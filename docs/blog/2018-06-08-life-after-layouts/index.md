@@ -70,11 +70,13 @@ Next, in `src/pages/index.js` we need to explicitly include the `Layout` compone
 import React from "react"
 import Layout from "../components/layout"
 
-export default function Home() (
-  <Layout>
-    <h1>I’m in a layout!</h1>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <h1>I’m in a layout!</h1>
+    </Layout>
+  )
+}
 ```
 
 Once we've made these changes, we can run `yarn develop` and see the updated layout in our browser:

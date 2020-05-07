@@ -544,21 +544,6 @@
   featured: false
   categories:
     - Marketing
-- title: Fabian Schultz' Portfolio
-  main_url: https://fabianschultz.com/
-  url: https://fabianschultz.com/
-  source_url: https://github.com/fabe/site
-  featured: false
-  description: >-
-    Hello, I’m Fabian — a product designer and developer based in Potsdam,
-    Germany. I’ve been working both as a product designer and frontend developer
-    for over 5 years now. I particularly enjoy working with companies that try
-    to meet broad and unique user needs.
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Fabian Schultz
-  built_by_url: https://fabianschultz.com/
 - title: CalState House Manager
   description: >
     Home service membership that offers proactive and on-demand maintenance for
@@ -1785,16 +1770,6 @@
   built_by: Mill3 Studio
   built_by_url: https://mill3.studio/en/
   featured: false
-- title: Bestvideogame.deals
-  main_url: https://bestvideogame.deals/
-  url: https://bestvideogame.deals/
-  description: |
-    Video game comparison website for the UK, build with GatsbyJS.
-  categories:
-    - E-commerce
-  built_by: Koen Kamphuis
-  built_by_url: https://koenkamphuis.com/
-  featured: false
 - title: Mahipat's Portfolio
   main_url: https://mojaave.com/
   url: https://mojaave.com
@@ -2761,16 +2736,6 @@
     - Web Development
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
-- title: BELLHOPS
-  main_url: https://www.getbellhops.com/
-  url: https://www.getbellhops.com/
-  description: >-
-    Whether you’re moving someplace new or just want to complete a few projects around your current home, BellHops can arrange the moving services you need—at simple, straightforward rates.
-  categories:
-    - Business
-  built_by: Bellhops, Inc.
-  built_by_url: https://www.getbellhops.com/
-  featured: false
 - title: Acclimate Consulting
   main_url: https://www.acclimate.io/
   url: https://www.acclimate.io/
@@ -8990,8 +8955,8 @@
   built_by: Shayan Javadi
   built_by_url: https://www.instagram.com/shawnjavadi/
 - title: a+ Saúde
-  url: https://www.amaissaude.com.br/
-  main_url: https://www.amaissaude.com.br/
+  url: https://www.amaissaude.com.br/sp/
+  main_url: https://www.amaissaude.com.br/sp/
   description: >
     An even better experience in using health services.
   categories:
@@ -10509,3 +10474,73 @@
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: Resistbot
+  url: https://resist.bot
+  main_url: https://resist.bot
+  description: >
+    A chatbot that helps you contact your representatives, and be an informed citizen.
+  categories:
+    - Blog
+    - Government
+    - Nonprofit
+- title: SVG to PNG
+  url: https://www.svgtopng.me/
+  main_url: https://www.svgtopng.me/
+  description: >
+    Online SVG to PNG batch converter. Upload and convert your SVG files to PNG with the desired size and background color for free, fast and secure.
+  categories:
+    - App
+    - Technology
+    - Productivity
+    - Design
+    - Web Development
+  built_by: Illia Achour
+  built_by_url: https://github.com/dummyco
+- title: St. Jude Cloud
+  url: https://www.stjude.cloud
+  main_url: https://www.stjude.cloud
+  description: >
+    Pediatric cancer data sharing ecosystem by St. Jude Children's Research Hospital.
+  categories:
+    - Science
+    - Technology
+    - Nonprofit
+    - Data
+    - Healthcare
+  featured: false
+- title: Philip Domingo
+  url: https://www.prtdomingo.com
+  main_url: https://www.prtdomingo.com
+  description: >
+    Personal website built on top of GatsbyJS, Ghost, and Azure.
+  categories:
+    - Technology
+    - Blog
+  featured: false
+- title: Cognifide Tech
+  url: https://tech.cognifide.com/
+  main_url: https://tech.cognifide.com/
+  description: >
+    Technology HUB that provides useful and specialized technical knowledge created for fellow engineers by engineers from Cognifide.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Cognifide
+  built_by_url: https://www.cognifide.com/
+- title: Chandraveena by S Balachander
+  url: https://www.chandraveena.com
+  main_url: https://www.chandraveena.com
+  description: >
+    Chandraveena is a contemporary Indian string instrument designed from the traditional Saraswati Veena.
+    S Balachander, an Indian classical musician, is the creator and performing artist of Chandraveena.
+    Chandraveena has been designed to support a systematic and contemplative exploration of Indian Ragas.
+    It is endowed with a deep sustain and a rich sound allowing the artist to create elaborate musical phrases
+    and subtle intonations. Visit the website to listen and learn more!
+  categories:
+    - Music
+    - Portfolio
+    - Blog
+  built_by: Sadharani Music Works
+  built_by_url: https://www.sadharani.com
+  featured: false

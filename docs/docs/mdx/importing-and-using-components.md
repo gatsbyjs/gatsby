@@ -43,9 +43,11 @@ import { Message } from "theme-ui"
 
 const shortcodes = { Chart, Pullquote, Message } // highlight-line
 
-export default function Layout({ children }) (
-  <MDXProvider components={shortcodes}>{children}</MDXProvider> // highlight-line
-)
+export default function Layout({ children }) {
+  return (
+    <MDXProvider components={shortcodes}>{children}</MDXProvider> // highlight-line
+  )
+}
 ```
 
 All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX documents that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
