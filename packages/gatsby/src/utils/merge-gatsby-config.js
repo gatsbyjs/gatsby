@@ -52,8 +52,8 @@ const howToMerge = {
   plugins: (a = [], b = []) =>
     _.uniqWith(a.concat(b), (a, b) =>
       _.isEqual(
-        _.omit(normalizePluginEntry(a), [`parentDir`]),
-        _.omit(normalizePluginEntry(b), [`parentDir`])
+        _.pick(normalizePluginEntry(a), [`resolve`, `options`]),
+        _.pick(normalizePluginEntry(b), [`resolve`, `options`])
       )
     ),
   mapping: (objA, objB) => _.merge({}, objA, objB),
