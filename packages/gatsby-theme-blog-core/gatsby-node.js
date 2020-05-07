@@ -4,7 +4,6 @@ const mkdirp = require(`mkdirp`)
 const Debug = require(`debug`)
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { urlResolve, createContentDigest, slash } = require(`gatsby-core-utils`)
-const url = require('url');
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -90,25 +89,8 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
           resolve: async (source, args, context, info) => {
             if (source.image___NODE) {
               return context.nodeModel.getNodeById({ id: source.image___NODE })
-            }
-            if (source.image) {
-              // Image is a relative path - find a corresponding file
-              const mdxFileNode = context.nodeModel.findRootNodeAncestor(
-                source,
-                node => node.internal && node.internal.type === `File`
-              )
-              if (!mdxFileNode) {
-                return
-              }
-              const imagePath = slash(
-                path.join(mdxFileNode.dir, source.image.match('([^\/]+$)')[1])
-              )
-              const fileNodes = context.nodeModel.getAllNodes({ type: `File` })
-              for (let file of fileNodes) {
-                if (file.absolutePath === imagePath) {
-                  return file
-                }
-              }
+            } else if (source.image) {
+              return processRelativeImage(source, context, "image")
             }
           },
         },
@@ -117,6 +99,13 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
         },
         socialImage: {
           type: 'File',
+          resolve: async (source, args, context, info) => {
+            if (source.socialImage___NODE) {
+              return context.nodeModel.getNodeById({ id: source.socialImage___NODE })
+            } else if (source.socialImage) {
+              return processRelativeImage(source, context, "socialImage")
+            }
+          },
         },
         body: {
           type: `String!`,
@@ -129,6 +118,27 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
       }
     })
   )
+}
+
+function processRelativeImage(source, context, type) {
+                // Image is a relative path - find a corresponding file
+                const mdxFileNode = context.nodeModel.findRootNodeAncestor(
+                  source,
+                  node => node.internal && node.internal.type === `File`
+                )
+                if (!mdxFileNode) {
+                  return
+                }
+                const imagePath = slash(
+                  path.join(mdxFileNode.dir, source[type])
+                )
+
+                const fileNodes = context.nodeModel.getAllNodes({ type: `File` })
+                for (let file of fileNodes) {
+                  if (file.absolutePath === imagePath) {
+                    return file
+                  }
+                }
 }
 
 function validURL(str) {
@@ -144,7 +154,6 @@ function validURL(str) {
 // This will change with schema customization with work
 exports.onCreateNode = async (
   { node, actions, getNode, createNodeId,
-    getNodesByType,
     store,
     cache},
   themeOptions
@@ -190,6 +199,7 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
+      image: node.frontmatter.image,
       socialImage: node.frontmatter.socialImage
     }
 
@@ -206,11 +216,32 @@ exports.onCreateNode = async (
       if (remoteFileNode) {
         fieldData.image___NODE = remoteFileNode.id
       }
-    } else if (node.frontmatter.image) {
-      // for relative paths: just assign the path
-      //   (we'll find the actual node in the custom resolver)
-      fieldData.image = node.frontmatter.image
-    }
+    } 
+    // else if (node.frontmatter.image) {
+    //   // for relative paths: just assign the path
+    //   //   (we'll find the actual node in the custom resolver)
+    //   fieldData.image = node.frontmatter.image
+    // }
+
+    if (validURL(node.frontmatter.socialImage)) { // create a file node for image URLs
+      const remoteFileNode = await createRemoteFileNode({
+        url: node.frontmatter.socialImage,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        cache,
+        store
+      })
+      // if the file was created, attach the new node to the parent node
+      if (remoteFileNode) {
+        fieldData.socialImage___NODE = remoteFileNode.id
+      }
+    } 
+    // else if (node.frontmatter.socialImage) {
+    //   // for relative paths: just assign the path
+    //   //   (we'll find the actual node in the custom resolver)
+    //   fieldData.socialImage = node.frontmatter.socialImage
+    // }
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
     await createNode({
