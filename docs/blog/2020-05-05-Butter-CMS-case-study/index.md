@@ -1,5 +1,5 @@
 ---
-title: "Faster, Easier and Also in French: Butter CMS + Gatsby drive Car Loans Canada"
+title: "Faster, Easier and Also in French: ButterCMS + Gatsby drive Car Loans Canada"
 author: Jake Lumetta
 date: 2020-05-05
 excerpt: "CarLoansCanada.com’s growing marketplace team needed to make their content marketing leaner and meaner. They tuned up their performance with a new website built on Gatsby paired with supremely easy content management from headless ButterCMS."
@@ -21,7 +21,7 @@ Josh and his team also had two more technical considerations that quickly limite
 
 ## Not all headless CMSs are created equal
 
-The decision came down to two final CMS contenders: Contentful and ButterCMS. There were four main reasons that ultimately tipped the scales toward Butter:
+The decision came down to two final CMS contenders: Contentful and [ButterCMS](https://buttercms.com/). There were four main reasons that ultimately tipped the scales toward Butter:
 
 - Butter plays nice with Gatsby, the framework that Car Loans Canada uses to build its sites.
 - Documentation and support were superior across the board. Documentation was especially important to the company. (“I won’t use anything with poor documentation,” adds Josh). Butter and Gatsby are both known for dedication to outstanding documentation.
