@@ -3,7 +3,7 @@ title: Progressive Enhancement
 disableTableOfContents: true
 ---
 
-Learn what _progressive enhancement_ is and how Gatsby it easy to build sites using progressive enhancement principles.
+Learn what _progressive enhancement_ is and how Gatsby builds sites using progressive enhancement principles by default.
 
 ## What is progressive enhancement?
 
