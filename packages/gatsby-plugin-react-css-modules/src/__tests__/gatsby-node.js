@@ -1,6 +1,6 @@
 const { onCreateBabelConfig } = require(`../gatsby-node`)
 
-describe(`gastby-plugin-react-css-modules`, () => {
+describe(`gatsby-plugin-react-css-modules`, () => {
   let actions
   beforeEach(() => {
     actions = {
@@ -13,7 +13,7 @@ describe(`gastby-plugin-react-css-modules`, () => {
     expect(actions.setBabelPlugin.mock.calls[0]).toMatchSnapshot()
   })
 
-  it(`should plugins from plugin options`, () => {
+  it(`should not pass plugins to babel plugin config`, () => {
     expect(actions.setBabelPlugin.mock.calls[0].plugins).not.toBeDefined()
   })
 })

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gastby-plugin-react-css-modules should add babel-plugin-react-css-modules plugin to babel config 1`] = `
+exports[`gatsby-plugin-react-css-modules should add babel-plugin-react-css-modules plugin to babel config 1`] = `
 Array [
   Object {
     "name": "babel-plugin-react-css-modules",
