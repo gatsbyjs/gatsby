@@ -66,7 +66,7 @@ export function followVariableDeclarations(binding): any {
   return binding
 }
 
-function getTagImport(tag): object | null {
+function getTagImport(tag): any {
   const name = tag.node.name
   const binding = tag.scope.getBinding(name)
 
@@ -202,7 +202,7 @@ function isUseStaticQuery(path): boolean {
 export default function ({ types: t }): object {
   return {
     visitor: {
-      Program(path, state) {
+      Program(path, state): void {
         const nestedJSXVistor = {
           JSXIdentifier(path2): void {
             if (
