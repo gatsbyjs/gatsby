@@ -38,6 +38,7 @@ Install NPM Packages
 />
 
 ---
+
 Install Gatsby Plugins
 
 First, add `gatsby-source-filesystem` to read images from the src/images
@@ -65,7 +66,13 @@ to handle image processing.
 />
 ---
 
-Finally, configure `gatsby-plugin-mdx` to resolve images in MDX files.
+Finally, configure `gatsby-plugin-mdx` to resolve images in MDX files—and import 
+gatsby-astronaut.png (to create an images folder in case it doesn't exist.)
+
+<File 
+  path="src/images/gatsby-astronaut.png" 
+  content="https://github.com/gatsbyjs/gatsby-starter-default/blob/master/src/images/gatsby-astronaut.png?raw=true" 
+/>
 
 <GatsbyPlugin 
   name="gatsby-plugin-mdx" 
