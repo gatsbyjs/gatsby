@@ -131,4 +131,23 @@ The following are the defined blog post fields based on the node interface in th
 | keywords    | String[] |
 | excerpt     | String   |
 | image       | String   |
+| imageAlt    | String   |
 | socialImage | String   |
+
+### Image Behavior
+
+Blog posts can include references to images inside frontmatter. Note that this works for a relative path as shown below, or an external URL.
+
+```md
+---
+title: Hello World (example)
+date: 2019-04-15
+image: ./some-image.jpg
+---
+```
+
+`image` refers to the featured image at the top of a post and is not required. It will also appear as the preview image inside a social card. Note that this requires you to set `siteURL` in your `gatsby-config.js` file metadata to your site's domain.
+
+When adding an `image`, `imageAlt` is available to provide alt text for the featured image within the post. If this is not included, it defaults to the post excerpt.
+
+You may want to use a different image for your social card than the one that appears in your blog post. You can do so by setting `socialImage` in frontmatter.
