@@ -152,18 +152,18 @@ function removeImport(tag): void {
   }
 }
 
-interface GraphQLTag {
-  ast: any,
-  text: string,
-  hash: number,
+interface IGraphQLTag {
+  ast: any
+  text: string
+  hash: number
   isGlobal: boolean
 }
 
-function getGraphQLTag(path): GraphQLTag {
+function getGraphQLTag(path): IGraphQLTag {
   const tag = path.get(`tag`)
   const isGlobal = isGlobalIdentifier(tag)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {} as GraphQLTag
+  if (!isGlobal && !isGraphqlTag(tag)) return {} as IGraphQLTag
 
   const quasis = path.node.quasi.quasis
 
@@ -206,7 +206,7 @@ export default function ({ types: t }) {
         const nestedJSXVistor = {
           JSXIdentifier(path2) {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV || '') &&
+              [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`) &&
               path2.parent.type !== `JSXClosingElement`
@@ -245,7 +245,7 @@ export default function ({ types: t }) {
         const nestedHookVisitor = {
           CallExpression(path2) {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV || '') &&
+              [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
