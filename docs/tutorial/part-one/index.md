@@ -196,7 +196,7 @@ export default function Header() {
 }
 ```
 
-3. Modify the `about.js` file to import the `Header` component. Replace the `h1` markup with `<Header />`:
+3. Modify the `about.js` file to import the `header` component. Replace the `h1` markup with `<header />`:
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -205,7 +205,7 @@ import Header from "../components/header" // highlight-line
 export default function About() {
   return (
     <div style={{ color: `teal` }}>
-      <Header /> {/* highlight-line */}
+      <header /> {/* highlight-line */}
       <p>Such wow. Very React.</p>
     </div>
   )
