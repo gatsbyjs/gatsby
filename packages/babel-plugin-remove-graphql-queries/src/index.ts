@@ -49,10 +49,10 @@ class GraphQLSyntaxError extends Error {
   }
 }
 
-const isGlobalIdentifier = tag =>
+const isGlobalIdentifier = (tag): boolean =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
 
-export function followVariableDeclarations(binding) {
+export function followVariableDeclarations(binding): any {
   const node = binding.path?.node
   if (
     node?.type === `VariableDeclarator` &&
@@ -99,7 +99,7 @@ function getTagImport(tag) {
   return null
 }
 
-function isGraphqlTag(tag) {
+function isGraphqlTag(tag): boolean {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
 
@@ -122,12 +122,12 @@ function isGraphqlTag(tag) {
   return false
 }
 
-function removeImport(tag) {
+function removeImport(tag): void {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
   const importPath = getTagImport(identifier)
 
-  const removeVariableDeclaration = statement => {
+  const removeVariableDeclaration = (statement): void => {
     const declaration = statement.findParent(p => p.isVariableDeclaration())
     if (declaration) {
       declaration.remove()
@@ -152,11 +152,18 @@ function removeImport(tag) {
   }
 }
 
-function getGraphQLTag(path) {
+interface GraphQLTag {
+  ast: any,
+  text: string,
+  hash: number,
+  isGlobal: boolean
+}
+
+function getGraphQLTag(path): GraphQLTag {
   const tag = path.get(`tag`)
   const isGlobal = isGlobalIdentifier(tag)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {}
+  if (!isGlobal && !isGraphqlTag(tag)) return {} as GraphQLTag
 
   const quasis = path.node.quasi.quasis
 
@@ -182,7 +189,7 @@ function getGraphQLTag(path) {
   }
 }
 
-function isUseStaticQuery(path) {
+function isUseStaticQuery(path): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
