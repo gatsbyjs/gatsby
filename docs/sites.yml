@@ -10517,3 +10517,15 @@
     - Technology
     - Blog
   featured: false
+- title: Cognifide Tech
+  url: https://tech.cognifide.com/
+  main_url: https://tech.cognifide.com/
+  description: >
+    Technology HUB that provides useful and specialized technical knowledge created for fellow engineers by engineers from Cognifide.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Cognifide
+  built_by_url: https://www.cognifide.com/
+  featured: false
