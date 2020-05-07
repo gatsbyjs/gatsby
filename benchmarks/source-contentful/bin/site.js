@@ -8,19 +8,6 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
-const siteId = process.env.BENCHMARK_SITE_ID
-const inputDir = path.normalize(
-  `${process.env.BENCHMARK_DATASOURCE_LOCAL_PATH}/data/${siteId}`
-)
-if (!fs.promises.opendir) {
-  console.error(`This script requires Node 12.12+`)
-  process.exit(1)
-}
-if (!fs.existsSync(inputDir)) {
-  console.error(`Could not find datasource directory: ${inputDir}`)
-  process.exit(1)
-}
-
 const locale = `en-US`
 const contentfulConfig = {
   spaceId: process.env.BENCHMARK_CONTENTFUL_SPACE_ID,
@@ -110,8 +97,19 @@ function extractEntities(sourceArticle) {
 }
 
 // Node 12.12+
-async function* readSourceArticles(directory) {
-  const dir = await fs.promises.opendir(directory)
+async function* readSourceArticles() {
+  if (!fs.promises.opendir) {
+    console.error(`This command requires Node 12.12+`)
+    process.exit(1)
+  }
+  const inputDir = path.normalize(
+    `${process.env.BENCHMARK_DATASOURCE_LOCAL_PATH}/data/${process.env.BENCHMARK_SITE_ID}`
+  )
+  if (!fs.existsSync(inputDir)) {
+    console.error(`Could not find datasource directory: ${inputDir}`)
+    process.exit(1)
+  }
+  const dir = await fs.promises.opendir(inputDir)
   for await (const dirent of dir) {
     if (dirent.isFile() && /\.json$/.test(dirent.name)) {
       const content = fs.readFileSync(path.join(inputDir, dirent.name))
@@ -254,7 +252,7 @@ async function createEntries({ env, skip = 0 }) {
 
   let total = 0
   let pending = []
-  for await (const sourceArticle of readSourceArticles(inputDir)) {
+  for await (const sourceArticle of readSourceArticles()) {
     if (total++ < skip) {
       continue
     }
@@ -270,7 +268,7 @@ async function createEntries({ env, skip = 0 }) {
 }
 
 async function updateAssets({ env, assetIds }) {
-  for await (const sourceArticle of readSourceArticles(inputDir)) {
+  for await (const sourceArticle of readSourceArticles()) {
     const { asset: assetData } = extractEntities(sourceArticle)
     if (assetIds.has(assetData.sys.id)) {
       try {
