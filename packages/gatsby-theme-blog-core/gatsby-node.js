@@ -3,8 +3,7 @@ const path = require(`path`)
 const mkdirp = require(`mkdirp`)
 const Debug = require(`debug`)
 const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`)
-const { urlResolve, createContentDigest } = require(`gatsby-core-utils`)
-const url = require('url');
+const { urlResolve, createContentDigest, slash } = require(`gatsby-core-utils`)
 
 const debug = Debug(`gatsby-theme-blog-core`)
 const withDefaults = require(`./utils/default-options`)
@@ -87,15 +86,26 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
         },
         image: {
           type: `File`,
-          extensions: {
-            link: {}
-          }
+          resolve: async (source, args, context, info) => {
+            if (source.image___NODE) {
+              return context.nodeModel.getNodeById({ id: source.image___NODE })
+            } else if (source.image) {
+              return processRelativeImage(source, context, "image")
+            }
+          },
         },
         imageAlt: {
           type: `String`,
         },
         socialImage: {
           type: 'File',
+          resolve: async (source, args, context, info) => {
+            if (source.socialImage___NODE) {
+              return context.nodeModel.getNodeById({ id: source.socialImage___NODE })
+            } else if (source.socialImage) {
+              return processRelativeImage(source, context, "socialImage")
+            }
+          },
         },
         body: {
           type: `String!`,
@@ -110,9 +120,30 @@ exports.createSchemaCustomization = ({ actions, schema }, themeOptions) => {
   )
 }
 
+function processRelativeImage(source, context, type) {
+                // Image is a relative path - find a corresponding file
+                const mdxFileNode = context.nodeModel.findRootNodeAncestor(
+                  source,
+                  node => node.internal && node.internal.type === `File`
+                )
+                if (!mdxFileNode) {
+                  return
+                }
+                const imagePath = slash(
+                  path.join(mdxFileNode.dir, source[type])
+                )
+
+                const fileNodes = context.nodeModel.getAllNodes({ type: `File` })
+                for (let file of fileNodes) {
+                  if (file.absolutePath === imagePath) {
+                    return file
+                  }
+                }
+}
+
 function validURL(str) {
   try {
-    url.parse(str)
+    new URL(str)
     return true
   } catch {
     return false
@@ -123,7 +154,6 @@ function validURL(str) {
 // This will change with schema customization with work
 exports.onCreateNode = async (
   { node, actions, getNode, createNodeId,
-    getNodesByType,
     store,
     cache},
   themeOptions
@@ -169,33 +199,39 @@ exports.onCreateNode = async (
       slug,
       date: node.frontmatter.date,
       keywords: node.frontmatter.keywords || [],
+      image: node.frontmatter.image,
       socialImage: node.frontmatter.socialImage
     }
 
     if (validURL(node.frontmatter.image)) { // create a file node for image URLs
-      let fileNode = await createRemoteFileNode({
-        url: node.frontmatter.image, 
-        parentNodeId: node.id, 
-        createNode, 
-        createNodeId, 
+      const remoteFileNode = await createRemoteFileNode({
+        url: node.frontmatter.image,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
         cache,
         store
       })
       // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        fieldData.image = fileNode.id
+      if (remoteFileNode) {
+        fieldData.image___NODE = remoteFileNode.id
       }
-    } else if (node.frontmatter.image) { // for relative paths, find the file node to assign it
-      const fileNodes = getNodesByType(`File`)
+    } 
 
-      for (let file of fileNodes) {
-        const imagePath = node.frontmatter.image.match('([^\/]+$)')[1] // parse out the file path
-        if (file.absolutePath === path.join(fileNode.dir, imagePath)) {
-          fieldData.image = file.id
-          break
-        }
+    if (validURL(node.frontmatter.socialImage)) { // create a file node for image URLs
+      const remoteFileNode = await createRemoteFileNode({
+        url: node.frontmatter.socialImage,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        cache,
+        store
+      })
+      // if the file was created, attach the new node to the parent node
+      if (remoteFileNode) {
+        fieldData.socialImage___NODE = remoteFileNode.id
       }
-    }
+    } 
 
     const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`)
     await createNode({
