@@ -169,7 +169,6 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         }
       }),
       setBootstrapFinished: assign<IContext>({
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         isInBootstrap: false
       })
     }
