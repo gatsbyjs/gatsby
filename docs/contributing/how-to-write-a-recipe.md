@@ -100,12 +100,14 @@ When writing a recipe, try to include each of the below items wherever relevant.
 import React from "react"
 import { Link } from "gatsby"
 
-export default function Home() (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link>
-    <p>What a world.</p>
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <Link to="/contact/">Contact</Link>
+      <p>What a world.</p>
+    </div>
+  )
+}
 ```
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link

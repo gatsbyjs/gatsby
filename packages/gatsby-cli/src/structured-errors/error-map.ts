@@ -34,7 +34,15 @@ const errors = {
   },
   "98123": {
     text: (context): string =>
-      `${context.stageLabel} failed\n\n${context.message}`,
+      `${context.stageLabel} failed\n\n${
+        context.sourceMessage ?? context.message
+      }`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+  },
+  "98124": {
+    text: (context): string =>
+      `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nPerhaps you need to install the package '${context.packageName}'?`,
     type: Type.WEBPACK,
     level: Level.ERROR,
   },
@@ -244,6 +252,12 @@ const errors = {
     level: Level.ERROR,
   },
   // Config errors
+  "10122": {
+    text: (context): string =>
+      `The site's gatsby-config.js failed validation:\n\n${context.sourceMessage}`,
+    type: Type.CONFIG,
+    level: Level.ERROR,
+  },
   "10123": {
     text: (context): string =>
       `We encountered an error while trying to load your site's ${context.configName}. Please fix the error and try again.`,

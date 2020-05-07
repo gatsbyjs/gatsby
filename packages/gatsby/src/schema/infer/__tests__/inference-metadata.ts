@@ -1148,9 +1148,10 @@ describe(`Type change detection`, () => {
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
     metadata.dirty = false
 
+    // Deleting is expected to restore initial metadata state
     metadata = deleteOne({ relatedNode___NODE: `added` }, metadata)
     expect(metadata.dirty).toEqual(true)
-    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
   it(`does not detect when the same node added to the relatedNode field`, () => {
@@ -1165,9 +1166,10 @@ describe(`Type change detection`, () => {
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
     metadata.dirty = false
 
+    // Deleting is expected to restore initial metadata state
     metadata = deleteOne({ relatedNodeList___NODE: [`added`] }, metadata)
     expect(metadata.dirty).toEqual(true)
-    expect(haveEqualFields(metadata, initialMetadata)).toEqual(false)
+    expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
   it(`does not detect when the same node added to the relatedNodeList field`, () => {

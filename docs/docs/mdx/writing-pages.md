@@ -102,11 +102,13 @@ find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.org/docs/
 
 <!-- This default export overrides the default layout ensuring -->
 <!--  that the FAQ component isn't wrapped by other elements -->
-export default function Layout({ children }) (
-  <>
-    {children}
-  </>
-)
+export default function Layout({ children }) {
+  return (
+    <>
+      {children}
+    </>
+  );
+}
 ```
 
 > **Note**: the default export concept used in this code block is explained in more detail
