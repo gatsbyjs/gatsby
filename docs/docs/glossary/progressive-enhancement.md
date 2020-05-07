@@ -15,7 +15,7 @@ You'll sometimes see progressive enhancement discussed alongside _graceful degra
 
 ### How Gatsby enables progressive enhancement
 
-Gatsby uses [server-side rendering](/docs/glossary/server-side-rendering/) and a React feature known as [hydration](/docs/glossary/hydration/) to create progressively-enhanced sites. During the build process, Gatsby creates an HTML document for each URL of your site and a corresponding React component.
+Gatsby uses [server-side rendering](/docs/glossary/server-side-rendering/) and a React feature known as [hydration](/docs/glossary/hydration/) to create progressively-enhanced sites. During the build process, Gatsby creates both an HTML document and a JavaScript component for each URL of your site.
 
 When a site visitor requests their first URL from your site, the initial response will be server-rendered HTML, along with linked JavaScript, CSS, and images. If their browser is capable, React will hydrate the DOM, adding event listeners and state. Subsequent URL requests become DOM updates managed by React. If hydration fails, however, your site still works. Subsequent URL requests will instead trigger a network request and a full-page load.
 
