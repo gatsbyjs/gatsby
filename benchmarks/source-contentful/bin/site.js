@@ -51,6 +51,13 @@ yargs
       runFixBrokenImages(ids).catch(console.error)
     },
   })
+  .command({
+    command: "data-update",
+    desc: `Update random article (to trigger Contentful webhook)`,
+    handler: () => {
+      runDataUpdate().catch(console.error)
+    },
+  })
   .demandCommand(1)
   .help().argv
 
@@ -350,4 +357,20 @@ async function runFixBrokenImages(ids) {
   const { env } = await createClient()
   console.log(`Fixing ${chalk.yellow(ids.length)} broken images`)
   await updateAssets({ env, assetIds: new Set(ids) })
+}
+
+async function runDataUpdate() {
+  const { env } = await createClient()
+
+  const entries = await env.getEntries({
+    content_type: 'article',
+    limit: 1
+  })
+
+  const entry = entries.items[0]
+  const title = entry.fields.title[locale]
+  entry.fields.title[locale] = `${title.substring(0, title.lastIndexOf(` `))} ${Date.now()}`
+
+  await entry.update()
+  console.log(`Updated ${chalk.green(entry.sys.id)}`)
 }
