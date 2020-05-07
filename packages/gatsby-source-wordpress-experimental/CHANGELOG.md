@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-- Fixed regression in the generated resolver for lists of unions in `src/steps/create-schema-customization/transform-fields/transform-union.js`. The `field` variable was being declared twice.
+- Fixed regression in the generated resolver for lists of unions in `src/steps/create-schema-customization/transform-fields/transform-union.js`. The `field` variable was being declared twice and accessed before it was initialized the second time.
 
 ## 0.1.10
 
