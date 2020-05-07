@@ -89,12 +89,8 @@ it("populates the author info and published time", () => {
 it("uses the seoTitle when available", () => {
   render(<BlogPostMetadata post={basePost} />)
   const content = Helmet.peek()
-  // TEMP: Verify output in CI
-  console.log("all of the things", JSON.stringify(content, null, 2))
 
-  expect(content.title).toContainEqual({
-    children: "How to write a Gatsby blog post",
-  })
+  expect(content.title).toEqual("How to write a Gatsby blog post")
 })
 
 it("uses the default title when seoTitle is not available", () => {
@@ -108,10 +104,6 @@ it("uses the default title when seoTitle is not available", () => {
 
   render(<BlogPostMetadata post={basePostWithoutSeoTitle} />)
   const content = Helmet.peek()
-  // TEMP: Verify output in CI
-  console.log("yasss content title", content.title)
 
-  expect(content.title).toContainEqual({
-    children: "My first Gatsby blog post!",
-  })
+  expect(content.title).toEqual("My first Gatsby blog post!")
 })
