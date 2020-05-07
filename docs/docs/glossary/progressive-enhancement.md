@@ -19,7 +19,7 @@ Gatsby uses [server-side rendering](/docs/glossary/server-side-rendering/) and a
 
 When a site visitor requests their first URL from your site, the initial response will be server-rendered HTML, along with linked JavaScript, CSS, and images. If their browser is capable, React will hydrate the DOM, adding event listeners and state. Subsequent URL requests become DOM updates managed by React. If hydration fails, however, your site still works. Subsequent URL requests will instead trigger a network request and a full-page load.
 
-Gatsby makes it easy to build blazing-fast web sites and applications that work with the latest browsers, without excluding older ones.
+Gatsby helps you build blazing-fast web sites and applications that work with the latest browsers, without excluding older ones.
 
 ### Learn more
 
