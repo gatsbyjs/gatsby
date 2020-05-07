@@ -199,7 +199,7 @@ export default function ({ types: t }) {
         const nestedJSXVistor = {
           JSXIdentifier(path2) {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              [`production`, `test`].includes(process.env.NODE_ENV!) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`) &&
               path2.parent.type !== `JSXClosingElement`
@@ -238,7 +238,7 @@ export default function ({ types: t }) {
         const nestedHookVisitor = {
           CallExpression(path2) {
             if (
-              [`production`, `test`].includes(process.env.NODE_ENV) &&
+              [`production`, `test`].includes(process.env.NODE_ENV!) &&
               isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
@@ -348,7 +348,7 @@ export default function ({ types: t }) {
                   return
                 }
                 jsxPath.traverse({
-                  TaggedTemplateExpression(templatePath, state) {
+                  TaggedTemplateExpression(templatePath) {
                     setImportForStaticQuery(templatePath)
                   },
                   Identifier(identifierPath) {
@@ -412,7 +412,7 @@ export default function ({ types: t }) {
 
         // Run it again to remove non-staticquery versions
         path.traverse({
-          TaggedTemplateExpression(path2, state) {
+          TaggedTemplateExpression(path2) {
             const { ast, hash, isGlobal } = getGraphQLTag(path2)
 
             if (!ast) return null
