@@ -41,7 +41,7 @@ const defaultContext: IContext = {
   isInBootstrap: true,
   componentPath: ``,
   query: ``,
-  pages: new Set(``)
+  pages: new Set(``),
 }
 
 export const componentMachine = machine<IContext, IState, IEvent>(
@@ -51,19 +51,19 @@ export const componentMachine = machine<IContext, IState, IEvent>(
     context: defaultContext,
     on: {
       BOOTSTRAP_FINISHED: {
-        actions: `setBootstrapFinished`
+        actions: `setBootstrapFinished`,
       },
       DELETE_PAGE: {
-        actions: `deletePage`
+        actions: `deletePage`,
       },
       NEW_PAGE_CREATED: {
-        actions: `setPage`
+        actions: `setPage`,
       },
       PAGE_CONTEXT_MODIFIED: {
-        actions: `rerunPageQuery`
+        actions: `rerunPageQuery`,
       },
       QUERY_EXTRACTION_GRAPHQL_ERROR: `queryExtractionGraphQLError`,
-      QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`
+      QUERY_EXTRACTION_BABEL_ERROR: `queryExtractionBabelError`,
     },
     states: {
       inactive: {
@@ -73,47 +73,47 @@ export const componentMachine = machine<IContext, IState, IEvent>(
           // immediately upon entering 'inactive' state if the condition is met.
           "": [
             { target: `inactiveWhileBootstrapping`, cond: `isBootstrapping` },
-            { target: `idle`, cond: `isNotBootstrapping` }
-          ]
-        }
+            { target: `idle`, cond: `isNotBootstrapping` },
+          ],
+        },
       },
       inactiveWhileBootstrapping: {
         on: {
           BOOTSTRAP_FINISHED: {
             target: `idle`,
-            actions: `setBootstrapFinished`
+            actions: `setBootstrapFinished`,
           },
-          QUERY_CHANGED: `runningPageQueries`
-        }
+          QUERY_CHANGED: `runningPageQueries`,
+        },
       },
       queryExtractionGraphQLError: {
         on: {
           QUERY_DID_NOT_CHANGE: `idle`,
-          QUERY_CHANGED: `runningPageQueries`
-        }
+          QUERY_CHANGED: `runningPageQueries`,
+        },
       },
       queryExtractionBabelError: {
         on: {
-          QUERY_EXTRACTION_BABEL_SUCCESS: `idle`
-        }
+          QUERY_EXTRACTION_BABEL_SUCCESS: `idle`,
+        },
       },
       runningPageQueries: {
         onEntry: [`setQuery`, `runPageComponentQueries`],
         on: {
-          QUERIES_COMPLETE: `idle`
-        }
+          QUERIES_COMPLETE: `idle`,
+        },
       },
       idle: {
         on: {
-          QUERY_CHANGED: `runningPageQueries`
-        }
-      }
-    }
+          QUERY_CHANGED: `runningPageQueries`,
+        },
+      },
+    },
   },
   {
     guards: {
       isBootstrapping: (context): boolean => context.isInBootstrap,
-      isNotBootstrapping: (context): boolean => !context.isInBootstrap
+      isNotBootstrapping: (context): boolean => !context.isInBootstrap,
     },
     actions: {
       rerunPageQuery: (_ctx, event): void => {
@@ -139,7 +139,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
           } else {
             return ctx.query
           }
-        }
+        },
       }),
       setPage: assign({
         pages: (ctx, event) => {
@@ -158,7 +158,7 @@ export const componentMachine = machine<IContext, IState, IEvent>(
           } else {
             return ctx.pages
           }
-        }
+        },
       }),
       deletePage: assign({
         pages: (ctx, event) => {
@@ -166,12 +166,12 @@ export const componentMachine = machine<IContext, IState, IEvent>(
             ctx.pages.delete(event.page.path)
           }
           return ctx.pages
-        }
+        },
       }),
       setBootstrapFinished: assign<IContext>({
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        isInBootstrap: false
-      })
-    }
+        isInBootstrap: false,
+      }),
+    },
   }
 )
