@@ -20,6 +20,7 @@ export default function BlogPostMetadata({ post }) {
     twittercard,
   } = post.frontmatter
   const { siteUrl } = useSiteMetadata()
+
   return (
     <PageMetadata
       title={seoTitle || title}

@@ -16,6 +16,7 @@ const basePost = {
   },
   frontmatter: {
     title: "My first Gatsby blog post!",
+    seoTitle: "How to write a Gatsby blog post",
     rawDate: 12345,
     author: {
       id: "Kyle Mathews",
@@ -82,5 +83,35 @@ it("populates the author info and published time", () => {
   expect(content.metaTags).toContainEqual({
     property: "article:published_time",
     content: 12345,
+  })
+})
+
+it("uses the seoTitle when available", () => {
+  render(<BlogPostMetadata post={basePost} />)
+  const content = Helmet.peek()
+  // TEMP: Verify output in CI
+  console.log("all of the things", JSON.stringify(content, null, 2))
+
+  expect(content.title).toContainEqual({
+    children: "How to write a Gatsby blog post",
+  })
+})
+
+it("uses the default title when seoTitle is not available", () => {
+  const basePostWithoutSeoTitle = {
+    ...basePost,
+    frontmatter: {
+      ...basePost.frontmatter,
+      seoTitle: undefined,
+    },
+  }
+
+  render(<BlogPostMetadata post={basePostWithoutSeoTitle} />)
+  const content = Helmet.peek()
+  // TEMP: Verify output in CI
+  console.log("yasss content title", content.title)
+
+  expect(content.title).toContainEqual({
+    children: "My first Gatsby blog post!",
   })
 })
