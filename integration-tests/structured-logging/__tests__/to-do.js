@@ -322,7 +322,7 @@ describe(`develop`, () => {
   // See https://github.com/gatsbyjs/gatsby/issues/18518
   describe.skip(`test preview workflows`, () => {
     let gatsbyProcess
-    const mitt = new EventEmitter()
+    const eventEmitter = new EventEmitter()
     const events = []
     const clearEvents = () => {
       events.splice(0, events.length)
@@ -348,7 +348,7 @@ describe(`develop`, () => {
           msg.action.payload !== `IN_PROGRESS`
         ) {
           setTimeout(() => {
-            mitt.emit(`done`)
+            eventEmitter.emit(`done`)
             done()
           }, 5000)
         }
@@ -394,7 +394,7 @@ describe(`develop`, () => {
             codeWithError
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -409,7 +409,7 @@ describe(`develop`, () => {
             `git checkout -- ${require.resolve(`../src/pages/index.js`)}`
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -434,7 +434,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -456,7 +456,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })

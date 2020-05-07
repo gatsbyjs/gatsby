@@ -8,7 +8,7 @@ title: TypeScript and Gatsby
 
 ## Example
 
-```tsx:title=src/pages/index.js
+```tsx:title=src/pages/index.tsx
 import React from "react"
 import { PageProps } from "gatsby"
 
