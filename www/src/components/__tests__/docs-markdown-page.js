@@ -100,7 +100,7 @@ it("should not display table of content if there are no items", () => {
   const tableOfContentsItems = []
   const { queryByText } = setup({ tableOfContentsItems })
 
-  expect(queryByText("Table of Contents")).toBeNull()
+  expect(queryByText("Table of Contents")).not.toBeDefined()
 })
 
 it("should not display table of content if disabled", () => {
@@ -111,7 +111,7 @@ it("should not display table of content if disabled", () => {
     },
   })
 
-  expect(queryByText("Table of Contents")).toBeNull()
+  expect(queryByText("Table of Contents")).not.toBeDefined()
 })
 
 it("should display prev page and next page if available", () => {

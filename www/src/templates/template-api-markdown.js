@@ -72,6 +72,8 @@ export default function APITemplate({ data, location, pageContext }) {
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
+
+  // Generate table of content items for API entries
   const items = tableOfContents.items || []
   const tableOfContentsItems = [
     ...items,
