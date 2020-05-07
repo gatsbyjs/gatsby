@@ -551,8 +551,7 @@ const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @param {function(id: string): IGatsbyNode | undefined} getNode Note: this is
- *   different for loki
+ * @param {function(id: string): IGatsbyNode | undefined} getNode
  * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
