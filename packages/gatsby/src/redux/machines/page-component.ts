@@ -18,6 +18,13 @@ export interface IState {
   }
 }
 
+/**
+ * Stricter types for actions are not possible
+ * as we have different payloads that would require casting.
+ * The current approach prevents this but makes all payloads optional.
+ * See https://github.com/gatsbyjs/gatsby/pull/23277#issuecomment-625425023
+ */
+
 type ActionTypes =
   | "BOOTSTRAP_FINISHED"
   | "DELETE_PAGE"
