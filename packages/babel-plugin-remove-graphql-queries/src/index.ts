@@ -66,7 +66,7 @@ export function followVariableDeclarations(binding): any {
   return binding
 }
 
-function getTagImport(tag) {
+function getTagImport(tag): object | null {
   const name = tag.node.name
   const binding = tag.scope.getBinding(name)
 
@@ -199,12 +199,12 @@ function isUseStaticQuery(path): boolean {
   )
 }
 
-export default function ({ types: t }) {
+export default function ({ types: t }): object {
   return {
     visitor: {
       Program(path, state) {
         const nestedJSXVistor = {
-          JSXIdentifier(path2) {
+          JSXIdentifier(path2): void {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
@@ -243,7 +243,7 @@ export default function ({ types: t }) {
         }
 
         const nestedHookVisitor = {
-          CallExpression(path2) {
+          CallExpression(path2): void {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               isUseStaticQuery(path2)
@@ -296,7 +296,7 @@ export default function ({ types: t }) {
 
         const tagsToRemoveImportsFrom = new Set()
 
-        const setImportForStaticQuery = templatePath => {
+        const setImportForStaticQuery = (templatePath): null => {
           const { ast, text, hash, isGlobal } = getGraphQLTag(templatePath)
 
           if (!ast) return null
@@ -389,7 +389,7 @@ export default function ({ types: t }) {
           CallExpression(hookPath) {
             if (!isUseStaticQuery(hookPath)) return
 
-            function TaggedTemplateExpression(templatePath) {
+            function TaggedTemplateExpression(templatePath): void {
               setImportForStaticQuery(templatePath)
             }
 
