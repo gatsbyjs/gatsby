@@ -20583,6 +20583,15 @@ remark-lint-final-newline@^1.0.0:
   dependencies:
     unified-lint-rule "^1.0.0"
 
+remark-lint-first-heading-level@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/remark-lint-first-heading-level/-/remark-lint-first-heading-level-2.0.0.tgz#e0ad7a187f06f0252025d64f11ee0697e8e218ce"
+  integrity sha512-LFjKO6nQAPo0oarhLZqHaGUqCpLvjeVuJTr58yo3jpC4v0Gmb1iG8X53hrLtxPz+MP4J5WVz/83eAXCH+Vh3vA==
+  dependencies:
+    unified-lint-rule "^1.0.0"
+    unist-util-generated "^1.1.0"
+    unist-util-visit "^2.0.0"
+
 remark-lint-hard-break-spaces@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/remark-lint-hard-break-spaces/-/remark-lint-hard-break-spaces-2.0.0.tgz#266c2b59f63203edd4a5a6d004f63cb7f7142d14"

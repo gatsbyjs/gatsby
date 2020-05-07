@@ -16,7 +16,7 @@ So how do you explain all the technical nuance to an audience that doesn’t wor
 
 I’ve worked at tech companies large and small over the past decade and one thing I’ve learned over the years is that highly skilled technical people can have a hard time explaining deep technical concepts to a not-as-technical audience. This makes sense because since there is so much to know about certain topics, it’s difficult to know where to start and how to simplify the concepts and still be accurate. To help, I’ve put together some thoughts on how to position Gatsby to your clients and team members.
 
-### **1. Know your audience**
+## **1. Know your audience**
 
 When talking to a client, marketer, or any team member, consider what they care about. Why do they need a website and what do they need it for? What are they trying to achieve?
 
@@ -30,7 +30,7 @@ The website goal could be to increase brand awareness, generate leads, sell prod
 
 Keep your audience and their priorities in mind and be sure to talk about these things when you recommend tools for the job. I’ll dive into a few of these business outcomes later.
 
-### **2: Keep it simple**
+## **2: Keep it simple**
 
 You don’t need to be completely, 100%, totally technically accurate! For example, my Dad is an electrical engineer. He’s very detail oriented and when he explains engineering concepts to me, it’s usually a long explanation that is 100% accurate and includes every subtle nuance of the topic. Usually, this is overwhelming and completely unnecessary. Sorry Dad! Just keep it simple and short. I only need to know what’s relevant to me.
 
@@ -40,7 +40,7 @@ _With a website framework (like Gatsby), the website is pre-built and hosted on 
 
 Since the entire website is pre-built, this translates into blazing fast page load times. By blazing fast, I mean the pages can load so quickly that it seems instantaneous and on slower connections and mobile phones, the experience is still fast. Fast sites translate into higher revenue (for e-commerce sites), a better user experience, and greater lead conversion. I was on a cross country flight recently and had a poor internet connection. The only websites I could get to load on my computer were Gatsby sites. That gives a company a huge advantage if their site loads on a slow connection when their competitors’ sites don’t.
 
-### **3. Focus on the outcome**
+## **3. Focus on the outcome**
 
 When you know your audience, then you can start to frame the discussion around what they care about. For a marketer, business manager, and many engineering managers, they care about business outcomes. So let’s look at each of the benefits from above:
 
@@ -52,7 +52,7 @@ When you know your audience, then you can start to frame the discussion around w
 
 **Revenue:** Generating revenue with your website is especially important for e-commerce sites. If an e-commerce company doesn’t get a high enough ROI (return on investment), then they may be out of business in a few months. In fact, leading e-commerce beauty site [Adore Beauty](https://topflightapps.com/ideas/why-page-load-time-matters/) found that faster page load times resulted in a 16.5% increase in conversion rates and a consistent improvement in revenue. The less time it takes a page to load, the more money you make. Marketers, managers, and sales care about this deeply.
 
-### **4. Give examples**
+## **4. Give examples**
 
 Give examples of websites that use the tech stack you’re recommending for the project and speak to the benefits that matter to your audience. At Gatsby, we have several case studies and the [Gatsby site showcase](/showcase/), which highlights some of the latest Gatsby sites. Reference the site showcase or any of the case studies on our blog. I’ve included a list of current case studies and other resources below. And here are a few specific examples to choose from:
 
