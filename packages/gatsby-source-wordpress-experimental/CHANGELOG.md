@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - Fixed regression in the generated resolver for lists of unions in `src/steps/create-schema-customization/transform-fields/transform-union.js`. The `field` variable was being declared twice and accessed before it was initialized the second time.
+- Fixed a query generation / node sourcing bug where fields that should have a selection set were being queried as if they didn't which would fail the build during node sourcing. The issue was due to the new `schema.circularQueryLimit` option which limits circular query generation separately from the overall `schema.queryDepth` option. Circular field references at the bottom level were sometimes missing their selectionsets.
 
 ## 0.1.10
 

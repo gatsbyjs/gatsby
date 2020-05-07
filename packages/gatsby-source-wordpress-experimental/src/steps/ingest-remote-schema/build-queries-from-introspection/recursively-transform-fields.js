@@ -208,19 +208,7 @@ function transformField({
       ancestorTypeNames,
     })
 
-    if (
-      !transformedFields &&
-      transformedInlineFragments &&
-      !transformedInlineFragments.length
-    ) {
-      return false
-    }
-
-    if (
-      !transformedInlineFragments &&
-      transformedFields &&
-      !transformedFields.length
-    ) {
+    if (!transformedFields?.length && !transformedInlineFragments?.length) {
       return false
     }
 
@@ -390,6 +378,10 @@ const recursivelyTransformFields = ({
       if (transformedField) {
         // save this type so we know to use it in schema customization
         store.dispatch.remoteSchema.addFetchedType(field.type)
+      }
+
+      if (field.fields && !transformedField) {
+        return null
       }
 
       return transformedField

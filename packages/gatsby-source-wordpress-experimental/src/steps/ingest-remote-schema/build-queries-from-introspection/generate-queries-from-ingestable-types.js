@@ -152,6 +152,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     )
 
     if (!singleNodeRootFieldInfo) {
+      // @todo handle cases where there is a nodelist field but no individual field. we can't do data updates or preview on this type.
       // reporter.info(formatLogMessage(`Unable to find a root field to query single nodes of the type`))
       continue
     }
