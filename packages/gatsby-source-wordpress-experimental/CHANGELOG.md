@@ -1,6 +1,14 @@
 # Change Log
 
+## 0.1.11
+
+### Bug Fixes
+
+- Fixed regression in the generated resolver for lists of unions in `src/steps/create-schema-customization/transform-fields/transform-union.js`. The `field` variable was being declared twice.
+
 ## 0.1.10
+
+### New Features
 
 - Added plugin option `debug.disableCompatibilityCheck`. This is useful for testing the source plugin against versions of WPGraphQL outside the current accepted version range.
 
