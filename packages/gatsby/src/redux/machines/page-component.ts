@@ -169,9 +169,8 @@ export const componentMachine = machine<IContext, IState, IEvent>(
       }),
       deletePage: assign({
         pages: (ctx, event) => {
-          if (event.page) {
-            ctx.pages.delete(event.page.path)
-          }
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          ctx.pages.delete(event.page!.path)
           return ctx.pages
         }
       }),
