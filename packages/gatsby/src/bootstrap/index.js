@@ -18,16 +18,15 @@ const { store, emitter } = require(`../redux`)
 import { internalActions } from "../redux/actions"
 const loadPlugins = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
-const report = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
 import { preferDefault } from "./prefer-default"
 import { removeStaleJobs } from "./remove-stale-jobs"
-const reporter = require(`gatsby-cli/lib/reporter`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
-  report.panic(reason)
+  reporter.panic(reason)
 })
 
 import { createGraphQLRunner } from "./create-graphql-runner"
@@ -91,7 +90,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   emitter.on(`CREATE_JOB`, () => {
     if (!activityForJobs) {
-      activityForJobs = report.phantomActivity(`Running jobs`)
+      activityForJobs = reporter.phantomActivity(`Running jobs`)
       activityForJobs.start()
     }
   })
@@ -106,7 +105,7 @@ module.exports = async (args: BootstrapArgs) => {
   emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-configs`, {
+  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -118,7 +117,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {
-    report.panic({
+    reporter.panic({
       id: `10126`,
       context: {
         configName: `gatsby-config`,
@@ -129,7 +128,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    report.warn(
+    reporter.warn(
       `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
     )
     const themes = await loadThemes(config, {
@@ -153,7 +152,7 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   if (config && config.polyfill) {
-    report.warn(
+    reporter.warn(
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }
@@ -165,7 +164,9 @@ module.exports = async (args: BootstrapArgs) => {
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
+  activity = reporter.activityTimer(`load plugins`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
@@ -182,7 +183,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   // onPreInit
-  activity = report.activityTimer(`onPreInit`, {
+  activity = reporter.activityTimer(`onPreInit`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -195,7 +196,7 @@ module.exports = async (args: BootstrapArgs) => {
     !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     process.env.NODE_ENV === `production`
   ) {
-    activity = report.activityTimer(
+    activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
       {
         parentSpan: bootstrapSpan,
@@ -211,7 +212,7 @@ module.exports = async (args: BootstrapArgs) => {
     activity.end()
   }
 
-  activity = report.activityTimer(`initialize cache`, {
+  activity = reporter.activityTimer(`initialize cache`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -247,7 +248,7 @@ module.exports = async (args: BootstrapArgs) => {
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
-    report.info(report.stripIndent`
+    reporter.info(reporter.stripIndent`
       One or more of your plugins have changed since the last time you ran Gatsby. As
       a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
@@ -259,7 +260,7 @@ module.exports = async (args: BootstrapArgs) => {
       // like when directory is mount point
       await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
-      report.error(`Failed to remove .cache files.`, e)
+      reporter.error(`Failed to remove .cache files.`, e)
     }
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
@@ -283,7 +284,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  activity = report.activityTimer(`copy gatsby files`, {
+  activity = reporter.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -304,7 +305,7 @@ module.exports = async (args: BootstrapArgs) => {
     // the data used to create the schema they're dependent on is available.
     await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
-    report.panic(`Unable to copy site files to .cache`, err)
+    reporter.panic(`Unable to copy site files to .cache`, err)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
@@ -372,7 +373,7 @@ module.exports = async (args: BootstrapArgs) => {
   try {
     sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   } catch (err) {
-    report.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
+    reporter.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
   }
 
   const ssrPluginsRequires = ssrPlugins
@@ -399,7 +400,7 @@ module.exports = async (args: BootstrapArgs) => {
    */
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`, {
+  activity = reporter.activityTimer(`onPreBootstrap`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -409,7 +410,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Prepare static schema types
-  activity = report.activityTimer(`createSchemaCustomization`, {
+  activity = reporter.activityTimer(`createSchemaCustomization`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -419,7 +420,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Source nodes
-  activity = report.activityTimer(`source and transform nodes`, {
+  activity = reporter.activityTimer(`source and transform nodes`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -434,7 +435,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Create Schema.
-  activity = report.activityTimer(`building schema`, {
+  activity = reporter.activityTimer(`building schema`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -455,10 +456,10 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphQLRunner(store, report)
+  const graphqlRunner = createGraphQLRunner(store, reporter)
 
   // Collect pages.
-  activity = report.activityTimer(`createPages`, {
+  activity = reporter.activityTimer(`createPages`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -485,7 +486,7 @@ module.exports = async (args: BootstrapArgs) => {
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  activity = report.activityTimer(`createPagesStatefully`, {
+  activity = reporter.activityTimer(`createPagesStatefully`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -503,7 +504,7 @@ module.exports = async (args: BootstrapArgs) => {
   )
   activity.end()
 
-  activity = report.activityTimer(`onPreExtractQueries`, {
+  activity = reporter.activityTimer(`onPreExtractQueries`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -511,7 +512,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`, {
+  activity = reporter.activityTimer(`update schema`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -521,35 +522,35 @@ module.exports = async (args: BootstrapArgs) => {
   await extractQueries({ parentSpan: bootstrapSpan })
 
   // Write out files.
-  activity = report.activityTimer(`write out requires`, {
+  activity = reporter.activityTimer(`write out requires`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
   try {
     await requiresWriter.writeAll(store.getState())
   } catch (err) {
-    report.panic(`Failed to write out requires`, err)
+    reporter.panic(`Failed to write out requires`, err)
   }
   activity.end()
 
   // Write out redirects.
-  activity = report.activityTimer(`write out redirect data`, {
+  activity = reporter.activityTimer(`write out redirect data`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
   await writeRedirects()
   activity.end()
 
-  activity = report.activityTimer(`onPostBootstrap`, {
+  activity = reporter.activityTimer(`onPostBootstrap`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
   activity.end()
 
-  report.log(``)
-  report.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
-  report.log(``)
+  reporter.log(``)
+  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
+  reporter.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_FINISHED`
