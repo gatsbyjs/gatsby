@@ -1,5 +1,4 @@
 import { nodesReducer } from "./nodes"
-import { staticQueryComponentsReducer } from "./static-query-components"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
@@ -31,8 +30,8 @@ import pageDataStatsReducer from "./page-data-stats"
  */
 export {
   programReducer as program,
-  nodeReducer as nodes,
-  nodesByType as nodesByType,
+  nodesReducer as nodes,
+  nodesByTypeReducer as nodesByType,
   resolvedNodesReducer as resolvedNodesCache,
   nodesTouchedReducer as nodesTouched,
   lastActionReducer as lastAction,
