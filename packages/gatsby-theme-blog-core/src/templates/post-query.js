@@ -33,7 +33,6 @@ export const query = graphql`
       slug
       title
       tags
-      keywords
       date(formatString: "MMMM DD, YYYY")
       image {
         childImageSharp {
