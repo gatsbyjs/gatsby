@@ -109,6 +109,7 @@ const findAncestorNode = (
     if (predicate(node)) {
       return node
     }
-  } while ((node = node.parent ? nodeStore.getNode(node.parent) : undefined))
+    node = nodeStore.getNode(node.parent)
+  } while (node !== undefined)
   return null
 }
