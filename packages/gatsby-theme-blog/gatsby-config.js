@@ -10,7 +10,7 @@ module.exports = options => {
       `gatsby-plugin-twitter`,
       `gatsby-plugin-emotion`,
       !disableThemeUiStyling && {
-      resolve: `gatsby-plugin-theme-ui`,
+        resolve: `gatsby-plugin-theme-ui`,
       }
     ].filter(Boolean)
   }
