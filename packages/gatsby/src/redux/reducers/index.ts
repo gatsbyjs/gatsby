@@ -34,11 +34,11 @@ export function getNodesReducer(): IGatsbyState["nodes"] {
   let nodesReducer
   switch (backend) {
     case `redux`:
-      nodesReducer = reduxNodes
+      nodesReducer = nodeReducer
       break
-    case `loki`:
-      nodesReducer = lokiNodes
-      break
+    // case `loki`:
+    //   nodesReducer = lokiNodes
+    //   break
     default:
       throw new Error(
         `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
@@ -53,9 +53,9 @@ export function getNodesByTypeReducer(): IGatsbyState["nodesByType"] {
     case `redux`:
       nodesReducer = nodesByTypeReducer
       break
-    case `loki`:
-      nodesReducer = (state = null): null => null
-      break
+    // case `loki`:
+    //   nodesReducer = (state = null): null => null
+    //   break
     default:
       throw new Error(
         `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
