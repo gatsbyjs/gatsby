@@ -1,4 +1,4 @@
-const reduxNodes = require(`./nodes`)
+import { nodeReducer } from "./nodes"
 const lokiNodes = require(`../../db/loki/nodes`).reducer
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
@@ -10,6 +10,7 @@ import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { lastAction } from "./last-action"
 
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
@@ -18,7 +19,7 @@ function getNodesReducer() {
   let nodesReducer
   switch (backend) {
     case `redux`:
-      nodesReducer = reduxNodes
+      nodesReducer = nodeReducer
       break
     case `loki`:
       nodesReducer = lokiNodes
@@ -57,7 +58,7 @@ module.exports = {
   nodesByType: getNodesByTypeReducer(),
   resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
-  lastAction: require(`./last-action`),
+  lastAction: lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   schema: schemaReducer,
