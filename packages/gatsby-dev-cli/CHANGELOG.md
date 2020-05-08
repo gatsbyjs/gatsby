@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.3...gatsby-dev-cli@2.7.4) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** fix `set-path-to-repo` command after yargs bump ([#23899](https://github.com/gatsbyjs/gatsby/issues/23899)) ([b130a8e](https://github.com/gatsbyjs/gatsby/commit/b130a8e))
+
 ## [2.7.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.2...gatsby-dev-cli@2.7.3) (2020-05-08)
 
 **Note:** Version bump only for package gatsby-dev-cli
