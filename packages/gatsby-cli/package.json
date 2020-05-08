@@ -48,7 +48,7 @@
     "strip-ansi": "^5.2.0",
     "update-notifier": "^3.0.1",
     "uuid": "3.4.0",
-    "yargs": "^12.0.5",
+    "yargs": "^15.3.1",
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {
@@ -82,9 +82,6 @@
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "postinstall": "node scripts/postinstall.js"
-  },
-  "yargs": {
-    "boolean-negation": false
   },
   "engines": {
     "node": ">=10.13.0"
