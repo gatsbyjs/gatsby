@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.1...gatsby-remark-images@3.3.2) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** allow default max-width to be overwritten with `wrapperStyle` ([#23854](https://github.com/gatsbyjs/gatsby/issues/23854)) ([02bd7ed](https://github.com/gatsbyjs/gatsby/commit/02bd7ed)), closes [#15578](https://github.com/gatsbyjs/gatsby/issues/15578)
+
 ## [3.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.3.0...gatsby-remark-images@3.3.1) (2020-05-05)
 
 **Note:** Version bump only for package gatsby-remark-images

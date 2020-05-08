@@ -1,3 +1,5 @@
+import { nodesReducer } from "./nodes"
+import { staticQueryComponentsReducer } from "./static-query-components"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
@@ -9,12 +11,11 @@ import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { configReducer } from "./config"
-import nodeReducer from "./nodes"
+import { lastActionReducer } from "./last-action"
 import nodesByTypeReducer from "./nodes-by-type"
 import programReducer from "./program"
 import resolvedNodesReducer from "./resolved-nodes"
 import nodesTouchedReducer from "./nodes-touched"
-import lastActionReducer from "./last-action"
 import flattenedPluginsReducer from "./flattened-plugins"
 import componentDataDependenciesReducer from "./component-data-dependencies"
 import componentsReducer from "./components"
@@ -24,51 +25,14 @@ import babelrcReducer from "./babelrc"
 import schemaCustomizationReducer from "./schema-customization"
 import inferenceMetadataReducer from "./inference-metadata"
 import pageDataStatsReducer from "./page-data-stats"
-import { IGatsbyState } from "../types"
-// const lokiNodes = require(`../../db/loki/nodes`).reducer
-
-// const backend = process.env.GATSBY_DB_NODES || `redux`
-const backend = `redux`
-
-export function getNodesReducer(): IGatsbyState["nodes"] {
-  let nodesReducer
-  switch (backend) {
-    case `redux`:
-      nodesReducer = nodeReducer
-      break
-    // case `loki`:
-    //   nodesReducer = lokiNodes
-    //   break
-    default:
-      throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-      )
-  }
-  return nodesReducer
-}
-
-export function getNodesByTypeReducer(): IGatsbyState["nodesByType"] {
-  let nodesReducer
-  switch (backend) {
-    case `redux`:
-      nodesReducer = nodesByTypeReducer
-      break
-    // case `loki`:
-    //   nodesReducer = (state = null): null => null
-    //   break
-    default:
-      throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-      )
-  }
-  return nodesReducer
-}
 
 /**
  * @property exports.nodesTouched Set<string>
  */
 export {
   programReducer as program,
+  nodeReducer as nodes,
+  nodesByType as nodesByType,
   resolvedNodesReducer as resolvedNodesCache,
   nodesTouchedReducer as nodesTouched,
   lastActionReducer as lastAction,
