@@ -237,22 +237,24 @@ SANITY_TOKEN = my-super-secret-token
 ```
 
 ```js:title=gatsby-config.js
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: "gatsby-source-sanity",
       options: {
         projectId: process.env.SANITY_PROJECT_ID,
-        dataset: process.env.SANITY_DATASET
-        token: process.env.SANITY_TOKEN
-      }
-    }
-  ]
+        dataset: process.env.SANITY_DATASET,
+        token: process.env.SANITY_TOKEN,
+      },
+    },
+  ],
 }
 ```
 
 This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+
+<CloudCallout />
