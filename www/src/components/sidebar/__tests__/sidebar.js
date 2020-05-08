@@ -61,7 +61,6 @@ function renderSidebar(pathname, { activeItemHash } = {}) {
       <I18nProvider locale="en">
         <Sidebar
           title="The Great Gatsby"
-          sidebarKey="great-gatsby"
           itemList={extendItemList(itemList)}
           location={{ pathname }}
           activeItemHash={activeItemHash}

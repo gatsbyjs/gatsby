@@ -29,7 +29,6 @@ export default ({ children, enableScrollSync, location }) => {
         enableScrollSync={enableScrollSync}
         itemList={itemList.items}
         title={itemList.title}
-        sidebarKey={itemList.key}
         disableExpandAll={itemList.disableExpandAll}
         disableAccordions={itemList.disableAccordions}
         key={location.pathname}
