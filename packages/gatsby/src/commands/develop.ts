@@ -1,3 +1,4 @@
+// NOTE(@mxstbr): Do not use the reporter in this file, as that has side-effects on import which break structured logging
 import path from "path"
 import http from "http"
 import tmp from "tmp"
@@ -7,7 +8,7 @@ import resolveCwd from "resolve-cwd"
 import getRandomPort from "get-port"
 import socket from "socket.io"
 import fs from "fs-extra"
-// import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -103,18 +104,18 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const statusServerPort = await getRandomPort()
 
-  // const success = await createServiceLock(
-  //   program.directory,
-  //   `developstatusserver`,
-  //   statusServerPort.toString()
-  // )
+  const unlock = await createServiceLock(
+    program.directory,
+    `developstatusserver`,
+    statusServerPort.toString()
+  )
 
-  // if (!success) {
-  //   report.error(
-  //     `It looks like a develop process for this site is already running.`
-  //   )
-  //   process.exit(1)
-  // }
+  if (!unlock) {
+    console.error(
+      `It looks like a develop process for this site is already running.`
+    )
+    process.exit(1)
+  }
 
   const statusServer = http.createServer().listen(statusServerPort)
   const io = socket(statusServer)
@@ -184,7 +185,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   process.on(`beforeExit`, async () => {
     proxy.server.close()
-    await watcher.close()
+    await Promise.all([watcher.close(), unlock()])
   })
 
   process.on(`SIGINT`, async () => {
