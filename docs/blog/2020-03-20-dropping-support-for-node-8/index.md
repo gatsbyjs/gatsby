@@ -13,7 +13,7 @@ Node 8 reached end of life in December of 2019. There were deprecation warnings 
 
 Evaluating all those factors, we decided that it's better to drop Node 8 support in a minor version, rather than wait further.
 
-# How will it affect me?
+## How will it affect me?
 
 You should be fine if you have already upgraded your Node version to 10.13.0 or higher as you won't be affected.
 
