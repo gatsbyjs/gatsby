@@ -1314,13 +1314,16 @@
     - Mobile-First approach in development
     - TSLint & Prettier
     - Offline support
+    - Styled Component implementation
     - Category and Tag for post
+    - Dark / Light theme
     - Type Safe by TypeScript
+    - Purge CSS
     - Format Safe by TSLint, StyleLint and Prettier with Lint-Staged(Husky)
     - Blog page
     - Syntax highlighting in code blocks
     - Pagination Ready
-    - Ready to deploy to GitHub Pages
+    - Ready to deploy to GitHub Pages or Netlify
     - Automatic RSS generation
     - Automatic Sitemap generation
 - url: https://gatsby-starter-kontent.netlify.com
