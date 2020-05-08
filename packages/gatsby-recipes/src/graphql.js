@@ -46,6 +46,7 @@ const applyPlan = ({ recipePath, projectRoot }) => {
       event: state.event,
       state: state.value,
       context: state.context,
+      stepResources: state.context.stepResources,
       plan: state.context.plan,
     })
     if (state.changed) {
