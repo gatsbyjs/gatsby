@@ -615,7 +615,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const presentationHeight = imageWithDensity1.height
 
   // If the users didn't set default sizes, we'll make one.
-  let sizes =
+  const sizes =
     options.sizes ??
     `(max-width: ${presentationWidth}px) 100vw, ${presentationHeight}px`
 
