@@ -247,14 +247,36 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`calculate height based on width when maxWidth & maxHeight are present`, async () => {
-      const args = { maxWidth: 20, maxHeight: 20 }
-      const result = await fluid({
+      const argsDefault = { maxWidth: 20, maxHeight: 20 }
+      const argsFitFill = { ...argsDefault, fit: sharp.fit.fill }
+      const argsFitInside = { ...argsDefault, fit: sharp.fit.inside }
+      const argsFitOutside = { ...argsDefault, fit: sharp.fit.outside }
+
+      const resultDefault = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args: argsDefault,
+      })
+      const resultFitFill = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: argsFitFill,
+      })
+      const resultFitInside = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: argsFitInside,
+      })
+      const resultFitOutside = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: argsFitOutside,
       })
 
-      expect(result.presentationWidth).toEqual(20)
-      expect(result.presentationHeight).toEqual(20)
+      expect(resultDefault.presentationWidth).toEqual(20)
+      expect(resultDefault.presentationHeight).toEqual(20)
+      expect(resultFitFill.presentationWidth).toEqual(20)
+      expect(resultFitFill.presentationHeight).toEqual(20)
+      expect(resultFitInside.presentationWidth).toEqual(20)
+      expect(resultFitInside.presentationHeight).toEqual(10)
+      expect(resultFitOutside.presentationWidth).toEqual(41)
+      expect(resultFitOutside.presentationHeight).toEqual(20)
       expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
