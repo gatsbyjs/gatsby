@@ -67,6 +67,7 @@
     "remark-cli": "^8.0.0",
     "remark-frontmatter": "^2.0.0",
     "remark-lint": "^7.0.0",
+    "remark-lint-first-heading-level": "^2.0.0",
     "remark-lint-no-duplicate-headings-in-section": "^2.0.0",
     "remark-lint-no-reference-like-url": "^2.0.0",
     "remark-preset-lint-markdown-style-guide": "^3.0.0",

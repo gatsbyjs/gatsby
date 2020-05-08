@@ -7,6 +7,7 @@ const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
+import { trackCli } from "gatsby-telemetry"
 const {
   createClient,
   useMutation,
@@ -132,6 +133,10 @@ const RecipesList = ({ setRecipe }) => {
     {
       label: `Add Storybook - JavaScript`,
       value: `storybook-js.mdx`,
+    },
+    {
+      label: `Add Storybook - TypeScript`,
+      value: `storybook-ts.mdx`,
     },
     // TODO remaining recipes
   ]
@@ -359,6 +364,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Text>
             <RecipesList
               setRecipe={async recipeItem => {
+                trackCli(`RECIPE_RUN`, { name: recipeItem.value })
                 showRecipesList = false
                 try {
                   await createOperation({

@@ -35,5 +35,6 @@ module.exports = {
     ["remark-lint-no-shortcut-reference-link", false],
     // We use brackets in a lot of places as argument lists and do not want to escape them.
     ["remark-lint-no-undefined-references", false],
+    ["remark-lint-first-heading-level", 2]
   ],
 }
