@@ -259,8 +259,6 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-const PlanContext = React.createContext({})
-
 module.exports = ({ recipe, graphqlPort, projectRoot }) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
@@ -391,9 +389,8 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
       const isDone = state.value === `done`
 
-      // If we're done, exit.
-      if (state.value === `done`) {
-      }
+      // If we're done with an error, render out error (happens below)
+      // then exit.
       if (state.value === `doneError`) {
         process.nextTick(() => process.exit())
       }
@@ -408,10 +405,6 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         const isPlan = state.context.plan && state.context.plan.length > 0
         const isPresetPlanState = state.value === `present plan`
         const isRunningStep = state.value === `applyingPlan`
-        const isLastStep =
-          state.context.steps &&
-          state.context.steps.length - 1 === state.context.currentStep
-
         if (isRunningStep) {
           return null
         }
@@ -524,7 +517,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         return <Error width="100%" state={state} />
       }
 
-      let staticMessages = {}
+      const staticMessages = {}
       for (let step = 0; step < state.context.currentStep; step++) {
         staticMessages[step] = [
           {
