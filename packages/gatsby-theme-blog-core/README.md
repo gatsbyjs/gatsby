@@ -60,7 +60,7 @@ module.exports = {
 | `contentPath`            | `content/posts`  | Location of blog posts                                                           |
 | `assetPath`              | `content/assets` | Location of assets                                                               |
 | `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site. |
-| `excerptLength`          | `120`            | Length of the auto-generated excerpt of a blog post                              |
+| `excerptLength`          | `140`            | Length of the auto-generated excerpt of a blog post                              |
 
 #### Example usage
 
