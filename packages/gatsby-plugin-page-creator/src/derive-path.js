@@ -18,5 +18,7 @@ exports.derivePath = function derivePath(absolutePath, node) {
     path = path.replace(slugPart, value)
   })
 
-  return path
+  // make sure we didnt accidentally get // by appending
+  // this probably shouldnt end up in the final api. it's a bit of a hack
+  return path.replace(`//`, `/`)
 }

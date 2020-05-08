@@ -21,13 +21,17 @@ class PageRenderer extends React.Component {
   }
 
   render() {
-    // This might be a bug, it might highjack the data key from query components.
-    // But I don't think they should both exist in a single component.
     const __collectionData = this.props.pageResources.json.pageContext
       .__collectionData
-    const collectionData = __collectionData ? { data: __collectionData } : {}
+    const __otherData =
+      this.props.pageResources.json.pageContext.__otherData || {}
+    const collectionData = __collectionData ? { node: __collectionData } : {}
 
     const props = {
+      data: {
+        ...this.props.data,
+        ...__otherData,
+      },
       ...this.props,
       ...collectionData,
       params: this.getParams(),

@@ -97,11 +97,36 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
 
   // -- Get the data, and create a page for each node
   // Not sure this is enough. Seems really brittle way of getting the array out of the query
-  const { data /*, error*/ } = await graphql(queryString)
+  const { data, error } = await graphql(queryString)
+
+  if (!data) {
+    console.warn(`Tried to create pages from the collection builder found at ${route}.
+Unfortunately, the query came back empty. There may be an error in your query.
+    `)
+    return
+  }
+
+  console.log({ data, error })
 
   // tightly dependent on the query being of form:
   // `{ allSomething { nodes { id } } }`
-  Object.values(data)[0].nodes.forEach(node => {
+  let nodes = []
+  let __otherData = {}
+
+  // This is a hack. We should have something indicate to us which query is the page builder
+  Object.entries(data).forEach(([k, v]) => {
+    if (Array.isArray(v?.nodes)) {
+      nodes = v.nodes
+    } else {
+      __otherData[k] = v
+    }
+  })
+
+  if (nodes) {
+    console.log(`>>>> Creating ${nodes.length} pages from ${route}`)
+  }
+
+  nodes.forEach((node, index) => {
     const matchPath = translateInterpolationToMatchPath(
       createPath(absolutePath)
     )
@@ -109,12 +134,19 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     const path = derivePath(absolutePath, node)
     const params = getParams(matchPath, path)
 
+    const previous = index === nodes.length - 1 ? null : nodes[index + 1]
+    const next = index === 0 ? null : nodes[index - 1]
+
     actions.createPage({
       path: path,
       component: tempPath,
       context: {
+        __otherData,
         __params: params,
         __collectionData: node,
+        // temp added for blog starter to work
+        previous,
+        next,
       },
     })
   })
