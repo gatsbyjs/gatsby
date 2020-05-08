@@ -42,7 +42,7 @@ const mergeFunctions = (data, context) => {
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
     const doc = node.childrenDocumentationJs
-      .filter(def => def.kind !== `typedef` && def.memberof)
+      .filter(def => def.kind !== `typedef`)
       .map(def => {
         if (!context.apiCalls) {
           // When an api call list is not available, the line numbers from jsdoc

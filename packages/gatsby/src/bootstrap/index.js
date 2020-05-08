@@ -23,6 +23,7 @@ import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
 import { preferDefault } from "./prefer-default"
 import { removeStaleJobs } from "./remove-stale-jobs"
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -282,28 +283,6 @@ module.exports = async (args: BootstrapArgs) => {
 
   activity.end()
 
-  // if (process.env.GATSBY_DB_NODES === `loki`) {
-  //   const loki = require(`../db/loki`)
-  //   // Start the nodes database (in memory loki js with interval disk
-  //   // saves). If data was saved from a previous build, it will be
-  //   // loaded here
-  //   activity = report.activityTimer(`start nodes db`, {
-  //     parentSpan: bootstrapSpan,
-  //   })
-  //   activity.start()
-  //   const dbSaveFile = `${cacheDirectory}/loki/loki.db`
-  //   try {
-  //     await loki.start({
-  //       saveFile: dbSaveFile,
-  //     })
-  //   } catch (e) {
-  //     report.error(
-  //       `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
-  //     )
-  //   }
-  //   activity.end()
-  // }
-
   activity = report.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
   })
@@ -444,7 +423,14 @@ module.exports = async (args: BootstrapArgs) => {
     parentSpan: bootstrapSpan,
   })
   activity.start()
-  await require(`../utils/source-nodes`)({ parentSpan: activity.span })
+  await require(`../utils/source-nodes`).default({ parentSpan: activity.span })
+  reporter.verbose(
+    `Now have ${store.getState().nodes.size} nodes with ${
+      store.getState().nodesByType.size
+    } types: [${[...store.getState().nodesByType.entries()]
+      .map(([type, nodes]) => type + `:` + nodes.size)
+      .join(`, `)}]`
+  )
   activity.end()
 
   // Create Schema.
@@ -485,6 +471,13 @@ module.exports = async (args: BootstrapArgs) => {
       parentSpan: activity.span,
     },
     { activity }
+  )
+  reporter.verbose(
+    `Now have ${store.getState().nodes.size} nodes with ${
+      store.getState().nodesByType.size
+    } types, and ${
+      store.getState().nodesByType?.get(`SitePage`).size
+    } SitePage nodes`
   )
   activity.end()
 
