@@ -8,10 +8,10 @@ const {
 
 describe(`gatsby-plugin-coffeescript`, () => {
   it(`contains coffee script extensions`, () => {
-    expect(resolvableExtensions()).toMatchSnapshot()
+    expect(resolvableExtensions()).toContain(`.coffee`)
   })
 
-  it(`modifies webpack config with cofeescript extensions`, () => {
+  it(`modifies webpack config with coffeescript extensions`, () => {
     const actions = {
       setWebpackConfig: jest.fn(),
     }
@@ -23,8 +23,16 @@ describe(`gatsby-plugin-coffeescript`, () => {
       resolvableExtensions().length
     )
 
-    const lastCall = actions.setWebpackConfig.mock.calls.pop()
-    expect(lastCall).toMatchSnapshot()
+    expect(actions.setWebpackConfig).toHaveBeenLastCalledWith({
+      module: {
+        rules: [
+          {
+            test: /\.coffee$/,
+            use: [`babel-loader`, `/resolved/path/coffee-loader`],
+          },
+        ],
+      },
+    })
   })
 
   describe(`pre processing`, () => {

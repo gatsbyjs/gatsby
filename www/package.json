@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@emotion/styled": "^10.0.27",
-    "@jamo/graphql-request": "2.0.2",
+    "@jamo/graphql-request": "2.0.3",
     "@lingui/react": "^2.9.1",
     "@loadable/component": "^5.12.0",
     "@mdx-js/mdx": "^1.6.1",
