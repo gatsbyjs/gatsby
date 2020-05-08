@@ -5,8 +5,11 @@ import mime from "mime"
 import isRelative from "is-relative"
 import isRelativeUrl from "is-relative-url"
 import { getValueAt } from "../../utils/get-value-at"
-import { Node } from "../../../index"
-import { INodeStore } from "../../db/types"
+import { IGatsbyNode } from "../../redux/types"
+
+import * as NodeStore from "../../redux/nodes"
+
+type INodeStore = typeof NodeStore
 
 export const isFile = (
   nodeStore: INodeStore,
@@ -21,7 +24,10 @@ export const isFile = (
   return filePathExists
 }
 
-const getFirstValueAt = (node: Node, selector: string | string[]): any => {
+const getFirstValueAt = (
+  node: IGatsbyNode,
+  selector: string | string[]
+): string => {
   let value = getValueAt(node, selector)
   while (Array.isArray(value)) {
     value = value[0]
@@ -53,14 +59,16 @@ const getFilePath = (
   const normalizedPath = slash(relativePath)
   const node = nodeStore
     .getNodesByType(typeName)
-    .find((node: Node) => getFirstValueAt(node, selector) === normalizedPath)
+    .find(
+      (node: IGatsbyNode) => getFirstValueAt(node, selector) === normalizedPath
+    )
 
   return node ? getAbsolutePath(nodeStore, node, normalizedPath) : null
 }
 
 const getAbsolutePath = (
   nodeStore: INodeStore,
-  node: Node,
+  node: IGatsbyNode,
   relativePath: string
 ): string | string[] | null => {
   const dir = getBaseDir(nodeStore, node)
@@ -72,7 +80,10 @@ const getAbsolutePath = (
     : null
 }
 
-const getBaseDir = (nodeStore: INodeStore, node: Node): string | null => {
+const getBaseDir = (
+  nodeStore: INodeStore,
+  node: IGatsbyNode
+): string | null => {
   if (node) {
     const { dir } = findAncestorNode(
       nodeStore,
@@ -90,10 +101,10 @@ const withBaseDir = (dir: string) => (p: string): string =>
 
 const findAncestorNode = (
   nodeStore: INodeStore,
-  childNode: Node,
-  predicate: (n: Node) => boolean
-): Node | null => {
-  let node: Node | undefined = childNode
+  childNode: IGatsbyNode,
+  predicate: (n: IGatsbyNode) => boolean
+): IGatsbyNode | null => {
+  let node: IGatsbyNode | undefined = childNode
   do {
     if (predicate(node)) {
       return node
