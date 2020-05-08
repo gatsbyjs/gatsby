@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.12...gatsby-recipes@0.1.13) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Also call telemetry when selecting a recipe from the list ([#23882](https://github.com/gatsbyjs/gatsby/issues/23882)) ([d98e2ad](https://github.com/gatsbyjs/gatsby/commit/d98e2ad))
+
 ## [0.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.11...gatsby-recipes@0.1.12) (2020-05-07)
 
 **Note:** Version bump only for package gatsby-recipes
