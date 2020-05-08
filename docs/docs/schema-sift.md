@@ -52,12 +52,12 @@ runSift({
 
 This file converts GraphQL Arguments into sift queries and applies them to the collection of all nodes of this type. The rough steps are:
 
-1.  Convert query args to sift args
-1.  Drop leaves from args
-1.  Resolve inner query fields on all nodes
-1.  Track newly realized fields
-1.  Run sift query on all nodes
-1.  Create Page dependency if required
+1. Convert query args to sift args
+2. Drop leaves from args
+3. Resolve inner query fields on all nodes
+4. Track newly realized fields
+5. Run sift query on all nodes
+6. Create Page dependency if required
 
 ### 1. Convert query args to sift args
 

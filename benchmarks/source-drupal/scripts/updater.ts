@@ -18,7 +18,7 @@ const patchArticle = async (
   server: string,
   article: IArticle
 ): Promise<void> => {
-  const url = `https://${server}/jsonapi/node/article/${article.id}`
+  const url = `${server}/jsonapi/node/article/${article.id}`
 
   const response = await fetch(url, {
     method: `PATCH`,
@@ -26,22 +26,22 @@ const patchArticle = async (
       "Content-Type": `application/vnd.api+json`,
       Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString(
         `base64`
-      )}`
+      )}`,
     },
     body: JSON.stringify({
       data: {
         type: `node--article`,
         id: article.id,
         attributes: {
-          title: updateTitle(article.attributes.title)
-        }
-      }
-    })
+          title: updateTitle(article.attributes.title),
+        },
+      },
+    }),
   })
 }
 
 const getFirstArticle = async (server: string): Promise<IArticle> => {
-  const url = `https://${server}/jsonapi/node/article?page[limit]=1&sort=created`
+  const url = `${server}/jsonapi/node/article?page[limit]=1&sort=created`
   const response = await fetch(url)
   const body = await response.json()
   return body.data[0]

@@ -57,26 +57,26 @@ that provided a more “out-of-the-box” solution. We wound up building the sit
 GatsbyJS, which is a **React-based static site generator**. GatsbyJS is the
 perfect fit for a number of reasons:
 
-1.  [Static sites](https://en.wikipedia.org/wiki/Static_web_page) load content much
-    more quickly than dynamic web applications, which require multiple
-    back-and-forth calls to a server in order to display the final composited view
-    to the user. They are more easily adaptable for low connectivity / offline
-    functionality for this reason. This allows us to provide a faster and more
-    reliable experience for tenants utilizing the service.
-1.  GatsbyJS ships with an incredible amount of pre-handled optimization features,
-    from prefetching resources to progressive image loading to inlining code blocks
-    so they don’t need to be fetched via
-    [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
-    could have achieved this level of optimization on our own in this timeframe.
-1.  A growing plugin library that allows for easy integrations that utilize Gatsby’s
-    GraphQL data query system. With these we could easily use things like
-    [gatsby-source-contentful](/packages/gatsby-source-contentful/?=conten)
-    and [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n).
-1.  A growing community of developers sharing resources and best practices. Credit
-    is due to [mccrodp](https://github.com/mccrodp) for setting up
-    [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
-    a boilerplate that synced Contentful and i18n features together and allowed us
-    to hit the ground running.
+1. [Static sites](https://en.wikipedia.org/wiki/Static_web_page) load content much
+   more quickly than dynamic web applications, which require multiple
+   back-and-forth calls to a server in order to display the final composited view
+   to the user. They are more easily adaptable for low connectivity / offline
+   functionality for this reason. This allows us to provide a faster and more
+   reliable experience for tenants utilizing the service.
+2. GatsbyJS ships with an incredible amount of pre-handled optimization features,
+   from prefetching resources to progressive image loading to inlining code blocks
+   so they don’t need to be fetched via
+   [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>). There was no way we
+   could have achieved this level of optimization on our own in this timeframe.
+3. A growing plugin library that allows for easy integrations that utilize Gatsby’s
+   GraphQL data query system. With these we could easily use things like
+   [gatsby-source-contentful](/packages/gatsby-source-contentful/?=conten)
+   and [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n).
+4. A growing community of developers sharing resources and best practices. Credit
+   is due to [mccrodp](https://github.com/mccrodp) for setting up
+   [gatsby-starter-contentful-i18n](https://github.com/mccrodp/gatsby-starter-contentful-i18n),
+   a boilerplate that synced Contentful and i18n features together and allowed us
+   to hit the ground running.
 
 #### **Using Contentful**
 
@@ -108,24 +108,26 @@ GraphQL `pageQuery` will then populate your React component’s `props` with the
 corresponding data, creating an incredibly simple pipeline from content → code.
 As an example, here’s the provider portion of a sample `pageQuery`:
 
-    providers {
-      title
-      acceptsRtcCases
-      phoneNumber
-      website
-      hours
-      intakeInstructions
-      address
-      logo {
-        resolutions(width: 100, height: 100) {
-          aspectRatio
-          width
-          height
-          src
-          srcSet
-        }
-      }
+```graphql
+providers {
+  title
+  acceptsRtcCases
+  phoneNumber
+  website
+  hours
+  intakeInstructions
+  address
+  logo {
+    resolutions(width: 100, height: 100) {
+      aspectRatio
+      width
+      height
+      src
+      srcSet
     }
+  }
+}
+```
 
 #### **Challenge: Hyper-personalized result pages in a static site**
 
@@ -181,8 +183,7 @@ simply linked Netlify to a branch in the Eviction Free NYC GitHub repo and it
 compiles and deploys the site with each push. It simplifies HTTPS certificate
 generation and even includes a system for deploying AWS Lambda functions, which
 we used to ship a small Twilio integration for the site's “Save to Phone”
-feature. _(note: we’re actually still using the original
-_[Serverless](https://serverless.com/)_ solution, but this code is in the repo
+feature. _(note: we’re actually still using the original_ [Serverless](https://serverless.com/) _solution, but this code is in the repo
 as a to-do)_
 
 The best feature of Netlify is its ability to utilize build hooks. This allows

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.5...gatsby-transformer-remark@2.8.6) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.4...gatsby-transformer-remark@2.8.5) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.3...gatsby-transformer-remark@2.8.4) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.1...gatsby-transformer-remark@2.8.3) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.0...gatsby-transformer-remark@2.8.1) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.5...gatsby-transformer-remark@2.8.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.4...gatsby-transformer-remark@2.7.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.3...gatsby-transformer-remark@2.7.4) (2020-04-22)
+
+### Features
+
+- **gatsby-remark-images:** support markdownCaptions in mdx + fix for remark ([#21188](https://github.com/gatsbyjs/gatsby/issues/21188)) ([82c05aa](https://github.com/gatsbyjs/gatsby/commit/82c05aa))
+
 ## [2.7.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.2...gatsby-transformer-remark@2.7.3) (2020-04-17)
 
 ### Bug Fixes

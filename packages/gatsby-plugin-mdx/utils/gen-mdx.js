@@ -116,6 +116,10 @@ export const _frontmatter = ${JSON.stringify(data)}`
       reporter,
       cache,
       pathPrefix,
+      compiler: {
+        parseString: compiler.parse.bind(compiler),
+        generateHTML: ast => mdx(ast, options),
+      },
       ...helpers,
     }
   )

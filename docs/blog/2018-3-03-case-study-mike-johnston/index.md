@@ -10,7 +10,7 @@ tags: ["wordpress", "netlify", "security", "case-studies"]
 
 [Ecliptic](http://www.ecliptic.io) is a small development team out of Broomfield, Colorado. We build everything from high-performance content-driven sites to richly interactive web and mobile applications using React, GraphQL, and functional programming. [Mike Johnston](https://www.mikejohnstonforcolorado.com) is a Colorado gubernatorial candidate with an ambitious vision. When we heard about his ideas for an online platform to truly engage with his constituents and give them a real voice, we were excited about the opportunity to make his ideas into reality!
 
-While we’re still a few phases away from seeing Mike’s ultimate vision come to fruition, we’ve got the foundations in place and we’re putting the finishing touches on a gorgeous new interface for Mike’s homepage. Check it out at [https://www.mikejohnstonforcolorado.com](https://www.mikejohnstonforcolorado.com)!
+While we’re still a few phases away from seeing Mike’s ultimate vision come to fruition, we’ve got the foundations in place and we’re putting the finishing touches on a gorgeous new interface for Mike’s homepage. Check it out at https://www.mikejohnstonforcolorado.com!
 
 ## Laying the Foundation for an Extensible Future
 

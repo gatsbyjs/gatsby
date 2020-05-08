@@ -20,7 +20,7 @@ I've long found it challenging to find just the right video to work on. Sometime
 
 My requirements for this Acroyoga videos site is that it be simple to add data to, load fast on mobile, and be generally intuitive to use. For this reason, I'm using Gatsby (and of course, React) and the Google Sheets API for this site. This simple stack will allow me to build a fast loading application that consumes data from a Google Sheet.
 
-As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: [https://github.com/kpennell/acrotagsgatsbyblog](https://github.com/kpennell/acrotagsgatsbyblog). Finally, if you want to check out the demo app, that can be found here: [https://acrotagsgatsbyblog.netlify.com](https://acrotagsgatsbyblog.netlify.com/).
+As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: https://github.com/kpennell/acrotagsgatsbyblog. Finally, if you want to check out the demo app, that can be found here: https://acrotagsgatsbyblog.netlify.com.
 
 ## Creating a Basic Gatsby Setup with Material-UI
 

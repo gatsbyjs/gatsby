@@ -130,13 +130,13 @@ In less than 30 minutes you can launch a new site for your local community using
 - A domain name (i.e. `[city]servicerelief.com`)
 - A free account with GitHub, Netlify and Airtable
 
-Detailed instructions are available at [https://www.servicerelief.us/start/](https://www.servicerelief.us/start/) and you can contact me [directly via Twitter](https://twitter.com/boborchard) _(DMs are open!)_ if you have any questions.
+Detailed instructions are available at https://www.servicerelief.us/start/ and you can contact me [directly via Twitter](https://twitter.com/boborchard) _(DMs are open!)_ if you have any questions.
 
 I'll also be publishing my personal workflow for building and deploying your Service Relief Project website using Gatsby Cloud + Netlify soon.
 
 ##### 2. Share this project with others
 
-Getting the word out to your network is the best way to raise awareness of this project. We'll be listing all published Service Relief websites on [https://www.servicerelief.us/](https://www.servicerelief.us/).
+Getting the word out to your network is the best way to raise awareness of this project. We'll be listing all published Service Relief websites on https://www.servicerelief.us/.
 
 ##### 3. Contribute to the project on GitHub
 
