@@ -254,7 +254,7 @@ describe(`gatsby-plugin-sharp`, () => {
       })
 
       expect(result.presentationWidth).toEqual(20)
-      expect(result.presentationHeight).toEqual(10)
+      expect(result.presentationHeight).toEqual(20)
       expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
