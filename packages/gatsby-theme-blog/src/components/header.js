@@ -93,7 +93,7 @@ export default ({ children, title, ...props }) => {
     }
     switchToggle = (
       <Switch
-        aria-label="Toggle dark mode"
+        aria-label={`Toggle dark mode ${isDark ? `off` : `on`}`}
         checkedIcon={checkedIcon}
         uncheckedIcon={uncheckedIcon}
         checked={isDark}
