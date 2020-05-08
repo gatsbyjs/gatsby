@@ -46,8 +46,6 @@
     "ink-select-input": "^3.1.2",
     "ink-spinner": "^3.1.0",
     "is-binary-path": "^2.1.0",
-    "is-blank": "^2.1.0",
-    "is-string": "^1.0.5",
     "is-url": "^1.2.4",
     "jest-diff": "^25.5.0",
     "lodash": "^4.17.15",
