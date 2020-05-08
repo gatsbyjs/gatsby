@@ -5,7 +5,6 @@ const { LocalNodeModel } = require(`../node-model`)
 const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [

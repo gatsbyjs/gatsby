@@ -1,5 +1,5 @@
 import { nodeReducer } from "./nodes"
-const lokiNodes = require(`../../db/loki/nodes`).reducer
+const nodesByType = require(`./nodes-by-type`)
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -12,50 +12,13 @@ import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 
-// const backend = process.env.GATSBY_DB_NODES || `redux`
-const backend = `redux`
-
-function getNodesReducer() {
-  let nodesReducer
-  switch (backend) {
-    case `redux`:
-      nodesReducer = nodeReducer
-      break
-    case `loki`:
-      nodesReducer = lokiNodes
-      break
-    default:
-      throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-      )
-  }
-  return nodesReducer
-}
-
-function getNodesByTypeReducer() {
-  let nodesReducer
-  switch (backend) {
-    case `redux`:
-      nodesReducer = require(`./nodes-by-type`)
-      break
-    case `loki`:
-      nodesReducer = (state = null) => null
-      break
-    default:
-      throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-      )
-  }
-  return nodesReducer
-}
-
 /**
  * @property exports.nodesTouched Set<string>
  */
 module.exports = {
   program: require(`./program`),
-  nodes: getNodesReducer(),
-  nodesByType: getNodesByTypeReducer(),
+  nodes: nodeReducer,
+  nodesByType: nodesByType,
   resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
   lastAction: lastAction,
