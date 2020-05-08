@@ -617,7 +617,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // If the users didn't set default sizes, we'll make one.
   const sizes =
     options.sizes ??
-    `(max-width: ${presentationWidth}px) 100vw, ${presentationHeight}px`
+    `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
 
   return {
     base64: base64Image && base64Image.src,
