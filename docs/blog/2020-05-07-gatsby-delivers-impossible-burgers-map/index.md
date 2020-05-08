@@ -101,6 +101,10 @@ Ultimately, Geo credits Impossible Foods' choice of technologies as the key that
 
 Check out this [webinar with Gatsby and Contentful](https://www.gatsbyjs.com/impossible-foods-webinar/) to hear Ashley Geo (Head of Brand Marketing-Communications at Impossible Foods) and David Fonnegra (Lead Technologist at Matter Supply) talk about delivering new features and content on impossiblefoods.com within often-impossible timeframes—and how they empowered the Impossible™ Digital team to increase customer engagement by more than 40%. Gatsby co-founder Kyle Mathews and Jim Ambras, Senior Technical Trainer at Contentful, join them.
 
-<CloudCallout>Sites built with Gatsby are fast no matter where they run. But when a Gatsby site runs on Gatsby Cloud, it can make the Kessel run in under 12 parsecs. Find out more:</CloudCallout>
+<CloudCallout>
+  Sites built with Gatsby are fast no matter where they run. But when a Gatsby
+  site runs on Gatsby Cloud, it can make the Kessel run in under 12 parsecs.
+  Find out more:
+</CloudCallout>
 
 Ashley Geo and David Fonnegra also highlighted the Impossible Foods / Matter Supply partnership in [ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale, and Flexibility](https://www.gatsbyjs.com/impossible-foods-webinar/). Deane Barker highlighted the store locator use-case [in a March 2019 podcast](https://www.ingeniux.com/company/podcast/content-matters-podcast-headless-content-management-with-deane-barker).
