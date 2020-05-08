@@ -70,6 +70,29 @@ plugins: [
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
       includeCollections: ["shop", "content"],
+
+      // Allow overriding the default queries
+      // This allows you to include/exclude extra fields when sourcing nodes
+      // Avaiable keys are: articles, blogs, collections, products, shopPolicies, and pages
+      // Queries need to accept arguments for first and after
+      // Defaults can be found in ./src/queries.js
+      queries: {
+        products: `
+          query GetProducts($first: Int!, $after: String) {
+            products(first: $first, after: $after) {
+              pageInfo {
+                hasNextPage
+              }
+              edges {
+                cursor
+                node {
+                  availableForSale
+                }
+              }
+            }
+          }
+        `,
+      },
     },
   },
 ]
