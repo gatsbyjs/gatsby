@@ -1,17 +1,61 @@
-const {
-  Machine,
-  actions: { assign },
-} = require(`xstate`)
+import { Machine as machine, assign } from "xstate"
 
-module.exports = Machine(
+export interface IContext {
+  isInBootstrap: boolean
+  componentPath: string
+  query: string
+  pages: Set<string>
+}
+
+export interface IState {
+  states: {
+    inactive: {}
+    inactiveWhileBootstrapping: {}
+    queryExtractionGraphQLError: {}
+    queryExtractionBabelError: {}
+    runningPageQueries: {}
+    idle: {}
+  }
+}
+
+/**
+ * Stricter types for actions are not possible
+ * as we have different payloads that would require casting.
+ * The current approach prevents this but makes all payloads optional.
+ * See https://github.com/gatsbyjs/gatsby/pull/23277#issuecomment-625425023
+ */
+
+type ActionTypes =
+  | "BOOTSTRAP_FINISHED"
+  | "DELETE_PAGE"
+  | "NEW_PAGE_CREATED"
+  | "PAGE_CONTEXT_MODIFIED"
+  | "QUERY_EXTRACTION_GRAPHQL_ERROR"
+  | "QUERY_EXTRACTION_BABEL_ERROR"
+  | "QUERY_EXTRACTION_BABEL_SUCCESS"
+  | "QUERY_CHANGED"
+  | "QUERY_DID_NOT_CHANGE"
+  | "QUERIES_COMPLETE"
+
+export interface IEvent {
+  type: ActionTypes
+  path?: string
+  query?: string
+  page?: { path: string }
+}
+
+const defaultContext: IContext = {
+  isInBootstrap: true,
+  componentPath: ``,
+  query: ``,
+  pages: new Set(``),
+}
+
+export const componentMachine = machine<IContext, IState, IEvent>(
   {
     id: `pageComponents`,
     initial: `inactive`,
-    context: {
-      isInBootstrap: true,
-      componentPath: ``,
-      query: ``,
-    },
+    context: defaultContext,
     on: {
       BOOTSTRAP_FINISHED: {
         actions: `setBootstrapFinished`,
@@ -75,11 +119,11 @@ module.exports = Machine(
   },
   {
     guards: {
-      isBootstrapping: context => context.isInBootstrap,
-      isNotBootstrapping: context => !context.isInBootstrap,
+      isBootstrapping: (context): boolean => context.isInBootstrap,
+      isNotBootstrapping: (context): boolean => !context.isInBootstrap,
     },
     actions: {
-      rerunPageQuery: (_ctx, event) => {
+      rerunPageQuery: (_ctx, event): void => {
         const queryUtil = require(`../../query`)
         // Wait a bit as calling this function immediately triggers
         // an Action call which Redux squawks about.
@@ -87,7 +131,7 @@ module.exports = Machine(
           queryUtil.enqueueExtractedQueryId(event.path)
         }, 0)
       },
-      runPageComponentQueries: (context, event) => {
+      runPageComponentQueries: (context): void => {
         const queryUtil = require(`../../query`)
         // Wait a bit as calling this function immediately triggers
         // an Action call which Redux squawks about.
@@ -96,8 +140,8 @@ module.exports = Machine(
         }, 0)
       },
       setQuery: assign({
-        query: (ctx, event) => {
-          if (typeof event.query !== `undefined` || event.query !== null) {
+        query: (ctx, event): string => {
+          if (typeof event.query !== `undefined` && event.query !== null) {
             return event.query
           } else {
             return ctx.query
@@ -125,11 +169,11 @@ module.exports = Machine(
       }),
       deletePage: assign({
         pages: (ctx, event) => {
-          ctx.pages.delete(event.page.path)
+          ctx.pages.delete(event.page!.path)
           return ctx.pages
         },
       }),
-      setBootstrapFinished: assign({
+      setBootstrapFinished: assign<IContext>({
         isInBootstrap: false,
       }),
     },
