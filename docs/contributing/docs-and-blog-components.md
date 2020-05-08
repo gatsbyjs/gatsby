@@ -219,6 +219,10 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
 
 #### Blog Posts
 
+- `seoTitle` (string)
+
+  If provided, this value will overwrite the `title` for the blog post's `og:title` and `<title>`. This is useful for SEO, as it lets us target specific relevant keywords, without needing to change the page's primary visible title.
+
 - `date` (string)
 
   The blog post's date in the format of `YYYY-MM-DD`.
