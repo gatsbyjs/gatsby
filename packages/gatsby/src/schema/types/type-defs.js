@@ -1,5 +1,5 @@
 const { parse, Kind: GraphQLASTNodeKind } = require(`graphql`)
-const { isGatsbyType } = require(`./type-builders`)
+import { isGatsbyType } from "./type-builders"
 const { inferExtensionName, dontInferExtensionName } = require(`../extensions`)
 const report = require(`gatsby-cli/lib/reporter`)
 

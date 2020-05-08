@@ -31,7 +31,7 @@ const {
 const { getPagination } = require(`./types/pagination`)
 const { getSortInput, SORTABLE_ENUM } = require(`./types/sort`)
 const { getFilterInput, SEARCHABLE_ENUM } = require(`./types/filter`)
-const { isGatsbyType, GatsbyGraphQLTypeKind } = require(`./types/type-builders`)
+import { isGatsbyType, GatsbyGraphQLTypeKind } from "./types/type-builders"
 const {
   isASTDocument,
   parseTypeDef,

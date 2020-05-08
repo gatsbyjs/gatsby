@@ -11,14 +11,14 @@ const fs = require(`fs-extra`)
 const { getCache } = require(`./get-cache`)
 import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
-const {
+import {
   buildObjectType,
   buildUnionType,
   buildInterfaceType,
   buildInputObjectType,
   buildEnumType,
   buildScalarType,
-} = require(`../schema/types/type-builders`)
+} from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)

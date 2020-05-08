@@ -10,7 +10,7 @@ const {
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build, rebuild } = require(`..`)
-const { buildObjectType } = require(`../types/type-builders`)
+import { buildObjectType } from "../types/type-builders"
 require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
