@@ -541,7 +541,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         process.nextTick(() => {
           subscriptionClient.close()
           exit()
-          process.stdout.write(`\n\n---\n\n\nThe recipe finished successfully!\n\n`)
+          process.stdout.write(
+            `\n\n---\n\n\nThe recipe finished successfully!\n\n`
+          )
           lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
             process.stdout.write(`✅ ${res._message}\n`)
           })
