@@ -4,7 +4,6 @@ import http from "http"
 import tmp from "tmp"
 import { spawn } from "child_process"
 import chokidar from "chokidar"
-import resolveCwd from "resolve-cwd"
 import getRandomPort from "get-port"
 import socket from "socket.io"
 import fs from "fs-extra"
@@ -78,9 +77,7 @@ class ControllableScript {
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
-  const developProcessPath = resolveCwd.silent(
-    `gatsby/dist/commands/develop-process`
-  )
+  const developProcessPath = require.resolve(`./develop-process`)
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port

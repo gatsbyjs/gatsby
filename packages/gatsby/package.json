@@ -127,7 +127,6 @@
     "react-refresh": "^0.7.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "resolve-cwd": "^3.0.0",
     "semver": "^5.7.1",
     "shallow-compare": "^1.2.2",
     "sift": "^5.1.0",
