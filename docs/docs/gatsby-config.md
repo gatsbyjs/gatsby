@@ -10,13 +10,13 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  [siteMetadata](#sitemetadata) (object)
-2.  [plugins](#plugins) (array)
-3.  [pathPrefix](#pathprefix) (string)
-4.  [polyfill](#polyfill) (boolean)
-5.  [mapping](#mapping-node-types) (object)
-6.  [proxy](#proxy) (object)
-7.  [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+1. [siteMetadata](#sitemetadata) (object)
+2. [plugins](#plugins) (array)
+3. [pathPrefix](#pathprefix) (string)
+4. [polyfill](#polyfill) (boolean)
+5. [mapping](#mapping-node-types) (object)
+6. [proxy](#proxy) (object)
+7. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
 ## siteMetadata
 
@@ -27,8 +27,8 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
     siteUrl: `https://www.gatsbyjs.org`,
-    description: `Blazing fast modern site generator for React`,
-  },
+    description: `Blazing fast modern site generator for React`
+  }
 }
 ```
 
@@ -48,10 +48,10 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `docs`,
-        path: `${__dirname}/../docs/`,
-      },
-    },
-  ],
+        path: `${__dirname}/../docs/`
+      }
+    }
+  ]
 }
 ```
 
@@ -63,7 +63,7 @@ It's common for sites to be hosted somewhere other than the root of their domain
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  pathPrefix: `/blog`,
+  pathPrefix: `/blog`
 }
 ```
 
@@ -77,7 +77,7 @@ If you'd like to provide your own Promise polyfill, you can set `polyfill` to fa
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  polyfill: false,
+  polyfill: false
 }
 ```
 
@@ -253,8 +253,8 @@ Setting the proxy config option will tell the develop server to proxy any unknow
 module.exports = {
   proxy: {
     prefix: "/api",
-    url: "http://examplesite.com/api/",
-  },
+    url: "http://examplesite.com/api/"
+  }
 }
 ```
 

@@ -52,7 +52,7 @@ export function createProgress(message, reporter) {
     {
       total: 0,
       width: 30,
-      clear: true,
+      clear: true
     }
   )
 
@@ -64,7 +64,7 @@ export function createProgress(message, reporter) {
     done() {},
     set total(value) {
       bar.total = value
-    },
+    }
   }
 }
 
@@ -74,7 +74,7 @@ export function createProgress(message, reporter) {
  *
  * @param  {String} directory
  * @param  {String} filename
- * @param  {String} url
+ * @param  {String} ext
  * @return {String}
  */
 export function createFilePath(directory, filename, ext) {

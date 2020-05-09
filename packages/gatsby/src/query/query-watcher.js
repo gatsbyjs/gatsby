@@ -20,14 +20,14 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
-const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+import { getGatsbyDependents } from "../utils/gatsby-dependents"
 
 const getQueriesSnapshot = () => {
   const state = store.getState()
 
   const snapshot = {
     components: new Map(state.components),
-    staticQueryComponents: new Map(state.staticQueryComponents),
+    staticQueryComponents: new Map(state.staticQueryComponents)
   }
 
   return snapshot
@@ -44,7 +44,7 @@ const handleComponentsWithRemovedQueries = (
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
         type: `REMOVE_STATIC_QUERY`,
-        payload: c.id,
+        payload: c.id
       })
       boundActionCreators.deleteComponentsDependencies([c.id])
     }
@@ -77,7 +77,7 @@ const handleQuery = (
         componentPath: query.path,
         id: query.id,
         query: query.text,
-        hash: query.hash,
+        hash: query.hash
       })
 
       debug(
@@ -112,7 +112,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
     components.forEach(c =>
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
+        query: queries.get(c.componentPath)?.text || ``
       })
     )
 
@@ -146,7 +146,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
         If you're more experienced with GraphQL, you can also export GraphQL
         fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
     }
@@ -176,7 +176,7 @@ const clearInactiveComponents = () => {
       )
       store.dispatch({
         type: `REMOVE_TEMPLATE_COMPONENT`,
-        payload: component,
+        payload: component
       })
     }
   })
@@ -234,7 +234,7 @@ const watch = async rootDir => {
   watcher = chokidar
     .watch([
       slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
-      ...packagePaths,
+      ...packagePaths
     ])
     .on(`change`, path => {
       report.pendingActivity({ id: `query-extraction` })
@@ -259,8 +259,8 @@ exports.startWatchDeletePage = () => {
       store.dispatch({
         type: `REMOVE_TEMPLATE_COMPONENT`,
         payload: {
-          componentPath,
-        },
+          componentPath
+        }
       })
     }
   })

@@ -3,13 +3,12 @@ const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const {
   buildInterfaceType,
-  buildObjectType,
+  buildObjectType
 } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
 const { createTypes, createFieldExtension } = actions
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.panic = jest.fn()
@@ -27,15 +26,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -48,29 +47,29 @@ describe(`Queryable Node interfaces`, () => {
         internal: { type: `Test`, contentDigest: `0` },
         foo: `foo`,
         bar: `bar`,
-        date: new Date(`2019-01-01`),
+        date: new Date(`2019-01-01`)
       },
       {
         id: `anothertest1`,
         internal: { type: `AnotherTest`, contentDigest: `0` },
         foo: `foooo`,
         baz: `baz`,
-        date: new Date(`2018-01-01`),
+        date: new Date(`2018-01-01`)
       },
       {
         id: `tbtest1`,
         internal: { type: `TBTest`, contentDigest: `0` },
         foo: `foo`,
         bar: `bar`,
-        date: new Date(`2019-01-01`),
+        date: new Date(`2019-01-01`)
       },
       {
         id: `anotherbttest1`,
         internal: { type: `AnotherTBTest`, contentDigest: `0` },
         foo: `foooo`,
         baz: `baz`,
-        date: new Date(`2018-01-01`),
-      },
+        date: new Date(`2018-01-01`)
+      }
     ]
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
@@ -155,7 +154,7 @@ describe(`Queryable Node interfaces`, () => {
         buildInterfaceType({
           name: `TypeBuilderInterface`,
           extensions: {
-            nodeInterface: true,
+            nodeInterface: true
           },
           fields: {
             id: `ID!`,
@@ -163,10 +162,10 @@ describe(`Queryable Node interfaces`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: {},
-              },
-            },
-          },
+                dateformat: {}
+              }
+            }
+          }
         }),
         buildObjectType({
           name: `TBTest`,
@@ -176,10 +175,10 @@ describe(`Queryable Node interfaces`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: {},
-              },
-            },
-          },
+                dateformat: {}
+              }
+            }
+          }
         }),
         buildObjectType({
           name: `AnotherTBTest`,
@@ -189,11 +188,11 @@ describe(`Queryable Node interfaces`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: {},
-              },
-            },
-          },
-        }),
+                dateformat: {}
+              }
+            }
+          }
+        })
       ])
     )
     const query = `
@@ -218,14 +217,14 @@ describe(`Queryable Node interfaces`, () => {
         nodes: [
           {
             foo: `foooo`,
-            date: `2018`,
-          },
-        ],
+            date: `2018`
+          }
+        ]
       },
       typeBuilderInterface: {
         foo: `foooo`,
-        date: `01/01/2018`,
-      },
+        date: `01/01/2018`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -261,20 +260,20 @@ describe(`Queryable Node interfaces`, () => {
         nodes: [
           {
             foo: `foo`,
-            id: `test1`,
+            id: `test1`
           },
           {
             foo: `foooo`,
             baz: `baz`,
-            id: `anothertest1`,
-          },
-        ],
+            id: `anothertest1`
+          }
+        ]
       },
       testInterface: {
         foo: `foo`,
         bar: `bar`,
-        id: `test1`,
-      },
+        id: `test1`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -299,13 +298,13 @@ describe(`Queryable Node interfaces`, () => {
       allTestInterface: {
         nodes: [
           {
-            foo: `foooo`,
-          },
-        ],
+            foo: `foooo`
+          }
+        ]
       },
       testInterface: {
-        foo: `foooo`,
-      },
+        foo: `foooo`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -328,16 +327,16 @@ describe(`Queryable Node interfaces`, () => {
       allTestInterface: {
         nodes: [
           {
-            date: `2019`,
+            date: `2019`
           },
           {
-            date: `2018`,
-          },
-        ],
+            date: `2018`
+          }
+        ]
       },
       testInterface: {
-        date: `01/01/2019`,
-      },
+        date: `01/01/2019`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -376,11 +375,11 @@ describe(`Queryable Node interfaces`, () => {
     const results = await runQuery(query)
     const expected = {
       testInterface: {
-        id: `test1`,
+        id: `test1`
       },
       test: {
-        id: `test1`,
-      },
+        id: `test1`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -391,24 +390,24 @@ describe(`Queryable Node interfaces`, () => {
         id: `author1`,
         internal: { type: `AuthorYaml` },
         name: `Author 1`,
-        birthday: new Date(Date.UTC(1978, 8, 26)),
+        birthday: new Date(Date.UTC(1978, 8, 26))
       },
       {
         id: `author2`,
         internal: { type: `AuthorJson` },
         name: `Author 2`,
-        birthday: new Date(Date.UTC(1978, 8, 26)),
+        birthday: new Date(Date.UTC(1978, 8, 26))
       },
       {
         id: `post1`,
         internal: { type: `ThisPost` },
-        author: `author1`,
+        author: `author1`
       },
       {
         id: `post2`,
         internal: { type: `ThatPost` },
-        author: `author2`,
-      },
+        author: `author2`
+      }
     ]
     nodes.forEach(node =>
       dispatch({ type: `CREATE_NODE`, payload: { ...node } })
@@ -417,15 +416,15 @@ describe(`Queryable Node interfaces`, () => {
       createFieldExtension({
         name: `echo`,
         args: {
-          value: `String!`,
+          value: `String!`
         },
         extend(options) {
           return {
             resolve() {
               return options.value
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -482,17 +481,17 @@ describe(`Queryable Node interfaces`, () => {
           {
             author: {
               name: `Author 1`,
-              echo: `Another Concrete Type`,
-            },
+              echo: `Another Concrete Type`
+            }
           },
           {
             author: {
               name: `Author 2`,
-              echo: `Concrete Type`,
-            },
-          },
-        ],
-      },
+              echo: `Concrete Type`
+            }
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -507,9 +506,9 @@ describe(`Queryable Node interfaces`, () => {
         slugInternal: `foo-bar`,
         internal: {
           type: `FooConcrete`,
-          contentDigest: `0`,
-        },
-      },
+          contentDigest: `0`
+        }
+      }
     ]
 
     nodes.forEach(node =>
@@ -582,7 +581,7 @@ const buildSchema = async () => {
   await build({})
   const {
     schemaCustomization: { composer: schemaComposer },
-    schema,
+    schema
   } = store.getState()
   return { schema, schemaComposer }
 }
@@ -595,7 +594,7 @@ const runQuery = async query => {
     undefined,
     withResolverContext({
       schema,
-      schemaComposer,
+      schemaComposer
     })
   )
   expect(results.errors).toBeUndefined()

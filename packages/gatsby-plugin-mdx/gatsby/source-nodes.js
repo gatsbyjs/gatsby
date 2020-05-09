@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { GraphQLBoolean } = require(`gatsby/graphql`)
 const remark = require(`remark`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
@@ -48,7 +49,7 @@ async function getCounts({ mdast }) {
   return {
     paragraphs: counts.ParagraphNode,
     sentences: counts.SentenceNode,
-    words: counts.WordNode,
+    words: counts.WordNode
   }
 }
 
@@ -127,7 +128,7 @@ module.exports = (
       reporter,
       actions,
       schema,
-      ...helpers,
+      ...helpers
     })
 
   // New Code // Schema
@@ -142,17 +143,21 @@ module.exports = (
         async resolve(mdxNode) {
           const { body } = await processMDX({ node: mdxNode })
           return body
-        },
+        }
       },
       excerpt: {
         type: `String!`,
         args: {
           pruneLength: {
             type: `Int`,
-            defaultValue: 140,
+            defaultValue: 140
           },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false
+          }
         },
-        async resolve(mdxNode, { pruneLength }) {
+        async resolve(mdxNode, { pruneLength, truncate }) {
           if (mdxNode.excerpt) {
             return Promise.resolve(mdxNode.excerpt)
           }
@@ -166,15 +171,22 @@ module.exports = (
             return
           })
 
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
-        },
+          if (!truncate) {
+            return prune(excerptNodes.join(` `), pruneLength, `…`)
+          }
+
+          return _.truncate(excerptNodes.join(` `), {
+            length: pruneLength,
+            omission: `…`
+          })
+        }
       },
       headings: {
         type: `[MdxHeadingMdx]`,
         args: {
           depth: {
-            type: `HeadingsMdx`,
-          },
+            type: `HeadingsMdx`
+          }
         },
         async resolve(mdxNode, { depth }) {
           // TODO: change this to operate on html instead of mdast
@@ -183,14 +195,14 @@ module.exports = (
           visit(mdast, `heading`, heading => {
             headings.push({
               value: toString(heading),
-              depth: heading.depth,
+              depth: heading.depth
             })
           })
           if (headingsMdx.includes(depth)) {
             headings = headings.filter(heading => `h${heading.depth}` === depth)
           }
           return headings
-        },
+        }
       },
       html: {
         type: `String`,
@@ -215,29 +227,29 @@ ${e}`
             )
             return undefined
           }
-        },
+        }
       },
       mdxAST: {
         type: `JSON`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode })
           return mdast
-        },
+        }
       },
       tableOfContents: {
         type: `JSON`,
         args: {
           maxDepth: {
             type: `Int`,
-            default: 6,
-          },
+            default: 6
+          }
         },
         async resolve(mdxNode, { maxDepth }) {
           const { mdast } = await processMDX({ node: mdxNode })
           const toc = generateTOC(mdast, { maxDepth })
 
           return getTableOfContents(toc.map, {})
-        },
+        }
       },
       timeToRead: {
         type: `Int`,
@@ -251,17 +263,17 @@ ${e}`
             timeToRead = 1
           }
           return timeToRead
-        },
+        }
       },
       wordCount: {
         type: `MdxWordCount`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode })
           return getCounts({ mdast })
-        },
-      },
+        }
+      }
     },
-    interfaces: [`Node`],
+    interfaces: [`Node`]
   })
   createTypes(MdxType)
 }

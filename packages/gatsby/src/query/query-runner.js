@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
+const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
@@ -18,14 +19,45 @@ type QueryJob = {
   query: string,
   componentPath: string,
   context: Object,
-  isPage: Boolean,
+  isPage: Boolean
 }
 
 // Run query
 module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
+  const graphql = (query, context) => {
+    // Check if query takes too long, print out warning
+    const promise = graphqlRunner.query(query, context)
+    let isPending = true
+
+    const timeoutId = setTimeout(() => {
+      if (isPending) {
+        const messageParts = [
+          `Query takes too long:`,
+          `File path: ${queryJob.componentPath}`
+        ]
+
+        if (queryJob.isPage) {
+          const { path, context } = queryJob.context
+          messageParts.push(`URL path: ${path}`)
+
+          if (!_.isEmpty(context)) {
+            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+          }
+        }
+
+        report.warn(messageParts.join(`\n`))
+      }
+    }, 15000)
+
+    promise.finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
+
+    return promise
+  }
 
   // Run query
   let result
@@ -51,7 +83,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     const structuredErrors = result.errors
       .map(e => {
         const structuredError = errorParser({
-          message: e.message,
+          message: e.message
         })
 
         structuredError.context = {
@@ -64,7 +96,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
           filePath: queryJob.componentPath,
           ...(urlPath && { urlPath }),
           ...queryContext,
-          plugin,
+          plugin
         }
 
         return structuredError
@@ -123,7 +155,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   boundActionCreators.pageQueryRun({
     path: queryJob.id,
     componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
+    isPage: queryJob.isPage
   })
 
   // Sets pageData to the store, here for easier access to the resultHash
@@ -133,7 +165,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   ) {
     boundActionCreators.setPageData({
       id: queryJob.id,
-      resultHash,
+      resultHash
     })
   }
   return result

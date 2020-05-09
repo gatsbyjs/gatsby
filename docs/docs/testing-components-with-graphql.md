@@ -55,9 +55,9 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: `Default Starter`,
-        },
-      },
+          title: `Default Starter`
+        }
+      }
     })
   )
 })
@@ -149,9 +149,9 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: `Default Starter`,
-        },
-      },
+          title: `Default Starter`
+        }
+      }
     })
   )
 })
@@ -161,9 +161,9 @@ describe("Index", () => {
     const data = {
       site: {
         siteMetadata: {
-          author: "Your name",
-        },
-      },
+          author: "Your name"
+        }
+      }
     }
 
     const tree = renderer.create(<Index data={data} />).toJSON()
@@ -203,20 +203,22 @@ const Header = ({ data }) => (
   </header>
 )
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
+export default function MyHeader(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+            }
           }
         }
-      }
-    `}
-    render={data => <Header {...props} data={data} />}
-  />
-)
+      `}
+      render={data => <Header {...props} data={data} />}
+    />
+  )
+}
 ```
 
 This is almost ready: all you need to do is export the pure component that you
@@ -313,9 +315,9 @@ describe("Header", () => {
     const data = {
       site: {
         siteMetadata: {
-          title: "Gatsby Starter Blog",
-        },
-      },
+          title: "Gatsby Starter Blog"
+        }
+      }
     }
     const tree = renderer.create(<Header data={data} />).toJSON()
     expect(tree).toMatchSnapshot()

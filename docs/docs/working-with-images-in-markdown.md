@@ -33,10 +33,10 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`, // highlight-line
-      },
-    },
-  ],
+        path: `${__dirname}/src/pages` // highlight-line
+      }
+    }
+  ]
 }
 ```
 
@@ -66,16 +66,16 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`, // highlight-line
-      },
+        path: `${__dirname}/src/pages` // highlight-line
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/images`, // highlight-line
-      },
-    },
-  ],
+        path: `${__dirname}/src/images` // highlight-line
+      }
+    }
+  ]
 }
 ```
 
@@ -128,7 +128,7 @@ import Layout from "../components/layout"
 import Img from "gatsby-image"
 // highlight-end
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   let post = data.markdownRemark
 
   // highlight-start
@@ -185,7 +185,11 @@ Configure the plugins in your `gatsby-config` file. As with the previous example
 
 ### Using the MDX Plugin
 
-The `gatsby-plugin-mdx` plugin will be used in the example below. Put the `gatsby-remark-images` plugin within the `gatsbyRemarkPlugins` option field of `gatsby-plugin-mdx`.
+The below example uses the `gatsby-plugin-mdx` plugin.
+
+`gatsby-remark-images` needs to be both a sub-plugin of `gatsby-plugin-mdx`, included in the `options` field, and a string entry in the plugins array. `gatsby-plugin-sharp` can be included on its own.
+
+`gatsby-source-filesystem` needs to be pointed at wherever you have your images on disk,
 
 > Note: This example configuration assumes your images and Markdown pages are sourced from the same directory. Check out the section on [configuring for different directories](#configuring-for-images-and-posts-in-different-directories) for additional help.
 
@@ -193,6 +197,7 @@ The `gatsby-plugin-mdx` plugin will be used in the example below. Put the `gatsb
 module.exports = {
   plugins: [
     `gatsby-plugin-sharp`,
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -200,19 +205,19 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 1200,
-            },
-          },
-        ],
-      },
+              maxWidth: 1200
+            }
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-      },
-    },
-  ],
+        path: `${__dirname}/src/pages`
+      }
+    }
+  ]
 }
 ```
 
@@ -231,19 +236,19 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 800,
-            },
-          },
-        ],
-      },
+              maxWidth: 800
+            }
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/posts`,
-      },
-    },
-  ],
+        path: `${__dirname}/src/posts`
+      }
+    }
+  ]
 }
 ```
 

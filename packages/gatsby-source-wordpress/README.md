@@ -103,7 +103,7 @@ module.exports = {
           // plugin, you can specify user and password to obtain access token and use authenticated requests against WordPress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
-          jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
+          jwt_base_path: "/jwt-auth/v1/token" // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
         // Set cookies that should be send with requests to WordPress as key value pairs
         cookies: {},
@@ -115,7 +115,7 @@ module.exports = {
         // Search and Replace Urls across WordPress content.
         searchAndReplaceContentUrls: {
           sourceUrl: "https://source-url.com",
-          replacementUrl: "https://replacement-url.com",
+          replacementUrl: "https://replacement-url.com"
         },
         // Set how many simultaneous requests are sent at once.
         concurrentRequests: 10,
@@ -135,7 +135,7 @@ module.exports = {
           "**/media",
           "**/tags",
           "**/taxonomies",
-          "**/users",
+          "**/users"
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
@@ -164,12 +164,12 @@ module.exports = {
             normalizer: function({ entities }) {
               // manipulate entities here
               return entities
-            },
-          },
-        ],
-      },
-    },
-  ],
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 
@@ -227,9 +227,9 @@ You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/
 
 Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
 
-### For Business, and eCommerce Plans
+### For Business, and E-commerce Plans
 
-Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
+Business and e-commerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -446,7 +446,7 @@ To access those fields, instead of using their field name, you need to use
 your WordPress pages you would need to use `page_builder_page`).
 
 To access data stored in these fields, you need to use GraphQL
-[inline fragments](http://graphql.org/learn/queries/#inline-fragments). This
+[inline fragments](https://graphql.org/learn/queries/#inline-fragments). This
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
@@ -815,10 +815,10 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers => [...normalizers, mapMoviesToGenres],
-      },
-    },
-  ],
+        normalizers: normalizers => [...normalizers, mapMoviesToGenres]
+      }
+    }
+  ]
 }
 ```
 
@@ -834,7 +834,7 @@ const dropUnusedMediaNormalizer = {
     return entities.filter(
       e => !(e.__type === "wordpress__wp_media" && !e.post)
     )
-  },
+  }
 }
 ```
 
@@ -847,10 +847,10 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
-      },
-    },
-  ],
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers]
+      }
+    }
+  ]
 }
 ```
 
@@ -925,8 +925,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: edge.node.path,
       component: slash(pageTemplate),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 
@@ -940,8 +940,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: edge.node.path,
       component: slash(postTemplate),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }

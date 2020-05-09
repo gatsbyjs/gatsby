@@ -94,10 +94,10 @@ functionality of the specified plugins.
 module.exports = {
   siteMetadata: {
     title: `Your Name - Blog`,
-    author: `Your Name`,
+    author: `Your Name`
   },
   // highlight-start
-  plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"],
+  plugins: ["gatsby-plugin-catch-links", "gatsby-plugin-react-helmet"]
 }
 // highlight-end
 ```
@@ -137,11 +137,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: "pages",
-      },
-    },
+        name: "pages"
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 
@@ -189,18 +189,18 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: "pages",
-      },
+        name: "pages"
+      }
     },
     // highlight-start
     {
       resolve: "gatsby-transformer-remark",
       options: {
-        plugins: [], // just in case those previously mentioned remark plugins sound cool :)
-      },
-    },
+        plugins: [] // just in case those previously mentioned remark plugins sound cool :)
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 
@@ -262,7 +262,7 @@ import { Helmet } from "react-helmet"
 // import '../css/blog-post.css'; // make it pretty!
 
 export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
+  data // this prop will be injected by the GraphQL query we'll write in a bit
 }) {
   const { markdownRemark: post } = data // data.markdownRemark holds your post data
   return (
@@ -490,7 +490,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     createPage({
       path: node.frontmatter.path,
       component: blogPostTemplate,
-      context: {}, // additional data can be passed via context
+      context: {} // additional data can be passed via context
     })
   })
   // highlight-end
@@ -647,7 +647,7 @@ Now go build something great.
     (previous link), and expands upon it with a bunch of features and some more
     advanced functionality
 
-[react-dom-server]: https://facebook.github.io/react/docs/react-dom-server.html
+[react-dom-server]: https://reactjs.org/docs/react-dom-server.html
 [gatsby-release]: /blog/gatsby-v1/
 [gatsby-plugins]: /docs/plugins/
 [gatsby-plugin-catch-links]: /packages/gatsby-plugin-catch-links/

@@ -11,7 +11,7 @@ jest.mock(`p-defer`, () =>
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     phantomActivity: jest.fn(),
-    warn: jest.fn(),
+    warn: jest.fn()
   }
 })
 
@@ -19,7 +19,7 @@ jest.mock(
   `/node_modules/gatsby-plugin-test/gatsby-worker.js`,
   () => {
     return {
-      TEST_JOB: jest.fn(),
+      TEST_JOB: jest.fn()
     }
   },
   { virtual: true }
@@ -29,7 +29,7 @@ jest.mock(
   `/gatsby-plugin-local/gatsby-worker.js`,
   () => {
     return {
-      TEST_JOB: jest.fn(),
+      TEST_JOB: jest.fn()
     }
   },
   { virtual: true }
@@ -51,7 +51,7 @@ fs.ensureDir = jest.fn().mockResolvedValue(true)
 const plugin = {
   name: `gatsby-plugin-test`,
   version: `1.0.0`,
-  resolve: `/node_modules/gatsby-plugin-test`,
+  resolve: `/node_modules/gatsby-plugin-test`
 }
 
 const createMockJob = (overrides = {}) => {
@@ -59,14 +59,14 @@ const createMockJob = (overrides = {}) => {
     name: `TEST_JOB`,
     inputPaths: [
       path.resolve(__dirname, `fixtures/input1.jpg`),
-      path.resolve(__dirname, `fixtures/input2.jpg`),
+      path.resolve(__dirname, `fixtures/input2.jpg`)
     ],
     outputDir: path.resolve(__dirname, `public/outputDir`),
     args: {
       param1: `param1`,
-      param2: `param2`,
+      param2: `param2`
     },
-    ...overrides,
+    ...overrides
   }
 }
 
@@ -87,7 +87,7 @@ describe(`Jobs manager`, () => {
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
-        end: endActivity,
+        end: endActivity
       }
     })
 
@@ -110,12 +110,12 @@ describe(`Jobs manager`, () => {
           inputPaths: [
             {
               path: slash(mockedJob.inputPaths[0]),
-              contentDigest: expect.any(String),
+              contentDigest: expect.any(String)
             },
             {
               path: slash(mockedJob.inputPaths[1]),
-              contentDigest: expect.any(String),
-            },
+              contentDigest: expect.any(String)
+            }
           ],
           outputDir: slash(mockedJob.outputDir),
           args: mockedJob.args,
@@ -123,8 +123,8 @@ describe(`Jobs manager`, () => {
             name: `gatsby-plugin-test`,
             version: `1.0.0`,
             resolve: `/node_modules/gatsby-plugin-test`,
-            isLocal: false,
-          },
+            isLocal: false
+          }
         })
       )
     })
@@ -132,7 +132,7 @@ describe(`Jobs manager`, () => {
     it(`should fail when path is relative`, async () => {
       const { createInternalJob } = jobManager
       const jobArgs = createMockJob({
-        inputPaths: [`./files/image.jpg`],
+        inputPaths: [`./files/image.jpg`]
       })
 
       expect.assertions(1)
@@ -165,19 +165,19 @@ describe(`Jobs manager`, () => {
       const job2 = enqueueJob(
         createInternalMockJob({
           inputPaths: [],
-          name: `NEXT_JOB`,
+          name: `NEXT_JOB`
         })
       )
       await Promise.all([
         expect(job1).resolves.toStrictEqual({ output: `myresult` }),
-        expect(job2).resolves.toStrictEqual({ output: `another result` }),
+        expect(job2).resolves.toStrictEqual({ output: `another result` })
       ])
       expect(endActivity).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalledWith({
         inputPaths: mockedJob.inputPaths,
         outputDir: mockedJob.outputDir,
-        args: mockedJob.args,
+        args: mockedJob.args
       })
       expect(worker.NEXT_JOB).toHaveBeenCalledTimes(1)
     })
@@ -189,8 +189,8 @@ describe(`Jobs manager`, () => {
       const jobArgs3 = createInternalMockJob({
         args: {
           param2: `param2`,
-          param1: `param1`,
-        },
+          param1: `param1`
+        }
       })
 
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
@@ -203,7 +203,7 @@ describe(`Jobs manager`, () => {
       await expect(Promise.all(promises)).resolves.toStrictEqual([
         { output: `myresult` },
         { output: `myresult` },
-        { output: `myresult` },
+        { output: `myresult` }
       ])
 
       // we have 1 pdefer for the job & 1 for the wait until all jobs are done
@@ -218,9 +218,9 @@ describe(`Jobs manager`, () => {
       const jobArgs2 = createInternalMockJob({ inputPaths: [] })
 
       worker.TEST_JOB.mockImplementationOnce(() => {
-        throw new Error(`An error occured`)
+        throw new Error(`An error occurred`)
       }).mockImplementationOnce(() =>
-        Promise.reject(new Error(`An error occured`))
+        Promise.reject(new Error(`An error occurred`))
       )
 
       expect.assertions(4)
@@ -228,13 +228,13 @@ describe(`Jobs manager`, () => {
         await enqueueJob(jobArgs)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[WorkerError: Error: An error occured]`
+          `[WorkerError: Error: An error occurred]`
         )
       }
       try {
         await enqueueJob(jobArgs2)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occurred]`)
       }
       expect(endActivity).toHaveBeenCalledTimes(2)
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(2)
@@ -314,8 +314,8 @@ describe(`Jobs manager`, () => {
       const inputPaths = [
         {
           path: `/tmp/unknown-file.jpg`,
-          contentDigest: `1234`,
-        },
+          contentDigest: `1234`
+        }
       ]
 
       expect(isJobStale({ inputPaths })).toBe(true)
@@ -326,8 +326,8 @@ describe(`Jobs manager`, () => {
       const inputPaths = [
         {
           path: path.resolve(__dirname, `fixtures/input1.jpg`),
-          contentDigest: `1234`,
-        },
+          contentDigest: `1234`
+        }
       ]
 
       expect(isJobStale({ inputPaths })).toBe(true)
@@ -340,8 +340,8 @@ describe(`Jobs manager`, () => {
       const inputPaths = [
         {
           path: path.resolve(__dirname, `fixtures/input1.jpg`),
-          contentDigest: `1234`,
-        },
+          contentDigest: `1234`
+        }
       ]
 
       expect(isJobStale({ inputPaths })).toBe(false)
@@ -386,7 +386,7 @@ describe(`Jobs manager`, () => {
       expect(process.send).toHaveBeenCalled()
       expect(process.send).toHaveBeenCalledWith({
         type: `JOB_CREATED`,
-        payload: jobArgs,
+        payload: jobArgs
       })
 
       expect(listeners.length).toBe(1)
@@ -405,15 +405,15 @@ describe(`Jobs manager`, () => {
         payload: {
           id: jobArgs.id,
           result: {
-            output: `hello`,
-          },
-        },
+            output: `hello`
+          }
+        }
       })
 
       jest.runAllTimers()
 
       await expect(promise).resolves.toStrictEqual({
-        output: `hello`,
+        output: `hello`
       })
       expect(worker.TEST_JOB).not.toHaveBeenCalled()
     })
@@ -430,8 +430,8 @@ describe(`Jobs manager`, () => {
         type: `JOB_FAILED`,
         payload: {
           id: jobArgs.id,
-          error: `JOB failed...`,
-        },
+          error: `JOB failed...`
+        }
       })
 
       jest.runAllTimers()
@@ -454,8 +454,8 @@ describe(`Jobs manager`, () => {
       listeners[0]({
         type: `JOB_NOT_WHITELISTED`,
         payload: {
-          id: jobArgs.id,
-        },
+          id: jobArgs.id
+        }
       })
 
       jest.runAllTimers()
@@ -471,7 +471,7 @@ describe(`Jobs manager`, () => {
       const jobArgs = createInternalJob(createMockJob(), {
         name: `gatsby-plugin-local`,
         version: `1.0.0`,
-        resolve: `/gatsby-plugin-local`,
+        resolve: `/gatsby-plugin-local`
       })
 
       await expect(enqueueJob(jobArgs)).resolves.toBeUndefined()
@@ -498,7 +498,7 @@ describe(`Jobs manager`, () => {
       const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
       const jobArgs2 = createInternalMockJob({
-        args: { key: `val` },
+        args: { key: `val` }
       })
 
       await enqueueJob(jobArgs)

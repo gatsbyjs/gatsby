@@ -63,9 +63,9 @@ plugins: [
        * One convention is to place your Netlify CMS customization code in a
        * `src/cms` directory.
        */
-      modulePath: `${__dirname}/src/cms/cms.js`,
-    },
-  },
+      modulePath: `${__dirname}/src/cms/cms.js`
+    }
+  }
 ]
 ```
 
@@ -80,8 +80,12 @@ The js module might look like this:
 import CMS from "netlify-cms-app"
 
 /**
- * Any imported styles will automatically be applied to the editor preview
- * pane, there is no need to use `registerPreviewStyle` for imported styles.
+ * Any imported styles should be automatically be applied to the editor preview
+ * pane thus eliminating the need to use `registerPreviewStyle` for imported
+ * styles. However if you are experiencing build errors regarding importing css,
+ * sass or scss into a cms module when deploying to the netlify platform, you
+ * may need to follow the implementation found in netlify documentation here:
+ * https://www.netlifycms.org/docs/beta-features/#raw-css-in-registerpreviewstyle
  * All of the example imports below would result in styles being applied to the
  * preview pane.
  */
@@ -113,9 +117,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
-      manualInit: true,
-    },
-  },
+      manualInit: true
+    }
+  }
 ]
 ```
 
@@ -131,9 +135,9 @@ import CMS from "netlify-cms-app"
 CMS.init({
   config: {
     backend: {
-      name: "git-gateway",
-    },
-  },
+      name: "git-gateway"
+    }
+  }
 })
 ```
 
@@ -150,9 +154,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-netlify-cms`,
     options: {
-      enableIdentityWidget: true,
-    },
-  },
+      enableIdentityWidget: true
+    }
+  }
 ]
 ```
 
@@ -203,14 +207,14 @@ plugins: [
 
         config.plugins.push(
           plugins.define({
-            "process.env.MY_VAR": JSON.stringify("my var value"),
+            "process.env.MY_VAR": JSON.stringify("my var value")
           })
         )
 
         config.plugins.push(new Plugin())
-      },
-    },
-  },
+      }
+    }
+  }
 ]
 ```
 
@@ -229,9 +233,9 @@ plugins: [
       publicPath: `admin`,
       htmlTitle: `Content Manager`,
       htmlFavicon: `path/to/favicon`,
-      includeRobots: false,
-    },
-  },
+      includeRobots: false
+    }
+  }
 ]
 ```
 
@@ -246,9 +250,9 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     plugins: [
       new webpack.IgnorePlugin({
-        resourceRegExp: /^netlify-identity-widget$/,
-      }),
-    ],
+        resourceRegExp: /^netlify-identity-widget$/
+      })
+    ]
   })
 }
 ```

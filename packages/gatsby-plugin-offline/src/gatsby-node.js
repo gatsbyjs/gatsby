@@ -8,12 +8,19 @@ const _ = require(`lodash`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
-exports.createPages = ({ actions }) => {
+exports.onPreBootstrap = ({ cache }) => {
+  const appShellSourcePath = path.join(__dirname, `app-shell.js`)
+  const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
+  fs.copyFileSync(appShellSourcePath, appShellTargetPath)
+}
+
+exports.createPages = ({ actions, cache }) => {
+  const appShellPath = path.join(cache.directory, `app-shell.js`)
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
     createPage({
       path: `/offline-plugin-app-shell-fallback/`,
-      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+      component: slash(appShellPath)
     })
   }
 }
@@ -69,7 +76,7 @@ exports.onPostBuild = (
     precachePages: precachePagesGlobs = [],
     appendScript = null,
     debug = undefined,
-    workboxConfig = {},
+    workboxConfig = {}
   }
 ) => {
   const { pathPrefix, reporter } = args
@@ -79,7 +86,7 @@ exports.onPostBuild = (
   const files = getAssetsForChunks([
     `app`,
     `webpack-runtime`,
-    `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+    `component---node-modules-gatsby-plugin-offline-app-shell-js`
   ])
   const appFile = files.find(file => file.startsWith(`app-`))
 
@@ -93,7 +100,7 @@ exports.onPostBuild = (
     ...getPrecachePages(
       precachePagesGlobs,
       `${process.cwd()}/${rootDir}`
-    ).filter(page => page !== offlineShellPath),
+    ).filter(page => page !== offlineShellPath)
   ]
 
   const criticalFilePaths = _.uniq(
@@ -103,7 +110,7 @@ exports.onPostBuild = (
   const globPatterns = files.concat([
     // criticalFilePaths doesn't include HTML pages (we only need this one)
     `offline-plugin-app-shell-fallback/index.html`,
-    ...criticalFilePaths,
+    ...criticalFilePaths
   ])
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
@@ -118,7 +125,7 @@ exports.onPostBuild = (
     modifyURLPrefix: {
       // If `pathPrefix` is configured by user, we should replace
       // the default prefix with `pathPrefix`.
-      "/": `${pathPrefix}/`,
+      "/": `${pathPrefix}/`
     },
     cacheId: `gatsby-plugin-offline`,
     // Don't cache-bust JS or CSS files, and anything in the static directory,
@@ -129,26 +136,26 @@ exports.onPostBuild = (
         // Use cacheFirst since these don't need to be revalidated (same RegExp
         // and same reason as above)
         urlPattern: /(\.js$|\.css$|static\/)/,
-        handler: `CacheFirst`,
+        handler: `CacheFirst`
       },
       {
         // page-data.json files are not content hashed
         urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `StaleWhileRevalidate`,
+        handler: `StaleWhileRevalidate`
       },
       {
         // Add runtime caching of various other page resources
         urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        handler: `StaleWhileRevalidate`,
+        handler: `StaleWhileRevalidate`
       },
       {
         // Google Fonts CSS (doesn't end in .css so we need to specify it)
         urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-        handler: `StaleWhileRevalidate`,
-      },
+        handler: `StaleWhileRevalidate`
+      }
     ],
     skipWaiting: true,
-    clientsClaim: true,
+    clientsClaim: true
   }
 
   const combinedOptions = _.merge(options, workboxConfig)

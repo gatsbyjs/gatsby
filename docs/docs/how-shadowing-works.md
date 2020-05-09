@@ -16,7 +16,7 @@ It's important to begin discussing how the composition of themes works. An end u
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: ["gatsby-theme-tomato-blog", "gatsby-theme-tomato-portfolio"],
+  plugins: ["gatsby-theme-tomato-blog", "gatsby-theme-tomato-portfolio"]
 }
 ```
 
@@ -35,7 +35,7 @@ These characteristics are used in the component shadowing algorithm to decide wh
 const themesArray = [
   "gatsby-theme-parent",
   "gatsby-theme-tomato-blog",
-  "gatsby-theme-tomato-portfolio",
+  "gatsby-theme-tomato-portfolio"
 ]
 ```
 
@@ -66,12 +66,12 @@ exports.onCreateWebpackConfig = (
             : flattenedPlugins.map(plugin => {
                 return {
                   themeDir: plugin.pluginFilepath,
-                  themeName: plugin.name,
+                  themeName: plugin.name
                 }
-              }),
-        }),
-      ],
-    },
+              })
+        })
+      ]
+    }
   })
 }
 ```
@@ -166,7 +166,7 @@ Since a file from a theme is being required we need to figure out which path sho
 const builtComponentPath = this.resolveComponentPath({
   matchingTheme: theme,
   themes: this.themes,
-  component,
+  component
 })
 
 return resolver.doResolve(
@@ -198,7 +198,7 @@ As discussed before, themes are flattened into a list and then all possible shad
 ```js
 const locationsToCheck = [
   // User's site
-  path.join(path.resolve(`.`), `src`, theme),
+  path.join(path.resolve(`.`), `src`, theme)
 ].concat(
   Array.from(themes)
     // Last theme wins, so start matching reverse
@@ -272,11 +272,13 @@ import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/author"
 import Card from "../components/card"
 
-export default props => (
-  <Card>
-    <Author {...props} />
-  </Card>
-)
+export default function MyAuthor(props) {
+  return (
+    <Card>
+      <Author {...props} />
+    </Card>
+  )
+}
 ```
 
 [Learn more about extending components](/blog/2019-07-02-extending-components/)
@@ -293,7 +295,7 @@ requestPathIsIssuerShadowPath({
   theme,
   component,
   requestPath: request.path,
-  issuerPath: request.context.issuer,
+  issuerPath: request.context.issuer
 })
 ```
 
@@ -314,7 +316,7 @@ In the above code block `getBaseShadowDirsForThemes` returns:
 ```js
 const baseDirs = [
   "/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-rebeccapurple/src/gatsby-theme-tomato",
-  "/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src",
+  "/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src"
 ]
 ```
 
@@ -324,7 +326,7 @@ Then, we join the component path and end up with:
 ```js
 const fullPaths = [
   "/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-rebeccapurple/src/gatsby-theme-tomato/box",
-  "/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src/box",
+  "/Users/johno/c/gatsby-theme-example-component-extending/gatsby-theme-tomato/src/box"
 ]
 ```
 
@@ -341,11 +343,13 @@ import React from "react"
 import Box from "gatsby-theme-tomato/src/box"
 import Card from "../components/card"
 
-export default props => (
-  <div style={{ padding: "20px", backgroundColor: "rebeccapurple" }}>
-    <Box {...props} />
-  </div>
-)
+export default function MyBox(props) {
+  return (
+    <div style={{ padding: "20px", backgroundColor: "rebeccapurple" }}>
+      <Box {...props} />
+    </div>
+  )
+}
 ```
 
 Now, all usages of the Box in `gatsby-theme-tomato` will be also wrapped in a purple box.

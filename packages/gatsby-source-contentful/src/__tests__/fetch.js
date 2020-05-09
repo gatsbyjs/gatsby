@@ -7,17 +7,17 @@ const mockClient = {
       items: [
         {
           code: `en-us`,
-          default: true,
-        },
-      ],
+          default: true
+        }
+      ]
     })
   ),
   getSpace: jest.fn(() =>
     Promise.resolve({
       space: {
         sys: { type: `Space`, id: `x2t9il8x6p` },
-        name: `space-name`,
-      },
+        name: `space-name`
+      }
     })
   ),
   sync: jest.fn(() => {
@@ -25,27 +25,27 @@ const mockClient = {
       entries: [],
       assets: [],
       deletedEntries: [],
-      deletedAssets: [],
+      deletedAssets: []
     }
   }),
   getContentTypes: jest.fn(async () => {
     return {
       items: [],
-      total: 0,
+      total: 0
     }
-  }),
+  })
 }
 
 jest.mock(`contentful`, () => {
   return {
-    createClient: jest.fn(() => mockClient),
+    createClient: jest.fn(() => mockClient)
   }
 })
 
 jest.mock(`../plugin-options`, () => {
   return {
     ...jest.requireActual(`../plugin-options`),
-    formatPluginOptionsForCLI: jest.fn(() => `formatPluginOptionsForCLIMock`),
+    formatPluginOptionsForCLI: jest.fn(() => `formatPluginOptionsForCLIMock`)
   }
 })
 
@@ -56,19 +56,19 @@ const contentful = require(`contentful`)
 const fetchData = require(`../fetch`)
 const {
   formatPluginOptionsForCLI,
-  createPluginConfig,
+  createPluginConfig
 } = require(`../plugin-options`)
 
 const proxyOption = {
   host: `localhost`,
-  port: 9001,
+  port: 9001
 }
 const options = {
   spaceId: `rocybtov1ozk`,
   accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
   host: `host`,
   environment: `env`,
-  proxy: proxyOption,
+  proxy: proxyOption
 }
 
 const pluginConfig = createPluginConfig(options)
@@ -79,12 +79,13 @@ beforeAll(() => {
 
   global.process = {
     ...realProcess,
-    exit: jest.fn(),
+    exit: jest.fn()
   }
 })
 
 const reporter = {
-  panic: jest.fn(),
+  info: jest.fn(),
+  panic: jest.fn()
 }
 
 beforeEach(() => {
@@ -108,7 +109,7 @@ it(`calls contentful.createClient with expected params`, async () => {
       environment: `env`,
       host: `host`,
       space: `rocybtov1ozk`,
-      proxy: proxyOption,
+      proxy: proxyOption
     })
   )
 })
@@ -117,9 +118,9 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
   await fetchData({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-      spaceId: `rocybtov1ozk`,
+      spaceId: `rocybtov1ozk`
     }),
-    reporter,
+    reporter
   })
 
   expect(reporter.panic).not.toBeCalled()
@@ -128,7 +129,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       environment: `master`,
       host: `cdn.contentful.com`,
-      space: `rocybtov1ozk`,
+      space: `rocybtov1ozk`
     })
   )
 })
@@ -137,16 +138,16 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
   await fetchData({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-      spaceId: `rocybtov1ozk`,
+      spaceId: `rocybtov1ozk`
     }),
-    reporter,
+    reporter
   })
 
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
     limit: 100,
     order: `sys.createdAt`,
-    skip: 0,
+    skip: 0
   })
 })
 
@@ -155,16 +156,16 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
-      pageLimit: 50,
+      pageLimit: 50
     }),
-    reporter,
+    reporter
   })
 
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
     limit: 50,
     order: `sys.createdAt`,
-    skip: 0,
+    skip: 0
   })
 })
 
@@ -174,9 +175,9 @@ it(`panics when localeFilter reduces locale list to 0`, async () => {
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
       pageLimit: 50,
-      localeFilter: () => false,
+      localeFilter: () => false
     }),
-    reporter,
+    reporter
   })
 
   expect(reporter.panic).toBeCalledWith(
@@ -204,7 +205,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
-        ...options,
+        ...options
       }),
       undefined
     )
@@ -229,7 +230,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
-        ...options,
+        ...options
       }),
       undefined
     )
@@ -254,11 +255,11 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
-        ...options,
+        ...options
       }),
       {
         host: `Check if setting is correct`,
-        spaceId: `Check if setting is correct`,
+        spaceId: `Check if setting is correct`
       }
     )
   })
@@ -284,11 +285,11 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
-        ...options,
+        ...options
       }),
       {
         accessToken: `Check if setting is correct`,
-        environment: `Check if setting is correct`,
+        environment: `Check if setting is correct`
       }
     )
   })

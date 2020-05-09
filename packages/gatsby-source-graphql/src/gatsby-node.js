@@ -3,15 +3,16 @@ const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   transformSchema,
   introspectSchema,
-  RenameTypes,
-} = require(`graphql-tools-fork`)
+  RenameTypes
+} = require(`graphql-tools`)
 const { createHttpLink } = require(`apollo-link-http`)
 const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+const { createDataloaderLink } = require(`./batching/dataloader-link`)
 
 const {
   NamespaceUnderFieldTransform,
-  StripNonQueryTransform,
+  StripNonQueryTransform
 } = require(`./transforms`)
 
 exports.sourceNodes = async (
@@ -29,6 +30,7 @@ exports.sourceNodes = async (
     createLink,
     createSchema,
     refetchInterval,
+    batch = false
   } = options
 
   invariant(
@@ -48,12 +50,13 @@ exports.sourceNodes = async (
   if (createLink) {
     link = await createLink(options)
   } else {
-    link = createHttpLink({
+    const options = {
       uri: url,
       fetch,
       fetchOptions,
-      headers: typeof headers === `function` ? await headers() : headers,
-    })
+      headers: typeof headers === `function` ? await headers() : headers
+    }
+    link = batch ? createDataloaderLink(options) : createHttpLink(options)
   }
 
   let introspectionSchema
@@ -79,14 +82,14 @@ exports.sourceNodes = async (
     id: nodeId,
     typeName,
     fieldName,
-    createContentDigest,
+    createContentDigest
   })
   createNode(node)
 
   const resolver = (parent, args, context) => {
     context.nodeModel.createPageDependency({
       path: context.path,
-      nodeId: nodeId,
+      nodeId: nodeId
     })
     return {}
   }
@@ -94,7 +97,7 @@ exports.sourceNodes = async (
   const schema = transformSchema(
     {
       schema: introspectionSchema,
-      link,
+      link
     },
     [
       new StripNonQueryTransform(),
@@ -102,8 +105,8 @@ exports.sourceNodes = async (
       new NamespaceUnderFieldTransform({
         typeName,
         fieldName,
-        resolver,
-      }),
+        resolver
+      })
     ]
   )
 
@@ -118,7 +121,7 @@ exports.sourceNodes = async (
             id: nodeId,
             typeName,
             fieldName,
-            createContentDigest,
+            createContentDigest
           })
         )
         setTimeout(refetcher, msRefetchInterval)
@@ -140,7 +143,7 @@ function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
     internal: {
       type: `GraphQLSource`,
       contentDigest: nodeContentDigest,
-      ignoreType: true,
-    },
+      ignoreType: true
+    }
   }
 }

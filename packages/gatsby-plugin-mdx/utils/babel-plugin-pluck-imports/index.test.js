@@ -20,12 +20,12 @@ describe(`babel-plugin-pluck-imports`, () => {
     const result = babel.transform(testContents, {
       configFile: false,
       plugins: [instance.plugin],
-      presets: [require(`@babel/preset-react`)],
+      presets: [require(`@babel/preset-react`)]
     })
 
     expect(result.code).toEqual(`export default (({
   children
-}) => React.createElement("div", null, children));
+}) => /*#__PURE__*/React.createElement("div", null, children));
 export const pageQuery = graphql\`
   query MDXWhatever {
     name
@@ -37,19 +37,19 @@ export const pageQuery = graphql\`
     const instance = new Plugin()
     babel.transform(testContents, {
       plugins: [instance.plugin],
-      presets: [require(`@babel/preset-react`)],
+      presets: [require(`@babel/preset-react`)]
     })
 
     expect(instance.state.imports).toEqual([
       `import React from "react";`,
-      `import { graphql } from "gatsby";`,
+      `import { graphql } from "gatsby";`
     ])
   })
   test(`yields list of local identifiers`, () => {
     const instance = new Plugin()
     babel.transform(testContents, {
       plugins: [instance.plugin],
-      presets: [require(`@babel/preset-react`)],
+      presets: [require(`@babel/preset-react`)]
     })
 
     expect(instance.state.identifiers).toEqual([`React`, `graphql`])

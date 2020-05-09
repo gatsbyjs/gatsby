@@ -21,9 +21,10 @@ exports.onPreBootstrap = (
     cache,
     actions,
     createNodeId,
+    getCache,
     getNodesByType,
     createContentDigest,
-    reporter,
+    reporter
   },
   pluginOptions
 ) => {
@@ -52,9 +53,10 @@ exports.onPreBootstrap = (
         cache,
         createNode,
         createNodeId,
+        getCache,
         parentNodeId: n.id,
         createContentDigest,
-        reporter,
+        reporter
       })
     } else {
       // Screenshot hasn't yet expired, touch the image node
@@ -75,7 +77,7 @@ exports.onPreBootstrap = (
 }
 
 exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest },
+  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
   pluginOptions
 ) => {
   const { createNode, createParentChildLink } = actions
@@ -99,8 +101,9 @@ exports.onCreateNode = async (
           cache,
           createNode,
           createNodeId,
+          getCache,
           createContentDigest,
-          parentNodeId: node.id,
+          parentNodeId: node.id
         })
         .on(`finish`, r => {
           resolve(r)
@@ -112,7 +115,7 @@ exports.onCreateNode = async (
 
     createParentChildLink({
       parent: node,
-      child: screenshotNode,
+      child: screenshotNode
     })
   } catch (e) {
     return
@@ -126,9 +129,10 @@ const createScreenshotNode = async ({
   cache,
   createNode,
   createNodeId,
+  getCache,
   parentNodeId,
   createContentDigest,
-  reporter,
+  reporter
 }) => {
   try {
     let fileNode, expires
@@ -136,7 +140,7 @@ const createScreenshotNode = async ({
       const getPlaceholderFileNode = require(`./placeholder-file-node`)
       fileNode = await getPlaceholderFileNode({
         createNode,
-        createNodeId,
+        createNodeId
       })
       expires = new Date(2999, 1, 1).getTime()
     } else {
@@ -148,8 +152,9 @@ const createScreenshotNode = async ({
         cache,
         createNode,
         createNodeId,
+        getCache,
         parentNodeId,
-        reporter,
+        reporter
       })
       expires = screenshotResponse.data.expires
 
@@ -165,10 +170,10 @@ const createScreenshotNode = async ({
       parent,
       children: [],
       internal: {
-        type: `Screenshot`,
+        type: `Screenshot`
       },
       screenshotFile___NODE: fileNode.id,
-      usingPlaceholder: USE_PLACEHOLDER_IMAGE,
+      usingPlaceholder: USE_PLACEHOLDER_IMAGE
     }
 
     screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)

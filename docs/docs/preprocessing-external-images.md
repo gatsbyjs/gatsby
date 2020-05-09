@@ -43,6 +43,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
+      featuredImg: File @link(from: "featuredImg___NODE")
     }
 
     type Frontmatter {
@@ -58,7 +59,7 @@ exports.onCreateNode = async ({
   actions: { createNode },
   store,
   cache,
-  createNodeId,
+  createNodeId
 }) => {
   // For all MarkdownRemark nodes that have a featured image url, call createRemoteFileNode
   if (
@@ -71,7 +72,7 @@ exports.onCreateNode = async ({
       createNode, // helper function in gatsby-node to generate the node
       createNodeId, // helper function in gatsby-node to generate the node id
       cache, // Gatsby's cache
-      store, // Gatsby's redux store
+      store // Gatsby's redux store
     })
 
     // if the file was created, attach the new node to the parent node
@@ -84,7 +85,7 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Define some types for `MarkdownRemark` using the Schema Customization API. Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
+1. Define some types for `MarkdownRemark` using the Schema Customization API. For `featuredImg`, use the `from` argument to point the `link` extension to the correct field name (with a `___NODE` suffix), [more details about foreign-key fields here](/docs/schema-customization/#foreign-key-fields). Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
 2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
 3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
 4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference. Do note, this new node is now attached to the root of the `markdownRemark` node instead of the `frontmatter` field.

@@ -1,4 +1,4 @@
-const prepareRegex = require(`../prepare-regex`)
+const { prepareRegex } = require(`../prepare-regex`)
 
 describe(`Prepare regex for Sift.js`, () => {
   it(`handles simple regex`, () => {
@@ -23,7 +23,7 @@ describe(`Prepare regex for Sift.js`, () => {
       GraphQLSchema,
       GraphQLObjectType,
       GraphQLString,
-      graphql,
+      graphql
     } = require(`graphql`)
     const QueryType = new GraphQLObjectType({
       name: `Query`,
@@ -31,11 +31,11 @@ describe(`Prepare regex for Sift.js`, () => {
         regex: {
           type: GraphQLString,
           args: {
-            regex: { type: GraphQLString },
+            regex: { type: GraphQLString }
           },
-          resolve: (source, args) => args.regex,
-        },
-      },
+          resolve: (source, args) => args.regex
+        }
+      }
     })
     const schema = new GraphQLSchema({ query: QueryType })
     /* prettier-ignore */

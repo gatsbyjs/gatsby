@@ -1,6 +1,5 @@
 const { store } = require(`../../redux`)
 const { build, rebuildWithSitePage } = require(`..`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -12,15 +11,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -32,8 +31,8 @@ const firstPage = () => {
     internal: { type: `SitePage`, contentDigest: `0`, counter: 0 },
     keep: `Page`,
     fields: {
-      oldKey: `value`,
-    },
+      oldKey: `value`
+    }
   }
 }
 
@@ -44,11 +43,11 @@ const secondPage = () => {
     children: [],
     internal: { type: `SitePage`, contentDigest: `0`, counter: 1 },
     fields: {
-      key: `value`,
+      key: `value`
     },
     context: {
-      key: `value`,
-    },
+      key: `value`
+    }
   }
 }
 
@@ -82,7 +81,7 @@ describe(`build and update schema for SitePage`, () => {
       `id`,
       `parent`,
       `children`,
-      `internal`,
+      `internal`
     ]
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())

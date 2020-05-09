@@ -1,5 +1,5 @@
 import React from "react"
-import loader from "./loader"
+import loader, { PageResourceStatus } from "./loader"
 import shallowCompare from "shallow-compare"
 
 class EnsureResources extends React.Component {
@@ -8,7 +8,7 @@ class EnsureResources extends React.Component {
     const { location, pageResources } = props
     this.state = {
       location: { ...location },
-      pageResources: pageResources || loader.loadPageSync(location.pathname),
+      pageResources: pageResources || loader.loadPageSync(location.pathname)
     }
   }
 
@@ -17,21 +17,21 @@ class EnsureResources extends React.Component {
       const pageResources = loader.loadPageSync(location.pathname)
       return {
         pageResources,
-        location: { ...location },
+        location: { ...location }
       }
     }
 
     return {
-      location: { ...location },
+      location: { ...location }
     }
   }
 
   loadResources(rawPath) {
     loader.loadPage(rawPath).then(pageResources => {
-      if (pageResources && pageResources.status !== `error`) {
+      if (pageResources && pageResources.status !== PageResourceStatus.Error) {
         this.setState({
           location: { ...window.location },
-          pageResources,
+          pageResources
         })
       } else {
         window.history.replaceState({}, ``, location.href)

@@ -1,23 +1,13 @@
 const Remark = require(`remark`)
 const find = require(`unist-util-find`)
 const _ = require(`lodash`)
-const semver = require(`semver`)
 
 const plugin = require(`../`)
-
-const testInNode8OrHigher = (title, ...args) => {
-  const isNode8OrHigher = semver.satisfies(process.version, `>=8`)
-  if (isNode8OrHigher) {
-    it(title, ...args)
-  } else {
-    it.skip(`skipped on Node 7 or lower: ${title}`, ...args)
-  }
-}
 
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
-  pedantic: true,
+  pedantic: true
 })
 
 const extractObjectTag = mdast =>
@@ -83,7 +73,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     })
   })
 
-  testInNode8OrHigher(`can copy JSX images`, async () => {
+  it(`can copy JSX images`, async () => {
     const mdx = require(`remark-mdx`)
 
     const markdownAST = remark().use(mdx).parse(`
@@ -103,7 +93,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     [`100%`, `100`],
     [`100`, `100%`],
     [`invalid`, `100`],
-    [`100`, `invalid`],
+    [`100`, `invalid`]
   ]
 
   _.map(shouldntTransform, ([width, height]) => {

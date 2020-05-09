@@ -2,19 +2,19 @@ import React from "react"
 
 jest.mock(`react-typography`, () => {
   return {
-    GoogleFont: () => <link />,
+    GoogleFont: () => <link />
   }
 })
 
 const mockTypographyCache = (googleFonts = [`Roboto`]) => {
   jest.doMock(
-    `../.cache/typography`,
+    `typography-plugin-cache-endpoint`,
     () => {
       return {
         injectStyles: () => {},
         options: {
-          googleFonts: [].concat(googleFonts),
-        },
+          googleFonts: [].concat(googleFonts)
+        }
       }
     },
     { virtual: true }
@@ -48,7 +48,7 @@ describe(`gatsby-plugin-typography`, () => {
   it(`shouldn't render googlefonts when omitGoogleFonts is true`, () => {
     const onClientEntry = require(`../gatsby-browser`).onClientEntry
     onClientEntry(null, {
-      omitGoogleFont: true,
+      omitGoogleFont: true
     })
 
     const link = document.querySelector(`[data-gatsby-typography]`)

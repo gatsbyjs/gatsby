@@ -6,7 +6,6 @@ const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
 const { createTypes } = actions
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()
@@ -16,7 +15,7 @@ report.activityTimer = jest.fn(() => {
   return {
     start: jest.fn(),
     setStatus: jest.fn(),
-    end: jest.fn(),
+    end: jest.fn()
   }
 })
 afterEach(() => {
@@ -34,71 +33,71 @@ describe(`Define parent-child relationships with field extensions`, () => {
         internal: {
           type: `Parent`,
           contentDigest: `Parent1`,
-          mediaType: `application/listenup`,
+          mediaType: `application/listenup`
         },
         parent: null,
-        children: [`child1`, `anotherchild1`, `anotherchild2`],
+        children: [`child1`, `anotherchild1`, `anotherchild2`]
       },
       {
         id: `parent2`,
         internal: {
           type: `Parent`,
           contentDigest: `Parent2`,
-          mediaType: `application/listenup`,
+          mediaType: `application/listenup`
         },
         parent: null,
-        children: [`child2`],
+        children: [`child2`]
       },
       {
         id: `relative`,
         internal: {
           type: `Relative`,
           contentDigest: `Relative1`,
-          mediaType: `multipart/related`,
+          mediaType: `multipart/related`
         },
         parent: null,
-        children: [`child1`],
+        children: [`child1`]
       },
       {
         id: `child1`,
         internal: {
           type: `Child`,
-          contentDigest: `Child1`,
+          contentDigest: `Child1`
         },
         parent: `parent1`,
         children: [],
-        name: `Child 1`,
+        name: `Child 1`
       },
       {
         id: `child2`,
         internal: {
           type: `Child`,
-          contentDigest: `Child2`,
+          contentDigest: `Child2`
         },
         parent: `parent2`,
         children: [],
-        name: `Child 2`,
+        name: `Child 2`
       },
       {
         id: `anotherchild1`,
         internal: {
           type: `AnotherChild`,
-          contentDigest: `AnotherChild1`,
+          contentDigest: `AnotherChild1`
         },
         parent: `parent1`,
         children: [],
-        name: `Another Child 1`,
+        name: `Another Child 1`
       },
       {
         id: `anotherchild2`,
         internal: {
           type: `AnotherChild`,
-          contentDigest: `AnotherChild2`,
+          contentDigest: `AnotherChild2`
         },
         parent: `parent1`,
         children: [],
-        name: `Another Child 2`,
-      },
+        name: `Another Child 2`
+      }
     ]
     nodes.forEach(node => {
       node.internal.contentDigest = `0`
@@ -272,28 +271,28 @@ describe(`Define parent-child relationships with field extensions`, () => {
           {
             id: `parent1`,
             childChild: {
-              name: `Child 1`,
+              name: `Child 1`
             },
             childrenAnotherChild: [
               {
-                name: `Another Child 1`,
+                name: `Another Child 1`
               },
               {
-                name: `Another Child 2`,
-              },
+                name: `Another Child 2`
+              }
             ],
-            childChildWithoutNodes: null,
+            childChildWithoutNodes: null
           },
           {
             id: `parent2`,
             childChild: {
-              name: `Child 2`,
+              name: `Child 2`
             },
             childrenAnotherChild: [],
-            childChildWithoutNodes: null,
-          },
-        ],
-      },
+            childChildWithoutNodes: null
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -306,46 +305,46 @@ describe(`Define parent-child relationships with field extensions`, () => {
           interfaces: [`Node`],
           fields: {},
           extensions: {
-            infer: false,
-          },
+            infer: false
+          }
         }),
         buildObjectType({
           name: `Child`,
           interfaces: [`Node`],
           fields: {
-            name: `String`,
+            name: `String`
           },
           extensions: {
             childOf: {
-              types: [`Parent`],
-            },
-          },
+              types: [`Parent`]
+            }
+          }
         }),
         buildObjectType({
           name: `AnotherChild`,
           interfaces: [`Node`],
           fields: {
-            name: `String`,
+            name: `String`
           },
           extensions: {
             childOf: {
               types: [`Parent`],
-              many: true,
-            },
-          },
+              many: true
+            }
+          }
         }),
         buildObjectType({
           name: `ChildWithoutNodes`,
           interfaces: [`Node`],
           fields: {
-            name: `String`,
+            name: `String`
           },
           extensions: {
             childOf: {
-              types: [`Parent`],
-            },
-          },
-        }),
+              types: [`Parent`]
+            }
+          }
+        })
       ])
     )
     const query = `
@@ -373,28 +372,28 @@ describe(`Define parent-child relationships with field extensions`, () => {
           {
             id: `parent1`,
             childChild: {
-              name: `Child 1`,
+              name: `Child 1`
             },
             childrenAnotherChild: [
               {
-                name: `Another Child 1`,
+                name: `Another Child 1`
               },
               {
-                name: `Another Child 2`,
-              },
+                name: `Another Child 2`
+              }
             ],
-            childChildWithoutNodes: null,
+            childChildWithoutNodes: null
           },
           {
             id: `parent2`,
             childChild: {
-              name: `Child 2`,
+              name: `Child 2`
             },
             childrenAnotherChild: [],
-            childChildWithoutNodes: null,
-          },
-        ],
-      },
+            childChildWithoutNodes: null
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -489,34 +488,34 @@ describe(`Define parent-child relationships with field extensions`, () => {
         nodes: [
           {
             childChild: {
-              name: `Child 1`,
+              name: `Child 1`
             },
             childrenAnotherChild: [
               {
-                name: `Another Child 1`,
+                name: `Another Child 1`
               },
               {
-                name: `Another Child 2`,
-              },
-            ],
+                name: `Another Child 2`
+              }
+            ]
           },
           {
             childChild: {
-              name: `Child 2`,
+              name: `Child 2`
             },
-            childrenAnotherChild: [],
-          },
-        ],
+            childrenAnotherChild: []
+          }
+        ]
       },
       allRelative: {
         nodes: [
           {
             childChild: {
-              name: `Child 1`,
-            },
-          },
-        ],
-      },
+              name: `Child 1`
+            }
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -565,26 +564,26 @@ describe(`Define parent-child relationships with field extensions`, () => {
         nodes: [
           {
             childChild: {
-              name: `Child 1`,
-            },
+              name: `Child 1`
+            }
           },
           {
             childChild: {
-              name: `Child 2`,
-            },
-          },
-        ],
+              name: `Child 2`
+            }
+          }
+        ]
       },
       allRelative: {
         nodes: [
           {
             childChild: {
-              name: `Child 1`,
+              name: `Child 1`
             },
-            childrenAnotherChild: [],
-          },
-        ],
-      },
+            childrenAnotherChild: []
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -641,27 +640,27 @@ describe(`Define parent-child relationships with field extensions`, () => {
             childrenNextGeneration: [
               {
                 __typename: `Child`,
-                id: `child1`,
+                id: `child1`
               },
               {
                 __typename: `AnotherChild`,
-                id: `anotherchild1`,
+                id: `anotherchild1`
               },
               {
                 __typename: `AnotherChild`,
-                id: `anotherchild2`,
-              },
-            ],
+                id: `anotherchild2`
+              }
+            ]
           },
           {
             childrenNextGeneration: [
               {
                 __typename: `Child`,
-                id: `child2`,
-              },
-            ],
-          },
-        ],
+                id: `child2`
+              }
+            ]
+          }
+        ]
       },
       allRelative: {
         nodes: [
@@ -669,12 +668,12 @@ describe(`Define parent-child relationships with field extensions`, () => {
             childrenNextGeneration: [
               {
                 __typename: `Child`,
-                id: `child1`,
-              },
-            ],
-          },
-        ],
-      },
+                id: `child1`
+              }
+            ]
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -718,35 +717,35 @@ describe(`Define parent-child relationships with field extensions`, () => {
           {
             childrenAnotherChild: [
               {
-                id: `anotherchild1`,
+                id: `anotherchild1`
               },
               {
-                id: `anotherchild2`,
-              },
-            ],
+                id: `anotherchild2`
+              }
+            ]
           },
           {
-            childrenAnotherChild: [],
-          },
-        ],
+            childrenAnotherChild: []
+          }
+        ]
       },
       allParent: {
         nodes: [
           {
             childrenAnotherChild: [
               {
-                id: `anotherchild1`,
+                id: `anotherchild1`
               },
               {
-                id: `anotherchild2`,
-              },
-            ],
+                id: `anotherchild2`
+              }
+            ]
           },
           {
-            childrenAnotherChild: [],
-          },
-        ],
-      },
+            childrenAnotherChild: []
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -789,30 +788,30 @@ describe(`Define parent-child relationships with field extensions`, () => {
         nodes: [
           {
             childChild: {
-              id: `child1`,
-            },
+              id: `child1`
+            }
           },
           {
             childChild: {
-              id: `child2`,
-            },
-          },
-        ],
+              id: `child2`
+            }
+          }
+        ]
       },
       allParent: {
         nodes: [
           {
             childChild: {
-              id: `child1`,
-            },
+              id: `child1`
+            }
           },
           {
             childChild: {
-              id: `child2`,
-            },
-          },
-        ],
-      },
+              id: `child2`
+            }
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -901,7 +900,7 @@ const buildSchema = async () => {
   await build({})
   const {
     schemaCustomization: { composer: schemaComposer },
-    schema,
+    schema
   } = store.getState()
   return { schema, schemaComposer }
 }
@@ -914,7 +913,7 @@ const runQuery = async query => {
     undefined,
     withResolverContext({
       schema,
-      schemaComposer,
+      schemaComposer
     })
   )
   expect(results.errors).toBeUndefined()

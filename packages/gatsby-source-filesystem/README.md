@@ -30,18 +30,18 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
+        path: `${__dirname}/src/pages/`
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `data`,
         path: `${__dirname}/src/data/`,
-        ignore: [`**/\.*`], // ignore files starting with a dot
-      },
-    },
-  ],
+        ignore: [`**/\.*`] // ignore files starting with a dot
+      }
+    }
+  ]
 }
 ```
 
@@ -142,14 +142,14 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     const relativeFilePath = createFilePath({
       node,
       getNode,
-      basePath: "data/faqs/",
+      basePath: "data/faqs/"
     })
 
     // Creates new query'able field with name of 'slug'
     createNodeField({
       node,
       name: "slug",
-      value: `/faqs${relativeFilePath}`,
+      value: `/faqs${relativeFilePath}`
     })
   }
 }
@@ -169,11 +169,8 @@ createRemoteFileNode({
   // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
   parentNodeId,
 
-  // The redux store which is passed to all Node APIs.
-  store,
-
   // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  cache,
+  getCache,
 
   // The action used to create nodes
   createNode,
@@ -191,7 +188,7 @@ createRemoteFileNode({
 
   // OPTIONAL
   // Sets the file extension
-  ext: ".jpg",
+  ext: ".jpg"
 })
 ```
 
@@ -204,11 +201,10 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 exports.downloadMediaFiles = ({
   nodes,
-  store,
-  cache,
+  getCache,
   createNode,
   createNodeId,
-  _auth,
+  _auth
 }) => {
   nodes.map(async node => {
     let fileNode
@@ -219,11 +215,10 @@ exports.downloadMediaFiles = ({
         fileNode = await createRemoteFileNode({
           url: node.source_url,
           parentNodeId: node.id,
-          store,
-          cache,
+          getCache,
           createNode,
           createNodeId,
-          auth: _auth,
+          auth: _auth
         })
       } catch (e) {
         // Ignore
@@ -250,13 +245,12 @@ createRemoteFileNode({
   // The source url of the remote file
   url: `https://example.com/a-file-without-an-extension`,
   parentNodeId: node.id,
-  store,
-  cache,
+  getCache,
   createNode,
   createNodeId,
   // if necessary!
   ext: ".jpg",
-  name: "image",
+  name: "image"
 })
 ```
 
@@ -274,10 +268,7 @@ The following example is adapted from the source of [`gatsby-source-mysql`](http
 // gatsby-node.js
 const createMySqlNodes = require(`./create-nodes`)
 
-exports.sourceNodes = async (
-  { actions, createNodeId, store, cache },
-  config
-) => {
+exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   const { createNode } = actions
   const { conn, queries } = config
   const { db, results } = await query(conn, queries)
@@ -289,8 +280,7 @@ exports.sourceNodes = async (
         createMySqlNodes(result, results, createNode, {
           createNode,
           createNodeId,
-          store,
-          cache,
+          getCache
         })
       )
     db.end()
@@ -311,10 +301,9 @@ function attach(node, key, value, ctx) {
     ctx.linkChildren.push(parentNodeId =>
       createFileNodeFromBuffer({
         buffer: value,
-        store: ctx.store,
-        cache: ctx.cache,
+        getCache: ctx.getCache,
         createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
+        createNodeId: ctx.createNodeId
       })
     )
     value = `Buffer`

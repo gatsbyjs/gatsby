@@ -13,7 +13,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins,
   mdxNode,
   getNode,
-  getNodes,
+  getNodesByType,
   reporter,
   cache,
   pathPrefix,
@@ -39,7 +39,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
       }
   }
 
-  fileNodes = getNodes().filter(n => n.internal.type === `File`)
+  fileNodes = getNodesByType(`File`)
 
   // return list of remarkPlugins
   const userPlugins = gatsbyRemarkPlugins
@@ -65,7 +65,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               pathPrefix,
               reporter,
               cache,
-              ...helpers,
+              ...helpers
             },
             plugin.options || {}
           )

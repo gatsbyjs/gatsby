@@ -12,7 +12,7 @@ const { createFileNode } = require(`./create-file-node`)
 const {
   getRemoteFileExtension,
   getRemoteFileName,
-  createFilePath,
+  createFilePath
 } = require(`./utils`)
 const cacheId = url => `create-remote-file-node-${url}`
 
@@ -23,11 +23,6 @@ let totalJobs = 0
 /********************
  * Type Definitions *
  ********************/
-
-/**
- * @typedef {Redux}
- * @see [Redux Docs]{@link https://redux.js.org/api-reference}
- */
 
 /**
  * @typedef {GatsbyCache}
@@ -52,15 +47,13 @@ let totalJobs = 0
  * @description Create Remote File Node Payload
  *
  * @param  {String} options.url
- * @param  {Redux} options.store
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
+ * @param  {Function} options.getCache
  * @param  {Auth} [options.auth]
  * @param  {Reporter} [options.reporter]
  */
 
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
 const STALL_RETRY_LIMIT = 3
 const STALL_TIMEOUT = 30000
 
@@ -80,7 +73,7 @@ const CONNECTION_TIMEOUT = 30000
 const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
-  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200
 })
 
 // when the queue is empty we stop the progressbar
@@ -160,7 +153,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       headers,
       timeout: CONNECTION_TIMEOUT,
       retries: CONNECTION_RETRY_LIMIT,
-      ...httpOpts,
+      ...httpOpts
     })
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
@@ -203,7 +196,6 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
  */
 async function processRemoteNode({
   url,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -211,19 +203,13 @@ async function processRemoteNode({
   httpHeaders = {},
   createNodeId,
   ext,
-  name,
+  name
 }) {
-  // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
-  await fs.ensureDir(pluginCacheDir)
-
+  const pluginCacheDir = cache.directory
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheId(url))
+
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
@@ -329,16 +315,16 @@ const pushTask = task =>
  */
 module.exports = ({
   url,
-  store,
   cache,
   createNode,
+  getCache,
   parentNodeId = null,
   auth = {},
   httpHeaders = {},
   createNodeId,
   ext = null,
   name = null,
-  reporter,
+  reporter
 }) => {
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
@@ -351,11 +337,14 @@ module.exports = ({
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
   }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
+  if (typeof getCache === `function`) {
+    // use cache of this plugin and not cache of function caller
+    cache = getCache(`gatsby-source-filesystem`)
   }
   if (typeof cache !== `object`) {
-    throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+    throw new Error(
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
+    )
   }
 
   // Check if we already requested node for this remote file
@@ -378,7 +367,6 @@ module.exports = ({
 
   const fileDownloadPromise = pushTask({
     url,
-    store,
     cache,
     createNode,
     parentNodeId,
@@ -386,7 +374,7 @@ module.exports = ({
     auth,
     httpHeaders,
     ext,
-    name,
+    name
   })
 
   processingCache[url] = fileDownloadPromise.then(node => {

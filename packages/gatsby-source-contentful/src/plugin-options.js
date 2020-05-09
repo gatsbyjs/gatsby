@@ -12,7 +12,7 @@ const defaultOptions = {
   localeFilter: () => true,
   forceFullSync: false,
   pageLimit: DEFAULT_PAGE_LIMIT,
-  useNameForId: true,
+  useNameForId: true
 }
 
 const createPluginConfig = pluginOptions => {
@@ -20,7 +20,7 @@ const createPluginConfig = pluginOptions => {
 
   return {
     get: key => conf[key],
-    getOriginalPluginOptions: () => pluginOptions,
+    getOriginalPluginOptions: () => pluginOptions
   }
 }
 
@@ -42,17 +42,17 @@ const optionsSchema = Joi.object().keys({
     port: Joi.number().required(),
     auth: Joi.object().keys({
       username: Joi.string(),
-      password: Joi.string(),
-    }),
+      password: Joi.string()
+    })
   }),
   useNameForId: Joi.boolean(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
   richText: Joi.object()
     .keys({
-      resolveFieldLocales: Joi.boolean(),
+      resolveFieldLocales: Joi.boolean()
     })
-    .default({}),
+    .default({})
 })
 
 const maskedFields = [`accessToken`, `spaceId`]
@@ -136,5 +136,5 @@ export {
   validateOptions,
   formatPluginOptionsForCLI,
   maskText,
-  createPluginConfig,
+  createPluginConfig
 }

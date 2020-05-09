@@ -23,7 +23,7 @@ In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link 
 
 ```js:title=gatsby-config.js
 module.exports = {
-  pathPrefix: `/examplerepository`,
+  pathPrefix: `/examplerepository`
 }
 ```
 
@@ -45,6 +45,9 @@ image: node:latest
 cache:
   paths:
     - node_modules/
+    # Enables git-lab CI caching. Both .cache and public must be cached, otherwise builds will fail.
+    - .cache/
+    - public/
 
 pages:
   script:

@@ -1,10 +1,10 @@
 jest.mock(`browserslist/node`, () => {
   return {
-    findConfig: jest.fn(),
+    findConfig: jest.fn()
   }
 })
 const path = require(`path`)
-const getBrowsersList = require(`../browserslist`)
+import { getBrowsersList } from "../browserslist"
 const { findConfig: mockedFindConfig } = require(`browserslist/node`)
 
 const BASE = path.resolve(`.`)
@@ -13,7 +13,7 @@ describe(`browserslist`, () => {
   it(`prefers returned browserslist results`, () => {
     const defaults = [`IE 11`]
     mockedFindConfig.mockReturnValueOnce({
-      defaults,
+      defaults
     })
 
     const list = getBrowsersList(BASE)

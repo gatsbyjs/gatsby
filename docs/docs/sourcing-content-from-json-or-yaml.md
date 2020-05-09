@@ -14,7 +14,7 @@ gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-star
 
 ## Directly import data with YAML
 
-This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#Directly-importing-data-with-JSON).
+This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#directly-import-data-with-json).
 
 ### Add the YAML content
 
@@ -230,8 +230,8 @@ exports.createPages = ({ actions }) => {
       component: require.resolve("./src/templates/basicTemplate.js"),
       context: {
         pageContent: element.content,
-        links: element.links,
-      },
+        links: element.links
+      }
     })
   })
 }

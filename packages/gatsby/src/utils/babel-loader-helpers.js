@@ -4,8 +4,8 @@ const _ = require(`lodash`)
 const loadCachedConfig = () => {
   let pluginBabelConfig = {
     stages: {
-      test: { plugins: [], presets: [] },
-    },
+      test: { plugins: [], presets: [] }
+    }
   }
   if (process.env.NODE_ENV !== `test`) {
     pluginBabelConfig = require(path.join(
@@ -29,8 +29,8 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   // Required plugins/presets
   const requiredPlugins = [
     babel.createConfigItem([resolve(`babel-plugin-remove-graphql-queries`)], {
-      type: `plugin`,
-    }),
+      type: `plugin`
+    })
   ]
   const requiredPresets = []
 
@@ -38,15 +38,16 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   if (stage === `build-html` || stage === `develop-html`) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
-        type: `plugin`,
+        type: `plugin`
       })
     )
   }
 
-  if (stage === `develop`) {
+  // TODO: Remove entire block when we make fast-refresh the default
+  if (stage === `develop` && process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
-        type: `plugin`,
+        type: `plugin`
       })
     )
   }
@@ -59,11 +60,11 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
       [
         resolve(`babel-preset-gatsby`),
         {
-          stage,
-        },
+          stage
+        }
       ],
       {
-        type: `preset`,
+        type: `preset`
       }
     )
   )
@@ -75,7 +76,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     reduxPlugins.push(
       babel.createConfigItem([resolve(plugin.name), plugin.options], {
         name: plugin.name,
-        type: `plugin`,
+        type: `plugin`
       })
     )
   })
@@ -83,7 +84,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     reduxPresets.push(
       babel.createConfigItem([resolve(preset.name), preset.options], {
         name: preset.name,
-        type: `preset`,
+        type: `preset`
       })
     )
   })
@@ -93,7 +94,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     reduxPlugins,
     requiredPresets,
     requiredPlugins,
-    fallbackPresets,
+    fallbackPresets
   ]
 }
 
@@ -108,10 +109,10 @@ const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
     items[index] = babel.createConfigItem(
       [
         itemToMerge.file.resolved,
-        _.merge({}, items[index].options, itemToMerge.options),
+        _.merge({}, items[index].options, itemToMerge.options)
       ],
       {
-        type,
+        type
       }
     )
   } else {

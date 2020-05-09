@@ -15,7 +15,7 @@ import {
   ProductMetafieldNode,
   ProductVariantMetafieldNode,
   ShopPolicyNode,
-  PageNode,
+  PageNode
 } from "./nodes"
 import {
   SHOP,
@@ -26,7 +26,7 @@ import {
   COLLECTION,
   PRODUCT,
   SHOP_POLICY,
-  PAGE,
+  PAGE
 } from "./constants"
 import {
   ARTICLES_QUERY,
@@ -34,18 +34,25 @@ import {
   COLLECTIONS_QUERY,
   PRODUCTS_QUERY,
   SHOP_POLICIES_QUERY,
-  PAGES_QUERY,
+  PAGES_QUERY
 } from "./queries"
 
 export const sourceNodes = async (
-  { actions: { createNode, touchNode }, createNodeId, store, cache, reporter },
+  {
+    actions: { createNode, touchNode },
+    createNodeId,
+    store,
+    cache,
+    getCache,
+    reporter
+  },
   {
     shopName,
     accessToken,
     apiVersion = `2019-07`,
     verbose = true,
     paginationSize = 250,
-    includeCollections = [SHOP, CONTENT],
+    includeCollections = [SHOP, CONTENT]
   }
 ) => {
   const client = createClient(shopName, accessToken, apiVersion)
@@ -64,7 +71,8 @@ export const sourceNodes = async (
       touchNode,
       store,
       cache,
-      reporter,
+      getCache,
+      reporter
     }
 
     // Arguments used for node creation.
@@ -75,7 +83,7 @@ export const sourceNodes = async (
       formatMsg,
       verbose,
       imageArgs,
-      paginationSize,
+      paginationSize
     }
 
     // Message printed when fetching is complete.
@@ -108,7 +116,7 @@ export const sourceNodes = async (
               createNode(await ProductOptionNode(imageArgs)(option))
             )
         }),
-        createShopPolicies(args),
+        createShopPolicies(args)
       ])
     }
     if (includeCollections.includes(CONTENT)) {
@@ -120,7 +128,7 @@ export const sourceNodes = async (
               createNode(await CommentNode(imageArgs)(edge.node))
             )
         }),
-        createPageNodes(PAGE, PAGES_QUERY, PageNode, args),
+        createPageNodes(PAGE, PAGES_QUERY, PageNode, args)
       ])
     }
 
@@ -174,7 +182,7 @@ const createShopPolicies = async ({
   client,
   createNode,
   formatMsg,
-  verbose,
+  verbose
 }) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${SHOP_POLICY} nodes`)

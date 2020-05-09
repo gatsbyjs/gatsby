@@ -58,15 +58,15 @@ Gatsby-config.js file:
 ```js
 module.exports = {
   siteMetadata: {
-    title: `Taking Care of Watson`,
+    title: `Taking Care of Watson`
   },
   plugins: [
     `gatsby-plugin-glamor`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
+        pathToConfigModule: `src/utils/typography`
+      }
     },
     //Here's where I include the gatsby-source-contentful plugin.
     // And also I added the spaceID and accessToken I got from my Contentful account.
@@ -74,12 +74,12 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `g0b694a663ft`,
-        accessToken: `cc94019b03af3894ec87eded57fffd67c6785f1c6fb6b2c3e67ded27682b0c02`,
-      },
+        accessToken: `cc94019b03af3894ec87eded57fffd67c6785f1c6fb6b2c3e67ded27682b0c02`
+      }
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-  ],
+    `gatsby-plugin-sharp`
+  ]
 }
 ```
 
@@ -117,7 +117,7 @@ Here are more examples of pages I created. This is the photo gallery page:
 ```jsx
 import React from "react"
 
-export default ({ data }) => {
+export default function Gallery({ data }) {
   console.log(data)
   // The next line is where the code drills deeper into the data structure to finally get to photos.
   // In order to create the correct order here, follow the structure of the GraphQL query.
@@ -171,7 +171,7 @@ Because each entry was inconsistent, my friends helped me figure out a way to us
 ```jsx
 import React from "react"
 
-export default ({ data }) => {
+export default function TricksCommands({ data }) {
   const tricks = data.allContentfulTricksCommands.edges
   console.log(tricks)
   console.log(data)
@@ -188,7 +188,7 @@ export default ({ data }) => {
           gatsby-transformer-remark plugin and this `dangerouslySetInnerHTML`.
           <div
             dangerouslySetInnerHTML={{
-              __html: trick.node.commandDescription.childMarkdownRemark.html,
+              __html: trick.node.commandDescription.childMarkdownRemark.html
             }}
           />
           {trick.node.exampleOfTheCommandInAction && (

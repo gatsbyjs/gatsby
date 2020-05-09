@@ -8,8 +8,8 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const stackTrace = require(`stack-trace`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)
-const getCache = require(`./get-cache`)
-const createNodeId = require(`./create-node-id`)
+const { getCache } = require(`./get-cache`)
+import { createNodeId } from "./create-node-id"
 const { createContentDigest } = require(`gatsby-core-utils`)
 const {
   buildObjectType,
@@ -17,13 +17,13 @@ const {
   buildInterfaceType,
   buildInputObjectType,
   buildEnumType,
-  buildScalarType,
+  buildScalarType
 } = require(`../schema/types/type-builders`)
 const { emitter, store } = require(`../redux`)
-const getPublicPath = require(`./get-public-path`)
+const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
-const { default: errorParser } = require(`./api-runner-error-parser`)
+import errorParser from "./api-runner-error-parser"
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -68,7 +68,7 @@ const initAPICallTracing = parentSpan => {
   return {
     tracer,
     parentSpan,
-    startSpan,
+    startSpan
   }
 }
 
@@ -93,15 +93,15 @@ const runAPI = (plugin, api, args, activity) => {
       getNode,
       getNodesByType,
       hasNodeChanged,
-      getNodeAndSavePathDependency,
+      getNodeAndSavePathDependency
     } = require(`../db/nodes`)
     const {
       publicActions,
-      restrictedActionsAvailableInAPI,
+      restrictedActionsAvailableInAPI
     } = require(`../redux/actions`)
     const availableActions = {
       ...publicActions,
-      ...(restrictedActionsAvailableInAPI[api] || {}),
+      ...(restrictedActionsAvailableInAPI[api] || {})
     }
     const boundActionCreators = bindActionCreators(
       availableActions,
@@ -156,7 +156,7 @@ const runAPI = (plugin, api, args, activity) => {
               For more info and debugging tips: see ${chalk.bold(
                 `https://gatsby.dev/sync-actions`
               )}
-            `),
+            `)
             ]
 
             const possiblyCodeFrame = getNonGatsbyCodeFrameFormatted()
@@ -167,10 +167,10 @@ const runAPI = (plugin, api, args, activity) => {
             reporter.warn(warning.join(`\n\n`))
             alreadyDisplayed = true
           }
-        },
+        }
       }
     }
-    let localReporter = getLocalReporter(activity, reporter)
+    const localReporter = getLocalReporter(activity, reporter)
 
     const apiCallArgs = [
       {
@@ -199,10 +199,10 @@ const runAPI = (plugin, api, args, activity) => {
           buildInterfaceType,
           buildInputObjectType,
           buildEnumType,
-          buildScalarType,
-        },
+          buildScalarType
+        }
       },
-      plugin.pluginOptions,
+      plugin.pluginOptions
     ]
 
     // If the plugin is using a callback use that otherwise
@@ -220,7 +220,7 @@ const runAPI = (plugin, api, args, activity) => {
         } catch (e) {
           trackBuildError(api, {
             error: e,
-            pluginName: `${plugin.name}@${plugin.version}`,
+            pluginName: `${plugin.name}@${plugin.version}`
           })
           throw e
         }
@@ -238,8 +238,8 @@ const runAPI = (plugin, api, args, activity) => {
   return null
 }
 
-let apisRunningById = new Map()
-let apisRunningByTraceId = new Map()
+const apisRunningById = new Map()
+const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
@@ -271,7 +271,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       resolve,
       span: apiSpan,
       startTime: new Date().toJSON(),
-      traceId,
+      traceId
     }
 
     // Generate IDs for api runs. Most IDs we generate from the args
@@ -332,17 +332,17 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
         return null
       }
 
-      let pluginName =
+      const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
       return new Promise(resolve => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
       }).catch(err => {
         decorateEvent(`BUILD_PANIC`, {
-          pluginName: `${plugin.name}@${plugin.version}`,
+          pluginName: `${plugin.name}@${plugin.version}`
         })
 
-        let localReporter = getLocalReporter(activity, reporter)
+        const localReporter = getLocalReporter(activity, reporter)
 
         const file = stackTrace
           .parse(err)
@@ -360,16 +360,16 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
             {
               start: {
                 line,
-                column,
-              },
+                column
+              }
             },
             {
-              highlightCode: true,
+              highlightCode: true
             }
           )
 
           structuredError.location = {
-            start: { line: line, column: column },
+            start: { line: line, column: column }
           }
           structuredError.filePath = fileName
         }
@@ -378,7 +378,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           ...structuredError.context,
           pluginName,
           api,
-          codeFrame,
+          codeFrame
         }
 
         localReporter.panicOnBuild(structuredError)

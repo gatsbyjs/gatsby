@@ -7,7 +7,7 @@ const glob = require(`glob`)
 const { warnOnIncompatiblePeerDependency } = require(`./validate`)
 const { store } = require(`../../redux`)
 const existsSync = require(`fs-exists-cached`).sync
-const createNodeId = require(`../../utils/create-node-id`)
+import { createNodeId } from "../../utils/create-node-id"
 const { createRequireFromPath } = require(`gatsby-core-utils`)
 
 function createFileContentHash(root, globPattern) {
@@ -70,7 +70,7 @@ function resolvePlugin(pluginName, rootDir) {
           name,
           id: createPluginId(name),
           version:
-            packageJSON.version || createFileContentHash(resolvedPath, `**`),
+            packageJSON.version || createFileContentHash(resolvedPath, `**`)
         }
       } else {
         // Make package.json a requirement for local plugins too
@@ -110,7 +110,7 @@ function resolvePlugin(pluginName, rootDir) {
       resolve: resolvedPath,
       id: createPluginId(packageJSON.name),
       name: packageJSON.name,
-      version: packageJSON.version,
+      version: packageJSON.version
     }
   } catch (err) {
     throw new Error(
@@ -133,8 +133,8 @@ const loadPlugins = (config = {}, rootDir = null) => {
       return {
         ...info,
         pluginOptions: {
-          plugins: [],
-        },
+          plugins: []
+        }
       }
     } else {
       plugin.options = plugin.options || {}
@@ -158,18 +158,18 @@ const loadPlugins = (config = {}, rootDir = null) => {
           id: createPluginId(name, plugin),
           name,
           pluginOptions: {
-            plugins: [],
+            plugins: []
           },
-          resolve: `__TEST__`,
+          resolve: `__TEST__`
         }
       }
 
-      const info = resolvePlugin(plugin.resolve, rootDir)
+      const info = resolvePlugin(plugin.resolve, plugin.parentDir || rootDir)
 
       return {
         ...info,
         id: createPluginId(info.name, plugin),
-        pluginOptions: _.merge({ plugins: [] }, plugin.options),
+        pluginOptions: _.merge({ plugins: [] }, plugin.options)
       }
     }
   }
@@ -180,7 +180,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
     `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
-    `../../internal-plugins/webpack-theme-component-shadowing`,
+    `../../internal-plugins/webpack-theme-component-shadowing`
   ]
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
@@ -205,8 +205,8 @@ const loadPlugins = (config = {}, rootDir = null) => {
         resolve: require.resolve(`gatsby-plugin-page-creator`),
         options: {
           path: slash(path.join(plugin.resolve, `src/pages`)),
-          pathCheck: false,
-        },
+          pathCheck: false
+        }
       })
     )
   })
@@ -218,8 +218,8 @@ const loadPlugins = (config = {}, rootDir = null) => {
     name: `default-site-plugin`,
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
-      plugins: [],
-    },
+      plugins: []
+    }
   })
 
   const program = store.getState().program
@@ -227,7 +227,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
   // default options for gatsby-plugin-page-creator
   let pageCreatorOptions = {
     path: slash(path.join(program.directory, `src/pages`)),
-    pathCheck: false,
+    pathCheck: false
   }
 
   if (config.plugins) {
@@ -243,10 +243,25 @@ const loadPlugins = (config = {}, rootDir = null) => {
     }
   }
 
+  // TypeScript support by default! use the user-provided one if it exists
+  const typescriptPlugin = (config.plugins || []).find(
+    plugin =>
+      plugin.resolve === `gatsby-plugin-typescript` ||
+      plugin === `gatsby-plugin-typescript`
+  )
+
+  if (typescriptPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-typescript`)
+      })
+    )
+  }
+
   plugins.push(
     processPlugin({
       resolve: require.resolve(`gatsby-plugin-page-creator`),
-      options: pageCreatorOptions,
+      options: pageCreatorOptions
     })
   )
 
@@ -255,5 +270,5 @@ const loadPlugins = (config = {}, rootDir = null) => {
 
 module.exports = {
   loadPlugins,
-  resolvePlugin,
+  resolvePlugin
 }

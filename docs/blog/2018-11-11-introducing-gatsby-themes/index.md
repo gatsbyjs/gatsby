@@ -7,7 +7,7 @@ tags: ["themes"]
 ---
 
 Gatsby is a powerful platform for building marketing sites, blogs,
-ecommerce frontends, and more. You can source data from static files
+e-commerce frontends, and more. You can source data from static files
 and any number of content management systems. You can process images,
 add support for our favorite styling technique, transform markdown,
 and just about anything else you can imagine.
@@ -83,9 +83,9 @@ module.exports = {
   plugins: [
     {
       resolve: "gatsby-theme-blog",
-      options: {},
-    },
-  ],
+      options: {}
+    }
+  ]
 }
 ```
 
@@ -100,10 +100,10 @@ module.exports = {
     {
       resolve: "gatsby-theme-blog",
       options: {
-        some: "value",
-      },
-    },
-  ],
+        some: "value"
+      }
+    }
+  ]
 }
 ```
 
@@ -153,7 +153,7 @@ the user optionally override the default component.
 ```js:title=gatsby-node.js
 createPage({
   path: post.node.fields.slug,
-  component: withThemePath("./src/templates/blog-post.js"),
+  component: withThemePath("./src/templates/blog-post.js")
 })
 ```
 

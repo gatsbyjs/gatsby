@@ -8,6 +8,8 @@ const fs = require(`fs`)
 
 const bootstrapTime = performance.now()
 
+const CI_NAME = process.env.CI_NAME
+
 const BENCHMARK_REPORTING_URL =
   process.env.BENCHMARK_REPORTING_URL === `cli`
     ? undefined
@@ -25,7 +27,7 @@ function reportError(...args) {
 function execToStr(cmd) {
   return String(
     execSync(cmd, {
-      encoding: `utf8`,
+      encoding: `utf8`
     }) ?? ``
   ).trim()
 }
@@ -50,9 +52,52 @@ class BenchMeta {
       preBootstrap: 0, // Gatsby onPreBootstrap life cycle
       preBuild: 0, // Gatsby onPreBuild life cycle
       postBuild: 0, // Gatsby onPostBuild life cycle
-      benchmarkEnd: 0, // End of benchmark itself
+      benchmarkEnd: 0 // End of benchmark itself
     }
     this.started = false
+  }
+
+  getMetadata() {
+    let siteId = ``
+    try {
+      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
+      siteId =
+        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
+    } catch (e) {
+      siteId = `error`
+      reportInfo(
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+      )
+    }
+
+    /**
+     * If we are running in netlify, environment variables can be attached using the INCOMING_HOOK_BODY
+     * extract the configuration from there
+     */
+
+    let buildType = process.env.BENCHMARK_BUILD_TYPE
+    const incomingHookBodyEnv = process.env.INCOMING_HOOK_BODY
+
+    if (CI_NAME === `netlify` && incomingHookBodyEnv) {
+      try {
+        const incomingHookBody = JSON.parse(incomingHookBodyEnv)
+        buildType = incomingHookBody && incomingHookBody.buildType
+      } catch (e) {
+        reportInfo(
+          `Suppressed an error trying to JSON.parse(INCOMING_HOOK_BODY): ${e}`
+        )
+      }
+    }
+
+    return {
+      buildId: process.env.BENCHMARK_BUILD_ID,
+      branch: process.env.BENCHMARK_BRANCH,
+      siteId,
+      contentSource: process.env.BENCHMARK_CONTENT_SOURCE,
+      siteType: process.env.BENCHMARK_SITE_TYPE,
+      repoName: process.env.BENCHMARK_REPO_NAME,
+      buildType: buildType
+    }
   }
 
   getData() {
@@ -62,7 +107,7 @@ class BenchMeta {
       rss: rss ?? 0,
       heapTotal: heapTotal ?? 0,
       heapUsed: heapUsed ?? 0,
-      external: external ?? 0,
+      external: external ?? 0
     }
 
     for (const key in this.timestamps) {
@@ -112,49 +157,34 @@ class BenchMeta {
       `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
     )
 
-    const pageCount = glob(`**/**.json`, {
-      cwd: `./public/page-data`,
-      nocase: true,
-    }).length
-
-    let siteId = ``
-    try {
-      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
-      siteId =
-        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
-    } catch (e) {
-      siteId = `error`
-      reportInfo(
-        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
-      )
-    }
+    const benchmarkMetadata = this.getMetadata()
 
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
-      siteId,
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
       commitTime,
       ci: process.env.CI || false,
-      ciName: process.env.CI_NAME || `local`,
+      ciName: CI_NAME || `local`,
       versions: {
         nodejs: nodejsVersion,
         gatsby: gatsbyVersion,
         gatsbyCli: gatsbyCliVersion,
         sharp: sharpVersion,
-        webpack: webpackVersion,
+        webpack: webpackVersion
       },
       counts: {
-        pages: pageCount,
+        pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
-        other: otherCount,
+        other: otherCount
       },
       memory,
       publicJsSize,
+      ...benchmarkMetadata
     }
   }
 
@@ -214,17 +244,17 @@ class BenchMeta {
       method: `POST`,
       headers: {
         "content-type": `application/json`,
-        // "user-agent": this.getUserAgent(),
+        "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET
       },
-      body: json,
+      body: json
     }).then(res => {
       lastStatus = res.status
-      if (lastStatus === 500) {
-        reportInfo(`Got 500 response, waiting for text`)
+      if ([401, 500].includes(lastStatus)) {
+        reportInfo(`Got ${lastStatus} response, waiting for text`)
         res.text().then(content => {
           reportError(
             `Response error`,
-            new Error(`Server responded with a 500 error: ${content}`)
+            new Error(`Server responded with a ${lastStatus} error: ${content}`)
           )
           process.exit(1)
         })
@@ -281,6 +311,7 @@ async function onPreBuild(api) {
 
 async function onPostBuild(api) {
   lastApi = api
+
   benchMeta.markDataPoint(`postBuild`)
   return benchMeta.markEnd()
 }

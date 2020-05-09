@@ -25,11 +25,11 @@ module.exports = {
       options: {
         postsPath: "/blog",
         colors: {
-          primary: "tomato",
-        },
-      },
-    },
-  ],
+          primary: "tomato"
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -45,7 +45,7 @@ module.exports = themeOptions => {
   return {
     plugins: [
       // ...
-    ],
+    ]
   }
 }
 ```
@@ -86,7 +86,9 @@ Taking the `Header` example from before, when you write your shadowing file at `
 import Header from "gatsby-theme-amazing/src/components/header"
 
 // these props are the same as the original component would get
-export default props => <Header {...props} myProp="true" />
+export default function MyHeader(props) {
+  return <Header {...props} myProp="true" />
+}
 ```
 
 Taking this approach means that when you upgrade your theme later you can also take advantage of all the updates to the `Header` component because you haven't fully replaced it, just modified it.
@@ -117,7 +119,7 @@ Gatsby themes can compose horizontally and vertically. Vertical composition refe
 
 ```js:title=gatsby-theme-child/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-parent`],
+  plugins: [`gatsby-theme-parent`]
 }
 ```
 
@@ -125,7 +127,7 @@ Horizontal composition is when two different themes are used together, such as `
 
 ```js:title=my-site/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-blog`, `gatsby-theme-notes`],
+  plugins: [`gatsby-theme-blog`, `gatsby-theme-notes`]
 }
 ```
 

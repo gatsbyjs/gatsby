@@ -14,9 +14,13 @@ const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../../joi-schemas/joi`)
+import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -34,7 +38,7 @@ const {
   enqueueJob,
   createInternalJob,
   removeInProgressJob,
-  getInProcessJobPromise,
+  getInProcessJobPromise
 } = require(`../../utils/jobs-manager`)
 
 const actions = {}
@@ -70,20 +74,20 @@ const findChildren = initialChildren => {
 import type { Plugin } from "./types"
 
 type Job = {
-  id: string,
+  id: string
 }
 
 type JobV2 = {
   name: string,
   inputPaths: string[],
   outputDir: string,
-  args: Object,
+  args: Object
 }
 
 type PageInput = {
   path: string,
   component: string,
-  context?: Object,
+  context?: Object
 }
 
 type Page = {
@@ -93,22 +97,22 @@ type Page = {
   context: Object,
   internalComponentName: string,
   componentChunkName: string,
-  updatedAt: number,
+  updatedAt: number
 }
 
 type ActionOptions = {
   traceId: ?string,
   parentSpan: ?Object,
-  followsSpan: ?Object,
+  followsSpan: ?Object
 }
 
 type PageData = {
   id: string,
-  resultHash: string,
+  resultHash: string
 }
 
 type PageDataRemove = {
-  id: string,
+  id: string
 }
 
 /**
@@ -122,7 +126,7 @@ type PageDataRemove = {
 actions.deletePage = (page: PageInput) => {
   return {
     type: `DELETE_PAGE`,
-    payload: page,
+    payload: page
   }
 }
 
@@ -173,8 +177,8 @@ actions.createPage = (
         context: {
           pluginName: name,
           pageObject: page,
-          message,
-        },
+          message
+        }
       })
     } else {
       return message
@@ -190,7 +194,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorId`,
+      `pluginCreatorId`
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -231,8 +235,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic({
           id: `11324`,
           context: {
-            message: error,
-          },
+            message: error
+          }
         })
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
@@ -250,8 +254,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         id: `11322`,
         context: {
           pluginName: name,
-          pageObject: page,
-        },
+          pageObject: page
+        }
       })
     } else {
       // For test
@@ -273,8 +277,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         context: {
           pluginName: name,
           pageObject: page,
-          component: page.component,
-        },
+          component: page.component
+        }
       })
     }
   }
@@ -286,8 +290,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         context: {
           pluginName: name,
           pageObject: page,
-          component: page.component,
-        },
+          component: page.component
+        }
       })
     } else {
       const message = `${name} must set the absolute path to the page component when create creating a page`
@@ -373,6 +377,24 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.panicOnBuild({
+      id: `11331`,
+      context: {
+        path: page.path,
+        invalidPathSegments,
+
+        // we will only show truncatedPath in non-production scenario
+        isProduction: process.env.NODE_ENV === `production`,
+        truncatedPath
+      }
+    })
+    page.path = truncatedPath
+  }
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
@@ -384,7 +406,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       actionOptions.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
-    updatedAt: Date.now(),
+    updatedAt: Date.now()
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -431,8 +453,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panicOnBuild({
           id: `11327`,
           context: {
-            relativePath,
-          },
+            relativePath
+          }
         })
       }
 
@@ -440,8 +462,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panicOnBuild({
           id: `11328`,
           context: {
-            fileName,
-          },
+            fileName
+          }
         })
       }
     }
@@ -472,7 +494,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     type: `CREATE_PAGE`,
     contextModified,
     plugin,
-    payload: internalPage,
+    payload: internalPage
   }
 }
 
@@ -532,7 +554,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     return {
       type: `DELETE_NODE`,
       plugin,
-      payload: node,
+      payload: node
     }
   }
 
@@ -553,7 +575,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was supressed in documentation pages.
+// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
  * @private
@@ -580,10 +602,9 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
+    // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
+    fullNodes: nodeIds.map(getNode)
   }
   return deleteNodesAction
 }
@@ -722,15 +743,15 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
+  const result = Joi.validate(node, nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
         id: `11467`,
         context: {
           validationErrorMessage: result.error.message,
-          node,
-        },
+          node
+        }
       }
 
       const possiblyCodeFrame = getNonGatsbyCodeFrame()
@@ -740,8 +761,8 @@ const createNode = (
         errorObj.location = {
           start: {
             line: possiblyCodeFrame.line,
-            column: possiblyCodeFrame.column,
-          },
+            column: possiblyCodeFrame.column
+          }
         }
       }
 
@@ -831,7 +852,7 @@ const createNode = (
       ...actionOptions,
       plugin,
       type: `TOUCH_NODE`,
-      payload: node.id,
+      payload: node.id
     }
   } else {
     // Remove any previously created descendant nodes as they're all due
@@ -842,7 +863,7 @@ const createNode = (
           ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          payload: node,
+          payload: node
         }
       }
       deleteActions = findChildren(oldNode.children)
@@ -855,7 +876,7 @@ const createNode = (
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      payload: node,
+      payload: node
     }
   }
 
@@ -883,7 +904,7 @@ actions.createNode = (...args) => dispatch => {
     node,
     traceId,
     parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    traceTags: { nodeId: node.id, nodeType: node.internal.type }
   })
 }
 
@@ -922,7 +943,7 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: nodeId,
+    payload: nodeId
   }
 }
 
@@ -931,7 +952,7 @@ type CreateNodeInput = {
   fieldName?: string,
   fieldValue?: string,
   name?: string,
-  value: any,
+  value: any
 }
 /**
  * Extend another node. The new node field is placed under the `fields`
@@ -1014,7 +1035,7 @@ actions.createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
-    addedField: name,
+    addedField: name
   }
 }
 
@@ -1034,14 +1055,14 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
     plugin,
-    payload: parent,
+    payload: parent
   }
 }
 
@@ -1058,7 +1079,7 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1075,7 +1096,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1115,7 +1136,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_OPTIONS`,
     plugin,
-    payload: options,
+    payload: options
   }
 }
 
@@ -1151,7 +1172,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_PLUGIN`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1187,7 +1208,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_PRESET`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1207,7 +1228,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `CREATE_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1254,8 +1275,8 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
     plugin,
     payload: {
       job: internalJob,
-      plugin,
-    },
+      plugin
+    }
   })
 
   const enqueuedJobPromise = enqueueJob(internalJob)
@@ -1266,8 +1287,8 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
       plugin,
       payload: {
         jobContentDigest,
-        result,
-      },
+        result
+      }
     })
 
     // remove the job from our inProgressJobQueue as it's available in our done state.
@@ -1291,7 +1312,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `SET_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1308,7 +1329,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `END_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1327,7 +1348,7 @@ actions.setPluginStatus = (
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
-    payload: status,
+    payload: status
   }
 }
 
@@ -1345,7 +1366,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/).
+ * plugin](/packages/gatsby-plugin-s3/). Alternatively, you can use
+ * [this plugin](/packages/gatsby-plugin-meta-redirect/) to generate meta redirect
+ * html files for redirecting on any static file host.
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -1383,8 +1406,8 @@ actions.createRedirect = ({
       isPermanent,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
-      ...rest,
-    },
+      ...rest
+    }
   }
 }
 
@@ -1401,7 +1424,7 @@ actions.createPageDependency = (
   {
     path,
     nodeId,
-    connection,
+    connection
   }: { path: string, nodeId: string, connection: string },
   plugin: string = ``
 ) => {
@@ -1414,8 +1437,8 @@ actions.createPageDependency = (
     payload: {
       path,
       nodeId,
-      connection,
-    },
+      connection
+    }
   }
 }
 
@@ -1429,7 +1452,7 @@ actions.createPageDependency = (
 actions.setPageData = (pageData: PageData) => {
   return {
     type: `SET_PAGE_DATA`,
-    payload: pageData,
+    payload: pageData
   }
 }
 
@@ -1442,7 +1465,7 @@ actions.setPageData = (pageData: PageData) => {
 actions.removePageData = (id: PageDataRemove) => {
   return {
     type: `REMOVE_PAGE_DATA`,
-    payload: id,
+    payload: id
   }
 }
 

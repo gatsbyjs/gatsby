@@ -1,18 +1,18 @@
 import Bluebird from "bluebird"
-import webpack from "webpack"
 import fs from "fs-extra"
-// import convertHrtime from "convert-hrtime"
-import { chunk } from "lodash"
-import webpackConfig from "../utils/webpack.config"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import telemetry from "gatsby-telemetry"
-import { BuildHTMLStage, IProgram } from "./types"
+import { chunk } from "lodash"
+import webpack from "webpack"
+
+import webpackConfig from "../utils/webpack.config"
+import { structureWebpackErrors } from "../utils/webpack-error-utils"
+
+import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
-
-import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
 const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
   new Bluebird((resolve, reject) => {
@@ -26,31 +26,31 @@ const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
   })
 
 const doBuildRenderer = async (
-  program: IProgram,
+  { directory }: IProgram,
   webpackConfig: webpack.Configuration
 ): Promise<string> => {
-  const { directory } = program
   const stats = await runWebpack(webpackConfig)
-  // render-page.js is hard coded in webpack.config
-  const outputFile = `${directory}/public/render-page.js`
   if (stats.hasErrors()) {
     reporter.panic(
       structureWebpackErrors(`build-html`, stats.compilation.errors)
     )
   }
-  return outputFile
+
+  // render-page.js is hard coded in webpack.config
+  return `${directory}/public/render-page.js`
 }
 
 const buildRenderer = async (
   program: IProgram,
-  stage: BuildHTMLStage,
+  stage: Stage,
   parentSpan: IActivity
 ): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
-    parentSpan,
+    parentSpan
   })
-  return await doBuildRenderer(program, config)
+
+  return doBuildRenderer(program, config)
 }
 
 const deleteRenderer = async (rendererPath: string): Promise<void> => {
@@ -73,27 +73,21 @@ const renderHTMLQueue = async (
   const envVars = [
     [`NODE_ENV`, process.env.NODE_ENV],
     [`gatsby_executing_command`, process.env.gatsby_executing_command],
-    [`gatsby_log_level`, process.env.gatsby_log_level],
+    [`gatsby_log_level`, process.env.gatsby_log_level]
   ]
 
   // const start = process.hrtime()
   const segments = chunk(pages, 50)
-  // let finished = 0
 
   await Bluebird.map(segments, async pageSegment => {
     await workerPool.renderHTML({
-      htmlComponentRendererPath,
-      paths: pageSegment,
       envVars,
+      htmlComponentRendererPath,
+      paths: pageSegment
     })
-    // finished += pageSegment.length
+
     if (activity && activity.tick) {
       activity.tick(pageSegment.length)
-      // activity.setStatus(
-      //   `${finished}/${pages.length} ${(
-      //     finished / convertHrtime(process.hrtime(start)).seconds
-      //   ).toFixed(2)} pages/second`
-      // )
     }
   })
 }
@@ -105,17 +99,17 @@ const doBuildPages = async (
   workerPool: IWorkerPool
 ): Promise<void> => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: pagePaths.length,
+    pagesCount: pagePaths.length
   })
 
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths)
-  } catch (e) {
+  } catch (error) {
     const prettyError = await createErrorFromString(
-      e.stack,
+      error.stack,
       `${rendererPath}.map`
     )
-    prettyError.context = e.context
+    prettyError.context = error.context
     throw prettyError
   }
 }
@@ -125,10 +119,10 @@ export const buildHTML = async ({
   stage,
   pagePaths,
   activity,
-  workerPool,
+  workerPool
 }: {
   program: IProgram
-  stage: BuildHTMLStage
+  stage: Stage
   pagePaths: string[]
   activity: IActivity
   workerPool: IWorkerPool

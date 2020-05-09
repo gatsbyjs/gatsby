@@ -5,7 +5,7 @@ jest.mock(`sharp`, () => {
       resize: () => pipeline,
       png: () => pipeline,
       jpeg: () => pipeline,
-      toFile: (_, cb) => cb(),
+      toFile: (_, cb) => cb()
     }
     return pipeline
   }
@@ -17,11 +17,12 @@ jest.mock(`sharp`, () => {
 })
 
 jest.mock(`potrace`, () => {
+  const circleSvgString = `<svg height="100" width="100"><circle cx="50" cy="50" r="40" /></svg>`
   return {
-    trace: (_, _2, cb) => cb(null, ``),
+    trace: (_, _2, cb) => cb(null, circleSvgString),
     Potrace: {
-      TURNPOLICY_MAJORITY: `wat`,
-    },
+      TURNPOLICY_MAJORITY: `wat`
+    }
   }
 })
 
@@ -53,8 +54,8 @@ function getFileObject(absolutePath, name = path.parse(absolutePath).name) {
     absolutePath,
     extension: `png`,
     internal: {
-      contentDigest: `1234`,
-    },
+      contentDigest: `1234`
+    }
   }
 }
 
@@ -76,7 +77,7 @@ describe(`traceSVG memoization`, () => {
 
   it(`Baseline`, async () => {
     await traceSVG({
-      file,
+      file
     })
 
     expect(memoizedTraceSVG).toBeCalledTimes(1)
@@ -87,11 +88,11 @@ describe(`traceSVG memoization`, () => {
 
   it(`Is memoizing results for same args`, async () => {
     await traceSVG({
-      file,
+      file
     })
 
     await traceSVG({
-      file,
+      file
     })
 
     expect(memoizedTraceSVG).toBeCalledTimes(2)
@@ -104,47 +105,47 @@ describe(`traceSVG memoization`, () => {
     await traceSVG({
       file,
       args: {
-        color: `red`,
+        color: `red`
       },
       fileArgs: {
-        width: 400,
-      },
+        width: 400
+      }
     })
     await traceSVG({
       file,
       args: {
-        color: `blue`,
+        color: `blue`
       },
       fileArgs: {
-        width: 400,
-      },
+        width: 400
+      }
     })
     await traceSVG({
       file,
       args: {
-        color: `red`,
+        color: `red`
       },
       fileArgs: {
-        width: 200,
-      },
+        width: 200
+      }
     })
     await traceSVG({
       file,
       args: {
-        color: `blue`,
+        color: `blue`
       },
       fileArgs: {
-        width: 200,
-      },
+        width: 200
+      }
     })
     await traceSVG({
       file: differentFile,
       args: {
-        color: `red`,
+        color: `red`
       },
       fileArgs: {
-        width: 400,
-      },
+        width: 400
+      }
     })
 
     expect(memoizedTraceSVG).toBeCalledTimes(5)
@@ -159,8 +160,8 @@ describe(`traceSVG memoization`, () => {
       expect.objectContaining({
         file,
         options: expect.objectContaining({
-          width: 400,
-        }),
+          width: 400
+        })
       })
     )
     expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
@@ -168,8 +169,8 @@ describe(`traceSVG memoization`, () => {
       expect.objectContaining({
         file,
         options: expect.objectContaining({
-          width: 200,
-        }),
+          width: 200
+        })
       })
     )
     expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
@@ -177,8 +178,8 @@ describe(`traceSVG memoization`, () => {
       expect.objectContaining({
         file: differentFile,
         options: expect.objectContaining({
-          width: 400,
-        }),
+          width: 400
+        })
       })
     )
 
@@ -194,20 +195,20 @@ describe(`traceSVG memoization`, () => {
     await traceSVG({
       file,
       args: {
-        color: `red`,
+        color: `red`
       },
       fileArgs: {
-        width: 400,
-      },
+        width: 400
+      }
     })
     await traceSVG({
       file: copyOfFile,
       args: {
-        color: `red`,
+        color: `red`
       },
       fileArgs: {
-        width: 400,
-      },
+        width: 400
+      }
     })
 
     expect(memoizedTraceSVG).toBeCalledTimes(2)

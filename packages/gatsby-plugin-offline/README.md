@@ -30,9 +30,9 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        precachePages: [`/about-us/`, `/projects/*`],
-      },
-    },
+        precachePages: [`/about-us/`, `/projects/*`]
+      }
+    }
   ]
   ```
 
@@ -45,9 +45,9 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        appendScript: require.resolve(`src/custom-sw-code.js`),
-      },
-    },
+        appendScript: require.resolve(`src/custom-sw-code.js`)
+      }
+    }
   ]
   ```
 
@@ -77,10 +77,10 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
       resolve: `gatsby-plugin-offline`,
       options: {
         workboxConfig: {
-          importWorkboxFrom: `cdn`,
-        },
-      },
-    },
+          importWorkboxFrom: `cdn`
+        }
+      }
+    }
   ]
   ```
 
@@ -95,9 +95,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-offline`,
     options: {
-      importWorkboxFrom: `cdn`,
-    },
-  },
+      importWorkboxFrom: `cdn`
+    }
+  }
 ]
 ```
 
@@ -109,10 +109,10 @@ plugins: [
     resolve: `gatsby-plugin-offline`,
     options: {
       workboxConfig: {
-        importWorkboxFrom: `cdn`,
-      },
-    },
-  },
+        importWorkboxFrom: `cdn`
+      }
+    }
+  }
 ]
 ```
 
@@ -132,7 +132,7 @@ const options = {
   modifyURLPrefix: {
     // If `pathPrefix` is configured by user, we should replace
     // the default prefix with `pathPrefix`.
-    "/": `${pathPrefix}/`,
+    "/": `${pathPrefix}/`
   },
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS or CSS files, and anything in the static directory,
@@ -143,26 +143,26 @@ const options = {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `CacheFirst`,
+      handler: `CacheFirst`
     },
     {
       // page-data.json files are not content hashed
       urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`,
+      handler: `NetworkFirst`
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `StaleWhileRevalidate`,
+      handler: `StaleWhileRevalidate`
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `StaleWhileRevalidate`,
-    },
+      handler: `StaleWhileRevalidate`
+    }
   ],
   skipWaiting: true,
-  clientsClaim: true,
+  clientsClaim: true
 }
 ```
 
@@ -214,3 +214,30 @@ Alternatively you can have a look at the `/public/index.html` file in your proje
 ### App shell and server logs
 
 Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like `/offline-plugin-app-shell-fallback/index.html`, this is a result of `gatsby-plugin-offline` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.
+
+### Using with gatsby-plugin-manifest
+
+If using this plugin with `gatsby-plugin-manifest` you may find that your icons are not cached.
+In order to solve this, update your `gatsby-config.js` as follows:
+
+```js
+// gatsby-config.js
+{
+   resolve: 'gatsby-plugin-manifest',
+   options: {
+      icon: 'icon.svg',
+      cache_busting_mode: 'none'
+   }
+},
+{
+   resolve: 'gatsby-plugin-offline',
+   options: {
+      workboxConfig: {
+         globPatterns: ['**/*']
+      }
+   }
+}
+```
+
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.

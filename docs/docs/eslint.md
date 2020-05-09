@@ -10,7 +10,7 @@ JavaScript, being a dynamic and loosely-typed language, is especially prone to d
 
 Gatsby ships with a built-in [ESLint](https://eslint.org) setup. For _most_ users, our built-in ESlint setup is all you need. If you know however that you'd like to customize your ESlint config e.g. your company has their own custom ESlint setup, this shows how this can be done.
 
-You'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js) so you can then add additional presets, plugins, and rules.
+You'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.ts) so you can then add additional presets, plugins, and rules.
 
 ```shell
 
@@ -32,13 +32,13 @@ Copy the snippet below to the newly created `.eslintrc.js` file. Then add additi
 ```js:title=.eslintrc.js
 module.exports = {
   globals: {
-    __PATH_PREFIX__: true,
+    __PATH_PREFIX__: true
   },
-  extends: `react-app`,
+  extends: `react-app`
 }
 ```
 
-Note: When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. This loader pipes ESLint feedback into the terminal window where you are running or building Gatsby and also to the console in your browser developer tools. This gives you consolidated, immediate feedback on newly-saved files. When you include a custom `.eslintrc` file, Gatsby gives you full control over the ESLint configuration. This means that it will override the built-in `eslint-loader` and you need to enable any and all rules yourself. One way to do this is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/). This also means that the default [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.js) will be entirely overwritten. If you would still like to take advantage of those rules, you'll need to copy them to your local file.
+Note: When there is no ESLint file Gatsby implicitly adds a barebones ESLint loader. This loader pipes ESLint feedback into the terminal window where you are running or building Gatsby and also to the console in your browser developer tools. This gives you consolidated, immediate feedback on newly-saved files. When you include a custom `.eslintrc` file, Gatsby gives you full control over the ESLint configuration. This means that it will override the built-in `eslint-loader` and you need to enable any and all rules yourself. One way to do this is to use the Community plugin [`gatsby-eslint-plugin`](/packages/gatsby-plugin-eslint/). This also means that the default [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.ts) will be entirely overwritten. If you would still like to take advantage of those rules, you'll need to copy them to your local file.
 
 ### Disabling ESLint
 

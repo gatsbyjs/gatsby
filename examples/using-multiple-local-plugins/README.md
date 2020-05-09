@@ -8,25 +8,25 @@ The actual Gatsby site to run is in the `gatsby-site-using-local-plugins` folder
 
 Navigate into the `gatsby-site-using-local-plugins` project directory with this command:
 
-```sh
+```shell
 cd gatsby-site-using-local-plugins
 ```
 
 You'll need to install dependencies for the site by running:
 
-```sh
+```shell
 npm install
 ```
 
 Then run `gatsby develop`:
 
-```sh
+```shell
 gatsby develop
 ```
 
 In your command line output, you should then see the text listed below. This text is showing how the code for each plugin is run sequentially thanks to the Node API implemented.
 
-```sh
+```shell
 $ gatsby develop
 success open and validate gatsby-configs - 0.051s
 success load plugins - 1.047s
@@ -43,7 +43,7 @@ module.exports = {
   siteMetadata: {
     title: `Using Multiple Local Plugins`,
     description: `An example Gatsby site utilizing multiple local plugins`,
-    author: `@gatsbyjs`,
+    author: `@gatsbyjs`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -51,19 +51,19 @@ module.exports = {
     `gatsby-plugin-console-log-a`,
     {
       // including a plugin from outside the plugins folder needs the path to it
-      resolve: require.resolve(`../gatsby-plugin-console-log-b`),
+      resolve: require.resolve(`../gatsby-plugin-console-log-b`)
     },
     // including a plugin with yarn or npm link
     //   in order for this plugin to be found when you run gatsby develop
     //   you first need to run `npm link ../gatsby-plugin-console-log-c` in the `gatsby-site-using-local-plugins` root folder
-    `gatsby-plugin-console-log-c`, // highlight-line
-  ],
+    `gatsby-plugin-console-log-c` // highlight-line
+  ]
 }
 ```
 
 And then run:
 
-```sh:title=gatsby-site-using-multiple-local-plugins
+```shell:title=gatsby-site-using-multiple-local-plugins
 npm link ../gatsby-plugin-console-log-c
 ```
 

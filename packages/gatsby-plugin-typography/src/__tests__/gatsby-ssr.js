@@ -1,7 +1,7 @@
 import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
 
 jest.mock(
-  `../.cache/typography`,
+  `typography-plugin-cache-endpoint`,
   () => {
     return {}
   },
@@ -14,7 +14,7 @@ describe(`onRenderBody`, () => {
   const setup = (options = {}, env = `build-html`) => {
     process.env.BUILD_STAGE = env
     const api = {
-      setHeadComponents: jest.fn(),
+      setHeadComponents: jest.fn()
     }
     onRenderBody(api, options)
     return api
@@ -29,7 +29,7 @@ describe(`onRenderBody`, () => {
 
     expect(api.setHeadComponents).toHaveBeenCalledWith([
       expect.objectContaining({ key: `TypographyStyle` }),
-      expect.objectContaining({ key: `GoogleFont` }),
+      expect.objectContaining({ key: `GoogleFont` })
     ])
   })
 
@@ -41,11 +41,11 @@ describe(`onRenderBody`, () => {
 
   it(`does not add google font if omitGoogleFont is passed`, () => {
     const api = setup({
-      omitGoogleFont: true,
+      omitGoogleFont: true
     })
 
     expect(api.setHeadComponents).toHaveBeenCalledWith([
-      expect.objectContaining({ key: `TypographyStyle` }),
+      expect.objectContaining({ key: `TypographyStyle` })
     ])
   })
 })
@@ -54,7 +54,7 @@ describe(`onPreRenderHTML`, () => {
   const setup = (components = []) => {
     const api = {
       getHeadComponents: jest.fn(() => components),
-      replaceHeadComponents: jest.fn(),
+      replaceHeadComponents: jest.fn()
     }
     onPreRenderHTML(api)
     return api
@@ -63,22 +63,22 @@ describe(`onPreRenderHTML`, () => {
   it(`reorders typography-js first`, () => {
     const spies = setup([
       {
-        key: `link-1234`,
+        key: `link-1234`
       },
       {
-        key: `link-preload`,
+        key: `link-preload`
       },
       {
-        key: `TypographyStyle`,
-      },
+        key: `TypographyStyle`
+      }
     ])
 
     expect(spies.replaceHeadComponents).toHaveBeenCalledTimes(1)
     expect(spies.replaceHeadComponents).toHaveBeenCalledWith(
       expect.arrayContaining([
         {
-          key: `TypographyStyle`,
-        },
+          key: `TypographyStyle`
+        }
       ])
     )
   })
@@ -86,14 +86,14 @@ describe(`onPreRenderHTML`, () => {
   it(`leaves non-typography head components as-is`, () => {
     const components = [
       {
-        key: `link-1234`,
+        key: `link-1234`
       },
       {
-        key: `link-preload`,
+        key: `link-preload`
       },
       {
-        key: `_____01234_____`,
-      },
+        key: `_____01234_____`
+      }
     ]
 
     const spies = setup(clone(components))
@@ -104,15 +104,15 @@ describe(`onPreRenderHTML`, () => {
   it(`does not fail when head components include null`, () => {
     const components = [
       {
-        key: `link-1234`,
+        key: `link-1234`
       },
       {
-        key: `link-preload`,
+        key: `link-preload`
       },
       {
-        key: `_____01234_____`,
+        key: `_____01234_____`
       },
-      null,
+      null
     ]
 
     const spies = setup(clone(components))

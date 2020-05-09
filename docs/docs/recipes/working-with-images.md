@@ -35,10 +35,12 @@ import FiestaImg from "../assets/fiesta.jpg" // highlight-line
 import React from "react"
 import FiestaImg from "../assets/fiesta.jpg"
 
-export default () => (
-  // The import result is the URL of your image
-  <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
-)
+export default function Home() {
+  return (
+    // The import result is the URL of your image
+    <img src={FiestaImg} alt="A dog smiling in a party hat" /> // highlight-line
+  )
+}
 ```
 
 3. Run `gatsby develop` to start the development server.
@@ -83,9 +85,11 @@ This is an **escape route** for [specific use cases](/docs/static-folder/#when-t
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => (
-  <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
-)
+export default function Home() {
+  return (
+    <img src={`fiesta.jpg`} alt="A dog smiling in a party hat" /> // highlight-line
+  )
+}
 ```
 
 3. Run `gatsby develop` to start the development server.
@@ -282,7 +286,7 @@ return (
 <Img
   fluid={{
     ...data.file.childImageSharp.fluid,
-    aspectRatio: 1.6, // 1280 / 800 = 1.6
+    aspectRatio: 1.6 // 1280 / 800 = 1.6
   }}
   alt="A corgi smiling happily"
 />
@@ -338,8 +342,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: path.resolve(`./src/components/markdown-layout.js`),
       // highlight-start
       context: {
-        slug: node.fields.slug,
-      },
+        slug: node.fields.slug
+      }
       // highlight-end
     })
   })
@@ -353,17 +357,19 @@ import React from "react"
 import { graphql } from "gatsby" // highlight-line
 import Img from "gatsby-image" // highlight-line
 
-export default ({ children, data }) => (
-  <main>
-    // highlight-start
-    <Img
-      fluid={data.markdown.frontmatter.image.childImageSharp.fluid}
-      alt="A corgi smiling happily"
-    />
-    // highlight-end
-    {children}
-  </main>
-)
+export default function Layout({ children, data }) {
+  return (
+    <main>
+      // highlight-start
+      <Img
+        fluid={data.markdown.frontmatter.image.childImageSharp.fluid}
+        alt="A corgi smiling happily"
+      />
+      // highlight-end
+      {children}
+    </main>
+  )
+}
 
 // highlight-start
 export const pageQuery = graphql`

@@ -9,7 +9,9 @@ https://using-contentful.gatsbyjs.org/
 
 ## Install
 
-`npm install --save gatsby-source-contentful`
+```shell
+npm install --save gatsby-source-contentful
+```
 
 ## How to use
 
@@ -26,10 +28,10 @@ module.exports = {
       options: {
         spaceId: `your_space_id`,
         // Learn about environment variables: https://gatsby.dev/env-vars
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
-    },
-  ],
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      }
+    }
+  ]
 }
 ```
 
@@ -45,10 +47,10 @@ module.exports = {
         spaceId: `your_space_id`,
         // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        host: `preview.contentful.com`,
-      },
-    },
-  ],
+        host: `preview.contentful.com`
+      }
+    }
+  ]
 }
 ```
 
@@ -68,10 +70,10 @@ module.exports = {
         spaceId: `your_space_id`,
         // Learn about environment variables: https://gatsby.app/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        downloadLocal: true,
-      },
-    },
-  ],
+        downloadLocal: true
+      }
+    }
+  ]
 }
 ```
 
@@ -285,7 +287,7 @@ You can then insert the returned HTML inline in your JSX:
 <div
   className="body"
   dangerouslySetInnerHTML={{
-    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html
   }}
 />
 ```
@@ -380,17 +382,43 @@ const Text = ({ children }) => <p className="align-center">{children}</p>
 
 const options = {
   renderMark: {
-    [MARKS.BOLD]: text => <Bold>{text}</Bold>,
+    [MARKS.BOLD]: text => <Bold>{text}</Bold>
   },
   renderNode: {
-    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
-  },
+    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>
+  }
 }
 
 documentToReactComponents(node.bodyRichText.json, options)
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Sourcing From Multiple Contentful Spaces
+
+To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      }
+    },
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_second_space_id`,
+        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN
+      }
+    }
+  ]
+}
+```
 
 [dotenv]: https://github.com/motdotla/dotenv
 [envvars]: https://gatsby.dev/env-vars

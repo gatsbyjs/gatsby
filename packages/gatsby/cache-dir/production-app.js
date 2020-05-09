@@ -7,12 +7,17 @@ import domReady from "@mikaelkristiansson/domready"
 import {
   shouldUpdateScroll,
   init as navigationInit,
-  RouteUpdates,
+  RouteUpdates
 } from "./navigation"
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import { setLoader, ProdLoader, publicLoader } from "./loader"
+import {
+  setLoader,
+  ProdLoader,
+  publicLoader,
+  PageResourceStatus
+} from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
@@ -48,7 +53,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     <BaseContext.Provider
       value={{
         baseuri: `/`,
-        basepath: `/`,
+        basepath: `/`
       }}
     >
       <PageRenderer {...props} />
@@ -114,12 +119,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     )
   ) {
     navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
-      replace: true,
+      replace: true
     })
   }
 
   publicLoader.loadPage(browserLoc.pathname).then(page => {
-    if (!page || page.status === `error`) {
+    if (!page || page.status === PageResourceStatus.Error) {
       throw new Error(
         `page resources for ${browserLoc.pathname} not found. Not rendering React`
       )

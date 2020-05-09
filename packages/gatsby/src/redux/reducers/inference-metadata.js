@@ -6,20 +6,20 @@ const {
   addNodes,
   deleteNode,
   ignore,
-  disable,
+  disable
 } = require(`../../schema/infer/inference-metadata`)
 const { NodeInterfaceFields } = require(`../../schema/types/node-interface`)
 const { typesWithoutInference } = require(`../../schema/types/type-defs`)
 
 const StepsEnum = {
   initialBuild: `initialBuild`,
-  incrementalBuild: `incrementalBuild`,
+  incrementalBuild: `incrementalBuild`
 }
 
 const initialState = () => {
   return {
     step: StepsEnum.initialBuild, // `initialBuild` | `incrementalBuild`
-    typeMap: {},
+    typeMap: {}
   }
 }
 
@@ -45,7 +45,7 @@ module.exports = (state = initialState(), action) => {
     case `START_INCREMENTAL_INFERENCE`: {
       return {
         ...state,
-        step: StepsEnum.incrementalBuild,
+        step: StepsEnum.incrementalBuild
       }
     }
 
@@ -60,11 +60,7 @@ module.exports = (state = initialState(), action) => {
   }
 }
 
-const ignoredFields = new Set([
-  ...NodeInterfaceFields,
-  `$loki`,
-  `__gatsby_resolved`,
-])
+const ignoredFields = new Set([...NodeInterfaceFields, `__gatsby_resolved`])
 
 const initialTypeMetadata = () => {
   return { ignoredFields }

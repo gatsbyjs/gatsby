@@ -25,8 +25,8 @@ For the plugin to be discovered when you run `gatsby develop`, the plugin's root
 module.exports = {
   plugins: [
     `gatsby-third-party-plugin`,
-    `my-own-plugin`, // highlight-line
-  ],
+    `my-own-plugin` // highlight-line
+  ]
 }
 ```
 
@@ -35,6 +35,12 @@ Then the plugin can begin to hook into Gatsby through [Node](/docs/node-apis/) a
 ## Developing a local plugin that is outside your project
 
 Your plugin doesn't have to be in your project in order to be tested or worked on. If you'd like to [decouple](/docs/glossary#decoupled) your plugin from your site you can follow one of the methods described below. This is a useful thing to do if you want to publish the plugin as its own package, or test/develop a forked version of a community authored plugin.
+
+To get started developing a plugin outside of your site's root folder, you can quickly generate one using `gatsby new` with the [starter for plugins](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-plugin):
+
+```shell
+gatsby new gatsby-plugin-foo https://github.com/gatsbyjs/gatsby-starter-plugin
+```
 
 ### Using `require.resolve` and a filepath
 
@@ -47,10 +53,10 @@ module.exports = {
     // highlight-start
     {
       // including a plugin from outside the plugins folder needs the path to it
-      resolve: require.resolve(`../path/to/gatsby-local-plugin`),
-    },
+      resolve: require.resolve(`../path/to/gatsby-local-plugin`)
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 

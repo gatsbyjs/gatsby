@@ -1,4 +1,9 @@
-import manager, { Store, StoreConfig, CachingConfig } from "cache-manager"
+import manager, {
+  Store,
+  StoreConfig,
+  CachingConfig,
+  MultiCache
+} from "cache-manager"
 import fs from "fs-extra"
 import fsStore from "cache-manager-fs-hash"
 import path from "path"
@@ -14,7 +19,7 @@ interface ICacheProperties {
 export default class Cache {
   public name: string
   public store: Store
-  public cache?: manager.Cache
+  public cache?: MultiCache
 
   constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
@@ -32,16 +37,16 @@ export default class Cache {
       {
         store: `memory`,
         max: MAX_CACHE_SIZE,
-        ttl: TTL,
+        ttl: TTL
       },
       {
         store: this.store,
         ttl: TTL,
         options: {
           path: this.directory,
-          ttl: TTL,
-        },
-      },
+          ttl: TTL
+        }
+      }
     ]
 
     const caches = configs.map(cache => manager.caching(cache))

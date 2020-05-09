@@ -7,36 +7,36 @@ jest.mock(`fs-extra`, () => {
             cb()
           }
         }),
-        close: jest.fn(),
+        close: jest.fn()
       }
     }),
     ensureDir: jest.fn(),
     removeSync: jest.fn(),
     move: jest.fn(),
-    stat: jest.fn(),
+    stat: jest.fn()
   }
 })
 jest.mock(`got`, () => {
   return {
-    stream: jest.fn(),
+    stream: jest.fn()
   }
 })
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
-    createProgress: jest.fn(),
+    createProgress: jest.fn()
   }
 })
 jest.mock(`../create-file-node`, () => {
   return {
-    createFileNode: jest.fn(),
+    createFileNode: jest.fn()
   }
 })
 const reporter = require(`gatsby-cli/lib/reporter`)
 const progressBar = {
   start: jest.fn(),
   total: 0,
-  tick: jest.fn(),
+  tick: jest.fn()
 }
 reporter.createProgress.mockImplementation(() => progressBar)
 
@@ -48,14 +48,24 @@ beforeEach(() => {
   progressBar.tick.mockClear()
 })
 
+const createMockCache = () => {
+  return {
+    get: jest.fn(),
+    set: jest.fn(),
+    directory: __dirname
+  }
+}
+
 describe(`create-remote-file-node`, () => {
+  const cache = createMockCache()
+
   const defaultArgs = {
     url: ``,
     store: {},
-    cache: {},
+    getCache: () => cache,
     createNode: jest.fn(),
     createNodeId: jest.fn(),
-    reporter,
+    reporter
   }
 
   describe(`basic functionality`, () => {
@@ -63,7 +73,7 @@ describe(`create-remote-file-node`, () => {
       it(`short-circuits and resolves`, () => {
         const value = createRemoteFileNode({
           ...defaultArgs,
-          url: ``,
+          url: ``
         })
 
         expect(value).rejects.toMatch(`wrong url: `)
@@ -72,7 +82,7 @@ describe(`create-remote-file-node`, () => {
       it(`does not increment progress bar total`, () => {
         const value = createRemoteFileNode({
           ...defaultArgs,
-          url: ``,
+          url: ``
         })
 
         expect(value).rejects.toMatch(`wrong url: `)
@@ -95,12 +105,12 @@ describe(`create-remote-file-node`, () => {
 
       const gotMock = {
         pipe: jest.fn(),
-        on: jest.fn(),
+        on: jest.fn()
       }
 
       createFileNode.mockImplementationOnce(() => {
         return {
-          internal: {},
+          internal: {}
         }
       })
 
@@ -117,28 +127,24 @@ describe(`create-remote-file-node`, () => {
           }
 
           return gotMock
-        }),
+        })
       })
 
       uuid += 1
 
       return createRemoteFileNode({
         ...defaultArgs,
-        cache: {
-          get: jest.fn(),
-          set: jest.fn(),
-        },
         store: {
           getState: jest.fn(() => {
             return {
               program: {
-                directory: `__whatever__`,
-              },
+                directory: `__whatever__`
+              }
             }
-          }),
+          })
         },
         url,
-        ...args,
+        ...args
       })
     }
 
@@ -153,7 +159,7 @@ describe(`create-remote-file-node`, () => {
       it(`passes correct url`, async () => {
         const url = `https://hello.com/image.png`
         await setup({
-          url,
+          url
         })
 
         expect(got.stream).toHaveBeenCalledWith(url, expect.any(Object))
@@ -165,7 +171,7 @@ describe(`create-remote-file-node`, () => {
         expect(got.stream).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
-            headers: {},
+            headers: {}
           })
         )
       })
@@ -173,16 +179,16 @@ describe(`create-remote-file-node`, () => {
       it(`passes custom auth header, if defined`, async () => {
         const auth = {
           htaccess_user: `hunter2`,
-          htaccess_pass: `*******`,
+          htaccess_pass: `*******`
         }
         await setup({
-          auth,
+          auth
         })
 
         expect(got.stream).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
-            auth: [auth.htaccess_user, auth.htaccess_pass].join(`:`),
+            auth: [auth.htaccess_user, auth.htaccess_pass].join(`:`)
           })
         )
       })
@@ -190,16 +196,16 @@ describe(`create-remote-file-node`, () => {
       it(`passes custom http header, if defined`, async () => {
         await setup({
           httpHeaders: {
-            Authorization: `Bearer foobar`,
-          },
+            Authorization: `Bearer foobar`
+          }
         })
 
         expect(got.stream).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
             headers: expect.objectContaining({
-              Authorization: `Bearer foobar`,
-            }),
+              Authorization: `Bearer foobar`
+            })
           })
         )
       })
@@ -222,7 +228,7 @@ describe(`create-remote-file-node`, () => {
 
         fs.createWriteStream.mockReturnValue({
           on: jest.fn(),
-          close: jest.fn(),
+          close: jest.fn()
         })
         jest.useFakeTimers()
         got.stream.mockReset()
@@ -230,7 +236,7 @@ describe(`create-remote-file-node`, () => {
           pipe: jest.fn(() => {
             return {
               pipe: jest.fn(),
-              on: jest.fn(),
+              on: jest.fn()
             }
           }),
           on: jest.fn((mockType, mockCallback) => {
@@ -245,7 +251,7 @@ describe(`create-remote-file-node`, () => {
               expect(got.stream).toHaveBeenCalledTimes(2)
               done()
             }
-          }),
+          })
         })
         setup()
         jest.runAllTimers()
@@ -258,7 +264,7 @@ describe(`create-remote-file-node`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
-          createNode: undefined,
+          createNode: undefined
         })
       }).toThrowErrorMatchingInlineSnapshot(
         `"createNode must be a function, was undefined"`
@@ -269,33 +275,41 @@ describe(`create-remote-file-node`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
-          createNodeId: undefined,
+          createNodeId: undefined
         })
       }).toThrowErrorMatchingInlineSnapshot(
         `"createNodeId must be a function, was undefined"`
       )
     })
 
-    it(`throws on invalid inputs: cache`, () => {
+    it(`throws on invalid inputs: cache and getCache undefined`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
           cache: undefined,
+          getCache: undefined
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"cache must be the Gatsby cache, was undefined"`
+        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
       )
     })
 
-    it(`throws on invalid inputs: store`, () => {
+    it(`doesn't throw when getCache is defined`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
-          store: undefined,
+          getCache: () => createMockCache()
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
-      )
+      }).not.toThrow()
+    })
+
+    it(`doesn't throw when cache is defined`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          cache: createMockCache()
+        })
+      }).not.toThrow()
     })
   })
 })

@@ -14,16 +14,16 @@ import {
   PRODUCT_METAFIELD,
   PRODUCT_VARIANT_METAFIELD,
   SHOP_POLICY,
-  PAGE,
+  PAGE
 } from "./constants"
 
 const { createNodeFactory, generateNodeId } = createNodeHelpers({
-  typePrefix: TYPE_PREFIX,
+  typePrefix: TYPE_PREFIX
 })
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
-  { createNode, createNodeId, touchNode, store, cache, reporter }
+  { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
 ) => {
   let fileNodeID
 
@@ -42,8 +42,9 @@ const downloadImageAndCreateFileNode = async (
     cache,
     createNode,
     createNodeId,
+    getCache,
     parentNodeId: nodeId,
-    reporter,
+    reporter
   })
 
   if (fileNode) {
@@ -88,7 +89,7 @@ export const CollectionNode = imageArgs =>
         {
           id: node.image.id,
           url: node.image.src && node.image.src.split(`?`)[0],
-          nodeId: node.id,
+          nodeId: node.id
         },
         imageArgs
       )
@@ -130,7 +131,7 @@ export const ProductNode = imageArgs =>
         edge.node.localFile___NODE = await downloadImageAndCreateFileNode(
           {
             id: edge.node.id,
-            url: edge.node.originalSrc && edge.node.originalSrc.split(`?`)[0],
+            url: edge.node.originalSrc && edge.node.originalSrc.split(`?`)[0]
           },
           imageArgs
         )
@@ -160,7 +161,7 @@ export const ProductVariantNode = imageArgs =>
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
           id: node.image.id,
-          url: node.image.originalSrc && node.image.originalSrc.split(`?`)[0],
+          url: node.image.originalSrc && node.image.originalSrc.split(`?`)[0]
         },
         imageArgs
       )

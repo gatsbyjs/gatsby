@@ -1,7 +1,9 @@
-const preset = require(`../`)
 const path = require(`path`)
 
-expect.addSnapshotSerializer(require(`../utils/path-serializer`))
+const preset = require(`../`)
+import * as pathSerializer from "../utils/path-serializer"
+
+expect.addSnapshotSerializer(pathSerializer)
 
 describe(`babel-preset-gatsby`, () => {
   it.each([`build-stage`, `develop`, `build-javascript`, `build-html`])(
@@ -15,7 +17,7 @@ describe(`babel-preset-gatsby`, () => {
     const targets = `last 1 version`
     const { presets } = preset(null, {
       stage: `build-javascript`,
-      targets,
+      targets
     })
 
     expect(presets[0]).toEqual([
@@ -26,8 +28,8 @@ describe(`babel-preset-gatsby`, () => {
         loose: true,
         modules: false,
         useBuiltIns: `usage`,
-        targets,
-      },
+        targets
+      }
     ])
   })
 })

@@ -5,7 +5,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLEnumType,
-  GraphQLNonNull,
+  GraphQLNonNull
 } = require(`gatsby/graphql`)
 const sharp = require(`./safe-sharp`)
 const { Potrace } = require(`potrace`)
@@ -16,8 +16,8 @@ const ImageFormatType = new GraphQLEnumType({
     NO_CHANGE: { value: `` },
     JPG: { value: `jpg` },
     PNG: { value: `png` },
-    WEBP: { value: `webp` },
-  },
+    WEBP: { value: `webp` }
+  }
 })
 
 const ImageFitType = new GraphQLEnumType({
@@ -26,7 +26,9 @@ const ImageFitType = new GraphQLEnumType({
     COVER: { value: sharp.fit.cover },
     CONTAIN: { value: sharp.fit.contain },
     FILL: { value: sharp.fit.fill },
-  },
+    INSIDE: { value: sharp.fit.inside },
+    OUTSIDE: { value: sharp.fit.outside }
+  }
 })
 
 const ImageCropFocusType = new GraphQLEnumType({
@@ -42,8 +44,8 @@ const ImageCropFocusType = new GraphQLEnumType({
     WEST: { value: sharp.gravity.west },
     NORTHWEST: { value: sharp.gravity.northwest },
     ENTROPY: { value: sharp.strategy.entropy },
-    ATTENTION: { value: sharp.strategy.attention },
-  },
+    ATTENTION: { value: sharp.strategy.attention }
+  }
 })
 
 const DuotoneGradientType = new GraphQLInputObjectType({
@@ -52,9 +54,9 @@ const DuotoneGradientType = new GraphQLInputObjectType({
     return {
       highlight: { type: new GraphQLNonNull(GraphQLString) },
       shadow: { type: new GraphQLNonNull(GraphQLString) },
-      opacity: { type: GraphQLInt },
+      opacity: { type: GraphQLInt }
     }
-  },
+  }
 })
 
 const PotraceTurnPolicyType = new GraphQLEnumType({
@@ -65,8 +67,8 @@ const PotraceTurnPolicyType = new GraphQLEnumType({
     TURNPOLICY_LEFT: { value: Potrace.TURNPOLICY_LEFT },
     TURNPOLICY_RIGHT: { value: Potrace.TURNPOLICY_RIGHT },
     TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
-    TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
-  },
+    TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY }
+  }
 })
 
 const PotraceType = new GraphQLInputObjectType({
@@ -74,7 +76,7 @@ const PotraceType = new GraphQLInputObjectType({
   fields: () => {
     return {
       turnPolicy: {
-        type: PotraceTurnPolicyType,
+        type: PotraceTurnPolicyType
       },
       turdSize: { type: GraphQLFloat },
       alphaMax: { type: GraphQLFloat },
@@ -83,9 +85,9 @@ const PotraceType = new GraphQLInputObjectType({
       threshold: { type: GraphQLInt },
       blackOnWhite: { type: GraphQLBoolean },
       color: { type: GraphQLString },
-      background: { type: GraphQLString },
+      background: { type: GraphQLString }
     }
-  },
+  }
 })
 
 module.exports = {
@@ -94,5 +96,5 @@ module.exports = {
   ImageCropFocusType,
   DuotoneGradientType,
   PotraceTurnPolicyType,
-  PotraceType,
+  PotraceType
 }

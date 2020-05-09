@@ -22,7 +22,7 @@ If you followed along with the [Unit testing guide](/docs/unit-testing) you'll h
 
 ```diff:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["babel-preset-gatsby"],
+~  presets: ["babel-preset-gatsby", "@emotion/babel-preset-css-prop"],
 +  plugins: [
 +    "emotion",
 +  ],
@@ -101,7 +101,7 @@ import { ThemeProvider } from "emotion-theming"
 import renderer from "react-test-renderer"
 
 const theme = {
-  maxWidth: "1450px",
+  maxWidth: "1450px"
 }
 
 const Wrapper = styled.section`

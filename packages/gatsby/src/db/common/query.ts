@@ -24,7 +24,7 @@ export enum DbComparator {
   IN = `$in`,
   NIN = `$nin`,
   REGEX = `$regex`,
-  GLOB = `$glob`,
+  GLOB = `$glob`
 }
 
 const DB_COMPARATOR_VALUES: Set<string> = new Set(Object.values(DbComparator))
@@ -63,7 +63,7 @@ function createDbQueriesFromObjectNested(
           return {
             type: `elemMatch`,
             path: path,
-            nestedQuery: query,
+            nestedQuery: query
           }
         })
       } else if (isDbComparator(key)) {
@@ -73,9 +73,9 @@ function createDbQueriesFromObjectNested(
             path,
             query: {
               comparator: key,
-              value: filter[key],
-            },
-          },
+              value: filter[key]
+            }
+          }
         ]
       } else {
         return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
@@ -108,21 +108,19 @@ export function dbQueryToSiftQuery(query: DbQuery): object {
   const result = {}
   if (query.type === `elemMatch`) {
     result[query.path.join(`.`)] = {
-      $elemMatch: dbQueryToSiftQuery(query.nestedQuery),
+      $elemMatch: dbQueryToSiftQuery(query.nestedQuery)
     }
   } else if (query.path.length) {
     result[query.path.join(`.`)] = {
-      [query.query.comparator]: query.query.value,
+      [query.query.comparator]: query.query.value
     }
   } else {
     return {
-      [query.query.comparator]: query.query.value,
+      [query.query.comparator]: query.query.value
     }
   }
   return result
 }
-
-// Most of the below can be gone after we decide to remove loki
 
 // Converts a nested mongo args object into a dotted notation. acc
 // (accumulator) must be a reference to an empty object. The converted
@@ -155,24 +153,6 @@ export function dbQueryToSiftQuery(query: DbQuery): object {
 //     $regex: // as above
 //   }
 // }
-export function toDottedFields(
-  filter: object,
-  acc: object = {},
-  path: Array<string> = []
-): object {
-  Object.keys(filter).forEach(key => {
-    const value = filter[key]
-    const nextValue = _.isPlainObject(value) && value[Object.keys(value)[0]]
-    if (key === `$elemMatch`) {
-      acc[path.join(`.`)] = { [`$elemMatch`]: toDottedFields(value) }
-    } else if (_.isPlainObject(nextValue)) {
-      toDottedFields(value, acc, path.concat(key))
-    } else {
-      acc[path.concat(key).join(`.`)] = value
-    }
-  })
-  return acc
-}
 
 // Like above, but doesn't handle $elemMatch
 export function objectToDottedField(
@@ -186,36 +166,11 @@ export function objectToDottedField(
       const pathResult = objectToDottedField(value, path.concat(key))
       result = {
         ...result,
-        ...pathResult,
+        ...pathResult
       }
     } else {
       result[path.concat(key).join(`.`)] = value
     }
   })
   return result
-}
-
-export function liftResolvedFields(
-  args: object,
-  resolvedFields: object
-): object {
-  const dottedFields = objectToDottedField(resolvedFields)
-  const dottedFieldKeys = Object.keys(dottedFields)
-  const finalArgs = {}
-  Object.keys(args).forEach(key => {
-    const value = args[key]
-    if (dottedFields[key]) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else if (
-      dottedFieldKeys.some(dottedKey => dottedKey.startsWith(key)) &&
-      value.$elemMatch
-    ) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else if (dottedFieldKeys.some(dottedKey => key.startsWith(dottedKey))) {
-      finalArgs[`__gatsby_resolved.${key}`] = value
-    } else {
-      finalArgs[key] = value
-    }
-  })
-  return finalArgs
 }

@@ -10,7 +10,6 @@ There are many options out there for adding comment functionality, several of th
 - [Commento](https://commento.io)
 - [Facebook Comments](https://www.npmjs.com/package/react-facebook)
 - [Staticman](https://staticman.net)
-- [JustComments](https://just-comments.com) \([official plugin for Gatsby](https://www.gatsbyjs.org/packages/gatsby-plugin-just-comments/)\)
 - [TalkYard](https://www.talkyard.io)
 - [Gitalk](https://gitalk.github.io)
 
@@ -70,7 +69,7 @@ Then define your Disqus configuration object
 ```js
 const disqusConfig = {
   shortname: process.env.GATSBY_DISQUS_NAME,
-  config: { identifier: slug, title },
+  config: { identifier: slug, title }
 }
 ```
 

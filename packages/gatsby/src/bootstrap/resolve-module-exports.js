@@ -1,12 +1,12 @@
 // @flow
-const fs = require(`fs`)
-const traverse = require(`@babel/traverse`).default
-const get = require(`lodash/get`)
-const { codeFrameColumns } = require(`@babel/code-frame`)
-const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
-const report = require(`gatsby-cli/lib/reporter`)
+import fs from "fs"
+import traverse from "@babel/traverse"
+import get from "lodash/get"
+import { codeFrameColumns } from "@babel/code-frame"
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
+import report from "gatsby-cli/lib/reporter"
 
-const testRequireError = require(`../utils/test-require-error`).default
+import { testRequireError } from "../utils/test-require-error"
 
 const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath
@@ -28,10 +28,10 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       const codeFrame = codeFrameColumns(
         code,
         {
-          start: err.loc,
+          start: err.loc
         },
         {
-          highlightCode: true,
+          highlightCode: true
         }
       )
 
@@ -72,6 +72,15 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       if (exportName) exportNames.push(exportName)
     },
 
+    // export default () => {}
+    // const foo = () => {}; export default foo
+    ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
+      const name = get(astPath, `node.declaration.name`)
+      const exportName = `export default${name ? ` ${name}` : ``}`
+      isES6 = true
+      exportNames.push(exportName)
+    },
+
     AssignmentExpression: function AssignmentExpression(astPath) {
       const nodeLeft = astPath.node.left
 
@@ -94,7 +103,7 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
         isCommonJS = true
         exportNames.push(nodeLeft.property.name)
       }
-    },
+    }
   })
 
   if (isES6 && isCommonJS && process.env.NODE_ENV !== `test`) {

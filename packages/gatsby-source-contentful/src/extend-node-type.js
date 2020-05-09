@@ -1,3 +1,7 @@
+const fs = require(`fs`)
+const path = require(`path`)
+const crypto = require(`crypto`)
+
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
@@ -6,19 +10,33 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLJSON,
-  GraphQLNonNull,
+  GraphQLNonNull
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
-const path = require(`path`)
 
 const cacheImage = require(`./cache-image`)
+
+// By default store the images in `.cache` but allow the user to override
+// and store the image cache away from the gatsby cache. After all, the gatsby
+// cache is more likely to go stale than the images (which never go stale)
+// Note that the same image might be requested multiple times in the same run
+
+if (process.env.GATSBY_REMOTE_CACHE) {
+  console.warn(
+    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
+  )
+}
+const REMOTE_CACHE_FOLDER =
+  process.env.GATSBY_REMOTE_CACHE ??
+  path.join(process.cwd(), `.cache/remote_cache`)
+const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
 const {
   ImageFormatType,
   ImageResizingBehavior,
-  ImageCropFocusType,
+  ImageCropFocusType
 } = require(`./schemes`)
 
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
@@ -34,10 +52,26 @@ const getBase64Image = imageProps => {
   if (!imageProps) return null
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
-  // TODO add caching.
+
+  // Note: sha1 is unsafe for crypto but okay for this particular case
+  const shasum = crypto.createHash(`sha1`)
+  shasum.update(requestUrl)
+  const urlSha = shasum.digest(`hex`)
+
+  // TODO: Find the best place for this step. This is definitely not it.
+  fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
+
+  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha)
+
+  if (fs.existsSync(cacheFile)) {
+    // TODO: against dogma, confirm whether readFileSync is indeed slower
+    return fs.promises.readFile(cacheFile, `utf8`)
+  }
+
   return new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
-      resolve(body)
+      // TODO: against dogma, confirm whether writeFileSync is indeed slower
+      fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
     })
   })
 }
@@ -56,7 +90,7 @@ const getBasicImageProps = (image, args) => {
     contentType: image.file.contentType,
     aspectRatio,
     width: image.file.details.image.width,
-    height: image.file.details.image.height,
+    height: image.file.details.image.height
   }
 }
 
@@ -71,7 +105,7 @@ const createUrl = (imgUrl, options = {}) => {
       fm: options.toFormat || ``,
       fit: options.resizingBehavior || ``,
       f: options.cropFocus || ``,
-      bg: options.background || ``,
+      bg: options.background || ``
     },
     _.identity
   )
@@ -153,7 +187,7 @@ const resolveFixed = (image, options) => {
       return `${createUrl(baseUrl, {
         ...options,
         width: size,
-        height: h,
+        height: h
       })} ${resolution}`
     })
     .join(`,\n`)
@@ -174,9 +208,9 @@ const resolveFixed = (image, options) => {
     height: Math.round(pickedHeight),
     src: createUrl(baseUrl, {
       ...options,
-      width: options.width,
+      width: options.width
     }),
-    srcSet,
+    srcSet
   }
 }
 exports.resolveFixed = resolveFixed
@@ -253,7 +287,7 @@ const resolveFluid = (image, options) => {
       return `${createUrl(image.file.url, {
         ...options,
         width,
-        height: h,
+        height: h
       })} ${Math.round(width)}w`
     })
     .join(`,\n`)
@@ -264,10 +298,10 @@ const resolveFluid = (image, options) => {
     src: createUrl(baseUrl, {
       ...options,
       width: options.maxWidth,
-      height: options.maxHeight,
+      height: options.maxHeight
     }),
     srcSet,
-    sizes: options.sizes,
+    sizes: options.sizes
   }
 }
 exports.resolveFluid = resolveFluid
@@ -306,7 +340,7 @@ const resolveResize = (image, options) => {
     width: Math.round(pickedWidth),
     height: Math.round(pickedHeight),
     aspectRatio,
-    baseUrl,
+    baseUrl
   }
 }
 
@@ -321,11 +355,11 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve(imageProps) {
             return getBase64Image(imageProps)
-          },
+          }
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: getTracedSVG
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -344,10 +378,10 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
 
             const fixed = resolveFixed(image, {
               ...options,
-              toFormat: `webp`,
+              toFormat: `webp`
             })
             return _.get(fixed, `src`)
-          },
+          }
         },
         srcSetWebp: {
           type: GraphQLString,
@@ -361,39 +395,39 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
 
             const fixed = resolveFixed(image, {
               ...options,
-              toFormat: `webp`,
+              toFormat: `webp`
             })
             return _.get(fixed, `srcSet`)
-          },
-        },
-      },
+          }
+        }
+      }
     }),
     args: {
       width: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       height: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
+        defaultValue: 50
       },
       toFormat: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: ``
       },
       resizingBehavior: {
-        type: ImageResizingBehavior,
+        type: ImageResizingBehavior
       },
       cropFocus: {
         type: ImageCropFocusType,
-        defaultValue: null,
+        defaultValue: null
       },
       background: {
         type: GraphQLString,
-        defaultValue: null,
-      },
+        defaultValue: null
+      }
     },
     resolve: (image, options, context) =>
       Promise.resolve(resolveFixed(image, options)).then(node => {
@@ -403,9 +437,9 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           ...node,
           image,
           options,
-          context,
+          context
         }
-      }),
+      })
   }
 }
 
@@ -418,11 +452,11 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve(imageProps) {
             return getBase64Image(imageProps)
-          },
+          }
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: getTracedSVG
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
         src: { type: new GraphQLNonNull(GraphQLString) },
@@ -439,10 +473,10 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
 
             const fluid = resolveFluid(image, {
               ...options,
-              toFormat: `webp`,
+              toFormat: `webp`
             })
             return _.get(fluid, `src`)
-          },
+          }
         },
         srcSetWebp: {
           type: GraphQLString,
@@ -456,43 +490,43 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
 
             const fluid = resolveFluid(image, {
               ...options,
-              toFormat: `webp`,
+              toFormat: `webp`
             })
             return _.get(fluid, `srcSet`)
-          },
+          }
         },
-        sizes: { type: new GraphQLNonNull(GraphQLString) },
-      },
+        sizes: { type: new GraphQLNonNull(GraphQLString) }
+      }
     }),
     args: {
       maxWidth: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       maxHeight: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
+        defaultValue: 50
       },
       toFormat: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: ``
       },
       resizingBehavior: {
-        type: ImageResizingBehavior,
+        type: ImageResizingBehavior
       },
       cropFocus: {
         type: ImageCropFocusType,
-        defaultValue: null,
+        defaultValue: null
       },
       background: {
         type: GraphQLString,
-        defaultValue: null,
+        defaultValue: null
       },
       sizes: {
-        type: GraphQLString,
-      },
+        type: GraphQLString
+      }
     },
     resolve: (image, options, context) =>
       Promise.resolve(resolveFluid(image, options)).then(node => {
@@ -502,9 +536,9 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           ...node,
           image,
           options,
-          context,
+          context
         }
-      }),
+      })
   }
 }
 
@@ -513,15 +547,15 @@ exports.extendNodeType = ({ type, store }) => {
     return {
       nodeType: {
         type: GraphQLString,
-        deprecationReason: `This field is deprecated, please use 'json' instead.`,
+        deprecationReason: `This field is deprecated, please use 'json' instead.`
       },
       json: {
         type: GraphQLJSON,
         resolve: (source, fieldArgs) => {
           const contentJSON = JSON.parse(source.internal.content)
           return contentJSON
-        },
-      },
+        }
+      }
     }
   }
 
@@ -534,7 +568,7 @@ exports.extendNodeType = ({ type, store }) => {
 
     const { image, options } = args
     const {
-      file: { contentType },
+      file: { contentType }
     } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
@@ -549,10 +583,10 @@ exports.extendNodeType = ({ type, store }) => {
         internal: image.internal,
         name: image.file.fileName,
         extension,
-        absolutePath,
+        absolutePath
       },
       args: { toFormat: `` },
-      fileArgs: options,
+      fileArgs: options
     })
   }
 
@@ -560,7 +594,7 @@ exports.extendNodeType = ({ type, store }) => {
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
   const resolutionsNode = fixedNodeType({
     name: `ContentfulResolutions`,
-    getTracedSVG,
+    getTracedSVG
   })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
@@ -581,52 +615,52 @@ exports.extendNodeType = ({ type, store }) => {
             type: GraphQLString,
             resolve(imageProps) {
               return getBase64Image(imageProps)
-            },
+            }
           },
           tracedSVG: {
             type: GraphQLString,
-            resolve: getTracedSVG,
+            resolve: getTracedSVG
           },
           src: { type: GraphQLString },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
-          aspectRatio: { type: GraphQLFloat },
-        },
+          aspectRatio: { type: GraphQLFloat }
+        }
       }),
       args: {
         width: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         height: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
+          defaultValue: 50
         },
         jpegProgressive: {
           type: GraphQLBoolean,
-          defaultValue: true,
+          defaultValue: true
         },
         resizingBehavior: {
-          type: ImageResizingBehavior,
+          type: ImageResizingBehavior
         },
         toFormat: {
           type: ImageFormatType,
-          defaultValue: ``,
+          defaultValue: ``
         },
         cropFocus: {
           type: ImageCropFocusType,
-          defaultValue: null,
+          defaultValue: null
         },
         background: {
           type: GraphQLString,
-          defaultValue: null,
-        },
+          defaultValue: null
+        }
       },
       resolve(image, options, context) {
         return resolveResize(image, options)
-      },
-    },
+      }
+    }
   }
 }

@@ -5,7 +5,7 @@ const bar = new ProgressBar(
   `Downloading Contentful Assets [:bar] :current/:total :elapsed secs :percent`,
   {
     total: 0,
-    width: 30,
+    width: 30
   }
 )
 
@@ -24,8 +24,9 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     createNodeId,
     store,
     cache,
+    getCache,
     getNodes,
-    reporter,
+    reporter
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
@@ -74,7 +75,8 @@ const downloadContentfulAssets = async gatsbyFunctions => {
             cache,
             createNode,
             createNodeId,
-            reporter,
+            getCache,
+            reporter
           })
 
           if (fileNode) {

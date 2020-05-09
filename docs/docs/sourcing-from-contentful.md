@@ -36,9 +36,9 @@ plugins: [
     resolve: `gatsby-source-contentful`,
     options: {
       spaceId: `your_space_id_grab_it_from_contentful`,
-      accessToken: `your_token_id_grab_it_from_contentful`,
-    },
-  },
+      accessToken: `your_token_id_grab_it_from_contentful`
+    }
+  }
 ]
 ```
 
@@ -51,12 +51,16 @@ plugins: [
     options: {
       spaceId: `your_space_id_grab_it_from_contentful`,
       accessToken: `your_token_id_grab_it_from_contentful`,
-      host: `preview.contentful.com`,
-    },
-  },
+      host: `preview.contentful.com`
+    }
+  }
 ]
 ```
 
 ## Examples of Gatsby + Contentful websites
 
 The Gatsby blog has [several examples of individuals and companies](/blog/tags/contentful) that chose to build with Gatsby and Contentful.
+
+<CloudCallout>
+  For an automatic integration using Contentful with Gatsby:
+</CloudCallout>

@@ -4,7 +4,7 @@ title: Sourcing from Sanity
 
 ## What is Sanity.io?
 
-[Sanity](https:///www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
+[Sanity](https://www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
 
 You can use Sanity as a headless CMS that lets your authors work in a user friendly environment, or as a pure data backend for your apps. We make it easier for you to reuse content across multiple websites, apps, print, voice assistants, and other channels.
 
@@ -29,10 +29,10 @@ module.exports = {
       resolve: "gatsby-source-sanity",
       options: {
         projectId: "abc123",
-        dataset: "blog",
-      },
-    },
-  ],
+        dataset: "blog"
+      }
+    }
+  ]
 }
 ```
 
@@ -202,7 +202,7 @@ exports.createPages = async ({ graphql, actions }) => {
     createPage({
       path,
       component: require.resolve("./src/templates/project.js"),
-      context: { slug: edge.node.slug.current },
+      context: { slug: edge.node.slug.current }
     })
   })
 }
@@ -237,17 +237,17 @@ SANITY_TOKEN = my-super-secret-token
 ```
 
 ```js:title=gatsby-config.js
-require('dotenv').config({
+require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`
 })
 
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: "gatsby-source-sanity",
       options: {
         projectId: process.env.SANITY_PROJECT_ID,
-        dataset: process.env.SANITY_DATASET
+        dataset: process.env.SANITY_DATASET,
         token: process.env.SANITY_TOKEN
       }
     }
@@ -256,3 +256,5 @@ module.exports = {
 ```
 
 This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+
+<CloudCallout />

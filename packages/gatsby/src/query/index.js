@@ -7,7 +7,7 @@ const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
-const GraphQLRunner = require(`./graphql-runner`)
+const GraphQLRunner = require(`./graphql-runner`).default
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -53,7 +53,7 @@ const findIdsWithoutDataDependencies = state => {
   const notTrackedIds = new Set(
     [
       ...Array.from(state.pages.values(), p => p.path),
-      ...[...state.staticQueryComponents.values()].map(c => c.id),
+      ...[...state.staticQueryComponents.values()].map(c => c.id)
     ].filter(
       x => !allTrackedIds.has(x) && !seenIdsWithoutDataDependencies.has(x)
     )
@@ -154,12 +154,12 @@ const groupQueryIds = queryIds => {
   )
   return {
     staticQueryIds: grouped.static || [],
-    pageQueryIds: grouped.page || [],
+    pageQueryIds: grouped.page || []
   }
 }
 
-const processQueries = async (queryJobs, activity) => {
-  const queue = queryQueue.createBuildQueue()
+const processQueries = async (queryJobs, { activity, graphqlRunner }) => {
+  const queue = queryQueue.createBuildQueue(graphqlRunner)
   await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
@@ -171,7 +171,7 @@ const createStaticQueryJob = (state, queryId) => {
     hash,
     query,
     componentPath,
-    context: { path: id },
+    context: { path: id }
   }
 }
 
@@ -184,7 +184,7 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   if (queryJobsCount) {
     const activity = report.createProgress(`run queries`, queryJobsCount, 0, {
       id: `query-running`,
-      parentSpan,
+      parentSpan
     })
     activity.start()
     return activity
@@ -193,20 +193,29 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
       done: () => {
         report.completeActivity(`query-running`)
       },
-      tick: () => {},
+      tick: () => {}
     }
   }
 }
 
-const processStaticQueries = async (queryIds, { state, activity }) => {
+const processStaticQueries = async (
+  queryIds,
+  { state, activity, graphqlRunner }
+) => {
   state = state || store.getState()
   await processQueries(
     queryIds.map(id => createStaticQueryJob(state, id)),
-    activity
+    {
+      activity,
+      graphqlRunner
+    }
   )
 }
 
-const processPageQueries = async (queryIds, { state, activity }) => {
+const processPageQueries = async (
+  queryIds,
+  { state, activity, graphqlRunner }
+) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
@@ -215,11 +224,14 @@ const processPageQueries = async (queryIds, { state, activity }) => {
   const pages = _.filter(queryIds.map(id => state.pages.get(id)))
   await processQueries(
     pages.map(page => createPageQueryJob(state, page)),
-    activity
+    {
+      activity,
+      graphqlRunner
+    }
   )
 }
 
-const getInitialQueryProcessors = ({ parentSpan } = {}) => {
+const getInitialQueryProcessors = ({ parentSpan, graphqlRunner } = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
@@ -235,7 +247,7 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
       activity = createQueryRunningActivity(queryjobsCount, parentSpan)
     }
 
-    await fn(queryIds, { state, activity })
+    await fn(queryIds, { state, activity, graphqlRunner })
 
     processedQueuesCount++
     // if both page and static queries are done, finish activity
@@ -247,7 +259,7 @@ const getInitialQueryProcessors = ({ parentSpan } = {}) => {
   return {
     processStaticQueries: createProcessor(processStaticQueries, staticQueryIds),
     processPageQueries: createProcessor(processPageQueries, pageQueryIds),
-    pageQueryIds,
+    pageQueryIds
   }
 }
 
@@ -255,7 +267,7 @@ const initialProcessQueries = async ({ parentSpan } = {}) => {
   const {
     pageQueryIds,
     processPageQueries,
-    processStaticQueries,
+    processStaticQueries
   } = getInitialQueryProcessors({ parentSpan })
 
   await processStaticQueries()
@@ -275,8 +287,8 @@ const createPageQueryJob = (state, page) => {
     componentPath,
     context: {
       ...page,
-      ...context,
-    },
+      ...context
+    }
   }
 }
 
@@ -299,7 +311,7 @@ const runQueuedQueries = () => {
     const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
     const queryJobs = [
       ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
-      ...pages.map(page => createPageQueryJob(state, page)),
+      ...pages.map(page => createPageQueryJob(state, page))
     ]
     listenerQueue.push(queryJobs)
   }
@@ -354,7 +366,7 @@ const startListeningToDevelopQueue = () => {
     `SET_SCHEMA_COMPOSER`,
     `SET_SCHEMA`,
     `ADD_FIELD_TO_NODE`,
-    `ADD_CHILD_NODE_TO_PARENT_NODE`,
+    `ADD_CHILD_NODE_TO_PARENT_NODE`
   ].forEach(eventType => {
     emitter.on(eventType, event => {
       graphqlRunner = null
@@ -395,5 +407,5 @@ module.exports = {
   startListeningToDevelopQueue,
   runQueuedQueries,
   enqueueExtractedQueryId,
-  enqueueExtractedPageComponent,
+  enqueueExtractedPageComponent
 }

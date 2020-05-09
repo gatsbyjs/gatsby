@@ -31,7 +31,7 @@ const HIGHLIGHT_DIRECTIVE = createDirectiveRegExp(`highlight`)
 
 const END_DIRECTIVE = {
   highlight: /highlight-end/,
-  hide: /hide-end/,
+  hide: /hide-end/
 }
 
 const PLAIN_TEXT_WITH_LF_TEST = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
@@ -59,7 +59,7 @@ const parseLine = (line, code, index, actions) => {
   const flagSource = {
     feature,
     index,
-    directive: `${feature}-${directive}${directiveRange}`,
+    directive: `${feature}-${directive}${directiveRange}`
   }
   switch (directive) {
     case `next-line`:
@@ -131,7 +131,7 @@ module.exports = function highlightLineRange(code, highlights = []) {
     highlight: line => actions.flag(`highlight`, line),
     stripComment: line => {
       lines[line].code = stripComment(lines[line].code)
-    },
+    }
   }
 
   const transform = lines =>

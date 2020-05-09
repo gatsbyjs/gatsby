@@ -69,9 +69,9 @@ plugins: [
       // List of collections you want to fetch.
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
-      includeCollections: ["shop", "content"],
-    },
-  },
+      includeCollections: ["shop", "content"]
+    }
+  }
 ]
 ```
 
@@ -448,8 +448,8 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
       path: `/${edge.node.handle}`,
       component: path.resolve("./src/templates/product.js"),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }
@@ -470,6 +470,6 @@ available.
 [gatsby]: https://www.gatsbyjs.org/
 [shopify]: https://www.shopify.com/
 [shopify-storefront-api]: https://help.shopify.com/api/custom-storefronts/storefront-api
-[graphql-inline-fragments]: http://graphql.org/learn/queries/#inline-fragments
+[graphql-inline-fragments]: https://graphql.org/learn/queries/#inline-fragments
 [gatsby-plugin-sharp]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sharp
 [gatsby-image-fragments]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image#gatsby-transformer-sharp

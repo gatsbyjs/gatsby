@@ -21,7 +21,7 @@ statically read the data exports.
 In a .js file, export a data object to set your metadata variables, like so:
 
 ```javascript
-import React from 'react'
+import * as React from 'react'
 
 exports.data = {
     title: 'Choropleth on d3v4',
@@ -44,7 +44,7 @@ export const data = {
   layoutType: "post",
   path: "choropleth-on-d3v4",
   category: "data science",
-  description: "Things about the choropleth.",
+  description: "Things about the choropleth."
 }
 ```
 

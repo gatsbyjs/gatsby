@@ -2,7 +2,7 @@ const {
   DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
-  imageWrapperClass,
+  imageWrapperClass
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
@@ -31,7 +31,7 @@ module.exports = (
     getNode,
     reporter,
     cache,
-    compiler,
+    compiler
   },
   pluginOptions
 ) => {
@@ -77,11 +77,11 @@ module.exports = (
         .split(`.`)
         .pop(),
       url,
-      query,
+      query
     }
   }
 
-  const getImageCaption = (node, overWrites) => {
+  const getImageCaption = async (node, overWrites) => {
     const getCaptionString = () => {
       const captionOptions = Array.isArray(options.showCaptions)
         ? options.showCaptions
@@ -118,7 +118,7 @@ module.exports = (
       return _.escape(captionString)
     }
 
-    return compiler.generateHTML(compiler.parseString(captionString))
+    return compiler.generateHTML(await compiler.parseString(captionString))
   }
 
   // Takes a node and generates the needed images and then returns
@@ -154,7 +154,7 @@ module.exports = (
       file: imageNode,
       args: options,
       reporter,
-      cache,
+      cache
     })
 
     if (!fluidResult) {
@@ -224,7 +224,7 @@ module.exports = (
           pluginOptions,
           DEFAULT_OPTIONS
         ),
-        reporter,
+        reporter
       })
 
       if (!webpFluidResult) {
@@ -275,7 +275,7 @@ module.exports = (
         args,
         fileArgs: args,
         cache,
-        reporter,
+        reporter
       })
 
       // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
@@ -291,7 +291,7 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const imageCaption =
-      options.showCaptions && getImageCaption(node, overWrites)
+      options.showCaptions && (await getImageCaption(node, overWrites))
 
     let removeBgImage = false
     if (options.disableBgImageOnAlpha) {
@@ -332,9 +332,9 @@ module.exports = (
     rawHTML = `
     <span
       class="${imageWrapperClass}"
-      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-        imageCaption ? `` : wrapperStyle
-      } max-width: ${presentationWidth}px;"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px; ${
+      imageCaption ? `` : wrapperStyle
+    }"
     >
       ${rawHTML}
     </span>

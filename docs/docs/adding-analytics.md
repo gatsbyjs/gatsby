@@ -43,10 +43,10 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // replace "UA-XXXXXXXXX-X" with your own Tracking ID
-        trackingId: "UA-XXXXXXXXX-X",
-      },
-    },
-  ],
+        trackingId: "UA-XXXXXXXXX-X"
+      }
+    }
+  ]
 }
 ```
 
@@ -69,3 +69,5 @@ Once this is configured you can deploy your site to test! If you navigate to the
 - [Matomo (formerly Piwik)](/packages/gatsby-plugin-matomo/)
 - [Simple Analytics](/packages/gatsby-plugin-simple-analytics)
 - [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics/)
+- [GoatCounter](/packages/gatsby-plugin-goatcounter/)
+- [PostHog](/packages/gatsby-plugin-posthog-analytics/)

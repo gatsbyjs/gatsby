@@ -1,5 +1,5 @@
 ---
-title: Building an e-commerce site with Shopify
+title: Building an E-commerce site with Shopify
 ---
 
 In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
@@ -34,9 +34,9 @@ plugins: [
       shopName: `[some-shop]`,
 
       // The storefront access token
-      accessToken: `[token]`,
-    },
-  },
+      accessToken: `[token]`
+    }
+  }
 ]
 ```
 
@@ -184,8 +184,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/product/${node.handle}`,
       component: path.resolve(`./src/templates/product.js`),
       context: {
-        product: node,
-      },
+        product: node
+      }
     })
   })
 }

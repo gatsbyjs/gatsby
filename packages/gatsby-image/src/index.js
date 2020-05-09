@@ -81,8 +81,8 @@ const getImageSrcKey = ({ fluid, fixed }) => {
 
 /**
  * Returns the current src - Preferably with art-direction support.
- * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
- * @return {{src: string, media?: string}}
+ * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
+ * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
 const getCurrentSrcData = currentData => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
@@ -90,6 +90,14 @@ const getCurrentSrcData = currentData => {
     const foundMedia = currentData.findIndex(matchesMedia)
     if (foundMedia !== -1) {
       return currentData[foundMedia]
+    }
+
+    // No media matches, select first element without a media condition
+    const noMedia = currentData.findIndex(
+      image => typeof image.media === `undefined`
+    )
+    if (noMedia !== -1) {
+      return currentData[noMedia]
     }
   }
   // Else return the first image.
@@ -254,14 +262,12 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({
-  src,
-  imageVariants,
-  generateSources,
-  spreadProps,
-  ariaHidden,
-}) => {
-  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
+const Placeholder = React.forwardRef((props, ref) => {
+  const { src, imageVariants, generateSources, spreadProps, ariaHidden } = props
+
+  const baseImage = (
+    <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
+  )
 
   return imageVariants.length > 1 ? (
     <picture>
@@ -271,7 +277,7 @@ const Placeholder = ({
   ) : (
     baseImage
   )
-}
+})
 
 const Img = React.forwardRef((props, ref) => {
   const {
@@ -308,7 +314,7 @@ const Img = React.forwardRef((props, ref) => {
         height: `100%`,
         objectFit: `cover`,
         objectPosition: `center`,
-        ...style,
+        ...style
       }}
     />
   )
@@ -317,7 +323,7 @@ const Img = React.forwardRef((props, ref) => {
 Img.propTypes = {
   style: PropTypes.object,
   onError: PropTypes.func,
-  onLoad: PropTypes.func,
+  onLoad: PropTypes.func
 }
 
 class Image extends React.Component {
@@ -345,10 +351,11 @@ class Image extends React.Component {
       isVisible,
       imgLoaded: false,
       imgCached: false,
-      fadeIn: !this.seenBefore && props.fadeIn,
+      fadeIn: !this.seenBefore && props.fadeIn
     }
 
     this.imageRef = React.createRef()
+    this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
   }
@@ -387,14 +394,18 @@ class Image extends React.Component {
         // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
         // imgLoaded and imgCached are in a 2nd setState call to be changed together,
         // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () =>
+        this.setState({ isVisible: true }, () => {
           this.setState({
             imgLoaded: imageInCache,
             // `currentSrc` should be a string, but can be `undefined` in IE,
             // !! operator validates the value is not undefined/null/""
-            imgCached: !!this.imageRef.current.currentSrc,
+            // for lazyloaded components this might be null
+            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
+            imgCached: !!(
+              this.imageRef.current && this.imageRef.current.currentSrc
+            )
           })
-        )
+        })
       })
     }
   }
@@ -425,7 +436,7 @@ class Image extends React.Component {
       Tag,
       itemProp,
       loading,
-      draggable,
+      draggable
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -434,21 +445,21 @@ class Image extends React.Component {
     const imageStyle = {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
-      ...imgStyle,
+      ...imgStyle
     }
 
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHideStyle = {
-      transitionDelay: `${durationFadeIn}ms`,
+      transitionDelay: `${durationFadeIn}ms`
     }
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
-      ...placeholderStyle,
+      ...placeholderStyle
     }
 
     const placeholderImageProps = {
@@ -456,7 +467,7 @@ class Image extends React.Component {
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
-      itemProp,
+      itemProp
     }
 
     if (fluid) {
@@ -469,7 +480,9 @@ class Image extends React.Component {
           style={{
             position: `relative`,
             overflow: `hidden`,
-            ...style,
+            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
+            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
+            ...style
           }}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
@@ -479,7 +492,7 @@ class Image extends React.Component {
             aria-hidden
             style={{
               width: `100%`,
-              paddingBottom: `${100 / image.aspectRatio}%`,
+              paddingBottom: `${100 / image.aspectRatio}%`
             }}
           />
 
@@ -496,7 +509,7 @@ class Image extends React.Component {
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 right: 0,
                 left: 0,
-                ...(shouldFadeIn && delayHideStyle),
+                ...(shouldFadeIn && delayHideStyle)
               }}
             />
           )}
@@ -505,6 +518,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -516,6 +530,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -554,8 +569,8 @@ class Image extends React.Component {
                   title,
                   loading,
                   ...image,
-                  imageVariants,
-                }),
+                  imageVariants
+                })
               }}
             />
           )}
@@ -573,7 +588,7 @@ class Image extends React.Component {
         display: `inline-block`,
         width: image.width,
         height: image.height,
-        ...style,
+        ...style
       }
 
       if (style.display === `inherit`) {
@@ -597,7 +612,7 @@ class Image extends React.Component {
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 height: image.height,
-                ...(shouldFadeIn && delayHideStyle),
+                ...(shouldFadeIn && delayHideStyle)
               }}
             />
           )}
@@ -606,6 +621,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -617,6 +633,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -657,8 +674,8 @@ class Image extends React.Component {
                   title,
                   loading,
                   ...image,
-                  imageVariants,
-                }),
+                  imageVariants
+                })
               }}
             />
           )}
@@ -677,7 +694,7 @@ Image.defaultProps = {
   Tag: `div`,
   // We set it to `lazy` by default because it's best to default to a performant
   // setting and let the user "opt out" to `eager`
-  loading: `lazy`,
+  loading: `lazy`
 }
 
 const fixedObject = PropTypes.shape({
@@ -689,7 +706,7 @@ const fixedObject = PropTypes.shape({
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
-  media: PropTypes.string,
+  media: PropTypes.string
 })
 
 const fluidObject = PropTypes.shape({
@@ -702,6 +719,8 @@ const fluidObject = PropTypes.shape({
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
   media: PropTypes.string,
+  maxWidth: PropTypes.number,
+  maxHeight: PropTypes.number
 })
 
 // If you modify these propTypes, please don't forget to update following files as well:
@@ -731,7 +750,7 @@ Image.propTypes = {
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
-  draggable: PropTypes.bool,
+  draggable: PropTypes.bool
 }
 
 export default Image

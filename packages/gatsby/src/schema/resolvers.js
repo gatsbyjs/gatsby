@@ -2,27 +2,39 @@ const systemPath = require(`path`)
 const normalize = require(`normalize-path`)
 const _ = require(`lodash`)
 const { GraphQLList, getNullableType, getNamedType, Kind } = require(`graphql`)
-const { getValueAt } = require(`../utils/get-value-at`)
+import { getValueAt } from "../utils/get-value-at"
 
-const findMany = typeName => (source, args, context, info) =>
-  context.nodeModel.runQuery(
+const findMany = typeName => (source, args, context, info) => {
+  if (context.stats) {
+    context.stats.totalRunQuery++
+    context.stats.totalPluralRunQuery++
+  }
+
+  return context.nodeModel.runQuery(
     {
       query: args,
       firstOnly: false,
       type: info.schema.getType(typeName),
+      stats: context.stats
     },
     { path: context.path, connectionType: typeName }
   )
+}
 
-const findOne = typeName => (source, args, context, info) =>
-  context.nodeModel.runQuery(
+const findOne = typeName => (source, args, context, info) => {
+  if (context.stats) {
+    context.stats.totalRunQuery++
+  }
+  return context.nodeModel.runQuery(
     {
       query: { filter: args },
       firstOnly: true,
       type: info.schema.getType(typeName),
+      stats: context.stats
     },
     { path: context.path }
   )
+}
 
 const findManyPaginated = typeName => async (source, args, context, info) => {
   // Peek into selection set and pass on the `field` arg of `group` and
@@ -62,14 +74,18 @@ const group = (source, args, context, info) => {
         acc[key] = (acc[key] || []).concat(node)
       })
     return acc
-  }, {})
+    // Note: using Object.create on purpose:
+    //   object key may be arbitrary string including reserved words (i.e. `constructor`)
+    //   see: https://github.com/gatsbyjs/gatsby/issues/22508
+  }, Object.create(null))
+
   return Object.keys(groupedResults)
     .sort()
     .reduce((acc, fieldValue) => {
       acc.push({
         ...paginate(groupedResults[fieldValue], args),
         field,
-        fieldValue,
+        fieldValue
       })
       return acc
     }, [])
@@ -98,7 +114,7 @@ const paginate = (results = [], { skip = 0, limit }) => {
       return {
         node: item,
         next: arr[i + 1],
-        previous: arr[i - 1],
+        previous: arr[i - 1]
       }
     }),
     nodes: items,
@@ -108,8 +124,8 @@ const paginate = (results = [], { skip = 0, limit }) => {
       hasNextPage,
       itemCount: items.length,
       pageCount,
-      perPage: limit,
-    },
+      perPage: limit
+    }
   }
 }
 
@@ -123,7 +139,7 @@ const link = (options = {}, fieldConfig) => async (
   const fieldValue = await resolver(source, args, context, {
     ...info,
     from: options.from || info.from,
-    fromNode: options.from ? options.fromNode : info.fromNode,
+    fromNode: options.from ? options.fromNode : info.fromNode
   })
 
   if (fieldValue == null) return null
@@ -160,12 +176,21 @@ const link = (options = {}, fieldConfig) => async (
   const operator = Array.isArray(fieldValue) ? oneOf : equals
   args.filter = options.by.split(`.`).reduceRight((acc, key, i, { length }) => {
     return {
-      [key]: i === length - 1 ? operator(acc) : acc,
+      [key]: i === length - 1 ? operator(acc) : acc
     }
   }, fieldValue)
 
+  const firstOnly = !(returnType instanceof GraphQLList)
+
+  if (context.stats) {
+    context.stats.totalRunQuery++
+    if (firstOnly) {
+      context.stats.totalPluralRunQuery++
+    }
+  }
+
   const result = await context.nodeModel.runQuery(
-    { query: args, firstOnly: !(returnType instanceof GraphQLList), type },
+    { query: args, firstOnly, type, stats: context.stats },
     { path: context.path }
   )
   if (
@@ -191,7 +216,7 @@ const fileByPath = (options = {}, fieldConfig) => async (
   const fieldValue = await resolver(source, args, context, {
     ...info,
     from: options.from || info.from,
-    fromNode: options.from ? options.fromNode : info.fromNode,
+    fromNode: options.from ? options.fromNode : info.fromNode
   })
 
   if (fieldValue == null) return null
@@ -262,7 +287,7 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
             fragmentDef.selectionSet,
             fieldName,
             info
-          ),
+          )
         ]
       }
     } else if (selection.kind === Kind.INLINE_FRAGMENT) {
@@ -272,7 +297,7 @@ const getFieldNodeByNameInSelectionSet = (selectionSet, fieldName, info) =>
           selection.selectionSet,
           fieldName,
           info
-        ),
+        )
       ]
     } /* FIELD_NODE */ else {
       if (selection.name.value === fieldName) {
@@ -305,5 +330,5 @@ module.exports = {
   link,
   distinct,
   group,
-  paginate,
+  paginate
 }

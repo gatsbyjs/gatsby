@@ -2,7 +2,12 @@ import fs from "fs"
 import path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
-import { defaultIcons, doesIconExist, addDigestToPath } from "./common"
+import {
+  defaultIcons,
+  doesIconExist,
+  addDigestToPath,
+  favicons
+} from "./common"
 
 sharp.simd(true)
 
@@ -32,7 +37,7 @@ async function generateIcon(icon, srcIcon) {
       width: size,
       height: size,
       fit: `contain`,
-      background: { r: 255, g: 255, b: 255, alpha: 0 },
+      background: { r: 255, g: 255, b: 255, alpha: 0 }
     })
     .toFile(imgPath)
 }
@@ -62,7 +67,7 @@ exports.onPostBootstrap = async (
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
-    parentSpan,
+    parentSpan
   })
   activity.start()
 
@@ -90,10 +95,10 @@ exports.onPostBootstrap = async (
           pluginOptions: {
             ...manifest,
             ...locale,
-            ...cacheModeOverride,
+            ...cacheModeOverride
           },
           shouldLocalize: true,
-          basePath,
+          basePath
         })
       })
     )
@@ -120,11 +125,13 @@ const makeManifest = async ({
   reporter,
   pluginOptions,
   shouldLocalize = false,
-  basePath = ``,
+  basePath = ``
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
     shouldLocalize && pluginOptions.lang ? `_${pluginOptions.lang}` : ``
+
+  const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
@@ -145,7 +152,7 @@ const makeManifest = async ({
     manifest.icons = manifest.icons.map(icon => {
       return {
         ...pluginOptions.icon_options,
-        ...icon,
+        ...icon
       }
     })
   }
@@ -192,30 +199,46 @@ const makeManifest = async ({
 
     const iconDigest = createContentDigest(fs.readFileSync(icon))
 
-    //if cacheBusting is being done via url query icons must be generated before cache busting runs
-    if (cacheMode === `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+    /**
+     * Given an array of icon configs, generate the various output sizes from
+     * the source icon image.
+     */
+    async function processIconSet(iconSet) {
+      //if cacheBusting is being done via url query icons must be generated before cache busting runs
+      if (cacheMode === `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
         )
-      )
+      }
+
+      if (cacheMode !== `none`) {
+        iconSet = iconSet.map(icon => {
+          let newIcon = { ...icon }
+          newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
+          return newIcon
+        })
+      }
+
+      //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+      if (cacheMode !== `query`) {
+        await Promise.all(
+          iconSet.map(dstIcon =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+          )
+        )
+      }
+
+      return iconSet
     }
 
-    if (cacheMode !== `none`) {
-      manifest.icons = manifest.icons.map(icon => {
-        let newIcon = { ...icon }
-        newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
-        return newIcon
-      })
-    }
+    manifest.icons = await processIconSet(manifest.icons)
 
-    //if file names are being modified by cacheBusting icons must be generated after cache busting runs
-    if (cacheMode !== `query`) {
-      await Promise.all(
-        manifest.icons.map(dstIcon =>
-          checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-        )
-      )
+    // If favicon is enabled, apply the same caching policy and generate
+    // the resized image(s)
+    if (faviconIsEnabled) {
+      await processIconSet(favicons)
     }
   }
 
@@ -223,7 +246,7 @@ const makeManifest = async ({
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src)),
+      src: slash(path.join(basePath, icon.src))
     }
   })
 
@@ -243,8 +266,8 @@ exports.onCreateWebpackConfig = ({ actions, plugins }, pluginOptions) => {
     plugins: [
       plugins.define({
         __MANIFEST_PLUGIN_HAS_LOCALISATION__:
-          pluginOptions.localize && pluginOptions.localize.length,
-      }),
-    ],
+          pluginOptions.localize && pluginOptions.localize.length
+      })
+    ]
   })
 }

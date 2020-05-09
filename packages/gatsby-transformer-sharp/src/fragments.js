@@ -7,7 +7,7 @@ import { graphql } from "gatsby"
  * @example
  * childImageSharp {
  *   fixed {
- *     ...GatsbyImageSharpFixed 
+ *     ...GatsbyImageSharpFixed
  *     # ^ identical to using the following fields:
  *     # base64
  *     # width
@@ -116,6 +116,17 @@ export const GatsbyImageSharpFluid = graphql`
 `
 
 /**
+ * Presentation sizes to make sure a fluid container does not overflow
+ * @type {Fragment}
+ */
+export const GatsbyImageSharpFluidLimitPresentationSize = graphql`
+  fragment GatsbyImageSharpFluidLimitPresentationSize on ImageSharpFluid {
+    maxHeight: presentationHeight
+    maxWidth: presentationWidth
+  }
+`
+
+/**
  * Traced SVG fluid images
  * @type {Fragment}
  */
@@ -145,7 +156,6 @@ export const GatsbyImageSharpFluid_withWebp = graphql`
   }
 `
 
-
 /**
  * Traced SVG fluid images that prefer Webp
  * @type {Fragment}
@@ -161,7 +171,6 @@ export const GatsbyImageSharpFluid_withWebp_tracedSVG = graphql`
     sizes
   }
 `
-
 
 /**
  * Traced SVG fluid images without the blurred base64 image

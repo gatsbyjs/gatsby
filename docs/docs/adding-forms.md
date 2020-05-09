@@ -9,7 +9,9 @@ Start with the following page.
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => <div>Hello world!</div>
+export default function Home() {
+  return <div>Hello world!</div>
+}
 ```
 
 This Gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
@@ -32,7 +34,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: "",
+    lastName: ""
   }
 
   render() {
@@ -49,7 +51,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: "",
+    lastName: ""
   }
 
   render() {
@@ -78,7 +80,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: "",
+    lastName: ""
   }
 
   handleInputChange = event => {
@@ -87,7 +89,7 @@ export default class IndexPage extends React.Component {
     const name = target.name
 
     this.setState({
-      [name]: value,
+      [name]: value
     })
   }
 
@@ -127,7 +129,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: "",
+    lastName: ""
   }
 
   handleInputChange = event => {
@@ -136,7 +138,7 @@ export default class IndexPage extends React.Component {
     const name = target.name
 
     this.setState({
-      [name]: value,
+      [name]: value
     })
   }
 

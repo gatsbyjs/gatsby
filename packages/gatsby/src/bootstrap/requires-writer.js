@@ -52,6 +52,7 @@ const getComponents = pages =>
   _(pages)
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
+    .orderBy(c => c.componentChunkName)
     .value()
 
 /**
@@ -63,7 +64,7 @@ const getMatchPaths = pages => {
     return {
       ...page,
       index,
-      score: rankRoute(page.matchPath),
+      score: rankRoute(page.matchPath)
     }
   }
 
@@ -92,7 +93,7 @@ const getMatchPaths = pages => {
           createMatchPathEntry(
             {
               ...page,
-              matchPath: page.path,
+              matchPath: page.path
             },
             index
           )
@@ -144,8 +145,16 @@ const writeAll = async state => {
 
   lastHash = newHash
 
+  // TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
+  const hotImport =
+    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+      ? `const { hot } = require("react-hot-loader/root")`
+      : ``
+  const hotMethod =
+    process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
+
   // Create file with sync requires of components/json files.
-  let syncRequires = `const { hot } = require("react-hot-loader/root")
+  let syncRequires = `${hotImport}
 
 // prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -153,9 +162,9 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": hot(preferDefault(require("${joinPath(
-          c.component
-        )}")))`
+        `  "${
+          c.componentChunkName
+        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
     )
     .join(`,\n`)}
 }\n\n`
@@ -190,7 +199,7 @@ const preferDefault = m => m && m.default || m
   await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
-    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
+    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4))
   ])
 
   return true
@@ -199,7 +208,7 @@ const preferDefault = m => m && m.default || m
 const debouncedWriteAll = _.debounce(
   async () => {
     const activity = reporter.activityTimer(`write out requires`, {
-      id: `requires-writer`,
+      id: `requires-writer`
     })
     activity.start()
     const didRequiresChange = await writeAll(store.getState())
@@ -212,7 +221,7 @@ const debouncedWriteAll = _.debounce(
   {
     // using "leading" can cause double `writeAll` call - particularly
     // when refreshing data using `/__refresh` hook.
-    leading: false,
+    leading: false
   }
 )
 
@@ -246,4 +255,5 @@ module.exports = {
   writeAll,
   resetLastHash,
   startListener,
+  getComponents
 }
