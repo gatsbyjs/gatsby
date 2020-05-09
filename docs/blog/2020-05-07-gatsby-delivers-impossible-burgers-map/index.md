@@ -2,7 +2,7 @@
 title: "Mapping Your Closest Impossible Burger with Gatsby"
 date: 2020-05-07
 author: Sam Bhagwat
-excerpt: ""Meat analogues" is a terrific punk band name. But it also describes one of the hottest current trends in food: plant-based protein products so realistic that they fool even hardcore carnivores, with a side of combatting climate change. Impossible Foods is one of the fastest growing alternative meat companies, particularly famous for their juicy and delicious Impossible Burgers. The company’s website made it hard for hungry customers to find their nearest Impossible Burger, though, so they turned to Gatsby and Contentful for an upgrade.”
+excerpt: "Meat Analogues is a terrific punk band name. But it also describes one of the hottest current trends in food: plant-based protein products so realistic that they fool even hardcore carnivores, with a side of combatting climate change. Impossible Foods is one of the fastest growing alternative meat companies, particularly famous for their juicy and delicious Impossible Burgers. The company’s website wasn't helping hungry customers find their nearest Impossible Burger, though, so they turned to Gatsby to build an interactive mapping web app."
 tags:
   - case-studies
   - performance
@@ -100,5 +100,11 @@ Ultimately, Geo credits Impossible Foods' choice of technologies as the key that
 ## Still hungry for more?
 
 Check out this [webinar with Gatsby and Contentful](https://www.gatsbyjs.com/impossible-foods-webinar/) to hear Ashley Geo (Head of Brand Marketing-Communications at Impossible Foods) and David Fonnegra (Lead Technologist at Matter Supply) talk about delivering new features and content on impossiblefoods.com within often-impossible timeframes—and how they empowered the Impossible™ Digital team to increase customer engagement by more than 40%. Gatsby co-founder Kyle Mathews and Jim Ambras, Senior Technical Trainer at Contentful, join them.
+
+<CloudCallout>
+  Sites built with Gatsby are fast no matter where they run. But when a Gatsby
+  site runs on Gatsby Cloud, it can make the Kessel run in under 12 parsecs.
+  Find out more:
+</CloudCallout>
 
 Ashley Geo and David Fonnegra also highlighted the Impossible Foods / Matter Supply partnership in [ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale, and Flexibility](https://www.gatsbyjs.com/impossible-foods-webinar/). Deane Barker highlighted the store locator use-case [in a March 2019 podcast](https://www.ingeniux.com/company/podcast/content-matters-podcast-headless-content-management-with-deane-barker).
