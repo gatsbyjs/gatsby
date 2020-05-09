@@ -14,6 +14,10 @@ function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPlugin({
     name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
   })
+  actions.setBabelPlugin({
+    name: require.resolve(`@babel/plugin-proposal-decorators`),
+    options: options && options.decoratorsOptions
+  })
 }
 
 function onCreateWebpackConfig({ actions, loaders }) {
