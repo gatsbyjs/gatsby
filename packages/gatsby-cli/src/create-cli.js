@@ -182,16 +182,16 @@ function buildLocalCommands(cli, isLocalSite) {
           default: false,
           describe: `Build site without uglifying JS bundles (for debugging).`,
         })
-       .option(`log-pages`, {
-         type: `boolean`,
-         default: false,
-         describe: `Log the pages that changes since last build (for optimization).`,
-       })
-       .option(`write-to-file`, {
-         type: `boolean`,
-         default: false,
-         describe: `Save the log of changed pages for future comparison (for optimization).`,
-       })
+        .option(`log-pages`, {
+          type: `boolean`,
+          default: false,
+          describe: `Log the pages that changes since last build (for optimization).`,
+        })
+        .option(`write-to-file`, {
+          type: `boolean`,
+          default: false,
+          describe: `Save the log of changed pages for future comparison (for optimization).`,
+        })
         .option(`profile`, {
           type: `boolean`,
           default: false,
