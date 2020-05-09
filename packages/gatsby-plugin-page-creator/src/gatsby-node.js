@@ -51,9 +51,9 @@ exports.createPagesStatefully = async (
 
   // Get initial list of files.
   let files = await glob(pagesGlob, { cwd: pagesPath })
-  files.forEach(file =>
+  files.forEach(file => {
     createPage(file, pagesDirectory, actions, ignore, graphql)
-  )
+  })
 
   watchDirectory(
     pagesPath,

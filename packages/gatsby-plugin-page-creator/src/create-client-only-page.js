@@ -13,8 +13,6 @@ exports.createClientOnlyPage = function createClientOnlyPage(
   absolutePath,
   actions
 ) {
-  console.log(`client only`, absolutePath)
-
   // Create page object
   const createdPath = createPath(absolutePath)
   const matchPath = translateInterpolationToMatchPath(createdPath)
