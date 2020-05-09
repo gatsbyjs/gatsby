@@ -91,6 +91,32 @@ Gatsby's `<Link>` component comes with a `getProps` prop, which can be useful fo
 
 You can read more about it on [`@reach/router`'s documentation](https://reach.tech/router/api/Link).
 
+### Use `<Match>` for advanced link styling or conditional rendering
+
+You can wrap Gatsby's `<Link>` component in Reach Router's `<Match>`. `<Match>`'s props contain a boolean property `match` that tells you whetever the given path was matched or not. You have to provide `<Match>` with a path to match against, so you can wrap Gatsby's `<Link>` component in a custom component: 
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+import { Match } from "@reach/router"
+
+const NavButton = ({ destination, text }) {
+  return (
+    <Match path={destination}>
+      {({ match }) => (
+        <Link
+          className={match ? "active-menu-item" : "inactive-menu-item"}
+          to={destination}
+        >
+          {text}
+        </Link>
+      )}
+    </Match>
+  )
+```
+`<Match>`
+You can read more about it on [`@reach/router`'s documentation](https://reach.tech/router/api/Match).
+
 ### Show active styles for partially matched and parent links
 
 By default the `activeStyle` and `activeClassName` props will only be set on a `<Link>` component if the current URL matches its `to` prop _exactly_. Sometimes, you may want to style a `<Link>` as active even if it partially matches the current URL. For example:
