@@ -599,8 +599,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
+    // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
     fullNodes: nodeIds.map(getNode),
   }

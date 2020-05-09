@@ -342,7 +342,9 @@ Gatsby version: ${gatsbyVersion}
 }
 
 module.exports = argv => {
-  const cli = yargs()
+  const cli = yargs().parserConfiguration({
+    "boolean-negation": false,
+  })
   const isLocalSite = isLocalGatsbySite()
 
   cli
