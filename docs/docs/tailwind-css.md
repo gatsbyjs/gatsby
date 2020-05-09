@@ -164,6 +164,7 @@ This will be your 'master' css file, which you will import all other css within.
 @tailwind components;
 @tailwind utilities;
 ```
+
 **Note**: if using scss (or another supported language, rename files/folders appropriately).
 
 2. Import any custom css files or add any custom css you need (optional)
@@ -173,9 +174,7 @@ This will be your 'master' css file, which you will import all other css within.
 @tailwind components;
 @tailwind utilities;
 
-@import popup.css
-
-body {
+@import popup.css body {
   @apply bg-purple-200;
 }
 ```
@@ -185,11 +184,12 @@ body {
 In `gatsby-browser.js` add an import rule for your Tailwind directives and custom css so that they are accounted for in build.
 
 ```js:title=gatsby-browser.js
-import './src/css/index.css'
+import "./src/css/index.css"
 ```
 
 ### 5. Purging your css
-Now we've fully configured Tailwind CSS, we want to make sure that only the classes we need are delivered to the browser. By default, Tailwind is a very large library because it includes every combination of every class you might think of. Most of these you won't need, so we use PurgeCSS to remove any unused classes. 
+
+Now we've fully configured Tailwind CSS, we want to make sure that only the classes we need are delivered to the browser. By default, Tailwind is a very large library because it includes every combination of every class you might think of. Most of these you won't need, so we use PurgeCSS to remove any unused classes.
 
 **Note**: By default, PurgeCSS only runs on the build command as it is a relatively slow process. The development server will include all Tailwind classes, so it's highly recommended you test on a build server before deploying.
 
@@ -201,12 +201,7 @@ In 1.4.0 you can purge your css directly from your Tailwind config. You simply n
 
 ```js:title=tailwind.config.js
 module.exports = {
-  purge: [
-    './src/**/*.js',
-    './src/**/*.jsx',
-    './src/**/*.ts',
-    './src/**/*.tsx',
-  ],
+  purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
   theme: {},
   variants: {},
   plugins: [],
@@ -218,7 +213,6 @@ Full documentation on this can now be found on the Tailwind site - [Tailwind Pur
 **Older versions**
 
 It is recommended you install the latest version of Tailwind CSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [Purge css manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation)
-
 
 ## Other resources
 
