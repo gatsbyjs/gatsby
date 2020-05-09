@@ -83,7 +83,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
       const imports = path.get(`body`).filter(p => p.isImportDeclaration())
 
       imports.forEach(importDeclaration =>
-        rewriteImports(absolutePath, importDeclaration)
+        rewriteImports(root, absolutePath, importDeclaration)
       )
     },
   })

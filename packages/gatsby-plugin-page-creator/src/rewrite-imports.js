@@ -9,6 +9,7 @@ const path = require(`path`)
 // Since our collection pages are placed in `gatsby-site/.cache/collection-components`, this changes the imports
 // to be `../../src/components/product.js`
 exports.rewriteImports = function rewriteImports(
+  root,
   absolutePath,
   importDeclaration
 ) {
@@ -19,6 +20,13 @@ exports.rewriteImports = function rewriteImports(
       .relative(absolutePath, importPath)
       .replace(/\.+\//g, ``)
 
-    importDeclaration.node.source.value = path.join(`../../src/`, pathInsideSrc)
+    const prefix = absolutePath.split(root)[1].split(`src/pages`)[0]
+
+    importDeclaration.node.source.value = path.join(
+      `../../`,
+      prefix,
+      `src`,
+      pathInsideSrc
+    )
   }
 }
