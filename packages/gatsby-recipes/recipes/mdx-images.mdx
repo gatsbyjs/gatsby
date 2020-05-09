@@ -66,13 +66,10 @@ to handle image processing.
 />
 ---
 
-Finally, configure `gatsby-plugin-mdx` to resolve images in MDX files—and import 
-gatsby-astronaut.png (to create an images folder in case it doesn't exist.)
+Finally, create `src/images` if it doesn't exist, and configure `gatsby-plugin-mdx`
+to resolve images in MDX files.
 
-<File 
-  path="src/images/gatsby-astronaut.png" 
-  content="https://github.com/gatsbyjs/gatsby-starter-default/blob/master/src/images/gatsby-astronaut.png?raw=true" 
-/>
+<Directory path="src/images" />
 
 <GatsbyPlugin 
   name="gatsby-plugin-mdx" 
