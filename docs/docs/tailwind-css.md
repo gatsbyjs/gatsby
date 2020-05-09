@@ -195,7 +195,7 @@ Now we've fully configured tailwindcss, we want to make sure that only the class
 
 From v1.4.0 onwards PurgeCSS is built into TailwindCSS, but the approaches needed are very similar.
 
-#### 1.4.0 and above
+**1.4.0 and above**
 
 In 1.4.0 you can purge your css directly from your tailwind config. You simply need to provide an array of strings telling it which files to process.
 
@@ -215,44 +215,9 @@ module.exports = {
 
 Full documentation on this can now be found on the Tailwind site - [Tailwind PurgeCSS documentation](https://tailwindcss.com/docs/controlling-file-size/#app)
 
-#### Older versions
+**Older versions**
 
-For older versions, PurgeCSS is not included so you will need to instead set it up in `gatsby-config.js`
-
-1. Install `gatsby-plugin-purgecss`
-
-```sh
-yarn add gatsby-plugin-purgecss
-```
-
-2. In `gatsby-config.js` add in your PurgeCSS configuration.
-
-**Note**: In order to properly take effect, you'll want to include this **after** any other preprocessors
-
-```js:title=gatsby-config.js
-module.exports = {
-  plugins: [
-    `gatsby-plugin-stylus`,
-    `gatsby-plugin-sass`,
-    `gatsby-plugin-less`,
-    `gatsby-plugin-postcss`,
-    // Add after these plugins if used
-    { 
-      resolve: `gatsby-plugin-purgecss`,
-      options: {
-        printRejected: true, // Print removed selectors and processed file names
-        // develop: true, // Enable while using `gatsby develop`
-        // tailwind: true, // Enable tailwindcss support
-        // whitelist: ['whitelist'], // Don't remove this selector
-        // ignore: ['/ignored.css', 'prismjs/', 'docsearch.js/'], // Ignore files/folders
-        // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
-      }
-    }
-  ]
-};
-```
-
-You can refer to the PurgeCSS documentation for instructions on how to set it up manually in older versions of TailwindCSS - [PurgeCSS instructions for Gatsby sites](https://purgecss.com/plugins/gatsby.html#installation)
+It is recommended you install the latest version of TailwindCSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [Purge css manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation)
 
 
 ## Other resources
