@@ -10,7 +10,8 @@ import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
-import { lastAction } from "./last-action"
+import { lastActionReducer } from "./last-action"
+import { nodeTouchedReducer } from "./nodes-touched"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -20,8 +21,8 @@ module.exports = {
   nodes: nodeReducer,
   nodesByType: nodesByType,
   resolvedNodesCache: require(`./resolved-nodes`),
-  nodesTouched: require(`./nodes-touched`),
-  lastAction: lastAction,
+  nodesTouched: nodeTouchedReducer,
+  lastAction: lastActionReducer,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   schema: schemaReducer,

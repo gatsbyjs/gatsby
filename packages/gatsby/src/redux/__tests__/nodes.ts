@@ -1,6 +1,6 @@
 import { actions } from "../actions"
 import { nodeReducer } from "../reducers/nodes"
-import nodeTouchedReducer from "../reducers/nodes-touched"
+import { nodeTouchedReducer } from "../reducers/nodes-touched"
 import { IGatsbyNode } from "../types"
 
 jest.mock(`../../db/nodes`)
