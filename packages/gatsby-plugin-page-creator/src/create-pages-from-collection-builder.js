@@ -35,9 +35,10 @@ function isCreatePagesFromData(path) {
 exports.createPagesFromCollectionBuilder = async function createPagesFromCollectionBuilder(
   absolutePath,
   actions,
-  graphql
+  graphql,
+  root
 ) {
-  const [root, route] = absolutePath.split(`src/pages`)
+  const [, route] = absolutePath.split(`src/pages`)
   const id = createContentDigest(route)
   const collectionCoponentsFolder = systemPath.join(
     root,

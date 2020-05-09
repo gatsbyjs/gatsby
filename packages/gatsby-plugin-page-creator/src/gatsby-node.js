@@ -21,7 +21,7 @@ exports.createPagesStatefully = async (
 ) => {
   const { deletePage } = actions
   const program = store.getState().program
-  console.log({ root: program.directory })
+  const root = program.directory
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
   if (!pagesPath) {
@@ -53,7 +53,7 @@ exports.createPagesStatefully = async (
   // Get initial list of files.
   let files = await glob(pagesGlob, { cwd: pagesPath })
   files.forEach(file => {
-    createPage(file, pagesDirectory, actions, ignore, graphql)
+    createPage(file, pagesDirectory, actions, ignore, graphql, root)
   })
 
   watchDirectory(
@@ -61,7 +61,7 @@ exports.createPagesStatefully = async (
     pagesGlob,
     addedPath => {
       if (!_.includes(files, addedPath)) {
-        createPage(addedPath, pagesDirectory, actions, ignore, graphql)
+        createPage(addedPath, pagesDirectory, actions, ignore, graphql, root)
         files.push(addedPath)
       }
     },

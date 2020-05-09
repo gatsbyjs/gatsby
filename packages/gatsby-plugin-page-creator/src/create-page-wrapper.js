@@ -14,7 +14,14 @@ const pathIsCCollectionBuilder = path => {
 
 const pathIsClientOnlyRoute = path => /\[.*\]/.test(path)
 
-exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
+exports.createPage = (
+  filePath,
+  pagesDirectory,
+  actions,
+  ignore,
+  graphql,
+  root
+) => {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {
@@ -32,7 +39,7 @@ exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
 
   if (pathIsCCollectionBuilder(absolutePath)) {
     console.log(3, absolutePath)
-    createPagesFromCollectionBuilder(absolutePath, actions, graphql)
+    createPagesFromCollectionBuilder(absolutePath, actions, graphql, root)
     return
   }
 
