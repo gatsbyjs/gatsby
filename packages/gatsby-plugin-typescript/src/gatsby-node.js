@@ -16,7 +16,7 @@ function onCreateBabelConfig({ actions }, options) {
   })
   actions.setBabelPlugin({
     name: require.resolve(`@babel/plugin-proposal-decorators`),
-    options: options && options.decoratorsOptions
+    options: options && options.decoratorsOptions,
   })
 }
 
