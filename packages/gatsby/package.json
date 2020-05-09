@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "2.21.16",
+  "version": "2.20.24-unifiedroutes-blog.24+3b0e02ab4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -31,8 +31,8 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^0.3.3",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "babel-plugin-remove-graphql-queries": "^2.9.1",
-    "babel-preset-gatsby": "^0.4.1",
+    "babel-plugin-remove-graphql-queries": "2.9.1",
+    "babel-preset-gatsby": "0.4.1",
     "better-opn": "1.0.0",
     "better-queue": "^3.8.10",
     "bluebird": "^3.7.2",
@@ -71,14 +71,14 @@
     "flat": "^4.1.0",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-cli": "^2.12.11",
-    "gatsby-core-utils": "^1.2.1",
-    "gatsby-graphiql-explorer": "^0.4.1",
-    "gatsby-link": "^2.4.1",
-    "gatsby-plugin-page-creator": "^2.3.1",
-    "gatsby-plugin-typescript": "^2.4.2",
-    "gatsby-react-router-scroll": "^3.0.0",
-    "gatsby-telemetry": "^1.3.2",
+    "gatsby-cli": "2.12.11",
+    "gatsby-core-utils": "1.2.1",
+    "gatsby-graphiql-explorer": "0.4.1",
+    "gatsby-link": "2.4.1",
+    "gatsby-plugin-page-creator": "2.2.3-unifiedroutes-blog.24+3b0e02ab4",
+    "gatsby-plugin-typescript": "2.4.2",
+    "gatsby-react-router-scroll": "3.0.0",
+    "gatsby-telemetry": "1.3.2",
     "glob": "^7.1.6",
     "got": "8.3.2",
     "graphql": "^14.6.0",
@@ -154,7 +154,7 @@
     "@babel/runtime": "^7.9.6",
     "@types/hapi__joi": "^16.0.12",
     "@types/socket.io": "^2.1.4",
-    "babel-preset-gatsby-package": "^0.4.1",
+    "babel-preset-gatsby-package": "0.4.1",
     "cross-env": "^5.2.1",
     "documentation": "^12.3.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -220,5 +220,5 @@
   "yargs": {
     "boolean-negation": false
   },
-  "gitHead": "d97e4ec5e067ac00c55e533b8bae4805ef7cf57b"
+  "gitHead": "3b0e02ab41799ce7b25fbb77f4ad9a04bb79b1bc"
 }

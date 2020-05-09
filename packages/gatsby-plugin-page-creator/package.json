@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-page-creator",
-  "version": "2.3.1",
+  "version": "2.2.3-unifiedroutes-blog.24+3b0e02ab4",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "@babel/runtime": "^7.9.6",
     "bluebird": "^3.7.2",
     "fs-exists-cached": "^1.0.0",
-    "gatsby-page-utils": "^0.2.1",
+    "gatsby-page-utils": "0.2.1",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
     "micromatch": "^3.1.10"
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
-    "babel-preset-gatsby-package": "^0.4.1",
+    "babel-preset-gatsby-package": "0.4.1",
     "cross-env": "^5.2.1"
   },
   "peerDependencies": {
@@ -44,5 +44,5 @@
   "engines": {
     "node": ">=10.13.0"
   },
-  "gitHead": "d97e4ec5e067ac00c55e533b8bae4805ef7cf57b"
+  "gitHead": "3b0e02ab41799ce7b25fbb77f4ad9a04bb79b1bc"
 }

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-ui-preset",
-  "version": "0.0.6",
+  "version": "0.0.7-unifiedroutes-blog.15071+3b0e02ab4",
   "description": "A Gatsby theme for theme-ui styles",
   "main": "index.js",
   "keywords": [
@@ -22,7 +22,7 @@
     "@theme-ui/prism": "^0.2.50",
     "@theme-ui/typography": "^0.2.46",
     "deepmerge": "^4.2.2",
-    "gatsby-plugin-emotion": "^4.3.1",
+    "gatsby-plugin-emotion": "4.3.1",
     "gatsby-plugin-theme-ui": "^0.2.53",
     "theme-ui": "^0.2.52",
     "typeface-merriweather": "0.0.72",
@@ -30,7 +30,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.21.16",
+    "gatsby": "2.20.24-unifiedroutes-blog.24+3b0e02ab4",
     "prettier": "2.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
@@ -42,5 +42,6 @@
   },
   "engines": {
     "node": ">=10.13.0"
-  }
+  },
+  "gitHead": "3b0e02ab41799ce7b25fbb77f4ad9a04bb79b1bc"
 }
