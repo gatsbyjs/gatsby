@@ -1,4 +1,9 @@
-module.exports = (state = new Set(), action) => {
+import { IGatsbyState, ActionsUnion } from "../types"
+
+export const nodeTouchedReducer = (
+  state: IGatsbyState["nodesTouched"] = new Set(),
+  action: ActionsUnion
+): IGatsbyState["nodesTouched"] => {
   switch (action.type) {
     case `CREATE_NODE`:
       state.add(action.payload.id)
