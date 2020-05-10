@@ -10,19 +10,30 @@ import {
   JSXIdentifier,
   JSXAttribute,
   JSXElement,
+  JSXOpeningElement,
   Program,
   Identifier,
   StringLiteral,
   ImportDeclaration,
   ObjectExpression,
   VariableDeclarator,
+  SourceLocation,
+  Expression,
 } from "@babel/types"
 
-class StringInterpolationNotAllowedError extends Error {
-  interpolationStart: Record<string, any>
-  interpolationEnd: Record<string, any>
+interface SourcePosition {
+  line: number
+  column: number
+}
 
-  constructor(interpolationStart: any, interpolationEnd: any) {
+class StringInterpolationNotAllowedError extends Error {
+  interpolationStart: SourcePosition
+  interpolationEnd: SourcePosition 
+
+  constructor(
+    interpolationStart: SourcePosition | undefined,
+    interpolationEnd: SourcePosition | undefined
+  ) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
         `fragments. Included fragments should be referenced ` +
@@ -35,9 +46,9 @@ class StringInterpolationNotAllowedError extends Error {
 }
 
 class EmptyGraphQLTagError extends Error {
-  templateLoc: any
+  templateLoc: SourceLocation | null
 
-  constructor(locationOfGraphqlString: any) {
+  constructor(locationOfGraphqlString: SourceLocation | null) {
     super(`BabelPluginRemoveGraphQLQueries: Unexpected empty graphql tag.`)
     this.templateLoc = locationOfGraphqlString
     Error.captureStackTrace(this, EmptyGraphQLTagError)
@@ -47,12 +58,12 @@ class EmptyGraphQLTagError extends Error {
 class GraphQLSyntaxError extends Error {
   documentText: string
   originalError: Error
-  templateLoc: any
+  templateLoc: SourceLocation | null
 
   constructor(
     documentText: string,
     originalError: Error,
-    locationOfGraphqlString: any
+    locationOfGraphqlString: SourceLocation | null
   ) {
     super(
       `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`
@@ -142,7 +153,7 @@ function isGraphqlTag(tag: NodePath): boolean {
   return false
 }
 
-function removeImport(tag: NodePath): void {
+function removeImport(tag: NodePath<Expression>): void {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
   const importPath = getTagImport(identifier as NodePath<Identifier>)
@@ -242,7 +253,8 @@ export default function ({ types: t }): PluginObj {
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
               // Add query
-              path2.parent.attributes.push(
+              const parent = path2.parent as JSXOpeningElement
+              parent.attributes.push(
                 t.jSXAttribute(
                   t.jSXIdentifier(`data`),
                   t.jSXExpressionContainer(identifier)
@@ -326,7 +338,7 @@ export default function ({ types: t }): PluginObj {
           },
         }
 
-        const tagsToRemoveImportsFrom = new Set()
+        const tagsToRemoveImportsFrom = new Set<NodePath<Expression>>()
 
         const setImportForStaticQuery = (
           templatePath: NodePath<TaggedTemplateExpression>
@@ -350,7 +362,7 @@ export default function ({ types: t }): PluginObj {
 
           // traverse upwards until we find top-level JSXOpeningElement or Program
           // this handles exported queries and variable queries
-          let parent = templatePath
+          let parent = templatePath as NodePath
           while (
             parent &&
             ![`Program`, `JSXOpeningElement`].includes(parent.node.type)
@@ -377,8 +389,9 @@ export default function ({ types: t }): PluginObj {
         // Traverse for <StaticQuery/> instances
         path.traverse({
           JSXElement(jsxElementPath: NodePath<JSXElement>) {
+            const jsxIdentifier = jsxElementPath.node.openingElement.name as JSXIdentifier
             if (
-              jsxElementPath.node.openingElement.name.name !== `StaticQuery`
+              jsxIdentifier.name !== `StaticQuery`
             ) {
               return
             }
@@ -402,8 +415,8 @@ export default function ({ types: t }): PluginObj {
                           varPath: NodePath<VariableDeclarator>
                         ) {
                           if (
-                            varPath.node.id.name === varName &&
-                            varPath.node.init.type ===
+                            (varPath.node.id as Identifier).name === varName &&
+                            varPath.node.init?.type ===
                               `TaggedTemplateExpression`
                           ) {
                             varPath.traverse({
