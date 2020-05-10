@@ -26,6 +26,26 @@ interface ISourcePosition {
   column: number
 }
 
+interface IGraphQLTag {
+  ast: any
+  text: string
+  hash: number
+  isGlobal: boolean
+}
+
+interface INestedJSXVisitor {
+  JSXIdentifier: (path: NodePath<JSXIdentifier>) => void
+  queryHash: string
+  query: string
+}
+
+interface INestedHookVisitor {
+  CallExpression: (path: NodePath<CallExpression>) => void
+  queryHash: string
+  query: string
+  templatePaath: NodePath<TaggedTemplateExpression>
+}
+
 class StringInterpolationNotAllowedError extends Error {
   interpolationStart: ISourcePosition
   interpolationEnd: ISourcePosition
@@ -186,13 +206,6 @@ function removeImport(tag: NodePath<Expression>): void {
   }
 }
 
-interface IGraphQLTag {
-  ast: any
-  text: string
-  hash: number
-  isGlobal: boolean
-}
-
 function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
   const tag = path.get(`tag`)
   const isGlobal = isGlobalIdentifier(tag as NodePath)
@@ -278,7 +291,7 @@ export default function ({ types: t }): PluginObj {
               path.unshiftContainer(`body`, importDeclaration)
             }
           },
-        }
+        } as INestedJSXVisitor
 
         const nestedHookVisitor = {
           CallExpression(path2: NodePath<CallExpression>): void {
@@ -336,7 +349,7 @@ export default function ({ types: t }): PluginObj {
               path.unshiftContainer(`body`, importDeclaration)
             }
           },
-        }
+        } as INestedHookVisitor
 
         const tagsToRemoveImportsFrom = new Set<NodePath<Expression>>()
 
