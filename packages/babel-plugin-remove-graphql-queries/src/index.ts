@@ -8,11 +8,14 @@ import {
   CallExpression,
   TaggedTemplateExpression,
   JSXIdentifier,
+  JSXAttribute,
+  JSXElement,
   Program,
   Identifier,
   StringLiteral,
   ImportDeclaration,
   ObjectExpression,
+  VariableDeclarator,
 } from "@babel/types"
 
 class StringInterpolationNotAllowedError extends Error {
@@ -231,7 +234,7 @@ export default function ({ types: t }): PluginObj {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
-              path2.referencesImport(`gatsby`) &&
+              path2.referencesImport(`gatsby`, ``) &&
               path2.parent.type !== `JSXClosingElement`
             ) {
               const identifier = t.identifier(`staticQueryData`)
@@ -285,10 +288,16 @@ export default function ({ types: t }): PluginObj {
               // cannot remove all 'gatsby' imports.
               if (path2.node.callee.type !== `MemberExpression`) {
                 // Remove imports to useStaticQuery
-                const importPath = path2.scope.getBinding(`useStaticQuery`).path
+                const importPath = (path2.scope.getBinding(
+                  `useStaticQuery`
+                ) as Binding).path
                 const parent = importPath.parentPath
                 if (importPath.isImportSpecifier())
-                  if (parent.node.specifiers.length === 1) parent.remove()
+                  if (
+                    (parent as NodePath<ImportDeclaration>).node.specifiers
+                      .length === 1
+                  )
+                    parent.remove()
                   else importPath.remove()
               }
 
@@ -319,7 +328,9 @@ export default function ({ types: t }): PluginObj {
 
         const tagsToRemoveImportsFrom = new Set()
 
-        const setImportForStaticQuery = (templatePath): null => {
+        const setImportForStaticQuery = (
+          templatePath: NodePath<TaggedTemplateExpression>
+        ): null => {
           const { ast, text, hash, isGlobal } = getGraphQLTag(templatePath)
 
           if (!ast) return null
@@ -365,7 +376,7 @@ export default function ({ types: t }): PluginObj {
 
         // Traverse for <StaticQuery/> instances
         path.traverse({
-          JSXElement(jsxElementPath) {
+          JSXElement(jsxElementPath: NodePath<JSXElement>) {
             if (
               jsxElementPath.node.openingElement.name.name !== `StaticQuery`
             ) {
@@ -373,26 +384,32 @@ export default function ({ types: t }): PluginObj {
             }
 
             jsxElementPath.traverse({
-              JSXAttribute(jsxPath) {
+              JSXAttribute(jsxPath: NodePath<JSXAttribute>) {
                 if (jsxPath.node.name.name !== `query`) {
                   return
                 }
                 jsxPath.traverse({
-                  TaggedTemplateExpression(templatePath) {
+                  TaggedTemplateExpression(
+                    templatePath: NodePath<TaggedTemplateExpression>
+                  ) {
                     setImportForStaticQuery(templatePath)
                   },
-                  Identifier(identifierPath) {
+                  Identifier(identifierPath: NodePath<Identifier>) {
                     if (identifierPath.node.name !== `graphql`) {
                       const varName = identifierPath.node.name
                       path.traverse({
-                        VariableDeclarator(varPath) {
+                        VariableDeclarator(
+                          varPath: NodePath<VariableDeclarator>
+                        ) {
                           if (
                             varPath.node.id.name === varName &&
                             varPath.node.init.type ===
                               `TaggedTemplateExpression`
                           ) {
                             varPath.traverse({
-                              TaggedTemplateExpression(templatePath) {
+                              TaggedTemplateExpression(
+                                templatePath: NodePath<TaggedTemplateExpression>
+                              ) {
                                 setImportForStaticQuery(templatePath)
                               },
                             })
@@ -409,10 +426,12 @@ export default function ({ types: t }): PluginObj {
 
         // Traverse once again for useStaticQuery instances
         path.traverse({
-          CallExpression(hookPath) {
+          CallExpression(hookPath: NodePath<CallExpression>) {
             if (!isUseStaticQuery(hookPath)) return
 
-            function TaggedTemplateExpression(templatePath): void {
+            function TaggedTemplateExpression(
+              templatePath: NodePath<TaggedTemplateExpression>
+            ): void {
               setImportForStaticQuery(templatePath)
             }
 
