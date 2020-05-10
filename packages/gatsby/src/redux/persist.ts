@@ -91,7 +91,7 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
     maxSize = Math.max(size, maxSize)
   }
   
-  //Sends a warning once if any of the chunckSizes exceeds approx 500kb limit
+  //Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if(warnFlag){
     report.warn(`page context was greater than 500kb`);
   }
