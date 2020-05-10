@@ -12,7 +12,7 @@ On March 29th, we launched [Eviction Free NYC](http://www.evictionfreenyc.org/) 
 
 In order to build this new resource we applied a [human-centered design process](https://medium.com/@JustFixNYC/co-designing-eviction-free-nyc-b54570c69153) followed by specialized technical scoping in order to determine what was best for our users and build something for this unique context. **That process led us to using GatsbyJS, Contentful, and Netlify!** Below, we've written up how we mapped design to dev, approached different stakeholders, and utilized Gatsby's great flexibility & plugin library.
 
-#### **Mapping Design Considerations to Technical Scoping**
+## **Mapping Design Considerations to Technical Scoping**
 
 ![Design Mapping](design-mapping.jpeg)
 _Journey mapping for a tenant organizing process!_
@@ -39,7 +39,7 @@ outdated. We also wanted to utilize this system to make it easy for new
 languages to be added and maintained with as little technical knowledge as
 possible.
 
-#### **Our solution: GatsbyJS**
+## **Our solution: GatsbyJS**
 
 We knew that we would build the site in [React](https://reactjs.org/).
 Developers can build websites quickly and reliably through its modular
@@ -78,7 +78,7 @@ perfect fit for a number of reasons:
    a boilerplate that synced Contentful and i18n features together and allowed us
    to hit the ground running.
 
-#### **Using Contentful**
+## **Using Contentful**
 
 [Contentful](https://www.contentful.com/) is a “headless” [Content Management
 System](https://en.wikipedia.org/wiki/Content_management_system), or CMS.
@@ -129,7 +129,7 @@ providers {
 }
 ```
 
-#### **Challenge: Hyper-personalized result pages in a static site**
+## **Challenge: Hyper-personalized result pages in a static site**
 
 When a tenant goes to Eviction Free NYC, they answer a simple questionnaire that
 determines a results page. It's tailored to their borough’s housing court
@@ -174,7 +174,7 @@ Feel free to [explore the source
 code](https://github.com/JustFixNYC/eviction-free-nyc) to get a better sense of
 how all this works!
 
-#### **Wrapping everything up: using Netlify**
+## **Wrapping everything up: using Netlify**
 
 When it came time to deploy, we were very excited to try out a new hosting
 platform called [Netlify](https://www.netlify.com/) that we’d been hearing a lot
@@ -196,7 +196,7 @@ deploy everything. Done!
 ![Mobile Comps](mobile-comps.png)
 _Mobile comps for Eviction Free NYC_
 
-#### In Conclusion
+## In Conclusion
 
 The technical process for building the site went by incredibly fast — this all
 came together in a little over a month! Despite the frenzied speed, we created a

@@ -223,12 +223,17 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddChildNodeToParentNodeAction
+  | IAddFieldToNodeAction
   | IAddThirdPartySchema
   | ICreateFieldExtension
+  | ICreateNodeAction
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
+  | IDeleteNodeAction
+  | IDeleteNodesAction
   | IDeleteComponentDependenciesAction
   | IDeletePageAction
   | IPageQueryRunAction
@@ -471,4 +476,31 @@ export interface ISetSchemaAction {
 export interface ISetSiteConfig {
   type: `SET_SITE_CONFIG`
   payload: IGatsbyState["config"]
+}
+
+export interface ICreateNodeAction {
+  type: `CREATE_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IAddFieldToNodeAction {
+  type: `ADD_FIELD_TO_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IAddChildNodeToParentNodeAction {
+  type: `ADD_CHILD_NODE_TO_PARENT_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IDeleteNodeAction {
+  type: `DELETE_NODE`
+  payload: {
+    id: Identifier
+  }
+}
+
+export interface IDeleteNodesAction {
+  type: `DELETE_NODES`
+  payload: Identifier[]
 }

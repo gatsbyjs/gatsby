@@ -18,7 +18,7 @@ Some of the things I worked on were implementing performance enhancements and SE
 
 I wanted to recreate the default advanced sitemap structure that we use for all Ghost publications on Gatsby, and since it’s an open source project, I was able to go ahead and build a [plugin](/packages/gatsby-plugin-advanced-sitemap/?=sitemap) which is now available for anyone to use!
 
-### Automatic, advanced sitemaps
+## Automatic, advanced sitemaps
 
 The plugin generates an organised sitemap that is accessible to both humans and robots and is also capable of generating single or multiple sitemaps with full XSL templates.
 
@@ -34,7 +34,7 @@ The plugin generates an organised sitemap that is accessible to both humans and 
 
 The plugin will work out of the box without any additional configuration, but also allows for individually organised sitemaps with a small amount of config work. Once in place, your Gatsby sitemap will be automatically updated and fully optimised for SEO performance.
 
-### The results?
+## The results?
 
 Rebuilding our docs site using Gatsby was a huge success. We saw major improvements to our SEO performance within two weeks of launching, and watched as our rankings improved and organic search visibility increased drastically over the following months:
 
@@ -48,7 +48,7 @@ Rebuilding our docs site using Gatsby was a huge success. We saw major improveme
 
 This success can be attributed to having improved content and meta data, a lightning-fast website powered by Gatsby and Ghost, and from submitting our new advanced sitemap to the search engines. From now on when we publish new content, the sitemap is automatically updated and content is indexed quickly by the search engines.
 
-### Installing the plugin
+## Installing the plugin
 
 Rather than making the sitemap plugin platform specific, it was built to work with any Gatsby project. You could be using Ghost as a Headless CMS, or any other software to build your site, and use the plugin for free.
 

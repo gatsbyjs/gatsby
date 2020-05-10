@@ -1,6 +1,8 @@
 /* @flow */
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
+const nodesDb: NodeStore = require(`../redux/nodes`)
+const runQuery = require(`../redux/run-sift`).runSift
 
 interface NodeStore {
   getNodes: () => Array<any>;
@@ -18,32 +20,7 @@ interface NodeStore {
   }) => any | undefined;
 }
 
-if (process.env.GATSBY_DB_NODES === `loki`) {
-  console.info(
-    `The experimental Loki backend for Gatsby has been removed. Falling back to redux. If this causes problems for you, please file an issue on GitHub and tag @pvdz.`
-  )
-}
-
-// const backend = process.env.GATSBY_DB_NODES || `redux`
-const backend = `redux`
-let nodesDb: NodeStore
-let runQuery
-switch (backend) {
-  case `redux`:
-    nodesDb = require(`../redux/nodes`)
-    runQuery = require(`../redux/run-sift`).runSift
-    break
-  case `loki`:
-    nodesDb = require(`./loki/nodes`)
-    runQuery = require(`./loki/nodes-query`)
-    break
-  default:
-    throw new Error(
-      `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-    )
-}
-
-module.exports = { ...nodesDb, runQuery, backend }
+module.exports = { ...nodesDb, runQuery }
 
 /**
  * Get content for a node from the plugin that created it.
