@@ -1,7 +1,20 @@
 /*  eslint-disable new-cap */
 const graphql = require(`gatsby/graphql`)
-const { murmurhash } = require(`./murmur`)
-const nodePath = require(`path`)
+import { murmurhash } from './murmur'
+import nodePath from 'path'
+import { NodePath, PluginObj } from '@babel/core'
+import { Binding } from 'babel__traverse'
+import {
+  CallExpression,
+  TaggedTemplateExpression,
+  JSXIdentifier,
+  Program,
+  Identifier,
+  StringLiteral,
+  ImportDeclaration,
+  ObjectExpression,
+} from '@babel/types'
+
 
 class StringInterpolationNotAllowedError extends Error {
   interpolationStart: Record<string, any>
@@ -49,10 +62,10 @@ class GraphQLSyntaxError extends Error {
   }
 }
 
-const isGlobalIdentifier = (tag): boolean =>
+const isGlobalIdentifier = (tag: NodePath): boolean =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
 
-export function followVariableDeclarations(binding): any {
+export function followVariableDeclarations(binding: Binding): Binding {
   const node = binding.path?.node
   if (
     node?.type === `VariableDeclarator` &&
@@ -60,13 +73,13 @@ export function followVariableDeclarations(binding): any {
     node?.init?.type === `Identifier`
   ) {
     return followVariableDeclarations(
-      binding.path.scope.getBinding(node.init.name)
+      binding.path.scope.getBinding(node.init.name) as Binding
     )
   }
   return binding
 }
 
-function getTagImport(tag): any {
+function getTagImport(tag: NodePath<Identifier>): NodePath | null {
   const name = tag.node.name
   const binding = tag.scope.getBinding(name)
 
@@ -84,51 +97,52 @@ function getTagImport(tag): any {
 
   if (
     path.isVariableDeclarator() &&
-    path.get(`init`).isCallExpression() &&
-    path.get(`init.callee`).isIdentifier({ name: `require` }) &&
-    path.get(`init`).node.arguments[0].value === `gatsby`
+    (path.get(`init`) as NodePath).isCallExpression() &&
+    (path.get(`init.callee`) as NodePath).isIdentifier({ name: `require` }) &&
+    ((path.get(`init`) as NodePath<CallExpression>)
+      .node.arguments[0] as StringLiteral).value === `gatsby`
   ) {
-    const id = path.get(`id`)
+    const id = path.get(`id`) as NodePath
     if (id.isObjectPattern()) {
       return id
         .get(`properties`)
-        .find(path => path.get(`value`).node.name === name)
+        .find(path => (path.get(`value`) as NodePath<Identifier>).node.name === name) as NodePath
     }
     return id
   }
   return null
 }
 
-function isGraphqlTag(tag): boolean {
+function isGraphqlTag(tag: NodePath): boolean {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
 
-  const importPath = getTagImport(identifier)
+  const importPath = getTagImport(identifier as NodePath<Identifier>)
   if (!importPath) return isGlobalIdentifier(tag)
 
   if (
     isExpression &&
     (importPath.isImportNamespaceSpecifier() || importPath.isIdentifier())
   ) {
-    return tag.get(`property`).node.name === `graphql`
+    return (tag.get(`property`) as NodePath<Identifier>).node.name === `graphql`
   }
 
   if (importPath.isImportSpecifier())
     return importPath.node.imported.name === `graphql`
 
   if (importPath.isObjectProperty())
-    return importPath.get(`key`).node.name === `graphql`
+    return (importPath.get(`key`) as NodePath<Identifier>).node.name === `graphql`
 
   return false
 }
 
-function removeImport(tag): void {
+function removeImport(tag: NodePath): void {
   const isExpression = tag.isMemberExpression()
   const identifier = isExpression ? tag.get(`object`) : tag
-  const importPath = getTagImport(identifier)
+  const importPath = getTagImport(identifier as NodePath<Identifier>)
 
-  const removeVariableDeclaration = (statement): void => {
-    const declaration = statement.findParent(p => p.isVariableDeclaration())
+  const removeVariableDeclaration = (statement: NodePath): void => {
+    const declaration = statement.findParent((p: NodePath) => p.isVariableDeclaration())
     if (declaration) {
       declaration.remove()
     }
@@ -139,11 +153,11 @@ function removeImport(tag): void {
   const parent = importPath.parentPath
 
   if (importPath.isImportSpecifier()) {
-    if (parent.node.specifiers.length === 1) parent.remove()
+    if ((parent as NodePath<ImportDeclaration>).node.specifiers.length === 1) parent.remove()
     else importPath.remove()
   }
   if (importPath.isObjectProperty()) {
-    if (parent.node.properties.length === 1) {
+    if ((parent as NodePath<ObjectExpression>).node.properties.length === 1) {
       removeVariableDeclaration(importPath)
     } else importPath.remove()
   }
@@ -159,23 +173,23 @@ interface IGraphQLTag {
   isGlobal: boolean
 }
 
-function getGraphQLTag(path): IGraphQLTag {
+function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
   const tag = path.get(`tag`)
-  const isGlobal = isGlobalIdentifier(tag)
+  const isGlobal = isGlobalIdentifier(tag as NodePath)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {} as IGraphQLTag
+  if (!isGlobal && !isGraphqlTag(tag as NodePath)) return {} as IGraphQLTag
 
   const quasis = path.node.quasi.quasis
 
   if (quasis.length !== 1) {
     throw new StringInterpolationNotAllowedError(
-      quasis[0].loc.end,
-      quasis[1].loc.start
+      quasis[0].loc?.end,
+      quasis[1].loc?.start
     )
   }
 
   const text = quasis[0].value.raw
-  const hash = murmurhash(text, `abc`)
+  const hash = murmurhash(text, 0)
 
   try {
     const ast = graphql.parse(text)
@@ -189,22 +203,22 @@ function getGraphQLTag(path): IGraphQLTag {
   }
 }
 
-function isUseStaticQuery(path): boolean {
+function isUseStaticQuery(path: NodePath<CallExpression>): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
-      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
-    (path.node.callee.name === `useStaticQuery` &&
-      path.get(`callee`).referencesImport(`gatsby`))
+      (path.get(`callee`).get(`object`) as NodePath).referencesImport(`gatsby`, '')) ||
+    ((path.node.callee as Identifier).name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`, ''))
   )
 }
 
-export default function ({ types: t }): object {
+export default function ({ types: t }): PluginObj {
   return {
     visitor: {
-      Program(path, state): void {
+      Program(path: NodePath<Program>, state: any) {
         const nestedJSXVistor = {
-          JSXIdentifier(path2): void {
+          JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
@@ -243,7 +257,7 @@ export default function ({ types: t }): object {
         }
 
         const nestedHookVisitor = {
-          CallExpression(path2): void {
+          CallExpression(path2: NodePath<CallExpression>): void {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV || ``) &&
               isUseStaticQuery(path2)
@@ -419,7 +433,7 @@ export default function ({ types: t }): object {
 
         // Run it again to remove non-staticquery versions
         path.traverse({
-          TaggedTemplateExpression(path2) {
+          TaggedTemplateExpression(path2: NodePath<TaggedTemplateExpression>) {
             const { ast, hash, isGlobal } = getGraphQLTag(path2)
 
             if (!ast) return null
