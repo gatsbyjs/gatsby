@@ -15,7 +15,7 @@ tags: ["themes", "content-mesh"]
 > talk](https://www.youtube.com/watch?v=wX84vXBpMR8) for a more audio/visual
 > approach.
 
-# Child Theming
+## Child Theming
 
 We've merged [a PR](https://github.com/gatsbyjs/gatsby/pull/10787) into Gatsby
 core to support Child theming. Child theming is an extension of the core theming
@@ -46,7 +46,7 @@ a similar data model encapsulated in a parent theme so that users can swap out
 child themes to try out new sites or new looks. This will take some more effort
 to achieve, so more on that at a later date.
 
-## A Concrete Example
+### A Concrete Example
 
 Taking advantage of child theming requires some familiarity with theming itself
 to be used effectively. If you're already experienced with themes and want to
@@ -109,7 +109,7 @@ expert can craft custom data models for their specific use cases to compose with
 other models. Each link in the chain supports the next, allowing us to reveal
 complexity for people with different skillsets when they need it and not before.
 
-## Component Shadowing
+### Component Shadowing
 
 The other major change that has landed is the only breaking change to themes so
 far. Based on feedback from the early adopters who have been authoring themes,
@@ -125,7 +125,7 @@ because of two key points of feedback:
 The fix for any currently existing theme users is to move any shadowed
 components from `src/components/<theme-name>` to `src/<theme-name>/components`.
 
-## What's next?
+### What's next?
 
 We are working on a roadmap post for themes which will give more insight into
 the future of theming, how we're approaching stability, and what we're working

@@ -53,8 +53,10 @@ exports.publishPackagesLocallyAndInstall = async ({
 
   const versionPostFix = Date.now()
 
+  const newlyPublishedPackageVersions = {}
+
   for (let packageName of packagesToPublish) {
-    await publishPackage({
+    newlyPublishedPackageVersions[packageName] = await publishPackage({
       packageName,
       packagesToPublish,
       root,
@@ -65,5 +67,9 @@ exports.publishPackagesLocallyAndInstall = async ({
 
   const packagesToInstall = _.intersection(packagesToPublish, localPackages)
 
-  await installPackages({ packagesToInstall, yarnWorkspaceRoot })
+  await installPackages({
+    packagesToInstall,
+    yarnWorkspaceRoot,
+    newlyPublishedPackageVersions,
+  })
 }

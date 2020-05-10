@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@4.3.1...gatsby-plugin-styletron@5.0.0) (2020-05-06)
+
+### Bug Fixes
+
+- **gatsby-plugin-styletron:** Styletron to peerDependencies ([#22731](https://github.com/gatsbyjs/gatsby/issues/22731)) ([a4969d9](https://github.com/gatsbyjs/gatsby/commit/a4969d9))
+
 ## [4.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@4.3.0...gatsby-plugin-styletron@4.3.1) (2020-05-05)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
