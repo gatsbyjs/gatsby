@@ -21,18 +21,18 @@ import {
   Expression,
 } from "@babel/types"
 
-interface SourcePosition {
+interface ISourcePosition {
   line: number
   column: number
 }
 
 class StringInterpolationNotAllowedError extends Error {
-  interpolationStart: SourcePosition
-  interpolationEnd: SourcePosition 
+  interpolationStart: ISourcePosition
+  interpolationEnd: ISourcePosition
 
   constructor(
-    interpolationStart: SourcePosition | undefined,
-    interpolationEnd: SourcePosition | undefined
+    interpolationStart: ISourcePosition | undefined,
+    interpolationEnd: ISourcePosition | undefined
   ) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
@@ -389,10 +389,9 @@ export default function ({ types: t }): PluginObj {
         // Traverse for <StaticQuery/> instances
         path.traverse({
           JSXElement(jsxElementPath: NodePath<JSXElement>) {
-            const jsxIdentifier = jsxElementPath.node.openingElement.name as JSXIdentifier
-            if (
-              jsxIdentifier.name !== `StaticQuery`
-            ) {
+            const jsxIdentifier = jsxElementPath.node.openingElement
+              .name as JSXIdentifier
+            if (jsxIdentifier.name !== `StaticQuery`) {
               return
             }
 
