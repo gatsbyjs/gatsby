@@ -3,6 +3,7 @@
  */
 import semver from "semver"
 import { isCI } from "gatsby-core-utils"
+import { ipcLogger } from "./loggers/ipc"
 
 export const startLogger = (): void => {
   let inkExists = false
@@ -27,7 +28,7 @@ export const startLogger = (): void => {
   if (process.send) {
     // process.env.FORCE_COLOR = `0`
 
-    require(`./loggers/ipc`)
+    ipcLogger()
   }
 
   if (process.env.GATSBY_LOGGER.includes(`json`)) {
