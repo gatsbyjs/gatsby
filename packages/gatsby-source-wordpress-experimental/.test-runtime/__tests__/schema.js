@@ -25,6 +25,13 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       url: process.env.WPGRAPHQL_URL,
     })
 
+    expect(
+      result.data.__schema.types.map(type => ({
+        name: type.name,
+        fields: type.fields.map(field => field.name),
+      }))
+    ).toMatchSnapshot()
+
     expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
 
@@ -33,6 +40,15 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       url: `http://localhost:8000/___graphql`,
       query: introspectionQuery,
     })
+
+    expect(
+      result.data.__schema.types
+        .filter(({ name }) => name.startsWith(`allWp`) || name.startsWith(`Wp`))
+        .map(type => ({
+          name: type.name,
+          fields: type.fields.map(field => field.name),
+        }))
+    ).toMatchSnapshot()
 
     expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
