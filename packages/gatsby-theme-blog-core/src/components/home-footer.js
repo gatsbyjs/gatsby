@@ -7,7 +7,7 @@ const Footer = ({ socialLinks }) => (
     <a href="https://www.gatsbyjs.org">Gatsby</a>
     {` `}&bull;{` `}
     {socialLinks.map((platform, i, arr) => (
-      <Fragment key={platform.url}>
+      <Fragment key={platform.url} className="social-link">
         <a href={platform.url} target="_blank" rel="noopener noreferrer">
           {platform.name}
         </a>

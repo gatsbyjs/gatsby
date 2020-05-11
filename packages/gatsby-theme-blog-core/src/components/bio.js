@@ -22,7 +22,7 @@ const Bio = () => {
   return (
     <>
       {avatar ? (
-        <Image fixed={avatar.childImageSharp.fixed} alt={author} />
+        <Image fixed={avatar.childImageSharp.fixed} alt={author} className="bio-image"/>
       ) : (
         <div role="presentation" />
       )}

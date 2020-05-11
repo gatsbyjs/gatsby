@@ -4,7 +4,7 @@ import React, { Fragment } from "react"
  */
 
 export default () => (
-  <Fragment>
+  <Fragment className="bio-text">
     Words by <a href="http://example.com/">Jane Doe</a>.
     <br />
     Change me. This is all quite default.
