@@ -91,6 +91,6 @@ People have been asking us for incremental builds all along—it just makes sens
 
 3. If you have an existing Gatsby site, you may need to upgrade. Incremental Builds works with Gatsby 2.20.4 and higher.
 
-4. To experience the fastest build times, update your site with content from Gatsby CLoud's first-class CMS integrations. These include Contentful, Sanity, DatoCMS and Cosmic. WordPress and Drupal support are in alpha. 
+4. To experience the fastest build times, update your site with content from Gatsby Cloud's first-class CMS integrations. These include Contentful, Sanity, DatoCMS and Cosmic. WordPress and Drupal support are in alpha. 
 
 If you’re interested in building a first-class integration with Gatsby Cloud for Incremental Builds, please reach out to partners@gatsbyjs.com.
