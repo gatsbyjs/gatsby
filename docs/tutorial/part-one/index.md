@@ -221,11 +221,8 @@ In the browser, the “About Gatsby” header text should now be replaced with �
 ```jsx:title=src/components/header.js
 import React from "react"
 
-export default function Header(props) {
-  return <h1>{props.headerText}</h1>
-  {
-    /* highlight-line */
-  }
+export default function Header(props) { {/* highlight-line */}
+  return <h1>{props.headerText}</h1> {/* highlight-line */}
 }
 ```
 
