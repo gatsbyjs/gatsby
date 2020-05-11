@@ -11,7 +11,7 @@ tags:
   - gatsby-preview
 ---
 
-![https://blog.strapi.io/content/images/2020/01/gatsby-blog.png](https://blog.strapi.io/content/images/2020/01/gatsby-blog.png "Gatsby and Strapi logos")
+![https://blog.strapi.io/content/images/2020/01/gatsby-blog.png](./gatsby_strapi.jpg "Gatsby and Strapi logos")
 
 Strapi is the #1 open source headless CMS frontend developers all over the world love. You can easily and quickly manage your content through an API and it's made entirely with Node & React. Gatsby developers will feel right at home in a Javascript environment that they know like the back of their hand.
 
