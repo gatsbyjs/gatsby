@@ -39,7 +39,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   root,
   queryString
 ) {
-  console.log("createing collection")
+  console.log(`createing collection`)
   const [, route] = absolutePath.split(`src/pages`)
   const id = createContentDigest(route)
   const collectionCoponentsFolder = systemPath.join(
@@ -136,7 +136,7 @@ Unfortunately, the query came back empty. There may be an error in your query.
     const previous = index === nodes.length - 1 ? null : nodes[index + 1]
     const next = index === 0 ? null : nodes[index - 1]
 
-    console.log("path", path)
+    console.log(`path`, path)
 
     actions.createPage({
       path: path,
