@@ -36,7 +36,7 @@ const defaultPluginOptions = {
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
   },
-  excludeFields: [],
+  excludeFieldNames: [],
   type: {
     ActionMonitorAction: {
       exclude: true,

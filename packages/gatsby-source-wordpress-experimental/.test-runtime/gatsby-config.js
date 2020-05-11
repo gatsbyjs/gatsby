@@ -24,7 +24,7 @@ module.exports = {
         verbose: true,
         // for wp-graphql-gutenberg, attributes currently breaks due
         // to the origin schema. It works if we exclude attributes
-        excludeFields: [`attributes`],
+        excludeFieldNames: [`commentCount`, `attributes`, `commentCount`],
         schema: {
           queryDepth: 5,
           typePrefix: `Wp`,

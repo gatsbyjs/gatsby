@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.13
+
+### New Features
+
+- Renamed excludeFields to excludeFieldNames to keep the API consistent with the Type.excludeFieldNames option.
+
 ## 0.1.12
 
 ### New Features

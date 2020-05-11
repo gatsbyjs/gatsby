@@ -455,7 +455,6 @@ Array [
     "fields": Array [
       "author",
       "categories",
-      "commentCount",
       "commentStatus",
       "comments",
       "content",
@@ -526,7 +525,6 @@ Array [
       "altText",
       "author",
       "caption",
-      "commentCount",
       "commentStatus",
       "comments",
       "contentType",
@@ -571,7 +569,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "commentCount",
       "commentStatus",
     ],
     "name": "WpNodeWithComments",
@@ -860,7 +857,6 @@ Array [
       "acfData",
       "author",
       "categories",
-      "commentCount",
       "commentStatus",
       "comments",
       "content",
@@ -1111,7 +1107,6 @@ Array [
       "acfPageFields",
       "author",
       "childPages",
-      "commentCount",
       "commentStatus",
       "comments",
       "content",
@@ -2292,7 +2287,7 @@ Array [
 ]
 `;
 
-exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 2`] = `"c8c73f6dc28d0031a27fde10fb040e27"`;
+exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the local Gatsby schema 2`] = `"76266da7636e2db89f88de000783eef6"`;
 
 exports[`[gatsby-source-wordpress-experimental] schema hasn't altered the remote WPGraphQL schema 1`] = `
 Array [
@@ -5624,7 +5619,6 @@ Object {
                           "portrait": Object {
                             "altText": "",
                             "caption": null,
-                            "commentCount": null,
                             "commentStatus": "open",
                             "databaseId": 99,
                             "date": "2020-03-02T20:58:44",
@@ -5742,7 +5736,6 @@ Object {
                           "portrait": Object {
                             "altText": "",
                             "caption": null,
-                            "commentCount": null,
                             "commentStatus": "open",
                             "databaseId": 99,
                             "date": "2020-03-02T20:58:44",
@@ -5893,7 +5886,6 @@ Object {
                           "portrait": Object {
                             "altText": "",
                             "caption": null,
-                            "commentCount": null,
                             "commentStatus": "open",
                             "databaseId": 99,
                             "date": "2020-03-02T20:58:44",
@@ -6011,7 +6003,6 @@ Object {
                           "portrait": Object {
                             "altText": "",
                             "caption": null,
-                            "commentCount": null,
                             "commentStatus": "open",
                             "databaseId": 99,
                             "date": "2020-03-02T20:58:44",

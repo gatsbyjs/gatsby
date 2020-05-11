@@ -141,6 +141,39 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
     })
   })
 
+  test(`excludeFieldNames option excludes fields from the schema globally`, async () => {
+    const result = await fetchGraphql({
+      url: `http://localhost:8000/___graphql`,
+      query: gql`
+        {
+          wpPage: __type(name: "WpPage") {
+            fields {
+              name
+            }
+          }
+
+          wpPost: __type(name: "WpPost") {
+            fields {
+              name
+            }
+          }
+        }
+      `,
+    })
+
+    const commentFieldFinder = ({ name }) => name === `commentCount`
+
+    const wpPageCommentCountField = result.data.wpPage.fields.find(
+      commentFieldFinder
+    )
+
+    const wpPostCommentCountField = result.data.wpPost.fields.find(
+      commentFieldFinder
+    )
+
+    expect(wpPostCommentCountField && wpPageCommentCountField).toBeFalsy()
+  })
+
   test(`Type.where option works when set to filter for French posts`, async () => {
     const result = await fetchGraphql({
       url: `http://localhost:8000/___graphql`,
@@ -298,7 +331,6 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
                               sourceUrl
                               altText
                               caption
-                              commentCount
                               commentStatus
                               date
                               dateGmt
