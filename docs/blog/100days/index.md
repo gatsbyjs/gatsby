@@ -7,7 +7,7 @@ tags: ["learning-to-code", "contest", "100-Days-of-Gatsby"]
 
 import EmailCaptureForm from "@components/email-capture-form"
 
-### If you're looking for a fun way to explore how to build blazing fast websites with Gatsby, our #100DaysOfGatsby challenge is for you!
+## If you're looking for a fun way to explore how to build blazing fast websites with Gatsby, our #100DaysOfGatsby challenge is for you!
 
 ![alt text](./100daysofgatsby.png "100 Days of Gatsby")
 
@@ -22,15 +22,15 @@ Register below to join the #100daysofGatsby coding challenge!
   signupMessage="Get weekly updates on new challenges, ideas for where to start, and step-by-step documentation for completing the challenge."
 />
 
-## Use #100DaysOfGatsby on Social Media
+### Use #100DaysOfGatsby on Social Media
 
 As you work on your Gatsby project, connect with the community by using #100DaysOfGatsby in your tweets or posts on social media. If you need help with a challenge, or want to share a tool or technique that was useful, visit our [Gatsby communities](/contributing/community/#where-to-get-support) on [Discord](https://discordapp.com/invite/gatsby), [Spectrum](https://spectrum.chat/gatsby-js), [Dev](https://dev.to/t/gatsby), and [Reddit](https://www.reddit.com/r/gatsbyjs/).
 
-## 👉🏽 New to React or Web Development?
+### 👉🏽 New to React or Web Development?
 
 If you are an aspiring React developer, then this challenge will supercharge your learning. Gatsby is a great framework to adopt first so you can master React, Node.js, and JavaScript. Register your email in the form above and we will send you beginner-friendly, interesting projects that will help you explore the Gatsby and React ecosystem.
 
-## 👉🏽 Experienced React Developer?
+### 👉🏽 Experienced React Developer?
 
 If you are comfortable building webapps with React and its related tooling and if you are already familiar with Gatsby, we invite you to take your knowledge deeper by building your first Gatsby theme, plugin, or dynamic app. Register your email in the form above and we will send you resources for building advanced Gatsby projects.
 

@@ -3,7 +3,6 @@ const { actions } = require(`../../../redux/actions`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 const { isDate, looksLikeADate } = require(`../date`)
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {

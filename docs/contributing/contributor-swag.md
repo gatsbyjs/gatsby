@@ -8,13 +8,13 @@ To show our appreciation, _**everyone who contributes to Gatsby is eligible to r
 
 ![Gatsby contributors wearing swag.](./images/gatsby-swag.jpg)
 
-### How to claim your free swag
+## How to claim your free swag
 
 If you contribute to the Gatsby organization on GitHub, you can claim your swag by [logging into the Gatsby Store](https://store.gatsbyjs.org/) and requesting a discount code. With five or more contributions, you can claim your _**Level 2**_ swag.
 
 If you’ve contributed in other ways, such as giving talks about Gatsby, teaching others to use it, writing Gatsby articles/tutorials, participating in a Gatsby research project, or any other way, please email [marketing@gatsbyjs.com](mailto:marketing@gatsbyjs.com) or [tweet at Gatsby on Twitter](https://twitter.com/gatsbyjs) to claim your swag.
 
-### Details about free swag
+## Details about free swag
 
 - We will send one item from our [swag store](https://store.gatsbyjs.org/) per swag tier
 - Tier 1 swag includes most items \$10 and under
