@@ -25,12 +25,15 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       url: process.env.WPGRAPHQL_URL,
     })
 
-    expect(
-      result.data.__schema.types.map(type => ({
+    const remoteWPGQLTypeNamesWithFieldNames = result.data.__schema.types.map(
+      type => ({
         name: type.name,
-        fields: type.fields.map(field => field.name),
-      }))
-    ).toMatchSnapshot()
+        fields:
+          type && type.fields ? type.fields.map(field => field.name) : null,
+      })
+    )
+
+    expect(remoteWPGQLTypeNamesWithFieldNames).toMatchSnapshot()
 
     expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
@@ -41,14 +44,15 @@ describe(`[gatsby-source-wordpress-experimental] schema`, () => {
       query: introspectionQuery,
     })
 
-    expect(
-      result.data.__schema.types
-        .filter(({ name }) => name.startsWith(`allWp`) || name.startsWith(`Wp`))
-        .map(type => ({
-          name: type.name,
-          fields: type.fields.map(field => field.name),
-        }))
-    ).toMatchSnapshot()
+    const localWPTypeNamesWithFieldNames = result.data.__schema.types
+      .filter(({ name }) => name.startsWith(`allWp`) || name.startsWith(`Wp`))
+      .map(type => ({
+        name: type.name,
+        fields:
+          type && type.fields ? type.fields.map(field => field.name) : null,
+      }))
+
+    expect(localWPTypeNamesWithFieldNames).toMatchSnapshot()
 
     expect(createContentDigest(result.data.__schema)).toMatchSnapshot()
   })
