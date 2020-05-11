@@ -183,7 +183,7 @@
   description: >-
     Hey, I'm Steven! I am the founder of Gatsby Manor, we build themes for gatsby.
     We have themes for all types of projects including, personal, business, docs,
-    portfolio, ecommerce, marketing, and creative designs. We also run an in-house
+    portfolio, e-commerce, marketing, and creative designs. We also run an in-house
     web dev and design studio. If you cannot find what you want, we can build it for you!
     Therefore there is no theme we cannot make for your project. Email us at gatsbymanor@gmail.com
     with questions. Visit gatsbymanor.com to see our themes. Outside of Gatsby Manor,
@@ -519,4 +519,15 @@
   location: Ukraine
   website: https://softblues.io/
   for_hire: true
+  portfolio: true
+- name: Amruth Pillai
+  type: individual
+  description: >-
+    I build beautiful websites and applications that help people around the world. Some of my open source works include Reactive Resume, a resume builder that has over 1k+ starts, and Be Thrifty Today, a money management app that has about 1000+ downloads on Google Play Store.
+  location: Bangalore, India
+  website: https://amruthpillai.com
+  github: https://github.com/AmruthPillai
+  image: images/amruth-pillai.png
+  for_hire: true
+  hiring: false
   portfolio: true

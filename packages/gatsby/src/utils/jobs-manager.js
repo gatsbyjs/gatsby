@@ -60,6 +60,8 @@ const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
  * @property {{path: string, contentDigest: string}[]} inputPaths
  * @property {{name: string, version: string, resolve: string, isLocal: boolean}} plugin
  *
+ * @typedef {Record<string, unknown>} JobResultInterface
+ *
  * I know this sucks but this is the only way to do it properly in jsdoc..
  * @typedef {BaseJobInterface & JobInputInterface} JobInput
  * @typedef {BaseJobInterface & InternalJobInterface} InternalJob

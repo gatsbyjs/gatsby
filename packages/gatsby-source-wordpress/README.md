@@ -145,7 +145,7 @@ module.exports = {
         // Defaults to false
         keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
         },
         // The normalizers option allows you to manipulate the array of internal
@@ -161,7 +161,7 @@ module.exports = {
           ...normalizers,
           {
             name: "nameOfTheFunction",
-            normalizer: function({ entities }) {
+            normalizer: function ({ entities }) {
               // manipulate entities here
               return entities
             },
@@ -227,9 +227,9 @@ You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/
 
 Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
 
-### For Business, and eCommerce Plans
+### For Business, and E-commerce Plans
 
-Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
+Business and e-commerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -830,7 +830,7 @@ and also your `wordpress-source-plugin` options from `gatsby-config.js`. To lear
 ```javascript
 const dropUnusedMediaNormalizer = {
   name: "dropUnusedMediaNormalizer",
-  normalizer: function({ entities }) {
+  normalizer: function ({ entities }) {
     return entities.filter(
       e => !(e.__type === "wordpress__wp_media" && !e.post)
     )

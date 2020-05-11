@@ -3,11 +3,11 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
 import { TiArrowRight } from "react-icons/ti"
 
+import PageMetadata from "../../components/page-metadata"
 import Link from "../../components/localized-link"
 import Button from "../../components/button"
 import Container from "../../components/container"
@@ -117,13 +117,10 @@ class TagsPage extends React.Component {
 
     return (
       <Container>
-        <Helmet>
-          <title>Tags</title>
-          <meta
-            name={`description`}
-            content={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
-          />
-        </Helmet>
+        <PageMetadata
+          title="Tags"
+          description={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
+        />
         <div>
           <h1
             css={{

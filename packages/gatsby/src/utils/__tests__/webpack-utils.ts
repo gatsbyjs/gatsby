@@ -151,7 +151,7 @@ describe(`webpack utils`, () => {
       it(`includes dependencies that don't use gatsby`, () => {
         expect(
           dependencies.exclude(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/awesome-lib/index.js`
           )
         ).toEqual(false)
       })
