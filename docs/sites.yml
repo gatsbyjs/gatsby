@@ -10567,3 +10567,13 @@
   built_by: Raz Lifshitz
   built_by_url: https://www.linkedin.com/in/raz-lifshitz
   featured: false
+ - title: Formula One Gym
+  url: https://www.formulaonegym.co.uk/
+  main_url: https://www.formulaonegym.co.uk/
+  source_url: https://github.com/Zellement/formula1gym
+  description: A UK based fitness gym in the heart of Nottingham, built with Gatsby v2
+  categories:
+    - Sports
+  built_by: Dan Farrow
+  built_by_url: https://github.com/Zellement
+  featured: false
