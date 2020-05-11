@@ -1,16 +1,16 @@
 /** @jsx jsx */
-import { jsx } from "theme-ui"
-import React from "react"
-import PropTypes from "prop-types"
 
-import MarkdownPageFooter from "./markdown-page-footer"
-import PageMetadata from "./page-metadata"
-import Link from "./localized-link"
-import Container from "./container"
-import FooterLinks from "./shared/footer-links"
+import { jsx } from "theme-ui"
+import { graphql } from "gatsby"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
-import GatsbyIcon from "./gatsby-monogram"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
+
+import PageMetadata from "../components/page-metadata"
+import Link from "../components/localized-link"
+import Container from "../components/container"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
+import FooterLinks from "../components/shared/footer-links"
+import GatsbyIcon from "../components/gatsby-monogram"
 
 const GatsbyPluginBadge = ({ isOfficial }) => {
   const Icon = isOfficial ? GatsbyIcon : CommunityIcon
@@ -49,20 +49,27 @@ const GatsbyPluginBadge = ({ isOfficial }) => {
   )
 }
 
-const PackageReadMe = props => {
-  const { page, packageName, excerpt, html, githubUrl, timeToRead } = props
-  const metaExcerpt = excerpt || `Plugin information for ${packageName}`
-  const isOfficial =
-    githubUrl.indexOf(`https://github.com/gatsbyjs/gatsby`) === 0 &&
-    packageName[0] !== `@`
+export default function PackageReadmeTemplate({
+  location,
+  data: { npmPackage },
+}) {
+  const readmePage = npmPackage.readme.childMarkdownRemark
+  const isOfficial = npmPackage.fields.official
+  const packageName = npmPackage.name
+
+  const excerpt = readmePage.excerpt ?? `Plugin information for ${packageName}`
+  const githubUrl = isOfficial
+    ? `https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`
+    : npmPackage.repository?.url ??
+      `https://github.com/search?q=${npmPackage.name}`
 
   return (
-    <React.Fragment>
+    <PageWithPluginSearchBar location={location}>
       <PageMetadata
         title={packageName}
-        description={metaExcerpt}
+        description={excerpt}
         type="article"
-        timeToRead={timeToRead}
+        timeToRead={readmePage.timeToRead}
       />
       <Container>
         <div
@@ -103,23 +110,32 @@ const PackageReadMe = props => {
         </div>
         <div
           css={{ position: `relative` }}
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: readmePage.html }}
         />
-        <MarkdownPageFooter page={page} packagePage />
       </Container>
       <FooterLinks />
-    </React.Fragment>
+    </PageWithPluginSearchBar>
   )
 }
 
-PackageReadMe.propTypes = {
-  page: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  packageName: PropTypes.string.isRequired,
-  excerpt: PropTypes.string,
-  html: PropTypes.string.isRequired,
-  githubUrl: PropTypes.string,
-  timeToRead: PropTypes.number,
-  lastPublisher: PropTypes.object,
-}
-
-export default PackageReadMe
+export const pageQuery = graphql`
+  query($slug: String!) {
+    npmPackage(slug: { eq: $slug }) {
+      name
+      keywords
+      fields {
+        official
+      }
+      repository {
+        url
+      }
+      readme {
+        childMarkdownRemark {
+          html
+          excerpt
+          timeToRead
+        }
+      }
+    }
+  }
+`

@@ -1128,21 +1128,21 @@
     - Remark for loading Markdown into React
 - url: https://gatsby-blog-cosmicjs.netlify.com/
   repo: https://github.com/cosmicjs/gatsby-blog-cosmicjs
-  description: Blog that utilizes the power of the Cosmic JS headless CMS for easy content management
+  description: Blog that utilizes the power of the Cosmic headless CMS for easy content management
   tags:
-    - CMS:Cosmic JS
+    - CMS:Cosmic
     - CMS:Headless
     - Blog
   features:
-    - Uses the Cosmic JS Gatsby source plugin
+    - Uses the Cosmic Gatsby source plugin
 - url: https://cosmicjs-gatsby-starter.netlify.com/
   repo: https://github.com/cosmicjs/gatsby-starter
-  description: Simple Gatsby starter connected to the Cosmic JS headless CMS for easy content management
+  description: Simple Gatsby starter connected to the Cosmic headless CMS for easy content management
   tags:
-    - CMS:Cosmic JS
+    - CMS:Cosmic
     - CMS:Headless
   features:
-    - Uses the Cosmic JS Gatsby source plugin
+    - Uses the Cosmic Gatsby source plugin
 - url: https://www.gatsby-typescript-template.com/
   repo: https://github.com/ikeryo1182/gatsby-typescript-template
   description: This is a standard starter with TypeScript, TSLint, Prettier, Lint-Staged(Husky) and Sass
@@ -2737,7 +2737,7 @@
   tags:
     - Blog
     - Portfolio
-    - CMS:Cosmic JS
+    - CMS:Cosmic
   features:
     - Landing Page
     - Home
@@ -2746,28 +2746,28 @@
     - People
 - url: https://cosmicjs.com/apps/gatsby-localization-app-starter/demo
   repo: https://github.com/cosmicjs/gatsby-localization-app-starter
-  description: A localized Gatsby starter application powered by Cosmic JS.
+  description: A localized Gatsby starter application powered by Cosmic.
   tags:
-    - CMS:Cosmic JS
+    - CMS:Cosmic
     - i18n
   features:
     - Gatsby localization starter app
 - url: https://cosmicjs.com/apps/gatsby-docs/demo
   repo: https://github.com/cosmicjs/gatsby-docs-app
-  description: Be able to view and create documentation using Gatsby and Cosmic JS. Leveraging the speed and high powered APIs of the Gatsby framework and the simplicity and scalability of Cosmic JS.
+  description: Be able to view and create documentation using Gatsby and Cosmic. Leveraging the speed and high powered APIs of the Gatsby framework and the simplicity and scalability of Cosmic.
   tags:
-    - CMS:Cosmic JS
+    - CMS:Cosmic
     - Documentation
   features:
     - manage docs in static web file format for zippy delivery
 - url: https://cosmicjs.com/apps/gatsby-ecommerce-website/demo
   repo: https://github.com/a9kitkumar/Gatsby-Ecommerce
-  description: A localized Gatsby starter application powered by Cosmic JS.
+  description: A localized Gatsby starter application powered by Cosmic.
   tags:
-    - CMS:Cosmic JS
+    - CMS:Cosmic
     - E-commerce
   features:
-    - Stores products, orders using Cosmic JS as a database and a server
+    - Stores products, orders using Cosmic as a database and a server
 - url: https://harshil1712.github.io/gatsby-starter-googlesheets/
   repo: https://github.com/harshil1712/gatsby-starter-googlesheets
   description: A starter using Google Sheets as data source

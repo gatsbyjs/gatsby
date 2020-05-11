@@ -88,7 +88,7 @@ We'll be adding many more of these starters in the future.
 
 ## Gatsby Real-Time Preview
 
-Preview offers a private playground for developers, designers, marketers, and content creators. You can view changes to your site immediately and in context with instant updates triggered by a CMS or webhooks. It's basically a _shareable_, hot-reloading preview. Preview is compatible with a growing number of CMSs, including Drupal, Contentful, Contentstack, Sanity, DatoCMS, and CosmicJS, with WordPress coming soon.
+Preview offers a private playground for developers, designers, marketers, and content creators. You can view changes to your site immediately and in context with instant updates triggered by a CMS or webhooks. It's basically a _shareable_, hot-reloading preview. Preview is compatible with a growing number of CMSs, including Drupal, Contentful, Contentstack, Sanity, DatoCMS, and Cosmic, with WordPress coming soon.
 
 Preview has been in beta since May, and we've welcomed over 1000 beta testers and are near our 100th customer. Thank you to everyone who's helped test and support Preview! We've learned a lot from our beta users and customers.
 

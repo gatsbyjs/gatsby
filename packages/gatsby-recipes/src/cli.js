@@ -260,8 +260,6 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-const PlanContext = React.createContext({})
-
 module.exports = ({ recipe, graphqlPort, projectRoot }) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
@@ -294,9 +292,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     })
 
     const RecipeInterpreter = () => {
+      const { exit } = useApp()
       // eslint-disable-next-line
       const [localRecipe, setRecipe] = useState(recipe)
-      const { exit } = useApp()
 
       const [subscriptionResponse] = useSubscription(
         {
@@ -344,11 +342,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         if (showRecipesList) {
           return
         }
-        if (key.return && state && state.value === `SUCCESS`) {
-          subscriptionClient.close()
-          exit()
-          process.exit()
-        } else if (key.return) {
+        if (key.return) {
           sendEvent({ event: `CONTINUE` })
         }
       })
@@ -395,10 +389,10 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       log(`render`, `${renderCount} ${new Date().toJSON()}`)
       renderCount += 1
 
-      // If we're done, exit.
-      if (state.value === `done`) {
-        process.nextTick(() => process.exit())
-      }
+      const isDone = state.value === `done`
+
+      // If we're done with an error, render out error (happens below)
+      // then exit.
       if (state.value === `doneError`) {
         process.nextTick(() => process.exit())
       }
@@ -413,22 +407,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         const isPlan = state.context.plan && state.context.plan.length > 0
         const isPresetPlanState = state.value === `present plan`
         const isRunningStep = state.value === `applyingPlan`
-        const isDone = state.value === `done`
-        const isLastStep =
-          state.context.steps &&
-          state.context.steps.length - 1 === state.context.currentStep
-
         if (isRunningStep) {
-          return null
-        }
-
-        if (isDone) {
-          return null
-        }
-
-        // If there's no plan on the last step, just return.
-        if (!isPlan && isLastStep) {
-          process.nextTick(() => process.exit())
           return null
         }
 
@@ -443,7 +422,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         return (
           <Div>
             <Div>
-              <Text bold underline marginBottom={2}>
+              <Text bold italic marginBottom={2}>
                 Proposed changes
               </Text>
             </Div>
@@ -540,31 +519,78 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         return <Error width="100%" state={state} />
       }
 
+      const staticMessages = {}
+      for (let step = 0; step < state.context.currentStep; step++) {
+        staticMessages[step] = [
+          {
+            type: `mdx`,
+            key: `mdx-${step}`,
+            value: state.context.stepsAsMdx[step],
+          },
+        ]
+      }
+      lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
+        staticMessages[res._currentStep].push({
+          type: `resource`,
+          key: `finished-stuff-${i}`,
+          value: res._message,
+        })
+      })
+
+      log(`staticMessages`, staticMessages)
+
+      if (isDone) {
+        process.nextTick(() => {
+          subscriptionClient.close()
+          exit()
+          process.stdout.write(
+            `\n\n---\n\n\nThe recipe finished successfully!\n\n`
+          )
+          lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
+            process.stdout.write(`✅ ${res._message}\n`)
+          })
+          process.exit()
+        })
+        // return null
+      }
+
       return (
         <>
           <Div>
             <Static>
-              {lodash.flattenDeep(state.context.stepResources).map((r, i) => (
-                <Text key={`finished-stuff-${i}`}>✅ {r._message}</Text>
-              ))}
+              {Object.keys(staticMessages).map((key, iStep) =>
+                staticMessages[key].map((r, i) => {
+                  if (r.type && r.type === `mdx`) {
+                    return (
+                      <Div key={r.key}>
+                        {iStep === 0 && <Text underline>Completed Steps</Text>}
+                        <Div marginTop={iStep === 0 ? 0 : 1} marginBottom={1}>
+                          {iStep !== 0 && `---`}
+                        </Div>
+                        {iStep !== 0 && <Text>Step {iStep}</Text>}
+                        <MDX components={components}>{r.value}</MDX>
+                      </Div>
+                    )
+                  }
+                  return <Text key={r.key}>✅ {r.value}</Text>
+                })
+              )}
             </Static>
           </Div>
           {state.context.currentStep === 0 && <WelcomeMessage />}
-          {state.context.currentStep > 0 && state.value !== `done` && (
-            <Div>
+          {state.context.currentStep > 0 && !isDone && (
+            <Div marginTop={7}>
               <Text underline bold>
                 Step {state.context.currentStep} /{` `}
                 {state.context.steps.length - 1}
               </Text>
             </Div>
           )}
-          <PlanContext.Provider value={{ planForNextStep: state.plan }}>
-            <MDX components={components}>
-              {state.context.stepsAsMdx[state.context.currentStep]}
-            </MDX>
-            <PresentStep state={state} />
-            <RunningStep state={state} />
-          </PlanContext.Provider>
+          <MDX components={components}>
+            {state.context.stepsAsMdx[state.context.currentStep]}
+          </MDX>
+          {!isDone && <PresentStep state={state} />}
+          {!isDone && <RunningStep state={state} />}
         </>
       )
     }

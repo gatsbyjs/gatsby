@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.14...gatsby-recipes@0.1.15) (2020-05-11)
+
+### Features
+
+- **gatsby-recipes:** Improve ongoing summary of steps + add end summary ([#23888](https://github.com/gatsbyjs/gatsby/issues/23888)) ([251dc58](https://github.com/gatsbyjs/gatsby/commit/251dc58))
+
 ## [0.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.13...gatsby-recipes@0.1.14) (2020-05-08)
 
 **Note:** Version bump only for package gatsby-recipes

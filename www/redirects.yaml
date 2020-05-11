@@ -15,7 +15,9 @@
 - fromPath: /docs/community/ # Moved "Community" page from /docs/community to /contributing/community
   toPath: /contributing/community/
 - fromPath: /docs/deploying-to-now/
-  toPath: /docs/deploying-to-zeit-now/
+  toPath: /docs/deploying-to-vercel/
+- fromPath: /docs/deploying-to-zeit-now/
+  toPath: /docs/deploying-to-vercel/
 - fromPath: /docs/pair-programming/
   toPath: /contributing/pair-programming/
 - fromPath: /docs/how-to-create-an-issue/
