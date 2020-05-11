@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-ui-preset",
-  "version": "0.0.7-unifiedroutes-blog.15073+4edf50233",
+  "version": "0.0.7-unifiedroutes.15078+a3b781790",
   "description": "A Gatsby theme for theme-ui styles",
   "main": "index.js",
   "keywords": [
@@ -30,7 +30,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "2.20.24-unifiedroutes-blog.26+4edf50233",
+    "gatsby": "2.20.24-unifiedroutes.31+a3b781790",
     "prettier": "2.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
@@ -43,5 +43,5 @@
   "engines": {
     "node": ">=10.13.0"
   },
-  "gitHead": "4edf5023378e1ef46b653828e4c6b6add2945bba"
+  "gitHead": "a3b7817908801143fe658f1f8c73254d10b248aa"
 }
