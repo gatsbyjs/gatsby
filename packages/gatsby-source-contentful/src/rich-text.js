@@ -34,7 +34,8 @@ const getFieldWithLocaleResolved = ({
   // If the field is itself a reference to another entry, recursively resolve
   // that entry's field locales too.
   if (isEntryReferenceField(field)) {
-    if (resolvedEntryIDs.has(field.sys.id)) {
+    const key = `${field.sys.id}___${field.sys.type}`
+    if (resolvedEntryIDs.has(key)) {
       return field
     }
 
@@ -43,7 +44,7 @@ const getFieldWithLocaleResolved = ({
       contentTypesById,
       getField,
       defaultLocale,
-      resolvedEntryIDs: resolvedEntryIDs.add(field.sys.id),
+      resolvedEntryIDs: resolvedEntryIDs.add(key),
     })
   }
 

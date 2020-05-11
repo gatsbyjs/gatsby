@@ -132,16 +132,18 @@ exports.buildResolvableSet = ({
       // We also need to apply `fixId` as some objects will have ids
       // prefixed with `c` and fixIds will recursively apply that
       // and resolvable ids need to match that.
-      resolvable.add(fixId(n.contentful_id))
+      resolvable.add(`${fixId(n.contentful_id)}___${n.sys.type}`)
     }
   })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      resolvable.add(entry.sys.id)
+      resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
-  assets.forEach(assetItem => resolvable.add(assetItem.sys.id))
+  assets.forEach(assetItem =>
+    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
+  )
 
   return resolvable
 }
@@ -183,15 +185,16 @@ exports.buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
+                const key = `${v.sys.id}___${v.sys.linkType || v.sys.type}`
                 // Don't create link to an unresolvable field.
-                if (!resolvable.has(v.sys.id)) {
+                if (!resolvable.has(key)) {
                   return
                 }
 
-                if (!foreignReferenceMap[v.sys.id]) {
-                  foreignReferenceMap[v.sys.id] = []
+                if (!foreignReferenceMap[key]) {
+                  foreignReferenceMap[key] = []
                 }
-                foreignReferenceMap[v.sys.id].push({
+                foreignReferenceMap[key].push({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
                   spaceId: space.sys.id,
@@ -203,13 +206,20 @@ exports.buildForeignReferenceMap = ({
             entryItemFieldValue &&
             entryItemFieldValue.sys &&
             entryItemFieldValue.sys.type &&
-            entryItemFieldValue.sys.id &&
-            resolvable.has(entryItemFieldValue.sys.id)
+            entryItemFieldValue.sys.id
           ) {
-            if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
-              foreignReferenceMap[entryItemFieldValue.sys.id] = []
+            const key = `${entryItemFieldValue.sys.id}___${
+              entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
+            }`
+            // Don't create link to an unresolvable field.
+            if (!resolvable.has(key)) {
+              return
             }
-            foreignReferenceMap[entryItemFieldValue.sys.id].push({
+
+            if (!foreignReferenceMap[key]) {
+              foreignReferenceMap[key] = []
+            }
+            foreignReferenceMap[key].push({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
               spaceId: space.sys.id,
@@ -237,6 +247,9 @@ function prepareTextNode(node, key, text, createNodeId) {
       content: str,
       contentDigest: digest(str),
     },
+    sys: {
+      type: node.sys.type,
+    },
   }
 
   node.children = node.children.concat([textNode.id])
@@ -258,6 +271,9 @@ function prepareRichTextNode(node, key, content, createNodeId) {
       content: str,
       contentDigest: digest(str),
     },
+    sys: {
+      type: node.sys.type,
+    },
   }
 
   node.children = node.children.concat([richTextNode.id])
@@ -276,6 +292,9 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
       mediaType: `application/json`,
       content: str,
       contentDigest: digest(str),
+    },
+    sys: {
+      type: node.sys.type,
     },
   }
 
@@ -393,10 +412,16 @@ exports.createNodesForContentType = ({
               // is empty due to links to missing entities
               const resolvableEntryItemFieldValue = entryItemFieldValue
                 .filter(function (v) {
-                  return resolvable.has(v.sys.id)
+                  return resolvable.has(
+                    `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                  )
                 })
                 .map(function (v) {
-                  return mId(space.sys.id, v.sys.id, v.sys.type)
+                  return mId(
+                    space.sys.id,
+                    v.sys.id,
+                    v.sys.linkType || v.sys.type
+                  )
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
                 entryItemFields[
@@ -412,7 +437,14 @@ exports.createNodesForContentType = ({
             entryItemFieldValue.sys.type &&
             entryItemFieldValue.sys.id
           ) {
-            if (resolvable.has(entryItemFieldValue.sys.id)) {
+            if (
+              resolvable.has(
+                `${entryItemFieldValue.sys.id}___${
+                  entryItemFieldValue.sys.linkType ||
+                  entryItemFieldValue.sys.type
+                }`
+              )
+            ) {
               entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                 space.sys.id,
                 entryItemFieldValue.sys.id,
@@ -425,7 +457,8 @@ exports.createNodesForContentType = ({
       })
 
       // Add reverse linkages if there are any for this node
-      const foreignReferences = foreignReferenceMap[entryItem.sys.id]
+      const foreignReferences =
+        foreignReferenceMap[`${entryItem.sys.id}___${entryItem.sys.type}`]
       if (foreignReferences) {
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
@@ -467,7 +500,9 @@ exports.createNodesForContentType = ({
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
         },
-        sys: {},
+        sys: {
+          type: entryItem.sys.type,
+        },
       }
 
       // Revision applies to entries, assets, and content types
@@ -581,6 +616,9 @@ exports.createNodesForContentType = ({
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
       },
+      sys: {
+        type: contentTypeItem.sys.type,
+      },
     }
 
     // Get content digest of node.
@@ -634,6 +672,9 @@ exports.createAssetNodes = ({
       node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
+      },
+      sys: {
+        type: assetItem.sys.type,
       },
     }
 
