@@ -30,6 +30,7 @@ const Post = ({
           : post.image?.childImageSharp?.fluid.src
       }
       keywords={post.keywords}
+      imageAlt={post.imageAlt}
     />
     <main>
       <PostHero post={post} />
