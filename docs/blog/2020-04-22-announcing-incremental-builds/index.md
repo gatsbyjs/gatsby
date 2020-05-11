@@ -85,7 +85,7 @@ People have been asking us for incremental builds all along—it just makes sens
 
 ## How to enable Gatsby's Incremental Builds
 
-1. Head to Gatsby Cloud (https://gatsbyjs.com/cloud/) to try Incremental Builds immediatley.
+1. Head to Gatsby Cloud (https://gatsbyjs.com/cloud/) to try Incremental Builds immediately.
 
 2. Incremental Builds is now available in public beta. So all Gatsby Cloud users get a free 14 day trial, with full availability on all Professional, Business, and Enterprise plans. 
 
