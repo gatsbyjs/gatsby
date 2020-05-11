@@ -190,6 +190,20 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
+        })
+        // log-pages and write-to-file are specific to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
+        // because of that they are hidden from `--help` but still defined so `yargs` know about them
+        .option(`log-pages`, {
+          type: `boolean`,
+          default: false,
+          describe: `Log the pages that changes since last build (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          hidden: true,
+        })
+        .option(`write-to-file`, {
+          type: `boolean`,
+          default: false,
+          describe: `Save the log of changed pages for future comparison (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          hidden: true,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
