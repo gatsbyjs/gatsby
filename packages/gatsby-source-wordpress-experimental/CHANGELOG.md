@@ -1,5 +1,25 @@
 # Change Log
 
+## 0.1.12
+
+### New Features
+
+- Added a new plugin option for HTTP Basic authentication:
+
+```js
+{
+  resolve: `gatsby-source-wordpress-experimental`,
+  options: {
+    auth: {
+      htaccess: {
+        username: `username`,
+        password: `password`,
+      }
+    }
+  }
+}
+```
+
 ## 0.1.11
 
 ### Bug Fixes

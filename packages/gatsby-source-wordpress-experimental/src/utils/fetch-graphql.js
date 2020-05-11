@@ -173,6 +173,43 @@ const handleFetchErrors = async ({
     )
   }
 
+  const unauthorized = e.message.includes(`Request failed with status code 401`)
+
+  const htaccessCredentials = pluginOptions.auth.htaccess
+
+  const missingCredentials =
+    !htaccessCredentials.password || !htaccessCredentials.username
+
+  if (unauthorized && !missingCredentials) {
+    reporter.panic(
+      formatLogMessage(
+        `Request failed with status code 401.\n\nThe HTTP Basic Auth credentials you've provided in plugin options were rejected.\nDouble check that your credentials are correct.
+         \n${genericError({ url })}`,
+        { useVerboseStyle: true }
+      )
+    )
+  } else if (unauthorized) {
+    reporter.panic(
+      formatLogMessage(
+        `Request failed with status code 401.\n\n Your WordPress instance may be protected with HTTP Basic authentication.\n If it is you will need to add the following to your plugin options:
+
+        {
+          resolve: \`gatsby-source-wordpress-experimental\`,
+          options: {
+            auth: {
+              htaccess: {
+                username: process.env.HTTPBASICAUTH_USERNAME,
+                password: process.env.HTTPBASICAUTH_PASSWORD,
+              }
+            }
+          }
+        }
+         \n${genericError({ url })}`,
+        { useVerboseStyle: true }
+      )
+    )
+  }
+
   if (response?.headers[`content-type`].includes(`text/html;`)) {
     reporter.panic(
       formatLogMessage(
@@ -222,10 +259,24 @@ const fetchGraphql = async ({
 
   const timeout = pluginOptions.schema.timeout
 
+  const htaccessCredentials = pluginOptions.auth.htaccess
+
+  const missingCredentials =
+    !htaccessCredentials.password || !htaccessCredentials.username
+
   let response
 
   try {
-    response = await http.post(url, { query, variables }, { timeout, headers })
+    const requestOptions = {
+      timeout,
+      headers,
+    }
+
+    if (!missingCredentials) {
+      requestOptions.auth = htaccessCredentials
+    }
+
+    response = await http.post(url, { query, variables }, requestOptions)
 
     const contentType = response.headers[`content-type`]
 

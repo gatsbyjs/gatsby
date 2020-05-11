@@ -24,6 +24,12 @@ const defaultPluginOptions = {
   production: {
     hardCacheMediaFiles: false,
   },
+  auth: {
+    htaccess: {
+      username: null,
+      password: null,
+    },
+  },
   schema: {
     queryDepth: 15,
     circularQueryLimit: 3,
