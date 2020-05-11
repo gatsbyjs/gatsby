@@ -42,7 +42,12 @@ async function onCreateNode(
   }
 
   const content = await loadNodeContent(node)
-  const parsedContent = JSON.parse(content)
+  let parsedContent
+  try {
+    parsedContent = JSON.parse(content)
+  } catch() {
+    throw new Error(`Unable to parse JSON: ${node.absolutePath}`)
+  }
 
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
