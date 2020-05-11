@@ -1371,7 +1371,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on boolean field`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             boolean: {
               elemMatch: {
                 eq: true,
@@ -1385,7 +1385,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`skips nodes without the field for elemMatch on boolean`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             boolSecondOnly: {
               elemMatch: {
                 eq: false,
@@ -1399,7 +1399,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on string field`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             string: {
               elemMatch: {
                 eq: `a`,
@@ -1413,7 +1413,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`should return all nodes for elemMatch on non-arrays too`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             name: {
               elemMatch: {
                 eq: `The Mad Wax`,
@@ -1429,7 +1429,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`skips nodes without the field for elemMatch on string`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             strSecondOnly: {
               elemMatch: {
                 eq: `needle`,
@@ -1443,7 +1443,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on number field`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             float: {
               elemMatch: {
                 eq: 1.5,

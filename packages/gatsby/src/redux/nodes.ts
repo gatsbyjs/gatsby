@@ -431,32 +431,35 @@ function addNodeToBucketWithElemMatch(
   }
 
   // `v` should now be an elemMatch target, probably an array (but maybe not)
-  if (Array.isArray(valueAtCurrentStep)) {
-    // Note: We need to check all elements because the node may need to be added
-    // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
-    // node ends up in buckets for value 3 and 4. This may lead to duplicate
-    // work when elements resolve to the same value, but that can't be helped.
-    valueAtCurrentStep.forEach(elem => {
-      if (nestedQuery.type === `elemMatch`) {
-        addNodeToBucketWithElemMatch(
-          node,
-          elem,
-          nestedQuery,
-          filterCache,
-          resolvedNodesCache
-        )
-      } else {
-        // Now take same route as non-elemMatch filters would take
-        addNodeToFilterCache(
-          node,
-          nestedQuery.path,
-          filterCache,
-          resolvedNodesCache,
-          elem
-        )
-      }
-    })
+  if (!Array.isArray(valueAtCurrentStep)) {
+    // It's possible to `elemMatch` on a non-array so let's support that too
+    valueAtCurrentStep = [valueAtCurrentStep]
   }
+
+  // Note: We need to check all elements because the node may need to be added
+  // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
+  // node ends up in buckets for value 3 and 4. This may lead to duplicate
+  // work when elements resolve to the same value, but that can't be helped.
+  valueAtCurrentStep.forEach(elem => {
+    if (nestedQuery.type === `elemMatch`) {
+      addNodeToBucketWithElemMatch(
+        node,
+        elem,
+        nestedQuery,
+        filterCache,
+        resolvedNodesCache
+      )
+    } else {
+      // Now take same route as non-elemMatch filters would take
+      addNodeToFilterCache(
+        node,
+        nestedQuery.path,
+        filterCache,
+        resolvedNodesCache,
+        elem
+      )
+    }
+  })
 }
 
 const binarySearchAsc = (
