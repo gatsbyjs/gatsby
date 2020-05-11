@@ -1,21 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-
-// API Rendering Stuff
 import { sortBy } from "lodash-es"
 
-import PageWithSidebar from "../components/page-with-sidebar"
-import PageMetadata from "../components/page-metadata"
-import MarkdownPageFooter from "../components/markdown-page-footer"
-import DocSearchContent from "../components/docsearch-content"
-import FooterLinks from "../components/shared/footer-links"
-import Breadcrumb from "../components/docs-breadcrumb"
-import Container from "../components/container"
-import PrevAndNext from "../components/prev-and-next"
-import APIReference, { APIContents } from "../components/api-reference"
+import APIReference from "../components/api-reference"
+import DocsMarkdownPage from "../components/docs-markdown-page"
 
 const normalizeGatsbyApiCall = array =>
   array.map(entry => {
@@ -75,59 +64,46 @@ const mergeFunctions = (data, context) => {
 }
 
 export default function APITemplate({ data, location, pageContext }) {
-  const { next, prev } = pageContext
+  const { prev, next } = pageContext
   const page = data.mdx
+  const { frontmatter, tableOfContents } = page
+  const heading = frontmatter.contentsHeading || "APIs"
+  const headingId = "apis"
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
 
+  // Generate table of content items for API entries
+  const items = tableOfContents.items || []
+  const tableOfContentsItems = [
+    ...items,
+    {
+      title: heading,
+      url: `#${headingId}`,
+      items: mergedFuncs.map(mergedFunc => ({
+        url: `#${mergedFunc.name}`,
+        title: mergedFunc.name,
+      })),
+    },
+  ]
+  const { tableOfContentsDepth: depth = 0 } = frontmatter
+  const tableOfContentsDepth = Math.max(depth, 2)
+
   return (
-    <PageWithSidebar location={location}>
-      <PageMetadata
-        title={page.frontmatter.title}
-        description={page.frontmatter.description || page.excerpt}
-        type="article"
-        timeToRead={page.timeToRead}
+    <DocsMarkdownPage
+      page={page}
+      location={location}
+      prev={prev}
+      next={next}
+      tableOfContentsItems={tableOfContentsItems}
+      tableOfContentsDepth={tableOfContentsDepth}
+    >
+      <h2 id={headingId}>{heading}</h2>
+      <APIReference
+        docs={mergedFuncs}
+        showTopLevelSignatures={frontmatter.showTopLevelSignatures}
       />
-      <DocSearchContent>
-        <Container
-          overrideCSS={{
-            pb: 0,
-            [mediaQueries.lg]: {
-              pt: 9,
-            },
-          }}
-        >
-          <Breadcrumb location={location} />
-          <h1 id={page.fields.anchor} sx={{ mt: 0 }}>
-            {page.frontmatter.title}
-          </h1>
-        </Container>
-        <Container
-          overrideCSS={{
-            pt: 0,
-            position: `static`,
-            [mediaQueries.lg]: {
-              pb: 9,
-            },
-          }}
-        >
-          <div>
-            <MDXRenderer slug={page.fields.slug}>{page.body}</MDXRenderer>
-            <h2>{page.frontmatter.contentsHeading || "APIs"}</h2>
-            <APIContents docs={mergedFuncs} />
-            <h2>Reference</h2>
-            <APIReference
-              docs={mergedFuncs}
-              showTopLevelSignatures={page.frontmatter.showTopLevelSignatures}
-            />
-            <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
-            <MarkdownPageFooter page={page} />
-          </div>
-        </Container>
-      </DocSearchContent>
-      <FooterLinks />
-    </PageWithSidebar>
+    </DocsMarkdownPage>
   )
 }
 
@@ -137,6 +113,7 @@ export const pageQuery = graphql`
       body
       excerpt
       timeToRead
+      tableOfContents
       fields {
         slug
         anchor
@@ -146,6 +123,8 @@ export const pageQuery = graphql`
         description
         contentsHeading
         showTopLevelSignatures
+        disableTableOfContents
+        tableOfContentsDepth
       }
       ...MarkdownPageFooterMdx
     }

@@ -549,7 +549,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   reporter.log(``)
-  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
+  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
   reporter.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(

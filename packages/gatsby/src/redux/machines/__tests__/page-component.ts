@@ -1,12 +1,13 @@
-const { interpret } = require(`xstate`)
-const machine = require(`../page-component`)
+import { interpret, Interpreter } from "xstate"
+
+import { componentMachine, IContext, IState, IEvent } from "../page-component"
 
 jest.mock(`../../../query`)
 const { enqueueExtractedQueryId, runQueuedQueries } = require(`../../../query`)
 
-const getService = (args = {}) =>
+const getService = (args = {}): Interpreter<IContext, IState, IEvent> =>
   interpret(
-    machine.withContext({
+    componentMachine.withContext({
       componentPath: `/a/path.js`,
       query: ``,
       pages: new Set([`/`]),
@@ -15,7 +16,8 @@ const getService = (args = {}) =>
     })
   ).start()
 
-const sleep = (delay = 50) => new Promise(resolve => setTimeout(resolve, delay))
+const sleep = (delay = 50): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, delay))
 
 describe(`bootstrap`, () => {
   beforeEach(() => {

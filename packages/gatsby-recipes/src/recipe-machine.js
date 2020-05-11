@@ -218,8 +218,14 @@ const recipeMachine = Machine(
       addResourcesToContext: assign((context, event) => {
         if (event.data) {
           const stepResources = context.stepResources || []
+          const messages = event.data.map(e => {
+            return {
+              _message: e._message,
+              _currentStep: context.currentStep,
+            }
+          })
           return {
-            stepResources: stepResources.concat([event.data]),
+            stepResources: stepResources.concat(messages),
           }
         }
         return undefined
