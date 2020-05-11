@@ -134,6 +134,13 @@ export const queryExtractionGraphQLError = (
   }
 }
 
+export const setQueries = queries => {
+  return {
+    type: `SET_ALL_QUERIES`,
+    payload: { queries },
+  }
+}
+
 /**
  *
  * Report that babel was able to extract the graphql query.

@@ -477,6 +477,23 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
+  activity = report.activityTimer(`onPreExtractQueries`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
+  activity.end()
+
+  // Update Schema for SitePage.
+  activity = report.activityTimer(`update schema`, {
+    parentSpan: bootstrapSpan,
+  })
+  activity.start()
+  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
+  activity.end()
+
+  await extractQueries({ parentSpan: bootstrapSpan })
+
   const graphqlRunner = createGraphQLRunner(store, report)
 
   // Collect pages.
@@ -524,23 +541,6 @@ module.exports = async (args: BootstrapArgs) => {
     }
   )
   activity.end()
-
-  activity = report.activityTimer(`onPreExtractQueries`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
-  activity.end()
-
-  // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan,
-  })
-  activity.start()
-  await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
-  activity.end()
-
-  await extractQueries({ parentSpan: bootstrapSpan })
 
   // Write out files.
   activity = report.activityTimer(`write out requires`, {

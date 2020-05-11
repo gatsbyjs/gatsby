@@ -36,8 +36,10 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   absolutePath,
   actions,
   graphql,
-  root
+  root,
+  queryString
 ) {
+  console.log("createing collection")
   const [, route] = absolutePath.split(`src/pages`)
   const id = createContentDigest(route)
   const collectionCoponentsFolder = systemPath.join(
@@ -51,8 +53,6 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     absolutePath
   )
 
-  let queryString
-
   // -- Use the ast to find the component and query, and change the code
   // -- to export default the component, instead of our fancy api
   traverse(ast, {
@@ -61,10 +61,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
       if (!isCreatePagesFromData(path)) return
       if (!t.isCallExpression(path)) return // this might not be needed...
 
-      const [componentAst, queryAst] = path.node.arguments
-
-      // 3 options for queryAst also
-      queryString = queryAst.quasi.quasis[0].value.raw
+      const [componentAst] = path.node.arguments
 
       // 3 options componentAst's _could be_
       // inline component
@@ -100,10 +97,11 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   // Not sure this is enough. Seems really brittle way of getting the array out of the query
   const { data, error } = await graphql(queryString)
 
-  if (!data) {
+  if (!data || error) {
     console.warn(`Tried to create pages from the collection builder found at ${route}.
 Unfortunately, the query came back empty. There may be an error in your query.
     `)
+    console.error(error)
     return
   }
 
@@ -137,6 +135,8 @@ Unfortunately, the query came back empty. There may be an error in your query.
 
     const previous = index === nodes.length - 1 ? null : nodes[index + 1]
     const next = index === 0 ? null : nodes[index - 1]
+
+    console.log("path", path)
 
     actions.createPage({
       path: path,

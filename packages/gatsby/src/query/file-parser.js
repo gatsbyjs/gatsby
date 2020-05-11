@@ -223,6 +223,29 @@ async function findGraphQLTags(
           documents.push(docInFile)
         }
 
+        function isCreatePagesFromData(path) {
+          return (
+            (path.node.callee.type === `MemberExpression` &&
+              path.node.callee.property.name === `createPagesFromData` &&
+              path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
+            (path.node.callee.name === `createPagesFromData` &&
+              path.get(`callee`).referencesImport(`gatsby`))
+          )
+        }
+
+        // Look for createPagesFromData(Component, query) elements.
+        traverse(ast, {
+          // TODO: Throw an error if this is not the export default ? just to encourage default habits
+          CallExpression(path) {
+            // if (!isCreatePagesFromData(path)) return
+            // if (!t.isCallExpression(path)) return // this might not be needed...
+
+            // const [, queryAst] = path.node.arguments
+
+            path.traverse({ TaggedTemplateExpression })
+          },
+        })
+
         // Look for queries in <StaticQuery /> elements.
         traverse(ast, {
           JSXElement(path) {

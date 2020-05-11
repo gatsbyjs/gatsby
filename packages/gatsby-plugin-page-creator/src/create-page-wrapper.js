@@ -20,7 +20,8 @@ exports.createPage = (
   actions,
   ignore,
   graphql,
-  root
+  root,
+  queriesMap
 ) => {
   // Filter out special components that shouldn't be made into
   // pages.
@@ -38,8 +39,15 @@ exports.createPage = (
   const absolutePath = systemPath.join(pagesDirectory, filePath)
 
   if (pathIsCCollectionBuilder(absolutePath)) {
+    let queryState = queriesMap.get(absolutePath)
     console.log(3, absolutePath)
-    createPagesFromCollectionBuilder(absolutePath, actions, graphql, root)
+    createPagesFromCollectionBuilder(
+      absolutePath,
+      actions,
+      graphql,
+      root,
+      queryState.text
+    )
     return
   }
 

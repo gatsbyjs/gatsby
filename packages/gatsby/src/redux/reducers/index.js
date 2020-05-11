@@ -10,6 +10,7 @@ import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { queriesReducer } from "./queries"
 
 // const backend = process.env.GATSBY_DB_NODES || `redux`
 const backend = `redux`
@@ -62,6 +63,7 @@ module.exports = {
   config: require(`./config`),
   schema: schemaReducer,
   pages: pagesReducer,
+  queries: queriesReducer,
   status: statusReducer,
   componentDataDependencies: require(`./component-data-dependencies`),
   components: require(`./components`),

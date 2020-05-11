@@ -85,6 +85,8 @@ export default async function compile({ parentSpan } = {}): Promise<
     parentSpan,
   })
 
+  // console.log(queries)
+
   if (errors.length !== 0) {
     const structuredErrors = activity.panicOnBuild(errors)
     if (process.env.gatsby_executing_command === `develop`) {

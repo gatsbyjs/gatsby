@@ -107,6 +107,8 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
     }
     handleComponentsWithRemovedQueries(snapshot, queries)
 
+    boundActionCreators.setQueries(queries)
+
     // Run action for each component
     const { components } = snapshot
     components.forEach(c =>
