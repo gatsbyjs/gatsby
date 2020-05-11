@@ -70,7 +70,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(
+export function guessSafeChunkSize(
   nodesByType: Map<string, Map<string, IGatsbyNode>>
 ): number {
   // Pick a few random elements and measure their size then pick a chunk size
@@ -80,8 +80,9 @@ function guessSafeChunkSize(
 
   const nodesToTest = 11 // Very arbitrary number. Count is per type.
   let maxSize = 1
-  nodesByType.forEach(nodes => {
-    const valueCount = nodes.size
+  nodesByType.forEach((nodesMap: Map<string, IGatsbyNode>) => {
+    const nodes = [...nodesMap.values()]
+    const valueCount = nodes.length
     const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
     for (let i = 0; i < valueCount; i += step) {
       const size = v8.serialize(nodes[i]).length
@@ -145,7 +146,7 @@ export function writeToCache(
   nodesByType: Map<string, Map<string, IGatsbyNode>>
 ): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
-  // make sure the cache cannot be left in a corruptable state due to errors.
+  // make sure the cache cannot be left in a corruptible state due to errors.
 
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 

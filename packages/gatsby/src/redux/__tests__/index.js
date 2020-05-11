@@ -3,6 +3,7 @@ const path = require(`path`)
 
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const { saveState, store, readState } = require(`../index`)
+import { guessSafeChunkSize } from "../persist"
 
 const {
   actions: { createPage },
@@ -87,6 +88,21 @@ function getFakeNodes() {
   return map
 }
 
+function getLargeNodes(n, type) {
+  let map /*: Map<string, IReduxNode>*/ = new Map()
+  for (let i = 0; i < n; ++i) {
+    const id = `page_${type}_${i}`
+    map.set(id, {
+      id,
+      data: `x`.repeat(500000),
+      internal: {
+        type,
+      },
+    })
+  }
+  return map
+}
+
 describe(`redux db`, () => {
   const initialComponentsState = _.cloneDeep(store.getState().components)
 
@@ -148,5 +164,25 @@ describe(`redux db`, () => {
     await saveState()
 
     expect(mockWrittenContent.has(legacyLocation)).toBe(false)
+  })
+
+  it(`should warn for large nodes`, async () => {
+    const nodes = new Map([
+      [`Ding`, getLargeNodes(30, `Ding`)],
+      [`Dong`, getLargeNodes(30, `Dong`)],
+      [`Dang`, getLargeNodes(30, `Dang`)],
+    ])
+
+    const maxBuf = 1.5 * 1024 * 1024 * 1024 // it's 2gb, actually. We want a margin.
+
+    // Math.floor(() / maxSize)
+    const node = [...[...nodes.values()][0].values()][0]
+    const nodeSize = require(`v8`).serialize(node).length
+    const expectedChunkSize = maxBuf / nodeSize
+
+    const actualChunkSize = guessSafeChunkSize(nodes)
+
+    // Allow some rounding errors for margin
+    expect(Math.abs(actualChunkSize - expectedChunkSize) <= 1).toBe(true)
   })
 })
