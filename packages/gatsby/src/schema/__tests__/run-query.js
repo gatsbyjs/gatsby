@@ -596,7 +596,7 @@ it(`should use the cache argument`, async () => {
       describe(`$lt`, () => {
         it(`handles lt operator with number`, async () => {
           const needle = 1
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             hair: { lt: needle },
           })
 
@@ -611,8 +611,7 @@ it(`should use the cache argument`, async () => {
           const result = await runQuery(
             { filter: { exh: { lt: needle } } },
             createFiltersCache(),
-            allNodes,
-            EXPECT_SIFT
+            allNodes
           )
 
           // Just check whether the reported count is equal to the actual count
@@ -666,7 +665,7 @@ it(`should use the cache argument`, async () => {
           // This test checks whether we don't incorrectly assume that if the
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             float: { lt: needle },
           })
 
@@ -680,7 +679,7 @@ it(`should use the cache argument`, async () => {
         it(`handles lt operator with null`, async () => {
           const needle = null
           // Note: Slow filter because it returns an empty result
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { lt: needle },
           })
 
@@ -794,7 +793,7 @@ it(`should use the cache argument`, async () => {
       describe(`$gt`, () => {
         it(`handles gt operator with number`, async () => {
           const needle = 1
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             hair: { gt: needle },
           })
 
@@ -809,8 +808,7 @@ it(`should use the cache argument`, async () => {
           const result = await runQuery(
             { filter: { exh: { gt: needle } } },
             createFiltersCache(),
-            allNodes,
-            EXPECT_SIFT
+            allNodes
           )
 
           // Just check whether the reported count is equal to the actual count
@@ -864,7 +862,7 @@ it(`should use the cache argument`, async () => {
           // This test checks whether we don't incorrectly assume that if the
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             float: { gt: needle },
           })
 
@@ -878,7 +876,7 @@ it(`should use the cache argument`, async () => {
         it(`handles gt operator with null`, async () => {
           const needle = null
           // Note: Slow filter because it returns an empty result
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { gt: needle },
           })
 
@@ -1288,7 +1286,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`should return only one node if elemMatch hits multiples`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             singleElem: {
               things: {
                 elemMatch: {

@@ -4,7 +4,7 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp = "$eq" | "$lte" | "$gte"
+type FilterOp = "$eq" | "$lt" | "$lte" | "$gt" | "$gte"
 // Note: `undefined` is an encoding for a property that does not exist
 type FilterValueNullable = string | number | boolean | null | undefined
 // This is filter value in most cases
@@ -180,7 +180,7 @@ export const postIndexingMetaSetup = (
   filterCache: IFilterCache,
   op: FilterOp
 ): void => {
-  if (op !== `$lte` && op !== `$gte`) {
+  if (op !== `$lt` && op !== `$lte` && op !== `$gt` && op !== `$gte`) {
     return
   }
 
@@ -214,10 +214,10 @@ export const postIndexingMetaSetup = (
   // and the only difference when comparing the inverse of one to the other
   // should be how these `NaN` cases end up getting ordered.
   // It's fine for `lt` and `lte` to use the same ordered set. Same for gt/gte.
-  if (op === `$lte`) {
+  if (op === `$lt` || op === `$lte`) {
     // Order ascending; first value is lowest
     entries.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-  } else if (op === `$gte`) {
+  } else if (op === `$gt` || op === `$gte`) {
     // Order descending; first value is highest
     entries.sort(([a], [b]) => (a > b ? -1 : a < b ? 1 : 0))
   }
@@ -236,14 +236,14 @@ export const postIndexingMetaSetup = (
     orderedValues.push(v)
   })
 
-  if (op === `$lte`) {
+  if (op === `$lt` || op === `$lte`) {
     filterCache.meta.valuesAsc = orderedValues
     filterCache.meta.nodesByValueAsc = orderedNodes
     // The nodesByValueAsc is ordered by value, but multiple nodes per value are
     // not ordered. To make lt as fast as lte, we must know the start and stop
     // index for each value. Similarly useful for for `ne`.
     filterCache.meta.valueRangesAsc = offsets
-  } else if (op === `$gte`) {
+  } else if (op === `$gt` || op === `$gte`) {
     filterCache.meta.valuesDesc = orderedValues
     filterCache.meta.nodesByValueDesc = orderedNodes
     // The nodesByValueDesc is ordered by value, but multiple nodes per value are
@@ -568,9 +568,60 @@ export const getNodesFromCacheByValue = (
   }
 
   if (filterValue == null) {
+    if (op === `$lt` || op === `$gt`) {
+      // Nothing is lt/gt null
+      return undefined
+    }
+
     // This is an edge case and this value should be directly indexed
     // For `lte`/`gte` this should only return nodes for `null`, not a "range"
     return filterCache.byValue.get(filterValue)
+  }
+
+  if (op === `$lt`) {
+    // First try a direct approach. If a value is queried that also exists then
+    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+
+    const ranges = filterCache.meta.valueRangesAsc
+    const nodes = filterCache.meta.nodesByValueAsc
+
+    const range = ranges!.get(filterValue)
+    if (range) {
+      return new Set(nodes!.slice(0, range[0]))
+    }
+
+    // Query may ask for a value that doesn't appear in the set, like if the
+    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // apply a search (we'll do binary) to determine the offset to slice from.
+
+    // Note: for lte, the valueAsc array must be set at this point
+    const values = filterCache.meta.valuesAsc as Array<FilterValue>
+    // It shouldn't find the targetValue (but it might) and return the index of
+    // the two value between which targetValue sits, or first/last element.
+    const point = binarySearchAsc(values, filterValue)
+    if (!point) {
+      return undefined
+    }
+    const [pivotMin, pivotMax] = point
+
+    // Each pivot index must have a value and a range
+    // The returned min/max index may include the lower/upper bound, so we still
+    // have to do lte checks for both values.
+    let pivotValue = values[pivotMax]
+    if (pivotValue > filterValue) {
+      pivotValue = values[pivotMin]
+    }
+
+    // Note: the pivot value _shouldnt_ match the filter value because that
+    // means the value was actually found, but those should have been indexed
+    // so should have yielded a result in the .get() above.
+
+    const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
+
+    // Note: technically, `5 <= "5" === true` but `5` would not be cached.
+    // So we have to consider weak comparison and may have to include the pivot
+    const until = pivotValue < filterValue ? inclPivot : exclPivot
+    return new Set(nodes!.slice(0, until))
   }
 
   if (op === `$lte`) {
@@ -616,6 +667,52 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue <= filterValue ? inclPivot : exclPivot
+    return new Set(nodes!.slice(0, until))
+  }
+
+  if (op === `$gt`) {
+    // First try a direct approach. If a value is queried that also exists then
+    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+
+    const ranges = filterCache.meta.valueRangesDesc
+    const nodes = filterCache.meta.nodesByValueDesc
+
+    const range = ranges!.get(filterValue)
+    if (range) {
+      return new Set(nodes!.slice(0, range[0]))
+    }
+
+    // Query may ask for a value that doesn't appear in the set, like if the
+    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // apply a search (we'll do binary) to determine the offset to slice from.
+
+    // Note: for gte, the valueDesc array must be set at this point
+    const values = filterCache.meta.valuesDesc as Array<FilterValue>
+    // It shouldn't find the targetValue (but it might) and return the index of
+    // the two value between which targetValue sits, or first/last element.
+    const point = binarySearchDesc(values, filterValue)
+    if (!point) {
+      return undefined
+    }
+    const [pivotMin, pivotMax] = point
+
+    // Each pivot index must have a value and a range
+    // The returned min/max index may include the lower/upper bound, so we still
+    // have to do gte checks for both values.
+    let pivotValue = values[pivotMax]
+    if (pivotValue < filterValue) {
+      pivotValue = values[pivotMin]
+    }
+
+    // Note: the pivot value _shouldnt_ match the filter value because that
+    // means the value was actually found, but those should have been indexed
+    // so should have yielded a result in the .get() above.
+
+    const [exclPivot, inclPivot] = ranges!.get(pivotValue) as [number, number]
+
+    // Note: technically, `5 >= "5" === true` but `5` would not be cached.
+    // So we have to consider weak comparison and may have to include the pivot
+    const until = pivotValue > filterValue ? inclPivot : exclPivot
     return new Set(nodes!.slice(0, until))
   }
 

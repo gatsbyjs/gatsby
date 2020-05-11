@@ -19,13 +19,7 @@ const {
   getNode: siftGetNode,
 } = require(`./nodes`)
 
-const FAST_OPS = [
-  `$eq`,
-  // "$lt",
-  `$lte`,
-  // "$gt",
-  `$gte`,
-]
+const FAST_OPS = [`$eq`, `$lt`, `$lte`, `$gt`, `$gte`]
 
 // More of a testing mechanic, to verify whether last runSift call used Sift
 let lastFilterUsedSift = false
