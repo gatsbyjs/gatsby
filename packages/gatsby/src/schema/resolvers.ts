@@ -484,7 +484,7 @@ export function tracingResolver<TSource, TArgs>(
     if (context.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
-        `GraphQL Resolver ${info.parentType.name}.${info.fieldName}`
+        `${info.parentType.name}.${info.fieldName}`
       )
       activity.start()
     }

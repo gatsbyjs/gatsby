@@ -150,6 +150,11 @@ function buildLocalCommands(cli, isLocalSite) {
           default: ``,
           describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
+        .option(`graphql-tracing`, {
+          type: `boolean`,
+          describe: `Trace every graphql resolver, may have performance implications`,
+          default: false,
+        })
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
@@ -186,6 +191,11 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `boolean`,
           default: false,
           describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
+        })
+        .option(`graphql-tracing`, {
+          type: `boolean`,
+          describe: `Trace every graphql resolver, may have performance implications`,
+          default: false,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,

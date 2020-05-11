@@ -43,7 +43,13 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
       prev = prev.prev
     }
     const parentSpan = this.getActivity(prev).span
-    const activity = report.phantomActivity(name, { parentSpan })
+    const activity = report.phantomActivity(`GraphQL Resolver`, {
+      parentSpan,
+      tags: {
+        field: name,
+        path: pathToArray(path).join(`.`),
+      },
+    })
     this.setActivity(path, activity)
     return activity
   }

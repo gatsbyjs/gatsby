@@ -43,6 +43,7 @@ type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
   parentSpan: Object,
+  graphqlTracing: boolean,
 }
 
 module.exports = async (args: BootstrapArgs) => {
@@ -457,6 +458,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
 
   const graphqlRunner = createGraphQLRunner(store, reporter, {
+    graphqlTracing: args.graphqlTracing,
     parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan,
   })
 

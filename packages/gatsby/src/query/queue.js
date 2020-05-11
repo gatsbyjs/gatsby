@@ -13,9 +13,9 @@ const createBaseOptions = () => {
   }
 }
 
-const createBuildQueue = graphqlRunner => {
+const createBuildQueue = (graphqlRunner, runnerOptions = {}) => {
   if (!graphqlRunner) {
-    graphqlRunner = new GraphQLRunner(store)
+    graphqlRunner = new GraphQLRunner(store, runnerOptions)
   }
   const handler = ({ job, activity }, callback) =>
     queryRunner(graphqlRunner, job, { parentSpan: activity?.span })

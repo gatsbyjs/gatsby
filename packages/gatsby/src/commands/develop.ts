@@ -89,7 +89,7 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-async function startServer(program: IProgram): Promise<IServer> {
+async function startServer(program: IDevelopArgs): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
@@ -357,7 +357,11 @@ async function startServer(program: IProgram): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-module.exports = async (program: IProgram): Promise<void> => {
+interface IDevelopArgs extends IProgram {
+  graphqlTracing: boolean
+}
+
+module.exports = async (program: IDevelopArgs): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -438,7 +442,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
 
-  await queryUtil.initialProcessQueries()
+  await queryUtil.initialProcessQueries({
+    graphqlTracing: program.graphqlTracing,
+  })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -448,7 +454,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   await waitUntilAllJobsComplete()
   requiresWriter.startListener()
   db.startAutosave()
-  queryUtil.startListeningToDevelopQueue()
+  queryUtil.startListeningToDevelopQueue({
+    graphqlTracing: program.graphqlTracing,
+  })
   queryWatcher.startWatchDeletePage()
 
   let { compiler, webpackActivity } = await startServer(program)

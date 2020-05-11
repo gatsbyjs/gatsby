@@ -36,13 +36,16 @@ export default class GraphQLRunner {
   scheduleClearCache: () => void
 
   stats: IGraphQLRunnerStats | null
+  graphqlTracing: boolean
 
   constructor(
     protected store: Store<IGatsbyState>,
     {
       collectStats,
+      graphqlTracing,
     }: {
       collectStats?: boolean
+      graphqlTracing?: boolean
     } = {}
   ) {
     const { schema, schemaCustomization } = this.store.getState()
@@ -57,6 +60,8 @@ export default class GraphQLRunner {
     this.parseCache = new Map()
     this.validDocuments = new WeakSet()
     this.scheduleClearCache = debounce(this.clearCache.bind(this), 5000)
+
+    this.graphqlTracing = graphqlTracing || false
 
     if (collectStats) {
       this.stats = {
@@ -166,9 +171,12 @@ export default class GraphQLRunner {
     const errors = this.validate(schema, document)
 
     let tracer
-    if (parentSpan) {
-      tracer = new GraphQLSpanTracer(`GraphQL Query ${queryName}`, {
+    if (this.graphqlTracing && parentSpan) {
+      tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
+        tags: {
+          queryName: queryName,
+        },
       })
 
       tracer.start()
