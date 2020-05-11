@@ -61,7 +61,13 @@ class ControllableScript {
     if (signal) {
       this.process.kill(signal)
     } else {
-      this.process.exit(code)
+      this.process.send({
+        type: `COMMAND`,
+        action: {
+          type: `EXIT`,
+          payload: code,
+        },
+      })
     }
 
     return new Promise(resolve => {

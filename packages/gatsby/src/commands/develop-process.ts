@@ -81,6 +81,12 @@ onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
 
+process.on(`message`, msg => {
+  if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
+    process.exit(msg.action.payload)
+  }
+})
+
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
 interface IServer {
