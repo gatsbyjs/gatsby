@@ -49,7 +49,7 @@ Follow these steps to deploy your website to Clodui.
    clodui website create --source-dir public
    ```
 
-   The command output shows website id, website name, deployment status and URL to your website. URL to your website is of the following format `https://<website-name>.clodui.com`. URL is accessible after the deployment completes, i.e. deployment status is `Deployed`.
+   The command output shows website id,  name(which is your website name), deployment status and URL to your website. URL to your website is of the following format `https://<website-name>.clodui.com`. URL is accessible after the deployment completes, i.e. deployment status is `Deployed`.
 
    If the deployment is in progress, wait for the deployment to finish. To check the latest website status, run the following command.
 
