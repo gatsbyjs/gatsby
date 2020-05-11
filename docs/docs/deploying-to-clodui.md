@@ -16,7 +16,7 @@ Clodui supports the following features to improve your website speed and develop
 
 **Prerequisites :**
 
-- This guide asummes that you have a Gatsby site setup and ready to deploy
+- This guide assumes that you have a Gatsby site setup and ready to deploy 
 
 ## Steps to get started
 
