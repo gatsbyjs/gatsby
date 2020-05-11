@@ -2,8 +2,6 @@
 title: Accessibility Statement
 ---
 
-_Last updated: May 11, 2020_
-
 We want everyone who uses Gatsby to feel welcome and find the experience rewarding: this includes developers with disabilities and users with disabilities for Gatsby sites, docs, and resources.
 
 This page was created to collect accessibility information about the Gatsby ecosystem in one place and provide communication channels for people with disabilities to get help with Gatsby.
