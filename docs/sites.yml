@@ -10544,3 +10544,12 @@
   built_by: Sadharani Music Works
   built_by_url: https://www.sadharani.com
   featured: false
+- title: Ofri Lifshitz Design
+  url: https://www.ofrilifshitz.com
+  main_url: https://www.ofrilifshitz.com
+  categories:
+    - Portfolio
+    - Design
+  built_by: Raz Lifshitz
+  built_by_url: https://www.linkedin.com/in/raz-lifshitz
+  featured: false
