@@ -1,4 +1,3 @@
-import url from "url"
 import fs from "fs"
 import openurl from "better-opn"
 import chokidar from "chokidar"
@@ -24,7 +23,6 @@ import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
-import address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
@@ -47,7 +45,7 @@ import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
 import { initTracer } from "../utils/tracer"
 import apiRunnerNode from "../utils/api-runner-node"
-import * as db from "../db"
+import { saveState, startAutosave } from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import queryUtil from "../query"
@@ -63,7 +61,8 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
+import { Stage, IProgram } from "./types"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -99,7 +98,7 @@ async function startServer(program: IProgram): Promise<IServer> {
     try {
       await buildHTML({
         program,
-        stage: BuildHTMLStage.DevelopHTML,
+        stage: Stage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
         activity,
@@ -434,84 +433,15 @@ module.exports = async (program: IProgram): Promise<void> => {
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
   )
-  await db.saveState()
+  await saveState()
 
   await waitUntilAllJobsComplete()
   requiresWriter.startListener()
-  db.startAutosave()
+  startAutosave()
   queryUtil.startListeningToDevelopQueue()
   queryWatcher.startWatchDeletePage()
 
   let { compiler, webpackActivity } = await startServer(program)
-
-  interface IPreparedUrls {
-    lanUrlForConfig: string
-    lanUrlForTerminal: string
-    localUrlForTerminal: string
-    localUrlForBrowser: string
-  }
-
-  function prepareUrls(
-    protocol: `http` | `https`,
-    host: string,
-    port: number
-  ): IPreparedUrls {
-    const formatUrl = (hostname: string): string =>
-      url.format({
-        protocol,
-        hostname,
-        port,
-        pathname: `/`,
-      })
-    const prettyPrintUrl = (hostname: string): string =>
-      url.format({
-        protocol,
-        hostname,
-        port: chalk.bold(String(port)),
-        pathname: `/`,
-      })
-
-    const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost = host
-    let lanUrlForConfig
-    let lanUrlForTerminal
-    if (isUnspecifiedHost) {
-      prettyHost = `localhost`
-
-      try {
-        // This can only return an IPv4 address
-        lanUrlForConfig = address.ip()
-        if (lanUrlForConfig) {
-          // Check if the address is a private ip
-          // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
-          if (
-            /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-              lanUrlForConfig
-            )
-          ) {
-            // Address is private, format it for later use
-            lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig)
-          } else {
-            // Address is not private, so we will discard it
-            lanUrlForConfig = undefined
-          }
-        }
-      } catch (_e) {
-        // ignored
-      }
-    }
-    // TODO collect errors (GraphQL + Webpack) in Redux so we
-    // can clear terminal and print them out on every compile.
-    // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(prettyHost)
-    const localUrlForBrowser = formatUrl(prettyHost)
-    return {
-      lanUrlForConfig,
-      lanUrlForTerminal,
-      localUrlForTerminal,
-      localUrlForBrowser,
-    }
-  }
 
   function printInstructions(appName: string, urls: IPreparedUrls): void {
     console.log()

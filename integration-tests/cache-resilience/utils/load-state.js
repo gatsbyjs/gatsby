@@ -45,9 +45,6 @@ const sanitiseNode = value => {
   // we don't care about order of node creation at this point
   delete value.internal.counter
 
-  // loki adds $loki metadata into nodes
-  delete value.$loki
-
   return value
 }
 

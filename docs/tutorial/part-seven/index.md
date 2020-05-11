@@ -76,7 +76,7 @@ You want to use each markdown file name to create the page slug. So
 `pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do you get
 the file name from the `MarkdownRemark` node? To get it, you need to _traverse_
 the "node graph" to its _parent_ `File` node, as `File` nodes contain data you
-need about files on disk. To do that, modify your function again:
+need about files on disk. To do that, you'll use the [`getNode()`](/docs/node-api-helpers/#getNode) helper. Add it to `onCreateNode`'s function parameters, and call it to get the file node:
 
 ```javascript:title=gatsby-node.js
 // highlight-next-line

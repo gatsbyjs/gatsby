@@ -4,22 +4,13 @@ import * as redux from "../redux"
 // import { backend } from "./nodes"
 const { emitter } = redux
 
-// Even if we are using loki, we still include redux in the list of
-// dbs since it still has pages, config, etc.
-const dbs = [redux]
-
-// if (process.env.GATSBY_DB_NODES === `loki`) {
-//   dbs.push(require(`./loki`))
-// }
-
-// calls `saveState()` on all DBs
 let saveInProgress = false
 export async function saveState(): Promise<void> {
   if (saveInProgress) return
   saveInProgress = true
 
   try {
-    await Promise.all(dbs.map(db => db.saveState()))
+    await redux.saveState()
   } catch (err) {
     reporter.warn(`Error persisting state: ${(err && err.message) || err}`)
   }

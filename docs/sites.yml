@@ -10474,6 +10474,28 @@
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: Resistbot
+  url: https://resist.bot
+  main_url: https://resist.bot
+  description: >
+    A chatbot that helps you contact your representatives, and be an informed citizen.
+  categories:
+    - Blog
+    - Government
+    - Nonprofit
+- title: SVG to PNG
+  url: https://www.svgtopng.me/
+  main_url: https://www.svgtopng.me/
+  description: >
+    Online SVG to PNG batch converter. Upload and convert your SVG files to PNG with the desired size and background color for free, fast and secure.
+  categories:
+    - App
+    - Technology
+    - Productivity
+    - Design
+    - Web Development
+  built_by: Illia Achour
+  built_by_url: https://github.com/dummyco
 - title: St. Jude Cloud
   url: https://www.stjude.cloud
   main_url: https://www.stjude.cloud
@@ -10485,4 +10507,40 @@
     - Nonprofit
     - Data
     - Healthcare
+  featured: false
+- title: Philip Domingo
+  url: https://www.prtdomingo.com
+  main_url: https://www.prtdomingo.com
+  description: >
+    Personal website built on top of GatsbyJS, Ghost, and Azure.
+  categories:
+    - Technology
+    - Blog
+  featured: false
+- title: Cognifide Tech
+  url: https://tech.cognifide.com/
+  main_url: https://tech.cognifide.com/
+  description: >
+    Technology HUB that provides useful and specialized technical knowledge created for fellow engineers by engineers from Cognifide.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Cognifide
+  built_by_url: https://www.cognifide.com/
+- title: Chandraveena by S Balachander
+  url: https://www.chandraveena.com
+  main_url: https://www.chandraveena.com
+  description: >
+    Chandraveena is a contemporary Indian string instrument designed from the traditional Saraswati Veena.
+    S Balachander, an Indian classical musician, is the creator and performing artist of Chandraveena.
+    Chandraveena has been designed to support a systematic and contemplative exploration of Indian Ragas.
+    It is endowed with a deep sustain and a rich sound allowing the artist to create elaborate musical phrases
+    and subtle intonations. Visit the website to listen and learn more!
+  categories:
+    - Music
+    - Portfolio
+    - Blog
+  built_by: Sadharani Music Works
+  built_by_url: https://www.sadharani.com
   featured: false

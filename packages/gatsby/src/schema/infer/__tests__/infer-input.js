@@ -8,7 +8,6 @@ import * as nodeStore from "../../../db/nodes"
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 import { createPageDependency } from "../../../redux/actions/add-page-dependency"
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
