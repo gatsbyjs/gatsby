@@ -14,9 +14,9 @@ const run = async content => {
   const markdownAST = remark.parse(content)
   await plugin({ markdownAST })
 
-  const htmlAst = toHAST(markdownAST, { allowDangerousHTML: true })
+  const htmlAst = toHAST(markdownAST, { allowDangerousHtml: true })
   const html = hastToHTML(htmlAst, {
-    allowDangerousHTML: true,
+    allowDangerousHtml: true,
   })
   return html
 }

@@ -176,7 +176,7 @@ module.exports = (
         parseString: string => parseString(string, markdownNode),
         generateHTML: ast =>
           hastToHTML(markdownASTToHTMLAst(ast), {
-            allowDangerousHTML: true,
+            allowDangerousHtml: true,
           }),
       }
 
@@ -329,8 +329,8 @@ module.exports = (
             tocAst.map = addSlugToUrl(tocAst.map)
           }
 
-          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-            allowDangerousHTML: true,
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHtml: true }), {
+            allowDangerousHtml: true,
           })
         } else {
           toc = ``
@@ -342,7 +342,7 @@ module.exports = (
 
     function markdownASTToHTMLAst(ast) {
       return toHAST(ast, {
-        allowDangerousHTML: true,
+        allowDangerousHtml: true,
         handlers: { code: codeHandler },
       })
     }
@@ -369,7 +369,7 @@ module.exports = (
         const ast = await getHTMLAst(markdownNode)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
-          allowDangerousHTML: true,
+          allowDangerousHtml: true,
         })
 
         // Save new HTML to cache
@@ -439,7 +439,7 @@ module.exports = (
         excerptSeparator,
       })
       const html = hastToHTML(excerptAST, {
-        allowDangerousHTML: true,
+        allowDangerousHtml: true,
       })
       return html
     }
