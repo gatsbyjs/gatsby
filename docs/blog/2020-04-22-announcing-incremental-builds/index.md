@@ -2,6 +2,7 @@
 title: "From Static to Real-time: Introducing Incremental Builds in Gatsby Cloud"
 date: 2020-04-22
 author: Kyle Mathews
+seoTitle: "What is Gatsby Incremental Builds?"
 excerpt: "This is how the web should work. Whatever can be built ahead of time should be built ahead of time. When content changes, only relevant pages should be rebuilt. Introducing Incremental Builds on Gatsby Cloud: an evolutionary leap forward to a seamless, fast experience for the developers, content editors and end users of any website—even if that site has millions of pages."
 tags:
   - gatsby-cloud
@@ -85,7 +86,7 @@ People have been asking us for incremental builds all along—it just makes sens
 
 ## How to enable Gatsby's Incremental Builds
 
-1. Head to Gatsby Cloud (https://gatsbyjs.com/cloud/) to try Incremental Builds immediately.
+1. Head to [Gatsby Cloud](https://gatsbyjs.com/) to try Incremental Builds immediately.
 
 2. Incremental Builds is now available in public beta. So all Gatsby Cloud users get a free 14 day trial, with full availability on all Professional, Business, and Enterprise plans. 
 
