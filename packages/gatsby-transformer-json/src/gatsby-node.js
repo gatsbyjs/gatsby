@@ -45,7 +45,7 @@ async function onCreateNode(
   let parsedContent
   try {
     parsedContent = JSON.parse(content)
-  } catch() {
+  } catch {
     throw new Error(`Unable to parse JSON: ${node.absolutePath}`)
   }
 
