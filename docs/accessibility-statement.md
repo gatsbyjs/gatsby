@@ -2,7 +2,7 @@
 title: Accessibility Statement
 ---
 
-_Last updated: April 8, 2019_
+_Last updated: May 11, 2020_
 
 We want everyone who uses Gatsby to feel welcome and find the experience rewarding: this includes developers with disabilities and users with disabilities for Gatsby sites, docs, and resources.
 
@@ -20,7 +20,7 @@ We strive to make these websites and the Gatsby framework itself as accessible a
 
 To contact the core team with your accessibility feedback or challenges, please [file an issue on GitHub](https://github.com/gatsbyjs/gatsby/issues/new/choose).
 
-Alternatively, we welcome you to reach out directly to Marcy Sutton, Head of Learning at Gatsby: [marcy@gatsbyjs.com](mailto:marcy@gatsbyjs.com)
+Alternatively, we welcome you to reach out to us via email at Gatsby: [accessibility@gatsbyjs.com](mailto:accessibility@gatsbyjs.com)
 
 ## Building with Gatsby
 
@@ -39,10 +39,10 @@ For managing and deploying Gatsby sites with accessible tools, we recommend:
 
 - Netlify
 
-To provide feedback for third-party services, you can contact those vendors directly or [write to us](mailto:marcy@gatsbyjs.com), and we will do our best to pass the information along. We're also interested in hearing about your successes with third-party platforms!
+To provide feedback for third-party services, you can contact those vendors directly or [write to us](mailto:accessibility@gatsbyjs.com), and we will do our best to pass the information along. We're also interested in hearing about your successes with third-party platforms!
 
 ## Surveys and research projects
 
 The Gatsby team conducts surveys and research projects from time to time. We highly value feedback from all Gatsby users, and particularly those with experience applicable to the research being conducted.
 
-To be considered for these initiatives, please contact [marcy@gatsbyjs.com](mailto:marcy@gatsbyjs.com).
+To be considered for these initiatives, please contact [accessibility@gatsbyjs.com](mailto:accessibility@gatsbyjs.com).
