@@ -45,7 +45,7 @@ if (
 if (semver.prerelease(version)) {
   report.warn(
     report.stripIndent(`
-    You are currently using a pre-release version of Node (${version}), which is not supported.
+    You are currently using a prerelease version of Node (${version}), which is not supported.
     You can use this for testing, but we do not recommend it in production. 
     Before reporting any bugs, please test with a supported version of Node (>=${MIN_NODE_VERSION}).`)
   )
