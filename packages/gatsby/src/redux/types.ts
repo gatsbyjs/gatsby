@@ -30,7 +30,7 @@ export interface IGatsbyPage {
   isCreatedByStatefulCreatePages: boolean
   context: {}
   updatedAt: number
-  pluginCreator__NODE: Identifier
+  pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
 }
@@ -76,6 +76,7 @@ export interface IGatsbyNode {
 }
 
 export interface IGatsbyPlugin {
+  id: Identifier
   name: string
   version: string
 }
@@ -222,12 +223,19 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddChildNodeToParentNodeAction
+  | IAddFieldToNodeAction
   | IAddThirdPartySchema
   | ICreateFieldExtension
+  | ICreateNodeAction
+  | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
+  | IDeleteNodeAction
+  | IDeleteNodesAction
   | IDeleteComponentDependenciesAction
+  | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
   | IQueryExtractedAction
@@ -381,6 +389,12 @@ export interface ICreateResolverContext {
     | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
 }
 
+export interface ICreatePageAction {
+  type: `CREATE_PAGE`
+  payload: IGatsbyPage
+  plugin?: IGatsbyPlugin
+}
+
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
@@ -408,6 +422,11 @@ export interface ISetPageDataAction {
     id: Identifier
     resultHash: string
   }
+}
+
+export interface IDeletePageAction {
+  type: `DELETE_PAGE`
+  payload: IGatsbyPage
 }
 
 export interface IReplaceStaticQueryAction {
@@ -457,4 +476,31 @@ export interface ISetSchemaAction {
 export interface ISetSiteConfig {
   type: `SET_SITE_CONFIG`
   payload: IGatsbyState["config"]
+}
+
+export interface ICreateNodeAction {
+  type: `CREATE_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IAddFieldToNodeAction {
+  type: `ADD_FIELD_TO_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IAddChildNodeToParentNodeAction {
+  type: `ADD_CHILD_NODE_TO_PARENT_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IDeleteNodeAction {
+  type: `DELETE_NODE`
+  payload: {
+    id: Identifier
+  }
+}
+
+export interface IDeleteNodesAction {
+  type: `DELETE_NODES`
+  payload: Identifier[]
 }

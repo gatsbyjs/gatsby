@@ -158,6 +158,53 @@ describe(`<Link />`, () => {
     getReplace()(`/some-path`)
     expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
   })
+
+  describe(`uses push or replace adequately`, () => {
+    it(`respects force disabling replace`, () => {
+      const to = `/`
+      getNavigate()
+      const { link } = setup({ linkProps: { to, replace: false } })
+      link.click()
+
+      expect(
+        global.___navigate
+      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: false })
+    })
+
+    it(`respects force enabling replace`, () => {
+      const to = `/courses`
+      getNavigate()
+      const { link } = setup({ linkProps: { to, replace: true } })
+      link.click()
+
+      expect(
+        global.___navigate
+      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+    })
+
+    it(`does not replace history when navigating away`, () => {
+      const to = `/courses`
+      getNavigate()
+      const { link } = setup({ linkProps: { to } })
+      link.click()
+
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        {}
+      )
+    })
+
+    it(`does replace history when navigating on the same page`, () => {
+      const to = `/`
+      getNavigate()
+      const { link } = setup({ linkProps: { to } })
+      link.click()
+
+      expect(
+        global.___navigate
+      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+    })
+  })
 })
 
 describe(`withPrefix`, () => {
@@ -274,8 +321,12 @@ describe(`state`, () => {
     const { link } = setup({ linkProps: { state } })
     link.click()
 
-    expect(
-      global.___navigate
-    ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { state })
+    expect(global.___navigate).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`,
+      {
+        replace: true,
+        state,
+      }
+    )
   })
 })

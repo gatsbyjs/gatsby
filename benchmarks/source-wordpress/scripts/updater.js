@@ -4,12 +4,12 @@ const fetchGraphql = require(`gatsby-source-wordpress-experimental/utils/fetch-g
 const faker = require(`faker`)
 
 const authedWPGQLRequest = async query => {
-  if (!process.env.BENCHMARK_WORDPRESS_BASE_URL) {
-    console.error(`No process.env.BENCHMARK_WORDPRESS_BASE_URL url found`)
+  if (!process.env.BENCHMARK_WPGRAPHQL_URL) {
+    console.error(`No process.env.BENCHMARK_WPGRAPHQL_URL url found`)
     process.exit(1)
   }
   const { errors, data } = await fetchGraphql({
-    url: `${process.env.BENCHMARK_WORDPRESS_BASE_URL}graphql`,
+    url: process.env.BENCHMARK_WPGRAPHQL_URL,
     query,
     headers: {
       Authorization: `Basic ${Buffer.from(
@@ -73,7 +73,7 @@ const getFirstArticle = async () => {
 const update = async ({ username, password, server }) => {
   if (!username || !password || !server) {
     console.error(
-      `You must add the BENCHMARK_WORDPRESS_USERNAME, BENCHMARK_WORDPRESS_PASSWORD and BENCHMARK_WORDPRESS_BASE_URL env variables`
+      `You must add the BENCHMARK_WORDPRESS_USERNAME, BENCHMARK_WORDPRESS_PASSWORD and BENCHMARK_WPGRAPHQL_URL env variables`
     )
     return
   }

@@ -7,7 +7,7 @@ tags: ["themes", "getting-started"]
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
-### What is a Gatsby theme?
+## What is a Gatsby theme?
 
 <Pullquote cite="Jason Lengstorf">
   Gatsby themes allow you to focus only on the parts of the site and app
