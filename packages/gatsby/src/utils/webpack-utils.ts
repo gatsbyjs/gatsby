@@ -13,7 +13,7 @@ import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 
 import { builtinPlugins } from "./webpack-plugins"
-import { IProgram } from "../commands/types"
+import { IProgram, Stage } from "../commands/types"
 import { eslintConfig } from "./eslint-config"
 
 type LoaderResolver<T = {}> = (options?: T) => Loader

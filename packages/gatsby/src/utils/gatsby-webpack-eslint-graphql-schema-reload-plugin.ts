@@ -10,7 +10,7 @@ import { hasLocalEslint } from "./local-eslint-config-finder"
 import { RuleSetRule, Compiler, RuleSetQuery, RuleSetLoader } from "webpack"
 import { GraphQLSchema } from "graphql"
 
-const isEslintRule = (rule?: RuleSetRule): boolean => {
+function isEslintRule(rule?: RuleSetRule): boolean {
   const options = rule?.use?.[0]?.options
   return options && typeof options.useEslintrc !== `undefined`
 }
