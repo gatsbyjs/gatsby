@@ -87,31 +87,19 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
-  let slug
-  let locale
-  let section
-  if (node.internal.type === `File`) {
-    const parsedFilePath = path.parse(node.relativePath)
-    // TODO add locale data for non-MDX files
-    if (node.sourceInstanceName === `docs`) {
-      slug = docSlugFromPath(parsedFilePath)
-    }
-    if (slug) {
-      createNodeField({ node, name: `slug`, value: slug })
-    }
-  } else if (
+  if (
     [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = path.parse(fileNode.relativePath)
+    if (fileNode.sourceInstanceName !== "docs") return
+
     // Add slugs for docs pages
-    if (fileNode.sourceInstanceName === `docs`) {
-      slug = docSlugFromPath(parsedFilePath)
-      locale = "en"
-      section = slug.split("/")[1]
-      if (section === "blog") return
-    }
+    const slug = docSlugFromPath(parsedFilePath)
+    const locale = "en"
+    const section = slug.split("/")[1]
+    if (section === "blog") return
 
     if (slug) {
       createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
