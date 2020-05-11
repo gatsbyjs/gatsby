@@ -1,13 +1,10 @@
-
 import { Link } from "gatsby"
 
 const PostLink = ({ title, slug, date, excerpt }) => (
   <article>
     <header>
       <h2>
-        <Link to={slug}>
-          {title || slug}
-        </Link>
+        <Link to={slug}>{title || slug}</Link>
       </h2>
       <small>{date}</small>
     </header>

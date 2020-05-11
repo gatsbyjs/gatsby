@@ -1,6 +1,3 @@
-
-const PostDate = props => (
-  <p {...props}/>
-)
+const PostDate = props => <p {...props} />
 
 export default PostDate
