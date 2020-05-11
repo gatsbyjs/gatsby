@@ -38,7 +38,7 @@ Follow these steps to deploy your website to Clodui.
 
    On Windows command prompt this can be done by:
 
-   ```batch
+   ```shell
    SET CLODUI_USERNAME=<Clodui username>
    SET CLODUI_PASSWORD=<Clodui password>
    ```
