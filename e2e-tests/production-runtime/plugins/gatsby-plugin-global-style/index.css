@@ -1,4 +1,4 @@
-[data-testid='global-plugin-style'] {
+[data-testid="global-plugin-style"] {
   position: relative;
   z-index: 9001; /* it's over 9000 */
 }

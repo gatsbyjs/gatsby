@@ -1,7 +1,6 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const nodeStore = require(`../../db/nodes`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
@@ -286,9 +285,9 @@ describe(`NodeModel`, () => {
       })
     })
     ;[
-      { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
+      { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
       { desc: `no cache`, cb: () => null }, // Always goes through sift
-    ].forEach(({ desc, cb: createIndexCache }) => {
+    ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`runQuery [${desc}]`, () => {
         it(`returns first result only`, async () => {
           const type = `Post`
@@ -296,7 +295,7 @@ describe(`NodeModel`, () => {
             filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = true
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
@@ -311,7 +310,7 @@ describe(`NodeModel`, () => {
             filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
@@ -328,7 +327,7 @@ describe(`NodeModel`, () => {
             filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           await nodeModel.runQuery(
             {
               query,
@@ -354,7 +353,7 @@ describe(`NodeModel`, () => {
             filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           await nodeModel.withContext({ path: `/` }).runQuery({
             query,
             firstOnly,
@@ -377,7 +376,7 @@ describe(`NodeModel`, () => {
             filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           await nodeModel.runQuery(
             {
               query,
@@ -397,7 +396,7 @@ describe(`NodeModel`, () => {
           const type = `AllFiles`
           const query = {}
           const firstOnly = true
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = nodeModel.runQuery({
             query,
             firstOnly,
@@ -412,7 +411,7 @@ describe(`NodeModel`, () => {
           const type = `TeamMember`
           const query = { name: { ne: null } }
           const firstOnly = true
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
@@ -429,7 +428,7 @@ describe(`NodeModel`, () => {
             },
           }
           const firstOnly = false
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
@@ -448,7 +447,7 @@ describe(`NodeModel`, () => {
             },
           }
           const firstOnly = true
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
@@ -456,6 +455,33 @@ describe(`NodeModel`, () => {
           })
           expect(result).toBeDefined()
           expect(result.id).toEqual(`post2`)
+        })
+
+        // FIXME: Filters on date instances are not supported yet
+        //  SIFT requires such filters to be expressed as Date instances but we
+        //  don't know if date is stored as `Date` instance or `string`
+        //  so can't really do that
+        //  See https://github.com/crcn/sift.js#date-comparison
+        it.skip(`queries date instances in nodes`, async () => {
+          const type = `Post`
+          const query = {
+            filter: {
+              frontmatter: {
+                date: { lte: `2018-01-01T00:00:00Z` },
+              },
+            },
+          }
+          const firstOnly = false
+          nodeModel.replaceTypeKeyValueCache(createFiltersCache())
+          const result = await nodeModel.runQuery({
+            query,
+            firstOnly,
+            type,
+          })
+          expect(result).toBeDefined()
+          expect(result.length).toEqual(2)
+          expect(result[0].id).toEqual(`post2`)
+          expect(result[1].id).toEqual(`post3`)
         })
       })
     })
@@ -551,11 +577,11 @@ describe(`NodeModel`, () => {
       })
     })
     ;[
-      { desc: `with cache`, cb: () => new Map() }, // Avoids sift for flat filters
+      { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
       { desc: `no cache`, cb: () => null }, // Always goes through sift
-    ].forEach(({ desc, cb: createIndexCache }) => {
+    ].forEach(({ desc, cb: createFiltersCache }) => {
       it(`[${desc}] should not resolve prepared nodes more than once`, async () => {
-        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        nodeModel.replaceFiltersCache(createFiltersCache())
         await nodeModel.runQuery(
           {
             query: { filter: { betterTitle: { eq: `foo` } } },
@@ -566,7 +592,7 @@ describe(`NodeModel`, () => {
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
-        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        nodeModel.replaceFiltersCache(createFiltersCache())
         await nodeModel.runQuery(
           {
             query: { filter: { betterTitle: { eq: `foo` } } },
@@ -577,7 +603,7 @@ describe(`NodeModel`, () => {
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
-        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        nodeModel.replaceFiltersCache(createFiltersCache())
         await nodeModel.runQuery(
           {
             query: {
@@ -590,7 +616,7 @@ describe(`NodeModel`, () => {
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
-        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        nodeModel.replaceFiltersCache(createFiltersCache())
         await nodeModel.runQuery(
           {
             query: {
@@ -603,7 +629,7 @@ describe(`NodeModel`, () => {
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
-        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        nodeModel.replaceFiltersCache(createFiltersCache())
         await nodeModel.runQuery(
           {
             query: {
@@ -619,7 +645,7 @@ describe(`NodeModel`, () => {
       })
 
       it(`[${desc}] can filter by resolved fields`, async () => {
-        nodeModel.replaceTypeKeyValueCache(createIndexCache())
+        nodeModel.replaceFiltersCache(createFiltersCache())
         const result = await nodeModel.runQuery(
           {
             query: {
@@ -764,12 +790,12 @@ describe(`NodeModel`, () => {
       })
     })
     ;[
-      { desc: `with index cache`, cb: () => new Map() }, // Avoids sift
-      { desc: `no index cache`, cb: () => null }, // Requires sift
-    ].forEach(({ desc, cb: createIndexCache }) => {
+      { desc: `with cache`, cb: () => new Map() }, // Avoids sift
+      { desc: `no cache`, cb: () => null }, // Requires sift
+    ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`[${desc}] Tracks nodes returned by queries`, () => {
         it(`Tracks objects when running query without filter`, async () => {
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query: {},
             type: schema.getType(`Test`),
@@ -786,7 +812,7 @@ describe(`NodeModel`, () => {
         })
 
         it(`Tracks objects when running query with filter`, async () => {
-          nodeModel.replaceTypeKeyValueCache(createIndexCache())
+          nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query: {
               filter: {

@@ -307,6 +307,7 @@ exports.createNodesForContentType = ({
     contentTypeItemId = contentTypeItem.sys.id
   }
 
+  const createNodePromises = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -388,10 +389,10 @@ exports.createNodesForContentType = ({
               // creating an empty node field in case when original key field value
               // is empty due to links to missing entities
               const resolvableEntryItemFieldValue = entryItemFieldValue
-                .filter(function(v) {
+                .filter(function (v) {
                   return resolvable.has(v.sys.id)
                 })
-                .map(function(v) {
+                .map(function (v) {
                   return mId(space.sys.id, v.sys.id)
                 })
               if (resolvableEntryItemFieldValue.length !== 0) {
@@ -466,15 +467,6 @@ exports.createNodesForContentType = ({
       if (entryItem.sys.contentType) {
         entryNode.sys.contentType = entryItem.sys.contentType
       }
-
-      // Use default locale field.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // Ignore fields with "___node" as they're already handled
-        // and won't be a text field.
-        if (entryItemFieldKey.split(`___`).length > 1) {
-          return
-        }
-      })
 
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
@@ -584,14 +576,16 @@ exports.createNodesForContentType = ({
 
     contentTypeNode.internal.contentDigest = contentDigest
 
-    createNode(contentTypeNode)
+    createNodePromises.push(createNode(contentTypeNode))
     entryNodes.forEach(entryNode => {
-      createNode(entryNode)
+      createNodePromises.push(createNode(entryNode))
     })
     childrenNodes.forEach(entryNode => {
-      createNode(entryNode)
+      createNodePromises.push(createNode(entryNode))
     })
   })
+
+  return createNodePromises
 }
 
 exports.createAssetNodes = ({
@@ -602,6 +596,7 @@ exports.createAssetNodes = ({
   locales,
   space,
 }) => {
+  const createNodePromises = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
     const mId = makeMakeId({
@@ -614,27 +609,16 @@ exports.createAssetNodes = ({
       localesFallback,
     })
 
-    const localizedAsset = { ...assetItem }
-    // Create a node for each asset. They may be referenced by Entries
-    //
-    // Get localized fields.
-    localizedAsset.fields = {
-      file: localizedAsset.fields.file
-        ? getField(localizedAsset.fields.file)
-        : null,
-      title: localizedAsset.fields.title
-        ? getField(localizedAsset.fields.title)
-        : ``,
-      description: localizedAsset.fields.description
-        ? getField(localizedAsset.fields.description)
-        : ``,
-    }
     const assetNode = {
-      contentful_id: localizedAsset.sys.contentful_id,
-      id: mId(space.sys.id, localizedAsset.sys.id),
+      contentful_id: assetItem.sys.contentful_id,
+      id: mId(space.sys.id, assetItem.sys.id),
       parent: null,
       children: [],
-      ...localizedAsset.fields,
+      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
+      description: assetItem.fields.description
+        ? getField(assetItem.fields.description)
+        : ``,
       node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
@@ -646,6 +630,8 @@ exports.createAssetNodes = ({
 
     assetNode.internal.contentDigest = contentDigest
 
-    createNode(assetNode)
+    createNodePromises.push(createNode(assetNode))
   })
+
+  return createNodePromises
 }

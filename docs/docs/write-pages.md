@@ -61,12 +61,12 @@ The dynamic files that are created are (all under the `.cache` directory).
 
 This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
 
-- [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname)
-- [jsonName](/docs/behind-the-scenes-terminology/#jsonname)
-- [path](/docs/behind-the-scenes-terminology/#path)
-- [matchPath](/docs/behind-the-scenes-terminology/#matchpath)
+- [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname)
+- [jsonName](/docs/gatsby-internals-terminology/#jsonname)
+- [path](/docs/gatsby-internals-terminology/#path)
+- [matchPath](/docs/gatsby-internals-terminology/#matchpath)
 
-The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/behind-the-scenes-terminology/#matchpath) for more info.
+The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/gatsby-internals-terminology/#matchpath) for more info.
 
 e.g
 
@@ -85,7 +85,7 @@ e.g
 
 ## sync-requires.js
 
-This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {

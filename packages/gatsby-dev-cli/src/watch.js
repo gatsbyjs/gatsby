@@ -151,6 +151,10 @@ async function watch(
     return
   }
 
+  const allPackagesIgnoringThemesToWatch = allPackagesToWatch.filter(
+    pkgName => !pkgName.startsWith(`gatsby-theme`)
+  )
+
   const ignored = [
     /[/\\]node_modules[/\\]/i,
     /\.git/i,
@@ -159,7 +163,9 @@ async function watch(
     /[/\\]__mocks__[/\\]/i,
     /\.npmrc/i,
   ].concat(
-    allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
+    allPackagesIgnoringThemesToWatch.map(
+      p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`)
+    )
   )
   const watchers = _.uniq(
     allPackagesToWatch
@@ -170,6 +176,7 @@ async function watch(
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
+  let isPublishing = false
 
   const waitFor = new Set()
   let anyPackageNotInstalled = false
@@ -205,6 +212,12 @@ async function watch(
       )
 
       if (relativePackageFile === `package.json`) {
+        // package.json files will change during publish to adjust version of package (and dependencies), so ignore
+        // changes during this process
+        if (isPublishing) {
+          return
+        }
+
         // Compare dependencies with local version
 
         const didDepsChangedPromise = checkDepsChanges({
@@ -286,6 +299,7 @@ async function watch(
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
+          isPublishing = true
           await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
@@ -293,6 +307,7 @@ async function watch(
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
+          isPublishing = false
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]

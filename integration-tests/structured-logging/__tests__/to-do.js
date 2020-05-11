@@ -103,10 +103,7 @@ const commonAssertions = events => {
     const actionSchema = joi.alternatives().try(
       joi
         .object({
-          type: joi
-            .string()
-            .required()
-            .valid([`SET_STATUS`]),
+          type: joi.string().required().valid([`SET_STATUS`]),
           // TODO: We should change this to always be an Object I think pieh
           payload: joi
             .string()
@@ -136,10 +133,7 @@ const commonAssertions = events => {
     )
 
     const eventSchema = joi.object({
-      type: joi
-        .string()
-        .required()
-        .valid([`LOG_ACTION`]),
+      type: joi.string().required().valid([`LOG_ACTION`]),
       action: actionSchema,
     })
     events.forEach(event => {
@@ -325,7 +319,7 @@ describe(`develop`, () => {
   // See https://github.com/gatsbyjs/gatsby/issues/18518
   describe.skip(`test preview workflows`, () => {
     let gatsbyProcess
-    const mitt = new EventEmitter()
+    const eventEmitter = new EventEmitter()
     const events = []
     const clearEvents = () => {
       events.splice(0, events.length)
@@ -351,7 +345,7 @@ describe(`develop`, () => {
           msg.action.payload !== `IN_PROGRESS`
         ) {
           setTimeout(() => {
-            mitt.emit(`done`)
+            eventEmitter.emit(`done`)
             done()
           }, 5000)
         }
@@ -397,7 +391,7 @@ describe(`develop`, () => {
             codeWithError
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -412,7 +406,7 @@ describe(`develop`, () => {
             `git checkout -- ${require.resolve(`../src/pages/index.js`)}`
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -437,7 +431,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -459,7 +453,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
