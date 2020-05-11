@@ -9,8 +9,8 @@ import PostDate from "./post-date"
 import PostFooter from "./post-footer"
 
 const Post = ({
-  node: post,
   data: {
+    post,
     site: {
       siteMetadata: { title },
     },
