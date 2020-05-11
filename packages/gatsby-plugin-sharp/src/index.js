@@ -467,6 +467,12 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+  const maxWidth = options.maxWidth
+    ? Math.min(options.maxWidth, width)
+    : undefined
+  const maxHeight = options.maxHeight
+    ? Math.min(options.maxHeight, height)
+    : undefined
 
   if (options[fixedDimension] < 1) {
     throw new Error(
@@ -505,7 +511,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       fluidSizes.push(breakpoint)
     })
   }
-  const filteredSizes = fluidSizes.filter(
+  let filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
 
@@ -513,13 +519,18 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // is available for small images. Also so we can link to
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
+  filteredSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
 
+  const imageWithDensityOneIndex = filteredSizes.findIndex(
+    size => size === (fixedDimension === `maxWidth` ? maxWidth : maxHeight)
+  )
+
   // Sort sizes for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = filteredSizes.map(size => {
     const arrrgs = createTransformObject(options)
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined
@@ -602,21 +613,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   // calculate presentationSizes
-  const maxWidth = options.maxWidth
-    ? Math.min(options.maxWidth, width)
-    : undefined
-  const maxHeight = options.maxHeight
-    ? Math.min(options.maxHeight, height)
-    : undefined
-  const imageWithDensity1 = images.find(
-    image => maxWidth === image.width || maxHeight === image.height
-  )
-  const presentationWidth = imageWithDensity1.width
-  const presentationHeight = imageWithDensity1.height
+  const imageWithDensityOne = images[imageWithDensityOneIndex]
+  const presentationWidth = imageWithDensityOne.width
+  const presentationHeight = imageWithDensityOne.height
 
   // If the users didn't set default sizes, we'll make one.
   const sizes =
-    options.sizes ??
+    options.sizes ||
     `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
 
   return {

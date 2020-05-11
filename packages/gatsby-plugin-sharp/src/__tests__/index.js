@@ -247,36 +247,50 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`calculate height based on width when maxWidth & maxHeight are present`, async () => {
-      const argsDefault = { maxWidth: 20, maxHeight: 20 }
-      const argsFitFill = { ...argsDefault, fit: sharp.fit.fill }
-      const argsFitInside = { ...argsDefault, fit: sharp.fit.inside }
-      const argsFitOutside = { ...argsDefault, fit: sharp.fit.outside }
+      const testsCases = [
+        { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.fill },
+          result: [20, 20],
+        },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.inside },
+          result: [20, 10],
+        },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.outside },
+          result: [41, 20],
+        },
+        { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.fill },
+          result: [200, 200],
+        },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.inside },
+          result: [200, 97],
+        },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.outside },
+          result: [413, 200],
+        },
+      ]
+      const fileObject = getFileObject(
+        path.join(__dirname, `images/144-density.png`)
+      )
 
-      const resultDefault = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: argsDefault,
-      })
-      const resultFitFill = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: argsFitFill,
-      })
-      const resultFitInside = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: argsFitInside,
-      })
-      const resultFitOutside = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: argsFitOutside,
-      })
+      await Promise.all(
+        testsCases.map(async function (testCase) {
+          const result = await fluid({
+            file: fileObject,
+            args: testCase.args,
+          })
 
-      expect(resultDefault.presentationWidth).toEqual(20)
-      expect(resultDefault.presentationHeight).toEqual(20)
-      expect(resultFitFill.presentationWidth).toEqual(20)
-      expect(resultFitFill.presentationHeight).toEqual(20)
-      expect(resultFitInside.presentationWidth).toEqual(20)
-      expect(resultFitInside.presentationHeight).toEqual(10)
-      expect(resultFitOutside.presentationWidth).toEqual(41)
-      expect(resultFitOutside.presentationHeight).toEqual(20)
+          expect(result.presentationWidth).toEqual(testCase.result[0])
+          expect(result.presentationHeight).toEqual(testCase.result[1])
+        })
+      )
+
       expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
