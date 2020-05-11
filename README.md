@@ -126,7 +126,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.org/plugins/) and [the official tutorial](https://gatsbyjs.org/tutorial/).
 
-5. **Quick demo**
+## Quick demo
 
 [![Runme](https://svc.runme.io/static/button.svg)](https://runme.io/run?app_id=1c7cffec-7007-4644-a13b-bd620f6465cc)
 
