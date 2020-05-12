@@ -296,7 +296,7 @@ module.exports = {
                   limit: 10,
                   filter: {
                     frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
+                    fields: { section: { eq: "blog" } }
                   }
                 ) {
                   nodes {

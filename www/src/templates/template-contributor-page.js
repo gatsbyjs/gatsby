@@ -97,8 +97,7 @@ export const pageQuery = graphql`
     allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       filter: {
-        fields: { released: { eq: true } }
-        fileAbsolutePath: { regex: "/blog/" }
+        fields: { section: "blog", released: { eq: true } }
         frontmatter: { draft: { ne: true } }
       }
     ) {
