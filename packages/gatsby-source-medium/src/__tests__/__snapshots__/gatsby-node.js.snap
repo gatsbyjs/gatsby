@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-source-medium sourceNodes should create node based on medium data 1`] = `
+Array [
+  Object {
+    "allowNotes": 1,
+    "backgroundImageId": "",
+    "bio": "Web Maker at #Bedrock and teacher in engineering school.",
+    "children": Array [],
+    "createdAt": "2017-06-22",
+    "id": "960fcb3074bd",
+    "imageId": "0*go4EskWOrll345ED.jpg",
+    "internal": Object {
+      "contentDigest": "digest",
+      "type": "MediumUser",
+    },
+    "isMembershipTrialEligible": true,
+    "isSuspended": false,
+    "isWriterProgramEnrolled": true,
+    "mediumMemberAt": 0,
+    "medium_id": undefined,
+    "name": "Antoine Caron",
+    "optOutOfIceland": false,
+    "parent": null,
+    "posts___NODE": Array [
+      "3b7ee86fb4e4",
+      "9bccb38fb7ae",
+      "5f9a0794a746",
+    ],
+    "twitterScreenName": "Slashgear_",
+    "type": "User",
+    "userId": "960fcb3074bd",
+    "username": "Slashgear_",
+  },
+]
+`;
