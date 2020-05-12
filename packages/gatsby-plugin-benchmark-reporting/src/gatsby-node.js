@@ -17,6 +17,9 @@ const BENCHMARK_REPORTING_URL =
 
 // Track the last received `api` because not all events in this plugin will receive one
 let lastApi
+// Current benchmark state, if any. If none then create one on next lifecycle.
+let benchMeta
+
 function reportInfo(...args) {
   ;(lastApi ? lastApi.reporter : console).info(...args)
 }
@@ -157,11 +160,6 @@ class BenchMeta {
       `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
     )
 
-    const pageCount = glob(`**/**.json`, {
-      cwd: `./public/page-data`,
-      nocase: true,
-    }).length
-
     const benchmarkMetadata = this.getMetadata()
 
     return {
@@ -181,7 +179,7 @@ class BenchMeta {
         webpack: webpackVersion,
       },
       counts: {
-        pages: pageCount,
+        pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
@@ -249,17 +247,17 @@ class BenchMeta {
       method: `POST`,
       headers: {
         "content-type": `application/json`,
-        // "user-agent": this.getUserAgent(),
+        "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET,
       },
       body: json,
     }).then(res => {
       lastStatus = res.status
-      if (lastStatus === 500) {
-        reportInfo(`Got 500 response, waiting for text`)
+      if ([401, 500].includes(lastStatus)) {
+        reportInfo(`Got ${lastStatus} response, waiting for text`)
         res.text().then(content => {
           reportError(
             `Response error`,
-            new Error(`Server responded with a 500 error: ${content}`)
+            new Error(`Server responded with a ${lastStatus} error: ${content}`)
           )
           process.exit(1)
         })
@@ -277,6 +275,20 @@ class BenchMeta {
   }
 }
 
+function init(lifecycle) {
+  if (!benchMeta) {
+    benchMeta = new BenchMeta()
+    // This should be set in the gatsby-config of the site when enabling this plugin
+    reportInfo(
+      `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${
+        BENCHMARK_REPORTING_URL || `the CLI`
+      }`
+    )
+
+    benchMeta.markStart()
+  }
+}
+
 process.on(`exit`, () => {
   if (!benchMeta.flushed) {
     // This is probably already a non-zero exit as otherwise node should wait for the last promise to complete
@@ -290,35 +302,36 @@ process.on(`exit`, () => {
   }
 })
 
-const benchMeta = new BenchMeta()
-
 async function onPreInit(api) {
   lastApi = api
-  // This should be set in the gatsby-config of the site when enabling this plugin
-  reportInfo(
-    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${BENCHMARK_REPORTING_URL ||
-      `the CLI`}`
-  )
-
-  benchMeta.markStart()
+  init(`preInit`)
   benchMeta.markDataPoint(`preInit`)
 }
 
 async function onPreBootstrap(api) {
   lastApi = api
+  init(`preBootstrap`)
   benchMeta.markDataPoint(`preBootstrap`)
 }
 
 async function onPreBuild(api) {
   lastApi = api
+  init(`preBuild`)
   benchMeta.markDataPoint(`preBuild`)
 }
 
 async function onPostBuild(api) {
+  if (!benchMeta) {
+    // Ignore. Don't start measuring on this event.
+    return
+  }
+
   lastApi = api
 
   benchMeta.markDataPoint(`postBuild`)
-  return benchMeta.markEnd()
+  await benchMeta.markEnd()
+
+  benchMeta = undefined
 }
 
 module.exports = { onPreInit, onPreBootstrap, onPreBuild, onPostBuild }

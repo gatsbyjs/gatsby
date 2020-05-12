@@ -30,7 +30,7 @@ You can also automatically run Lighthouse after every build if you [use Gatsby C
 
 #### B. Intelligent Preloading
 
-By leveraging Google Analytics data and machine learning, Guess.js is able to determine which pages a user is most likely to navigate to from the current page and only preload those resources. Thus, there are fewer network requests which improves performance on slower networks. Learn more [about Guess.js](docs/optimizing-site-performance-with-guessjs/), and install [the Gatsby plugin](/packages/gatsby-plugin-guess-js).
+By leveraging Google Analytics data and machine learning, Guess.js is able to determine which pages a user is most likely to navigate to from the current page and only preload those resources. Thus, there are fewer network requests which improves performance on slower networks. Learn more [about Guess.js](/docs/optimizing-site-performance-with-guessjs/), and install [the Gatsby plugin](/packages/gatsby-plugin-guess-js).
 
 #### C. CDN for Media Assets
 

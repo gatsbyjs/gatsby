@@ -1,5 +1,4 @@
 const { graphql, GraphQLString } = require(`graphql`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
@@ -12,7 +11,7 @@ jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
-const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 const { TypeConflictReporter } = require(`../infer/type-conflict-reporter`)
 const typeConflictReporter = new TypeConflictReporter()

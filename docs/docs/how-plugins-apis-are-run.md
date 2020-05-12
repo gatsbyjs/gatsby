@@ -54,11 +54,11 @@ API implementations are passed a variety of useful [actions](/docs/actions/) and
 
 All actions take 3 arguments:
 
-1.  The core information required by the action. E.g. for [createNode](/docs/actions/#createNode), you must pass a node
-2.  The plugin that is calling this action. E.g. `createNode` uses this to assign the owner of the new node
-3.  An object with misc action options:
-    - **traceId**: [See below](#using-traceid-to-await-downstream-api-calls)
-    - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
+1. The core information required by the action. E.g. for [createNode](/docs/actions/#createNode), you must pass a node
+2. The plugin that is calling this action. E.g. `createNode` uses this to assign the owner of the new node
+3. An object with misc action options:
+   - **traceId**: [See below](#using-traceid-to-await-downstream-api-calls)
+   - **parentSpan**: opentracing span (see [tracing docs](/docs/performance-tracing/))
 
 Passing the plugin and action options on every single action call would be extremely painful for plugin/site authors. Since you know the plugin, traceId and parentSpan when you're running your API, you can rebind injected actions so these arguments are already provided. This is done in the [doubleBind](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L14) step.
 
@@ -100,19 +100,24 @@ digraph {
 }
 ```
 
-1.  The traceID is passed as an argument to the original API runner. E.g
+1. The traceID is passed as an argument to the original API runner. E.g
 
-    ```javascript
-    apiRunner(`sourceNodes`, {
-      traceId: `initial-sourceNodes`,
-      waitForCascadingActions: true,
-      parentSpan: parentSpan,
-    })
-    ```
+   ```javascript
+   apiRunner(`sourceNodes`, {
+     traceId: `initial-sourceNodes`,
+     waitForCascadingActions: true,
+     parentSpan: parentSpan,
+   })
+   ```
 
-1.  You keep track of the number of API calls with this traceId in the [apisRunningByTraceId](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L139) Map. On this first invocation, it will be set to `1`.
-1.  Using the action rebinding mentioned [above](#injected-arguments), the traceId is passed through to all action calls via the `actionOptions` object.
-1.  After reducing the Action, a global event is [emitted](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/redux/index.js#L93) which includes the action information
-1.  For the `CREATE_NODE` and `CREATE_PAGE` events, you need to call the `onCreateNode` and `onCreatePage` APIs respectively. The [plugin-runner](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/redux/plugin-runner.js) takes care of this. It also passes on the traceId from the Action back into the API call.
-1.  You're back in `api-runner-node.js` and can tie this new API call back to its original. So you increment the value of [apisRunningByTraceId](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L218) for this traceId.
-1.  Now, whenever an API finishes running (when all its implementing plugins have finished), you decrement `apisRunningByTraceId[traceId]`. If the original API call included the `waitForCascadingActions` option, then you wait until `apisRunningByTraceId[traceId]` == 0 before resolving.
+2. You keep track of the number of API calls with this traceId in the [apisRunningByTraceId](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L139) Map. On this first invocation, it will be set to `1`.
+
+3. Using the action rebinding mentioned [above](#injected-arguments), the traceId is passed through to all action calls via the `actionOptions` object.
+
+4. After reducing the Action, a global event is [emitted](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/redux/index.js#L93) which includes the action information
+
+5. For the `CREATE_NODE` and `CREATE_PAGE` events, you need to call the `onCreateNode` and `onCreatePage` APIs respectively. The [plugin-runner](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/redux/plugin-runner.js) takes care of this. It also passes on the traceId from the Action back into the API call.
+
+6. You're back in `api-runner-node.js` and can tie this new API call back to its original. So you increment the value of [apisRunningByTraceId](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L218) for this traceId.
+
+7. Now, whenever an API finishes running (when all its implementing plugins have finished), you decrement `apisRunningByTraceId[traceId]`. If the original API call included the `waitForCascadingActions` option, then you wait until `apisRunningByTraceId[traceId]` == 0 before resolving.

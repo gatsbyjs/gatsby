@@ -16,7 +16,7 @@ jest.mock(`fs-extra`, () => {
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
-    renameSync: jest.fn((from, to) => {
+    moveSync: jest.fn((from, to) => {
       // This will only work for folders if they are always the full prefix
       // of the file... (that goes for both input dirs). That's the case here.
       if (mockWrittenContent.has(to)) {
@@ -111,61 +111,30 @@ describe(`redux db`, () => {
     mockWrittenContent.clear()
   })
 
-  // yuck - loki and redux will have different shape of redux state (nodes and nodesByType)
-  // Note: branched skips will keep snapshots with and without loki env var
-  if (process.env.GATSBY_DB_NODES === `loki`) {
-    it.skip(`should write redux cache to disk`, async () => {})
-    it(`should write loki cache to disk`, async () => {
-      expect(initialComponentsState).toEqual(new Map())
+  it(`should write redux cache to disk`, async () => {
+    expect(initialComponentsState).toEqual(new Map())
 
-      store.getState().nodes = getFakeNodes()
+    store.getState().nodes = getFakeNodes()
 
-      await saveState()
+    await saveState()
 
-      expect(writeToCache).toBeCalled()
+    expect(writeToCache).toBeCalled()
 
-      // reset state in memory
-      store.dispatch({
-        type: `DELETE_CACHE`,
-      })
-      // make sure store in memory is empty
-      expect(store.getState().components).toEqual(initialComponentsState)
-
-      // read data that was previously cached
-      const data = readState()
-
-      // make sure data was read and is not the same as our clean redux state
-      expect(data.components).not.toEqual(initialComponentsState)
-
-      expect(_.omit(data, [`nodes`, `nodesByType`])).toMatchSnapshot()
+    // reset state in memory
+    store.dispatch({
+      type: `DELETE_CACHE`,
     })
-  } else {
-    it.skip(`should write loki cache to disk`, async () => {})
-    it(`should write redux cache to disk`, async () => {
-      expect(initialComponentsState).toEqual(new Map())
+    // make sure store in memory is empty
+    expect(store.getState().components).toEqual(initialComponentsState)
 
-      store.getState().nodes = getFakeNodes()
+    // read data that was previously cached
+    const data = readState()
 
-      await saveState()
+    // make sure data was read and is not the same as our clean redux state
+    expect(data.components).not.toEqual(initialComponentsState)
 
-      expect(writeToCache).toBeCalled()
-
-      // reset state in memory
-      store.dispatch({
-        type: `DELETE_CACHE`,
-      })
-      // make sure store in memory is empty
-      expect(store.getState().components).toEqual(initialComponentsState)
-
-      // read data that was previously cached
-      const data = readState()
-
-      // make sure data was read and is not the same as our clean redux state
-      expect(data.components).not.toEqual(initialComponentsState)
-
-      expect(data).toMatchSnapshot()
-    })
-  }
+    expect(data).toMatchSnapshot()
+  })
 
   it(`should drop legacy file if exists`, async () => {
     expect(initialComponentsState).toEqual(new Map())

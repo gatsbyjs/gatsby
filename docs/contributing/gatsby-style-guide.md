@@ -142,11 +142,11 @@ When referencing another page within [gatsbyjs.org](https://www.gatsbyjs.org/) h
 ```markdown
 <!-- Good -->
 
-[Gatsby's glossay](/docs/glossary)
+[Gatsby's glossary](/docs/glossary)
 
 <!-- Bad -->
 
-[Gatsby's glossay](https://www.gatsbyjs.org/docs/glossary)
+[Gatsby's glossary](https://www.gatsbyjs.org/docs/glossary)
 ```
 
 Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
@@ -250,7 +250,7 @@ Use the following as reference when creating and editing docs:
 
 Each code snippet will include a tab showing the language type the snippet contains. For example, the following YAML snippet will show a "YAML" tab...
 
-````
+````markdown
 ```yaml
 - id: John Smith
   bio: Thinks documentation is the coolest.
@@ -285,10 +285,10 @@ If a language keyword is omitted, the type will show as `TEXT` (as shown above).
 
 Where appropriate, add code titles to your code blocks. Switching between multiple files in the course of the document can confuse some readers. It's best to explicitly tell them where the code example should go. You can use syntax highlighting as usual, then add `:title=your-path-name` to it. Use it like so:
 
-````
+````markdown
 ```javascript:title=src/util/alert.js
-const s = "I solemnly swear that I'm up to no good.";
-alert(s);
+const s = "I solemnly swear that I'm up to no good."
+alert(s)
 ```
 ````
 
@@ -308,10 +308,10 @@ You may also choose to include line highlighting in your code snippets, using th
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`, // highlight-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`, // highlight-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -330,11 +330,11 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	siteMetadata: {
-		title: `GatsbyJS`,
-		// highlight-next-line
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
+  siteMetadata: {
+    title: `GatsbyJS`,
+    // highlight-next-line
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 ````
@@ -354,12 +354,12 @@ module.exports = {
 ````no-highlight
 ```javascript:title=gatsby-config.js
 module.exports = {
-	// highlight-start
-	siteMetadata: {
-		title: `GatsbyJS`,
-		siteUrl: `https://www.gatsbyjs.org`,
-	},
-	// highlight-end
+  // highlight-start
+  siteMetadata: {
+    title: `GatsbyJS`,
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
+  // highlight-end
 }
 ```
 ````
@@ -377,9 +377,12 @@ module.exports = {
 
 ### Capitalize proper nouns
 
-Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in Guide articles.
+Proper nouns should use correct capitalization when possible. Below is a list of words as they should appear in blog posts, docs, and other learning materials on this website.
 
+- Gatsby
+- GraphQL
 - JavaScript (capital letters in "J" and "S" and no abbreviations)
+- Markdown
 - Node.js
 
 A full-stack developer (adjective form with a dash) works on the full stack

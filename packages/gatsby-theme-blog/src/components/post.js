@@ -1,10 +1,12 @@
 import React from "react"
-import { Styled, css } from "theme-ui"
 
-import PostFooter from "../components/post-footer"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+
+import Layout from "./layout"
+import SEO from "./seo"
+import PostTitle from "./post-title"
+import PostDate from "./post-date"
+import PostFooter from "./post-footer"
 
 const Post = ({
   data: {
@@ -18,18 +20,14 @@ const Post = ({
   next,
 }) => (
   <Layout location={location} title={title}>
-    <SEO title={post.title} description={post.excerpt} />
+    <SEO
+      title={post.title}
+      description={post.excerpt}
+      keywords={post.keywords}
+    />
     <main>
-      <Styled.h1>{post.title}</Styled.h1>
-      <Styled.p
-        css={css({
-          fontSize: 1,
-          mt: -3,
-          mb: 3,
-        })}
-      >
-        {post.date}
-      </Styled.p>
+      <PostTitle>{post.title}</PostTitle>
+      <PostDate>{post.date}</PostDate>
       <MDXRenderer>{post.body}</MDXRenderer>
     </main>
     <PostFooter {...{ previous, next }} />

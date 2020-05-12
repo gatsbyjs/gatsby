@@ -4,6 +4,7 @@ const fs = require(`fs-extra`)
 const report = require(`gatsby-cli/lib/reporter`)
 
 const path = require(`path`)
+const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const pageDataUtil = require(`../utils/page-data`)
@@ -22,10 +23,44 @@ type QueryJob = {
 }
 
 // Run query
-module.exports = async (graphqlRunner, queryJob: QueryJob) => {
+module.exports = async (graphqlRunner, queryJob: QueryJob, { parentSpan }) => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => graphqlRunner.query(query, context)
+  const graphql = (query, context, queryName) => {
+    // Check if query takes too long, print out warning
+    const promise = graphqlRunner.query(query, context, {
+      parentSpan,
+      queryName,
+    })
+    let isPending = true
+
+    const timeoutId = setTimeout(() => {
+      if (isPending) {
+        const messageParts = [
+          `Query takes too long:`,
+          `File path: ${queryJob.componentPath}`,
+        ]
+
+        if (queryJob.isPage) {
+          const { path, context } = queryJob.context
+          messageParts.push(`URL path: ${path}`)
+
+          if (!_.isEmpty(context)) {
+            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+          }
+        }
+
+        report.warn(messageParts.join(`\n`))
+      }
+    }, 15000)
+
+    promise.finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
+
+    return promise
+  }
 
   // Run query
   let result
@@ -33,7 +68,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context)
+    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
   }
 
   // If there's a graphql error then log the error. If we're building, also

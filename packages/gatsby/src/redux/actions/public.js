@@ -14,9 +14,13 @@ const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../../joi-schemas/joi`)
+import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
@@ -373,6 +377,24 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName = `Component${pascalCase(page.path)}`
   }
 
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.panicOnBuild({
+      id: `11331`,
+      context: {
+        path: page.path,
+        invalidPathSegments,
+
+        // we will only show truncatedPath in non-production scenario
+        isProduction: process.env.NODE_ENV === `production`,
+        truncatedPath,
+      },
+    })
+    page.path = truncatedPath
+  }
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
@@ -541,10 +563,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node &&
-    findChildren(node.children)
-      .map(getNode)
-      .map(createDeleteAction)
+    node && findChildren(node.children).map(getNode).map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
@@ -553,7 +572,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was supressed in documentation pages.
+// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
  * @private
@@ -580,8 +599,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
+    // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
     fullNodes: nodeIds.map(getNode),
   }
@@ -722,7 +740,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
+  const result = Joi.validate(node, nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
@@ -1034,9 +1052,9 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
@@ -1345,7 +1363,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/).
+ * plugin](/packages/gatsby-plugin-s3/). Alternatively, you can use
+ * [this plugin](/packages/gatsby-plugin-meta-redirect/) to generate meta redirect
+ * html files for redirecting on any static file host.
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

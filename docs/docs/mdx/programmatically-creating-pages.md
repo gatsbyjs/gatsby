@@ -129,8 +129,8 @@ to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
 
-- blog-1.mdx => http://localhost:8000/blog/blog-1/
-- blog-2.mdx => http://localhost:8000/blog/blog-2/
+- `blog-1.mdx` => `http://localhost:8000/blog/blog-1/`
+- `blog-2.mdx` => `http://localhost:8000/blog/blog-2/`
 
 [`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
@@ -274,13 +274,19 @@ component should look like:
 ```jsx:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
+import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { Link } from "gatsby"
+
+const shortcodes = { Link } // Provide common components here
 
 export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.body}</MDXRenderer>
+      <MDXProvider components={shortcodes}>
+        <MDXRenderer>{mdx.body}</MDXRenderer>
+      </MDXProvider>
     </div>
   )
 }
