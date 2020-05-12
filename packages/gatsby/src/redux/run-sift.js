@@ -27,6 +27,9 @@ const FAST_OPS = [
   `$gte`,
 ]
 
+// More of a testing mechanic, to verify whether last runSift call used Sift
+let lastFilterUsedSift = false
+
 /**
  * Creates a key for one filterCache inside FiltersCache
  *
@@ -390,6 +393,10 @@ const runFilterAndSort = (args: Object) => {
 
 exports.runSift = runFilterAndSort
 
+exports.didLastFilterUseSift = function _didLastFilterUseSift() {
+  return lastFilterUsedSift
+}
+
 /**
  * Applies filter. First through a simple approach, which is much faster than
  * running sift, but not as versatile and correct. If no nodes were found then
@@ -434,6 +441,8 @@ const applyFilters = (
   }
 
   const result = filterWithoutSift(filters, nodeTypeNames, filtersCache)
+
+  lastFilterUsedSift = false
   if (result) {
     if (stats) {
       stats.totalIndexHits++
@@ -443,6 +452,7 @@ const applyFilters = (
     }
     return result
   }
+  lastFilterUsedSift = true
 
   const siftResult = filterWithSift(
     filters,
