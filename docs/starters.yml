@@ -2984,7 +2984,7 @@
     - Comment feature (disqus, utterances)
     - Sponsor service (Buy-me-a-coffee)
     - CLI Tool
-- url: https://learn.hasura.io/graphql/react/introduction
+- url: https://hasura.io/learn/graphql/react/introduction/
   repo: https://github.com/hasura/gatsby-gitbook-starter
   description: A starter to generate docs/tutorial websites based on GitBook theme.
   tags:
@@ -3001,6 +3001,7 @@
     - SEO Tags with MDX frontmatter
     - Edit on GitHub button
     - Fully Customisable with rich embeds using React in MDX.
+    - Search integration with Algolia
 - url: https://gatsby-starter-blog-with-lunr.netlify.com/
   repo: https://github.com/lukewhitehouse/gatsby-starter-blog-with-lunr
   description: Building upon Gatsby's blog starter with a Lunr.js powered Site Search.
