@@ -46,7 +46,9 @@ In `src/components/layout.js`, include the stylesheet and export a layout compon
 import React from "react"
 import "./layout.css"
 
-export default ({ children }) => <div>{children}</div>
+export default function Layout({ children }) {
+  return <div>{children}</div>
+}
 ```
 
 Finally, update `src/pages/index.js` to use the new layout component:
@@ -55,7 +57,9 @@ Finally, update `src/pages/index.js` to use the new layout component:
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => <Layout>Hello world!</Layout>
+export default function Home() {
+  return <Layout>Hello world!</Layout>
+}
 ```
 
 Run `npm run develop` and you’ll see the global styles applied.

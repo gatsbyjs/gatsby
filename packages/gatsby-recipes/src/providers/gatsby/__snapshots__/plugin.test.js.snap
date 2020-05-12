@@ -1,10 +1,128 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`gatsby-plugin resource all returns plugins as array 1`] = `
+Array [
+  Object {
+    "id": "gatsby-source-filesystem",
+    "name": "gatsby-source-filesystem",
+    "options": Object {
+      "name": "pages",
+      "path": "\${__dirname}/src/pages",
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-transformer-sharp",
+    "name": "gatsby-transformer-sharp",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-emotion",
+    "name": "gatsby-plugin-emotion",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-typography",
+    "name": "gatsby-plugin-typography",
+    "options": Object {
+      "pathToConfigModule": "src/utils/typography",
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-transformer-remark",
+    "name": "gatsby-transformer-remark",
+    "options": Object {
+      "plugins": Array [
+        Object {
+          "options": Object {
+            "maxWidth": 590,
+          },
+          "resolve": "gatsby-remark-images",
+        },
+        Object {
+          "options": Object {
+            "wrapperStyle": "margin-bottom: 1.0725rem",
+          },
+          "resolve": "gatsby-remark-responsive-iframe",
+        },
+        "gatsby-remark-prismjs",
+        "gatsby-remark-copy-linked-files",
+        "gatsby-remark-smartypants",
+      ],
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-sharp",
+    "name": "gatsby-plugin-sharp",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-google-analytics",
+    "name": "gatsby-plugin-google-analytics",
+    "options": Object {
+      "trackingId": "UA-774017-3",
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-manifest",
+    "name": "gatsby-plugin-manifest",
+    "options": Object {
+      "background_color": null,
+      "display": "minimal-ui",
+      "icon": "static/logo.png",
+      "name": "Bricolage",
+      "short_name": "Bricolage",
+      "start_url": "/",
+      "theme_color": null,
+    },
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-offline",
+    "name": "gatsby-plugin-offline",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "id": "gatsby-plugin-react-helmet",
+    "name": "gatsby-plugin-react-helmet",
+    "options": undefined,
+    "shadowableFiles": Array [],
+    "shadowedFiles": Array [],
+  },
+]
+`;
+
+exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
+Object {
+  "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
+  "id": "gatsby-plugin-foo",
+  "name": "gatsby-plugin-foo",
+  "options": undefined,
+}
+`;
+
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
+  "options": undefined,
 }
 `;
 
@@ -18,19 +136,25 @@ Object {
 module.exports = {
   /* Your site config here */
   plugins: [],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "- Original  - 1
-+ Modified  + 1
++ Modified  + 7
 
-@@ -5,6 +5,6 @@
+@@ -5,6 +5,12 @@
    */
   module.exports = {
     /* Your site config here */
 -   plugins: [],
-+   plugins: [\\"gatsby-plugin-foo\\"],
-  }
++   plugins: [
++     {
++       resolve: \\"gatsby-plugin-foo\\",
++       options: undefined,
++       __key: \\"gatsby-plugin-foo\\",
++     },
++   ],
+  };
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
@@ -41,8 +165,14 @@ module.exports = {
  */
 module.exports = {
   /* Your site config here */
-  plugins: [\\"gatsby-plugin-foo\\"],
-}
+  plugins: [
+    {
+      resolve: \\"gatsby-plugin-foo\\",
+      options: undefined,
+      __key: \\"gatsby-plugin-foo\\",
+    },
+  ],
+};
 ",
 }
 `;
@@ -54,6 +184,7 @@ Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
+  "options": undefined,
 }
 `;
 
@@ -67,10 +198,27 @@ Object {
 module.exports = {
   /* Your site config here */
   plugins: [\\"gatsby-plugin-foo\\"],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "Compared values have no visual difference.",
+  "diff": "- Original  - 1
++ Modified  + 8
+
+@@ -5,6 +5,13 @@
+   */
+  module.exports = {
+    /* Your site config here */
+-   plugins: [\\"gatsby-plugin-foo\\"],
++   plugins: [
++     \\"gatsby-plugin-foo\\",
++     {
++       resolve: \\"gatsby-plugin-foo\\",
++       options: undefined,
++       __key: \\"gatsby-plugin-foo\\",
++     },
++   ],
+  };
+",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
   "newState": "/**
@@ -80,8 +228,15 @@ module.exports = {
  */
 module.exports = {
   /* Your site config here */
-  plugins: [\\"gatsby-plugin-foo\\"],
-}
+  plugins: [
+    \\"gatsby-plugin-foo\\",
+    {
+      resolve: \\"gatsby-plugin-foo\\",
+      options: undefined,
+      __key: \\"gatsby-plugin-foo\\",
+    },
+  ],
+};
 ",
 }
 `;
@@ -91,12 +246,13 @@ Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
+  "options": undefined,
 }
 `;
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create plan 1`] = `
 Object {
-  "currentState": "const redish = \`#c5484d\`
+  "currentState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -160,26 +316,30 @@ module.exports = {
         display: \`minimal-ui\`,
       },
     },
-    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
   ],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
   "diff": "- Original  - 0
-+ Modified  + 1
++ Modified  + 5
 
-@@ -64,6 +64,7 @@
+@@ -64,6 +64,11 @@
       },
-      \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+      \`gatsby-plugin-offline\`,
       \`gatsby-plugin-react-helmet\`,
-+     \\"gatsby-plugin-foo\\",
++     {
++       resolve: \\"gatsby-plugin-foo\\",
++       options: undefined,
++       __key: \\"gatsby-plugin-foo\\",
++     },
     ],
-  }
+  };
 ",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
-  "newState": "const redish = \`#c5484d\`
+  "newState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -243,11 +403,15 @@ module.exports = {
         display: \`minimal-ui\`,
       },
     },
-    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
-    \\"gatsby-plugin-foo\\",
+    {
+      resolve: \\"gatsby-plugin-foo\\",
+      options: undefined,
+      __key: \\"gatsby-plugin-foo\\",
+    },
   ],
-}
+};
 ",
 }
 `;
@@ -259,12 +423,13 @@ Object {
   "_message": "Installed gatsby-plugin-foo in gatsby-config.js",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
+  "options": undefined,
 }
 `;
 
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update plan 1`] = `
 Object {
-  "currentState": "const redish = \`#c5484d\`
+  "currentState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -328,17 +493,31 @@ module.exports = {
         display: \`minimal-ui\`,
       },
     },
-    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
     \\"gatsby-plugin-foo\\",
   ],
-}
+};
 ",
   "describe": "Install gatsby-plugin-foo in gatsby-config.js",
-  "diff": "Compared values have no visual difference.",
+  "diff": "- Original  - 0
++ Modified  + 5
+
+@@ -65,6 +65,11 @@
+      \`gatsby-plugin-offline\`,
+      \`gatsby-plugin-react-helmet\`,
+      \\"gatsby-plugin-foo\\",
++     {
++       resolve: \\"gatsby-plugin-foo\\",
++       options: undefined,
++       __key: \\"gatsby-plugin-foo\\",
++     },
+    ],
+  };
+",
   "id": "gatsby-plugin-foo",
   "name": "gatsby-plugin-foo",
-  "newState": "const redish = \`#c5484d\`
+  "newState": "const redish = \`#c5484d\`;
 module.exports = {
   siteMetadata: {
     title: \`Bricolage\`,
@@ -402,11 +581,39 @@ module.exports = {
         display: \`minimal-ui\`,
       },
     },
-    \`gatsby-plugin-offline\`, // \`gatsby-plugin-preact\`,
+    \`gatsby-plugin-offline\`,
     \`gatsby-plugin-react-helmet\`,
     \\"gatsby-plugin-foo\\",
+    {
+      resolve: \\"gatsby-plugin-foo\\",
+      options: undefined,
+      __key: \\"gatsby-plugin-foo\\",
+    },
   ],
-}
+};
 ",
 }
+`;
+
+exports[`gatsby-plugin resource handles config options as an object 1`] = `
+Array [
+  Object {
+    "name": "gatsby-plugin-foo",
+    "options": Object {
+      "bar": "baz",
+      "baz": "qux",
+      "foo": 1,
+      "otherStuff": Array [
+        Object {
+          "bar": Array [
+            Object {
+              "foo": "bar",
+            },
+          ],
+          "foo": "bar2",
+        },
+      ],
+    },
+  },
+]
 `;

@@ -7,9 +7,9 @@ import { Node } from "../../../index"
 
 export interface ITypeConflictExample {
   value: unknown
-  parent: Node
   type: string
-  arrayTypes: string[]
+  parent?: Node
+  arrayTypes?: string[]
 }
 
 interface ITypeConflict {

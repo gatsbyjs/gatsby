@@ -46,6 +46,7 @@ const applyPlan = ({ recipePath, projectRoot }) => {
       event: state.event,
       state: state.value,
       context: state.context,
+      stepResources: state.context.stepResources,
       plan: state.context.plan,
     })
     if (state.changed) {
@@ -79,17 +80,18 @@ const OperationType = new GraphQLObjectType({
   },
 })
 
-const types = createTypes()
+const { queryTypes, mutationTypes } = createTypes()
 
 const rootQueryType = new GraphQLObjectType({
   name: `Root`,
-  fields: () => types,
+  fields: () => queryTypes,
 })
 
 const rootMutationType = new GraphQLObjectType({
   name: `Mutation`,
   fields: () => {
     return {
+      ...mutationTypes,
       createOperation: {
         type: GraphQLString,
         args: {
