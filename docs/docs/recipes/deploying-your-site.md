@@ -84,7 +84,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 ## Deploying to Vercel Now
 
-Use [Now CLI](https://vercel.com/download) to deploy your Gatsby application without leaving the command-line interface.
+Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application without leaving the command-line interface.
 
 ### Prerequisites
 
