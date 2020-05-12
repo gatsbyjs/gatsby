@@ -281,17 +281,17 @@ describe(`gatsby-plugin-sharp`, () => {
 
       await Promise.all(
         testsCases.map(async function (testCase) {
+          boundActionCreators.createJobV2.mockClear()
           const result = await fluid({
             file: fileObject,
             args: testCase.args,
           })
 
+          expect(boundActionCreators.createJobV2.calls).toMatchSnapshot()
           expect(result.presentationWidth).toEqual(testCase.result[0])
           expect(result.presentationHeight).toEqual(testCase.result[1])
         })
       )
-
-      expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
     it(`should throw if maxWidth is less than 1`, async () => {
