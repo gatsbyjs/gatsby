@@ -5469,7 +5469,7 @@
     - Responsive design.
     - Simple React functional components (FC).
     - Google Analytics ready.
-    - Continuous deployment via Netlify or Vercel(formally ZEIT).
+    - Continuous deployment via Netlify or Vercel.
 - url: https://gatsby-starter-mountain.netlify.com/
   repo: https://github.com/artezan/gatsby-starter-mountain
   description: Blog theme that combine the new powerful MDX with the old WordPress. Built with WP/MDX and Theme UI
