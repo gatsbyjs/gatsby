@@ -82,7 +82,7 @@ exports.createPages = async ({ graphql, actions }) => {
         limit: 10000
         filter: {
           fileAbsolutePath: { ne: null }
-          frontmatter: { draft: { eq: false } }
+          frontmatter: { draft: { ne: true } }
           fields: { section: { eq: "blog" } }
         }
       ) {
@@ -93,7 +93,6 @@ exports.createPages = async ({ graphql, actions }) => {
           }
           frontmatter {
             title
-            draft
             canonicalLink
             publishedAt
             tags
@@ -113,6 +112,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const blogPosts = data.allMdx.nodes
 
+  console.log(`num blog posts: `, blogPosts.length)
+
   const releasedBlogPosts = blogPosts.filter(post =>
     _.get(post, `fields.released`)
   )
@@ -120,6 +121,8 @@ exports.createPages = async ({ graphql, actions }) => {
   // Create blog-list pages.
   const postsPerPage = 8
   const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
+
+  console.log({ numPages })
 
   Array.from({
     length: numPages,
