@@ -72,24 +72,34 @@ const recursivelyAliasFragments = field =>
     return fragment
   })
 
-const aliasConflictingFields = ({ transformedFields }) =>
-  transformedFields.map(field => {
-    // we only have conflicting fields in inlineFragments
-    // if there are no inlineFragments, do nothing
-    if (!field.inlineFragments) {
-      return field
-    }
-
-    field.inlineFragments = recursivelyAliasFragments(field)
-
-    if (field.fields) {
-      field.fields = aliasConflictingFields({
-        transformedFields: field.fields,
-      })
-    }
-
+const aliasConflictingFieldFields = field => {
+  // we only have conflicting fields in inlineFragments
+  // if there are no inlineFragments, do nothing
+  if (!field.inlineFragments) {
     return field
-  })
+  }
+
+  field.inlineFragments = recursivelyAliasFragments(field)
+
+  if (field.fields) {
+    field.fields = aliasConflictingFields({
+      transformedFields: field.fields,
+    })
+  }
+
+  return field
+}
+
+const aliasConflictingFields = ({ transformedFields }) =>
+  transformedFields.map(aliasConflictingFieldFields)
+
+const aliasConflictingFragmentFields = ({ fragments }) => {
+  for (const [fragmentKey, fragment] of Object.entries(fragments)) {
+    const aliasedFragment = aliasConflictingFieldFields(fragment)
+
+    fragments[fragmentKey] = aliasedFragment
+  }
+}
 
 const timeFunction = async ({ label, fn, args = {}, disableTimer = false }) => {
   const {
@@ -204,8 +214,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     })
     prepareFieldsActivity.end()
 
-    clipboardy.writeSync(JSON.stringify(transformedFields, null, 2))
-    dd(`here`)
+    const aliasedFragments = aliasConflictingFragmentFields({ fragments })
 
     const aliasFieldsActivity = reporter.activityTimer(
       `${singleFieldName} alias conflicting fields`
@@ -315,8 +324,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       nodeListQueryActivity.end()
 
       nodeListQueries = [nodeListQuery]
-      await clipboardy.write(nodeListQuery)
-      dd(nodeListQuery)
     }
 
     if (
@@ -330,10 +337,11 @@ const generateNodeQueriesFromIngestibleFields = async () => {
             `Query debug mode. Writing node list query for the ${nodesType.name} node type to the system clipboard and exiting\n\n`
           )
         )
-        await clipboardy.write(nodeListQueries[0])
         await clipboardy.write(gqlPrettier(nodeListQueries[0]))
         process.exit()
       } catch (e) {
+        reporter.log(``)
+        reporter.error(e)
         reporter.log(``)
         reporter.warn(
           formatLogMessage(

@@ -469,6 +469,32 @@ const transformFields = ({
         store.dispatch.remoteSchema.addFetchedType(field.type)
       }
 
+      const fragment = fragments?.[findTypeName(field.type)]
+
+      if (fragment && transformedField) {
+        // remove fields from this query that already exist in the fragment
+        transformedField.fields = transformedField.fields.filter(
+          field =>
+            !fragment.fields.find(
+              fragmentField => fragmentField.fieldName === field.fieldName
+            )
+        )
+
+        transformedField.fields.push({
+          internalType: `Fragment`,
+          fragment,
+        })
+
+        transformedField.inlineFragments = transformedField.inlineFragments.filter(
+          fieldInlineFragment =>
+            // yes this is a horrible use of .find(). @todo refactor this for better perf
+            !fragment.inlineFragments.find(
+              fragmentInlineFragment =>
+                fragmentInlineFragment.name === fieldInlineFragment.name
+            )
+        )
+      }
+
       if (field.fields && !transformedField) {
         return null
       }
@@ -554,42 +580,6 @@ const recursivelyTransformFields = ({
 
   if (!recursivelyTransformedFields.length) {
     return null
-  }
-
-  const fragment = fragments?.[typeName]
-
-  if (fragment) {
-    // remove fields from this query that already exist in the fragment
-    recursivelyTransformedFields = recursivelyTransformedFields.filter(
-      field =>
-        !fragment.fields.find(
-          fragmentField => fragmentField.fieldName === field.fieldName
-        ) &&
-        // yes this is a horrible use of .find(). @todo refactor this for better perf
-        !fragment.inlineFragments.find(
-          inlineFragment =>
-            !!inlineFragment.fields.find(
-              inlineFragmentField =>
-                inlineFragmentField.fieldName === field.fieldName
-            )
-        )
-    )
-
-    // if (parentField.name === `innerBlocks`) {
-    //   clipboardy.writeSync(
-    //     JSON.stringify(recursivelyTransformedFields, null, 2)
-    //   )
-    //   dd(recursivelyTransformedFields)
-    // }
-
-    recursivelyTransformedFields.push({
-      internalType: `Fragment`,
-      fragment,
-    })
-
-    // dump(parentField)
-    // dump(recursivelyTransformFields.length)
-    // dd(typeName)
   }
 
   // const blocksField = recursivelyTransformedFields.find(
