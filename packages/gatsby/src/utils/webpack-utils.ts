@@ -10,7 +10,7 @@ import isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
 
 import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"
-import GatsbyWebpackEslintGraphqlSchemaReload from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -642,10 +642,8 @@ export const createWebpackUtils = (
   plugins.extractStats = (options: any): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor(options)
 
-  plugins.eslintGraphqlSchemaReload = (
-    options
-  ): GatsbyWebpackEslintGraphqlSchemaReload =>
-    new GatsbyWebpackEslintGraphqlSchemaReload(options)
+  plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
+    new GatsbyWebpackEslintGraphqlSchemaReload()
 
   return {
     loaders,
