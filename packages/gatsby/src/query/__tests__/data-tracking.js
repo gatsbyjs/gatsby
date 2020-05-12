@@ -58,7 +58,6 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 let mockPersistedState = {}
-let lokiStorage = {}
 jest.mock(`../../redux/persist`, () => {
   return {
     readFromCache: () => mockPersistedState,
@@ -68,18 +67,7 @@ jest.mock(`../../redux/persist`, () => {
   }
 })
 
-let mockedLokiFsAdapter = {
-  loadDatabase: (dbname, callback) => {
-    callback(lokiStorage[dbname])
-  },
-
-  saveDatabase: (dbname, dbstring, callback) => {
-    lokiStorage[dbname] = dbstring
-    callback(null)
-  },
-}
-
-let pluginOptions = {}
+const pluginOptions = {}
 
 let mockAPIs = {}
 const setAPIhooks = hooks => (mockAPIs = { ...mockAPIs, ...hooks })
@@ -117,7 +105,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     jest.resetModules()
     if (clearCache) {
       mockPersistedState = {}
-      lokiStorage = {}
     }
   } else if (clearCache) {
     console.error(`Can't clear cache without restarting`)
@@ -165,20 +152,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   )
   const apiRunner = require(`../../utils/api-runner-node`)
 
-  if (restart) {
-    const { backend } = require(`../../db/nodes`)
-    if (backend === `loki`) {
-      const loki = require(`../../db/loki`)
-      const dbSaveFile = `${__dirname}/fixtures/loki.db`
-      await loki.start({
-        saveFile: dbSaveFile,
-        lokiDBOptions: {
-          adapter: mockedLokiFsAdapter,
-        },
-      })
-    }
-  }
-
   queryRunner.mockClear()
 
   store.dispatch({
@@ -188,7 +161,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     },
   })
 
-  await require(`../../utils/source-nodes`)({})
+  await require(`../../utils/source-nodes`).default({})
   // trigger page-hot-reloader (if it was setup in previous test)
   emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
 

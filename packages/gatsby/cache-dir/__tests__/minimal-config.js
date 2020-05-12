@@ -16,15 +16,15 @@ it(`Builds cache-dir with minimal config`, done => {
   let stderr = ``
   let stdout = ``
 
-  spawn.stderr.on(`data`, function(chunk) {
+  spawn.stderr.on(`data`, function (chunk) {
     stderr += chunk
   })
 
-  spawn.stdout.on(`data`, function(chunk) {
+  spawn.stdout.on(`data`, function (chunk) {
     stdout += chunk
   })
 
-  spawn.on(`close`, function() {
+  spawn.on(`close`, function () {
     expect(stderr).toEqual(``)
     expect(stdout).not.toEqual(``)
     done()

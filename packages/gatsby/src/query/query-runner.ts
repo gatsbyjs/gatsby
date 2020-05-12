@@ -64,6 +64,8 @@ export const queryRunner = async (
       .map(e => {
         const structuredError = errorParser({
           message: e.message,
+          filePath: undefined,
+          location: undefined,
         })
 
         structuredError.context = {

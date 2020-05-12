@@ -3,6 +3,8 @@ title: Glossary
 disableTableOfContents: true
 ---
 
+import HorizontalNavList from "@components/horizontal-nav-list"
+
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
@@ -28,7 +30,7 @@ The inclusive practice of removing barriers that prevent interaction with, or ac
 
 ### Babel
 
-A tool that lets you write the most modern [JavaScript](#javascript), and on [build](#build) it gets [compiled](#compiler) to code that most web browsers can understand.
+A tool that lets you write the most modern [JavaScript](#javascript), and during the [build](#build) process it gets [transpiled](#transpile) to code that most web browsers can understand.
 
 ### Backend
 
@@ -64,7 +66,7 @@ A text-based interface to run commands on your computer. The default Command Lin
 
 ### Compiler
 
-A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files.
+A compiler is a program that translates code written in one language to another language. For example [Gatsby](#gatsby) can compile [React](#react) applications into static [HTML](#html) files. See also: [transpile](#transpile).
 
 ### Component
 
@@ -122,7 +124,7 @@ The Document Object Model, commonly referred to as "the DOM", is a standard brow
 
 ### ECMAScript
 
-ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to [compile](#compiler) the latest ECMAScript code into more widely supported JavaScript.
+ECMAScript (often referred to as ES) is a specification for scripting languages. [JavaScript](#javascript) is an implementation of ECMAScript. Often developers will use [Babel](#babel) to [transpile](#transpile) the latest ECMAScript code into more widely supported JavaScript.
 
 ### Environment
 
@@ -186,6 +188,10 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
+### [Infrastructure As Code](/docs/glossary/infrastructure-as-code/)
+
+Infrastructure As Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
+
 ## J
 
 ### [JAMStack](/docs/glossary/jamstack)
@@ -220,9 +226,9 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ## N
 
-### NPM
+### [npm](/docs/glossary/npm)
 
-[Node](#node) [Package](#package) Manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
+[Node](#node) [package](#package) manager. Allows you to install and update other packages that your project depends on. [Gatsby](#gatsby) and [React](#react) are examples of your project's dependencies. See also: [Yarn](#yarn).
 
 ### Node
 
@@ -342,6 +348,10 @@ A Gatsby theme is like a WordPress theme that is composable (with other themes),
 
 A [plugin](#plugin) that transforms one type of data to another. For example you might transform a spreadsheet into a [JavaScript](#javascript) array.
 
+### Transpile
+
+The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compilation) process.
+
 ## U
 
 ### UI
@@ -364,7 +374,7 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ## Y
 
-### Yarn
+### [Yarn](/docs/glossary/yarn/)
 
 A [package](#package) manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
