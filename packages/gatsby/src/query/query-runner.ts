@@ -2,6 +2,7 @@ import { Span } from "opentracing"
 import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
+import crypto from "crypto"
 
 import path from "path"
 import { store } from "../redux"
@@ -148,7 +149,7 @@ export const queryRunner = async (
   }
 
   const resultJSON = JSON.stringify(result)
-  const resultHash = require(`crypto`)
+  const resultHash = crypto
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)
