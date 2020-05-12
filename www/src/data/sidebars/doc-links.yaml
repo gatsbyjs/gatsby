@@ -105,6 +105,9 @@
             - title: Deploying to Gatsby Cloud
               link: /docs/deploying-to-gatsby-cloud/
               breadcrumbTitle: Gatsby Cloud
+            - title: Deploying to Clodui
+              link: /docs/deploying-to-clodui/
+              breadcrumbTitle: Clodui
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -379,7 +382,7 @@
             - title: Visual Testing with Storybook
               link: /docs/visual-testing-with-storybook/
         - title: TypeScript
-          link: /docs/typescript
+          link: /docs/typescript/
         - title: Debugging Gatsby
           link: /docs/debugging/
           breadcrumbTitle: Debugging
@@ -780,6 +783,8 @@
           link: /docs/glossary/hydration/
         - title: JAMStack
           link: /docs/glossary/jamstack/
+        - title: Infrastructure as Code
+          link: /docs/glossary/infrastructure-as-code/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX

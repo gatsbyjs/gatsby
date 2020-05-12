@@ -482,5 +482,5 @@ Then the new data needs to be pulled in via a live update like a websocket (in t
 ## Additional resources
 
 - Working example repository on [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with the features in this guide implemented
-- Tutorial on [Creating a Pixabay Image Source Plugin](/tutorial/pixabay-source-plugin-tutorial/)
+- Tutorial on [Creating a Source Plugin](/tutorial/source-plugin-tutorial/)
 - [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers), a community-made npm package with helper functions to generate Node objects with required fields like IDs and the `contentDigest` MD5 hash.
