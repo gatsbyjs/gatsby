@@ -214,7 +214,8 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     })
     prepareFieldsActivity.end()
 
-    const aliasedFragments = aliasConflictingFragmentFields({ fragments })
+    // mutates the fragments..
+    aliasConflictingFragmentFields({ fragments })
 
     const aliasFieldsActivity = reporter.activityTimer(
       `${singleFieldName} alias conflicting fields`
