@@ -10457,6 +10457,19 @@
   featured: false
   main_url: https://sztuka-programowania.pl/
   url: https://sztuka-programowania.pl/
+- title: Rivers Casino
+  built_by: WILDLIFE.LA
+  built_by_url: https://www.wildlife.la
+  categories:
+    - Entertainment
+    - Food
+    - Blog
+    - Travel
+  description: >
+    Rivers Casino offers the very best in casinos, hotels, restaurants, concerts, and entertainment. Visit us in Des Plaines, IL, Philadelphia, PA, Pittsburgh, PA and Schenectady, NY.
+  featured: false
+  main_url: https://www.riverscasino.com/desplaines/
+  url: https://www.riverscasino.com/desplaines/
 - title: Mishal Shah
   built_by: Mishal Shah
   built_by_url: https://mishal23.github.io
