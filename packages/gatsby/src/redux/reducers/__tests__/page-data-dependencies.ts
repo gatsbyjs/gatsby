@@ -1,8 +1,11 @@
-const reducer = require(`../component-data-dependencies`)
+import {
+  componentDataDependencies as reducer,
+  ICreateComponentDependencyAction,
+} from "../component-data-dependencies"
 
 describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {
-    const action = {
+    const action: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
@@ -16,21 +19,21 @@ describe(`add page data dependency`, () => {
     })
   })
   it(`lets you add a node dependency to multiple paths`, () => {
-    const action = {
+    const action: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         nodeId: `1.2.3`,
       },
     }
-    const action2 = {
+    const action2: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
         nodeId: `1.2.3`,
       },
     }
-    const action3 = {
+    const action3: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/blog/`,
@@ -48,14 +51,14 @@ describe(`add page data dependency`, () => {
     })
   })
   it(`lets you add a connection dependency`, () => {
-    const action = {
+    const action: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         connection: `Markdown.Remark`,
       },
     }
-    const action2 = {
+    const action2: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
@@ -72,7 +75,7 @@ describe(`add page data dependency`, () => {
     })
   })
   it(`removes duplicate paths`, () => {
-    const action = {
+    const action: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
@@ -80,7 +83,7 @@ describe(`add page data dependency`, () => {
         connection: `MarkdownRemark`,
       },
     }
-    const action2 = {
+    const action2: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
@@ -95,11 +98,13 @@ describe(`add page data dependency`, () => {
     // Add different action
     state = reducer(state, action2)
 
-    expect(state.connections.get(`MarkdownRemark`).size).toEqual(2)
-    expect(state.nodes.get(1).size).toEqual(2)
+    expect(
+      (state.connections.get(`MarkdownRemark`) as Set<string>).size
+    ).toEqual(2)
+    expect((state.nodes.get(1) as Set<number | string>).size).toEqual(2)
   })
   it(`lets you add both a node and connection in one action`, () => {
-    const action = {
+    const action: ICreateComponentDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
@@ -108,7 +113,7 @@ describe(`add page data dependency`, () => {
       },
     }
 
-    let state = reducer(undefined, action)
+    const state = reducer(undefined, action)
 
     expect(state).toMatchSnapshot()
   })
