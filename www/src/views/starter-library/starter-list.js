@@ -217,7 +217,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 export default StartersList
 
 function sortingFunction() {
-  return function({ node: nodeA }, { node: nodeB }) {
+  return function ({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)
     return metricB - metricA

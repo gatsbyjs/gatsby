@@ -8,10 +8,7 @@ module.exports = index => `${matter
     title: faker.lorem.sentence(),
     description: faker.lorem.sentence(),
     path: `/${faker.helpers.slugify(faker.lorem.sentence())}`,
-    date: faker.date
-      .recent(1000)
-      .toISOString()
-      .slice(0, 10),
+    date: faker.date.recent(1000).toISOString().slice(0, 10),
     tags: `[${faker.random
       .words(3)
       .split(` `)

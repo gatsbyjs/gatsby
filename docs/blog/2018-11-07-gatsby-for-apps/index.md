@@ -41,7 +41,7 @@ For me there are two key examples that are at the forefront of my mental model o
 Gmail served as an early proof of concept that proved out two, key functional wins:
 
 1. Client-side JavaScript can power an app-like experience, and
-1. a JavaScript application (running in your browser) can compare favorably to traditional, native applications for desktop and mobile
+2. a JavaScript application (running in your browser) can compare favorably to traditional, native applications for desktop and mobile
 
 The impact of these wins can’t be understated. Gmail _proved_ that a native, app-like experience is not only possible for end users, but that it can even be preferable and more convenient than the native experience. We'll revisit this trusty Gmail web application example in due time.
 
@@ -75,8 +75,8 @@ What if I told you... that building a Gatsby website enables all of these tradit
 Every Gatsby application isn't merely static. It's _as much_ static HTML rendered up-front, as possible. Client-side JavaScript (via React!) takes over as the engine for dynamic application functionality. A quick overview of Gatsby's general build process is effective to illustrate the concept.
 
 1. Inject pages with data (from [GraphQL][gatsby-graphql] or even [without using GraphQL][gatsby-without-graphql])
-1. Use the [ReactDOMServer.renderToString][react-dom-render-to-string] API to invoke server-side APIs to render React components to _HTML_ files
-1. Inject a runtime and helpers (like a router!) to enable app functionality
+2. Use the [ReactDOMServer.renderToString][react-dom-render-to-string] API to invoke server-side APIs to render React components to _HTML_ files
+3. Inject a runtime and helpers (like a router!) to enable app functionality
    - Gatsby _produces_ a [create-react-app][create-react-app] like experience once this runtime takes over
 
 To illustrate the concept, let's start with a classic example... we need to fetch some data at _run-time_ rather than build-time.
@@ -183,7 +183,7 @@ In merely adding the [`gatsby-plugin-offline`][gatsby-plugin-offline] plugin, we
 If we consider this approach, the technique looks like the following:
 
 1. Render as much content, as possible, up front (e.g. the app shell)
-1. Make async data requests to load disparate pieces, e.g. load page content from an API, particularly an API with authentication
+2. Make async data requests to load disparate pieces, e.g. load page content from an API, particularly an API with authentication
 
 Let’s compare this approach with the server-rendered approach. Consider an authenticated API call for this example. This API call is used to populate page data before it's sent (as HTML) to the end user. We're forced to defer loading for the entire page and the bottleneck of the API response, rather than serving the app shell as dynamic data loads in the background.
 
@@ -202,8 +202,8 @@ To unify all these concepts, I've assembled a demo application revisiting our ol
 [Gatsby Mail][gatsby-mail-app] encapsulates some of the concepts and themes I've been hitting upon, particularly:
 
 1. Gmail, Twitter, et al, are key exemplars of rich, web app experiences
-1. Gatsby provides components, plugins, etc. for delivering great experiences; use them!
-1. Gatsby is an excellent choice for building web applications
+2. Gatsby provides components, plugins, etc. for delivering great experiences; use them!
+3. Gatsby is an excellent choice for building web applications
 
 Additionally, Gatsby Mail shows some specific web application functionality, such as:
 
@@ -230,15 +230,12 @@ We can't wait to see what you build.
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
 [gatsby-graphql]: /docs/graphql-concepts/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
-[authentication-data]: /tutorial/authentication-tutorial/
 [client-only-routes]: /docs/client-only-routes-and-user-authentication
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount
-[prpl]: https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 [react-context]: https://reactjs.org/docs/context.html
 [react-lifecycle-methods]: https://reactjs.org/docs/state-and-lifecycle.html
-[gatsby-unstructured]: /blog/2018-10-25-unstructured-data/
 [authentication-tutorial]: /tutorial/authentication-tutorial/
 [using-gatsby-image]: https://using-gatsby-image.gatsbyjs.org/
 [traced-svg]: https://using-gatsby-image.gatsbyjs.org/traced-svg/

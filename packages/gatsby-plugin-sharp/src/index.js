@@ -30,6 +30,14 @@ const getImageSize = file => {
     const dimensions = imageSize.sync(
       toArray(fs.readFileSync(file.absolutePath))
     )
+
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
+
     imageSizeCache.set(file.internal.contentDigest, dimensions)
     return dimensions
   }
@@ -613,8 +621,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
     srcSet,
     srcSetType,
     sizes: options.sizes,
-    originalImg: originalImg,
-    originalName: originalName,
+    originalImg,
+    originalName,
     density,
     presentationWidth,
     presentationHeight,

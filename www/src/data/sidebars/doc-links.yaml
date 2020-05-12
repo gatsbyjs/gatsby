@@ -102,6 +102,12 @@
             - title: Deploying to KintoHub
               link: /docs/deploying-to-kintohub/
               breadcrumbTitle: KintoHub Hosting
+            - title: Deploying to Gatsby Cloud
+              link: /docs/deploying-to-gatsby-cloud/
+              breadcrumbTitle: Gatsby Cloud
+            - title: Deploying to Clodui
+              link: /docs/deploying-to-clodui/
+              breadcrumbTitle: Clodui
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -147,6 +153,8 @@
               breadcrumbTitle: Static Folder
             - title: Using gatsby-image
               link: /docs/using-gatsby-image/
+            - title: Using Cloudinary Image service
+              link: /docs/using-cloudinary-image-service/
             - title: Working with Images in Gatsby
               link: /docs/working-with-images/
               breadcrumbTitle: Images in Gatsby
@@ -373,6 +381,8 @@
               link: /docs/testing-react-components/
             - title: Visual Testing with Storybook
               link: /docs/visual-testing-with-storybook/
+        - title: TypeScript
+          link: /docs/typescript/
         - title: Debugging Gatsby
           link: /docs/debugging/
           breadcrumbTitle: Debugging
@@ -475,6 +485,8 @@
               items:
                 - title: Building an E-commerce Site with Shopify
                   link: /docs/building-an-ecommerce-site-with-shopify/
+                - title: Adding a Shopping Cart with Snipcart
+                  link: /docs/adding-a-shopping-cart-with-snipcart/
                 - title: Processing Payments with Stripe
                   link: /docs/processing-payments-with-stripe/
                 - title: Processing Payments with Square
@@ -610,7 +622,7 @@
           link: /docs/prpl-pattern/
         - title: GraphQL Concepts
           link: /docs/graphql-concepts/
-        - title: Security in Gatsby*
+        - title: Security in Gatsby
           link: /docs/security-in-gatsby/
         - title: Theme Shadowing
           link: /docs/how-shadowing-works/
@@ -755,6 +767,8 @@
       items:
         - title: Build
           link: /docs/glossary/build/
+        - title: Content Delivery Network
+          link: /docs/glossary/content-delivery-network/
         - title: Continuous Deployment
           link: /docs/glossary/continuous-deployment/
         - title: Decoupled Drupal
@@ -765,22 +779,32 @@
           link: /docs/glossary/headless-cms/
         - title: Headless WordPress
           link: /docs/glossary/headless-wordpress/
+        - title: Hydration
+          link: /docs/glossary/hydration/
         - title: JAMStack
           link: /docs/glossary/jamstack/
+        - title: Infrastructure as Code
+          link: /docs/glossary/infrastructure-as-code/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX
           link: /docs/glossary/mdx/
         - title: Node.js
           link: /docs/glossary/node/
+        - title: npm
+          link: /docs/glossary/npm/
         - title: React
           link: /docs/glossary/react/
+        - title: Server Side Rendering
+          link: /docs/glossary/server-side-rendering/
         - title: Static Site Generator
           link: /docs/glossary/static-site-generator/
         - title: webpack
           link: /docs/glossary/webpack/
         - title: WPGraphQL
           link: /docs/glossary/wpgraphql/
+        - title: Yarn
+          link: /docs/glossary/yarn/
     - title: Gatsby Telemetry
       link: /docs/telemetry/
     - title: Gatsby Feedback

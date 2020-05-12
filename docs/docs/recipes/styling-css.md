@@ -32,7 +32,7 @@ p {
 import "./src/styles/global.css"
 ```
 
-> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-browser.js` file.
 
 3. Run `gatsby-develop` to observe the global styling being applied across your site.
 
@@ -70,7 +70,9 @@ body {
 import React from "react"
 import "./layout.css"
 
-export default ({ children }) => <div>{children}</div>
+export default function Layout({ children }) {
+  return <div>{children}</div>
+}
 ```
 
 5. Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
@@ -79,7 +81,9 @@ export default ({ children }) => <div>{children}</div>
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => <Layout>Hello world!</Layout>
+export default function Home() {
+  return <Layout>Hello world!</Layout>
+}
 ```
 
 ### Additional resources
@@ -142,20 +146,22 @@ const User = props => (
   </>
 )
 
-export default () => (
-  <Container>
-    <h1>About Styled Components</h1>
-    <p>Styled Components is cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-    />
-  </Container>
-)
+export default function UsersList() {
+  return (
+    <Container>
+      <h1>About Styled Components</h1>
+      <p>Styled Components is cool</p>
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+      />
+    </Container>
+  )
+}
 ```
 
 4. Run `gatsby develop` to see the changes
@@ -190,11 +196,13 @@ import React from "react"
 // highlight-start
 import style from "./index.module.css"
 
-export default () => (
-  <section className={style.feature}>
-    <h1>Using CSS Modules</h1>
-  </section>
-)
+export default function Home() {
+  return (
+    <section className={style.feature}>
+      <h1>Using CSS Modules</h1>
+    </section>
+  )
+}
 // highlight-end
 ```
 
@@ -232,7 +240,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 plugins: [`gatsby-plugin-sass`],
 ```
 
-3.  Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
 
 ```css:title=styles.scss
 $font-stack: Helvetica, sans-serif;
@@ -338,18 +346,20 @@ Import Emotion's `css` core package. You can then use the `css` prop to add [Emo
 import React from "react"
 import { css } from "@emotion/core"
 
-export default () => (
-  <div>
-    <p
-      css={{
-        background: "pink",
-        color: "blue",
-      }}
-    >
-      This page is using Emotion.
-    </p>
-  </div>
-)
+export default function EmotionSample() {
+  return (
+    <div>
+      <p
+        css={{
+          background: "pink",
+          color: "blue",
+        }}
+      >
+        This page is using Emotion.
+      </p>
+    </div>
+  )
+}
 ```
 
 4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
@@ -366,11 +376,13 @@ const Content = styled.div`
   }
 `
 
-export default () => (
-  <Content>
-    <p>This page is using Emotion.</p>
-  </Content>
-)
+export default function EmotionSample() {
+  return (
+    <Content>
+      <p>This page is using Emotion.</p>
+    </Content>
+  )
+}
 ```
 
 ### Additional resources
