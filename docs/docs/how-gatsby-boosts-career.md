@@ -14,6 +14,6 @@ In general, great engineering career opportunities often lie in developing exper
 
 For an inspiring story on how Gatsby has already transformed someone's career, read our [interview with Ahmed Alahmady](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career/) on the Gatsby blog.
 
---
+---
 
 **Note:** do you have more ideas on how Gatsby can boost your career? We welcome contributions to this page. Find out [how to contribute](/contributing/docs-contributions/).

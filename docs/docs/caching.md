@@ -59,5 +59,9 @@ server on each request. However, if you are correctly utilizing ETags or Last-Mo
 validation you will avoid downloading assets when the cached copy is still valid
 (e.g. the file hasn't changed on the origin server since it was cached).
 
+<!--lint disable no-unused-definitions -->
+
 [2]: https://tools.ietf.org/html/rfc7234#section-5.2.2.1
 [3]: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#no-cache_and_no-store
+
+<!--lint enable no-unused-definitions -->

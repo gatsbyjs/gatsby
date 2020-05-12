@@ -1,5 +1,6 @@
 const typeDefs = `
   type MarkdownHeading {
+    id: String
     value: String
     depth: Int
   }

@@ -19,7 +19,6 @@ const {
   buildInterfaceType,
 } = require(`../types/type-builders`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
 

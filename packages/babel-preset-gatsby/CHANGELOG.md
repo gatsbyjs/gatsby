@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.0...babel-preset-gatsby@0.4.1) (2020-05-05)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** remove prop-types in production for dependencies ([#23609](https://github.com/gatsbyjs/gatsby/issues/23609)) ([a844157](https://github.com/gatsbyjs/gatsby/commit/a844157))
+
 # [0.4.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.6...babel-preset-gatsby@0.4.0) (2020-04-27)
 
 **Note:** Version bump only for package babel-preset-gatsby
