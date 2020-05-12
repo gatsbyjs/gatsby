@@ -156,7 +156,7 @@ app.post("/contact", function (req, res) {
 app.listen(3000)
 ```
 
-This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Vercel Now](https://vercel.com/home).
+This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Vercel](https://vercel.com/home).
 
 Once deployed, note the url of the deployment (something like `my-project-abcd123.now.sh`), and use it as your form action:
 
