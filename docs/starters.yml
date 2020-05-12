@@ -6178,6 +6178,19 @@
     - Snipcart e-commerce starter
     - Flotiq CMS as a product source
     - Deploy to Heroku
+- url: https://goodpraxis.coop
+  repo: https://github.com/GoodPraxis/gp-gatsby-starter-ts-sass-jest
+  description: A solid, basic Gatsby starter used by Good Praxis suitable for many different types of projects
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - SEO
+    - Testing
+  features:
+    - TypeScript support
+    - SCSS for styling
+    - JEST tests
+    - Simple SEO setup
 - url: https://gatsby-markdown-personal-website.netlify.app/
   repo: https://github.com/SaimirKapaj/gatsby-markdown-personal-website
   description: Gatsby Markdown Personal Website Starter, using Styled Components, Tailwindcss and Framer Motion.
