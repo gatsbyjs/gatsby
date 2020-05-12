@@ -75,9 +75,9 @@
             - title: Deploying to Heroku
               link: /docs/deploying-to-heroku/
               breadcrumbTitle: Heroku
-            - title: Deploying to ZEIT Now
-              link: /docs/deploying-to-zeit-now/
-              breadcrumbTitle: ZEIT Now
+            - title: Deploying to Vercel
+              link: /docs/deploying-to-vercel/
+              breadcrumbTitle: Vercel
             - title: Deploying to Cloudflare Workers
               link: /docs/deploying-to-cloudflare-workers/
               breadcrumbTitle: Cloudflare Workers
