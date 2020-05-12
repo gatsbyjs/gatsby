@@ -6067,6 +6067,22 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://dropinblog-gatsby-starter.netlify.app/
+  repo: https://github.com/DynamisDevelopment/dib-gatsby-starter
+  description: A quick and simple Gatsby solution for the simplest blogging solution.
+  tags:
+    - Blog
+    - Netlify
+    - Pagination
+    - SEO
+    - CMS:Headless
+    - Styling:SCSS
+    - Styling:CSS-in-JS
+    - Styling:Tailwind
+  features:
+    - Pagination
+    - Beautifully designed landing page.
+    - Includes Chakra-UI and Tailwind CSS
 - url: https://gatsby-material-typescript-starter.netlify.app
   repo: https://github.com/Junscuzzy/gatsby-material-typescript-starter
   description: A simple starter using Typescript, eslint, prettier & @Material-ui
