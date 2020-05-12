@@ -5413,11 +5413,15 @@
     - CMS:Headless
     - CMS:Contentful
     - Portfolio
+    - PWA
+    - Testing
   features:
     - Styled components
     - Responsive webpage
     - Portfolio
     - Blog
+    - Testing
+    - PWA
 - url: https://example-site-for-square-starter.netlify.com/
   repo: https://github.com/jonniebigodes/example-site-for-square-starter
   description: A barebones starter to help you kickstart your next Gatsby project with Square payments
