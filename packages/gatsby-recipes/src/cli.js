@@ -192,6 +192,22 @@ function eliminateNewLines(children) {
 
 const components = {
   inlineCode: props => <Text {...props} />,
+  code: props => {
+    const children = props.children.trim()
+    // eslint-disable-next-line
+    let language = "```"
+    if (props.className) {
+      // eslint-disable-next-line
+      language = "```" + props.className.split(`-`)[1]
+    }
+    return (
+      <Div>
+        {language}
+        <Text>{children}</Text>
+        ```
+      </Div>
+    )
+  },
   h1: props => (
     <Div marginBottom={1}>
       <Text bold underline {...props} />
