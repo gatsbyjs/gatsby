@@ -20,7 +20,7 @@ const logDeprecationNotice = (prop, replacement) => {
 }
 
 // Handle legacy props during their deprecation phase
-const convertProps = props => {
+const convertProps = (props) => {
   let convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
@@ -55,10 +55,10 @@ const convertProps = props => {
  * @param currentData  {{media?: string}[]}   The props to check for images.
  * @return {boolean}
  */
-const hasArtDirectionSupport = currentData =>
+const hasArtDirectionSupport = (currentData) =>
   !!currentData &&
   Array.isArray(currentData) &&
-  currentData.some(image => typeof image.media !== `undefined`)
+  currentData.some((image) => typeof image.media !== `undefined`)
 
 /**
  * Tries to detect if a media query matches the current viewport.
@@ -85,7 +85,7 @@ const getImageSrcKey = ({ fluid, fixed }) => {
  * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
  * @return {{src: string, media?: string}}
  */
-const getCurrentSrcData = currentData => {
+const getCurrentSrcData = (currentData) => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
     // Do we have an image for the current Viewport?
     const foundMedia = currentData.findIndex(matchesMedia)
@@ -95,7 +95,7 @@ const getCurrentSrcData = currentData => {
 
     // No media matches, select first element without a media condition
     const noMedia = currentData.findIndex(
-      image => typeof image.media === `undefined`
+      (image) => typeof image.media === `undefined`
     )
     if (noMedia !== -1) {
       return currentData[noMedia]
@@ -108,14 +108,14 @@ const getCurrentSrcData = currentData => {
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
 const imageCache = Object.create({})
-const inImageCache = props => {
+const inImageCache = (props) => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
   return imageCache[src] || false
 }
 
-const activateCacheForImage = props => {
+const activateCacheForImage = (props) => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
@@ -140,8 +140,8 @@ function getIO() {
     window.IntersectionObserver
   ) {
     io = new window.IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (listeners.has(entry.target)) {
             const cb = listeners.get(entry.target)
             // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
@@ -181,7 +181,7 @@ function generateImageSources(imageVariants) {
 function groupByMedia(imageVariants) {
   const withMedia = []
   const without = []
-  imageVariants.forEach(variant =>
+  imageVariants.forEach((variant) =>
     (variant.media ? withMedia : without).push(variant)
   )
 
@@ -207,25 +207,23 @@ function generateBase64Sources(imageVariants) {
 }
 
 function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
-  const propsObj = {};
+  const propsObj = {}
 
-  propsObj["media"] = media;
-  if(isWebp) propsObj["type"] ='image/webp'
-  propsObj["srcset"] = isWebp ? srcSetWebp : srcSet
-  propsObj["sizes"] = sizes
+  propsObj[`media`] = media
+  if (isWebp) propsObj[`type`] = `image/webp`
+  propsObj[`srcset`] = isWebp ? srcSetWebp : srcSet
+  propsObj[`sizes`] = sizes
 
-  return <source {...propsObj}/>
+  return <source {...propsObj} />
 }
 
 function generateNoscriptSources(imageVariants) {
-  return imageVariants
-    .map(
-      (variant, i) =>
-        (<React.Fragment key={i}>
-          {!!variant.srcSetWebp && generateNoscriptSource(variant, true)}
-          {generateNoscriptSource(variant)}
-        </React.Fragment>)
-    )
+  return imageVariants.map((variant, i) => (
+    <React.Fragment key={i}>
+      {!!variant.srcSetWebp && generateNoscriptSource(variant, true)}
+      {generateNoscriptSource(variant)}
+    </React.Fragment>
+  ))
 }
 
 const listenToIntersections = (el, cb) => {
@@ -242,31 +240,31 @@ const listenToIntersections = (el, cb) => {
   }
 }
 
-const noscriptImg = props => {
+const noscriptImg = (props) => {
   const propsObj = {}
 
   // Required Attributes
-  propsObj["src"] = props.src || ""
-  propsObj["alt"] = props.alt || ""
+  propsObj[`src`] = props.src || ``
+  propsObj[`alt`] = props.alt || ``
 
-  propsObj["sizes"] = props.sizes
-  propsObj["srcSet"] = props.srcSet
-  propsObj["title"] = props.title
-  propsObj["width"] = props.width
-  propsObj["height"] = props.height
-  propsObj["crossOrigin"] = props.crossOrigin
-  propsObj["loading"] = props.loading
-  propsObj["draggable"] = props.draggable
+  propsObj[`sizes`] = props.sizes
+  propsObj[`srcSet`] = props.srcSet
+  propsObj[`title`] = props.title
+  propsObj[`width`] = props.width
+  propsObj[`height`] = props.height
+  propsObj[`crossOrigin`] = props.crossOrigin
+  propsObj[`loading`] = props.loading
+  propsObj[`draggable`] = props.draggable
 
-  propsObj["style"] = {
-    position: "absolute",
+  propsObj[`style`] = {
+    position: `absolute`,
     top: 0,
     left: 0,
     opacity: 1,
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "center",
+    width: `100%`,
+    height: `100%`,
+    objectFit: `cover`,
+    objectPosition: `center`,
     ...props.imgStyle,
   }
 
