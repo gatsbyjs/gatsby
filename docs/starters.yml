@@ -6071,16 +6071,16 @@
   repo: https://github.com/DynamisDevelopment/dib-gatsby-starter
   description: A quick and simple Gatsby solution for the simplest blogging solution.
   tags:
-    - Blog 
+    - Blog
     - Netlify
-    - Pagination 
-    - SEO 
+    - Pagination
+    - SEO
     - CMS:Headless
     - Styling:SCSS
     - Styling:CSS-in-JS
     - Styling:Tailwind
   features:
-    - Pagination 
+    - Pagination
     - Beautifully designed landing page.
     - Includes Chakra-UI and Tailwind CSS
 - url: https://gatsby-material-typescript-starter.netlify.app
