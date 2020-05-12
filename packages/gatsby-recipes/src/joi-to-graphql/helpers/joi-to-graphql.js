@@ -5,8 +5,9 @@ const {
   GraphQLInputObjectType,
   GraphQLList,
 } = require(`graphql`)
-const TypeDictionary = require(`./type-dictionary`)
+const { GraphQLJSONObject } = require(`graphql-type-json`)
 const Hoek = require(`@hapi/hoek`)
+const TypeDictionary = require(`./type-dictionary`)
 const internals = {}
 let cache = {}
 const lazyLoadQueue = []
@@ -112,10 +113,18 @@ internals.buildFields = fields => {
     const key = field.key
 
     if (field.schema._type === `object`) {
-      const Type = new GraphQLObjectType({
-        name: field.key.charAt(0).toUpperCase() + field.key.slice(1),
-        fields: internals.buildFields(field.schema._inner.children),
-      })
+      let Type
+      if (!field.schema._inner.children) {
+        // When there's an object with no children that means we've
+        // called Joi.object() and permit any key. As such let's specify
+        // a JSON GraphQL object type that's just as permissive.
+        Type = GraphQLJSONObject
+      } else {
+        Type = new GraphQLObjectType({
+          name: field.key.charAt(0).toUpperCase() + field.key.slice(1),
+          fields: internals.buildFields(field.schema._inner.children),
+        })
+      }
 
       attrs[key] = {
         type: Type,
