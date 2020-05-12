@@ -1,4 +1,5 @@
 const path = require(`path`)
+const _ = require(`lodash`)
 const slugify = require(`slugify`)
 
 const docSlugFromPath = parsedFilePath => {
