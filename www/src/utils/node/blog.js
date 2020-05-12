@@ -1,4 +1,5 @@
 const path = require(`path`)
+const slugify = require(`slugify`)
 
 const docSlugFromPath = parsedFilePath => {
   if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
