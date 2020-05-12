@@ -1,6 +1,9 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 const slugify = require(`slugify`)
+const moment = require(`moment`)
+const url = require(`url`)
+const { slash } = require(`gatsby-core-utils`)
 
 const docSlugFromPath = parsedFilePath => {
   if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
