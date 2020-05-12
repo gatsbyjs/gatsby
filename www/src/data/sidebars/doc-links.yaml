@@ -105,6 +105,9 @@
             - title: Deploying to Gatsby Cloud
               link: /docs/deploying-to-gatsby-cloud/
               breadcrumbTitle: Gatsby Cloud
+            - title: Deploying to Clodui
+              link: /docs/deploying-to-clodui/
+              breadcrumbTitle: Clodui
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages

@@ -6,7 +6,7 @@
   "author": "@gatsbyjs",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "gatsby": "^2.21.21",
+    "gatsby": "^2.21.22",
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-source-graphql": "^2.5.1",
     "prop-types": "^15.7.2",
