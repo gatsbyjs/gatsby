@@ -88,7 +88,7 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 
 ### Prerequisites
 
-- A [Vercel Now](https://vercel.com/signup) account
+- A [Vercel](https://vercel.com/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
 - [Now CLI](https://vercel.com/download) package installed
 - [Gatsby CLI](/docs/gatsby-cli) installed
