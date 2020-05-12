@@ -68,6 +68,7 @@ module.exports = {
 | `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site.                                                                                   |
 | `disableThemeUiStyling`  | `false`          | Set this flag `true` if you want to use the blog theme without `gatsby-plugin-theme-ui` styles. Note that styles within the components you can shadow still exist. |
 | `excerptLength`          | `140`            | Length of the auto-generated excerpt of a blog post                                                                                                                |
+| `webfontURL`             | `''`             | URL for the webfont you'd like to include. Be sure that your local theme does not override it.                                                                     |
 
 #### Example configuration
 
