@@ -3,14 +3,21 @@
 
 import path from "path"
 
+interface IPresetOptions {
+  stage?: "build-javascript" | "build-html" | "develop" | "develop-html"
+}
+
 // export default is required here because it is passed directly to webpack
 // via require.resolve
 // This function has a better inference than would be beneficial to type, and it's relatively easy to grok.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default () => {
+export default (_?: unknown, options: IPresetOptions = {}) => {
   const absoluteRuntimePath = path.dirname(
     require.resolve(`@babel/runtime/package.json`)
   )
+
+  // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
+  const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
 
   return {
     // Babel assumes ES Modules, which isn't safe until CommonJS
@@ -53,6 +60,13 @@ export default () => {
       ],
       // Adds syntax support for import()
       require.resolve(`@babel/plugin-syntax-dynamic-import`),
-    ],
+      stage === `build-javascript` && [
+        // Remove PropTypes from production build
+        require.resolve(`babel-plugin-transform-react-remove-prop-types`),
+        {
+          removeImport: true,
+        },
+      ],
+    ].filter(Boolean),
   }
 }

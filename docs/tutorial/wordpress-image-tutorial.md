@@ -2,17 +2,17 @@
 title: "Adding Images to a WordPress Site"
 ---
 
-### What this tutorial covers:
+## What this tutorial covers:
 
 In this tutorial, you will install the several image plugins and components in order to pull image data from a WordPress account into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://using-wordpress.gatsbyjs.org/sample-post-1) shows you a sample of what you’re going to be building in this tutorial, although in this tutorial you’ll just focus on adding images.
 
-### Why go through this tutorial?
+## Why go through this tutorial?
 
 Images are one of the most beautiful and striking ways to communicate to people, and are a key part of creating an effective and positive user experience; at the same time, high quality images can load slowly and cause text boxes to jump around, both of which make it difficult for people to be patient with visiting your website.
 
 The Gatsby Way™ of creating images describes a set of best practices that help you optimize performance and responsiveness of images so that you can get the benefits of awesome images that don't slow down your site. This [Gatsbygram site](https://gatsbygram.gatsbyjs.org/) (an Instagram feed fed through Gatsby) shows off the svg image tracing effect. Here’s an [image processing demo site](https://image-processing.gatsbyjs.org/) exploring how to have fun with images in your Gatsby site.
 
-### Installing the `gatsby-source-wordpress` plugin
+## Installing the `gatsby-source-wordpress` plugin
 
 First you’ll need to install the `gatsby-source-wordpress` plugin that has images ready for you to pull into your site.
 
@@ -68,7 +68,7 @@ module.exports = {
 }
 ```
 
-### Installing plugins to help with images
+## Installing plugins to help with images
 
 Now you will need to add the `gatsby-transformer-sharp` and `gatsby-plugin-sharp` plugins to `gatsby-config.js`, add a GraphQL query to a page, add an image to the page, and then view the result in the browser.
 
@@ -119,7 +119,7 @@ module.exports = {
 }
 ```
 
-### Creating GraphQL queries that pull in images from WordPress
+## Creating GraphQL queries that pull in images from WordPress
 
 Now you are ready to create a GraphQL query to pull in some images from the WordPress site.
 
@@ -197,7 +197,7 @@ Here’s an example query for generating different sizes of an image:
 
 In either case, you can add traced SVG support by adding `_tracedSVG` to the end of each fragment. _Note this won’t work in the GraphQL explorer._
 
-### Rendering the images to `index.js`
+## Rendering the images to `index.js`
 
 Here is what your `index.js` should look like with the query added:
 
@@ -255,7 +255,7 @@ Your demo site should look something like this:
 
 ![Demo site example](./images/wordpress-image-tutorial.gif)
 
-### Testing your image loading speed and effects
+## Testing your image loading speed and effects
 
 It is useful and can be fun to purposefully slow down your browser to see image effects animate more slowly.
 
