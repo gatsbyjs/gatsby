@@ -23,12 +23,15 @@ type QueryJob = {
 }
 
 // Run query
-module.exports = async (graphqlRunner, queryJob: QueryJob) => {
+module.exports = async (graphqlRunner, queryJob: QueryJob, { parentSpan }) => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => {
+  const graphql = (query, context, queryName) => {
     // Check if query takes too long, print out warning
-    const promise = graphqlRunner.query(query, context)
+    const promise = graphqlRunner.query(query, context, {
+      parentSpan,
+      queryName,
+    })
     let isPending = true
 
     const timeoutId = setTimeout(() => {
@@ -65,7 +68,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context)
+    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
   }
 
   // If there's a graphql error then log the error. If we're building, also

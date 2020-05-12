@@ -31,7 +31,7 @@ See [docs templates](/docs/docs-templates/) in the contributing docs for more he
 
 ## New automated recipes available!
 
-Looking for information on Gatsby CLI recipes? [Read the press release](/blog/2020-04-15-announcing-gatsby-recipes/) and [See the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to learn more about automating your development workflows with `gatsby recipes`. Note that they are experimental.
+Looking for information on Gatsby CLI recipes? [Read the press release](/blog/2020-04-15-announcing-gatsby-recipes/) and [see the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to learn more about automating your development workflows with `gatsby recipes`. Note that they are experimental.
 
 ## What are recipes?
 
