@@ -112,7 +112,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
   if (errors) throw errors
 
-  const { allMdx: blogPosts, allAuthorYaml } = data
+  const blogPosts = data.allMdx.nodes
 
   const releasedBlogPosts = blogPosts.filter(post =>
     _.get(post, `fields.released`)
@@ -186,7 +186,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   // Create contributor pages.
-  allAuthorYaml.nodes.forEach(node => {
+  data.allAuthorYaml.nodes.forEach(node => {
     createPage({
       path: `${node.fields.slug}`,
       component: slash(contributorPageTemplate),
