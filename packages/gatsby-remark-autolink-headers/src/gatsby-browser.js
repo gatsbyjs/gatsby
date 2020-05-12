@@ -11,8 +11,15 @@ const getTargetOffset = hash => {
         document.body.scrollTop
       let clientTop =
         document.documentElement.clientTop || document.body.clientTop || 0
+      let scrollMarginTop = window
+        .getComputedStyle(element)
+        .getPropertyValue("scroll-margin-top")
       return (
-        element.getBoundingClientRect().top + scrollTop - clientTop - offsetY
+        element.getBoundingClientRect().top +
+        scrollTop -
+        parseInt(scrollMarginTop, 10) -
+        clientTop -
+        offsetY
       )
     }
   }
