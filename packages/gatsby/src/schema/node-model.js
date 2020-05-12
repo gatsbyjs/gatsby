@@ -201,7 +201,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
-    const { query, firstOnly, type, stats } = args || {}
+    const { query, firstOnly, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -213,6 +213,13 @@ class LocalNodeModel {
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
 
+    let materializationActivity
+    if (tracer) {
+      materializationActivity = reporter.phantomActivity(`Materialization`, {
+        parentSpan: tracer.getParentActivity().span,
+      })
+      materializationActivity.start()
+    }
     const fields = getQueryFields({
       filter: query.filter,
       sort: query.sort,
@@ -229,6 +236,18 @@ class LocalNodeModel {
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
+    if (materializationActivity) {
+      materializationActivity.end()
+    }
+
+    let runQueryActivity
+    if (tracer) {
+      runQueryActivity = reporter.phantomActivity(`runQuery`, {
+        parentSpan: tracer.getParentActivity().span,
+      })
+      runQueryActivity.start()
+    }
+
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
@@ -241,6 +260,21 @@ class LocalNodeModel {
       stats,
     })
 
+    if (runQueryActivity) {
+      runQueryActivity.end()
+    }
+
+    let trackInlineObjectsActivity
+    if (tracer) {
+      trackInlineObjectsActivity = reporter.phantomActivity(
+        `trackInlineObjects`,
+        {
+          parentSpan: tracer.getParentActivity().span,
+        }
+      )
+      trackInlineObjectsActivity.start()
+    }
+
     let result = queryResult
     if (firstOnly) {
       if (result?.length > 0) {
@@ -251,6 +285,10 @@ class LocalNodeModel {
       }
     } else if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
+    }
+
+    if (trackInlineObjectsActivity) {
+      trackInlineObjectsActivity.end()
     }
 
     return this.trackPageDependencies(result, pageDependencies)
@@ -726,9 +764,9 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode /*: boolean */,
-  path /*: Set<mixed> */
-) /*: void */ => {
+  isNode /* : boolean */,
+  path /* : Set<mixed> */
+) /* : void */ => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
