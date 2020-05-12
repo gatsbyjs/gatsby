@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.22...gatsby@2.21.23) (2020-05-12)
+
+### Bug Fixes
+
+- handle nullish announcementRef to fix client side redirect error ([#23956](https://github.com/gatsbyjs/gatsby/issues/23956)) ([7a23392](https://github.com/gatsbyjs/gatsby/commit/7a23392))
+
+### Features
+
+- **gatsby:** Add tracing for graphql resolvers ([#23589](https://github.com/gatsbyjs/gatsby/issues/23589)) ([e124aae](https://github.com/gatsbyjs/gatsby/commit/e124aae))
+- **gatsby:** Gatsby config validation should suggest related keys ([#23284](https://github.com/gatsbyjs/gatsby/issues/23284)) ([e50407a](https://github.com/gatsbyjs/gatsby/commit/e50407a))
+
 ## [2.21.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.21...gatsby@2.21.22) (2020-05-11)
 
 **Note:** Version bump only for package gatsby
