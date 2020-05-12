@@ -1,20 +1,14 @@
 ---
-title: Experimental Page Build Optimizations for Incremental Data Changes
+title: Conditional Page Builds
 ---
 
-Building sites with large amounts of content (10,000s nodes upwards) is relatively fast with Gatsby. However, some projects might start to experience issues when adopting CI/CD principles - continuously building and deploying. Gatsby rebuilds the complete app on each `gatsby build` which means the complete app also needs to be deployed. Doing this each time a small data change occurs unnecessarily increases demand on CPU, memory, and bandwidth.
-
-[Incremental Builds](/blog/2020-04-22-announcing-incremental-builds/) provides Gatsby Cloud users with support for incremental data changes to Gatsby sites. Incremental Builds only rebuilds the data that has changed, reliably reducing build times to under 10 seconds.
-
-For projects that require self-hosted environments, where Gatsby Cloud is not an option, the experimental page build optimizations for incremental data changes documented below can help reduce build times, deployment times, and demand on resources.
+If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not true [incremental builds](https://www.gatsbyjs.com/docs/incremental-builds/) as it still needs to run page queries in order to compare the data, it can save time on the HTML-generation step by not calling `createPage` for sites with unchanged data. This feature is experimental, and will only improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
 
 For more info on the standard build process, please see the [overview of the gatsby build process](/docs/overview-of-the-gatsby-build-process/).
 
-For more info on Incremental Builds in Gatsby Cloud, please see [Incremental Builds in Gatsby Cloud](https://www.gatsbyjs.com/docs/incremental-builds/).
-
 ## How to use
 
-To enable this enhancement, use the environment variable `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true` in your `gatsby build` command, for example:
+To enable conditional page builds, use the environment variable `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true` in your `gatsby build` command, for example:
 
 `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages`
 
@@ -52,7 +46,7 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 ## More information
 
-- This enhancement works by comparing the page data from the previous build to the new page data. This creates a list of page directories that are passed to the static build process.
+- This feature works by comparing the page data from the previous build to the new page data. This creates a list of page directories that are passed to the static build process.
 
 - To enable this build option you will need to set an environment variable, which requires access to do so in your build environment.
 
