@@ -13,6 +13,7 @@ const {
   setDefaultTags,
   setTelemetryEnabled,
 } = require(`gatsby-telemetry`)
+const { recipesHandler } = require(`./recipes`)
 
 const handlerP = fn => (...args) => {
   Promise.resolve(fn(...args)).then(
@@ -136,13 +137,18 @@ function buildLocalCommands(cli, isLocalSite) {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (relative path; also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (relative path; also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
+        })
+        .option(`ca-file`, {
+          type: `string`,
+          default: ``,
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
@@ -184,6 +190,20 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
+        })
+        // log-pages and write-to-file are specific to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
+        // because of that they are hidden from `--help` but still defined so `yargs` know about them
+        .option(`log-pages`, {
+          type: `boolean`,
+          default: false,
+          describe: `Log the pages that changes since last build (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          hidden: true,
+        })
+        .option(`write-to-file`, {
+          type: `boolean`,
+          default: false,
+          describe: `Save the log of changed pages for future comparison (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          hidden: true,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
@@ -293,6 +313,12 @@ function buildLocalCommands(cli, isLocalSite) {
       return cmd(args)
     }),
   })
+
+  cli.command({
+    command: `recipes [recipe]`,
+    desc: `[EXPERIMENTAL] Run a recipe`,
+    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
+  })
 }
 
 function isLocalGatsbySite() {
@@ -330,7 +356,9 @@ Gatsby version: ${gatsbyVersion}
 }
 
 module.exports = argv => {
-  const cli = yargs()
+  const cli = yargs().parserConfiguration({
+    "boolean-negation": false,
+  })
   const isLocalSite = isLocalGatsbySite()
 
   cli
@@ -400,11 +428,12 @@ Using a plugin:
 Creating a plugin:
 - Naming a Plugin (https://www.gatsbyjs.org/docs/naming-a-plugin/)
 - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.org/docs/files-gatsby-looks-for-in-a-plugin/)
+- Creating a Generic Plugin (https://www.gatsbyjs.org/docs/creating-a-generic-plugin/)
 - Creating a Local Plugin (https://www.gatsbyjs.org/docs/creating-a-local-plugin/)
 - Creating a Source Plugin (https://www.gatsbyjs.org/docs/creating-a-source-plugin/)
 - Creating a Transformer Plugin (https://www.gatsbyjs.org/docs/creating-a-transformer-plugin/)
 - Submit to Plugin Library (https://www.gatsbyjs.org/contributing/submit-to-plugin-library/)
-- Pixabay Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/pixabay-source-plugin-tutorial/)
+- Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)

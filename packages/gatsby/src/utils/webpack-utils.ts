@@ -10,7 +10,7 @@ import isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
-import GatsbyWebpackEslintGraphqlSchemaReload from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -352,7 +352,14 @@ export const createWebpackUtils = (
         babelrc: false,
         configFile: false,
         compact: false,
-        presets: [require.resolve(`babel-preset-gatsby/dependencies`)],
+        presets: [
+          [
+            require.resolve(`babel-preset-gatsby/dependencies`),
+            {
+              stage,
+            },
+          ],
+        ],
         // If an error happens in a package, it's possible to be
         // because it was compiled. Thus, we don't want the browser
         // debugger to show the original code. Instead, the code
@@ -375,8 +382,13 @@ export const createWebpackUtils = (
             ) {
               return true
             }
-            // If dep is babel-runtime or core-js, exclude
-            if (/@babel(?:\/|\\{1,2})runtime|core-js/.test(modulePath)) {
+            // If dep is known library that doesn't need polyfilling, we don't.
+            // TODO this needs rework, this is buggy as hell
+            if (
+              /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
+                modulePath
+              )
+            ) {
               return true
             }
 
@@ -630,10 +642,8 @@ export const createWebpackUtils = (
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor()
 
-  plugins.eslintGraphqlSchemaReload = (
-    options
-  ): GatsbyWebpackEslintGraphqlSchemaReload =>
-    new GatsbyWebpackEslintGraphqlSchemaReload(options)
+  plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
+    new GatsbyWebpackEslintGraphqlSchemaReload()
 
   return {
     loaders,

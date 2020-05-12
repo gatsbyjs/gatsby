@@ -60,11 +60,7 @@ module.exports = (state = initialState(), action) => {
   }
 }
 
-const ignoredFields = new Set([
-  ...NodeInterfaceFields,
-  `$loki`,
-  `__gatsby_resolved`,
-])
+const ignoredFields = new Set([...NodeInterfaceFields, `__gatsby_resolved`])
 
 const initialTypeMetadata = () => {
   return { ignoredFields }
