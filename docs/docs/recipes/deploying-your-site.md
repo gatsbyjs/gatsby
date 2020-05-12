@@ -103,7 +103,7 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 
 ### Additional resources
 
-- [Deploying to Vercel Now](/docs/deploying-to-now/)
+- [Deploying to Vercel](/docs/deploying-to-vercel/)
 
 ## Deploying to Cloudflare Workers
 
