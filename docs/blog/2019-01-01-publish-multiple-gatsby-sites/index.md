@@ -461,9 +461,9 @@ Hopefully what I’ve said makes more sense with the code in front of us. The `s
 
 ### Now
 
-Now is a tool created by ZEIT that makes the process of deploying Node applications simple. Now has recently released updates to the way they deploy static websites. Fortunately our Gatsby packages build to static sites, so it’s a win for us.
+Now is a tool created by Vercel(formally ZEIT) that makes the process of deploying Node applications simple. Now has recently released updates to the way they deploy static websites. Fortunately our Gatsby packages build to static sites, so it’s a win for us.
 
-If you haven’t used Now before, then go-ahead and [get started](https://zeit.co/now#features). This will install the `now-cli` and get a free account created, things we need for the tutorial. The getting started page also has a brief FAQs section that’s well worth reading.
+If you haven’t used Now before, then go-ahead and [get started](https://vercel.com/home#features). This will install the `now-cli` and get a free account created, things we need for the tutorial. The getting started page also has a brief FAQs section that’s well worth reading.
 
 Travis-CI isn’t permitted to deploy to your Now account by default, and requires a token. You can create a token via the Account Settings page on the Now website. Once you’re there click the tokens tab and create a new token. Copy it to your clipboard, as we’ll be adding to the list of variables that Travis uses in our pipelines. Go to your lerna-monorepo repository in Travis and from the ‘More options’ drop down, click ‘settings’. When you’re here, you’ll see a section called ‘environment variables’. Create a new variable called `NOW_TOKEN` and paste your Now public key as the value. We can now reference the key from within our `.travis.yml` file.
 
