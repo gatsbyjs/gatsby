@@ -1,12 +1,9 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import Bio from "./bio"
-
 const Footer = ({ previous, next }) => (
   <footer>
     <hr />
-    <Bio />
     {(previous || next) && (
       <>
         <li>
