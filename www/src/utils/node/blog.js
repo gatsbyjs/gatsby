@@ -33,15 +33,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({ node, name: `slug`, value: slug })
     createNodeField({ node, name: `section`, value: section })
 
-    const date = _.get(node, `frontmatter.date`)
+    const { date, draft, canonicalLink, publishedAt, excerpt } =
+      node.frontmatter ?? {}
+
     createNodeField({
       node,
       name: `released`,
-      value: !!date && moment.utc().isSameOrAfter(moment.utc(date)),
+      value: !draft && !!date && moment.utc().isSameOrAfter(moment.utc(date)),
     })
-
-    const canonicalLink = _.get(node, `frontmatter.canonicalLink`)
-    const publishedAt = _.get(node, `frontmatter.publishedAt`)
 
     createNodeField({
       node,
@@ -55,7 +54,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       node,
       name: `excerpt`,
-      value: node.frontmatter.excerpt || node.excerpt,
+      value: excerpt || node.excerpt,
     })
   } else if (node.internal.type === `AuthorYaml`) {
     createNodeField({

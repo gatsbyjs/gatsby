@@ -295,8 +295,7 @@ module.exports = {
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
                   filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fields: { section: { eq: "blog" } }
+                    fields: { section: { eq: "blog" }, released: { eq: true } }
                   }
                 ) {
                   nodes {

@@ -96,10 +96,7 @@ export const pageQuery = graphql`
     }
     allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
-      filter: {
-        fields: { section: { eq: "blog" }, released: { eq: true } }
-        frontmatter: { draft: { ne: true } }
-      }
+      filter: { fields: { section: { eq: "blog" }, released: { eq: true } } }
     ) {
       nodes {
         ...BlogPostPreview_item
