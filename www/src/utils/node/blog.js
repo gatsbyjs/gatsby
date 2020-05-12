@@ -13,7 +13,7 @@ const docSlugFromPath = parsedFilePath => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   if (
-    ![`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
+    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
     getNode(node.parent).internal.type === `File`
   ) {
     const fileNode = getNode(node.parent)
