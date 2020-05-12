@@ -4,6 +4,8 @@ description: Learn about contributing to one of the most welcoming communities h
 disableTableOfContents: true
 ---
 
+import EmailCaptureForm from "@components/email-capture-form"
+
 Thanks for being interested in contributing! We're so glad you want to help!
 
 Below you'll find guides on the Gatsby.js community, code of conduct, and how to get started contributing:

@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "cross-env": "^7.0.0",
+    "datocms-client": "^3.0.15",
     "dotenv": "^8.2.0",
+    "faker": "^4.1.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.40",
     "gatsby-plugin-benchmark-reporting": "*",

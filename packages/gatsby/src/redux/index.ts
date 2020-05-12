@@ -7,14 +7,14 @@ import {
 } from "redux"
 import _ from "lodash"
 
-import mitt from "mitt"
+import { mett } from "../utils/mett"
 import thunk from "redux-thunk"
 import reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion } from "./types"
 
 // Create event emitter for actions
-export const emitter = mitt()
+export const emitter = mett()
 
 // Read old node data from cache.
 export const readState = (): IGatsbyState => {
@@ -62,7 +62,7 @@ export const configureStore = (
     applyMiddleware(thunk, multi)
   )
 
-export const store: Store = configureStore(readState())
+export const store: Store<IGatsbyState> = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {

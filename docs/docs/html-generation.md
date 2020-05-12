@@ -15,8 +15,8 @@ In the [previous section](/docs/production-app/), we saw how Gatsby uses webpack
 The high level process is:
 
 1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
-1. Build a `render-page.js` that takes a page path and renders its HTML
-1. For each page in redux, call `render-page.js`
+2. Build a `render-page.js` that takes a page path and renders its HTML
+3. For each page in redux, call `render-page.js`
 
 ## Webpack
 

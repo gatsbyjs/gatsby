@@ -3,6 +3,119 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.24](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.23...gatsby@2.21.24) (2020-05-12)
+
+### Bug Fixes
+
+- **gatsby:** allow elemMatch on non-arrays, fix tests ([#23634](https://github.com/gatsbyjs/gatsby/issues/23634)) ([1d99ffd](https://github.com/gatsbyjs/gatsby/commit/1d99ffd))
+
+### Performance Improvements
+
+- **gatsby:** enable fast filters for lt and gt ([#23978](https://github.com/gatsbyjs/gatsby/issues/23978)) ([1d22341](https://github.com/gatsbyjs/gatsby/commit/1d22341))
+
+## [2.21.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.22...gatsby@2.21.23) (2020-05-12)
+
+### Bug Fixes
+
+- handle nullish announcementRef to fix client side redirect error ([#23956](https://github.com/gatsbyjs/gatsby/issues/23956)) ([7a23392](https://github.com/gatsbyjs/gatsby/commit/7a23392))
+
+### Features
+
+- **gatsby:** Add tracing for graphql resolvers ([#23589](https://github.com/gatsbyjs/gatsby/issues/23589)) ([e124aae](https://github.com/gatsbyjs/gatsby/commit/e124aae))
+- **gatsby:** Gatsby config validation should suggest related keys ([#23284](https://github.com/gatsbyjs/gatsby/issues/23284)) ([e50407a](https://github.com/gatsbyjs/gatsby/commit/e50407a))
+
+## [2.21.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.21...gatsby@2.21.22) (2020-05-11)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.20...gatsby@2.21.21) (2020-05-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.19...gatsby@2.21.20) (2020-05-08)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.18...gatsby@2.21.19) (2020-05-07)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.17...gatsby@2.21.18) (2020-05-07)
+
+### Performance Improvements
+
+- **gatsby:** replace `mitt` with a modern Map/Set based version of it ([#23223](https://github.com/gatsbyjs/gatsby/issues/23223)) ([986f7b8](https://github.com/gatsbyjs/gatsby/commit/986f7b8))
+
+## [2.21.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.16...gatsby@2.21.17) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby:** print LAN url with serve (like gatsby develop) ([#23418](https://github.com/gatsbyjs/gatsby/issues/23418)) ([0dc20a3](https://github.com/gatsbyjs/gatsby/commit/0dc20a3))
+- **gatsby:** use scoped requires for theme plugins ([#23696](https://github.com/gatsbyjs/gatsby/issues/23696)) ([4430687](https://github.com/gatsbyjs/gatsby/commit/4430687))
+
+### Performance Improvements
+
+- **gatsby:** include node counts in output after sourcing steps ([#23671](https://github.com/gatsbyjs/gatsby/issues/23671)) ([192faf6](https://github.com/gatsbyjs/gatsby/commit/192faf6))
+
+## [2.21.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.15...gatsby@2.21.16) (2020-05-06)
+
+### Features
+
+- **gatsby/dev-404-page:** support reading and writing filter to `?filter` query string ([#23618](https://github.com/gatsbyjs/gatsby/issues/23618)) ([8f4257a](https://github.com/gatsbyjs/gatsby/commit/8f4257a))
+
+## [2.21.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.14...gatsby@2.21.15) (2020-05-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.13...gatsby@2.21.14) (2020-05-06)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.12...gatsby@2.21.13) (2020-05-05)
+
+### Bug Fixes
+
+- Add 98124 error to better help with "Can't resolve [...]" errors ([#23741](https://github.com/gatsbyjs/gatsby/issues/23741)) ([9970faf](https://github.com/gatsbyjs/gatsby/commit/9970faf))
+
+## [2.21.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.11...gatsby@2.21.12) (2020-05-05)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** remove prop-types in production for dependencies ([#23609](https://github.com/gatsbyjs/gatsby/issues/23609)) ([a844157](https://github.com/gatsbyjs/gatsby/commit/a844157))
+- **gatsby:** log config validation errors ([#23620](https://github.com/gatsbyjs/gatsby/issues/23620)) ([62d6bb4](https://github.com/gatsbyjs/gatsby/commit/62d6bb4))
+
+## [2.21.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.10...gatsby@2.21.11) (2020-05-04)
+
+### Bug Fixes
+
+- **gatsby:** Fix dirty check for schema rebuilding ([#23658](https://github.com/gatsbyjs/gatsby/issues/23658)) ([fa50f3e](https://github.com/gatsbyjs/gatsby/commit/fa50f3e))
+
+## [2.21.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.9...gatsby@2.21.10) (2020-05-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.8...gatsby@2.21.9) (2020-05-01)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.7...gatsby@2.21.8) (2020-05-01)
+
+### Bug Fixes
+
+- **gatsby:** add maxAsyncRequests to infinity to reduce bundle size ([#23528](https://github.com/gatsbyjs/gatsby/issues/23528)) ([0acafdd](https://github.com/gatsbyjs/gatsby/commit/0acafdd))
+
+## [2.21.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.6...gatsby@2.21.7) (2020-04-30)
+
+### Bug Fixes
+
+- **gatsby:** fix binary search incorrectly setting next pivot + tests ([#23637](https://github.com/gatsbyjs/gatsby/issues/23637)) ([867cb31](https://github.com/gatsbyjs/gatsby/commit/867cb31))
+
+## [2.21.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.5...gatsby@2.21.6) (2020-04-30)
+
+### Performance Improvements
+
+- **gatsby:** support fast filters for gte ([#23348](https://github.com/gatsbyjs/gatsby/issues/23348)) ([a69701b](https://github.com/gatsbyjs/gatsby/commit/a69701b))
+
 ## [2.21.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.4...gatsby@2.21.5) (2020-04-29)
 
 **Note:** Version bump only for package gatsby

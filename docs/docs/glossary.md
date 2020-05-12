@@ -3,6 +3,8 @@ title: Glossary
 disableTableOfContents: true
 ---
 
+import HorizontalNavList from "@components/horizontal-nav-list"
+
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
@@ -185,6 +187,10 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 ### Inference
 
 As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
+
+### [Infrastructure As Code](/docs/glossary/infrastructure-as-code/)
+
+Infrastructure As Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
 
 ## J
 
