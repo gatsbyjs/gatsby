@@ -6235,3 +6235,34 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+url: https://a2zarslaan.github.io/gatsby-starter-sasslan/
+  repo: https://github.com/a2zarslaan/gatsby-starter-sasslan
+  description:A minimalistic Gatsby starter template featuring SASS and CSS 7-1 architecture.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+    - CSS Modules
+    - SASS
+    - 7-1 Architecture
+    - Page Transitions
+    - SVG
+    - Google Fonts
+    - Responsive Design
+    - Github Pages
+    - Landing Page
+    - Beautiful typography 
+  features:
+    - Markdown
+    - CSS 7-1 Architecture
+    - GraphQL IDE 
+    - Page Transitions
+    - Easy to edit CSS variables
+    - Styled Components
+    - SVG icons
+    - Google fonts
+    - Desktop-First Design
+    - Responsive Design
+    - React Helmet
+    - Gatsby Remark Images
+    - Code Readability
