@@ -7,9 +7,9 @@ const ROOT = path.join(__dirname, `..`, `..`)
 const OUTPUT_FILE = path.join(ROOT, `latest-apis.json`)
 
 export interface IAPIResponse {
-  browser: object
-  node: object
-  ssr: object
+  browser: Object
+  node: Object
+  ssr: Object
 }
 
 export const getLatestAPIs = async (): Promise<IAPIResponse> => {
@@ -20,7 +20,7 @@ export const getLatestAPIs = async (): Promise<IAPIResponse> => {
 
     return data
   } catch (e) {
-    if (await fs.exists(OUTPUT_FILE)) {
+    if (await fs.pathExists(OUTPUT_FILE)) {
       return fs.readJSON(OUTPUT_FILE)
     }
     // possible offline/network issue
