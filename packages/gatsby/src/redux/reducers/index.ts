@@ -11,6 +11,7 @@ import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { configReducer } from "./config"
 import { lastActionReducer } from "./last-action"
+import { jobsV2Reducer } from "./jobsv2"
 import nodesByTypeReducer from "./nodes-by-type"
 import programReducer from "./program"
 import resolvedNodesReducer from "./resolved-nodes"
@@ -19,7 +20,6 @@ import flattenedPluginsReducer from "./flattened-plugins"
 import componentDataDependenciesReducer from "./component-data-dependencies"
 import componentsReducer from "./components"
 import jobsReducer from "./jobs"
-import jobsv2Reducer from "./jobsv2"
 import babelrcReducer from "./babelrc"
 import schemaCustomizationReducer from "./schema-customization"
 import inferenceMetadataReducer from "./inference-metadata"
@@ -44,7 +44,7 @@ export {
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,
   jobsReducer as jobs,
-  jobsv2Reducer as jobsV2,
+  jobsV2Reducer as jobsV2,
   webpackReducer as webpack,
   webpackCompilationHashReducer as webpackCompilationHash,
   redirectsReducer as redirects,

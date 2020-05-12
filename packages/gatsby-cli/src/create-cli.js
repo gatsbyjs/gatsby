@@ -150,6 +150,11 @@ function buildLocalCommands(cli, isLocalSite) {
           default: ``,
           describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
+        .option(`graphql-tracing`, {
+          type: `boolean`,
+          describe: `Trace every graphql resolver, may have performance implications`,
+          default: false,
+        })
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
@@ -187,9 +192,28 @@ function buildLocalCommands(cli, isLocalSite) {
           default: false,
           describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
         })
+        .option(`graphql-tracing`, {
+          type: `boolean`,
+          describe: `Trace every graphql resolver, may have performance implications`,
+          default: false,
+        })
         .option(`open-tracing-config-file`, {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
+        })
+        // log-pages and write-to-file are specific to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
+        // because of that they are hidden from `--help` but still defined so `yargs` know about them
+        .option(`log-pages`, {
+          type: `boolean`,
+          default: false,
+          describe: `Log the pages that changes since last build (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          hidden: true,
+        })
+        .option(`write-to-file`, {
+          type: `boolean`,
+          default: false,
+          describe: `Save the log of changed pages for future comparison (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          hidden: true,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args, cmd) => {
