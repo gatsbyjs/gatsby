@@ -286,7 +286,6 @@ function init(lifecycle) {
     )
 
     benchMeta.markStart()
-    benchMeta.markDataPoint(lifecycle)
   }
 }
 
@@ -305,7 +304,7 @@ process.on(`exit`, () => {
 
 async function onPreInit(api) {
   lastApi = api
-  init(`onPreInit`)
+  init(`preInit`)
   benchMeta.markDataPoint(`preInit`)
 }
 
