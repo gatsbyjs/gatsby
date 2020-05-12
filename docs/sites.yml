@@ -10422,6 +10422,15 @@
     - Healthcare
   built_by: Albert Chen
   built_by_url: https://github.com/mralbertchen
+- title: Most Recommended Books
+  url: http://mostrecommendedbooks.com/
+  main_url: http://mostrecommendedbooks.com/
+  description: >
+    Discover credibly powerful books recommendations by billionaires, icons, and world-class performers.
+  categories:
+    - Blog
+    - Entrepreneurship
+    - Books
 - title: theAnubhav.com
   main_url: https://theanubhav.com/
   url: https://theanubhav.com/
