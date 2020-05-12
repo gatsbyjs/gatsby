@@ -138,7 +138,10 @@ export class GraphQLRunner {
   query(
     query: Query,
     context: Record<string, unknown>,
-    tracing?: { parentSpan: Span; queryName: string }
+    {
+      parentSpan,
+      queryName,
+    }: { parentSpan: Span | undefined; queryName: string }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -170,11 +173,11 @@ export class GraphQLRunner {
     const errors = this.validate(schema, document)
 
     let tracer
-    if (this.graphqlTracing && tracing) {
+    if (this.graphqlTracing && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
-        parentSpan: tracing.parentSpan,
+        parentSpan: parentSpan,
         tags: {
-          queryName: tracing.queryName,
+          queryName: queryName,
         },
       })
 

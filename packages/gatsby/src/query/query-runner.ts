@@ -1,3 +1,5 @@
+import { Span } from "opentracing"
+import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
 
@@ -32,12 +34,50 @@ interface IExecutionResult extends ExecutionResult {
 // Run query
 export const queryRunner = async (
   graphqlRunner: GraphQLRunner,
-  queryJob: IQueryJob
+  queryJob: IQueryJob,
+  parentSpan: Span | undefined
 ): Promise<IExecutionResult> => {
   const { program } = store.getState()
 
-  const graphql = (query: string, context: any): Promise<ExecutionResult> =>
-    graphqlRunner.query(query, context)
+  const graphql = (
+    query: string,
+    context: Record<string, unknown>,
+    queryName: string
+  ): Promise<ExecutionResult> => {
+    // Check if query takes too long, print out warning
+    const promise = graphqlRunner.query(query, context, {
+      parentSpan,
+      queryName,
+    })
+    let isPending = true
+
+    const timeoutId = setTimeout(() => {
+      if (isPending) {
+        const messageParts = [
+          `Query takes too long:`,
+          `File path: ${queryJob.componentPath}`,
+        ]
+
+        if (queryJob.isPage) {
+          const { path, context } = queryJob.context
+          messageParts.push(`URL path: ${path}`)
+
+          if (!_.isEmpty(context)) {
+            messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
+          }
+        }
+
+        report.warn(messageParts.join(`\n`))
+      }
+    }, 15000)
+
+    promise.finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
+
+    return promise
+  }
 
   // Run query
   let result: IExecutionResult
@@ -45,7 +85,7 @@ export const queryRunner = async (
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context)
+    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
   }
 
   // If there's a graphql error then log the error. If we're building, also
