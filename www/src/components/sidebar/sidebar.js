@@ -89,10 +89,11 @@ export default withI18n()(function Sidebar({
 
   function toggleExpandAll() {
     if (expandAll) {
-      setOpenSectionHash(derivedHash)
+      // Close everything except the initial open section
+      setOpenSectionHash(initialHash)
     } else {
       const newOpenSectionHash = {}
-      for (const key of Object.keys(derivedHash)) {
+      for (const key of Object.keys(initialHash)) {
         newOpenSectionHash[key] = true
       }
       setOpenSectionHash(newOpenSectionHash)
