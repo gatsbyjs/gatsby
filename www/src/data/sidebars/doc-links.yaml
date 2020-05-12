@@ -793,6 +793,8 @@
           link: /docs/glossary/node/
         - title: npm
           link: /docs/glossary/npm/
+        - title: Progressive Enhancement
+          link: /docs/glossary/progressive-enhancement/
         - title: React
           link: /docs/glossary/react/
         - title: Server Side Rendering
