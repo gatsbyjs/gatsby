@@ -47,7 +47,7 @@ Add the plugin to your project.
 
 2. In the root of your project, create an environment file called `.env` and add your Cloudinary credentials and their values
 
-```
+```shell
 CLOUDINARY_API_KEY=xxxxxxxxxxxxxx
 CLOUDINARY_API_SECRET=xxxxxxxxxxxxxxxxxxxx
 CLOUDINARY_CLOUD_NAME=xxxxx
@@ -109,7 +109,7 @@ Before using the `gatsby-transformer-cloudinary` plugin you should do the follow
 
 2. In the root of your project, create an environment file called `.env` to which to add your Cloudinary credentials and their values.
 
-```
+```shell
 CLOUDINARY_API_KEY=xxxxxxxxxxxxxx
 CLOUDINARY_API_SECRET=xxxxxxxxxxxxxxxxxxxx
 CLOUDINARY_CLOUD_NAME=xxxxx

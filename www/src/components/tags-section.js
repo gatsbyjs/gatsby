@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import Link from "./localized-link"
 import { TiTags as TagsIcon } from "react-icons/ti"
-const { kebabCase } = require(`lodash-es`)
+import { kebabCase } from "lodash-es"
 
 import Button from "./button"
 

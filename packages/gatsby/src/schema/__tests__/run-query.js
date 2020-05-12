@@ -2,9 +2,6 @@ const { runQuery: nodesQuery } = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
-// Note: loki does not match redux in certain node cases in this file
-const IS_LOKI = require(`../../db/__tests__/fixtures/ensure-loki`)()
-
 const makeNodesUneven = () => [
   // Note: This is assumed to be an uneven node count
   {
@@ -219,6 +216,20 @@ const makeNodesEven = () => [
   },
 ]
 
+function make100Nodes(even) {
+  const arr = []
+
+  for (let i = 0; i < (even ? 100 : 99); ++i) {
+    arr.push({
+      id: String(i),
+      internal: { type: `Test`, contentDigest: `a${i}b` },
+      exh: i + 1,
+    })
+  }
+
+  return arr
+}
+
 function makeGqlType(nodes) {
   const { createSchemaComposer } = require(`../../schema/schema-composer`)
   const { addInferredFields } = require(`../infer/add-inferred-fields`)
@@ -268,9 +279,6 @@ async function runFilterOnCache(filter, filtersCache) {
 }
 
 it(`should use the cache argument`, async () => {
-  // Loki does not use this system at all
-  if (IS_LOKI) return
-
   const filtersCache = new Map()
   const [result] = await runFilterOnCache({ hair: { eq: 2 } }, filtersCache)
 
@@ -407,8 +415,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`does not coerce numbers against single-element arrays`, async () => {
-          if (IS_LOKI) return
-
           const needle = `8` // note: `('8' == [8]) === true`
           const [result] = await runFilter({
             singleArray: { eq: needle },
@@ -421,8 +427,6 @@ it(`should use the cache argument`, async () => {
 
       describe(`$ne`, () => {
         it(`handles ne operator`, async () => {
-          if (IS_LOKI) return
-
           const needle = 2
           const [result, allNodes] = await runFilter({ hair: { ne: needle } })
 
@@ -434,8 +438,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`coerces number to string`, async () => {
-          if (IS_LOKI) return
-
           const needle = 2 // Note: `id` is a numstr
           const [result, allNodes] = await runFilter({ id: { ne: needle } })
 
@@ -448,8 +450,6 @@ it(`should use the cache argument`, async () => {
 
         // This test causes a stack overflow right now
         it.skip(`dpes not coerce string to number`, async () => {
-          if (IS_LOKI) return
-
           const needle = `2` // Note: `id` is a numstr
           const [result] = await runFilter({ id: { hair: needle } })
 
@@ -492,8 +492,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles ne operator with null`, async () => {
-          if (IS_LOKI) return
-
           const needle = 0
           const [result, allNodes] = await runFilter({ nil: { ne: needle } })
 
@@ -559,8 +557,6 @@ it(`should use the cache argument`, async () => {
         })
 
         async function confirmPosition(allNodes, needle) {
-          if (IS_LOKI) return
-
           const result = await runQuery(
             { filter: { exh: { lt: needle } } },
             createFiltersCache(),
@@ -572,11 +568,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh < needle).length
           )
+          if (result) result.forEach(node => expect(node.exh < needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to lt anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -588,6 +585,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -608,8 +624,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles lt operator with null`, async () => {
-          if (IS_LOKI) return
-
           const needle = null
           const [result, allNodes] = await runFilter({ nil: { lt: needle } })
 
@@ -635,8 +649,6 @@ it(`should use the cache argument`, async () => {
         })
 
         async function confirmPosition(allNodes, needle) {
-          if (IS_LOKI) return
-
           const result = await runQuery(
             { filter: { exh: { lte: needle } } },
             createFiltersCache(),
@@ -648,11 +660,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh <= needle).length
           )
+          if (result) result.forEach(node => expect(node.exh <= needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to lte anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -664,6 +677,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -684,8 +716,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles lte operator with null`, async () => {
-          if (IS_LOKI) return
-
           const needle = null
           const [result, allNodes] = await runFilter({ nil: { lte: needle } })
 
@@ -711,8 +741,6 @@ it(`should use the cache argument`, async () => {
         })
 
         async function confirmPosition(allNodes, needle) {
-          if (IS_LOKI) return
-
           const result = await runQuery(
             { filter: { exh: { gt: needle } } },
             createFiltersCache(),
@@ -724,11 +752,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh > needle).length
           )
+          if (result) result.forEach(node => expect(node.exh > needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to gt anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -740,6 +769,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -760,8 +808,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles gt operator with null`, async () => {
-          if (IS_LOKI) return
-
           const needle = null
           const [result, allNodes] = await runFilter({ nil: { gt: needle } })
 
@@ -787,8 +833,6 @@ it(`should use the cache argument`, async () => {
         })
 
         async function confirmPosition(allNodes, needle) {
-          if (IS_LOKI) return
-
           const result = await runQuery(
             { filter: { exh: { gte: needle } } },
             createFiltersCache(),
@@ -800,11 +844,12 @@ it(`should use the cache argument`, async () => {
           expect(result?.length ?? 0).toEqual(
             allNodes.filter(node => node.exh >= needle).length
           )
+          if (result) result.forEach(node => expect(node.exh >= needle))
         }
 
         ;[`uneven`, `even`].forEach(count => {
           describe(`positional checks for count=` + count, () => {
-            for (let i = 0; i < 5; i += 0.5) {
+            for (let i = 0; i <= 5; i += 0.5) {
               it(
                 `should be able to gte anywhere in an array i=` + i.toFixed(1),
                 async () => {
@@ -816,6 +861,25 @@ it(`should use the cache argument`, async () => {
                   )
                 }
               )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5,
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
             }
           })
         })
@@ -836,8 +900,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles gte operator with null`, async () => {
-          if (IS_LOKI) return
-
           const needle = null
           const [result, allNodes] = await runFilter({ nil: { gte: needle } })
 
@@ -905,8 +967,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`does not match double quote for string without it`, async () => {
-          if (IS_LOKI) return
-
           const [result, allNodes] = await runFilter({ name: { regex: `/"/` } })
 
           expect(result).toEqual(null)
@@ -959,8 +1019,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for just null`, async () => {
-          if (IS_LOKI) return
-
           const [result, allNodes] = await runFilter({ nil: { in: [null] } })
 
           // Do not include the nodes without a `nil` property
@@ -976,8 +1034,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for double null`, async () => {
-          if (IS_LOKI) return
-
           const [result, allNodes] = await runFilter({
             nil: { in: [null, null] },
           })
@@ -995,8 +1051,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for null in int and null`, async () => {
-          if (IS_LOKI) return
-
           const [result, allNodes] = await runFilter({ nil: { in: [5, null] } })
 
           // Include the nodes without a `nil` property
@@ -1170,8 +1224,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`ignores the elemMatch operator on a partial sub tree`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             singleElem: {
               things: {
@@ -1232,8 +1284,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on boolean field`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             boolean: {
               elemMatch: {
@@ -1248,8 +1298,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`skips nodes without the field for elemMatch on boolean`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             boolSecondOnly: {
               elemMatch: {
@@ -1264,8 +1312,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on string field`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             string: {
               elemMatch: {
@@ -1280,8 +1326,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`should return all nodes for elemMatch on non-arrays too`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             name: {
               elemMatch: {
@@ -1298,8 +1342,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`skips nodes without the field for elemMatch on string`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             strSecondOnly: {
               elemMatch: {
@@ -1314,8 +1356,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on number field`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             float: {
               elemMatch: {
@@ -1349,8 +1389,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for array [null]`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             nullArray: { nin: [null] },
           })
@@ -1409,8 +1447,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for double null`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             nil: { nin: [null, null] },
           })
@@ -1425,8 +1461,6 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for null in int+null`, async () => {
-          if (IS_LOKI) return
-
           const [result] = await runFilter({
             nil: { nin: [5, null] },
           })

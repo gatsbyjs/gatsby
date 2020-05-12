@@ -7,8 +7,8 @@ const OUTPUT_FILE_NAME = `apis.json`
 async function outputFile() {
   const apis = await Promise.all([
     path.join('cache-dir', 'api-ssr-docs.js'),
-    path.join('src', 'utils', 'api-browser-docs.js'),
-    path.join('src', 'utils', 'api-node-docs.js')
+    path.join('src', 'utils', 'api-browser-docs.ts'),
+    path.join('src', 'utils', 'api-node-docs.ts')
   ]
     .map(filePath => {
       const resolved = path.resolve(filePath)

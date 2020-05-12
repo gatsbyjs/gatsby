@@ -77,8 +77,8 @@ It'd be great to get help with any of the following:
 - Use [schema customization](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/) since this solves one of the biggest complaints of plugin authors!
 - Add your tips and tricks to the [maintaining a plugin docs page](https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 
-* Comment on this issue: [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
-* Comment on this issue: [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)
+- Comment on this issue: [Gatsby CLI to add scaffolding for source plugin creation #13376](https://github.com/gatsbyjs/gatsby/issues/13376)
+- Comment on this issue: [Invite new Gatsby users to learn more about plugin authoring via CLI #13377](https://github.com/gatsbyjs/gatsby/issues/13377)
 
 Read these ideas and create issues and/or PRs for ones that prove valuable!
 

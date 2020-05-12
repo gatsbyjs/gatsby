@@ -110,7 +110,9 @@ Add a `src/pages/` directory and add a _Hello, world_ page.
 ```jsx:title=example/src/pages/index.js
 import React from "react"
 
-export default props => <h1>Hello, world</h1>
+export default function Home(props) {
+  return <h1>Hello, world</h1>
+}
 ```
 
 Add Gatsby develop and build scripts to the example site's `package.json`.
@@ -176,7 +178,9 @@ Make a `src/pages` directory in the theme and add a demo page.
 ```jsx:title=gatsby-theme-example-workspaces/src/pages/theme-page.js
 import React from "react"
 
-export default props => <h1>Hello, from the theme!</h1>
+export default function ThemePage(props) {
+  return <h1>Hello, from the theme!</h1>
+}
 ```
 
 Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8000/theme-page`.
@@ -186,6 +190,5 @@ Be sure to look for more posts on developing Gatsby themes in the near future,
 and you can read more about themes here on the [blog][themes-tag].
 
 [themes-tag]: /blog/tags/themes
-[yarn]: https://yarnpkg.com
 [yarn workspaces]: https://yarnpkg.com/lang/en/docs/workspaces/
 [install yarn]: https://yarnpkg.com/en/docs/install
