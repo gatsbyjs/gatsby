@@ -14,6 +14,9 @@ const transformInlineFragments = ({
   maxDepth,
   parentType,
   parentField,
+  fragments,
+  circularQueryLimit,
+  buildingFragment = false,
   ancestorTypeNames: parentAncestorTypeNames,
 }) => {
   const ancestorTypeNames = [...parentAncestorTypeNames]
@@ -70,6 +73,9 @@ const transformInlineFragments = ({
               parentType: type,
               depth,
               ancestorTypeNames,
+              fragments,
+              buildingFragment,
+              circularQueryLimit,
             })
 
             if (!fields || !fields.length) {
@@ -104,6 +110,8 @@ function transformField({
   fieldAliases,
   ancestorTypeNames: parentAncestorTypeNames,
   circularQueryLimit,
+  fragments,
+  buildingFragment,
 } = {}) {
   const ancestorTypeNames = [...parentAncestorTypeNames]
   // we're potentially infinitely recursing when fields are connected to other types that have fields that are connections to other types
@@ -132,6 +140,23 @@ function transformField({
   if (
     countIncarnations({ typeName, ancestorTypeNames }) >= circularQueryLimit
   ) {
+    // we're at the deepest level of a circular field query
+    // create a fragment here that the upper levels can use, then return null
+    createFragment({
+      fields: typeMap.get(typeName).fields,
+      type: field.type,
+      fragments,
+      field,
+      ancestorTypeNames: parentAncestorTypeNames,
+      depth,
+      fieldBlacklist,
+      fieldAliases,
+      typeMap,
+      gatsbyNodesInfo,
+      circularQueryLimit,
+      queryDepth: maxDepth,
+      buildingFragment,
+    })
     return false
   }
 
@@ -195,6 +220,8 @@ function transformField({
       parentType: listOfType || fieldType,
       depth,
       ancestorTypeNames,
+      fragments,
+      circularQueryLimit,
     })
 
     const transformedInlineFragments = transformInlineFragments({
@@ -206,6 +233,8 @@ function transformField({
       depth,
       maxDepth,
       ancestorTypeNames,
+      fragments,
+      circularQueryLimit,
     })
 
     if (!transformedFields?.length && !transformedInlineFragments?.length) {
@@ -256,6 +285,8 @@ function transformField({
       depth,
       maxDepth,
       ancestorTypeNames,
+      fragments,
+      circularQueryLimit,
     })
   }
 
@@ -267,6 +298,8 @@ function transformField({
       depth,
       ancestorTypeNames,
       parentField: field,
+      fragments,
+      circularQueryLimit,
     })
 
     if (!transformedFields?.length && !transformedInlineFragments?.length) {
@@ -289,6 +322,8 @@ function transformField({
       parentType: fieldType,
       depth,
       ancestorTypeNames,
+      fragments,
+      circularQueryLimit,
     })
 
     const inlineFragments = transformInlineFragments({
@@ -299,6 +334,8 @@ function transformField({
       maxDepth,
       ancestorTypeNames,
       parentField: field,
+      fragments,
+      circularQueryLimit,
     })
 
     return {
@@ -312,9 +349,138 @@ function transformField({
   return false
 }
 
+const createFragment = ({
+  fields,
+  field,
+  type,
+  fragments,
+  fieldBlacklist,
+  fieldAliases,
+  typeMap,
+  gatsbyNodesInfo,
+  queryDepth,
+  ancestorTypeNames,
+  buildingFragment = false,
+}) => {
+  if (buildingFragment) {
+    // this fragment is inside a fragment that's already being built so we should exit
+    return null
+  }
+
+  const typeName = findTypeName(type)
+
+  const previouslyCreatedFragment = fragments[typeName]
+
+  if (previouslyCreatedFragment) {
+    return previouslyCreatedFragment
+  }
+
+  const fragmentFields = fields.reduce((fragmentFields, field) => {
+    const transformedField = transformField({
+      field,
+      gatsbyNodesInfo,
+      typeMap,
+      maxDepth: queryDepth,
+      depth: 0,
+      fieldBlacklist,
+      fieldAliases,
+      ancestorTypeNames,
+      circularQueryLimit: 1,
+      fragments,
+      buildingFragment: true,
+    })
+
+    if (findTypeName(field.type) !== typeName && !!transformedField) {
+      fragmentFields.push(transformedField)
+    }
+
+    return fragmentFields
+  }, [])
+
+  const queryType = typeMap.get(typeName)
+
+  const transformedInlineFragments = queryType?.possibleTypes?.length
+    ? transformInlineFragments({
+        possibleTypes: queryType.possibleTypes,
+        parentType: queryType,
+        parentField: field,
+        gatsbyNodesInfo,
+        typeMap,
+        depth: 0,
+        maxDepth: queryDepth,
+        circularQueryLimit: 1,
+        ancestorTypeNames,
+        fragments,
+        buildingFragment: true,
+      })
+    : null
+
+  fragments[typeName] = {
+    name: `${typeName}Fragment`,
+    type: typeName,
+    fields: fragmentFields,
+    inlineFragments: transformedInlineFragments,
+  }
+
+  return fragmentFields
+}
+
+const transformFields = ({
+  fields,
+  parentType,
+  fragments,
+  parentField,
+  ancestorTypeNames,
+  depth,
+  fieldBlacklist,
+  fieldAliases,
+  typeMap,
+  gatsbyNodesInfo,
+  queryDepth,
+  circularQueryLimit,
+  pluginOptions,
+}) =>
+  fields
+    ?.filter(
+      field =>
+        !fieldIsExcludedOnParentType({
+          pluginOptions,
+          field,
+          parentType,
+          parentField,
+        })
+    )
+    .map(field => {
+      const transformedField = transformField({
+        maxDepth: queryDepth,
+        gatsbyNodesInfo,
+        fieldBlacklist,
+        fieldAliases,
+        typeMap,
+        field,
+        depth,
+        ancestorTypeNames,
+        circularQueryLimit,
+        fragments,
+      })
+
+      if (transformedField) {
+        // save this type so we know to use it in schema customization
+        store.dispatch.remoteSchema.addFetchedType(field.type)
+      }
+
+      if (field.fields && !transformedField) {
+        return null
+      }
+
+      return transformedField
+    })
+    .filter(Boolean)
+
 const recursivelyTransformFields = ({
   fields,
   parentType,
+  fragments,
   parentField = {},
   ancestorTypeNames: parentAncestorTypeNames,
   depth = 0,
@@ -347,50 +513,95 @@ const recursivelyTransformFields = ({
   if (
     countIncarnations({ typeName, ancestorTypeNames }) >= circularQueryLimit
   ) {
+    // we're at the deepest level of a circular field query
+    // create a fragment here that the upper levels can use, then return null
+    createFragment({
+      fields,
+      type: parentType,
+      fragments,
+      field: parentField,
+      ancestorTypeNames: parentAncestorTypeNames,
+      depth,
+      fieldBlacklist,
+      fieldAliases,
+      typeMap,
+      gatsbyNodesInfo,
+      queryDepth,
+      circularQueryLimit,
+      pluginOptions,
+    })
+
     return null
   }
 
-  ancestorTypeNames.push(typeName)
+  parentAncestorTypeNames.push(typeName)
 
-  const recursivelyTransformedFields = fields
-    ?.filter(
+  let recursivelyTransformedFields = transformFields({
+    fields,
+    parentType,
+    fragments,
+    parentField,
+    ancestorTypeNames: parentAncestorTypeNames,
+    depth,
+    fieldBlacklist,
+    fieldAliases,
+    typeMap,
+    gatsbyNodesInfo,
+    queryDepth,
+    circularQueryLimit,
+    pluginOptions,
+  })
+
+  if (!recursivelyTransformedFields.length) {
+    return null
+  }
+
+  const fragment = fragments?.[typeName]
+
+  if (fragment) {
+    // remove fields from this query that already exist in the fragment
+    recursivelyTransformedFields = recursivelyTransformedFields.filter(
       field =>
-        !fieldIsExcludedOnParentType({
-          pluginOptions,
-          field,
-          parentType,
-          parentField,
-        })
+        !fragment.fields.find(
+          fragmentField => fragmentField.fieldName === field.fieldName
+        ) &&
+        // yes this is a horrible use of .find(). @todo refactor this for better perf
+        !fragment.inlineFragments.find(
+          inlineFragment =>
+            !!inlineFragment.fields.find(
+              inlineFragmentField =>
+                inlineFragmentField.fieldName === field.fieldName
+            )
+        )
     )
-    .map(field => {
-      const transformedField = transformField({
-        maxDepth: queryDepth,
-        gatsbyNodesInfo,
-        fieldBlacklist,
-        fieldAliases,
-        typeMap,
-        field,
-        depth,
-        ancestorTypeNames,
-        circularQueryLimit,
-      })
 
-      if (transformedField) {
-        // save this type so we know to use it in schema customization
-        store.dispatch.remoteSchema.addFetchedType(field.type)
-      }
+    // if (parentField.name === `innerBlocks`) {
+    //   clipboardy.writeSync(
+    //     JSON.stringify(recursivelyTransformedFields, null, 2)
+    //   )
+    //   dd(recursivelyTransformedFields)
+    // }
 
-      if (field.fields && !transformedField) {
-        return null
-      }
-
-      return transformedField
+    recursivelyTransformedFields.push({
+      internalType: `Fragment`,
+      fragment,
     })
-    .filter(Boolean)
 
-  return recursivelyTransformedFields.length
-    ? recursivelyTransformedFields
-    : null
+    // dump(parentField)
+    // dump(recursivelyTransformFields.length)
+    // dd(typeName)
+  }
+
+  // const blocksField = recursivelyTransformedFields.find(
+  //   field => field.fieldName && field.fieldName === `blocks`
+  // )
+
+  // if (blocksField) {
+  //   dump(Object.keys(blocksField))
+  //   dd(blocksField.length)
+  // }
+
+  return recursivelyTransformedFields
 }
 
 export default recursivelyTransformFields

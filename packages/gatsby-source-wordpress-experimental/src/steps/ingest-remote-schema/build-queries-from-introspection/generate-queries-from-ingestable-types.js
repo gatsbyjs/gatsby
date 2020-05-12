@@ -3,6 +3,7 @@ import {
   buildNodesQueryOnFieldName,
   buildNodeQueryOnFieldName,
   buildSelectionSet,
+  buildReusableFragments,
 } from "./build-query-on-field-name"
 
 import store from "~/store"
@@ -90,6 +91,28 @@ const aliasConflictingFields = ({ transformedFields }) =>
     return field
   })
 
+const timeFunction = async ({ label, fn, args = {}, disableTimer = false }) => {
+  const {
+    gatsbyApi: {
+      helpers: { reporter },
+    },
+  } = store.getState()
+
+  const activity = reporter.activityTimer(label)
+
+  if (!disableTimer) {
+    activity.start()
+  }
+
+  const result = await fn(args)
+
+  if (!disableTimer) {
+    activity.end()
+  }
+
+  return result
+}
+
 /**
  * generateNodeQueriesFromIngestibleFields
  *
@@ -153,39 +176,89 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     if (!singleNodeRootFieldInfo) {
       // @todo handle cases where there is a nodelist field but no individual field. we can't do data updates or preview on this type.
-      // reporter.info(formatLogMessage(`Unable to find a root field to query single nodes of the type`))
+      reporter.info(
+        formatLogMessage(
+          `${nodesType.name} Unable to find a root field to query single nodes of this type`
+        )
+      )
       continue
     }
 
+    const generateNodeQueriesActivity = reporter.activityTimer(
+      `generate node queries for ${name}`
+    )
+    generateNodeQueriesActivity.start()
+
+    const fragments = {}
+
     const singleFieldName = singleNodeRootFieldInfo?.name
 
+    const prepareFieldsActivity = reporter.activityTimer(
+      `${singleFieldName} Prepare fields`
+    )
+    prepareFieldsActivity.start()
     const transformedFields = recursivelyTransformFields({
       fields,
+      fragments,
       parentType: type,
     })
+    prepareFieldsActivity.end()
 
-    const aliasedTransformedFields = await aliasConflictingFields({
+    clipboardy.writeSync(JSON.stringify(transformedFields, null, 2))
+    dd(`here`)
+
+    const aliasFieldsActivity = reporter.activityTimer(
+      `${singleFieldName} alias conflicting fields`
+    )
+    aliasFieldsActivity.start()
+    const aliasedTransformedFields = aliasConflictingFields({
       transformedFields,
       parentType: type,
     })
+    aliasFieldsActivity.end()
 
+    const builtFragments = buildReusableFragments({ fragments })
+
+    const buildSelectionSetActivity = reporter.activityTimer(
+      `${singleFieldName} build selection set string`
+    )
+    buildSelectionSetActivity.start()
     const selectionSet = buildSelectionSet(aliasedTransformedFields, {
       fieldPath: name,
+      fragments,
     })
+
+    buildSelectionSetActivity.end()
+
+    const buildNodeQueryActivity = reporter.activityTimer(
+      `${singleFieldName} build node query`
+    )
+    buildNodeQueryActivity.start()
 
     const nodeQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
       settings,
+      builtFragments,
+      builtSelectionSet: selectionSet,
     })
 
+    buildNodeQueryActivity.end()
+
+    const buildPreviewQueryActivity = reporter.activityTimer(
+      `${singleFieldName} build node preview query`
+    )
+    buildPreviewQueryActivity.start()
     const previewQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
       fieldInputArguments: `id: $id, idType: DATABASE_ID`,
       queryName: `PREVIEW_QUERY`,
       settings,
+      builtFragments,
+      builtSelectionSet: selectionSet,
     })
+    buildPreviewQueryActivity.end()
 
     const whereArgs = args.find(arg => arg.name === `where`)
 
@@ -207,6 +280,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         name,
         fields,
         selectionSet,
+        builtFragments,
         singleFieldName,
         singleNodeRootFieldInfo,
         settings,
@@ -226,14 +300,23 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     }
 
     if (!nodeListQueries || !nodeListQueries.length) {
+      const nodeListQueryActivity = reporter.activityTimer(
+        `${singleFieldName} build node list query`
+      )
+      nodeListQueryActivity.start()
       const nodeListQuery = buildNodesQueryOnFieldName({
         fields: transformedFields,
         fieldName: name,
         fieldVariables,
         settings,
+        builtFragments,
+        builtSelectionSet: selectionSet,
       })
+      nodeListQueryActivity.end()
 
       nodeListQueries = [nodeListQuery]
+      await clipboardy.write(nodeListQuery)
+      dd(nodeListQuery)
     }
 
     if (
@@ -247,6 +330,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
             `Query debug mode. Writing node list query for the ${nodesType.name} node type to the system clipboard and exiting\n\n`
           )
         )
+        await clipboardy.write(nodeListQueries[0])
         await clipboardy.write(gqlPrettier(nodeListQueries[0]))
         process.exit()
       } catch (e) {
@@ -273,8 +357,11 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       nodeQuery,
       previewQuery,
       selectionSet,
+      builtFragments,
       settings,
     }
+
+    generateNodeQueriesActivity.end()
   }
 
   return nodeQueries

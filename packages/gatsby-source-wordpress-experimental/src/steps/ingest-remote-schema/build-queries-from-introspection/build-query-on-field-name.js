@@ -2,9 +2,26 @@ import compress from "graphql-query-compress"
 import store from "~/store"
 import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
+export const buildReusableFragments = ({ fragments }) =>
+  Object.values(fragments)
+    .map(
+      ({
+        name,
+        type,
+        fields,
+        inlineFragments,
+      }) => `fragment ${name} on ${type} {
+      ${buildSelectionSet(fields)}
+      ${buildInlineFragments(inlineFragments)}
+    }`
+    )
+    .join(` `)
+
 export const buildNodesQueryOnFieldName = ({
   fields,
   fieldName,
+  builtSelectionSet,
+  builtFragments = ``,
   queryVariables = ``,
   fieldVariables = ``,
 }) =>
@@ -21,30 +38,36 @@ export const buildNodesQueryOnFieldName = ({
         },
         {
           fieldName: `nodes`,
-          fields: fields,
+          fields,
+          builtSelectionSet,
         },
       ],
+      builtFragments,
     })
   )
 
 const buildVariables = variables =>
   variables && typeof variables === `string` ? `(${variables})` : ``
 
-const buildFragment = ({ name, fields }) => `
+const buildInlineFragment = ({ name, fields, fragments }) => `
   ... on ${name} {
-    ${buildSelectionSet(fields)}
+    ${buildSelectionSet(fields, { fragments })}
   }
 `
 
-const buildFragments = inlineFragments =>
+const buildInlineFragments = (inlineFragments, { fragments = {} } = {}) =>
   inlineFragments
     ? `
       __typename
-      ${inlineFragments.map(buildFragment).join(` `)}
+      ${inlineFragments
+        .map(inlineFragment =>
+          buildInlineFragment({ ...inlineFragment, fragments })
+        )
+        .join(` `)}
     `
     : ``
 
-export const buildSelectionSet = fields => {
+export const buildSelectionSet = (fields, { fragments = {} } = {}) => {
   if (!fields || !fields.length) {
     return ``
   }
@@ -53,25 +76,44 @@ export const buildSelectionSet = fields => {
     remoteSchema: { typeMap },
   } = store.getState()
 
-  return fields
+  const selectionSet = fields
     .map(field => {
       if (typeof field === `string`) {
         return field
       }
 
-      let { fieldName, variables, fields, inlineFragments, fieldType } = field
+      let {
+        fieldName,
+        variables,
+        fields,
+        inlineFragments,
+        fieldType,
+        internalType,
+        builtSelectionSet,
+      } = field
 
-      // @todo instead of checking for a nodes field, include the field type here
-      // and check for input args instead. Maybe some kind of input args API or something would be helpful
+      if (internalType === `Fragment`) {
+        return `...${field.fragment.name}`
+      }
+
       if (
         (!variables || variables === ``) &&
         fields?.find(field => field.fieldName === `nodes`)
       ) {
+        // @todo instead of checking for a nodes field, include the field type here
+        // and check for input args instead. Maybe some kind of input args API or something would be helpful
         variables = `first: 100`
       }
 
-      const selectionSet = buildSelectionSet(fields)
-      const builtInlineFragments = buildFragments(inlineFragments)
+      const selectionSet =
+        builtSelectionSet ||
+        buildSelectionSet(fields, {
+          fragments,
+        })
+
+      const builtInlineFragments = buildInlineFragments(inlineFragments, {
+        fragments,
+      })
 
       if (fieldName && (builtInlineFragments !== `` || selectionSet !== ``)) {
         return `
@@ -97,6 +139,8 @@ export const buildSelectionSet = fields => {
     })
     .filter(Boolean).join(`
     `)
+
+  return selectionSet
 }
 
 const buildQuery = ({
@@ -105,17 +149,23 @@ const buildQuery = ({
   fieldVariables,
   variables,
   fields,
+  builtSelectionSet,
+  builtFragments = ``,
 }) => `
   query ${queryName} ${buildVariables(variables)} {
     ${fieldName} ${buildVariables(fieldVariables)} {
-      ${buildSelectionSet(fields)}
+      ${builtSelectionSet ? builtSelectionSet : buildSelectionSet(fields)}
     }
   }
+
+  ${builtFragments}
 `
 
 export const buildNodeQueryOnFieldName = ({
   fields,
   fieldName,
+  builtFragments,
+  builtSelectionSet,
   variables = `$id: ID!`,
   fieldInputArguments = `id: $id`,
   queryName = `SINGLE_CONTENT_QUERY`,
@@ -127,5 +177,7 @@ export const buildNodeQueryOnFieldName = ({
       fieldName,
       fieldVariables: fieldInputArguments,
       fields: fields,
+      builtFragments,
+      builtSelectionSet,
     })
   )
