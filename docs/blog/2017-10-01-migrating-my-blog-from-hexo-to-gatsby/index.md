@@ -12,7 +12,7 @@ _This article was originally posted on
 I'm reposting here in the hopes that it helps more people get started with
 Gatsby!_
 
-# Migrating a blog to Gatsby
+## Migrating a blog to Gatsby
 
 ---
 
@@ -33,7 +33,7 @@ Let's jump in.
 
 ---
 
-## Preparing your existing blog for migration
+### Preparing your existing blog for migration
 
 **NOTE:** If you _don't_ already have a blog or want to create one from scratch
 there's a
@@ -45,7 +45,7 @@ the suggested file structure for migrating my blog. How you handle this step
 will depend on what you're migrating from. I am migrating from Hexo, which is
 very similar to Jekyll in how it structures files.
 
-### Clean up your source repo
+#### Clean up your source repo
 
 For the first step, clear everything other than your actual post content out of
 the repo. For me, this meant everything that wasn't under the `source/`
@@ -74,7 +74,7 @@ Here's what that looks like for me:
 For the rest of this post I'll ignore the `hexo.bak/` directory because it's not
 relevant to Gatsby.
 
-## Set up Gatsby
+### Set up Gatsby
 
 You need to copy all the standard Gatsby boilerplate into your directory. There
 are many ways you could do this but I'll go over what I did.
@@ -121,12 +121,12 @@ Boom 💥! The default site is up.
 
 ![Gatsby Default Screen](https://dropsinn.s3.amazonaws.com/Screen%20Shot%202017-08-26%20at%2012.57.40%20PM.png)
 
-## Rendering a list of posts
+### Rendering a list of posts
 
 Let's customize that landing page to render a list of posts. You will also
 probably want to customize the header and overall layout.
 
-### Customizing the layout
+#### Customizing the layout
 
 This is pretty simple. Just modify the primary layout file that was generated:
 
@@ -142,7 +142,7 @@ Less, etc are also supported if you add the appropriate plugin.
 **Sidenote:** You can also create your own plugin to do whatever you want, which
 I talked about in part 1.
 
-### Customizing the landing page
+#### Customizing the landing page
 
 Also straightforward, just edit:
 
@@ -153,7 +153,7 @@ src/pages/index.js
 This file is where we'll actually render out the list of posts. So where the
 hell does that data come from??
 
-### Querying data with GraphQL
+#### Querying data with GraphQL
 
 Now we're getting in to the meat of Gatsby and one of the areas where it really
 shines: Data sources. You can pull in data from anywhere to be rendered in your
@@ -174,7 +174,7 @@ I recommend getting to know this tool if you're not already familiar. You will
 be coming back to this often to find the right query to pull data for your
 pages.
 
-### Querying the file system
+#### Querying the file system
 
 If you play around with GraphiQL you'll notice there's not that much there.
 Let's fix that. We need to teach Gatsby how to query the file system. Luckily
@@ -223,7 +223,7 @@ available to you under `node` in GraphQL.
 **Pro tip:** Hit <kbd>ctrl</kbd><kbd>space</kbd> to trigger autocomplete and
 bring up the list of all available fields.
 
-### Handling Markdown
+#### Handling Markdown
 
 Being able to query files is a big win, and if you have a directory of HTML
 files this is all you will need. But if you want to render markdown files as
@@ -286,7 +286,7 @@ query {
 Now you have access to the full HTML of your posts as well as the titles. With
 this we have enough information to render a list of posts on the front page.
 
-### Getting GraphQL data into your components
+#### Getting GraphQL data into your components
 
 Gatsby has the concept of the `pageQuery`. For every page you create you can
 specify a `pageQuery` that will pass data into the default export of that page.
@@ -389,7 +389,7 @@ Personally I think it would be more clear if `graphql` was imported from Gatsby,
 but the project is still young so the API could change at some point ¯\\_( ツ
 )_/¯
 
-### Linking to blog posts
+#### Linking to blog posts
 
 > But the links don't link anywhere... where's that `href`?
 
@@ -466,7 +466,7 @@ title: My Post
 path: my-post
 ---
 
-# My post
+## My post
 ```
 
 In this case `node.frontmatter.path` would be used to construct URLs. If this is
@@ -478,7 +478,7 @@ This was exactly my situation. The URL was actually derived from the title of
 the post so I had to figure out how to augment the GraphQL fields with my own
 data. Namely the URL of the post derived from the post title.
 
-## Adding custom data to the GraphQL schema
+### Adding custom data to the GraphQL schema
 
 If I have a post named "Isn't this a fun title" then I want the URL to be
 "isnt-this-a-fun-title". Notice that spaces turn into hyphens and special
@@ -537,7 +537,7 @@ You can use this technique to add any field you want to your GraphQL schema. Now
 you should be all set to render `Link` components that actually point somewhere
 interesting 👍.
 
-## Generating pages from markdown files
+### Generating pages from markdown files
 
 This is where it all comes together. If you finished the last section you would
 have ended up with a bunch of links that point to the correct URL but when you
@@ -556,7 +556,7 @@ generate an `about.html` page. Simple.
 But almost everyone will want to generate some pages based on data, not on the
 files in the pages directory. Gatsby let's us do this.
 
-### Generating custom pages
+#### Generating custom pages
 
 The key here is again to hook in to one of Gatsby's many plugin hooks. In this
 case, `createPages`. In the same `gatsby-node.js` file as before:
@@ -661,7 +661,7 @@ Notice that the query is very similar to the `pageQuery` in index.js but it's
 not identical. This time we actually want the `id` because it will allow the
 post template to use the ID to query one single blog post.
 
-## Rendering individual posts
+### Rendering individual posts
 
 If you've made it to this point rendering individual posts is quite
 straightforward. You need to:
@@ -716,7 +716,7 @@ The important thing to note here is that `$id` is passed in via `context` in
 way into props. Then it's just a matter of rendering as you would with any other
 component.
 
-## Where to go from here
+### Where to go from here
 
 There's a lot more you can do with Gatsby and it's not always obvious how to
 proceed, but you have the full power of JavaScript at your disposal. So as long
@@ -735,7 +735,7 @@ source code here:
 
 [Source code for the blog](https://github.com/iansinnott/iansinnott.github.io/tree/gatsby-migration)
 
-## Closing thoughts
+### Closing thoughts
 
 In my opinion Gatsby provides a few killer features:
 

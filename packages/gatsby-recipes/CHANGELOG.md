@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.14...gatsby-recipes@0.1.15) (2020-05-11)
+
+### Features
+
+- **gatsby-recipes:** Improve ongoing summary of steps + add end summary ([#23888](https://github.com/gatsbyjs/gatsby/issues/23888)) ([251dc58](https://github.com/gatsbyjs/gatsby/commit/251dc58))
+
+## [0.1.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.13...gatsby-recipes@0.1.14) (2020-05-08)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.12...gatsby-recipes@0.1.13) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Also call telemetry when selecting a recipe from the list ([#23882](https://github.com/gatsbyjs/gatsby/issues/23882)) ([d98e2ad](https://github.com/gatsbyjs/gatsby/commit/d98e2ad))
+
+## [0.1.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.11...gatsby-recipes@0.1.12) (2020-05-07)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.10...gatsby-recipes@0.1.11) (2020-05-06)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Fix gatsby config all function ([#23811](https://github.com/gatsbyjs/gatsby/issues/23811)) ([c5b8aa5](https://github.com/gatsbyjs/gatsby/commit/c5b8aa5))
+
+## [0.1.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.9...gatsby-recipes@0.1.10) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.8...gatsby-recipes@0.1.9) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.7...gatsby-recipes@0.1.8) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.6...gatsby-recipes@0.1.7) (2020-05-01)
+
+### Features
+
+- **gatsby-recipes:** add local dev instructions for gatsby-recipes ([#23613](https://github.com/gatsbyjs/gatsby/issues/23613)) ([0cab305](https://github.com/gatsbyjs/gatsby/commit/0cab305))
+
+## [0.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.5...gatsby-recipes@0.1.6) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Create default gatsby-config.js when installing a plugin if one doesn't exist ([#23602](https://github.com/gatsbyjs/gatsby/issues/23602)) ([293e171](https://github.com/gatsbyjs/gatsby/commit/293e171))
+- **gatsby-recipes:** document option support for GatsbyPlugin ([#23599](https://github.com/gatsbyjs/gatsby/issues/23599)) ([c0c8875](https://github.com/gatsbyjs/gatsby/commit/c0c8875))
+
+## [0.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.4...gatsby-recipes@0.1.5) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Add React Helmet recipe to menu ([#23594](https://github.com/gatsbyjs/gatsby/issues/23594)) ([8249526](https://github.com/gatsbyjs/gatsby/commit/8249526e2a197967f7396ca77cfe2c847effa796))
+
+## [0.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.2...gatsby-recipes@0.1.4) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.1...gatsby-recipes@0.1.2) (2020-04-29)
+
+### Features
+
+- **gatsby-recipes:** Add PWA recipe + improving diffing for binary files ([#23563](https://github.com/gatsbyjs/gatsby/issues/23563)) ([c36b394](https://github.com/gatsbyjs/gatsby/commit/c36b394))
+- **gatsby-recipes:** Add PWA recipe to menu ([#23574](https://github.com/gatsbyjs/gatsby/issues/23574)) ([e76e39e](https://github.com/gatsbyjs/gatsby/commit/e76e39e))
+
 ## [0.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.0...gatsby-recipes@0.1.1) (2020-04-28)
 
 ### Bug Fixes

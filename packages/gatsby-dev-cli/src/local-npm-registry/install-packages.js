@@ -4,7 +4,11 @@ const fs = require(`fs-extra`)
 const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
 const { registryUrl } = require(`./verdaccio-config`)
 
-const installPackages = async ({ packagesToInstall, yarnWorkspaceRoot }) => {
+const installPackages = async ({
+  packagesToInstall,
+  yarnWorkspaceRoot,
+  newlyPublishedPackageVersions,
+}) => {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
       .map(packageAndVersion => ` - ${packageAndVersion}`)
@@ -71,7 +75,10 @@ const installPackages = async ({ packagesToInstall, yarnWorkspaceRoot }) => {
       `yarn`,
       [
         `add`,
-        ...packagesToInstall.map(packageName => `${packageName}@gatsby-dev`),
+        ...packagesToInstall.map(packageName => {
+          const packageVersion = newlyPublishedPackageVersions[packageName]
+          return `${packageName}@${packageVersion}`
+        }),
         `--registry=${registryUrl}`,
         `--exact`,
       ],
@@ -84,6 +91,7 @@ const installPackages = async ({ packagesToInstall, yarnWorkspaceRoot }) => {
     console.log(`Installation complete`)
   } catch (error) {
     console.error(`Installation failed`, error)
+    process.exit(1)
   }
 }
 

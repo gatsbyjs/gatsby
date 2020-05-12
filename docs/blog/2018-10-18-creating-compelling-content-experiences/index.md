@@ -22,7 +22,7 @@ Website teams moving to this space have to plan four steps -- one for each categ
 
 ## Moving to the content mesh
 
-### First, choose content systems.
+### First, choose content systems
 
 In a modular CMS system, website teams can [use preferred workflows to choose your content systems](/blog/2018-10-10-unbundling-of-the-cms).
 
