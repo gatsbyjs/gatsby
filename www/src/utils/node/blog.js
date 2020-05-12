@@ -34,7 +34,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({ node, name: `section`, value: section })
 
     const { date, draft, canonicalLink, publishedAt, excerpt } =
-      node.frontmatter ?? {}
+      node.frontmatter || {}
 
     createNodeField({
       node,
