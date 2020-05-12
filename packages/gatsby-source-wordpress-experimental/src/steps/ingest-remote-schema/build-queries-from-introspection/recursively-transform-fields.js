@@ -369,7 +369,7 @@ const createFragment = ({
 
   const typeName = findTypeName(type)
 
-  const previouslyCreatedFragment = fragments[typeName]
+  const previouslyCreatedFragment = fragments?.[typeName]
 
   if (previouslyCreatedFragment) {
     return previouslyCreatedFragment
@@ -415,11 +415,13 @@ const createFragment = ({
       })
     : null
 
-  fragments[typeName] = {
-    name: `${typeName}Fragment`,
-    type: typeName,
-    fields: fragmentFields,
-    inlineFragments: transformedInlineFragments,
+  if (fragments) {
+    fragments[typeName] = {
+      name: `${typeName}Fragment`,
+      type: typeName,
+      fields: fragmentFields,
+      inlineFragments: transformedInlineFragments,
+    }
   }
 
   return fragmentFields
@@ -473,26 +475,30 @@ const transformFields = ({
 
       if (fragment && transformedField) {
         // remove fields from this query that already exist in the fragment
-        transformedField.fields = transformedField.fields.filter(
-          field =>
-            !fragment.fields.find(
-              fragmentField => fragmentField.fieldName === field.fieldName
-            )
-        )
+        if (transformedField?.fields?.length) {
+          transformedField.fields = transformedField.fields.filter(
+            field =>
+              !fragment.fields.find(
+                fragmentField => fragmentField.fieldName === field.fieldName
+              )
+          )
+        }
 
         transformedField.fields.push({
           internalType: `Fragment`,
           fragment,
         })
 
-        transformedField.inlineFragments = transformedField.inlineFragments.filter(
-          fieldInlineFragment =>
-            // yes this is a horrible use of .find(). @todo refactor this for better perf
-            !fragment.inlineFragments.find(
-              fragmentInlineFragment =>
-                fragmentInlineFragment.name === fieldInlineFragment.name
-            )
-        )
+        if (transformedField?.inlineFragments?.length) {
+          transformedField.inlineFragments = transformedField.inlineFragments.filter(
+            fieldInlineFragment =>
+              // yes this is a horrible use of .find(). @todo refactor this for better perf
+              !fragment.inlineFragments.find(
+                fragmentInlineFragment =>
+                  fragmentInlineFragment.name === fieldInlineFragment.name
+              )
+          )
+        }
       }
 
       if (field.fields && !transformedField) {
