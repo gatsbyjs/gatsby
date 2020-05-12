@@ -32,6 +32,9 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           .replace(/^\/$/, ``)
       )
     ),
+    linkPrefix: Joi.forbidden().error(
+      new Error(`"linkPrefix" should be changed to "pathPrefix"`)
+    ),
     siteMetadata: Joi.object({
       siteUrl: stripTrailingSlash(Joi.string()).uri(),
     }).unknown(),

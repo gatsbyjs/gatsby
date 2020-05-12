@@ -1,5 +1,6 @@
+import { statusReducer } from "../reducers/status"
+
 const { actions } = require(`../actions`)
-const statusReducer = require(`../reducers/status`)
 
 Date.now = jest.fn(() => 1482363367071)
 

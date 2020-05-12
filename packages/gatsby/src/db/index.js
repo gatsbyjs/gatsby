@@ -3,21 +3,13 @@ const report = require(`gatsby-cli/lib/reporter`)
 const redux = require(`../redux`)
 const { emitter } = redux
 
-// Even if we are using loki, we still include redux in the list of
-// dbs since it still has pages, config, etc.
-const dbs = [redux]
-if (process.env.GATSBY_DB_NODES === `loki`) {
-  dbs.push(require(`./loki`))
-}
-
-// calls `saveState()` on all DBs
 let saveInProgress = false
 async function saveState() {
   if (saveInProgress) return
   saveInProgress = true
 
   try {
-    await Promise.all(dbs.map(db => db.saveState()))
+    await redux.saveState()
   } catch (err) {
     report.warn(`Error persisting state: ${(err && err.message) || err}`)
   }

@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
 import Avatar from "../components/avatar"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 
 class ContributorPageTemplate extends React.Component {
   render() {
@@ -20,25 +20,11 @@ class ContributorPageTemplate extends React.Component {
 
     return (
       <main>
-        <Helmet>
-          <title>{`${contributor.id} - Contributor`}</title>
-          <meta name="description" content={contributor.bio} />
-          <meta property="og:description" content={contributor.bio} />
-          <meta name="twitter:description" content={contributor.bio} />
-          <meta property="og:title" content={contributor.id} />
-          {contributor.avatar && (
-            <meta
-              property="og:image"
-              content={`https://gatsbyjs.org${contributor.avatar.childImageSharp.fixed.src}`}
-            />
-          )}
-          {contributor.avatar && (
-            <meta
-              name="twitter:image"
-              content={`https://gatsbyjs.org${contributor.avatar.childImageSharp.fixed.src}`}
-            />
-          )}
-        </Helmet>
+        <PageMetadata
+          title={`${contributor.id} - Contributor`}
+          description={contributor.bio}
+          image={contributor.avatar?.childImageSharp.fixed}
+        />
         <Container>
           <div
             sx={{

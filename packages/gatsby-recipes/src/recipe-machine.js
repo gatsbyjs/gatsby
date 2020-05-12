@@ -136,12 +136,35 @@ const recipeMachine = Machine(
       applyingPlan: {
         invoke: {
           id: `applyPlan`,
-          src: async (context, event) => {
+          src: (context, event) => cb => {
+            cb(`RESET`)
             if (context.plan.length == 0) {
-              return undefined
+              return cb(`onDone`)
             }
 
-            return await applyPlan(context.plan)
+            const interval = setInterval(() => {
+              cb(`TICK`)
+            }, 10000)
+
+            applyPlan(context.plan)
+              .then(result => {
+                cb({ type: `onDone`, data: result })
+              })
+              .catch(error => cb({ type: `onError`, data: error }))
+
+            return () => clearInterval(interval)
+          },
+        },
+        on: {
+          RESET: {
+            actions: assign({
+              elapsed: 0,
+            }),
+          },
+          TICK: {
+            actions: assign({
+              elapsed: context => (context.elapsed += 10000),
+            }),
           },
           onDone: {
             target: `hasAnotherStep`,
@@ -195,8 +218,14 @@ const recipeMachine = Machine(
       addResourcesToContext: assign((context, event) => {
         if (event.data) {
           const stepResources = context.stepResources || []
+          const messages = event.data.map(e => {
+            return {
+              _message: e._message,
+              _currentStep: context.currentStep,
+            }
+          })
           return {
-            stepResources: stepResources.concat([event.data]),
+            stepResources: stepResources.concat(messages),
           }
         }
         return undefined

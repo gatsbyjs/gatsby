@@ -12,7 +12,7 @@ All configurations can be done through your Forestry site dashboard, but they ca
 
 To complete this tutorial, you will need a Forestry account. You can sign-up at [Forestry.io](https://app.forestry.io/signup).
 
-_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.
 
 ## Setup
 
@@ -165,4 +165,4 @@ Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses
 
 For more examples and help, visit the [Forestry.io docs](https://forestry.io/docs/welcome/).
 
-_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.

@@ -1,7 +1,7 @@
 const normalize = require(`normalize-path`)
 const { interpret } = require(`xstate`)
 
-const componentMachine = require(`../machines/page-component`)
+import { componentMachine } from "../machines/page-component"
 
 const services = new Map()
 let programStatus = `BOOTSTRAPPING`
