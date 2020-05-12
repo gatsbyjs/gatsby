@@ -1,4 +1,4 @@
-- url: https://gatsby-ghost-balsa-starter.now.sh/
+- url: https://ghost-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
   tags:
@@ -6216,7 +6216,7 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
-- url: https://gatsby-wordpress-balsa-starter.now.sh/
+- url: https://wordpress-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-wordpress-balsa-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
   tags:
