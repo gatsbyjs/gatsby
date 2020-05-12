@@ -27,6 +27,7 @@ export const TAGS_AND_DOCS = new Map([
   [`contentful`, `/docs/sourcing-from-contentful/`],
   [`contest`, ``],
   [`core-concepts`, `/docs/gatsby-core-philosophy/`],
+  [`cosmic`, ``],
   [`cutting-edge-experiences`, ``],
   [`data-visualization`, ``],
   [`deployment`, `/docs/deploying-and-hosting/`],
