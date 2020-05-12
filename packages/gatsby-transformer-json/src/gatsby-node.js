@@ -46,7 +46,8 @@ async function onCreateNode(
   try {
     parsedContent = JSON.parse(content)
   } catch {
-    throw new Error(`Unable to parse JSON: ${node.absolutePath}`)
+    const hint = node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
+    throw new Error(`Unable to parse JSON: ${hint}`)
   }
 
   if (_.isArray(parsedContent)) {
