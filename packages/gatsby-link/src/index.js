@@ -7,35 +7,34 @@ import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-function isRelativePath(path) {
-  return /^\.{1,2}\//.test(path)
-}
-
-export function withPrefix(path) {
-  if (isRelativePath(path)) {
-    return normalizePath(path)
-  }
-  return normalizePath(
-    [
-      typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
-      path,
-    ].join(`/`)
+function isAbsolutePath(path) {
+  return !(
+    path.startsWith(`./`) ||
+    path.startsWith(`../`) ||
+    path === `..` ||
+    path === `.`
   )
 }
 
-export function withAssetPrefix(path) {
-  return isRelativePath(path)
-    ? path
-    : [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
+export function withPrefix(path) {
+  if (isAbsolutePath(path)) {
+    return normalizePath(`${__BASE_PATH__ ?? __PATH_PREFIX__}/${path}`)
+  }
+  return normalizePath(path)
 }
 
+export function withAssetPrefix(path) {
+  return isAbsolutePath(path)
+    ? `${__PATH_PREFIX__}/${path.startsWith(`/`) ? path.substring(1) : path}`
+    : path
+}
 function normalizePath(path) {
   return path.replace(/\/+/g, `/`)
 }
 
 function absolutify(path, current) {
   // If it's already absolute, return as-is
-  if (!isRelativePath(path)) {
+  if (isAbsolutePath(path)) {
     return path
   }
   return resolve(path, current)
@@ -149,13 +148,9 @@ class GatsbyLink extends React.Component {
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
-    const LOCAL_URL = /^\/(?!\/)/
-    const isRelative = isRelativePath(to)
-    if (
-      process.env.NODE_ENV !== `production` &&
-      !LOCAL_URL.test(to) &&
-      !isRelative
-    ) {
+    const isAbsolute = isAbsolutePath(to)
+    const isLocal = to.startsWith(`/`) && !to.startsWith(`//`)
+    if (process.env.NODE_ENV !== `production` && !isLocal && isAbsolute) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
@@ -164,10 +159,11 @@ class GatsbyLink extends React.Component {
     return (
       <Location>
         {({ location }) => {
-          const prefixedTo = isRelative
-            ? absolutify(to, location.pathname)
-            : withPrefix(to)
-
+          const prefixedTo =
+            isAbsolute && isLocal
+              ? withPrefix(to)
+              : absolutify(to, location.pathname)
+          console.log({ to, prefixedTo, isAbsolute, isLocal })
           return (
             <Link
               to={prefixedTo}
@@ -178,7 +174,7 @@ class GatsbyLink extends React.Component {
                 if (onMouseEnter) {
                   onMouseEnter(e)
                 }
-                ___loader.hovering(parsePath(to).pathname)
+                ___loader.hovering(parsePath(prefixedTo).pathname)
               }}
               onClick={e => {
                 if (onClick) {
