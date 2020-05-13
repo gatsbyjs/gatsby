@@ -38,6 +38,15 @@ const defaultPluginOptions = {
   },
   excludeFieldNames: [],
   type: {
+    RootQuery: {
+      excludeFieldNames: [`viewer`, `node`, `schemaMd5`],
+    },
+    Settings: {
+      excludeFieldNames: [`generalSettingsEmail`],
+    },
+    GeneralSettings: {
+      excludeFieldNames: [`email`],
+    },
     ActionMonitorAction: {
       exclude: true,
     },
