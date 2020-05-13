@@ -8,12 +8,12 @@ import { parsePath } from "./parse-path"
 export { parsePath }
 
 function isRelativePath(path) {
-  return /^\.{1,2}\/(?!\/)/.test(path)
+  return /^\.{1,2}\//.test(path)
 }
 
 export function withPrefix(path) {
   if (isRelativePath(path)) {
-    normalizePath(path)
+    return normalizePath(path)
   }
   return normalizePath(
     [
