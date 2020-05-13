@@ -134,7 +134,16 @@ const objectType = typeBuilderApi => {
       .map(({ name }) => buildTypeName(name))
   }
 
-  if (gatsbyNodeTypes.includes(type.name) || isAGatsbyNode) {
+  if (
+    gatsbyNodeTypes.includes(type.name) ||
+    isAGatsbyNode ||
+    // this accounts for Node types that weren't fetched because
+    // they have no root field to fetch a single node of this type
+    // removing them from the schema breaks the build though
+    // @todo instead, if a node type isn't fetched, remove it
+    // from the entire schema
+    type?.interfaces?.find(({ name }) => name === `Node`)
+  ) {
     // this is used to filter the node interfaces
     // by different content types (post types)
     objectType.fields[`nodeType`] = `String`
