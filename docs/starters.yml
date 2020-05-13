@@ -1328,18 +1328,15 @@
     - Automatic Sitemap generation
 - url: https://gatsby-starter-kontent.netlify.com
   repo: https://github.com/Kentico/gatsby-starter-kontent
-  description: Gatsby starter site with Kentico Kontent
+  description: Gatsby starter site with Kentico Kontent based on default Gatsby starter
   tags:
     - CMS:Headless
     - CMS:Kontent
     - Netlify
   features:
-    - Gatsby v2 support
-    - Content item <-> content type relationships
-    - Language variants relationships
-    - Linked items elements relationships
-    - Content items in Rich text elements relationships
-    - Reverse link relationships
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
+    - Kentico Kontent integration
 - url: https://gatsby-starter-storybook.netlify.com/
   repo: https://github.com/markoradak/gatsby-starter-storybook
   description: Gatsby starter site with Storybook
