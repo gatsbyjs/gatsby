@@ -24,7 +24,7 @@ const createStore = (schema = {}) => {
 
 const tracingContext = {
   graphqlTracing: false,
-  parentSpan: globalTracer.startSpan(`test`),
+  parentSpan: globalTracer().startSpan(`test`),
 }
 
 describe(`grapqhl-runner`, () => {
