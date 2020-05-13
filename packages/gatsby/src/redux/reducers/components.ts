@@ -2,38 +2,14 @@ import normalize from "normalize-path"
 import { interpret } from "xstate"
 
 import { componentMachine } from "../machines/page-component"
-import {
-  IGatsbyState,
-  IDeleteCacheAction,
-  ISetProgramStatusAction,
-  ICreatePageAction,
-  IQueryExtractedAction,
-  IQueryExtractedBabelSuccessAction,
-  IQueryExtractionBabelErrorAction,
-  IQueryExtractionGraphQLErrorAction,
-  IPageQueryRunAction,
-  IDeletePageAction,
-  IRemoveTemplateComponentAction,
-} from "../types"
+import { IGatsbyState, ActionsUnion } from "../types"
 
 const services = new Map()
 let programStatus = `BOOTSTRAPPING`
 
-type Actions =
-  | IDeleteCacheAction
-  | ISetProgramStatusAction
-  | ICreatePageAction
-  | IQueryExtractedAction
-  | IQueryExtractedBabelSuccessAction
-  | IQueryExtractionBabelErrorAction
-  | IQueryExtractionGraphQLErrorAction
-  | IPageQueryRunAction
-  | IRemoveTemplateComponentAction
-  | IDeletePageAction
-
 export const components = (
   state: IGatsbyState["components"] = new Map(),
-  action: Actions
+  action: ActionsUnion
 ): IGatsbyState["components"] => {
   switch (action.type) {
     case `DELETE_CACHE`:

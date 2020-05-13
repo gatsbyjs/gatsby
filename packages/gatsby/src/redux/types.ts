@@ -257,6 +257,7 @@ export type ActionsUnion =
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | IRemoveTemplateComponentAction
 
 export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
