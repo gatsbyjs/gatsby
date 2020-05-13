@@ -14,6 +14,7 @@ const defaultPluginOptions = {
       panicOnError: false,
       onlyReportCriticalErrors: true,
       copyNodeSourcingQueryAndExit: false,
+      writeQueriesToDisk: false,
     },
     disableCompatibilityCheck: false,
   },
