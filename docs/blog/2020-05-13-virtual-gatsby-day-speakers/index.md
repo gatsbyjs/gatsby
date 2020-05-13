@@ -27,6 +27,7 @@ The lineup includes:
 Adekunle Oduye will be offering insights on maintaining (ever-evolving!) design systems documentation and discover how Gatsby can make it easier.
 
 You'll learn why Gatsby's a great tool for documenting a design system, how to dynamically generate pattern documentation, and strategies to update and maintain your documentation site. Follow Oduye on Twitter [@adekunleoduye](https://twitter.com/adekunleoduye).
+
 ![Benedicte Raae speaker photo](./Benedicte_Raae.jpg)
 
 Follow along on Benedicte Raae's journey to create POW! - an encrypted menstrual cycle tracker she built using Gatsby and Userbase.
