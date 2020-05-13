@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/generator": "^7.9.6",
+    "@babel/plugin-transform-react-jsx": "^7.9.4",
     "@babel/standalone": "^7.9.6",
     "@babel/template": "^7.8.6",
     "@babel/types": "^7.9.6",

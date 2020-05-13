@@ -23,7 +23,7 @@ const recipeMachine = Machine(
     states: {
       parsingRecipe: {
         invoke: {
-          id: `parseRecipe`,
+          id: `parseRecipe`, // Partition MDX into steps
           src: async (context, event) => {
             let parsed
 
@@ -63,10 +63,17 @@ const recipeMachine = Machine(
             actions: assign({
               steps: (context, event) => event.data.commands,
               stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              stepsAsJsx: (context, event) => event.data.stepsAsJsx,
             }),
           },
         },
       },
+      /*
+        validateRecipe
+          • Parseable
+          • First step has no resource (uses renderer to validate)
+          • Each step contains a resource (future)
+      */
       validateSteps: {
         invoke: {
           id: `validateSteps`,
@@ -88,6 +95,7 @@ const recipeMachine = Machine(
         },
       },
       validatePlan: {
+        // This goes bye bye because validateRecipe will handle all top level validation
         invoke: {
           id: `validatePlan`,
           src: async (context, event) => {
@@ -109,6 +117,7 @@ const recipeMachine = Machine(
         },
       },
       creatingPlan: {
+        // Calls renderer for current step on MDX to get the plan
         entry: [`deleteOldPlan`],
         invoke: {
           id: `createPlan`,
@@ -134,6 +143,8 @@ const recipeMachine = Machine(
         },
       },
       applyingPlan: {
+        // cb mechanism can be used to emit events/actions between UI and the server/renderer
+        // https://xstate.js.org/docs/guides/communication.html#invoking-callbacks
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {

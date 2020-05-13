@@ -1,16 +1,71 @@
-const React = require(`react`)
+const mdx = require(`@mdx-js/mdx`)
 
-const { render, File, NPMPackage } = require(`.`)
+const render = require(`.`)
 
-const fixture = (
-  <doc>
-    <File path="red.js" content="red!" />
-    <NPMPackage name="gatsby" />
-  </doc>
-)
+const fixture = `
+  <div>
+    <File path="foo.js" content="/** foo */" />
+  </div>
+`
 
-test(`renders to a plan`, async () => {
-  const result = await render(fixture, {})
+const mdxFixture = `
+# Hello, world!
+
+---
+
+Write a file!
+
+<File path="foo.js" content="/** foo */" />
+`
+
+test(`handles MDX as input`, async () => {
+  const result = await render(mdxFixture)
+
+  expect(result).toMatchInlineSnapshot(`
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
+            },
+          ],
+          "props": Object {
+            "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
+          },
+          "type": "File",
+        },
+      ],
+    }
+  `)
+})
+
+test(`handles MDX JSX output`, async () => {
+  const jsx = mdx.sync(mdxFixture, { skipExport: true })
+
+  const result = await render(jsx)
+
+  expect(result).toMatchInlineSnapshot(`
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
+            },
+          ],
+          "props": Object {
+            "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
+          },
+          "type": "File",
+        },
+      ],
+    }
+  `)
+})
+
+test(`returns a plan for the step`, async () => {
+  const result = await render(fixture)
 
   expect(result).toMatchInlineSnapshot(`
     Object {
@@ -20,38 +75,22 @@ test(`renders to a plan`, async () => {
             Object {
               "children": Array [
                 Object {
-                  "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"red!\\",\\"describe\\":\\"Write red.js\\",\\"diff\\":\\"- Original  - 0/n+ Modified  + 1/n/n+ red!\\"}",
+                  "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
                 },
               ],
               "props": Object {
-                "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"red!\\",\\"describe\\":\\"Write red.js\\",\\"diff\\":\\"- Original  - 0/n+ Modified  + 1/n/n+ red!\\"}",
+                "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
               },
               "type": "File",
             },
-            Object {
-              "children": Array [
-                Object {
-                  "text": "{\\"newState\\":\\"gatsby@latest\\",\\"describe\\":\\"Install gatsby@latest\\"}",
-                },
-              ],
-              "props": Object {
-                "children": "{\\"newState\\":\\"gatsby@latest\\",\\"describe\\":\\"Install gatsby@latest\\"}",
-              },
-              "type": "NPMPackage",
-            },
           ],
           "props": Object {
-            "children": Array [
-              <File
-                content="red!"
-                path="red.js"
-              />,
-              <NPMPackage
-                name="gatsby"
-              />,
-            ],
+            "children": <File
+              content="/** foo */"
+              path="foo.js"
+            />,
           },
-          "type": "doc",
+          "type": "div",
         },
       ],
     }

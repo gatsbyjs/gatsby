@@ -1,4 +1,5 @@
 const unified = require(`unified`)
+const mdxCore = require(`@mdx-js/mdx`)
 const remarkMdx = require(`remark-mdx`)
 const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
@@ -145,6 +146,8 @@ const toMdxWithoutJsx = nodes => {
   return u.stringify(stepAst)
 }
 
+const toJsx = mdx => mdxCore.sync(mdx, { skipExport: true })
+
 const parse = async src => {
   try {
     const ast = u.parse(src)
@@ -158,6 +161,7 @@ const parse = async src => {
       steps,
       commands,
       stepsAsMdx: steps.map(toMdx),
+      stepsAsJsx: steps.map(toJsx),
       stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx),
     }
   } catch (e) {

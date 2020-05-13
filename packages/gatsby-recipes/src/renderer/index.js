@@ -1,66 +1,59 @@
 const React = require(`react`)
-const { Suspense } = require(`react`)
+const mdx = require(`@mdx-js/mdx`)
+const { transform } = require(`@babel/standalone`)
+const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 
-const resources = require(`../resources`)
+const { render, File, NPMPackage } = require(`./render`)
 
-const RecipesReconciler = require(`./reconciler`)
-const ErrorBoundary = require(`./error-boundary`)
+// TODO: Create components for resources dynamically
+// based on what's found in resources.
+const scope = {
+  React,
+  File,
+  NPMPackage,
+}
 
-const promises = []
-const cache = new Map()
+// TODO: Release MDX v2 canary so we can avoid the hacks
+const isMdxJsx = str => str.startsWith(`/* @jsx mdx */`)
+const stripMdxLayout = str => {
+  const newJsx = str
+    .replace(/^.*mdxType="MDXLayout">/ms, ``)
+    .replace(/<\/MDXLayout>.*/ms, ``)
 
-const Wrapper = ({ children }) => (
-  <ErrorBoundary>
-    <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
-  </ErrorBoundary>
-)
+  return `<doc>${newJsx}</doc>`
+}
 
-const ResourceComponent = ({ _resourceName: Resource, ...props }) => (
-  <Suspense fallback={<p>Reading resource...</p>}>
-    <Resource>
-      {JSON.stringify(readResource(Resource, { root: __dirname }, props))}
-    </Resource>
-  </Suspense>
-)
+const transformJsx = jsx => {
+  const { code } = transform(jsx, {
+    plugins: [babelPluginTransformReactJsx],
+  })
 
-const File = props => <ResourceComponent _resourceName="File" {...props} />
+  return code
+}
 
-const NPMPackage = props => (
-  <ResourceComponent _resourceName="NPMPackage" {...props} />
-)
+// This is overloaded to handle MDX input, JSX input
+// or MDX's JSX output as input.
+module.exports = jsx => {
+  const scopeKeys = Object.keys(scope)
+  const scopeValues = Object.values(scope)
 
-const readResource = (resourceName, context, props) => {
-  const key = JSON.stringify({ resourceName, ...props })
-  const cachedResult = cache.get(key)
+  let srcCode = null
 
-  if (cachedResult) {
-    return cachedResult
+  if (isMdxJsx(jsx)) {
+    jsx = stripMdxLayout(jsx)
   }
 
-  const promise = resources[resourceName]
-    .plan(context, props)
-    .then(result => cache.set(key, result))
+  try {
+    srcCode = transformJsx(jsx)
+  } catch (e) {
+    const jsxFromMdx = mdx.sync(jsx, { skipExport: true })
+    srcCode = transformJsx(stripMdxLayout(jsxFromMdx))
+  }
 
-  promises.push(promise)
+  const component = new Function(
+    ...scopeKeys,
+    `return (${srcCode.replace(/;$/, ``)})`
+  )
 
-  throw promise
+  return render(component(...scopeValues))
 }
-
-const render = async recipe => {
-  const plan = {}
-
-  const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
-
-  // Run the first pass of the render to queue up all the promises and suspend
-  await RecipesReconciler.render(recipeWithWrapper, plan)
-  // Await all promises for resources and cache results
-  await Promise.all(promises)
-  // Rerender with the resources and resolve the data
-  const result = await RecipesReconciler.render(recipeWithWrapper, plan)
-
-  return result
-}
-
-module.exports.render = render
-module.exports.File = File
-module.exports.NPMPackage = NPMPackage
