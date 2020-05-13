@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import path from "path"
 import { slash } from "gatsby-core-utils"
 import mime from "mime"
@@ -11,19 +10,6 @@ import * as NodeStore from "../../redux/nodes"
 
 type INodeStore = typeof NodeStore
 
-export const isFile = (
-  nodeStore: INodeStore,
-  fieldPath: string,
-  relativePath: string
-): boolean => {
-  const filePath = getFilePath(nodeStore, fieldPath, relativePath)
-  if (!filePath) return false
-  const filePathExists = nodeStore
-    .getNodesByType(`File`)
-    .some(node => node.absolutePath === filePath)
-  return filePathExists
-}
-
 const getFirstValueAt = (
   node: IGatsbyNode,
   selector: string | string[]
@@ -33,6 +19,54 @@ const getFirstValueAt = (
     value = value[0]
   }
   return value
+}
+
+const withBaseDir = (dir: string) => (p: string): string =>
+  path.posix.join(dir, slash(p))
+
+const findAncestorNode = (
+  nodeStore: INodeStore,
+  childNode: IGatsbyNode,
+  predicate: (n: IGatsbyNode) => boolean
+): IGatsbyNode | null => {
+  let node: IGatsbyNode | undefined = childNode
+  do {
+    if (predicate(node)) {
+      return node
+    }
+    node = nodeStore.getNode(node.parent)
+  } while (node !== undefined)
+  return null
+}
+
+const getBaseDir = (
+  nodeStore: INodeStore,
+  node: IGatsbyNode
+): string | null => {
+  if (node) {
+    const { dir } = findAncestorNode(
+      nodeStore,
+      node,
+      node => node.internal.type === `File`
+    ) || { dir: `` }
+
+    return typeof dir === `string` ? dir : null
+  }
+  return null
+}
+
+const getAbsolutePath = (
+  nodeStore: INodeStore,
+  node: IGatsbyNode,
+  relativePath: string
+): string | string[] | null => {
+  const dir = getBaseDir(nodeStore, node)
+  const withDir = withBaseDir(dir ?? ``)
+  return dir
+    ? Array.isArray(relativePath)
+      ? relativePath.map(withDir)
+      : withDir(relativePath)
+    : null
 }
 
 const getFilePath = (
@@ -66,50 +100,15 @@ const getFilePath = (
   return node ? getAbsolutePath(nodeStore, node, normalizedPath) : null
 }
 
-const getAbsolutePath = (
+export const isFile = (
   nodeStore: INodeStore,
-  node: IGatsbyNode,
+  fieldPath: string,
   relativePath: string
-): string | string[] | null => {
-  const dir = getBaseDir(nodeStore, node)
-  const withDir = withBaseDir(dir ?? ``)
-  return dir
-    ? Array.isArray(relativePath)
-      ? relativePath.map(withDir)
-      : withDir(relativePath)
-    : null
-}
-
-const getBaseDir = (
-  nodeStore: INodeStore,
-  node: IGatsbyNode
-): string | null => {
-  if (node) {
-    const { dir } = findAncestorNode(
-      nodeStore,
-      node,
-      node => node.internal.type === `File`
-    ) || { dir: `` }
-
-    return typeof dir === `string` ? dir : null
-  }
-  return null
-}
-
-const withBaseDir = (dir: string) => (p: string): string =>
-  path.posix.join(dir, slash(p))
-
-const findAncestorNode = (
-  nodeStore: INodeStore,
-  childNode: IGatsbyNode,
-  predicate: (n: IGatsbyNode) => boolean
-): IGatsbyNode | null => {
-  let node: IGatsbyNode | undefined = childNode
-  do {
-    if (predicate(node)) {
-      return node
-    }
-    node = nodeStore.getNode(node.parent)
-  } while (node !== undefined)
-  return null
+): boolean => {
+  const filePath = getFilePath(nodeStore, fieldPath, relativePath)
+  if (!filePath) return false
+  const filePathExists = nodeStore
+    .getNodesByType(`File`)
+    .some(node => node.absolutePath === filePath)
+  return filePathExists
 }
