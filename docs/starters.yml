@@ -5890,9 +5890,7 @@
 
 - url: https://gct.mozart409.space/
   repo: https://github.com/Mozart409/gatsby-custom-tailwind
-
   description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom Vercel/serve server for production build, visible to all in your network, so you can test it with your phone.
-
   tags:
     - Linting
     - PWA
