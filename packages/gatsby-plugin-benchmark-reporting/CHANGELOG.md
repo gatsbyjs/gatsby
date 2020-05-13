@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.3...gatsby-plugin-benchmark-reporting@0.2.4) (2020-05-13)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporter:** change type of incremental benchmark after first run ([#24052](https://github.com/gatsbyjs/gatsby/issues/24052)) ([8213570](https://github.com/gatsbyjs/gatsby/commit/8213570))
+
 ## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.2...gatsby-plugin-benchmark-reporting@0.2.3) (2020-05-12)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting
