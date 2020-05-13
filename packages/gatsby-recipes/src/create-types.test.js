@@ -4,6 +4,15 @@ test(`create-types`, () => {
   const result = createTypes()
   expect(result.mutationTypes).toMatchInlineSnapshot(`
     Object {
+      "createDirectory": Object {
+        "args": Object {
+          "directory": Object {
+            "type": "DirectoryInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
+      },
       "createFile": Object {
         "args": Object {
           "file": Object {
@@ -67,6 +76,15 @@ test(`create-types`, () => {
         "resolve": [Function],
         "type": "NPMScript",
       },
+      "destroyDirectory": Object {
+        "args": Object {
+          "directory": Object {
+            "type": "DirectoryInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
+      },
       "destroyFile": Object {
         "args": Object {
           "file": Object {
@@ -129,6 +147,15 @@ test(`create-types`, () => {
         },
         "resolve": [Function],
         "type": "NPMScript",
+      },
+      "updateDirectory": Object {
+        "args": Object {
+          "directory": Object {
+            "type": "DirectoryInput",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
       },
       "updateFile": Object {
         "args": Object {
@@ -212,6 +239,15 @@ test(`create-types`, () => {
       "allNPMScript": Object {
         "resolve": [Function],
         "type": "NPMScriptConnection",
+      },
+      "directory": Object {
+        "args": Object {
+          "id": Object {
+            "type": "String",
+          },
+        },
+        "resolve": [Function],
+        "type": "Directory",
       },
       "file": Object {
         "args": Object {

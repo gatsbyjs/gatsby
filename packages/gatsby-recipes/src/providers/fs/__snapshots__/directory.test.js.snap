@@ -12,8 +12,11 @@ exports[`directory resource e2e directory resource test: Directory create plan 1
 Object {
   "currentState": "",
   "describe": "Create src/images",
-  "diff": "  Comparing two different types of values. Expected string but received undefined.",
-  "newState": undefined,
+  "diff": "- Original  - 0
++ Modified  + 1
+
++ Directory",
+  "newState": "Directory",
 }
 `;
 
@@ -37,7 +40,10 @@ exports[`directory resource e2e directory resource test: Directory update plan 1
 Object {
   "currentState": "",
   "describe": "Create src/images",
-  "diff": "  Comparing two different types of values. Expected string but received undefined.",
-  "newState": undefined,
+  "diff": "- Original  - 0
++ Modified  + 1
+
++ Directory",
+  "newState": "Directory",
 }
 `;

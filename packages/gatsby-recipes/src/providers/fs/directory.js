@@ -1,9 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const mkdirp = require(`mkdirp`)
 const Joi = require(`@hapi/joi`)
-const isUrl = require(`is-url`)
-const fetch = require(`node-fetch`)
 const isBinaryPath = require(`is-binary-path`)
 
 const getDiff = require(`../utils/get-diff`)
@@ -22,9 +19,7 @@ const directoryExists = fullPath => {
 
 const create = async ({ root }, { id, path: directoryPath, content }) => {
   const fullPath = makePath(root, directoryPath)
-  const { dir } = path.parse(fullPath)
 
-  // await mkdirp(dir)
   await fs.ensureDir(fullPath)
 
   return await read({ root }, directoryPath)
@@ -32,7 +27,7 @@ const create = async ({ root }, { id, path: directoryPath, content }) => {
 
 const update = async (context, resource) => {
   const fullPath = makePath(context.root, resource.id)
-  await mkdirp(fullPath)
+  await fs.ensureDir(fullPath)
   return await read(context, resource.id)
 }
 
@@ -64,14 +59,8 @@ module.exports.plan = async (context, { id, path: directoryPath, content }) => {
   }
 
   let newState = content
-  if (isUrl(content)) {
-    if (!isBinaryPath(directoryPath)) {
-      const res = await fetch(content)
-      newState = await res.text()
-    } else {
-      newState = `Binary file`
-    }
-  }
+
+  newState = `Directory`
 
   const plan = {
     currentState: (currentResource && currentResource.content) || ``,
