@@ -1,7 +1,7 @@
 {
   "name": "gatsby-theme-notes",
   "description": "Gatsby Theme for adding a notes section to your website",
-  "version": "1.3.25",
+  "version": "1.3.26",
   "author": "John Otander",
   "license": "MIT",
   "main": "index.js",
@@ -43,7 +43,7 @@
     "gatsby-plugin-meta-redirect": "^1.1.1",
     "gatsby-plugin-redirects": "^1.0.0",
     "gatsby-plugin-theme-ui": "^0.2.53",
-    "gatsby-source-filesystem": "^2.3.2",
+    "gatsby-source-filesystem": "^2.3.3",
     "is-present": "^1.0.0",
     "react-feather": "^1.1.6",
     "theme-ui": "^0.2.52",
