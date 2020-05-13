@@ -12,9 +12,9 @@ const getTargetOffset = hash => {
       let clientTop =
         document.documentElement.clientTop || document.body.clientTop || 0
       let computedStyles = window.getComputedStyle(element)
-      let scrollMarginTop = 
-        computedStyles.getPropertyValue(`scroll-margin-top`) || 
-        computedStyles.getPropertyValue(`scroll-snap-margin-top`) || 
+      let scrollMarginTop =
+        computedStyles.getPropertyValue(`scroll-margin-top`) ||
+        computedStyles.getPropertyValue(`scroll-snap-margin-top`) ||
         `0px`
 
       return (
