@@ -2,7 +2,7 @@
 title: Conditional Page Builds
 ---
 
-If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [incremental builds](https://www.gatsbyjs.com/docs/incremental-builds/) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for sites with unchanged data. This feature is experimental, but may improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
+If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [incremental builds](https://www.gatsbyjs.com/docs/incremental-builds/) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for pages with unchanged data. This feature is experimental, but may improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
 
 For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/overview-of-the-gatsby-build-process/).
 
