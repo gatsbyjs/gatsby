@@ -1,5 +1,11 @@
 # Change Log
 
+## Upcoming
+
+### New Features
+
+- Added plugin option `debug.graphql.writeQueriesToDisk` which writes out all the internal GraphQL queries to `./WordPress/GraphQL/[typname]` for each node type.
+
 ## 0.1.13
 
 ### New Features

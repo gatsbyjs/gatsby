@@ -7,6 +7,7 @@ import { identifyAndStoreIngestableFieldsAndTypes } from "./identify-and-store-i
 import { buildNonNodeQueries } from "./build-and-store-ingestible-root-field-non-node-queries"
 import { buildNodeQueries } from "./build-queries-from-introspection/build-node-queries"
 import { cacheFetchedTypes } from "./cache-fetched-types"
+import { writeQueriesToDisk } from "./write-queries-to-disk"
 
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
   // @todo if this is an inc build or preview, we need quicker logic
@@ -32,6 +33,7 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
         buildNodeQueries,
         buildNonNodeQueries,
         cacheFetchedTypes,
+        writeQueriesToDisk,
       ],
       helpers,
       pluginOptions

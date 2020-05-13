@@ -1,14 +1,4 @@
 import fetchGraphql from "gatsby-source-wordpress-experimental/utils/fetch-graphql"
-import path from "path"
-
-// require .env.development or .env.production
-require(`dotenv`).config({
-  path: path.resolve(process.cwd(), `.test-runtime/.env.test`),
-})
-
-require(`dotenv`).config({
-  path: path.resolve(process.cwd(), `.test-runtime/.env.WORDPRESS_BASIC_AUTH`),
-})
 
 export const authedWPGQLRequest = async query => {
   if (!process.env.WPGRAPHQL_URL) {

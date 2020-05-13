@@ -8,11 +8,10 @@
     "email": "tyler@gatsbyjs.com"
   },
   "scripts": {
-    "develop": "yarn remove-self && gatsby develop",
-    "build": "yarn remove-self && gatsby build",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
     "clean-develop": "gatsby clean && yarn develop",
     "clean-build": "gatsby clean && yarn build",
-    "remove-self": "rm -rf ./node_modules/gatsby-source-wordpress-experimental/.test-runtime",
     "serve": "gatsby serve"
   },
   "dependencies": {
@@ -28,7 +27,6 @@
     "gatsby-plugin-react-svg": "^3.0.0",
     "gatsby-plugin-sharp": "2.5.6",
     "gatsby-source-filesystem": "^2.2.4",
-    "gatsby-source-wordpress-experimental": "../",
     "gatsby-transformer-sharp": "2.4.6",
     "parse-path": "^4.0.1",
     "react": "^16.3.2",

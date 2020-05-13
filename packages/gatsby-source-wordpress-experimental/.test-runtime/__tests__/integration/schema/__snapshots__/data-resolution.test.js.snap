@@ -1,0 +1,873 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves menus 1`] = `
+Object {
+  "data": Object {
+    "allWpMenu": Object {
+      "nodes": Array [
+        Object {
+          "count": 4,
+          "id": "TWVudToxNw==",
+          "menuId": 17,
+          "menuItems": Object {
+            "nodes": Array [
+              Object {
+                "childItems": Object {
+                  "nodes": Array [],
+                },
+                "id": "bmF2X21lbnVfaXRlbTo1NjQ=",
+                "label": "Activity",
+                "menuItemId": 564,
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/activity/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [
+                    Object {
+                      "childItems": Object {
+                        "nodes": Array [
+                          Object {
+                            "label": "test custom link",
+                            "url": "https://google.com",
+                          },
+                        ],
+                      },
+                      "connectedObject": Object {
+                        "__typename": "WpPost",
+                        "featuredImage": Object {
+                          "title": "84-1000&#215;1000",
+                        },
+                        "title": "Hello world!",
+                        "uri": "/2020/02/25/hello-world/",
+                      },
+                      "id": "bmF2X21lbnVfaXRlbTo1NjY=",
+                      "label": "Hello world!",
+                      "menuItemId": 566,
+                    },
+                  ],
+                },
+                "id": "bmF2X21lbnVfaXRlbTo1NjU=",
+                "label": "Sample Page",
+                "menuItemId": 565,
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/sample-page/",
+              },
+            ],
+          },
+          "name": "main menu",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves menus INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpMenu": Object {
+      "nodes": Array [
+        Object {
+          "count": 4,
+          "id": "TWVudToxNw==",
+          "menuId": 17,
+          "menuItems": Object {
+            "nodes": Array [
+              Object {
+                "childItems": Object {
+                  "nodes": Array [],
+                },
+                "id": "bmF2X21lbnVfaXRlbTo1NjQ=",
+                "label": "Activity",
+                "menuItemId": 564,
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/activity/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [
+                    Object {
+                      "childItems": Object {
+                        "nodes": Array [
+                          Object {
+                            "label": "test custom link",
+                            "url": "https://google.com",
+                          },
+                        ],
+                      },
+                      "connectedObject": Object {
+                        "__typename": "WpPost",
+                        "featuredImage": Object {
+                          "title": "84-1000&#215;1000",
+                        },
+                        "title": "Hello world! DELTA SYNC",
+                        "uri": "/2020/02/25/hello-world/",
+                      },
+                      "id": "bmF2X21lbnVfaXRlbTo1NjY=",
+                      "label": "Hello world!",
+                      "menuItemId": 566,
+                    },
+                  ],
+                },
+                "id": "bmF2X21lbnVfaXRlbTo1NjU=",
+                "label": "Sample Page",
+                "menuItemId": 565,
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/sample-page/",
+              },
+            ],
+          },
+          "name": "main menu",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves pages 1`] = `
+Object {
+  "data": Object {
+    "allWpPage": Object {
+      "nodes": Array [
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": Array [
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_Header",
+                "header": "header text test",
+              },
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_TeamMembers",
+                "teamMembers": Array [
+                  Object {
+                    "teamMember": Array [
+                      Object {
+                        "__typename": "WpTeamMember",
+                        "acfData": Object {
+                          "fieldGroupName": "acfData",
+                          "name": "Jason",
+                          "portrait": Object {
+                            "altText": "",
+                            "caption": null,
+                            "commentStatus": "open",
+                            "databaseId": 99,
+                            "date": "2020-03-02T20:58:44",
+                            "dateGmt": "2020-03-02T20:58:44",
+                            "description": null,
+                            "desiredSlug": null,
+                            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/avatar.jpg",
+                          },
+                          "projects": Array [
+                            Object {
+                              "content": null,
+                              "databaseId": 172,
+                              "date": "2020-03-02T22:17:12",
+                              "id": "cHJvamVjdDoxNzI=",
+                              "slug": "wpgraphql",
+                              "status": "publish",
+                              "title": "WPGraphQL",
+                              "uri": "/project/wpgraphql/",
+                            },
+                          ],
+                          "title": "WPGraphQL guy",
+                          "twitterlink": Object {
+                            "target": "_blank",
+                            "title": "",
+                            "url": "https://twitter.com/jasonbahl",
+                          },
+                          "webSite": Object {
+                            "target": "",
+                            "title": "",
+                            "url": "https://jasonbahl.com/",
+                          },
+                        },
+                        "content": "
+<p>Creator and maintainer of&nbsp;<a href=\\"https://www.wpgraphql.com/\\">WPGraphQL</a>&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "databaseId": 98,
+                        "date": "2020-03-02T20:59:13",
+                        "dateGmt": "2020-03-02T20:59:13",
+                        "desiredSlug": null,
+                        "enclosure": null,
+                        "excerpt": "<p>Creator and maintainer of&nbsp;WPGraphQL&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "id": "dGVhbV9tZW1iZXI6OTg=",
+                        "link": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/team_member/jason-bahl/",
+                        "menuOrder": null,
+                        "pingStatus": "open",
+                        "seo": Object {
+                          "focuskw": "",
+                          "metaDesc": "",
+                          "metaKeywords": "",
+                          "metaRobotsNofollow": "",
+                          "title": "Jason Bahl - Automated testing for Gatsby source WordPress V4",
+                        },
+                        "slug": "jason-bahl",
+                        "status": "publish",
+                        "termNames": null,
+                        "termSlugs": null,
+                        "title": "Jason Bahl",
+                        "toPing": null,
+                        "uri": "/team_member/jason-bahl/",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "French home page",
+          "translations": Array [
+            Object {
+              "title": "Members",
+            },
+          ],
+          "uri": "/fr/french-home-page/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": null,
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Child page",
+          "translations": Array [],
+          "uri": "/sample-page/child-page/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": Array [
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_Header",
+                "header": "header text test",
+              },
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_TeamMembers",
+                "teamMembers": Array [
+                  Object {
+                    "teamMember": Array [
+                      Object {
+                        "__typename": "WpTeamMember",
+                        "acfData": Object {
+                          "fieldGroupName": "acfData",
+                          "name": "Jason",
+                          "portrait": Object {
+                            "altText": "",
+                            "caption": null,
+                            "commentStatus": "open",
+                            "databaseId": 99,
+                            "date": "2020-03-02T20:58:44",
+                            "dateGmt": "2020-03-02T20:58:44",
+                            "description": null,
+                            "desiredSlug": null,
+                            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/avatar.jpg",
+                          },
+                          "projects": Array [
+                            Object {
+                              "content": null,
+                              "databaseId": 172,
+                              "date": "2020-03-02T22:17:12",
+                              "id": "cHJvamVjdDoxNzI=",
+                              "slug": "wpgraphql",
+                              "status": "publish",
+                              "title": "WPGraphQL",
+                              "uri": "/project/wpgraphql/",
+                            },
+                          ],
+                          "title": "WPGraphQL guy",
+                          "twitterlink": Object {
+                            "target": "_blank",
+                            "title": "",
+                            "url": "https://twitter.com/jasonbahl",
+                          },
+                          "webSite": Object {
+                            "target": "",
+                            "title": "",
+                            "url": "https://jasonbahl.com/",
+                          },
+                        },
+                        "content": "
+<p>Creator and maintainer of&nbsp;<a href=\\"https://www.wpgraphql.com/\\">WPGraphQL</a>&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "databaseId": 98,
+                        "date": "2020-03-02T20:59:13",
+                        "dateGmt": "2020-03-02T20:59:13",
+                        "desiredSlug": null,
+                        "enclosure": null,
+                        "excerpt": "<p>Creator and maintainer of&nbsp;WPGraphQL&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "id": "dGVhbV9tZW1iZXI6OTg=",
+                        "link": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/team_member/jason-bahl/",
+                        "menuOrder": null,
+                        "pingStatus": "open",
+                        "seo": Object {
+                          "focuskw": "",
+                          "metaDesc": "",
+                          "metaKeywords": "",
+                          "metaRobotsNofollow": "",
+                          "title": "Jason Bahl - Automated testing for Gatsby source WordPress V4",
+                        },
+                        "slug": "jason-bahl",
+                        "status": "publish",
+                        "termNames": null,
+                        "termSlugs": null,
+                        "title": "Jason Bahl",
+                        "toPing": null,
+                        "uri": "/team_member/jason-bahl/",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Members",
+          "translations": Array [
+            Object {
+              "title": "French home page",
+            },
+          ],
+          "uri": "/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": null,
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Activity",
+          "translations": Array [],
+          "uri": "/activity/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": null,
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [
+              Object {
+                "title": "Child page",
+              },
+            ],
+          },
+          "title": "Sample Page",
+          "translations": Array [],
+          "uri": "/sample-page/",
+        },
+      ],
+    },
+    "testPage": Object {
+      "title": "Sample Page",
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves pages INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpPage": Object {
+      "nodes": Array [
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": Array [
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_Header",
+                "header": "header text test",
+              },
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_TeamMembers",
+                "teamMembers": Array [
+                  Object {
+                    "teamMember": Array [
+                      Object {
+                        "__typename": "WpTeamMember",
+                        "acfData": Object {
+                          "fieldGroupName": "acfData",
+                          "name": "Jason",
+                          "portrait": Object {
+                            "altText": "",
+                            "caption": null,
+                            "commentStatus": "open",
+                            "databaseId": 99,
+                            "date": "2020-03-02T20:58:44",
+                            "dateGmt": "2020-03-02T20:58:44",
+                            "description": null,
+                            "desiredSlug": null,
+                            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/avatar.jpg",
+                          },
+                          "projects": Array [
+                            Object {
+                              "content": null,
+                              "databaseId": 172,
+                              "date": "2020-03-02T22:17:12",
+                              "id": "cHJvamVjdDoxNzI=",
+                              "slug": "wpgraphql",
+                              "status": "publish",
+                              "title": "WPGraphQL",
+                              "uri": "/project/wpgraphql/",
+                            },
+                          ],
+                          "title": "WPGraphQL guy",
+                          "twitterlink": Object {
+                            "target": "_blank",
+                            "title": "",
+                            "url": "https://twitter.com/jasonbahl",
+                          },
+                          "webSite": Object {
+                            "target": "",
+                            "title": "",
+                            "url": "https://jasonbahl.com/",
+                          },
+                        },
+                        "content": "
+<p>Creator and maintainer of&nbsp;<a href=\\"https://www.wpgraphql.com/\\">WPGraphQL</a>&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "databaseId": 98,
+                        "date": "2020-03-02T20:59:13",
+                        "dateGmt": "2020-03-02T20:59:13",
+                        "desiredSlug": null,
+                        "enclosure": null,
+                        "excerpt": "<p>Creator and maintainer of&nbsp;WPGraphQL&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "id": "dGVhbV9tZW1iZXI6OTg=",
+                        "link": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/team_member/jason-bahl/",
+                        "menuOrder": null,
+                        "pingStatus": "open",
+                        "seo": Object {
+                          "focuskw": "",
+                          "metaDesc": "",
+                          "metaKeywords": "",
+                          "metaRobotsNofollow": "",
+                          "title": "Jason Bahl - Automated testing for Gatsby source WordPress V4",
+                        },
+                        "slug": "jason-bahl",
+                        "status": "publish",
+                        "termNames": null,
+                        "termSlugs": null,
+                        "title": "Jason Bahl",
+                        "toPing": null,
+                        "uri": "/team_member/jason-bahl/",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "French home page",
+          "translations": Array [
+            Object {
+              "title": "Members",
+            },
+          ],
+          "uri": "/fr/french-home-page/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": null,
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Child page",
+          "translations": Array [],
+          "uri": "/sample-page/child-page/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": Array [
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_Header",
+                "header": "header text test",
+              },
+              Object {
+                "__typename": "WpPage_Acfpagefields_Flex_TeamMembers",
+                "teamMembers": Array [
+                  Object {
+                    "teamMember": Array [
+                      Object {
+                        "__typename": "WpTeamMember",
+                        "acfData": Object {
+                          "fieldGroupName": "acfData",
+                          "name": "Jason",
+                          "portrait": Object {
+                            "altText": "",
+                            "caption": null,
+                            "commentStatus": "open",
+                            "databaseId": 99,
+                            "date": "2020-03-02T20:58:44",
+                            "dateGmt": "2020-03-02T20:58:44",
+                            "description": null,
+                            "desiredSlug": null,
+                            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/avatar.jpg",
+                          },
+                          "projects": Array [
+                            Object {
+                              "content": null,
+                              "databaseId": 172,
+                              "date": "2020-03-02T22:17:12",
+                              "id": "cHJvamVjdDoxNzI=",
+                              "slug": "wpgraphql",
+                              "status": "publish",
+                              "title": "WPGraphQL",
+                              "uri": "/project/wpgraphql/",
+                            },
+                          ],
+                          "title": "WPGraphQL guy",
+                          "twitterlink": Object {
+                            "target": "_blank",
+                            "title": "",
+                            "url": "https://twitter.com/jasonbahl",
+                          },
+                          "webSite": Object {
+                            "target": "",
+                            "title": "",
+                            "url": "https://jasonbahl.com/",
+                          },
+                        },
+                        "content": "
+<p>Creator and maintainer of&nbsp;<a href=\\"https://www.wpgraphql.com/\\">WPGraphQL</a>&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "databaseId": 98,
+                        "date": "2020-03-02T20:59:13",
+                        "dateGmt": "2020-03-02T20:59:13",
+                        "desiredSlug": null,
+                        "enclosure": null,
+                        "excerpt": "<p>Creator and maintainer of&nbsp;WPGraphQL&nbsp;(GraphQL for WordPress). Occasional conference speaker.</p>
+",
+                        "id": "dGVhbV9tZW1iZXI6OTg=",
+                        "link": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/team_member/jason-bahl/",
+                        "menuOrder": null,
+                        "pingStatus": "open",
+                        "seo": Object {
+                          "focuskw": "",
+                          "metaDesc": "",
+                          "metaKeywords": "",
+                          "metaRobotsNofollow": "",
+                          "title": "Jason Bahl - Automated testing for Gatsby source WordPress V4",
+                        },
+                        "slug": "jason-bahl",
+                        "status": "publish",
+                        "termNames": null,
+                        "termSlugs": null,
+                        "title": "Jason Bahl",
+                        "toPing": null,
+                        "uri": "/team_member/jason-bahl/",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Members",
+          "translations": Array [
+            Object {
+              "title": "French home page",
+            },
+          ],
+          "uri": "/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": null,
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [],
+          },
+          "title": "Activity",
+          "translations": Array [],
+          "uri": "/activity/",
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+            "flex": null,
+          },
+          "author": Object {
+            "name": "Tyler",
+          },
+          "childPages": Object {
+            "nodes": Array [
+              Object {
+                "title": "Child page",
+              },
+            ],
+          },
+          "title": "Sample Page DELTA SYNC",
+          "translations": Array [],
+          "uri": "/sample-page/",
+        },
+      ],
+    },
+    "testPage": Object {
+      "title": "Sample Page DELTA SYNC",
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves posts 1`] = `
+Object {
+  "data": Object {
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "avatar": Object {
+              "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
+            },
+            "comments": Object {
+              "nodes": Array [],
+            },
+          },
+          "featuredImage": Object {
+            "altText": "",
+            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+          },
+          "title": "Hello world!",
+        },
+      ],
+    },
+    "testPost": Object {
+      "title": "Hello world!",
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves posts INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "avatar": Object {
+              "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
+            },
+            "comments": Object {
+              "nodes": Array [],
+            },
+          },
+          "featuredImage": Object {
+            "altText": "",
+            "sourceUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+          },
+          "title": "Hello world! DELTA SYNC",
+        },
+      ],
+    },
+    "testPost": Object {
+      "title": "Hello world! DELTA SYNC",
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves root fields 1`] = `
+Object {
+  "data": Object {
+    "wp": Object {
+      "allSettings": Object {
+        "discussionSettingsDefaultCommentStatus": "open",
+        "discussionSettingsDefaultPingStatus": "open",
+        "generalSettingsDateFormat": "F j, Y",
+        "generalSettingsDescription": "Just another WordPress site",
+        "generalSettingsEmail": null,
+        "generalSettingsLanguage": "en_US",
+        "generalSettingsStartOfWeek": 1,
+        "generalSettingsTimeFormat": "g:i a",
+        "generalSettingsTimezone": "",
+        "generalSettingsTitle": "Automated testing for Gatsby source WordPress V4",
+        "generalSettingsUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io",
+        "readingSettingsPostsPerPage": 10,
+        "writingSettingsDefaultCategory": 23,
+        "writingSettingsDefaultPostFormat": "",
+        "writingSettingsUseSmilies": true,
+      },
+      "nodeType": null,
+      "writingSettings": Object {
+        "defaultCategory": 23,
+        "defaultPostFormat": "0",
+        "useSmilies": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves root fields INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "wp": Object {
+      "allSettings": Object {
+        "discussionSettingsDefaultCommentStatus": "open",
+        "discussionSettingsDefaultPingStatus": "open",
+        "generalSettingsDateFormat": "F j, Y",
+        "generalSettingsDescription": "Just another WordPress site",
+        "generalSettingsEmail": null,
+        "generalSettingsLanguage": "en_US",
+        "generalSettingsStartOfWeek": 1,
+        "generalSettingsTimeFormat": "g:i a",
+        "generalSettingsTimezone": "",
+        "generalSettingsTitle": "Automated testing for Gatsby source WordPress V4",
+        "generalSettingsUrl": "https://dev-automated-testing-gatsby-source-wordpress-wpgraphql.pantheonsite.io",
+        "readingSettingsPostsPerPage": 10,
+        "writingSettingsDefaultCategory": 23,
+        "writingSettingsDefaultPostFormat": "",
+        "writingSettingsUseSmilies": true,
+      },
+      "nodeType": null,
+      "writingSettings": Object {
+        "defaultCategory": 23,
+        "defaultPostFormat": "0",
+        "useSmilies": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves users 1`] = `
+Object {
+  "data": Object {
+    "allWpUser": Object {
+      "nodes": Array [
+        Object {
+          "databaseId": 1,
+          "name": "Tyler",
+          "pages": Object {
+            "nodes": Array [
+              Object {
+                "title": "French home page",
+              },
+              Object {
+                "title": "Members",
+              },
+              Object {
+                "title": "Activity",
+              },
+              Object {
+                "title": "Sample Page",
+              },
+            ],
+          },
+          "posts": Object {
+            "nodes": Array [
+              Object {
+                "title": "Hello world!",
+              },
+            ],
+          },
+        },
+      ],
+    },
+    "testUser": Object {
+      "firstName": "Tyler",
+    },
+  },
+}
+`;
+
+exports[`[gatsby-source-wordpress-experimental] data resolution resolves users INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpUser": Object {
+      "nodes": Array [
+        Object {
+          "databaseId": 1,
+          "name": "Tyler",
+          "pages": Object {
+            "nodes": Array [
+              Object {
+                "title": "French home page",
+              },
+              Object {
+                "title": "Members",
+              },
+              Object {
+                "title": "Activity",
+              },
+              Object {
+                "title": "Sample Page DELTA SYNC",
+              },
+            ],
+          },
+          "posts": Object {
+            "nodes": Array [
+              Object {
+                "title": "Hello world! DELTA SYNC",
+              },
+            ],
+          },
+        },
+      ],
+    },
+    "testUser": Object {
+      "firstName": "Tyler DELTA SYNC",
+    },
+  },
+}
+`;

@@ -1,0 +1,4465 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  categories(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      ancestors {
+        id
+      }
+      wpChildren: children(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      count
+      databaseId
+      description
+      id
+      language {
+        id
+        locale
+        name
+        slug
+      }
+      link
+      name
+      wpParent: parent {
+        id
+      }
+      posts(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      taxonomy {
+        node {
+          id
+        }
+      }
+      teamMembers(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      termGroupId
+      termTaxonomyId
+      translations {
+        id
+      }
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  category(id: $id, idType: DATABASE_ID) {
+    ancestors {
+      id
+    }
+    wpChildren: children(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    count
+    databaseId
+    description
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    name
+    wpParent: parent {
+      id
+    }
+    posts(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    taxonomy {
+      node {
+        id
+      }
+    }
+    teamMembers(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    termGroupId
+    termTaxonomyId
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  category(id: $id) {
+    ancestors {
+      id
+    }
+    wpChildren: children(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    count
+    databaseId
+    description
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    name
+    wpParent: parent {
+      id
+    }
+    posts(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    taxonomy {
+      node {
+        id
+      }
+    }
+    teamMembers(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    termGroupId
+    termTaxonomyId
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  comments(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      agent
+      approved
+      author {
+        __typename
+        ... on User {
+          id
+        }
+        ... on CommentAuthor {
+          email
+          id
+          name
+          url
+        }
+      }
+      authorIp
+      wpChildren: children(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      commentId
+      commentedOn {
+        __typename
+        ... on Post {
+          id
+        }
+        ... on Page {
+          id
+        }
+        ... on MediaItem {
+          id
+        }
+        ... on TeamMember {
+          id
+        }
+        ... on Project {
+          id
+        }
+        ... on TypeLimitTest {
+          id
+        }
+        ... on TypeLimit0Test {
+          id
+        }
+        ... on TranslationFilterTest {
+          id
+        }
+      }
+      content
+      date
+      dateGmt
+      id
+      karma
+      wpParent: parent {
+        id
+      }
+      type
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  comment(id: $id, idType: DATABASE_ID) {
+    agent
+    approved
+    author {
+      __typename
+      ... on User {
+        id
+      }
+      ... on CommentAuthor {
+        email
+        id
+        name
+        url
+      }
+    }
+    authorIp
+    wpChildren: children(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentId
+    commentedOn {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on MediaItem {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+    }
+    content
+    date
+    dateGmt
+    id
+    karma
+    wpParent: parent {
+      id
+    }
+    type
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  comment(id: $id) {
+    agent
+    approved
+    author {
+      __typename
+      ... on User {
+        id
+      }
+      ... on CommentAuthor {
+        email
+        id
+        name
+        url
+      }
+    }
+    authorIp
+    wpChildren: children(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentId
+    commentedOn {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on MediaItem {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+    }
+    content
+    date
+    dateGmt
+    id
+    karma
+    wpParent: parent {
+      id
+    }
+    type
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  contentTypes(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      canExport
+      connectedTaxonomies {
+        id
+      }
+      connectedTaxonomyNames
+      deleteWithUser
+      description
+      excludeFromSearch
+      graphqlPluralName
+      graphqlSingleName
+      hasArchive
+      hierarchical
+      id
+      label
+      labels {
+        addNew
+        addNewItem
+        allItems
+        archives
+        editItem
+        featuredImage
+        filterItemsList
+        insertIntoItem
+        itemsList
+        itemsListNavigation
+        menuName
+        name
+        newItem
+        notFound
+        notFoundInTrash
+        parentItemColon
+        removeFeaturedImage
+        searchItems
+        setFeaturedImage
+        singularName
+        uploadedToThisItem
+        useFeaturedImage
+        viewItem
+        viewItems
+      }
+      menuIcon
+      menuPosition
+      name
+      public
+      publiclyQueryable
+      restBase
+      restControllerClass
+      showInAdminBar
+      showInGraphql
+      showInMenu
+      showInNavMenus
+      showInRest
+      showUi
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  contentType(id: $id, idType: DATABASE_ID) {
+    canExport
+    connectedTaxonomies {
+      id
+    }
+    connectedTaxonomyNames
+    deleteWithUser
+    description
+    excludeFromSearch
+    graphqlPluralName
+    graphqlSingleName
+    hasArchive
+    hierarchical
+    id
+    label
+    labels {
+      addNew
+      addNewItem
+      allItems
+      archives
+      editItem
+      featuredImage
+      filterItemsList
+      insertIntoItem
+      itemsList
+      itemsListNavigation
+      menuName
+      name
+      newItem
+      notFound
+      notFoundInTrash
+      parentItemColon
+      removeFeaturedImage
+      searchItems
+      setFeaturedImage
+      singularName
+      uploadedToThisItem
+      useFeaturedImage
+      viewItem
+      viewItems
+    }
+    menuIcon
+    menuPosition
+    name
+    public
+    publiclyQueryable
+    restBase
+    restControllerClass
+    showInAdminBar
+    showInGraphql
+    showInMenu
+    showInNavMenus
+    showInRest
+    showUi
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  contentType(id: $id) {
+    canExport
+    connectedTaxonomies {
+      id
+    }
+    connectedTaxonomyNames
+    deleteWithUser
+    description
+    excludeFromSearch
+    graphqlPluralName
+    graphqlSingleName
+    hasArchive
+    hierarchical
+    id
+    label
+    labels {
+      addNew
+      addNewItem
+      allItems
+      archives
+      editItem
+      featuredImage
+      filterItemsList
+      insertIntoItem
+      itemsList
+      itemsListNavigation
+      menuName
+      name
+      newItem
+      notFound
+      notFoundInTrash
+      parentItemColon
+      removeFeaturedImage
+      searchItems
+      setFeaturedImage
+      singularName
+      uploadedToThisItem
+      useFeaturedImage
+      viewItem
+      viewItems
+    }
+    menuIcon
+    menuPosition
+    name
+    public
+    publiclyQueryable
+    restBase
+    restControllerClass
+    showInAdminBar
+    showInGraphql
+    showInMenu
+    showInNavMenus
+    showInRest
+    showUi
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  mediaItems(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      altText
+      author {
+        id
+      }
+      caption
+      commentStatus
+      comments(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      description
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      guid
+      id
+      language {
+        id
+        locale
+        name
+        slug
+      }
+      link
+      mediaDetails {
+        file
+        height
+        meta {
+          aperture
+          camera
+          caption
+          copyright
+          createdTimestamp
+          credit
+          focalLength
+          iso
+          keywords
+          orientation
+          shutterSpeed
+          title
+        }
+        sizes {
+          file
+          height
+          mimeType
+          name
+          sourceUrl
+          width
+        }
+        width
+      }
+      mediaItemUrl
+      mediaType
+      mimeType
+      modified
+      modifiedGmt
+      wpParent: parent {
+        __typename
+        ... on Post {
+          id
+        }
+        ... on Page {
+          id
+        }
+        ... on MediaItem {
+          id
+        }
+        ... on TeamMember {
+          id
+        }
+        ... on Project {
+          id
+        }
+        ... on TypeLimitTest {
+          id
+        }
+        ... on TypeLimit0Test {
+          id
+        }
+        ... on TranslationFilterTest {
+          id
+        }
+      }
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      sizes
+      slug
+      sourceUrl
+      srcSet
+      status
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      termNames
+      termSlugs
+      terms {
+        __typename
+        ... on Category {
+          id
+        }
+        ... on Tag {
+          id
+        }
+      }
+      title
+      translations {
+        id
+        sourceUrl
+      }
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  mediaItem(id: $id, idType: DATABASE_ID) {
+    altText
+    author {
+      id
+    }
+    caption
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    description
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    guid
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    mediaDetails {
+      file
+      height
+      meta {
+        aperture
+        camera
+        caption
+        copyright
+        createdTimestamp
+        credit
+        focalLength
+        iso
+        keywords
+        orientation
+        shutterSpeed
+        title
+      }
+      sizes {
+        file
+        height
+        mimeType
+        name
+        sourceUrl
+        width
+      }
+      width
+    }
+    mediaItemUrl
+    mediaType
+    mimeType
+    modified
+    modifiedGmt
+    wpParent: parent {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on MediaItem {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    sizes
+    slug
+    sourceUrl
+    srcSet
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    translations {
+      id
+      sourceUrl
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  mediaItem(id: $id) {
+    altText
+    author {
+      id
+    }
+    caption
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    description
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    guid
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    mediaDetails {
+      file
+      height
+      meta {
+        aperture
+        camera
+        caption
+        copyright
+        createdTimestamp
+        credit
+        focalLength
+        iso
+        keywords
+        orientation
+        shutterSpeed
+        title
+      }
+      sizes {
+        file
+        height
+        mimeType
+        name
+        sourceUrl
+        width
+      }
+      width
+    }
+    mediaItemUrl
+    mediaType
+    mimeType
+    modified
+    modifiedGmt
+    wpParent: parent {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on MediaItem {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    sizes
+    slug
+    sourceUrl
+    srcSet
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    translations {
+      id
+      sourceUrl
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  menus(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      count
+      id
+      menuId
+      menuItems(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      name
+      slug
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  menu(id: $id, idType: DATABASE_ID) {
+    count
+    id
+    menuId
+    menuItems(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    name
+    slug
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  menu(id: $id) {
+    count
+    id
+    menuId
+    menuItems(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    name
+    slug
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  menuItems(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      childItems(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      connectedObject {
+        __typename
+        ... on Post {
+          id
+        }
+        ... on Page {
+          id
+        }
+        ... on TeamMember {
+          id
+        }
+        ... on Project {
+          id
+        }
+        ... on TypeLimitTest {
+          id
+        }
+        ... on TypeLimit0Test {
+          id
+        }
+        ... on TranslationFilterTest {
+          id
+        }
+        ... on Category {
+          id
+        }
+        ... on Tag {
+          id
+        }
+        ... on MenuItem {
+          id
+        }
+      }
+      cssClasses
+      description
+      id
+      label
+      linkRelationship
+      menuItemId
+      target
+      title
+      url
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  menuItem(id: $id, idType: DATABASE_ID) {
+    childItems(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    connectedObject {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+      ... on MenuItem {
+        id
+      }
+    }
+    cssClasses
+    description
+    id
+    label
+    linkRelationship
+    menuItemId
+    target
+    title
+    url
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  menuItem(id: $id) {
+    childItems(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    connectedObject {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+      ... on MenuItem {
+        id
+      }
+    }
+    cssClasses
+    description
+    id
+    label
+    linkRelationship
+    menuItemId
+    target
+    title
+    url
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  pages(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      acfPageFields {
+        fieldGroupName
+        flex {
+          __typename
+          ... on Page_Acfpagefields_Flex_Header {
+            fieldGroupName
+            header
+          }
+          ... on Page_Acfpagefields_Flex_TeamMembers {
+            fieldGroupName
+            teamMembers {
+              fieldGroupName
+              teamMember {
+                __typename
+                ... on TeamMember {
+                  id
+                }
+              }
+            }
+          }
+        }
+        image {
+          id
+          sourceUrl
+        }
+      }
+      author {
+        id
+      }
+      childPages(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      commentStatus
+      comments(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      isFrontPage
+      isRevision
+      language {
+        id
+        locale
+        name
+        slug
+      }
+      link
+      menuOrder
+      modified
+      modifiedGmt
+      wpParent: parent {
+        __typename
+        ... on Post {
+          id
+        }
+        ... on Page {
+          id
+        }
+        ... on MediaItem {
+          id
+        }
+        ... on TeamMember {
+          id
+        }
+        ... on Project {
+          id
+        }
+        ... on TypeLimitTest {
+          id
+        }
+        ... on TypeLimit0Test {
+          id
+        }
+        ... on TranslationFilterTest {
+          id
+        }
+      }
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      termNames
+      termSlugs
+      terms {
+        __typename
+        ... on Category {
+          id
+        }
+        ... on Tag {
+          id
+        }
+      }
+      title
+      translations {
+        id
+      }
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  page(id: $id, idType: DATABASE_ID) {
+    acfPageFields {
+      fieldGroupName
+      flex {
+        __typename
+        ... on Page_Acfpagefields_Flex_Header {
+          fieldGroupName
+          header
+        }
+        ... on Page_Acfpagefields_Flex_TeamMembers {
+          fieldGroupName
+          teamMembers {
+            fieldGroupName
+            teamMember {
+              __typename
+              ... on TeamMember {
+                id
+              }
+            }
+          }
+        }
+      }
+      image {
+        id
+        sourceUrl
+      }
+    }
+    author {
+      id
+    }
+    childPages(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    isFrontPage
+    isRevision
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    menuOrder
+    modified
+    modifiedGmt
+    wpParent: parent {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on MediaItem {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  page(id: $id) {
+    acfPageFields {
+      fieldGroupName
+      flex {
+        __typename
+        ... on Page_Acfpagefields_Flex_Header {
+          fieldGroupName
+          header
+        }
+        ... on Page_Acfpagefields_Flex_TeamMembers {
+          fieldGroupName
+          teamMembers {
+            fieldGroupName
+            teamMember {
+              __typename
+              ... on TeamMember {
+                id
+              }
+            }
+          }
+        }
+      }
+      image {
+        id
+        sourceUrl
+      }
+    }
+    author {
+      id
+    }
+    childPages(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    isFrontPage
+    isRevision
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    menuOrder
+    modified
+    modifiedGmt
+    wpParent: parent {
+      __typename
+      ... on Post {
+        id
+      }
+      ... on Page {
+        id
+      }
+      ... on MediaItem {
+        id
+      }
+      ... on TeamMember {
+        id
+      }
+      ... on Project {
+        id
+      }
+      ... on TypeLimitTest {
+        id
+      }
+      ... on TypeLimit0Test {
+        id
+      }
+      ... on TranslationFilterTest {
+        id
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  posts(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      author {
+        id
+      }
+      categories(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      commentStatus
+      comments(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      excerpt
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      isRevision
+      language {
+        id
+        locale
+        name
+        slug
+      }
+      link
+      modified
+      modifiedGmt
+      pingStatus
+      pinged
+      postFormats {
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      tags(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      termNames
+      termSlugs
+      terms {
+        __typename
+        ... on Category {
+          id
+        }
+        ... on Tag {
+          id
+        }
+      }
+      title
+      toPing
+      translations {
+        id
+      }
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  post(id: $id, idType: DATABASE_ID) {
+    author {
+      id
+    }
+    categories(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    excerpt
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    isRevision
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    modified
+    modifiedGmt
+    pingStatus
+    pinged
+    postFormats {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    tags(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    toPing
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  post(id: $id) {
+    author {
+      id
+    }
+    categories(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    excerpt
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    isRevision
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    modified
+    modifiedGmt
+    pingStatus
+    pinged
+    postFormats {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    tags(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    toPing
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  projects(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      acfProject {
+        fieldGroupName
+        image {
+          id
+          sourceUrl
+        }
+        projectUrl {
+          target
+          title
+          url
+        }
+      }
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      link
+      modified
+      modifiedGmt
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      title
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  project(id: $id, idType: DATABASE_ID) {
+    acfProject {
+      fieldGroupName
+      image {
+        id
+        sourceUrl
+      }
+      projectUrl {
+        target
+        title
+        url
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    title
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  project(id: $id) {
+    acfProject {
+      fieldGroupName
+      image {
+        id
+        sourceUrl
+      }
+      projectUrl {
+        target
+        title
+        url
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    title
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  tags(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      count
+      databaseId
+      description
+      id
+      language {
+        id
+        locale
+        name
+        slug
+      }
+      link
+      name
+      posts(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      taxonomy {
+        node {
+          id
+        }
+      }
+      teamMembers(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      termGroupId
+      termTaxonomyId
+      translations {
+        id
+      }
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  tag(id: $id, idType: DATABASE_ID) {
+    count
+    databaseId
+    description
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    name
+    posts(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    taxonomy {
+      node {
+        id
+      }
+    }
+    teamMembers(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    termGroupId
+    termTaxonomyId
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  tag(id: $id) {
+    count
+    databaseId
+    description
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    name
+    posts(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    taxonomy {
+      node {
+        id
+      }
+    }
+    teamMembers(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    termGroupId
+    termTaxonomyId
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  taxonomies(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      connectedPostTypeNames
+      connectedPostTypes {
+        id
+      }
+      description
+      graphqlPluralName
+      graphqlSingleName
+      hierarchical
+      id
+      label
+      name
+      public
+      restBase
+      restControllerClass
+      showCloud
+      showInAdminColumn
+      showInGraphql
+      showInMenu
+      showInNavMenus
+      showInQuickEdit
+      showInRest
+      showUi
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  taxonomy(id: $id, idType: DATABASE_ID) {
+    connectedPostTypeNames
+    connectedPostTypes {
+      id
+    }
+    description
+    graphqlPluralName
+    graphqlSingleName
+    hierarchical
+    id
+    label
+    name
+    public
+    restBase
+    restControllerClass
+    showCloud
+    showInAdminColumn
+    showInGraphql
+    showInMenu
+    showInNavMenus
+    showInQuickEdit
+    showInRest
+    showUi
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  taxonomy(id: $id) {
+    connectedPostTypeNames
+    connectedPostTypes {
+      id
+    }
+    description
+    graphqlPluralName
+    graphqlSingleName
+    hierarchical
+    id
+    label
+    name
+    public
+    restBase
+    restControllerClass
+    showCloud
+    showInAdminColumn
+    showInGraphql
+    showInMenu
+    showInNavMenus
+    showInQuickEdit
+    showInRest
+    showUi
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  teamMembers(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      acfData {
+        fieldGroupName
+        name
+        portrait {
+          id
+          sourceUrl
+        }
+        projects {
+          __typename
+          ... on Project {
+            id
+          }
+        }
+        title
+        twitterlink {
+          target
+          title
+          url
+        }
+        webSite {
+          target
+          title
+          url
+        }
+      }
+      author {
+        id
+      }
+      categories(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      commentStatus
+      comments(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      excerpt
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      isRevision
+      link
+      menuOrder
+      modified
+      modifiedGmt
+      pingStatus
+      pinged
+      postFormats {
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      tags(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      termNames
+      termSlugs
+      terms {
+        __typename
+        ... on Category {
+          id
+        }
+        ... on Tag {
+          id
+        }
+      }
+      title
+      toPing
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  teamMember(id: $id, idType: DATABASE_ID) {
+    acfData {
+      fieldGroupName
+      name
+      portrait {
+        id
+        sourceUrl
+      }
+      projects {
+        __typename
+        ... on Project {
+          id
+        }
+      }
+      title
+      twitterlink {
+        target
+        title
+        url
+      }
+      webSite {
+        target
+        title
+        url
+      }
+    }
+    author {
+      id
+    }
+    categories(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    excerpt
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    isRevision
+    link
+    menuOrder
+    modified
+    modifiedGmt
+    pingStatus
+    pinged
+    postFormats {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    tags(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    toPing
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  teamMember(id: $id) {
+    acfData {
+      fieldGroupName
+      name
+      portrait {
+        id
+        sourceUrl
+      }
+      projects {
+        __typename
+        ... on Project {
+          id
+        }
+      }
+      title
+      twitterlink {
+        target
+        title
+        url
+      }
+      webSite {
+        target
+        title
+        url
+      }
+    }
+    author {
+      id
+    }
+    categories(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    commentStatus
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    excerpt
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    isRevision
+    link
+    menuOrder
+    modified
+    modifiedGmt
+    pingStatus
+    pinged
+    postFormats {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    tags(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    toPing
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TranslationFilterTest node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  translationFilterTests(first: $first, after: $after, where: {parent: null, language: FR}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      language {
+        id
+        locale
+        name
+        slug
+      }
+      link
+      modified
+      modifiedGmt
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      termNames
+      termSlugs
+      terms {
+        __typename
+        ... on Category {
+          id
+        }
+        ... on Tag {
+          id
+        }
+      }
+      title
+      translations {
+        id
+      }
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TranslationFilterTest node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  translationFilterTest(id: $id, idType: DATABASE_ID) {
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TranslationFilterTest node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  translationFilterTest(id: $id) {
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    language {
+      id
+      locale
+      name
+      slug
+    }
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    termNames
+    termSlugs
+    terms {
+      __typename
+      ... on Category {
+        id
+      }
+      ... on Tag {
+        id
+      }
+    }
+    title
+    translations {
+      id
+    }
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  typeLimit0Tests(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      link
+      modified
+      modifiedGmt
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      title
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  typeLimit0Test(id: $id, idType: DATABASE_ID) {
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    title
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  typeLimit0Test(id: $id) {
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    title
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  typeLimitTests(first: $first, after: $after, where: {parent: null}) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      content
+      contentType {
+        node {
+          id
+        }
+      }
+      databaseId
+      date
+      dateGmt
+      desiredSlug
+      editLast {
+        id
+      }
+      enclosure
+      featuredImage {
+        id
+        sourceUrl
+      }
+      guid
+      id
+      link
+      modified
+      modifiedGmt
+      seo {
+        focuskw
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphDescription
+        opengraphImage {
+          id
+          sourceUrl
+        }
+        opengraphTitle
+        title
+        twitterDescription
+        twitterImage {
+          id
+          sourceUrl
+        }
+        twitterTitle
+      }
+      slug
+      status
+      template {
+        __typename
+        ... on DefaultTemplate {
+          templateName
+        }
+        ... on CoverTemplateTemplate {
+          templateName
+        }
+        ... on FullWidthTemplateTemplate {
+          templateName
+        }
+      }
+      title
+      uri
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  typeLimitTest(id: $id, idType: DATABASE_ID) {
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    title
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  typeLimitTest(id: $id) {
+    content
+    contentType {
+      node {
+        id
+      }
+    }
+    databaseId
+    date
+    dateGmt
+    desiredSlug
+    editLast {
+      id
+    }
+    enclosure
+    featuredImage {
+      id
+      sourceUrl
+    }
+    guid
+    id
+    link
+    modified
+    modifiedGmt
+    seo {
+      focuskw
+      metaDesc
+      metaKeywords
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        id
+        sourceUrl
+      }
+      opengraphTitle
+      title
+      twitterDescription
+      twitterImage {
+        id
+        sourceUrl
+      }
+      twitterTitle
+    }
+    slug
+    status
+    template {
+      __typename
+      ... on DefaultTemplate {
+        templateName
+      }
+      ... on CoverTemplateTemplate {
+        templateName
+      }
+      ... on FullWidthTemplateTemplate {
+        templateName
+      }
+    }
+    title
+    uri
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node list query hasn't changed 1`] = `
+"query NODE_LIST_QUERY($first: Int!, $after: String) {
+  users(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      avatar {
+        default
+        extraAttr
+        forceDefault
+        foundAvatar
+        height
+        rating
+        scheme
+        size
+        url
+        width
+      }
+      capKey
+      capabilities
+      comments(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      databaseId
+      description
+      email
+      extraCapabilities
+      firstName
+      id
+      lastName
+      locale
+      mediaItems(first: 100) {
+        nodes {
+          id
+          sourceUrl
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      name
+      nicename
+      nickname
+      pages(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      posts(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      projects(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      registeredDate
+      slug
+      teamMembers(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      translationFilterTests(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      typeLimit0Tests(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      typeLimitTests(first: 100) {
+        nodes {
+          id
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+      uri
+      url
+      userId
+      username
+    }
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node preview query hasn't changed 1`] = `
+"query PREVIEW_QUERY($id: ID!) {
+  user(id: $id, idType: DATABASE_ID) {
+    avatar {
+      default
+      extraAttr
+      forceDefault
+      foundAvatar
+      height
+      rating
+      scheme
+      size
+      url
+      width
+    }
+    capKey
+    capabilities
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    databaseId
+    description
+    email
+    extraCapabilities
+    firstName
+    id
+    lastName
+    locale
+    mediaItems(first: 100) {
+      nodes {
+        id
+        sourceUrl
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    name
+    nicename
+    nickname
+    pages(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    posts(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    projects(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    registeredDate
+    slug
+    teamMembers(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    translationFilterTests(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    typeLimit0Tests(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    typeLimitTests(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    uri
+    url
+    userId
+    username
+  }
+}"
+`;
+
+exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node single query hasn't changed 1`] = `
+"query SINGLE_CONTENT_QUERY($id: ID!) {
+  user(id: $id) {
+    avatar {
+      default
+      extraAttr
+      forceDefault
+      foundAvatar
+      height
+      rating
+      scheme
+      size
+      url
+      width
+    }
+    capKey
+    capabilities
+    comments(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    databaseId
+    description
+    email
+    extraCapabilities
+    firstName
+    id
+    lastName
+    locale
+    mediaItems(first: 100) {
+      nodes {
+        id
+        sourceUrl
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    name
+    nicename
+    nickname
+    pages(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    posts(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    projects(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    registeredDate
+    slug
+    teamMembers(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    translationFilterTests(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    typeLimit0Tests(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    typeLimitTests(first: 100) {
+      nodes {
+        id
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+    uri
+    url
+    userId
+    username
+  }
+}"
+`;

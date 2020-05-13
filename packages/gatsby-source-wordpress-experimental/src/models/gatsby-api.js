@@ -14,6 +14,7 @@ const defaultPluginOptions = {
       panicOnError: false,
       onlyReportCriticalErrors: true,
       copyNodeSourcingQueryAndExit: false,
+      writeQueriesToDisk: false,
     },
     disableCompatibilityCheck: false,
   },
@@ -32,7 +33,7 @@ const defaultPluginOptions = {
   },
   schema: {
     queryDepth: 10,
-    circularQueryLimit: 4,
+    circularQueryLimit: 3,
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
   },

@@ -2,7 +2,7 @@ import execa from "execa"
 import on from "wait-on"
 import kill from "tree-kill"
 
-import { incrementalIt } from "../test-utils/incremental-it"
+import { incrementalIt } from "../../../test-utils/incremental-it"
 
 jest.setTimeout(100000)
 
@@ -18,11 +18,7 @@ describe(`[gatsby-source-wordpress-experimental] build`, () => {
   incrementalIt(`builds successfully`, async done => {
     const gatsbyProcess = execa(`yarn`, [`build-test-runtime`])
 
-    if (process.env.SHOW_GATSBY_PROCESS_STDOUT) {
-      gatsbyProcess.stdout.pipe(process.stdout)
-    } else {
-      console.log(`running \`gatsby build\` via \`yarn build-test-runtime\`...`)
-    }
+    gatsbyProcess.stdout.pipe(process.stdout)
 
     await gatsbyProcess
 

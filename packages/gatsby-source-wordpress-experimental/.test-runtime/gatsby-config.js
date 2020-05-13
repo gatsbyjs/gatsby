@@ -18,7 +18,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-wordpress-experimental`,
+      resolve: require.resolve(`../package.json`),
       options: {
         url: process.env.WPGRAPHQL_URL,
         verbose: true,
@@ -40,6 +40,7 @@ module.exports = {
             panicOnError: false,
             // a critical error is a WPGraphQL query that returns an error and response data. Currently WPGQL will error if we try to access private posts so if this is false it returns a lot of irrelevant errors.
             onlyReportCriticalErrors: true,
+            writeQueriesToDisk: true,
           },
         },
         type: {
