@@ -1,21 +1,11 @@
-import {
-  IGatsbyState,
-  ICreatePageDependencyAction,
-  IDeleteCacheAction,
-  IDeleteComponentDependenciesAction,
-} from "../types"
-
-type Actions =
-  | ICreatePageDependencyAction
-  | IDeleteCacheAction
-  | IDeleteComponentDependenciesAction
+import { IGatsbyState, ActionsUnion } from "../types"
 
 export const componentDataDependencies = (
   state: IGatsbyState["componentDataDependencies"] = {
     nodes: new Map(),
     connections: new Map(),
   },
-  action: Actions
+  action: ActionsUnion
 ): IGatsbyState["componentDataDependencies"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
