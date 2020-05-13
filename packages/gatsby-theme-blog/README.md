@@ -60,12 +60,15 @@ module.exports = {
 
 ### Theme options
 
-| Key                      | Default value    | Description                                                                      |
-| ------------------------ | ---------------- | -------------------------------------------------------------------------------- |
-| `basePath`               | `/`              | Root url for all blog posts                                                      |
-| `contentPath`            | `content/posts`  | Location of blog posts                                                           |
-| `assetPath`              | `content/assets` | Location of assets                                                               |
-| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site. |
+| Key                      | Default value    | Description                                                                                                                                                        |
+| ------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `basePath`               | `/`              | Root url for all blog posts                                                                                                                                        |
+| `contentPath`            | `content/posts`  | Location of blog posts                                                                                                                                             |
+| `assetPath`              | `content/assets` | Location of assets                                                                                                                                                 |
+| `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site.                                                                                   |
+| `disableThemeUiStyling`  | `false`          | Set this flag `true` if you want to use the blog theme without `gatsby-plugin-theme-ui` styles. Note that styles within the components you can shadow still exist. |
+| `excerptLength`          | `140`            | Length of the auto-generated excerpt of a blog post                                                                                                                |
+| `webfontURL`             | `''`             | URL for the webfont you'd like to include. Be sure that your local theme does not override it.                                                                     |
 
 #### Example configuration
 
@@ -99,6 +102,8 @@ module.exports = {
     // Used for SEO
     description: `My site description...`,
     // Used for social links in the root footer
+    siteURL: `https://example.com`,
+    // Used for resolving images in social cards
     social: [
       {
         name: `Twitter`,
@@ -117,13 +122,34 @@ module.exports = {
 
 The following are the defined blog post fields based on the node interface in the schema
 
-| Field    | Type     |
-| -------- | -------- |
-| id       | String   |
-| title    | String   |
-| body     | String   |
-| slug     | String   |
-| date     | Date     |
-| tags     | String[] |
-| keywords | String[] |
-| excerpt  | String   |
+| Field       | Type     |
+| ----------- | -------- |
+| id          | String   |
+| title       | String   |
+| body        | String   |
+| slug        | String   |
+| date        | Date     |
+| tags        | String[] |
+| keywords    | String[] |
+| excerpt     | String   |
+| image       | String   |
+| imageAlt    | String   |
+| socialImage | String   |
+
+### Image Behavior
+
+Blog posts can include references to images inside frontmatter. Note that this works for a relative path as shown below, or an external URL.
+
+```md
+---
+title: Hello World (example)
+date: 2019-04-15
+image: ./some-image.jpg
+---
+```
+
+`image` refers to the featured image at the top of a post and is not required. It will also appear as the preview image inside a social card. Note that this requires you to set `siteURL` in your `gatsby-config.js` file metadata to your site's domain.
+
+When adding an `image`, `imageAlt` is available to provide alt text for the featured image within the post. If this is not included, it defaults to the post excerpt.
+
+You may want to use a different image for your social card than the one that appears in your blog post. You can do so by setting `socialImage` in frontmatter.
