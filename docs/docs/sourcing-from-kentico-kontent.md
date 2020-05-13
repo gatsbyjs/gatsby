@@ -8,7 +8,7 @@ Kentico Kontent is a hosted CMS that offers you Content as a Service (CaaS) for 
 
 You can also take advantage of Kentico Kontent's ability to deliver content in multiple languages and create relationships among various content with linked items. However you structure your content in Kentico Kontent, the [source plugin](https://github.com/Kentico/kontent-gatsby-packages/tree/master/packages/gatsby-source-kontent) will ensure the proper nodes are created for your Gatsby site.
 
-  _Note: For this guide, you'll work from scratch from the [Gatsby default starter](https://github.com/gatsbyjs/gatsby-starter-default) to get a feel for how sourcing from Kentico Kontent works. If you'd like to look at an example of a complete basic site, have a look at the [Kentico Kontent Gatsby starter site](https://github.com/Kentico/gatsby-starter-kontent), which includes worked examples for querying content. Or you could also check out the [Kontent starter based on Lumen template](https://github.com/Kentico/gatsby-starter-kontent-lumen), which is a minimal, lightweight and mobile-first starter for creating blogs using Gatsby and Kentico Kontent._
+_Note: For this guide, you'll work from scratch from the [Gatsby default starter](https://github.com/gatsbyjs/gatsby-starter-default) to get a feel for how sourcing from Kentico Kontent works. If you'd like to look at an example of a complete basic site, have a look at the [Kentico Kontent Gatsby starter site](https://github.com/Kentico/gatsby-starter-kontent), which includes worked examples for querying content. Or you could also check out the [Kontent starter based on Lumen template](https://github.com/Kentico/gatsby-starter-kontent-lumen), which is a minimal, lightweight and mobile-first starter for creating blogs using Gatsby and Kentico Kontent._
 
 ## Setup
 
@@ -44,22 +44,22 @@ Once that's done, you need to add the plugin to `gatsby-config.js`:
 ```javascript
 module.exports = {
   siteMetadata: {
-   // ...
+    // ...
   },
   plugins: [
     // ...
     {
       resolve: `@kentico/gatsby-source-kontent`,
-        options: {
-          projectId: `<YourProjectID>`, // Fill in your Project ID
-          // Please note that with the Sample Project generated above, `en-US` is the default language for the project and this config. For a blank project, this needs to be `default`.
-          languageCodenames: [
-            `en-US` // Or the languages in your project (Project settings -> Localization)
-          ]
-        }
+      options: {
+        projectId: `<YourProjectID>`, // Fill in your Project ID
+        // Please note that with the Sample Project generated above, `en-US` is the default language for the project and this config. For a blank project, this needs to be `default`.
+        languageCodenames: [
+          `en-US`, // Or the languages in your project (Project settings -> Localization)
+        ],
+      },
     },
     // ...
-  ]
+  ],
 }
 ```
 
