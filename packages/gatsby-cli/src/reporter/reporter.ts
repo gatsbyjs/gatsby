@@ -17,9 +17,10 @@ import { ErrorMeta, CreateLogAction } from "./types"
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
 
-interface IActivityArgs {
+export interface IActivityArgs {
   id?: string
   parentSpan?: Span
+  tags?: { [key: string]: any }
 }
 
 let isVerbose = false
@@ -189,8 +190,8 @@ class Reporter {
     text: string,
     activityArgs: IActivityArgs = {}
   ): ITimerReporter => {
-    let { parentSpan, id } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    let { parentSpan, id, tags } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
       id = text
     }
@@ -214,8 +215,8 @@ class Reporter {
     text: string,
     activityArgs: IActivityArgs = {}
   ): IPhantomReporter => {
-    let { parentSpan, id } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    let { parentSpan, id, tags } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
       id = text
     }
@@ -234,8 +235,8 @@ class Reporter {
     start = 0,
     activityArgs: IActivityArgs = {}
   ): IProgressReporter => {
-    let { parentSpan, id } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan } : {}
+    let { parentSpan, id, tags } = activityArgs
+    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
     if (!id) {
       id = text
     }

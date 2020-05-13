@@ -101,7 +101,7 @@ export const getPagination = <TContext = any>({
     typeComposer,
     inputTypeComposer,
   })
-  const fields = {
+  const fields: { [key: string]: any } = {
     distinct: {
       type: [`String!`],
       args: {
