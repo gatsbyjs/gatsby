@@ -1,12 +1,20 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from "@reach/router"
+import { Link, Location } from "@reach/router"
+import { resolve } from "@reach/router/lib/utils"
 
 import { parsePath } from "./parse-path"
 
 export { parsePath }
 
+function isRelativePath(path) {
+  return /^\.{1,2}\/(?!\/)/.test(path)
+}
+
 export function withPrefix(path) {
+  if (isRelativePath(path)) {
+    normalizePath(path)
+  }
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
@@ -16,11 +24,21 @@ export function withPrefix(path) {
 }
 
 export function withAssetPrefix(path) {
-  return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
+  return isRelativePath(path)
+    ? path
+    : [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
 function normalizePath(path) {
   return path.replace(/\/+/g, `/`)
+}
+
+function absolutify(path, current) {
+  // If it's already absolute, return as-is
+  if (!isRelativePath(path)) {
+    return path
+  }
+  return resolve(path, current)
 }
 
 const NavLinkPropTypes = {
@@ -131,59 +149,73 @@ class GatsbyLink extends React.Component {
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
-
     const LOCAL_URL = /^\/(?!\/)/
-    if (process.env.NODE_ENV !== `production` && !LOCAL_URL.test(to)) {
+    const isRelative = isRelativePath(to)
+    if (
+      process.env.NODE_ENV !== `production` &&
+      !LOCAL_URL.test(to) &&
+      !isRelative
+    ) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
     }
 
-    const prefixedTo = withPrefix(to)
-
     return (
-      <Link
-        to={prefixedTo}
-        state={state}
-        getProps={getProps}
-        innerRef={this.handleRef}
-        onMouseEnter={e => {
-          if (onMouseEnter) {
-            onMouseEnter(e)
-          }
-          ___loader.hovering(parsePath(to).pathname)
+      <Location>
+        {({ location }) => {
+          const prefixedTo = isRelative
+            ? absolutify(to, location.pathname)
+            : withPrefix(to)
+
+          return (
+            <Link
+              to={prefixedTo}
+              state={state}
+              getProps={getProps}
+              innerRef={this.handleRef}
+              onMouseEnter={e => {
+                if (onMouseEnter) {
+                  onMouseEnter(e)
+                }
+                ___loader.hovering(parsePath(to).pathname)
+              }}
+              onClick={e => {
+                if (onClick) {
+                  onClick(e)
+                }
+
+                if (
+                  e.button === 0 && // ignore right clicks
+                  !this.props.target && // let browser handle "target=_blank"
+                  !e.defaultPrevented && // onClick prevented default
+                  !e.metaKey && // ignore clicks with modifier keys...
+                  !e.altKey &&
+                  !e.ctrlKey &&
+                  !e.shiftKey
+                ) {
+                  e.preventDefault()
+
+                  let shouldReplace = replace
+                  const isCurrent = encodeURI(to) === window.location.pathname
+                  if (typeof replace !== `boolean` && isCurrent) {
+                    shouldReplace = true
+                  }
+                  // Make sure the necessary scripts and data are
+                  // loaded before continuing.
+                  window.___navigate(prefixedTo, {
+                    state,
+                    replace: shouldReplace,
+                  })
+                }
+
+                return true
+              }}
+              {...rest}
+            />
+          )
         }}
-        onClick={e => {
-          if (onClick) {
-            onClick(e)
-          }
-
-          if (
-            e.button === 0 && // ignore right clicks
-            !this.props.target && // let browser handle "target=_blank"
-            !e.defaultPrevented && // onClick prevented default
-            !e.metaKey && // ignore clicks with modifier keys...
-            !e.altKey &&
-            !e.ctrlKey &&
-            !e.shiftKey
-          ) {
-            e.preventDefault()
-
-            let shouldReplace = replace
-            const isCurrent = encodeURI(to) === window.location.pathname
-            if (typeof replace !== `boolean` && isCurrent) {
-              shouldReplace = true
-            }
-
-            // Make sure the necessary scripts and data are
-            // loaded before continuing.
-            navigate(to, { state, replace: shouldReplace })
-          }
-
-          return true
-        }}
-        {...rest}
-      />
+      </Location>
     )
   }
 }
