@@ -16,6 +16,8 @@ If you’ve contributed in other ways, such as giving talks about Gatsby, teachi
 
 ## Details about free swag
 
+<!-- The entire bulleted list must be prettier-ignored to prevent Prettier from escaping the dollar signs -->
+<!-- prettier-ignore -->
 - We will send one item from our [swag store](https://store.gatsbyjs.org/) per swag tier
 - Tier 1 swag includes most items $10 and under
 - Tier 2 swag includes most items $26 and under
