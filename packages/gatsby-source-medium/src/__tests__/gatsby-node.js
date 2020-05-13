@@ -26,7 +26,7 @@ describe(`gatsby-source-medium`, () => {
         { username: `foo`, limit: 5 }
       )
       expect(actions.createNode).toBeCalled()
-      expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
+      expect(actions.createNode.mock.calls).toMatchSnapshot()
     })
 
     it(`should call medium api with username and limit`, async () => {
