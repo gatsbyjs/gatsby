@@ -79,6 +79,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-theme-blog`,
     },
     {
+      label: `Add Gatsby Theme Blog Core`,
+      value: `gatsby-theme-blog-core`,
+    },
+    {
       label: `Add persistent layout component with gatsby-plugin-layout`,
       value: `gatsby-plugin-layout`,
     },
