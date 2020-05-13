@@ -18,7 +18,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-wordpress-experimental`,
+      resolve: require.resolve(`../package.json`),
       options: {
         url: process.env.WPGRAPHQL_URL,
         verbose: true,
