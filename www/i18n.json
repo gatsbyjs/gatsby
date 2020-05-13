@@ -1,6 +1,7 @@
 [
   { "code": "ar", "name": "Arabic", "localName": "العربية" },
   { "code": "bn", "name": "Bengali", "localName": "বাংলা" },
+  { "code": "ca", "name": "Catalan", "localName": "Català" },
   { "code": "de", "name": "German", "localName": "Deutsch" },
   { "code": "es", "name": "Spanish", "localName": "Español" },
   { "code": "fr", "name": "French", "localName": "Français" },

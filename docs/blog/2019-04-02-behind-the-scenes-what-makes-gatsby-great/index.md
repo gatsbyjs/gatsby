@@ -25,8 +25,8 @@ Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, 
 In an effort to answer this initial question, this post outlines several foundational techniques that Gatsby enables _by default_ to deliver this experience. Specifically:
 
 1. Server-side rendering (SSR) at **build time**
-1. Route-based code splitting
-1. Modern APIs
+2. Route-based code splitting
+3. Modern APIs
 
 Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicriously fast.
 
@@ -324,8 +324,8 @@ _Want to dive deeper? Much of this is encapsulated in our internal [Webpack conf
 Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end user experience in Gatsby:
 
 1. `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
-1. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
-1. `srcset` powering responsive images - a API to load the _smallest possible_ image that matches the viewport of the requesting device
+2. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
+3. `srcset` powering responsive images - a API to load the _smallest possible_ image that matches the viewport of the requesting device
 
 Let's get to it.
 
@@ -349,7 +349,7 @@ The `Link` component exported by `gatsby` ships with an `IntersectionObserver`. 
 1. An `IntersectionObserver` is registered for all links
    - This will register an **idle** `prefetch` for a request for that link's resources
    - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L25-L41)
-1. On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
+2. On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
    - This will use an `onMouseEnter` prop to make the resources available via our internal loader
    - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L131-L135)
 

@@ -391,10 +391,12 @@ const descriptorsAreEqual = (
           descriptor?.relatedNode?.nodes,
           otherDescriptor?.relatedNode?.nodes
         )
+        // Must be present in both descriptors or absent in both
+        // in order to be considered equal
         return nodeIds.every(
           id =>
-            descriptor?.relatedNode?.nodes[id] &&
-            otherDescriptor?.relatedNode?.nodes[id]
+            Boolean(descriptor?.relatedNode?.nodes[id]) ===
+            Boolean(otherDescriptor?.relatedNode?.nodes[id])
         )
       }
       case `relatedNodeList`: {
@@ -404,8 +406,8 @@ const descriptorsAreEqual = (
         )
         return nodeIds.every(
           id =>
-            descriptor?.relatedNodeList?.nodes[id] &&
-            otherDescriptor?.relatedNodeList?.nodes[id]
+            Boolean(descriptor?.relatedNodeList?.nodes[id]) ===
+            Boolean(otherDescriptor?.relatedNodeList?.nodes[id])
         )
       }
       default:

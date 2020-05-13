@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import { TiTags as TagsIcon, TiArrowRight } from "react-icons/ti"
 
@@ -9,6 +8,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 import { TAGS_AND_DOCS } from "../data/tags-docs"
 
 // Select first tag with whitespace instead of hyphens for
@@ -33,15 +33,12 @@ const Tags = ({ pageContext, data }) => {
 
   return (
     <Container>
-      <Helmet>
-        <title>{`${preferSpacedTag(tags)} Tag`}</title>
-        <meta
-          name="description"
-          content={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
-            tags
-          )}`}
-        />
-      </Helmet>
+      <PageMetadata
+        title={`${preferSpacedTag(tags)} Tag`}
+        description={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
+          tags
+        )}`}
+      />
       <h1>{tagHeader}</h1>
       <Button
         variant="small"

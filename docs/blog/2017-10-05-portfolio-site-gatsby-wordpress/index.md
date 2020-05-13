@@ -19,7 +19,7 @@ _This article was originally published on
 [my portfolio site](http://dfjames.com/blog/site-generating-with-the-great-gatsbyjs)
 on October 1, 2017._
 
-# Site generating with the great GatsbyJS
+## Site generating with the great GatsbyJS
 
 When someone mentions static site generation, many people think of
 [Jekyll](https://jekyllrb.com/). I had heard some good things about it and
@@ -47,7 +47,7 @@ me the opportunity to learn some more React and JavaScript. Another reason I
 ended up going with Gatsby was the promise that your project could be connected
 to various APIs or even a CMS of your choice.
 
-## The magic of GraphQL and Gatsby Plugins
+### The magic of GraphQL and Gatsby Plugins
 
 Originally, following Scott's and the official Gatsby tutorial, I had it pulling
 my content from good ol' Markdown files. Then I saw it... too good to be true,
@@ -115,7 +115,7 @@ export const postQuery = graphql`
 `
 ```
 
-## Wrap up and future
+### Wrap up and future
 
 In just a few weekends I managed to rebuild my portfolio site with the blog I
 wanted. I'd highly recommend [Gatsby](/tutorial/) for

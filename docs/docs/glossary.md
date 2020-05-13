@@ -3,6 +3,8 @@ title: Glossary
 disableTableOfContents: true
 ---
 
+import HorizontalNavList from "@components/horizontal-nav-list"
+
 When you're new to Gatsby there can be a lot of words to learn. This glossary aims to give you a 10,000-foot overview of common terms and what they mean for Gatsby sites.
 
 <HorizontalNavList
@@ -186,6 +188,10 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
+### [Infrastructure As Code](/docs/glossary/infrastructure-as-code/)
+
+Infrastructure As Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
+
 ## J
 
 ### [JAMStack](/docs/glossary/jamstack)
@@ -258,7 +264,7 @@ The [environment](#environment) for the [built](#build) website or app that user
 
 Something that automatically happens based on your code and configuration. For example, you might [configure](#config) your project to create a [page](#page) for every blog post written, or read and display the current year as part of a copyright in your site footer.
 
-### Progressive enhancement
+### [Progressive Enhancement](/docs/glossary/progressive-enhancement/)
 
 Progressive enhancement is a strategy for the web that emphasizes core page content is loaded from a server before anything else, without [JavaScript](#javascript) as a requirement to load. This strategy then progressively adds more complex layers of presentation and features on top of the content as the end user's browser/network connection allow. Gatsby's default approach to [building](#build) pages ahead-of-time means content will load first and enhance as scripts download and execute.
 

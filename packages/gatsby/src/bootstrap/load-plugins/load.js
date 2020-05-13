@@ -139,6 +139,13 @@ const loadPlugins = (config = {}, rootDir = null) => {
     } else {
       plugin.options = plugin.options || {}
 
+      // Throw an error if there is an "option" key.
+      if (_.isEmpty(plugin.options) && !_.isEmpty(plugin.option)) {
+        throw new Error(
+          `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`
+        )
+      }
+
       // Plugins can have plugins.
       const subplugins = []
       if (plugin.options.plugins) {
@@ -164,7 +171,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
         }
       }
 
-      const info = resolvePlugin(plugin.resolve, rootDir)
+      const info = resolvePlugin(plugin.resolve, plugin.parentDir || rootDir)
 
       return {
         ...info,
@@ -241,6 +248,21 @@ const loadPlugins = (config = {}, rootDir = null) => {
       // override the options if there are any user specified options
       pageCreatorOptions = pageCreatorPlugin.options
     }
+  }
+
+  // TypeScript support by default! use the user-provided one if it exists
+  const typescriptPlugin = (config.plugins || []).find(
+    plugin =>
+      plugin.resolve === `gatsby-plugin-typescript` ||
+      plugin === `gatsby-plugin-typescript`
+  )
+
+  if (typescriptPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-typescript`),
+      })
+    )
   }
 
   plugins.push(
