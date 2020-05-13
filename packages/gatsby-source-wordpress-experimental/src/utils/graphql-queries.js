@@ -69,6 +69,7 @@ export const introspectionQuery = gql`
             name
             type {
               kind
+              name
               inputFields {
                 name
               }

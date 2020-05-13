@@ -110,6 +110,14 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       continue
     }
 
+    const takesIDinput = field?.args?.find(arg => arg.type.name === `ID`)
+
+    // if a non-node root field takes an id input, we 99% likely can't use it.
+    // so don't fetch it and don't add it to the schema.
+    if (takesIDinput) {
+      continue
+    }
+
     // we don't need to mark types as fetched if they're supported SCALAR types
     if (!typeIsABuiltInScalar(field.type)) {
       store.dispatch.remoteSchema.addFetchedType(field.type)
