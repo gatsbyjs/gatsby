@@ -249,6 +249,7 @@ export type ActionsUnion =
   | ISetPluginStatusAction
   | ISetProgramStatusAction
   | ISetSchemaAction
+  | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | IUpdatePluginsHashAction
@@ -529,4 +530,9 @@ export interface IDeleteNodeAction {
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   payload: Identifier[]
+}
+
+export interface ISetSiteFlattenedPluginsAction {
+  type: `SET_SITE_FLATTENED_PLUGINS`
+  payload: IGatsbyState["flattenedPlugins"]
 }
