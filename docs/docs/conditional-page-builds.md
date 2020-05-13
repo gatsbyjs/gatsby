@@ -52,7 +52,7 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 - This feature is not available with `gatsby develop`.
 
-- You should not try to use this flag alongside incremental builds in Gatsby Cloud, as it uses a different process and may conflict with it.
+- You should not try to use this flag alongside Incremental Builds in Gatsby Cloud, as it uses a different process and may conflict with it.
 
 - You will need to persist the `.cache` and `public` directories between builds. This allows for comparisons and reuse of previously built files. If `.cache` directory was not persisted then a full build will be triggered. If `public` directory was not persisted then you might experience failing builds or builds that are missing certain assets.
 
