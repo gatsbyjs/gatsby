@@ -23,34 +23,48 @@ The lineup includes:
 -   The Developer Experience Experience - _Trevor Blades_
 
 ![Adekunle Oduye photo](./Adekunle_Oduye.jpg)
+
 Adekunle Oduye will be offering insights on maintaining (ever-evolving!) design systems documentation and discover how Gatsby can make it easier.
 
 You'll learn why Gatsby's a great tool for documenting a design system, how to dynamically generate pattern documentation, and strategies to update and maintain your documentation site. Follow Oduye on Twitter [@adekunleoduye](https://twitter.com/adekunleoduye).
 ![Benedicte Raae speaker photo](./Benedicte_Raae.jpg)
+
 Follow along on Benedicte Raae's journey to create POW! - an encrypted menstrual cycle tracker she built using Gatsby and Userbase.
 
 Raae's talk will give you a rookie's introduction to web encryption and how Userbase has solved all of that for her in a smooth way. Follow Raae on Twitter [@raae](https://twitter.com/raae).
+
 ![Colby Fayock speaker photo](./Colby_Fayock.jpg)
+
 From driving directions to the spread of a pandemic, maps are a tool that can have a great impact on everyone's lives. But building a map with some data doesn't have to be hard.
 
 Fayock will walk you through how you can easily spin up a map with Gatsby and use it to present powerful data to help scientists debug the earth. Follow Fayock on Twitter [@colbyfayock](https://twitter.com/colbyfayock).
+
 ![Derek Murr speaker photo](./Derek_Murr.jpg)
+
 Raise your hand if you're looking for a high-level, non-technical, first-hand account of working with Gatsby as a junior dev! If you've got a hand in the air, don't miss Derek Murr's talk about his experience of going from coding bootcamp to a job helping a small team to build an all-new website from scratch using Gatsby.
 
 You'll learn how the combination of Gatsby's documentation, the speed with which you can get a new site up and running, the breadth of plugins, and the enthusiasm of the community all made it a great environment for him as a new developer -- and how it can help you to jump in and start building! Follow Murr on Twitter [@derekmurr.](https://twitter.com/derekmurr)
+
 ![Makenna Smutz speaker photo](./Makenna_Smutz.jpg)
+
 Ready to set up your drop-shipping side hustle? Great news: Makenna Smutz is here to show you how do it fast and for free.
 
 Smutz will provide a fast-track tutorial for setting up a static site with Gatsby and Netlify (for zero up-front costs) using Stripe, Printful, Sendgrid, and GraphCMS. Follow Smutz on Twitter [@KenzSmutz](https://twitter.com/KenzSmutz).
+
 ![Sam Julien speaker photo](./Sam_Julien.jpg)
+
 Remember when we announced [Gatsby Recipes](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)? Sam Julien does! Julien jumped in right away and now he's excited to share how you can use a Gatsby Recipe to set up Auth on your site.
 
 In this talk, you'll learn how to apply this fun and easy way to set up logging in and out of a Gatsby site, access protected data, and handle silent authentication when the page reloads. You'll also learn some tips and tricks to avoid common pitfalls with authentication in Gatsby. By the end, you'll be ready for the next level of your Gatsby quest! Follow Julien on Twitter [@samjulien](https://twitter.com/samjulien).
+
 ![Tae'lur Alexis speaker photo](./Taelur_Alexis.jpg)
+
 Join Tae'lur Alexis for an overview on how to take advantage of the various ways Gatsby provides accessibility right out of the box!
 
 You'll learn best practices for JavaScript accessibility that you can implement in your next Gatsby project, hear which testing tools she highly recommends, and hear practical ways to improve accessibility in your own Gatsby sites. Follow Alexis on Twitter [@TaelurAlexis](https://twitter.com/TaelurAlexis).
+
 ![Trevor Blades speaker photo](./Trevor_Blades.jpg)
+
 Gatsby helps us ship blazing fast websites. Thanks to its excellent local development experience, iterating on them is blazing fast too. Trevor Blades will demonstrate how GraphQL, hot reloading, and Gatsby's rich plugin ecosystem empower the Apollo developer experience team to rapidly build its docs and blog websites.
 
 Follow Blades on Twitter [@trevorblades](https://twitter.com/trevorblades).
