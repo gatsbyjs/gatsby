@@ -7,7 +7,7 @@ import { IGatsbyState, ActionsUnion } from "../types"
 const services = new Map()
 let programStatus = `BOOTSTRAPPING`
 
-export const components = (
+export const componentsReducer = (
   state: IGatsbyState["components"] = new Map(),
   action: ActionsUnion
 ): IGatsbyState["components"] => {

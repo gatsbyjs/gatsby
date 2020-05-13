@@ -12,7 +12,7 @@ import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
-import { components } from "./components"
+import { componentsReducer } from "./components"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -30,7 +30,7 @@ module.exports = {
   pages: pagesReducer,
   status: statusReducer,
   componentDataDependencies: require(`./component-data-dependencies`),
-  components: components,
+  components: componentsReducer,
   staticQueryComponents: staticQueryComponentsReducer,
   jobs: require(`./jobs`),
   jobsV2: jobsV2Reducer,
