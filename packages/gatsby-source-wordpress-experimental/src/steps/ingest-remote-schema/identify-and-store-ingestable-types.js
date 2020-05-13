@@ -118,6 +118,15 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
       continue
     }
 
+    if (
+      // if this type is excluded on the RootQuery, skip it
+      pluginOptions.type.RootQuery?.excludeFieldNames?.find(
+        excludedFieldName => excludedFieldName === field.name
+      )
+    ) {
+      continue
+    }
+
     // we don't need to mark types as fetched if they're supported SCALAR types
     if (!typeIsABuiltInScalar(field.type)) {
       store.dispatch.remoteSchema.addFetchedType(field.type)
