@@ -3,7 +3,6 @@ import resolveCwd from "resolve-cwd"
 import yargs from "yargs"
 import report from "./reporter"
 import { setStore } from "./reporter/redux"
-import { didYouMean } from "./did-you-mean"
 import { getLocalGatsbyVersion } from "./util/version"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
@@ -173,7 +172,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
-      getCommandHandler(`develop`, (args, cmd) => {
+      getCommandHandler(`develop`, (args: unknown, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
@@ -490,19 +489,6 @@ Creating a plugin:
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
-    .fail((msg: string, _err: Error, yargs: any): void => {
-      // FIXME: could not find any mention of getCommands in the typings or the docs
-      // It might be some private API which should not be used
-      const availableCommands = yargs.getCommands().map(commandDescription => {
-        const [command] = commandDescription
-        return command.split(` `)[0]
-      })
-      const arg = argv.slice(2)[0]
-      const suggestion = arg ? didYouMean(arg, availableCommands) : ``
-
-      cli.showHelp()
-      report.log(suggestion)
-      report.log(msg)
-    })
+    .recommendCommands()
     .parse(argv.slice(2))
 }
