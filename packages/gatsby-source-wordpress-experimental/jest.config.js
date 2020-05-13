@@ -13,4 +13,6 @@ module.exports = {
   },
   testURL: `http://localhost`,
   setupFiles: [`<rootDir>/loadershim.js`],
+  globalSetup: `./.test-runtime/test-utils/global-setup-jest.js`,
+  globalTeardown: `./.test-runtime/test-utils/global-teardown-jest.js`,
 }

@@ -58,17 +58,16 @@
     "prepare": "cross-env NODE_ENV=production BABEL_ENV=production npm run build",
     "prepublishOnly": "npm run test",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --verbose",
-    "setup-test-runtime": "yarn build && cd .test-runtime && rm -rf ./node_modules/gatsby-source-wordpress-experimental && yarn install --check-files && rm -rf ./node_modules/gatbsy-source-wordpress-experimental/.test-runtime",
+    "ci": "yarn test",
     "clean-test-runtime": "cd .test-runtime && gatsby clean",
     "develop-test-runtime": "cd .test-runtime && yarn develop",
     "build-test-runtime": "cd .test-runtime && yarn build",
     "serve-test-runtime": "cd .test-runtime && yarn serve",
-    "ci": "yarn prepare && yarn setup-test-runtime && yarn test",
-    "ci-develop": "yarn prepare && yarn test-develop",
-    "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/schema.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/schema.js",
-    "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/build.js && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/build.js",
-    "test": "yarn setup-test-runtime && yarn test-schema && yarn test-build",
-    "test-develop": "jest --watch"
+    "test-schema": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false START_SERVER=true jest ./.test-runtime/__tests__/integration/schema && WPGQL_INCREMENT=true START_SERVER=true jest ./.test-runtime/__tests__/integration/schema",
+    "test-build": "yarn clean-test-runtime && WPGRAPHQL_INCREMENT=false jest ./.test-runtime/__tests__/integration/build && WPGQL_INCREMENT=true jest ./.test-runtime/__tests__/integration/build",
+    "test": "yarn prepare && yarn test-schema && yarn test-build",
+    "test-schema-watch": "SHOW_GATSBY_PROCESS_STDOUT=true START_SERVER=true jest --watch ./.test-runtime/__tests__/integration/schema",
+    "test-build-watch": "SHOW_GATSBY_PROCESS_STDOUT=true jest --watch ./.test-runtime/__tests__/integration/build"
   },
   "engines": {
     "node": ">=8.0.0"
