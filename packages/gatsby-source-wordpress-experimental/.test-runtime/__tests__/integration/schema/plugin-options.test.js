@@ -2,15 +2,7 @@ import fetchGraphql from "gatsby-source-wordpress-experimental/utils/fetch-graph
 
 jest.setTimeout(100000)
 
-// require(`dotenv`).config({
-//   path: `./test-runtime/.env.development`,
-// })
-
-// require(`dotenv`).config({
-//   path: `./test-runtime/credentials.env`,
-// })
-
-describe(`[gatsby-source-wordpress-experimental] schema`, () => {
+describe(`[gatsby-source-wordpress-experimental] plugin options`, () => {
   test(`Type.exclude option removes types from the schema`, async () => {
     const result = await fetchGraphql({
       url: `http://localhost:8000/___graphql`,

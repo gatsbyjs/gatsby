@@ -3,15 +3,7 @@ import { incrementalIt } from "../../../test-utils/incremental-it"
 
 jest.setTimeout(100000)
 
-// require(`dotenv`).config({
-//   path: `./test-runtime/.env.development`,
-// })
-
-// require(`dotenv`).config({
-//   path: `./test-runtime/credentials.env`,
-// })
-
-describe(`[gatsby-source-wordpress-experimental] schema`, () => {
+describe(`[gatsby-source-wordpress-experimental] data resolution`, () => {
   incrementalIt(`resolves menus`, async () => {
     const result = await fetchGraphql({
       url: `http://localhost:8000/___graphql`,
