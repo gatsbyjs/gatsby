@@ -219,10 +219,10 @@ function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
 
 function generateNoscriptSources(imageVariants) {
   return imageVariants.map((variant, i) => (
-    <React.Fragment key={i}>
+    <>
       {!!variant.srcSetWebp && generateNoscriptSource(variant, true)}
       {generateNoscriptSource(variant)}
-    </React.Fragment>
+    </>
   ))
 }
 
