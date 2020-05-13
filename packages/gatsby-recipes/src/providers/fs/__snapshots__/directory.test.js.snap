@@ -2,37 +2,37 @@
 
 exports[`directory resource e2e directory resource test: Directory create 1`] = `
 Object {
-  "_message": "Created directory src/images",
-  "id": "src/images",
-  "path": "src/images",
+  "_message": "Created directory src/image",
+  "id": "src/image",
+  "path": "src/image",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Create src/images",
+  "describe": "Create src/image",
   "diff": "- Original  - 0
 + Modified  + 1
 
-+ Directory",
-  "newState": "Directory",
++ src/image",
+  "newState": "src/image",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory destroy 1`] = `
 Object {
-  "_message": "Created directory src/images",
-  "id": "src/images",
-  "path": "src/images",
+  "_message": "Created directory src/image",
+  "id": "src/image",
+  "path": "src/image",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory update 1`] = `
 Object {
-  "_message": "Created directory src/images",
-  "id": "src/images",
-  "path": "src/images",
+  "_message": "Created directory src/image",
+  "id": "src/image",
+  "path": "src/image",
 }
 `;
 
@@ -43,7 +43,7 @@ Object {
   "diff": "- Original  - 0
 + Modified  + 1
 
-+ Directory",
-  "newState": "Directory",
++ src/images",
+  "newState": "src/images",
 }
 `;

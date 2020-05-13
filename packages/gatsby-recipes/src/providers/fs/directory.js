@@ -19,9 +19,7 @@ const directoryExists = fullPath => {
 
 const create = async ({ root }, { id, path: directoryPath }) => {
   const fullPath = makePath(root, directoryPath)
-
   await fs.ensureDir(fullPath)
-
   return await read({ root }, directoryPath)
 }
 
@@ -50,7 +48,7 @@ const destroy = async (context, directoryResource) => {
 }
 
 // TODO pass action to plan
-module.exports.plan = async (context, { id, path: directoryPath, content }) => {
+module.exports.plan = async (context, { id, path: directoryPath }) => {
   let currentResource
   if (!isBinaryPath(directoryPath)) {
     currentResource = await read(context, directoryPath)
@@ -84,8 +82,6 @@ const schema = {
 exports.schema = schema
 exports.validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
-
-module.exports.exists = directoryExists
 
 module.exports.create = create
 module.exports.update = update

@@ -9,8 +9,8 @@ describe(`directory resource`, () => {
       resourceModule: directory,
       resourceName: `Directory`,
       context: { root },
-      initialObject: { path: `src/images` },
-      // partialUpdate: { content: content + `1` },
+      initialObject: { path: `src/image` },
+      partialUpdate: { path: `src/images` },
     })
   })
 })
