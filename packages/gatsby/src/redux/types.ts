@@ -419,6 +419,7 @@ export interface ICreatePageAction {
   type: `CREATE_PAGE`
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
+  contextModified?: boolean
 }
 
 export interface ICreateRedirectAction {
@@ -447,6 +448,13 @@ export interface ISetPageDataAction {
   payload: {
     id: Identifier
     resultHash: string
+  }
+}
+
+export interface IRemoveTemplateComponentAction {
+  type: `REMOVE_TEMPLATE_COMPONENT`
+  payload: {
+    componentPath: string
   }
 }
 
