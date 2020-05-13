@@ -60,6 +60,7 @@ module.exports = {
 | `contentPath`            | `content/posts`  | Location of blog posts                                                           |
 | `assetPath`              | `content/assets` | Location of assets                                                               |
 | `mdxOtherwiseConfigured` | `false`          | Set this flag `true` if `gatsby-plugin-mdx` is already configured for your site. |
+| `excerptLength`          | `140`            | Length of the auto-generated excerpt of a blog post                              |
 
 #### Example usage
 
@@ -93,6 +94,8 @@ module.exports = {
     // Used for SEO
     description: `My site description...`,
     // Used for social links in the root footer
+    siteURL: `https://example.com`,
+    // Used for resolving images in social cards
     social: [
       {
         name: `Twitter`,
@@ -111,13 +114,16 @@ module.exports = {
 
 The following are the defined blog post fields based on the node interface in the schema
 
-| Field    | Type     |
-| -------- | -------- |
-| id       | String   |
-| title    | String   |
-| body     | String   |
-| slug     | String   |
-| date     | Date     |
-| tags     | String[] |
-| keywords | String[] |
-| excerpt  | String   |
+| Field       | Type     |
+| ----------- | -------- |
+| id          | String   |
+| title       | String   |
+| body        | String   |
+| slug        | String   |
+| date        | Date     |
+| tags        | String[] |
+| keywords    | String[] |
+| excerpt     | String   |
+| image       | String   |
+| imageAlt    | String   |
+| socialImage | String   |
