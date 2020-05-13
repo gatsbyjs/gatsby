@@ -186,51 +186,32 @@ const generateNodeQueriesFromIngestibleFields = async () => {
 
     if (!singleNodeRootFieldInfo) {
       // @todo handle cases where there is a nodelist field but no individual field. we can't do data updates or preview on this type.
-      reporter.info(
+      reporter.warn(
         formatLogMessage(
-          `${nodesType.name} Unable to find a root field to query single nodes of this type`
+          `Unable to find a single Node query for ${nodesType.name}\n\tThis type will not be available in Gatsby.\n`
         )
       )
       continue
     }
 
-    const generateNodeQueriesActivity = reporter.activityTimer(
-      `generate node queries for ${name}`
-    )
-    generateNodeQueriesActivity.start()
-
     const fragments = {}
 
     const singleFieldName = singleNodeRootFieldInfo?.name
 
-    const prepareFieldsActivity = reporter.activityTimer(
-      `${singleFieldName} Prepare fields`
-    )
-    prepareFieldsActivity.start()
     const transformedFields = recursivelyTransformFields({
       fields,
       fragments,
       parentType: type,
     })
-    prepareFieldsActivity.end()
 
     // mutates the fragments..
     aliasConflictingFragmentFields({ fragments })
 
-    const aliasFieldsActivity = reporter.activityTimer(
-      `${singleFieldName} alias conflicting fields`
-    )
-    aliasFieldsActivity.start()
     const aliasedTransformedFields = aliasConflictingFields({
       transformedFields,
       parentType: type,
     })
-    aliasFieldsActivity.end()
 
-    const buildSelectionSetActivity = reporter.activityTimer(
-      `${singleFieldName} build selection set string`
-    )
-    buildSelectionSetActivity.start()
     const selectionSet = buildSelectionSet(aliasedTransformedFields, {
       fieldPath: name,
       fragments,
@@ -241,13 +222,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       selectionSet,
     })
 
-    buildSelectionSetActivity.end()
-
-    const buildNodeQueryActivity = reporter.activityTimer(
-      `${singleFieldName} build node query`
-    )
-    buildNodeQueryActivity.start()
-
     const nodeQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
@@ -256,12 +230,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       builtSelectionSet: selectionSet,
     })
 
-    buildNodeQueryActivity.end()
-
-    const buildPreviewQueryActivity = reporter.activityTimer(
-      `${singleFieldName} build node preview query`
-    )
-    buildPreviewQueryActivity.start()
     const previewQuery = buildNodeQueryOnFieldName({
       fields: transformedFields,
       fieldName: singleFieldName,
@@ -271,7 +239,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       builtFragments,
       builtSelectionSet: selectionSet,
     })
-    buildPreviewQueryActivity.end()
 
     const whereArgs = args.find(arg => arg.name === `where`)
 
@@ -313,10 +280,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     }
 
     if (!nodeListQueries || !nodeListQueries.length) {
-      const nodeListQueryActivity = reporter.activityTimer(
-        `${singleFieldName} build node list query`
-      )
-      nodeListQueryActivity.start()
       const nodeListQuery = buildNodesQueryOnFieldName({
         fields: transformedFields,
         fieldName: name,
@@ -325,7 +288,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         builtFragments,
         builtSelectionSet: selectionSet,
       })
-      nodeListQueryActivity.end()
 
       nodeListQueries = [nodeListQuery]
     }
@@ -372,8 +334,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       builtFragments,
       settings,
     }
-
-    generateNodeQueriesActivity.end()
   }
 
   return nodeQueries
