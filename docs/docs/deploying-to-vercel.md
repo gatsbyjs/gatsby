@@ -6,12 +6,12 @@ title: Deploying to Vercel
 
 This guide will show you how to get started in a few quick steps:
 
-## Step 1: Installing Now CLI
+## Step 1: Installing VERCEL CLI
 
 To install their command-line interface with [npm](https://www.npmjs.com/), run the following command:
 
 ```shell
-npm install -g now
+npm i -g vercel
 ```
 
 ## Step 2: Deploying

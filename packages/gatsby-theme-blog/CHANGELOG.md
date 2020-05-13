@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<<<<<<< HEAD
+=======
+## [1.6.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.6.2...gatsby-theme-blog@1.6.3) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.6.1...gatsby-theme-blog@1.6.2) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.6.0...gatsby-theme-blog@1.6.1) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+# [1.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.27...gatsby-theme-blog@1.6.0) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.26...gatsby-theme-blog@1.5.27) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.25...gatsby-theme-blog@1.5.26) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.24...gatsby-theme-blog@1.5.25) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.23...gatsby-theme-blog@1.5.24) (2020-05-12)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+## [1.5.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.22...gatsby-theme-blog@1.5.23) (2020-05-12)
+
+**Note:** Version bump only for package gatsby-theme-blog
+
+>>>>>>> origin/master
 ## [1.5.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog@1.5.21...gatsby-theme-blog@1.5.22) (2020-05-11)
 
 **Note:** Version bump only for package gatsby-theme-blog
