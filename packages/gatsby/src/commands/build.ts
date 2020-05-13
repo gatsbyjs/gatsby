@@ -168,7 +168,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   let pagePaths = [...store.getState().pages.keys()]
 
-  // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
+  // Rebuild subset of pages if user opt into conditional poage builds
   // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
   if (
     process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&

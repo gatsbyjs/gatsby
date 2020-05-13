@@ -363,9 +363,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     report.panic(
-      `The flag ${chalk.yellow(
-        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
-      )} is not available with ${chalk.cyan(
+      `Conditional page builds are not available with ${chalk.cyan(
         `gatsby develop`
       )}, please retry using ${chalk.cyan(`gatsby build`)}`
     )
