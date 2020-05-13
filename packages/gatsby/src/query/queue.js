@@ -18,7 +18,7 @@ const createBuildQueue = (graphqlRunner, runnerOptions = {}) => {
     graphqlRunner = new GraphQLRunner(store, runnerOptions)
   }
   const handler = ({ job, activity }, callback) =>
-    queryRunner(graphqlRunner, job, { parentSpan: activity?.span })
+    queryRunner(graphqlRunner, job, activity?.span)
       .then(result => callback(null, result))
       .catch(callback)
   const queue = new Queue(handler, createBaseOptions())
@@ -41,7 +41,7 @@ const createDevelopQueue = getRunner => {
   }
 
   const handler = ({ job: queryJob, activity }, callback) => {
-    queryRunner(getRunner(), queryJob, { parentSpan: activity?.span }).then(
+    queryRunner(getRunner(), queryJob, activity?.span).then(
       result => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
