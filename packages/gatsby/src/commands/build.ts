@@ -42,6 +42,7 @@ interface IBuildArgs extends IProgram {
   prefixPaths: boolean
   noUglify: boolean
   profile: boolean
+  graphqlTracing: boolean
   openTracingConfigFile: string
 }
 
@@ -70,7 +71,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
-  const graphqlRunner = new GraphQLRunner(store, { collectStats: true })
+  const graphqlRunner = new GraphQLRunner(store, {
+    collectStats: true,
+    graphqlTracing: program.graphqlTracing,
+  })
 
   const {
     processPageQueries,
