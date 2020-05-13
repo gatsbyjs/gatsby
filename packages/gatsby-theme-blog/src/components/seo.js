@@ -27,7 +27,7 @@ function SEO({
             title
             description
             author
-            siteURL
+            siteUrl
           }
         }
       }
@@ -36,7 +36,7 @@ function SEO({
 
   const metaDescription = description || site.siteMetadata.description
   const image = imageSource
-    ? `${site.siteMetadata.siteURL}${imageSource}`
+    ? `${site.siteMetadata.siteUrl}${imageSource}`
     : null
   const imageAltText = imageAlt || metaDescription
 
