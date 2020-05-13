@@ -19,12 +19,15 @@ const trimPathname = rawPathname => {
 
 function absolutify(path) {
   // If it's already absolute, return as-is
-  if (!/^\.{1,2}\/(?!\/)/.test(path)) {
+  if (!path.startsWith(`./`) && !path.startsWith(`../`) && path !== `..`) {
     return path
   }
   // Calculate path relative to current location, adding a trailing slash to
   // match behavior of @reach/router
-  return new URL(path, window.location.href.replace(/([^/])$/, `$1/`)).pathname
+  return new URL(
+    path,
+    window.location.href + (window.location.href.endsWith(`/`) ? `` : `/`)
+  ).pathname
 }
 
 /**
