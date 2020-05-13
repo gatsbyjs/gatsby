@@ -4,7 +4,7 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp = "$eq" | "$lt" | "$lte" | "$gt" | "$gte"
+type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte"
 // Note: `undefined` is an encoding for a property that does not exist
 type FilterValueNullable = string | number | boolean | null | undefined
 // This is filter value in most cases
@@ -15,6 +15,8 @@ export interface IFilterCache {
   // In this set, `undefined` values represent nodes that did not have the path
   byValue: Map<FilterValueNullable, Set<IGatsbyNode>>
   meta: {
+    // Unordered unfiltered flat set of _all_ nodes of requested type(s)
+    nodesUnordered?: Array<IGatsbyNode>
     // Ordered set of all values (by `<`) found by this filter. No null / undefs
     valuesAsc?: Array<FilterValue>
     // Flat set of nodes, ordered by valueAsc, but not ordered per value group
@@ -176,14 +178,42 @@ export const addResolvedNodes = (
   return resolvedNodes
 }
 
-export const postIndexingMetaSetup = (
+export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
-): void => {
-  if (op !== `$lt` && op !== `$lte` && op !== `$gt` && op !== `$gte`) {
-    return
+): void {
+  if (op === `$ne`) {
+    postIndexingMetaSetupNe(filterCache)
+  } else if ([`$lt`, `$lte`, `$gt`, `$gte`].includes(op)) {
+    postIndexingMetaSetupLtLteGtGte(filterCache, op)
   }
+}
 
+function postIndexingMetaSetupNe(filterCache: IFilterCache): void {
+  // Note: edge cases regarding `null` and `undefined`. Here `undefined` signals
+  // that the property did not exist as sift does not support actual `undefined`
+  // values. For $ne, `null` only returns nodes that actually have the property
+  // and in that case the property cannot be `null` either. For any other value,
+  // $ne will return all nodes where the value is not actually the needle,
+  // including nodes where the value is null.
+
+  // For `$ne` we will take the list of all targeted nodes and eliminate the
+  // bucket of nodes with a particular value, if it exists at all. So for that
+  // reason we construct a flat list here to create new Set instances from.
+
+  const arr: Array<IGatsbyNode> = []
+  filterCache.meta.nodesUnordered = arr
+  filterCache.byValue.forEach(v => {
+    v.forEach(node => {
+      arr.push(node)
+    })
+  })
+}
+
+function postIndexingMetaSetupLtLteGtGte(
+  filterCache: IFilterCache,
+  op: FilterOp
+): void {
   // Create an ordered array of individual nodes, ordered (grouped) by the
   // value to which the filter resolves. Nodes are not ordered per value.
   // This way non-eq ops can simply slice the array to get a range.
@@ -317,11 +347,9 @@ function addNodeToFilterCache(
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
   let v = valueOffset as any
-  let prev = v
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
-    prev = v
     v = v[nextProp]
   }
 
@@ -332,22 +360,31 @@ function addNodeToFilterCache(
       v !== null) ||
     i !== chain.length
   ) {
-    if (chain[i - 1] in prev) {
-      // This means that either
-      // - The filter resolved to `undefined`, or
-      // - The filter resolved to something other than a primitive
+    if (i === chain.length && Array.isArray(v)) {
+      // The op resolved to an array
+      // Add an entry for each element of the array. This would work for ops
+      // like eq and ne, but not sure about range ops like lt,lte,gt,gte.
+
+      v.forEach(v => markNodeForValue(filterCache, node, v))
+
       return
     }
-    // The filter path did not fully exist in node. Encode this as `undefined`.
-    // The edge case is that `eq` will return these for `null` checks while
-    // range checks like `lte` do not return these, so we make a distinction.
+
+    // This means that either
+    // - The filter resolved to `undefined`, or
+    // - The filter resolved to something other than a primitive
+    // Set the value to `undefined` to mark "path does not (fully) exist"
     v = undefined
   }
 
-  let set = filterCache.byValue.get(v)
+  markNodeForValue(filterCache, node, v)
+}
+
+function markNodeForValue(filterCache, node, value): void {
+  let set = filterCache.byValue.get(value)
   if (!set) {
     set = new Set()
-    filterCache.byValue.set(v, set)
+    filterCache.byValue.set(value, set)
   }
   set.add(node)
 }
@@ -565,6 +602,26 @@ export const getNodesFromCacheByValue = (
       ])
     }
     return filterCache.byValue.get(filterValue)
+  }
+
+  if (op === `$ne`) {
+    const set = new Set(filterCache.meta.nodesUnordered)
+
+    if (filterValue === null) {
+      // Edge case: $ne with `null` returns only the nodes that contain the full
+      // path and that don't resolve to null, so drop `undefined` as well.
+      let cache = filterCache.byValue.get(undefined)
+      if (cache) cache.forEach(node => set.delete(node))
+      cache = filterCache.byValue.get(null)
+      if (cache) cache.forEach(node => set.delete(node))
+    } else {
+      // Not excluding null so it should include undefined leafs or leafs where
+      // only the partial path exists for whatever reason.
+      const cache = filterCache.byValue.get(filterValue)
+      if (cache) cache.forEach(node => set.delete(node))
+    }
+
+    return set
   }
 
   if (filterValue == null) {

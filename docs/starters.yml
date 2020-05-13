@@ -1,4 +1,4 @@
-- url: https://gatsby-ghost-balsa-starter.now.sh/
+- url: https://ghost-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
   tags:
@@ -5890,7 +5890,9 @@
 
 - url: https://gct.mozart409.space/
   repo: https://github.com/Mozart409/gatsby-custom-tailwind
-  description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom vercel/serve server for production build, visible to all in your network, so you can test it with your phone.
+
+  description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom Vercel/serve server for production build, visible to all in your network, so you can test it with your phone.
+
   tags:
     - Linting
     - PWA
@@ -5901,7 +5903,7 @@
     - Minimal Tailwind Starter
     - Custom Fonts predefined
     - Automatic Linting on Commit using husky and pretty-quick
-    - Custom server to test Production Builds on your local network via vercel/serve
+    - Custom server to test Production Builds on your local network via Vercel/serve
     - Extensive Readme in the repo
 - url: https://gatsby-redux-toolkit-typescript.netlify.com/
   repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
@@ -6216,7 +6218,7 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
-- url: https://gatsby-wordpress-balsa-starter.now.sh/
+- url: https://wordpress-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-wordpress-balsa-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
   tags:
