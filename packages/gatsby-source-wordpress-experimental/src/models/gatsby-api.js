@@ -31,7 +31,7 @@ const defaultPluginOptions = {
     },
   },
   schema: {
-    queryDepth: 15,
+    queryDepth: 10,
     circularQueryLimit: 4,
     typePrefix: `Wp`,
     timeout: 30 * 1000, // 30 seconds
