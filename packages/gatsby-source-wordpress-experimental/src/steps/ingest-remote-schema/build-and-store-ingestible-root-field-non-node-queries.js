@@ -14,7 +14,7 @@ const buildNonNodeQueries = async () => {
 
   // recursively transform fields
   const transformedFields = recursivelyTransformFields({
-    fields: nonNodeRootFields.filter(({ name }) => ![`cart`].includes(name)),
+    fields: nonNodeRootFields,
     parentType: {
       name: `RootQuery`,
       type: `OBJECT`,
