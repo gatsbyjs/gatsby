@@ -7,6 +7,7 @@ const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
+const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
 const {
   createClient,
@@ -193,18 +194,20 @@ function eliminateNewLines(children) {
 const components = {
   inlineCode: props => <Text {...props} />,
   code: props => {
-    const children = props.children.trim()
     // eslint-disable-next-line
     let language = "```"
     if (props.className) {
       // eslint-disable-next-line
-      language = "```" + props.className.split(`-`)[1]
+      language = props.className.split(`-`)[1]
     }
+    const children = hicat(props.children.trim(), { lang: language })
+    const regex = /^/gm
+
+    const ansi = children.ansi.replace(regex, `··  `)
+
     return (
-      <Div>
-        {language}
-        <Text>{children}</Text>
-        ```
+      <Div marginBottom={1}>
+        <Text>{ansi}</Text>
       </Div>
     )
   },
