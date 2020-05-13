@@ -51,6 +51,16 @@ if (semver.prerelease(version)) {
   )
 }
 
+// if (!semver.satisfies(version, `>=${NEXT_MIN_NODE_VERSION}`)) {
+//   report.warn(
+//     report.stripIndent(`
+//       Node.js ${version} has reached End of Life status on 31 December, 2019.
+//       Gatsby will only actively support ${NEXT_MIN_NODE_VERSION} or higher and drop support for Node 8 soon.
+//       Please upgrade Node.js to a currently active LTS release: https://gatsby.dev/upgrading-node-js
+//     `)
+//   )
+// }
+
 process.on(`unhandledRejection`, reason => {
   // This will exit the process in newer Node anyway so lets be consistent
   // across versions and crash
