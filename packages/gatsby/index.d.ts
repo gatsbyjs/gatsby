@@ -52,7 +52,7 @@ export const prefetchPathname: (path: string) => void
  * export default (props: IndexProps) => {
  *   ..
  */
-export type PageProps<DataType = object, PageContextType = object, LocationState = object> = {
+export type PageProps<DataType = object, PageContextType = object, LocationState = WindowLocation["state"]> = {
   /** The path for this current page */
   path: string
   /** The URI for the current page */
