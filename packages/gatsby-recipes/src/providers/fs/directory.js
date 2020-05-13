@@ -24,8 +24,8 @@ const create = async ({ root }, { id, path: directoryPath, content }) => {
   const fullPath = makePath(root, directoryPath)
   const { dir } = path.parse(fullPath)
 
-  await mkdirp(dir)
-  await fs.ensureFile(fullPath)
+  // await mkdirp(dir)
+  await fs.ensureDir(fullPath)
 
   return await read({ root }, directoryPath)
 }

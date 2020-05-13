@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`directory resource e2e directory resource test: Directory create 1`] = `
+Object {
+  "_message": "Created directory src/images",
+  "id": "src/images",
+  "path": "src/images",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
+Object {
+  "currentState": "",
+  "describe": "Create src/images",
+  "diff": "  Comparing two different types of values. Expected string but received undefined.",
+  "newState": undefined,
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory destroy 1`] = `
+Object {
+  "_message": "Created directory src/images",
+  "id": "src/images",
+  "path": "src/images",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory update 1`] = `
+Object {
+  "_message": "Created directory src/images",
+  "id": "src/images",
+  "path": "src/images",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory update plan 1`] = `
+Object {
+  "currentState": "",
+  "describe": "Create src/images",
+  "diff": "  Comparing two different types of values. Expected string but received undefined.",
+  "newState": undefined,
+}
+`;

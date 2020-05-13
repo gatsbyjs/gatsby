@@ -95,7 +95,7 @@ const RecipesList = ({ setRecipe }) => {
       value: `mdx-pages.mdx`,
     },
     {
-      label: `Add support for MDX Pages with images!!`,
+      label: `Add support for MDX Pages with images`,
       value: `mdx-images.mdx`,
     },
     {
