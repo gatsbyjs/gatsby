@@ -52,13 +52,13 @@ export const prefetchPathname: (path: string) => void
  * export default (props: IndexProps) => {
  *   ..
  */
-export type PageProps<DataType = object, PageContextType = object> = {
+export type PageProps<DataType = object, PageContextType = object, LocationState = WindowLocation["state"]> = {
   /** The path for this current page */
   path: string
   /** The URI for the current page */
   uri: string
   /** An extended version of window.document which comes from @react/router */
-  location: WindowLocation
+  location: WindowLocation<LocationState>
   /** A way to handle programmatically controlling navigation */
   navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
