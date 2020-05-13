@@ -207,14 +207,14 @@ function generateBase64Sources(imageVariants) {
 }
 
 function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
-  const propsObj = {}
+  const props = {
+    media,
+    sizes,
+    srcset: isWebp ? srcSetWebp : srcSet,
+    type: isWebp ? "image/webp" : undefined,
+  }
 
-  propsObj[`media`] = media
-  if (isWebp) propsObj[`type`] = `image/webp`
-  propsObj[`srcset`] = isWebp ? srcSetWebp : srcSet
-  propsObj[`sizes`] = sizes
-
-  return <source {...propsObj} />
+  return <source {...props} />
 }
 
 function generateNoscriptSources(imageVariants) {
@@ -240,40 +240,50 @@ const listenToIntersections = (el, cb) => {
   }
 }
 
-const noscriptImg = props => {
-  const propsObj = {}
+const noscriptImg = (props) => {
+  const {
+    src = "",
+    alt = "",
+    sizes,
+    srcSet,
+    title,
+    width,
+    height,
+    crossOrigin,
+    loading,
+    draggable,
+  } = props
 
-  // Required Attributes
-  propsObj[`src`] = props.src || ``
-  propsObj[`alt`] = props.alt || ``
+  const imageProps = {
+    src,
+    alt,
+    sizes,
+    srcSet,
+    title,
+    width,
+    height,
+    crossOrigin,
+    loading,
+    draggable,
 
-  propsObj[`sizes`] = props.sizes
-  propsObj[`srcSet`] = props.srcSet
-  propsObj[`title`] = props.title
-  propsObj[`width`] = props.width
-  propsObj[`height`] = props.height
-  propsObj[`crossOrigin`] = props.crossOrigin
-  propsObj[`loading`] = props.loading
-  propsObj[`draggable`] = props.draggable
-
-  propsObj[`style`] = {
-    position: `absolute`,
-    top: 0,
-    left: 0,
-    opacity: 1,
-    width: `100%`,
-    height: `100%`,
-    objectFit: `cover`,
-    objectPosition: `center`,
-    ...props.imgStyle,
+    style: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      opacity: 1,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      objectPosition: "center",
+      ...props.imgStyle,
+    },
   }
-
   const sources = generateNoscriptSources(props.imageVariants)
 
   return ReactDOMServer.renderToString(
     <picture>
       {sources}
-      <img {...propsObj} />
+      <img {...imageProps} />
     </picture>
   )
 }
