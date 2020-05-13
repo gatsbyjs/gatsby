@@ -781,10 +781,12 @@
           link: /docs/glossary/headless-wordpress/
         - title: Hydration
           link: /docs/glossary/hydration/
-        - title: JAMStack
-          link: /docs/glossary/jamstack/
         - title: Infrastructure as Code
           link: /docs/glossary/infrastructure-as-code/
+        - title: JAMStack
+          link: /docs/glossary/jamstack/
+        - title: JSX
+          link: /docs/glossary/jsx/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX

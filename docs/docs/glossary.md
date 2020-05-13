@@ -202,7 +202,7 @@ JAMStack refers to a modern web architecture using [JavaScript](#javascript), [A
 
 A programming language that helps us make the web dynamic and interactive. [JavaScript](https://developer.mozilla.org/en-US/docs/Web/Javascript) is a widely deployed web technology in browsers. It is also used on the server-side with [Node.js](#node). It is an implementation of the [ECMAScript](#ECMAScript) specification.
 
-### JSX
+### [JSX](/docs/glossary/jsx/)
 
 JSX is an extension to JavaScript that allows developers to write HTML and custom components in the same piece of code. The [React team recommends](https://reactjs.org/docs/introducing-jsx.html) using it to describe what a [UI](#UI) should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript. Some important details to note are that because JSX uses JavaScript, some HTML attributes in your markup have to be swapped out to avoid reserved words in JavaScript (things like `htmlFor` and `className`).
 
