@@ -1,4 +1,4 @@
-import { componentDataDependencies as reducer } from "../component-data-dependencies"
+import { componentDataDependenciesReducer as reducer } from "../component-data-dependencies"
 
 import { ICreatePageDependencyAction } from "../../types"
 

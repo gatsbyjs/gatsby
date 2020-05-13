@@ -1,6 +1,6 @@
 import { IGatsbyState, ActionsUnion } from "../types"
 
-export const componentDataDependencies = (
+export const componentDataDependenciesReducer = (
   state: IGatsbyState["componentDataDependencies"] = {
     nodes: new Map(),
     connections: new Map(),
