@@ -15,16 +15,14 @@ export interface IFilterCache {
   // In this set, `undefined` values represent nodes that did not have the path
   byValue: Map<FilterValueNullable, Set<IGatsbyNode>>
   meta: {
+    // Unordered unfiltered flat set of _all_ nodes of requested type(s)
+    nodesUnordered?: Array<IGatsbyNode>
     // Ordered set of all values (by `<`) found by this filter. No null / undefs
     valuesAsc?: Array<FilterValue>
-    // Ordered set of all values (by `<`) with undefined/null unordered at the start of the array
-    valuesAscNullable?: Array<FilterValueNullable>
     // Flat set of nodes, ordered by valueAsc, but not ordered per value group
     nodesByValueAsc?: Array<IGatsbyNode>
     // Ranges of nodes per value, maps to the nodesByValueAsc array
     valueRangesAsc?: Map<FilterValue, [number, number]>
-    // Ranges of nodes per value, maps to the nodesByValueAscNullable array
-    valueRangesAscNullable?: Map<FilterValueNullable, [number, number]>
     // Ordered set of all values (by `>`) found by this filter. No null / undefs
     valuesDesc?: Array<FilterValue>
     // Flat set of nodes, ordered by valueDesc, but not ordered per value group
@@ -199,68 +197,17 @@ function postIndexingMetaSetupNe(filterCache: IFilterCache): void {
   // $ne will return all nodes where the value is not actually the needle,
   // including nodes where the value is null.
 
-  // To prepare, we sort the list of nodes ascending and put the null/undefined
-  // nodes first. This way, a query for `null` can quickly skip past the nodes
-  // with null/undefined and slice the rest. Any other query does not need to
-  // worry about the null/undefined case and just slice from the start.
+  // For `$ne` we will take the list of all targeted nodes and eliminate the
+  // bucket of nodes with a particular value, if it exists at all. So for that
+  // reason we construct a flat list here to create new Set instances from.
 
-  // The nodesByValueAsc list order will be [undefined, null, a<b ]
-
-  const entriesNullable: Array<[FilterValueNullable, Set<IGatsbyNode>]> = [
-    ...filterCache.byValue.entries(),
-  ]
-
-  entriesNullable.sort(function (
-    [a]: [FilterValueNullable, unknown],
-    [b]: [FilterValueNullable, unknown]
-  ): number {
-    if (a === b) {
-      return 0
-    }
-    if (a === undefined) {
-      return -1
-    }
-    if (b === undefined) {
-      return 1
-    }
-    if (a === null) {
-      return -1
-    }
-    if (b === null) {
-      return 1
-    }
-    if (a == b) {
-      return 0
-    }
-    // Use lt order for anything else for binary search
-    if (a < b) {
-      return -1
-    }
-    return 1
+  const arr: Array<IGatsbyNode> = []
+  filterCache.meta.nodesUnordered = arr
+  filterCache.byValue.forEach(v => {
+    v.forEach(node => {
+      arr.push(node)
+    })
   })
-
-  const orderedNodes: Array<IGatsbyNode> = []
-  const orderedValues: Array<FilterValueNullable> = []
-  const offsets: Map<FilterValueNullable, [number, number]> = new Map()
-  entriesNullable.forEach(
-    ([v, bucket]: [FilterValueNullable, Set<IGatsbyNode>]) => {
-      // Record the range containing all nodes with as filter value v
-      // The last value of the range should be the offset of the next value
-      // (So you should be able to do `nodes.slice(start, stop)` to get them)
-      offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.size])
-      // We could do `arr.push(...bucket)` here but that's not safe with very
-      // large sets, so we use a regular loop
-      bucket.forEach(node => orderedNodes.push(node))
-      orderedValues.push(v)
-    }
-  )
-
-  filterCache.meta.valuesAscNullable = orderedValues
-  filterCache.meta.nodesByValueAsc = orderedNodes
-  // The nodesByValueAsc is ordered by value, but multiple nodes per value are
-  // not ordered. To make lt as fast as lte, we must know the start and stop
-  // index for each value. Similarly useful for for `ne`.
-  filterCache.meta.valueRangesAscNullable = offsets
 }
 
 function postIndexingMetaSetupLtLteGtGte(
@@ -658,54 +605,23 @@ export const getNodesFromCacheByValue = (
   }
 
   if (op === `$ne`) {
-    const ranges = filterCache.meta.valueRangesAscNullable
-    const nodes = filterCache.meta.nodesByValueAsc
+    const set = new Set(filterCache.meta.nodesUnordered)
 
-    if (nodes!.length === 0) {
-      return undefined
+    if (filterValue === null) {
+      // Edge case: $ne with `null` returns only the nodes that contain the full
+      // path and that don't resolve to null, so drop `undefined` as well.
+      let cache = filterCache.byValue.get(undefined)
+      if (cache) cache.forEach(node => set.delete(node))
+      cache = filterCache.byValue.get(null)
+      if (cache) cache.forEach(node => set.delete(node))
+    } else {
+      // Not excluding null so it should include undefined leafs or leafs where
+      // only the partial path exists for whatever reason.
+      const cache = filterCache.byValue.get(filterValue)
+      if (cache) cache.forEach(node => set.delete(node))
     }
 
-    // Note: $ne returns all nodes where path does not lead to given needle.
-    // Note: Exception is `null`, which changes behavior to only return nodes
-    // where the value is not null and not undefined (-> so the path must exist)
-
-    if (filterValue == null) {
-      // Return all nodes that have the property and it is not null
-      // The ordered list will have all null/undefined nodes at the start, in a
-      // group for `null`, so we can quickly slice them out.
-
-      // Get the highest offset for undefined or null. If neithe exists, this
-      // will be come 0, which is what we'd want.
-      const offset = Math.max(
-        ranges!.get(null)?.[1] ?? 0,
-        ranges!.get(undefined)?.[1] ?? 0
-      )
-
-      if (offset > 0) {
-        // There is a range so there must be at least one node that is null or
-        // where the property doesn't exist. Slice those out.
-        return new Set(nodes!.slice(offset))
-      }
-
-      // Since there is no range for `null`, we can return all nodes now
-      return new Set(nodes)
-    }
-
-    // If we have a range that means there is at least one node with that
-    // value. Slice all those nodes out (omit the range). Else return every node
-    // TODO: are coercion cases a concern for us? What about Date?
-
-    const result = new Set(nodes)
-
-    const range = ranges!.get(filterValue)
-    if (range) {
-      // Get the nodes that match the filter value
-      // Drop them from the set (nodes in the slice should be unique)
-      const removals = nodes!.slice(range[0], range[1])
-      removals.forEach(n => result.delete(n))
-    }
-
-    return result
+    return set
   }
 
   if (filterValue == null) {
