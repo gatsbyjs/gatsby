@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
+const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
@@ -87,27 +88,21 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
-  if (
-    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
-    getNode(node.parent).internal.type === `File`
-  ) {
-    const fileNode = getNode(node.parent)
-    const parsedFilePath = path.parse(fileNode.relativePath)
-    if (fileNode.sourceInstanceName !== "docs") return
+  const slug = getMdxContentSlug(node, getNode(node.parent))
+  if (!slug) return
 
-    // Add slugs for docs pages
-    const slug = docSlugFromPath(parsedFilePath)
-    const locale = "en"
-    const section = slug.split("/")[1]
-    if (section === "blog") return
+  const locale = "en"
+  const section = slug.split("/")[1]
+  // fields for blog pages are handled in `utils/node/blog.js`
+  if (section === "blog") return
 
-    if (slug) {
-      createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-      createNodeField({ node, name: `slug`, value: slug })
-      createNodeField({ node, name: `section`, value: section })
-    }
-    if (locale) {
-      createNodeField({ node, name: `locale`, value: locale })
-    }
+  // Add slugs and other fields for docs pages
+  if (slug) {
+    createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
+    createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: `section`, value: section })
+  }
+  if (locale) {
+    createNodeField({ node, name: `locale`, value: locale })
   }
 }

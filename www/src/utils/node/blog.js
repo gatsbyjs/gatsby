@@ -4,30 +4,20 @@ const slugify = require(`slugify`)
 const moment = require(`moment`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
-
-const docSlugFromPath = parsedFilePath => {
-  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-  } else if (parsedFilePath.dir === ``) {
-    return `/${parsedFilePath.name}/`
-  } else {
-    return `/${parsedFilePath.dir}/`
-  }
-}
+const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
-  if (
-    [`MarkdownRemark`, `Mdx`].includes(node.internal.type) &&
-    getNode(node.parent).internal.type === `File`
-  ) {
-    const fileNode = getNode(node.parent)
-    const parsedFilePath = path.parse(fileNode.relativePath)
-
-    if (fileNode.sourceInstanceName !== `docs`) return
-    const slug = docSlugFromPath(parsedFilePath)
+  if (node.internal.type === `AuthorYaml`) {
+    createNodeField({
+      node,
+      name: `slug`,
+      value: `/contributors/${slugify(node.id, { lower: true })}/`,
+    })
+  } else {
+    const slug = getMdxContentSlug(node, getNode(node.parent))
+    if (!slug) return
     const section = slug.split("/")[1]
-
     if (section !== `blog`) return
 
     createNodeField({ node, name: `slug`, value: slug })
@@ -56,12 +46,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: `excerpt`,
       value: excerpt || node.excerpt,
     })
-  } else if (node.internal.type === `AuthorYaml`) {
-    createNodeField({
-      node,
-      name: `slug`,
-      value: `/contributors/${slugify(node.id, { lower: true })}/`,
-    })
   }
 }
 
@@ -77,6 +61,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { data, errors } = await graphql(`
     query {
+      allAuthorYaml {
+        nodes {
+          fields {
+            slug
+          }
+        }
+      }
       allMdx(
         sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
         limit: 10000
@@ -99,20 +90,22 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      allAuthorYaml {
-        nodes {
-          fields {
-            slug
-          }
-        }
-      }
     }
   `)
   if (errors) throw errors
 
-  const blogPosts = data.allMdx.nodes
+  // Create contributor pages.
+  data.allAuthorYaml.nodes.forEach(node => {
+    createPage({
+      path: `${node.fields.slug}`,
+      component: slash(contributorPageTemplate),
+      context: {
+        slug: node.fields.slug,
+      },
+    })
+  })
 
-  console.log(`num blog posts: `, blogPosts.length)
+  const blogPosts = data.allMdx.nodes
 
   const releasedBlogPosts = blogPosts.filter(post =>
     _.get(post, `fields.released`)
@@ -121,8 +114,6 @@ exports.createPages = async ({ graphql, actions }) => {
   // Create blog-list pages.
   const postsPerPage = 8
   const numPages = Math.ceil(releasedBlogPosts.length / postsPerPage)
-
-  console.log({ numPages })
 
   Array.from({
     length: numPages,
@@ -183,17 +174,6 @@ exports.createPages = async ({ graphql, actions }) => {
       component: tagTemplate,
       context: {
         tags,
-      },
-    })
-  })
-
-  // Create contributor pages.
-  data.allAuthorYaml.nodes.forEach(node => {
-    createPage({
-      path: `${node.fields.slug}`,
-      component: slash(contributorPageTemplate),
-      context: {
-        slug: node.fields.slug,
       },
     })
   })
