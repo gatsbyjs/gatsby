@@ -53,7 +53,7 @@ Last week's launch supports content changes with a few specific CMS providers:
 - Contentful
 - Sanity
 - DatoCMS
-- CosmicJS
+- Cosmic
 - Wordpress (alpha)
 - Drupal (alpha)
 

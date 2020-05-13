@@ -1,16 +1,14 @@
 ---
-title: Deploying to Vercel Now
+title: Deploying to Vercel
 ---
 
-[Vercel Now](https://vercel.com/now)(formally ZEIT) is a cloud platform for websites and serverless APIs, that you can use to deploy your Gatsby projects to your personal domain (or a free `.now.sh` suffixed URL).
-
-> Here is a link to the [offical announcement](https://vercel.com/blog/zeit-is-now-vercel)
+[Vercel](https://vercel.com/home) is a cloud platform for websites and serverless APIs, that you can use to deploy your Gatsby projects to your personal domain (or a free `.vercel.app` suffixed URL).
 
 This guide will show you how to get started in a few quick steps:
 
-## Step 1: Getting Started with Gatsby
+## Step 1: Installing Now CLI
 
-To install the Vercel command-line interface with [npm](https://www.npmjs.com/), run the following command:
+To install their command-line interface with [npm](https://www.npmjs.com/), run the following command:
 
 ```shell
 npm install -g now
