@@ -22,19 +22,19 @@ The lineup includes:
 -  Creating more Accessible Components with Gatsby - _Tae'lur Alexis_
 -   The Developer Experience Experience - _Trevor Blades_
 
-        ![Adekunle Oduye photo](./Adekunle_Oduye.jpg)
+![Adekunle Oduye photo](./Adekunle_Oduye.jpg)
 
 Adekunle Oduye will be offering insights on maintaining (ever-evolving!) design systems documentation and discover how Gatsby can make it easier.
 
 You'll learn why Gatsby's a great tool for documenting a design system, how to dynamically generate pattern documentation, and strategies to update and maintain your documentation site. Follow Oduye on Twitter [@adekunleoduye](https://twitter.com/adekunleoduye).
 
-        ![Benedicte Raae speaker photo](./Benedicte_Raae.jpg)
+![Benedicte Raae speaker photo](./Benedicte_Raae.jpg)
 
 Follow along on Benedicte Raae's journey to create POW! - an encrypted menstrual cycle tracker she built using Gatsby and Userbase.
 
 Raae's talk will give you a rookie's introduction to web encryption and how Userbase has solved all of that for her in a smooth way. Follow Raae on Twitter [@raae](https://twitter.com/raae).
 
-      ![Colby Fayock speaker photo](./Colby_Fayock.jpg)
+![Colby Fayock speaker photo](./Colby_Fayock.jpg)
 
 From driving directions to the spread of a pandemic, maps are a tool that can have a great impact on everyone's lives. But building a map with some data doesn't have to be hard.
 
