@@ -11,7 +11,7 @@ const resourceSchema = require(`../resource-schema`)
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
 
-const fileExists = fullPath => {
+const directoryExists = fullPath => {
   try {
     fs.accessSync(fullPath, fs.constants.F_OK)
     return true
@@ -20,74 +20,52 @@ const fileExists = fullPath => {
   }
 }
 
-const downloadFile = async (url, filePath) =>
-  fetch(url).then(
-    res =>
-      new Promise((resolve, reject) => {
-        const dest = fs.createWriteStream(filePath)
-        res.body.pipe(dest)
-        dest.on(`finish`, () => {
-          resolve(true)
-        })
-        dest.on(`error`, reject)
-      })
-  )
-
-const create = async ({ root }, { id, path: filePath, content }) => {
-  const fullPath = makePath(root, filePath)
+const create = async ({ root }, { id, path: directoryPath, content }) => {
+  const fullPath = makePath(root, directoryPath)
   const { dir } = path.parse(fullPath)
 
   await mkdirp(dir)
+  await fs.ensureFile(fullPath)
 
-  if (isUrl(content)) {
-    await downloadFile(content, fullPath)
-  } else {
-    await fs.ensureFile(fullPath)
-    await fs.writeFile(fullPath, content)
-  }
-
-  return await read({ root }, filePath)
+  return await read({ root }, directoryPath)
 }
 
 const update = async (context, resource) => {
   const fullPath = makePath(context.root, resource.id)
-  await fs.writeFile(fullPath, resource.content)
+  await mkdirp(fullPath)
   return await read(context, resource.id)
 }
 
 const read = async (context, id) => {
   const fullPath = makePath(context.root, id)
 
-  let content = ``
-  if (fileExists(fullPath)) {
-    content = await fs.readFile(fullPath, `utf8`)
-  } else {
+  if (!directoryExists(fullPath)) {
     return undefined
   }
 
-  const resource = { id, path: id, content }
+  const resource = { id, path: id }
   resource._message = message(resource)
   return resource
 }
 
-const destroy = async (context, fileResource) => {
-  const fullPath = makePath(context.root, fileResource.id)
-  await fs.unlink(fullPath)
-  return fileResource
+const destroy = async (context, directoryResource) => {
+  const fullPath = makePath(context.root, directoryResource.id)
+  await fs.rmdirSync(fullPath)
+  return directoryResource
 }
 
 // TODO pass action to plan
-module.exports.plan = async (context, { id, path: filePath, content }) => {
+module.exports.plan = async (context, { id, path: directoryPath, content }) => {
   let currentResource
-  if (!isBinaryPath(filePath)) {
-    currentResource = await read(context, filePath)
+  if (!isBinaryPath(directoryPath)) {
+    currentResource = await read(context, directoryPath)
   } else {
     currentResource = `Binary file`
   }
 
   let newState = content
   if (isUrl(content)) {
-    if (!isBinaryPath(filePath)) {
+    if (!isBinaryPath(directoryPath)) {
       const res = await fetch(content)
       newState = await res.text()
     } else {
@@ -98,7 +76,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   const plan = {
     currentState: (currentResource && currentResource.content) || ``,
     newState,
-    describe: `Write ${filePath}`,
+    describe: `Create ${directoryPath}`,
     diff: ``,
   }
 
@@ -109,7 +87,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   return plan
 }
 
-const message = resource => `Wrote file ${resource.path}`
+const message = resource => `Created directory ${resource.path}`
 
 const schema = {
   path: Joi.string(),
@@ -120,7 +98,7 @@ exports.schema = schema
 exports.validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-module.exports.exists = fileExists
+module.exports.exists = directoryExists
 
 module.exports.create = create
 module.exports.update = update
