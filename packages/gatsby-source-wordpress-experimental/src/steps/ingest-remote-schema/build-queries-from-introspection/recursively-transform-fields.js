@@ -588,15 +588,6 @@ const recursivelyTransformFields = ({
     return null
   }
 
-  // const blocksField = recursivelyTransformedFields.find(
-  //   field => field.fieldName && field.fieldName === `blocks`
-  // )
-
-  // if (blocksField) {
-  //   dump(Object.keys(blocksField))
-  //   dd(blocksField.length)
-  // }
-
   return recursivelyTransformedFields
 }
 
