@@ -149,7 +149,7 @@ export interface IGatsbyState {
     PLUGINS_HASH: Identifier
   }
   componentDataDependencies: {
-    nodes: Map<string, Set<string>>
+    nodes: Map<string | number, Set<string>>
     connections: Map<string, Set<string>>
   }
   components: Map<
@@ -283,10 +283,10 @@ export interface IRemoveStaleJobV2Action {
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
-  plugin: string
+  plugin?: string
   payload: {
     path: string
-    nodeId?: string
+    nodeId?: string | number
     connection?: string
   }
 }

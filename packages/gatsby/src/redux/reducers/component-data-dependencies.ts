@@ -1,37 +1,22 @@
-interface IState {
-  nodes: Map<number | string, Set<string>>
-  connections: Map<string, Set<string>>
-}
-
-export interface ICreateComponentDependencyAction {
-  type: `CREATE_COMPONENT_DEPENDENCY`
-  payload: {
-    path: string
-    nodeId?: number | string
-    connection?: string
-  }
-}
-
-interface IDeleteCacheAction {
-  type: `DELETE_CACHE`
-}
-
-interface IDeleteComponentsDependenciesAction {
-  type: `DELETE_COMPONENTS_DEPENDENCIES`
-  payload: {
-    paths: string[]
-  }
-}
+import {
+  IGatsbyState,
+  ICreatePageDependencyAction,
+  IDeleteCacheAction,
+  IDeleteComponentDependenciesAction,
+} from "../types"
 
 type Actions =
-  | ICreateComponentDependencyAction
+  | ICreatePageDependencyAction
   | IDeleteCacheAction
-  | IDeleteComponentsDependenciesAction
+  | IDeleteComponentDependenciesAction
 
 export const componentDataDependencies = (
-  state: IState = { nodes: new Map(), connections: new Map() },
+  state: IGatsbyState["componentDataDependencies"] = {
+    nodes: new Map(),
+    connections: new Map(),
+  },
   action: Actions
-): IState => {
+): IGatsbyState["componentDataDependencies"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return { nodes: new Map(), connections: new Map() }
