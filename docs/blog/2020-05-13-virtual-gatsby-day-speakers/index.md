@@ -66,8 +66,6 @@ You'll learn best practices for JavaScript accessibility that you can implement 
 
 ![Trevor Blades speaker photo](./Trevor_Blades.jpg)
 
-Gatsby helps us ship blazing fast websites. Thanks to its excellent local development experience, iterating on them is blazing fast too. Trevor Blades will demonstrate how GraphQL, hot reloading, and Gatsby's rich plugin ecosystem empower the Apollo developer experience team to rapidly build its docs and blog websites.
-
-Follow Blades on Twitter [@trevorblades](https://twitter.com/trevorblades).
+Gatsby helps us ship blazing fast websites. Thanks to its excellent local development experience, iterating on them is blazing fast too. Trevor Blades will demonstrate how GraphQL, hot reloading, and Gatsby's rich plugin ecosystem empower the Apollo developer experience team to rapidly build its docs and blog websites. Follow Blades on Twitter [@trevorblades](https://twitter.com/trevorblades).
 
 **Stay tuned for more speaker announcements coming soon, and [register for free](https://www.gatsbyjs.com/virtual-gatsby-days-registration/) now to join us at Virtual Gatsby Days on June 2nd and 3rd!** (With exclusive swag for everyone who registers).
