@@ -18,7 +18,6 @@ export const buildReusableFragments = ({ fragments }) =>
     .join(` `)
 
 export const buildNodesQueryOnFieldName = ({
-  fields,
   fieldName,
   builtSelectionSet,
   builtFragments = ``,
@@ -31,17 +30,15 @@ export const buildNodesQueryOnFieldName = ({
       variables: `$first: Int!, $after: String, ${queryVariables}`,
       fieldName,
       fieldVariables: `first: $first, after: $after, ${fieldVariables}`,
-      fields: [
-        {
-          fieldName: `pageInfo`,
-          fields: [`hasNextPage`, `endCursor`],
-        },
-        {
-          fieldName: `nodes`,
-          fields,
-          builtSelectionSet,
-        },
-      ],
+      builtSelectionSet: `
+        nodes {
+          ${builtSelectionSet}
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      `,
       builtFragments,
     })
   )
@@ -148,13 +145,12 @@ const buildQuery = ({
   fieldName,
   fieldVariables,
   variables,
-  fields,
   builtSelectionSet,
   builtFragments = ``,
 }) => `
   query ${queryName} ${buildVariables(variables)} {
     ${fieldName} ${buildVariables(fieldVariables)} {
-      ${builtSelectionSet ? builtSelectionSet : buildSelectionSet(fields)}
+      ${builtSelectionSet}
     }
   }
 
@@ -162,7 +158,6 @@ const buildQuery = ({
 `
 
 export const buildNodeQueryOnFieldName = ({
-  fields,
   fieldName,
   builtFragments,
   builtSelectionSet,
@@ -176,7 +171,6 @@ export const buildNodeQueryOnFieldName = ({
       variables,
       fieldName,
       fieldVariables: fieldInputArguments,
-      fields: fields,
       builtFragments,
       builtSelectionSet,
     })
