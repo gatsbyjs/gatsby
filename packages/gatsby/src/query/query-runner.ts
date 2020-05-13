@@ -36,7 +36,7 @@ interface IExecutionResult extends ExecutionResult {
 export const queryRunner = async (
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
-  parentSpan: Span | undefined
+  { parentSpan }: { parentSpan: Span | undefined }
 ): Promise<IExecutionResult> => {
   const { program } = store.getState()
 

@@ -175,7 +175,7 @@ export class GraphQLRunner {
     let tracer
     if (this.graphqlTracing && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
-        parentSpan: parentSpan,
+        parentSpan,
         tags: {
           queryName: queryName,
         },
