@@ -1,12 +1,40 @@
-const normalize = require(`normalize-path`)
-const { interpret } = require(`xstate`)
+import normalize from "normalize-path"
+import { interpret } from "xstate"
 
 import { componentMachine } from "../machines/page-component"
+import {
+  IGatsbyState,
+  IDeleteCacheAction,
+  ISetProgramStatusAction,
+  ICreatePageAction,
+  IQueryExtractedAction,
+  IQueryExtractedBabelSuccessAction,
+  IQueryExtractionBabelErrorAction,
+  IQueryExtractionGraphQLErrorAction,
+  IPageQueryRunAction,
+  IDeletePageAction,
+  IRemoveTemplateComponentAction,
+} from "../types"
 
 const services = new Map()
 let programStatus = `BOOTSTRAPPING`
 
-module.exports = (state = new Map(), action) => {
+type Actions =
+  | IDeleteCacheAction
+  | ISetProgramStatusAction
+  | ICreatePageAction
+  | IQueryExtractedAction
+  | IQueryExtractedBabelSuccessAction
+  | IQueryExtractionBabelErrorAction
+  | IQueryExtractionGraphQLErrorAction
+  | IPageQueryRunAction
+  | IRemoveTemplateComponentAction
+  | IDeletePageAction
+
+module.exports = (
+  state: IGatsbyState["components"] = new Map(),
+  action: Actions
+): IGatsbyState["components"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
