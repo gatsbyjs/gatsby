@@ -2,7 +2,7 @@ import compress from "graphql-query-compress"
 import store from "~/store"
 import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
-export const buildReusableFragments = ({ fragments }) =>
+const buildReusableFragments = ({ fragments }) =>
   Object.values(fragments)
     .map(
       ({
@@ -16,6 +16,40 @@ export const buildReusableFragments = ({ fragments }) =>
     }`
     )
     .join(` `)
+
+/**
+ * Takes in a fragments object (built up during the buildSelectionSet function)
+ * transforms that object into an actual fragment,
+ * then checks for unused fragments and potential regenerates again
+ * with the unused fragments removed
+ */
+export const generateReusableFragments = ({ fragments, selectionSet }) => {
+  let builtFragments = buildReusableFragments({ fragments })
+
+  if (fragments) {
+    let regenerateFragments = false
+
+    Object.values(fragments).forEach(({ name, type }) => {
+      // if our query didn't use the fragment due to the query depth AND the fragment isn't used in another fragment, delete it
+      // @todo these fragments shouldn't be generated if they wont be used.
+      // if we fix this todo, we can use the buildReusableFragments function directly
+      // instead of running it twice to remove unused fragments
+      if (
+        !selectionSet.includes(`...${name}`) &&
+        !builtFragments.includes(`...${name}`)
+      ) {
+        delete fragments[type]
+        regenerateFragments = true
+      }
+    })
+
+    if (regenerateFragments) {
+      builtFragments = buildReusableFragments({ fragments })
+    }
+  }
+
+  return builtFragments
+}
 
 export const buildNodesQueryOnFieldName = ({
   fieldName,

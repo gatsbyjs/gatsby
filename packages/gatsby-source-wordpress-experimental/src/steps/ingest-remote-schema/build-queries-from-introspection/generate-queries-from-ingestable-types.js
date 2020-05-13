@@ -3,7 +3,7 @@ import {
   buildNodesQueryOnFieldName,
   buildNodeQueryOnFieldName,
   buildSelectionSet,
-  buildReusableFragments,
+  generateReusableFragments,
 } from "./build-query-on-field-name"
 
 import store from "~/store"
@@ -227,8 +227,6 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     })
     aliasFieldsActivity.end()
 
-    const builtFragments = buildReusableFragments({ fragments })
-
     const buildSelectionSetActivity = reporter.activityTimer(
       `${singleFieldName} build selection set string`
     )
@@ -236,6 +234,11 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     const selectionSet = buildSelectionSet(aliasedTransformedFields, {
       fieldPath: name,
       fragments,
+    })
+
+    const builtFragments = generateReusableFragments({
+      fragments,
+      selectionSet,
     })
 
     buildSelectionSetActivity.end()
