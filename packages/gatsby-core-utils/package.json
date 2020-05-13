@@ -39,7 +39,7 @@
     "@types/ci-info": "2.0.0",
     "babel-preset-gatsby-package": "^0.4.1",
     "cross-env": "^5.2.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "engines": {
     "node": ">=10.13.0"

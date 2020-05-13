@@ -14,7 +14,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "subscriptions-transport-ws": "^0.9.16",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.2",
     "urql": "^1.9.7"
   },
   "scripts": {
