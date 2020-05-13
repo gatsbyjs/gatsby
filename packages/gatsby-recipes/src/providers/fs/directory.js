@@ -17,7 +17,7 @@ const directoryExists = fullPath => {
   }
 }
 
-const create = async ({ root }, { id, path: directoryPath, content }) => {
+const create = async ({ root }, { id, path: directoryPath }) => {
   const fullPath = makePath(root, directoryPath)
 
   await fs.ensureDir(fullPath)
@@ -58,9 +58,7 @@ module.exports.plan = async (context, { id, path: directoryPath, content }) => {
     currentResource = `Binary file`
   }
 
-  let newState = content
-
-  newState = `Directory`
+  let newState = directoryPath
 
   const plan = {
     currentState: (currentResource && currentResource.content) || ``,
