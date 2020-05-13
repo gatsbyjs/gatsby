@@ -31,7 +31,7 @@ type Actions =
   | IRemoveTemplateComponentAction
   | IDeletePageAction
 
-module.exports = (
+export const components = (
   state: IGatsbyState["components"] = new Map(),
   action: Actions
 ): IGatsbyState["components"] => {
