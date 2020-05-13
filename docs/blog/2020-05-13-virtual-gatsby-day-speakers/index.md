@@ -7,20 +7,21 @@ tags:
   - gatsby-days
   - community
 ---
+
 Virtual Gatsby Days is just around the corner! This two day single-track conference is a unique opportunity for the Gatsby community to come together online, develop their skills and expertise, and interact with each other and the Gatsby team. It's happening June 2nd & 3rd (9am until noon PST both days) and we are thrilled to announce our first wave of speakers today.
 
 Stay tuned for a full schedule, including sneak peeks at upcoming Gatsby projects and additional speakers from the Gatsby team. But here is a tantalizing preview of Virtual Gatsby Days guest speakers and their topics. Before you dig in, though, go [register for this free event now](https://www.gatsbyjs.com/resources/gatsby-days/)!
 
 The lineup includes:
 
--   Building a Design System Documentation with Gatsby - _Adekunle Oduye_
--   Gatsby + Userbase = Encrypted Menstrual Cycle Journal - _Benedicte Raae_
--   Supercharge Your Mapping Apps with Gatsby - _Colby Fayock_
--   Gatsby Is a Booster Rocket for Junior Developers - _Derek Murr_
--   Using Gatsby to Launch Your Side Hustle for Free - _Makenna Smutz_
--   A Recipe to Power Up Your Gatsby App with Auth - _Sam Julien_
--  Creating more Accessible Components with Gatsby - _Tae'lur Alexis_
--   The Developer Experience Experience - _Trevor Blades_
+- Building a Design System Documentation with Gatsby - _Adekunle Oduye_
+- Gatsby + Userbase = Encrypted Menstrual Cycle Journal - _Benedicte Raae_
+- Supercharge Your Mapping Apps with Gatsby - _Colby Fayock_
+- Gatsby Is a Booster Rocket for Junior Developers - _Derek Murr_
+- Using Gatsby to Launch Your Side Hustle for Free - _Makenna Smutz_
+- A Recipe to Power Up Your Gatsby App with Auth - _Sam Julien_
+- Creating more Accessible Components with Gatsby - _Tae'lur Alexis_
+- The Developer Experience Experience - _Trevor Blades_
 
 ![Adekunle Oduye photo](./Adekunle_Oduye.jpg)
 
