@@ -68,5 +68,6 @@ it("generates the expected api output", done => {
         },
       }
     `)
+    done()
   })
 })
