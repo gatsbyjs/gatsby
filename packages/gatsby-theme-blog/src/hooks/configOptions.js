@@ -5,6 +5,7 @@ const useBlogThemeConfig = () => {
     query {
       blogThemeConfig(id: { eq: "gatsby-theme-blog-config" }) {
         disableThemeUiStyling
+        webfontURL
       }
     }
   `)
