@@ -82,15 +82,15 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 
-## Deploying to Vercel Now
+## Deploying to Vercel
 
-Use [Now CLI](https://vercel.com/download) to deploy your Gatsby application without leaving the command-line interface.
+Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application without leaving the command-line interface.
 
 ### Prerequisites
 
-- A [Vercel Now](https://vercel.com/signup) account
+- A [Vercel](https://vercel.com/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
-- [Now CLI](https://vercel.com/download) package installed
+- [Vercel CLI](https://vercel.com/download) package installed
 - [Gatsby CLI](/docs/gatsby-cli) installed
 
 ### Directions
@@ -103,7 +103,7 @@ Use [Now CLI](https://vercel.com/download) to deploy your Gatsby application wit
 
 ### Additional resources
 
-- [Deploying to Vercel Now](/docs/deploying-to-now/)
+- [Deploying to Vercel](/docs/deploying-to-vercel/)
 
 ## Deploying to Cloudflare Workers
 
