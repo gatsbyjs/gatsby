@@ -1,15 +1,15 @@
 ---
-title: "Virtual Gatsby Days: Announcing
+title: "Virtual Gatsby Days: Announcing Our Speakers"
 date: 2020-05-13
 author: Laci Texter
-excerpt: "Our first virtual Gatsby Days is coming June 2-3, 2020. It will be live-streamed on YouTube from 9:00am to noon PST both days, and here are some of the awesome speakers you'll be seeing!"
+excerpt: "Our first virtual Gatsby Days is coming June 2-3, 2020. It will be live-streamed on YouTube from 9:00am to noon PST both days, and here are some of the awesome speakers you'll be hearing from!"
 tags:
   - gatsby-days
   - community
 ---
-Virtual Gatsby Days is just around the corner! This two day single-track conference is a unique opportunity for the Gatsby community to come together online, develop their skills and expertise, and interact with each other and the Gatsby team. It's happening June 2nd & 3rd, from 9am until noon PST both days and we are thrilled to announce our first wave of speakers today.
+Virtual Gatsby Days is just around the corner! This two day single-track conference is a unique opportunity for the Gatsby community to come together online, develop their skills and expertise, and interact with each other and the Gatsby team. It's happening June 2nd & 3rd (9am until noon PST both days) and we are thrilled to announce our first wave of speakers today.
 
-Stay tuned for additional speakers and a finalized schedule, but here is a first look at some of the amazing speakers and topics we have lined up. Before you dig in, though, go [register for this free event now](https://www.gatsbyjs.com/resources/gatsby-days/).
+Stay tuned for additional speakers and a finalized schedule, but here is a first look at some of the amazing speakers and topics we have lined up. Before you dig in, though, go [register for this free event now](https://www.gatsbyjs.com/resources/gatsby-days/)!
 
 The lineup includes:
 
