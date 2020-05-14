@@ -192,4 +192,16 @@ export const fieldTransformers = [
     test: field => field.type.kind === `INTERFACE`,
     transform: ({ field }) => buildTypeName(field.type.name),
   },
+
+  {
+    test: field =>
+      findTypeKind(field.type) !== `LIST` && field.type.kind === `NON_NULL`,
+    transform: ({ field }) => `${buildTypeName(findTypeName(field.type))}!`,
+  },
+
+  // for finding uncaught types
+  // {
+  //   test: () => true,
+  //   transform: ({ field }) => dd(field),
+  // },
 ]
