@@ -219,7 +219,7 @@ exports.onCreatePage = ({ page, actions }) => {
   // Remove trailing slash unless page is /
   page.path = replacePath(page.path)
   if (page.path !== oldPage.path) {
-    // Replace new page with old page
+    // Replace old page with new page
     deletePage(oldPage)
     createPage(page)
   }

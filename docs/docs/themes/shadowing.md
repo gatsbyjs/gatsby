@@ -137,23 +137,25 @@ import React from "react"
 import { Avatar, MediaObject, Icon } from "gatsby-theme-blog"
 import Card from "../components/card"
 
-export default function Bio({ name, bio, avatar, twitterUrl, githubUrl }) (
-  <Card>
-    <MediaObject>
-      <Avatar {...avatar} />
-      <div>
-        <h3>{name}</h3>
-        <p>{bio}</p>
-        <a href={twitterUrl}>
-          <Icon name="twitter" />
-        </a>
-        <a href={githubUrl}>
-          <Icon name="github" />
-        </a>
-      </div>
-    </MediaObject>
-  </Card>
-)
+export default function Bio({ name, bio, avatar, twitterUrl, githubUrl }) {
+  return (
+    <Card>
+      <MediaObject>
+        <Avatar {...avatar} />
+        <div>
+          <h3>{name}</h3>
+          <p>{bio}</p>
+          <a href={twitterUrl}>
+            <Icon name="twitter" />
+          </a>
+          <a href={githubUrl}>
+            <Icon name="github" />
+          </a>
+        </div>
+      </MediaObject>
+    </Card>
+  )
+}
 ```
 
 This workflow isn’t too bad, especially since the component is relatively straightforward. However, it could be optimized in scenarios where you want to wrap a component or pass a different prop without having to worry about the component’s internals.

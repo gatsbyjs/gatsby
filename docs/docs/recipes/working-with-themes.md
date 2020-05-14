@@ -36,6 +36,8 @@ npm install gatsby-theme-blog
 
 Follow the instructions found in the README of the theme you're using to determine what configuration it requires.
 
+> To learn how to further customize the blog theme, check out the available configuration options in the [Gatsby-theme-blog Documentation](/packages/gatsby-theme-blog/#theme-options).
+
 ```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
@@ -44,9 +46,6 @@ module.exports = {
       options: {
         /*
         - basePath defaults to `/`
-        - contentPath defaults to `content/posts`
-        - assetPath defaults to `content/assets`
-        - mdx defaults to `true`
         */
         basePath: `/blog`,
       },
@@ -56,8 +55,6 @@ module.exports = {
 ```
 
 4. Run `gatsby develop`, the theme should now be running on your site. In this case with the blog theme configured with the `basePath` to `"/blog"`, it should be available at `http://localhost:8000/blog`.
-
-> To learn how to further customize a theme, check out the available paths on [Gatsby-theme-blog Documentation](/packages/gatsby-theme-blog/#theme-options).
 
 ### Additional resources
 

@@ -58,6 +58,20 @@ describe(`error handling`, () => {
       expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
     )
   })
+
+  it(`allows prerelease versions`, () => {
+    const { reporter } = setup(`v15.0.0-pre`)
+
+    expect(reporter.panic).not.toHaveBeenCalled()
+  })
+
+  it(`warns on prerelease versions`, () => {
+    const { reporter } = setup(`v15.0.0-pre`)
+
+    expect(reporter.warn).toHaveBeenCalledWith(
+      expect.stringContaining(`prerelease`)
+    )
+  })
 })
 
 // describe(`deprecation warning`, () => {

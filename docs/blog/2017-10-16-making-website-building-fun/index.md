@@ -24,11 +24,13 @@ using it would look like this:
 import React from "react"
 import Headroom from "react-headroom"
 
-export default function Header() (
-  <Headroom>
-    <h1>You can put anything you'd like inside the Headroom Component</h1>
-  </Headroom>
-)
+export default function Header() {
+  return (
+    <Headroom>
+      <h1>You can put anything you'd like inside the Headroom Component</h1>
+    </Headroom>
+  )
+}
 ```
 
 Having coming from years of building things with Backbone.js and jQuery where
@@ -38,13 +40,13 @@ and use it like an HTML element?
 
 Compare this with the minimum code necessary for the original headroom.js.
 
-#### HTML
+## HTML
 
 ```html
 <header class="headroom"><h1>header content</h1></header>
 ```
 
-#### JavaScript
+## JavaScript
 
 ```js
 // grab the element
@@ -55,7 +57,7 @@ var headroom = new Headroom(myElement)
 headroom.init()
 ```
 
-#### CSS
+## CSS
 
 ```css
 .headroom {
@@ -204,12 +206,14 @@ like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default function Page({ data }) (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default function Page({ data }) {
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 ```
 
 So this is all very nice and it's far better to be able to use this from NPM vs.
@@ -250,12 +254,14 @@ would look like:
 import React from "react"
 import Img from "gatsby-image"
 
-export default function Image({ data }) (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default function Image({ data }) {
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
