@@ -23,28 +23,28 @@ import {
 } from "@babel/types"
 
 type SourcePosition = {
-  line: number;
-  column: number;
+  line: number
+  column: number
 }
 
-type GraphQLTag = {
-  ast: any;
-  text: string;
-  hash: number;
-  isGlobal: boolean;
+interface GraphQLTag {
+  ast: any
+  text: string
+  hash: number
+  isGlobal: boolean
 }
 
-type NestedJSXVisitor = {
-  JSXIdentifier: (path: NodePath<JSXIdentifier>) => void;
-  queryHash: string;
-  query: string;
+interface NestedJSXVisitor {
+  JSXIdentifier: (path: NodePath<JSXIdentifier>) => void
+  queryHash: string
+  query: string
 }
 
-type NestedHookVisitor = {
-  CallExpression: (path: NodePath<CallExpression>) => void;
-  queryHash: string;
-  query: string;
-  templatePaath: NodePath<TaggedTemplateExpression>;
+interface NestedHookVisitor {
+  CallExpression: (path: NodePath<CallExpression>) => void
+  queryHash: string
+  query: string
+  templatePaath: NodePath<TaggedTemplateExpression>
 }
 
 class StringInterpolationNotAllowedError extends Error {
@@ -107,7 +107,7 @@ export function followVariableDeclarations(binding: Binding): Binding {
     node?.init?.type === `Identifier`
   ) {
     return followVariableDeclarations(
-      (binding.path.scope.getBinding(node.init.name) as Binding)
+      binding.path.scope.getBinding(node.init.name) as Binding
     )
   }
   return binding
