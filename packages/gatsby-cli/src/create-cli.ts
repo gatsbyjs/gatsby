@@ -440,11 +440,11 @@ export const createCli = (argv: string[]): yargs.Arguments => {
     .command({
       command: `new [rootPath] [starter]`,
       describe: `Create new Gatsby project.`,
-      handler: handlerP(({ rootPath, starter }) => {
+      handler: handlerP(async ({ rootPath, starter }) => {
         const starterStr = starter ? String(starter) : undefined
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
-        initStarter(starterStr, rootPathStr)
+        await initStarter(starterStr, rootPathStr)
       }),
     })
     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
