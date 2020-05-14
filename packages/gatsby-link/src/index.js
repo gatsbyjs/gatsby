@@ -40,6 +40,13 @@ function absolutify(path, current) {
   return resolve(path, current)
 }
 
+const isLocalLink = path => path.startsWith(`/`) && !path.startsWith(`//`)
+
+const rewriteLinkPath = (path, relativeTo) =>
+  isAbsolutePath(path) && isLocalLink(path)
+    ? withPrefix(path)
+    : absolutify(path, relativeTo)
+
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
@@ -84,14 +91,20 @@ class GatsbyLink extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(parsePath(this.props.to).pathname)
+      ___loader.enqueue(
+        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+          .pathname
+      )
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(parsePath(this.props.to).pathname)
+      ___loader.enqueue(
+        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+          .pathname
+      )
     }
   }
 
@@ -115,7 +128,9 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       this.io = createIntersectionObserver(ref, () => {
-        ___loader.enqueue(parsePath(this.props.to).pathname)
+        ___loader.enqueue(
+          parsePath(this.props.to, window.location.pathname).pathname
+        )
       })
     }
   }
@@ -148,9 +163,11 @@ class GatsbyLink extends React.Component {
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
-    const isAbsolute = isAbsolutePath(to)
-    const isLocal = to.startsWith(`/`) && !to.startsWith(`//`)
-    if (process.env.NODE_ENV !== `production` && !isLocal && isAbsolute) {
+    if (
+      process.env.NODE_ENV !== `production` &&
+      !isLocalLink(to) &&
+      isAbsolutePath(to)
+    ) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
@@ -159,11 +176,7 @@ class GatsbyLink extends React.Component {
     return (
       <Location>
         {({ location }) => {
-          const prefixedTo =
-            isAbsolute && isLocal
-              ? withPrefix(to)
-              : absolutify(to, location.pathname)
-          // console.log({ to, prefixedTo, isAbsolute, isLocal })
+          const prefixedTo = rewriteLinkPath(to, location.pathname)
           return (
             <Link
               to={prefixedTo}
@@ -193,7 +206,8 @@ class GatsbyLink extends React.Component {
                   e.preventDefault()
 
                   let shouldReplace = replace
-                  const isCurrent = encodeURI(to) === window.location.pathname
+                  const isCurrent =
+                    encodeURI(prefixedTo) === window.location.pathname
                   if (typeof replace !== `boolean` && isCurrent) {
                     shouldReplace = true
                   }

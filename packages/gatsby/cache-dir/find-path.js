@@ -19,7 +19,12 @@ const trimPathname = rawPathname => {
 
 function absolutify(path) {
   // If it's already absolute, return as-is
-  if (!path.startsWith(`./`) && !path.startsWith(`../`) && path !== `..`) {
+  if (
+    !path.startsWith(`./`) &&
+    !path.startsWith(`../`) &&
+    path !== `..` &&
+    path !== `.`
+  ) {
     return path
   }
   // Calculate path relative to current location, adding a trailing slash to
