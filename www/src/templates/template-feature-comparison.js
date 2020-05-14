@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { Component } from "react"
 import { css } from "@emotion/core"
-import { SkipNavContent } from "@reach/skip-nav"
+import Main from "../components/main-content"
 import PageWithSidebar from "../components/page-with-sidebar"
 import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
@@ -36,8 +36,7 @@ class FeatureComparison extends Component {
       <PageWithSidebar location={location}>
         <PageMetadata title={titleString} />
         <Container>
-          <main>
-            <SkipNavContent/>
+          <Main>
             <Breadcrumb location={location} />
             <h1>{titleString}</h1>
             {options.map(o => (
@@ -67,7 +66,7 @@ class FeatureComparison extends Component {
               sections={sections}
               sectionHeaders={sectionHeaders}
             />
-          </main>
+          </Main>
           <FeaturesFooter />
           <FooterLinks />
         </Container>

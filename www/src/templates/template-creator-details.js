@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import { SkipNavContent } from "@reach/skip-nav"
+import Main from "../components/main-content"
 import Link from "../components/localized-link"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
@@ -77,7 +77,7 @@ class CreatorTemplate extends Component {
           description={creator.description}
         />
         <CreatorsHeader submissionText="Add Yourself" />
-        <main
+        <Main
           role="main"
           sx={{
             p: 6,
@@ -94,7 +94,6 @@ class CreatorTemplate extends Component {
             },
           }}
           >
-          <SkipNavContent/>
           <div
             sx={{
               m: 6,
@@ -235,7 +234,7 @@ class CreatorTemplate extends Component {
               </MetaSection>
             )}
           </div>
-        </main>
+        </Main>
         <FooterLinks />
       </React.Fragment>
     )

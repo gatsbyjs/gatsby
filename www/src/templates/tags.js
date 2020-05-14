@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import { TiTags as TagsIcon, TiArrowRight } from "react-icons/ti"
-import { SkipNavContent } from "@reach/skip-nav"
+import Main from "../components/main-content"
 
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
@@ -33,8 +33,7 @@ const Tags = ({ pageContext, data }) => {
   const doc = TAGS_AND_DOCS.get(tags[0])
 
   return (
-    <main>
-      <SkipNavContent/>
+    <Main>
       <Container>
         <PageMetadata
           title={`${preferSpacedTag(tags)} Tag`}
@@ -72,7 +71,7 @@ const Tags = ({ pageContext, data }) => {
         ))}
         <FooterLinks />
       </Container>
-    </main>
+    </Main>
   )
 }
 

@@ -7,7 +7,6 @@ import {
   MdArrowForward as ArrowForwardIcon,
   MdSort,
 } from "react-icons/md"
-import { SkipNavContent } from "@reach/skip-nav"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { loadMoreButton } from "../shared/styles"
 import LHSFilter from "./lhs-filter"
@@ -21,6 +20,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import Main from "../../components/main-content"
 import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
 import DebounceInput from "../../components/debounce-input"
@@ -101,8 +101,7 @@ export default class FilteredStarterLibrary extends Component {
     }
 
     return (
-      <main>
-        <SkipNavContent/>
+      <Main>
         <section className="showcase" css={{ display: `flex` }}>
           <SidebarContainer css={{ overflowY: `auto` }}>
             <SidebarHeader />
@@ -254,7 +253,7 @@ export default class FilteredStarterLibrary extends Component {
             <FooterLinks />
           </ContentContainer>
         </section>
-      </main>
+      </Main>
     )
   }
 }
