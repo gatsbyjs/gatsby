@@ -5,9 +5,22 @@
 ### New Features
 
 - Added plugin option `debug.graphql.writeQueriesToDisk` which writes out all the internal GraphQL queries to `./WordPress/GraphQL/[typname]` for each node type.
-- Automatically generate fragments when types are infinitely nested within themselves. This makes fetching circular references more efficient and prevents running out of memory.
+- Automatically generate fragments when types are infinitely nested within themselves. This makes fetching circular references more efficient and prevents running out of memory. wp-graphql-gutenberg and wp-graphql-woocommerce now appear to work!
 - Increased default query depth and circular query limit since queries are more efficient now.
 - Added the ability to exclude fields on the RootQuery via plugin options.
+- Removed some fields that require auth by default:
+
+```js
+RootQuery: {
+  excludeFieldNames: [`viewer`, `node`, `schemaMd5`],
+},
+Settings: {
+  excludeFieldNames: [`generalSettingsEmail`],
+},
+GeneralSettings: {
+  excludeFieldNames: [`email`],
+},
+```
 
 ### Bug Fixes
 
