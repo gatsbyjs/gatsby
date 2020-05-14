@@ -6218,6 +6218,29 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://gatsby-markdown-typescript-personal-website.netlify.app/
+  repo: https://github.com/SaimirKapaj/gatsby-markdown-typescript-personal-website
+  description: Gatsby Markdown Personal Website Starter, using Typescript, Styled Components, Tailwindcss and Framer Motion.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+    - Language:TypeScript
+    - Styling:Tailwind
+  features:
+    - Markdown
+    - Typescript
+    - Framer Motion
+    - Page Transition
+    - Styled Components
+    - Tailwind CSS
+    - Removes unused CSS with Purgecss
+    - Font Awesome Icons
+    - Responsive Design
+    - SEO
+    - React Helmet
+    - Offline Support
+    - Gatsby Image
 - url: https://thestartup.netlify.app/
   repo: https://github.com/bagseye/startup
   description: A startup template perfect for brochure sites and small businesses
