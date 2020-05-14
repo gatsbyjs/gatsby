@@ -3,7 +3,7 @@ import chalk from "chalk"
 import { forEach } from "p-iteration"
 import { printGraphQLError, queryAll, queryOnce } from "./lib"
 import { createClient } from "./create-client"
-import PluginOptions from './pluginOptions'
+import PluginOptions from "./plugin-options"
 
 import {
   ArticleNode,
@@ -54,8 +54,8 @@ export const sourceNodes = async (
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
-    downloadImages=true,
-    defaultImageUrl='https://raw.githubusercontent.com/mrhut10/gatsby/Feature/gatsby-source-shopify/downloadImagesOption/packages/gatsby-source-shopify/src/default.png',
+    downloadImages = true,
+    defaultImageUrl = `https://raw.githubusercontent.com/mrhut10/gatsby/Feature/gatsby-source-shopify/downloadImagesOption/packages/gatsby-source-shopify/src/default.png`,
   }
 ) => {
   // sending options into PluginOptions Singleton Class
@@ -66,7 +66,7 @@ export const sourceNodes = async (
     .setPaginationSize(paginationSize)
     .setIncludeCollections(includeCollections)
     .setDownloadImages(downloadImages)
-    .setDefaultImageUrl(defaultImageUrl);
+    .setDefaultImageUrl(defaultImageUrl)
 
   const client = createClient(shopName, accessToken, apiVersion)
 
