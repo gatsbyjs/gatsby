@@ -31,7 +31,7 @@ See [docs templates](/docs/docs-templates/) in the contributing docs for more he
 
 ## New automated recipes available!
 
-Looking for information on Gatsby CLI recipes? [Read the press release](/blog/2020-04-15-announcing-gatsby-recipes/) and [See the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to learn more about automating your development workflows with `gatsby recipes`. Note that they are experimental.
+Looking for information on Gatsby CLI recipes? [Read the press release](/blog/2020-04-15-announcing-gatsby-recipes/) and [see the umbrella issue](https://github.com/gatsbyjs/gatsby/issues/22991) to learn more about automating your development workflows with `gatsby recipes`. Note that they are experimental.
 
 ## What are recipes?
 
@@ -129,6 +129,6 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 
 - [Preparing for deployment](/docs/recipes/deploying-your-site#preparing-for-deployment)
 - [Deploying to Netlify](/docs/recipes/deploying-your-site#deploying-to-netlify)
-- [Deploying to ZEIT Now](/docs/recipes/deploying-your-site#deploying-to-zeit-now)
+- [Deploying to Vercel](/docs/recipes/deploying-your-site#deploying-to-vercel)
 - [Deploying to Cloudflare Workers](/docs/recipes/deploying-your-site#deploying-to-cloudflare-workers)
 - [Setting up Google Analytics](/docs/recipes/deploying-your-site#setting-up-google-analytics)

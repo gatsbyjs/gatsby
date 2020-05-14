@@ -85,4 +85,17 @@ describe(`setSiteConfig`, () => {
     const action = setSiteConfig({})
     expect(action.payload.pathPrefix).toBe(``)
   })
+
+  it(`It warns with a suggestion when an invalid key is passed`, () => {
+    setSiteConfig({
+      plugin: [],
+    })
+
+    expect(reporter.panic).toBeCalledWith({
+      id: `10122`,
+      context: {
+        sourceMessage: `"plugin" is not allowed. Did you mean "plugins"?`,
+      },
+    })
+  })
 })

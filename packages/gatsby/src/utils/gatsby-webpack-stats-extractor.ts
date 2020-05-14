@@ -1,19 +1,20 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
+import fs from "fs-extra"
+import path from "path"
+import { Compiler } from "webpack"
 
-class GatsbyWebpackStatsExtractor {
-  constructor(options) {
+export class GatsbyWebpackStatsExtractor {
+  private plugin: { name: string }
+  constructor() {
     this.plugin = { name: `GatsbyWebpackStatsExtractor` }
-    this.options = options || {}
   }
-  apply(compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.done.tapAsync(this.plugin.name, (stats, done) => {
-      let assets = {}
-      let assetsMap = {}
-      for (let chunkGroup of stats.compilation.chunkGroups) {
+      const assets = {}
+      const assetsMap = {}
+      for (const chunkGroup of stats.compilation.chunkGroups) {
         if (chunkGroup.name) {
-          let files = []
-          for (let chunk of chunkGroup.chunks) {
+          const files: string[] = []
+          for (const chunk of chunkGroup.chunks) {
             files.push(...chunk.files)
           }
           assets[chunkGroup.name] = files.filter(f => f.slice(-4) !== `.map`)
@@ -44,5 +45,3 @@ class GatsbyWebpackStatsExtractor {
     })
   }
 }
-
-module.exports = GatsbyWebpackStatsExtractor

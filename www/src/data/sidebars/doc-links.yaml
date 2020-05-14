@@ -75,9 +75,9 @@
             - title: Deploying to Heroku
               link: /docs/deploying-to-heroku/
               breadcrumbTitle: Heroku
-            - title: Deploying to ZEIT Now
-              link: /docs/deploying-to-zeit-now/
-              breadcrumbTitle: ZEIT Now
+            - title: Deploying to Vercel
+              link: /docs/deploying-to-vercel/
+              breadcrumbTitle: Vercel
             - title: Deploying to Cloudflare Workers
               link: /docs/deploying-to-cloudflare-workers/
               breadcrumbTitle: Cloudflare Workers
@@ -105,6 +105,9 @@
             - title: Deploying to Gatsby Cloud
               link: /docs/deploying-to-gatsby-cloud/
               breadcrumbTitle: Gatsby Cloud
+            - title: Deploying to Clodui
+              link: /docs/deploying-to-clodui/
+              breadcrumbTitle: Clodui
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
@@ -790,6 +793,8 @@
           link: /docs/glossary/node/
         - title: npm
           link: /docs/glossary/npm/
+        - title: Progressive Enhancement
+          link: /docs/glossary/progressive-enhancement/
         - title: React
           link: /docs/glossary/react/
         - title: Server Side Rendering
