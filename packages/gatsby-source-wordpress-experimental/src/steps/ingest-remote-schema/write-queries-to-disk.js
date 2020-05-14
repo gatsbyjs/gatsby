@@ -10,6 +10,12 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
 
   const { remoteSchema } = store.getState()
 
+  // the queries only change when the remote schema changes
+  // no need to write them to disk in that case
+  if (!remoteSchema.schemaWasChanged) {
+    return
+  }
+
   const activity = reporter.activityTimer(
     formatLogMessage(`writing GraphQL queries to disk at ./WordPress/GraphQL/`)
   )
