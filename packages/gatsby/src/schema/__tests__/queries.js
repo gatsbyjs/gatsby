@@ -3,7 +3,6 @@ const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
