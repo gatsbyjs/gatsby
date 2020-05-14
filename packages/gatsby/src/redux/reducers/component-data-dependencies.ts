@@ -19,7 +19,7 @@ export const componentDataDependenciesReducer = (
       if (action.payload.nodeId) {
         let existingPaths: Set<string> = new Set()
         if (state.nodes.has(action.payload.nodeId)) {
-          existingPaths = state.nodes.get(action.payload.nodeId) as Set<string>
+          existingPaths = state.nodes.get(action.payload.nodeId)!
         }
         if (!existingPaths.has(action.payload.path)) {
           existingPaths.add(action.payload.path)
@@ -31,9 +31,7 @@ export const componentDataDependenciesReducer = (
       if (action.payload.connection) {
         let existingPaths: Set<string> = new Set()
         if (state.connections.has(action.payload.connection)) {
-          existingPaths = state.connections.get(
-            action.payload.connection
-          ) as Set<string>
+          existingPaths = state.connections.get(action.payload.connection)!
         }
         if (!existingPaths.has(action.payload.path)) {
           existingPaths.add(action.payload.path)
