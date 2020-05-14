@@ -1,10 +1,10 @@
-jest.mock(`fs`, () => {
-  return {
-    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
-  }
-})
+const { onPreInit } = require(`../gatsby-node`)
+const { onRenderBody: ssrOnRenderBody } = require(`../gatsby-ssr`)
 
-const { onRenderBody } = require(`../gatsby-ssr`)
+const onRenderBody = (args, pluginOptions) => {
+  onPreInit({}, pluginOptions)
+  return ssrOnRenderBody(args, pluginOptions)
+}
 
 let headComponents
 const setHeadComponents = args => (headComponents = headComponents.concat(args))
