@@ -71,10 +71,10 @@ gatsby new catalyst https://github.com/ehowey/gatsby-starter-catalyst
 
 This gives you a basic installation of Gatsby Theme Catalyst including the core theme, a header theme, and a footer theme. By default content is authored in MDX. The intention is that this is a jumping off point for a custom site, check out the [source code](https://github.com/ehowey/erichoweydev) for my personal site to see a custom example in action.
 
-For an example of a production ready starter with content sourced from SANITY.io, a presentation theme, and more complex component shadowing take a look at [gatsby-theme-catalyst-hydrogen](https://www.gatsbycatalyst.com/docs/tutorials/building-a-website-for-a-freelance-writer-using-gatsby-theme-catalyst-hydrogen) which is a theme designed for freelance writers. This theme layers together 5 different sub themes in the finished site!
+For an example of a production ready starter with content sourced from SANITY.io, a presentation theme, and more complex component shadowing take a look at [gatsby-theme-catalyst-hydrogen](https://www.gatsbycatalyst.com/docs/tutorials/building-a-website-for-a-freelance-writer-using-gatsby-theme-catalyst-hydrogen) which is a theme designed for freelance writers. This theme layers 5 different sub themes together in the finished site!
 
 ![Gatsby Theme Catalyst Hydrogen](catalyst-4-way.jpg "Gatsby Theme Catalyst Hydrogen")
 
-Gatsby Theme Catalyst is an open source project. Ideas, suggestions and issues are always welcome. I would also love to hear about any projects you create with it!
+Gatsby Theme Catalyst is an open source project. Ideas, suggestions and issues are always welcome. I would love to hear about any projects you create with it!
 
 Happy coding!
