@@ -10,7 +10,6 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
 
   const { remoteSchema } = store.getState()
 
-  console.log(`writing`)
   const activity = reporter.activityTimer(
     formatLogMessage(`writing GraphQL queries to disk at ./WordPress/GraphQL/`)
   )
@@ -48,5 +47,4 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
   }
 
   activity.end()
-  dd(`and so it was written.`)
 }
