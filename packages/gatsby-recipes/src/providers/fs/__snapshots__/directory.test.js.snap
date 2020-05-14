@@ -2,7 +2,7 @@
 
 exports[`directory resource e2e directory resource test: Directory create 1`] = `
 Object {
-  "_message": "Created directory src/image",
+  "_message": "Creating directory src/image",
   "id": "src/image",
   "path": "src/image",
 }
@@ -17,7 +17,7 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory destroy 1`] = `
 Object {
-  "_message": "Created directory src/image",
+  "_message": "Creating directory src/image",
   "id": "src/image",
   "path": "src/image",
 }
@@ -25,7 +25,7 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory update 1`] = `
 Object {
-  "_message": "Created directory src/image",
+  "_message": "Creating directory src/image",
   "id": "src/image",
   "path": "src/image",
 }

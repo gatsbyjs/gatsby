@@ -1,9 +1,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
-const isBinaryPath = require(`is-binary-path`)
 
-const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
@@ -47,9 +45,7 @@ const destroy = async (context, directoryResource) => {
   return directoryResource
 }
 
-// TODO pass action to plan
 module.exports.plan = async (context, { id, path: directoryPath }) => {
-
   let newState = directoryPath
 
   const plan = {
@@ -60,7 +56,7 @@ module.exports.plan = async (context, { id, path: directoryPath }) => {
   return plan
 }
 
-const message = resource => `Created directory ${resource.path}`
+const message = resource => `Creating directory ${resource.path}`
 
 const schema = {
   path: Joi.string(),
