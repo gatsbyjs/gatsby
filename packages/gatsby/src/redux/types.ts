@@ -286,7 +286,7 @@ export interface ICreatePageDependencyAction {
   plugin?: string
   payload: {
     path: string
-    nodeId?: string | number
+    nodeId?: string
     connection?: string
   }
 }
