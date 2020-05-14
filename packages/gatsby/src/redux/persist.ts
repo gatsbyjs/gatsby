@@ -81,18 +81,14 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   const valueCount = values.length
   const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
   let maxSize = 0
-  let warnFlag = false;
-
+  
   for (let i = 0; i < valueCount; i += step) {
     const size = v8.serialize(values[i]).length
-    if (size > 500000) {
-      warnFlag = true;
-    }
     maxSize = Math.max(size, maxSize)
   }
   
-  //Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
-  if(warnFlag){
+  // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
+  if (maxSize > 500000) {
     report.warn(`page context was greater than 500kb`);
   }
 
