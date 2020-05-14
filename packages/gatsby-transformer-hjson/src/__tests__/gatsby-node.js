@@ -21,7 +21,6 @@ describe(`Process HJSON nodes correctly`, () => {
   const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`correctly creates nodes from HJSON which is an array of objects`, async () => {
-    expect(`a`).toEqual(`b`)
     const data = [
       { id: `foo`, blue: true, funny: `yup` },
       { blue: false, funny: `nope` },
