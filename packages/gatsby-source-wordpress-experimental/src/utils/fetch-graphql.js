@@ -1,4 +1,4 @@
-import gqlPrettier from "graphql-prettier"
+import prettier from "prettier"
 import axios from "axios"
 import rateLimit from "axios-rate-limit"
 import chalk from "chalk"
@@ -29,7 +29,7 @@ const handleErrors = async ({
   }
 
   try {
-    query = gqlPrettier(query)
+    query = prettier(query, { parser: `graphql` })
   } catch (e) {
     // do nothing
   }

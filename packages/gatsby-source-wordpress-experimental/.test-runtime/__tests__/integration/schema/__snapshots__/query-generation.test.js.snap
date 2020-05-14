@@ -2,7 +2,7 @@
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  categories(first: $first, after: $after, where: {parent: null}) {
+  categories(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -93,7 +93,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node preview query hasn't changed 1`] = `
@@ -183,7 +184,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node single query hasn't changed 1`] = `
@@ -273,12 +275,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  comments(first: $first, after: $after, where: {parent: null}) {
+  comments(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -349,7 +352,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       type
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node preview query hasn't changed 1`] = `
@@ -419,7 +423,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     type
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node single query hasn't changed 1`] = `
@@ -489,7 +494,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     type
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node list query hasn't changed 1`] = `
@@ -555,7 +561,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       showUi
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node preview query hasn't changed 1`] = `
@@ -615,7 +622,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     showInRest
     showUi
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node single query hasn't changed 1`] = `
@@ -675,12 +683,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     showInRest
     showUi
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  mediaItems(first: $first, after: $after, where: {parent: null}) {
+  mediaItems(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -841,7 +850,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node preview query hasn't changed 1`] = `
@@ -1001,7 +1011,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node single query hasn't changed 1`] = `
@@ -1161,7 +1172,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node list query hasn't changed 1`] = `
@@ -1190,7 +1202,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       slug
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node preview query hasn't changed 1`] = `
@@ -1213,7 +1226,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     name
     slug
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node single query hasn't changed 1`] = `
@@ -1236,7 +1250,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     name
     slug
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node list query hasn't changed 1`] = `
@@ -1302,7 +1317,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       url
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node preview query hasn't changed 1`] = `
@@ -1362,7 +1378,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     url
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node single query hasn't changed 1`] = `
@@ -1422,12 +1439,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     url
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  pages(first: $first, after: $after, where: {parent: null}) {
+  pages(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -1596,7 +1614,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node preview query hasn't changed 1`] = `
@@ -1764,7 +1783,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node single query hasn't changed 1`] = `
@@ -1932,12 +1952,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  posts(first: $first, after: $after, where: {parent: null}) {
+  posts(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -2074,7 +2095,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node preview query hasn't changed 1`] = `
@@ -2210,7 +2232,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node single query hasn't changed 1`] = `
@@ -2346,12 +2369,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  projects(first: $first, after: $after, where: {parent: null}) {
+  projects(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -2430,7 +2454,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node preview query hasn't changed 1`] = `
@@ -2508,7 +2533,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node single query hasn't changed 1`] = `
@@ -2586,12 +2612,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  tags(first: $first, after: $after, where: {parent: null}) {
+  tags(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -2665,7 +2692,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node preview query hasn't changed 1`] = `
@@ -2738,7 +2766,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node single query hasn't changed 1`] = `
@@ -2811,7 +2840,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node list query hasn't changed 1`] = `
@@ -2846,7 +2876,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       showUi
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node preview query hasn't changed 1`] = `
@@ -2875,7 +2906,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     showInRest
     showUi
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node single query hasn't changed 1`] = `
@@ -2904,12 +2936,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     showInRest
     showUi
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  teamMembers(first: $first, after: $after, where: {parent: null}) {
+  teamMembers(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -3063,7 +3096,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node preview query hasn't changed 1`] = `
@@ -3216,7 +3250,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     toPing
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node single query hasn't changed 1`] = `
@@ -3369,12 +3404,17 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     toPing
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TranslationFilterTest node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  translationFilterTests(first: $first, after: $after, where: {parent: null, language: FR}) {
+  translationFilterTests(
+    first: $first
+    after: $after
+    where: { parent: null, language: FR }
+  ) {
     pageInfo {
       hasNextPage
       endCursor
@@ -3461,7 +3501,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TranslationFilterTest node preview query hasn't changed 1`] = `
@@ -3547,7 +3588,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TranslationFilterTest node single query hasn't changed 1`] = `
@@ -3633,12 +3675,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     }
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  typeLimit0Tests(first: $first, after: $after, where: {parent: null}) {
+  typeLimit0Tests(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -3705,7 +3748,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node preview query hasn't changed 1`] = `
@@ -3771,7 +3815,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node single query hasn't changed 1`] = `
@@ -3837,12 +3882,13 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
-  typeLimitTests(first: $first, after: $after, where: {parent: null}) {
+  typeLimitTests(first: $first, after: $after, where: { parent: null }) {
     pageInfo {
       hasNextPage
       endCursor
@@ -3909,7 +3955,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       uri
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node preview query hasn't changed 1`] = `
@@ -3975,7 +4022,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node single query hasn't changed 1`] = `
@@ -4041,7 +4089,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     title
     uri
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node list query hasn't changed 1`] = `
@@ -4185,7 +4234,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       username
     }
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node preview query hasn't changed 1`] = `
@@ -4323,7 +4373,8 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     userId
     username
   }
-}"
+}
+"
 `;
 
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node single query hasn't changed 1`] = `
@@ -4461,5 +4512,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     userId
     username
   }
-}"
+}
+"
 `;
