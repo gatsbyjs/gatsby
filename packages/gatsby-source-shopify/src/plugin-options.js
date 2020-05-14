@@ -26,7 +26,7 @@ class PluginOptions {
   }
 
   get apiVersion() {
-    return this.#apiVersion || '2020-01'
+    return this.#apiVersion || `2020-01`
   }
 
   get verbose() {
@@ -38,7 +38,7 @@ class PluginOptions {
   }
 
   get includeCollections() {
-    return this.#includeCollections || ['shop', 'content']
+    return this.#includeCollections || [`shop`, `content`]
   }
 
   get downloadImages() {
