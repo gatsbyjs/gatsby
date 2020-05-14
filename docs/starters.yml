@@ -6216,6 +6216,18 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://thestartup.netlify.app/
+  repo: https://github.com/bagseye/startup
+  description: A startup template perfect for brochure sites and small businesses
+  tags:
+    - Landing Page
+    - Onepage
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Font Awesome Icons
+    - Responsive Design
+    - Style-Components
 - url: https://gatsby-starter-tailwind-css.netlify.app/
   repo: https://github.com/melanienolan/gatsby-starter-tailwind-css
   description: A Gatsby starter with Tailwind CSS. Uses Tailwind CSS v1.4.1 and includes built-in support for PurgeCSS.
