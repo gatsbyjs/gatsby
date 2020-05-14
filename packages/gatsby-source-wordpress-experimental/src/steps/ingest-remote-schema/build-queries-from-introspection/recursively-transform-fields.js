@@ -599,26 +599,28 @@ const recursivelyTransformFields = ({
     ancestorTypeNames,
   })
 
-  if (typeIncarnationCount > 0) {
-    // this type is nested within itself atleast once
-    // create a fragment here that can be reused
-    createFragment({
-      fields,
-      type: parentType,
-      fragments,
-      field: parentField,
-      ancestorTypeNames: parentAncestorTypeNames,
-      depth,
-      fieldBlacklist,
-      fieldAliases,
-      typeMap,
-      gatsbyNodesInfo,
-      queryDepth,
-      circularQueryLimit,
-      pluginOptions,
-      buildingFragment,
-    })
-  }
+  // this appears to not be needed here but @todo investigate if that's always true
+  // it's also being used in transformField()
+  // if (typeIncarnationCount > 0) {
+  //   // this type is nested within itself atleast once
+  //   // create a fragment here that can be reused
+  //   createFragment({
+  //     fields,
+  //     type: parentType,
+  //     fragments,
+  //     field: parentField,
+  //     ancestorTypeNames: parentAncestorTypeNames,
+  //     depth,
+  //     fieldBlacklist,
+  //     fieldAliases,
+  //     typeMap,
+  //     gatsbyNodesInfo,
+  //     queryDepth,
+  //     circularQueryLimit,
+  //     pluginOptions,
+  //     buildingFragment,
+  //   })
+  // }
 
   if (typeIncarnationCount >= circularQueryLimit) {
     return null
