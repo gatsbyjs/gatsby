@@ -77,13 +77,13 @@ When you create a Markdown file, you can include a set of key value pairs that c
 
 ```markdown:title=src/markdown-pages/post-1.md
 ---
-path: "/blog/my-first-post"
+slug: "/blog/my-first-post"
 date: "2019-05-04"
 title: "My first blog post"
 ---
 ```
 
-What is important in this step is the key pair `path`. The value that is assigned to the key `path` is used in order to navigate to your post.
+What is important in this step is the key pair `slug`. The value that is assigned to the key `slug` is used in order to navigate to your post.
 
 ## Create a page template for the Markdown files
 
@@ -114,12 +114,12 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
+  query($slug: String!) {
+    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
-        path
+        slug
         title
       }
     }
@@ -144,12 +144,10 @@ Use the `graphql` to query Markdown file data as below. Next, use the `createPag
 **NOTE:** Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`.
 
 ```javascript:title=gatsby-node.js
-const path = require(`path`)
-
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
-  const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`)
+  const blogPostTemplate = require.resolve(`./src/templates/blogTemplate.js`)
 
   const result = await graphql(`
     {
@@ -160,7 +158,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         edges {
           node {
             frontmatter {
-              path
+              slug
             }
           }
         }
@@ -176,9 +174,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     createPage({
-      path: node.frontmatter.path,
+      path: node.frontmatter.slug,
       component: blogPostTemplate,
-      context: {}, // additional data can be passed via context
+      context: {
+        // additional data can be passed via context
+        slug: node.frontmatter.slug,
+      },
     })
   })
 }

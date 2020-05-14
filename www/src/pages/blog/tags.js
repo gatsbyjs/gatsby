@@ -222,10 +222,7 @@ export const pageQuery = graphql`
   query {
     allMdx(
       limit: 2000
-      filter: {
-        fields: { released: { eq: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-      }
+      filter: { fields: { released: { eq: true }, section: { eq: "blog" } } }
     ) {
       group(field: frontmatter___tags) {
         fieldValue
