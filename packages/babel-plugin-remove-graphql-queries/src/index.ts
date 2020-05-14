@@ -1,5 +1,5 @@
 /*  eslint-disable new-cap */
-const graphql = require(`gatsby/graphql`)
+import { graphql } from "gatsby"
 import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
@@ -7,6 +7,7 @@ import { Binding } from "babel__traverse"
 import {
   CallExpression,
   TaggedTemplateExpression,
+  TemplateElement,
   JSXIdentifier,
   JSXAttribute,
   JSXElement,
@@ -21,38 +22,38 @@ import {
   Expression,
 } from "@babel/types"
 
-interface ISourcePosition {
-  line: number
-  column: number
+type SourcePosition = {
+  line: number;
+  column: number;
 }
 
-interface IGraphQLTag {
-  ast: any
-  text: string
-  hash: number
-  isGlobal: boolean
+type GraphQLTag = {
+  ast: any;
+  text: string;
+  hash: number;
+  isGlobal: boolean;
 }
 
-interface INestedJSXVisitor {
-  JSXIdentifier: (path: NodePath<JSXIdentifier>) => void
-  queryHash: string
-  query: string
+type NestedJSXVisitor = {
+  JSXIdentifier: (path: NodePath<JSXIdentifier>) => void;
+  queryHash: string;
+  query: string;
 }
 
-interface INestedHookVisitor {
-  CallExpression: (path: NodePath<CallExpression>) => void
-  queryHash: string
-  query: string
-  templatePaath: NodePath<TaggedTemplateExpression>
+type NestedHookVisitor = {
+  CallExpression: (path: NodePath<CallExpression>) => void;
+  queryHash: string;
+  query: string;
+  templatePaath: NodePath<TaggedTemplateExpression>;
 }
 
 class StringInterpolationNotAllowedError extends Error {
-  interpolationStart: ISourcePosition
-  interpolationEnd: ISourcePosition
+  interpolationStart: SourcePosition
+  interpolationEnd: SourcePosition
 
   constructor(
-    interpolationStart: ISourcePosition | undefined,
-    interpolationEnd: ISourcePosition | undefined
+    interpolationStart: SourcePosition | undefined,
+    interpolationEnd: SourcePosition | undefined
   ) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
@@ -106,7 +107,7 @@ export function followVariableDeclarations(binding: Binding): Binding {
     node?.init?.type === `Identifier`
   ) {
     return followVariableDeclarations(
-      binding.path.scope.getBinding(node.init.name) as Binding
+      (binding.path.scope.getBinding(node.init.name) as Binding)
     )
   }
   return binding
@@ -206,13 +207,13 @@ function removeImport(tag: NodePath<Expression>): void {
   }
 }
 
-function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
-  const tag = path.get(`tag`) as NodePath
-  const isGlobal = isGlobalIdentifier(tag)
+function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): GraphQLTag {
+  const tag: NodePath = path.get(`tag`) as NodePath
+  const isGlobal: boolean = isGlobalIdentifier(tag)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {} as IGraphQLTag
+  if (!isGlobal && !isGraphqlTag(tag)) return {} as GraphQLTag
 
-  const quasis = path.node.quasi.quasis
+  const quasis: TemplateElement[] = path.node.quasi.quasis
 
   if (quasis.length !== 1) {
     throw new StringInterpolationNotAllowedError(
@@ -221,8 +222,8 @@ function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
     )
   }
 
-  const text = quasis[0].value.raw
-  const hash = murmurhash(text, 0)
+  const text: string = quasis[0].value.raw
+  const hash: number = murmurhash(text, 0)
 
   try {
     const ast = graphql.parse(text)
@@ -291,7 +292,7 @@ export default function ({ types: t }): PluginObj {
               path.unshiftContainer(`body`, importDeclaration)
             }
           },
-        } as INestedJSXVisitor
+        } as NestedJSXVisitor
 
         const nestedHookVisitor = {
           CallExpression(path2: NodePath<CallExpression>): void {
@@ -349,7 +350,7 @@ export default function ({ types: t }): PluginObj {
               path.unshiftContainer(`body`, importDeclaration)
             }
           },
-        } as INestedHookVisitor
+        } as NestedHookVisitor
 
         const tagsToRemoveImportsFrom = new Set<NodePath<Expression>>()
 
