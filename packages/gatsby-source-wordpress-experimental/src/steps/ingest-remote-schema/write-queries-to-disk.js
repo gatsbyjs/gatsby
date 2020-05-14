@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import store from "~/store"
-import graphqlPrettier from "graphql-prettier"
+import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
 
 export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
@@ -30,19 +30,19 @@ export const writeQueriesToDisk = async ({ reporter }, pluginOptions) => {
 
     await fs.writeFile(
       `${directory}/node-list-query.graphql`,
-      graphqlPrettier(nodeListQueries[0]),
+      prettier.format(nodeListQueries[0], { parser: `graphql` }),
       `utf8`
     )
 
     await fs.writeFile(
       `${directory}/node-single-query.graphql`,
-      graphqlPrettier(nodeQuery),
+      prettier.format(nodeQuery, { parser: `graphql` }),
       `utf8`
     )
 
     await fs.writeFile(
       `${directory}/node-preview-query.graphql`,
-      graphqlPrettier(previewQuery),
+      prettier.format(previewQuery, { parser: `graphql` }),
       `utf8`
     )
   }
