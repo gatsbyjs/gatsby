@@ -4705,7 +4705,9 @@
   tags:
     - Documentation
     - Markdown
-    - Styling:Other
+    - Language:TypeScript
+    - Styling:Ant Design
+    - i18n
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
