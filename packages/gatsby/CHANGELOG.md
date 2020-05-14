@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.29...gatsby@2.21.30) (2020-05-14)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.28...gatsby@2.21.29) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby:** don't fail validation on fragments that are not used ([#24032](https://github.com/gatsbyjs/gatsby/issues/24032)) ([61d0ef4](https://github.com/gatsbyjs/gatsby/commit/61d0ef4))
+- **gatsby:** update script to generate apis.json to accomodate Typescript ([#24023](https://github.com/gatsbyjs/gatsby/issues/24023)) ([7878d0f](https://github.com/gatsbyjs/gatsby/commit/7878d0f))
+
+## [2.21.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.27...gatsby@2.21.28) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby:** add generic locationState to types ([#24029](https://github.com/gatsbyjs/gatsby/issues/24029)) ([8f16846](https://github.com/gatsbyjs/gatsby/commit/8f16846))
+
+### Performance Improvements
+
+- **gatsby:** enable fast filters for \$ne ([#24050](https://github.com/gatsbyjs/gatsby/issues/24050)) ([8e5e5f7](https://github.com/gatsbyjs/gatsby/commit/8e5e5f7))
+
 ## [2.21.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.26...gatsby@2.21.27) (2020-05-13)
 
 **Note:** Version bump only for package gatsby
