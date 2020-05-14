@@ -6218,6 +6218,18 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://flotiq-starter-recipes.herokuapp.com
+  repo: https://github.com/flotiq/gatsby-starter-recipes
+  description: A Gatsby culinary starter with recipes sourced from Flotiq.
+  tags:
+    - CMS:Headless
+    - Gallery
+    - Pagination
+    - CMS:Other
+  features:
+    - Recipes starter
+    - Culinary recipes
+    - Flotiq CMS as a recipe source
 - url: https://gatsby-markdown-typescript-personal-website.netlify.app/
   repo: https://github.com/SaimirKapaj/gatsby-markdown-typescript-personal-website
   description: Gatsby Markdown Personal Website Starter, using Typescript, Styled Components, Tailwindcss and Framer Motion.
