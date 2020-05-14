@@ -2,38 +2,38 @@
 
 exports[`directory resource e2e directory resource test: Directory create 1`] = `
 Object {
-  "_message": "Creating directory src/image",
-  "id": "src/image",
-  "path": "src/image",
+  "_message": "Creating directory directory",
+  "id": "directory",
+  "path": "directory",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
 Object {
-  "describe": "Create src/image",
-  "newState": "src/image",
+  "describe": "Create directory",
+  "newState": "directory",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory destroy 1`] = `
 Object {
-  "_message": "Creating directory src/image",
-  "id": "src/image",
-  "path": "src/image",
+  "_message": "Creating directory directory",
+  "id": "directory",
+  "path": "directory",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory update 1`] = `
 Object {
-  "_message": "Creating directory src/image",
-  "id": "src/image",
-  "path": "src/image",
+  "_message": "Creating directory directory",
+  "id": "directory",
+  "path": "directory",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory update plan 1`] = `
 Object {
-  "describe": "Create src/images",
-  "newState": "src/images",
+  "describe": "Create directory1",
+  "newState": "directory1",
 }
 `;
