@@ -198,6 +198,7 @@ export function paginate<NodeType>(
       itemCount: items.length,
       pageCount,
       perPage: limit,
+      totalCount: count,
     },
   }
 }
