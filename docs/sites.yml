@@ -10488,11 +10488,7 @@
     - Open Source
     - Web Development
   description: >
-    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, 
-    Databases and Web Security. This website is my personal portfolio and blog 
-    with the Fresh theme. I love reading engineering articles, contributing to 
-    open-source and interacting with communities. Feel free to get in touch if 
-    you have an interesting project that you want to collaborate on.
+    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, Databases and Web Security. This website is my personal portfolio and blog with the Fresh theme. I love reading engineering articles, contributing to open-source and interacting with communities. Feel free to get in touch if you have an interesting project that you want to collaborate on.
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
@@ -10539,6 +10535,19 @@
     - Technology
     - Blog
   featured: false
+- title: Vinicius Dias
+  built_by: Vinicius Dias
+  built_by_url: https://viniciusdias.works/
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+    - Web Development
+  description: >
+    Hi, I'm Vinicius Dias, a Front-End developer with focus on performance and UX. This is my personal portfolio developed with Gatsby. I'm always learning different things and I consider myself a very curious guy. I feel that it keeps me motivated and creative to solve problems.
+  featured: false
+  main_url: https://viniciusdias.works/
+  url: https://viniciusdias.works/
 - title: Cognifide Tech
   url: https://tech.cognifide.com/
   main_url: https://tech.cognifide.com/
