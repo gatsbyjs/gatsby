@@ -62,6 +62,12 @@ describe(`gatsby-plugin resource`, () => {
     })
   })
 
+  test(`all returns plugins as array`, async () => {
+    const result = await plugin.all({ root: STARTER_BLOG_FIXTURE })
+
+    expect(result).toMatchSnapshot()
+  })
+
   test(`does not add the same plugin twice by default`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
     let newConfigSrc = addPluginToConfig(configSrc, {

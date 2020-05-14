@@ -60,6 +60,7 @@ export default function PageMetadata({
   const { siteUrl } = useSiteMetadata()
   // <Helmet> doesn't support JSX fragments so we can't bundle the tags based on
   // the property they match up with
+
   return (
     <Helmet>
       {title && <title>{title}</title>}
