@@ -205,9 +205,8 @@ const components = {
       language = props.className.split(`-`)[1]
     }
     const children = hicat(props.children.trim(), { lang: language })
-    const regex = /^/gm
 
-    const ansi = children.ansi.replace(regex, `··  `)
+    const ansi = `\`\`\`${language}\n${children.ansi}\n\`\`\``
 
     return (
       <Div marginBottom={1}>

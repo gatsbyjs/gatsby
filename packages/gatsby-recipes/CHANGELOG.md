@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.18...gatsby-recipes@0.1.19) (2020-05-14)
+
+### Bug Fixes
+
+- **gatsby-recipes:** format code blocks without indentation as that makes copy/paste difficult ([#24080](https://github.com/gatsbyjs/gatsby/issues/24080)) ([b27ce7e](https://github.com/gatsbyjs/gatsby/commit/b27ce7e))
+
 ## [0.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.17...gatsby-recipes@0.1.18) (2020-05-13)
 
 ### Bug Fixes
