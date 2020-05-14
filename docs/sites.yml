@@ -6796,8 +6796,8 @@
   description: >-
     Recipes and videos with the best of Ecuadorian cuisine.
     Collectable recipes from Diario El Universo.
-  main_url: https://recetas-eu.netlify.com/
-  url: https://recetas-eu.netlify.com/
+  main_url: https://recetas-eu.now.sh/
+  url: https://recetas-eu.now.sh/
   featured: false
   categories:
     - Blog
@@ -10613,3 +10613,14 @@
   built_by: Raz Lifshitz
   built_by_url: https://www.linkedin.com/in/raz-lifshitz
   featured: false
+- title: Que Jamear
+  description: >-
+    A directory with a map of food delivery services 
+    to be used during the health emergency caused by covid 19.
+  main_url: https://quejamear.com/encebollados
+  url: https://quejamear.com/encebollados
+  featured: false
+  categories:
+    - Food
+  built_by: Ramón Chancay
+  built_by_url: https://ramonchancay.me/
