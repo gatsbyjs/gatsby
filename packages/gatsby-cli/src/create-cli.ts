@@ -94,12 +94,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
   function getCommandHandler(
     command: string,
-    handler?: (args: any, cmd: Function) => any
+    handler?: (args: yargs.Arguments, cmd: Function) => void
   ) {
-    return (argv: yargs.Arguments<any>): any => {
+    return (argv: yargs.Arguments): void => {
       report.setVerbose(!!argv.verbose)
 
-      report.setNoColor(argv.noColor || process.env.NO_COLOR)
+      report.setNoColor(!!(argv.noColor || process.env.NO_COLOR))
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -172,7 +172,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
-      getCommandHandler(`develop`, (args: unknown, cmd: Function) => {
+      getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
@@ -228,7 +228,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           hidden: true,
         }),
     handler: handlerP(
-      getCommandHandler(`build`, (args, cmd) => {
+      getCommandHandler(`build`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = `production`
         return cmd(args)
       })
@@ -277,7 +277,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         default: false,
         describe: `Automagically copy environment information to clipboard`,
       }),
-    handler: args => {
+    handler: (args: yargs.Arguments) => {
       try {
         const copyToClipboard =
           // Clipboard is not accessible when on a linux tty
@@ -330,16 +330,27 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   cli.command({
     command: `repl`,
     describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
-    handler: getCommandHandler(`repl`, (args, cmd) => {
-      process.env.NODE_ENV = process.env.NODE_ENV || `development`
-      return cmd(args)
-    }),
+    handler: getCommandHandler(
+      `repl`,
+      (args: yargs.Arguments, cmd: Function) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        return cmd(args)
+      }
+    ),
   })
 
   cli.command({
     command: `recipes [recipe]`,
     describe: `[EXPERIMENTAL] Run a recipe`,
-    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
+    handler: handlerP(({ recipe }: yargs.Arguments) => {
+      if (typeof recipe !== `string`) {
+        throw new Error(
+          `Error: gatsby recipes needs to be called with a specific recipe`
+        )
+      }
+
+      recipesHandler(recipe)
+    }),
   })
 }
 
@@ -429,9 +440,12 @@ export const createCli = (argv: string[]): yargs.Arguments => {
     .command({
       command: `new [rootPath] [starter]`,
       describe: `Create new Gatsby project.`,
-      handler: handlerP(({ rootPath, starter }) =>
-        initStarter(starter, { rootPath })
-      ),
+      handler: handlerP(({ rootPath, starter }) => {
+        const starterStr = starter ? String(starter) : undefined
+        const rootPathStr = rootPath ? String(rootPath) : undefined
+
+        initStarter(starterStr, rootPathStr)
+      }),
     })
     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
       yargs
@@ -480,7 +494,7 @@ Creating a plugin:
             description: `Disable telemetry`,
           }),
 
-      handler: handlerP(({ enable, disable }) => {
+      handler: handlerP(({ enable, disable }: yargs.Arguments) => {
         const enabled = enable || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
