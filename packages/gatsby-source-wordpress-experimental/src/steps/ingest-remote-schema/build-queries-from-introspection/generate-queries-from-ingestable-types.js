@@ -8,7 +8,7 @@ import {
 
 import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
-import gqlPrettier from "graphql-prettier"
+import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
 
 const recursivelyAliasFragments = field =>
@@ -303,7 +303,9 @@ const generateNodeQueriesFromIngestibleFields = async () => {
             `Query debug mode. Writing node list query for the ${nodesType.name} node type to the system clipboard and exiting\n\n`
           )
         )
-        await clipboardy.write(gqlPrettier(nodeListQueries[0]))
+        await clipboardy.write(
+          prettier.format(nodeListQueries[0], { parser: `graphql` })
+        )
         process.exit()
       } catch (e) {
         reporter.log(``)

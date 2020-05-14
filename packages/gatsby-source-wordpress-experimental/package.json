@@ -20,7 +20,6 @@
     "execall": "^2.0.0",
     "fast-json-stable-stringify": "^2.1.0",
     "glob": "^7.1.6",
-    "graphql-prettier": "^1.0.6",
     "graphql-query-compress": "^1.2.2",
     "node-fetch": "^1.7.3",
     "p-queue": "^6.3.0"
