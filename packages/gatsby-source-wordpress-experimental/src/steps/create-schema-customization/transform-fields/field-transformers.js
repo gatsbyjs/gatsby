@@ -199,9 +199,9 @@ export const fieldTransformers = [
     transform: ({ field }) => `${buildTypeName(findTypeName(field.type))}!`,
   },
 
-  // for finding uncaught types
-  // {
-  //   test: () => true,
-  //   transform: ({ field }) => dd(field),
-  // },
+  // for finding unhandled types
+  {
+    test: () => true,
+    transform: ({ field }) => dd(field),
+  },
 ]
