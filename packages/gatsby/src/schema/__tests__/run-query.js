@@ -1182,7 +1182,7 @@ it(`should use the cache argument`, async () => {
       describe(`$in`, () => {
         it(`handles the in operator for strings`, async () => {
           const needle = [`b`, `c`]
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             string: { in: needle },
           })
 
@@ -1197,7 +1197,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for ints`, async () => {
           const needle = [0, 2]
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             index: { in: needle },
           })
 
@@ -1212,7 +1212,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for floats`, async () => {
           const needle = [1.5, 2.5]
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             float: { in: needle },
           })
 
@@ -1226,11 +1226,10 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for just null`, async () => {
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { in: [null] },
           })
 
-          // Do not include the nodes without a `nil` property
           // May not have the property, or must be null
           expect(result?.length).toEqual(
             allNodes.filter(node => node.nil === undefined || node.nil === null)
@@ -1243,11 +1242,10 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for double null`, async () => {
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { in: [null, null] },
           })
 
-          // Do not include the nodes without a `nil` property
           // May not have the property, or must be null
           expect(result?.length).toEqual(
             allNodes.filter(node => node.nil === undefined || node.nil === null)
@@ -1260,7 +1258,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for null in int and null`, async () => {
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { in: [5, null] },
           })
 
@@ -1276,7 +1274,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for int in int and null`, async () => {
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             index: { in: [2, null] },
           })
 
@@ -1300,7 +1298,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for booleans`, async () => {
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             boolean: { in: [true] },
           })
 
@@ -1313,7 +1311,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for array with one element`, async () => {
           // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { in: [5] },
           })
 
@@ -1332,7 +1330,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the in operator for array some elements`, async () => {
           // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
           const needle = [20, 5, 300]
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { in: needle },
           })
 
@@ -1351,7 +1349,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nested in operator for array of strings`, async () => {
           const needle = [`moo`]
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             frontmatter: { tags: { in: needle } },
           })
 
@@ -1367,6 +1365,31 @@ it(`should use the cache argument`, async () => {
                 needle.some(n => node.frontmatter.tags.includes(n))
             ).toEqual(true)
           )
+        })
+
+        it(`refuses a non-arg number argument`, async () => {
+          await expect(
+            runFastFilter({
+              hair: { in: 2 },
+            })
+          ).rejects.toThrow()
+        })
+
+        // I'm convinced this only works in Sift because of a fluke
+        it.skip(`refuses a non-arg string argument`, async () => {
+          await expect(
+            runFastFilter({
+              name: { in: `The Mad Max` },
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`refuses a non-arg boolean argument`, async () => {
+          await expect(
+            runFastFilter({
+              boolean: { in: true },
+            })
+          ).rejects.toThrow()
         })
       })
 
