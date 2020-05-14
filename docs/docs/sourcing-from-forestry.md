@@ -122,7 +122,6 @@ new_page_extension: md
 auto_deploy: false
 admin_path: /static/admin
 webhook_url:
-sections:
 upload_dir: static/uploads
 public_path: "/static/uploads"
 front_matter_path: ''
@@ -143,6 +142,7 @@ sections:
   match: "**/*"
   templates:
   - blog
+---
 ```
 
 Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Run `gatsby build && gatsby serve`. Once the server is running, it will print the address to open for viewing. It's typically `http://localhost:8000`. Now navigate to `/admin` - so if your site is at `http://localhost:8000`, go to `http://localhost:8000/admin`
