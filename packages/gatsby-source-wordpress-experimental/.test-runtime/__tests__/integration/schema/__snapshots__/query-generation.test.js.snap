@@ -3,10 +3,6 @@
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Category node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   categories(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       ancestors {
         id
@@ -91,6 +87,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         id
       }
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -282,10 +282,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Comment node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   comments(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       agent
       approved
@@ -350,6 +346,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         id
       }
       type
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -501,10 +501,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] ContentType node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   contentTypes(first: $first, after: $after) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       canExport
       connectedTaxonomies {
@@ -559,6 +555,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       showInNavMenus
       showInRest
       showUi
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -690,10 +690,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MediaItem node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   mediaItems(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       altText
       author {
@@ -848,6 +844,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         sourceUrl
       }
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -1179,10 +1179,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Menu node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   menus(first: $first, after: $after) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       count
       id
@@ -1200,6 +1196,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       }
       name
       slug
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -1257,10 +1257,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] MenuItem node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   menuItems(first: $first, after: $after) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       childItems(first: 100) {
         nodes {
@@ -1315,6 +1311,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       target
       title
       url
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -1446,10 +1446,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Page node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   pages(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       acfPageFields {
         fieldGroupName
@@ -1612,6 +1608,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         id
       }
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -1959,10 +1959,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Post node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   posts(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       author {
         id
@@ -2093,6 +2089,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         id
       }
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -2376,10 +2376,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Project node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   projects(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       acfProject {
         fieldGroupName
@@ -2452,6 +2448,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       }
       title
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -2619,10 +2619,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Tag node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   tags(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       count
       databaseId
@@ -2690,6 +2686,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         id
       }
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -2847,10 +2847,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] Taxonomy node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   taxonomies(first: $first, after: $after) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       connectedPostTypeNames
       connectedPostTypes {
@@ -2874,6 +2870,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       showInQuickEdit
       showInRest
       showUi
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -2943,10 +2943,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TeamMember node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   teamMembers(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       acfData {
         fieldGroupName
@@ -3094,6 +3090,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       title
       toPing
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -3415,10 +3415,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
     after: $after
     where: { parent: null, language: FR }
   ) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       content
       contentType {
@@ -3499,6 +3495,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
         id
       }
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -3682,10 +3682,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimit0Test node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   typeLimit0Tests(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       content
       contentType {
@@ -3746,6 +3742,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       }
       title
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -3889,10 +3889,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] TypeLimitTest node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   typeLimitTests(first: $first, after: $after, where: { parent: null }) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       content
       contentType {
@@ -3953,6 +3949,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       }
       title
       uri
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -4096,10 +4096,6 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
 exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-wordpress-experimental] User node list query hasn't changed 1`] = `
 "query NODE_LIST_QUERY($first: Int!, $after: String) {
   users(first: $first, after: $after) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
     nodes {
       avatar {
         default
@@ -4232,6 +4228,10 @@ exports[`[gatsby-source-wordpress-experimental] query generation [gatsby-source-
       url
       userId
       username
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }

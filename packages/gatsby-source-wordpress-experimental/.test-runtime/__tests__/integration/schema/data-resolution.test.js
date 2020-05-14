@@ -260,7 +260,6 @@ describe(`[gatsby-source-wordpress-experimental] data resolution`, () => {
               discussionSettingsDefaultPingStatus
               generalSettingsDateFormat
               generalSettingsDescription
-              generalSettingsEmail
               generalSettingsLanguage
               generalSettingsStartOfWeek
               generalSettingsTimeFormat

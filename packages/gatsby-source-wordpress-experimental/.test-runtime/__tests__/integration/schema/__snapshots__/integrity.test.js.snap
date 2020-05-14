@@ -428,6 +428,10 @@ Array [
       "id",
       "name",
       "url",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
     ],
     "name": "WpCommentAuthor",
   },
@@ -1529,6 +1533,48 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "WpCommentAuthorFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentAuthorSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentAuthorFieldsEnum",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpCommentAuthorConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpCommentAuthorEdge",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpCommentAuthorGroupConnection",
+  },
+  Object {
+    "fields": null,
     "name": "WpPostSortInput",
   },
   Object {
@@ -2150,10 +2196,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "WpNodeFilterInput",
-  },
-  Object {
-    "fields": null,
     "name": "WpReadingSettingsFilterInput",
   },
   Object {
@@ -2167,10 +2209,7 @@ Array [
       "discussionSettings",
       "generalSettings",
       "languages",
-      "node",
       "readingSettings",
-      "schemaMd5",
-      "viewer",
       "writingSettings",
       "nodeType",
       "id",
@@ -2186,7 +2225,6 @@ Array [
       "discussionSettingsDefaultPingStatus",
       "generalSettingsDateFormat",
       "generalSettingsDescription",
-      "generalSettingsEmail",
       "generalSettingsLanguage",
       "generalSettingsStartOfWeek",
       "generalSettingsTimeFormat",
@@ -2211,7 +2249,6 @@ Array [
     "fields": Array [
       "dateFormat",
       "description",
-      "email",
       "language",
       "startOfWeek",
       "timeFormat",
@@ -2287,7 +2324,7 @@ Array [
 ]
 `;
 
-exports[`[gatsby-source-wordpress-experimental] schema integrity hasn't altered the local Gatsby schema 2`] = `"76266da7636e2db89f88de000783eef6"`;
+exports[`[gatsby-source-wordpress-experimental] schema integrity hasn't altered the local Gatsby schema 2`] = `"aa1a7fefb8b221b0b0a08e80c6c4e74e"`;
 
 exports[`[gatsby-source-wordpress-experimental] schema integrity hasn't altered the remote WPGraphQL schema 1`] = `
 Array [
@@ -5457,4 +5494,4 @@ Array [
 ]
 `;
 
-exports[`[gatsby-source-wordpress-experimental] schema integrity hasn't altered the remote WPGraphQL schema 2`] = `"99b9b3dde3f2f108bbf0fa3411ca60be"`;
+exports[`[gatsby-source-wordpress-experimental] schema integrity hasn't altered the remote WPGraphQL schema 2`] = `"32e7691fe39528a81f5cdf0d0c5c5bec"`;
