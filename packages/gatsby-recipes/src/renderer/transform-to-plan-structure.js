@@ -1,16 +1,24 @@
+const providedResources = require(`../resources`)
+
 module.exports = renderTree => {
   const resources = renderTree.children[0].children
   const plan = resources.reduce((acc, curr) => {
-    // TODO: Test against list of resources
-    if (!/^[A-Z]/.test(curr.type)) {
+    if (!providedResources[curr.type]) {
       return acc
     }
 
-    acc[curr.type] = acc[curr.type] || []
-    acc[curr.type].push(JSON.parse(curr.children[0].text))
+    const { _props, ...plan } = JSON.parse(curr.children[0].text)
+
+    const resourcePlan = {
+      resourceName: curr.type,
+      resourceDefinitions: _props,
+      ...plan,
+    }
+
+    acc.push(resourcePlan)
 
     return acc
-  }, {})
+  }, [])
 
   return plan
 }

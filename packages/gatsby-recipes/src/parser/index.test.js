@@ -26,22 +26,10 @@ test(`raises an error when the recipe isn't known`, async () => {
   }
 })
 
-test(`returns a set of commands`, async () => {
-  const result = await parser.parse(fixtureSrc)
-
-  expect(result.commands).toMatchSnapshot()
-})
-
 test(`partitions the MDX into steps`, async () => {
   const result = await parser.parse(fixtureSrc)
 
   expect(result.stepsAsMdx).toMatchSnapshot()
-})
-
-test(`returns raw JSX partitioned as steps`, async () => {
-  const result = await parser.parse(fixtureSrc)
-
-  expect(result.stepsAsJsx).toMatchSnapshot()
 })
 
 test(`raises an error if JSX doesn't parse`, async () => {

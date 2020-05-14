@@ -16,27 +16,56 @@ const mdxFixture = `
 Write a file!
 
 <File path="foo.js" content="/** foo */" />
+
+---
+
+<File path="foo2.js" content="/** foo2 */" />
+<NPMPackage name="gatsby" />
 `
 
 test(`handles MDX as input`, async () => {
   const result = await render(mdxFixture)
 
   expect(result).toMatchInlineSnapshot(`
-    Object {
-      "children": Array [
-        Object {
-          "children": Array [
-            Object {
-              "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
-            },
-          ],
-          "props": Object {
-            "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
-          },
-          "type": "File",
+    Array [
+      Object {
+        "currentState": "",
+        "describe": "Write foo.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + /** foo */",
+        "newState": "/** foo */",
+        "resourceDefinitions": Object {
+          "content": "/** foo */",
+          "path": "foo.js",
         },
-      ],
-    }
+        "resourceName": "File",
+      },
+      Object {
+        "currentState": "",
+        "describe": "Write foo2.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + /** foo2 */",
+        "newState": "/** foo2 */",
+        "resourceDefinitions": Object {
+          "content": "/** foo2 */",
+          "path": "foo2.js",
+        },
+        "resourceName": "File",
+      },
+      Object {
+        "currentState": "gatsby@2.21.28",
+        "describe": "Install gatsby@latest",
+        "newState": "gatsby@latest",
+        "resourceDefinitions": Object {
+          "name": "gatsby",
+        },
+        "resourceName": "NPMPackage",
+      },
+    ]
   `)
 })
 
@@ -46,21 +75,45 @@ test(`handles MDX JSX output`, async () => {
   const result = await render(jsx)
 
   expect(result).toMatchInlineSnapshot(`
-    Object {
-      "children": Array [
-        Object {
-          "children": Array [
-            Object {
-              "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
-            },
-          ],
-          "props": Object {
-            "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
-          },
-          "type": "File",
+    Array [
+      Object {
+        "currentState": "",
+        "describe": "Write foo.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + /** foo */",
+        "newState": "/** foo */",
+        "resourceDefinitions": Object {
+          "content": "/** foo */",
+          "path": "foo.js",
         },
-      ],
-    }
+        "resourceName": "File",
+      },
+      Object {
+        "currentState": "",
+        "describe": "Write foo2.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + /** foo2 */",
+        "newState": "/** foo2 */",
+        "resourceDefinitions": Object {
+          "content": "/** foo2 */",
+          "path": "foo2.js",
+        },
+        "resourceName": "File",
+      },
+      Object {
+        "currentState": "gatsby@2.21.28",
+        "describe": "Install gatsby@latest",
+        "newState": "gatsby@latest",
+        "resourceDefinitions": Object {
+          "name": "gatsby",
+        },
+        "resourceName": "NPMPackage",
+      },
+    ]
   `)
 })
 
@@ -68,31 +121,21 @@ test(`returns a plan for the step`, async () => {
   const result = await render(fixture)
 
   expect(result).toMatchInlineSnapshot(`
-    Object {
-      "children": Array [
-        Object {
-          "children": Array [
-            Object {
-              "children": Array [
-                Object {
-                  "text": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
-                },
-              ],
-              "props": Object {
-                "children": "{\\"currentState\\":\\"\\",\\"newState\\":\\"/** foo */\\",\\"describe\\":\\"Write foo.js\\",\\"diff\\":null}",
-              },
-              "type": "File",
-            },
-          ],
-          "props": Object {
-            "children": <File
-              content="/** foo */"
-              path="foo.js"
-            />,
-          },
-          "type": "div",
+    Array [
+      Object {
+        "currentState": "",
+        "describe": "Write foo.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + /** foo */",
+        "newState": "/** foo */",
+        "resourceDefinitions": Object {
+          "content": "/** foo */",
+          "path": "foo.js",
         },
-      ],
-    }
+        "resourceName": "File",
+      },
+    ]
   `)
 })

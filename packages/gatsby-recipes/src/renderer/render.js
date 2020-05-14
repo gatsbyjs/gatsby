@@ -5,6 +5,7 @@ const resources = require(`../resources`)
 
 const RecipesReconciler = require(`./reconciler`)
 const ErrorBoundary = require(`./error-boundary`)
+const transformToPlan = require(`./transform-to-plan-structure`)
 
 const promises = []
 const cache = new Map()
@@ -23,19 +24,13 @@ const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
     <Suspense fallback={<p>Reading resource...</p>}>
       <Resource>
         {JSON.stringify({
-          ...readResource(Resource, { root: __dirname }, props),
+          ...readResource(Resource, { root: process.cwd() }, props),
           _props: userProps,
         })}
       </Resource>
     </Suspense>
   )
 }
-
-const File = props => <ResourceComponent _resourceName="File" {...props} />
-
-const NPMPackage = props => (
-  <ResourceComponent _resourceName="NPMPackage" {...props} />
-)
 
 const readResource = (resourceName, context, props) => {
   const key = JSON.stringify({ resourceName, ...props })
@@ -45,9 +40,16 @@ const readResource = (resourceName, context, props) => {
     return cachedResult
   }
 
-  const promise = resources[resourceName]
-    .plan(context, props)
-    .then(result => cache.set(key, result))
+  let promise
+  try {
+    promise = resources[resourceName]
+      .plan(context, props)
+      .then(result => cache.set(key, result))
+      .catch(e => console.log(e))
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
 
   promises.push(promise)
 
@@ -59,16 +61,19 @@ const render = async recipe => {
 
   const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
 
-  // Run the first pass of the render to queue up all the promises and suspend
-  await RecipesReconciler.render(recipeWithWrapper, plan)
-  // Await all promises for resources and cache results
-  await Promise.all(promises)
-  // Rerender with the resources and resolve the data
-  const result = await RecipesReconciler.render(recipeWithWrapper, plan)
-
-  return result
+  try {
+    // Run the first pass of the render to queue up all the promises and suspend
+    RecipesReconciler.render(recipeWithWrapper, plan)
+    // Await all promises for resources and cache results
+    await Promise.all(promises)
+    // Rerender with the resources and resolve the data
+    const result = RecipesReconciler.render(recipeWithWrapper, plan)
+    return transformToPlan(result)
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
 }
 
 module.exports.render = render
-module.exports.File = File
-module.exports.NPMPackage = NPMPackage
+module.exports.ResourceComponent = ResourceComponent

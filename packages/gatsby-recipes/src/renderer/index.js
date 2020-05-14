@@ -3,14 +3,12 @@ const mdx = require(`@mdx-js/mdx`)
 const { transform } = require(`@babel/standalone`)
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 
-const { render, File, NPMPackage } = require(`./render`)
+const { render } = require(`./render`)
+const resourceComponents = require(`./resource-components`)
 
-// TODO: Create components for resources dynamically
-// based on what's found in resources.
 const scope = {
   React,
-  File,
-  NPMPackage,
+  ...resourceComponents,
 }
 
 // TODO: Release MDX v2 canary so we can avoid the hacks
