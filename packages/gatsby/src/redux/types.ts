@@ -149,7 +149,7 @@ export interface IGatsbyState {
     PLUGINS_HASH: Identifier
   }
   componentDataDependencies: {
-    nodes: Map<string | number, Set<string>>
+    nodes: Map<string, Set<string>>
     connections: Map<string, Set<string>>
   }
   components: Map<
