@@ -22,7 +22,7 @@ function isCodeFile(node) {
   return (
     node.internal.type === `File` &&
     node.sourceInstanceName === `packages` &&
-    [`js`, `ts`].includes(node.extension) &&
+    [`js`].includes(node.extension) &&
     minimatch(node.relativePath, `gatsby/**`) &&
     !ignorePatterns.some(ignorePattern =>
       minimatch(node.relativePath, ignorePattern)
