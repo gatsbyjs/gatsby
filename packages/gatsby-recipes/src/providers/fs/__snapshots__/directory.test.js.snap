@@ -10,12 +10,7 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
 Object {
-  "currentState": "",
   "describe": "Create src/image",
-  "diff": "- Original  - 0
-+ Modified  + 1
-
-+ src/image",
   "newState": "src/image",
 }
 `;
@@ -38,12 +33,7 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory update plan 1`] = `
 Object {
-  "currentState": "",
   "describe": "Create src/images",
-  "diff": "- Original  - 0
-+ Modified  + 1
-
-+ src/images",
   "newState": "src/images",
 }
 `;

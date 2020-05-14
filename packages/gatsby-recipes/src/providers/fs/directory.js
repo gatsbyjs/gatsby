@@ -49,24 +49,12 @@ const destroy = async (context, directoryResource) => {
 
 // TODO pass action to plan
 module.exports.plan = async (context, { id, path: directoryPath }) => {
-  let currentResource
-  if (!isBinaryPath(directoryPath)) {
-    currentResource = await read(context, directoryPath)
-  } else {
-    currentResource = `Binary file`
-  }
 
   let newState = directoryPath
 
   const plan = {
-    currentState: (currentResource && currentResource.content) || ``,
     newState,
     describe: `Create ${directoryPath}`,
-    diff: ``,
-  }
-
-  if (plan.currentState !== plan.newState) {
-    plan.diff = await getDiff(plan.currentState, plan.newState)
   }
 
   return plan
