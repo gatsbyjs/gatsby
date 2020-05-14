@@ -78,7 +78,7 @@ describe(`add page data dependency`, () => {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
-        nodeId: 1,
+        nodeId: `1`,
         connection: `MarkdownRemark`,
       },
     }
@@ -86,7 +86,7 @@ describe(`add page data dependency`, () => {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
-        nodeId: 1,
+        nodeId: `1`,
         connection: `MarkdownRemark`,
       },
     }
@@ -97,10 +97,8 @@ describe(`add page data dependency`, () => {
     // Add different action
     state = reducer(state, action2)
 
-    expect(
-      (state.connections.get(`MarkdownRemark`) as Set<string>).size
-    ).toEqual(2)
-    expect((state.nodes.get(1) as Set<number | string>).size).toEqual(2)
+    expect(state.connections.get(`MarkdownRemark`)?.size).toEqual(2)
+    expect(state.nodes.get(`1`)?.size).toEqual(2)
   })
   it(`lets you add both a node and connection in one action`, () => {
     const action: ICreatePageDependencyAction = {
