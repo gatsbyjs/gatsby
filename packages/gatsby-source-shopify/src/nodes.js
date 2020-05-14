@@ -27,8 +27,10 @@ const downloadImageAndCreateFileNode = async (
   { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
 ) => {
   let fileNodeID
-  
-  const effectiveUrl = PluginOptions.downloadImages ? url : PluginOptions.defaultImageUrl
+
+  const effectiveUrl = PluginOptions.downloadImages
+    ? url
+    : PluginOptions.defaultImageUrl
   const mediaDataCacheKey = `${TYPE_PREFIX}__Media__${effectiveUrl}`
   const cacheMediaData = await cache.get(mediaDataCacheKey)
 
