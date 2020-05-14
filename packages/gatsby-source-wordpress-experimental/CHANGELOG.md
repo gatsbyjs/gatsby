@@ -5,6 +5,19 @@
 ### New Features
 
 - Added plugin option `debug.graphql.writeQueriesToDisk` which writes out all the internal GraphQL queries to `./WordPress/GraphQL/[typname]` for each node type.
+- Removed some fields that require auth by default:
+
+```js
+RootQuery: {
+  excludeFieldNames: [`viewer`, `node`, `schemaMd5`],
+},
+Settings: {
+  excludeFieldNames: [`generalSettingsEmail`],
+},
+GeneralSettings: {
+  excludeFieldNames: [`email`],
+},
+```
 
 ## 0.1.13
 
