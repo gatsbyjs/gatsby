@@ -4,32 +4,88 @@ title: Using a Theme
 
 In this tutorial, you'll learn how to use Gatsby themes by creating a new site using the official Gatsby blog theme.
 
-## Create a new site using the blog theme starter
+## Pre-requisites
 
-Creating a site using a theme starter starts the same way as using a regular Gatsby starter:
+- A Gatsby site
+
+> Note: This tutorial assumes you already have a Gatsby site to install your theme in. If you'd prefer to start with an entirely new site you can run `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme` to install a theme that comes with the starter.
+
+## Installing the blog theme
+
+Navigate to the root of your project inside your terminal and install the theme with the following command:
 
 ```shell
-gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme
+  npm install gatsby-theme-blog
 ```
 
-## Run the site
+## Configure the theme
 
-Creating a new site from the starter installed all of the blog theme's dependencies for you. Next, run the site and see what you have:
+In your `gatsby-config.js` file, add `gatsby-theme-blog`. Note that this theme takes optional dependencies that you can find in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#theme-options). However, you won't need to use them here.
 
-```shell
-cd my-blog
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    // highlight-start
+    {
+      resolve: "gatsby-theme-blog",
+      options: {},
+    },
+    // highlight-end
+    // you will likely have other plugins configured as well
+  ],
+}
+```
+
+> Note: If you already have a landing page set up for your site you may want to make use of the `basePath` option that will put your blog listing page at a path other than `/`.
+
+## Add some content
+
+Before you can see anything, you'll want to add some content so there is something to see.
+
+By default, the posts are expected in the `/content/posts` directory, so create those folders and add a `my-post.md` file. Your file structure should look something like this.
+
+```text
+my-blog
+├── content
+│   └── posts
+│       └── my-post.md
+├── src
+├── gatsby-config.js
+└── package.json
+```
+
+Inside that markdown file, add content. The top section is called frontmatter and `title` and `date` are required fields.
+
+`````markdown:title=/content/posts/my-post.md
+---
+title: My Post
+date: 2020-04-15
+---
+
+Let's write a post!
+
+```javascript
+const test = "this is a theme"
+```
+`````
+
+```
+
+## Test run your site
+
+To make sure everything is working, run your site. This command should be run in your terminal in your  project's root directory.
+
+```
+
 gatsby develop
-```
 
-![Default screen when starting a project using gatsby blog starter](./images/starter-blog-theme-default.png)
+````
 
-## Replace your avatar
-
-The blog theme starter ships with a solid gray image for the avatar. Add your own avatar by choosing the image you want, and overwriting the file located at `/content/assets/avatar.png`.
+Navigate to `localhost:8000` to see the landing page of your site.
 
 ## Update your site metadata
 
-Customize the information on your site by replacing the site metadata in the `gatsby-config.js` file.
+Customize the information on your site by replacing the site metadata in the `gatsby-config.js` file. Your `siteUrl` should point to your public domain. It's ok if you don't have one yet, you can update it later.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -59,7 +115,11 @@ module.exports = {
   },
   {/* highlight-end */}
 }
-```
+````
+
+## Replace your avatar
+
+The blog theme starter ships with a solid gray image for the avatar. Add your own avatar by choosing the image you want, and overwriting the file located at `/content/assets/avatar.png`.
 
 ## Replace the content of the bio
 
@@ -80,9 +140,7 @@ my-blog
 ├── src
 │   └── gatsby-theme-blog
 │       ├── components
-│       │   └── bio-content.js
-│       └── gatsby-plugin-theme-ui
-│           └── colors.js
+│           └── bio-content.js
 ├── gatsby-config.js
 └── package.json
 ```
@@ -109,15 +167,13 @@ export default function Bio() {
 }
 ```
 
-At this point, you should have an updated avatar, updated site details, and an updated bio:
-
-![Screenshot of project with current tutorial edits](./images/starter-blog-theme-edited.png)
+At this point, you should have an updated avatar, updated site details, and an updated bio.
 
 ## Add your own blog content
 
 Now you can add your first blog post, and get rid of the demo content in the starter.
 
-### Create a new blog post
+<!-- ### Create a new blog post
 
 Create a new file in `my-blog/content/posts`. Name it whatever you'd like (with a `.md` or `.mdx` file extension), and add some content! Here's an example:
 
@@ -128,7 +184,7 @@ date: 2019-07-03
 ---
 
 This will be my very first post on this blog!
-```
+``` -->
 
 ### Delete the demo posts
 
@@ -137,49 +193,71 @@ Delete the two demo posts in the `/content/posts` directory:
 - `my-blog/content/posts/hello-world.mdx`
 - `my-blog/content/posts/my-second-post.mdx`
 
-Restart the dev server, and you'll see your updated blog content:
-
-![Screenshot of project with updated post content](./images/starter-blog-theme-updated-content.png)
+Restart the dev server, and you'll see your updated blog content.
 
 ## Change the color theme
 
-The blog theme ships with a default Gatsby purple theme, but you can override and customize the theming of your site to your heart's content. In this tutorial, you'll change a few colors.
+The blog theme uses `gatsby-plugin-theme-ui` to style your site. There are a number of presets available for you to make use of, or you can make your own!
 
-Open up `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/colors.js`, and uncomment the code in that file.
+> If you want to use a preset take a look at the [Theme UI preset listing](https://theme-ui.com/packages/presets).
 
-```javascript:title=colors.js
-import merge from "deepmerge"
-import defaultThemeColors from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors"
+You're going to use `@theme-ui/preset-funk`. To start, you have to install it.
 
-{/* highlight-start */}
-const darkBlue = `#007acc`
-const lightBlue = `#66E0FF`
-const blueGray = `#282c35`
-{/* highlight-end */}
+```shell
+npm install @theme-ui/preset-funk
+```
 
-export default merge(defaultThemeColors, {
-  {/* highlight-start */}
-  text: blueGray,
-  primary: darkBlue,
-  heading: blueGray,
-  modes: {
-    dark: {
-      background: blueGray,
-      primary: lightBlue,
-      highlight: lightBlue,
+Next, update your `gatsby-config.js` file to pass in the preset package name.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-theme-blog",
+      options: {
+        preset: "@theme-ui/preset-funk", // highlight-line
+      },
     },
-  },
-  {/* highlight-end */}
+  ],
+}
+```
+
+If you want to further customize this theme you can shadow it. Create a file at `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js`.
+
+```javascript:title=/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js
+
+export default {
+  colors: {
+    text: blueGray,
+    primary: darkBlue,
+    heading: blueGray,
+  }
 })
 ```
 
-Now, instead of a purple theme, you have a blue theme instead:
+These colors will merge with the preset theme and override that part of the preset.
 
-![Screenshot of project with updated color theme](./images/starter-blog-theme-updated-colors.png)
+### Change your prism theme
 
-In this file, you're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
+Another option you can make use of is prism styling for code blocks. There are many available from [Theme UI](https://theme-ui.com/packages/prism#syntax-themes).
 
-To see what other theme colors you can customize, check out the `colors.js` file in the official blog theme (`node_modules/gatsby-theme-blog/src/gatsby-plugin-theme-ui/colors.js`)
+In this example you'll use `prism-okaidia`. Update your `gatsby-config.js` file with that option.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-theme-blog",
+      options: {
+        preset: "@theme-ui/preset-funk",
+        prismPreset: "prism-okaidia", // highlight-line
+      },
+    },
+  ],
+}
+```
+
+When you restart your development server you'll see new syntax highlighting in your code snippets.
 
 ## Wrapping up
 
