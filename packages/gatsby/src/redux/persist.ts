@@ -81,7 +81,6 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   const valueCount = values.length
   const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
   let maxSize = 0
-  
   for (let i = 0; i < valueCount; i += step) {
     const size = v8.serialize(values[i]).length
     maxSize = Math.max(size, maxSize)
@@ -89,7 +88,9 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if (maxSize > 500000) {
-    report.warn(`page context was greater than 500kb`);
+    report.warn(
+      `The size of least one page context exceeded 500kb, this could lead to degraded performance. Consider putting less data in the page context.`
+    )
   }
 
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
