@@ -6216,6 +6216,18 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
+- url: https://gatsby-starter-tailwind-css.netlify.app/
+  repo: https://github.com/melanienolan/gatsby-starter-tailwind-css
+  description: A Gatsby starter with Tailwind CSS. Uses Tailwind CSS v1.4.1 and includes built-in support for PurgeCSS.
+  tags:
+    - Landing Page
+    - Onepage
+    - Styling:Tailwind
+  features:
+    - Simple boilerplate site using Tailwind CSS
+    - PurgeCSS support to remove unused styles
+    - PostCSS including Autoprefixer
+    - React Helmet for better SEO
 - url: https://wordpress-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-wordpress-balsa-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
