@@ -18,7 +18,8 @@
         "uuid": "file-2",
         "filename": "secondary-image.png",
         "uri": {
-          "url" : "/sites/default/files/secondary-image.png"
+          "url" : "/sites/default/files/secondary-image.png",
+           "value" : "public://secondary-image.png"
         }
       }
     }
