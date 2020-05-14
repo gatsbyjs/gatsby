@@ -10492,6 +10492,21 @@
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: Chris Nager
+  main_url: https://chrisnager.com
+  url: https://chrisnager.com
+  source_url: https://github.com/chrisnager/chrisnager-dot-com
+  description: >
+    Developer and designer in Brooklyn, NY passionate about performance, accessibility, and systematic design.
+  categories:
+    - Accessibility
+    - Blog
+    - Design
+    - Portfolio
+    - User Experience
+    - Web Development
+  built_by: Chris Nager
+  built_by_url: https://twitter.com/chrisnager
 - title: Resistbot
   url: https://resist.bot
   main_url: https://resist.bot
