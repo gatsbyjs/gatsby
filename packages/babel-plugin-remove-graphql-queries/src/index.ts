@@ -207,10 +207,10 @@ function removeImport(tag: NodePath<Expression>): void {
 }
 
 function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
-  const tag = path.get(`tag`)
-  const isGlobal = isGlobalIdentifier(tag as NodePath)
+  const tag = path.get(`tag`) as NodePath
+  const isGlobal = isGlobalIdentifier(tag)
 
-  if (!isGlobal && !isGraphqlTag(tag as NodePath)) return {} as IGraphQLTag
+  if (!isGlobal && !isGraphqlTag(tag)) return {} as IGraphQLTag
 
   const quasis = path.node.quasi.quasis
 
