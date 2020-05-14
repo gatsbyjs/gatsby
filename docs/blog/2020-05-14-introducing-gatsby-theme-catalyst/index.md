@@ -1,6 +1,6 @@
 ---
 title: "Introducing Gatsby Theme Catalyst"
-date: 2020-05-18
+date: 2020-05-14
 author: Eric Howey
 excerpt: "Gatsby Theme Catalyst is an opinionated set of integrated themes and starters to accelerate your next Gatsby project. Build faster. The themes are designed to be maintained via npm package updates, reusable across different contexts, and extendable through component shadowing."
 tags:
@@ -49,7 +49,7 @@ The major win here is ease of use, you can add these themes as needed. Plug and 
 
 Data themes act as the wiring or plumbing in your home - where is the data coming from and where is it going? I made an opinionated decision in Gatsby Theme Catalyst that at the very least you should be using MDX and Git for this. However, I have also created a data theme for [SANITY.io](https://www.sanity.io/) using this approach.
 
-The win this provides is enabling flexibility in the data source. Admittedly this is an area that is more complicated however early patterns are emerging - the key is to make sure you [seperate your data queries and presentation components](https://www.erichowey.dev/writing/decoupling-data-and-presentation-components-in-gatsby-themes/). Changing the plumbing in your home isn’t easy.
+The win this provides is enabling flexibility in the data source. Admittedly this is an area that is more complicated however early patterns are emerging - the key is to make sure you [separate your data queries and presentation components](https://www.erichowey.dev/writing/decoupling-data-and-presentation-components-in-gatsby-themes/). Changing the plumbing in your home isn’t easy.
 
 ### Presentation themes
 
