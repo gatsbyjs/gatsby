@@ -153,7 +153,7 @@
   avatar: avatars/dennis-brotzky.jpg
   twitter: "@_brotzky"
 - id: Tony Spiro
-  bio: Cosmic JS Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
+  bio: Cosmic Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
   avatar: avatars/tony-spiro.jpg
   twitter: "@tonyspiro"
 - id: Khaled Garbaya
@@ -422,3 +422,11 @@
   bio: "Jake is the CEO of ButterCMS. He loves whipping up Butter puns and building tools that make developers' lives better."
   avatar: avatars/jake-lumetta.jpg
   twitter: "@jakelumetta"
+- id: Maxime Castres
+  bio: "Growth Hacker @ Strapi. Gathering interesting individuals to build the best community."
+  avatar: avatars/maxime-castres.jpg
+  twitter: "@MaxCastres"
+- id: Eric Howey
+  bio: "Dad all the time, mental health therapist full time, web developer in my spare time. I listen and care."
+  avatar: avatars/eric-howey.jpg
+  twitter: "@erchwy"

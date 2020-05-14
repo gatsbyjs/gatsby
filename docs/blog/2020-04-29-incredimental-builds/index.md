@@ -1,5 +1,6 @@
 ---
-title: "Gatsby Cloud Incremental Builds: More like *Incredimental* Builds!"
+title: "Incredimental Builds"
+seoTitle: "Gatsby's Incremental Builds: A Closer Look"
 date: 2020-04-29
 author: "Josh Comeau"
 excerpt: "A deeper look at Gatsby's recent announcement, how it changes the game for content editors, and what it means for the future."
@@ -52,7 +53,7 @@ Last week's launch supports content changes with a few specific CMS providers:
 - Contentful
 - Sanity
 - DatoCMS
-- CosmicJS
+- Cosmic
 - Wordpress (alpha)
 - Drupal (alpha)
 

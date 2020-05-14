@@ -11,7 +11,6 @@ const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build, rebuild } = require(`..`)
 const { buildObjectType } = require(`../types/type-builders`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 
@@ -1221,7 +1220,12 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       external2
     }
     `
-    const result = await graphql(newSchema, query)
+    const result = await graphql({
+      schema: newSchema,
+      source: query,
+      rootValue: {},
+      contextValue: {},
+    })
     expect(result).toEqual({
       data: {
         external: {
@@ -1263,7 +1267,12 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       external2
     }
     `
-    const result = await graphql(newSchema, query)
+    const result = await graphql({
+      schema: newSchema,
+      source: query,
+      rootValue: {},
+      contextValue: {},
+    })
     expect(result).toEqual({
       data: {
         external: {
