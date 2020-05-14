@@ -54,7 +54,7 @@ const convert = (
     const type = fieldConfig.type
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {
-        const typeComposer = schemaComposer.getAnyTC(
+        const typeComposer = schemaComposer.getIFTC(
           type.name.replace(/Input$/, ``)
         )
         Object.assign(
