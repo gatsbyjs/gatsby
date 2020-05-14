@@ -137,11 +137,14 @@ function transformField({
   // somewhere up the tree
   const typeName = findTypeName(field.type)
 
-  if (
-    countIncarnations({ typeName, ancestorTypeNames }) >= circularQueryLimit
-  ) {
-    // we're at the deepest level of a circular field query
-    // create a fragment here that the upper levels can use, then return null
+  const typeIncarnationCount = countIncarnations({
+    typeName,
+    ancestorTypeNames,
+  })
+
+  if (typeIncarnationCount > 0) {
+    // this type is nested within itself atleast once
+    // create a fragment here that can be reused
     createFragment({
       fields: typeMap.get(typeName).fields,
       type: field.type,
@@ -157,6 +160,9 @@ function transformField({
       queryDepth: maxDepth,
       buildingFragment,
     })
+  }
+
+  if (typeIncarnationCount >= circularQueryLimit) {
     return false
   }
 
@@ -222,6 +228,7 @@ function transformField({
       ancestorTypeNames,
       fragments,
       circularQueryLimit,
+      buildingFragment,
     })
 
     const transformedInlineFragments = transformInlineFragments({
@@ -300,6 +307,7 @@ function transformField({
       parentField: field,
       fragments,
       circularQueryLimit,
+      buildingFragment,
     })
 
     if (!transformedFields?.length && !transformedInlineFragments?.length) {
@@ -324,6 +332,7 @@ function transformField({
       ancestorTypeNames,
       fragments,
       circularQueryLimit,
+      buildingFragment,
     })
 
     const inlineFragments = transformInlineFragments({
@@ -362,20 +371,34 @@ const createFragment = ({
   ancestorTypeNames,
   buildingFragment = false,
 }) => {
+  const typeName = findTypeName(type)
+
   if (buildingFragment) {
     // this fragment is inside a fragment that's already being built so we should exit
     return null
   }
 
-  const typeName = findTypeName(type)
-
   const previouslyCreatedFragment = fragments?.[typeName]
 
-  if (previouslyCreatedFragment) {
+  if (previouslyCreatedFragment && buildingFragment === typeName) {
     return previouslyCreatedFragment
   }
 
   const fragmentFields = fields.reduce((fragmentFields, field) => {
+    const fieldTypeName = findTypeName(field.type)
+    const fieldType = typeMap.get(fieldTypeName)
+
+    if (
+      // if this field is a different type than the fragment but has a field of the same type as the fragment,
+      // we need to skip this field in the fragment to prevent nesting this type in itself a level down
+      fieldType.name !== typeName &&
+      fieldType?.fields?.find(
+        innerFieldField => findTypeName(innerFieldField.type) === typeName
+      )
+    ) {
+      return fragmentFields
+    }
+
     const transformedField = transformField({
       field,
       gatsbyNodesInfo,
@@ -387,7 +410,7 @@ const createFragment = ({
       ancestorTypeNames,
       circularQueryLimit: 1,
       fragments,
-      buildingFragment: true,
+      buildingFragment: typeName,
     })
 
     if (findTypeName(field.type) !== typeName && !!transformedField) {
@@ -441,6 +464,7 @@ const transformFields = ({
   queryDepth,
   circularQueryLimit,
   pluginOptions,
+  buildingFragment,
 }) =>
   fields
     ?.filter(
@@ -464,6 +488,7 @@ const transformFields = ({
         ancestorTypeNames,
         circularQueryLimit,
         fragments,
+        buildingFragment,
       })
 
       if (transformedField) {
@@ -471,9 +496,11 @@ const transformFields = ({
         store.dispatch.remoteSchema.addFetchedType(field.type)
       }
 
-      const fragment = fragments?.[findTypeName(field.type)]
+      const typeName = findTypeName(field.type)
+      const fragment = fragments?.[typeName]
 
       if (fragment && transformedField) {
+        // if (fragment && buildingFragment !== typeName && transformedField) {
         // remove fields from this query that already exist in the fragment
         if (transformedField?.fields?.length) {
           transformedField.fields = transformedField.fields.filter(
@@ -482,6 +509,13 @@ const transformFields = ({
                 fragmentField => fragmentField.fieldName === field.fieldName
               )
           )
+        }
+
+        // if this field has no fields (because it has inline fragments only)
+        // we need to create an empty array since we treat reusable fragments as
+        // a field
+        if (!transformedField.fields) {
+          transformedField.fields = []
         }
 
         transformedField.fields.push({
@@ -516,6 +550,7 @@ const recursivelyTransformFields = ({
   parentField = {},
   ancestorTypeNames: parentAncestorTypeNames,
   depth = 0,
+  buildingFragment = false,
 }) => {
   if (!fields || !fields.length) {
     return null
@@ -542,11 +577,14 @@ const recursivelyTransformFields = ({
 
   const typeName = findTypeName(parentType)
 
-  if (
-    countIncarnations({ typeName, ancestorTypeNames }) >= circularQueryLimit
-  ) {
-    // we're at the deepest level of a circular field query
-    // create a fragment here that the upper levels can use, then return null
+  const typeIncarnationCount = countIncarnations({
+    typeName,
+    ancestorTypeNames,
+  })
+
+  if (typeIncarnationCount > 0) {
+    // this type is nested within itself atleast once
+    // create a fragment here that can be reused
     createFragment({
       fields,
       type: parentType,
@@ -561,8 +599,11 @@ const recursivelyTransformFields = ({
       queryDepth,
       circularQueryLimit,
       pluginOptions,
+      buildingFragment,
     })
+  }
 
+  if (typeIncarnationCount >= circularQueryLimit) {
     return null
   }
 
@@ -582,6 +623,7 @@ const recursivelyTransformFields = ({
     queryDepth,
     circularQueryLimit,
     pluginOptions,
+    buildingFragment,
   })
 
   if (!recursivelyTransformedFields.length) {
