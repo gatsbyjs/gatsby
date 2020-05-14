@@ -6235,9 +6235,9 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
-- url: https://gatsby-starter-banshorian.now.sh
+- url: https://gatsby-starter-banshorian.netlify.app
   repo: https://github.com/webmaeistro/gatsby-starter-banshorian
-  description: Starter for the gatsby-theme-banshorian. A creative cool-looking personal or work projects showcase / portfolio / CV. Based on byfolio. 
+  description: Starter for the gatsby-theme-banshorian. A creative cool-looking personal or work projects showcase / portfolio / CV. Based on byfolio.
   tags:
     - Styling:Other
     - Portfolio
@@ -6250,6 +6250,5 @@
     - Style-Components Using @emotion
     - Edit Everything From gatsby.config
     - Developer Friendly
-    - Isomorphic Skills Tiles 
-    - Transitions between pages and Menu
-    
+    - Isomorphic Skills Tiles
+    - Transitions Between Pages and Menu
