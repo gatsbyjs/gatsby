@@ -36,9 +36,9 @@ No one seems to know what to do with the doc titled “Building apps with Gatsby
 
 This could mean several things:
 
-1.  We don’t have very many docs about how Gatsby can be used to build dynamic apps
-2.  People don’t think of Gatsby as a tool they’d use to build apps with
-3.  The title of the doc is too broad or too vague
+1. We don’t have very many docs about how Gatsby can be used to build dynamic apps
+2. People don’t think of Gatsby as a tool they’d use to build apps with
+3. The title of the doc is too broad or too vague
 
 Without interviewing each participant I can’t be sure, but I’m inclined to think a combination of all three factors means people don’t know where to put that doc in the navigation. This might mean we need clarity in how we present what Gatsby _is_ in all our informational material and marketing and that we build more docs about Gatsby being more than a static site generator.
 

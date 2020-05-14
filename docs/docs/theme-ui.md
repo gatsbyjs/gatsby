@@ -131,25 +131,25 @@ import { jsx } from "theme-ui"
 
 The [`sx` prop][] is used to style elements by referencing values from the theme object.
 
-[`sx` prop]: https://theme-ui.com/sx-prop
-
 ```jsx:title=src/components/header.js
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-export default props => (
-  <header
-    sx={{
-      // this uses the value from `theme.space[4]`
-      padding: 4,
-      // these use values from `theme.colors`
-      color: "background",
-      backgroundColor: "primary",
-    }}
-  >
-    {props.children}
-  </header>
-)
+export default function Header(props) {
+  return (
+    <header
+      sx={{
+        // this uses the value from `theme.space[4]`
+        padding: 4,
+        // these use values from `theme.colors`
+        color: "background",
+        backgroundColor: "primary",
+      }}
+    >
+      {props.children}
+    </header>
+  )
+}
 ```
 
 ## Using Theme UI in a Gatsby theme
@@ -219,3 +219,4 @@ To learn more about using Theme UI in your project, see the official [Theme UI][
 [typography.js]: /docs/typography-js
 [react context]: https://reactjs.org/docs/context.html
 [component shadowing api]: /docs/themes/api-reference#component-shadowing
+[`sx` prop]: https://theme-ui.com/sx-prop

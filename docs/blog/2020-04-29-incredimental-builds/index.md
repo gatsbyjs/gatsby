@@ -1,5 +1,6 @@
 ---
 title: "Incredimental Builds"
+seoTitle: "Gatsby's Incremental Builds: A Closer Look"
 date: 2020-04-29
 author: "Josh Comeau"
 excerpt: "A deeper look at Gatsby's recent announcement, how it changes the game for content editors, and what it means for the future."
@@ -52,7 +53,7 @@ Last week's launch supports content changes with a few specific CMS providers:
 - Contentful
 - Sanity
 - DatoCMS
-- CosmicJS
+- Cosmic
 - Wordpress (alpha)
 - Drupal (alpha)
 
@@ -86,6 +87,8 @@ Because Gatsby Cloud only has to build Gatsby sites, we can make all kinds of as
 That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/) for "incremental data changes", to handle the content-diffing mentioned earlier.
 
 We do believe that Gatsby Cloud should be the best place to build your Gatsby project, since we're able to make Gatsby-specific optimizations. But we also want Gatsby builds to be fast, no matter where they're built.
+
+<CloudCallout>To experience Incremental Builds for yourself:</CloudCallout>
 
 ## Bright days ahead
 
