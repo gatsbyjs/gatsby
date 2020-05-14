@@ -577,6 +577,23 @@ const recursivelyTransformFields = ({
 
   const typeName = findTypeName(parentType)
 
+  const grandParentTypeName = ancestorTypeNames.length
+    ? ancestorTypeNames[ancestorTypeNames.length - 1]
+    : null
+
+  if (grandParentTypeName && typeName !== grandParentTypeName) {
+    // if a field has fields of the same type as the field above it
+    // we shouldn't fetch them. 2 types that are circular between each other
+    // are dangerous as they will generate very large queries and fetch data we don't need
+    // these types should instead be proper connections so we can identify
+    // that only an id needs to be fetched.
+    // @todo maybe move this into transformFields() instead of here
+    fields = fields.filter(field => {
+      const fieldTypeName = findTypeName(field.type)
+      return fieldTypeName !== grandParentTypeName
+    })
+  }
+
   const typeIncarnationCount = countIncarnations({
     typeName,
     ancestorTypeNames,
