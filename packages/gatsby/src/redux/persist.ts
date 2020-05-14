@@ -85,7 +85,7 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
     const size = v8.serialize(values[i]).length
     maxSize = Math.max(size, maxSize)
   }
-  
+
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if (maxSize > 500000) {
     report.warn(
