@@ -5,6 +5,15 @@
 ### New Features
 
 - Added plugin option `debug.graphql.writeQueriesToDisk` which writes out all the internal GraphQL queries to `./WordPress/GraphQL/[typname]` for each node type.
+- Automatically generate fragments when types are infinitely nested within themselves. This makes fetching circular references more efficient and prevents running out of memory.
+- Increased default query depth and circular query limit since queries are more efficient now.
+- Added the ability to exclude fields on the RootQuery via plugin options.
+
+### Bug Fixes
+
+- When generating queries fields which are circular between 2 types are now disallowed and not fetched. This indicates that these are connections which can't be identified as nodes so there is no efficient way to fetch them. They are excluded and the schema author should make these connections identifiable as nodes by adding an id field to them.
+- Switch from graphql-prettier to prettier since it turns out the former is not very accurate. This was a minor bug but could affect debugging accuracy when queries were prettified.
+- Non node root fields which take any input arg with a type of ID are automatically ignored now. They are almost definitely unusable without input args.
 
 ## 0.1.13
 
