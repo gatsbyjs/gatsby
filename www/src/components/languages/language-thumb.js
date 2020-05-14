@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from "theme-ui"
+import { jsx, useColorMode } from "theme-ui"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
 
@@ -50,34 +50,52 @@ const LocalName = styled.span`
 
 const ContributionText = styled.span`
   font-size: ${p => p.theme.fontSizes[0]};
-  color: ${p => p.theme.colors.grey[50]};
 `
 
 const ContributionLink = styled.a`
   &&:not(:hover) {
     color: ${p => p.theme.colors.grey[50]};
-    border-bottom: ${p => p.theme.colors.grey[30]};
+    border-bottom-color: ${p =>
+      p.colorMode === "dark"
+        ? p.theme.colors.grey[90]
+        : p.theme.colors.grey[30]};
+  }
+
+  & + svg {
+    color: ${p => p.theme.colors.grey[50]};
+  }
+
+  &:hover,
+  &:hover + svg {
+    color: ${p => p.theme.colors.link.color};
   }
 `
 
-const LanguageThumb = ({ lang, isCurrent }) => (
-  <Container>
-    <EnglishName>{lang.name}</EnglishName>
-    <LocalName>
-      <Link to={localizedPath(lang.code, "/languages")}>{lang.localName}</Link>{" "}
-      {isCurrent && <CheckCircleIcon />}
-    </LocalName>
-    <ContributionText>
-      <ContributionLink
-        href={`https://github.com/gatsbyjs/gatsby-${lang.code}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Contribute
-      </ContributionLink>{" "}
-      <LaunchIcon />
-    </ContributionText>
-  </Container>
-)
+const LanguageThumb = ({ lang, isCurrent }) => {
+  const [colorMode] = useColorMode()
+
+  return (
+    <Container>
+      <EnglishName>{lang.name}</EnglishName>
+      <LocalName>
+        <Link to={localizedPath(lang.code, "/languages")}>
+          {lang.localName}
+        </Link>{" "}
+        {isCurrent && <CheckCircleIcon />}
+      </LocalName>
+      <ContributionText>
+        <ContributionLink
+          href={`https://github.com/gatsbyjs/gatsby-${lang.code}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          colorMode={colorMode}
+        >
+          Contribute
+        </ContributionLink>{" "}
+        <LaunchIcon />
+      </ContributionText>
+    </Container>
+  )
+}
 
 export default LanguageThumb

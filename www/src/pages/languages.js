@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from "react"
-import { jsx } from "theme-ui"
+import { jsx, useColorMode } from "theme-ui"
 import { Helmet } from "react-helmet"
 import styled from "@emotion/styled"
 
@@ -21,7 +21,8 @@ const TranslateBackground = styled(TranslateIcon)`
   font-size: 10rem;
   opacity: 0.25;
 
-  color: ${p => p.theme.colors.grey[10]};
+  color: ${p =>
+    p.colorMode === "dark" ? p.theme.colors.grey[10] : p.theme.colors.grey[90]};
 `
 
 const LanguagesContainer = styled.div`
@@ -64,34 +65,38 @@ const LanguagesFooter = () => (
   </section>
 )
 
-const LanguagesPage = ({ location, pageContext }) => (
-  <>
-    <Helmet>
-      <title>Languages</title>
-      <meta
-        name="description"
-        content={`The Gatsby documentation is currently translated in over ${allLanguages.length}+ local languages. Set your language preference.`}
-      />
-    </Helmet>
-    <Container>
-      <TranslateBackground />
-      <main id={`reach-skip-nav`}>
-        <Breadcrumb location={location} />
-        <LanguagesHeader />
-        <LanguagesContainer>
-          {allLanguages.map(lang => (
-            <LanguageThumb
-              key={lang.code}
-              lang={lang}
-              isCurrent={lang.code === (pageContext.locale || defaultLang)}
-            />
-          ))}
-        </LanguagesContainer>
-        <LanguagesFooter />
-      </main>
-    </Container>
-    <FooterLinks />
-  </>
-)
+const LanguagesPage = ({ location, pageContext }) => {
+  const [colorMode] = useColorMode()
+
+  return (
+    <>
+      <Helmet>
+        <title>Languages</title>
+        <meta
+          name="description"
+          content={`The Gatsby documentation is currently translated in over ${allLanguages.length}+ local languages. Set your language preference.`}
+        />
+      </Helmet>
+      <Container>
+        <TranslateBackground colorMode={colorMode} />
+        <main id={`reach-skip-nav`}>
+          <Breadcrumb location={location} />
+          <LanguagesHeader />
+          <LanguagesContainer>
+            {allLanguages.map(lang => (
+              <LanguageThumb
+                key={lang.code}
+                lang={lang}
+                isCurrent={lang.code === (pageContext.locale || defaultLang)}
+              />
+            ))}
+          </LanguagesContainer>
+          <LanguagesFooter />
+        </main>
+      </Container>
+      <FooterLinks />
+    </>
+  )
+}
 
 export default LanguagesPage
