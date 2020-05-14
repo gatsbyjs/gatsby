@@ -154,7 +154,7 @@ Rendered, the component looks like this:
 
 <CloudCallout>
   Connect your Gatsby site to Storage Provider for automatic deployments
-</CloudCallout>{" "}
+</CloudCallout>
 
 ### Component Model
 

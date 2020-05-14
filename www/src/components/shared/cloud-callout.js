@@ -46,9 +46,7 @@ const CloudCallout = ({ narrow = true, children }) => {
   return (
     <CloudCalloutRoot narrow={narrow}>
       <CloudText>{children}</CloudText>
-      Try <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>,
-      with CMS and CDN auto-provisioning, performance reports, and 20x faster
-      builds!
+      Try it on <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>!
       <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
     </CloudCalloutRoot>
   )
