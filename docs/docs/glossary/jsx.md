@@ -28,7 +28,7 @@ JSX also uses [camelCase](https://en.wikipedia.org/wiki/Camel_case) for hyphenat
 
 It isn't necessary to enclose multi-line JSX in parentheses, but doing so is a good practice. Parentheses reduce the likelihood of errors caused by [automatic semicolon insertion](https://stackoverflow.com/questions/2846283/what-are-the-rules-for-javascripts-automatic-semicolon-insertion-asi).
 
-You can't use JSX by itself. Browsers do not understand it. JSX tags must be converted to standard JavaScript by a [transpiler](https://www.gatsbyjs.org/docs/glossary#transpile). A transpiler is software that converts code from one language or syntax to another. Gatsby and React use [Babel](https://www.gatsbyjs.org/docs/glossary#babel) to transpile JSX into browser-compatible JavaScript.
+You can't use JSX by itself. Browsers do not understand it. JSX tags must be converted to standard JavaScript by a [transpiler](/docs/glossary#transpile). A transpiler is software that converts code from one language or syntax to another. Gatsby and React use [Babel](/docs/glossary#babel) to transpile JSX into browser-compatible JavaScript.
 
 ## Learn more about JSX
 
