@@ -68,7 +68,7 @@ exports.onPreInit = (_, pluginOptions) => {
   pluginOptions.theme_color_in_head = pluginOptions.theme_color_in_head ?? true
   pluginOptions.cacheDigest = null
 
-  if (pluginOptions.cache_busting_mode !== `none`) {
+  if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
     pluginOptions.cacheDigest = createContentDigest(
       fs.readFileSync(pluginOptions.icon)
     )
