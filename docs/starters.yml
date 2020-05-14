@@ -90,6 +90,14 @@
     - Includes plugins for easy, beautiful typography
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for offline support out of the box
+- url: https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-blog-theme
+  repo: https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-blog-theme
+  description: official blog theme
+  tags:
+    - Official
+    - Blog
+  features:
+    - Includes plugin for adjustment of background lighting
 - url: https://gatsby-starter-default-demo.netlify.com/
   repo: https://github.com/gatsbyjs/gatsby-starter-default
   description: official default
@@ -98,6 +106,13 @@
   features:
     - Comes with React Helmet for adding site meta tags
     - Includes plugins for offline support out of the box
+- url: https://github.com/gatsbyjs/gatsby-starter-theme-workspace
+  repo: https://github.com/gatsbyjs/gatsby-starter-theme-workspace
+  description: official workspace theme
+  tags:
+    - Official
+  features:
+    - Minimalist plugin to make content stand out
 - url: https://gatsby-netlify-cms.netlify.com/
   repo: https://github.com/netlify-templates/gatsby-starter-netlify-cms
   description: n/a

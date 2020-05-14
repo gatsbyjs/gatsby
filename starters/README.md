@@ -60,11 +60,13 @@ A starter is a simplified example to get up and running with Gatsby quickly and 
 
 <!-- AUTO-GENERATED-CONTENT:START (LIST_STARTERS) -->
 
-|                                 Name                                  | Demo                                                                                                | Description                                                   |
-| :-------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-|        [blog](https://github.com/gatsbyjs/gatsby-starter-blog)        | [gatsby-starter-blog-demo.netlify.com](https://gatsby-starter-blog-demo.netlify.com/)               | A starter for a blog powered by Gatsby and Markdown           |
-|     [default](https://github.com/gatsbyjs/gatsby-starter-default)     | [gatsby-starter-default-demo.netlify.com](https://gatsby-starter-default-demo.netlify.com/)         | A simple starter to get up and developing quickly with Gatsby |
-| [hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world) | [gatsby-starter-hello-world-demo.netlify.com](https://gatsby-starter-hello-world-demo.netlify.com/) | A simplified bare-bones starter for Gatsby                    |
+|                                                           Name                                                           | Demo                                                                                                                          | Description                                                                 |
+| :----------------------------------------------------------------------------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+|                                 [blog](https://github.com/gatsbyjs/gatsby-starter-blog)                                  | [gatsby-starter-blog-demo.netlify.com](https://gatsby-starter-blog-demo.netlify.com/)                                         | A starter for a blog powered by Gatsby and Markdown                         |
+|                              [default](https://github.com/gatsbyjs/gatsby-starter-default)                               | [gatsby-starter-default-demo.netlify.com](https://gatsby-starter-default-demo.netlify.com/)                                   | A simple starter to get up and developing quickly with Gatsby               |
+|                          [hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)                           | [gatsby-starter-hello-world-demo.netlify.com](https://gatsby-starter-hello-world-demo.netlify.com/)                           | A simplified bare-bones starter for Gatsby                                  |
+|      [gatsby-starter-blog-theme](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-blog-theme)      | [gatsby-starter-blog-theme-docs](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-blog-theme)           | A starter for a blog with augmented functionality provided by Gatsby themes |
+| [gatsby-starter-theme-workspace](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-theme-workspace) | [gatsby-starter-theme-workspace-docs](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-theme-workspace) | A sample starter utilizing a minimalist theme provided by Gatsby            |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
