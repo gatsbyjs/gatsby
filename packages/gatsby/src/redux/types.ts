@@ -257,6 +257,7 @@ export type ActionsUnion =
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | IAddPageDataStatsAction
 
 export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
@@ -529,4 +530,12 @@ export interface IDeleteNodeAction {
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   payload: Identifier[]
+}
+
+export interface IAddPageDataStatsAction {
+  type: `ADD_PAGE_DATA_STATS`
+  payload: {
+    filePath: SystemPath
+    size: number
+  }
 }

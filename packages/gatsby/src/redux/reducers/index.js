@@ -12,6 +12,7 @@ import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
+import { pageDataStatsReducer } from "./page-data-stats"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -41,6 +42,6 @@ module.exports = {
   themes: themesReducer,
   logs: logReducer,
   inferenceMetadata: require(`./inference-metadata`),
-  pageDataStats: require(`./page-data-stats`),
+  pageDataStats: pageDataStatsReducer,
   pageData: pageDataReducer,
 }
