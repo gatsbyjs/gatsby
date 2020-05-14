@@ -1,7 +1,7 @@
 import createNodeHelpers from "gatsby-node-helpers"
 import { map } from "p-iteration"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import PluginOptions from "./pluginOptions"
+import PluginOptions from "./plugin-options"
 
 import {
   TYPE_PREFIX,
