@@ -6235,3 +6235,18 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://expo-gatsby-starter.netlify.app/
+  repo: https://github.com/Sidibedev/expo-gatsby-starter
+  description: A simple Expo and Gatsby starter.
+  tags:
+    - Expo
+    - React native web
+    - Cross-platform
+  features:
+    - SEO
+    - Progressive Web App
+    - Offline Support
+    - Upload Image
+    - Expo SDK
+    - Image manipulation
+    - 404 page
