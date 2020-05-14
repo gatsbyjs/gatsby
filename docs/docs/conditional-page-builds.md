@@ -2,7 +2,7 @@
 title: Conditional Page Builds
 ---
 
-If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [incremental builds](https://www.gatsbyjs.com/docs/incremental-builds/) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for pages with unchanged data. This feature is experimental, but may improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
+If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [Incremental Builds](https://www.gatsbyjs.com/docs/incremental-builds/) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for pages with unchanged data. This feature is experimental, but _may_ improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
 
 For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/overview-of-the-gatsby-build-process/).
 
@@ -52,7 +52,7 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 - This feature is not available with `gatsby develop`.
 
-- You should not try to use this flag alongside incremental builds in Gatsby Cloud, as it uses a different process and may conflict with it.
+- You should not try to use this flag alongside Incremental Builds in Gatsby Cloud, as it uses a different process and may conflict with it.
 
 - You will need to persist the `.cache` and `public` directories between builds. This allows for comparisons and reuse of previously built files. If `.cache` directory was not persisted then a full build will be triggered. If `public` directory was not persisted then you might experience failing builds or builds that are missing certain assets.
 
