@@ -29,6 +29,56 @@ module.exports = {
 Theme UI uses a `theme` configuration object to provide color, typography, layout, and other shared stylistic values through [React context][].
 This allows components within your site to add styles based on a predefined set of values.
 
+There are two ways to add a theme to your site.
+
+### `gatsby-plugin-theme-ui` configuration
+
+`gatsby-plugin-theme-ui` allows for optional configuration. One of the options you can pass in is `preset`. Preset is a base theme object you'd like your site to use.
+
+The `preset` can be a JSON object or a string package name that the plugin will require for you.
+
+If you're passing in a string package name you need to make sure that the dependency is installed.
+
+```shell
+npm install @theme-ui/preset-funk
+```
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-theme-ui`,
+      options: {
+        preset: "@theme-ui/preset-funk",
+      },
+    },
+  ],
+}
+```
+
+Alternatively, you could do the same thing and require the package yourself.
+
+```shell
+npm install @theme-ui/preset-funk
+```
+
+```js:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-theme-ui`,
+      options: {
+        preset: require("@theme-ui/preset-funk"),
+      },
+    },
+  ],
+}
+```
+
+`preset` operates as your base theme and any local shadowed styles with automatically merge with it. Local styles are considered more specific and will override base styles where necessary.
+
+### Local shadowing
+
 The Theme UI plugin uses the [component shadowing API][] to add the theme object context to your site.
 Create a `src/gatsby-plugin-theme-ui` directory in your project, and add an `index.js` file to export a theme object.
 
@@ -42,7 +92,7 @@ export default {}
 
 ## Creating a theme object
 
-Add a `colors` object to the file created above to store the color palette for your site.
+Create a `src/gatsby-plugin-theme-ui` directory in your project, and add an `index.js` file to export a theme object. Add a `colors` object to the file to store the color palette for your site.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
@@ -165,9 +215,9 @@ The following is an example of extending the configuration from `gatsby-theme-bl
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui"
-import merge from "lodash.merge"
+import { merge } from "theme-ui"
 
-// lodash.merge will deeply merge custom values with the
+// merge will deeply merge custom values with the
 // blog theme's defaults
 export default merge({}, baseTheme, {
   colors: {

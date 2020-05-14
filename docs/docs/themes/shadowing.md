@@ -71,23 +71,24 @@ user-site
 
 ## Shadowing other themes
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. If you want to customize the implementation of any theme you can do so with shadowing.
+Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. One way to customize the styling of a theme is with shadowing.
 
 For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
+import { merge } from "theme-ui"
 import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/index"
 
-export default {
-  ...baseTheme,
+export default merge(baseTheme, {
   fontSizes: [12, 14, 16, 24, 32, 48, 64, 96, 128],
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   colors: {
-    ...baseTheme.colors,
     primary: `tomato`,
   },
-}
+})
 ```
+
+> Note that `theme-ui` comes with the `merge` function that allows you to deep merge any theme objects. In the case of overriding styles the last object merged in wins.
 
 Which will result in the following directory tree:
 
