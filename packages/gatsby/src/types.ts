@@ -2,7 +2,7 @@ export interface IMatch {
   id: string
   context: {
     sourceMessage: string
-    [key: string]: string | boolean
+    [key: string]: unknown
   }
   error?: Error | undefined
   [key: string]: unknown

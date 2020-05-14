@@ -6,7 +6,6 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { platform } = require(`os`)
 const path = require(`path`)
-const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
@@ -526,8 +525,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
+    // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
     fullNodes: nodeIds.map(getNode),
   }

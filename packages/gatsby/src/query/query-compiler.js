@@ -20,7 +20,6 @@ const {
   isAbstractType,
   Kind,
   FragmentsOnCompositeTypesRule,
-  KnownTypeNamesRule,
   LoneAnonymousOperationRule,
   PossibleFragmentSpreadsRule,
   ScalarLeafsRule,
@@ -185,7 +184,6 @@ export const processQueries = ({
 
 const preValidationRules = [
   LoneAnonymousOperationRule,
-  KnownTypeNamesRule,
   FragmentsOnCompositeTypesRule,
   VariablesAreInputTypesRule,
   ScalarLeafsRule,

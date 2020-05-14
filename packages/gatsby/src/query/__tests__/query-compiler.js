@@ -958,6 +958,120 @@ describe(`actual compiling`, () => {
     `)
     expect(result).toEqual(new Map())
   })
+
+  it(`doesn't error if unknown type is used in unused fragment`, async () => {
+    const nodes = [
+      createGatsbyDoc(
+        `unusedFragment`,
+        `fragment Foo on ThisTypeSurelyDoesntExistInSchema {
+          field
+        }`
+      ),
+      createGatsbyDoc(
+        `mockFile`,
+        `query mockFileQuery {
+          allPostsJson {
+            nodes {
+              id
+            }
+          }
+        }`
+      ),
+    ]
+
+    const errors = []
+    const result = processQueries({
+      schema,
+      parsedQueries: nodes,
+      addError: e => {
+        errors.push(e)
+      },
+    })
+    expect(errors).toMatchInlineSnapshot(`Array []`)
+    expect(result).toMatchInlineSnapshot(`
+      Map {
+        "mockFile" => Object {
+          "hash": "hash",
+          "isHook": false,
+          "isStaticQuery": false,
+          "name": "mockFileQuery",
+          "originalText": "query mockFileQuery {
+                allPostsJson {
+                  nodes {
+                    id
+                  }
+                }
+              }",
+          "path": "mockFile",
+          "text": "query mockFileQuery {
+        allPostsJson {
+          nodes {
+            id
+          }
+        }
+      }
+      ",
+        },
+      }
+    `)
+  })
+
+  it(`does error if unknown type is used in used fragment`, async () => {
+    const nodes = [
+      createGatsbyDoc(
+        `usedFragment`,
+        `fragment Foo on ThisTypeSurelyDoesntExistInSchema {
+          field
+        }`
+      ),
+      createGatsbyDoc(
+        `mockFile`,
+        `query mockFileQuery {
+          allPostsJson {
+            nodes {
+              ...Foo
+            }
+          }
+        }`
+      ),
+    ]
+
+    const errors = []
+    const result = processQueries({
+      schema,
+      parsedQueries: nodes,
+      addError: e => {
+        errors.push(e)
+      },
+    })
+    expect(errors).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "context": Object {
+            "sourceMessage": "Unknown type \\"ThisTypeSurelyDoesntExistInSchema\\".
+
+      GraphQL request:1:17
+      1 | fragment Foo on ThisTypeSurelyDoesntExistInSchema {
+        |                 ^
+      2 |           field",
+          },
+          "filePath": "mockFile",
+          "id": "85901",
+          "location": Object {
+            "end": Object {
+              "column": 17,
+              "line": 1,
+            },
+            "start": Object {
+              "column": 17,
+              "line": 1,
+            },
+          },
+        },
+      ]
+    `)
+    expect(result).toEqual(new Map())
+  })
 })
 
 describe(`Extra fields`, () => {

@@ -7,7 +7,7 @@ const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
-const GraphQLRunner = require(`./graphql-runner`).default
+const { GraphQLRunner } = require(`./graphql-runner`)
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -158,9 +158,12 @@ const groupQueryIds = queryIds => {
   }
 }
 
-const processQueries = async (queryJobs, { activity, graphqlRunner }) => {
-  const queue = queryQueue.createBuildQueue(graphqlRunner)
-  return queryQueue.processBatch(queue, queryJobs, activity)
+const processQueries = async (
+  queryJobs,
+  { activity, graphqlRunner, graphqlTracing }
+) => {
+  const queue = queryQueue.createBuildQueue(graphqlRunner, { graphqlTracing })
+  await queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {
@@ -200,7 +203,7 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
 
 const processStaticQueries = async (
   queryIds,
-  { state, activity, graphqlRunner }
+  { state, activity, graphqlRunner, graphqlTracing }
 ) => {
   state = state || store.getState()
   return processQueries(
@@ -208,13 +211,14 @@ const processStaticQueries = async (
     {
       activity,
       graphqlRunner,
+      graphqlTracing,
     }
   )
 }
 
 const processPageQueries = async (
   queryIds,
-  { state, activity, graphqlRunner }
+  { state, activity, graphqlRunner, graphqlTracing }
 ) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
@@ -227,11 +231,16 @@ const processPageQueries = async (
     {
       activity,
       graphqlRunner,
+      graphqlTracing,
     }
   )
 }
 
-const getInitialQueryProcessors = ({ parentSpan, graphqlRunner } = {}) => {
+const getInitialQueryProcessors = ({
+  parentSpan,
+  graphqlRunner,
+  graphqlTracing,
+} = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
   const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
@@ -245,11 +254,15 @@ const getInitialQueryProcessors = ({ parentSpan, graphqlRunner } = {}) => {
   const actuallyProcessStaticQueries = async () => {
     activity = createQueryRunningActivity(queryjobsCount, parentSpan)
 
-    await processStaticQueries(staticQueryIds, { state, activity })
+    await processStaticQueries(staticQueryIds, {
+      state,
+      activity,
+      graphqlTracing,
+    })
   }
 
   const actuallyProcessPageQueries = async () => {
-    await processPageQueries(pageQueryIds, { state, activity })
+    await processPageQueries(pageQueryIds, { state, activity, graphqlTracing })
 
     activity.done()
   }
@@ -262,12 +275,12 @@ const getInitialQueryProcessors = ({ parentSpan, graphqlRunner } = {}) => {
   }
 }
 
-const initialProcessQueries = async ({ parentSpan } = {}) => {
+const initialProcessQueries = async ({ parentSpan, graphqlTracing } = {}) => {
   const {
     pageQueryIds,
     processPageQueries,
     processStaticQueries,
-  } = getInitialQueryProcessors({ parentSpan })
+  } = getInitialQueryProcessors({ parentSpan, graphqlTracing })
 
   await processStaticQueries()
   await processPageQueries()
@@ -328,13 +341,13 @@ const runQueuedQueries = () => {
  * For what constitutes a dirty query, see `calcQueries`
  */
 
-const startListeningToDevelopQueue = () => {
+const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
   // We use a queue to process batches of queries so that they are
   // processed consecutively
   let graphqlRunner = null
   const developQueue = queryQueue.createDevelopQueue(() => {
     if (!graphqlRunner) {
-      graphqlRunner = new GraphQLRunner(store)
+      graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
     }
     return graphqlRunner
   })

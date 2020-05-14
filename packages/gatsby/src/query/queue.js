@@ -1,11 +1,9 @@
-import websocketManager from "../utils/websocket-manager"
-
 const Queue = require(`better-queue`)
 const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
-const queryRunner = require(`../query/query-runner`)
-
-const GraphQLRunner = require(`./graphql-runner`).default
+const { queryRunner } = require(`../query/query-runner`)
+const { websocketManager } = require(`../utils/websocket-manager`)
+const { GraphQLRunner } = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
@@ -15,12 +13,12 @@ const createBaseOptions = () => {
   }
 }
 
-const createBuildQueue = graphqlRunner => {
+const createBuildQueue = (graphqlRunner, runnerOptions = {}) => {
   if (!graphqlRunner) {
-    graphqlRunner = new GraphQLRunner(store)
+    graphqlRunner = new GraphQLRunner(store, runnerOptions)
   }
-  const handler = (queryJob, callback) =>
-    queryRunner(graphqlRunner, queryJob)
+  const handler = ({ job, activity }, callback) =>
+    queryRunner(graphqlRunner, job, activity?.span)
       .then(result => callback(null, result))
       .catch(callback)
   const queue = new Queue(handler, createBaseOptions())
@@ -30,7 +28,7 @@ const createBuildQueue = graphqlRunner => {
 const createDevelopQueue = getRunner => {
   const queueOptions = {
     ...createBaseOptions(),
-    priority: (job, cb) => {
+    priority: ({ job }, cb) => {
       if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
@@ -42,8 +40,8 @@ const createDevelopQueue = getRunner => {
     },
   }
 
-  const handler = (queryJob, callback) => {
-    queryRunner(getRunner(), queryJob).then(
+  const handler = ({ job: queryJob, activity }, callback) => {
+    queryRunner(getRunner(), queryJob, activity?.span).then(
       result => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
@@ -116,8 +114,9 @@ const processBatch = async (queue, jobs, activity) => {
       })
 
     jobs.forEach(job =>
-      queue.push(job).on(`finish`, function (result) {
-        results.set(job.id, result)
+      queue.push({
+        job,
+        activity,
       })
     )
   })

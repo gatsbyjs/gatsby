@@ -3,6 +3,7 @@ import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
+import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
 
 type SystemPath = string
 type Identifier = string
@@ -95,15 +96,14 @@ export interface IGatsbyStaticQueryComponents {
 
 type GatsbyNodes = Map<string, IGatsbyNode>
 
-export interface IGatsbyJobContent {
-  inputPaths: string[]
-  contentDigest: string
+export interface IGatsbyIncompleteJobV2 {
+  job: InternalJobInterface
+  plugin: IGatsbyPlugin
 }
 
-export interface IGatsbyJobV2 {
-  job: IGatsbyJobContent
-  plugin: IGatsbyPlugin
-  traceId?: string
+export interface IGatsbyCompleteJobV2 {
+  result: JobResultInterface
+  inputPaths: InternalJobInterface["inputPaths"]
 }
 
 export interface IGatsbyState {
@@ -171,8 +171,8 @@ export interface IGatsbyState {
     done: any[] // TODO
   }
   jobsV2: {
-    incomplete: Map<Identifier, IGatsbyJobV2>
-    complete: Map<Identifier, IGatsbyJobV2>
+    incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
+    complete: Map<Identifier, IGatsbyCompleteJobV2>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -223,12 +223,17 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | IAddChildNodeToParentNodeAction
+  | IAddFieldToNodeAction
   | IAddThirdPartySchema
   | ICreateFieldExtension
+  | ICreateNodeAction
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
+  | IDeleteNodeAction
+  | IDeleteNodesAction
   | IDeleteComponentDependenciesAction
   | IDeletePageAction
   | IPageQueryRunAction
@@ -249,6 +254,32 @@ export type ActionsUnion =
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
+  | ICreateJobV2Action
+  | IEndJobV2Action
+  | IRemoveStaleJobV2Action
+
+export interface ICreateJobV2Action {
+  type: `CREATE_JOB_V2`
+  payload: {
+    job: IGatsbyIncompleteJobV2["job"]
+    plugin: IGatsbyIncompleteJobV2["plugin"]
+  }
+}
+
+export interface IEndJobV2Action {
+  type: `END_JOB_V2`
+  payload: {
+    jobContentDigest: string
+    result: JobResultInterface
+  }
+}
+
+export interface IRemoveStaleJobV2Action {
+  type: `REMOVE_STALE_JOB_V2`
+  payload: {
+    contentDigest: string
+  }
+}
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
@@ -471,4 +502,31 @@ export interface ISetSchemaAction {
 export interface ISetSiteConfig {
   type: `SET_SITE_CONFIG`
   payload: IGatsbyState["config"]
+}
+
+export interface ICreateNodeAction {
+  type: `CREATE_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IAddFieldToNodeAction {
+  type: `ADD_FIELD_TO_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IAddChildNodeToParentNodeAction {
+  type: `ADD_CHILD_NODE_TO_PARENT_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IDeleteNodeAction {
+  type: `DELETE_NODE`
+  payload: {
+    id: Identifier
+  }
+}
+
+export interface IDeleteNodesAction {
+  type: `DELETE_NODES`
+  payload: Identifier[]
 }
