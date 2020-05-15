@@ -152,6 +152,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   script.start()
 
+  let isInitialStart = true
   script.on(`message`, msg => {
     if (msg.type === `HEARTBEAT`) return
     if (process.send) {
@@ -164,8 +165,15 @@ module.exports = async (program: IProgram): Promise<void> => {
       msg.action.type === `SET_STATUS` &&
       msg.action.payload === `IN_PROGRESS`
     ) {
-      proxy.serveRestartingScreen()
-      io.emit(`develop:is-starting`)
+      // We do not want to serve the restarting screen
+      // when the develop process is initially starting
+      // only on subsequent restarts
+      if (!isInitialStart) {
+        proxy.serveRestartingScreen()
+        io.emit(`develop:is-starting`)
+      } else {
+        isInitialStart = false
+      }
     }
 
     if (
