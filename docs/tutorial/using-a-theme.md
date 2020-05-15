@@ -38,6 +38,39 @@ module.exports = {
 
 > Note: If you already have a landing page set up for your site you may want to make use of the `basePath` option that will put your blog listing page at a path other than `/`.
 
+## Update your site metadata
+
+Customize the information on your site by replacing the site metadata in the `gatsby-config.js` file. Your `siteUrl` should point to your public domain. It's ok if you don't have one yet, you can update it later.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  {/* highlight-start */}
+  siteMetadata: {
+    title: "My Blog",
+    author: "Amberley Romo",
+    description: "A collection of my thoughts and writings.",
+    siteUrl: "https://amberley.blog/",
+    social: [
+      {
+        name: "twitter",
+        url: "https://twitter.com/amber1ey",
+      },
+      {
+        name: "github",
+        url: "https://github.com/amberleyromo",
+      },
+    ],
+  },
+  {/* highlight-end */}
+  plugins: [
+    {
+      resolve: "gatsby-theme-blog",
+      options: {},
+    },
+  ],
+}
+```
+
 ## Add some content
 
 Before you can see anything, you'll want to add some content so there is something to see.
@@ -69,57 +102,21 @@ const test = "this is a theme"
 ```
 `````
 
-```
+````
 
 ## Test run your site
 
 To make sure everything is working, run your site. This command should be run in your terminal in your  project's root directory.
 
-```
-
+```shell
 gatsby develop
-
 ````
 
 Navigate to `localhost:8000` to see the landing page of your site.
 
-## Update your site metadata
-
-Customize the information on your site by replacing the site metadata in the `gatsby-config.js` file. Your `siteUrl` should point to your public domain. It's ok if you don't have one yet, you can update it later.
-
-```javascript:title=gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: "gatsby-theme-blog",
-      options: {},
-    },
-  ],
-  // Customize your site metadata:
-  {/* highlight-start */}
-  siteMetadata: {
-    title: "My Blog",
-    author: "Amberley Romo",
-    description: "A collection of my thoughts and writings.",
-    siteUrl: "https://amberley.blog/",
-    social: [
-      {
-        name: "twitter",
-        url: "https://twitter.com/amber1ey",
-      },
-      {
-        name: "github",
-        url: "https://github.com/amberleyromo",
-      },
-    ],
-  },
-  {/* highlight-end */}
-}
-````
-
 ## Replace your avatar
 
-The blog theme starter ships with a solid gray image for the avatar. Add your own avatar by choosing the image you want, and overwriting the file located at `/content/assets/avatar.png`.
+At the moment, the bio on your pages shows a blank section where a picture should be. Add your own avatar by choosing the image you want, and overwriting the file located at `/content/assets/avatar.png`.
 
 ## Replace the content of the bio
 
@@ -127,7 +124,7 @@ When using Gatsby themes, you can take advantage of something called component s
 
 The Gatsby blog theme package has a component that contains the content of the site author's biography. The file path to that component (in the blog theme package, not your site) is `src/gatsby-theme-blog/components/bio-content.js`. You can find this path by looking through the theme in your site's `node_modules/gatsby-theme-blog` directory.
 
-If you look at the file tree of your site, you'll see it looks like this:
+If you look at the file tree of your site, you'll see it looks something like this:
 
 ```text
 my-blog
@@ -135,11 +132,10 @@ my-blog
 │   ├── assets
 │   │   └── avatar.png
 │   └── posts
-│       ├── hello-world.mdx
-│       └── my-second-post.mdx
+│       └── my-post.md
 ├── src
 │   └── gatsby-theme-blog
-│       ├── components
+│       └── components
 │           └── bio-content.js
 ├── gatsby-config.js
 └── package.json
@@ -167,33 +163,7 @@ export default function Bio() {
 }
 ```
 
-At this point, you should have an updated avatar, updated site details, and an updated bio.
-
-## Add your own blog content
-
-Now you can add your first blog post, and get rid of the demo content in the starter.
-
-<!-- ### Create a new blog post
-
-Create a new file in `my-blog/content/posts`. Name it whatever you'd like (with a `.md` or `.mdx` file extension), and add some content! Here's an example:
-
-```mdx:title=my-blog/content/posts/my-first-post.mdx
----
-title: My first post
-date: 2019-07-03
----
-
-This will be my very first post on this blog!
-``` -->
-
-### Delete the demo posts
-
-Delete the two demo posts in the `/content/posts` directory:
-
-- `my-blog/content/posts/hello-world.mdx`
-- `my-blog/content/posts/my-second-post.mdx`
-
-Restart the dev server, and you'll see your updated blog content.
+At this point, you should have an updated avatar, updated site details, and an updated bio. You may want to re-run `gatsby develop` to make sure everything looks good.
 
 ## Change the color theme
 
@@ -225,14 +195,13 @@ module.exports = {
 If you want to further customize this theme you can shadow it. Create a file at `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js`.
 
 ```javascript:title=/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js
-
 export default {
   colors: {
     text: blueGray,
     primary: darkBlue,
     heading: blueGray,
-  }
-})
+  },
+}
 ```
 
 These colors will merge with the preset theme and override that part of the preset.
