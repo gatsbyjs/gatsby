@@ -115,7 +115,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   if (!unlock) {
     console.error(
-      `It looks like a develop process for this site is already running.`
+      `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
     )
     process.exit(1)
   }
