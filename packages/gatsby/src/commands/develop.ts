@@ -141,39 +141,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   const statusServer = http.createServer().listen(statusServerPort)
   const io = socket(statusServer)
 
-  io.on(`connection`, socket => {
-    socket.on(`develop:restart`, async () => {
-      isRestarting = true
-      await script.stop()
-      script.start()
-      isRestarting = false
-    })
-  })
-
-  script.start()
-
-  let isInitialStart = true
-  script.on(`message`, msg => {
+  const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return
     if (process.send) {
       // Forward IPC
       process.send(msg)
-    }
-
-    if (
-      msg.type === `LOG_ACTION` &&
-      msg.action.type === `SET_STATUS` &&
-      msg.action.payload === `IN_PROGRESS`
-    ) {
-      // We do not want to serve the restarting screen
-      // when the develop process is initially starting
-      // only on subsequent restarts
-      if (!isInitialStart) {
-        proxy.serveRestartingScreen()
-        io.emit(`develop:is-starting`)
-      } else {
-        isInitialStart = false
-      }
     }
 
     if (
@@ -184,7 +156,22 @@ module.exports = async (program: IProgram): Promise<void> => {
       proxy.serveSite()
       io.emit(`develop:started`)
     }
+  }
+
+  io.on(`connection`, socket => {
+    socket.on(`develop:restart`, async () => {
+      isRestarting = true
+      proxy.serveRestartingScreen()
+      io.emit(`develop:is-starting`)
+      await script.stop()
+      script.start()
+      script.on(`message`, handleChildProcessIPC)
+      isRestarting = false
+    })
   })
+
+  script.start()
+  script.on(`message`, handleChildProcessIPC)
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
