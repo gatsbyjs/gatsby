@@ -155,6 +155,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   })
 
+  // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
+  // This needs to be propagated back to the parent process
   script.on(`exit`, code => {
     process.exit(code)
   })
