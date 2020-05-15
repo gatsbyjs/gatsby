@@ -3,14 +3,10 @@
 const { createPath } = require(`gatsby-page-utils`)
 const { getParams } = require(`./get-params`)
 const { babelParseToAst } = require(`gatsby/dist/utils/babel-parse-to-ast`)
-const { createContentDigest } = require(`gatsby-core-utils`)
 const { derivePath } = require(`./derive-path`)
-const { rewriteImports } = require(`./rewrite-imports`)
 const fs = require(`fs-extra`)
 const traverse = require(`@babel/traverse`).default
-const generate = require(`@babel/generator`).default
 const t = require(`@babel/types`)
-const systemPath = require(`path`)
 
 // Changes something like
 //   `/Users/site/src/pages/foo/[id]/`
@@ -19,6 +15,27 @@ const systemPath = require(`path`)
 function translateInterpolationToMatchPath(createdPath) {
   const [, path] = createdPath.split(`src/pages`)
   return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
+}
+
+// Input str could be:
+//   Product
+//   allProduct
+//   allProduct(filter: thing)
+// End result should be something like { allProducts { nodes { id }}}
+function generateQueryFromString(str, fields) {
+  const needsAllPrefix = str.startsWith(`all`) === false
+
+  return `{${needsAllPrefix ? `all` : ``}${str}{nodes{${fields}}}}`
+}
+
+// Changes something like
+//   `/Users/site/src/pages/foo/[id]/[baz]`
+// to
+//   `id,baz`
+function extractUrlParamsForQuery(createdPath) {
+  const parts = /(\[[a-zA-Z_]+\])/.exec(createdPath)
+
+  return parts.map(p => p.replace(`[`, ``).replace(`]`, ``)).join(`,`)
 }
 
 function isCreatePagesFromData(path) {
@@ -36,22 +53,18 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
   absolutePath,
   actions,
   graphql,
-  root,
-  queryString
+  root
+  // queryString
 ) {
   console.log(`createing collection`)
   const [, route] = absolutePath.split(`src/pages`)
-  const id = createContentDigest(route)
-  const collectionCoponentsFolder = systemPath.join(
-    root,
-    `.cache/collection-components`
-  )
-  const tempPath = systemPath.join(collectionCoponentsFolder, `${id}.js`)
 
   const ast = babelParseToAst(
     fs.readFileSync(absolutePath).toString(),
     absolutePath
   )
+
+  let queryString
 
   // -- Use the ast to find the component and query, and change the code
   // -- to export default the component, instead of our fancy api
@@ -61,40 +74,15 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
       if (!isCreatePagesFromData(path)) return
       if (!t.isCallExpression(path)) return // this might not be needed...
 
-      const [componentAst] = path.node.arguments
+      const [, queryAst] = path.node.arguments
 
-      // 3 options componentAst's _could be_
-      // inline component
-      // referenced componenet from within the file
-      // imported component from another file
-
-      // Case 1: inline component
-      if (t.isIdentifier(componentAst)) {
-        const exportDeclaration = path.find(n =>
-          t.isExportDefaultDeclaration(n)
-        )
-        exportDeclaration.node.declaration = componentAst
-      }
-    },
-    Program(path) {
-      const imports = path.get(`body`).filter(p => p.isImportDeclaration())
-
-      imports.forEach(importDeclaration =>
-        rewriteImports(root, absolutePath, importDeclaration)
+      queryString = generateQueryFromString(
+        queryAst.quasis[0].value.raw,
+        extractUrlParamsForQuery(absolutePath)
       )
     },
   })
 
-  // -- create the dir if it doesnt exist
-  if (fs.existsSync(collectionCoponentsFolder) === false) {
-    fs.mkdirSync(collectionCoponentsFolder)
-  }
-
-  // -- write the compiled component to a cache file
-  fs.writeFileSync(tempPath, generate(ast).code)
-
-  // -- Get the data, and create a page for each node
-  // Not sure this is enough. Seems really brittle way of getting the array out of the query
   const { data, error } = await graphql(queryString)
 
   if (!data || error) {
@@ -105,27 +93,15 @@ Unfortunately, the query came back empty. There may be an error in your query.
     return
   }
 
-  console.log({ data, error })
-
-  // tightly dependent on the query being of form:
-  // `{ allSomething { nodes { id } } }`
-  let nodes = []
-  let __otherData = {}
-
-  // This is a hack. We should have something indicate to us which query is the page builder
-  Object.entries(data).forEach(([k, v]) => {
-    if (Array.isArray(v?.nodes)) {
-      nodes = v.nodes
-    } else {
-      __otherData[k] = v
-    }
-  })
+  // -- Get the data, and create a page for each node
+  // Not sure this is enough. Seems really brittle way of getting the array out of the query
+  const nodes = Object.values(data)[0].nodes
 
   if (nodes) {
     console.log(`>>>> Creating ${nodes.length} pages from ${route}`)
   }
 
-  nodes.forEach((node, index) => {
+  nodes.forEach(node => {
     const matchPath = translateInterpolationToMatchPath(
       createPath(absolutePath)
     )
@@ -133,21 +109,12 @@ Unfortunately, the query came back empty. There may be an error in your query.
     const path = derivePath(absolutePath, node)
     const params = getParams(matchPath, path)
 
-    const previous = index === nodes.length - 1 ? null : nodes[index + 1]
-    const next = index === 0 ? null : nodes[index - 1]
-
-    console.log(`path`, path)
-
     actions.createPage({
       path: path,
-      component: tempPath,
+      component: absolutePath,
       context: {
-        __otherData,
+        ...node,
         __params: params,
-        __collectionData: node,
-        // temp added for blog starter to work
-        previous,
-        next,
       },
     })
   })

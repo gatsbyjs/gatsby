@@ -39,14 +39,14 @@ exports.createPage = (
   const absolutePath = systemPath.join(pagesDirectory, filePath)
 
   if (pathIsCCollectionBuilder(absolutePath)) {
-    let queryState = queriesMap.get(absolutePath)
+    // let queryState = queriesMap.get(absolutePath)
     console.log(3, absolutePath)
     createPagesFromCollectionBuilder(
       absolutePath,
       actions,
       graphql,
-      root,
-      queryState.text
+      root
+      // queryState.text
     )
     return
   }

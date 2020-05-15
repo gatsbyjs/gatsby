@@ -21,19 +21,8 @@ class PageRenderer extends React.Component {
   }
 
   render() {
-    const __collectionData = this.props.pageResources.json.pageContext
-      .__collectionData
-    const __otherData =
-      this.props.pageResources.json.pageContext.__otherData || {}
-    const collectionData = __collectionData ? { node: __collectionData } : {}
-
     const props = {
-      data: {
-        ...this.props.data,
-        ...__otherData,
-      },
       ...this.props,
-      ...collectionData,
       params: this.getParams(),
       pathContext: this.props.pageContext,
     }
