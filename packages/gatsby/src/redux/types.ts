@@ -106,6 +106,26 @@ export interface IGatsbyCompleteJobV2 {
   inputPaths: InternalJobInterface["inputPaths"]
 }
 
+interface IPlugin {
+  name: string
+  options: string[]
+}
+
+interface IBabelStage {
+  plugins: IPlugin[]
+  presets: string[]
+  options: {
+    cacheDirectory: boolean
+    sourceType: string
+  }
+}
+
+type BabelStageKeys =
+  | "develop"
+  | "develop-html"
+  | "build-html"
+  | "build-javascript"
+
 export interface IGatsbyState {
   program: IProgram
   nodes: GatsbyNodes
@@ -179,10 +199,7 @@ export interface IGatsbyState {
   redirects: IRedirect[]
   babelrc: {
     stages: {
-      develop: any // TODO
-      "develop-html": any // TODO
-      "build-html": any // TODO
-      "build-javascript": any // TODO
+      [key in BabelStageKeys]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -257,6 +274,16 @@ export type ActionsUnion =
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | ISetBabelPluginAction
+
+export interface ISetBabelPluginAction {
+  type: `SET_BABEL_PLUGIN`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
 
 export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
