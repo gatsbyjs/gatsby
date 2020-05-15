@@ -275,9 +275,29 @@ export type ActionsUnion =
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
   | ISetBabelPluginAction
+  | ISetBabelPresetAction
+  | ISetBabelOptionsAction
 
-export interface ISetBabelPluginAction {
+interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
+
+interface ISetBabelPresetAction {
+  type: `SET_BABEL_PRESET`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
+
+interface ISetBabelOptionsAction {
+  type: `SET_BABEL_OPTIONS`
   payload: {
     stage: BabelStageKeys
     name: IPlugin["name"]
