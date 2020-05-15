@@ -24,7 +24,7 @@
     "gatsby-core-utils": "^1.2.2"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.9.6"
   },
   "license": "MIT",
   "main": "index.js",

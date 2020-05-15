@@ -35,9 +35,6 @@
     "babel-preset-gatsby-package": "^0.4.1",
     "cross-env": "^5.2.1"
   },
-  "peerDependencies": {
-    "gatsby": "^2.0.0"
-  },
   "files": [
     "dist/*"
   ],

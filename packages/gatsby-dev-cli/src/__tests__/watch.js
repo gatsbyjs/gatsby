@@ -284,7 +284,6 @@ const monoRepoPackages = [
   `gatsby-transformer-toml`,
   `gatsby-transformer-xml`,
   `gatsby-transformer-yaml`,
-  `graphql-skip-limit`,
 ]
 
 const mockDepsChanges = packagesWithChangedDeps => ({ packageName }) =>

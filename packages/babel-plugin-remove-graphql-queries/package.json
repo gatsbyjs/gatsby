@@ -16,10 +16,6 @@
   },
   "license": "MIT",
   "main": "index.js",
-  "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "graphql": "^14.1.1"
-  },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
