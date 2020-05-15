@@ -11,22 +11,20 @@ const createHash = link => {
   return index >= 0 ? link.substr(index + 1) : false
 }
 
-const extendItem = (items, parentTitle, parentUi, level) => {
+const extendItem = (items, parentTitle, level) => {
   items.forEach(item => {
     item.hash = createHash(item.link)
     item.parentTitle = parentTitle
-    if (parentUi) item.parentUi = parentUi
     item.level = level || 1
 
-    if (item.items)
-      extendItem(item.items, item.title, item.parentUi, item.level + 1)
+    if (item.items) extendItem(item.items, item.title, item.level + 1)
   })
 }
 
 const extendItemList = itemList => {
   itemList.forEach(section => {
     section.level = 0
-    if (section.items) extendItem(section.items, section.title, section.ui)
+    if (section.items) extendItem(section.items, section.title)
   })
   return itemList
 }

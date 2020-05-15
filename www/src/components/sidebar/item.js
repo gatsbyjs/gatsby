@@ -4,7 +4,7 @@ import Accordion from "./accordion"
 import ItemLink from "./item-link"
 import { useSidebarContext } from "./sidebar"
 
-const Item = ({ item }) => {
+const Item = ({ item, isSteps }) => {
   const { getItemState } = useSidebarContext()
   const { isActive } = getItemState(item)
   const itemRef = React.useRef(null)
@@ -21,7 +21,7 @@ const Item = ({ item }) => {
   } else {
     return (
       <li ref={itemRef}>
-        <ItemLink item={item} />
+        <ItemLink item={item} isSteps={isSteps} />
       </li>
     )
   }
