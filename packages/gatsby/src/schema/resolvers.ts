@@ -482,7 +482,7 @@ export function tracingResolver<TSource, TArgs>(
     info
   ): Promise<any> {
     let activity
-    if (context.tracer) {
+    if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
         `${info.parentType.name}.${info.fieldName}`
