@@ -10612,4 +10612,18 @@
     - Design
   built_by: Raz Lifshitz
   built_by_url: https://www.linkedin.com/in/raz-lifshitz
+- title: Runly
+  url: https://www.runly.io/
+  main_url: https://www.runly.io/
+  description: >
+    The easiest way to run background jobs with .NET Core. It's more than background jobs —
+    it's an all-in-one platform to create great user experiences.
+  categories:
+    - API
+    - App
+    - Landing Page
+    - Technology
+    - Programming
+  built_by: Chad Lee
+  built_by_url: https://github.com/chadly
   featured: false
