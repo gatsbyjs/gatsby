@@ -32,7 +32,7 @@ const doesConfigChangeRequireRestart = (
   newConfig: Record<string, any>
 ): boolean => {
   // Ignore changes to siteMetadata
-  const replacer = (k, v): string | void => {
+  const replacer = (_, v): string | void => {
     if (typeof v === `function`) {
       return v.toString()
     } else {
