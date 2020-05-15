@@ -283,7 +283,7 @@ export interface IRemoveStaleJobV2Action {
 
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
-  plugin: string
+  plugin?: string
   payload: {
     path: string
     nodeId?: string
