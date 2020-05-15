@@ -63,6 +63,7 @@ exports.createPages = async ({ graphql, actions }) => {
     query {
       allAuthorYaml {
         nodes {
+          id
           fields {
             slug
           }
@@ -100,7 +101,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `${node.fields.slug}`,
       component: slash(contributorPageTemplate),
       context: {
-        slug: node.fields.slug,
+        authorId: node.id,
       },
     })
   })
