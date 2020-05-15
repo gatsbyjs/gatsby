@@ -85,7 +85,7 @@ const LayerModel = ({
     }
   }, [selected])
   return (
-        <div
+    <div
       sx={{
         borderRadius: 3,
         border: t => `1px solid ${t.colors.ui.border}`,

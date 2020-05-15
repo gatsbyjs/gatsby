@@ -3,6 +3,7 @@ import { jsx } from "theme-ui"
 import { Fragment } from "react"
 import loadable from "@loadable/component"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import Main from "./main-content"
 
 const PluginSearchBar = loadable(() => import("./plugin-searchbar-body"))
 
@@ -34,8 +35,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
     >
       <PluginSearchBar location={location} />
     </nav>
-    <main
-      id={`reach-skip-nav`}
+    <Main
       sx={{
         // mobile: hide README on gatsbyjs.org/plugins index page
         display: isPluginsIndex ? `none` : false,
@@ -49,7 +49,7 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
       }}
     >
       {children}
-    </main>
+    </Main>
   </Fragment>
 )
 
