@@ -401,6 +401,9 @@ module.exports = async (
           `.cache/react-lifecycles-compat.js`
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
+        "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
+          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        ),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -531,8 +534,8 @@ module.exports = async (
         },
         commons: {
           name: `commons`,
-          // if a chunk is used on all components we put it in commons
-          minChunks: componentsCount,
+          // if a chunk is used on all components we put it in commons (we need at least 2 components)
+          minChunks: Math.max(componentsCount, 2),
           priority: 20,
         },
         // If a chunk is used in at least 2 components we create a separate chunk
@@ -565,6 +568,11 @@ module.exports = async (
           enforce: true,
         },
       },
+      // We load our pages async through async-requires, maxInitialRequests doesn't have an effect on chunks derived from page components.
+      // By default webpack has set maxAsyncRequests to 6, in some cases this isn't enough an actually makes the bundle size blow up.
+      // We've set maxAsyncRequests to Infinity to negate this. This could potentionally exceed the 25 initial requests that we set before
+      // sadly I do not have a better solution.
+      maxAsyncRequests: Infinity,
       maxInitialRequests: 25,
       minSize: 20000,
     }
@@ -639,7 +647,7 @@ module.exports = async (
     }
 
     config.externals = [
-      function(context, request, callback) {
+      function (context, request, callback) {
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)

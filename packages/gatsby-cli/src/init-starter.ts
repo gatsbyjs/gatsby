@@ -165,7 +165,10 @@ const copy = async (
 }
 
 // Clones starter from URI.
-const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
+const clone = async (
+  hostInfo: hostedGitInfo,
+  rootPath: string
+): Promise<void> => {
   let url: string
   // Let people use private repos accessed over SSH.
   if (hostInfo.getDefaultRepresentation() === `sshurl`) {
@@ -179,9 +182,14 @@ const clone = async (hostInfo: any, rootPath: string): Promise<void> => {
 
   report.info(`Creating new site from git: ${url}`)
 
-  const args = [`clone`, ...branch, url, rootPath, `--depth=1`].filter(arg =>
-    Boolean(arg)
-  )
+  const args = [
+    `clone`,
+    ...branch,
+    url,
+    rootPath,
+    `--recursive`,
+    `--depth=1`,
+  ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 
@@ -203,8 +211,8 @@ interface IGetPaths {
 }
 
 const getPaths = async (
-  starterPath: string,
-  rootPath: string
+  starterPath?: string,
+  rootPath?: string
 ): Promise<IGetPaths> => {
   let selectedOtherStarter = false
 
@@ -252,10 +260,6 @@ const getPaths = async (
   return { starterPath, rootPath, selectedOtherStarter }
 }
 
-interface IInitOptions {
-  rootPath: string
-}
-
 const successMessage = (path: string): void => {
   report.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
@@ -269,12 +273,12 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
  * Main function that clones or copies the starter.
  */
 export async function initStarter(
-  starter: string,
-  options: IInitOptions
+  starter?: string,
+  root?: string
 ): Promise<void> {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
-    options.rootPath
+    root
   )
 
   const urlObject = url.parse(rootPath)

@@ -26,8 +26,11 @@ _Note: A **KintoBlock** is connected to a GitHub repository. Accessing the kinto
 ### Create a KintoBlock
 
 1. Register on [KintoHub](https://beta.kintohub.com).
+
 2. Create a new **KintoBlock** of type **Website** and give KintoHub permission to access your GitHub repo.
+
 3. Select your GitHub repo from the list and press **Continue**.
+
 4. Choose **Static from Build** with the following values:
 
    |                         |                                                            |

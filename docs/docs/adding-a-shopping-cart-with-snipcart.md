@@ -185,10 +185,10 @@ The following quote is from the Snipcart [payment gateway page](https://app.snip
 
 ## Other resources
 
-- [Build an E-commerce Site with Gatsby, DatoCMS, and Snipcart](/docs/tutorial/e-commerce-with-datocms-and-snipcart/) tutorial
+- [Build an E-commerce Site with Gatsby, DatoCMS, and Snipcart](/tutorial/e-commerce-with-datocms-and-snipcart/) tutorial
 - [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/)
 - [OneShopper Gatsby starter](/starters/rohitguptab/OneShopper/)
 - Reference guide on [sourcing from Etsy](/docs/sourcing-from-etsy/)
 - Reference guide on [processing payments with Stripe](/docs/processing-payments-with-stripe/)
-- From the Snipcart blog: [E-Commerce for React Developers [w/ Gatsby Tutorial]](https://snipcart.com/blog/react-ecommerce-gatsby-tutorial)
+- From the Snipcart blog: [E-Commerce for React Developers \[w/ Gatsby Tutorial\]](https://snipcart.com/blog/react-ecommerce-gatsby-tutorial)
 - [Snipcart documentation](https://docs.snipcart.com/v3/setup/installation)

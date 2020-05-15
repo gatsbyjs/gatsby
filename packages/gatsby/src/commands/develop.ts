@@ -1,7 +1,7 @@
-import url from "url"
 import fs from "fs"
 import openurl from "better-opn"
 import chokidar from "chokidar"
+import { SchemaComposer } from "graphql-compose"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
@@ -12,7 +12,7 @@ import webpack from "webpack"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError } from "graphql"
+import { formatError, GraphQLSchema } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
@@ -24,19 +24,23 @@ import report from "gatsby-cli/lib/reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
-import address from "address"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
 
-import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
+import {
+  bootstrapSchemaHotReloader,
+  startSchemaHotReloader,
+  stopSchemaHotReloader,
+} from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { developStatic } from "./develop-static"
 import withResolverContext from "../schema/context"
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
+import { rebuild as rebuildSchema } from "../schema"
 import { websocketManager } from "../utils/websocket-manager"
 import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
@@ -58,7 +62,8 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
+import { Stage, IProgram } from "./types"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -84,7 +89,7 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-async function startServer(program: IProgram): Promise<IServer> {
+async function startServer(program: IDevelopArgs): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
@@ -94,7 +99,7 @@ async function startServer(program: IProgram): Promise<IServer> {
     try {
       await buildHTML({
         program,
-        stage: BuildHTMLStage.DevelopHTML,
+        stage: Stage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
         activity,
@@ -174,7 +179,16 @@ async function startServer(program: IProgram): Promise<IServer> {
     graphqlEndpoint,
     graphqlHTTP(
       (): graphqlHTTP.OptionsData => {
-        const { schema, schemaCustomization } = store.getState()
+        const {
+          schema,
+          schemaCustomization,
+        }: {
+          schema: GraphQLSchema
+          schemaCustomization: {
+            composer: SchemaComposer<any>
+            context: any
+          }
+        } = store.getState()
 
         return {
           schema,
@@ -203,6 +217,7 @@ async function startServer(program: IProgram): Promise<IServer> {
    **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
+    stopSchemaHotReloader()
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
     await createSchemaCustomization({
@@ -215,6 +230,11 @@ async function startServer(program: IProgram): Promise<IServer> {
       webhookBody: req.body,
     })
     activity.end()
+    activity = report.activityTimer(`rebuild schema`)
+    activity.start()
+    await rebuildSchema({ parentSpan: activity })
+    activity.end()
+    startSchemaHotReloader()
   }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
@@ -337,7 +357,11 @@ async function startServer(program: IProgram): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-module.exports = async (program: IProgram): Promise<void> => {
+interface IDevelopArgs extends IProgram {
+  graphqlTracing: boolean
+}
+
+module.exports = async (program: IDevelopArgs): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -402,6 +426,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     program.ssl = await getSslCert({
       name: sslHost,
+      caFile: program[`ca-file`],
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
@@ -417,7 +442,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
 
-  await queryUtil.initialProcessQueries()
+  await queryUtil.initialProcessQueries({
+    graphqlTracing: program.graphqlTracing,
+  })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -427,79 +454,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   await waitUntilAllJobsComplete()
   requiresWriter.startListener()
   db.startAutosave()
-  queryUtil.startListeningToDevelopQueue()
+  queryUtil.startListeningToDevelopQueue({
+    graphqlTracing: program.graphqlTracing,
+  })
   queryWatcher.startWatchDeletePage()
 
   let { compiler, webpackActivity } = await startServer(program)
-
-  interface IPreparedUrls {
-    lanUrlForConfig: string
-    lanUrlForTerminal: string
-    localUrlForTerminal: string
-    localUrlForBrowser: string
-  }
-
-  function prepareUrls(
-    protocol: `http` | `https`,
-    host: string,
-    port: number
-  ): IPreparedUrls {
-    const formatUrl = (hostname: string): string =>
-      url.format({
-        protocol,
-        hostname,
-        port,
-        pathname: `/`,
-      })
-    const prettyPrintUrl = (hostname: string): string =>
-      url.format({
-        protocol,
-        hostname,
-        port: chalk.bold(String(port)),
-        pathname: `/`,
-      })
-
-    const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost = host
-    let lanUrlForConfig
-    let lanUrlForTerminal
-    if (isUnspecifiedHost) {
-      prettyHost = `localhost`
-
-      try {
-        // This can only return an IPv4 address
-        lanUrlForConfig = address.ip()
-        if (lanUrlForConfig) {
-          // Check if the address is a private ip
-          // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
-          if (
-            /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-              lanUrlForConfig
-            )
-          ) {
-            // Address is private, format it for later use
-            lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig)
-          } else {
-            // Address is not private, so we will discard it
-            lanUrlForConfig = undefined
-          }
-        }
-      } catch (_e) {
-        // ignored
-      }
-    }
-    // TODO collect errors (GraphQL + Webpack) in Redux so we
-    // can clear terminal and print them out on every compile.
-    // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(prettyHost)
-    const localUrlForBrowser = formatUrl(prettyHost)
-    return {
-      lanUrlForConfig,
-      lanUrlForTerminal,
-      localUrlForTerminal,
-      localUrlForBrowser,
-    }
-  }
 
   function printInstructions(appName: string, urls: IPreparedUrls): void {
     console.log()
@@ -603,7 +563,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   //   console.log(`set invalid`, args, this)
   // })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
@@ -618,7 +578,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
     stats,
     done
   ) {
