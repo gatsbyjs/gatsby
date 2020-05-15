@@ -10613,3 +10613,18 @@
   built_by: Raz Lifshitz
   built_by_url: https://www.linkedin.com/in/raz-lifshitz
   featured: false
+- title: Ajith's blog
+  url: https://ajith.blog
+  main_url: https://ajith.blog
+  source_url: https://github.com/ajithrnayak/ajith_blog
+  description: >
+    I build apps and sometimes write about the observations and frustrations at work here.
+  categories:
+    - Blog
+    - Mobile Development
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Ajith R Nayak
+  built_by_url: https://ajith.xyz
+  featured: false
