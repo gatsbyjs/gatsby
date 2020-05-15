@@ -34,7 +34,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     .then(res => res.json())
     .then(services => {
       const parentSocket = io(
-        `http://localhost:${services.developstatusserver}`
+        `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver}`
       )
 
       parentSocket.on(`develop:needs-restart`, msg => {
