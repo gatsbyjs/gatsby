@@ -32,26 +32,42 @@ const doesConfigChangeRequireRestart = (
   newConfig: Record<string, any>
 ): boolean => {
   // Ignore changes to siteMetadata
-  if (
-    JSON.stringify({ ...lastConfig, siteMetadata: null }) ===
-    JSON.stringify({ ...newConfig, siteMetadata: null })
+  const replacer = (k, v): string | void => {
+    if (typeof v === `function`) {
+      return v.toString()
+    } else {
+      return v
+    }
+  }
+
+  const oldConfigString = JSON.stringify(
+    { ...lastConfig, siteMetadata: null },
+    replacer
   )
-    return false
+  const newConfigString = JSON.stringify(
+    { ...newConfig, siteMetadata: null },
+    replacer
+  )
+
+  if (oldConfigString === newConfigString) return false
 
   return true
 }
 
 class ControllableScript {
   private process
-  private tmpFile
+  private script
   public isRunning
   constructor(script) {
-    this.tmpFile = tmp.fileSync()
-    fs.writeFileSync(this.tmpFile.name, script)
+    this.script = script
   }
   start(): void {
+    const tmpFile = tmp.fileSync({
+      tmpdir: path.join(process.cwd(), `.cache`),
+    })
+    fs.writeFileSync(tmpFile.name, this.script)
     this.isRunning = true
-    this.process = spawn(`node`, [this.tmpFile.name], {
+    this.process = spawn(`node`, [tmpFile.name], {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -81,6 +97,8 @@ class ControllableScript {
     this.process.on(type, callback)
   }
 }
+
+let isRestarting
 
 module.exports = async (program: IProgram): Promise<void> => {
   const developProcessPath = require.resolve(`./develop-process`)
@@ -125,8 +143,10 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   io.on(`connection`, socket => {
     socket.on(`develop:restart`, async () => {
+      isRestarting = true
       await script.stop()
       script.start()
+      isRestarting = false
     })
   })
 
@@ -161,6 +181,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
   script.on(`exit`, code => {
+    if (isRestarting) return
     process.exit(code)
   })
 
@@ -192,9 +213,17 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   process.on(`beforeExit`, async () => {
-    statusServer.close()
-    proxy.server.close()
-    await Promise.all([watcher.close(), unlock()])
+    await Promise.all([
+      watcher.close(),
+      unlock(),
+      new Promise(resolve => {
+        statusServer.close(resolve)
+      }),
+
+      new Promise(resolve => {
+        proxy.server.close(resolve)
+      }),
+    ])
   })
 
   process.on(`SIGINT`, async () => {
