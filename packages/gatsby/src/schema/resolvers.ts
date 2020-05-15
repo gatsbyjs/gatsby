@@ -17,7 +17,7 @@ import {
   FieldNode,
 } from "graphql"
 import { Path } from "graphql/jsutils/Path"
-const reporter = require(`gatsby-cli/lib/reporter`)
+import reporter from  "gatsby-cli/lib/reporter`)
 import { pathToArray } from "../query/utils"
 import { getValueAt } from "../utils/get-value-at"
 import {
