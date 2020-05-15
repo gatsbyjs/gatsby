@@ -16,6 +16,9 @@ import {
   SelectionNode,
   FieldNode,
 } from "graphql"
+import { Path } from "graphql/jsutils/Path"
+import reporter from "gatsby-cli/lib/reporter"
+import { pathToArray } from "../query/utils"
 import { getValueAt } from "../utils/get-value-at"
 import {
   GatsbyResolver,
@@ -472,7 +475,19 @@ export const defaultFieldResolver: GatsbyResolver<
   return null
 }
 
-export function tracingResolver<TSource, TArgs>(
+let WARNED_ABOUT_RESOLVERS = false
+function badResolverInvocationMessage(missingVar: string, path?: Path): string {
+  const resolverName = path ? `${pathToArray(path)} ` : ``
+  return `GraphQL Resolver ${resolverName}got called without "${missingVar}" argument. This might cause unexpected errors.
+  
+It's likely that this has happened in a schemaCustomization with manually invoked resolver. If manually invoking resolvers, it's best to invoke them as follows:
+
+  resolve(parent, args, context, info)
+
+`
+}
+
+export function wrappingResolver<TSource, TArgs>(
   resolver: GatsbyResolver<TSource, TArgs>
 ): GatsbyResolver<TSource, TArgs> {
   return async function wrappedTracingResolver(
@@ -481,8 +496,18 @@ export function tracingResolver<TSource, TArgs>(
     context,
     info
   ): Promise<any> {
+    if (!WARNED_ABOUT_RESOLVERS) {
+      if (!info) {
+        reporter.warn(badResolverInvocationMessage(`info`))
+        WARNED_ABOUT_RESOLVERS = true
+      } else if (!context) {
+        reporter.warn(badResolverInvocationMessage(`context`, info.path))
+        WARNED_ABOUT_RESOLVERS = true
+      }
+    }
+
     let activity
-    if (context.tracer) {
+    if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
         `${info.parentType.name}.${info.fieldName}`
@@ -499,4 +524,4 @@ export function tracingResolver<TSource, TArgs>(
   }
 }
 
-export const defaultTracingResolver = tracingResolver(defaultFieldResolver)
+export const defaultResolver = wrappingResolver(defaultFieldResolver)
