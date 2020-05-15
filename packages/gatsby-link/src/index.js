@@ -125,7 +125,8 @@ class GatsbyLink extends React.Component {
       // If IO supported and element reference found, setup Observer functionality
       this.io = createIntersectionObserver(ref, () => {
         ___loader.enqueue(
-          parsePath(this.props.to, window.location.pathname).pathname
+          parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+            .pathname
         )
       })
     }
