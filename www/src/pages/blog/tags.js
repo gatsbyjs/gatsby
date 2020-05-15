@@ -32,8 +32,6 @@ const POPULAR_TAGS = [
   `contentful`,
 ]
 
-// grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
