@@ -13,7 +13,7 @@ import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
-import { babelReducer } from "./babelrc"
+import { babelrcReducer } from "./babelrc"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -38,7 +38,7 @@ module.exports = {
   webpack: webpackReducer,
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,
-  babelrc: babelReducer,
+  babelrc: babelrcReducer,
   schemaCustomization: require(`./schema-customization`),
   themes: themesReducer,
   logs: logReducer,

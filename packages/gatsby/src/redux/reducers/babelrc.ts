@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 
 import { IGatsbyState, ActionsUnion } from "../types"
 
-export const babelReducer = (
+export const babelrcReducer = (
   state: IGatsbyState["babelrc"] = {
     stages: {
       develop: {
