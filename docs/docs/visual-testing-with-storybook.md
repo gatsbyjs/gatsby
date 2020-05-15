@@ -214,7 +214,11 @@ The `babel-preset-react-app` package will also need to be installed.
 npm install --save-dev babel-preset-react-app
 ```
 
+With setup completed for Storybook 5, you can continue with the [information below to write stories](#writing-stories).
+
 ### Storybook version 4
+
+To use Storybook version 4 with Gatsby, use the following setup instructions:
 
 ```js:title=.storybook/webpack.config.js
 module.exports = (baseConfig, env, defaultConfig) => {
