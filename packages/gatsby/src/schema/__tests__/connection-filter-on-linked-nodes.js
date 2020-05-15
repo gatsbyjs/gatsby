@@ -285,12 +285,12 @@ describe(`filtering on linked nodes`, () => {
     }
 
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
-    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    expect(result.data.in.edges).toEqual([`bar`, `foo`, `baz`].map(itemToEdge))
     expect(result.data.insideInlineArrayEq.edges).toEqual(
       [`lorem`, `ipsum`, `sit`].map(itemToEdge)
     )
     expect(result.data.insideInlineArrayIn.edges).toEqual(
-      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+      [`lorem`, `ipsum`, `dolor`, `sit`].map(itemToEdge)
     )
   })
 
