@@ -14,15 +14,7 @@ const pathIsCCollectionBuilder = path => {
 
 const pathIsClientOnlyRoute = path => /\[.*\]/.test(path)
 
-exports.createPage = (
-  filePath,
-  pagesDirectory,
-  actions,
-  ignore,
-  graphql,
-  root,
-  queriesMap
-) => {
+exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {
@@ -39,15 +31,8 @@ exports.createPage = (
   const absolutePath = systemPath.join(pagesDirectory, filePath)
 
   if (pathIsCCollectionBuilder(absolutePath)) {
-    // let queryState = queriesMap.get(absolutePath)
     console.log(3, absolutePath)
-    createPagesFromCollectionBuilder(
-      absolutePath,
-      actions,
-      graphql,
-      root
-      // queryState.text
-    )
+    createPagesFromCollectionBuilder(absolutePath, actions, graphql)
     return
   }
 

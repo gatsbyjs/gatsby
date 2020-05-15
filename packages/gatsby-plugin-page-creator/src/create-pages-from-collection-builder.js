@@ -52,11 +52,8 @@ function isCreatePagesFromData(path) {
 exports.createPagesFromCollectionBuilder = async function createPagesFromCollectionBuilder(
   absolutePath,
   actions,
-  graphql,
-  root
-  // queryString
+  graphql
 ) {
-  console.log(`createing collection`)
   const [, route] = absolutePath.split(`src/pages`)
 
   const ast = babelParseToAst(
@@ -64,7 +61,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     absolutePath
   )
 
-  let queryString
+  let queryString = ``
 
   // -- Use the ast to find the component and query, and change the code
   // -- to export default the component, instead of our fancy api
@@ -93,9 +90,8 @@ Unfortunately, the query came back empty. There may be an error in your query.
     return
   }
 
-  // -- Get the data, and create a page for each node
-  // Not sure this is enough. Seems really brittle way of getting the array out of the query
-  const nodes = Object.values(data)[0].nodes
+  const rootKey = /^\{([a-zA-Z]+)/.exec(queryString)[1]
+  const nodes = data[rootKey].nodes
 
   if (nodes) {
     console.log(`>>>> Creating ${nodes.length} pages from ${route}`)
