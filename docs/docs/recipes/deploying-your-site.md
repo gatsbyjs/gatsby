@@ -95,7 +95,7 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 
 ### Directions
 
-1. Login into Now CLI using `vercel login`
+1. Login into Vercel CLI using `vercel login`
 
 2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
 
