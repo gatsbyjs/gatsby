@@ -36,17 +36,13 @@ const POPULAR_TAGS = [
   `contentful`,
 ]
 
+// grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   grid-gap: ${space[2]};
-  ${mediaQueries.xs} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  ${mediaQueries.md} {
-    grid-template-columns: repeat(4, 1fr);
-  }
 `
 
 const PopularTagButton = ({ children, tag }) => (
