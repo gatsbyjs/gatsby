@@ -10,19 +10,21 @@ export { parsePath }
 const isAbsolutePath = path => path.startsWith(`/`)
 
 export function withPrefix(path) {
+  const base = __BASE_PATH__ ?? __PATH_PREFIX__
   if (isAbsolutePath(path)) {
-    return normalizePath(`${__BASE_PATH__ ?? __PATH_PREFIX__}/${path}`)
+    return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${path}`
   }
-  return normalizePath(path)
+  return path
 }
 
 export function withAssetPrefix(path) {
   return isAbsolutePath(path)
-    ? `${__PATH_PREFIX__}/${path.startsWith(`/`) ? path.substring(1) : path}`
+    ? `${
+        __PATH_PREFIX__?.endsWith(`/`)
+          ? __PATH_PREFIX__.slice(0, -1)
+          : __PATH_PREFIX__
+      }/${path.startsWith(`/`) ? path.substring(1) : path}`
     : path
-}
-function normalizePath(path) {
-  return path.replace(/\/+/g, `/`)
 }
 
 function absolutify(path, current) {
@@ -38,10 +40,14 @@ const isLocalLink = path =>
   !path.startsWith(`https://`) &&
   !path.startsWith(`//`)
 
-const rewriteLinkPath = (path, relativeTo) =>
-  isAbsolutePath(path) && isLocalLink(path)
+const rewriteLinkPath = (path, relativeTo) => {
+  if (!isLocalLink(path)) {
+    return path
+  }
+  return isAbsolutePath(path)
     ? withPrefix(path)
-    : absolutify(path, relativeTo)
+    : withPrefix(absolutify(path, relativeTo))
+}
 
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
@@ -160,11 +166,7 @@ class GatsbyLink extends React.Component {
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
-    if (
-      process.env.NODE_ENV !== `production` &&
-      !isLocalLink(to) &&
-      isAbsolutePath(to)
-    ) {
+    if (process.env.NODE_ENV !== `production` && !isLocalLink(to)) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
@@ -174,7 +176,7 @@ class GatsbyLink extends React.Component {
       <Location>
         {({ location }) => {
           const prefixedTo = rewriteLinkPath(to, location.pathname)
-          return (
+          return isLocalLink(prefixedTo) ? (
             <Link
               to={prefixedTo}
               state={state}
@@ -220,6 +222,8 @@ class GatsbyLink extends React.Component {
               }}
               {...rest}
             />
+          ) : (
+            <a href={prefixedTo} {...rest} />
           )
         }}
       </Location>
