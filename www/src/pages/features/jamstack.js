@@ -14,6 +14,7 @@ import Breadcrumb from "../../components/docs-breadcrumb"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import useComparisonState from "../../hooks/use-comparison-state"
 import PageWithSidebar from "../../components/page-with-sidebar"
+import Main from "../../components/main-content"
 
 const FeaturesHeader = () => (
   <section>
@@ -40,7 +41,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
   return (
     <PageWithSidebar location={location}>
       <Container>
-        <main id={`reach-skip-nav`}>
+        <Main>
           <Breadcrumb location={location} />
           <FeaturesHeader />
           <h3>Comparison</h3>
@@ -87,7 +88,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
             sectionHeaders={sectionHeaders}
           />
           <FeaturesFooter />
-        </main>
+        </Main>
         <FooterLinks />
       </Container>
     </PageWithSidebar>

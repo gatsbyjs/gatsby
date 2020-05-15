@@ -47,7 +47,7 @@ class EcosystemPage extends Component {
     const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
 
     return (
-       <Main>
+      <Main>
         <Layout
           location={location}
           pageTitle={pageTitle}
@@ -61,7 +61,7 @@ class EcosystemPage extends Component {
           />
           <FooterLinks />
         </Layout>
-        </Main>
+      </Main>
     )
   }
 }

@@ -12,6 +12,7 @@ import FeaturesFooter from "../../components/features/features-footer"
 import LegendTable from "../../components/features/legend-table"
 import CompareButton from "../../components/features/compare-button"
 import Breadcrumb from "../../components/docs-breadcrumb"
+import Main from "../../components/main-content"
 import featureComparisonOptions from "../../data/features/comparison-options.json"
 import useComparisonState from "../../hooks/use-comparison-state"
 
@@ -37,7 +38,7 @@ const CmsFeaturesPage = ({ data, location }) => {
   return (
     <PageWithSidebar location={location}>
       <Container>
-        <main id={`reach-skip-nav`}>
+        <Main>
           <Breadcrumb location={location} />
           <FeaturesHeader />
           <h3>Comparison</h3>
@@ -86,7 +87,7 @@ const CmsFeaturesPage = ({ data, location }) => {
             sectionHeaders={sectionHeaders}
           />
           <FeaturesFooter />
-        </main>
+        </Main>
         <FooterLinks />
       </Container>
     </PageWithSidebar>

@@ -16,6 +16,7 @@ import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
 import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
+import Main from "../components/main-content"
 import {
   setupScrollersObserver,
   unobserveScrollers,
@@ -83,8 +84,7 @@ class IndexRoute extends React.Component {
     return (
       <>
         <PageMetadata description="Blazing fast modern site generator for React. Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby." />
-        <main
-          id={`reach-skip-nav`}
+        <Main
           css={{
             display: `flex`,
             flexDirection: `row`,
@@ -130,7 +130,7 @@ class IndexRoute extends React.Component {
           <HomepageBlog posts={postsData} />
 
           <HomepageNewsletter />
-        </main>
+        </Main>
         <FooterLinks />
       </>
     )

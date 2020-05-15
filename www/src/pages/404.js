@@ -6,7 +6,6 @@ import Main from "../components/main-content"
 
 export default function FourOhFour() {
   return (
-    <>
     <Main>
       <Container>
         <h1>Page not found</h1>
@@ -14,9 +13,8 @@ export default function FourOhFour() {
         <Link to="/">
           <p>Go Back</p>
         </Link>
-        </Container>
-        <FooterLinks />
-      </Main>
-    </>
+      </Container>
+      <FooterLinks />
+    </Main>
   )
 }

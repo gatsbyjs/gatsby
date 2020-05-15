@@ -117,7 +117,7 @@ class TagsPage extends React.Component {
     })
 
     return (
-    <Main>
+      <Main>
         <Container>
           <PageMetadata
             title="Tags"

@@ -11,6 +11,7 @@ import LegendTable from "../components/features/legend-table"
 import FeaturesFooter from "../components/features/features-footer"
 import SimpleEvaluationTable from "../components/features/simple-evaluation-table"
 import PageWithSidebar from "../components/page-with-sidebar"
+import Main from "../components/main-content"
 
 const FeaturesHeader = () => (
   <section>
@@ -110,7 +111,7 @@ class FeaturesPage extends Component {
           description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
         />
         <Container>
-          <main id={`reach-skip-nav`}>
+          <Main>
             <FeaturesHeader />
             <SimpleEvaluationTable
               title="Feature Comparison"
@@ -126,7 +127,7 @@ class FeaturesPage extends Component {
               data={this.props.data.allGatsbyFeaturesSpecsCsv.nodes}
             />
             <FeaturesFooter />
-          </main>
+          </Main>
           <FooterLinks />
         </Container>
       </PageWithSidebar>
