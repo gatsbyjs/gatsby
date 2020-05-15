@@ -126,17 +126,20 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const statusServerPort = await getRandomPort()
 
-  const unlock = await createServiceLock(
-    program.directory,
-    `developstatusserver`,
-    statusServerPort.toString()
-  )
-
-  if (!unlock) {
-    console.error(
-      `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
+  let unlock
+  if (!isCI()) {
+    unlock = await createServiceLock(
+      program.directory,
+      `developstatusserver`,
+      statusServerPort.toString()
     )
-    process.exit(1)
+
+    if (!unlock) {
+      console.error(
+        `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
+      )
+      process.exit(1)
+    }
   }
 
   const statusServer = http.createServer().listen(statusServerPort)
@@ -215,7 +218,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   process.on(`beforeExit`, async () => {
     await Promise.all([
       watcher?.close(),
-      unlock(),
+      unlock?.(),
       new Promise(resolve => {
         statusServer.close(resolve)
       }),
