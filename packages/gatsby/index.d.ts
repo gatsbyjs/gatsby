@@ -30,13 +30,10 @@ export const parsePath: (path: string) => WindowLocation
 
 export const prefetchPathname: (path: string) => void
 
-interface CollectionPagesSchema {}
-type CollectionPagesTransformer<T> = (results: T) => T
 export const createPagesFromData: <T>(
   component: React.ComponentType<PageProps<T>>,
-  query: void,
-  transformer?: CollectionPagesTransformer<T>
-) => CollectionPagesSchema
+  query: string
+) => React.ComponentType<PageProps<T>>
 
 /**
  * A props object for adding type safety to your Gatsby pages, can be
