@@ -7,7 +7,11 @@ const IndexPage = () => (
   <Layout>
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby blog with Markdown pages.</p>
-    <Link to="/blog/my-first-post/">Go to my first Markdown blog post</Link>
+    <p>
+      <Link to="/blog/my-first-post/">Go to my first Markdown blog post</Link>
+      <br />
+      <Link to="/blog/my-second-post/">Go to my second Markdown blog post</Link>
+    </p>
   </Layout>
 )
 

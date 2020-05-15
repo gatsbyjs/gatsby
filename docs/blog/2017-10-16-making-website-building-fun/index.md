@@ -40,13 +40,13 @@ and use it like an HTML element?
 
 Compare this with the minimum code necessary for the original headroom.js.
 
-#### HTML
+## HTML
 
 ```html
 <header class="headroom"><h1>header content</h1></header>
 ```
 
-#### JavaScript
+## JavaScript
 
 ```js
 // grab the element
@@ -57,7 +57,7 @@ var headroom = new Headroom(myElement)
 headroom.init()
 ```
 
-#### CSS
+## CSS
 
 ```css
 .headroom {
