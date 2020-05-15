@@ -22,14 +22,14 @@ export const SORTABLE_ENUM = {
 const MAX_SORT_DEPTH = 3
 const SORT_FIELD_DELIMITER = `___`
 
-const convert = (
-  schemaComposer: SchemaComposer<any>,
-  typeComposer: InterfaceTypeComposer<any>,
+const convert = <TContext = any>(
+  schemaComposer: SchemaComposer<TContext>,
+  typeComposer: InterfaceTypeComposer<TContext>,
   fields: GraphQLInputFieldConfigMap,
   prefix?: string,
   depth = 0,
   deprecationReason?: string
-): ObjMap<EnumTypeComposer.ComposeEnumValueConfig> => {
+): ObjMap<TContext> => {
   const sortFields = {}
 
   Object.keys(fields).forEach(fieldName => {
@@ -54,7 +54,7 @@ const convert = (
     const type = fieldConfig.type
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {
-        const typeComposer = schemaComposer.getIFTC(
+        const typeComposer = schemaComposer.getAnyTC(
           type.name.replace(/Input$/, ``)
         )
         Object.assign(
@@ -80,10 +80,10 @@ const convert = (
   return sortFields
 }
 
-export const getSortOrderEnum = ({
+export const getSortOrderEnum = <TContext = any>({
   schemaComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
+  schemaComposer: SchemaComposer<TContext>
 }): EnumTypeComposer =>
   schemaComposer.getOrCreateETC(`SortOrderEnum`, (etc: EnumTypeComposer) => {
     etc.setFields({
@@ -92,13 +92,13 @@ export const getSortOrderEnum = ({
     })
   })
 
-export const getFieldsEnum = ({
+export const getFieldsEnum = <TContext = any>({
   schemaComposer,
   typeComposer,
   inputTypeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
-  typeComposer: InterfaceTypeComposer<any>
+  schemaComposer: SchemaComposer<TContext>
+  typeComposer: InterfaceTypeComposer<TContext>
   inputTypeComposer: InputTypeComposer
 }): EnumTypeComposer => {
   const typeName = typeComposer.getTypeName()
@@ -121,12 +121,12 @@ export const getFieldsEnum = ({
   return fieldsEnumTypeComposer
 }
 
-export const getSortInput = ({
+export const getSortInput = <TContext = any>({
   schemaComposer,
   typeComposer,
 }: {
-  schemaComposer: SchemaComposer<any>
-  typeComposer: InterfaceTypeComposer<any>
+  schemaComposer: SchemaComposer<TContext>
+  typeComposer: InterfaceTypeComposer<TContext>
 }): InputTypeComposer => {
   const inputTypeComposer = typeComposer.getInputTypeComposer()
   const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
