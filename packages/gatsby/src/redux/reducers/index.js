@@ -13,6 +13,7 @@ import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
+import { nodesTouchedReducer } from "./nodes-touched"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -22,7 +23,7 @@ module.exports = {
   nodes: nodeReducer,
   nodesByType: nodesByType,
   resolvedNodesCache: require(`./resolved-nodes`),
-  nodesTouched: require(`./nodes-touched`),
+  nodesTouched: nodesTouchedReducer,
   lastAction: lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),

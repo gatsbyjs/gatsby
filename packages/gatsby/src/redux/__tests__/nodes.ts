@@ -1,7 +1,7 @@
 import { actions } from "../actions"
 import { nodeReducer } from "../reducers/nodes"
-import nodeTouchedReducer from "../reducers/nodes-touched"
 import { IGatsbyNode } from "../types"
+import { nodesTouchedReducer } from "../reducers/nodes-touched"
 
 jest.mock(`../../db/nodes`)
 jest.mock(`../nodes`)
@@ -124,7 +124,7 @@ describe(`Create and update nodes`, (): void => {
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
 
-    const state = nodeTouchedReducer(undefined, action)
+    const state = nodesTouchedReducer(undefined, action)
 
     expect(state instanceof Set).toBe(true)
 

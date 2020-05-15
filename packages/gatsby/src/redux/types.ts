@@ -251,6 +251,7 @@ export type ActionsUnion =
   | ISetSchemaAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
@@ -529,4 +530,9 @@ export interface IDeleteNodeAction {
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   payload: Identifier[]
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }
