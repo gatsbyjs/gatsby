@@ -2,7 +2,7 @@ import { onLogAction } from "../../redux/index"
 import { ISetStatus, ActionsUnion } from "../../redux/types"
 import { Actions, LogLevels } from "../../constants"
 import stripAnsi from "strip-ansi"
-import {cloneDeep} from "lodash"
+import { cloneDeep } from "lodash"
 
 const isStringPayload = (action: ActionsUnion): action is ISetStatus =>
   typeof action.payload === `string`
@@ -12,7 +12,7 @@ const isStringPayload = (action: ActionsUnion): action is ISetStatus =>
  * See more at integration-tests/structured-logging/__tests__/to-do.js
  */
 const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
-  let copiedAction = cloneDeep(action)
+  const copiedAction = cloneDeep(action)
 
   if (isStringPayload(copiedAction)) {
     return copiedAction
