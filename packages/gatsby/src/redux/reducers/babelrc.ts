@@ -1,6 +1,6 @@
-const _ = require(`lodash`)
+import _ from "lodash"
 
-import { IGatsbyState, ActionsUnion } from "../types"
+import { IGatsbyState, ActionsUnion, IPlugin } from "../types"
 
 export const babelrcReducer = (
   state: IGatsbyState["babelrc"] = {
@@ -50,7 +50,7 @@ export const babelrcReducer = (
 
         const index = _.findIndex(
           state.stages[stage].plugins,
-          p => p.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.
@@ -78,7 +78,7 @@ export const babelrcReducer = (
 
         const index = _.findIndex(
           state.stages[stage].presets,
-          p => p.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.

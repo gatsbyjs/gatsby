@@ -106,9 +106,9 @@ export interface IGatsbyCompleteJobV2 {
   inputPaths: InternalJobInterface["inputPaths"]
 }
 
-interface IPlugin {
+export interface IPlugin {
   name: string
-  options: string[]
+  options: Record<string, any>
 }
 
 interface IBabelStage {
