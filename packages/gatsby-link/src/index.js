@@ -7,14 +7,7 @@ import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-function isAbsolutePath(path) {
-  return !(
-    path.startsWith(`./`) ||
-    path.startsWith(`../`) ||
-    path === `..` ||
-    path === `.`
-  )
-}
+const isAbsolutePath = path => path.startsWith(`/`)
 
 export function withPrefix(path) {
   if (isAbsolutePath(path)) {
@@ -40,7 +33,10 @@ function absolutify(path, current) {
   return resolve(path, current)
 }
 
-const isLocalLink = path => path.startsWith(`/`) && !path.startsWith(`//`)
+const isLocalLink = path =>
+  !path.startsWith(`http://`) &&
+  !path.startsWith(`https://`) &&
+  !path.startsWith(`//`)
 
 const rewriteLinkPath = (path, relativeTo) =>
   isAbsolutePath(path) && isLocalLink(path)

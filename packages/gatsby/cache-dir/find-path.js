@@ -20,10 +20,9 @@ const trimPathname = rawPathname => {
 function absolutify(path) {
   // If it's already absolute, return as-is
   if (
-    !path.startsWith(`./`) &&
-    !path.startsWith(`../`) &&
-    path !== `..` &&
-    path !== `.`
+    path.startsWith(`/`) ||
+    path.startsWith(`https://`) ||
+    path.startsWith(`http://`)
   ) {
     return path
   }
