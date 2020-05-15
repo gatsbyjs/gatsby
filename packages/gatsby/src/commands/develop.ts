@@ -62,12 +62,12 @@ class ControllableScript {
     this.script = script
   }
   start(): void {
-    const tmpFile = tmp.fileSync({
+    const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
-    fs.writeFileSync(tmpFile.name, this.script)
+    fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    this.process = spawn(`node`, [tmpFile.name], {
+    this.process = spawn(`node`, [tmpFileName], {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
