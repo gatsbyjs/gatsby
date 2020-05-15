@@ -3,7 +3,7 @@ import { ISetStatus, ActionsUnion } from "../../redux/types"
 import { Actions, LogLevels } from "../../constants"
 import stripAnsi from "strip-ansi"
 
-const isISetStatus = (action: ActionsUnion): action is ISetStatus =>
+const isStringPayload = (action: ActionsUnion): action is ISetStatus =>
   typeof action.payload === `string`
 
 /**
@@ -11,7 +11,7 @@ const isISetStatus = (action: ActionsUnion): action is ISetStatus =>
  * See more at integration-tests/structured-logging/__tests__/to-do.js
  */
 const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
-  if (isISetStatus(action)) {
+  if (isStringPayload(action)) {
     return action
   }
 
