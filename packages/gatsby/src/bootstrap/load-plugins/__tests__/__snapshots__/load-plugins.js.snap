@@ -170,6 +170,22 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -186,7 +202,7 @@ Array [
 ]
 `;
 
-exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
+exports[`Load plugins Loads plugins defined with an object but without an options key 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],
@@ -374,6 +390,22 @@ Array [
     "id": "",
     "name": "default-site-plugin",
     "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -604,6 +636,22 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "gatsby-plugin-typescript",
+    "nodeAPIs": Array [
+      "resolvableExtensions",
+      "onCreateBabelConfig",
+      "onCreateWebpackConfig",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -619,3 +667,5 @@ Array [
   },
 ]
 `;
+
+exports[`Load plugins Throws an error when a plugin is defined with an option key 1`] = `"Plugin \\"___TEST___\\" has an \\"option\\" key in the configuration. Did you mean \\"options\\"?"`;

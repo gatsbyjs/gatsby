@@ -143,7 +143,7 @@ title: Deploying to Storage Provider
 
 <!-- highlight-start -->
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
+  Connect your Gatsby site to Storage Provider for automatic deployments.
 </CloudCallout>
 <!-- highlight-end -->
 ```
@@ -153,8 +153,8 @@ title: Deploying to Storage Provider
 Rendered, the component looks like this:
 
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
-</CloudCallout>{" "}
+  Connect your Gatsby site to Storage Provider for automatic deployments.
+</CloudCallout>
 
 ### Component Model
 
@@ -218,6 +218,10 @@ You can read more about writing in Markdown in the [Markdown syntax guide](/docs
   The excerpt for the post. Gatsby renders the value in `description`, `og:description`, and `twitter:description`.
 
 #### Blog Posts
+
+- `seoTitle` (string)
+
+  If provided, this value will overwrite the `title` for the blog post's `og:title` and `<title>`. This is useful for SEO, as it lets us target specific relevant keywords, without needing to change the page's primary visible title.
 
 - `date` (string)
 

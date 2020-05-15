@@ -116,8 +116,9 @@ To run a local recipe, make sure to start the path to the recipe with a period l
 
 To run a remote recipe, copy the path to the recipe and run it e.g.
 
-````shell
+```shell
 gatsby recipes https://example.com/sweet-recipe.mdx
+```
 
 ## External learning resources
 
@@ -138,7 +139,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
     path="src/pages"
   }}
 />
-````
+```
 
 #### props
 

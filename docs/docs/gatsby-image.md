@@ -371,7 +371,7 @@ Here are some usage examples:
 <Img
   fluid={data.file.childImageSharp.fluid}
   alt="Cat taking up an entire chair"
-  fadeIn="false"
+  fadeIn={false}
   className="customImg"
   placeholderStyle={{ `backgroundColor`: `black` }}
   onLoad={() => {
