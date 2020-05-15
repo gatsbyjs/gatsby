@@ -47,7 +47,7 @@ The following plugins have been created:
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
 - [gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3)
 
-When deploying with Now, follow the instructions in the [Now documentation](https://zeit.co/guides/deploying-gatsby-with-now#bonus:-cache-your-gatsby-assets).
+When deploying with Vercel, follow the instructions in the [Vercel documentation](https://vercel.com/guides/deploying-gatsby-with-vercel#bonus:-cache-your-gatsby-assets).
 
 ---
 
