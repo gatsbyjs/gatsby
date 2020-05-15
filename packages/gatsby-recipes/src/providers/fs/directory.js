@@ -50,10 +50,7 @@ const destroy = async (context, directoryResource) => {
 }
 
 module.exports.plan = async (context, { id, path: directoryPath }) => {
-  const newState = directoryPath
-
   const plan = {
-    newState,
     describe: `Create directory "${directoryPath}"`,
   }
 
