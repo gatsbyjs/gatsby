@@ -9,8 +9,8 @@ import { MDXProvider } from "@mdx-js/react"
 import theme from "../../../src/gatsby-plugin-theme-ui"
 
 jest.mock("gatsby-plugin-mdx", () => ({
-  MDXRenderer: () => <div />
-}));
+  MDXRenderer: () => <div />,
+}))
 
 jest.mock("../../utils/sidebar/item-list", () => {
   return {

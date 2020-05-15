@@ -7,7 +7,7 @@ module.exports = {
   Link: jest.fn().mockImplementation(({ children, to, onClick, id }) => {
     // Prevent the default click event to stop a console.error from jsdom.
     // https://github.com/jsdom/jsdom/issues/2112
-    const onClickWithoutDefault = (ev) => {
+    const onClickWithoutDefault = ev => {
       ev.preventDefault()
       onClick(ev)
     }

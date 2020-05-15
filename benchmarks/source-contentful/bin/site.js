@@ -363,13 +363,16 @@ async function runDataUpdate() {
   const { env } = await createClient()
 
   const entries = await env.getEntries({
-    content_type: 'article',
-    limit: 1
+    content_type: "article",
+    limit: 1,
   })
 
   const entry = entries.items[0]
   const title = entry.fields.title[locale]
-  entry.fields.title[locale] = `${title.substring(0, title.lastIndexOf(` `))} ${Date.now()}`
+  entry.fields.title[locale] = `${title.substring(
+    0,
+    title.lastIndexOf(` `)
+  )} ${Date.now()}`
 
   await entry.update()
   console.log(`Updated ${chalk.green(entry.sys.id)}`)
