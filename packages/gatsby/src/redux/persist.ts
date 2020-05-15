@@ -89,7 +89,7 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if (maxSize > 500000) {
     report.warn(
-      `The size of least one page context exceeded 500kb, this could lead to degraded performance. Consider putting less data in the page context.`
+      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
     )
   }
 
