@@ -2,6 +2,7 @@ import { onLogAction } from "../../redux/index"
 import { ISetStatus, ActionsUnion } from "../../redux/types"
 import { Actions, LogLevels } from "../../constants"
 import stripAnsi from "strip-ansi"
+import {cloneDeep} from "lodash"
 
 const isStringPayload = (action: ActionsUnion): action is ISetStatus =>
   typeof action.payload === `string`
@@ -11,18 +12,20 @@ const isStringPayload = (action: ActionsUnion): action is ISetStatus =>
  * See more at integration-tests/structured-logging/__tests__/to-do.js
  */
 const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
-  if (isStringPayload(action)) {
-    return action
+  let copiedAction = cloneDeep(action)
+
+  if (isStringPayload(copiedAction)) {
+    return copiedAction
   }
 
-  if (`text` in action.payload && action.payload.text) {
-    action.payload.text = stripAnsi(action.payload.text)
+  if (`text` in copiedAction.payload && copiedAction.payload.text) {
+    copiedAction.payload.text = stripAnsi(copiedAction.payload.text)
   }
-  if (`statusText` in action.payload && action.payload.statusText) {
-    action.payload.statusText = stripAnsi(action.payload.statusText)
+  if (`statusText` in copiedAction.payload && copiedAction.payload.statusText) {
+    copiedAction.payload.statusText = stripAnsi(copiedAction.payload.statusText)
   }
 
-  return action
+  return copiedAction
 }
 
 export const ipcLogger = (): void => {
