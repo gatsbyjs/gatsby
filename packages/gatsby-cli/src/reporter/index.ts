@@ -3,11 +3,7 @@ import { patchConsole } from "./patch-console"
 import { catchExitSignals } from "./catch-exit-signals"
 import { reporter } from "./reporter"
 
-// Boy, I'm going to regret this
-if (process.argv[2] !== `develop`) {
-  catchExitSignals()
-}
-
+catchExitSignals()
 startLogger()
 patchConsole(reporter)
 
