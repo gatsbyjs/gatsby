@@ -81,8 +81,7 @@ export const pageQuery = graphql`
       sort: { fields: [frontmatter___date, fields___slug], order: DESC }
       filter: {
         frontmatter: { tags: { in: $tags } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-        fields: { released: { eq: true } }
+        fields: { section: { eq: "blog" }, released: { eq: true } }
       }
     ) {
       totalCount

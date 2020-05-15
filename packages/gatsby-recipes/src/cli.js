@@ -7,6 +7,7 @@ const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
+const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
 const {
   createClient,
@@ -77,6 +78,10 @@ const RecipesList = ({ setRecipe }) => {
     {
       label: `Add Gatsby Theme Blog`,
       value: `gatsby-theme-blog`,
+    },
+    {
+      label: `Add Gatsby Theme Blog Core`,
+      value: `gatsby-theme-blog-core`,
     },
     {
       label: `Add persistent layout component with gatsby-plugin-layout`,
@@ -192,6 +197,23 @@ function eliminateNewLines(children) {
 
 const components = {
   inlineCode: props => <Text {...props} />,
+  code: props => {
+    // eslint-disable-next-line
+    let language = "```"
+    if (props.className) {
+      // eslint-disable-next-line
+      language = props.className.split(`-`)[1]
+    }
+    const children = hicat(props.children.trim(), { lang: language })
+
+    const ansi = `\`\`\`${language}\n${children.ansi}\n\`\`\``
+
+    return (
+      <Div marginBottom={1}>
+        <Text>{ansi}</Text>
+      </Div>
+    )
+  },
   h1: props => (
     <Div marginBottom={1}>
       <Text bold underline {...props} />

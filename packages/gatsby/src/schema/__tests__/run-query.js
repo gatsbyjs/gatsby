@@ -220,6 +220,70 @@ const makeNodesEven = () => [
   },
 ]
 
+const makeNodesNeNull = () => [
+  // This set of nodes checks `ne` behavior with null and non-existing props in
+  // the target path, every step of the way.
+  {
+    id: `0`,
+    internal: { type: `Test`, contentDigest: `0` },
+    desc: `does not have the property chain at all`,
+  },
+  {
+    id: `1`,
+    internal: { type: `Test`, contentDigest: `1` },
+    desc: `first start of path is null`,
+    a: null,
+  },
+  {
+    id: `2`,
+    internal: { type: `Test`, contentDigest: `2` },
+    desc: `second start of path is undefined`,
+    a: {},
+  },
+  {
+    id: `3`,
+    internal: { type: `Test`, contentDigest: `3` },
+    desc: `second start of path is null`,
+    a: { b: null },
+  },
+  {
+    id: `4`,
+    internal: { type: `Test`, contentDigest: `4` },
+    desc: `third part is undefined`,
+    a: { b: {} },
+  },
+  {
+    id: `5`,
+    internal: { type: `Test`, contentDigest: `5` },
+    desc: `third part is null`,
+    a: { b: { c: null } },
+  },
+  {
+    id: `6`,
+    internal: { type: `Test`, contentDigest: `6` },
+    desc: `third part is true`,
+    a: { b: { c: true } },
+  },
+  {
+    id: `7`,
+    internal: { type: `Test`, contentDigest: `7` },
+    desc: `third part is false`,
+    a: { b: { c: false } },
+  },
+  {
+    id: `8`,
+    internal: { type: `Test`, contentDigest: `8` },
+    desc: `first step is a bool (would be prevented by schema in real world) `,
+    a: true,
+  },
+  {
+    id: `9`,
+    internal: { type: `Test`, contentDigest: `9` },
+    desc: `second step is a bool (would be prevented by schema in real world)`,
+    a: { b: true },
+  },
+]
+
 function make100Nodes(even) {
   const arr = []
 
@@ -427,7 +491,7 @@ it(`should use the cache argument`, async () => {
 
         it(`finds numbers inside arrays`, async () => {
           const needle = 3
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { eq: needle },
           })
 
@@ -442,7 +506,7 @@ it(`should use the cache argument`, async () => {
 
         it(`finds numbers inside single-element arrays`, async () => {
           const needle = 8
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             singleArray: { eq: needle },
           })
 
@@ -469,7 +533,7 @@ it(`should use the cache argument`, async () => {
       describe(`$ne`, () => {
         it(`handles ne operator`, async () => {
           const needle = 2
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             hair: { ne: needle },
           })
 
@@ -482,7 +546,7 @@ it(`should use the cache argument`, async () => {
 
         it(`coerces number to string`, async () => {
           const needle = 2 // Note: `id` is a numstr
-          const [result, allNodes] = await runSlowFilter({ id: { ne: needle } })
+          const [result, allNodes] = await runFastFilter({ id: { ne: needle } })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.id !== needle).length
@@ -496,12 +560,13 @@ it(`should use the cache argument`, async () => {
           const needle = `2` // Note: `id` is a numstr
           const [result] = await runSlowFilter({ id: { hair: needle } })
 
+          // Slow filter because it's an empty result
           expect(result).toEqual(null)
         })
 
         it(`handles ne operator with true`, async () => {
           const needle = true
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             boolean: { ne: true },
           })
 
@@ -512,12 +577,73 @@ it(`should use the cache argument`, async () => {
           result.forEach(node => expect(node.boolean).not.toEqual(needle))
         })
 
+        describe(`exhaustive checks for null and partial paths`, () => {
+          // This group of tests exhausitvely checks what happens when you $ne on path a.b.c=value a node that
+          // has a partial path, either ending in null or undefined prematurely, for all partials of the path.
+
+          it(`should deal with eq null`, async () => {
+            const needle = null
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Sift only returns id=6,7, where a.b.c===true/false.
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => !(node?.a?.b?.c == null)).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+
+          it(`should deal with eq true`, async () => {
+            const needle = true
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Note: Sift only omits id=6, where a.b.c===true (contrary to searching for null)
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => node?.a?.b?.c !== needle).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+
+          it(`should deal with eq false`, async () => {
+            const needle = false
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Note: Sift only omits id=7, where a.b.c===false (contrary to searching for null)
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => node?.a?.b?.c !== needle).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+        })
+
         it(`handles nested ne operator with true`, async () => {
           const needle = true
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             waxOnly: { foo: { ne: true } },
           })
 
+          // Note: one node has this, one node has waxOnly=null, one node does not have the waxOnly property at all.
+          // Redux seems to return only the node that doesn't have the property at all (node.id=0)
           expect(result?.length).toEqual(
             allNodes.filter(node => node.waxOnly?.foo !== needle).length
           )
@@ -527,7 +653,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles ne operator with 0`, async () => {
           const needle = 0
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             hair: { ne: needle },
           })
 
@@ -540,7 +666,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles ne operator with null`, async () => {
           const needle = 0
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { ne: needle },
           })
 
@@ -564,7 +690,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles deeply nested ne: true operator`, async () => {
           const needle = true
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             waxOnly: { bar: { baz: { ne: needle } } },
           })
 
@@ -579,9 +705,11 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the ne operator for array field values`, async () => {
           const needle = 1
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { ne: needle },
           })
+
+          // Sift returns only the node that doesn't have the property at all (the other two arrays contain 1)
 
           expect(result?.length).toEqual(
             allNodes.filter(node => !node.anArray?.includes(needle)).length
@@ -1585,7 +1713,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`date`, () => {
         it(`filters date fields`, async () => {
-          const [result] = await runSlowFilter({ date: { ne: null } })
+          const [result] = await runFastFilter({ date: { ne: null } })
 
           expect(result.length).toEqual(2)
           expect(result[0].index).toEqual(0)

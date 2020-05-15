@@ -20,6 +20,8 @@ let lastApi
 // Current benchmark state, if any. If none then create one on next lifecycle.
 let benchMeta
 
+let nextBuildType = process.env.BENCHMARK_BUILD_TYPE ?? `initial`
+
 function reportInfo(...args) {
   ;(lastApi ? lastApi.reporter : console).info(...args)
 }
@@ -78,7 +80,8 @@ class BenchMeta {
      * extract the configuration from there
      */
 
-    let buildType = process.env.BENCHMARK_BUILD_TYPE
+    let buildType = nextBuildType
+    nextBuildType = process.env.BENCHMARK_BUILD_TYPE_NEXT ?? `DATA_UPDATE`
     const incomingHookBodyEnv = process.env.INCOMING_HOOK_BODY
 
     if (CI_NAME === `netlify` && incomingHookBodyEnv) {

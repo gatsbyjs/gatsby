@@ -889,6 +889,7 @@ type PageInfo {
   itemCount: Int!
   pageCount: Int!
   perPage: Int
+  totalCount: Int!
 }
 
 type Query {
