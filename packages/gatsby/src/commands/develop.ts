@@ -124,8 +124,8 @@ module.exports = async (program: IProgram): Promise<void> => {
   const io = socket(statusServer)
 
   io.on(`connection`, socket => {
-    socket.on(`develop:restart`, () => {
-      script.stop()
+    socket.on(`develop:restart`, async () => {
+      await script.stop()
       script.start()
     })
   })
@@ -133,8 +133,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   script.start()
 
   script.on(`message`, msg => {
-    // Forward IPC
-    if (process.send) process.send(msg)
+    if (msg.type === `HEARTBEAT`) return
+    if (process.send) {
+      // Forward IPC
+      process.send(msg)
+    }
 
     if (
       msg.type === `LOG_ACTION` &&
@@ -189,6 +192,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   process.on(`beforeExit`, async () => {
+    statusServer.close()
     proxy.server.close()
     await Promise.all([watcher.close(), unlock()])
   })

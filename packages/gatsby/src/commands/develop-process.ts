@@ -78,6 +78,19 @@ setTimeout(() => {
   syncStaticDir()
 }, 10000)
 
+// Time for another story...
+// When the parent process is killed by SIGKILL, Node doesm't kill spawned child processes
+// Hence, we peiodically send a heart beat to the parent to check if it is still alive
+// This will crash with Error [ERR_IPC_CHANNEL_CLOSED]: Channel closed
+// and kill the orphaned child process as a result
+if (process.send) {
+  setInterval(() => {
+    process.send!({
+      type: `HEARTBEAT`,
+    })
+  }, 1000)
+}
+
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
