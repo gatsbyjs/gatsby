@@ -4,27 +4,33 @@
  *
  * This plugin replaces options of eslint-plugin-graphql during develop
  */
-const { store } = require(`../redux`)
+import { store } from "../redux"
 import { eslintConfig } from "./eslint-config"
-const { hasLocalEslint } = require(`./local-eslint-config-finder`)
+import { hasLocalEslint } from "./local-eslint-config-finder"
+import { RuleSetRule, Compiler, RuleSetQuery, RuleSetLoader } from "webpack"
+import { GraphQLSchema } from "graphql"
 
-const isEslintRule = rule => {
-  const options = rule && rule.use && rule.use[0] && rule.use[0].options
+function isEslintRule(rule?: RuleSetRule): boolean {
+  const options = rule?.use?.[0]?.options
   return options && typeof options.useEslintrc !== `undefined`
 }
 
-class GatsbyWebpackEslintGraphqlSchemaReload {
-  schema = null
+export class GatsbyWebpackEslintGraphqlSchemaReload {
+  private plugin: { name: string }
+  private schema: GraphQLSchema | null
 
-  constructor(options) {
+  constructor() {
     this.plugin = { name: `GatsbyWebpackEslintGraphqlSchemaReload` }
-    this.options = options || {}
+    this.schema = null
   }
 
-  findEslintOptions = compiler =>
-    compiler.options.module.rules.find(isEslintRule).use[0].options
+  findEslintOptions(compiler: Compiler): RuleSetQuery | undefined {
+    const [rule] = compiler.options.module?.rules.find(isEslintRule)
+      ?.use as RuleSetLoader[]
+    return rule.options
+  }
 
-  apply(compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.compile.tap(this.plugin.name, () => {
       const { schema, program } = store.getState()
 
@@ -48,5 +54,3 @@ class GatsbyWebpackEslintGraphqlSchemaReload {
     })
   }
 }
-
-module.exports = GatsbyWebpackEslintGraphqlSchemaReload

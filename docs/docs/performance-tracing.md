@@ -14,6 +14,8 @@ Gatsby allows a build to be traced, enabling you to find which plugins or parts 
 
 Gatsby code is instrumented with OpenTracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an OpenTracing compatible library in your application, as well as a backend to collect the trace data.
 
+In addition, Gatsby has additional tracing for GraphQL resolvers. This traces every resolver and might have performance impact, so it's disabled by default. You can enable it with `--graphql-tracing` argument for the build command.
+
 The steps required to add tracing are below. Or, you can skip ahead if you want specific instructions for [Jaeger](/docs/performance-tracing/#local-jaeger-with-docker) or [Zipkin](/docs/performance-tracing/#local-zipkin-with-docker).
 
 ### 1. Library dependency

@@ -43,6 +43,7 @@ type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
   parentSpan: Object,
+  graphqlTracing: boolean,
 }
 
 module.exports = async (args: BootstrapArgs) => {
@@ -456,7 +457,10 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphQLRunner(store, reporter)
+  const graphqlRunner = createGraphQLRunner(store, reporter, {
+    graphqlTracing: args.graphqlTracing,
+    parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan,
+  })
 
   // Collect pages.
   activity = reporter.activityTimer(`createPages`, {
@@ -549,7 +553,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   reporter.log(``)
-  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)} s`)
+  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
   reporter.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(

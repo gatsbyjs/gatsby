@@ -11,19 +11,21 @@ Install necessary NPM packages
 
 ---
 
-Install the gatsby-theme-blog plugin in gatsby-config.js
+Install the gatsby-theme-blog plugin in gatsby-config.js. Make use of the `basePath` configuration so the blog listing appears at `/blog`.
 
-<GatsbyPlugin name="gatsby-theme-blog" />
+<GatsbyPlugin name="gatsby-theme-blog" options={{basePath: `/blog`}}/>
 
 ---
 Now let's add a post!
 
-<File path="content/posts/first-blog.md" content="https://gist.githubusercontent.com/laurieontech/7a0c01a1cee0d99b74a519faa7a83d4a/raw/589dcc93ee2fca4bdedfab04fc16736dd5d9201e/first-blog.md" />
+<File path="content/posts/first-blog.md" content="https://gist.githubusercontent.com/laurieontech/dbd124e77f1fe96f18493f2e9c4ea62e/raw/03342f883c2cd1366dee47d257aa0dc598d1274c/hello-world-image.md"/>
 
 ---
 
-Sweet, now it's ready to go.
+And just like that, you're ready to start blogging!
 
-Note that for the moment you'll need to delete your src/pages/index.js file.
+Run `gatsby develop` and check out `http://localhost:8000/blog` for the list of posts.
+
+Example content is available at `http://localhost:8000/blog/first-blog`.
 
 ---
