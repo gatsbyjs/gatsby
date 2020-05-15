@@ -15,11 +15,7 @@ import SearchIcon from "../../components/search-icon"
 import FooterLinks from "../../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
-import {
-  colors,
-  space,
-  mediaQueries,
-} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { colors, space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const POPULAR_TAGS = [
   `themes`,
