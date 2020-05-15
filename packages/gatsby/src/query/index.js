@@ -7,7 +7,7 @@ const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
-const GraphQLRunner = require(`./graphql-runner`).default
+const { GraphQLRunner } = require(`./graphql-runner`)
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
