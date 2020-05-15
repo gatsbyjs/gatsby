@@ -7,6 +7,7 @@ import chokidar from "chokidar"
 import getRandomPort from "get-port"
 import socket from "socket.io"
 import fs from "fs-extra"
+import { isCI } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
@@ -185,31 +186,35 @@ module.exports = async (program: IProgram): Promise<void> => {
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
   let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
 
-  const watcher = chokidar.watch(files).on(`change`, filePath => {
-    const file = path.basename(filePath)
+  let watcher
 
-    if (file === `gatsby-config.js`) {
-      const newConfig = requireUncached(rootFile(`gatsby-config.js`))
+  if (!isCI()) {
+    chokidar.watch(files).on(`change`, filePath => {
+      const file = path.basename(filePath)
 
-      if (!doesConfigChangeRequireRestart(lastConfig, newConfig)) {
+      if (file === `gatsby-config.js`) {
+        const newConfig = requireUncached(rootFile(`gatsby-config.js`))
+
+        if (!doesConfigChangeRequireRestart(lastConfig, newConfig)) {
+          lastConfig = newConfig
+          return
+        }
+
         lastConfig = newConfig
-        return
       }
 
-      lastConfig = newConfig
-    }
-
-    console.warn(
-      `develop process needs to be restarted to apply the changes to ${file}`
-    )
-    io.emit(`develop:needs-restart`, {
-      dirtyFile: file,
+      console.warn(
+        `develop process needs to be restarted to apply the changes to ${file}`
+      )
+      io.emit(`develop:needs-restart`, {
+        dirtyFile: file,
+      })
     })
-  })
+  }
 
   process.on(`beforeExit`, async () => {
     await Promise.all([
-      watcher.close(),
+      watcher?.close(),
       unlock(),
       new Promise(resolve => {
         statusServer.close(resolve)
