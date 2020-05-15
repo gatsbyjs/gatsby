@@ -113,10 +113,11 @@ export interface IPlugin {
 
 interface IBabelStage {
   plugins: IPlugin[]
-  presets: string[]
+  presets: IPlugin[]
   options: {
     cacheDirectory: boolean
     sourceType: string
+    sourceMaps?: string
   }
 }
 

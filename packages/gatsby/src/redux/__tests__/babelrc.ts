@@ -1,9 +1,9 @@
-const { actions } = require(`../actions`)
-const babelrcReducer = require(`../reducers/babelrc`)
-const {
+import { actions } from "../actions"
+import { babelrcReducer } from "../reducers/babelrc"
+import {
   prepareOptions,
   mergeConfigItemOptions,
-} = require(`../../utils/babel-loader-helpers`)
+} from "../../utils/babel-loader-helpers"
 
 describe(`Babelrc actions/reducer`, () => {
   it(`allows adding a new plugin`, () => {
@@ -75,7 +75,7 @@ describe(`Babelrc actions/reducer`, () => {
   })
 
   it(`sets default presets/plugins if there's no userland babelrc`, () => {
-    const fakeResolver = moduleName => `/path/to/module/${moduleName}`
+    const fakeResolver = (moduleName): string => `/path/to/module/${moduleName}`
     const babel = { createConfigItem: jest.fn() }
 
     prepareOptions(babel, { stage: `test` }, fakeResolver)
@@ -105,7 +105,7 @@ describe(`Babelrc actions/reducer`, () => {
       { options: { sourceMaps: `inline` }, stage: `develop` },
       { name: `test` }
     )
-    let state = babelrcReducer(undefined, action)
+    const state = babelrcReducer(undefined, action)
     expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
     expect(state.stages[`develop-html`].options.sourceMaps).toBe(undefined)
   })
