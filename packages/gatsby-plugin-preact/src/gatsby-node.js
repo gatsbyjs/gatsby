@@ -1,22 +1,37 @@
+const PreactRefreshPlugin = require(`@prefresh/webpack`)
+
 exports.onPreInit = () => {
-  // Setting this variable replaces react-hot-loader with
-  // [fast-refresh](https://reactnative.dev/docs/next/fast-refresh)
-  // and resolves conflicts with running Preact in development.
+  // force fast-refresh in gatsby
   process.env.GATSBY_HOT_LOADER = `fast-refresh`
 }
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  // React-dom is hardcoded as part of react-hot-loader
-  // in the development server. So we either avoid Preact
-  // during development or switch to fast-refresh and loose
-  // hot reloading capabilities.
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+  const webpackPlugins = []
+  if (stage === `develop`) {
+    webpackPlugins.push(new PreactRefreshPlugin())
+
+    // remove React refresh plugin, we want ot add preact refresh instead.
+    const webpackConfig = getConfig()
+    const reactRefreshPluginIndex = webpackConfig.plugins.findIndex(
+      plugin => plugin.constructor.name === `ReactRefreshPlugin`
+    )
+    webpackConfig.plugins.splice(reactRefreshPluginIndex, 1)
+    actions.replaceWebpackConfig(webpackConfig)
+
+    // enable react-refresh babel plugin to enable hooks
+    // @see https://github.com/JoviDeCroock/prefresh/tree/master/packages/webpack#using-hooks
+    actions.setBabelPlugin({
+      name: `react-refresh/babel`,
+    })
+  }
+
   actions.setWebpackConfig({
     resolve: {
       alias: {
         react: `preact/compat`,
         "react-dom": `preact/compat`,
-        "react-dom/server": `preact/compat`,
       },
     },
+    plugins: webpackPlugins,
   })
 }
