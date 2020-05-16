@@ -210,7 +210,7 @@ When you rerun `gatsby develop`, you'll be able to see each article as a page wi
 
 The body copy for this article comes from a rich text element in Kentico Kontent. Links and inline linked items (e.g., embedded videos) are not resolved by default for rich text elements. If you want to resolve them, you can query the required data in structured form for resolution and create your own React components you could use [Rich text element component](https://github.com/Kentico/kontent-gatsby-packages/tree/master/packages/gatsby-kontent-components#rich-text-element-component) that is a part of the [@kentico/gatsby-kontent-components](https://www.gatsbyjs.org/packages/@kentico/gatsby-kontent-components) package.
 
-Since the Kontent source plugin in defining the GrphQL schema for data from Kentico Kontent, you could use this schema and extend it according to your needs. There are [some examples](https://github.com/Kentico/kontent-gatsby-packages/tree/master/site#examples) what you could do in you application.
+Since the Kontent source plugin is defining the GraphQL schema for data from Kentico Kontent, you could use this schema and extend it according to your needs. There are [some examples](https://github.com/Kentico/kontent-gatsby-packages/tree/master/site#examples) of what you could do in your application.
 
 Now you know how to create pages programmatically and pull their content from Kentico Kontent. To get the most out of your CaaS, you'll want to also make sure your site builds automatically whenever published content changes inside Kentico Kontent.
 
