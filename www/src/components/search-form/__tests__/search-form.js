@@ -1,7 +1,7 @@
 import React from "react"
 import { render, waitFor, fireEvent } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "../../i18n-contextt"
+import { I18nProvider } from "../../i18n-context"
 
 import theme from "../../../gatsby-plugin-theme-ui"
 import SearchForm from "../search-form"
