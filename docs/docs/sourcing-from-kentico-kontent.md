@@ -14,7 +14,7 @@ _Note: For this guide, you'll work from scratch from the [Gatsby default starter
 
 ### Kentico Kontent
 
-The first thing to do, if you haven't already done so, is [sign up for a Kentico Kontent account](https://app.kontent.ai/sign-uputm_medium=gatsbyjsorg&utm_source=guide). This will automatically start a free 30-day trial with all Kentico Kontent features. At any point during the trial or after, you can switch to a Starter plan (which always starts as free) or a higher plan with more features.
+The first thing to do, if you haven't already done so, is [sign up for a Kentico Kontent account](https://app.kontent.ai/sign-up?utm_medium=gatsbyjsorg&utm_source=guide). This will automatically start a free 30-day trial with all Kentico Kontent features. At any point during the trial or after, you can switch to a Starter plan (which always starts as free) or a higher plan with more features.
 
 Once you have a subscription to Kentico Kontent, you need some content to retrieve. If you know what you want, you can set up your own content types (templates for your content) and then create content items (the actual content) based on them. If you'd like to take a shortcut and see some example content, you can use [Sample Project generator](https://app.kontent.ai/sample-project-generator) to generate project "Sample Project" and import sample content. This guide will continue with the example of the "Sample Project".
 
