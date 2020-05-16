@@ -24,6 +24,23 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     })
   }
 
+  // add preact to the framework bundle
+  if (stage === `build-javascript`) {
+    const webpackConfig = getConfig()
+    if (
+      webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test
+    ) {
+      const frameworkRegex =
+        webpackConfig.optimization.splitChunks.cacheGroups.framework.test
+      // replace react libs with preact
+      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = new RegExp(
+        frameworkRegex.source.replace(`react|react-dom|scheduler|`, `preact|`),
+        frameworkRegex.flags
+      )
+      actions.replaceWebpackConfig(webpackConfig)
+    }
+  }
+
   actions.setWebpackConfig({
     resolve: {
       alias: {
