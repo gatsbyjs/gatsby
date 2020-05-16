@@ -68,7 +68,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   })
 
-  starters.forEach((node, index) => {
+  starters.forEach(node => {
     createPage({
       path: `/starters${node.fields.starterShowcase.slug}`,
       component: slash(starterTemplate),
@@ -79,8 +79,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   })
 }
 
-const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) => {
-  return githubApiClient
+const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
+  githubApiClient
     .request(
       `
     query {
@@ -106,7 +106,7 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) => {
       }
 
       const githubUrl = `https://github.com/${owner}/${repo}`
-      const { url } = await fetch(githubUrl, { method: "HEAD" })
+      const { url } = await fetch(githubUrl, { method: `HEAD` })
       const { owner: newOwner, name: newRepo } = parseGHUrl(url)
 
       reporter.warn(
@@ -118,7 +118,6 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) => {
         retry + 1
       )
     })
-}
 
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
   const { createNodeField } = actions
@@ -156,7 +155,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
 
     if (!process.env.GITHUB_API_TOKEN) {
-      return createNodeField({
+      createNodeField({
         node,
         name: `starterShowcase`,
         value: {
@@ -164,7 +163,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         },
       })
     } else {
-      return Promise.all([
+      Promise.all([
         getpkgjson(node.repo),
         fetchGithubData({ owner, repo: repoStub, reporter }),
       ])
@@ -184,7 +183,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           )
 
           const gatsbyMajorVersion = allDependencies
-            .filter(([key, _]) => key === `gatsby`)
+            .filter(([key]) => key === `gatsby`)
             .map(version => {
               let [gatsby, versionNum] = version
               if (versionNum === `latest` || versionNum === `next`) {
@@ -208,11 +207,11 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
             allDependencies,
             gatsbyDependencies: allDependencies
               .filter(
-                ([key, _]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+                ([key]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
               )
-              .filter(([key, _]) => key.includes(`gatsby`)),
+              .filter(([key]) => key.includes(`gatsby`)),
             miscDependencies: allDependencies.filter(
-              ([key, _]) => !key.includes(`gatsby`)
+              ([key]) => !key.includes(`gatsby`)
             ),
           }
           createNodeField({

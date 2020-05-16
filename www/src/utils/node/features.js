@@ -27,4 +27,4 @@ exports.createPages = async ({ actions }) => {
   }
 }
 
-exports.onCreateNode = helpers => {}
+exports.onCreateNode = () => {}

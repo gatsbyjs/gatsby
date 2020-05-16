@@ -1,4 +1,5 @@
 import { graphql, useStaticQuery } from "gatsby"
+import React from "react"
 import EventList from "./event-list"
 
 const Events = () => {

@@ -30,7 +30,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         fontWeight: selected ? `bold` : `body`,
         p: 2,
         ":focus": {
-          boxShadow: t => `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
+          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
           outline: 0,
         },
         ":hover": {
@@ -85,7 +85,7 @@ const LayerModel = ({
     }
   }, [selected])
   return (
-        <div
+    <div
       sx={{
         borderRadius: 3,
         border: t => `1px solid ${t.colors.ui.border}`,

@@ -80,6 +80,12 @@ module.exports = {
       },
     },
     {
+      files: ["www/**/*"],
+      rules: {
+        "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
+      },
+    },
+    {
       files: ["*.ts", "*.tsx"],
       parser: "@typescript-eslint/parser",
       plugins: ["@typescript-eslint/eslint-plugin"],

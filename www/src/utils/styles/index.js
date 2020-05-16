@@ -20,7 +20,7 @@ export const focusStyle = {
   boxShadow: `0 0 0 2px ${colors.input.focusBoxShadow}`,
 }
 
-export const buttonStyles = t => {
+export const buttonStyles = () => {
   return {
     default: {
       alignItems: `center`,
@@ -62,7 +62,7 @@ export const buttonStyles = t => {
   }
 }
 
-export const svgStyles = t => {
+export const svgStyles = () => {
   return {
     stroke: {
       "& .svg-stroke": {

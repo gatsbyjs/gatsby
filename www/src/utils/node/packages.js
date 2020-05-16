@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)

@@ -28,7 +28,7 @@ export default function BlogPostMetadata({ post }) {
       type="article"
       timeToRead={post.timeToRead}
       image={image?.childImageSharp.resize}
-      twitterCard={twittercard || "summary"}
+      twitterCard={twittercard || `summary`}
     >
       {/* These are populated when the article is published elsewhere and has a
       canonical link to that location */}

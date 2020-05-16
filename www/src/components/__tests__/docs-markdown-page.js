@@ -8,11 +8,13 @@ import { MDXProvider } from "@mdx-js/react"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
 
-jest.mock("gatsby-plugin-mdx", () => ({
-  MDXRenderer: () => <div />
-}));
+jest.mock(`gatsby-plugin-mdx`, () => {
+  return {
+    MDXRenderer: () => <div />,
+  }
+})
 
-jest.mock("../../utils/sidebar/item-list", () => {
+jest.mock(`../../utils/sidebar/item-list`, () => {
   return {
     itemListContributing: {},
     itemListDocs: {},
@@ -20,13 +22,11 @@ jest.mock("../../utils/sidebar/item-list", () => {
   }
 })
 
-jest.mock("../../hooks/use-site-metadata", () => {
-  return () => {
-    return { siteUrl: "https://www.gatsbyjs.org" }
-  }
+jest.mock(`../../hooks/use-site-metadata`, () => () => {
+  return { siteUrl: `https://www.gatsbyjs.org` }
 })
 
-Object.defineProperty(window, "IntersectionObserver", {
+Object.defineProperty(window, `IntersectionObserver`, {
   writable: true,
   value: jest.fn().mockImplementation(() => {
     return {
@@ -36,31 +36,33 @@ Object.defineProperty(window, "IntersectionObserver", {
   }),
 })
 
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, `matchMedia`, {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-  })),
+  value: jest.fn().mockImplementation(() => {
+    return {
+      matches: false,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+    }
+  }),
 })
 
 const tableOfContentsItems = [
   {
-    url: "#section",
-    title: "section",
+    url: `#section`,
+    title: `section`,
   },
 ]
 const page = {
-  excerpt: "excerpt",
+  excerpt: `excerpt`,
   timeToRead: 1,
   fields: {
-    slug: "/docs/apis/",
-    anchor: "apis",
+    slug: `/docs/apis/`,
+    anchor: `apis`,
   },
   frontmatter: {
-    title: "title",
-    description: "description",
+    title: `title`,
+    description: `description`,
   },
   tableOfContents: {
     items: tableOfContentsItems,
@@ -69,7 +71,7 @@ const page = {
 }
 
 const location = {
-  pathname: "/docs/current",
+  pathname: `/docs/current`,
 }
 
 const setup = (setupProps = {}) => {
@@ -90,20 +92,20 @@ const setup = (setupProps = {}) => {
   )
 }
 
-it("should display table of content if there are items and is not disabled", () => {
+it(`should display table of content if there are items and is not disabled`, () => {
   const { getByText } = setup()
 
-  expect(getByText("Table of Contents")).toBeDefined()
+  expect(getByText(`Table of Contents`)).toBeDefined()
 })
 
-it("should not display table of content if there are no items", () => {
+it(`should not display table of content if there are no items`, () => {
   const tableOfContentsItems = []
   const { queryByText } = setup({ tableOfContentsItems })
 
-  expect(queryByText("Table of Contents")).toBeNull()
+  expect(queryByText(`Table of Contents`)).toBeNull()
 })
 
-it("should not display table of content if disabled", () => {
+it(`should not display table of content if disabled`, () => {
   const { queryByText } = setup({
     page: {
       ...page,
@@ -111,50 +113,50 @@ it("should not display table of content if disabled", () => {
     },
   })
 
-  expect(queryByText("Table of Contents")).toBeNull()
+  expect(queryByText(`Table of Contents`)).toBeNull()
 })
 
-it("should display prev page and next page if available", () => {
+it(`should display prev page and next page if available`, () => {
   const prev = {
-    title: "prev",
-    link: "/docs/prev",
+    title: `prev`,
+    link: `/docs/prev`,
   }
   const next = {
-    title: "next",
-    link: "/docs/next",
+    title: `next`,
+    link: `/docs/next`,
   }
   const { getByText } = setup({ prev, next })
 
   expect(getByText(prev.title)).toBeDefined()
-  expect(getByText(prev.title).closest("a")).toHaveAttribute("href", prev.link)
+  expect(getByText(prev.title).closest(`a`)).toHaveAttribute(`href`, prev.link)
   expect(getByText(next.title)).toBeDefined()
-  expect(getByText(next.title).closest("a")).toHaveAttribute("href", next.link)
+  expect(getByText(next.title).closest(`a`)).toHaveAttribute(`href`, next.link)
 })
 
-it("should display frontmatter meta data if available", () => {
+it(`should display frontmatter meta data if available`, () => {
   setup()
 
   const contents = Helmet.peek()
 
   expect(contents.title).toEqual(page.frontmatter.title)
   expect(contents.metaTags).toContainEqual({
-    name: "description",
+    name: `description`,
     content: page.frontmatter.description,
   })
 })
 
-it("should display excerpt as meta description if no frontmatter description is available", () => {
+it(`should display excerpt as meta description if no frontmatter description is available`, () => {
   setup({ page: { ...page, frontmatter: {} } })
 
   const contents = Helmet.peek()
 
   expect(contents.metaTags).toContainEqual({
-    name: "description",
+    name: `description`,
     content: page.excerpt,
   })
 })
 
-it("should display main title", () => {
+it(`should display main title`, () => {
   const { getByText } = setup()
 
   expect(getByText(page.frontmatter.title)).toBeDefined()

@@ -2,7 +2,7 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import useSiteMetadata from "../hooks/use-site-metadata"
 
-import { useLocale } from "./I18nContext"
+import { useLocale } from "./i18n-context"
 import gatsbyIcon from "../assets/gatsby-icon.png"
 
 const SiteMetadata = ({ pathname }) => {

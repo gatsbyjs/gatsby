@@ -51,9 +51,9 @@ const HomepageFeatures = () => (
       <CardHeadline>Future-proof your website</CardHeadline>
       <FuturaParagraph>
         Don't build a website with last decade’s tech. The future of the web is
-        mobile, JavaScript and APIs. Every website is a web app
-        and every web app is a website. Gatsby.js is the universal JavaScript
-        framework you’ve been waiting for.
+        mobile, JavaScript and APIs. Every website is a web app and every web
+        app is a website. Gatsby.js is the universal JavaScript framework you’ve
+        been waiting for.
       </FuturaParagraph>
     </Card>
     <Card>

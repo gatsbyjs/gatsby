@@ -8,23 +8,23 @@ import TableOfContents from "../docs-table-of-contents"
 
 const tableOfContentsNoUrl = {
   location: {
-    pathname: "",
+    pathname: ``,
   },
   depth: 2,
   items: [
     {
-      title: "API commands",
+      title: `API commands`,
       items: [
         {
-          url: "#new",
-          title: "new",
+          url: `#new`,
+          title: `new`,
           items: [
             {
-              title: "Arguments",
+              title: `Arguments`,
             },
             {
-              url: "#examples",
-              title: "Examples",
+              url: `#examples`,
+              title: `Examples`,
             },
           ],
         },
@@ -35,122 +35,121 @@ const tableOfContentsNoUrl = {
 
 const tableOfContentsSimple = {
   location: {
-    pathname: "",
+    pathname: ``,
   },
   depth: null,
   items: [
     {
-      url: "#how-to-use-gatsby-cli",
-      title: "How to use gatsby-cli",
+      url: `#how-to-use-gatsby-cli`,
+      title: `How to use gatsby-cli`,
     },
   ],
 }
 
 const tableOfContentsDeep = {
   location: {
-    pathname: "",
+    pathname: ``,
   },
   depth: 2,
   items: [
     {
-      url: "#how-to-use-gatsby-cli",
-      title: "How to use gatsby-cli",
+      url: `#how-to-use-gatsby-cli`,
+      title: `How to use gatsby-cli`,
     },
     {
-      url: "#api-commands",
-      title: "API commands",
+      url: `#api-commands`,
+      title: `API commands`,
       items: [
         {
-          url: "#new",
-          title: "new",
+          url: `#new`,
+          title: `new`,
           items: [
             {
-              url: "#arguments",
-              title: "Arguments",
+              url: `#arguments`,
+              title: `Arguments`,
             },
             {
-              url: "#examples",
-              title: "Examples",
+              url: `#examples`,
+              title: `Examples`,
             },
           ],
         },
         {
-          url: "#develop",
-          title: "develop",
+          url: `#develop`,
+          title: `develop`,
           items: [
             {
-              url: "#options",
-              title: "Options",
+              url: `#options`,
+              title: `Options`,
             },
             {
-              url: "#preview-changes-on-other-devices",
-              title: "Preview changes on other devices",
+              url: `#preview-changes-on-other-devices`,
+              title: `Preview changes on other devices`,
             },
           ],
         },
         {
-          url: "#build",
-          title: "build",
+          url: `#build`,
+          title: `build`,
           items: [
             {
-              url: "#options-1",
-              title: "Options",
+              url: `#options-1`,
+              title: `Options`,
             },
           ],
         },
         {
-          url: "#serve",
-          title: "serve",
+          url: `#serve`,
+          title: `serve`,
           items: [
             {
-              url: "#options-2",
-              title: "Options",
+              url: `#options-2`,
+              title: `Options`,
             },
           ],
         },
         {
-          url: "#info",
-          title: "info",
+          url: `#info`,
+          title: `info`,
           items: [
             {
-              url: "#options-3",
-              title: "Options",
+              url: `#options-3`,
+              title: `Options`,
             },
           ],
         },
         {
-          url: "#clean",
-          title: "clean",
+          url: `#clean`,
+          title: `clean`,
         },
         {
-          url: "#plugin",
-          title: "plugin",
+          url: `#plugin`,
+          title: `plugin`,
           items: [
             {
-              url: "#docs",
-              title: "docs",
+              url: `#docs`,
+              title: `docs`,
             },
           ],
         },
         {
-          url: "#repl",
-          title: "Repl",
+          url: `#repl`,
+          title: `Repl`,
         },
         {
-          url: "#disabling-colored-output",
-          title: "Disabling colored output",
+          url: `#disabling-colored-output`,
+          title: `Disabling colored output`,
         },
       ],
     },
     {
-      url: "#how-to-change-your-default-package-manager-for-your-next-project",
-      title:
-        "How to change your default package manager for your next project?",
+      url: `#how-to-change-your-default-package-manager-for-your-next-project`,
+      title: `How to change your default package manager for your next project?`,
     },
   ],
 }
 
-Object.defineProperty(window, "IntersectionObserver", {
+Object.defineProperty(window, `IntersectionObserver`, {
   writable: true,
   value: jest.fn().mockImplementation(() => {
     return {
@@ -160,13 +159,15 @@ Object.defineProperty(window, "IntersectionObserver", {
   }),
 })
 
-Object.defineProperty(window, "matchMedia", {
+Object.defineProperty(window, `matchMedia`, {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-  })),
+  value: jest.fn().mockImplementation(() => {
+    return {
+      matches: false,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+    }
+  }),
 })
 
 const testHeadingsRecursively = (getByTestId, items, depth) => {
@@ -183,7 +184,7 @@ const testHeadingsRecursively = (getByTestId, items, depth) => {
   }
 }
 
-test("Table of contents (depth == 0)", () => {
+test(`Table of contents (depth == 0)`, () => {
   const { items, depth, location } = tableOfContentsSimple
   const { getByTestId } = render(
     <ThemeProvider theme={theme}>
@@ -198,7 +199,7 @@ test("Table of contents (depth == 0)", () => {
   }
 })
 
-test("Table of contents (depth >= 1)", () => {
+test(`Table of contents (depth >= 1)`, () => {
   const { items, depth, location } = tableOfContentsDeep
   const { getByTestId } = render(
     <ThemeProvider theme={theme}>
@@ -209,7 +210,7 @@ test("Table of contents (depth >= 1)", () => {
   testHeadingsRecursively(getByTestId, items, depth - 1)
 })
 
-test("Table of contents (missing URLs)", () => {
+test(`Table of contents (missing URLs)`, () => {
   const { items, depth, location } = tableOfContentsNoUrl
   const { getByTestId } = render(
     <ThemeProvider theme={theme}>

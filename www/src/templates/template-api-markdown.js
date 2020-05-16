@@ -67,8 +67,8 @@ export default function APITemplate({ data, location, pageContext }) {
   const { prev, next } = pageContext
   const page = data.mdx
   const { frontmatter, tableOfContents } = page
-  const heading = frontmatter.contentsHeading || "APIs"
-  const headingId = "apis"
+  const heading = frontmatter.contentsHeading || `APIs`
+  const headingId = `apis`
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
@@ -80,10 +80,12 @@ export default function APITemplate({ data, location, pageContext }) {
     {
       title: heading,
       url: `#${headingId}`,
-      items: mergedFuncs.map(mergedFunc => ({
-        url: `#${mergedFunc.name}`,
-        title: mergedFunc.name,
-      })),
+      items: mergedFuncs.map(mergedFunc => {
+        return {
+          url: `#${mergedFunc.name}`,
+          title: mergedFunc.name,
+        }
+      }),
     },
   ]
   const { tableOfContentsDepth: depth = 0 } = frontmatter

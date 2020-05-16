@@ -22,7 +22,10 @@ class CreatorsView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.state !== null && prevProps.location.state !== null) {
+    if (
+      this.props.location.state !== null &&
+      prevProps.location.state !== null
+    ) {
       const filterStateChanged =
         this.props.location.state.filter !== prevProps.location.state.filter
       const isNotFiltered = this.props.location.state.filter === ``
@@ -98,7 +101,7 @@ class CreatorsView extends Component {
     }
 
     return (
-      <>
+      <React.Fragment>
         <PageMetadata
           title={title}
           description="Discover developers skilled in working on Gatsby applications available for hire"
@@ -181,7 +184,7 @@ class CreatorsView extends Component {
           </div>
         </main>
         <FooterLinks />
-      </>
+      </React.Fragment>
     )
   }
 }

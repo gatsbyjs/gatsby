@@ -11,16 +11,6 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-const docSlugFromPath = parsedFilePath => {
-  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-  } else if (parsedFilePath.dir === ``) {
-    return `/${parsedFilePath.name}/`
-  } else {
-    return `/${parsedFilePath.dir}/`
-  }
-}
-
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
@@ -91,10 +81,10 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const slug = getMdxContentSlug(node, getNode(node.parent))
   if (!slug) return
 
-  const locale = "en"
-  const section = slug.split("/")[1]
+  const locale = `en`
+  const section = slug.split(`/`)[1]
   // fields for blog pages are handled in `utils/node/blog.js`
-  if (section === "blog") return
+  if (section === `blog`) return
 
   // Add slugs and other fields for docs pages
   if (slug) {

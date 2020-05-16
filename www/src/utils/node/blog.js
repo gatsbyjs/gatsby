@@ -17,7 +17,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   } else {
     const slug = getMdxContentSlug(node, getNode(node.parent))
     if (!slug) return
-    const section = slug.split("/")[1]
+    const section = slug.split(`/`)[1]
     if (section !== `blog`) return
 
     createNodeField({ node, name: `slug`, value: slug })

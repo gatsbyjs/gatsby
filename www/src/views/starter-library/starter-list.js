@@ -15,7 +15,7 @@ import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "!raw-loader!../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
-const StartersList = ({ urlState, starters, count, sortRecent }) => {
+const StartersList = ({ urlState, starters, count }) => {
   if (!starters.length) {
     // empty state!
     const emptyStateReason =
