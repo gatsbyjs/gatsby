@@ -112,7 +112,11 @@ You can browse the [source of the official recipes](https://github.com/gatsbyjs/
 
 You can run built-in recipes, ones you write locally, and ones people have posted online.
 
-To run a local recipe, make sure to start the path to the recipe with a period like `gatsby recipes ./my-cool-recipe.mdx`
+To run a local recipe, make sure to start the path to the recipe with a period like:
+
+```shell
+gatsby recipes ./my-cool-recipe.mdx
+```
 
 To run a remote recipe, copy the path to the recipe and run it e.g.
 
@@ -160,7 +164,9 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 ### `<NPMPackage>`
 
-`<NPMPackage name="lodash" version="latest" />`
+```jsx
+<NPMPackage name="lodash" version="latest" />
+```
 
 #### props
 
@@ -170,7 +176,9 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 ### `<NPMScript>`
 
-`<NPMScript name="test" command="jest" />`
+```jsx
+<NPMScript name="test" command="jest" />
+```
 
 #### props
 
@@ -179,7 +187,12 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 ### `<File>`
 
-<File path="test.md" content="https://raw.githubusercontent.com/KyleAMathews/test-recipes/master/gatsby-recipe-jest.mdx" />
+```jsx
+<File
+  path="test.md"
+  content="https://raw.githubusercontent.com/KyleAMathews/test-recipes/master/gatsby-recipe-jest.mdx"
+/>
+```
 
 #### props
 
@@ -200,7 +213,7 @@ If you want to fix a bug in a resource or extend it in some way, typically you'l
 
 In your terminal, start a jest watch process against the resource you're working on e.g. for GatsbyPlugin:
 
-```bash
+```shell
 GATSBY_RECIPES_NO_COLOR=true jest --testPathPattern "src/.*plugin.test" --watch
 ```
 
