@@ -6239,14 +6239,14 @@
   repo: https://github.com/Sidibedev/expo-gatsby-starter
   description: A simple Expo and Gatsby starter.
   tags:
-    - Expo
-    - React native web
-    - Cross-platform
+    - PWA
+    - SEO
   features:
     - SEO
-    - Progressive Web App
+    - PWA
     - Offline Support
     - Upload Image
     - Expo SDK
     - Image manipulation
     - 404 page
+    - Navigation
