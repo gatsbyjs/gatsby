@@ -152,3 +152,5 @@
   toPath: /contributing/docs-and-blog-components/
 - fromPath: /docs/pixabay-source-plugin-tutorial
   toPath: /docs/source-plugin-tutorial
+- fromPath: /docs/page-build-optimizations-for-incremental-data-changes
+  toPath: /docs/conditional-page-builds

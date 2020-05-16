@@ -1,28 +1,24 @@
-const path = require(`path`)
-const resolveCwd = require(`resolve-cwd`)
-const yargs = require(`yargs`)
-const report = require(`./reporter`)
-const { setStore } = require(`./reporter/redux`)
-const { didYouMean } = require(`./did-you-mean`)
-const { getLocalGatsbyVersion } = require(`./util/version`)
-const envinfo = require(`envinfo`)
-const existsSync = require(`fs-exists-cached`).sync
-const clipboardy = require(`clipboardy`)
-const {
-  trackCli,
-  setDefaultTags,
-  setTelemetryEnabled,
-} = require(`gatsby-telemetry`)
-const { recipesHandler } = require(`./recipes`)
+import path from "path"
+import resolveCwd from "resolve-cwd"
+import yargs from "yargs"
+import report from "./reporter"
+import { setStore } from "./reporter/redux"
+import { getLocalGatsbyVersion } from "./util/version"
+import envinfo from "envinfo"
+import { sync as existsSync } from "fs-exists-cached"
+import clipboardy from "clipboardy"
+import { trackCli, setDefaultTags, setTelemetryEnabled } from "gatsby-telemetry"
+import { initStarter } from "./init-starter"
+import { recipesHandler } from "./recipes"
 
-const handlerP = fn => (...args) => {
+const handlerP = (fn: Function) => (...args: unknown[]): void => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
     err => report.panic(err)
   )
 }
 
-function buildLocalCommands(cli, isLocalSite) {
+function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   const defaultHost = `localhost`
   const defaultPort = `8000`
   const directory = path.resolve(`.`)
@@ -33,7 +29,12 @@ function buildLocalCommands(cli, isLocalSite) {
       ? [`> 1%`, `last 2 versions`, `IE >= 9`]
       : [`>0.25%`, `not dead`]
 
-  const siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const siteInfo = {
+    directory,
+    browserslist: DEFAULT_BROWSERS,
+    sitePackageJson: undefined,
+  }
+
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
@@ -41,17 +42,17 @@ function buildLocalCommands(cli, isLocalSite) {
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
-  function getLocalGatsbyMajorVersion() {
-    let version = getLocalGatsbyVersion()
+  function getLocalGatsbyMajorVersion(): number | undefined {
+    const version = getLocalGatsbyVersion()
 
     if (version) {
-      version = Number(version.split(`.`)[0])
+      return Number(version.split(`.`)[0])
     }
 
-    return version
+    return undefined
   }
 
-  function resolveLocalCommand(command) {
+  function resolveLocalCommand(command: string): Function | never {
     if (!isLocalSite) {
       cli.showHelp()
       report.verbose(`current directory: ${directory}`)
@@ -73,7 +74,15 @@ function buildLocalCommands(cli, isLocalSite) {
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
-      return require(cmdPath)
+
+      const cmd = require(cmdPath)
+      if (cmd instanceof Function) {
+        return cmd
+      }
+
+      return report.panic(
+        `Handler for command "${command}" is not a function. Your Gatsby package might be corrupted, try reinstalling it and running the command again.`
+      )
     } catch (err) {
       cli.showHelp()
       return report.panic(
@@ -83,11 +92,14 @@ function buildLocalCommands(cli, isLocalSite) {
     }
   }
 
-  function getCommandHandler(command, handler) {
-    return argv => {
+  function getCommandHandler(
+    command: string,
+    handler?: (args: yargs.Arguments, cmd: Function) => void
+  ) {
+    return (argv: yargs.Arguments): void => {
       report.setVerbose(!!argv.verbose)
 
-      report.setNoColor(argv.noColor || process.env.NO_COLOR)
+      report.setNoColor(!!(argv.noColor || process.env.NO_COLOR))
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
@@ -105,7 +117,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `develop`,
-    desc:
+    describe:
       `Start development server. Watches files, rebuilds, and hot reloads ` +
       `if something changes`,
     builder: _ =>
@@ -160,20 +172,20 @@ function buildLocalCommands(cli, isLocalSite) {
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
-      getCommandHandler(`develop`, (args, cmd) => {
+      getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
         // kills it so this is fine.
-        return new Promise(resolve => {})
+        return new Promise(() => {})
       })
     ),
   })
 
   cli.command({
     command: `build`,
-    desc: `Build a Gatsby project.`,
+    describe: `Build a Gatsby project.`,
     builder: _ =>
       _.option(`prefix-paths`, {
         type: `boolean`,
@@ -216,7 +228,7 @@ function buildLocalCommands(cli, isLocalSite) {
           hidden: true,
         }),
     handler: handlerP(
-      getCommandHandler(`build`, (args, cmd) => {
+      getCommandHandler(`build`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = `production`
         return cmd(args)
       })
@@ -225,7 +237,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `serve`,
-    desc: `Serve previously built Gatsby site.`,
+    describe: `Serve previously built Gatsby site.`,
     builder: _ =>
       _.option(`H`, {
         alias: `host`,
@@ -257,7 +269,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `info`,
-    desc: `Get environment information for debugging and issue reporting`,
+    describe: `Get environment information for debugging and issue reporting`,
     builder: _ =>
       _.option(`C`, {
         alias: `clipboard`,
@@ -265,7 +277,7 @@ function buildLocalCommands(cli, isLocalSite) {
         default: false,
         describe: `Automagically copy environment information to clipboard`,
       }),
-    handler: args => {
+    handler: (args: yargs.Arguments) => {
       try {
         const copyToClipboard =
           // Clipboard is not accessible when on a linux tty
@@ -311,27 +323,38 @@ function buildLocalCommands(cli, isLocalSite) {
 
   cli.command({
     command: `clean`,
-    desc: `Wipe the local gatsby environment including built assets and cache`,
+    describe: `Wipe the local gatsby environment including built assets and cache`,
     handler: getCommandHandler(`clean`),
   })
 
   cli.command({
     command: `repl`,
-    desc: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
-    handler: getCommandHandler(`repl`, (args, cmd) => {
-      process.env.NODE_ENV = process.env.NODE_ENV || `development`
-      return cmd(args)
-    }),
+    describe: `Get a node repl with context of Gatsby environment, see (https://www.gatsbyjs.org/docs/gatsby-repl/)`,
+    handler: getCommandHandler(
+      `repl`,
+      (args: yargs.Arguments, cmd: Function) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        return cmd(args)
+      }
+    ),
   })
 
   cli.command({
     command: `recipes [recipe]`,
-    desc: `[EXPERIMENTAL] Run a recipe`,
-    handler: handlerP(({ recipe }) => recipesHandler(recipe)),
+    describe: `[EXPERIMENTAL] Run a recipe`,
+    handler: handlerP(({ recipe }: yargs.Arguments) => {
+      if (typeof recipe !== `string`) {
+        throw new Error(
+          `Error: gatsby recipes needs to be called with a specific recipe`
+        )
+      }
+
+      recipesHandler(recipe)
+    }),
   })
 }
 
-function isLocalGatsbySite() {
+function isLocalGatsbySite(): boolean {
   let inGatsbySite = false
   try {
     const { dependencies, devDependencies } = require(path.resolve(
@@ -346,7 +369,7 @@ function isLocalGatsbySite() {
   return !!inGatsbySite
 }
 
-function getVersionInfo() {
+function getVersionInfo(): string {
   const { version } = require(`../package.json`)
   const isGatsbySite = isLocalGatsbySite()
   if (isGatsbySite) {
@@ -365,10 +388,11 @@ Gatsby version: ${gatsbyVersion}
   }
 }
 
-module.exports = argv => {
-  const cli = yargs().parserConfiguration({
+export const createCli = (argv: string[]): yargs.Arguments => {
+  const cli = yargs(argv).parserConfiguration({
     "boolean-negation": false,
   })
+
   const isLocalSite = isLocalGatsbySite()
 
   cli
@@ -415,17 +439,19 @@ module.exports = argv => {
   return cli
     .command({
       command: `new [rootPath] [starter]`,
-      desc: `Create new Gatsby project.`,
-      handler: handlerP(({ rootPath, starter }) => {
-        const { initStarter } = require(`./init-starter`)
-        return initStarter(starter, { rootPath })
+      describe: `Create new Gatsby project.`,
+      handler: handlerP(async ({ rootPath, starter }) => {
+        const starterStr = starter ? String(starter) : undefined
+        const rootPathStr = rootPath ? String(rootPath) : undefined
+
+        await initStarter(starterStr, rootPathStr)
       }),
     })
     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
       yargs
         .command({
           command: `docs`,
-          desc: `Helpful info about using and creating plugins`,
+          describe: `Helpful info about using and creating plugins`,
           handler: handlerP(() =>
             console.log(`
 Using a plugin:
@@ -456,7 +482,7 @@ Creating a plugin:
     )
     .command({
       command: `telemetry`,
-      desc: `Enable or disable Gatsby anonymous analytics collection.`,
+      describe: `Enable or disable Gatsby anonymous analytics collection.`,
       builder: yargs =>
         yargs
           .option(`enable`, {
@@ -468,7 +494,7 @@ Creating a plugin:
             description: `Disable telemetry`,
           }),
 
-      handler: handlerP(({ enable, disable }) => {
+      handler: handlerP(({ enable, disable }: yargs.Arguments) => {
         const enabled = enable || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
@@ -477,17 +503,6 @@ Creating a plugin:
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
     .strict()
-    .fail((msg, err, yargs) => {
-      const availableCommands = yargs.getCommands().map(commandDescription => {
-        const [command] = commandDescription
-        return command.split(` `)[0]
-      })
-      const arg = argv.slice(2)[0]
-      const suggestion = arg ? didYouMean(arg, availableCommands) : ``
-
-      cli.showHelp()
-      report.log(suggestion)
-      report.log(msg)
-    })
+    .recommendCommands()
     .parse(argv.slice(2))
 }
