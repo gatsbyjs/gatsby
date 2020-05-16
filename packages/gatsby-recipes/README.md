@@ -135,8 +135,8 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
   name="gatsby-source-filesystem"
   key="src/pages"
   options={{
-    name="src pages directory"
-    path="src/pages"
+    name: `src pages directory`,
+    path: `src/pages`,
   }}
 />
 ```
