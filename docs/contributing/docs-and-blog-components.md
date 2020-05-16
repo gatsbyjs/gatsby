@@ -143,7 +143,7 @@ title: Deploying to Storage Provider
 
 <!-- highlight-start -->
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
+  Connect your Gatsby site to Storage Provider for automatic deployments.
 </CloudCallout>
 <!-- highlight-end -->
 ```
@@ -153,8 +153,8 @@ title: Deploying to Storage Provider
 Rendered, the component looks like this:
 
 <CloudCallout>
-  Connect your Gatsby site to Storage Provider for automatic deployments
-</CloudCallout>{" "}
+  Connect your Gatsby site to Storage Provider for automatic deployments.
+</CloudCallout>
 
 ### Component Model
 
