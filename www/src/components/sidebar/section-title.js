@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
-
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
 import ItemLink from "./item-link"
