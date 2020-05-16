@@ -32,6 +32,9 @@ const POPULAR_TAGS = [
   `contentful`,
 ]
 
+// Responsive tag list using grid
+// https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
+
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
