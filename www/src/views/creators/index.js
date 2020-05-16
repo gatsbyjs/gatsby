@@ -101,7 +101,7 @@ class CreatorsView extends Component {
     }
 
     return (
-      <React.Fragment>
+      <>
         <PageMetadata
           title={title}
           description="Discover developers skilled in working on Gatsby applications available for hire"
@@ -184,7 +184,7 @@ class CreatorsView extends Component {
           </div>
         </main>
         <FooterLinks />
-      </React.Fragment>
+      </>
     )
   }
 }
