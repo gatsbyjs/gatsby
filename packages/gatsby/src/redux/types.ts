@@ -248,6 +248,7 @@ export type ActionsUnion =
   | IReplaceWebpackConfigAction
   | ISetPluginStatusAction
   | ISetProgramStatusAction
+  | ISetResolvedNodesAction
   | ISetSchemaAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
@@ -535,4 +536,12 @@ export interface IDeleteNodesAction {
 export interface ISetSiteFlattenedPluginsAction {
   type: `SET_SITE_FLATTENED_PLUGINS`
   payload: IGatsbyState["flattenedPlugins"]
+}
+
+export interface ISetResolvedNodesAction {
+  type: `SET_RESOLVED_NODES`
+  payload: {
+    key: string
+    nodes: IGatsbyState["resolvedNodesCache"]
+  }
 }
