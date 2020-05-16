@@ -461,7 +461,7 @@ Hopefully what I’ve said makes more sense with the code in front of us. The `s
 
 ### Vercel
 
-Vercel is a tool created by VERCEL that makes the process of deploying Node applications simple. Vercel has recently released updates to the way they deploy static websites. Fortunately our Gatsby packages build to static sites, so it’s a win for us.
+Vercel is a tool created by Vercel that makes the process of deploying Node applications simple. Vercel has recently released updates to the way they deploy static websites. Fortunately our Gatsby packages build to static sites, so it’s a win for us.
 
 If you haven’t used Vercel before, then go-ahead and [get started](https://vercel.com/home#features). This will install the `Vercel CLI` and get a free account created, things we need for the tutorial. The getting started page also has a brief FAQs section that’s well worth reading.
 
