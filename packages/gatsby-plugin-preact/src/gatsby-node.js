@@ -33,10 +33,9 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
       const frameworkRegex =
         webpackConfig.optimization.splitChunks.cacheGroups.framework.test
       // replace react libs with preact
-      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = new RegExp(
-        frameworkRegex.source.replace(`react|react-dom|scheduler|`, `preact|`),
-        frameworkRegex.flags
-      )
+      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = [
+        /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/
+      ].concat(webpackConfig.optimization.splitChunks.cacheGroups.framework.test)
       actions.replaceWebpackConfig(webpackConfig)
     }
   }
