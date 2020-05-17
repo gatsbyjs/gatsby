@@ -81,7 +81,7 @@ export const query = graphql`
   }
 `;
 
-export default function NotFound({ data, pathContext: { langCode } }) => {
+export default function NotFound({ data, pageContext: { langCode } }) => {
   const {
     markdownRemark: { frontmatter: { header, subheader, home } },
   } = data;
