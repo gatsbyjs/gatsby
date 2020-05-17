@@ -253,10 +253,11 @@ const noscriptImg = props => {
     : ``
   const loading = props.loading ? `loading="${props.loading}" ` : ``
   const draggable = props.draggable ? `draggable="${props.draggable}" ` : ``
+  const className = props.imgClassName ? `class="${props.imgClassName}" ` : ``
 
   const sources = generateNoscriptSources(props.imageVariants)
 
-  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}${draggable}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
+  return `<picture>${sources}<img ${loading}${width}${height}${sizes}${srcSet}${src}${alt}${title}${crossOrigin}${draggable}${className}style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture>`
 }
 
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
@@ -427,6 +428,7 @@ class Image extends React.Component {
       className,
       style = {},
       imgStyle = {},
+      imgClassName,
       placeholderStyle = {},
       placeholderClassName,
       fluid,
@@ -556,6 +558,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                className={imgClassName}
               />
             </picture>
           )}
@@ -570,6 +573,7 @@ class Image extends React.Component {
                   loading,
                   ...image,
                   imageVariants,
+                  imgClassName,
                 }),
               }}
             />
@@ -661,6 +665,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                className={imgClassName}
               />
             </picture>
           )}
@@ -675,6 +680,7 @@ class Image extends React.Component {
                   loading,
                   ...image,
                   imageVariants,
+                  imgClassName,
                 }),
               }}
             />
@@ -741,6 +747,7 @@ Image.propTypes = {
   crossOrigin: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   style: PropTypes.object,
   imgStyle: PropTypes.object,
+  imgClassName: PropTypes.string,
   placeholderStyle: PropTypes.object,
   placeholderClassName: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

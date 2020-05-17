@@ -353,6 +353,7 @@ After you've made a query, you can pass additional options to the gatsby-image c
 | `className`            | `string` / `object` | Passed to the wrapper element. Object is needed to support Glamor's css prop                                                  |
 | `style`                | `object`            | Spread into the default styles of the wrapper element                                                                         |
 | `imgStyle`             | `object`            | Spread into the default styles of the actual `img` element                                                                    |
+| `imgClassName`         | `string`            | A class that is passed to the actual `img` element                                                                            |
 | `placeholderStyle`     | `object`            | Spread into the default styles of the placeholder `img` element                                                               |
 | `placeholderClassName` | `string`            | A class that is passed to the placeholder `img` element                                                                       |
 | `backgroundColor`      | `string` / `bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string.   |
