@@ -6301,3 +6301,22 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-landing-page-starter.netlify.app/
+  repo: https://github.com/btahir/gatsby-landing-page-starter
+  description: Simple Landing Page Starter Built With Gatsby.
+  tags:
+    - Landing Page
+    - Lead Generator
+    - Conversion Optimization
+    - SEO
+    - Responsive layout
+    - Styling:SCSS
+  features:
+    - Responsive design
+    - SEO optimized
+    - Conversion optimized
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - Composable and extensible
