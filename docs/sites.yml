@@ -10648,3 +10648,17 @@
   built_by: Chad Lee
   built_by_url: https://github.com/chadly
   featured: false
+- title: Dondokosusumu Website
+  url: https://xn--28jma5da5l6e.com/en/
+  main_url: https://xn--28jma5da5l6e.com/en/
+  source_url: https://github.com/dondoko-susumu/website-v2
+  description: >
+    The Web site of Dondokosusumu, a Japanese cartoonist. His cartoons have been posted. It is internationalized into 12 languages.
+  categories:
+    - Blog
+    - Entertainment
+    - Gallery
+    - Landing Page
+  built_by: Dondokosusumu
+  built_by_url: https://xn--28jma5da5l6e.com/en/
+  featured: false
