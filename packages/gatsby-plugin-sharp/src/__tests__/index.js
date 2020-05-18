@@ -279,19 +279,17 @@ describe(`gatsby-plugin-sharp`, () => {
         path.join(__dirname, `images/144-density.png`)
       )
 
-      await Promise.all(
-        testsCases.map(async function (testCase) {
-          boundActionCreators.createJobV2.mockClear()
-          const result = await fluid({
-            file: fileObject,
-            args: testCase.args,
-          })
-
-          expect(boundActionCreators.createJobV2.mock.calls).toMatchSnapshot()
-          expect(result.presentationWidth).toEqual(testCase.result[0])
-          expect(result.presentationHeight).toEqual(testCase.result[1])
+      for (const testCase of testsCases) {
+        boundActionCreators.createJobV2.mockClear()
+        const result = await fluid({
+          file: fileObject,
+          args: testCase.args,
         })
-      )
+
+        expect(boundActionCreators.createJobV2.mock.calls).toMatchSnapshot()
+        expect(result.presentationWidth).toEqual(testCase.result[0])
+        expect(result.presentationHeight).toEqual(testCase.result[1])
+      }
     })
 
     it(`should throw if maxWidth is less than 1`, async () => {
