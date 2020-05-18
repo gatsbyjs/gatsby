@@ -15,7 +15,9 @@ const globalConfigPath =
   process.env.XDG_CONFIG_HOME || path.join(os.homedir(), `.config`)
 
 const getLockfileDir = (programPath: string): string => {
-  const hash = createContentDigest(programPath)
+  // NOTE(@mxstbr): Unsure as to the root cause, but sometimes the createContentDigest
+  // fn adds whitespace at the beginning of the string.
+  const hash = createContentDigest(programPath).trim()
 
   return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
 }
