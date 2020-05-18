@@ -10,7 +10,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === `develop`) {
     webpackPlugins.push(new PreactRefreshPlugin())
 
-    // remove React refresh plugin, we want ot add preact refresh instead.
+    // remove React refresh plugin, we want to add preact refresh instead.
     const webpackConfig = getConfig()
     const reactRefreshPluginIndex = webpackConfig.plugins.findIndex(
       plugin => plugin.constructor.name === `ReactRefreshPlugin`
