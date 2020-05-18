@@ -1119,7 +1119,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the regex operator without flags`, async () => {
           const needleStr = `/^The.*Wax/`
           const needleRex = /^The.*Wax/
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             name: { regex: needleStr },
           })
 
@@ -1136,7 +1136,7 @@ it(`should use the cache argument`, async () => {
           // Note: needle is different from checked because `new RegExp('/a/i')` does _not_ work
           const needleRex = /^the.*wax/i
           const needleStr = `/^the.*wax/i`
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             name: { regex: needleStr },
           })
 
@@ -1149,22 +1149,73 @@ it(`should use the cache argument`, async () => {
           )
         })
 
-        it(`handles the nested regex operator`, async () => {
+        it(`rejects strings without forward slashes`, async () => {
+          await expect(
+            runFastFilter({
+              name: { regex: `^The.*Wax` },
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`rejects strings without trailing slash`, async () => {
+          await expect(
+            runFastFilter({
+              name: { regex: `/^The.*Wax` },
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`accepts strings without leading slash`, async () => {
+          // If this test starts failing, that might be okay and it should be dropped.
+          // At the time of writing it, this was a status quo edge case for Sift
+
+          // Passes because the requirement is mostly about a .split() failing
+          // for the other fail cases. As long as it passes a regex ultimately
+          // we don't really have to care / validate.
+
+          const needleRex = /(?:)/i // This was what it turned into
+          const needleStr = `^the.*wax/i`
+          const [result, allNodes] = await runFastFilter({
+            name: { regex: needleStr },
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needleRex.test(node.name)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needleRex.test(node.name)).toEqual(true)
+          )
+        })
+
+        it(`rejects actual regex`, async () => {
+          await expect(
+            runFastFilter({
+              name: { regex: /^The.*Wax/ },
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`handles the nested regex operator and ignores partial paths`, async () => {
           const needleStr = `/.*/`
           const needleRex = /.*/
-          const [result, allNodes] = await runSlowFilter({
+          const [result, allNodes] = await runFastFilter({
             nestedRegex: { field: { regex: needleStr } },
           })
 
           expect(result?.length).toEqual(
             allNodes.filter(
-              node => node.nestedRegex && needleRex.test(node.nestedRegex.field)
+              node =>
+                node.nestedRegex !== undefined &&
+                node.nestedRegex.field !== undefined &&
+                needleRex.test(node.nestedRegex.field)
             ).length
           )
           expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
           result.forEach(node =>
             expect(
-              node.nestedRegex && needleRex.test(node.nestedRegex.field)
+              node.nestedRegex === undefined ||
+                needleRex.test(node.nestedRegex.field)
             ).toEqual(true)
           )
         })
@@ -1726,8 +1777,10 @@ it(`should use the cache argument`, async () => {
       })
 
       describe(`$glob`, () => {
+        // Note: glob internally uses $regex
+
         it(`handles the glob operator`, async () => {
-          const [result] = await runSlowFilter({ name: { glob: `*Wax` } })
+          const [result] = await runFastFilter({ name: { glob: `*Wax` } })
 
           expect(result.length).toEqual(2)
           expect(result[0].name).toEqual(`The Mad Wax`)
