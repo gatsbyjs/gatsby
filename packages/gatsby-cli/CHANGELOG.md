@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.21...gatsby-cli@2.12.22) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Improve wording for 98124 error message ([#24186](https://github.com/gatsbyjs/gatsby/issues/24186)) ([0d68336](https://github.com/gatsbyjs/gatsby/commit/0d68336))
+
 ## [2.12.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.20...gatsby-cli@2.12.21) (2020-05-14)
 
 **Note:** Version bump only for package gatsby-cli

@@ -1608,7 +1608,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`$nin`, () => {
         it(`handles the nin operator for array [5]`, async () => {
-          const [result] = await runSlowFilter({ anArray: { nin: [5] } })
+          const [result] = await runFastFilter({ anArray: { nin: [5] } })
 
           // Since the array does not contain `null`, the query should also return the
           // nodes that do not have the field at all (NULL).
@@ -1625,7 +1625,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for array [null]`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             nullArray: { nin: [null] },
           })
 
@@ -1637,7 +1637,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for strings`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             string: { nin: [`b`, `c`] },
           })
 
@@ -1649,7 +1649,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for ints`, async () => {
-          const [result] = await runSlowFilter({ index: { nin: [0, 2] } })
+          const [result] = await runFastFilter({ index: { nin: [0, 2] } })
 
           expect(result.length).toEqual(1)
           result.forEach(node => {
@@ -1659,7 +1659,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for floats`, async () => {
-          const [result] = await runSlowFilter({ float: { nin: [1.5] } })
+          const [result] = await runFastFilter({ float: { nin: [1.5] } })
 
           expect(result.length).toEqual(2)
           result.forEach(node => {
@@ -1668,8 +1668,8 @@ it(`should use the cache argument`, async () => {
           })
         })
 
-        it(`handles the nin operator for booleans`, async () => {
-          const [result] = await runSlowFilter({
+        it(`handles the nin operator for boolean and null on boolean`, async () => {
+          const [result] = await runFastFilter({
             boolean: { nin: [true, null] },
           })
 
@@ -1683,7 +1683,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for double null`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             nil: { nin: [null, null] },
           })
 
@@ -1697,7 +1697,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for null in int+null`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             nil: { nin: [5, null] },
           })
 
@@ -1711,7 +1711,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for int in int+null`, async () => {
-          const [result] = await runSlowFilter({
+          const [result] = await runFastFilter({
             index: { nin: [2, null] },
           })
 

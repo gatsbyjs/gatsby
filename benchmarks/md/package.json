@@ -23,7 +23,7 @@
     "front-matter": "^3.1.0",
     "gatsby": "^2.20.23",
     "gatsby-image": "^2.3.3",
-    "gatsby-plugin-benchmark-reporting": "0.1.3",
+    "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-page-creator": "^2.2.2",
     "gatsby-plugin-sharp": "^2.4.12",
     "gatsby-remark-images": "^3.2.3",

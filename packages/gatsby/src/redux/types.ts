@@ -257,6 +257,7 @@ export type ActionsUnion =
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | IRemoveTemplateComponentAction
 
 export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
@@ -419,6 +420,7 @@ export interface ICreatePageAction {
   type: `CREATE_PAGE`
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
+  contextModified?: boolean
 }
 
 export interface ICreateRedirectAction {
@@ -447,6 +449,13 @@ export interface ISetPageDataAction {
   payload: {
     id: Identifier
     resultHash: string
+  }
+}
+
+export interface IRemoveTemplateComponentAction {
+  type: `REMOVE_TEMPLATE_COMPONENT`
+  payload: {
+    componentPath: string
   }
 }
 

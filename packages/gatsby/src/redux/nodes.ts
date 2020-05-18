@@ -4,7 +4,7 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte" | "$in"
+type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte" | "$in" | "$nin"
 // Note: `undefined` is an encoding for a property that does not exist
 type FilterValueNullable =
   | string
@@ -188,20 +188,23 @@ export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
 ): void {
-  if (op === `$ne`) {
-    postIndexingMetaSetupNe(filterCache)
+  if (op === `$ne` || op === `$nin`) {
+    postIndexingMetaSetupNeNin(filterCache)
   } else if ([`$lt`, `$lte`, `$gt`, `$gte`].includes(op)) {
     postIndexingMetaSetupLtLteGtGte(filterCache, op)
   }
 }
 
-function postIndexingMetaSetupNe(filterCache: IFilterCache): void {
+function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // Note: edge cases regarding `null` and `undefined`. Here `undefined` signals
   // that the property did not exist as sift does not support actual `undefined`
-  // values. For $ne, `null` only returns nodes that actually have the property
+  // values.
+  // For $ne, `null` only returns nodes that actually have the property
   // and in that case the property cannot be `null` either. For any other value,
   // $ne will return all nodes where the value is not actually the needle,
   // including nodes where the value is null.
+  // A $nin does the same as an $ne except it filters multiple values instead
+  // of just one.
 
   // For `$ne` we will take the list of all targeted nodes and eliminate the
   // bucket of nodes with a particular value, if it exists at all. So for that
@@ -639,6 +642,37 @@ export const getNodesFromCacheByValue = (
       .forEach((v: FilterValueNullable) =>
         filterCache.byValue.get(v)?.forEach(v => set.add(v))
       )
+
+    return set
+  }
+
+  if (op === `$nin`) {
+    // This is essentially the same as the $ne operator, just with multiple
+    // values to exclude.
+
+    if (!Array.isArray(filterValue)) {
+      throw new Error(`The $nin operator expects an array as value`)
+    }
+
+    const values: Set<FilterValueNullable> = new Set(filterValue)
+    const set = new Set(filterCache.meta.nodesUnordered)
+
+    // Do the action for "$ne" for each element in the set of values
+    values.forEach(filterValue => {
+      if (filterValue === null) {
+        // Edge case: $nin with `null` returns only the nodes that contain the
+        // full path and that don't resolve to null, so drop `undefined` as well
+        let cache = filterCache.byValue.get(undefined)
+        if (cache) cache.forEach(node => set.delete(node))
+        cache = filterCache.byValue.get(null)
+        if (cache) cache.forEach(node => set.delete(node))
+      } else {
+        // Not excluding null so it should include undefined leafs or leafs
+        // where only the partial path exists for whatever reason.
+        const cache = filterCache.byValue.get(filterValue)
+        if (cache) cache.forEach(node => set.delete(node))
+      }
+    })
 
     return set
   }
