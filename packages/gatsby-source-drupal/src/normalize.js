@@ -49,8 +49,9 @@ exports.downloadFile = async (
       // Resolve w/ baseUrl if node.uri isn't absolute.
       const url = new URL(fileUrl, baseUrl)
       // If we have basicAuth credentials, add them to the request.
+      const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
       const auth =
-        typeof basicAuth === `object` && fileType === `public:`
+        typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
           ? {
               htaccess_user: basicAuth.username,
               htaccess_pass: basicAuth.password,
