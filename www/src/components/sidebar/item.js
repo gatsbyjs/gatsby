@@ -11,7 +11,7 @@ const Item = ({ item, isSteps }) => {
 
   React.useEffect(() => {
     // If the active item isn't a hash, scroll to it on page load
-    if (isActive && !item.link.includes("#")) {
+    if (isActive && !item.link.includes(`#`)) {
       itemRef.current.scrollIntoView({ block: `center` })
     }
   }, [isActive, item])

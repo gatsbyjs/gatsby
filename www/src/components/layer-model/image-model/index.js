@@ -35,15 +35,13 @@ const layers = [
   },
 ]
 
-const ImageModel = ({ initialLayer, ...props }) => {
-  return (
-    <LayerModel
-      layers={layers}
-      initialLayer={initialLayer}
-      displayCodeFullWidth={true}
-      {...props}
-    />
-  )
-}
+const ImageModel = ({ initialLayer, ...props }) => (
+  <LayerModel
+    layers={layers}
+    initialLayer={initialLayer}
+    displayCodeFullWidth={true}
+    {...props}
+  />
+)
 
 export default ImageModel

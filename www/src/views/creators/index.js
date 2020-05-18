@@ -22,7 +22,10 @@ class CreatorsView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.state !== null && prevProps.location.state !== null) {
+    if (
+      this.props.location.state !== null &&
+      prevProps.location.state !== null
+    ) {
       const filterStateChanged =
         this.props.location.state.filter !== prevProps.location.state.filter
       const isNotFiltered = this.props.location.state.filter === ``
