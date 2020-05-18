@@ -1,7 +1,12 @@
-module.exports = (
-  state = { nodes: new Map(), connections: new Map() },
-  action
-) => {
+import { IGatsbyState, ActionsUnion } from "../types"
+
+export const componentDataDependenciesReducer = (
+  state: IGatsbyState["componentDataDependencies"] = {
+    nodes: new Map(),
+    connections: new Map(),
+  },
+  action: ActionsUnion
+): IGatsbyState["componentDataDependencies"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return { nodes: new Map(), connections: new Map() }
@@ -12,36 +17,36 @@ module.exports = (
 
       // If this nodeId not set yet.
       if (action.payload.nodeId) {
-        let existingPaths = new Set()
+        let existingPaths: Set<string> = new Set()
         if (state.nodes.has(action.payload.nodeId)) {
-          existingPaths = state.nodes.get(action.payload.nodeId)
+          existingPaths = state.nodes.get(action.payload.nodeId)!
         }
-        if (!existingPaths.has(action.payload.path || action.payload.id)) {
-          existingPaths.add(action.payload.path || action.payload.id)
+        if (!existingPaths.has(action.payload.path)) {
+          existingPaths.add(action.payload.path)
         }
         state.nodes.set(action.payload.nodeId, existingPaths)
       }
 
       // If this connection not set yet.
       if (action.payload.connection) {
-        let existingPaths = new Set()
+        let existingPaths: Set<string> = new Set()
         if (state.connections.has(action.payload.connection)) {
-          existingPaths = state.connections.get(action.payload.connection)
+          existingPaths = state.connections.get(action.payload.connection)!
         }
-        if (!existingPaths.has(action.payload.path || action.payload.id)) {
-          existingPaths.add(action.payload.path || action.payload.id)
+        if (!existingPaths.has(action.payload.path)) {
+          existingPaths.add(action.payload.path)
         }
         state.connections.set(action.payload.connection, existingPaths)
       }
 
       return state
     case `DELETE_COMPONENTS_DEPENDENCIES`:
-      state.nodes.forEach((val, _key) => {
+      state.nodes.forEach(val => {
         for (const path of action.payload.paths) {
           val.delete(path)
         }
       })
-      state.connections.forEach((val, _key) => {
+      state.connections.forEach(val => {
         for (const path of action.payload.paths) {
           val.delete(path)
         }

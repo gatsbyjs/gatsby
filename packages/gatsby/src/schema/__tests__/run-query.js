@@ -1,6 +1,10 @@
 const { runQuery: nodesQuery } = require(`../../db/nodes`)
+const { didLastFilterUseSift } = require(`../../redux/run-sift`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
+
+const EXPECT_SIFT = true
+const EXPECT_FAST_FILTER = false
 
 const makeNodesUneven = () => [
   // Note: This is assumed to be an uneven node count
@@ -216,6 +220,70 @@ const makeNodesEven = () => [
   },
 ]
 
+const makeNodesNeNull = () => [
+  // This set of nodes checks `ne` behavior with null and non-existing props in
+  // the target path, every step of the way.
+  {
+    id: `0`,
+    internal: { type: `Test`, contentDigest: `0` },
+    desc: `does not have the property chain at all`,
+  },
+  {
+    id: `1`,
+    internal: { type: `Test`, contentDigest: `1` },
+    desc: `first start of path is null`,
+    a: null,
+  },
+  {
+    id: `2`,
+    internal: { type: `Test`, contentDigest: `2` },
+    desc: `second start of path is undefined`,
+    a: {},
+  },
+  {
+    id: `3`,
+    internal: { type: `Test`, contentDigest: `3` },
+    desc: `second start of path is null`,
+    a: { b: null },
+  },
+  {
+    id: `4`,
+    internal: { type: `Test`, contentDigest: `4` },
+    desc: `third part is undefined`,
+    a: { b: {} },
+  },
+  {
+    id: `5`,
+    internal: { type: `Test`, contentDigest: `5` },
+    desc: `third part is null`,
+    a: { b: { c: null } },
+  },
+  {
+    id: `6`,
+    internal: { type: `Test`, contentDigest: `6` },
+    desc: `third part is true`,
+    a: { b: { c: true } },
+  },
+  {
+    id: `7`,
+    internal: { type: `Test`, contentDigest: `7` },
+    desc: `third part is false`,
+    a: { b: { c: false } },
+  },
+  {
+    id: `8`,
+    internal: { type: `Test`, contentDigest: `8` },
+    desc: `first step is a bool (would be prevented by schema in real world) `,
+    a: true,
+  },
+  {
+    id: `9`,
+    internal: { type: `Test`, contentDigest: `9` },
+    desc: `second step is a bool (would be prevented by schema in real world)`,
+    a: { b: true },
+  },
+]
+
 function make100Nodes(even) {
   const arr = []
 
@@ -255,7 +323,12 @@ function resetDb(nodes) {
   )
 }
 
-async function runQuery(queryArgs, filtersCache, nodes = makeNodesUneven()) {
+async function runQuery(
+  queryArgs,
+  filtersCache,
+  nodes = makeNodesUneven(),
+  alwaysSift = !filtersCache
+) {
   resetDb(nodes)
   const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
@@ -266,21 +339,41 @@ async function runQuery(queryArgs, filtersCache, nodes = makeNodesUneven()) {
     nodeTypeNames: [gqlType.name],
     filtersCache,
   }
-  return await nodesQuery(args)
+
+  let result = await nodesQuery(args)
+
+  // If the filters cache was set, then the test expects fast filters to handle
+  // the query and to skip Sift. If it's not set, then it can't use fast filters
+  // Might revise this when adding tests where we don't expect fast filters to
+  // support it yet..?
+  if (result && result.length) {
+    // Currently, empty results must go through Sift, so ignore those cases here
+    if (alwaysSift) {
+      expect(didLastFilterUseSift()).toBe(true)
+    } else {
+      expect(didLastFilterUseSift()).toBe(!filtersCache)
+    }
+  }
+
+  return result
 }
 
-async function runQuery2(queryArgs, filtersCache) {
+async function runQuery2(queryArgs, filtersCache, alwaysSift) {
   const nodes = makeNodesUneven()
-  return [await runQuery(queryArgs, filtersCache, nodes), nodes]
+  return [await runQuery(queryArgs, filtersCache, nodes, alwaysSift), nodes]
 }
 
-async function runFilterOnCache(filter, filtersCache) {
-  return await runQuery2({ filter }, filtersCache)
+async function runFilterOnCache(filter, filtersCache, alwaysSift) {
+  return await runQuery2({ filter }, filtersCache, alwaysSift)
 }
 
 it(`should use the cache argument`, async () => {
   const filtersCache = new Map()
-  const [result] = await runFilterOnCache({ hair: { eq: 2 } }, filtersCache)
+  const [result] = await runFilterOnCache(
+    { hair: { eq: 2 } },
+    filtersCache,
+    EXPECT_FAST_FILTER
+  )
 
   // Validate answer
   expect(result.length).toEqual(1)
@@ -309,8 +402,14 @@ it(`should use the cache argument`, async () => {
   { desc: `without cache`, cb: () => null }, // Forces no cache, must use Sift
   { desc: `with cache`, cb: () => new Map() },
 ].forEach(({ desc, cb: createFiltersCache }) => {
-  async function runFilter(filter) {
-    return runFilterOnCache(filter, createFiltersCache())
+  async function runFastFilter(filter) {
+    // Assume (and assert) that the query used fast filters if a cache was given
+    return runFilterOnCache(filter, createFiltersCache(), EXPECT_FAST_FILTER)
+  }
+  async function runSlowFilter(filter) {
+    // Assume (and assert) that the query used Sift even if a cache was given
+    // (These are cases we still need to support, at least, before dropping Sift)
+    return runFilterOnCache(filter, createFiltersCache(), EXPECT_SIFT)
   }
 
   describe(desc, () => {
@@ -318,7 +417,9 @@ it(`should use the cache argument`, async () => {
       describe(`$eq`, () => {
         it(`handles eq operator with number value`, async () => {
           const needle = 2
-          const [result, allNodes] = await runFilter({ hair: { eq: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { eq: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair === needle).length
@@ -329,7 +430,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles eq operator with false value`, async () => {
           const needle = false
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             boolean: { eq: needle },
           })
 
@@ -342,7 +443,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles eq operator with 0`, async () => {
           const needle = 0
-          const [result, allNodes] = await runFilter({ hair: { eq: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { eq: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair === needle).length
@@ -353,7 +456,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles eq operator with null`, async () => {
           const needle = null // note: this should find nodes with null OR undefined (apparently)
-          const [result, allNodes] = await runFilter({ nil: { eq: needle } })
+          const [result, allNodes] = await runFastFilter({
+            nil: { eq: needle },
+          })
 
           // Also returns nodes that do not have the property at all (NULL in db)
           expect(result?.length).toEqual(
@@ -365,7 +470,7 @@ it(`should use the cache argument`, async () => {
 
         // grapqhl would never pass on `undefined`
         // it(`handles eq operator with undefined`, async () => {
-        //   const [result, allNodes] = await runFilter({ undef: { eq: undefined } })
+        //   const [result, allNodes] = await runFastFilter{ undef: { eq: undefined } })
         //
         //   expect(result.length).toEqual(?)
         //   expect(result[0].hair).toEqual(?)
@@ -373,7 +478,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles eq operator with serialized array value`, async () => {
           const needle = `[5,6,7,8]`
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             strArray: { eq: needle },
           })
 
@@ -386,7 +491,7 @@ it(`should use the cache argument`, async () => {
 
         it(`finds numbers inside arrays`, async () => {
           const needle = 3
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { eq: needle },
           })
 
@@ -401,7 +506,7 @@ it(`should use the cache argument`, async () => {
 
         it(`finds numbers inside single-element arrays`, async () => {
           const needle = 8
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             singleArray: { eq: needle },
           })
 
@@ -416,7 +521,7 @@ it(`should use the cache argument`, async () => {
 
         it(`does not coerce numbers against single-element arrays`, async () => {
           const needle = `8` // note: `('8' == [8]) === true`
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             singleArray: { eq: needle },
           })
 
@@ -428,7 +533,9 @@ it(`should use the cache argument`, async () => {
       describe(`$ne`, () => {
         it(`handles ne operator`, async () => {
           const needle = 2
-          const [result, allNodes] = await runFilter({ hair: { ne: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { ne: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair !== needle).length
@@ -439,7 +546,7 @@ it(`should use the cache argument`, async () => {
 
         it(`coerces number to string`, async () => {
           const needle = 2 // Note: `id` is a numstr
-          const [result, allNodes] = await runFilter({ id: { ne: needle } })
+          const [result, allNodes] = await runFastFilter({ id: { ne: needle } })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.id !== needle).length
@@ -451,14 +558,17 @@ it(`should use the cache argument`, async () => {
         // This test causes a stack overflow right now
         it.skip(`dpes not coerce string to number`, async () => {
           const needle = `2` // Note: `id` is a numstr
-          const [result] = await runFilter({ id: { hair: needle } })
+          const [result] = await runSlowFilter({ id: { hair: needle } })
 
+          // Slow filter because it's an empty result
           expect(result).toEqual(null)
         })
 
         it(`handles ne operator with true`, async () => {
           const needle = true
-          const [result, allNodes] = await runFilter({ boolean: { ne: true } })
+          const [result, allNodes] = await runFastFilter({
+            boolean: { ne: true },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.boolean !== needle).length
@@ -467,12 +577,73 @@ it(`should use the cache argument`, async () => {
           result.forEach(node => expect(node.boolean).not.toEqual(needle))
         })
 
+        describe(`exhaustive checks for null and partial paths`, () => {
+          // This group of tests exhausitvely checks what happens when you $ne on path a.b.c=value a node that
+          // has a partial path, either ending in null or undefined prematurely, for all partials of the path.
+
+          it(`should deal with eq null`, async () => {
+            const needle = null
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Sift only returns id=6,7, where a.b.c===true/false.
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => !(node?.a?.b?.c == null)).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+
+          it(`should deal with eq true`, async () => {
+            const needle = true
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Note: Sift only omits id=6, where a.b.c===true (contrary to searching for null)
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => node?.a?.b?.c !== needle).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+
+          it(`should deal with eq false`, async () => {
+            const needle = false
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Note: Sift only omits id=7, where a.b.c===false (contrary to searching for null)
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => node?.a?.b?.c !== needle).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+        })
+
         it(`handles nested ne operator with true`, async () => {
           const needle = true
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             waxOnly: { foo: { ne: true } },
           })
 
+          // Note: one node has this, one node has waxOnly=null, one node does not have the waxOnly property at all.
+          // Redux seems to return only the node that doesn't have the property at all (node.id=0)
           expect(result?.length).toEqual(
             allNodes.filter(node => node.waxOnly?.foo !== needle).length
           )
@@ -482,7 +653,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles ne operator with 0`, async () => {
           const needle = 0
-          const [result, allNodes] = await runFilter({ hair: { ne: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { ne: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair !== needle).length
@@ -493,7 +666,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles ne operator with null`, async () => {
           const needle = 0
-          const [result, allNodes] = await runFilter({ nil: { ne: needle } })
+          const [result, allNodes] = await runFastFilter({
+            nil: { ne: needle },
+          })
 
           // Should only return nodes who do have the property, not set to null
           expect(result?.length).toEqual(
@@ -505,7 +680,7 @@ it(`should use the cache argument`, async () => {
 
         // grapqhl would never pass on `undefined`
         // it(`handles ne operator with undefined`, async () => {
-        //   const [result, allNodes] = await runFilter({ undef: { ne: undefined } })
+        //   const [result, allNodes] = await runFastFilter({ undef: { ne: undefined } })
         //
         //   expect(result.length).toEqual(?)
         //   expect(result?.length).toEqual(allNodes.filter(node => node.nil !== needle).length)
@@ -515,7 +690,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles deeply nested ne: true operator`, async () => {
           const needle = true
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             waxOnly: { bar: { baz: { ne: needle } } },
           })
 
@@ -530,9 +705,11 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the ne operator for array field values`, async () => {
           const needle = 1
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { ne: needle },
           })
+
+          // Sift returns only the node that doesn't have the property at all (the other two arrays contain 1)
 
           expect(result?.length).toEqual(
             allNodes.filter(node => !node.anArray?.includes(needle)).length
@@ -547,7 +724,9 @@ it(`should use the cache argument`, async () => {
       describe(`$lt`, () => {
         it(`handles lt operator with number`, async () => {
           const needle = 1
-          const [result, allNodes] = await runFilter({ hair: { lt: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { lt: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair < needle).length
@@ -614,7 +793,9 @@ it(`should use the cache argument`, async () => {
           // This test checks whether we don't incorrectly assume that if the
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
-          const [result, allNodes] = await runFilter({ float: { lt: needle } })
+          const [result, allNodes] = await runFastFilter({
+            float: { lt: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.float < needle).length
@@ -625,7 +806,10 @@ it(`should use the cache argument`, async () => {
 
         it(`handles lt operator with null`, async () => {
           const needle = null
-          const [result, allNodes] = await runFilter({ nil: { lt: needle } })
+          // Note: Slow filter because it returns an empty result
+          const [result, allNodes] = await runFastFilter({
+            nil: { lt: needle },
+          })
 
           // Nothing is lt null so zero nodes should match
           // (Note: this is different from `lte`, which does return nulls here!)
@@ -639,7 +823,9 @@ it(`should use the cache argument`, async () => {
       describe(`$lte`, () => {
         it(`handles lte operator with number`, async () => {
           const needle = 1
-          const [result, allNodes] = await runFilter({ hair: { lte: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { lte: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair <= needle).length
@@ -706,7 +892,9 @@ it(`should use the cache argument`, async () => {
           // This test checks whether we don't incorrectly assume that if the
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
-          const [result, allNodes] = await runFilter({ float: { lte: needle } })
+          const [result, allNodes] = await runFastFilter({
+            float: { lte: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.float <= needle).length
@@ -717,7 +905,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles lte operator with null`, async () => {
           const needle = null
-          const [result, allNodes] = await runFilter({ nil: { lte: needle } })
+          const [result, allNodes] = await runFastFilter({
+            nil: { lte: needle },
+          })
 
           // lte null matches null but no nodes without the property (NULL)
           expect(result?.length).toEqual(
@@ -731,7 +921,9 @@ it(`should use the cache argument`, async () => {
       describe(`$gt`, () => {
         it(`handles gt operator with number`, async () => {
           const needle = 1
-          const [result, allNodes] = await runFilter({ hair: { gt: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { gt: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair > needle).length
@@ -798,7 +990,9 @@ it(`should use the cache argument`, async () => {
           // This test checks whether we don't incorrectly assume that if the
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
-          const [result, allNodes] = await runFilter({ float: { gt: needle } })
+          const [result, allNodes] = await runFastFilter({
+            float: { gt: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.float > needle).length
@@ -809,7 +1003,10 @@ it(`should use the cache argument`, async () => {
 
         it(`handles gt operator with null`, async () => {
           const needle = null
-          const [result, allNodes] = await runFilter({ nil: { gt: needle } })
+          // Note: Slow filter because it returns an empty result
+          const [result, allNodes] = await runFastFilter({
+            nil: { gt: needle },
+          })
 
           // Nothing is gt null so zero nodes should match
           // (Note: this is different from `gte`, which does return nulls here!)
@@ -823,7 +1020,9 @@ it(`should use the cache argument`, async () => {
       describe(`$gte`, () => {
         it(`handles gte operator with number`, async () => {
           const needle = 1
-          const [result, allNodes] = await runFilter({ hair: { gte: needle } })
+          const [result, allNodes] = await runFastFilter({
+            hair: { gte: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.hair >= needle).length
@@ -890,7 +1089,9 @@ it(`should use the cache argument`, async () => {
           // This test checks whether we don't incorrectly assume that if the
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
-          const [result, allNodes] = await runFilter({ float: { gte: needle } })
+          const [result, allNodes] = await runFastFilter({
+            float: { gte: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => node.float >= needle).length
@@ -901,7 +1102,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles gte operator with null`, async () => {
           const needle = null
-          const [result, allNodes] = await runFilter({ nil: { gte: needle } })
+          const [result, allNodes] = await runFastFilter({
+            nil: { gte: needle },
+          })
 
           // gte null matches null but no nodes without the property (NULL)
           expect(result?.length).toEqual(
@@ -916,7 +1119,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the regex operator without flags`, async () => {
           const needleStr = `/^The.*Wax/`
           const needleRex = /^The.*Wax/
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runSlowFilter({
             name: { regex: needleStr },
           })
 
@@ -933,7 +1136,7 @@ it(`should use the cache argument`, async () => {
           // Note: needle is different from checked because `new RegExp('/a/i')` does _not_ work
           const needleRex = /^the.*wax/i
           const needleStr = `/^the.*wax/i`
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runSlowFilter({
             name: { regex: needleStr },
           })
 
@@ -949,7 +1152,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the nested regex operator`, async () => {
           const needleStr = `/.*/`
           const needleRex = /.*/
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runSlowFilter({
             nestedRegex: { field: { regex: needleStr } },
           })
 
@@ -967,7 +1170,9 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`does not match double quote for string without it`, async () => {
-          const [result, allNodes] = await runFilter({ name: { regex: `/"/` } })
+          const [result, allNodes] = await runFastFilter({
+            name: { regex: `/"/` },
+          })
 
           expect(result).toEqual(null)
           expect(allNodes.filter(node => node.name === `"`).length).toEqual(0)
@@ -977,7 +1182,7 @@ it(`should use the cache argument`, async () => {
       describe(`$in`, () => {
         it(`handles the in operator for strings`, async () => {
           const needle = [`b`, `c`]
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             string: { in: needle },
           })
 
@@ -992,7 +1197,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for ints`, async () => {
           const needle = [0, 2]
-          const [result, allNodes] = await runFilter({ index: { in: needle } })
+          const [result, allNodes] = await runFastFilter({
+            index: { in: needle },
+          })
 
           expect(result?.length).toEqual(
             allNodes.filter(node => needle.includes(node.index)).length
@@ -1005,7 +1212,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for floats`, async () => {
           const needle = [1.5, 2.5]
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             float: { in: needle },
           })
 
@@ -1019,9 +1226,10 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for just null`, async () => {
-          const [result, allNodes] = await runFilter({ nil: { in: [null] } })
+          const [result, allNodes] = await runFastFilter({
+            nil: { in: [null] },
+          })
 
-          // Do not include the nodes without a `nil` property
           // May not have the property, or must be null
           expect(result?.length).toEqual(
             allNodes.filter(node => node.nil === undefined || node.nil === null)
@@ -1034,11 +1242,10 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for double null`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             nil: { in: [null, null] },
           })
 
-          // Do not include the nodes without a `nil` property
           // May not have the property, or must be null
           expect(result?.length).toEqual(
             allNodes.filter(node => node.nil === undefined || node.nil === null)
@@ -1051,7 +1258,9 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for null in int and null`, async () => {
-          const [result, allNodes] = await runFilter({ nil: { in: [5, null] } })
+          const [result, allNodes] = await runFastFilter({
+            nil: { in: [5, null] },
+          })
 
           // Include the nodes without a `nil` property
           expect(result?.length).toEqual(
@@ -1065,7 +1274,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for int in int and null`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             index: { in: [2, null] },
           })
 
@@ -1089,7 +1298,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the in operator for booleans`, async () => {
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             boolean: { in: [true] },
           })
 
@@ -1102,7 +1311,9 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for array with one element`, async () => {
           // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
-          const [result, allNodes] = await runFilter({ anArray: { in: [5] } })
+          const [result, allNodes] = await runFastFilter({
+            anArray: { in: [5] },
+          })
 
           // The first one has a 5, the second one does not have a 5, the third does
           // not have the property at all (NULL). It should return the first and last.
@@ -1119,7 +1330,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the in operator for array some elements`, async () => {
           // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
           const needle = [20, 5, 300]
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             anArray: { in: needle },
           })
 
@@ -1138,7 +1349,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nested in operator for array of strings`, async () => {
           const needle = [`moo`]
-          const [result, allNodes] = await runFilter({
+          const [result, allNodes] = await runFastFilter({
             frontmatter: { tags: { in: needle } },
           })
 
@@ -1155,11 +1366,36 @@ it(`should use the cache argument`, async () => {
             ).toEqual(true)
           )
         })
+
+        it(`refuses a non-arg number argument`, async () => {
+          await expect(
+            runFastFilter({
+              hair: { in: 2 },
+            })
+          ).rejects.toThrow()
+        })
+
+        // I'm convinced this only works in Sift because of a fluke
+        it.skip(`refuses a non-arg string argument`, async () => {
+          await expect(
+            runFastFilter({
+              name: { in: `The Mad Max` },
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`refuses a non-arg boolean argument`, async () => {
+          await expect(
+            runFastFilter({
+              boolean: { in: true },
+            })
+          ).rejects.toThrow()
+        })
       })
 
       describe(`$elemMatch`, () => {
         it(`handles the elemMatch operator on a proper single tree`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -1180,7 +1416,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the elemMatch operator on the second element`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -1201,7 +1437,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`should return only one node if elemMatch hits multiples`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -1224,7 +1460,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`ignores the elemMatch operator on a partial sub tree`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             singleElem: {
               things: {
                 elemMatch: {
@@ -1238,7 +1474,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the elemMatch operator for array of objects (1)`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             data: {
               tags: {
                 elemMatch: {
@@ -1261,7 +1497,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the elemMatch operator for array of objects (2)`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             data: {
               tags: {
                 elemMatch: {
@@ -1284,7 +1520,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on boolean field`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             boolean: {
               elemMatch: {
                 eq: true,
@@ -1298,7 +1534,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`skips nodes without the field for elemMatch on boolean`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             boolSecondOnly: {
               elemMatch: {
                 eq: false,
@@ -1312,7 +1548,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on string field`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             string: {
               elemMatch: {
                 eq: `a`,
@@ -1326,7 +1562,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`should return all nodes for elemMatch on non-arrays too`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             name: {
               elemMatch: {
                 eq: `The Mad Wax`,
@@ -1342,7 +1578,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`skips nodes without the field for elemMatch on string`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             strSecondOnly: {
               elemMatch: {
                 eq: `needle`,
@@ -1356,7 +1592,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`works for elemMatch on number field`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runFastFilter({
             float: {
               elemMatch: {
                 eq: 1.5,
@@ -1372,7 +1608,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`$nin`, () => {
         it(`handles the nin operator for array [5]`, async () => {
-          const [result] = await runFilter({ anArray: { nin: [5] } })
+          const [result] = await runSlowFilter({ anArray: { nin: [5] } })
 
           // Since the array does not contain `null`, the query should also return the
           // nodes that do not have the field at all (NULL).
@@ -1389,7 +1625,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for array [null]`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runSlowFilter({
             nullArray: { nin: [null] },
           })
 
@@ -1401,7 +1637,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for strings`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runSlowFilter({
             string: { nin: [`b`, `c`] },
           })
 
@@ -1413,7 +1649,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for ints`, async () => {
-          const [result] = await runFilter({ index: { nin: [0, 2] } })
+          const [result] = await runSlowFilter({ index: { nin: [0, 2] } })
 
           expect(result.length).toEqual(1)
           result.forEach(node => {
@@ -1423,7 +1659,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for floats`, async () => {
-          const [result] = await runFilter({ float: { nin: [1.5] } })
+          const [result] = await runSlowFilter({ float: { nin: [1.5] } })
 
           expect(result.length).toEqual(2)
           result.forEach(node => {
@@ -1433,7 +1669,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for booleans`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runSlowFilter({
             boolean: { nin: [true, null] },
           })
 
@@ -1447,7 +1683,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for double null`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runSlowFilter({
             nil: { nin: [null, null] },
           })
 
@@ -1461,7 +1697,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for null in int+null`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runSlowFilter({
             nil: { nin: [5, null] },
           })
 
@@ -1475,7 +1711,7 @@ it(`should use the cache argument`, async () => {
         })
 
         it(`handles the nin operator for int in int+null`, async () => {
-          const [result] = await runFilter({
+          const [result] = await runSlowFilter({
             index: { nin: [2, null] },
           })
 
@@ -1491,7 +1727,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`$glob`, () => {
         it(`handles the glob operator`, async () => {
-          const [result] = await runFilter({ name: { glob: `*Wax` } })
+          const [result] = await runSlowFilter({ name: { glob: `*Wax` } })
 
           expect(result.length).toEqual(2)
           expect(result[0].name).toEqual(`The Mad Wax`)
@@ -1500,7 +1736,7 @@ it(`should use the cache argument`, async () => {
 
       describe(`date`, () => {
         it(`filters date fields`, async () => {
-          const [result] = await runFilter({ date: { ne: null } })
+          const [result] = await runFastFilter({ date: { ne: null } })
 
           expect(result.length).toEqual(2)
           expect(result[0].index).toEqual(0)

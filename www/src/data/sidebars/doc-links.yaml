@@ -75,9 +75,9 @@
             - title: Deploying to Heroku
               link: /docs/deploying-to-heroku/
               breadcrumbTitle: Heroku
-            - title: Deploying to ZEIT Now
-              link: /docs/deploying-to-zeit-now/
-              breadcrumbTitle: ZEIT Now
+            - title: Deploying to Vercel
+              link: /docs/deploying-to-vercel/
+              breadcrumbTitle: Vercel
             - title: Deploying to Cloudflare Workers
               link: /docs/deploying-to-cloudflare-workers/
               breadcrumbTitle: Cloudflare Workers
@@ -525,8 +525,8 @@
               breadcrumbTitle: React Profiler
             - title: Scaling Issues
               link: /docs/scaling-issues/
-            - title: Experimental Page Build Optimizations for Incremental Data Changes
-              link: /docs/page-build-optimizations-for-incremental-data-changes/
+            - title: Conditional Page Builds
+              link: /docs/conditional-page-builds/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
@@ -781,10 +781,12 @@
           link: /docs/glossary/headless-wordpress/
         - title: Hydration
           link: /docs/glossary/hydration/
-        - title: JAMStack
-          link: /docs/glossary/jamstack/
         - title: Infrastructure as Code
           link: /docs/glossary/infrastructure-as-code/
+        - title: JAMStack
+          link: /docs/glossary/jamstack/
+        - title: JSX
+          link: /docs/glossary/jsx/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX
@@ -793,6 +795,8 @@
           link: /docs/glossary/node/
         - title: npm
           link: /docs/glossary/npm/
+        - title: Progressive Enhancement
+          link: /docs/glossary/progressive-enhancement/
         - title: React
           link: /docs/glossary/react/
         - title: Server Side Rendering

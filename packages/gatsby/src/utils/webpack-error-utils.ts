@@ -21,7 +21,7 @@ interface ITransformedWebpackError {
     stage: Stage
     stageLabel: StageLabel
     sourceMessage?: string
-    [key: string]: string | boolean | undefined
+    [key: string]: unknown
   }
 }
 const transformWebpackError = (
