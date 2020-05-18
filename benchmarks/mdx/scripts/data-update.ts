@@ -36,10 +36,10 @@ interface IArticleAttributes {
 
   // call webhooks if they exist
   if (
-    process.env.BENCHMARK_UPDATE_WEBHOOKS &&
-    typeof process.env.BENCHMARK_UPDATE_WEBHOOKS === `string`
+    process.env.BENCHMARK_MDX_UPDATE_WEBHOOKS &&
+    typeof process.env.BENCHMARK_MDX_UPDATE_WEBHOOKS === `string`
   ) {
-    const webhooks = process.env.BENCHMARK_UPDATE_WEBHOOKS.split(`,`)
+    const webhooks = process.env.BENCHMARK_MDX_UPDATE_WEBHOOKS.split(`,`)
 
     for (const webhook of webhooks) {
       await fetch(webhook, { method: `POST` })

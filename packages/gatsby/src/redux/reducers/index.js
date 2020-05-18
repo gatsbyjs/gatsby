@@ -1,5 +1,5 @@
-const reduxNodes = require(`./nodes`)
-const lokiNodes = require(`../../db/loki/nodes`).reducer
+import { nodeReducer } from "./nodes"
+const nodesByType = require(`./nodes-by-type`)
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -10,68 +10,36 @@ import { pageDataReducer } from "./page-data"
 import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
-
-// const backend = process.env.GATSBY_DB_NODES || `redux`
-const backend = `redux`
-
-function getNodesReducer() {
-  let nodesReducer
-  switch (backend) {
-    case `redux`:
-      nodesReducer = reduxNodes
-      break
-    case `loki`:
-      nodesReducer = lokiNodes
-      break
-    default:
-      throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-      )
-  }
-  return nodesReducer
-}
-
-function getNodesByTypeReducer() {
-  let nodesReducer
-  switch (backend) {
-    case `redux`:
-      nodesReducer = require(`./nodes-by-type`)
-      break
-    case `loki`:
-      nodesReducer = (state = null) => null
-      break
-    default:
-      throw new Error(
-        `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-      )
-  }
-  return nodesReducer
-}
+import { lastAction } from "./last-action"
+import { jobsV2Reducer } from "./jobsv2"
+import { componentsReducer } from "./components"
+import { componentDataDependenciesReducer } from "./component-data-dependencies"
+import { babelrcReducer } from "./babelrc"
 
 /**
  * @property exports.nodesTouched Set<string>
  */
 module.exports = {
   program: require(`./program`),
-  nodes: getNodesReducer(),
-  nodesByType: getNodesByTypeReducer(),
+  nodes: nodeReducer,
+  nodesByType: nodesByType,
   resolvedNodesCache: require(`./resolved-nodes`),
   nodesTouched: require(`./nodes-touched`),
-  lastAction: require(`./last-action`),
+  lastAction: lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
   schema: schemaReducer,
   pages: pagesReducer,
   status: statusReducer,
-  componentDataDependencies: require(`./component-data-dependencies`),
-  components: require(`./components`),
+  componentDataDependencies: componentDataDependenciesReducer,
+  components: componentsReducer,
   staticQueryComponents: staticQueryComponentsReducer,
   jobs: require(`./jobs`),
-  jobsV2: require(`./jobsv2`),
+  jobsV2: jobsV2Reducer,
   webpack: webpackReducer,
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,
-  babelrc: require(`./babelrc`),
+  babelrc: babelrcReducer,
   schemaCustomization: require(`./schema-customization`),
   themes: themesReducer,
   logs: logReducer,

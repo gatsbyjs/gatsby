@@ -210,9 +210,10 @@ it(`should store created/changed/deleted resources on the context after applying
       fs.unlinkSync(path.join(process.cwd(), filePath2))
       fs.unlinkSync(path.join(process.cwd(), filePath3))
 
-      expect(state.context.stepResources[0]).toHaveLength(2)
-      //expect(state.context.stepResources).toMatchSnapshot()
-      expect(state.context.stepResources[1][0]._message).toBeTruthy()
+      expect(state.context.stepResources).toHaveLength(3)
+      expect(state.context.stepResources).toMatchSnapshot()
+      expect(state.context.stepResources[0]._message).toBeTruthy()
+      expect(state.context.stepResources[0]._currentStep).toBeTruthy()
       done()
     }
   })

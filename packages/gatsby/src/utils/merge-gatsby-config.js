@@ -51,7 +51,10 @@ const howToMerge = {
   // plugins are concatenated and uniq'd, so we don't get two of the same plugin value
   plugins: (a = [], b = []) =>
     _.uniqWith(a.concat(b), (a, b) =>
-      _.isEqual(normalizePluginEntry(a), normalizePluginEntry(b))
+      _.isEqual(
+        _.pick(normalizePluginEntry(a), [`resolve`, `options`]),
+        _.pick(normalizePluginEntry(b), [`resolve`, `options`])
+      )
     ),
   mapping: (objA, objB) => _.merge({}, objA, objB),
 }

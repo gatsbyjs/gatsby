@@ -13,6 +13,7 @@ import {
 import { navigate as reachNavigate } from "@reach/router"
 import Link from "../components/localized-link"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
+import isOfficialPackage from "../utils/is-official-package"
 import AlgoliaLogo from "../assets/vendor-logos/algolia.svg"
 import GatsbyIcon from "./gatsby-monogram"
 import { debounce, unescape } from "lodash-es"
@@ -326,6 +327,7 @@ const Result = ({ hit, pathname, query }) => {
   // pathname = `/packages/gatsby-link/` || `/packages/@comsoc/gatsby-mdast-copy-linked-files`
   //  hit.name = `gatsby-link` || `@comsoc/gatsby-mdast-copy-linked-files`
   const selected = new RegExp(`^/packages/${hit.name}/?$`).test(pathname)
+  const isOfficial = isOfficialPackage(hit)
   return (
     <Link
       to={`/packages/${hit.name}/?=${query}`}
@@ -407,18 +409,14 @@ const Result = ({ hit, pathname, query }) => {
             fontSize: 0,
           }}
         >
-          {hit.repository &&
-          hit.name[0] !== `@` &&
-          hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
-            0 ? (
-            <span sx={{ mr: 1 }} alt={`Official Gatsby Plugin`}>
-              <GatsbyIcon />
-            </span>
-          ) : (
-            <span sx={{ mr: 1 }} alt={`Community Gatsby Plugin`}>
-              <CommunityIcon />
-            </span>
-          )}
+          <span
+            sx={{ mr: 1 }}
+            alt={
+              isOfficial ? `Official Gatsby Plugin` : `Community Gatsby Plugin`
+            }
+          >
+            {isOfficial ? <GatsbyIcon /> : <CommunityIcon />}
+          </span>
           <span
             css={{
               width: `5em`,

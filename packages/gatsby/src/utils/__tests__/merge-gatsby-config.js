@@ -38,22 +38,45 @@ describe(`Merge gatsby config`, () => {
 
   it(`Merging plugins uniqs them, keeping the first occurrence`, () => {
     const basicConfig = {
-      plugins: [`gatsby-plugin-mdx`],
+      plugins: [
+        `gatsby-plugin-mdx`,
+        {
+          resolve: `scoped-plugin`,
+          options: {},
+          parentDir: `/path/to/scoped-basic/parent`,
+        },
+      ],
     }
     const morePlugins = {
       plugins: [
         `a-plugin`,
         `gatsby-plugin-mdx`,
         `b-plugin`,
-        { resolve: `c-plugin`, options: {} },
+        {
+          resolve: `c-plugin`,
+          options: {},
+        },
+        {
+          resolve: `scoped-plugin`,
+          options: {},
+          parentDir: `/path/to/scoped-more/parent`,
+        },
       ],
     }
     expect(mergeGatsbyConfig(basicConfig, morePlugins)).toEqual({
       plugins: [
         `gatsby-plugin-mdx`,
+        {
+          resolve: `scoped-plugin`,
+          options: {},
+          parentDir: `/path/to/scoped-basic/parent`,
+        },
         `a-plugin`,
         `b-plugin`,
-        { resolve: `c-plugin`, options: {} },
+        {
+          resolve: `c-plugin`,
+          options: {},
+        },
       ],
     })
     expect(mergeGatsbyConfig(morePlugins, basicConfig)).toEqual({
@@ -61,7 +84,15 @@ describe(`Merge gatsby config`, () => {
         `a-plugin`,
         `gatsby-plugin-mdx`,
         `b-plugin`,
-        { resolve: `c-plugin`, options: {} },
+        {
+          resolve: `c-plugin`,
+          options: {},
+        },
+        {
+          resolve: `scoped-plugin`,
+          options: {},
+          parentDir: `/path/to/scoped-more/parent`,
+        },
       ],
     })
   })
