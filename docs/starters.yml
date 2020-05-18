@@ -6301,3 +6301,24 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-starter-portfolio-minimal.netlify.app/
+  repo: https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal
+  description: A modern one-page portfolio with a clean yet expressive design.
+  tags:
+    - Portfolio
+    - Personal Website
+    - Markdown
+    - MDX
+    - PWA
+    - One-page
+    - Styling:CSS-in-JS
+    - Animations
+  features:
+    - Quick and Easy Setup - Add content and deploy
+    - Content via Markdown/MDX - No external CMS needed
+    - Extendable Layout - Add more sections as you like
+    - Responsive Design - With freshening Animations
+    - Medium Integration - Feature your latest articles
+    - Progressive Web App/PWA - Offline Support
+    - Fast and Accessible
+    - SEO
