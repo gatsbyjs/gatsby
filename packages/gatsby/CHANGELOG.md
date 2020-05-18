@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.34...gatsby@2.21.35) (2020-05-18)
+
+### Performance Improvements
+
+- **gatsby:** Enable fast filters for \$nin comparator ([#24184](https://github.com/gatsbyjs/gatsby/issues/24184)) ([8e3428f](https://github.com/gatsbyjs/gatsby/commit/8e3428f))
+
 ## [2.21.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.33...gatsby@2.21.34) (2020-05-18)
 
 ### Features
