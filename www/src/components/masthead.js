@@ -72,9 +72,9 @@ const MastheadContent = () => (
         href="https://www.gatsbyjs.com"
         onClick={() =>
           trackCustomEvent({
-            category: `home-masthead`,
+            category: `Gateways to Self-Serve`,
             action: `click`,
-            label: `Gatsby Cloud`
+            label: `loc:masthead; text:Gatsby Cloud`
           })
         }
       >

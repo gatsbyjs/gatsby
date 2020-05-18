@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
 import { CirclesOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -46,8 +46,20 @@ const CloudCallout = ({ narrow = true, children }) => {
   return (
     <CloudCalloutRoot narrow={narrow}>
       <CloudText>{children}</CloudText>
-      Try <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>,
-      with CMS and CDN auto-provisioning, performance reports, and 20x faster
+      Try{" "}
+      <a
+        href="https://gatsbyjs.com"
+        onClick={() =>
+          trackCustomEvent({
+            category: `Gateways to Self-Serve`,
+            action: `click`,
+            label: `loc:CloudCallout; text:Gatsby Cloud`
+          })
+        }
+      >
+        Gatsby Cloud
+      </a>
+      , with CMS and CDN auto-provisioning, performance reports, and 20x faster
       builds!
       <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
     </CloudCalloutRoot>
