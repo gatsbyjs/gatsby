@@ -87,6 +87,5 @@ That's it! If everything is working correctly, Strapi will now inform Gatsby Clo
 
 <CloudCallout>
   Sites built with Gatsby are fast no matter where they run. But when a Gatsby
-  site runs on Gatsby Cloud, it can make the Kessel run in under 12 parsecs.
-  Find out more:
+  site runs on Gatsby Cloud, its builds get even faster!
 </CloudCallout>

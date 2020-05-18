@@ -6,27 +6,6 @@ import Sidebar from "../sidebar"
 import { I18nProvider } from "../../I18nContext"
 import theme from "../../../gatsby-plugin-theme-ui"
 
-class LocalStorageMock {
-  store = {}
-
-  getItem(key) {
-    return this.store[key] ?? null
-  }
-
-  setItem(key, value) {
-    this.store[key] = value
-  }
-
-  clear() {
-    this.store = {}
-  }
-}
-
-Object.defineProperty(window, "localStorage", {
-  value: new LocalStorageMock(),
-  writable: true,
-})
-
 function extendItemList(itemList, parentTitle) {
   for (const item of itemList) {
     if (parentTitle) {
@@ -82,7 +61,6 @@ function renderSidebar(pathname, { activeItemHash } = {}) {
       <I18nProvider locale="en">
         <Sidebar
           title="The Great Gatsby"
-          sidebarKey="great-gatsby"
           itemList={extendItemList(itemList)}
           location={{ pathname }}
           activeItemHash={activeItemHash}
@@ -95,7 +73,6 @@ function renderSidebar(pathname, { activeItemHash } = {}) {
 describe("sidebar", () => {
   let scrollIntoViewMock
   beforeEach(() => {
-    localStorage.clear()
     scrollIntoViewMock = jest.fn()
     // https://github.com/jsdom/jsdom/issues/1695
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
@@ -103,22 +80,8 @@ describe("sidebar", () => {
 
   describe("initialization", () => {
     it("opens sections with active items", () => {
-      // Render a page
-      renderSidebar("/plot-summary/").unmount()
-      // Render another page and make sure that its section is open even if
-      // a falsy value was stored in local storage
       const { queryByText } = renderSidebar("/characters/jay-gatsby/")
       expect(queryByText("Jay Gatsby")).toBeInTheDocument()
-    })
-
-    it("opens sections based on local storage", () => {
-      // Render a page
-      renderSidebar("/characters/jay-gatsby/").unmount()
-      // Render a new page and check that the previous opened section
-      // is still open
-      const { queryByText } = renderSidebar("/plot-summary/")
-      expect(queryByText("Jay Gatsby")).toBeInTheDocument()
-      expect(queryByText("Daisy Buchanan")).not.toBeInTheDocument()
     })
   })
 
@@ -165,7 +128,6 @@ describe("sidebar", () => {
     })
 
     it("does not scroll into view when loaded with a hash", () => {
-      //
       renderSidebar("/themes/", {
         activeItemHash: "the-american-dream",
       })
