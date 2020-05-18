@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.33...gatsby-theme-notes@1.3.34) (2020-05-15)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.32...gatsby-theme-notes@1.3.33) (2020-05-15)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.31...gatsby-theme-notes@1.3.32) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.30...gatsby-theme-notes@1.3.31) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.29...gatsby-theme-notes@1.3.30) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.28...gatsby-theme-notes@1.3.29) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.27...gatsby-theme-notes@1.3.28) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.26...gatsby-theme-notes@1.3.27) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
+## [1.3.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.25...gatsby-theme-notes@1.3.26) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
 ## [1.3.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.24...gatsby-theme-notes@1.3.25) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-theme-notes

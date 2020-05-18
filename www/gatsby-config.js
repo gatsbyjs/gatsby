@@ -295,8 +295,7 @@ module.exports = {
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
                   filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
+                    fields: { section: { eq: "blog" }, released: { eq: true } }
                   }
                 ) {
                   nodes {
