@@ -102,7 +102,7 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
         {isSteps && (
           <span
             sx={{
-              bg: `white`,
+              bg: `ui.border`,
               borderColor: `ui.border`,
               borderRadius: 6,
               borderStyle: `solid`,
