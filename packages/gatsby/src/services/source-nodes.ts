@@ -1,6 +1,6 @@
 import { IBuildContext } from "../state-machines/develop"
+import sourceNodesAndGc from "../utils/source-nodes"
 
-const sourceNodesAndGc = require(`../utils/source-nodes`)
 import reporter from "gatsby-cli/lib/reporter"
 
 export async function sourceNodes({

@@ -12,6 +12,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store } from "../.."
 import { Span } from "opentracing"
+import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
 import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
@@ -22,7 +23,6 @@ const loadThemes = require(`../bootstrap/load-themes`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { getConfigFile } = require(`../bootstrap/get-config-file`)
 const tracer = require(`opentracing`).globalTracer()
-const preferDefault = require(`../bootstrap/prefer-default`)
 const { removeStaleJobs } = require(`../bootstrap/remove-stale-jobs`)
 
 // Show stack trace on unhandled promises.
