@@ -11,10 +11,6 @@ These are end to end tests triggered via a CI job. You can run these tests local
 ## Running the Tests
 
 - `cd` to the test (e.g. `cd e2e-tests/gatsby-image`)
-- Install dependencies: `yarn` or `npm install`
-- OPTIONAL: Use [gatsby-dev-cli][gatsby-dev-cli] to link current changes in packages
-- Run the `test` script, e.g. `yarn test` or `npm test`
+- Run the `e2e-test` script: `../../script/e2e-test.sh`
 
 Thanks for contributing to Gatsby! 💜
-
-[gatsby-dev-cli]: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli
