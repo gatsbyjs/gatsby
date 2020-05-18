@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.2.2...gatsby-core-utils@1.2.3) (2020-05-18)
+
+### Bug Fixes
+
+- **docs:** changes(ZEIT to Vercel) in core-utils and recipes ([#24120](https://github.com/gatsbyjs/gatsby/issues/24120)) ([aeb6c03](https://github.com/gatsbyjs/gatsby/commit/aeb6c03))
+
 ## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.2.1...gatsby-core-utils@1.2.2) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-core-utils
