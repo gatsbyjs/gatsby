@@ -218,18 +218,18 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       }
 
       const index = documentationJson.findIndex(
-        (docsJson) =>
+        docsJson =>
           docsJson.name === typeName &&
-          [`interface`, `typedef`, `constant`].includes(docsJson.kind),
-      );
+          [`interface`, `typedef`, `constant`].includes(docsJson.kind)
+      )
 
-      const isCycle = parent === documentationJson[index];
+      const isCycle = parent === documentationJson[index]
       if (isCycle) {
         helpers.reporter.warn(
-          `Unexpected cycle detected creating DocumentationJS nodes for file:\n\n\t${node.absolutePath}\n\nFor type: ${typeName}`,
-        );
+          `Unexpected cycle detected creating DocumentationJS nodes for file:\n\n\t${node.absolutePath}\n\nFor type: ${typeName}`
+        )
       }
-      
+
       if (index !== -1 && !isCycle) {
         return prepareNodeForDocs(documentationJson[index], {
           commentNumber: index,
@@ -241,21 +241,21 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
     const tryToAddTypeDef = (type, parent) => {
       if (type.applications) {
-        type.applications.forEach(t => tryToAddTypeDef(t, parent));
+        type.applications.forEach(t => tryToAddTypeDef(t, parent))
       }
 
       if (type.expression) {
-        tryToAddTypeDef(type.expression, parent);
+        tryToAddTypeDef(type.expression, parent)
       }
 
       if (type.elements) {
-        type.elements.forEach(t => tryToAddTypeDef(t, parent));
+        type.elements.forEach(t => tryToAddTypeDef(t, parent))
       }
 
       if (type.type === `NameExpression` && type.name) {
-        type.typeDef___NODE = getNodeIDForType(type.name, parent);
+        type.typeDef___NODE = getNodeIDForType(type.name, parent)
       }
-    };
+    }
 
     /**
      * Prepare Gatsby node from JsDoc object.
