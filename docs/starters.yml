@@ -6306,10 +6306,8 @@
   description: Simple Landing Page Starter Built With Gatsby.
   tags:
     - Landing Page
-    - Lead Generator
-    - Conversion Optimization
     - SEO
-    - Responsive layout
+    - PWA
     - Styling:SCSS
   features:
     - Responsive design
