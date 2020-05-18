@@ -32,7 +32,10 @@ export const createServiceLock = async (
   await fs.ensureDir(lockfileDir)
 
   try {
-    const unlock = await lockfile.lock(lockfileDir)
+    const unlock = await lockfile.lock(lockfileDir, {
+      // Use the minimum stale duration
+      stale: 5000,
+    })
 
     // Once the directory for this site is locked, we write a file to the dir with the service metadata
     await fs.writeFile(path.join(lockfileDir, `${name}.lock`), content)
