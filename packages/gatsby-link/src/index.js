@@ -45,9 +45,7 @@ const rewriteLinkPath = (path, relativeTo) => {
   if (!isLocalLink(path)) {
     return path
   }
-  return isAbsolutePath(path)
-    ? withPrefix(path)
-    : withPrefix(absolutify(path, relativeTo))
+  return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
 }
 
 const NavLinkPropTypes = {
@@ -250,17 +248,17 @@ export default React.forwardRef((props, ref) => (
 ))
 
 export const navigate = (to, options) => {
-  window.___navigate(withPrefix(to), options)
+  window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
 }
 
 export const push = to => {
   showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(withPrefix(to))
+  window.___push(rewriteLinkPath((to, window.location.pathname)))
 }
 
 export const replace = to => {
   showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(withPrefix(to))
+  window.___replace(rewriteLinkPath((to, window.location.pathname)))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
