@@ -9,22 +9,28 @@ export { parsePath }
 
 const isAbsolutePath = path => path.startsWith(`/`)
 
-export function withPrefix(path) {
-  const base = __BASE_PATH__ ?? __PATH_PREFIX__
-  if (isAbsolutePath(path)) {
-    return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${path}`
+export function withPrefix(path, prefix = __BASE_PATH__) {
+  if (!isLocalLink(path)) {
+    return path
   }
-  return path
+
+  if (path.startsWith(`./`) || path.startsWith(`../`)) {
+    return path
+  }
+  const base = prefix ?? __PATH_PREFIX__ ?? `/`
+
+  return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${
+    path.startsWith(`/`) ? path : `/${path}`
+  }`
 }
 
+const isLocalLink = path =>
+  !path.startsWith(`http://`) &&
+  !path.startsWith(`https://`) &&
+  !path.startsWith(`//`)
+
 export function withAssetPrefix(path) {
-  return isAbsolutePath(path)
-    ? `${
-        __PATH_PREFIX__?.endsWith(`/`)
-          ? __PATH_PREFIX__.slice(0, -1)
-          : __PATH_PREFIX__
-      }/${path.startsWith(`/`) ? path.substring(1) : path}`
-    : path
+  return withPrefix(path, __PATH_PREFIX__)
 }
 
 function absolutify(path, current) {
@@ -34,11 +40,6 @@ function absolutify(path, current) {
   }
   return resolve(path, current)
 }
-
-const isLocalLink = path =>
-  !path.startsWith(`http://`) &&
-  !path.startsWith(`https://`) &&
-  !path.startsWith(`//`)
 
 const rewriteLinkPath = (path, relativeTo) => {
   if (!isLocalLink(path)) {
