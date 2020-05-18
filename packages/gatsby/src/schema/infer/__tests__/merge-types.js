@@ -2,7 +2,7 @@ const { buildObjectType } = require(`../../types/type-builders`)
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
 const { actions } = require(`../../../redux/actions`)
-const { defaultTracingResolver } = require(`../../resolvers`)
+const { defaultResolver } = require(`../../resolvers`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -286,7 +286,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBe(defaultTracingResolver)
+        expect(fields.explicitDate.resolve).toBe(defaultResolver)
         expect(fields.inferDate.resolve).toBeDefined()
       })
 
@@ -337,7 +337,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBe(defaultTracingResolver)
+        expect(fields.explicitDate.resolve).toBe(defaultResolver)
       })
 
       it(`with "infer(noDefaultResolvers: false)"`, async () => {
@@ -438,7 +438,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBe(defaultTracingResolver)
+        expect(fields.explicitDate.resolve).toBe(defaultResolver)
         expect(fields.inferDate.resolve).toBeDefined()
       })
 
@@ -543,7 +543,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.conflict.type.toString()).toBe(`String!`)
 
         // Date resolvers
-        expect(fields.explicitDate.resolve).toBe(defaultTracingResolver)
+        expect(fields.explicitDate.resolve).toBe(defaultResolver)
       })
     })
   })
@@ -698,7 +698,7 @@ describe(`merges explicit and inferred type definitions`, () => {
     const { link, links } = schema.getType(`LinkTest`).getFields()
     expect(link.type.toString()).toBe(`Test!`)
     expect(links.type.toString()).toBe(`[Test!]!`)
-    expect(link.resolve).toBe(defaultTracingResolver)
-    expect(links.resolve).toBe(defaultTracingResolver)
+    expect(link.resolve).toBe(defaultResolver)
+    expect(links.resolve).toBe(defaultResolver)
   })
 })

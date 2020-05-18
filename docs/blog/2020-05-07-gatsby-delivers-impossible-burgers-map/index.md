@@ -103,8 +103,7 @@ Check out this [webinar with Gatsby and Contentful](https://www.gatsbyjs.com/imp
 
 <CloudCallout>
   Sites built with Gatsby are fast no matter where they run. But when a Gatsby
-  site runs on Gatsby Cloud, it can make the Kessel run in under 12 parsecs.
-  Find out more:
+  site runs on Gatsby Cloud, its builds get even faster!
 </CloudCallout>
 
 Ashley Geo and David Fonnegra also highlighted the Impossible Foods / Matter Supply partnership in [ImpossibleFoods.com: Combining Gatsby + Contentful for Speed, Scale, and Flexibility](https://www.gatsbyjs.com/impossible-foods-webinar/). Deane Barker highlighted the store locator use-case [in a March 2019 podcast](https://www.ingeniux.com/company/podcast/content-matters-podcast-headless-content-management-with-deane-barker).

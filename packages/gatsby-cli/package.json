@@ -40,7 +40,7 @@
     "prompts": "^2.3.2",
     "react": "^16.8.0",
     "redux": "^4.0.5",
-    "resolve-cwd": "^2.0.0",
+    "resolve-cwd": "^3.0.0",
     "semver": "^6.3.0",
     "signal-exit": "^3.0.3",
     "source-map": "0.7.3",
@@ -55,6 +55,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@types/hosted-git-info": "^3.0.0",
+    "@types/yargs": "^15.0.4",
     "babel-preset-gatsby-package": "^0.4.1",
     "cross-env": "^5.2.1"
   },

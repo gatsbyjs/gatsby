@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "bench": "set -x; gatsby clean; NUM_PAGES=${NUM_PAGES:-2000} gatsby build",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "data-update": "ts-node scripts/data-update.ts",

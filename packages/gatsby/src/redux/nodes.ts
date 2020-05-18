@@ -4,11 +4,17 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte"
+type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte" | "$in"
 // Note: `undefined` is an encoding for a property that does not exist
-type FilterValueNullable = string | number | boolean | null | undefined
+type FilterValueNullable =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Array<string | number | boolean | null | undefined>
 // This is filter value in most cases
-type FilterValue = string | number | boolean
+type FilterValue = string | number | boolean | Array<string | number | boolean>
 export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp
@@ -604,6 +610,39 @@ export const getNodesFromCacheByValue = (
     return filterCache.byValue.get(filterValue)
   }
 
+  if (op === `$in`) {
+    if (!Array.isArray(filterValue)) {
+      // Sift assumes the value has an `indexOf` property. By this fluke,
+      // string args would work, but I don't think that's intentional/expected.
+      throw new Error("The argument to the `in` comparator should be an array")
+    }
+    const filterValueArr: Array<FilterValueNullable> = filterValue
+
+    const set = new Set<IGatsbyNode>()
+    if (filterValueArr.includes(null)) {
+      // Like all other ops, `in: [null]` behaves weirdly, allowing all nodes
+      // that do not actually have a (complete) path (v=undefined)
+      const nodes = filterCache.byValue.get(undefined)
+      if (nodes) {
+        nodes.forEach(v => set.add(v))
+      }
+    }
+
+    // For every value in the needle array, find the bucket of nodes for
+    // that value, add this bucket of nodes to one set, return the set.
+    filterValueArr
+      .slice(0) // Sort is inline so slice the original array
+      .sort((a, b) => {
+        if (a == null || b == null) return 0
+        return a < b ? -1 : a > b ? 1 : 0
+      }) // Just sort to preserve legacy order as much as possible.
+      .forEach((v: FilterValueNullable) =>
+        filterCache.byValue.get(v)?.forEach(v => set.add(v))
+      )
+
+    return set
+  }
+
   if (op === `$ne`) {
     const set = new Set(filterCache.meta.nodesUnordered)
 
@@ -633,6 +672,12 @@ export const getNodesFromCacheByValue = (
     // This is an edge case and this value should be directly indexed
     // For `lte`/`gte` this should only return nodes for `null`, not a "range"
     return filterCache.byValue.get(filterValue)
+  }
+
+  if (Array.isArray(filterValue)) {
+    throw new Error(
+      "Array is an invalid filter value for the `" + op + "` comparator"
+    )
   }
 
   if (op === `$lt`) {

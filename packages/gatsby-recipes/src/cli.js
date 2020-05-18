@@ -143,7 +143,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Storybook - TypeScript`,
       value: `storybook-ts.mdx`,
     },
-    // TODO remaining recipes
+    {
+      label: `Add Ava`,
+      value: `ava.mdx`,
+    },
   ]
 
   return (
