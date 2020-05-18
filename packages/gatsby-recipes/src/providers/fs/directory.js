@@ -25,6 +25,7 @@ const update = async (context, resource) => {
   // TODO figure out how to move directories when it shifts
   // probably update needs to be called with the previous version
   // of the resource.
+  //
   // Also Directory needs a key.
   const fullPath = makePath(context.root, resource.id)
   await fs.ensureDir(fullPath)
