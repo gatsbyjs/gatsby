@@ -46,7 +46,6 @@ const PostsColumn = styled(`div`)`
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
   font-family: ${p => p.theme.fonts.heading};
-  overflow: hidden;
   width: auto;
 
   a {
@@ -132,7 +131,7 @@ class HomepageBlogPosts extends Component {
     this.desktopMediaQuery.removeListener(this.updateViewPortState)
   }
 
-  updateViewPortState = e => {
+  updateViewPortState = () => {
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
 

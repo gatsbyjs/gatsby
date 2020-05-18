@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.4.1...gatsby-transformer-json@2.4.2) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby-transform-json:** improve json parse error so it's easier to locate problematic content ([#23968](https://github.com/gatsbyjs/gatsby/issues/23968)) ([66fc314](https://github.com/gatsbyjs/gatsby/commit/66fc314))
+
 ## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@2.4.0...gatsby-transformer-json@2.4.1) (2020-05-05)
 
 **Note:** Version bump only for package gatsby-transformer-json
