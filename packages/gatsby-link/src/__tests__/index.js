@@ -168,31 +168,15 @@ describe(`<Link />`, () => {
 
     it(`handles relative link with pathPrefix`, () => {
       const pathPrefix = `/prefixed`
-
+      const sourcePath = `/prefixed/active/`
       const location = `./courses?sort=name`
-      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      const { link } = setup({
+        linkProps: { to: location },
+        pathPrefix,
+        sourcePath,
+      })
       expect(link.getAttribute(`href`)).toEqual(
         `${pathPrefix}/active/courses?sort=name`
-      )
-    })
-
-    it(`handles relative link with external pathPrefix`, () => {
-      const pathPrefix = `https://cdn.example.com/prefixed`
-
-      const location = `./courses?sort=name`
-      const { link } = setup({ linkProps: { to: location }, pathPrefix })
-      expect(link.getAttribute(`href`)).toEqual(
-        `${pathPrefix}/active/courses?sort=name`
-      )
-    })
-
-    it(`handles relative link with external pathPrefix with trailing slash`, () => {
-      const pathPrefix = `https://cdn.example.com/prefixed/`
-
-      const location = `./courses?sort=name`
-      const { link } = setup({ linkProps: { to: location }, pathPrefix })
-      expect(link.getAttribute(`href`)).toEqual(
-        `${pathPrefix}active/courses?sort=name`
       )
     })
 
