@@ -34,9 +34,9 @@ const fixture = {
 }
 
 test(`transforms the render output`, async () => {
-  const result = transform(fixture)
+  const [npmPackage, ...files] = transform(fixture)
 
-  expect(result.NPMPackage[0].resourceDefinitions.name).toEqual(`gatsby`)
-  expect(result.NPMPackage[0].newState).toEqual(`gatsby@latest`)
-  expect(result.File).toHaveLength(2)
+  expect(npmPackage.resourceDefinitions.name).toEqual(`gatsby`)
+  expect(npmPackage.newState).toEqual(`gatsby@latest`)
+  expect(files).toHaveLength(2)
 })

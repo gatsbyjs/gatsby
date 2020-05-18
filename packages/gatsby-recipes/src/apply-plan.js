@@ -10,7 +10,7 @@ const asyncForEach = async (array, callback) => {
 
 const applyPlan = async stepPlan => {
   let appliedResources = []
-  // We apply each resource serially for now — we can parallalize in the
+  // We apply each resource serially for now — we can parallelize in the
   // future for SPEED
   await asyncForEach(stepPlan, async resourcePlan => {
     const resource = resources[resourcePlan.resourceName]
