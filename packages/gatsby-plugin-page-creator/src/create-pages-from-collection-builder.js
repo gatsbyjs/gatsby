@@ -7,6 +7,10 @@ const { derivePath } = require(`./derive-path`)
 const fs = require(`fs-extra`)
 const traverse = require(`@babel/traverse`).default
 const t = require(`@babel/types`)
+import {
+  queryPartsFromPath,
+  generateQueryFromString,
+} from "../collection-query-builder"
 
 // Changes something like
 //   `/Users/site/src/pages/foo/[id]/`
@@ -15,27 +19,6 @@ const t = require(`@babel/types`)
 function translateInterpolationToMatchPath(createdPath) {
   const [, path] = createdPath.split(`src/pages`)
   return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
-}
-
-// Input str could be:
-//   Product
-//   allProduct
-//   allProduct(filter: thing)
-// End result should be something like { allProducts { nodes { id }}}
-function generateQueryFromString(str, fields) {
-  const needsAllPrefix = str.startsWith(`all`) === false
-
-  return `{${needsAllPrefix ? `all` : ``}${str}{nodes{${fields}}}}`
-}
-
-// Changes something like
-//   `/Users/site/src/pages/foo/[id]/[baz]`
-// to
-//   `id,baz`
-function extractUrlParamsForQuery(createdPath) {
-  const parts = /(\[[a-zA-Z_]+\])/.exec(createdPath)
-
-  return parts.map(p => p.replace(`[`, ``).replace(`]`, ``)).join(`,`)
 }
 
 function isCreatePagesFromData(path) {
@@ -75,11 +58,12 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
 
       queryString = generateQueryFromString(
         queryAst.quasis[0].value.raw,
-        extractUrlParamsForQuery(absolutePath)
+        queryPartsFromPath(absolutePath)
       )
     },
   })
 
+  console.debug({ queryString })
   const { data, error } = await graphql(queryString)
 
   if (!data || error) {

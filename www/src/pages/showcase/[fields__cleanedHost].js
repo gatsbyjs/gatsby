@@ -34,7 +34,7 @@ function Showcase({ location, data }) {
 
 export default createPagesFromData(
   Showcase,
-  `allSitesYaml(filter: { main_url: { ne: null }, fields: { ne: null, slug: { ne: null }, hasScreenshot: { ne: null } } }`
+  `allSitesYaml(filter: { main_url: { ne: null }, fields: { ne: null, slug: { ne: null }, hasScreenshot: { ne: null } } })`
 )
 
 export const query = graphql`
