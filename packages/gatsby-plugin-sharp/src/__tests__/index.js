@@ -287,7 +287,7 @@ describe(`gatsby-plugin-sharp`, () => {
             args: testCase.args,
           })
 
-          expect(boundActionCreators.createJobV2.calls).toMatchSnapshot()
+          expect(boundActionCreators.createJobV2.mock.calls).toMatchSnapshot()
           expect(result.presentationWidth).toEqual(testCase.result[0])
           expect(result.presentationHeight).toEqual(testCase.result[1])
         })
