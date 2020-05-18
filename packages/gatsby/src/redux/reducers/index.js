@@ -11,6 +11,9 @@ import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
+import { jobsV2Reducer } from "./jobsv2"
+import { componentsReducer } from "./components"
+import { componentDataDependenciesReducer } from "./component-data-dependencies"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -27,11 +30,11 @@ module.exports = {
   schema: schemaReducer,
   pages: pagesReducer,
   status: statusReducer,
-  componentDataDependencies: require(`./component-data-dependencies`),
-  components: require(`./components`),
+  componentDataDependencies: componentDataDependenciesReducer,
+  components: componentsReducer,
   staticQueryComponents: staticQueryComponentsReducer,
   jobs: require(`./jobs`),
-  jobsV2: require(`./jobsv2`),
+  jobsV2: jobsV2Reducer,
   webpack: webpackReducer,
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,

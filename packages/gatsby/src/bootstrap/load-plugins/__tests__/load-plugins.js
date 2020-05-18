@@ -36,7 +36,7 @@ describe(`Load plugins`, () => {
     expect(plugins).toMatchSnapshot()
   })
 
-  it(`Loads plugins defined with an object but without an option key`, async () => {
+  it(`Loads plugins defined with an object but without an options key`, async () => {
     const config = {
       plugins: [
         {
@@ -50,6 +50,26 @@ describe(`Load plugins`, () => {
     plugins = replaceFieldsThatCanVary(plugins)
 
     expect(plugins).toMatchSnapshot()
+  })
+
+  it(`Throws an error when a plugin is defined with an option key`, async () => {
+    expect.assertions(1)
+    const config = {
+      plugins: [
+        {
+          resolve: `___TEST___`,
+          option: {
+            test: true,
+          },
+        },
+      ],
+    }
+
+    try {
+      await loadPlugins(config)
+    } catch (err) {
+      expect(err.message).toMatchSnapshot()
+    }
   })
 
   it(`Overrides the options for gatsby-plugin-page-creator`, async () => {

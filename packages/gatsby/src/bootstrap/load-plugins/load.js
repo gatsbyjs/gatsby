@@ -139,6 +139,13 @@ const loadPlugins = (config = {}, rootDir = null) => {
     } else {
       plugin.options = plugin.options || {}
 
+      // Throw an error if there is an "option" key.
+      if (_.isEmpty(plugin.options) && !_.isEmpty(plugin.option)) {
+        throw new Error(
+          `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`
+        )
+      }
+
       // Plugins can have plugins.
       const subplugins = []
       if (plugin.options.plugins) {

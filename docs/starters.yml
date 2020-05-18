@@ -1,4 +1,4 @@
-- url: https://gatsby-ghost-balsa-starter.now.sh/
+- url: https://ghost-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
   tags:
@@ -591,6 +591,14 @@
   features:
     - A no-frills Gatsby install
     - No plugins, no boilerplate
+    - Great for advanced users
+- url: https://gatsby-starter-hello-world-tailwind-css.netlify.com/
+  repo: https://github.com/ohduran/gatsby-starter-hello-world-tailwind-css
+  description: hello world + Tailwind CSS
+  tags:
+    - Styling:Tailwind
+  features:
+    - One plugin, no boilerplate
     - Great for advanced users
 - url: https://gatsby-starter-hero-blog.greglobinski.com/
   repo: https://github.com/greglobinski/gatsby-starter-hero-blog
@@ -1328,18 +1336,15 @@
     - Automatic Sitemap generation
 - url: https://gatsby-starter-kontent.netlify.com
   repo: https://github.com/Kentico/gatsby-starter-kontent
-  description: Gatsby starter site with Kentico Kontent
+  description: Gatsby starter site with Kentico Kontent based on default Gatsby starter
   tags:
     - CMS:Headless
     - CMS:Kontent
     - Netlify
   features:
-    - Gatsby v2 support
-    - Content item <-> content type relationships
-    - Language variants relationships
-    - Linked items elements relationships
-    - Content items in Rich text elements relationships
-    - Reverse link relationships
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
+    - Kentico Kontent integration
 - url: https://gatsby-starter-storybook.netlify.com/
   repo: https://github.com/markoradak/gatsby-starter-storybook
   description: Gatsby starter site with Storybook
@@ -2984,7 +2989,7 @@
     - Comment feature (disqus, utterances)
     - Sponsor service (Buy-me-a-coffee)
     - CLI Tool
-- url: https://learn.hasura.io/graphql/react/introduction
+- url: https://hasura.io/learn/graphql/react/introduction/
   repo: https://github.com/hasura/gatsby-gitbook-starter
   description: A starter to generate docs/tutorial websites based on GitBook theme.
   tags:
@@ -3001,6 +3006,7 @@
     - SEO Tags with MDX frontmatter
     - Edit on GitHub button
     - Fully Customisable with rich embeds using React in MDX.
+    - Search integration with Algolia
 - url: https://gatsby-starter-blog-with-lunr.netlify.com/
   repo: https://github.com/lukewhitehouse/gatsby-starter-blog-with-lunr
   description: Building upon Gatsby's blog starter with a Lunr.js powered Site Search.
@@ -4704,7 +4710,9 @@
   tags:
     - Documentation
     - Markdown
-    - Styling:Other
+    - Language:TypeScript
+    - Styling:Ant Design
+    - i18n
   features:
     - ⚛ Prerendered static site
     - 🌎 Internationalization support by i18next
@@ -5412,11 +5420,15 @@
     - CMS:Headless
     - CMS:Contentful
     - Portfolio
+    - PWA
+    - Testing
   features:
     - Styled components
     - Responsive webpage
     - Portfolio
     - Blog
+    - Testing
+    - PWA
 - url: https://example-site-for-square-starter.netlify.com/
   repo: https://github.com/jonniebigodes/example-site-for-square-starter
   description: A barebones starter to help you kickstart your next Gatsby project with Square payments
@@ -5464,7 +5476,7 @@
     - Responsive design.
     - Simple React functional components (FC).
     - Google Analytics ready.
-    - Continuous deployment via Netlify or Zeit.
+    - Continuous deployment via Netlify or Vercel.
 - url: https://gatsby-starter-mountain.netlify.com/
   repo: https://github.com/artezan/gatsby-starter-mountain
   description: Blog theme that combine the new powerful MDX with the old WordPress. Built with WP/MDX and Theme UI
@@ -5885,7 +5897,7 @@
 
 - url: https://gct.mozart409.space/
   repo: https://github.com/Mozart409/gatsby-custom-tailwind
-  description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom zeit/serve server for production build, visible to all in your network, so you can test it with your phone.
+  description: A minimal tailwind css starter, with custom fonts, purgecss, automatic linting when committing to master, awesome lighthouse audit, custom Vercel/serve server for production build, visible to all in your network, so you can test it with your phone.
   tags:
     - Linting
     - PWA
@@ -5896,7 +5908,7 @@
     - Minimal Tailwind Starter
     - Custom Fonts predefined
     - Automatic Linting on Commit using husky and pretty-quick
-    - Custom server to test Production Builds on your local network via zeit/serve
+    - Custom server to test Production Builds on your local network via Vercel/serve
     - Extensive Readme in the repo
 - url: https://gatsby-redux-toolkit-typescript.netlify.com/
   repo: https://github.com/saimirkapaj/gatsby-redux-toolkit-typescript-starter
@@ -6067,6 +6079,22 @@
     - Pagination
     - SEO
     - Phone browser Support
+- url: https://dropinblog-gatsby-starter.netlify.app/
+  repo: https://github.com/DropInBlog/gatsby-starter
+  description: A quick and simple Gatsby solution for the simplest blogging solution
+  tags:
+    - Blog
+    - Netlify
+    - Pagination
+    - SEO
+    - CMS:Headless
+    - Styling:SCSS
+    - Styling:CSS-in-JS
+    - Styling:Tailwind
+  features:
+    - Pagination
+    - Beautifully designed landing page.
+    - Includes Chakra-UI and Tailwind CSS
 - url: https://gatsby-material-typescript-starter.netlify.app
   repo: https://github.com/Junscuzzy/gatsby-material-typescript-starter
   description: A simple starter using Typescript, eslint, prettier & @Material-ui
@@ -6161,6 +6189,19 @@
     - Snipcart e-commerce starter
     - Flotiq CMS as a product source
     - Deploy to Heroku
+- url: https://goodpraxis.coop
+  repo: https://github.com/GoodPraxis/gp-gatsby-starter-ts-sass-jest
+  description: A solid, basic Gatsby starter used by Good Praxis suitable for many different types of projects
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - SEO
+    - Testing
+  features:
+    - TypeScript support
+    - SCSS for styling
+    - JEST tests
+    - Simple SEO setup
 - url: https://gatsby-markdown-personal-website.netlify.app/
   repo: https://github.com/SaimirKapaj/gatsby-markdown-personal-website
   description: Gatsby Markdown Personal Website Starter, using Styled Components, Tailwindcss and Framer Motion.
@@ -6182,7 +6223,66 @@
     - React Helmet
     - Offline Support
     - Gatsby Image
-- url: https://gatsby-wordpress-balsa-starter.now.sh/
+- url: https://flotiq-starter-recipes.herokuapp.com
+  repo: https://github.com/flotiq/gatsby-starter-recipes
+  description: A Gatsby culinary starter with recipes sourced from Flotiq.
+  tags:
+    - CMS:Headless
+    - Gallery
+    - Pagination
+    - CMS:Other
+  features:
+    - Recipes starter
+    - Culinary recipes
+    - Flotiq CMS as a recipe source
+- url: https://gatsby-markdown-typescript-personal-website.netlify.app/
+  repo: https://github.com/SaimirKapaj/gatsby-markdown-typescript-personal-website
+  description: Gatsby Markdown Personal Website Starter, using Typescript, Styled Components, Tailwindcss and Framer Motion.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+    - Language:TypeScript
+    - Styling:Tailwind
+  features:
+    - Markdown
+    - Typescript
+    - Framer Motion
+    - Page Transition
+    - Styled Components
+    - Tailwind CSS
+    - Removes unused CSS with Purgecss
+    - Font Awesome Icons
+    - Responsive Design
+    - SEO
+    - React Helmet
+    - Offline Support
+    - Gatsby Image
+- url: https://thestartup.netlify.app/
+  repo: https://github.com/bagseye/startup
+  description: A startup template perfect for brochure sites and small businesses
+  tags:
+    - Landing Page
+    - Onepage
+    - Portfolio
+    - Styling:CSS-in-JS
+  features:
+    - Font Awesome Icons
+    - Responsive Design
+    - Style-Components
+- url: https://gatsby-starter-tailwind-css.netlify.app/
+  repo: https://github.com/melanienolan/gatsby-starter-tailwind-css
+  description: A Gatsby starter with Tailwind CSS. Uses Tailwind CSS v1.4.1 and includes built-in support for PurgeCSS.
+  tags:
+    - Landing Page
+    - Onepage
+    - Styling:Tailwind
+  features:
+    - Simple boilerplate site using Tailwind CSS
+    - PurgeCSS support to remove unused styles
+    - PostCSS including Autoprefixer
+    - React Helmet for better SEO
+- url: https://wordpress-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-wordpress-balsa-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
   tags:

@@ -98,7 +98,7 @@ https://youtu.be/AmkI2iH6c40
 
 We'll soon be shipping a fast build service that will dramatically speed up your Gatsby builds. It will provide feedback while you develop and deploy your code and content changes to your hosting platform.
 
-Gatsby Cloud Builds works in similar ways to build services like Heroku, Netlify, Zeit, and others that integrate with GitHub and other services to automatically build and deploy your site when you make changes. We integrate with a number of different CDNs such as Netlify, Fastly, and Firebase as well as the major cloud providers so you can host your site wherever you'd like.
+Gatsby Cloud Builds works in similar ways to build services like Heroku, Netlify, Vercel, and others that integrate with GitHub and other services to automatically build and deploy your site when you make changes. We integrate with a number of different CDNs such as Netlify, Fastly, and Firebase as well as the major cloud providers so you can host your site wherever you'd like.
 
 We're tackling this problem in our Gatsby Cloud Builds service through two strategies that take advantage of the special nature of cloud computing.
 

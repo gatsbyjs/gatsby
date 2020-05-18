@@ -2,6 +2,7 @@
 title: "From Static to Real-time: Introducing Incremental Builds in Gatsby Cloud"
 date: 2020-04-22
 author: Kyle Mathews
+seoTitle: "What is Gatsby Incremental Builds?"
 excerpt: "This is how the web should work. Whatever can be built ahead of time should be built ahead of time. When content changes, only relevant pages should be rebuilt. Introducing Incremental Builds on Gatsby Cloud: an evolutionary leap forward to a seamless, fast experience for the developers, content editors and end users of any website—even if that site has millions of pages."
 tags:
   - gatsby-cloud
@@ -83,10 +84,14 @@ Now, with no extra work for developers and content authors, changes can be appli
 
 People have been asking us for incremental builds all along—it just makes sense: “When I change one thing, I only want that part rebuilt and not the whole thing, and I want it to happen immediately.” And now we can finally just be like, “Yeah, that's exactly what we're doing.”
 
-## Get started with Incremental Builds
+## How to enable Gatsby's Incremental Builds
 
-Incremental Builds is now available in public beta on [Gatsby Cloud](http://gatsbyjs.com). All Gatsby Cloud users get a free 14 day trial, with full availability on all Professional, Business, and Enterprise plans. Incremental Builds works with Gatsby 2.20.4 and higher.
+1. Head to [Gatsby Cloud](https://gatsbyjs.com/) to try Incremental Builds immediately.
 
-We’re currently fully supporting incremental Builds for our first-class integrations with Gatsby Cloud, including Contentful, Sanity, DatoCMS and Cosmic. WordPress and Drupal support are in alpha. If you’re interested in building a first-class integration with Gatsby Cloud for Incremental Builds, please reach out to partners@gatsbyjs.com.
+2. Incremental Builds is now available in public beta. So all Gatsby Cloud users get a free 14 day trial, with full availability on all Professional, Business, and Enterprise plans.
 
-_Head to Gatsby Cloud (https://gatsbyjs.com/cloud/) to try Incremental Builds today! You can also join Dustin Schau, Gatsby's Head of Product, for a webinar on May 7th for a demonstration of how build times just got **seriously** faster. Visit http://gatsbyjs.com/incrbuilds-webinar to register._
+3. If you have an existing Gatsby site, you may need to upgrade. Incremental Builds works with Gatsby 2.20.4 and higher.
+
+4. To experience the fastest build times, update your site with content from Gatsby Cloud's first-class CMS integrations. These include Contentful, Sanity, DatoCMS and Cosmic. WordPress and Drupal support are in alpha.
+
+If you’re interested in building a first-class integration with Gatsby Cloud for Incremental Builds, please reach out to partners@gatsbyjs.com.

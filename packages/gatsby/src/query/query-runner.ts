@@ -1,34 +1,55 @@
-// @flow
+import { Span } from "opentracing"
+import _ from "lodash"
+import fs from "fs-extra"
+import report from "gatsby-cli/lib/reporter"
+import crypto from "crypto"
 
-const fs = require(`fs-extra`)
-const report = require(`gatsby-cli/lib/reporter`)
+import path from "path"
+import { store } from "../redux"
+import { boundActionCreators } from "../redux/actions"
+import pageDataUtil from "../utils/page-data"
+import { getCodeFrame } from "./graphql-errors"
+import errorParser from "./error-parser"
 
-const path = require(`path`)
-const _ = require(`lodash`)
-const { store } = require(`../redux`)
-const { boundActionCreators } = require(`../redux/actions`)
-const pageDataUtil = require(`../utils/page-data`)
-const { getCodeFrame } = require(`./graphql-errors`)
-const { default: errorParser } = require(`./error-parser`)
+import { GraphQLRunner } from "./graphql-runner"
+import { ExecutionResult } from "graphql"
 
 const resultHashes = new Map()
 
-type QueryJob = {
-  id: string,
-  hash?: string,
-  query: string,
-  componentPath: string,
-  context: Object,
-  isPage: Boolean,
+type PageContext = any
+
+interface IQueryJob {
+  id: string
+  hash?: string
+  query: string
+  componentPath: string
+  context: PageContext
+  isPage: boolean
+  pluginCreatorId: string
+}
+
+interface IExecutionResult extends ExecutionResult {
+  pageContext?: PageContext
 }
 
 // Run query
-module.exports = async (graphqlRunner, queryJob: QueryJob) => {
+export const queryRunner = async (
+  graphqlRunner: GraphQLRunner,
+  queryJob: IQueryJob,
+  parentSpan: Span | undefined
+): Promise<IExecutionResult> => {
   const { program } = store.getState()
 
-  const graphql = (query, context) => {
+  const graphql = (
+    query: string,
+    context: Record<string, unknown>,
+    queryName: string
+  ): Promise<ExecutionResult> => {
     // Check if query takes too long, print out warning
-    const promise = graphqlRunner.query(query, context)
+    const promise = graphqlRunner.query(query, context, {
+      parentSpan,
+      queryName,
+    })
     let isPending = true
 
     const timeoutId = setTimeout(() => {
@@ -60,12 +81,12 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   }
 
   // Run query
-  let result
+  let result: IExecutionResult
   // Nothing to do if the query doesn't exist.
   if (!queryJob.query || queryJob.query === ``) {
     result = {}
   } else {
-    result = await graphql(queryJob.query, queryJob.context)
+    result = await graphql(queryJob.query, queryJob.context, queryJob.id)
   }
 
   // If there's a graphql error then log the error. If we're building, also
@@ -84,6 +105,8 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
       .map(e => {
         const structuredError = errorParser({
           message: e.message,
+          filePath: undefined,
+          location: undefined,
         })
 
         structuredError.context = {
@@ -94,7 +117,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
             e.locations && e.locations[0].column
           ),
           filePath: queryJob.componentPath,
-          ...(urlPath && { urlPath }),
+          ...(urlPath ? { urlPath } : {}),
           ...queryContext,
           plugin,
         }
@@ -126,7 +149,7 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
   }
 
   const resultJSON = JSON.stringify(result)
-  const resultHash = require(`crypto`)
+  const resultHash = crypto
     .createHash(`sha1`)
     .update(resultJSON)
     .digest(`base64`)

@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "gatsby": "^2.21.21",
+    "gatsby": "^2.21.22",
     "gatsby-plugin-typography": "^2.5.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

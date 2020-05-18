@@ -8,7 +8,7 @@ import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import bootstrap from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
-import GraphQLRunner from "../query/graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
@@ -42,6 +42,7 @@ interface IBuildArgs extends IProgram {
   prefixPaths: boolean
   noUglify: boolean
   profile: boolean
+  graphqlTracing: boolean
   openTracingConfigFile: string
 }
 
@@ -70,7 +71,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
-  const graphqlRunner = new GraphQLRunner(store, { collectStats: true })
+  const graphqlRunner = new GraphQLRunner(store, {
+    collectStats: true,
+    graphqlTracing: program.graphqlTracing,
+  })
 
   const {
     processPageQueries,
