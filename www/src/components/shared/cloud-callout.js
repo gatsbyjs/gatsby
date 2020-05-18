@@ -7,7 +7,7 @@ import { CirclesOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const CloudCalloutRoot = styled(`div`)`
-  border: 1px solid ${p => console.log(p) || p.theme.colors.purple["20"]};
+  border: 1px solid ${p => console.log(p) || p.theme.colors.purple[`20`]};
   border-radius: ${p => p.theme.radii[2]};
   font-family: ${p => p.theme.fonts.heading};
   font-size: ${p => p.theme.fontSizes[3]};
@@ -39,7 +39,7 @@ const Circles = styled(`span`)`
   bottom: 16px;
   right: 0px;
   transform: translateX(15px);
-  color: ${p => p.theme.colors.purple["30"]};
+  color: ${p => p.theme.colors.purple[`30`]};
 `
 
 const CloudCallout = ({ narrow = true, children }) => {
@@ -68,7 +68,7 @@ const CloudCallout = ({ narrow = true, children }) => {
 
 CloudCallout.propTypes = {
   children: PropTypes.node.isRequired,
-  narrow: PropTypes.bool
+  narrow: PropTypes.bool,
 }
 
 export default CloudCallout

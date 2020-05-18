@@ -42,7 +42,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
   </Link>
 )
 const navItems = [
-  { id: "docs", text: t`Docs`, icon: DocsIcon },
+  { id: `docs`, text: t`Docs`, icon: DocsIcon },
   { id: `tutorial`, text: t`Tutorials`, icon: TutorialIcon },
   { id: `plugins`, text: t`Plugins`, icon: PluginsIcon },
   { id: `blog`, text: t`Blog`, icon: BlogIcon },
