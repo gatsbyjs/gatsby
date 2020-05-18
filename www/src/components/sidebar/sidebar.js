@@ -10,19 +10,6 @@ import getActiveItem from "../../utils/sidebar/get-active-item"
 import getActiveItemParents from "../../utils/sidebar/get-active-item-parents"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-// Access to global `localStorage` property must be guarded as it
-// fails under iOS private session mode.
-var hasLocalStorage = true
-var testKey = `gatsbyjs.sidebar.testKey`
-var ls
-try {
-  ls = global.localStorage
-  ls.setItem(testKey, `test`)
-  ls.removeItem(testKey)
-} catch (e) {
-  hasLocalStorage = false
-}
-
 function isItemInActiveTree(item, activeItem, activeItemParents) {
   return (
     activeItem.title === item.title ||
@@ -48,19 +35,6 @@ function getOpenItemHash(itemList, activeItem, activeItemParents) {
   return result
 }
 
-function readLocalStorage(key) {
-  if (hasLocalStorage) {
-    return JSON.parse(localStorage.getItem(`gatsbyjs:sidebar:${key}`)) ?? {}
-  }
-  return {}
-}
-
-function writeLocalStorage(key, state) {
-  if (hasLocalStorage) {
-    localStorage.setItem(`gatsbyjs:sidebar:${key}`, JSON.stringify(state))
-  }
-}
-
 const SidebarContext = React.createContext({})
 
 export function useSidebarContext() {
@@ -70,7 +44,6 @@ export function useSidebarContext() {
 export default withI18n()(function Sidebar({
   i18n,
   title,
-  sidebarKey,
   closeSidebar,
   itemList,
   location,
@@ -100,17 +73,7 @@ export default withI18n()(function Sidebar({
 
   // Get the hash where the only open items are
   // the hierarchy defined in props
-  const derivedHash = getOpenItemHash(itemList, activeItem, activeItemParents)
-
-  // Merge hash in local storage and the derived hash from props
-  // so that all sections open in either hash are open
-  const initialHash = (() => {
-    const { openSectionHash = {} } = readLocalStorage(sidebarKey)
-    for (const [key, isOpen] of Object.entries(derivedHash)) {
-      openSectionHash[key] = openSectionHash[key] || isOpen
-    }
-    return openSectionHash
-  })()
+  const initialHash = getOpenItemHash(itemList, activeItem, activeItemParents)
 
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
   const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
@@ -126,20 +89,16 @@ export default withI18n()(function Sidebar({
 
   function toggleExpandAll() {
     if (expandAll) {
-      setOpenSectionHash(derivedHash)
+      // Close everything except the initial open section
+      setOpenSectionHash(initialHash)
     } else {
       const newOpenSectionHash = {}
-      for (const key of Object.keys(derivedHash)) {
+      for (const key of Object.keys(initialHash)) {
         newOpenSectionHash[key] = true
       }
       setOpenSectionHash(newOpenSectionHash)
     }
   }
-
-  // Write to local storage whenever the open section hash changes
-  React.useEffect(() => {
-    writeLocalStorage(sidebarKey, { openSectionHash })
-  }, [openSectionHash])
 
   const getItemState = React.useCallback(
     item => ({

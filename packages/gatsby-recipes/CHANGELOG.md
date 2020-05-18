@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.19...gatsby-recipes@0.1.20) (2020-05-18)
+
+### Features
+
+- **recipes:** add Ava recipe ([#23801](https://github.com/gatsbyjs/gatsby/issues/23801)) ([56c4732](https://github.com/gatsbyjs/gatsby/commit/56c4732))
+
 ## [0.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.18...gatsby-recipes@0.1.19) (2020-05-14)
 
 ### Bug Fixes
