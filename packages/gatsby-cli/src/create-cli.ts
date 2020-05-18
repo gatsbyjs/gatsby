@@ -342,15 +342,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   cli.command({
     command: `recipes [recipe]`,
     describe: `[EXPERIMENTAL] Run a recipe`,
-    handler: handlerP(({ recipe }: yargs.Arguments) => {
-      if (typeof recipe !== `string`) {
-        throw new Error(
-          `Error: gatsby recipes needs to be called with a specific recipe`
-        )
+    handler: handlerP(
+      async ({ recipe }: yargs.Arguments<{ recipe: string | undefined }>) => {
+        await recipesHandler(recipe)
       }
-
-      recipesHandler(recipe)
-    }),
+    ),
   })
 }
 
