@@ -106,6 +106,27 @@ export interface IGatsbyCompleteJobV2 {
   inputPaths: InternalJobInterface["inputPaths"]
 }
 
+export interface IPlugin {
+  name: string
+  options: Record<string, any>
+}
+
+interface IBabelStage {
+  plugins: IPlugin[]
+  presets: IPlugin[]
+  options: {
+    cacheDirectory: boolean
+    sourceType: string
+    sourceMaps?: string
+  }
+}
+
+type BabelStageKeys =
+  | "develop"
+  | "develop-html"
+  | "build-html"
+  | "build-javascript"
+
 export interface IGatsbyState {
   program: IProgram
   nodes: GatsbyNodes
@@ -179,10 +200,7 @@ export interface IGatsbyState {
   redirects: IRedirect[]
   babelrc: {
     stages: {
-      develop: any // TODO
-      "develop-html": any // TODO
-      "build-html": any // TODO
-      "build-javascript": any // TODO
+      [key in BabelStageKeys]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -258,6 +276,36 @@ export type ActionsUnion =
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
   | IRemoveTemplateComponentAction
+  | ISetBabelPluginAction
+  | ISetBabelPresetAction
+  | ISetBabelOptionsAction
+
+interface ISetBabelPluginAction {
+  type: `SET_BABEL_PLUGIN`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
+
+interface ISetBabelPresetAction {
+  type: `SET_BABEL_PRESET`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
+
+interface ISetBabelOptionsAction {
+  type: `SET_BABEL_OPTIONS`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
 
 export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
