@@ -21,8 +21,10 @@ const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
   return action
 }
 
-onLogAction((action: ActionsUnion) => {
-  const sanitizedAction = sanitizeAction(action)
+export function initializeJSONLogger() {
+  onLogAction((action: ActionsUnion) => {
+    const sanitizedAction = sanitizeAction(action)
 
-  process.stdout.write(JSON.stringify(sanitizedAction) + `\n`)
-})
+    process.stdout.write(JSON.stringify(sanitizedAction) + `\n`)
+  })
+}
