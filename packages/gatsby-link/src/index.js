@@ -253,12 +253,12 @@ export const navigate = (to, options) => {
 
 export const push = to => {
   showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(rewriteLinkPath((to, window.location.pathname)))
+  window.___push(rewriteLinkPath(to, window.location.pathname))
 }
 
 export const replace = to => {
   showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(rewriteLinkPath((to, window.location.pathname)))
+  window.___replace(rewriteLinkPath(to, window.location.pathname))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
