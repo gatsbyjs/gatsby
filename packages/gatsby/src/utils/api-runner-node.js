@@ -103,8 +103,15 @@ const getLocalReporter = (activity, reporter) =>
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
     : reporter
 
+const pluginNodeCache = new Map()
+
 const runAPI = (plugin, api, args, activity) => {
-  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+  let gatsbyNode = pluginNodeCache.get(plugin.name)
+  if (!gatsbyNode) {
+    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+    pluginNodeCache.set(plugin.name, gatsbyNode)
+  }
+
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
