@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "gatsby": "^2.21.22",
+    "gatsby": "^2.21.35",
     "gatsby-plugin-typography": "^2.5.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -31,6 +31,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
     "prettier": "2.0.5",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   }
 }
