@@ -5241,6 +5241,19 @@
   source_url: https://github.com/ERS-HCL/gatsby-ershcl-app
   built_by: Tarun Kumar Sukhu
   built_by_url: https://github.com/tsukhu
+- title: Ben Shi
+  url: https://hbish.com/
+  main_url: https://hbish.com/
+  source_url: https://github.com/hbish/hbish.com
+  description: >
+    A personal website of Ben Shi, a technologist from Sydney, Australia.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Ben Shi
+  built_by_url: https://hbish.com/
+  featured: false
 - title: Sandbox
   url: https://www.sandboxneu.com/
   main_url: https://www.sandboxneu.com/
