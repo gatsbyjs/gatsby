@@ -108,7 +108,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxyPort = program.port
   const developPort = await getRandomPort()
 
-  const script = new ControllableScript(`
+  const developProcess = new ControllableScript(`
     const cmd = require("${developProcessPath}");
     const args = ${JSON.stringify({
       ...program,
@@ -167,19 +167,19 @@ module.exports = async (program: IProgram): Promise<void> => {
       isRestarting = true
       proxy.serveRestartingScreen()
       io.emit(`develop:is-starting`)
-      await script.stop()
-      script.start()
-      script.on(`message`, handleChildProcessIPC)
+      await developProcess.stop()
+      developProcess.start()
+      developProcess.on(`message`, handleChildProcessIPC)
       isRestarting = false
     })
   })
 
-  script.start()
-  script.on(`message`, handleChildProcessIPC)
+  developProcess.start()
+  developProcess.on(`message`, handleChildProcessIPC)
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
-  script.on(`exit`, code => {
+  developProcess.on(`exit`, code => {
     if (isRestarting) return
     process.exit(code)
   })
@@ -222,7 +222,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       new Promise(resolve => {
         statusServer.close(resolve)
       }),
-
       new Promise(resolve => {
         proxy.server.close(resolve)
       }),
@@ -230,12 +229,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   })
 
   process.on(`SIGINT`, async () => {
-    await script.stop(`SIGINT`)
+    await developProcess.stop(`SIGINT`)
     process.exit()
   })
 
   process.on(`SIGTERM`, async () => {
-    await script.stop(`SIGTERM`)
+    await developProcess.stop(`SIGTERM`)
     process.exit()
   })
 }
