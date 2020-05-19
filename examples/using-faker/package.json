@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "core-js": "^2.6.11",
-    "gatsby": "^2.21.22",
+    "gatsby": "^2.21.35",
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-source-faker": "^2.3.1",
     "react": "^16.3.2",

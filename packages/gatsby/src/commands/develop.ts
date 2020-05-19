@@ -330,7 +330,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
           )
           .pipe(res)
       })
-    })
+    }, cors())
   }
 
   await apiRunnerNode(`onCreateDevServer`, { app })
