@@ -17,7 +17,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 ### Create a local Git repository
 
 1. Initialize a Git repository, place yourself in the root directory of your Gatsby app and type
-   `git init`
+   `git init`.
 1. Next, create a file called `.gitignore` in the root of your project and give it the following content:
 
    ```bash
@@ -36,7 +36,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
 ### Create a GitHub repository and push your code
 
-1. Go to GitHub and log in. You should now be at a URL like `https://github.com/<your username>?tab=repositories`
+1. Go to GitHub and log in. You should now be at a URL like `https://github.com/<your username>?tab=repositories`.
 
 2. Click the `new` button.
 
@@ -53,7 +53,7 @@ Now you are ready to deploy your site!
 
 ## Deploy to Azure Static Web Apps
 
-1. Sign in to the [Azure portal](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true)
+1. Sign in to the [Azure portal](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true).
 1. In the top bar, search for **Static Web Apps**.
 1. Select **Static Web Apps**.
 1. Select **New**.
@@ -62,14 +62,14 @@ Now you are ready to deploy your site!
 
 Next, configure your new app and link it to your GitHub repository.
 
-1. Enter the **Project Details**
+1. Enter the **Project Details**.
 
    | Setting          | Value                                  |
    | ---------------- | -------------------------------------- |
    | _Subscription_   | **Your chosen subscription**           |
    | _Resource Group_ | _A pre-existing or new resource group_ |
 
-1. Enter the **Static Web Apps details**
+1. Enter the **Static Web Apps details**.
 
    | Setting  | Value                                                                         |
    | -------- | ----------------------------------------------------------------------------- |
@@ -77,8 +77,8 @@ Next, configure your new app and link it to your GitHub repository.
    | _Region_ | Select Region closest to you                                                  |
    | _SKU_    | **Free**                                                                      |
 
-1. Click the **Sign-in with GitHub** button and authenticate with GitHub
-1. Enter the **Source Control Details**
+1. Click the **Sign-in with GitHub** button and authenticate with GitHub.
+1. Enter the **Source Control Details**.
 
    | Setting        | Value                                                    |
    | -------------- | -------------------------------------------------------- |
@@ -86,7 +86,7 @@ Next, configure your new app and link it to your GitHub repository.
    | _Repository_   | **gatsby-app**                                           |
    | _Branch_       | **master**                                               |
 
-1. Click the **Next: Build >** button to edit the build configuration
+1. Click the **Next: Build >** button to edit the build configuration.
 
 ### Building your site
 
@@ -98,7 +98,7 @@ Next, add configuration details specific to your preferred frontend framework.
 | _Api location_          | _Leave blank_ |
 | _App artifact location_ | **build**     |
 
-Click the **Review + create** button
+Click the **Review + create** button.
 
 Continue to create the application.
 
@@ -108,7 +108,7 @@ Continue to create the application.
 
 ### Review the GitHub Action
 
-At this stage, your Static Web Apps instance is created in Azure, but your app is not yet deployed. The GitHub Action that Azure creates in your repository will run automatically to perform the first build and deployment of your app, but it takes a couple of minutes to finish.
+At this stage, your Static Web Apps instance is created in Azure but your app is not yet deployed. The GitHub Action that Azure creates in your repository will run automatically to perform the first build and deployment of your app, but it takes a couple of minutes to finish.
 
 You can check the status of your build and deploy action by clicking a big blue border at the top of your main window.
 
@@ -124,7 +124,7 @@ Congratulations! You've deployed your first app to Azure Static Web Apps!
 
 ## Additional resources
 
-There's much more to learn about Azure Static Web Apps such as working with routes, setup custom domains, add a Serverless API and much more. Below are some useful links:
+There's much more to learn about Azure Static Web Apps such as working with routes, setting up custom domains, adding a Serverless API, and much more. Below are some useful links:
 
 - [Docs: Azure Static Web Apps, overview page](https://docs.microsoft.com/en-gb/azure/static-web-apps?WT.mc_id=staticwebapps-github-chnoring)
 - [Docs: Azure Static Web Apps, add Serverless API](https://docs.microsoft.com/en-us/azure/static-apps/apis?WT.mc_id=staticwebapps-github-chnoring)
