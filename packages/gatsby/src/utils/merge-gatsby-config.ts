@@ -1,14 +1,21 @@
 import _ from "lodash"
 // TODO export it in index.d.ts
-interface IGatsbyConfig {
+type PluginEntry =
+  | string
+  | {
+    resolve: string
+    options?: Record<string, unknown>
+  }
+
+
+interface INormalizedPluginEntry {
+  resolve: string
+  options: Record<string, unknown>
+}
+
+interface IGatsbyConfigInput {
   siteMetadata?: Record<string, unknown>
-  plugins?: Array<
-    | string
-    | {
-        resolve: string
-        options: Record<string, unknown>
-      }
-  >
+  plugins?: Array<PluginEntry>
   pathPrefix?: string
   assetPrefix?: string
   polyfill?: boolean
@@ -20,19 +27,9 @@ interface IGatsbyConfig {
   developMiddleware?(app: any): void
 }
 
-type ConfigKey = keyof IGatsbyConfig
-type Metadata = IGatsbyConfig["siteMetadata"]
-type PluginEntry =
-  | string
-  | {
-      resolve: string
-      options?: Record<string, unknown>
-    }
-interface INormalizedPluginEntry {
-  resolve: string
-  options: Record<string, unknown>
-}
-type Mapping = IGatsbyConfig["mapping"]
+type ConfigKey = keyof IGatsbyConfigInput
+type Metadata = IGatsbyConfigInput["siteMetadata"]
+type Mapping = IGatsbyConfigInput["mapping"]
 
 /**
  * Normalize plugin spec before comparing so
@@ -45,8 +42,8 @@ const normalizePluginEntry = (entry: PluginEntry): INormalizedPluginEntry =>
   _.isString(entry)
     ? { resolve: entry, options: {} }
     : _.isObject(entry)
-    ? { options: {}, ...entry }
-    : entry
+      ? { options: {}, ...entry }
+      : entry
 
 const howToMerge = {
   /**
@@ -66,19 +63,19 @@ const howToMerge = {
       )
     ),
   mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
-}
+} as const
 
 /**
  * Defines how a theme object is merged with the user's config
  */
 export const mergeGatsbyConfig = (
-  a: IGatsbyConfig,
-  b: IGatsbyConfig
-): IGatsbyConfig => {
+  a: IGatsbyConfigInput,
+  b: IGatsbyConfigInput
+): IGatsbyConfigInput => {
   // a and b are gatsby configs, If they have keys, that means there are values to merge
-  const allGatsbyConfigKeysWithAValue = _.uniq(
+  const allGatsbyConfigKeysWithAValue: ConfigKey[] = _.uniq(
     Object.keys(a).concat(Object.keys(b))
-  )
+  ) as ConfigKey[]
 
   // reduce the array of mergable keys into a single gatsby config object
   const mergedConfig = allGatsbyConfigKeysWithAValue.reduce(
@@ -91,7 +88,7 @@ export const mergeGatsbyConfig = (
         [gatsbyConfigKey]: mergeFn(a[gatsbyConfigKey], b[gatsbyConfigKey]),
       }
     },
-    {}
+    {} as IGatsbyConfigInput
   )
 
   // return the fully merged config
