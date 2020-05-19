@@ -34,7 +34,7 @@ const doesConfigChangeRequireRestart = (
 ): boolean => {
   // Ignore changes to siteMetadata
   const replacer = (_, v): string | void => {
-    if (typeof v === `function`) {
+    if (typeof v === `function` || v instanceof RegExp) {
       return v.toString()
     } else {
       return v
