@@ -6252,3 +6252,57 @@
     - Developer Friendly
     - Isomorphic Skills Tiles
     - Transitions Between Pages and Menu
+- url: https://a2zarslaan.github.io/gatsby-starter-sasslan/
+  repo: https://github.com/a2zarslaan/gatsby-starter-sasslan
+  description: A minimalistic Gatsby starter template featuring SASS and CSS 7-1 architecture.
+  tags:
+    - Blog
+    - Portfolio
+    - Markdown
+  features:
+    - Markdown
+    - CSS 7-1 Architecture
+    - GraphQL IDE
+    - Page Transitions
+    - Easy to edit CSS variables
+    - Styled Components
+    - SVG icons
+    - Google fonts
+    - Desktop-First Design
+    - Responsive Design
+    - React Helmet
+    - Gatsby Remark Images
+    - Code Readability
+    - Progressive Web App
+- url: https://pedantic-brown-bbf927.netlify.app/
+  repo: https://github.com/pkino/gatsby-starter-typescript-sass
+  description: A minimum starter with TypeScript, Sass, ESLint and prettier built in
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - Linting
+  features:
+    - TypeScript and Sass support
+    - ESLint with basic react rules
+    - Progressive Web App
+- url: https://gatsby-starter-portfolio-minimal.netlify.app/
+  repo: https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal
+  description: A modern one-page portfolio with a clean yet expressive design.
+  tags:
+    - Portfolio
+    - Personal Website
+    - Markdown
+    - MDX
+    - PWA
+    - One-page
+    - Styling:CSS-in-JS
+    - Animations
+  features:
+    - Quick and Easy Setup - Add content and deploy
+    - Content via Markdown/MDX - No external CMS needed
+    - Extendable Layout - Add more sections as you like
+    - Responsive Design - With freshening Animations
+    - Medium Integration - Feature your latest articles
+    - Progressive Web App/PWA - Offline Support
+    - Fast and Accessible
+    - SEO
