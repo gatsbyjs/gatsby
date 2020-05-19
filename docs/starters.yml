@@ -259,8 +259,8 @@
     - Blog post listing with previews for each blog post
     - Navigation between posts with a previous/next post button
     - Tags and tag navigation
-- url: https://contentful-userland.github.io/gatsby-contentful-starter/
-  repo: https://github.com/contentful-userland/gatsby-contentful-starter
+- url: https://contentful.github.io/starter-gatsby-blog/
+  repo: https://github.com/contentful/starter-gatsby-blog
   description: n/a
   tags:
     - Blog
