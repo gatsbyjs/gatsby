@@ -133,18 +133,14 @@ exports.onCreateNode = async ({
     }
     return
   }
-  const locale = `en`
-  const section = slug.split(`/`)[1]
-  // fields for blog pages are handled in `utils/node/blog.js`
-  if (section === `blog`) return
 
   const slug = getMdxContentSlug(node, getNode(node.parent))
   if (!slug) return
 
-  const locale = "en"
-  const section = slug.split("/")[1]
+  const locale = `en`
+  const section = slug.split(`/`)[1]
   // fields for blog pages are handled in `utils/node/blog.js`
-  if (section === "blog") return
+  if (section === `blog`) return
 
   // Add slugs and other fields for docs pages
   if (slug) {
