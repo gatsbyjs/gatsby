@@ -38,7 +38,7 @@ Run `gatsby develop` to start a development server and view your the site:
 
 ![The homepage of the site created by gatsby-theme-starter](../images/gatsby-theme-starter-home.png)
 
-![The `notes` route of a site created by gatsby-theme starter](../images/gatsby-theme-starter-notes.png)
+![The `notes` route of a site created by gatsby-theme-starter](../images/gatsby-theme-starter-notes.png)
 
 ## Tutorial
 

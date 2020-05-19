@@ -48,7 +48,7 @@ In this case, the file to shadow is `gatsby-theme-blog/src/components/bio.js`.
 
 The shadowing API uses a deterministic file structure to determine which component will be rendered. In order to override the `Bio` component in `gatsby-theme-blog`, create a file named `user-site/src/gatsby-theme-blog/components/bio.js`.
 
-Any file that lives in the `src/gatsby-theme-blog` directory of the user’s site will be used instead of a file with the same name located in the theme’s src directory: `gatsby-theme-blog/src`. This replaces the entire file: to re-use parts of the original file from the theme such as functionality or styling, check out the sections of this doc on [extending](#extending-shadowed-files) and [importing](#importing-the-shadowed-component) shadowed files.
+Any file that lives in the `src/gatsby-theme-blog` directory of the user’s site will be used instead of a file with the same name located in the theme’s `src` directory: `gatsby-theme-blog/src`. This replaces the entire file: to re-use parts of the original file from the theme such as functionality or styling, check out the sections of this doc on [extending](#extending-shadowed-files) and [importing](#importing-the-shadowed-component) shadowed files.
 
 This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rendered in place of `gatsby-theme-blog/src/components/bio.js`:
 
@@ -215,7 +215,7 @@ export default function CallToAction(props) {
 }
 ```
 
-**Note:** For this approach to work NewsletterCTA has to accept a `className` property to apply styles after the CSS prop is transformed by the Emotion babel plugin.
+**Note:** For this approach to work `NewsletterCTA` has to accept a `className` property to apply styles after the CSS prop is transformed by the Emotion babel plugin.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 import theme from "gatsby-plugin-theme-ui/src"

@@ -9077,6 +9077,11 @@ diacritics-map@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/diacritics-map/-/diacritics-map-0.1.0.tgz#6dfc0ff9d01000a2edf2865371cac316e94977af"
 
+dictionary-en@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/dictionary-en/-/dictionary-en-3.0.0.tgz#c6cdb8cabbde09bd6a4a9349586548e58afff042"
+  integrity sha512-GHD7vLcjd3oB878zQ86iDhJLgrylt8U5H0+s8IBIMDW7EXQ+uRoDh27NawU/HMyc5amYaaoLQawwhAJX+TDQaw==
+
 diff-sequences@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-24.9.0.tgz#5715d6244e2aa65f48bba0bc972db0b0b11e95b5"
@@ -17641,6 +17646,13 @@ nprogress@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
 
+nspell@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/nspell/-/nspell-2.1.2.tgz#429a1bcd4288e93bd0989e8fa5d4ab2c3950e00a"
+  integrity sha512-j79L4A5aJSiswMUJ/6BW8+7ytgBUVce5BJX6xq8LtvKQpU96CMB340/yMeREH9U+gB/8dk4ctTn62DLiPMAXsA==
+  dependencies:
+    is-buffer "^2.0.0"
+
 nth-check@^1.0.1, nth-check@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-1.0.1.tgz#9929acdf628fc2c41098deab82ac580cf149aae4"
@@ -19696,7 +19708,7 @@ quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
 
-quotation@^1.0.0, quotation@^1.0.1:
+quotation@^1.0.0, quotation@^1.0.1, quotation@^1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/quotation/-/quotation-1.1.3.tgz#2a4d11f70105ad398b577883f310469367f53351"
   integrity sha512-45gUgmX/RtQOQV1kwM06boP49OYXcKCPrYwdmAvs5YqkpiobhNKKwo524JM6Ma0ko3oN9tXNcWs9+ABq3Ry7YA==
@@ -21705,11 +21717,41 @@ retext-smartypants@^3.0.3:
     nlcst-to-string "^2.0.0"
     unist-util-visit "^1.0.0"
 
+retext-spell@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/retext-spell/-/retext-spell-4.0.0.tgz#ff8391c7d6eda0beeeb3db1420483a5b04ed25d7"
+  integrity sha512-sEyVkWfiuljLGD7qCvpvmrk1yNlnpOG9otMJ4uWiIvKGKIHbFn+NknqL1DbInvQd3VAmnOaWFNRynrpAv/zw8g==
+  dependencies:
+    nlcst-is-literal "^1.0.0"
+    nlcst-to-string "^2.0.0"
+    nspell "^2.0.0"
+    quotation "^1.1.0"
+    unist-util-visit "^2.0.0"
+
 retext-stringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/retext-stringify/-/retext-stringify-2.0.0.tgz#00238facc5491f5bcdc589703a4658db2e54415b"
   dependencies:
     nlcst-to-string "^2.0.0"
+
+retext-syntax-mentions@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/retext-syntax-mentions/-/retext-syntax-mentions-2.1.0.tgz#02aaedea61ea8e0eb4075301493a1766957cba0d"
+  integrity sha512-cH2E5csc1X/QoTW4fOQBtlDZ5uk+IKjvhWyx+ltB0kcaNqarEcAJQfx+siRHD5v2R5b2bq+yRByyi9zNajTFVA==
+  dependencies:
+    nlcst-to-string "^2.0.0"
+    unist-util-position "^3.0.0"
+    unist-util-visit "^2.0.0"
+
+retext-syntax-urls@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/retext-syntax-urls/-/retext-syntax-urls-2.0.0.tgz#fe08161d08bf8d64c52ecdda55add5c31ff7e810"
+  integrity sha512-HHm32sKKXFwlqz5yNSpSwNQZJxCfekXwtCHAoLM8b6snn/S5pNotZMJSKCUO0XCvUOgq/x0wBUTTfYBwB0vGpg==
+  dependencies:
+    nlcst-to-string "^2.0.0"
+    unist-util-is "^4.0.0"
+    unist-util-modify-children "^1.1.1"
+    unist-util-position "^3.0.0"
 
 retext@^5.0.0:
   version "5.0.0"
@@ -24718,6 +24760,13 @@ unist-util-map@^1.0.5:
 unist-util-modify-children@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/unist-util-modify-children/-/unist-util-modify-children-1.1.2.tgz#c7f1b91712554ee59c47a05b551ed3e052a4e2d1"
+  dependencies:
+    array-iterate "^1.0.0"
+
+unist-util-modify-children@^1.1.1:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/unist-util-modify-children/-/unist-util-modify-children-1.1.6.tgz#1587130ca0ab5c56155fa60837ff524c3fbfbfaa"
+  integrity sha512-TOA6W9QLil+BrHqIZNR4o6IA5QwGOveMbnQxnWYq+7EFORx9vz/CHrtzF36zWrW61E2UKw7sM1KPtIgeceVwXw==
   dependencies:
     array-iterate "^1.0.0"
 

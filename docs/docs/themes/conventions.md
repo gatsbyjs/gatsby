@@ -34,7 +34,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
 ## Separating queries and presentational components
 
-As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/page-query) or [StaticQuery](/docs/static-query).
+As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [`pageQuery`](/docs/page-query) or [`StaticQuery`](/docs/static-query).
 
 ### Page queries
 
@@ -223,7 +223,7 @@ for performing a theme upgrade.
   - Renaming a directory
 - **Removing or changing the props a component accepts** since it will affect component extending.
 - **Changing queries** since a user could be using the original data in shadowed components.
-- **Removing or changing the behaviour** of your theme's configuration.
+- **Removing or changing the behavior** of your theme's configuration.
 - **Removing attributes in schema definitions** because it can break end user queries.
 - **Removing default data** this could change your generated schema and break a user's site if they
   depend on some part of that generated schema.

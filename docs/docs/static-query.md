@@ -4,7 +4,7 @@ title: Querying Data in Components using StaticQuery
 
 Gatsby v2 introduces `StaticQuery`, a new API that allows components to retrieve data via a GraphQL query.
 
-In this guide, you'll see an example using `StaticQuery`, and learn about [the difference between a StaticQuery and a page query](#how-staticquery-differs-from-page-query).
+In this guide, you'll see an example using `StaticQuery`, and learn about [the difference between a `StaticQuery` and a page query](#how-staticquery-differs-from-page-query).
 
 ## How to use `StaticQuery` in components
 
@@ -45,13 +45,13 @@ export default function Header() {
 
 By using `StaticQuery`, you can colocate a component with its data. It is no longer required to, say, pass data down from `Layout` to `Header`.
 
-### useStaticQuery
+### `useStaticQuery`
 
-There's also a React hooks version of StaticQuery: check out the documentation on [`useStaticQuery`](/docs/use-static-query/)
+There's also a React hooks version of `StaticQuery`: check out the documentation on [`useStaticQuery`](/docs/use-static-query/)
 
-### Typechecking
+### Type-checking
 
-With the above pattern, you lose the ability to typecheck with PropTypes. To regain typechecking while achieving the same result, you can change the component to:
+With the above pattern, you lose the ability to type-check with `PropTypes`. To regain type-checking while achieving the same result, you can change the component to:
 
 ```jsx:title=src/components/header.js
 import React from "react"
@@ -92,9 +92,9 @@ Header.propTypes = {
 }
 ```
 
-## How StaticQuery differs from page query
+## How `StaticQuery` differs from page query
 
-StaticQuery can do most of the things that page query can, including fragments. The main differences are:
+`StaticQuery` can do most of the things that page query can, including fragments. The main differences are:
 
 - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
 - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages

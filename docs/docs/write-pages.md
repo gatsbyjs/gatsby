@@ -52,19 +52,19 @@ Most of the code backing this section is in [pages-writer.js](https://github.com
 
 The dynamic files that are created are (all under the `.cache` directory).
 
-- [pages.json](#pagesjson)
-- [sync-requires.js](#sync-requiresjs)
-- [async-requires.js](#async-requiresjs)
-- [data.json](#datajson)
+- [`pages.json`](#pagesjson)
+- [`sync-requires.js`](#sync-requiresjs)
+- [`async-requires.js`](#async-requiresjs)
+- [`data.json`](#datajson)
 
 ## pages.json
 
 This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
 
-- [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname)
-- [jsonName](/docs/gatsby-internals-terminology/#jsonname)
-- [path](/docs/gatsby-internals-terminology/#path)
-- [matchPath](/docs/gatsby-internals-terminology/#matchpath)
+- [`componentChunkName`](/docs/gatsby-internals-terminology/#componentchunkname)
+- [`jsonName`](/docs/gatsby-internals-terminology/#jsonname)
+- [`path`](/docs/gatsby-internals-terminology/#path)
+- [`matchPath`](/docs/gatsby-internals-terminology/#matchpath)
 
 The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/gatsby-internals-terminology/#matchpath) for more info.
 
@@ -96,7 +96,7 @@ exports.components = {
 
 It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) so that it can map componentChunkNames to their component implementations. Whereas the [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) must use `async-requires.js` (below) since it performs [code splitting](/docs/how-code-splitting-works/).
 
-## async-requires.js
+## `async-requires.js`
 
 ---
 
@@ -120,9 +120,9 @@ exports.data = () => import("/home/site/.cache/data.json")
 
 Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation/). And `async-requires.js` is used by [Building the JavaScript App](/docs/production-app/).
 
-## data.json
+## `data.json`
 
-This is a generated json file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
+This is a generated JSON file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
 
 ```javascript
 {

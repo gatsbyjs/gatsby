@@ -256,7 +256,7 @@ Though the routing is working now, you still can access all routes without restr
 
 ## Controlling private routes
 
-To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
+To check if a user can access the content, you can wrap the restricted content inside a `PrivateRoute` component:
 
 ```jsx:title=src/components/privateRoute.js
 import React from "react"
@@ -275,7 +275,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
 export default PrivateRoute
 ```
 
-And now you can edit your Router to use the PrivateRoute component:
+And now you can edit your Router to use the `PrivateRoute` component:
 
 ```jsx:title=src/pages/app.js
 import React from "react"

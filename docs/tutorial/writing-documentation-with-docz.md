@@ -4,7 +4,7 @@ title: "Writing Documentation with Docz"
 
 Writing good documentation is important for your project maintainers (and for your future self). [Docz](https://www.docz.site) is a very nice documentation generator. It enables you to write interactive documentation for your React components with very little effort.
 
-Docz leverages `mdx` files – short for Markdown with JSX – which brings **React components** to Markdown files. From your PropTypes, or Flow types or TypeScript types, it can generate **property tables** to document properly how to use your components. In addition, you can provide a **coding playground** for your components, so that anyone can see them in action, modify the code and see the changes live, or copy the snippet to use it somewhere else.
+Docz leverages `mdx` files – short for Markdown with JSX – which brings **React components** to Markdown files. From your `PropTypes`, or Flow types or TypeScript types, it can generate **property tables** to document properly how to use your components. In addition, you can provide a **coding playground** for your components, so that anyone can see them in action, modify the code and see the changes live, or copy the snippet to use it somewhere else.
 
 If you're starting your Gatsby project from scratch and would like to have great documentation, with Docz support out of the box, you can use [`gatsby-starter-docz`](https://github.com/pedronauck/gatsby-starter-docz). You can also find more information at the end of this guide in the [Other resources](#other-resources) section.
 

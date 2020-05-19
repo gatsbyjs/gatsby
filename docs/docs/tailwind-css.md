@@ -149,9 +149,9 @@ plugins: [
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-### 4. Add custom css/scss files
+### 4. Add custom CSS/SCSS files
 
-**Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and @apply rules directly from your .js files.
+**Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and @apply rules directly from your `.js` files.
 
 In case you need to create custom classes for elements for nested selectors, or for overriding external packages, you can create your own css/scss files.
 
@@ -181,23 +181,23 @@ This will be your 'master' css file, which you will import all other css within.
 
 3. Apply these additional styles to the browser
 
-In `gatsby-browser.js` add an import rule for your Tailwind directives and custom css so that they are accounted for in build.
+In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
 
 ```js:title=gatsby-browser.js
 import "./src/css/index.css"
 ```
 
-### 5. Purging your css
+### 5. Purging your CSS
 
 Now we've fully configured Tailwind CSS, we want to make sure that only the classes we need are delivered to the browser. By default, Tailwind is a very large library because it includes every combination of every class you might think of. Most of these you won't need, so we use PurgeCSS to remove any unused classes.
 
 **Note**: By default, PurgeCSS only runs on the build command as it is a relatively slow process. The development server will include all Tailwind classes, so it's highly recommended you test on a build server before deploying.
 
-From v1.4.0 onwards PurgeCSS is built into Tailwind CSS, but the approaches needed are very similar.
+From v1.4.0 onward PurgeCSS is built into Tailwind CSS, but the approaches needed are very similar.
 
 **1.4.0 and above**
 
-In 1.4.0 you can purge your css directly from your Tailwind config. You simply need to provide an array of strings telling it which files to process.
+In 1.4.0 you can purge your CSS directly from your Tailwind config. You simply need to provide an array of strings telling it which files to process.
 
 ```js:title=tailwind.config.js
 module.exports = {
@@ -212,7 +212,7 @@ Full documentation on this can now be found on the Tailwind site - [Tailwind Pur
 
 **Older versions**
 
-It is recommended you install the latest version of Tailwind CSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [Purge css manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation)
+It is recommended you install the latest version of Tailwind CSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [PurgeCSS manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation)
 
 ## Other resources
 

@@ -76,7 +76,7 @@ Select `allMarkdownRemark` again and run it as you did for `allFile`. You'll see
 
 ![markdown-query](markdown-query.png)
 
-Ok! Hopefully, some basics are starting to fall into place. Source plugins bring data _into_ Gatsby's data system and _transformer_ plugins transform raw content brought by source plugins. This pattern can handle all data sourcing and data transformation you might need when building a Gatsby site.
+OK! Hopefully, some basics are starting to fall into place. Source plugins bring data _into_ Gatsby's data system and _transformer_ plugins transform raw content brought by source plugins. This pattern can handle all data sourcing and data transformation you might need when building a Gatsby site.
 
 ## Create a list of your site's markdown files in `src/pages/index.js`
 
@@ -148,9 +148,9 @@ export const query = graphql`
 `
 ```
 
-Now the frontpage should look like:
+Now the front page should look like:
 
-![frontpage](frontpage.png)
+![front page](frontpage.png)
 
 But your one blog post looks a bit lonely. So let's add another one at `src/pages/pandas-and-bananas.md`
 

@@ -71,8 +71,8 @@ Install nvm (Node Version Manager) and needed dependencies. nvm is used to manag
 Select your distro:
 
 - [Ubuntu, Debian, and other apt based distros](#ubuntu-debian-and-other-apt-based-distros)
-- [Arch, Manjaro and other pacman based distros](#arch-manjaro-and-other-pacman-based-distros)
-- [Fedora, RedHat, and other dnf based distros](#fedora-redhat-and-other-dnf-based-distros)
+- [Arch, Manjaro and other `pacman` based distros](#arch-manjaro-and-other-pacman-based-distros)
+- [Fedora, RedHat, and other `dnf` based distros](#fedora-redhat-and-other-dnf-based-distros)
 
 > 💡 If the Linux distribution you are using is not listed here, please find instructions on the web.
 
@@ -199,7 +199,7 @@ See the available commands:
 gatsby --help
 ```
 
-![Check gatsby commands in terminal](05-gatsby-help.png)
+![Check Gatsby commands in terminal](05-gatsby-help.png)
 
 > 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
@@ -216,11 +216,11 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 
 > 💡 What just happened?
 >
-> - `new` is a gatsby command to create a new Gatsby project.
+> - `new` is a Gatsby command to create a new Gatsby project.
 > - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
 > - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
-> 💡 Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install
+> 💡 Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the GIF below was paused during part of the install
 
 3. Change into the working directory:
 
