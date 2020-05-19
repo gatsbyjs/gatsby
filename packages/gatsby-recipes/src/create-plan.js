@@ -11,9 +11,6 @@ module.exports = async context => {
     const result = await render(stepAsMdx)
     return result
   } catch (e) {
-    console.log(`Error creating plan`)
-    console.log(context)
-    console.log(e)
     throw e
   }
 }

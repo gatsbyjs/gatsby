@@ -23,7 +23,7 @@ const recipeMachine = Machine(
       parsingRecipe: {
         invoke: {
           id: `parseRecipe`,
-          src: async (context, event) => {
+          src: async (context, _event) => {
             let parsed
 
             if (context.src) {

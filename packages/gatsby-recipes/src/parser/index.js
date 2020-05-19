@@ -105,3 +105,4 @@ module.exports = async (recipePath, projectRoot) => {
 }
 
 module.exports.parse = parse
+module.exports.u = u

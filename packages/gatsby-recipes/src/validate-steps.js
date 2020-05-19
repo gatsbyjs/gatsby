@@ -1,4 +1,13 @@
-module.exports = steps =>
-  // TODO: Check that there is no resources in the first step.
-  //       Waiting on MDX v2 canary.
-  []
+const validate = require(`./parser/validate`)
+
+module.exports = steps => {
+  const errors = []
+  steps.map((stepMdx, i) => {
+    const syntaxError = validate(stepMdx)
+    if (syntaxError) {
+      errors.push(syntaxError)
+    }
+  })
+
+  return errors
+}
