@@ -205,9 +205,8 @@ export default React.forwardRef((props, ref) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
 
-export const navigate = (to, options) => {
+export const navigate = (to, options) =>
   window.___navigate(withPrefix(to), options)
-}
 
 export const push = to => {
   showDeprecationWarning(`push`, `navigate`, 3)

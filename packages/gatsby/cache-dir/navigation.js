@@ -61,7 +61,7 @@ const navigate = (to, options = {}) => {
   // reset the pathname whitelist
   if (window.___swUpdated) {
     window.location = pathname
-    return
+    return Promise.resolve()
   }
 
   // Start a timer to wait for a second before transitioning and showing a
@@ -73,7 +73,7 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.loadPage(pathname).then(pageResources => {
+  return loader.loadPage(pathname).then(pageResources => {
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing
@@ -84,7 +84,7 @@ const navigate = (to, options = {}) => {
       window.history.replaceState({}, ``, location.href)
       window.location = pathname
       clearTimeout(timeoutId)
-      return
+      return null
     }
 
     // If the loaded page has a different compilation hash to the
@@ -109,8 +109,8 @@ const navigate = (to, options = {}) => {
         window.location = pathname
       }
     }
-    reachNavigate(to, options)
     clearTimeout(timeoutId)
+    return reachNavigate(to, options)
   })
 }
 
