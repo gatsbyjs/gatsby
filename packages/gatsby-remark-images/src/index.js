@@ -194,7 +194,9 @@ module.exports = (
       vertical-align: middle;
       position: absolute;
       top: 0;
-      left: 0;`.replace(/\s*(\S+:)\s*/g, `$1`)
+      left: 0;
+      object-fit:cover;
+      object-position:center;`.replace(/\s*(\S+:)\s*/g, `$1`)
 
     // Create our base image tag
     let imageTag = `
