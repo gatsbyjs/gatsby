@@ -57,6 +57,7 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  mapping?: Record<string, string>
 }
 
 export interface IGatsbyNode {
