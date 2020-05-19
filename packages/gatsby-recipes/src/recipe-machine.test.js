@@ -206,6 +206,7 @@ describe(`recipes machine`, () => {
         service.send(`CONTINUE`)
       }
       if (state.value === `done`) {
+        console.log(state.context.steps)
         // Clean up files
         fs.unlinkSync(path.join(process.cwd(), filePath))
         fs.unlinkSync(path.join(process.cwd(), filePath2))

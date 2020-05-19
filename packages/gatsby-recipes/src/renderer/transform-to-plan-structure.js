@@ -1,10 +1,15 @@
 const providedResources = require(`../resources`)
 
-module.exports = renderTree => {
-  const resources = renderTree.children[0].children
-  const plan = resources.reduce((acc, curr) => {
+const transform = (props = {}) => {
+  if (!props.children) {
+    return []
+  }
+
+  const plan = props.children.reduce((acc, curr) => {
+    const childResourcePlans = transform(curr)
+
     if (!providedResources[curr.type]) {
-      return acc
+      return [...acc, ...childResourcePlans]
     }
 
     const { _props, ...plan } = JSON.parse(curr.children[0].text)
@@ -15,10 +20,14 @@ module.exports = renderTree => {
       ...plan,
     }
 
-    acc.push(resourcePlan)
-
-    return acc
+    return [...acc, resourcePlan]
   }, [])
 
   return plan
+}
+
+module.exports = renderTree => {
+  const [doc] = renderTree.children
+
+  return transform(doc)
 }

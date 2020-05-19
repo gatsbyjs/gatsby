@@ -12,7 +12,6 @@ const scope = {
 }
 
 // TODO: Release MDX v2 canary so we can avoid the hacks
-const isMdxJsx = str => str.startsWith(`/* @jsx mdx */`)
 const stripMdxLayout = str => {
   const newJsx = str
     .replace(/^.*mdxType="MDXLayout">/ms, ``)
@@ -35,18 +34,8 @@ module.exports = jsx => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
-  let srcCode = null
-
-  if (isMdxJsx(jsx)) {
-    jsx = stripMdxLayout(jsx)
-  }
-
-  try {
-    srcCode = transformJsx(jsx)
-  } catch (e) {
-    const jsxFromMdx = mdx.sync(jsx, { skipExport: true })
-    srcCode = transformJsx(stripMdxLayout(jsxFromMdx))
-  }
+  const jsxFromMdx = mdx.sync(jsx, { skipExport: true })
+  const srcCode = transformJsx(stripMdxLayout(jsxFromMdx))
 
   const component = new Function(
     ...scopeKeys,
