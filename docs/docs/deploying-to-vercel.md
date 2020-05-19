@@ -19,7 +19,7 @@ npm i -g vercel
 You can deploy your application by running the following command in the root of the project directory:
 
 ```shell
-now
+vercel
 ```
 
 That's all!
