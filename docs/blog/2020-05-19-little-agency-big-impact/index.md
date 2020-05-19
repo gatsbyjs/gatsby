@@ -9,12 +9,11 @@ tags:
   - building-sites-faster
 ---
 
-Allan Pooley and Sakura Rimal created their agency, [Little & Big](https://www.littleandbig.com.au/), to tackle big projects for the little people. More precisely, this developer and designer team, based in Sydney, Australia, helps small businesses take on the potentially daunting tasks of branding, web design, and web development. 
+Allan Pooley and Sakura Rimal created their agency, [Little & Big](https://www.littleandbig.com.au/), to tackle big projects for the little people. More precisely, this developer and designer team, based in Sydney, Australia, helps small businesses take on the potentially daunting tasks of branding, web design, and web development.
 
 "The motivation for starting Little & Big was to make significant contributions to unique projects," says Pooley. "For each client, we help develop a brand and then design a website to support it---whatever kind of website the client needs. We work on everything from basic marketing SPAs to e-commerce sites."
 
-Faster in every possible way
-----------------------------
+## Faster in every possible way
 
 Pooley began his web development career using the WordPress content management system (CMS). But as he matured as a developer he began to use React: "React gives developers superpowers---it lets us do a lot of cool things fast." So Pooley tried using React as a frontend for a headless WordPress -- a less than desirable scenario, given the time delay between these two boxes, the React front-end and the WordPress server. Searching for a solution, Pooley came across Gatsby.
 
@@ -34,14 +33,13 @@ The site created for [Kua Coffee](https://kuacoffee.co/) is a prime example of t
 
 ![](https://lh4.googleusercontent.com/kpjFPhTBeFtwZNMvWW1QV4D3Axi90V3j02Zpx5h8k_89o78HYDygz7RXdvUPMU_9uCcwfhdjRmN55xzivb-waoXpni9UseCcbgqOt9NmP1AiaoROgl5lR_P8R4R5A9bmk2C6Ogp0)
 
-Little & Big created an interactive experience that begins on the Kua home page, where site visitors select the number of coffee cups they drink per day. Visitors learn about the positive impact they can have on people and the environment by choosing Kua Coffee for those cups of coffee. 
+Little & Big created an interactive experience that begins on the Kua home page, where site visitors select the number of coffee cups they drink per day. Visitors learn about the positive impact they can have on people and the environment by choosing Kua Coffee for those cups of coffee.
 
 Site visitors can then buy Kua coffee through an online store [built on Shopify](https://www.gatsbyjs.org/docs/building-an-ecommerce-site-with-shopify/). "Recently we've had a lot of interest in developing e-commerce sites," says Pooley. "Integrating Shopify with Gatsby has been super easy, thanks to plugins."
 
 By using Gatsby as the frontend framework for the Kua project, Pooley was able to develop the website rapidly. "Gatsby is just a massive time saver," says Pooley. "It comes with out-of-the-box features that really speed our development process."
 
-Secret (weapon) to success
---------------------------
+## Secret (weapon) to success
 
 The performance of the Gatsby-powered Kua site generated Lighthouse scores that helped earn Little & Big one of several awards for [mobile excellence](https://www.awwwards.com/sites/kua-coffee/mobile-excellence-report). "We wouldn't have won those awards without Gatsby," says Pooley.
 
