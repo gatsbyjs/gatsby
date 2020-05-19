@@ -6,6 +6,7 @@ import Card from "../card"
 import CardHeadline from "../card-headline"
 import TechWithIcon from "../tech-with-icon"
 import FuturaParagraph from "../futura-paragraph"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const HomepageFeatures = () => (
   <div
@@ -15,6 +16,10 @@ const HomepageFeatures = () => (
       flex: `0 1 auto`,
       flexWrap: `wrap`,
       px: 8,
+      pb: 8,
+      [mediaQueries.sm]: {
+        pb: 0,
+      },
     }}
   >
     <Card>
