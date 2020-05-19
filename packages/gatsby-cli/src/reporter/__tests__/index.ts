@@ -1,4 +1,4 @@
-const reporter = require(`../`)
+import reporter from "../"
 import * as reporterActions from "../redux/actions"
 
 // TODO: report.error now DOES return something. Get rid of this spying mocking stuff
@@ -12,6 +12,7 @@ import * as reporterActions from "../redux/actions"
 // We can then use the returned structuredError for snapshots.
 jest
   .spyOn(reporterActions, `createLog`)
+  // @ts-ignore
   .mockImplementation(structuredLog => structuredLog)
 
 // We don't care about this
@@ -24,7 +25,7 @@ const getErrorMessages = fn =>
 
 describe(`report.error`, () => {
   beforeEach(() => {
-    reporterActions.createLog.mockClear()
+    ;(reporterActions.createLog as jest.Mock).mockClear()
   })
 
   it(`handles "String, Error" signature correctly`, () => {
