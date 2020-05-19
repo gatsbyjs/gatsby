@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import styled from "@emotion/styled"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 const InnerContainer = styled(`div`)`
   align-items: center;
@@ -39,15 +38,15 @@ const Banner = () => (
       position: `fixed`,
       width: `100%`,
       zIndex: `banner`,
-      px: `env(safe-area-inset-left)`,
+      px: `env(safe-area-inset-left)`
     }}
   >
     <InnerContainer>
       <Content>
         {`New! Try Incremental Builds with `}
-        <OutboundLink href="https://www.gatsbyjs.com">
+        <a href="https://www.gatsbyjs.com" data-gtm-cta-loc="banner">
           Gatsby Cloud!
-        </OutboundLink>
+        </a>
       </Content>
     </InnerContainer>
   </aside>

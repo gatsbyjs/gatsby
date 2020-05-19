@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
-import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
 import Button from "./button"
 
@@ -13,7 +12,7 @@ const MastheadContent = () => (
       px: 8,
       py: [9, null, null, 12],
       mb: [null, null, null, 6],
-      textAlign: `center`,
+      textAlign: `center`
     }}
   >
     <h1
@@ -24,7 +23,7 @@ const MastheadContent = () => (
         maxWidth: `15em`,
         mb: 6,
         mt: 0,
-        mx: `auto`,
+        mx: `auto`
       }}
     >
       Fast in every way that&nbsp;matters
@@ -38,7 +37,7 @@ const MastheadContent = () => (
         maxWidth: `45rem`,
         mb: 10,
         mt: 0,
-        mx: `auto`,
+        mx: `auto`
       }}
     >
       Gatsby is a free and open source framework based on React that helps
@@ -52,7 +51,7 @@ const MastheadContent = () => (
       tracking="MasterHead -> Get Started"
       icon={<ArrowForwardIcon />}
       sx={{
-        mb: 5,
+        mb: 5
       }}
     >
       Get Started
@@ -64,20 +63,11 @@ const MastheadContent = () => (
         fontSize: [3, 3],
         lineHeight: `dense`,
         maxWidth: `30rem`,
-        mx: `auto`,
+        mx: `auto`
       }}
     >
       Already using Gatsby? Preview, build, and deploy faster with{` `}
-      <a
-        href="https://www.gatsbyjs.com"
-        onClick={() =>
-          trackCustomEvent({
-            category: `home-masthead`,
-            action: `click`,
-            label: `Gatsby Cloud`,
-          })
-        }
-      >
+      <a href="https://www.gatsbyjs.com" data-gtm-cta-loc="masthead">
         Gatsby Cloud
       </a>
       .

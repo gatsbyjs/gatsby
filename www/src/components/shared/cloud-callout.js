@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 import { CirclesOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -46,14 +45,17 @@ const CloudCallout = ({ narrow = true, children }) => (
   <CloudCalloutRoot narrow={narrow}>
     <CloudText>{children}</CloudText>
     Try it on{` `}
-    <OutboundLink href="https://gatsbyjs.com">Gatsby Cloud</OutboundLink>!
+    <a href="https://gatsbyjs.com" data-gtm-cta-loc="Cloud Callout">
+      Gatsby Cloud
+    </a>
+    !
     <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
   </CloudCalloutRoot>
 )
 
 CloudCallout.propTypes = {
   children: PropTypes.node.isRequired,
-  narrow: PropTypes.bool,
+  narrow: PropTypes.bool
 }
 
 export default CloudCallout
