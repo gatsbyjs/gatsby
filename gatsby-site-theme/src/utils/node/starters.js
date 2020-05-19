@@ -8,7 +8,9 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
 const yaml = require(`js-yaml`)
 const ecosystemFeaturedItems = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+  fs.readFileSync(
+    path.resolve(__dirname, `../../data/ecosystem/featured-items.yaml`)
+  )
 )
 
 if (
