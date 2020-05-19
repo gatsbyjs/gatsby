@@ -6,13 +6,14 @@
  * NOTE(@mxstbr): This is NOT EXPORTED from the main index.ts due to this relying on Node.js-specific APIs but core-utils also being used in browser environments. See https://github.com/jprichardson/node-fs-extra/issues/743
  */
 import path from "path"
-import os from "os"
+import tmp from "tmp"
 import lockfile from "proper-lockfile"
 import fs from "fs-extra"
+import xdgBasedir from "xdg-basedir"
 import { createContentDigest } from "./create-content-digest"
+import { isCI } from "./ci"
 
-const globalConfigPath =
-  process.env.XDG_CONFIG_HOME || path.join(os.homedir(), `.config`)
+const globalConfigPath = xdgBasedir.config || tmp.fileSync().name
 
 const getLockfileDir = (programPath: string): string => {
   // NOTE(@mxstbr): Unsure as to the root cause, but sometimes the createContentDigest
@@ -24,11 +25,21 @@ const getLockfileDir = (programPath: string): string => {
 
 type UnlockFn = () => Promise<void>
 
+const memoryServices = {}
 export const createServiceLock = async (
   programPath: string,
   name: string,
   content: string
 ): Promise<UnlockFn | null> => {
+  if (isCI()) {
+    if (memoryServices[name]) return null
+
+    memoryServices[name] = content
+    return async (): Promise<void> => {
+      delete memoryServices[name]
+    }
+  }
+
   const lockfileDir = getLockfileDir(programPath)
 
   await fs.ensureDir(lockfileDir)
@@ -52,6 +63,8 @@ export const getService = (
   programPath: string,
   name: string
 ): Promise<string | null> => {
+  if (isCI()) return Promise.resolve(memoryServices[name] || null)
+
   const lockfileDir = getLockfileDir(programPath)
   const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
@@ -63,6 +76,7 @@ export const getService = (
 }
 
 export const getServices = async (programPath: string): Promise<any> => {
+  if (isCI()) return memoryServices
   const lockfileDir = getLockfileDir(programPath)
 
   const files = await fs.readdir(lockfileDir)
