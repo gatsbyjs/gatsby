@@ -10699,3 +10699,14 @@
   built_by: Raymond Ware
   built_by_url: https://github.com/raymondware
   featured: false
+- title: Blog - Thanawat Gulati
+  main_url: https://testing.thanawatgulati.com
+  url: https://testing.thanawatgulati.com
+  source_url: https://github.com/thanawatgulati/thanawatgulati-blog
+  description: >
+    Thanawat Gulati - Blog , Work experience portfolio and more.
+  categories:
+    - Blog
+  built_by: Thanawat Gulati
+  built_by_url: https://twitter.com/mjamesvevo
+  featured: false
