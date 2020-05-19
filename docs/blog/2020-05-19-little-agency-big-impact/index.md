@@ -31,7 +31,7 @@ Today, Pooley uses Gatsby as the frontend framework whenever the agency builds a
 
 The site created for [Kua Coffee](https://kuacoffee.co/) is a prime example of the beautifully designed, interactive websites that Little & Big produces with Gatsby. Kua is a six-person charity that strives to improve the sustainability of coffee production and consumption. Little & Big helped refine the organization's brand and create an engaging web presence.
 
-![](https://lh4.googleusercontent.com/kpjFPhTBeFtwZNMvWW1QV4D3Axi90V3j02Zpx5h8k_89o78HYDygz7RXdvUPMU_9uCcwfhdjRmN55xzivb-waoXpni9UseCcbgqOt9NmP1AiaoROgl5lR_P8R4R5A9bmk2C6Ogp0)
+![Graphic for Kua coffee reading "How many coffees do you have a day?"](https://lh4.googleusercontent.com/kpjFPhTBeFtwZNMvWW1QV4D3Axi90V3j02Zpx5h8k_89o78HYDygz7RXdvUPMU_9uCcwfhdjRmN55xzivb-waoXpni9UseCcbgqOt9NmP1AiaoROgl5lR_P8R4R5A9bmk2C6Ogp0)
 
 Little & Big created an interactive experience that begins on the Kua home page, where site visitors select the number of coffee cups they drink per day. Visitors learn about the positive impact they can have on people and the environment by choosing Kua Coffee for those cups of coffee.
 
