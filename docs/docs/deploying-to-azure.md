@@ -17,28 +17,29 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 ### Create a local Git repository
 
 1. Initialize a Git repository, place yourself in the root directory of your Gatsby app and type
-  ```git init```
+   `git init`
 1. Next, create a file called `.gitignore` in the root of your project and give it the following content:
 
-    ```bash
-    node_modules
-    build
-    ```
+   ```bash
+   node_modules
+   build
+   ```
 
-    The above configuration will prevent the `build` and `node_modules` directories from being added to your repository. The `build` directory changes every time you build. The `node_modules` directory is only needed at build time and can be quite large because of all the libraries it contains.
+   The above configuration will prevent the `build` and `node_modules` directories from being added to your repository. The `build` directory changes every time you build. The `node_modules` directory is only needed at build time and can be quite large because of all the libraries it contains.
+
 1. Finally, add the change and commit it.
 
-    ```bash
-    git add .
-    git commit -m "adding Gatsby project"
-    ```
+   ```bash
+   git add .
+   git commit -m "adding Gatsby project"
+   ```
 
 ### Create a GitHub repository and push your code
 
-1. Go to GitHub and log in. You should now be at a URL like  `https://github.com/<your username>?tab=repositories`
+1. Go to GitHub and log in. You should now be at a URL like `https://github.com/<your username>?tab=repositories`
 
 2. Click the `new` button.
-  
+
 3. Name your repository and click `Create repository`.
 
 4. Finally, add your GitHub repository as a remote and push. Type the following commands to accomplish that (replacing `<user>` with your GitHub user name):
@@ -63,10 +64,10 @@ Next, configure your new app and link it to your GitHub repository.
 
 1. Enter the **Project Details**
 
-   | Setting          | Value                                    |
-   | ---------------- | ---------------------------------------- |
-   | _Subscription_   | **Your chosen subscription**                    |
-   | _Resource Group_ | *A pre-existing or new resource group*   |
+   | Setting          | Value                                  |
+   | ---------------- | -------------------------------------- |
+   | _Subscription_   | **Your chosen subscription**           |
+   | _Resource Group_ | _A pre-existing or new resource group_ |
 
 1. Enter the **Static Web Apps details**
 
@@ -82,7 +83,7 @@ Next, configure your new app and link it to your GitHub repository.
    | Setting        | Value                                                    |
    | -------------- | -------------------------------------------------------- |
    | _Organization_ | Select the Organization where you created the repository |
-   | _Repository_   | **gatsby-app**                              |
+   | _Repository_   | **gatsby-app**                                           |
    | _Branch_       | **master**                                               |
 
 1. Click the **Next: Build >** button to edit the build configuration
@@ -91,11 +92,11 @@ Next, configure your new app and link it to your GitHub repository.
 
 Next, add configuration details specific to your preferred frontend framework.
 
-| Setting                 | Value                |
-| ----------------------- | -------------------- |
-| _App location_          |  *Leave blank*       |
-| _Api location_          |  *Leave blank*       |
-| _App artifact location_ | **build**            |
+| Setting                 | Value         |
+| ----------------------- | ------------- |
+| _App location_          | _Leave blank_ |
+| _Api location_          | _Leave blank_ |
+| _App artifact location_ | **build**     |
 
 Click the **Review + create** button
 
