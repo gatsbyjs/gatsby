@@ -1,4 +1,4 @@
-const mergeGatsbyConfig = require(`../merge-gatsby-config`)
+import { mergeGatsbyConfig } from "../merge-gatsby-config"
 
 describe(`Merge gatsby config`, () => {
   it(`Merging empty config is an identity operation`, () => {

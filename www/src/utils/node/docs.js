@@ -125,30 +125,34 @@ exports.onCreateNode = async ({
             type: `GatsbyAPICall`,
           },
         }
-
         apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
 
         createNode(apiCallNode)
         createParentChildLink({ parent: node, child: apiCallNode })
       })
     }
-  } else {
-    const slug = getMdxContentSlug(node, getNode(node.parent))
-    if (!slug) return
+    return
+  }
+  const locale = `en`
+  const section = slug.split(`/`)[1]
+  // fields for blog pages are handled in `utils/node/blog.js`
+  if (section === `blog`) return
 
-    const locale = "en"
-    const section = slug.split("/")[1]
-    // fields for blog pages are handled in `utils/node/blog.js`
-    if (section === "blog") return
+  const slug = getMdxContentSlug(node, getNode(node.parent))
+  if (!slug) return
 
-    // Add slugs and other fields for docs pages
-    if (slug) {
-      createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-      createNodeField({ node, name: `slug`, value: slug })
-      createNodeField({ node, name: `section`, value: section })
-    }
-    if (locale) {
-      createNodeField({ node, name: `locale`, value: locale })
-    }
+  const locale = "en"
+  const section = slug.split("/")[1]
+  // fields for blog pages are handled in `utils/node/blog.js`
+  if (section === "blog") return
+
+  // Add slugs and other fields for docs pages
+  if (slug) {
+    createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
+    createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: `section`, value: section })
+  }
+  if (locale) {
+    createNodeField({ node, name: `locale`, value: locale })
   }
 }

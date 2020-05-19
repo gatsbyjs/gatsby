@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.2.3...gatsby-core-utils@1.3.0) (2020-05-19)
+
+### Features
+
+- **gatsby:** Prompt users to restart process on gatsby-config & gatsby-node changes ([#22759](https://github.com/gatsbyjs/gatsby/issues/22759)) ([d4ec5e5](https://github.com/gatsbyjs/gatsby/commit/d4ec5e5))
+
 ## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.2.2...gatsby-core-utils@1.2.3) (2020-05-18)
 
 ### Bug Fixes

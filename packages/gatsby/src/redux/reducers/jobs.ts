@@ -1,8 +1,13 @@
-const _ = require(`lodash`)
-const { oneLine } = require(`common-tags`)
-const moment = require(`moment`)
+import _ from "lodash"
+import { oneLine } from "common-tags"
+import moment from "moment"
 
-module.exports = (state = { active: [], done: [] }, action) => {
+import { IGatsbyState, ActionsUnion } from "../types"
+
+export const jobsReducer = (
+  state: IGatsbyState["jobs"] = { active: [], done: [] },
+  action: ActionsUnion
+): IGatsbyState["jobs"] => {
   switch (action.type) {
     case `CREATE_JOB`:
     case `SET_JOB`: {

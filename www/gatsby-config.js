@@ -55,15 +55,17 @@ if (process.env.AIRTABLE_API_KEY) {
 
 if (i18nEnabled) {
   dynamicPlugins.push(
-    ...langCodes.map(code => ({
-      resolve: `gatsby-source-git`,
-      options: {
-        name: `docs-${code}`,
-        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
-        branch: `master`,
-        patterns: [`docs/**`],
-      },
-    })),
+    ...langCodes.map(code => {
+      return {
+        resolve: `gatsby-source-git`,
+        options: {
+          name: `docs-${code}`,
+          remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
+          branch: `master`,
+          patterns: [`docs/**`],
+        },
+      }
+    }),
     {
       resolve: `gatsby-plugin-i18n`, // local plugin
       options: {
@@ -93,7 +95,7 @@ module.exports = {
           // Relative paths when importing components from MDX break translations of the docs,
           // so use an alias instead inside MDX:
           // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
-          "@components": "src/components",
+          "@components": `src/components`,
         },
       },
     },

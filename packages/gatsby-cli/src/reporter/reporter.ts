@@ -86,7 +86,7 @@ class Reporter {
   }
 
   error = (
-    errorMeta: ErrorMeta,
+    errorMeta: ErrorMeta | ErrorMeta[],
     error?: Error | Error[]
   ): IStructuredError | IStructuredError[] => {
     let details: {

@@ -101,23 +101,24 @@ export default withI18n()(function Sidebar({
   }
 
   const getItemState = React.useCallback(
-    item => ({
-      isExpanded: openSectionHash[item.title] || disableAccordions,
-      isActive: item.title === activeItem.title,
-      inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
-    }),
+    item => {
+      return {
+        isExpanded: openSectionHash[item.title] || disableAccordions,
+        isActive: item.title === activeItem.title,
+        inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
+      }
+    },
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
   )
 
-  const context = React.useMemo(
-    () => ({
+  const context = React.useMemo(() => {
+    return {
       getItemState,
       disableAccordions,
       onLinkClick: closeSidebar,
       onSectionTitleClick: toggleSection,
-    }),
-    [getItemState, disableAccordions, closeSidebar, toggleSection]
-  )
+    }
+  }, [getItemState, disableAccordions, closeSidebar, toggleSection])
 
   return (
     <SidebarContext.Provider value={context}>
