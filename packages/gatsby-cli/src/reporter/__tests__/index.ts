@@ -18,7 +18,7 @@ jest
 // We don't care about this
 reporter.log = jest.fn()
 
-const getErrorMessages = (fn: jest.Mock): unknown =>
+const getErrorMessages = (fn: jest.Mock): any =>
   fn.mock.calls
     .map(([firstArg]) => firstArg)
     .filter(structuredMessage => structuredMessage.level === `ERROR`)
