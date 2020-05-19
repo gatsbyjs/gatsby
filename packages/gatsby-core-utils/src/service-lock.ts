@@ -21,6 +21,9 @@ const getLockfileDir = (programPath: string): string => {
   return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
 }
 
+const getDataFilePath = (lockfileDir: string, serviceName: string): string =>
+  path.join(lockfileDir, `${serviceName}.lock`)
+
 type UnlockFn = () => Promise<void>
 
 const memoryServices = {}
@@ -51,7 +54,7 @@ export const createServiceLock = async (
     })
 
     // Once the directory for this site is locked, we write a file to the dir with the service metadata
-    await fs.writeFile(path.join(lockfileDir, `${name}.lock`), content)
+    await fs.writeFile(getDataFilePath(lockfileDir, name), content)
 
     return unlock
   } catch (err) {
@@ -66,10 +69,9 @@ export const getService = (
   if (isCI()) return Promise.resolve(memoryServices[name] || null)
 
   const lockfileDir = getLockfileDir(programPath)
-  const lockfilePath = path.join(lockfileDir, `${name}.lock`)
 
   try {
-    return fs.readFile(lockfilePath, `utf8`)
+    return fs.readFile(getDataFilePath(lockfileDir, name), `utf8`)
   } catch (err) {
     return Promise.resolve(null)
   }
