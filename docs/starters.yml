@@ -592,6 +592,14 @@
     - A no-frills Gatsby install
     - No plugins, no boilerplate
     - Great for advanced users
+- url: https://gatsby-starter-hello-world-tailwind-css.netlify.com/
+  repo: https://github.com/ohduran/gatsby-starter-hello-world-tailwind-css
+  description: hello world + Tailwind CSS
+  tags:
+    - Styling:Tailwind
+  features:
+    - One plugin, no boilerplate
+    - Great for advanced users
 - url: https://gatsby-starter-hero-blog.greglobinski.com/
   repo: https://github.com/greglobinski/gatsby-starter-hero-blog
   description: no description yet
@@ -1328,18 +1336,15 @@
     - Automatic Sitemap generation
 - url: https://gatsby-starter-kontent.netlify.com
   repo: https://github.com/Kentico/gatsby-starter-kontent
-  description: Gatsby starter site with Kentico Kontent
+  description: Gatsby starter site with Kentico Kontent based on default Gatsby starter
   tags:
     - CMS:Headless
     - CMS:Kontent
     - Netlify
   features:
-    - Gatsby v2 support
-    - Content item <-> content type relationships
-    - Language variants relationships
-    - Linked items elements relationships
-    - Content items in Rich text elements relationships
-    - Reverse link relationships
+    - Comes with React Helmet for adding site meta tags
+    - Includes plugins for offline support out of the box
+    - Kentico Kontent integration
 - url: https://gatsby-starter-storybook.netlify.com/
   repo: https://github.com/markoradak/gatsby-starter-storybook
   description: Gatsby starter site with Storybook
@@ -6075,8 +6080,8 @@
     - SEO
     - Phone browser Support
 - url: https://dropinblog-gatsby-starter.netlify.app/
-  repo: https://github.com/DynamisDevelopment/dib-gatsby-starter
-  description: A quick and simple Gatsby solution for the simplest blogging solution.
+  repo: https://github.com/DropInBlog/gatsby-starter
+  description: A quick and simple Gatsby solution for the simplest blogging solution
   tags:
     - Blog
     - Netlify
@@ -6327,3 +6332,36 @@
     - React Helmet
     - Gatsby Remark Images
     - Code Readability
+    - Progressive Web App
+- url: https://pedantic-brown-bbf927.netlify.app/
+  repo: https://github.com/pkino/gatsby-starter-typescript-sass
+  description: A minimum starter with TypeScript, Sass, ESLint and prettier built in
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - Linting
+  features:
+    - TypeScript and Sass support
+    - ESLint with basic react rules
+    - Progressive Web App
+- url: https://gatsby-starter-portfolio-minimal.netlify.app/
+  repo: https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal
+  description: A modern one-page portfolio with a clean yet expressive design.
+  tags:
+    - Portfolio
+    - Personal Website
+    - Markdown
+    - MDX
+    - PWA
+    - One-page
+    - Styling:CSS-in-JS
+    - Animations
+  features:
+    - Quick and Easy Setup - Add content and deploy
+    - Content via Markdown/MDX - No external CMS needed
+    - Extendable Layout - Add more sections as you like
+    - Responsive Design - With freshening Animations
+    - Medium Integration - Feature your latest articles
+    - Progressive Web App/PWA - Offline Support
+    - Fast and Accessible
+    - SEO

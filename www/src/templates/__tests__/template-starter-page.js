@@ -7,9 +7,7 @@ import theme from "../../../src/gatsby-plugin-theme-ui"
 import StarterTemplate from "../template-starter-page"
 
 // Mock out metadata that relies on queries
-jest.mock("../../components/page-metadata", () => {
-  return () => null
-})
+jest.mock(`../../components/page-metadata`, () => () => null)
 
 const getMockImage = () => {
   return {
