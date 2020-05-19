@@ -22,6 +22,8 @@ if (semver.lt(React.version, `16.8.0`)) {
   )
 }
 
+const PROJECT_ROOT = '/Users/johno-mini/c/gatsby/starters/blog'
+
 const Boxen = 'div'
 const Text = 'p'
 const Static = 'div'
@@ -157,7 +159,7 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = '/Users/johno-mini/c/gatsby' }) => {
+const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
