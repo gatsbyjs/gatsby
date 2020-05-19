@@ -10,7 +10,7 @@ Sometimes it can be helpful to know exactly what your app's browser URL is at an
 {
   key: 'ac3df4', // does not populate with a HashHistory!
   pathname: '/somepage',
-  search: '?someurlparam=foo&anotherurlparam=bar',
+  search: '?someurlparam=valuestring1&anotherurlparam=valuestring2',
   hash: '#about',
   state: {
     [userDefined]: true
