@@ -467,25 +467,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+  const maxWidth = options.maxWidth
+    ? Math.min(options.maxWidth, width)
+    : undefined
+  const maxHeight = options.maxHeight
+    ? Math.min(options.maxHeight, height)
+    : undefined
 
   if (options[fixedDimension] < 1) {
     throw new Error(
       `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
     )
-  }
-
-  let presentationWidth, presentationHeight
-  if (fixedDimension === `maxWidth`) {
-    presentationWidth = Math.min(options.maxWidth, width)
-    presentationHeight = Math.round(presentationWidth * (height / width))
-  } else {
-    presentationHeight = Math.min(options.maxHeight, height)
-    presentationWidth = Math.round(presentationHeight * (width / height))
-  }
-
-  // If the users didn't set default sizes, we'll make one.
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image if no custom breakpoints are
@@ -519,7 +511,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       fluidSizes.push(breakpoint)
     })
   }
-  const filteredSizes = fluidSizes.filter(
+  let filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
 
@@ -527,13 +519,18 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // is available for small images. Also so we can link to
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
+  filteredSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
 
+  const imageWithDensityOneIndex = filteredSizes.findIndex(
+    size => size === (fixedDimension === `maxWidth` ? maxWidth : maxHeight)
+  )
+
   // Sort sizes for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = filteredSizes.map(size => {
     const arrrgs = createTransformObject(options)
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined
@@ -588,6 +585,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
+
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
@@ -614,13 +612,23 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
+  // calculate presentationSizes
+  const imageWithDensityOne = images[imageWithDensityOneIndex]
+  const presentationWidth = imageWithDensityOne.width
+  const presentationHeight = imageWithDensityOne.height
+
+  // If the users didn't set default sizes, we'll make one.
+  const sizes =
+    options.sizes ||
+    `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+
   return {
     base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
     srcSetType,
-    sizes: options.sizes,
+    sizes,
     originalImg,
     originalName,
     density,

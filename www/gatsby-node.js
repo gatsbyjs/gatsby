@@ -59,7 +59,6 @@ exports.onPostBuild = () => {
 exports.sourceNodes = async ({
   actions: { createTypes, createNode },
   createContentDigest,
-  schema,
 }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in

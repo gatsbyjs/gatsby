@@ -12,7 +12,7 @@ const bulletSize = 8
 const bulletSizeActive = 100
 const bulletOffsetTop = `1.3em`
 
-export default function ItemLink({ item, overrideCSS }) {
+export default function ItemLink({ item, overrideCSS, isSteps }) {
   const { onLinkClick, getItemState } = useSidebarContext()
   const { isActive, inActiveTree } = getItemState(item)
 
@@ -20,7 +20,7 @@ export default function ItemLink({ item, overrideCSS }) {
   const title = _getTitle(item.title, isDraft)
 
   const level = item.level
-  const indent = item.ui === `steps` ? indention(level + 1) : indention(level)
+  const indent = isSteps ? indention(level + 1) : indention(level)
 
   return (
     <span
@@ -74,7 +74,7 @@ export default function ItemLink({ item, overrideCSS }) {
           "&:before, &:after": {
             content: `''`,
             left: t =>
-              level === 0 || (level === 1 && item.ui !== `steps`)
+              level === 0 || (level === 1 && !isSteps)
                 ? `calc(${indent} - ${t.space[4]})`
                 : `calc(${indent} - ${t.space[6]})`,
             top: bulletOffsetTop,
@@ -99,10 +99,10 @@ export default function ItemLink({ item, overrideCSS }) {
         onClick={onLinkClick}
         to={item.link}
       >
-        {item.ui === `steps` && (
+        {isSteps && (
           <span
             sx={{
-              bg: `white`,
+              bg: `ui.border`,
               borderColor: `ui.border`,
               borderRadius: 6,
               borderStyle: `solid`,
