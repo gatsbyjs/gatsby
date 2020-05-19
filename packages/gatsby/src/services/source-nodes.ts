@@ -14,7 +14,7 @@ export async function sourceNodes({
   activity.start()
   await sourceNodesAndGc({
     parentSpan: activity.span,
-    deferNodeMutation: true,
+    deferNodeMutation: !!(webhookBody && Object.keys(webhookBody).length),
     webhookBody,
   })
   activity.end()

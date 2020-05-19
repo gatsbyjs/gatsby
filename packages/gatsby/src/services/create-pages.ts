@@ -5,7 +5,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { boundActionCreators } from "../redux/actions"
 const { deletePage, deleteComponentsDependencies } = boundActionCreators
 
-import { differenceWith, isEqualWith, IsEqualCustomizer } from "lodash"
+import { isEqualWith, IsEqualCustomizer } from "lodash"
 
 export async function createPages({
   parentSpan,
@@ -33,7 +33,6 @@ export async function createPages({
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
-      deferNodeMutation: true,
     },
     { activity }
   )

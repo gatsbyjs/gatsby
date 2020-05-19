@@ -13,7 +13,6 @@ export async function extractQueries({
   activity.start()
   await apiRunnerNode(`onPreExtractQueries`, {
     parentSpan: activity.span,
-    deferNodeMutation: true,
   })
   activity.end()
 

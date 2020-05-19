@@ -51,7 +51,6 @@ export const callApi: BuildMachineAction = async (
  * mutations. Instead we add it to a batch to process when we're next idle
  */
 export const addNodeMutation: BuildMachineAction = assign((ctx, event) => {
-  console.log(`adding node mutation`, event.payload)
   return {
     nodeMutationBatch: ctx.nodeMutationBatch.concat([event.payload]),
   }
