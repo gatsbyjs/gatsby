@@ -29,6 +29,8 @@ export const createServiceLock = async (
   name: string,
   content: string
 ): Promise<UnlockFn | null> => {
+  // NOTE(@mxstbr): In CI, we cannot reliably access the global config dir and do not need cross-process coordination anyway
+  // so we fall back to storing the services in memory instead!
   if (isCI()) {
     if (memoryServices[name]) return null
 
