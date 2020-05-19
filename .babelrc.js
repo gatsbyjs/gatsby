@@ -11,7 +11,7 @@ module.exports = {
   presets: ["babel-preset-gatsby-package"],
   overrides: [
     {
-      test: "**/*.ts",
+      test: ["**/*.ts", "**/*.tsx"],
       plugins: [["@babel/plugin-transform-typescript", { isTSX: true }]],
     },
   ],
