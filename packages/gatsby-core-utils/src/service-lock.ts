@@ -16,9 +16,7 @@ import { isCI } from "./ci"
 const globalConfigPath = xdgBasedir.config || tmp.fileSync().name
 
 const getLockfileDir = (programPath: string): string => {
-  // NOTE(@mxstbr): Unsure as to the root cause, but sometimes the createContentDigest
-  // fn adds whitespace at the beginning of the string.
-  const hash = createContentDigest(programPath).trim()
+  const hash = createContentDigest(programPath)
 
   return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
 }
