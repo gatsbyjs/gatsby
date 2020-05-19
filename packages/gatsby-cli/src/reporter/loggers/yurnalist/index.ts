@@ -105,7 +105,7 @@ export function initializeYurnalistLogger(): void {
           activities[action.payload.id] = {
             text: undefined,
             statusText: undefined,
-            update: payload => {
+            update(payload): void {
               if (payload.total) {
                 bar.total = payload.total
               }
@@ -115,20 +115,24 @@ export function initializeYurnalistLogger(): void {
 
               bar.tick(0)
             },
-            end: () => {},
+            end(): void {},
           }
         }
         break
       }
       case Actions.UpdateActivity: {
         const activity = activities[action.payload.id]
-        activity?.update(action.payload)
+        if (activity) {
+          activity.update(action.payload)
+        }
         break
       }
       case Actions.EndActivity: {
         const activity = activities[action.payload.id]
-        activity?.end()
-        delete activities[action.payload.id]
+        if (activity) {
+          activity.end()
+          delete activities[action.payload.id]
+        }
       }
     }
   })
