@@ -10654,7 +10654,6 @@
   description: >
     KAIGO in JAPAN is a website for those who are planning to work in the care work field in Japan. We built a multilingual site on Gatsby. One of them is a special language called Easy-Japanese with various ruby tags.
   categories:
-    - Official
     - Nonprofit
     - Web Development
     - Programming
