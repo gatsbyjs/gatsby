@@ -153,11 +153,7 @@ export const pageQuery = graphql`
     allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
       limit: 4
-      filter: {
-        frontmatter: { draft: { ne: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-        fields: { released: { eq: true } }
-      }
+      filter: { fields: { section: { eq: "blog" }, released: { eq: true } } }
     ) {
       nodes {
         ...HomepageBlogPostData

@@ -25,7 +25,7 @@ Gatsby Cloud integrates with the tools you already use to build sites. By connec
 Gatsby Cloud offers integrations with a wide variety of CMSs. The below CMSs have first-class, automatic integrations with Gatsby Cloud:
 
 - Contentful
-- Cosmic JS
+- Cosmic
 - Dato CMS
 - Sanity.io
 

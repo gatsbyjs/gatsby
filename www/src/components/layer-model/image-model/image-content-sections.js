@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
 
 import InstallLayer from "./text-content/InstallLayer"
 import ConfigLayer from "./text-content/ConfigLayer"

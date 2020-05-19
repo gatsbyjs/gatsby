@@ -5,7 +5,7 @@ jest.mock(`fs-extra`, () => {
 })
 const glob = require(`glob`)
 
-const reducer = require(`../reducers/pages`)
+const { pagesReducer: reducer } = require(`../reducers/pages`)
 const { actions } = require(`../actions`)
 const { readFile } = require(`fs-extra`)
 
@@ -174,7 +174,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
     const action2 = actions.deletePage({ path: `/hi/` })
 

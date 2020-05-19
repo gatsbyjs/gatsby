@@ -126,29 +126,6 @@ module.exports = (
       ...helpers,
     })
 
-  async function getHTML(mdxNode) {
-    if (mdxNode.html) {
-      return Promise.resolve(mdxNode.html)
-    }
-    const { body } = await processMDX({ node: mdxNode })
-    try {
-      if (!mdxHTMLLoader) {
-        mdxHTMLLoader = loader({ reporter, cache, store })
-      }
-      const html = await mdxHTMLLoader.load({ ...mdxNode, body })
-      return html
-    } catch (e) {
-      reporter.error(
-        `gatsby-plugin-mdx: Error querying the \`html\` field.
-        This field is intended for use with RSS feed generation.
-        If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
-        Original error:
-        ${e}`
-      )
-      return undefined
-    }
-  }
-
   // New Code // Schema
   const MdxType = schema.buildObjectType({
     name: `Mdx`,
@@ -225,7 +202,26 @@ module.exports = (
       html: {
         type: `String`,
         async resolve(mdxNode) {
-          return await getHTML(mdxNode)
+          if (mdxNode.html) {
+            return Promise.resolve(mdxNode.html)
+          }
+          const { body } = await processMDX({ node: mdxNode })
+          try {
+            if (!mdxHTMLLoader) {
+              mdxHTMLLoader = loader({ reporter, cache, store })
+            }
+            const html = await mdxHTMLLoader.load({ ...mdxNode, body })
+            return html
+          } catch (e) {
+            reporter.error(
+              `gatsby-plugin-mdx: Error querying the \`html\` field.
+This field is intended for use with RSS feed generation.
+If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
+Original error:
+${e}`
+            )
+            return undefined
+          }
         },
       },
       mdxAST: {
@@ -253,20 +249,15 @@ module.exports = (
       timeToRead: {
         type: `Int`,
         async resolve(mdxNode) {
-          const html = await getHTML(mdxNode)
-          const { mdast, body } = await processMDX({ node: mdxNode })
+          const { mdast } = await processMDX({ node: mdxNode })
           const { words } = await getCounts({ mdast })
-          const { timeToRead } = pluginOptions
+          let timeToRead = 0
           const avgWPM = 265
-          const timeToReadInMinutes = Math.max(
-            1,
-            Math.round(
-              _.isFunction(timeToRead)
-                ? timeToRead(words, html, body)
-                : words / avgWPM
-            )
-          )
-          return timeToReadInMinutes
+          timeToRead = Math.round(words / avgWPM)
+          if (timeToRead === 0) {
+            timeToRead = 1
+          }
+          return timeToRead
         },
       },
       wordCount: {

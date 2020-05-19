@@ -67,7 +67,7 @@ const MastheadContent = () => (
         mx: `auto`,
       }}
     >
-      Already using Gatsby? Preview, build, and deploy faster with{" "}
+      Already using Gatsby? Preview, build, and deploy faster with{` `}
       <a
         href="https://www.gatsbyjs.com"
         onClick={() =>

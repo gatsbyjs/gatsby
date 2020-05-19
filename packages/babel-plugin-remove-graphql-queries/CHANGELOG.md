@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.0...babel-plugin-remove-graphql-queries@2.9.1) (2020-05-05)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
 # [2.9.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.8.5...babel-plugin-remove-graphql-queries@2.9.0) (2020-04-27)
 
 **Note:** Version bump only for package babel-plugin-remove-graphql-queries

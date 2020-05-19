@@ -5,7 +5,7 @@ import loadable from "@loadable/component"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Main from "./main-content"
 
-const PluginSearchBar = loadable(() => import("./plugin-searchbar-body"))
+const PluginSearchBar = loadable(() => import(`./plugin-searchbar-body`))
 
 const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
   <Fragment>

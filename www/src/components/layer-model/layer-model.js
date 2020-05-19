@@ -30,7 +30,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         fontWeight: selected ? `bold` : `body`,
         p: 2,
         ":focus": {
-          boxShadow: t => `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
+          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
           outline: 0,
         },
         ":hover": {

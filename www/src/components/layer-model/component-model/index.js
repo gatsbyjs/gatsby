@@ -42,8 +42,9 @@ const layers = [
   },
 ]
 
-const ComponentModel = ({ initialLayer, ...props }) => {
-  return <LayerModel layers={layers} initialLayer={initialLayer} {...props} />
-}
+
+const ComponentModel = ({ initialLayer, ...props }) => (
+  <LayerModel layers={layers} initialLayer={initialLayer} {...props} />
+)
 
 export default ComponentModel
