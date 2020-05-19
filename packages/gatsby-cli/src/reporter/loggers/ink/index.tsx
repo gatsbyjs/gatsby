@@ -12,7 +12,7 @@ const ConnectedCLI: React.FC = (): React.ReactElement => {
   return <CLI showStatusBar={Boolean(showStatusBar)} logs={state.logs} />
 }
 
-export function initializeINKLogger() {
+export function initializeINKLogger(): void {
   render(
     <StoreStateProvider>
       <ConnectedCLI />

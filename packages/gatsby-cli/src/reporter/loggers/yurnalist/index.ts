@@ -10,8 +10,9 @@ import { createReporter } from "yurnalist"
 import ProgressBar from "progress"
 import chalk from "chalk"
 import { IUpdateActivity } from "../../redux/types"
+import { IGatsbyState } from "gatsby/src/redux/types"
 
-type YurnalistActivities = {
+interface IYurnalistActivities {
   [activityId: string]: {
     text: string | undefined
     statusText: string | undefined
@@ -20,8 +21,8 @@ type YurnalistActivities = {
   }
 }
 
-export function initializeYurnalistLogger() {
-  const activities: YurnalistActivities = {}
+export function initializeYurnalistLogger(): void {
+  const activities: IYurnalistActivities = {}
   const yurnalist = createReporter({ emoji: true, verbose: true })
 
   const levelToYurnalist = {
@@ -65,7 +66,10 @@ export function initializeYurnalistLogger() {
           const activity = {
             text: action.payload.text,
             statusText: action.payload.statusText,
-            update: payload => {
+            update(payload: any): void {
+              // TODO: I'm not convinced that this is ever called with a text property.
+              // From searching the codebase it appears that we do not ever assign a text
+              // property during the IUpdateActivity action.
               if (payload.text) {
                 activity.text = payload.text
               }
@@ -82,7 +86,7 @@ export function initializeYurnalistLogger() {
 
               spinner.tick(message)
             },
-            end: () => {
+            end(): void {
               spinner.end()
             },
           }
