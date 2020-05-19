@@ -109,21 +109,13 @@ function getPosition({
   return map.originalPositionFor({ line, column })
 }
 
-interface INativeStringThisMethods {
-  isNative(): boolean
-  isEval(): boolean
-  getEvalOrigin(): string
-  isConstructor(): boolean
-  isToplevel(): boolean
-}
-
 // This is copied almost verbatim from the V8 source code at
 // https://code.google.com/p/v8/source/browse/trunk/src/messages.js.
 function CallSiteToString(): string {
   // @ts-ignore
-  const _this = this
+  const _this = this // eslint-disable-line @typescript-eslint/no-this-alias
   const self = _this as
-    | INativeStringThisMethods
+    | NodeJS.CallSite
     | IWrappedStackFrame
     | stackTrace.StackFrame
 
@@ -175,7 +167,7 @@ function CallSiteToString(): string {
     line += functionName
     if (
       functionName.indexOf(`.` + methodName) !=
-      functionName.length - methodName.length - 1
+      functionName.length - (methodName || ``).length - 1
     ) {
       line += ` [as ${methodName}]`
     }
