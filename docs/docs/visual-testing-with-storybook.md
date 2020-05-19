@@ -261,8 +261,8 @@ However, if you use `StaticQuery` or `useStaticQuery` in your project Storybook 
 ```json:title=package.json
 {
   "scripts": {
-    "storybook": "NODE_ENV=production start-storybook -s public",
-    "build-storybook": "NODE_ENV=production build-storybook -s public"
+    "storybook": "NODE_ENV=production start-storybook -s static",
+    "build-storybook": "NODE_ENV=production build-storybook -s static"
   }
 }
 ```
