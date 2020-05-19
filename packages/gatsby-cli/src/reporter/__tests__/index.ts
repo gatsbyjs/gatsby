@@ -18,7 +18,7 @@ jest
 // We don't care about this
 reporter.log = jest.fn()
 
-const getErrorMessages = fn =>
+const getErrorMessages = (fn: jest.Mock): unknown =>
   fn.mock.calls
     .map(([firstArg]) => firstArg)
     .filter(structuredMessage => structuredMessage.level === `ERROR`)
@@ -33,7 +33,9 @@ describe(`report.error`, () => {
       `Error string passed to reporter`,
       new Error(`Message from new Error`)
     )
-    const generatedError = getErrorMessages(reporterActions.createLog)[0]
+    const generatedError = getErrorMessages(
+      reporterActions.createLog as jest.Mock
+    )[0]
 
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
@@ -42,7 +44,9 @@ describe(`report.error`, () => {
 
   it(`handles "Error" signature correctly`, () => {
     reporter.error(new Error(`Message from new Error`))
-    const generatedError = getErrorMessages(reporterActions.createLog)[0]
+    const generatedError = getErrorMessages(
+      reporterActions.createLog as jest.Mock
+    )[0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
     })
@@ -55,7 +59,9 @@ describe(`report.error`, () => {
       new Error(`Message 3 from new Error`),
     ])
 
-    const generatedErrors = getErrorMessages(reporterActions.createLog)
+    const generatedErrors = getErrorMessages(
+      reporterActions.createLog as jest.Mock
+    )
 
     expect(generatedErrors.length).toEqual(3)
 
@@ -73,13 +79,17 @@ describe(`report.error`, () => {
         ref: `navigator`,
       },
     })
-    const generatedError = getErrorMessages(reporterActions.createLog)[0]
+    const generatedError = getErrorMessages(
+      reporterActions.createLog as jest.Mock
+    )[0]
     expect(generatedError).toMatchSnapshot()
   })
 
   it(`handles "String" signature correctly`, () => {
     reporter.error(`Error created in Jest`)
-    const generatedError = getErrorMessages(reporterActions.createLog)[0]
+    const generatedError = getErrorMessages(
+      reporterActions.createLog as jest.Mock
+    )[0]
     expect(generatedError).toMatchSnapshot()
   })
 })
