@@ -162,7 +162,7 @@ module.exports = {
           return (
             [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
             (node.internal.type === `File` &&
-              path.parse(node.dir).dir.endsWith(`packages`))
+              node.sourceInstanceName === `packages`)
           )
         },
         gatsbyRemarkPlugins: [
@@ -263,7 +263,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
     `gatsby-plugin-offline`,
