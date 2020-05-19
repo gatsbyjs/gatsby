@@ -4,9 +4,9 @@ import { Express } from "express"
 type PluginEntry =
   | string
   | {
-    resolve: string
-    options?: Record<string, unknown>
-  }
+      resolve: string
+      options?: Record<string, unknown>
+    }
 
 interface INormalizedPluginEntry {
   resolve: string
@@ -41,12 +41,12 @@ type Mapping = IGatsbyConfigInput["mapping"]
 const normalizePluginEntry = (entry: PluginEntry): INormalizedPluginEntry =>
   _.isString(entry)
     ? {
-      resolve: entry,
-      options: {},
-    }
+        resolve: entry,
+        options: {},
+      }
     : _.isObject(entry)
-      ? { options: {}, ...entry }
-      : entry
+    ? { options: {}, ...entry }
+    : entry
 
 const howToMerge = {
   /**
