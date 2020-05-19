@@ -42,7 +42,7 @@ const errors = {
   },
   "98124": {
     text: (context): string =>
-      `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nPerhaps you need to install the package '${context.packageName}'?`,
+      `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`,
     type: Type.WEBPACK,
     level: Level.ERROR,
   },

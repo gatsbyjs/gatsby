@@ -1,13 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
 
-import InstallLayer from './text-content/InstallLayer'
-import ConfigLayer from './text-content/ConfigLayer'
-import QueryLayer from './text-content/QueryLayer'
-import DisplayLayer from './text-content/DisplayLayer'
-
-
+import InstallLayer from "./text-content/InstallLayer"
+import ConfigLayer from "./text-content/ConfigLayer"
+import QueryLayer from "./text-content/QueryLayer"
+import DisplayLayer from "./text-content/DisplayLayer"
 
 import {
   LayerContentWrapper,
@@ -27,7 +24,7 @@ const InstallLayerContent = ({ index, displayCodeFullWidth }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <InstallLayer/>
+      <InstallLayer />
     </div>
   </LayerContentWrapper>
 )
@@ -54,7 +51,7 @@ const ConfigLayerContent = ({ index, displayCodeFullWidth }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <ConfigLayer/>
+      <ConfigLayer />
     </div>
   </LayerContentWrapper>
 )
@@ -82,7 +79,7 @@ const QueryLayerContent = ({ index, displayCodeFullWidth }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <QueryLayer/>
+      <QueryLayer />
     </div>
   </LayerContentWrapper>
 )
@@ -105,7 +102,7 @@ export ({ data }) => (
       </CodeWrapper>
     </ExampleWrapper>
     <div>
-      <DisplayLayer/>
+      <DisplayLayer />
     </div>
   </LayerContentWrapper>
 )

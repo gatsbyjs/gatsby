@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.36...gatsby@2.21.37) (2020-05-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.35...gatsby@2.21.36) (2020-05-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.34...gatsby@2.21.35) (2020-05-18)
+
+### Performance Improvements
+
+- **gatsby:** Enable fast filters for \$nin comparator ([#24184](https://github.com/gatsbyjs/gatsby/issues/24184)) ([8e3428f](https://github.com/gatsbyjs/gatsby/commit/8e3428f))
+
+## [2.21.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.33...gatsby@2.21.34) (2020-05-18)
+
+### Features
+
+- **gatsby:** Warn when pageContext is over 500k ([#23310](https://github.com/gatsbyjs/gatsby/issues/23310)) ([02bdba9](https://github.com/gatsbyjs/gatsby/commit/02bdba9))
+
+## [2.21.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.32...gatsby@2.21.33) (2020-05-15)
+
+### Performance Improvements
+
+- **gatsby:** enable fast filters for `in` comparator ([#24095](https://github.com/gatsbyjs/gatsby/issues/24095)) ([70a7533](https://github.com/gatsbyjs/gatsby/commit/70a7533))
+
+## [2.21.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.31...gatsby@2.21.32) (2020-05-15)
+
+### Bug Fixes
+
+- **gatsby:** Protect about possibly missing context in graphql ([#24108](https://github.com/gatsbyjs/gatsby/issues/24108)) ([9ad511b](https://github.com/gatsbyjs/gatsby/commit/9ad511b))
+
+### Features
+
+- **gatsby:** Add total count to pageInfo ([#24084](https://github.com/gatsbyjs/gatsby/issues/24084)) ([1e3b775](https://github.com/gatsbyjs/gatsby/commit/1e3b775))
+
+## [2.21.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.30...gatsby@2.21.31) (2020-05-14)
+
+### Bug Fixes
+
+- **gatsby:** Update to handle changes to fast refresh webpack plugin ([#24091](https://github.com/gatsbyjs/gatsby/issues/24091)) ([7adad91](https://github.com/gatsbyjs/gatsby/commit/7adad91))
+
+## [2.21.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.29...gatsby@2.21.30) (2020-05-14)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.28...gatsby@2.21.29) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby:** don't fail validation on fragments that are not used ([#24032](https://github.com/gatsbyjs/gatsby/issues/24032)) ([61d0ef4](https://github.com/gatsbyjs/gatsby/commit/61d0ef4))
+- **gatsby:** update script to generate apis.json to accomodate Typescript ([#24023](https://github.com/gatsbyjs/gatsby/issues/24023)) ([7878d0f](https://github.com/gatsbyjs/gatsby/commit/7878d0f))
+
+## [2.21.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.27...gatsby@2.21.28) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby:** add generic locationState to types ([#24029](https://github.com/gatsbyjs/gatsby/issues/24029)) ([8f16846](https://github.com/gatsbyjs/gatsby/commit/8f16846))
+
+### Performance Improvements
+
+- **gatsby:** enable fast filters for \$ne ([#24050](https://github.com/gatsbyjs/gatsby/issues/24050)) ([8e5e5f7](https://github.com/gatsbyjs/gatsby/commit/8e5e5f7))
+
+## [2.21.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.26...gatsby@2.21.27) (2020-05-13)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.25...gatsby@2.21.26) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby:** wait for app-data.json file writing ([#22099](https://github.com/gatsbyjs/gatsby/issues/22099)) ([037de56](https://github.com/gatsbyjs/gatsby/commit/037de56))
+
 ## [2.21.25](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.24...gatsby@2.21.25) (2020-05-13)
 
 **Note:** Version bump only for package gatsby
