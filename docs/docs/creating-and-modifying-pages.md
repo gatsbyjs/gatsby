@@ -159,7 +159,7 @@ Your template file would look like this:
 
 ```javascript:title=src/templates/product.js
 function Product({ pageContext }) {
-  const { product } = this.props.pageContext
+  const { product } = pageContext
   return (
     <div>
       Name: {product.name}
