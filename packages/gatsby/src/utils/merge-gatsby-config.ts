@@ -73,7 +73,7 @@ export const mergeGatsbyConfig = (
   b: IGatsbyConfigInput
 ): IGatsbyConfigInput => {
   // a and b are gatsby configs, If they have keys, that means there are values to merge
-  const allGatsbyConfigKeysWithAValue: ConfigKey[] = _.uniq(
+  const allGatsbyConfigKeysWithAValue = _.uniq(
     Object.keys(a).concat(Object.keys(b))
   ) as ConfigKey[]
 
