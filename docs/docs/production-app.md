@@ -83,7 +83,7 @@ The config is quite large, but here are some of the important values in the fina
 
 There's a lot going on here. And this is just a sample of the output that doesn't include the loaders, rules, etc. We won't go over everything here, but most of it is geared towards proper code splitting of your application.
 
-The splitChunks section is the most complex part of the Gatsby webpack config as it configures how Gatsby generates the most optimized bundles for your website. This is referred to as Granular Chunks as Gatsby tries to make the generated JavaScript files as granular as possible by deduplicating all modules. You can read more about [SplitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) and [chunks](https://webpack.js.org/concepts/under-the-hood/#chunks) on the [official webpack website](https://webpack.js.org/).
+The `splitChunks` section is the most complex part of the Gatsby webpack config as it configures how Gatsby generates the most optimized bundles for your website. This is referred to as Granular Chunks as Gatsby tries to make the generated JavaScript files as granular as possible by deduplicating all modules. You can read more about [SplitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) and [chunks](https://webpack.js.org/concepts/under-the-hood/#chunks) on the [official webpack website](https://webpack.js.org/).
 
 Once Webpack has finished compilation, it will have produced a few key types of bundles:
 
@@ -101,7 +101,7 @@ The framework bundle contains the React framework. Based on user behavior, React
 
 ##### commons-[contenthash].js
 
-Libraries used on every Gatsby page are bundled into the commons javascript file. By bundling these together, you can make sure your users only need to download this bundle once.
+Libraries used on every Gatsby page are bundled into the commons JavaScript file. By bundling these together, you can make sure your users only need to download this bundle once.
 
 ##### component---[name]-[contenthash].js
 

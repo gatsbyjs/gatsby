@@ -12,7 +12,7 @@ To modify the functionality of a starter, you'll want a basic understanding of [
 
 ## Choosing a starter
 
-To choose a starter, first consider the functionality you need. Are you building an e-commerce site? A blog? Do you already know what data sources you'll want to use? Find a starter that fulfills your requirements by using the searchbar and filters in the [Gatsby Starter Library](/starters/).
+To choose a starter, first consider the functionality you need. Are you building an e-commerce site? A blog? Do you already know what data sources you'll want to use? Find a starter that fulfills your requirements by using the search bar and filters in the [Gatsby Starter Library](/starters/).
 
 If you're not sure what to choose or want only the most essential functionality, try customizing either [`gatsby-starter-blog`](https://github.com/gatsbyjs/gatsby-starter-blog) (if you're primarily using this site as a blog) or [`gatsby-starter-default`](https://github.com/gatsbyjs/gatsby-starter-default). These official starters are maintained by Gatsby and are great options, particularly for your first Gatsby site.
 
