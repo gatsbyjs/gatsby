@@ -30,15 +30,16 @@ describe(`Job actions/reducer`, () => {
   })
 
   it(`throws an error if an ID isn't provided`, done => {
-    const runReducer = (): IGatsbyState["jobs"] =>
+    function runReducer(): void {
       jobsReducer(undefined, actions.createJob(`test job`))
+    }
 
     expect(runReducer).toThrowErrorMatchingSnapshot()
     done()
   })
 
   it(`throws an error if endJob is called for a job that's already ended`, done => {
-    const runReducer = (): IGatsbyState["jobs"] => {
+    function runReducer(): IGatsbyState["jobs"] {
       let state = jobsReducer(undefined, actions.createJob({ id: `test job` }))
       state = jobsReducer(state, actions.endJob({ id: `test job` }))
       state = jobsReducer(
