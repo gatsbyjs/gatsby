@@ -5,7 +5,7 @@ author: "Benjamin Read"
 tags: ["react", "getting-started", "wordpress"]
 ---
 
-As a frontend designer I've always prided myself on being a HTML and CSS
+As a frontend designer I've always prided myself on being an HTML and CSS
 specialist. My use of JavaScript has been limited to animations and DOM
 manipulation. However, at
 [Indigo Tree](https://indigotree.co.uk)

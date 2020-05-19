@@ -1,7 +1,9 @@
-const _ = require(`lodash`)
+import _ from "lodash"
 
-module.exports = (
-  state = {
+import { IGatsbyState, ActionsUnion, IPlugin } from "../types"
+
+export const babelrcReducer = (
+  state: IGatsbyState["babelrc"] = {
     stages: {
       develop: {
         plugins: [],
@@ -37,8 +39,8 @@ module.exports = (
       },
     },
   },
-  action
-) => {
+  action: ActionsUnion
+): IGatsbyState["babelrc"] => {
   switch (action.type) {
     case `SET_BABEL_PLUGIN`: {
       Object.keys(state.stages).forEach(stage => {
@@ -48,7 +50,7 @@ module.exports = (
 
         const index = _.findIndex(
           state.stages[stage].plugins,
-          p => p.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.
@@ -76,7 +78,7 @@ module.exports = (
 
         const index = _.findIndex(
           state.stages[stage].presets,
-          p => p.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.

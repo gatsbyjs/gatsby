@@ -131,7 +131,7 @@ class HomepageBlogPosts extends Component {
     this.desktopMediaQuery.removeListener(this.updateViewPortState)
   }
 
-  updateViewPortState = e => {
+  updateViewPortState = () => {
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
 
