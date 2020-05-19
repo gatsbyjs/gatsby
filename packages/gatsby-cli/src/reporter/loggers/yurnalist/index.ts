@@ -10,7 +10,6 @@ import { createReporter } from "yurnalist"
 import ProgressBar from "progress"
 import chalk from "chalk"
 import { IUpdateActivity } from "../../redux/types"
-import { IGatsbyState } from "gatsby/src/redux/types"
 
 interface IYurnalistActivities {
   [activityId: string]: {
