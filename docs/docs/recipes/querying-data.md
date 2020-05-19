@@ -94,7 +94,7 @@ export default NonPageComponent
 
 2. You can now use this component as you would [any other component](/docs/building-with-components#non-page-components) by importing it into a larger page of JSX components and HTML markup.
 
-## Querying data with the useStaticQuery hook
+## Querying data with the `useStaticQuery` hook
 
 Since Gatsby v2.1.0, you can use the `useStaticQuery` hook to query data with a JavaScript function instead of a component. The syntax removes the need for a `<StaticQuery>` component to wrap everything, which some people find simpler to write.
 
@@ -144,7 +144,7 @@ export default NonPageComponent
 
 - [More on Static Query for querying data in components](/docs/static-query/)
 - [The difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query)
-- [More on the useStaticQuery hook](/docs/use-static-query/)
+- [More on the `useStaticQuery` hook](/docs/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
 ## Limiting with GraphQL
@@ -336,7 +336,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 You can rename any field in a GraphQL query with an alias.
 
-If you would like to run two queries on the same datasource, you can use an alias to avoid a naming collision with two queries of the same name.
+If you would like to run two queries on the same data source, you can use an alias to avoid a naming collision with two queries of the same name.
 
 ### Directions
 

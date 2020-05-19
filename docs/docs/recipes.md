@@ -45,7 +45,7 @@ Add pages to your Gatsby site, and use layouts to manage common page elements.
 - [Creating pages automatically](/docs/recipes/pages-layouts#creating-pages-automatically)
 - [Linking between pages](/docs/recipes/pages-layouts#linking-between-pages)
 - [Creating a layout component](/docs/recipes/pages-layouts#creating-a-layout-component)
-- [Creating pages programmatically with createPage](/docs/recipes/pages-layouts#creating-pages-programmatically-with-createpage)
+- [Creating pages programmatically with `createPage`](/docs/recipes/pages-layouts#creating-pages-programmatically-with-createpage)
 
 ## [2. Styling with CSS](/docs/recipes/styling-css/)
 
@@ -99,7 +99,7 @@ Gatsby lets you access your data across all sources using a single GraphQL inter
 
 - [Querying data with a Page Query](/docs/recipes/querying-data#querying-data-with-a-page-query)
 - [Querying data with the StaticQuery Component](/docs/recipes/querying-data#querying-data-with-the-staticquery-component)
-- [Querying data with the useStaticQuery hook](/docs/recipes/querying-data/#querying-data-with-the-usestaticquery-hook)
+- [Querying data with the `useStaticQuery` hook](/docs/recipes/querying-data/#querying-data-with-the-usestaticquery-hook)
 - [Limiting with GraphQL](/docs/recipes/querying-data#limiting-with-graphql)
 - [Sorting with GraphQL](/docs/recipes/querying-data#sorting-with-graphql)
 - [Filtering with GraphQL](/docs/recipes/querying-data#filtering-with-graphql)

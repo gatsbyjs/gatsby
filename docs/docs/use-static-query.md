@@ -8,7 +8,7 @@ Just like the [StaticQuery](/docs/static-query/) component, it allows your React
 
 In this guide, you will walk through an example using `useStaticQuery`. If you're not familiar with static queries in Gatsby, you might want to check out [the difference between a static query and a page query](/docs/static-query/#how-staticquery-differs-from-page-query).
 
-## How to use useStaticQuery in components
+## How to use `useStaticQuery` in components
 
 > 💡 You'll need React and ReactDOM 16.8.0 or later to use `useStaticQuery`.
 >

@@ -115,7 +115,7 @@ The `ThemeProvider` component exported from the `ThemeContext.js` file wraps the
 
 ## Editing the Layout file
 
-The default `layout.js` uses a `<staticQuery>` and renderProp to render the layout, which is wrapped by a Fragment `<>`. Modify it to look like this:
+The default `layout.js` uses a `<staticQuery>` and render prop to render the layout, which is wrapped by a Fragment `<>`. Modify it to look like this:
 
 ```jsx:title=src/components/layout.js
 import * as React from 'react'

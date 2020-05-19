@@ -186,7 +186,7 @@ You now have:
 
 1. Added the `StaticQuery` component to a page that allows you to fetch content from the GraphQL API.
 2. Fetched some vehicles from the demo data, namely the name and weight.
-3. Rendered the list in the StaticQuery's RenderProp called "render".
+3. Rendered the list in the StaticQuery's render prop called "render".
 
 Hopefully you've seen how easy it is to start working with Gentics Mesh and Gatsby.
 
