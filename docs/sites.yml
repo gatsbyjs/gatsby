@@ -10661,6 +10661,18 @@
   built_by: Chad Lee
   built_by_url: https://github.com/chadly
   featured: false
+- title: KAIGO in JAPAN
+  main_url: https://kaigo-in-japan.jp
+  url: https://kaigo-in-japan.jp
+  description: >
+    KAIGO in JAPAN is a website for those who are planning to work in the care work field in Japan. We built a multilingual site on Gatsby. One of them is a special language called Easy-Japanese with various ruby tags.
+  categories:
+    - Healthcare
+    - Nonprofit
+    - Web Development
+    - Programming
+  built_by: hgw
+  built_by_url: https://shunyahagiwara.com/
 - title: Dondoko Susumu Website
   url: https://xn--28jma5da5l6e.com/en/
   main_url: https://xn--28jma5da5l6e.com/en/
