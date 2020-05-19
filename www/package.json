@@ -6,6 +6,7 @@
     "gatsby-site-theme": "^2.0.0"
   },
   "scripts": {
-    "develop": "gatsby develop"
+    "develop": "gatsby develop",
+    "build": "gatsby build"
   }
 }
