@@ -12,13 +12,13 @@ const getCLI = () => {
   jest.resetModules()
 
   const reporter = require(`../reporter`)
-  const createCLI = require(`../create-cli`)
+  const { createCli } = require(`../create-cli`)
 
   require(`../`)
 
   return {
     reporter,
-    createCLI,
+    createCli,
   }
 }
 
@@ -93,10 +93,10 @@ describe(`normal behavior`, () => {
     })
   })
 
-  it(`invokes createCLI`, () => {
-    const { createCLI } = setup()
+  it(`invokes createCli`, () => {
+    const { createCli } = setup()
 
-    expect(createCLI).toHaveBeenCalledTimes(1)
-    expect(createCLI).toHaveBeenCalledWith(process.argv)
+    expect(createCli).toHaveBeenCalledTimes(1)
+    expect(createCli).toHaveBeenCalledWith(process.argv)
   })
 })
