@@ -1,5 +1,6 @@
-const { actions } = require(`../actions`)
-const jobsReducer = require(`../reducers/jobs`)
+import { actions } from "../actions"
+import { jobsReducer } from "../reducers/jobs"
+import { IGatsbyState } from "../types"
 
 Date.now = jest.fn(() => 1482363367071)
 
@@ -29,8 +30,8 @@ describe(`Job actions/reducer`, () => {
   })
 
   it(`throws an error if an ID isn't provided`, done => {
-    function runReducer() {
-      return jobsReducer(undefined, actions.createJob(`test job`))
+    function runReducer(): void {
+      jobsReducer(undefined, actions.createJob(`test job`))
     }
 
     expect(runReducer).toThrowErrorMatchingSnapshot()
@@ -38,7 +39,7 @@ describe(`Job actions/reducer`, () => {
   })
 
   it(`throws an error if endJob is called for a job that's already ended`, done => {
-    function runReducer() {
+    function runReducer(): IGatsbyState["jobs"] {
       let state = jobsReducer(undefined, actions.createJob({ id: `test job` }))
       state = jobsReducer(state, actions.endJob({ id: `test job` }))
       state = jobsReducer(

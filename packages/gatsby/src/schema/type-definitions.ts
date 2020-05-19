@@ -45,6 +45,7 @@ export interface IGatsbyPageInfo {
   itemCount: number
   pageCount: number
   perPage: number | undefined
+  totalCount: number
 }
 
 export interface IGraphQLSpanTracer {

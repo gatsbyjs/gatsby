@@ -5241,6 +5241,19 @@
   source_url: https://github.com/ERS-HCL/gatsby-ershcl-app
   built_by: Tarun Kumar Sukhu
   built_by_url: https://github.com/tsukhu
+- title: Ben Shi
+  url: https://hbish.com/
+  main_url: https://hbish.com/
+  source_url: https://github.com/hbish/hbish.com
+  description: >
+    A personal website of Ben Shi, a technologist from Sydney, Australia.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Ben Shi
+  built_by_url: https://hbish.com/
+  featured: false
 - title: Sandbox
   url: https://www.sandboxneu.com/
   main_url: https://www.sandboxneu.com/
@@ -10488,14 +10501,25 @@
     - Open Source
     - Web Development
   description: >
-    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, 
-    Databases and Web Security. This website is my personal portfolio and blog 
-    with the Fresh theme. I love reading engineering articles, contributing to 
-    open-source and interacting with communities. Feel free to get in touch if 
-    you have an interesting project that you want to collaborate on.
+    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, Databases and Web Security. This website is my personal portfolio and blog with the Fresh theme. I love reading engineering articles, contributing to open-source and interacting with communities. Feel free to get in touch if you have an interesting project that you want to collaborate on.
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: Chris Nager
+  main_url: https://chrisnager.com
+  url: https://chrisnager.com
+  source_url: https://github.com/chrisnager/chrisnager-dot-com
+  description: >
+    Developer and designer in Brooklyn, NY passionate about performance, accessibility, and systematic design.
+  categories:
+    - Accessibility
+    - Blog
+    - Design
+    - Portfolio
+    - User Experience
+    - Web Development
+  built_by: Chris Nager
+  built_by_url: https://twitter.com/chrisnager
 - title: Resistbot
   url: https://resist.bot
   main_url: https://resist.bot
@@ -10539,6 +10563,19 @@
     - Technology
     - Blog
   featured: false
+- title: Vinicius Dias
+  built_by: Vinicius Dias
+  built_by_url: https://viniciusdias.works/
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+    - Web Development
+  description: >
+    Hi, I'm Vinicius Dias, a Front-End developer with focus on performance and UX. This is my personal portfolio developed with Gatsby. I'm always learning different things and I consider myself a very curious guy. I feel that it keeps me motivated and creative to solve problems.
+  featured: false
+  main_url: https://viniciusdias.works/
+  url: https://viniciusdias.works/
 - title: Cognifide Tech
   url: https://tech.cognifide.com/
   main_url: https://tech.cognifide.com/
@@ -10566,6 +10603,27 @@
   built_by: Sadharani Music Works
   built_by_url: https://www.sadharani.com
   featured: false
+- title: Anong Network
+  main_url: https://anong.network
+  url: https://anong.network
+  description: >
+    An app used to quickly identify a network provider in Philippines
+  categories:
+    - App
+    - Directory
+  built_by: Jan Harold Diaz
+  built_by_url: https://janharold.com
+  featured: false
+- title: PayMongo
+  main_url: https://paymongo.com
+  url: https://paymongo.com
+  description: >
+    The official website of PayMongo Philippines
+  categories:
+    - Marketing
+    - Finance
+  built_by: PayMongo
+  built_by_url: https://paymongo.com
 - title: Zona Digital
   url: https://zonadigital.pt
   main_url: https://zonadigital.pt
@@ -10588,4 +10646,67 @@
     - Design
   built_by: Raz Lifshitz
   built_by_url: https://www.linkedin.com/in/raz-lifshitz
+- title: Runly
+  url: https://www.runly.io/
+  main_url: https://www.runly.io/
+  description: >
+    The easiest way to run background jobs with .NET Core. It's more than background jobs —
+    it's an all-in-one platform to create great user experiences.
+  categories:
+    - API
+    - App
+    - Landing Page
+    - Technology
+    - Programming
+  built_by: Chad Lee
+  built_by_url: https://github.com/chadly
+  featured: false
+- title: KAIGO in JAPAN
+  main_url: https://kaigo-in-japan.jp
+  url: https://kaigo-in-japan.jp
+  description: >
+    KAIGO in JAPAN is a website for those who are planning to work in the care work field in Japan. We built a multilingual site on Gatsby. One of them is a special language called Easy-Japanese with various ruby tags.
+  categories:
+    - Healthcare
+    - Nonprofit
+    - Web Development
+    - Programming
+  built_by: hgw
+  built_by_url: https://shunyahagiwara.com/
+- title: Dondoko Susumu Website
+  url: https://xn--28jma5da5l6e.com/en/
+  main_url: https://xn--28jma5da5l6e.com/en/
+  source_url: https://github.com/dondoko-susumu/website-v2
+  description: >
+    The Web site of Dondoko Susumu, a Japanese cartoonist. His cartoons have been posted. It is internationalized into 12 languages.
+  categories:
+    - Blog
+    - Entertainment
+    - Gallery
+    - Landing Page
+  built_by: Dondoko Susumu
+  built_by_url: https://xn--28jma5da5l6e.com/en/
+- title: Raymond Ware
+  url: https://www.raymondware.com
+  main_url: https://www.raymondware.com
+  description: >
+    Seattle web developer portfolio site.
+  categories:
+    - Portfolio
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Raymond Ware
+  built_by_url: https://github.com/raymondware
+  featured: false
+- title: Blog - Thanawat Gulati
+  main_url: https://testing.thanawatgulati.com
+  url: https://testing.thanawatgulati.com
+  source_url: https://github.com/thanawatgulati/thanawatgulati-blog
+  description: >
+    Thanawat Gulati - Blog , Work experience portfolio and more.
+  categories:
+    - Blog
+  built_by: Thanawat Gulati
+  built_by_url: https://twitter.com/mjamesvevo
   featured: false

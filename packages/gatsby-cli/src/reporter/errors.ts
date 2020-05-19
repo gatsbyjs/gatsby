@@ -1,9 +1,8 @@
-// @flow
-
-const PrettyError = require(`pretty-error`)
-const prepareStackTrace = require(`./prepare-stack-trace`)
-const _ = require(`lodash`)
-const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
+import PrettyError from "pretty-error"
+import stackTrace from "stack-trace"
+import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
+import { isNodeInternalModulePath } from "gatsby-core-utils"
+import { IStructuredStackFrame } from "../structured-errors/types"
 
 const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
 
@@ -13,22 +12,24 @@ const packagesToSkipTest = new RegExp(
 
 // TO-DO: move this this out of this file (and probably delete this file completely)
 // it's here because it re-implements similar thing as `pretty-error` already does
-const sanitizeStructuredStackTrace = stack => {
+export const sanitizeStructuredStackTrace = (
+  stack: stackTrace.StackFrame[]
+): IStructuredStackFrame[] => {
   // first filter out not useful call sites
   stack = stack.filter(callSite => {
-    if (!callSite.fileName) {
+    if (!callSite.getFileName()) {
       return false
     }
 
-    if (packagesToSkipTest.test(callSite.fileName)) {
+    if (packagesToSkipTest.test(callSite.getFileName())) {
       return false
     }
 
-    if (callSite.fileName.includes(`asyncToGenerator.js`)) {
+    if (callSite.getFileName().includes(`asyncToGenerator.js`)) {
       return false
     }
 
-    if (isNodeInternalModulePath(callSite.fileName)) {
+    if (isNodeInternalModulePath(callSite.getFileName())) {
       return false
     }
 
@@ -37,14 +38,19 @@ const sanitizeStructuredStackTrace = stack => {
 
   // then sanitize individual call site objects to make sure we don't
   // emit objects with extra fields that won't be handled by consumers
-  stack = stack.map(callSite =>
-    _.pick(callSite, [`fileName`, `functionName`, `columnNumber`, `lineNumber`])
-  )
-
-  return stack
+  return stack.map(callSite => {
+    return {
+      fileName: callSite.getFileName(),
+      functionName: callSite.getFunctionName(),
+      columnNumber: callSite.getColumnNumber(),
+      lineNumber: callSite.getLineNumber(),
+    }
+  })
 }
 
-function getErrorFormatter() {
+type PrettyRenderError = Error | ErrorWithCodeFrame
+
+export function getErrorFormatter(): PrettyError {
   const prettyError = new PrettyError()
   const baseRender = prettyError.render
 
@@ -57,7 +63,8 @@ function getErrorFormatter() {
     // `tapable`, // webpack
   )
 
-  prettyError.skip((traceLine, ln) => {
+  // @ts-ignore the type defs in prettyError are wrong
+  prettyError.skip((traceLine: any) => {
     if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
     return false
   })
@@ -78,13 +85,15 @@ function getErrorFormatter() {
     prettyError.withoutColors()
   }
 
-  prettyError.render = err => {
+  prettyError.render = (
+    err: PrettyRenderError | PrettyRenderError[]
+  ): string => {
     if (Array.isArray(err)) {
-      return err.map(prettyError.render).join(`\n`)
+      return err.map(e => prettyError.render(e)).join(`\n`)
     }
 
     let rendered = baseRender.call(prettyError, err)
-    if (err && err.codeFrame) rendered = `\n${err.codeFrame}\n${rendered}`
+    if (`codeFrame` in err) rendered = `\n${err.codeFrame}\n${rendered}`
     return rendered
   }
   return prettyError
@@ -93,34 +102,28 @@ function getErrorFormatter() {
 /**
  * Convert a stringified webpack compilation error back into
  * an Error instance so it can be formatted properly
- * @param {string} errorStr
- * @param {string} sourceMapFile
  */
-async function createErrorFromString(
+export async function createErrorFromString(
   errorStr: string = ``,
   sourceMapFile: string
-) {
+): Promise<Error | ErrorWithCodeFrame> {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
 
   message = message.replace(/^(Error:)/, ``)
 
-  let error = new Error(message)
+  const error = new Error(message)
 
   error.stack = [message, rest.join(`\n`)].join(`\n`)
 
   error.name = `WebpackError`
   try {
-    if (sourceMapFile) await prepareStackTrace(error, sourceMapFile)
+    if (sourceMapFile) {
+      return await prepareStackTrace(error, sourceMapFile)
+    }
   } catch (err) {
     // don't shadow a real error because of a parsing issue
   }
   return error
-}
-
-module.exports = {
-  createErrorFromString,
-  getErrorFormatter,
-  sanitizeStructuredStackTrace,
 }
