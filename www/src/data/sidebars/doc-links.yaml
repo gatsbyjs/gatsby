@@ -60,6 +60,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Azure
+              link: /docs/deploying-to-azure/
+              breadcrumbTitle: Azure
             - title: Deploying to Netlify
               link: /docs/deploying-to-netlify/
               breadcrumbTitle: Netlify
