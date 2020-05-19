@@ -30,7 +30,7 @@ export default function Layout({ children }) {
 
 **Note**: you can also provide your own custom components to the `MDXProvider` that make them globally available while writing MDX. You can find more details about this pattern in the [Importing and Using Components in MDX guide](/docs/mdx/importing-and-using-components/#make-components-available-globally-as-shortcodes).
 
-The following components can be customized with the MDXProvider:
+The following components can be customized with the `MDXProvider`:
 
 <!-- remark lint doesn't realize the pipes in code blocks aren't table markers -->
 <!-- lint ignore table-pipe-alignment -->
@@ -66,7 +66,7 @@ The following components can be customized with the MDXProvider:
 
 ## How does this work?
 
-Components passed to the MDXProvider are used to render the HTML elements
+Components passed to the `MDXProvider` are used to render the HTML elements
 that Markdown creates. It uses
 [React's Context API](https://reactjs.org/docs/context.html).
 

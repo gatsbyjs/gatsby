@@ -206,7 +206,7 @@ export const query = graphql`
 `
 ```
 
-When you rerun `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Kontent. To see a list of all pages, visit `http://localhost:8000/asdf` (or any other url that generates a 404).
+When you rerun `gatsby develop`, you'll be able to see each article as a page with content pulled from Kentico Kontent. To see a list of all pages, visit `http://localhost:8000/asdf` (or any other URL that generates a 404).
 
 The body copy for this article comes from a rich text element in Kentico Kontent. Links and inline linked items (e.g., embedded videos) are not resolved by default for rich text elements. If you want to resolve them, you can query the required data in structured form for resolution and create your own React components. You could use [Rich text element component](https://github.com/Kentico/kontent-gatsby-packages/tree/master/packages/gatsby-kontent-components#rich-text-element-component) that is a part of the [@kentico/gatsby-kontent-components](https://www.gatsbyjs.org/packages/@kentico/gatsby-kontent-components) package.
 

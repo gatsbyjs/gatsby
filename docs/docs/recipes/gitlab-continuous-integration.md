@@ -13,7 +13,7 @@ This recipe helps you set up CI/CD on GitLab and automate your production build!
 
 ## Directions
 
-1. Create a gatsby site
+1. Create a Gatsby site
 
 ```shell
 gatsby new {your-project-name}

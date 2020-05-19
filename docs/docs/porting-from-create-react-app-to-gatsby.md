@@ -105,7 +105,7 @@ The structure of a [Gatsby project](/docs/gatsby-project-structure/) adds some a
 
 An important difference to note is the `/pages` folder in the Gatsby project structure where components will automatically be turned into static pages by Gatsby. This is discussed more in the [routing](#routing) section below.
 
-The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/browser-apis/#wrapRootElement) Gatsby API.
+The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) Gatsby API.
 
 ### Server-side rendering and browser APIs
 

@@ -20,7 +20,7 @@ npm install --save gatsby-plugin-postcss
 plugins: [`gatsby-plugin-postcss`],
 ```
 
-> **Note**: If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
+> **Note**: If you need to pass options to PostCSS use the plugins options; see [`postcss-loader`](https://github.com/postcss/postcss-loader) for all available options.
 
 3. Write your stylesheets using PostCSS (`.css` files) and require or import them as normal.
 
@@ -46,7 +46,7 @@ Using CSS modules requires no additional configuration. Simply prepend `.module`
 
 ### PostCSS plugins
 
-If you would prefer to add additional postprocessing to your PostCSS output you can specify plugins in the plugin options:
+If you would prefer to add additional post-processing to your PostCSS output you can specify plugins in the plugin options:
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -75,4 +75,4 @@ module.exports = () => ({
 
 ## Other resources
 
-- [Introduction to postcss](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)
+- [Introduction to PostCSS](https://www.smashingmagazine.com/2015/12/introduction-to-postcss/)

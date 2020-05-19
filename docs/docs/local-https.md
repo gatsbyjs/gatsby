@@ -49,7 +49,7 @@ To install `certutil`, you need to install the `nss tools` package(s). The exact
 
 #### Linux
 
-On a linux OS, you should be able to run one of the following, depending on your Linux distro:
+On a Linux OS, you should be able to run one of the following, depending on your Linux distro:
 
 ```shell
 # Debian based (Ubuntu)
@@ -132,9 +132,9 @@ machines for development (or if your dev environment is containerized in Docker)
 If you need to use a custom HTTPS setup, you can pass the `--https`, `--key-file`,
 `--cert-file`, and `--ca-file` flags to `npm run develop`.
 
-- `--cert-file` [relative/absolute path to ssl certificate file]
-- `--key-file` [relative/absolute path to ssl key file]
-- `--ca-file` [relative/absolute path to ssl certificate authority file]
+- `--cert-file` [relative/absolute path to SSL certificate file]
+- `--key-file` [relative/absolute path to SSL key file]
+- `--ca-file` [relative/absolute path to SSL certificate authority file]
 
 ### Using `npm run develop`
 
@@ -162,4 +162,4 @@ In most cases, the `--https` passed by itself is easier and more convenient to g
 
 ---
 
-Automatic certificates issued with the `--https` flag are issued to `localhost` by default, unless you have used the `--host` flag. If you have, a record in your hosts file will automatically be configured to point the defined host to `127.0.0.1`. At this time, ip addresses defined by `--host` are not supported.
+Automatic certificates issued with the `--https` flag are issued to `localhost` by default, unless you have used the `--host` flag. If you have, a record in your hosts file will automatically be configured to point the defined host to `127.0.0.1`. At this time, IP addresses defined by `--host` are not supported.

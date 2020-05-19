@@ -31,7 +31,7 @@ Other features covered by schema connections are aggregators and reducers such a
 
 ### Connection/Edge
 
-A connection is an abstraction that describes a collection of nodes of a type, and how to query and navigate through them. In the above example query, `allMarkdownRemark` is a Connection Type. Its field `edges` is analogous to `results`. Each Edge points at a `node` (in the collection of all markdownRemark nodes), but it also points to the logical `next` and `previous` nodes, relative to the `node` in the collection (meaningful if you provided a `sort` arg).
+A connection is an abstraction that describes a collection of nodes of a type, and how to query and navigate through them. In the above example query, `allMarkdownRemark` is a Connection Type. Its field `edges` is analogous to `results`. Each Edge points at a `node` (in the collection of all `markdownRemark` nodes), but it also points to the logical `next` and `previous` nodes, relative to the `node` in the collection (meaningful if you provided a `sort` arg).
 
 _Fun Fact: This stuff is all based on [relay connections](https://facebook.github.io/relay/graphql/connections.htm) concepts_
 
