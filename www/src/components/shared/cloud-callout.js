@@ -42,29 +42,27 @@ const Circles = styled(`span`)`
   color: ${p => p.theme.colors.purple[`30`]};
 `
 
-const CloudCallout = ({ narrow = true, children }) => {
-  return (
-    <CloudCalloutRoot narrow={narrow}>
-      <CloudText>{children}</CloudText>
-      Try{" "}
-      <a
-        href="https://gatsbyjs.com"
-        onClick={() =>
-          trackCustomEvent({
-            category: `Gateways to Self-Serve`,
-            action: `click`,
-            label: `loc:CloudCallout; text:Gatsby Cloud`
-          })
-        }
-      >
-        Gatsby Cloud
-      </a>
-      , with CMS and CDN auto-provisioning, performance reports, and 20x faster
-      builds!
-      <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
-    </CloudCalloutRoot>
-  )
-}
+const CloudCallout = ({ narrow = true, children }) => (
+  <CloudCalloutRoot narrow={narrow}>
+    <CloudText>{children}</CloudText>
+    Try{` `}
+    <a
+      href="https://gatsbyjs.com"
+      onClick={() =>
+        trackCustomEvent({
+          category: `Gateways to Self-Serve`,
+          action: `click`,
+          label: `loc:CloudCallout; text:Gatsby Cloud`,
+        })
+      }
+    >
+      Gatsby Cloud
+    </a>
+    , with CMS and CDN auto-provisioning, performance reports, and 20x faster
+    builds!
+    <Circles dangerouslySetInnerHTML={{ __html: CirclesOrnament }} />
+  </CloudCalloutRoot>
+)
 
 CloudCallout.propTypes = {
   children: PropTypes.node.isRequired,

@@ -74,7 +74,7 @@ const MastheadContent = () => (
           trackCustomEvent({
             category: `Gateways to Self-Serve`,
             action: `click`,
-            label: `loc:masthead; text:Gatsby Cloud`
+            label: `loc:masthead; text:Gatsby Cloud`,
           })
         }
       >
