@@ -43,7 +43,7 @@ By using Gatsby as the frontend framework for the Kua project, Pooley was able t
 
 The performance of the Gatsby-powered Kua site generated Lighthouse scores that helped earn Little & Big one of several awards for [mobile excellence](https://www.awwwards.com/sites/kua-coffee/mobile-excellence-report). "We wouldn't have won those awards without Gatsby," says Pooley.
 
-![](https://lh3.googleusercontent.com/hProX3TCdRU_wrYqzmW6MW-0YeYknWM3Rq9OxPf0OeMEDeF9jtd4cRZnSYWSo4aWanlqurRawoGWXc8TeHmpBODR4wEEheY1v90OsSQ1M5o1QYKEB2TNMo5z0AiidZVgnXVAcBrT)
+![Little & Big's landing page that reads: "Big projects for little people"](https://lh3.googleusercontent.com/hProX3TCdRU_wrYqzmW6MW-0YeYknWM3Rq9OxPf0OeMEDeF9jtd4cRZnSYWSo4aWanlqurRawoGWXc8TeHmpBODR4wEEheY1v90OsSQ1M5o1QYKEB2TNMo5z0AiidZVgnXVAcBrT)
 
 As Little & Big continues to grow, the agency is assembling an impressive portfolio of work built with the Gatsby framework -- including their agency's own website. "Gatsby is a really important differentiator for us," says Pooley. "As a small, boutique agency, having Gatsby is like having a secret weapon."
 
