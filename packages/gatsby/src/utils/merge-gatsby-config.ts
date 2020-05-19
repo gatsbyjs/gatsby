@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { Express } from "express"
 // TODO export it in index.d.ts
 type PluginEntry =
   | string
@@ -6,7 +7,6 @@ type PluginEntry =
     resolve: string
     options?: Record<string, unknown>
   }
-
 
 interface INormalizedPluginEntry {
   resolve: string
@@ -24,7 +24,7 @@ interface IGatsbyConfigInput {
     prefix: string
     url: string
   }
-  developMiddleware?(app: any): void
+  developMiddleware?(app: Express): void
 }
 
 type ConfigKey = keyof IGatsbyConfigInput
@@ -40,7 +40,10 @@ type Mapping = IGatsbyConfigInput["mapping"]
  */
 const normalizePluginEntry = (entry: PluginEntry): INormalizedPluginEntry =>
   _.isString(entry)
-    ? { resolve: entry, options: {} }
+    ? {
+      resolve: entry,
+      options: {},
+    }
     : _.isObject(entry)
       ? { options: {}, ...entry }
       : entry
