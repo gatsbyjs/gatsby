@@ -6300,7 +6300,18 @@
     - Twitter Cards meta
     - Sitemap Generation
     - XML Sitemaps
-    - Progressive Web Ap
+    - Progressive Web App
+- url: https://pedantic-brown-bbf927.netlify.app/
+  repo: https://github.com/pkino/gatsby-starter-typescript-sass
+  description: A minimum starter with TypeScript, Sass, ESLint and prettier built in
+  tags:
+    - Language:TypeScript
+    - Styling:SCSS
+    - Linting
+  features:
+    - TypeScript and Sass support
+    - ESLint with basic react rules
+    - Progressive Web App
 - url: https://gatsby-starter-portfolio-minimal.netlify.app/
   repo: https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal
   description: A modern one-page portfolio with a clean yet expressive design.
