@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.22.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.40...gatsby@2.22.0) (2020-05-19)
+
+### Features
+
+- **gatsby:** Prompt users to restart process on gatsby-config & gatsby-node changes ([#22759](https://github.com/gatsbyjs/gatsby/issues/22759)) ([d4ec5e5](https://github.com/gatsbyjs/gatsby/commit/d4ec5e5))
+
 ## [2.21.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.39...gatsby@2.21.40) (2020-05-19)
 
 **Note:** Version bump only for package gatsby
