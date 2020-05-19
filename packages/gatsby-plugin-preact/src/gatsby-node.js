@@ -12,10 +12,9 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
 
     // remove React refresh plugin, we want to add preact refresh instead.
     const webpackConfig = getConfig()
-    const reactRefreshPluginIndex = webpackConfig.plugins.findIndex(
-      plugin => plugin.constructor.name === `ReactRefreshPlugin`
+    webpackConfig.plugins = webpackConfig.plugins.filter(
+      plugin => plugin.constructor.name !== `ReactRefreshPlugin`
     )
-    webpackConfig.plugins.splice(reactRefreshPluginIndex, 1)
     actions.replaceWebpackConfig(webpackConfig)
 
     // enable react-refresh babel plugin to enable hooks
