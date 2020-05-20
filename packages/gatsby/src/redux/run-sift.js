@@ -149,7 +149,7 @@ function handleMany(siftArgs, nodes) {
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @returns {Array<IGatsbyNode> | undefined}
+ * @returns {Array<IGatsbyNode> | null}
  */
 const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   const nodesPerValueSets /*: Array<Set<IGatsbyNode>> */ = getBucketsForFilters(
@@ -160,7 +160,7 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
 
   if (!nodesPerValueSets) {
     // Let Sift take over as fallback
-    return undefined
+    return null
   }
 
   // Put smallest last (we'll pop it)
@@ -189,7 +189,7 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   // case for all value pairs? How likely is that to ever be reused?
 
   if (result.length === 0) {
-    return undefined
+    return null
   }
   return result
 }
@@ -412,7 +412,7 @@ exports.didLastFilterUseSift = function _didLastFilterUseSift() {
  * @param {Array<string>} nodeTypeNames
  * @param {undefined | null | FiltersCache} filtersCache
  * @param resolvedFields
- * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
+ * @returns {Array<IGatsbyNode> | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
  */
 const applyFilters = (
@@ -461,7 +461,11 @@ const applyFilters = (
     return null
   }
 
-  const result = filterWithoutSift(filters, nodeTypeNames, filtersCache)
+  const result /*: Array<IGatsbyNode> | null */ = filterWithoutSift(
+    filters,
+    nodeTypeNames,
+    filtersCache
+  )
 
   lastFilterUsedSift = false
   if (result) {
@@ -475,7 +479,7 @@ const applyFilters = (
   }
   lastFilterUsedSift = true
 
-  const siftResult = filterWithSift(
+  const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
     filters,
     firstOnly,
     nodeTypeNames,
@@ -520,12 +524,12 @@ const filterToStats = (
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
  * @param {undefined | null | FiltersCache} filtersCache
- * @returns {Array<IGatsbyNode> | undefined} Collection of results
+ * @returns {Array<IGatsbyNode> | null} Collection of results
  */
 const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
-    return undefined
+    return null
   }
 
   if (
@@ -535,7 +539,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
     )
   ) {
     // If there's a filter with non-supported op, stop now.
-    return undefined
+    return null
   }
 
   return runFiltersWithoutSift(filters, nodeTypeNames, filtersCache)
@@ -551,7 +555,7 @@ exports.filterWithoutSift = filterWithoutSift
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ * @returns {Array<IGatsbyNode> | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
@@ -577,7 +581,7 @@ const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
  * @param {function(id: string): IGatsbyNode | undefined} getNode
- * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ * @returns {Array<IGatsbyNode> | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
 const runSiftOnNodes = (
@@ -616,13 +620,14 @@ const runSiftOnNodes = (
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
- * @param {Array<IGatsbyNode> | undefined | null} nodes Pre-filtered list of nodes
+ * @param {Array<IGatsbyNode> | null} nodes Pre-filtered list of nodes
  * @param {Object | undefined} sort Sorting arguments
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | undefined | null} Same as input, except sorted
  */
 const sortNodes = (nodes, sort, resolvedFields, stats) => {
-  if (!sort || nodes?.length <= 1) {
+  // `undefined <= 1` and `undefined > 1` are both false so invert the result...
+  if (!sort || !(nodes?.length > 1)) {
     return nodes
   }
 
