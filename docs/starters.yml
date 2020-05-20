@@ -6326,6 +6326,10 @@
 - url: https://pedantic-brown-bbf927.netlify.app/
   repo: https://github.com/pkino/gatsby-starter-typescript-sass
   description: A minimum starter with TypeScript, Sass, ESLint and prettier built in
+    - Progressive Web App
+- url: https://pedantic-brown-bbf927.netlify.app/
+  repo: https://github.com/pkino/gatsby-starter-typescript-sass
+  description: A minimum starter with TypeScript, Sass, ESlint and prettier built in
   tags:
     - Language:TypeScript
     - Styling:SCSS
