@@ -1,6 +1,6 @@
 import React from "react"
 import { MdWarning } from "react-icons/md"
-import Link from "gatsby-link"
+import Link from "../../components/localized-link"
 
 import {
   Container,

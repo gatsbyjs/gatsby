@@ -10,7 +10,7 @@ if (
 } else if (`serviceWorker` in navigator) {
   navigator.serviceWorker
     .register(`${__BASE_PATH__}/sw.js`)
-    .then(function(reg) {
+    .then(function (reg) {
       reg.addEventListener(`updatefound`, () => {
         apiRunner(`onServiceWorkerUpdateFound`, { serviceWorker: reg })
         // The updatefound event implies that reg.installing is set; see
@@ -58,7 +58,7 @@ if (
         })
       })
     })
-    .catch(function(e) {
+    .catch(function (e) {
       console.error(`Error during service worker registration:`, e)
     })
 }

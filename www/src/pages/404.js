@@ -1,6 +1,6 @@
 import React from "react"
 import Container from "../components/container"
-import { Link } from "gatsby"
+import Link from "../components/localized-link"
 import FooterLinks from "../components/shared/footer-links"
 
 export default function FourOhFour() {

@@ -6,7 +6,7 @@ starter:
   - Blog
   - Client-side App
   - CMS:Agility CMS
-  - CMS:Cosmic JS
+  - CMS:Cosmic
   - CMS:Headless
   - CMS:Contentful
   - CMS:DatoCMS
@@ -21,7 +21,7 @@ starter:
   - CMS:Other
   - Disqus
   - Documentation
-  - eCommerce
+  - E-commerce
   - Firebase
   - Gallery
   - Google Sheets
@@ -59,7 +59,7 @@ starter:
   - Styling:PostCSS
   - Styling:SCSS
   - Styling:Tailwind
-  - Styling:Milligram
+  - Styling:Theme-UI
   - Styling:Other
   - Styling:None
   - Testing
@@ -70,6 +70,7 @@ site:
   - Agency
   - App
   - Blog
+  - Books
   - Business
   - Community
   - Conference
@@ -79,6 +80,7 @@ site:
   - Design System
   - Directory
   - Documentation
+  - E-commerce
   - Education
   - Entertainment
   - Entrepreneurship
@@ -119,4 +121,3 @@ site:
   - Video
   - Web Development
   - WordPress
-  - eCommerce

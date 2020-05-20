@@ -25,12 +25,12 @@ Here's the design process.
 
 We wanted to make sure that the site provides necessary information to developers at each of these stages (thank you, Pronovix, for the excellent articles on this, like [Eliminating API Friction Along Downstream Developer Journey](https://pronovix.com/blog/eliminating-api-friction-along-downstream-developer-journey-1) and [What is the MVP for a Developer Portal?](https://pronovix.com/blog/what-mvp-developer-portal))
 
-1.  Discover/Research - what is this site? how can this portal help me to solve my specific task?
-2.  Evaluate - can I trust this organization’s commitment to its project?
-3.  Get Started - where do I begin?
-4.  Develop/Troubleshoot - do I know everything to make this work? How do I get X done with Gatsby? How do I use Gatsby with [insert other tech or CMS]? Where do I go when I have a problem with Gatsby?
-5.  Celebrate - will they care about my work?
-6.  Maintain - how hard will it be to keep this running?
+1. Discover/Research - what is this site? how can this portal help me to solve my specific task?
+2. Evaluate - can I trust this organization’s commitment to its project?
+3. Get Started - where do I begin?
+4. Develop/Troubleshoot - do I know everything to make this work? How do I get X done with Gatsby? How do I use Gatsby with [insert other tech or CMS]? Where do I go when I have a problem with Gatsby?
+5. Celebrate - will they care about my work?
+6. Maintain - how hard will it be to keep this running?
 
 ## Investigating other "excellent docs showcase" structures
 

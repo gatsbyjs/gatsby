@@ -41,7 +41,7 @@ Plugins have been a very successful lower-level abstraction for Gatsby. Themes i
 
 - People new to Gatsby that want to get started quickly without a difficult learning curve
 
-- People who have clear and common use-cases in mind for Gatsby (e.g. blog, ecommerce, documentation) and want to share the complexity of maintaining the underlying functionality with others — so pick a theme as the base for their site instead of starting from scratch
+- People who have clear and common use-cases in mind for Gatsby (e.g. blog, e-commerce, documentation) and want to share the complexity of maintaining the underlying functionality with others — so pick a theme as the base for their site instead of starting from scratch
 
 - OSS/Commercial entrepreneurs who want to create web products. Themes will enable them to assemble a product they can share or sell with others.
 

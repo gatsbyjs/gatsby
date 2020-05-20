@@ -6,7 +6,6 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   activeClassName?: string
   /** Inline styles for when this Link is active */
   activeStyle?: object
-  innerRef?: Function
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
   /** Class the link as highlighted if there is a partial match via a the `to` being prefixed to the current url */
   partiallyActive?: boolean

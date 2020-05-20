@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.2...gatsby-transformer-sharp@2.5.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.1...gatsby-transformer-sharp@2.5.2) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix fluid not respecting maxWidth/maxHeight ([#17006](https://github.com/gatsbyjs/gatsby/issues/17006)) ([ad7cd6b](https://github.com/gatsbyjs/gatsby/commit/ad7cd6b))
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.0...gatsby-transformer-sharp@2.5.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.7...gatsby-transformer-sharp@2.5.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.6...gatsby-transformer-sharp@2.4.7) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.5...gatsby-transformer-sharp@2.4.6) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.4...gatsby-transformer-sharp@2.4.5) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.3...gatsby-transformer-sharp@2.4.4) (2020-04-04)
+
+### Bug Fixes
+
+- **dependencies:** bump potrace version ([#22803](https://github.com/gatsbyjs/gatsby/issues/22803)) ([7a8f016](https://github.com/gatsbyjs/gatsby/commit/7a8f016))
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.2...gatsby-transformer-sharp@2.4.3) (2020-03-27)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** Add `checkSupportedExtensions`… ([#22565](https://github.com/gatsbyjs/gatsby/issues/22565)) ([91e7bfb](https://github.com/gatsbyjs/gatsby/commit/91e7bfb))
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.1...gatsby-transformer-sharp@2.4.2) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.4.0...gatsby-transformer-sharp@2.4.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.19...gatsby-transformer-sharp@2.4.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
 ## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.3.18...gatsby-transformer-sharp@2.3.19) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

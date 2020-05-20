@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 
 import React, { Component } from "react"
 import Slider from "./slider"
-import Link from "gatsby-link"
+import Link from "./localized-link"
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md"
 import { visuallyHidden } from "../utils/styles"
 

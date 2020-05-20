@@ -1,5 +1,5 @@
-const allLangs = require("../../i18n.json")
-const defaultLang = "en"
+const allLangs = require(`../../i18n.json`)
+const defaultLang = `en`
 
 // Only allow languages defined in the LOCALES env variable.
 // This allows us to compile only languages that are "complete" or test only
@@ -10,7 +10,7 @@ function getLanguages(localeStr) {
     return []
   }
 
-  const langCodes = localeStr.split(" ")
+  const langCodes = localeStr.split(` `)
   const langs = []
   for (let code of langCodes) {
     if (code === defaultLang) {
@@ -33,6 +33,8 @@ function getLanguages(localeStr) {
 const langs = getLanguages(process.env.LOCALES)
 const langCodes = langs.map(lang => lang.code)
 
+const i18nEnabled = langs.length > 0
+
 function isDefaultLang(locale) {
   return locale === defaultLang
 }
@@ -48,7 +50,7 @@ function localizedPath(locale, path) {
     return path
   }
 
-  const [, base] = path.split("/")
+  const [, base] = path.split(`/`)
 
   // If for whatever reason we receive an already localized path
   // (e.g. if the path was made with location.pathname)
@@ -70,14 +72,15 @@ function localizedPath(locale, path) {
  * the ones defined in `process.env.LOCALES`
  */
 function getLocaleAndBasePath(path, codes = langCodes) {
-  const [, code, ...rest] = path.split("/")
+  const [, code, ...rest] = path.split(`/`)
   if (codes.includes(code)) {
-    return { locale: code, basePath: `/${rest.join("/")}` }
+    return { locale: code, basePath: `/${rest.join(`/`)}` }
   }
   return { locale: defaultLang, basePath: path }
 }
 
 module.exports = {
+  i18nEnabled,
   langCodes,
   langs,
   defaultLang,

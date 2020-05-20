@@ -2,7 +2,8 @@
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
 import { keyframes } from "@emotion/core"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
+import Link from "./localized-link"
 
 import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"

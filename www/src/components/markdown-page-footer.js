@@ -15,16 +15,33 @@ export default class MarkdownPageFooter extends React.Component {
       <>
         <hr sx={{ display: `none` }} />
         {this.props.page && (
-          <a
-            sx={{ variant: `links.muted`, mt: 9 }}
-            href={`https://github.com/gatsbyjs/gatsby/blob/master/${
-              this.props.packagePage ? `packages` : `docs`
-            }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
+          <div
+            sx={{
+              display: `flex`,
+              alignItems: `center`,
+              justifyContent: `space-between`,
+              mt: 9,
+            }}
           >
-            <Trans>
-              <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
-            </Trans>
-          </a>
+            <a
+              sx={{ variant: `links.muted` }}
+              href={`https://github.com/gatsbyjs/gatsby/blob/master/${
+                this.props.packagePage ? `packages` : `docs`
+              }/${this.props.page ? this.props.page.parent.relativePath : ``}`}
+            >
+              <Trans>
+                <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
+              </Trans>
+            </a>
+            {this.props.page?.parent?.fields?.gitLogLatestDate && (
+              <span sx={{ color: `textMuted`, fontSize: 1 }}>
+                Last updated:{` `}
+                <time dateTime={this.props.page.parent.fields.gitLogLatestDate}>
+                  {this.props.page.parent.fields.gitLogLatestDate}
+                </time>
+              </span>
+            )}
+          </div>
         )}
       </>
     )
@@ -36,6 +53,9 @@ export const fragment = graphql`
     parent {
       ... on File {
         relativePath
+        fields {
+          gitLogLatestDate(formatString: "MMMM D, YYYY")
+        }
       }
     }
   }
@@ -43,6 +63,9 @@ export const fragment = graphql`
     parent {
       ... on File {
         relativePath
+        fields {
+          gitLogLatestDate(formatString: "MMMM D, YYYY")
+        }
       }
     }
   }

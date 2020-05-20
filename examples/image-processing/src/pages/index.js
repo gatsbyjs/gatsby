@@ -123,11 +123,9 @@ class Index extends React.Component {
         <p>
           The default is
           <code>ATTENTION</code>, which the Sharp documentation describes as
-          {` "`}
-          focus on the region with the highest luminance frequency, colour
-          saturation and presence of skin tones
-          {`"`} – which is why we actually see Mr. Gatsby toasting to us in the
-          first thumbnail:
+          "focus on the region with the highest luminance frequency, colour
+          saturation and presence of skin tones" – which is why we actually see
+          F. Scott Fitzgerald centered in the first thumbnail:
         </p>
 
         <ul style={{ ...styles.ul, ...styles.row }}>
@@ -469,28 +467,28 @@ export const pageQuery = graphql`
         }
       }
     }
-    cropDefault: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropDefault: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180) {
           src
         }
       }
     }
-    cropBottomLeft: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropBottomLeft: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
           src
         }
       }
     }
-    cropEntropy: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropEntropy: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: ENTROPY) {
           src
         }
       }
     }
-    cropCenter: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropCenter: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: CENTER) {
           src

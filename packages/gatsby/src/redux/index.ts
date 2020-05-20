@@ -7,28 +7,28 @@ import {
 } from "redux"
 import _ from "lodash"
 
-import mitt from "mitt"
+import { mett } from "../utils/mett"
 import thunk from "redux-thunk"
 import reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IReduxState, ActionsUnion } from "./types"
+import { IGatsbyState, ActionsUnion } from "./types"
 
 // Create event emitter for actions
-export const emitter = mitt()
+export const emitter = mett()
 
 // Read old node data from cache.
-export const readState = (): IReduxState => {
+export const readState = (): IGatsbyState => {
   try {
-    const state = readFromCache() as IReduxState
+    const state = readFromCache() as IGatsbyState
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
       state.nodes.forEach(node => {
         const { type } = node.internal
-        if (!state.nodesByType!.has(type)) {
-          state.nodesByType!.set(type, new Map())
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
         }
-        state.nodesByType!.get(type).set(node.id, node)
+        state.nodesByType.get(type)!.set(node.id, node)
       })
     }
 
@@ -42,7 +42,7 @@ export const readState = (): IReduxState => {
   }
   // BUG: Would this not cause downstream bugs? seems likely. Why wouldn't we just
   // throw and kill the program?
-  return {} as IReduxState
+  return {} as IGatsbyState
 }
 
 /**
@@ -53,14 +53,16 @@ const multi: Middleware = ({ dispatch }) => next => (
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-export const configureStore = (initialState: IReduxState): Store<IReduxState> =>
+export const configureStore = (
+  initialState: IGatsbyState
+): Store<IGatsbyState> =>
   createStore(
-    combineReducers<IReduxState>({ ...reducers }),
+    combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk, multi)
   )
 
-export const store = configureStore(readState())
+export const store: Store<IGatsbyState> = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {

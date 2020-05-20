@@ -17,12 +17,4 @@ describe(`gatsby-plugin-preact`, () => {
       },
     })
   })
-
-  it(`does not invoke setWebpackConfig when stage is develop`, () => {
-    const actions = { setWebpackConfig: jest.fn() }
-
-    onCreateWebpackConfig({ stage: `develop`, actions })
-
-    expect(actions.setWebpackConfig).not.toHaveBeenCalled()
-  })
 })

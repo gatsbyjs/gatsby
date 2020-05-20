@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.2...gatsby-link@2.4.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.1...gatsby-link@2.4.2) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-link:** replace current path in history rather than pushing it ([#23414](https://github.com/gatsbyjs/gatsby/issues/23414)) ([5fcd6dc](https://github.com/gatsbyjs/gatsby/commit/5fcd6dc)), closes [#22124](https://github.com/gatsbyjs/gatsby/issues/22124)
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.0...gatsby-link@2.4.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-link
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.5...gatsby-link@2.4.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.4...gatsby-link@2.3.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.3...gatsby-link@2.3.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.2...gatsby-link@2.3.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.1...gatsby-link@2.3.2) (2020-04-03)
+
+### Bug Fixes
+
+- **gatsby-link:** drop custom innerRef typing and reuse one from @reach/router ([#22770](https://github.com/gatsbyjs/gatsby/issues/22770)) ([14b9605](https://github.com/gatsbyjs/gatsby/commit/14b9605))
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.0...gatsby-link@2.3.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-link
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.31...gatsby-link@2.3.0) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-link
+
 ## [2.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.2.30...gatsby-link@2.2.31) (2020-03-16)
 
 **Note:** Version bump only for package gatsby-link

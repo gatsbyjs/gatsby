@@ -19,7 +19,6 @@ const Layout = ({ location, title, children }) => {
         <Link
           style={{
             boxShadow: `none`,
-            textDecoration: `none`,
             color: `inherit`,
           }}
           to={`/`}
@@ -39,7 +38,6 @@ const Layout = ({ location, title, children }) => {
         <Link
           style={{
             boxShadow: `none`,
-            textDecoration: `none`,
             color: `inherit`,
           }}
           to={`/`}

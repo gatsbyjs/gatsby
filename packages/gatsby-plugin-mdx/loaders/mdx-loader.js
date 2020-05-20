@@ -88,7 +88,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function(content) {
+module.exports = async function (content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,
@@ -185,7 +185,7 @@ ${contentWithoutFrontmatter}`
     debugMore(`transformed code`, result.code)
     return callback(
       null,
-      `import React from 'react'
+      `import * as React from 'react'
   ${result.code}
       `
     )

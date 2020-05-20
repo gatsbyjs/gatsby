@@ -5,7 +5,7 @@ author: Linda Watkins
 tags:
   - case-studies
   - apps
-  - ecommerce
+  - e-commerce
 image: "images/hapticmedia.jpg"
 showImageInArticle: true
 ---

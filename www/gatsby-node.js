@@ -5,14 +5,16 @@ const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
 const yaml = require(`js-yaml`)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
+const { i18nEnabled } = require(`./src/utils/i18n`)
 
 const docs = require(`./src/utils/node/docs.js`)
+const blog = require(`./src/utils/node/blog.js`)
 const showcase = require(`./src/utils/node/showcase.js`)
 const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, showcase, starters, creators, packages, features]
+const sections = [docs, blog, showcase, starters, creators, packages, features]
 
 exports.createPages = async helpers => {
   const { actions } = helpers
@@ -40,7 +42,10 @@ exports.onCreateNode = helpers => {
 }
 
 exports.onPostBootstrap = () => {
-  child_process.execSync(`yarn lingui:build`)
+  // Compile language strings if locales are enabled
+  if (i18nEnabled) {
+    child_process.execSync(`yarn lingui:build`)
+  }
 }
 
 exports.onPostBuild = () => {
@@ -54,7 +59,6 @@ exports.onPostBuild = () => {
 exports.sourceNodes = async ({
   actions: { createTypes, createNode },
   createContentDigest,
-  schema,
 }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in

@@ -1,5 +1,5 @@
 import { HEADER_COMMENT } from "./constants"
-import { appendFile, exists, readFile, writeFile } from "fs-extra"
+import { exists, readFile, writeFile } from "fs-extra"
 
 export default async function writeRedirectsFile(
   pluginData,
@@ -54,22 +54,27 @@ export default async function writeRedirectsFile(
     ({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`
   )
 
-  let appendToFile = false
+  let commentFound = false
 
   // Websites may also have statically defined redirects
   // In that case we should append to them (not overwrite)
   // Make sure we aren't just looking at previous build results though
   const fileExists = await exists(FILE_PATH)
+  let fileContents = ``
   if (fileExists) {
-    const fileContents = await readFile(FILE_PATH)
-    if (fileContents.indexOf(HEADER_COMMENT) < 0) {
-      appendToFile = true
-    }
+    fileContents = await readFile(FILE_PATH, `utf8`)
+    commentFound = fileContents.includes(HEADER_COMMENT)
+  }
+  let data
+  if (commentFound) {
+    const [theirs] = fileContents.split(`\n${HEADER_COMMENT}\n`)
+    data = theirs
+  } else {
+    data = fileContents
   }
 
-  const data = `${HEADER_COMMENT}\n\n${[...redirects, ...rewrites].join(`\n`)}`
-
-  return appendToFile
-    ? appendFile(FILE_PATH, `\n\n${data}`)
-    : writeFile(FILE_PATH, data)
+  return writeFile(
+    FILE_PATH,
+    [data, HEADER_COMMENT, ...redirects, ...rewrites].join(`\n`)
+  )
 }

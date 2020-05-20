@@ -57,7 +57,7 @@ function getEnvDetect({
   key: string
   name: string
 }): () => string | null {
-  return function(): string | null {
+  return function (): string | null {
     if (process.env[key]) {
       return name
     }

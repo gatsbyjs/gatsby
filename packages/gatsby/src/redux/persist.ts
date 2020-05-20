@@ -1,14 +1,15 @@
 import path from "path"
+import os from "os"
 import v8 from "v8"
 import {
   existsSync,
   mkdtempSync,
+  moveSync, // Note: moveSync over renameSync because /tmp may be on other mount
   readFileSync,
   removeSync,
-  renameSync,
   writeFileSync,
 } from "fs-extra"
-import { IReduxNode, ICachedReduxState } from "./types"
+import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
@@ -54,9 +55,9 @@ export function readFromCache(): ICachedReduxState {
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: [string, IReduxNode][] = [].concat(...chunks)
+  const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
 
-  if (!chunks.length && process.env.GATSBY_DB_NODES !== `loki`) {
+  if (!chunks.length) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
@@ -69,7 +70,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IReduxNode][]): number {
+function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -83,6 +84,13 @@ function guessSafeChunkSize(values: [string, IReduxNode][]): number {
   for (let i = 0; i < valueCount; i += step) {
     const size = v8.serialize(values[i]).length
     maxSize = Math.max(size, maxSize)
+  }
+
+  // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
+  if (maxSize > 500000) {
+    report.warn(
+      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
+    )
   }
 
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
@@ -106,7 +114,7 @@ function prepareCacheFolder(
 
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: [string, IReduxNode][] = [...map.entries()]
+    const values: [string, IGatsbyNode][] = [...map.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 
@@ -130,7 +138,7 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
     ++suffixCounter
     bakName = reduxCacheFolder + tmpSuffix + suffixCounter
   }
-  renameSync(reduxCacheFolder, bakName)
+  moveSync(reduxCacheFolder, bakName)
 
   return bakName
 }
@@ -139,7 +147,7 @@ export function writeToCache(contents: ICachedReduxState): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
-  const tmpDir = mkdtempSync(`reduxcache`) // linux / windows
+  const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
   prepareCacheFolder(tmpDir, contents)
 
@@ -156,7 +164,7 @@ export function writeToCache(contents: ICachedReduxState): void {
   }
 
   // The redux cache folder should now not exist so we can rename our tmp to it
-  renameSync(tmpDir, reduxCacheFolder)
+  moveSync(tmpDir, reduxCacheFolder)
 
   // Now try to yolorimraf the old cache folder
   try {

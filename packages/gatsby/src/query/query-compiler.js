@@ -20,7 +20,6 @@ const {
   isAbstractType,
   Kind,
   FragmentsOnCompositeTypesRule,
-  KnownTypeNamesRule,
   LoneAnonymousOperationRule,
   PossibleFragmentSpreadsRule,
   ScalarLeafsRule,
@@ -29,7 +28,7 @@ const {
   VariablesInAllowedPositionRule,
 } = require(`graphql`)
 
-const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
 import * as actions from "../redux/actions/internal"
 const { default: FileParser } = require(`./file-parser`)
@@ -44,7 +43,7 @@ const {
   default: errorParser,
   locInGraphQlToLocInFile,
 } = require(`./error-parser`)
-const websocketManager = require(`../utils/websocket-manager`)
+const { websocketManager } = require(`../utils/websocket-manager`)
 
 const overlayErrorID = `graphql-compiler`
 
@@ -185,7 +184,6 @@ export const processQueries = ({
 
 const preValidationRules = [
   LoneAnonymousOperationRule,
-  KnownTypeNamesRule,
   FragmentsOnCompositeTypesRule,
   VariablesAreInputTypesRule,
   ScalarLeafsRule,

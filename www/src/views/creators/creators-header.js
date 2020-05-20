@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component } from "react"
-import { Link } from "gatsby"
+import Link from "../../components/localized-link"
 import Button from "../../components/button"
 import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 

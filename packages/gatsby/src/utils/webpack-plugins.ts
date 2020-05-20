@@ -1,6 +1,9 @@
 import webpack, { Plugin } from "webpack"
 
-const plugin = (name: string, optimize?: boolean): Plugin => {
+const plugin = (
+  name: string,
+  optimize?: boolean
+): ((...args: any) => Plugin) => {
   const WebpackPlugin = (optimize ? webpack.optimize : webpack)[name]
   return (...args: any): Plugin => new WebpackPlugin(...args)
 }

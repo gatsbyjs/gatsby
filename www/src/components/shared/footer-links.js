@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+import Link from "../localized-link"
 import { t, Trans } from "@lingui/macro"
 
 const links = [
@@ -9,7 +9,7 @@ const links = [
   { to: `/guidelines/logo/`, text: t`Logo & Assets` },
 ]
 
-const FooterLinks = props => (
+const FooterLinks = () => (
   <footer>
     <ul
       sx={{

@@ -54,7 +54,9 @@ This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rend
 
 ```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
-export default () => <h1>My new bio component!</h1>
+export default function Bio() {
+  return <h1>My new bio component!</h1>
+}
 ```
 
 A successful shadow of the Bio component will result in the following directory tree:
@@ -135,23 +137,25 @@ import React from "react"
 import { Avatar, MediaObject, Icon } from "gatsby-theme-blog"
 import Card from "../components/card"
 
-export default ({ name, bio, avatar, twitterUrl, githubUrl }) => (
-  <Card>
-    <MediaObject>
-      <Avatar {...avatar} />
-      <div>
-        <h3>{name}</h3>
-        <p>{bio}</p>
-        <a href={twitterUrl}>
-          <Icon name="twitter" />
-        </a>
-        <a href={githubUrl}>
-          <Icon name="github" />
-        </a>
-      </div>
-    </MediaObject>
-  </Card>
-)
+export default function Bio({ name, bio, avatar, twitterUrl, githubUrl }) {
+  return (
+    <Card>
+      <MediaObject>
+        <Avatar {...avatar} />
+        <div>
+          <h3>{name}</h3>
+          <p>{bio}</p>
+          <a href={twitterUrl}>
+            <Icon name="twitter" />
+          </a>
+          <a href={githubUrl}>
+            <Icon name="github" />
+          </a>
+        </div>
+      </MediaObject>
+    </Card>
+  )
+}
 ```
 
 This workflow isn’t too bad, especially since the component is relatively straightforward. However, it could be optimized in scenarios where you want to wrap a component or pass a different prop without having to worry about the component’s internals.
@@ -165,11 +169,13 @@ import React from "react"
 import { Author } from "gatsby-theme-blog/src/components/bio"
 import Card from "../components/card"
 
-export default props => (
-  <Card>
-    <Author {...props} />
-  </Card>
-)
+export default function Bio(props) {
+  return (
+    <Card>
+      <Author {...props} />
+    </Card>
+  )
+}
 ```
 
 This is a quick and efficient way to customize rendering without needing to worry about the implementation details of the component you’re looking to customize. Importing the shadowed component means you can use composition, leveraging a great feature from React.
@@ -183,7 +189,9 @@ For example, if `NewsletterCTA` accepts a `variant` prop which changes the look 
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"
 
-export default props => <NewsletterCTA {...props} variant="link" />
+export default function CallToAction(props) {
+  return <NewsletterCTA {...props} variant="link" />
+}
 ```
 
 ## Using the CSS prop
@@ -193,16 +201,18 @@ In addition to passing a different prop to a component you’re extending, you m
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"
 
-export default props => (
-  <NewsletterCTA
-    css={{
-      backgroundColor: "rebeccapurple",
-      color: "white",
-      boxShadow: "none",
-    }}
-    {...props}
-  />
-)
+export default function CallToAction(props) {
+  return (
+    <NewsletterCTA
+      css={{
+        backgroundColor: "rebeccapurple",
+        color: "white",
+        boxShadow: "none",
+      }}
+      {...props}
+    />
+  )
+}
 ```
 
 **Note:** For this approach to work NewsletterCTA has to accept a `className` property to apply styles after the CSS prop is transformed by the Emotion babel plugin.

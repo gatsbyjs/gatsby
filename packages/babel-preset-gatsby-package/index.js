@@ -1,7 +1,7 @@
 const r = require(`./resolver`)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false, nodeVersion = `8.0` } = options
+  const { browser = false, debug = false, nodeVersion = `10.13.0` } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const IS_TEST  = (BABEL_ENV || NODE_ENV) === `test`
@@ -46,6 +46,12 @@ function preset(context, options = {}) {
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`)
     ].filter(Boolean),
+    overrides: [
+      {
+        test: [`**/*.ts`, `**/*.tsx`],
+        plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
+      },
+    ],
   }
 }
 

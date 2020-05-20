@@ -80,11 +80,36 @@ module.exports = {
       },
     },
     {
+      files: ["www/**/*"],
+      rules: {
+        // We need to import React to use the Fragment shorthand (`<>`).
+        // When we use theme-ui's JSX pragma, it lists React as an unused var
+        // even though it's still needed.
+        "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
+      },
+    },
+    {
       files: ["*.ts", "*.tsx"],
       parser: "@typescript-eslint/parser",
       plugins: ["@typescript-eslint/eslint-plugin"],
       rules: {
         ...TSEslint.configs.recommended.rules,
+        // We should absolutely avoid using ts-ignore, but it's not always possible.
+        // particular when a dependencies types are incorrect.
+        "@typescript-eslint/ban-ts-ignore": "warn",
+        // This rule is great. It helps us not throw on types for areas that are
+        // easily inferrable. However we have a desire to have all function inputs
+        // and outputs declaratively typed. So this let's us ignore the parameters
+        // inferrable lint.
+        "@typescript-eslint/no-inferrable-types": [
+          "error",
+          { ignoreParameters: true },
+        ],
+        // This rule tries to ensure we use camelCase for all variables, properties
+        // functions, etc. However, it is not always possible to ensure properties
+        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+        // this rule. This allows properties to be whatever they need to be.
+        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
         // This rule tries to prevent using `require()`. However in node code,
         // there are times where this makes sense. And it specifically is causing
         // problems in our tests where we often want this functionality for module

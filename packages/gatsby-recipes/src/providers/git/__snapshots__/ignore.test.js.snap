@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`git ignore resource e2e test: GitIgnore create 1`] = `
+Object {
+  "_message": "Added .cache to gitignore",
+  "id": ".cache",
+  "name": ".cache",
+}
+`;
+
+exports[`git ignore resource e2e test: GitIgnore create plan 1`] = `
+Object {
+  "currentState": "node_modules
+",
+  "describe": "Add .cache to gitignore",
+  "diff": "- Original  - 1
++ Modified  + 1
+
+  node_modules
+-
++ .cache",
+  "newState": "node_modules
+.cache",
+}
+`;
+
+exports[`git ignore resource e2e test: GitIgnore destroy 1`] = `
+Object {
+  "id": ".cache",
+  "name": ".cache",
+}
+`;
+
+exports[`git ignore resource e2e test: GitIgnore update 1`] = `
+Object {
+  "_message": "Added .cache to gitignore",
+  "id": ".cache",
+  "name": ".cache",
+}
+`;
+
+exports[`git ignore resource e2e test: GitIgnore update plan 1`] = `
+Object {
+  "currentState": "node_modules
+.cache
+",
+  "describe": "Add .cache to gitignore",
+  "diff": "",
+  "newState": "node_modules
+.cache
+",
+}
+`;

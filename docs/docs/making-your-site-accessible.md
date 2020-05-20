@@ -44,7 +44,7 @@ For more on supported rules, check out the docs for [`eslint-plugin-jsx-a11y`](h
   "extends": ["react-app", "plugin:jsx-a11y/recommended"],
   "plugins": ["jsx-a11y"],
   "rules": {
-    "jsx-a11y/rule-name": "warning"
+    "jsx-a11y/rule-name": "warn"
   }
 }
 ```

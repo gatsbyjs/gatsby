@@ -40,7 +40,7 @@ const q = queue(
  */
 exports.IMAGE_PROCESSING = ({ inputPaths, outputDir, args }) =>
   new Promise((resolve, reject) => {
-    q.push({ inputPaths, outputDir, args }, function(err) {
+    q.push({ inputPaths, outputDir, args }, function (err) {
       if (err) {
         return reject(err)
       }

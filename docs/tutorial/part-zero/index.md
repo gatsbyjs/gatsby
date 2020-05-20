@@ -12,8 +12,7 @@ The command line is a text-based interface used to run commands on your computer
 
 Take a moment to locate and open up the command line interface (CLI) for your computer. Depending on which operating system you are using, see [**instructions for Mac**](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/), [**instructions for Windows**](https://www.lifewire.com/how-to-open-command-prompt-2618089) or [**instructions for Linux**](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
-_**Note:** If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, someth
-ing like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute._
+_**Note:** If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute._
 
 ## Install Node.js for your appropriate operating system
 
@@ -208,8 +207,8 @@ gatsby --help
 
 Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
 
-1.  Open up your terminal.
-2.  Create a new site from a starter:
+1. Open up your terminal.
+2. Create a new site from a starter:
 
 ```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -217,13 +216,13 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 
 > 💡 What just happened?
 >
-> - `new` is a a gatsby command to create a new Gatsby project.
+> - `new` is a gatsby command to create a new Gatsby project.
 > - Here, `hello-world` is an arbitrary title — you could pick anything. The CLI tool will place the code for your new site in a new folder called “hello-world”.
 > - Lastly, the GitHub URL specified points to a code repository that holds the starter code you want to use.
 
 > 💡 Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install
 
-3.  Change into the working directory:
+3. Change into the working directory:
 
 ```shell
 cd hello-world
@@ -231,7 +230,7 @@ cd hello-world
 
 > 💡 This says _'I want to change directories (`cd`) to the “hello-world” subfolder'_. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
-4.  Start the development mode:
+4. Start the development mode:
 
 ```shell
 gatsby develop
@@ -270,9 +269,9 @@ We also recommend using [Prettier](https://github.com/prettier/prettier), a tool
 
 You can use Prettier directly in your editor using the [Prettier VS Code plugin](https://github.com/prettier/prettier-vscode):
 
-1.  Open the extensions view on VS Code (View => Extensions).
-2.  Search for "Prettier - Code formatter".
-3.  Click "Install". (After installation, you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
+1. Open the extensions view on VS Code (View => Extensions).
+2. Search for "Prettier - Code formatter".
+3. Click "Install". (After installation, you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 
