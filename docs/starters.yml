@@ -1,3 +1,25 @@
+- url: https://gatsby-blog-mdx.now.sh/
+  repo: https://github.com/EllisMin/gatsby-blog-mdx
+  description: Customizable personal blog using mdx
+  tags:
+    - Blog
+    - MDX
+    - Markdown
+    - Disqus
+    - SEO
+    - Netlify
+    - Documentation
+    - Styling:Other
+  features:
+    - Simple responsive blog
+    - Light / Dark Themes
+    - MDX & Markdown to create post & About page
+    - Code syntax highlighting
+    - Facebook | Disqus | Utterances comments
+    - Social media share buttons & links
+    - Googly Analytics
+    - SEO + Sitemap + RSS
+    - Easy & Highly Customizable
 - url: https://ghost-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
