@@ -9,7 +9,6 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package#readme",
   "dependencies": {
-    "@babel/core": "^7.6.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
@@ -21,6 +20,9 @@
     "@babel/preset-react": "^7.9.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "core-js": "^2.6.11"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0"
   },
   "license": "MIT",
   "main": "index.js",
