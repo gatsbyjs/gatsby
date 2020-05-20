@@ -26,7 +26,6 @@
   "main": "index.js",
   "peerDependencies": {
     "@reach/router": "^1.0.0",
-    "gatsby": "^2.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   },

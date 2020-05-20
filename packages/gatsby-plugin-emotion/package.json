@@ -16,6 +16,11 @@
     "babel-preset-gatsby-package": "^0.4.1",
     "cross-env": "^5.2.1"
   },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0",
+    "@emotion/core": "^10.0.5",
+    "gatsby": "^2.0.0"
+  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
     "gatsby",
@@ -25,11 +30,6 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "peerDependencies": {
-    "@babel/core": "^7.0.0",
-    "@emotion/core": "^10.0.5",
-    "gatsby": "^2.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
