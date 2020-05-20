@@ -210,12 +210,17 @@ export interface IGatsbyState {
     }
   }
   schemaCustomization: {
-    composer: SchemaComposer<any>
-    context: {} // TODO
-    fieldExtensions: {} // TODO
-    printConfig: any // TODO
-    thridPartySchemas: any[] // TODO
-    types: any[] // TODO
+    composer: SchemaComposer<any> | null
+    context: Record<string, any>
+    fieldExtensions: GraphQLFieldExtensionDefinition
+    printConfig: {
+      path?: string
+      include?: { types?: Array<string>; plugins?: Array<string> }
+      exclude?: { types?: Array<string>; plugins?: Array<string> }
+      withFieldTypes?: boolean
+    } | null
+    thirdPartySchemas: GraphQLSchema[]
+    types: string[]
   }
   themes: any // TODO
   logs: IGatsbyCLIState
@@ -289,6 +294,9 @@ export type ActionsUnion =
   | ICreateJobAction
   | ISetJobAction
   | IEndJobAction
+  | ICreateResolverContext
+  | IClearSchemaCustomizationAction
+  | ISetSchemaComposerAction
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -499,6 +507,15 @@ export interface ICreateResolverContext {
   payload:
     | IGatsbyPluginContext
     | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
+}
+
+interface IClearSchemaCustomizationAction {
+  type: `CLEAR_SCHEMA_CUSTOMIZATION`
+}
+
+interface ISetSchemaComposerAction {
+  type: `SET_SCHEMA_COMPOSER`
+  payload: SchemaComposer<any>
 }
 
 export interface ICreatePageAction {
