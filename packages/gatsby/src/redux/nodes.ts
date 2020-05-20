@@ -380,7 +380,10 @@ export function ensureEmptyFilterCache(
       if (!node.__gatsby_resolved) {
         const typeName = node.internal.type
         const resolvedNodes = resolvedNodesCache.get(typeName)
-        node.__gatsby_resolved = resolvedNodes?.get(node.id)
+        const resolved = resolvedNodes?.get(node.id)
+        if (resolved !== undefined) {
+          node.__gatsby_resolved = resolved
+        }
       }
       nodesUnordered.push(node)
     })
@@ -392,7 +395,10 @@ export function ensureEmptyFilterCache(
         if (!node.__gatsby_resolved) {
           const typeName = node.internal.type
           const resolvedNodes = resolvedNodesCache.get(typeName)
-          node.__gatsby_resolved = resolvedNodes?.get(node.id)
+          const resolved = resolvedNodes?.get(node.id)
+          if (resolved !== undefined) {
+            node.__gatsby_resolved = resolved
+          }
         }
         nodesUnordered.push(node)
       }
