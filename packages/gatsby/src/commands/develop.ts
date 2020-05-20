@@ -9,7 +9,6 @@ import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
-import startGraphQLServer from "gatsby-recipes/dist/graphql-server"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -125,7 +124,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     programPath: program.directory,
   })
 
-  await startGraphQLServer(program.directory, true)
   const statusServerPort = await getRandomPort()
 
   let unlock
