@@ -17,6 +17,7 @@ import { componentsReducer } from "./components"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
+import { schemaCustomizationReducer } from "./schema-customization"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -42,7 +43,7 @@ module.exports = {
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,
   babelrc: babelrcReducer,
-  schemaCustomization: require(`./schema-customization`),
+  schemaCustomization: schemaCustomizationReducer,
   themes: themesReducer,
   logs: logReducer,
   inferenceMetadata: require(`./inference-metadata`),
