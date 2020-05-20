@@ -18,7 +18,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
 1. Initialize a Git repository, place yourself in the root directory of your Gatsby app and type
    `git init`.
-1. Next, create a file called `.gitignore` in the root of your project and give it the following content:
+2. Next, create a file called `.gitignore` in the root of your project and give it the following content:
 
    ```bash
    node_modules
@@ -27,7 +27,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
    The above configuration will prevent the `build` and `node_modules` directories from being added to your repository. The `build` directory changes every time you build. The `node_modules` directory is only needed at build time and can be quite large because of all the libraries it contains.
 
-1. Finally, add the change and commit it.
+3. Finally, add the change and commit it.
 
    ```bash
    git add .
@@ -54,9 +54,9 @@ Now you are ready to deploy your site!
 ## Deploy to Azure Static Web Apps
 
 1. Sign in to the [Azure portal](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true).
-1. In the top bar, search for **Static Web Apps**.
-1. Select **Static Web Apps**.
-1. Click **+ Add** at the top left.
+2. In the top bar, search for **Static Web Apps**.
+3. Select **Static Web Apps**.
+4. Click **+ Add** at the top left.
 
 ### Configuring settings
 
@@ -69,7 +69,7 @@ Next, configure your new app and link it to your GitHub repository.
    | _Subscription_   | **Your chosen subscription**           |
    | _Resource Group_ | _A pre-existing or new resource group_ |
 
-1. Enter the **Static Web Apps details**.
+2. Enter the **Static Web Apps details**.
 
    | Setting  | Value                                                                         |
    | -------- | ----------------------------------------------------------------------------- |
@@ -77,8 +77,8 @@ Next, configure your new app and link it to your GitHub repository.
    | _Region_ | Select Region closest to you                                                  |
    | _SKU_    | **Free**                                                                      |
 
-1. Click the **Sign-in with GitHub** button and authenticate with GitHub.
-1. Enter the **Source Control Details**.
+3. Click the **Sign-in with GitHub** button and authenticate with GitHub.
+4. Enter the **Source Control Details**.
 
    | Setting        | Value                                                    |
    | -------------- | -------------------------------------------------------- |
@@ -86,7 +86,7 @@ Next, configure your new app and link it to your GitHub repository.
    | _Repository_   | **gatsby-app**                                           |
    | _Branch_       | **master**                                               |
 
-1. Click the **Next: Build >** button to edit the build configuration.
+5. Click the **Next: Build >** button to edit the build configuration.
 
 ### Building your site
 
@@ -98,11 +98,11 @@ The default value for `Api location` is `/api`. As we don't have an API in an `/
 
 The really important field to specify is the `App artifact location`, this should point to the folder where your Gatsby project is built, this would be `public` directory.
 
-| Setting                 | Value         |
-| ----------------------- | ------------- |
-| _App location_          | / |
+| Setting                 | Value                    |
+| ----------------------- | ------------------------ |
+| _App location_          | /                        |
 | _Api location_          | **api** or _Leave blank_ |
-| _App artifact location_ | **public**     |
+| _App artifact location_ | **public**               |
 
 Click the **Review + create** button.
 
@@ -110,7 +110,7 @@ Continue to create the application.
 
 1. Click the **Create** button
 
-1. Once the deployment is complete, click the **Go to resource** button
+2. Once the deployment is complete, click the **Go to resource** button
 
 ### Review the GitHub Action
 
@@ -139,4 +139,4 @@ There's much more to learn about Azure Static Web Apps such as working with rout
 - [LEARN module: SPA applications + Serverless API and Azure Static Web Apps](https://docs.microsoft.com/learn/modules/publish-app-service-static-web-app-api?WT.mc_id=staticwebapps-github-chnoring)
 - [Docs: Azure Static Web Apps, Routing](https://docs.microsoft.com/en-us/azure/static-web-apps/routes?WT.mc_id=staticwebapps-github-chnoring)
 - [Docs: Azure Static Web Apps, Authentication & Authorization](https://docs.microsoft.com/en-us/azure/static-web-apps/authentication-authorization?WT.mc_id=staticwebapps-github-chnoring)
-- [Quickstart: Azure Static Web Apps + Gatsby ](https://docs.microsoft.com/en-us/azure/static-apps/publish-gatsby?WT.mc_id=staticwebapps-github-chnoring)
+- [Quickstart: Azure Static Web Apps + Gatsby](https://docs.microsoft.com/en-us/azure/static-apps/publish-gatsby?WT.mc_id=staticwebapps-github-chnoring)
