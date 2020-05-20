@@ -6311,6 +6311,7 @@
   features:
     - TypeScript and Sass support
     - ESLint with basic react rules
+    - Progressive Web Ap
 - url: https://a2zarslaan.github.io/gatsby-starter-sasslan/
   repo: https://github.com/a2zarslaan/gatsby-starter-sasslan
   description: A minimalistic Gatsby starter template featuring SASS and CSS 7-1 architecture.
@@ -6336,6 +6337,10 @@
 - url: https://pedantic-brown-bbf927.netlify.app/
   repo: https://github.com/pkino/gatsby-starter-typescript-sass
   description: A minimum starter with TypeScript, Sass, ESLint and prettier built in
+    - Progressive Web App
+- url: https://pedantic-brown-bbf927.netlify.app/
+  repo: https://github.com/pkino/gatsby-starter-typescript-sass
+  description: A minimum starter with TypeScript, Sass, ESlint and prettier built in
   tags:
     - Language:TypeScript
     - Styling:SCSS
