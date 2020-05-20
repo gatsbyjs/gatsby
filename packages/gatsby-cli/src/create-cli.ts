@@ -344,7 +344,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe: `[EXPERIMENTAL] Run a recipe`,
     handler: handlerP(
       async ({ recipe }: yargs.Arguments<{ recipe: string | undefined }>) => {
-        await recipesHandler(recipe)
+        await recipesHandler(siteInfo.directory, recipe)
       }
     ),
   })
