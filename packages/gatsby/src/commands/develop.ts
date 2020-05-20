@@ -128,11 +128,9 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   let unlock
   if (!isCI()) {
-    unlock = await createServiceLock(
-      program.directory,
-      `developstatusserver`,
-      statusServerPort.toString()
-    )
+    unlock = await createServiceLock(program.directory, `developstatusserver`, {
+      port: statusServerPort,
+    })
 
     if (!unlock) {
       console.error(
