@@ -6301,6 +6301,23 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-starter-banshorian.netlify.app
+  repo: https://github.com/webmaeistro/gatsby-starter-banshorian
+  description: Starter for the gatsby-theme-banshorian. A creative cool-looking personal or work projects showcase / portfolio / CV. Based on byfolio.
+  tags:
+    - Styling:Other
+    - Portfolio
+    - Transitions
+    - Linting
+    - Testing
+    - PWA
+  features:
+    - GatsbyJS v2
+    - Style-Components Using @emotion
+    - Edit Everything From gatsby.config
+    - Developer Friendly
+    - Isomorphic Skills Tiles
+    - Transitions Between Pages and Menu
 - url: https://a2zarslaan.github.io/gatsby-starter-sasslan/
   repo: https://github.com/a2zarslaan/gatsby-starter-sasslan
   description: A minimalistic Gatsby starter template featuring SASS and CSS 7-1 architecture.
