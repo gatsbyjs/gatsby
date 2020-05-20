@@ -2,7 +2,7 @@ import { IGatsbyState, ActionsUnion } from "../types"
 
 const initialState = (): IGatsbyState["schemaCustomization"] => {
   return {
-    composer: null,
+    composer: null as any,
     context: {},
     fieldExtensions: {},
     printConfig: null,

@@ -210,7 +210,7 @@ export interface IGatsbyState {
     }
   }
   schemaCustomization: {
-    composer: SchemaComposer<any> | null
+    composer: SchemaComposer<any>
     context: Record<string, any>
     fieldExtensions: GraphQLFieldExtensionDefinition
     printConfig: {
