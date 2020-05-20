@@ -7,10 +7,13 @@ import {
   createServiceLock,
 } from "gatsby-core-utils/dist/service-lock"
 
-const startGraphQLServer = async programPath => {
+// NOTE(@mxstbr): The forceStart boolean enforces us to start the recipes graphql server
+// even if another instance might already be running. This is necessary to ensure the gatsby
+// develop command does not _not_ run the server if the user is running gatsby recipes at the same time.
+const startGraphQLServer = async (programPath, forceStart) => {
   let port = await getService(programPath, `recipesgraphqlserver`)
 
-  if (!port) {
+  if (!port || forceStart) {
     port = await detectPort(4000)
     await createServiceLock(programPath, `recipesgraphqlserver`, port)
 

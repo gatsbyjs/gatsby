@@ -125,6 +125,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     programPath: program.directory,
   })
 
+  await startGraphQLServer(program.directory, true)
   const statusServerPort = await getRandomPort()
 
   let unlock
@@ -173,7 +174,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   })
 
-  startGraphQLServer(program.directory)
   developProcess.start()
   developProcess.on(`message`, handleChildProcessIPC)
 
