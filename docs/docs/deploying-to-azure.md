@@ -96,7 +96,7 @@ Next, add configuration details specific to your preferred frontend framework.
 | ----------------------- | ------------- |
 | _App location_          | _Leave blank_ |
 | _Api location_          | _Leave blank_ |
-| _App artifact location_ | **build**     |
+| _App artifact location_ | **public**     |
 
 Click the **Review + create** button.
 
