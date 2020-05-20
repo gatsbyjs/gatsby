@@ -199,14 +199,23 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
     graphqlEndpoint,
     graphqlHTTP(
       (): graphqlHTTP.OptionsData => {
-        const { schema, schemaCustomization } = store.getState()
+        const {
+          schema,
+          schemaCustomization,
+        }: {
+          schema: GraphQLSchema
+          schemaCustomization: {
+            composer: SchemaComposer<any>
+            context: any
+          }
+        } = store.getState()
 
         return {
           schema,
           graphiql: false,
           context: withResolverContext({
             schema,
-            schemaComposer: schemaCustomization.composer!,
+            schemaComposer: schemaCustomization.composer,
             context: {},
             customContext: schemaCustomization.context,
           }),
