@@ -12,6 +12,7 @@ const {
   dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
+  ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
@@ -38,7 +39,7 @@ let lastFilterUsedSift = false
  * Creates a key for one filterCache inside FiltersCache
  *
  * @param {Array<string>} typeNames
- * @param {DbQuery} filter
+ * @param {DbQuery | null} filter If null the key will have empty path/op parts
  * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
  */
 const createFilterCacheKey = (typeNames, filter) => {
@@ -444,6 +445,20 @@ const applyFilters = (
     }
   }
 
+  if (filtersCache && filters.length === 0) {
+    let filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
+    if (!filtersCache.has(filterCacheKey)) {
+      ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
+    }
+
+    const cache = filtersCache.get(filterCacheKey).meta.nodesUnordered
+
+    if (firstOnly || cache.length) {
+      return cache.slice(0)
+    }
+    return null
+  }
+
   const result = filterWithoutSift(filters, nodeTypeNames, filtersCache)
 
   lastFilterUsedSift = false
@@ -508,12 +523,6 @@ const filterToStats = (
 const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
-    return undefined
-  }
-
-  if (filters.length === 0) {
-    // If no filters are given, go through Sift. This does not appear to be
-    // slower than shortcutting it here.
     return undefined
   }
 
