@@ -1,3 +1,7 @@
 module.exports = {
-  plugins: [`gatsby-site-theme`],
+  plugins: [
+    {
+      resolve: require.resolve(`../gatsby-site-theme`),
+    },
+  ],
 }

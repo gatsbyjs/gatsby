@@ -2,8 +2,7 @@
   "name": "www",
   "version": "2.0.0",
   "dependencies": {
-    "gatsby": "^2.21.35",
-    "gatsby-site-theme": "^2.0.0"
+    "gatsby": "^2.21.35"
   },
   "scripts": {
     "develop": "gatsby develop",

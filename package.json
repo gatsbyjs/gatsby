@@ -151,7 +151,6 @@
   },
   "workspaces": [
     "packages/*",
-    "gatsby-site-theme",
-    "www"
+    "gatsby-site-theme"
   ]
 }
