@@ -91,7 +91,11 @@ export default html`
             .then(res => res.json())
             .then(services => {
               const socket = io(
-                "http://localhost:" + services.developstatusserver
+                window.location.protocol +
+                  "//" +
+                  window.location.hostname +
+                  ":" +
+                  services.developstatusserver.port
               )
               socket.on("develop:started", () => {
                 window.location.reload()
