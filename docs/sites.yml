@@ -10720,3 +10720,14 @@
   built_by: Thanawat Gulati
   built_by_url: https://twitter.com/mjamesvevo
   featured: false
+- title: Sheringham Flooring
+  main_url: https://www.sheringhamflooring.com
+  url: https://www.sheringhamflooring.com
+  source_url: https://github.com/Zellement/sheringham-flooring-2019
+  description: >
+    Sheringham Flooring - commercial and domestic flooring solutions
+  categories:
+    - Business
+  built_by: Dan Farrow
+  built_by_url: https://www.zellement.com
+  featured: false
