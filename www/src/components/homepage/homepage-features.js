@@ -16,10 +16,7 @@ const HomepageFeatures = () => (
       flex: `0 1 auto`,
       flexWrap: `wrap`,
       px: 8,
-      pb: 8,
-      [mediaQueries.sm]: {
-        pb: 0,
-      },
+      pb: [8, 0],
     }}
   >
     <Card>
