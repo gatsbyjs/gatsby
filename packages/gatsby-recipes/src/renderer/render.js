@@ -47,7 +47,6 @@ const readResource = (resourceName, context, props) => {
       .then(result => cache.set(key, result))
       .catch(e => console.log(e))
   } catch (e) {
-    console.log(e)
     throw e
   }
 

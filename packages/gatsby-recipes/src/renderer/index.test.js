@@ -103,4 +103,14 @@ describe(`renderer`, () => {
       ]
     `)
   })
+
+  test(`handles introduction step with config`, async () => {
+    const result = await render(`# Setup Theme UI
+
+This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
+
+<Config name="gatsbyjs/add-theme-ui" />`)
+
+    expect(result).toMatchInlineSnapshot(`Array []`)
+  })
 })

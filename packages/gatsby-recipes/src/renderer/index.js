@@ -8,7 +8,16 @@ const resourceComponents = require(`./resource-components`)
 
 const scope = {
   React,
+  Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
+}
+
+// We want to call the function constructor with our resulting
+// transformed JS so we need to turn it into a "function body"
+const transformCodeForEval = code => {
+  const newCode = code.replace(/;$/, ``)
+
+  return `return (${newCode})`
 }
 
 // TODO: Release MDX v2 canary so we can avoid the hacks
@@ -22,7 +31,7 @@ const stripMdxLayout = str => {
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
-    plugins: [babelPluginTransformReactJsx],
+    plugins: [[babelPluginTransformReactJsx, { useBuiltIns: true }]],
   })
 
   return code
@@ -37,10 +46,7 @@ module.exports = jsx => {
   const jsxFromMdx = mdx.sync(jsx, { skipExport: true })
   const srcCode = transformJsx(stripMdxLayout(jsxFromMdx))
 
-  const component = new Function(
-    ...scopeKeys,
-    `return (${srcCode.replace(/;$/, ``)})`
-  )
+  const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
   return render(component(...scopeValues))
 }
