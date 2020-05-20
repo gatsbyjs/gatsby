@@ -102,6 +102,11 @@ export interface IGatsbyIncompleteJobV2 {
   plugin: IGatsbyPlugin
 }
 
+export interface IGatsbyIncompleteJob {
+  job: InternalJobInterface
+  plugin: IGatsbyPlugin
+}
+
 export interface IGatsbyCompleteJobV2 {
   result: JobResultInterface
   inputPaths: InternalJobInterface["inputPaths"]
@@ -281,6 +286,9 @@ export type ActionsUnion =
   | ISetBabelPluginAction
   | ISetBabelPresetAction
   | ISetBabelOptionsAction
+  | ICreateJobAction
+  | ISetJobAction
+  | IEndJobAction
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -330,6 +338,33 @@ export interface IRemoveStaleJobV2Action {
   payload: {
     contentDigest: string
   }
+}
+
+interface ICreateJobAction {
+  type: `CREATE_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface ISetJobAction {
+  type: `SET_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface IEndJobAction {
+  type: `END_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
 }
 
 export interface ICreatePageDependencyAction {
