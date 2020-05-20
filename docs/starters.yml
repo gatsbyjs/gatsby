@@ -6357,9 +6357,8 @@
     - SEO
 - url: https://jolly-tree-003047c03.azurestaticapps.net/
   repo: https://github.com/floAr/gatsby-starter-azure_swa
-  description: A simple GatsbyJS starter making use of the new 
-  [Azure Static Web App](https://azure.microsoft.com/en-us/services/app-service/static/) service. 
-  Uses automatic CI/CD from github actions
+  description: A simple GatsbyJS starter making use of the new Azure Static Web App service.
+   
   # These correspond to the category filters in the library
   # See docs/categories.yml for valid tags.
   tags:
