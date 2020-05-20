@@ -199,16 +199,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
     graphqlEndpoint,
     graphqlHTTP(
       (): graphqlHTTP.OptionsData => {
-        const {
-          schema,
-          schemaCustomization,
-        }: {
-          schema: GraphQLSchema
-          schemaCustomization: {
-            composer: SchemaComposer<any>
-            context: any
-          }
-        } = store.getState()
+        const { schema, schemaCustomization } = store.getState()
 
         return {
           schema,
