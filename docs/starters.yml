@@ -6356,13 +6356,11 @@
   description: A modern one-page portfolio with a clean yet expressive design.
   tags:
     - Portfolio
-    - Personal Website
     - Markdown
     - MDX
     - PWA
-    - One-page
+    - Onepage
     - Styling:CSS-in-JS
-    - Animations
   features:
     - Quick and Easy Setup - Add content and deploy
     - Content via Markdown/MDX - No external CMS needed
