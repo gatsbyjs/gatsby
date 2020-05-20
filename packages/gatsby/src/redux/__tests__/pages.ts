@@ -1,16 +1,17 @@
+import { readFile } from "fs-extra"
+
 jest.mock(`fs-extra`, () => {
   return {
     readFile: jest.fn(() => `contents`),
   }
 })
-const glob = require(`glob`)
+import glob from "glob"
 
-const { pagesReducer: reducer } = require(`../reducers/pages`)
-const { actions } = require(`../actions`)
-const { readFile } = require(`fs-extra`)
+import { pagesReducer as reducer } from "../reducers/pages"
+import { actions } from "../actions"
 
 afterEach(() => {
-  readFile.mockClear()
+  ;(readFile as jest.Mock).mockClear()
 })
 
 Date.now = jest.fn(
