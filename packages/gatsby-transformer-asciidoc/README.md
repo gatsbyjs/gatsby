@@ -24,10 +24,10 @@ plugins: [
     resolve: `gatsby-transformer-asciidoc`,
     options: {
       attributes: {
-        showtitle: true,
-      },
-    },
-  },
+        showtitle: true
+      }
+    }
+  }
 ]
 ```
 
@@ -47,11 +47,11 @@ plugins: [
     resolve: `gatsby-transformer-asciidoc`,
     options: {
       attributes: {
-        showtitle: true,
+        showtitle: true
       },
-      fileExtensions: [`ad`, `adoc`],
-    },
-  },
+      fileExtensions: [`ad`, `adoc`]
+    }
+  }
 ]
 ```
 
@@ -68,10 +68,10 @@ plugins: [
     resolve: `gatsby-transformer-asciidoc`,
     options: {
       attributes: {
-        imagesdir: `/images`,
-      },
-    },
-  },
+        imagesdir: `/images`
+      }
+    }
+  }
 ]
 ```
 
@@ -164,9 +164,9 @@ plugins: [
   {
     resolve: `gatsby-transformer-asciidoc`,
     options: {
-      converterFactory: TemplateConverter,
-    },
-  },
+      converterFactory: TemplateConverter
+    }
+  }
 ]
 ```
 

@@ -37,7 +37,7 @@ Another way to create pages is in your `gatsby-node.js` file using the `createPa
 createPage({
   path: "/routing",
   component: routing,
-  context: {},
+  context: {}
 })
 ```
 

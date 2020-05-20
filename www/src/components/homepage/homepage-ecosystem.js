@@ -6,11 +6,11 @@ import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 import HomepageSection from "./homepage-section"
 import EcosystemSection from "../ecosystem/ecosystem-section"
 import EcosystemFeaturedItem, {
-  BlockLink as FeaturedItemBlockLink,
+  BlockLink as FeaturedItemBlockLink
 } from "../ecosystem/ecosystem-featured-item"
 import {
   HorizontalScroller,
-  HorizontalScrollerContent,
+  HorizontalScrollerContent
 } from "../shared/horizontal-scroller"
 import { EcosystemIcon } from "../../assets/icons"
 import { PluginsIcon, StartersIcon } from "../../assets/icons/ecosystem-icons"
@@ -154,8 +154,8 @@ const HomepageEcosystem = ({ featuredItems }) => (
         label: `Explore the Gatsby Ecosystem`,
         to: `/ecosystem/`,
         icon: ArrowForwardIcon,
-        tracking: `Plugins - Explore the Gatsby Ecosystem`,
-      },
+        tracking: `Plugins - Explore the Gatsby Ecosystem`
+      }
     ]}
   >
     <Sections>
@@ -168,9 +168,9 @@ const HomepageEcosystem = ({ featuredItems }) => (
           {
             label: `Creating Plugins`,
             to: `/docs/creating-plugins/`,
-            secondary: true,
+            secondary: true
           },
-          { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
+          { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true }
         ]}
         onHomepage={true}
       />
@@ -181,14 +181,14 @@ const HomepageEcosystem = ({ featuredItems }) => (
         icon={StartersIcon}
         links={[
           { label: `Browse Starters`, to: `/starters/` },
-          { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
+          { label: `Using Starters`, to: `/docs/starters/`, secondary: true }
         ]}
       />
       <Section
         title="External Resources"
         description="A curated list of interesting Gatsby community projects and learning resources like podcasts and tutorials."
         links={[
-          { label: `Browse Resources`, to: `/docs/awesome-gatsby-resources/` },
+          { label: `Browse Resources`, to: `/docs/awesome-gatsby-resources/` }
         ]}
       />
     </Sections>
@@ -207,7 +207,7 @@ const HomepageEcosystem = ({ featuredItems }) => (
 )
 
 HomepageEcosystem.propTypes = {
-  featuredItems: PropTypes.array.isRequired,
+  featuredItems: PropTypes.array.isRequired
 }
 
 export default HomepageEcosystem

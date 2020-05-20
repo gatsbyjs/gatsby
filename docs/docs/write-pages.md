@@ -75,8 +75,8 @@ e.g
   {
     componentChunkName: "component---src-blog-2-js",
     jsonName: "blog-c06",
-    path: "/blog",
-  },
+    path: "/blog"
+  }
   // more pages
 ]
 ```
@@ -89,7 +89,7 @@ This is a dynamically generated JavaScript file that exports `components`. It is
 
 ```javascript
 exports.components = {
-  "component---src--blog-2-js": require("/home/site/src/blog/2.js"),
+  "component---src--blog-2-js": require("/home/site/src/blog/2.js")
   // more components
 }
 ```
@@ -111,7 +111,7 @@ exports.components = {
   "component---src-blog-2-js": () =>
     import(
       "/home/site/src/blog/2.js" /* webpackChunkName: "component---src-blog-2-js" */
-    ),
+    )
   // more components
 }
 

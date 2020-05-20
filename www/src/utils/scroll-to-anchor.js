@@ -42,7 +42,7 @@ const animateScroll = (
         stepSize,
         increment,
         duration,
-        callback,
+        callback
       })
     }, increment)
   } else {
@@ -60,7 +60,7 @@ const scrollToLocation = (element, targetPos, duration, callback) =>
         callback()
         resolve()
       },
-      duration,
+      duration
     })
   })
 

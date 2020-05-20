@@ -15,8 +15,8 @@ const HorizontalNavList = ({ items = [], slug }) => (
         "& * + *": {
           borderLeftStyle: `solid`,
           borderLeftWidth: `1px`,
-          borderColor: `ui.border`,
-        },
+          borderColor: `ui.border`
+        }
       }}
     >
       {items.map(item => (
@@ -25,8 +25,8 @@ const HorizontalNavList = ({ items = [], slug }) => (
             m: 0,
             padding: `3px 12px`,
             [mediaQueries.md]: {
-              padding: `0px 6px`,
-            },
+              padding: `0px 6px`
+            }
           }}
           key={item}
         >

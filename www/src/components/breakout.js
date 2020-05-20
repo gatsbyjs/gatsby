@@ -11,7 +11,7 @@ const Breakout = ({ children }) => (
       left: `50%`,
       right: `50%`,
       marginLeft: `-49vw`,
-      marginRight: `-49vw`,
+      marginRight: `-49vw`
     }}
   >
     {children}

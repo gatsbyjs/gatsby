@@ -10,8 +10,8 @@ exports.onCreatePage = ({ page, actions }, pluginOptions) => {
       path: `/${lang}${page.path}`,
       context: {
         ...page.context,
-        locale: lang,
-      },
+        locale: lang
+      }
     })
   }
 }

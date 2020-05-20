@@ -40,7 +40,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby+Algolia`,
     description: `How to setup Algolia search in Gatsby`,
-    author: `<your name>`,
+    author: `<your name>`
   },
   plugins: [
     {
@@ -49,11 +49,11 @@ module.exports = {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
         queries,
-        chunkSize: 10000, // default: 1000
-      },
+        chunkSize: 10000 // default: 1000
+      }
     },
-    `gatsby-plugin-styled-components`,
-  ],
+    `gatsby-plugin-styled-components`
+  ]
 }
 ```
 
@@ -131,7 +131,7 @@ const postQuery = `{
 const flatten = arr =>
   arr.map(({ node: { frontmatter, ...rest } }) => ({
     ...frontmatter,
-    ...rest,
+    ...rest
   }))
 const settings = { attributesToSnippet: [`excerpt:20`] }
 
@@ -140,14 +140,14 @@ const queries = [
     query: pageQuery,
     transformer: ({ data }) => flatten(data.pages.edges),
     indexName: `Pages`,
-    settings,
+    settings
   },
   {
     query: postQuery,
     transformer: ({ data }) => flatten(data.posts.edges),
     indexName: `Posts`,
-    settings,
-  },
+    settings
+  }
 ]
 
 module.exports = queries
@@ -182,7 +182,7 @@ import {
   InstantSearch,
   Index,
   Hits,
-  connectStateResults,
+  connectStateResults
 } from "react-instantsearch-dom"
 import algoliasearch from "algoliasearch/lite"
 
@@ -568,7 +568,7 @@ import Search from "../Search"
 
 const searchIndices = [
   { name: `Pages`, title: `Pages`, hitComp: `PageHit` },
-  { name: `Posts`, title: `Blog Posts`, hitComp: `PostHit` },
+  { name: `Posts`, title: `Blog Posts`, hitComp: `PostHit` }
 ]
 
 const Header = ({ site, transparent }) => (

@@ -27,7 +27,7 @@ Data should be in a yaml file named `sites.yml` and look like:
 ```javascript
 // in your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-screenshot`],
+  plugins: [`gatsby-transformer-screenshot`]
 }
 ```
 
@@ -42,10 +42,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-screenshot`,
       options: {
-        nodeTypes: [`StartersYaml`, `WhateverType`],
-      },
-    },
-  ],
+        nodeTypes: [`StartersYaml`, `WhateverType`]
+      }
+    }
+  ]
 }
 ```
 

@@ -238,7 +238,7 @@ const Form = () => (
         "/form-submitted/",
         // highlight-start
         {
-          state: { formValues },
+          state: { formValues }
         }
         // highlight-end
       )

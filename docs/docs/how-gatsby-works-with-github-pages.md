@@ -40,7 +40,7 @@ For sites deployed at a path like `username.github.io/reponame/`, the `--prefix-
 
 ```js:title=gatsby-config.js
 module.exports = {
-  pathPrefix: "/reponame",
+  pathPrefix: "/reponame"
 }
 ```
 

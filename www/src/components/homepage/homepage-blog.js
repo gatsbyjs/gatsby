@@ -18,8 +18,8 @@ const HomepageBlog = ({ posts }) => (
         label: `View all posts`,
         to: `/blog/`,
         icon: ArrowForwardIcon,
-        tracking: `The Gatsby Blog - View all posts`,
-      },
+        tracking: `The Gatsby Blog - View all posts`
+      }
     ]}
   >
     <HomepageBlogPosts posts={posts} />
@@ -27,7 +27,7 @@ const HomepageBlog = ({ posts }) => (
 )
 
 HomepageBlog.propTypes = {
-  posts: PropTypes.array.isRequired,
+  posts: PropTypes.array.isRequired
 }
 
 export default HomepageBlog

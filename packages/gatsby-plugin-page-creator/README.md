@@ -38,16 +38,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `${__dirname}/src/account/pages`,
-      },
+        path: `${__dirname}/src/account/pages`
+      }
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `${__dirname}/src/settings/pages`,
-      },
-    },
-  ],
+        path: `${__dirname}/src/settings/pages`
+      }
+    }
+  ]
 }
 ```
 
@@ -65,12 +65,12 @@ module.exports = {
       resolve: `gatsby-plugin-page-creator`,
       options: {
         path: `${__dirname}/src/indexes/pages`,
-        ignore: [`blog.(js|ts)?(x)`],
+        ignore: [`blog.(js|ts)?(x)`]
         // See pattern syntax recognized by micromatch
         // https://www.npmjs.com/package/micromatch#matching-features
-      },
-    },
-  ],
+      }
+    }
+  ]
 }
 ```
 
@@ -93,12 +93,12 @@ module.exports = {
           // Example: Ignore `file.example.js`, `dir/s/file.example.tsx`
           patterns: [`**/*.example.(js|ts)?(x)`],
           // Example: Match both `file.example.js` and `file.EXAMPLE.js`
-          options: { nocase: true },
+          options: { nocase: true }
           // See all available micromatch options
           // https://www.npmjs.com/package/micromatch#optionsnocase
-        },
-      },
-    },
-  ],
+        }
+      }
+    }
+  ]
 }
 ```

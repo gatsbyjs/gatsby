@@ -27,7 +27,7 @@ In your `gatsby-config.js`:
 
 ```javascript
 module.exports = {
-  plugins: [`gatsby-plugin-preload-fonts`],
+  plugins: [`gatsby-plugin-preload-fonts`]
 }
 ```
 
@@ -95,10 +95,10 @@ module.exports = {
         crossOrigin: `use-credentials`,
         // OR
         crossOrigin: pathname =>
-          pathname.match(/^\/elevated/) ? `use-credentials` : `anonymous`,
-      },
-    },
-  ],
+          pathname.match(/^\/elevated/) ? `use-credentials` : `anonymous`
+      }
+    }
+  ]
 }
 ```
 

@@ -21,14 +21,14 @@ Or with theme
 const theme = {
   fontSize: 16,
   fontFamily: "Roboto",
-  color: "#212121",
+  color: "#212121"
 }
 
 plugins: [
   {
     resolve: "gatsby-plugin-jss",
-    options: { theme },
-  },
+    options: { theme }
+  }
 ]
 ```
 

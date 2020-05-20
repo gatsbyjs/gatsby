@@ -91,7 +91,7 @@ const handleWebhookUpdate = async (
     getCache,
     getNode,
     reporter,
-    store,
+    store
   },
   pluginOptions
 ) => {
@@ -103,7 +103,7 @@ const handleWebhookUpdate = async (
 
   handleReferences(newNode, {
     getNode,
-    createNodeId,
+    createNodeId
   })
 
   const oldNode = getNode(newNode.id)
@@ -162,7 +162,7 @@ const handleWebhookUpdate = async (
         cache,
         createNode,
         createNodeId,
-        getCache,
+        getCache
       },
       pluginOptions
     )

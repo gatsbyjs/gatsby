@@ -28,8 +28,8 @@ import PostLink from "../components/post-link"
 
 const IndexPage = ({
   data: {
-    allMarkdownRemark: { edges },
-  },
+    allMarkdownRemark: { edges }
+  }
 }) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
@@ -52,8 +52,8 @@ import PostLink from "../components/post-link"
 
 const IndexPage = ({
   data: {
-    allMarkdownRemark: { edges },
-  },
+    allMarkdownRemark: { edges }
+  }
 }) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria

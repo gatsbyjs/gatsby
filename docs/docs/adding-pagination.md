@@ -103,8 +103,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         limit: postsPerPage,
         skip: i * postsPerPage,
         numPages,
-        currentPage: i + 1,
-      },
+        currentPage: i + 1
+      }
     })
   })
   // highlight-end
@@ -117,7 +117,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value
     })
   }
 }

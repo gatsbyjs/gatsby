@@ -15,9 +15,9 @@ module.exports = {
      */
     {
       resolve: `gatsby-source-mongodb`,
-      options: { dbName: `local`, collection: `documents` },
-    },
-  ],
+      options: { dbName: `local`, collection: `documents` }
+    }
+  ]
 }
 ```
 
@@ -29,9 +29,9 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-source-mongodb`,
-      options: { dbName: `local`, collection: [`documents`, `vehicles`] },
-    },
-  ],
+      options: { dbName: `local`, collection: [`documents`, `vehicles`] }
+    }
+  ]
 }
 ```
 
@@ -76,12 +76,12 @@ module.exports = {
         collection: `documents`,
         // highlight-start
         map: {
-          documents: { body: `text/markdown` },
-        },
+          documents: { body: `text/markdown` }
+        }
         // highlight-end
-      },
-    },
-  ],
+      }
+    }
+  ]
 }
 ```
 

@@ -58,10 +58,10 @@ module.exports = {
         // Field name under which it will be available. Used in your Gatsby query. This is also an arbitrary name.
         fieldName: "wpcontent",
         // GraphQL endpoint, relative to your WordPress home URL.
-        url: "https://example.com/blog/graphql",
-      },
-    },
-  ],
+        url: "https://example.com/blog/graphql"
+      }
+    }
+  ]
 }
 ```
 

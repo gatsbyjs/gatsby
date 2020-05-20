@@ -81,13 +81,13 @@ You can specify a `trigger` function that will handle the animation. This is use
     length: length,
     // highlight-next-line
     trigger: ({ exit, node }) =>
-      this.someCustomDefinedAnimation({ exit, node, direction: "out" }),
+      this.someCustomDefinedAnimation({ exit, node, direction: "out" })
   }}
   entry={{
     length: 0,
     // highlight-next-line
     trigger: ({ exit, node }) =>
-      this.someCustomDefinedAnimation({ exit, node, direction: "in" }),
+      this.someCustomDefinedAnimation({ exit, node, direction: "in" })
   }}
   {...props}
 >

@@ -40,7 +40,7 @@ You could programmatically create a page at `/no-data/` by adding the following 
 exports.createPages = ({ actions: { createPage } }) => {
   createPage({
     path: "/no-data/",
-    component: require.resolve("./src/templates/no-data.js"),
+    component: require.resolve("./src/templates/no-data.js")
   })
 }
 ```
@@ -69,8 +69,8 @@ exports.createPages = ({ actions: { createPage } }) => {
     component: require.resolve("./src/templates/with-context.js"),
     context: {
       title: "We Don’t Need No Stinkin’ GraphQL!",
-      content: "<p>This is page content.</p><p>No GraphQL required!</p>",
-    },
+      content: "<p>This is page content.</p><p>No GraphQL required!</p>"
+    }
   })
 }
 ```
@@ -152,8 +152,8 @@ exports.createPages = ({ actions: { createPage } }) => {
         title: product.title,
         description: product.description,
         image: product.image,
-        price: product.price,
-      },
+        price: product.price
+      }
     })
   })
 }
@@ -236,13 +236,13 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: "./data/",
-      },
+        path: "./data/"
+      }
     },
     "gatsby-transformer-json",
     "gatsby-transformer-sharp",
-    "gatsby-plugin-sharp",
-  ],
+    "gatsby-plugin-sharp"
+  ]
 }
 ```
 
@@ -310,8 +310,8 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
       path: `/gql/${product.slug}/`,
       component: require.resolve("./src/templates/product-graphql.js"),
       context: {
-        slug: product.slug,
-      },
+        slug: product.slug
+      }
     })
   })
 }

@@ -69,9 +69,9 @@ plugins: [
       // List of collections you want to fetch.
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
-      includeCollections: ["shop", "content"],
-    },
-  },
+      includeCollections: ["shop", "content"]
+    }
+  }
 ]
 ```
 
@@ -448,8 +448,8 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
       path: `/${edge.node.handle}`,
       component: path.resolve("./src/templates/product.js"),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }

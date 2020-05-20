@@ -6,7 +6,7 @@ import {
   colors,
   fontSizes,
   radii,
-  space,
+  space
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { formInputFocus, focusStyle } from "../../utils/styles"
 
@@ -118,25 +118,25 @@ export const ToggleButtonIcon = styled(`span`)(props => {
       fill: props.theme.colors.white,
       height: props.theme.space[6],
       width: props.theme.space[6],
-      transition: `0.5s`,
+      transition: `0.5s`
     },
     [mediaQueries.lg]: {
       ".opened &, .failed &, .success &, .submitting &": {
         svg: {
           height: props.theme.space[5],
-          width: props.theme.space[5],
+          width: props.theme.space[5]
         },
         "&:hover": {
           svg: {
             transform: `rotate(90deg)`,
-            fill: props.theme.colors.accent,
-          },
-        },
-      },
+            fill: props.theme.colors.accent
+          }
+        }
+      }
     },
     "@media screen and (prefers-reduced-motion: reduce)": {
-      transition: 0,
-    },
+      transition: 0
+    }
   }
 })
 

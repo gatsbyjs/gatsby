@@ -14,8 +14,8 @@ const Button = styled(Box)(
     return {
       "&&": {
         borderColor: themeGet(`colors.gatsby`)(props),
-        color: themeGet(`colors.white`)(props),
-      },
+        color: themeGet(`colors.white`)(props)
+      }
     }
   },
   {
@@ -23,7 +23,7 @@ const Button = styled(Box)(
     display: `inline-block`,
     lineHeight: `inherit`,
     textAlign: `center`,
-    textDecoration: `none`,
+    textDecoration: `none`
   },
   styleProps,
   props =>
@@ -36,15 +36,15 @@ const Button = styled(Box)(
         color: themeGet(`colors.purple.60`)(props),
         fontSize: `${themeGet(`fontSizes.3`)(props)}`,
         ":hover": {
-          borderColor: themeGet(`colors.lilac`)(props),
-        },
+          borderColor: themeGet(`colors.lilac`)(props)
+        }
       },
       svg: {
-        height: 20,
+        height: 20
       },
       [`@media (min-width: ${themeGet(`breakpoints.md`)(props)}px)`]: {
-        fontSize: `${themeGet(`fontSizes.3`)(props)}`,
-      },
+        fontSize: `${themeGet(`fontSizes.3`)(props)}`
+      }
     }
 )
 
@@ -60,7 +60,7 @@ Button.defaultProps = {
   fontSize: { xxs: 4, md: 5 },
   fontWeight: `bold`,
   px: 4,
-  py: 2,
+  py: 2
 }
 
 export default Button

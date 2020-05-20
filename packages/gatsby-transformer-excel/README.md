@@ -20,11 +20,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `data`,
-        path: `${__dirname}/src/data/`,
-      },
+        path: `${__dirname}/src/data/`
+      }
     },
-    `gatsby-transformer-excel`,
-  ],
+    `gatsby-transformer-excel`
+  ]
 }
 ```
 
@@ -126,10 +126,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-excel`,
       options: {
-        defval: "",
-      },
-    },
-  ],
+        defval: ""
+      }
+    }
+  ]
 }
 ```
 
@@ -147,10 +147,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-excel`,
       options: {
-        raw: false,
-      },
-    },
-  ],
+        raw: false
+      }
+    }
+  ]
 }
 ```
 

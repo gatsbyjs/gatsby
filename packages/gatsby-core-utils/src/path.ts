@@ -67,7 +67,7 @@ const nodePaths = [
   /^vm.js$/,
   /^zlib.js$/,
   /^node.js$/,
-  /^internal[/\\]/,
+  /^internal[/\\]/
 ]
 
 /**

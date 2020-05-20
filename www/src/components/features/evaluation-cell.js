@@ -13,11 +13,11 @@ const renderText = txt => {
         sx={{
           height: t => t.space[3],
           mb: 1,
-          verticalAlign: `baseline`,
+          verticalAlign: `baseline`
         }}
         alt={`Info Icon`}
       />
-    </span>,
+    </span>
   ]
 }
 
@@ -29,7 +29,7 @@ const renderCell = (text, column) => {
           display: `inline-block`,
           mx: `auto`,
           textAlign: `left`,
-          verticalAlign: `middle`,
+          verticalAlign: `middle`
         }}
       >
         <button
@@ -39,7 +39,7 @@ const renderCell = (text, column) => {
             color: `text`,
             cursor: `inherit`,
             p: 0,
-            textAlign: `left`,
+            textAlign: `left`
           }}
           onClick={e => {
             e.preventDefault()
@@ -79,7 +79,7 @@ const basicStyling = {
   height: t => t.space[5],
   width: t => t.space[5],
   borderRadius: `50%`,
-  margin: `0 auto`,
+  margin: `0 auto`
 }
 
 const EvaluationCell = ({ num, style }) => (
@@ -89,7 +89,7 @@ const EvaluationCell = ({ num, style }) => (
       backgroundColor:
         [`N/A`, `0`, ``].indexOf(num) !== -1 ? `orange.20` : `orange.50`,
       backgroundImage: getBackground(num),
-      ...(style || {}),
+      ...(style || {})
     }}
   />
 )

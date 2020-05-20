@@ -8,7 +8,7 @@ const LegendTable = () => {
     float: `none`,
     marginLeft: 0,
     marginRight: 0,
-    display: `inline-block`,
+    display: `inline-block`
   }
 
   const legendBallCellStyle = t => {
@@ -18,7 +18,7 @@ const LegendTable = () => {
       textAlign: `center`,
       padding: 3,
       borderLeft: `1px solid ${t.colors.ui.border}`,
-      borderBottom: `1px solid ${t.colors.ui.border}`,
+      borderBottom: `1px solid ${t.colors.ui.border}`
     }
   }
 
@@ -29,7 +29,7 @@ const LegendTable = () => {
       textAlign: `center`,
       padding: 3,
       borderLeft: `1px solid ${t.colors.ui.border}`,
-      borderBottom: [`1px solid ${t.colors.ui.border}`, null, 0],
+      borderBottom: [`1px solid ${t.colors.ui.border}`, null, 0]
     }
   }
 
@@ -48,7 +48,7 @@ const LegendTable = () => {
     </div>,
     <div sx={legendBallCellStyle} key={`${legendBallCellStyle}-5`}>
       <EvaluationCell num="0" style={legendBallStyle} />
-    </div>,
+    </div>
   ]
 
   const legendText = [
@@ -66,7 +66,7 @@ const LegendTable = () => {
     </div>,
     <div sx={legendExplanationCellStyle} key={`legendExplanationCell-5`}>
       Poor (not possible)
-    </div>,
+    </div>
   ]
 
   return (
@@ -76,7 +76,7 @@ const LegendTable = () => {
           border: t => `1px solid ${t.colors.ui.border}`,
           borderLeft: 0,
           fontFamily: `heading`,
-          display: [`none`, null, `table`],
+          display: [`none`, null, `table`]
         }}
       >
         <div css={{ display: `table-row` }}>{balls}</div>
@@ -87,7 +87,7 @@ const LegendTable = () => {
           display: [`table`, null, `none`],
           border: t => `1px solid ${t.colors.ui.border}`,
           borderLeft: 0,
-          fontFamily: `heading`,
+          fontFamily: `heading`
         }}
       >
         {[0, 1, 2, 3, 4].map(i => (

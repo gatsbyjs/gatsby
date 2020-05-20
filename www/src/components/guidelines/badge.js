@@ -11,14 +11,14 @@ const BadgeBase = styled(Flex)(
   {
     display: `inline-flex`,
     position: `relative`,
-    textTransform: `uppercase`,
+    textTransform: `uppercase`
   },
   styleProps
 )
 
 BadgeBase.propTypes = {
   ...propTypes.border,
-  ...propTypes.typography,
+  ...propTypes.typography
 }
 
 BadgeBase.defaultProps = {
@@ -34,7 +34,7 @@ BadgeBase.defaultProps = {
   letterSpacing: `tracked`,
   lineHeight: `solid`,
   py: 1,
-  px: 2,
+  px: 2
 }
 
 const Badge = ({ children, ...rest }) => (

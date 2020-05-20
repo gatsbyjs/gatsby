@@ -103,12 +103,12 @@ i18n
     debug: true,
 
     interpolation: {
-      escapeValue: false, // not needed for react!!
+      escapeValue: false // not needed for react!!
     },
 
     react: {
-      wait: true,
-    },
+      wait: true
+    }
   })
 
 export default i18n
@@ -242,7 +242,7 @@ class LanguageSwitcher extends Component {
 
   renderLanguageChoice({ code, label }) {
     const buttonClass = classNames("LanguageSwitcher__button", {
-      "LanguageSwitcher__button--selected": this.props.i18n.language === code,
+      "LanguageSwitcher__button--selected": this.props.i18n.language === code
     })
 
     return (
@@ -259,7 +259,7 @@ class LanguageSwitcher extends Component {
   render() {
     const languages = [
       { code: "en", label: "English" },
-      { code: "cy", label: "Cymraeg" },
+      { code: "cy", label: "Cymraeg" }
     ]
 
     return (

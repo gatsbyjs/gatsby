@@ -34,7 +34,7 @@ exports.handler = async (event, context, callback) => {
   // Connect to the database
   const q = faunadb.query
   const client = new faunadb.Client({
-    secret: process.env.FAUNADB_SECRET,
+    secret: process.env.FAUNADB_SECRET
   })
 
   // Get the provided slug, and use it to look up
@@ -47,15 +47,15 @@ exports.handler = async (event, context, callback) => {
   // Increment the number of hits by 1
   await client.query(
     q.Update(document.ref, {
-      data: { hits: document.data.hits + 1 },
+      data: { hits: document.data.hits + 1 }
     })
   )
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      success: true,
-    }),
+      success: true
+    })
   }
 }
 ```

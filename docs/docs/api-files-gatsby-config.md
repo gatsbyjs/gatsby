@@ -21,7 +21,7 @@ An example `gatsby-config.js` file could look like this:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `Gatsby`
   },
   plugins: [
     `gatsby-transform-plugin`,
@@ -29,10 +29,10 @@ module.exports = {
       resolve: `gatsby-plugin-name`,
       options: {
         optionA: true,
-        optionB: `Another option`,
-      },
-    },
-  ],
+        optionB: `Another option`
+      }
+    }
+  ]
 }
 ```
 
@@ -47,8 +47,8 @@ The `siteMetadata` object can contain any data you want to share across your sit
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby`,
-  },
+    title: `Gatsby`
+  }
 }
 ```
 
@@ -64,7 +64,7 @@ Installing a plugin using a package manager like `npm` **does not** enable it in
 module.exports = {
   plugins: [
     //plugins go here
-  ],
+  ]
 }
 ```
 
@@ -76,7 +76,7 @@ If a plugin does not require any options, you can add its name as a string to th
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-name`],
+  plugins: [`gatsby-plugin-name`]
 }
 ```
 
@@ -93,10 +93,10 @@ module.exports = {
       resolve: `gatsby-plugin-name`,
       options: {
         optionA: true,
-        optionB: `Another option`,
-      },
-    },
-  ],
+        optionB: `Another option`
+      }
+    }
+  ]
 }
 ```
 
@@ -112,10 +112,10 @@ module.exports = {
       resolve: `gatsby-plugin-name`,
       options: {
         optionA: true,
-        optionB: `Another option`,
-      },
-    },
-  ],
+        optionB: `Another option`
+      }
+    }
+  ]
 }
 ```
 

@@ -4,7 +4,7 @@ import React from "react"
 import { navigate } from "gatsby"
 import {
   MdArrowForward as ArrowForwardIcon,
-  MdArrowBack as ArrowBackIcon,
+  MdArrowBack as ArrowBackIcon
 } from "react-icons/md"
 import PaginationLink from "./PaginationLink"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -26,8 +26,8 @@ class Pagination extends React.Component {
     const prevNextLinkStyles = {
       "&&": {
         borderBottom: 0,
-        color: `gatsby`,
-      },
+        color: `gatsby`
+      }
     }
 
     return (
@@ -44,8 +44,8 @@ class Pagination extends React.Component {
             borderTop: 0,
             marginBottom: 0,
             paddingTop: 0,
-            flexDirection: `row`,
-          },
+            flexDirection: `row`
+          }
         }}
       >
         <div
@@ -58,8 +58,8 @@ class Pagination extends React.Component {
             mb: 3,
             [mediaQueries.md]: {
               width: `15rem`,
-              mb: 0,
-            },
+              mb: 0
+            }
           }}
         >
           <PaginationLink to={prevPageLink} sx={prevNextLinkStyles}>
@@ -76,7 +76,7 @@ class Pagination extends React.Component {
             display: `flex`,
             alignItems: `center`,
             justifyContent: `flex-end`,
-            fontSize: 1,
+            fontSize: 1
           }}
         >
           <span>Showing page &nbsp;</span>
@@ -89,7 +89,7 @@ class Pagination extends React.Component {
               border: `none`,
               padding: `0.5ch 2ch 0.5ch 0.5ch`,
               color: `gatsby`,
-              fontWeight: `bold`,
+              fontWeight: `bold`
             }}
           >
             {Array.from({ length: numPages }, (_, i) => (
@@ -111,7 +111,7 @@ class Pagination extends React.Component {
               position: `relative`,
               right: 4,
               fill: `gatsby`,
-              pointerEvents: `none`,
+              pointerEvents: `none`
             }}
           >
             <path d="M0 0l5 4.998L10 0z" fillRule="evenodd" />

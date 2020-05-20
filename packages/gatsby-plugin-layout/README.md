@@ -25,7 +25,7 @@ By default plugin will try to use Layout component located in `src/layouts/index
 
 ```js
 module.exports = {
-  plugins: [`gatsby-plugin-layout`],
+  plugins: [`gatsby-plugin-layout`]
 }
 ```
 
@@ -37,10 +37,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-layout`,
       options: {
-        component: require.resolve(`./relative/path/to/layout/component`),
-      },
-    },
-  ],
+        component: require.resolve(`./relative/path/to/layout/component`)
+      }
+    }
+  ]
 }
 ```
 
@@ -99,9 +99,9 @@ import React from "react"
 const defaultContextValue = {
   data: {
     // set your initial data shape here
-    menuOpen: false,
+    menuOpen: false
   },
-  set: () => {},
+  set: () => {}
 }
 
 const { Provider, Consumer } = React.createContext(defaultContextValue)
@@ -113,7 +113,7 @@ class ContextProviderComponent extends React.Component {
     this.setData = this.setData.bind(this)
     this.state = {
       ...defaultContextValue,
-      set: this.setData,
+      set: this.setData
     }
   }
 
@@ -121,8 +121,8 @@ class ContextProviderComponent extends React.Component {
     this.setState(state => ({
       data: {
         ...state.data,
-        ...newData,
-      },
+        ...newData
+      }
     }))
   }
 

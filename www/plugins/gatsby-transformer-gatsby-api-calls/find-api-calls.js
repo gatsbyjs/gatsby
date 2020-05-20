@@ -4,16 +4,16 @@ const traverse = require(`@babel/traverse`).default
 const buckets = [
   {
     test: /api-runner-node/,
-    group: `NodeAPI`,
+    group: `NodeAPI`
   },
   {
     test: /api-runner-browser/,
-    group: `BrowserAPI`,
+    group: `BrowserAPI`
   },
   {
     test: /api-runner-ssr/,
-    group: `SSRAPI`,
-  },
+    group: `SSRAPI`
+  }
 ]
 
 const PARSER_OPTIONS = {
@@ -30,8 +30,8 @@ const PARSER_OPTIONS = {
     [
       `decorators`,
       {
-        decoratorsBeforeExport: true,
-      },
+        decoratorsBeforeExport: true
+      }
     ],
     `classProperties`,
     `classPrivateProperties`,
@@ -51,11 +51,11 @@ const PARSER_OPTIONS = {
     [
       `pipelineOperator`,
       {
-        proposal: `minimal`,
-      },
+        proposal: `minimal`
+      }
     ],
-    `nullishCoalescingOperator`,
-  ],
+    `nullishCoalescingOperator`
+  ]
 }
 
 module.exports = async function findApiCalls({ node, loadNodeContent }) {
@@ -79,7 +79,7 @@ module.exports = async function findApiCalls({ node, loadNodeContent }) {
             // to turn it into one
             codeLocation: JSON.parse(JSON.stringify(call.node.loc)),
             name: apiHookName,
-            group: bucket.group,
+            group: bucket.group
           })
         }
       })
@@ -126,12 +126,12 @@ module.exports = async function findApiCalls({ node, loadNodeContent }) {
             }
           }
         }
-      },
+      }
     })
   } catch (e) {
     console.log(`parsing error`, {
       file: node.relativePath,
-      e,
+      e
     })
   }
 

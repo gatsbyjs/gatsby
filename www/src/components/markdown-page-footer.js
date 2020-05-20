@@ -20,7 +20,7 @@ export default class MarkdownPageFooter extends React.Component {
               display: `flex`,
               alignItems: `center`,
               justifyContent: `space-between`,
-              mt: 9,
+              mt: 9
             }}
           >
             <a

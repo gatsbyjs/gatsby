@@ -13,7 +13,7 @@ const Avatar = ({ image, alt, overrideCSS }) => (
       // prevents image twitch in Chrome when hovering the card
       transform: `translateZ(0)`,
       verticalAlign: `top`,
-      ...overrideCSS,
+      ...overrideCSS
     }}
   />
 )

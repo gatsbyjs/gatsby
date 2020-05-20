@@ -19,7 +19,7 @@ array: [1,2,3]
     
 a bit of a paragraph
     
-some content`,
+some content`
   }
 
   return {
@@ -32,8 +32,8 @@ some content`,
       input.frontmatter ? code.frontmatter : ``,
       input.layout ? code.defaultLayout : ``,
       input.namedExports ? code.namedExports : ``,
-      code.body,
-    ].join(`\n\n`),
+      code.body
+    ].join(`\n\n`)
   }
 }
 
@@ -49,9 +49,9 @@ const fixtures = c
     {
       internal: { type: `File` },
       sourceInstanceName: `webpack-test-fixtures`,
-      absolutePath: `/fake/${name}`,
+      absolutePath: `/fake/${name}`
     },
-    content,
+    content
   ])
 
 describe(`mdx-loader`, () => {
@@ -61,7 +61,7 @@ describe(`mdx-loader`, () => {
     },
     test() {
       return true
-    },
+    }
   })
   test.each(fixtures)(
     `snapshot with %s`,
@@ -87,10 +87,10 @@ describe(`mdx-loader`, () => {
             },
             set() {
               return
-            },
-          },
+            }
+          }
         },
-        resourcePath: fakeGatsbyNode.absolutePath,
+        resourcePath: fakeGatsbyNode.absolutePath
       })
       await loader(content)
     }

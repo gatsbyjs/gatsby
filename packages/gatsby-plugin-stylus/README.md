@@ -38,10 +38,10 @@ module.exports = {
     {
       resolve: "gatsby-plugin-stylus",
       options: {
-        use: [rupture()],
-      },
-    },
-  ],
+        use: [rupture()]
+      }
+    }
+  ]
 }
 ```
 
@@ -58,8 +58,8 @@ plugins: [
   {
     resolve: `gatsby-plugin-stylus`,
     options: {
-      postCssPlugins: [somePostCssPlugin()],
-    },
-  },
+      postCssPlugins: [somePostCssPlugin()]
+    }
+  }
 ]
 ```

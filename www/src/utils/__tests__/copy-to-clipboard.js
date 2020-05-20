@@ -2,7 +2,7 @@ import copyToClipboard from "../copy-to-clipboard"
 
 beforeEach(() => {
   window.navigator.clipboard = {
-    writeText: jest.fn(),
+    writeText: jest.fn()
   }
 
   document.execCommand = jest.fn()
@@ -10,7 +10,7 @@ beforeEach(() => {
   window.getSelection = jest.fn(() => {
     return {
       removeAllRanges: jest.fn(),
-      addRange: jest.fn(),
+      addRange: jest.fn()
     }
   })
 })

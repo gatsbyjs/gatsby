@@ -137,7 +137,7 @@ const RatingOption = ({
   ratingValue,
   checked,
   handleChange,
-  icon: Icon,
+  icon: Icon
 }) => (
   <Label className={checked ? `focused` : null}>
     <IconWrapper>

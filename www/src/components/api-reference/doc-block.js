@@ -11,7 +11,7 @@ import {
   SignatureWrapper,
   TypeComponent,
   SignatureElement,
-  isFunctionDef,
+  isFunctionDef
 } from "./signature"
 import ReturnBlock from "./returns"
 import { Header, LinkBox } from "./utils"
@@ -34,8 +34,8 @@ const Deprecated = ({ definition }) => {
           "p:before": {
             color: `#e8bd36`,
             content: `(deprecated) `,
-            fontFamily: `heading`,
-          },
+            fontFamily: `heading`
+          }
         }}
       >
         <MDXRenderer>{definition.deprecated.childMdx.body}</MDXRenderer>
@@ -52,7 +52,7 @@ const APILink = ({ definition, relativeFilePath }) => {
       <a
         sx={{
           variant: `links.muted`,
-          display: `inline-flex !important`,
+          display: `inline-flex !important`
         }}
         href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${relativeFilePath}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
@@ -72,7 +72,7 @@ const APILink = ({ definition, relativeFilePath }) => {
       <a
         sx={{
           variant: `links.muted`,
-          display: `inline-flex !important`,
+          display: `inline-flex !important`
         }}
         href={`https://github.com/gatsbyjs/gatsby/blob/${process.env.COMMIT_SHA}/packages/${definition.codeLocation.file}#L${definition.codeLocation.start.line}-L${definition.codeLocation.end.line}`}
         aria-label="View source on GitHub"
@@ -93,10 +93,10 @@ const APILink = ({ definition, relativeFilePath }) => {
         sx={{
           variant: `links.muted`,
           "&&:hover": {
-            color: `textMuted`,
+            color: `textMuted`
           },
           display: `inline-flex !important`,
-          alignItems: `center`,
+          alignItems: `center`
         }}
       >
         <GithubIcon focusable="false" sx={{ mr: 2 }} />
@@ -131,7 +131,7 @@ const AvailableIn = ({ definition }) => {
             sx={{
               variant: `links.muted`,
               display: `inline-block`,
-              ml: 2,
+              ml: 2
             }}
           >
             {api}
@@ -171,7 +171,7 @@ const DocBlock = ({
   linkableTitle = false,
   title = null,
   showSignature = true,
-  ignoreParams = [],
+  ignoreParams = []
 }) => {
   let titleElement = title || definition.name
 
@@ -200,7 +200,7 @@ const DocBlock = ({
   return (
     <div
       css={{
-        ...scale(-(level || 0) / 5),
+        ...scale(-(level || 0) / 5)
       }}
     >
       <Header level={level}>

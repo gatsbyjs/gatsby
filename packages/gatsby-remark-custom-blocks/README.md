@@ -33,18 +33,18 @@ plugins: [
           options: {
             blocks: {
               danger: {
-                classes: "danger",
+                classes: "danger"
               },
               info: {
                 classes: "info",
-                title: "optional",
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
+                title: "optional"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
 ]
 ```
 

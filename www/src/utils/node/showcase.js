@@ -38,8 +38,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `${node.fields.slug}`,
       component: slash(showcaseTemplate),
       context: {
-        slug: node.fields.slug,
-      },
+        slug: node.fields.slug
+      }
     })
   })
 }

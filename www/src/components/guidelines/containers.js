@@ -11,20 +11,20 @@ Container.defaultProps = {
   position: `relative`,
   pr: { xxs: 6, md: 10 },
   pl: { xxs: 6, md: 10 },
-  zIndex: 1,
+  zIndex: 1
 }
 
 export const Section = styled(Container)()
 
 Section.propTypes = {
-  ...propTypes.space,
+  ...propTypes.space
 }
 
 Section.defaultProps = {
   ...Container.defaultProps,
   as: `section`,
   pt: { xxs: 4, sm: 5, md: 8 },
-  pb: { xxs: 4, sm: 5, md: 8 },
+  pb: { xxs: 4, sm: 5, md: 8 }
 }
 
 export const copyColumnWidth = `20rem`
@@ -52,8 +52,8 @@ export const CopyColumn = ({
     flex={{ lg: `0 0 auto` }}
     css={{
       "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
+        maxWidth: `40rem`
+      }
     }}
   >
     <div
@@ -62,7 +62,7 @@ export const CopyColumn = ({
         top: t =>
           sticky
             ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
-            : false,
+            : false
       }}
     >
       {children}
@@ -79,8 +79,8 @@ export const ContentColumn = ({ children, fullWidth, ...props }) => (
       overflow: `hidden`,
       position: `relative`,
       "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
+        maxWidth: `40rem`
+      }
     }}
     {...props}
   >

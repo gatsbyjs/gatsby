@@ -30,8 +30,8 @@ Including a local plugin in your plugins folder also requires a configuration st
 module.exports = {
   plugins: [
     `gatsby-third-party-plugin`,
-    `gatsby-local-plugin`, // highlight-line
-  ],
+    `gatsby-local-plugin` // highlight-line
+  ]
 }
 ```
 

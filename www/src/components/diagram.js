@@ -11,7 +11,7 @@ import FuturaParagraph from "./futura-paragraph"
 import TechWithIcon from "./tech-with-icon"
 
 const lineAnimation = keyframes({
-  to: { strokeDashoffset: 10 },
+  to: { strokeDashoffset: 10 }
 })
 
 const Segment = ({ className, children }) => (
@@ -20,7 +20,7 @@ const Segment = ({ className, children }) => (
     css={{
       margin: `0 auto`,
       maxWidth: `48rem`,
-      textAlign: `center`,
+      textAlign: `center`
     }}
   >
     {children}
@@ -45,7 +45,7 @@ const SegmentTitle = ({ children }) => (
       px: 3,
       py: 2,
       textTransform: `uppercase`,
-      transform: `translateZ(0)`,
+      transform: `translateZ(0)`
     }}
   >
     {children}
@@ -66,7 +66,7 @@ const VerticalLine = () => (
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
-        animation: `${lineAnimation} 400ms linear infinite`,
+        animation: `${lineAnimation} 400ms linear infinite`
       }}
     />
   </svg>
@@ -78,7 +78,7 @@ const box = {
   borderStyle: `solid`,
   borderWidth: `1px`,
   px: 7,
-  py: 5,
+  py: 5
 }
 
 const borderAndBoxShadow = {
@@ -87,7 +87,7 @@ const borderAndBoxShadow = {
   borderRadius: 1,
   boxShadow: `raised`,
   transform: `translateZ(0)`,
-  width: `100%`,
+  width: `100%`
 }
 
 const SourceItems = ({ children }) => (
@@ -96,7 +96,7 @@ const SourceItems = ({ children }) => (
       display: `flex`,
       flexWrap: `wrap`,
       justifyContent: `center`,
-      ...box,
+      ...box
     }}
   >
     {children}
@@ -112,7 +112,7 @@ const SourceItem = ({ children }) => (
       px: 5,
       display: `flex`,
       flex: [null, `1 1 50%`, null, `1 1 33%`],
-      maxWidth: [null, null, null, `33%`],
+      maxWidth: [null, null, null, `33%`]
     }}
   >
     <div
@@ -120,7 +120,7 @@ const SourceItem = ({ children }) => (
         ...borderAndBoxShadow,
         ...boxPadding,
         lineHeight: `dense`,
-        textAlign: `left`,
+        textAlign: `left`
       }}
     >
       {children}
@@ -133,7 +133,7 @@ const ItemTitle = ({ children }) => (
     sx={{
       fontSize: 2,
       margin: 0,
-      color: `card.header`,
+      color: `card.header`
     }}
   >
     {children}
@@ -147,7 +147,7 @@ const ItemDescription = ({ children, color }) => (
       display: `block`,
       fontFamily: `body`,
       fontSize: 1,
-      lineHeight: `dense`,
+      lineHeight: `dense`
     }}
   >
     {children}
@@ -168,7 +168,7 @@ const Gatsby = () => (
       p: 5,
       margin: `0 auto`,
       width: `8.5rem`,
-      height: `8.5rem`,
+      height: `8.5rem`
     }}
   >
     <img
@@ -178,7 +178,7 @@ const Gatsby = () => (
         height: [t => t.space[8], null, null, null, t => t.space[9]],
         margin: 0,
         verticalAlign: `middle`,
-        width: `auto`,
+        width: `auto`
       }}
       alt="Gatsby"
     />
@@ -188,7 +188,7 @@ const Gatsby = () => (
           color: `grey.50`,
           display: `block`,
           mt: 2,
-          mb: 1,
+          mb: 1
         }}
       >
         powered by
@@ -219,13 +219,13 @@ const Diagram = () => (
           flex: `1 1 100%`,
           fontFamily: `heading`,
           p: 6,
-          textAlign: `center`,
+          textAlign: `center`
         }}
       >
         <h1
           sx={{
             fontWeight: `heading`,
-            mb: 6,
+            mb: 6
           }}
         >
           How Gatsby works
@@ -268,7 +268,7 @@ const Diagram = () => (
               backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
               backgroundImage: t =>
                 `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
-              py: 0,
+              py: 0
             }}
           >
             <VerticalLine />
@@ -281,7 +281,7 @@ const Diagram = () => (
                 bg: `white`,
                 display: `inline-block`,
                 py: 3,
-                width: `auto`,
+                width: `auto`
               }}
             >
               <ItemDescription color="grey.50">
@@ -302,7 +302,7 @@ const Diagram = () => (
           <div
             sx={{
               ...box,
-              pb: 5,
+              pb: 5
             }}
           >
             <ItemTitle>Web Hosting</ItemTitle>

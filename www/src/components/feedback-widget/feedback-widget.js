@@ -15,7 +15,7 @@ const postFeedback = ({ rating, comment }) => {
     variables: {
       rating,
       comment,
-      url: window.location.href,
+      url: window.location.href
     },
     query: `
       mutation submit($rating: Int!, $url: String!, $comment: String) {
@@ -25,7 +25,7 @@ const postFeedback = ({ rating, comment }) => {
           comment: $comment
         })
       }
-    `,
+    `
   }
 
   return post(process.env.GATSBY_FEEDBACK_ENDPOINT, payload)
@@ -36,7 +36,7 @@ const feedbackMachine = Machine({
   initial: `closed`,
   context: {
     rating: 2,
-    comment: ``,
+    comment: ``
   },
   states: {
     opened: {
@@ -44,46 +44,46 @@ const feedbackMachine = Machine({
       on: {
         RATE: {
           // Assign the RATE event value to the rating context
-          actions: assign({ rating: (_context, event) => event.value }),
+          actions: assign({ rating: (_context, event) => event.value })
         },
         COMMENT: {
-          actions: assign({ comment: (_ctx, e) => e.value }),
+          actions: assign({ comment: (_ctx, e) => e.value })
         },
-        SUBMIT: `submitting`,
-      },
+        SUBMIT: `submitting`
+      }
     },
     submitting: {
       invoke: {
         id: `postFeedback`,
         src: ctx => postFeedback(ctx),
         onDone: `success`,
-        onError: `failed`,
-      },
+        onError: `failed`
+      }
     },
     success: {
       // TODO can we send these events to gatsby-telemetry?
-      onEntry: `focusSuccessTitle`,
+      onEntry: `focusSuccessTitle`
     },
     failed: {
       // TODO can we send these events to gatsby-telemetry?
       on: {
-        OPEN: `opened`,
+        OPEN: `opened`
       },
-      onEntry: `focusErrorTitle`,
+      onEntry: `focusErrorTitle`
     },
     closed: {
       on: {
-        OPEN: `opened`,
+        OPEN: `opened`
       },
-      onEntry: [assign({ comment: ``, rating: 2 })],
-    },
+      onEntry: [assign({ comment: ``, rating: 2 })]
+    }
   },
   on: {
     CLOSE: {
       target: `closed`,
-      actions: `focusOpenButton`,
-    },
-  },
+      actions: `focusOpenButton`
+    }
+  }
 })
 
 const FeedbackWidget = () => {
@@ -118,8 +118,8 @@ const FeedbackWidget = () => {
           requestAnimationFrame(() => {
             toggleButton.current.focus()
           })
-        },
-      },
+        }
+      }
     })
   )
 
@@ -128,7 +128,7 @@ const FeedbackWidget = () => {
   const handleChange = event => {
     send({
       type: `RATE`,
-      value: +event.target.value, // Use + to cast to an integer.
+      value: +event.target.value // Use + to cast to an integer.
     })
   }
 
@@ -137,7 +137,7 @@ const FeedbackWidget = () => {
     const safeComment = event.target.value.replace(/(<([^>]+)>)/gi, ``)
     send({
       type: `COMMENT`,
-      value: safeComment,
+      value: safeComment
     })
   }
 

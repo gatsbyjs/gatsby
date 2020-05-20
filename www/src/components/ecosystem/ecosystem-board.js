@@ -7,7 +7,7 @@ import EcosystemSection from "./ecosystem-section"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   setupScrollersObserver,
-  unobserveScrollers,
+  unobserveScrollers
 } from "../../utils/scrollers-observer"
 
 class EcosystemBoard extends Component {
@@ -23,7 +23,7 @@ class EcosystemBoard extends Component {
     const {
       icons: { plugins: PluginsIcon, starters: StartersIcon },
       starters,
-      plugins,
+      plugins
     } = this.props
 
     return (
@@ -38,8 +38,8 @@ class EcosystemBoard extends Component {
               `calc(100vh - (${t.sizes.bannerHeight} + ${t.sizes.headerHeight} + 1px))`,
             pt: 7,
             px: 4,
-            pb: 4,
-          },
+            pb: 4
+          }
         }}
       >
         <EcosystemSection
@@ -52,9 +52,9 @@ class EcosystemBoard extends Component {
             {
               label: `Creating Plugins`,
               to: `/docs/creating-plugins/`,
-              secondary: true,
+              secondary: true
             },
-            { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true },
+            { label: `Using Plugins`, to: `/docs/plugins/`, secondary: true }
           ]}
           featuredItems={plugins}
         />
@@ -65,7 +65,7 @@ class EcosystemBoard extends Component {
           icon={StartersIcon}
           links={[
             { label: `Browse Starters`, to: `/starters/` },
-            { label: `Using Starters`, to: `/docs/starters/`, secondary: true },
+            { label: `Using Starters`, to: `/docs/starters/`, secondary: true }
           ]}
           featuredItems={starters}
         />
@@ -75,8 +75,8 @@ class EcosystemBoard extends Component {
           links={[
             {
               label: `Browse Resources`,
-              to: `/docs/awesome-gatsby-resources/`,
-            },
+              to: `/docs/awesome-gatsby-resources/`
+            }
           ]}
         />
       </div>
@@ -87,7 +87,7 @@ class EcosystemBoard extends Component {
 EcosystemBoard.propTypes = {
   icons: PropTypes.object,
   starters: PropTypes.array,
-  plugins: PropTypes.array,
+  plugins: PropTypes.array
 }
 
 export default EcosystemBoard

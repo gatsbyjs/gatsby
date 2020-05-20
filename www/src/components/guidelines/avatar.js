@@ -10,7 +10,7 @@ Avatar.defaultProps = {
   flex: `0 0 auto`,
   height: `avatar`,
   lineHeight: `solid`,
-  width: `avatar`,
+  width: `avatar`
 }
 
 export default Avatar

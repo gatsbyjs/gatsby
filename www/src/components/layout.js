@@ -39,8 +39,8 @@ export default function DefaultLayout({ location, children }) {
           pb: t => t.sizes.headerHeight,
           [breakpointGutter]: {
             pt: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
-            pb: 0,
-          },
+            pb: 0
+          }
         }}
       >
         {children}

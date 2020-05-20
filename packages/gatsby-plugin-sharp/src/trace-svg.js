@@ -12,7 +12,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
   file,
   options,
   tmpFilePath,
-  reporter,
+  reporter
 }) => {
   let pipeline
   try {
@@ -28,17 +28,17 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 
   pipeline
     .resize(options.width, options.height, {
-      position: options.cropFocus,
+      position: options.cropFocus
     })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: options.toFormat === `png`,
+      force: options.toFormat === `png`
     })
     .jpeg({
       quality: options.quality,
       progressive: options.jpegProgressive,
-      force: options.toFormat === `jpg`,
+      force: options.toFormat === `jpg`
     })
 
   // grayscale
@@ -73,18 +73,18 @@ const optimize = svg => {
     floatPrecision: 0,
     plugins: [
       {
-        removeViewBox: false,
+        removeViewBox: false
       },
       {
         addAttributesToSVGElement: {
           attributes: [
             {
-              preserveAspectRatio: `none`,
-            },
-          ],
-        },
-      },
-    ],
+              preserveAspectRatio: `none`
+            }
+          ]
+        }
+      }
+    ]
   })
   return svgo.optimize(svg).then(({ data }) => data)
 }
@@ -99,10 +99,10 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       ...(fileArgs && fileArgs.maxWidth && fileArgs.maxHeight
         ? {
             height: fileArgs.maxHeight,
-            width: fileArgs.maxWidth,
+            width: fileArgs.maxWidth
           }
         : {}),
-      ...fileArgs,
+      ...fileArgs
     },
     file.extension
   )
@@ -116,7 +116,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       tmpFilePath,
       file,
       options,
-      reporter,
+      reporter
     })
 
     const svgToMiniDataURI = require(`mini-svg-data-uri`)
@@ -127,7 +127,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       color: `lightgray`,
       optTolerance: 0.4,
       turdSize: 100,
-      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
+      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY
     }
 
     const optionsSVG = _.defaults(args, defaultArgs)

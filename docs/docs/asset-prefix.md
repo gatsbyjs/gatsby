@@ -14,7 +14,7 @@ This `assetPrefix` functionality is available starting in gatsby@2.4.0, so that 
 
 ```js:title=gatsby-config.js
 module.exports = {
-  assetPrefix: `https://cdn.example.com`,
+  assetPrefix: `https://cdn.example.com`
 }
 ```
 

@@ -5,7 +5,7 @@ export const showcaseList = {
   display: `flex`,
   flexWrap: `wrap`,
   justifyContent: `space-evenly`,
-  p: 6,
+  p: 6
 }
 
 export const showcaseItem = {
@@ -15,18 +15,18 @@ export const showcaseItem = {
   m: 6,
   maxWidth: 350,
   minWidth: 259, // shows 3 items/row on windows > 1200px wide
-  position: `relative`,
+  position: `relative`
 }
 
 export const withTitleHover = {
   "& .title": {
     transition: t =>
-      `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
+      `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`
   },
   "&:hover .title": {
     boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.link.hoverBorder}`,
-    color: `link.hoverColor`,
-  },
+    color: `link.hoverColor`
+  }
 }
 
 export const loadMoreButton = {
@@ -35,14 +35,14 @@ export const loadMoreButton = {
   flexFlow: `row wrap`,
   mt: 0,
   mx: `auto`,
-  mb: 9,
+  mb: 9
 }
 
 export const screenshot = {
   borderRadius: 1,
   boxShadow: `raised`,
   mb: 3,
-  transition: `default`,
+  transition: `default`
 }
 
 export const screenshotHover = {
@@ -50,8 +50,8 @@ export const screenshotHover = {
   color: `link.hoverColor`,
   "& .gatsby-image-wrapper": {
     transform: t => `translateY(-${t.space[1]})`,
-    boxShadow: `overlay`,
-  },
+    boxShadow: `overlay`
+  }
 }
 
 export const shortcutIcon = {
@@ -60,17 +60,17 @@ export const shortcutIcon = {
     borderBottom: `none`,
     color: `textMuted`,
     "&:hover": {
-      color: `link.hoverColor`,
-    },
-  },
+      color: `link.hoverColor`
+    }
+  }
 }
 
 export const meta = {
   alignItems: `baseline`,
   fontSize: 1,
   "&&": {
-    color: `textMuted`,
-  },
+    color: `textMuted`
+  }
 }
 
 export const filterButton = {
@@ -90,11 +90,11 @@ export const filterButton = {
   textAlign: `left`,
   width: `100%`,
   ":hover": {
-    color: `link.hoverColor`,
-  },
+    color: `link.hoverColor`
+  }
 }
 
 export const filterCheckbox = {
   fontSize: 2,
-  mr: 2,
+  mr: 2
 }

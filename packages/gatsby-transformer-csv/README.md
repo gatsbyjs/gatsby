@@ -20,11 +20,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `data`,
-        path: `${__dirname}/src/data/`,
-      },
+        path: `${__dirname}/src/data/`
+      }
     },
-    `gatsby-transformer-csv`,
-  ],
+    `gatsby-transformer-csv`
+  ]
 }
 ```
 
@@ -136,10 +136,10 @@ module.exports = {
       resolve: `gatsby-transformer-csv`,
       options: {
         typeName: ({ node, object }) =>
-          _.upperFirst(_.camelCase(`${path.basename(node.dir)} Data`)),
-      },
-    },
-  ],
+          _.upperFirst(_.camelCase(`${path.basename(node.dir)} Data`))
+      }
+    }
+  ]
 }
 ```
 
@@ -156,10 +156,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-csv`,
       options: {
-        typeName: typeNameFromDir,
-      },
-    },
-  ],
+        typeName: typeNameFromDir
+      }
+    }
+  ]
 }
 ```
 
@@ -179,10 +179,10 @@ module.exports = {
       resolve: `gatsby-transformer-csv`,
       options: {
         typeName: () => `Foodstuffs`,
-        nodePerFile: `ingredients`,
-      },
-    },
-  ],
+        nodePerFile: `ingredients`
+      }
+    }
+  ]
 }
 ```
 

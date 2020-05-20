@@ -10,7 +10,7 @@ const Details = ({
   shownDeps,
   showAllDeps,
   showMore,
-  startersYaml,
+  startersYaml
 }) => (
   <div
     sx={{
@@ -20,8 +20,8 @@ const Details = ({
         gridRowGap: 6,
         gridColumnGap: 6,
         gridTemplateColumns: `auto 1fr`,
-        p: 8,
-      },
+        p: 8
+      }
     }}
   >
     <h2 sx={styles.headline}>Tags</h2>
@@ -51,8 +51,8 @@ const Details = ({
           display: `grid`,
           [mediaQueries.lg]: {
             gridTemplateColumns: `repeat(3, 1fr)`,
-            gridGap: 5,
-          },
+            gridGap: 5
+          }
         }}
       >
         {shownDeps &&
@@ -92,12 +92,12 @@ const styles = {
     mt: 0,
     mb: 2,
     [mediaQueries.md]: {
-      mb: 0,
-    },
+      mb: 0
+    }
   },
   content: {
     pb: 8,
-    [mediaQueries.md]: { pb: 0 },
+    [mediaQueries.md]: { pb: 0 }
   },
   showMoreButton: {
     backgroundColor: `gatsby`,
@@ -110,7 +110,7 @@ const styles = {
     px: 4,
     "&&": {
       borderBottom: `none`,
-      color: `white`,
-    },
-  },
+      color: `white`
+    }
+  }
 }

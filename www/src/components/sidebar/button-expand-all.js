@@ -6,7 +6,7 @@ import { GoFold, GoUnfold } from "react-icons/go"
 
 const iconStyles = {
   display: `inline-block`,
-  mr: 2,
+  mr: 2
 }
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
@@ -28,8 +28,8 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
         bg: `sidebar.itemHoverBackground`,
-        color: `navigation.linkHover`,
-      },
+        color: `navigation.linkHover`
+      }
     }}
   >
     {expandAll ? (

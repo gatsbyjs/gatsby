@@ -8,7 +8,7 @@ import { buttonStyles } from "../utils/styles"
 const components = {
   link: Link,
   href: ({ children, ...rest }) => <a {...rest}>{children}</a>,
-  button: ({ children, ...rest }) => <button {...rest}>{children}</button>,
+  button: ({ children, ...rest }) => <button {...rest}>{children}</button>
 }
 
 const Button = ({
@@ -27,7 +27,7 @@ const Button = ({
   const props = {
     to: !tag ? to : undefined,
     href: tag === `href` ? to : undefined,
-    ...rest,
+    ...rest
   }
 
   const trackingOnClick = e => {
@@ -59,7 +59,7 @@ const Button = ({
         eventCategory: `Outbound Link`,
         eventAction: `click`,
         eventLabel: `${tracking} - ${props.to || props.href}`,
-        transport: redirect ? `beacon` : ``,
+        transport: redirect ? `beacon` : ``
       })
     }
   }
@@ -73,8 +73,8 @@ const Button = ({
           ...buttonStyles().default,
           ...(secondary && buttonStyles().secondary),
           variant: `buttons.${variant}`,
-          ...overrideCSS,
-        },
+          ...overrideCSS
+        }
       }}
     >
       {children}

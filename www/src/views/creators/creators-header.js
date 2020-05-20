@@ -19,14 +19,14 @@ class CreatorsHeader extends Component {
           fontFamily: `heading`,
           height: `headerHeight`,
           px: 6,
-          zIndex: `2`,
+          zIndex: `2`
         }}
       >
         <h1
           css={{
             display: `flex`,
             height: `100%`,
-            margin: 0,
+            margin: 0
           }}
         >
           <Link
@@ -40,9 +40,9 @@ class CreatorsHeader extends Component {
                 fontSize: 4,
                 mr: 3,
                 "&:hover": {
-                  backgroundColor: `initial`,
-                },
-              },
+                  backgroundColor: `initial`
+                }
+              }
             }}
           >
             Creators
@@ -52,14 +52,14 @@ class CreatorsHeader extends Component {
           className="creators--filters"
           css={{
             display: `flex`,
-            flex: `2`,
+            flex: `2`
           }}
         >
           <div
             css={{
               alignItems: `center`,
               display: `flex`,
-              marginLeft: `auto`,
+              marginLeft: `auto`
             }}
           >
             <Button

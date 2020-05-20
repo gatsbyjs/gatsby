@@ -20,8 +20,8 @@ const ResetFilters = ({ onClick }) => (
         textAlign: `left`,
         "&:hover": {
           background: `gatsby`,
-          color: `white`,
-        },
+          color: `white`
+        }
       }}
       onClick={onClick}
     >

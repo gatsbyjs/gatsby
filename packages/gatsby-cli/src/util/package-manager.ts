@@ -22,10 +22,10 @@ export const promptPackageManager = async (): Promise<PackageManager> => {
       message: `Which package manager would you like to use ?`,
       choices: [
         { title: `yarn`, value: `yarn` },
-        { title: `npm`, value: `npm` },
+        { title: `npm`, value: `npm` }
       ],
-      initial: 0,
-    },
+      initial: 0
+    }
   ])
   const response = promptsAnswer.package_manager
   if (response) {

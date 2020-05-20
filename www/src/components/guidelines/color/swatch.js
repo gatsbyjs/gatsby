@@ -8,17 +8,17 @@ import { Box } from "../system"
 export default class Swatch extends React.Component {
   state = {
     value: this.props.color.hex,
-    displayCopied: false,
+    displayCopied: false
   }
 
   toggleCopied = () => {
     this.setState({
-      displayCopied: true,
+      displayCopied: true
     })
 
     setTimeout(() => {
       this.setState({
-        displayCopied: false,
+        displayCopied: false
       })
     }, 2500)
   }
@@ -37,8 +37,8 @@ export default class Swatch extends React.Component {
         sx={{
           ...swatchStyle,
           ":hover > .btn-copy": {
-            display: `block`,
-          },
+            display: `block`
+          }
         }}
       >
         {a11yLabel !== `×` && (
@@ -51,7 +51,7 @@ export default class Swatch extends React.Component {
               bottom: `2px`,
               left: `3px`,
               lineHeight: `dense`,
-              top: `auto`,
+              top: `auto`
             }}
           >
             {a11yLabel}
@@ -75,8 +75,8 @@ export default class Swatch extends React.Component {
               width: `100%`,
               zIndex: 1,
               ":focus .tooltip, :hover .tooltip": {
-                display: `block`,
-              },
+                display: `block`
+              }
             }}
             aria-label={color.hex}
             onClick={this.handleClick}
@@ -94,7 +94,7 @@ export default class Swatch extends React.Component {
                 lineHeight: `32px`,
                 display: `none`,
                 position: `absolute`,
-                width: `160px`,
+                width: `160px`
               }}
             >
               {this.state.displayCopied ? (
@@ -122,7 +122,7 @@ export default class Swatch extends React.Component {
             right={4}
             css={{
               bottom: 4,
-              right: 4,
+              right: 4
             }}
           />
         )}

@@ -11,7 +11,7 @@ import {
   colors,
   space,
   zIndices,
-  mediaQueries,
+  mediaQueries
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import "../assets/fonts/futura"
 import LazyModal from "./lazy-modal"
@@ -24,7 +24,7 @@ export default function Modal({
   previous,
   filters,
   modalPreviousLink,
-  modalNextLink,
+  modalNextLink
 }) {
   const colorMode = useColorMode()
   const isDark = colorMode[0] === `dark`
@@ -38,13 +38,13 @@ export default function Modal({
 
   function modalPrev() {
     navigate(previous, {
-      state: { isModal: true, filters },
+      state: { isModal: true, filters }
     })
   }
 
   function modalNext() {
     navigate(next, {
-      state: { isModal: true, filters },
+      state: { isModal: true, filters }
     })
   }
 
@@ -76,7 +76,7 @@ export default function Modal({
             padding: `${space[8]} 0`,
             right: `inherit`,
             top: `inherit`,
-            maxWidth: `1050px`,
+            maxWidth: `1050px`
           },
           overlay: {
             backgroundColor: isDark
@@ -90,8 +90,8 @@ export default function Modal({
             position: `absolute`,
             right: 0,
             top: 0,
-            zIndex: zIndices.modal,
-          },
+            zIndex: zIndices.modal
+          }
         }}
         onRequestClose={() => navigate(modalBackgroundPath)}
         contentLabel="Site Details Modal"
@@ -102,8 +102,8 @@ export default function Modal({
             flexWrap: `wrap`,
             justifyContent: `space-between`,
             [mediaQueries.md]: {
-              flexWrap: `nowrap`,
-            },
+              flexWrap: `nowrap`
+            }
           }}
         >
           <div
@@ -114,7 +114,7 @@ export default function Modal({
               position: `relative`,
               alignItems: `center`,
               order: 1,
-              width: `100%`,
+              width: `100%`
             }}
           >
             <button
@@ -134,8 +134,8 @@ export default function Modal({
                 width: 40,
                 "&:hover": {
                   bg: `ui.hover`,
-                  color: `gatsby`,
-                },
+                  color: `gatsby`
+                }
               }}
             >
               <MdClose />
@@ -146,7 +146,7 @@ export default function Modal({
             to={previous}
             state={{
               isModal: true,
-              filters,
+              filters
             }}
             sx={{
               order: 1,
@@ -158,8 +158,8 @@ export default function Modal({
                 display: `block`,
                 order: 0,
                 top: `110px`,
-                width: `auto`,
-              },
+                width: `auto`
+              }
             }}
           >
             {modalPreviousLink}
@@ -168,7 +168,7 @@ export default function Modal({
             to={next}
             state={{
               isModal: true,
-              filters,
+              filters
             }}
             sx={{
               order: 2,
@@ -179,8 +179,8 @@ export default function Modal({
               [mediaQueries.md]: {
                 mt: 6,
                 display: `block`,
-                top: `110px`,
-              },
+                top: `110px`
+              }
             }}
           >
             {modalNextLink}

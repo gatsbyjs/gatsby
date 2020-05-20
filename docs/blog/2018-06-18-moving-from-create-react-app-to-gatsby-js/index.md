@@ -177,8 +177,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `${edge.node.slug}`, // required
       component: blogPostTemplate,
       context: {
-        slug: edge.node.slug, // in react this will be the `:slug` part
-      },
+        slug: edge.node.slug // in react this will be the `:slug` part
+      }
     })
   })
 }
@@ -224,7 +224,7 @@ class BlogPost extends React.Component {
         <h1>{post.title}</h1>
         <div
           dangerouslySetInnerHTML={{
-            __html: post.content.childMarkdownRemark.html,
+            __html: post.content.childMarkdownRemark.html
           }}
         />
       </div>
