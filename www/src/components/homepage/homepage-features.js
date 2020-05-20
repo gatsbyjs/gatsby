@@ -6,7 +6,6 @@ import Card from "../card"
 import CardHeadline from "../card-headline"
 import TechWithIcon from "../tech-with-icon"
 import FuturaParagraph from "../futura-paragraph"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const HomepageFeatures = () => (
   <div
