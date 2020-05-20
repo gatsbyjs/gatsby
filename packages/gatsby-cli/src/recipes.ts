@@ -4,7 +4,9 @@ import * as path from "path"
 import * as fs from "fs"
 import detectPort from "detect-port"
 
-export async function recipesHandler(recipe: string): Promise<void> {
+export async function recipesHandler(
+  recipe: string | undefined
+): Promise<void> {
   // We don't really care what port is used for GraphQL as it's
   // generally only for code to code communication or debugging.
   const graphqlPort = await detectPort(4000)

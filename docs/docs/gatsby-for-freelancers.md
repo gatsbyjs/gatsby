@@ -3,7 +3,7 @@ title: Gatsby for Freelancers
 issue: https://github.com/gatsbyjs/gatsby/issues/21069
 ---
 
-As a freelancer, the most important thing is [helping clients understand](/docs/winning-over-clients) the benefits of Gatsby.
+As a freelancer, the most important thing is [helping clients understand](/docs/winning-over-clients/) the benefits of Gatsby.
 
 --
 
