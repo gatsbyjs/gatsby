@@ -385,8 +385,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
-      actionOptions &&
-      actionOptions.traceId === `initial-createPagesStatefully`,
+      actionOptions?.traceId === `initial-createPagesStatefully` ||
+      actionOptions?.traceId === `initial-sourceNodes`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),

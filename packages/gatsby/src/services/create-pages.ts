@@ -2,10 +2,11 @@ import { IBuildContext } from "../state-machines/develop"
 
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunnerNode from "../utils/api-runner-node"
-import { boundActionCreators } from "../redux/actions"
-const { deletePage, deleteComponentsDependencies } = boundActionCreators
 
-import { isEqualWith, IsEqualCustomizer } from "lodash"
+import {
+  deleteUntouchedPages,
+  findChangedPages,
+} from "../utils/check-for-changed-pages"
 
 export async function createPages({
   parentSpan,
@@ -37,22 +38,12 @@ export async function createPages({
     { activity }
   )
 
-  const deletedPages: string[] = []
   activity.end()
 
   reporter.info(`Checking for deleted pages`)
-  // Delete pages that weren't updated when running createPages.
-  store.getState().pages.forEach(page => {
-    if (
-      !page.isCreatedByStatefulCreatePages &&
-      page.updatedAt < timestamp &&
-      page.path !== `/404.html`
-    ) {
-      deleteComponentsDependencies([page.path])
-      deletePage(page)
-      deletedPages.push(page.path, `/page-data${page.path}`)
-    }
-  })
+
+  const deletedPages = deleteUntouchedPages(store.getState().pages, timestamp)
+
   reporter.info(
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
   )
@@ -60,17 +51,10 @@ export async function createPages({
   const tim = reporter.activityTimer(`Checking for changed pages`)
   tim.start()
 
-  const changedPages: string[] = []
-
-  const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) =>
-    key === `updatedAt` || undefined
-
-  store.getState().pages.forEach((newPage, key) => {
-    const oldPage = currentPages.get(key)
-    if (!oldPage || !isEqualWith(newPage, oldPage, compareWithoutUpdated)) {
-      changedPages.push(key)
-    }
-  })
+  const { changedPages } = findChangedPages(
+    currentPages,
+    store.getState().pages
+  )
 
   reporter.info(
     `Found ${changedPages.length} changed page${

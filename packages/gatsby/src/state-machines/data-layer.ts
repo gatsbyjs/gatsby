@@ -21,6 +21,7 @@ export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
         id: `sourcing-nodes`,
         onDone: {
           target: `buildingSchema`,
+          actions: `assignChangedPages`,
         },
         onError,
       },
