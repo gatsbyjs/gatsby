@@ -1,4 +1,4 @@
-import reporterActions from "./redux/actions"
+import * as reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 
@@ -17,14 +17,14 @@ export interface IPhantomReporter {
 export const createPhantomReporter = ({
   text,
   id,
-  span,
+  span
 }: ICreatePhantomReporterArguments): IPhantomReporter => {
   return {
     start(): void {
       reporterActions.startActivity({
         id,
         text,
-        type: ActivityTypes.Hidden,
+        type: ActivityTypes.Hidden
       })
     },
 
@@ -33,10 +33,10 @@ export const createPhantomReporter = ({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Success,
+        status: ActivityStatuses.Success
       })
     },
 
-    span,
+    span
   }
 }

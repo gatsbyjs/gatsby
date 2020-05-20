@@ -1,6 +1,6 @@
-// TODO enable preact/debug again when preact devtools is fixed.
-// exports.onClientEntry = () => {
-//   if (process.env.NODE_ENV !== `production`) {
-//     require(`preact/debug`)
-//   }
-// }
+exports.onClientEntry = () => {
+  if (process.env.NODE_ENV !== `production`) {
+    console.log(`[HMR] disabled: preact is not compatible with RHL`)
+    require(`preact/debug`)
+  }
+}

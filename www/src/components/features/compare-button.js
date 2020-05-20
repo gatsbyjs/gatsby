@@ -15,13 +15,12 @@ const compareButtonStyles = {
   p: 2,
   ":hover": {
     borderColor: `purple.60`,
-    cursor: `pointer`,
+    cursor: `pointer`
   },
   ":focus": {
     outline: 0,
-    boxShadow: t =>
-      `0 0 0 ${t.space[1]} ${t.colors.themedInput.focusBoxShadow}`,
-  },
+    boxShadow: t => `0 0 0 ${t.space[1]} ${t.colors.themedInput.focusBoxShadow}`
+  }
 }
 
 const CompareButton = ({ children, optionKey, selected, setSelected }) => (
@@ -30,14 +29,14 @@ const CompareButton = ({ children, optionKey, selected, setSelected }) => (
       ...compareButtonStyles,
       backgroundColor: selected ? `purple.50` : `background`,
       borderColor: selected ? `purple.60` : `ui.border`,
-      color: selected ? `white` : `textMuted`,
+      color: selected ? `white` : `textMuted`
     }}
-    onClick={e => setSelected({ [optionKey]: !selected })}
+    onClick={() => setSelected({ [optionKey]: !selected })}
   >
     <img
       sx={{
         height: t => t.space[6],
-        mb: 0,
+        mb: 0
       }}
       src={logoDictionary[optionKey]}
     />

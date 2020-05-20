@@ -14,7 +14,7 @@ const getParams = (name = ``) => {
       .split(`language-`)
       .pop()
       .split(`{`)
-      .shift(),
+      .shift()
   ].concat(
     params.split(`&`).reduce((merged, param) => {
       const [key, value] = param.split(`=`)
@@ -32,7 +32,7 @@ const getParams = (name = ``) => {
 const CodeBlock = ({
   children,
   className = children.props ? children.props.className : ``,
-  copy,
+  copy
 }) => {
   const [language, { title = `` }] = getParams(className)
   const [content, highlights] = normalize(
@@ -60,7 +60,7 @@ const CodeBlock = ({
                     position: `absolute`,
                     right: t => t.space[1],
                     top: t => t.space[1],
-                    borderRadius: 2,
+                    borderRadius: 2
                   }}
                   content={content}
                 />
@@ -76,7 +76,7 @@ const CodeBlock = ({
                     <div
                       key={i}
                       {...Object.assign({}, lineProps, {
-                        className,
+                        className
                       })}
                     >
                       {line.map((token, key) => (
@@ -97,11 +97,11 @@ const CodeBlock = ({
 CodeBlock.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   className: PropTypes.string,
-  copy: PropTypes.bool,
+  copy: PropTypes.bool
 }
 
 CodeBlock.defaultProps = {
-  copy: true,
+  copy: true
 }
 
 export default CodeBlock

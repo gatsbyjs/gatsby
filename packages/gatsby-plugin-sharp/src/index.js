@@ -13,7 +13,7 @@ const {
   getPluginOptions,
   healOptions,
   createTransformObject,
-  removeDefaultValues,
+  removeDefaultValues
 } = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
@@ -30,6 +30,14 @@ const getImageSize = file => {
     const dimensions = imageSize.sync(
       toArray(fs.readFileSync(file.absolutePath))
     )
+
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
+
     imageSizeCache.set(file.internal.contentDigest, dimensions)
     return dimensions
   }
@@ -102,7 +110,7 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
   return {
     width,
     height,
-    aspectRatio: width / height,
+    aspectRatio: width / height
   }
 }
 
@@ -143,7 +151,7 @@ function prepareQueue({ file, args }) {
     width,
     height,
     aspectRatio,
-    options: removeDefaultValues(args, getPluginOptions()),
+    options: removeDefaultValues(args, getPluginOptions())
   }
 }
 
@@ -184,7 +192,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     aspectRatio,
     relativePath,
     outputDir,
-    options,
+    options
   } = prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
@@ -197,11 +205,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
         operations: [
           {
             outputPath: relativePath,
-            args: options,
-          },
+            args: options
+          }
         ],
-        pluginOptions: getPluginOptions(),
-      },
+        pluginOptions: getPluginOptions()
+      }
     },
     { reporter }
   )
@@ -213,7 +221,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height,
     aspectRatio,
     finishedPromise,
-    originalName: file.base,
+    originalName: file.base
   }
 }
 
@@ -230,12 +238,12 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       aspectRatio,
       relativePath,
       outputDir,
-      options,
+      options
     } = prepareQueue({ file, args: transform })
     // queue operations of an image
     operations.push({
       outputPath: relativePath,
-      args: options,
+      args: options
     })
 
     // create output results
@@ -246,7 +254,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       height,
       aspectRatio,
       originalName: file.base,
-      finishedPromise: null,
+      finishedPromise: null
     })
   })
 
@@ -262,8 +270,8 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       ),
       args: {
         operations,
-        pluginOptions: getPluginOptions(),
-      },
+        pluginOptions: getPluginOptions()
+      }
     },
     { reporter }
   )
@@ -280,7 +288,7 @@ const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: defaultBase64Width(),
+    width: defaultBase64Width()
   })
   let pipeline
   try {
@@ -310,21 +318,21 @@ async function generateBase64({ file, args = {}, reporter }) {
       height: options.height,
       position: options.cropFocus,
       fit: options.fit,
-      background: options.background,
+      background: options.background
     })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: args.toFormat === `png`
     })
     .jpeg({
       quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: args.toFormat === `jpg`
     })
     .webp({
       quality: options.webpQuality || options.quality,
-      force: args.toFormat === `webp`,
+      force: args.toFormat === `webp`
     })
 
   // grayscale
@@ -342,14 +350,14 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = await duotone(options.duotone, args.toFormat, pipeline)
   }
   const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
+    resolveWithObject: true
   })
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
-    originalName: file.base,
+    originalName: file.base
   }
   return base64output
 }
@@ -396,7 +404,7 @@ async function getTracedSVG({ file, options, cache, reporter }) {
       fileArgs: options,
       file,
       cache,
-      reporter,
+      reporter
     })
     return tracedSVG
   }
@@ -417,7 +425,7 @@ async function stats({ file, reporter }) {
   }
 
   return {
-    isTransparent: !imgStats.isOpaque,
+    isTransparent: !imgStats.isOpaque
   }
 }
 
@@ -459,25 +467,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // if no maxWidth is passed, we need to resize the image based on the passed maxHeight
   const fixedDimension =
     options.maxWidth === undefined ? `maxHeight` : `maxWidth`
+  const maxWidth = options.maxWidth
+    ? Math.min(options.maxWidth, width)
+    : undefined
+  const maxHeight = options.maxHeight
+    ? Math.min(options.maxHeight, height)
+    : undefined
 
   if (options[fixedDimension] < 1) {
     throw new Error(
       `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
     )
-  }
-
-  let presentationWidth, presentationHeight
-  if (fixedDimension === `maxWidth`) {
-    presentationWidth = Math.min(options.maxWidth, width)
-    presentationHeight = Math.round(presentationWidth * (height / width))
-  } else {
-    presentationHeight = Math.min(options.maxHeight, height)
-    presentationWidth = Math.round(presentationHeight * (width / height))
-  }
-
-  // If the users didn't set default sizes, we'll make one.
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image if no custom breakpoints are
@@ -489,7 +489,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
   const fluidSizes = [
-    options[fixedDimension], // ensure maxWidth (or maxHeight) is added
+    options[fixedDimension] // ensure maxWidth (or maxHeight) is added
   ]
   // use standard breakpoints if no custom breakpoints are specified
   if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
@@ -511,7 +511,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       fluidSizes.push(breakpoint)
     })
   }
-  const filteredSizes = fluidSizes.filter(
+  let filteredSizes = fluidSizes.filter(
     size => size < (fixedDimension === `maxWidth` ? width : height)
   )
 
@@ -519,13 +519,18 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // is available for small images. Also so we can link to
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
+  filteredSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
 
+  const imageWithDensityOneIndex = filteredSizes.findIndex(
+    size => size === (fixedDimension === `maxWidth` ? maxWidth : maxHeight)
+  )
+
   // Sort sizes for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = filteredSizes.map(size => {
     const arrrgs = createTransformObject(options)
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined
@@ -547,7 +552,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const images = batchQueueImageResizing({
     file,
     transforms,
-    reporter,
+    reporter
   })
 
   let base64Image
@@ -567,7 +572,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       cropFocus: options.cropFocus,
       fit: options.fit,
       width: base64Width,
-      height: base64Height,
+      height: base64Height
     }
     // Get base64 version
     base64Image = await base64({ file, args: base64Args, reporter, cache })
@@ -580,6 +585,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
+
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
@@ -606,19 +612,29 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
+  // calculate presentationSizes
+  const imageWithDensityOne = images[imageWithDensityOneIndex]
+  const presentationWidth = imageWithDensityOne.width
+  const presentationHeight = imageWithDensityOne.height
+
+  // If the users didn't set default sizes, we'll make one.
+  const sizes =
+    options.sizes ||
+    `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+
   return {
     base64: base64Image && base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
     srcSetType,
-    sizes: options.sizes,
-    originalImg: originalImg,
-    originalName: originalName,
+    sizes,
+    originalImg,
+    originalName,
     density,
     presentationWidth,
     presentationHeight,
-    tracedSVG,
+    tracedSVG
   }
 }
 
@@ -671,7 +687,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const images = batchQueueImageResizing({
     file,
     transforms,
-    reporter,
+    reporter
   })
 
   let base64Image
@@ -691,14 +707,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
       cropFocus: options.cropFocus,
       fit: options.fit,
       width: base64Width,
-      height: base64Height,
+      height: base64Height
     }
     // Get base64 version
     base64Image = await base64({
       file,
       args: base64Args,
       reporter,
-      cache,
+      cache
     })
   }
 
@@ -734,7 +750,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
-    tracedSVG,
+    tracedSVG
   }
 }
 

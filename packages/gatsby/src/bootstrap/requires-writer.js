@@ -52,6 +52,7 @@ const getComponents = pages =>
   _(pages)
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
+    .orderBy(c => c.componentChunkName)
     .value()
 
 /**
@@ -63,7 +64,7 @@ const getMatchPaths = pages => {
     return {
       ...page,
       index,
-      score: rankRoute(page.matchPath),
+      score: rankRoute(page.matchPath)
     }
   }
 
@@ -92,7 +93,7 @@ const getMatchPaths = pages => {
           createMatchPathEntry(
             {
               ...page,
-              matchPath: page.path,
+              matchPath: page.path
             },
             index
           )
@@ -198,7 +199,7 @@ const preferDefault = m => m && m.default || m
   await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
-    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
+    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4))
   ])
 
   return true
@@ -207,7 +208,7 @@ const preferDefault = m => m && m.default || m
 const debouncedWriteAll = _.debounce(
   async () => {
     const activity = reporter.activityTimer(`write out requires`, {
-      id: `requires-writer`,
+      id: `requires-writer`
     })
     activity.start()
     const didRequiresChange = await writeAll(store.getState())
@@ -220,7 +221,7 @@ const debouncedWriteAll = _.debounce(
   {
     // using "leading" can cause double `writeAll` call - particularly
     // when refreshing data using `/__refresh` hook.
-    leading: false,
+    leading: false
   }
 )
 
@@ -254,4 +255,5 @@ module.exports = {
   writeAll,
   resetLastHash,
   startListener,
+  getComponents
 }

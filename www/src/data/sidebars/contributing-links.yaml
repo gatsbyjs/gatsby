@@ -63,6 +63,22 @@
               link: /contributing/docs-writing-process/
             - title: Docs Templates
               link: /contributing/docs-templates/
+              items:
+                - title: How to Write a Reference Guide
+                  breadcrumbTitle: Reference Guides
+                  link: /contributing/how-to-write-a-reference-guide/
+                - title: How to Write a Recipe
+                  breadcrumbTitle: Recipes
+                  link: /contributing/how-to-write-a-recipe/
+                - title: How to Write a Tutorial
+                  breadcrumbTitle: Tutorials
+                  link: /contributing/how-to-write-a-tutorial/
+                - title: How to Write a Plugin README
+                  breadcrumbTitle: Plugin READMEs
+                  link: /contributing/how-to-write-a-plugin-readme/
+                - title: How to Write a Starter README
+                  breadcrumbTitle: Starter READMEs
+                  link: /contributing/how-to-write-a-starter-readme/
             - title: How to Write a Stub
               link: /contributing/how-to-write-a-stub/
             - title: Stub List

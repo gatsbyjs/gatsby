@@ -42,7 +42,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby WordPress Tutorial`,
     description: `An example to learn how to source data from WordPress.`,
-    author: `@gatsbyjs`,
+    author: `@gatsbyjs`
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
@@ -68,8 +68,8 @@ module.exports = {
         hostingWPCOM: false,
         // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on WordPress.com
-        useACF: true,
-      },
+        useACF: true
+      }
     },
     // highlight-end
     /**
@@ -81,8 +81,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -95,10 +95,10 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
-    },
-  ],
+        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
+      }
+    }
+  ]
 }
 ```
 
@@ -158,7 +158,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   //highlight-line
   return (
     <Layout>
@@ -211,7 +211,7 @@ To do this, you need to:
 
 If you haven't already, please read through [Part 7](/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 
-### Creating pages for each blog post.
+### Creating pages for each blog post
 
 In Part 7 of the tutorial, the first step in creating pages is creating slugs for the markdown files. Since you are using WordPress and not Markdown files, you can grab the slugs that get returned from your API call to the WordPress source. You can skip creating slugs, since you already have them.
 
@@ -256,7 +256,7 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.allWordpressPost.edges[0].node
   console.log(post)
   return (
@@ -313,8 +313,8 @@ exports.createPages = ({ graphql, actions }) => {
         context: {
           // This is the $slug variable
           // passed to blog-post.js
-          slug: node.slug,
-        },
+          slug: node.slug
+        }
       })
     })
     //highlight-end
@@ -328,7 +328,7 @@ You will need to stop and start your environment again using `gatsby develop`. W
 
 But nobody likes to go to a 404 page to find a blog post! So, let's link these up from the home page.
 
-### Linking to posts from the homepage.
+### Linking to posts from the homepage
 
 Since you already have your structure and query done for the `index.js` page, all you need to do is use the `Link` component to wrap your titles and you should be good to go.
 
@@ -340,7 +340,7 @@ import { Link, graphql } from "gatsby" //highlight-line
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <Layout>
       <SEO title="home" />
@@ -379,6 +379,6 @@ And that's it! When you wrap the title in the `Link` component and reference the
 
 ![Final product with links from the home page to the blog posts](./images/wordpress-source-plugin-home-to-post-links.gif)
 
-### Wrapping up.
+### Wrapping up
 
 You can apply the same procedure to calling and creating pages, custom post types, custom fields, taxonomies, and all the fun and flexible content WordPress is known for. This can be as simple or as complex as you would like it to be, so explore and have fun with it!

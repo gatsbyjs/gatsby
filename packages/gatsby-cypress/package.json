@@ -1,6 +1,6 @@
 {
   "name": "gatsby-cypress",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "description": "Cypress tools for Gatsby projects",
   "main": "index.js",
   "repository": {
@@ -15,12 +15,12 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7"
+    "@babel/runtime": "^7.9.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.1",
+    "@babel/core": "^7.9.6",
+    "babel-preset-gatsby-package": "^0.4.1",
     "cross-env": "^5.2.1"
   },
   "keywords": [
@@ -35,9 +35,9 @@
   },
   "readme": "README.md",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
     "node": ">=10.13.0"

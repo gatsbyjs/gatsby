@@ -22,11 +22,17 @@ module.exports = (
     removeAccents = false,
     enableCustomId = false,
     isIconAfterHeader = false,
+    elements = null
   }
 ) => {
   slugs.reset()
 
   visit(markdownAST, `heading`, node => {
+    // If elements array exists, do not create links for heading types not included in array
+    if (Array.isArray(elements) && !elements.includes(`h${node.depth}`)) {
+      return
+    }
+
     let id
     if (enableCustomId && node.children.length > 0) {
       const last = node.children[node.children.length - 1]
@@ -67,16 +73,16 @@ module.exports = (
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
+            class: `${className} ${isIconAfterHeader ? `after` : `before`}`
           },
           hChildren: [
             {
               type: `raw`,
               // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
-              value: icon,
-            },
-          ],
-        },
+              value: icon
+            }
+          ]
+        }
       })
     }
   })

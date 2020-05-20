@@ -8,12 +8,12 @@ To add tags to your blog posts, you will first want to have your site set up to 
 
 The process will essentially look like this:
 
-1.  Add tags to your `markdown` files
-2.  Write a query to get all tags for your posts
-3.  Make a tags page template (for `/tags/{tag}`)
-4.  Modify `gatsby-node.js` to render pages using that template
-5.  Make a tags index page (`/tags`) that renders a list of all tags
-6.  _(optional)_ Render tags inline with your blog posts
+1. Add tags to your `markdown` files
+2. Write a query to get all tags for your posts
+3. Make a tags page template (for `/tags/{tag}`)
+4. Modify `gatsby-node.js` to render pages using that template
+5. Make a tags index page (`/tags`) that renders a list of all tags
+6. _(optional)_ Render tags inline with your blog posts
 
 ## Add tags to your `markdown` files
 
@@ -104,7 +104,7 @@ const Tags = ({ pageContext, data }) => {
 
 Tags.propTypes = {
   pageContext: PropTypes.shape({
-    tag: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired
   }),
   data: PropTypes.shape({
     allMarkdownRemark: PropTypes.shape({
@@ -113,16 +113,16 @@ Tags.propTypes = {
         PropTypes.shape({
           node: PropTypes.shape({
             frontmatter: PropTypes.shape({
-              title: PropTypes.string.isRequired,
+              title: PropTypes.string.isRequired
             }),
             fields: PropTypes.shape({
-              slug: PropTypes.string.isRequired,
-            }),
-          }),
+              slug: PropTypes.string.isRequired
+            })
+          })
         }).isRequired
-      ),
-    }),
-  }),
+      )
+    })
+  })
 }
 
 export default Tags
@@ -203,7 +203,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   posts.forEach(({ node }) => {
     createPage({
       path: node.fields.slug,
-      component: blogPostTemplate,
+      component: blogPostTemplate
     })
   })
 
@@ -216,8 +216,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
       component: tagTemplate,
       context: {
-        tag: tag.fieldValue,
-      },
+        tag: tag.fieldValue
+      }
     })
   })
 }
@@ -248,9 +248,9 @@ const TagsPage = ({
   data: {
     allMarkdownRemark: { group },
     site: {
-      siteMetadata: { title },
-    },
-  },
+      siteMetadata: { title }
+    }
+  }
 }) => (
   <div>
     <Helmet title={title} />
@@ -275,16 +275,16 @@ TagsPage.propTypes = {
       group: PropTypes.arrayOf(
         PropTypes.shape({
           fieldValue: PropTypes.string.isRequired,
-          totalCount: PropTypes.number.isRequired,
+          totalCount: PropTypes.number.isRequired
         }).isRequired
-      ),
+      )
     }),
     site: PropTypes.shape({
       siteMetadata: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-      }),
-    }),
-  }),
+        title: PropTypes.string.isRequired
+      })
+    })
+  })
 }
 
 export default TagsPage

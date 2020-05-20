@@ -4,14 +4,12 @@ import PropTypes from "prop-types"
 import { globalHistory as history } from "@reach/router/lib/history"
 import SessionStorage from "./StateStorage"
 
+export const ScrollBehaviorContext = React.createContext()
+
 const propTypes = {
   shouldUpdateScroll: PropTypes.func,
   children: PropTypes.element.isRequired,
-  location: PropTypes.object.isRequired,
-}
-
-const childContextTypes = {
-  scrollBehavior: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 class ScrollContext extends React.Component {
@@ -22,14 +20,8 @@ class ScrollContext extends React.Component {
       addTransitionHook: history.listen,
       stateStorage: new SessionStorage(),
       getCurrentLocation: () => this.props.location,
-      shouldUpdateScroll: this.shouldUpdateScroll,
+      shouldUpdateScroll: this.shouldUpdateScroll
     })
-  }
-
-  getChildContext() {
-    return {
-      scrollBehavior: this,
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -41,7 +33,7 @@ class ScrollContext extends React.Component {
     }
 
     const prevRouterProps = {
-      location: prevProps.location,
+      location: prevProps.location
     }
 
     this.scrollBehavior.updateScroll(prevRouterProps, { history, location })
@@ -84,11 +76,14 @@ class ScrollContext extends React.Component {
   }
 
   render() {
-    return React.Children.only(this.props.children)
+    return (
+      <ScrollBehaviorContext.Provider value={this}>
+        {React.Children.only(this.props.children)}
+      </ScrollBehaviorContext.Provider>
+    )
   }
 }
 
 ScrollContext.propTypes = propTypes
-ScrollContext.childContextTypes = childContextTypes
 
 export default ScrollContext

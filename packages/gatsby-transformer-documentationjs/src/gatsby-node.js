@@ -35,8 +35,8 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
       type: `DocumentationJSComponentDescription`,
       mediaType: `text/markdown`,
       content: markdownStr,
-      contentDigest: createContentDigest(markdownStr),
-    },
+      contentDigest: createContentDigest(markdownStr)
+    }
   }
 
   return descriptionNode
@@ -146,7 +146,7 @@ exports.createResolvers = ({ createResolvers }) => {
               typeDef: context.nodeModel.getNodeById(
                 { id: obj.typeDef___NODE, type: `DocumentationJs` },
                 { path: context.path }
-              ),
+              )
             }
           }
 
@@ -173,9 +173,9 @@ exports.createResolvers = ({ createResolvers }) => {
           }
 
           return visit(resolve(source.type))
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }
 
@@ -201,7 +201,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
   let documentationJson
   try {
     documentationJson = await documentation.build(node.absolutePath, {
-      shallow: true,
+      shallow: true
     })
   } catch (e) {
     // Ignore as there'll probably be other tooling already checking for errors
@@ -225,7 +225,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       if (index !== -1) {
         return prepareNodeForDocs(documentationJson[index], {
-          commentNumber: index,
+          commentNumber: index
         }).node.id
       }
 
@@ -278,8 +278,8 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         parent,
         children: [],
         internal: {
-          type: `DocumentationJs`,
-        },
+          type: `DocumentationJs`
+        }
       }
 
       const children = []
@@ -305,7 +305,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `since`,
         `lends`,
         `examples`,
-        `tags`,
+        `tags`
       ])
 
       picked.optional = false
@@ -344,7 +344,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
           picked[`${fieldName}___NODE`] = childNode.id
           children.push({
-            node: childNode,
+            node: childNode
           })
         }
       })
@@ -357,7 +357,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `returns`,
         `throws`,
         `todos`,
-        `yields`,
+        `yields`
       ]
       docsSubfields.forEach(fieldName => {
         if (docsJson[fieldName] && docsJson[fieldName].length > 0) {
@@ -374,12 +374,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
               const adjustedObj = {
                 ...docObj,
-                path: [...docsJson.path, { fieldName, fieldIndex }],
+                path: [...docsJson.path, { fieldName, fieldIndex }]
               }
 
               const nodeHierarchy = prepareNodeForDocs(adjustedObj, {
                 level: level + 1,
-                parent: docSkeletonNode.id,
+                parent: docSkeletonNode.id
               })
               children.push(nodeHierarchy)
               return nodeHierarchy.node.id
@@ -407,7 +407,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               acc[`${key}___NODE`] = membersOfType.map(member => {
                 const nodeHierarchy = prepareNodeForDocs(member, {
                   level: level + 1,
-                  parent: docSkeletonNode.id,
+                  parent: docSkeletonNode.id
                 })
                 children.push(nodeHierarchy)
                 return nodeHierarchy.node.id
@@ -427,14 +427,14 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
             highlighted: Prism.highlight(
               example.description,
               Prism.languages.javascript
-            ),
+            )
           }
         })
       }
 
       const docNode = {
         ...docSkeletonNode,
-        ...picked,
+        ...picked
       }
       docNode.internal.contentDigest = createContentDigest(docNode)
 
@@ -444,7 +444,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       const nodeHierarchy = {
         node: docNode,
-        children,
+        children
       }
       handledDocs.set(docsJson, nodeHierarchy)
       return nodeHierarchy
@@ -460,7 +460,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
           createNode(nodeHierarchy.node)
           createParentChildLink({
             parent,
-            child: nodeHierarchy.node,
+            child: nodeHierarchy.node
           })
           createChildrenNodesRecursively(nodeHierarchy)
         })
@@ -469,7 +469,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
     createChildrenNodesRecursively({
       node,
-      children: rootNodes,
+      children: rootNodes
     })
 
     return true

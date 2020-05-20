@@ -17,6 +17,11 @@ const BENCHMARK_REPORTING_URL =
 
 // Track the last received `api` because not all events in this plugin will receive one
 let lastApi
+// Current benchmark state, if any. If none then create one on next lifecycle.
+let benchMeta
+
+let nextBuildType = process.env.BENCHMARK_BUILD_TYPE ?? `initial`
+
 function reportInfo(...args) {
   ;(lastApi ? lastApi.reporter : console).info(...args)
 }
@@ -27,7 +32,7 @@ function reportError(...args) {
 function execToStr(cmd) {
   return String(
     execSync(cmd, {
-      encoding: `utf8`,
+      encoding: `utf8`
     }) ?? ``
   ).trim()
 }
@@ -52,7 +57,7 @@ class BenchMeta {
       preBootstrap: 0, // Gatsby onPreBootstrap life cycle
       preBuild: 0, // Gatsby onPreBuild life cycle
       postBuild: 0, // Gatsby onPostBuild life cycle
-      benchmarkEnd: 0, // End of benchmark itself
+      benchmarkEnd: 0 // End of benchmark itself
     }
     this.started = false
   }
@@ -75,7 +80,8 @@ class BenchMeta {
      * extract the configuration from there
      */
 
-    let buildType = process.env.BENCHMARK_BUILD_TYPE
+    let buildType = nextBuildType
+    nextBuildType = process.env.BENCHMARK_BUILD_TYPE_NEXT ?? `DATA_UPDATE`
     const incomingHookBodyEnv = process.env.INCOMING_HOOK_BODY
 
     if (CI_NAME === `netlify` && incomingHookBodyEnv) {
@@ -96,7 +102,7 @@ class BenchMeta {
       contentSource: process.env.BENCHMARK_CONTENT_SOURCE,
       siteType: process.env.BENCHMARK_SITE_TYPE,
       repoName: process.env.BENCHMARK_REPO_NAME,
-      buildType: buildType,
+      buildType: buildType
     }
   }
 
@@ -107,7 +113,7 @@ class BenchMeta {
       rss: rss ?? 0,
       heapTotal: heapTotal ?? 0,
       heapUsed: heapUsed ?? 0,
-      external: external ?? 0,
+      external: external ?? 0
     }
 
     for (const key in this.timestamps) {
@@ -173,18 +179,18 @@ class BenchMeta {
         gatsby: gatsbyVersion,
         gatsbyCli: gatsbyCliVersion,
         sharp: sharpVersion,
-        webpack: webpackVersion,
+        webpack: webpackVersion
       },
       counts: {
         pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
-        other: otherCount,
+        other: otherCount
       },
       memory,
       publicJsSize,
-      ...benchmarkMetadata,
+      ...benchmarkMetadata
     }
   }
 
@@ -244,9 +250,9 @@ class BenchMeta {
       method: `POST`,
       headers: {
         "content-type": `application/json`,
-        "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET,
+        "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET
       },
-      body: json,
+      body: json
     }).then(res => {
       lastStatus = res.status
       if ([401, 500].includes(lastStatus)) {
@@ -272,8 +278,21 @@ class BenchMeta {
   }
 }
 
+function init(lifecycle) {
+  if (!benchMeta) {
+    benchMeta = new BenchMeta()
+    // This should be set in the gatsby-config of the site when enabling this plugin
+    reportInfo(
+      `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${BENCHMARK_REPORTING_URL ||
+        `the CLI`}`
+    )
+
+    benchMeta.markStart()
+  }
+}
+
 process.on(`exit`, () => {
-  if (!benchMeta.flushed) {
+  if (benchMeta && !benchMeta.flushed) {
     // This is probably already a non-zero exit as otherwise node should wait for the last promise to complete
     reportError(
       `gatsby-plugin-benchmark-reporting error`,
@@ -285,35 +304,36 @@ process.on(`exit`, () => {
   }
 })
 
-const benchMeta = new BenchMeta()
-
 async function onPreInit(api) {
   lastApi = api
-  // This should be set in the gatsby-config of the site when enabling this plugin
-  reportInfo(
-    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${BENCHMARK_REPORTING_URL ||
-      `the CLI`}`
-  )
-
-  benchMeta.markStart()
+  init(`preInit`)
   benchMeta.markDataPoint(`preInit`)
 }
 
 async function onPreBootstrap(api) {
   lastApi = api
+  init(`preBootstrap`)
   benchMeta.markDataPoint(`preBootstrap`)
 }
 
 async function onPreBuild(api) {
   lastApi = api
+  init(`preBuild`)
   benchMeta.markDataPoint(`preBuild`)
 }
 
 async function onPostBuild(api) {
+  if (!benchMeta) {
+    // Ignore. Don't start measuring on this event.
+    return
+  }
+
   lastApi = api
 
   benchMeta.markDataPoint(`postBuild`)
-  return benchMeta.markEnd()
+  await benchMeta.markEnd()
+
+  benchMeta = undefined
 }
 
 module.exports = { onPreInit, onPreBootstrap, onPreBuild, onPostBuild }

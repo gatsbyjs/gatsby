@@ -2,7 +2,7 @@ jest.mock(`fs-extra`, () => {
   return {
     existsSync: () => false,
     copy: jest.fn(),
-    ensureDir: jest.fn(),
+    ensureDir: jest.fn()
   }
 })
 const Remark = require(`remark`)
@@ -14,7 +14,7 @@ const plugin = require(`../`)
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
-  pedantic: true,
+  pedantic: true
 })
 
 const imageURL = markdownAST => markdownAST.children[0].children[0].url
@@ -25,14 +25,14 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   })
 
   const markdownNode = {
-    parent: {},
+    parent: {}
   }
   const getNode = () => {
     return {
       dir: ``,
       internal: {
-        type: `File`,
-      },
+        type: `File`
+      }
     }
   }
   const getFiles = filePath => [
@@ -42,8 +42,8 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       extension: filePath
         .split(`.`)
         .pop()
-        .trim(),
-    },
+        .trim()
+    }
   ]
 
   describe(`images`, () => {
@@ -56,7 +56,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
           files: getFiles(path),
           markdownAST,
           markdownNode,
-          getNode,
+          getNode
         })
 
         expect(fsExtra.copy).toHaveBeenCalledWith(
@@ -74,7 +74,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
           files: getFiles(path),
           markdownAST,
           markdownNode,
-          getNode,
+          getNode
         })
 
         expect(fsExtra.copy).not.toHaveBeenCalled()
@@ -134,7 +134,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       files: getFiles(path),
       markdownAST,
       markdownNode,
-      getNode,
+      getNode
     })
 
     expect(fsExtra.copy).toHaveBeenCalled()
@@ -152,7 +152,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       files: [...getFiles(path1), ...getFiles(path2)],
       markdownAST,
       markdownNode,
-      getNode,
+      getNode
     })
 
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
@@ -170,7 +170,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       files: [...getFiles(path1), ...getFiles(path2)],
       markdownAST,
       markdownNode,
-      getNode,
+      getNode
     })
 
     expect(fsExtra.copy).toHaveBeenCalledTimes(1)
@@ -212,7 +212,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       files: [...getFiles(videoPath), ...getFiles(posterPath)],
       markdownAST,
       markdownNode,
-      getNode,
+      getNode
     })
 
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
@@ -251,7 +251,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     await plugin({
       markdownAST,
       markdownNode,
-      getNode,
+      getNode
     }).then(() => {
       // we expect the resulting markdownAST to consist
       // of a paragraph with three children:
@@ -280,7 +280,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       return plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
         {
-          destinationDir: invalidDestinationDir,
+          destinationDir: invalidDestinationDir
         }
       ).catch(e => {
         expect(e).toEqual(expect.stringContaining(invalidDestinationDir))
@@ -297,7 +297,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       return plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
         {
-          destinationDir: customDestinationDir,
+          destinationDir: customDestinationDir
         }
       ).catch(e => {
         expect(e).toEqual(expect.stringContaining(invalidDestinationDir))
@@ -318,7 +318,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       await plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
         {
-          destinationDir: validDestinationDir,
+          destinationDir: validDestinationDir
         }
       ).then(v => {
         expect(v).toBeDefined()
@@ -364,10 +364,10 @@ describe(`gatsby-remark-copy-linked-files`, () => {
           markdownAST,
           markdownNode,
           pathPrefix,
-          getNode,
+          getNode
         },
         {
-          destinationDir: validDestinationDir,
+          destinationDir: validDestinationDir
         }
       ).then(v => {
         expect(v).toBeDefined()
@@ -390,7 +390,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
           markdownAST,
           markdownNode,
           pathPrefix,
-          getNode,
+          getNode
         },
         { destinationDir: customDestinationDir }
       ).then(v => {
@@ -417,7 +417,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         files: getFiles(imagePath),
         markdownAST,
         markdownNode,
-        getNode,
+        getNode
       }).then(v => {
         expect(v).toBeDefined()
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
@@ -444,14 +444,14 @@ describe(`gatsby-remark-copy-linked-files`, () => {
             ...getFiles(jpgImagePath),
             ...getFiles(jpegImagePath),
             ...getFiles(bmpImagePath),
-            ...getFiles(tiffImagePath),
+            ...getFiles(tiffImagePath)
           ],
           markdownAST,
           markdownNode,
-          getNode,
+          getNode
         },
         {
-          ignoreFileExtensions: [],
+          ignoreFileExtensions: []
         }
       )
 

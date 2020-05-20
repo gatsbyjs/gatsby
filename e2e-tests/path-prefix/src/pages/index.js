@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { Link, navigate } from 'gatsby'
+import * as React from "react"
+import { Link, navigate } from "gatsby"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const IndexPage = () => (
   <Layout>

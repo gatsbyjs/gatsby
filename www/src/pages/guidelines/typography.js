@@ -8,13 +8,13 @@ import {
   Section,
   Columns,
   ContentColumn,
-  CopyColumn,
+  CopyColumn
 } from "../../components/guidelines/containers"
 import {
   Intro,
   PageHeading,
   SectionHeading,
-  SectionSubheading,
+  SectionSubheading
 } from "../../components/guidelines/typography"
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
@@ -26,7 +26,7 @@ import {
   fontSizes,
   fontWeights,
   letterSpacings,
-  lineHeights,
+  lineHeights
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
   Box,
@@ -34,7 +34,7 @@ import {
   Flex,
   Link,
   Heading,
-  Text,
+  Text
 } from "../../components/guidelines/system"
 
 const ExampleBox = styled(Box)({ pt: 4 })
@@ -174,7 +174,7 @@ const Typography = ({ location }) => (
                 css={{
                   overflow: `hidden`,
                   position: `relative`,
-                  whiteSpace: `nowrap`,
+                  whiteSpace: `nowrap`
                 }}
               >
                 Gatsby believed in the green light, the orgastic future that
@@ -193,7 +193,7 @@ const Typography = ({ location }) => (
                 <code
                   css={{
                     background: `transparent`,
-                    ":before, :after": { display: `none` },
+                    ":before, :after": { display: `none` }
                   }}
                 >
                   fontSizes[{index}]
@@ -300,7 +300,7 @@ const Typography = ({ location }) => (
               letterSpacing="tracked"
               pb={8}
               css={{
-                textTransform: `uppercase`,
+                textTransform: `uppercase`
               }}
             >
               greglobinski
@@ -389,7 +389,7 @@ const Typography = ({ location }) => (
               mb={4}
               letterSpacing="tracked"
               css={{
-                textTransform: `uppercase`,
+                textTransform: `uppercase`
               }}
             >
               The Future is Fast
@@ -469,8 +469,8 @@ const Typography = ({ location }) => (
         <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
           <MarketingColumn title="Modern web tech without the headache">
             Enjoy the power of the latest web technologies – React.js, Webpack,
-            modern JavaScript and CSS and more — all set up and waiting for
-            you to start building.
+            modern JavaScript and CSS and more — all set up and waiting for you
+            to start building.
           </MarketingColumn>
           <MarketingColumn title="Bring your own data">
             Gatsby’s rich data plugin ecosystem lets you build sites with the
@@ -532,7 +532,7 @@ const Typography = ({ location }) => (
             sx={{
               borderRightWidth: 1,
               borderRightStyle: `solid`,
-              borderColor: `ui.border`,
+              borderColor: `ui.border`
             }}
             pr={7}
           >
@@ -562,7 +562,7 @@ const Typography = ({ location }) => (
                 `Debugging Gatsby`,
                 `Adding website functionality`,
                 `Improving performance`,
-                `Localizing your site`,
+                `Localizing your site`
               ].map((item, index) => (
                 <SidebarLI key={`sidebar-item-2-${index}`}>{item}</SidebarLI>
               ))}

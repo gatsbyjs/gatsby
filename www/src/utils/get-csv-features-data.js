@@ -23,6 +23,6 @@ export const getFeaturesData = function(data) {
 
   return {
     sectionHeaders,
-    sections,
+    sections
   }
 }

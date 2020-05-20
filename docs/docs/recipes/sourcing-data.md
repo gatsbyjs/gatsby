@@ -19,7 +19,7 @@ This recipe shows you how to add custom data using `createNode()`.
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const pokemons = [
     { name: "Pikachu", type: "electric" },
-    { name: "Squirtle", type: "water" },
+    { name: "Squirtle", type: "water" }
   ]
 
   pokemons.forEach(pokemon => {
@@ -29,8 +29,8 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       id: createNodeId(`Pokemon-${pokemon.name}`),
       internal: {
         type: "Pokemon",
-        contentDigest: createContentDigest(pokemon),
-      },
+        contentDigest: createContentDigest(pokemon)
+      }
     }
     actions.createNode(node)
   })
@@ -59,7 +59,7 @@ query MyPokemonQuery {
 
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
-- Understand source plugins by building one in the [Pixabay source plugin tutorial](/tutorial/pixabay-source-plugin-tutorial/)
+- Understand source plugins by building one in the [source plugin tutorial](/tutorial/source-plugin-tutorial/)
 - The createNode function [documentation](/docs/actions/#createNode)
 
 ## Sourcing Markdown data for blog posts and pages with GraphQL
@@ -157,7 +157,7 @@ exports.createPages = async ({ actions, graphql }) => {
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     createPage({
       path: node.frontmatter.path,
-      component: path.resolve(`src/templates/post.js`),
+      component: path.resolve(`src/templates/post.js`)
     })
   })
 }
@@ -269,7 +269,7 @@ class Post extends Component {
 
 Post.propTypes = {
   data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
+  edges: PropTypes.array
 }
 
 export default Post
@@ -317,8 +317,8 @@ exports.createPages = async ({ graphql, actions }) => {
       // In the ^template's GraphQL query, 'id' will be available
       // as a GraphQL variable to query for this posts's data.
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }
@@ -501,7 +501,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
 }
 ```
@@ -511,19 +511,21 @@ exports.createPages = async ({ actions: { createPage } }) => {
 ```jsx:title=src/templates/all-pokemon.js
 import React from "react"
 
-export default ({ pageContext: { allPokemon } }) => (
-  <div>
-    <h1>Behold, the Pokémon!</h1>
-    <ul>
-      {allPokemon.map(pokemon => (
-        <li key={pokemon.id}>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-          <p>{pokemon.name}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-)
+export default function AllPokemon({ pageContext: { allPokemon } }) {
+  return (
+    <div>
+      <h1>Behold, the Pokémon!</h1>
+      <ul>
+        {allPokemon.map(pokemon => (
+          <li key={pokemon.id}>
+            <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+            <p>{pokemon.name}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 ```
 
 3. Run `gatsby develop` to fetch the data, build pages, and start the development server.
@@ -560,10 +562,10 @@ module.exports = {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://your-website/`,
-        apiBase: `api`, // optional, defaults to `jsonapi`
-      },
-    },
-  ],
+        apiBase: `api` // optional, defaults to `jsonapi`
+      }
+    }
+  ]
 }
 ```
 

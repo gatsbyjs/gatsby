@@ -91,7 +91,7 @@ function MemoryStoreWithPriorityBuckets() {
       let haveSomeTasks = false
       const tasksToRun = {}
 
-      for (let priority of priorityKeys) {
+      for (const priority of priorityKeys) {
         const taskWithSamePriority = queueMap.get(priority)
         const grabbedTaskIds = taskWithSamePriority.splice(0, remainingTasks)
         grabbedTaskIds.forEach(taskId => {
@@ -135,7 +135,7 @@ function MemoryStoreWithPriorityBuckets() {
       let haveSomeTasks = false
       const tasksToRun = {}
 
-      for (let priority of priorityKeys.reverse()) {
+      for (const priority of priorityKeys.reverse()) {
         const taskWithSamePriority = queueMap.get(priority)
         const deleteCount = Math.min(
           remainingTasks,
@@ -183,7 +183,7 @@ function MemoryStoreWithPriorityBuckets() {
     releaseLock: function(lockId, cb) {
       delete running[lockId]
       cb()
-    },
+    }
   }
 }
 

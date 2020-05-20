@@ -27,8 +27,8 @@ async function onCreateNode(
       parent: node.id,
       internal: {
         contentDigest: createContentDigest(obj),
-        type,
-      },
+        type
+      }
     }
     createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
@@ -42,7 +42,15 @@ async function onCreateNode(
   }
 
   const content = await loadNodeContent(node)
-  const parsedContent = JSON.parse(content)
+  let parsedContent
+  try {
+    parsedContent = JSON.parse(content)
+  } catch {
+    const hint = node.absolutePath
+      ? `file ${node.absolutePath}`
+      : `in node ${node.id}`
+    throw new Error(`Unable to parse JSON: ${hint}`)
+  }
 
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {

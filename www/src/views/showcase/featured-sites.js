@@ -10,7 +10,7 @@ import ShowcaseItemCategories from "./showcase-item-categories"
 import { ShowcaseIcon } from "../../assets/icons"
 import {
   mediaQueries,
-  colors,
+  colors
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 import Button from "../../components/button"
@@ -27,11 +27,11 @@ const featuredSitesCard = {
   marginRight: 6,
   [mediaQueries.xl]: {
     width: 360,
-    marginRight: 8,
+    marginRight: 8
   },
   [mediaQueries.xxl]: {
-    width: 400,
-  },
+    width: 400
+  }
 }
 
 const GradientOverlay = () => {
@@ -42,7 +42,7 @@ const GradientOverlay = () => {
   return (
     <div
       sx={{
-        background: t =>
+        background: () =>
           `linear-gradient(90deg, ${hex2rgba(gradientColor, 0)} 0%, ${hex2rgba(
             gradientColor,
             1
@@ -52,7 +52,7 @@ const GradientOverlay = () => {
         position: `absolute`,
         right: t => `-${t.space[6]}`,
         top: 0,
-        width: 60,
+        width: 60
       }}
     />
   )
@@ -77,15 +77,15 @@ class FeaturedSites extends Component {
           position: `relative`,
           display: `none`,
           [mediaQueries.lg]: {
-            display: `block`,
-          },
+            display: `block`
+          }
         }}
       >
         <div
           sx={{
             display: `flex`,
             alignItems: `center`,
-            flexWrap: `wrap`,
+            flexWrap: `wrap`
           }}
         >
           <h1
@@ -95,7 +95,7 @@ class FeaturedSites extends Component {
               fontWeight: `bold`,
               ml: 1,
               mr: 30,
-              my: 0,
+              my: 0
             }}
           >
             Featured Sites
@@ -107,15 +107,15 @@ class FeaturedSites extends Component {
               display: `none`,
               fontSize: 1,
               [mediaQueries.sm]: {
-                display: `block`,
+                display: `block`
               },
               "&&": {
                 borderBottom: 0,
                 cursor: `pointer`,
                 "&:hover": {
-                  color: `link.hoverColor`,
-                },
-              },
+                  color: `link.hoverColor`
+                }
+              }
             }}
             onClick={this.setFilterToFeatured}
           >
@@ -127,7 +127,7 @@ class FeaturedSites extends Component {
             css={{
               alignItems: `center`,
               display: `flex`,
-              marginLeft: `auto`,
+              marginLeft: `auto`
             }}
           >
             <div
@@ -137,8 +137,8 @@ class FeaturedSites extends Component {
                 fontSize: 1,
                 mr: 4,
                 [mediaQueries.md]: {
-                  display: `block`,
-                },
+                  display: `block`
+                }
               }}
             >
               Want to get featured?
@@ -163,7 +163,7 @@ class FeaturedSites extends Component {
               flexShrink: 0,
               margin: t => `0 -${t.space[6]}`,
               overflowX: `scroll`,
-              padding: t => `${t.space[6]} ${t.space[6]} 0`,
+              padding: t => `${t.space[6]} ${t.space[6]} 0`
             }}
           >
             {featured.slice(0, 9).map(node => (
@@ -171,7 +171,7 @@ class FeaturedSites extends Component {
                 key={node.id}
                 sx={{
                   ...featuredSitesCard,
-                  ...withTitleHover,
+                  ...withTitleHover
                 }}
               >
                 <Link
@@ -184,8 +184,8 @@ class FeaturedSites extends Component {
                       fontWeight: `bold`,
                       transition: t =>
                         `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform .3s ${t.transition.curve.default}`,
-                      "&:hover": { ...screenshotHover },
-                    },
+                      "&:hover": { ...screenshotHover }
+                    }
                   }}
                   to={node.fields.slug}
                   state={{ isModal: true }}
@@ -210,8 +210,8 @@ class FeaturedSites extends Component {
                     fontSize: 1,
                     fontWeight: `body`,
                     [mediaQueries.lg]: {
-                      marginTop: `auto`,
-                    },
+                      marginTop: `auto`
+                    }
                   }}
                 >
                   {node.built_by && (
@@ -241,10 +241,10 @@ class FeaturedSites extends Component {
                     transition: `default`,
                     "&:hover": {
                       transform: t => `translateY(-${t.space[1]})`,
-                      boxShadow: `overlay`,
-                    },
+                      boxShadow: `overlay`
+                    }
                   },
-                  ...featuredSitesCard,
+                  ...featuredSitesCard
                 }}
                 onClick={this.setFilterToFeatured}
               >
@@ -254,13 +254,13 @@ class FeaturedSites extends Component {
                     borderRadius: 1,
                     display: `flex`,
                     flexBasis: `100%`,
-                    position: `relative`,
+                    position: `relative`
                   }}
                 >
                   <span
                     sx={{
                       color: `gatsby`,
-                      mx: `auto`,
+                      mx: `auto`
                     }}
                   >
                     <span
@@ -271,15 +271,15 @@ class FeaturedSites extends Component {
                         mb: 6,
                         width: `auto`,
                         [mediaQueries.md]: {
-                          height: 64,
+                          height: 64
                         },
                         [mediaQueries.xl]: {
-                          height: 72,
+                          height: 72
                         },
                         "& svg": {
                           height: `100%`,
-                          ...svgStyles.active,
-                        },
+                          ...svgStyles.active
+                        }
                       }}
                     >
                       <span

@@ -10,7 +10,7 @@ export function withPrefix(path) {
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
-      path,
+      path
     ].join(`/`)
   )
 }
@@ -26,7 +26,7 @@ function normalizePath(path) {
 const NavLinkPropTypes = {
   activeClassName: PropTypes.string,
   activeStyle: PropTypes.object,
-  partiallyActive: PropTypes.bool,
+  partiallyActive: PropTypes.bool
 }
 
 // Set up IntersectionObserver
@@ -59,7 +59,7 @@ class GatsbyLink extends React.Component {
     }
 
     this.state = {
-      IOSupported,
+      IOSupported
     }
     this.handleRef = this.handleRef.bind(this)
   }
@@ -109,7 +109,7 @@ class GatsbyLink extends React.Component {
         className: [this.props.className, this.props.activeClassName]
           .filter(Boolean)
           .join(` `),
-        style: { ...this.props.style, ...this.props.activeStyle },
+        style: { ...this.props.style, ...this.props.activeStyle }
       }
     }
     return null
@@ -169,9 +169,15 @@ class GatsbyLink extends React.Component {
           ) {
             e.preventDefault()
 
+            let shouldReplace = replace
+            const isCurrent = encodeURI(to) === window.location.pathname
+            if (typeof replace !== `boolean` && isCurrent) {
+              shouldReplace = true
+            }
+
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            navigate(to, { state, replace })
+            navigate(to, { state, replace: shouldReplace })
           }
 
           return true
@@ -187,7 +193,7 @@ GatsbyLink.propTypes = {
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
-  state: PropTypes.object,
+  state: PropTypes.object
 }
 
 const showDeprecationWarning = (functionName, altFunctionName, version) =>

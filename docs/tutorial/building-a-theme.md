@@ -231,16 +231,16 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: "data",
-      },
+        path: "data"
+      }
     },
     {
       resolve: "gatsby-transformer-yaml",
       options: {
-        typeName: "Event",
-      },
-    },
-  ],
+        typeName: "Event"
+      }
+    }
+  ]
 }
 ```
 
@@ -385,9 +385,9 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
-      },
-    },
+        resolve: source => slugify(source.name)
+      }
+    }
   })
 }
 // highlight-end
@@ -415,9 +415,9 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
-      },
-    },
+        resolve: source => slugify(source.name)
+      }
+    }
   })
 }
 ```
@@ -443,9 +443,9 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
-      },
-    },
+        resolve: source => slugify(source.name)
+      }
+    }
   })
 }
 ```
@@ -470,9 +470,9 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
-      },
-    },
+        resolve: source => slugify(source.name)
+      }
+    }
   })
   // highlight-end
 }
@@ -505,7 +505,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const basePath = "/"
   actions.createPage({
     path: basePath,
-    component: require.resolve("./src/templates/events.js"),
+    component: require.resolve("./src/templates/events.js")
   })
 }
 // highlight-end
@@ -523,7 +523,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const basePath = "/"
   actions.createPage({
     path: basePath,
-    component: require.resolve("./src/templates/events.js"),
+    component: require.resolve("./src/templates/events.js")
   })
 
   // highlight-start
@@ -557,7 +557,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const basePath = "/"
   actions.createPage({
     path: basePath,
-    component: require.resolve("./src/templates/events.js"),
+    component: require.resolve("./src/templates/events.js")
   })
 
   const result = await graphql(`
@@ -586,8 +586,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       path: slug,
       component: require.resolve("./src/templates/event.js"),
       context: {
-        eventID: event.id,
-      },
+        eventID: event.id
+      }
     })
   })
   // highlight-end
@@ -598,7 +598,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "events" and "event" template components.
+### Create the "events" and "event" template components
 
 The last step to make sure that these pages build is to create the page template components.
 
@@ -790,7 +790,7 @@ const EventList = ({ events }) => (
           {new Date(event.startDate).toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
-            year: "numeric",
+            year: "numeric"
           })}{" "}
           in {event.location}
         </li>
@@ -936,7 +936,7 @@ const getDate = (date, { day = true, month = true, year = true } = {}) =>
   date.toLocaleDateString("en-US", {
     day: day ? "numeric" : undefined,
     month: month ? "long" : undefined,
-    year: year ? "numeric" : undefined,
+    year: year ? "numeric" : undefined
   })
 
 const EventDate = ({ startDate, endDate }) => {
@@ -998,16 +998,16 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
       resolve: "gatsby-source-filesystem",
       options: {
         // highlight-next-line
-        path: contentPath,
-      },
+        path: contentPath
+      }
     },
     {
       resolve: "gatsby-transformer-yaml",
       options: {
-        typeName: "Event",
-      },
-    },
-  ],
+        typeName: "Event"
+      }
+    }
+  ]
 })
 ```
 
@@ -1047,6 +1047,8 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
+Note that the example above sets default values for `options`. This behavior was also included in the prior `gatsby-config.js` example. You only need to set default values once, but both mechanisms for doing so are valid.
+
 > 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
@@ -1062,10 +1064,10 @@ module.exports = {
       resolve: "gatsby-theme-events",
       options: {
         contentPath: "events",
-        basePath: "/events",
-      },
-    },
-  ],
+        basePath: "/events"
+      }
+    }
+  ]
 }
 ```
 
@@ -1109,16 +1111,16 @@ module.exports = ({ contentPath = "data", basePath = "/" }) => ({
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: contentPath,
-      },
+        path: contentPath
+      }
     },
     {
       resolve: "gatsby-transformer-yaml",
       options: {
-        typeName: "Event",
-      },
-    },
-  ],
+        typeName: "Event"
+      }
+    }
+  ]
 })
 ```
 
@@ -1130,21 +1132,21 @@ To use it, create a `theme.js` file in `gatsby-theme-events/src`:
 export const theme = {
   space: [0, 4, 8, 16, 32],
   fonts: {
-    body: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif",
+    body: "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
   },
   fontSizes: [16, 18, 20, 22, 27, 36],
   lineHeights: {
     body: 1.45,
-    heading: 1.1,
+    heading: 1.1
   },
   colors: {
     gray: ["#efefef", "#ddd", "#333", "#111"],
     background: "#fff",
-    primary: "rebeccapurple",
+    primary: "rebeccapurple"
   },
   sizes: {
     default: "90vw",
-    max: "540px",
+    max: "540px"
   },
   text: {
     heading: {
@@ -1156,9 +1158,9 @@ export const theme = {
       padding: 3,
       width: "default",
       a: {
-        color: "inherit",
-      },
-    },
+        color: "inherit"
+      }
+    }
   },
   layout: {
     container: {
@@ -1169,8 +1171,8 @@ export const theme = {
       color: "gray.2",
       fontFamily: "body",
       fontSize: 1,
-      lineHeight: "body",
-    },
+      lineHeight: "body"
+    }
   },
   styles: {
     h1: {
@@ -1178,23 +1180,23 @@ export const theme = {
       fontSize: 5,
       fontWeight: "bold",
       lineHeight: "heading",
-      margin: "1rem 0 0",
+      margin: "1rem 0 0"
     },
     ul: {
       borderTop: "1px solid",
       borderColor: "gray.0",
       listStyle: "none",
-      padding: 0,
+      padding: 0
     },
     li: {
       borderBottom: "1px solid",
       borderColor: "gray.1",
       padding: 2,
       "&:focus-within,&:hover": {
-        backgroundColor: "gray.0",
-      },
-    },
-  },
+        backgroundColor: "gray.0"
+      }
+    }
+  }
 }
 
 export default theme
@@ -1290,7 +1292,7 @@ const EventList = ({ events }) => {
             {new Date(event.startDate).toLocaleDateString("en-US", {
               month: "long",
               day: "numeric",
-              year: "numeric",
+              year: "numeric"
             })}{" "}
             in {event.location}
             // highlight-next-line
@@ -1413,7 +1415,7 @@ Create a new `gatsby-config.js` file in the root:
 
 ```javascript:title=theme-test/gatsby-config.js
 module.exports = {
-  plugins: ["@jlengstorf/gatsby-theme-events"],
+  plugins: ["@jlengstorf/gatsby-theme-events"]
 }
 ```
 
@@ -1480,8 +1482,8 @@ import { theme } from "@jlengstorf/gatsby-theme-events"
 
 export default merge({}, theme, {
   colors: {
-    primary: "blue",
-  },
+    primary: "blue"
+  }
 })
 ```
 
@@ -1528,7 +1530,9 @@ For example, create a new file to override the layout component: `theme-test/src
 ```jsx:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
 
-export default ({ children }) => <>{children}</>
+export default function Layout({ children }) {
+  return <>{children}</>
+}
 ```
 
 If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:

@@ -27,6 +27,7 @@ export const TAGS_AND_DOCS = new Map([
   [`contentful`, `/docs/sourcing-from-contentful/`],
   [`contest`, ``],
   [`core-concepts`, `/docs/gatsby-core-philosophy/`],
+  [`cosmic`, ``],
   [`cutting-edge-experiences`, ``],
   [`data-visualization`, ``],
   [`deployment`, `/docs/deploying-and-hosting/`],
@@ -90,9 +91,9 @@ export const TAGS_AND_DOCS = new Map([
   [`v2`, ``],
   [
     `web-building-blocks`,
-    `/docs/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks`,
+    `/docs/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks`
   ],
   [`wordpress`, `/docs/sourcing-from-wordpress/`],
   [`100-Days-of-Gatsby`, ``],
-  [`lambda`, ``],
+  [`lambda`, ``]
 ])

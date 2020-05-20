@@ -7,7 +7,7 @@ const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
-const { getRepositoryId: _getRepositoryId } = require(`./repository-id`)
+import { getRepositoryId as _getRepositoryId } from "./repository-id"
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -154,7 +154,7 @@ module.exports = class AnalyticsTracker {
         error.forEach(err => {
           this.formatErrorAndStoreEvent(eventType, {
             error: err,
-            ...restOfTags,
+            ...restOfTags
           })
         })
         return
@@ -168,7 +168,7 @@ module.exports = class AnalyticsTracker {
         type: tags.error?.type,
         // see if we need empty string or can just use NULL
         stack: cleanPaths(tags.error?.error?.stack || ``),
-        context: cleanPaths(JSON.stringify(tags.error?.context)),
+        context: cleanPaths(JSON.stringify(tags.error?.context))
       }
 
       delete tags.error
@@ -190,17 +190,13 @@ module.exports = class AnalyticsTracker {
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
       dbEngine: this.getDbEngine(),
-      ...this.getRepositoryId(),
+      ...this.getRepositoryId()
     }
     this.store.addEvent(event)
   }
 
   getDbEngine() {
-    if (process.env.GATSBY_DB_NODES === `loki`) {
-      return `loki`
-    } else {
-      return `redux`
-    }
+    return `redux`
   }
 
   getMachineId() {
@@ -247,7 +243,7 @@ module.exports = class AnalyticsTracker {
       arch: os.arch(),
       ci: isCI(),
       ciName: getCIName(),
-      docker: isDocker(),
+      docker: isDocker()
     }
     this.osInfo = osInfo
     return osInfo
@@ -277,7 +273,7 @@ module.exports = class AnalyticsTracker {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
     this.metadataCache[event] = Object.assign(cachedEvent, {
-      siteMeasurements: Object.assign(cachedMeasurements, obj),
+      siteMeasurements: Object.assign(cachedMeasurements, obj)
     })
   }
 
@@ -313,7 +309,7 @@ module.exports = class AnalyticsTracker {
       mean: mean,
       median: median,
       stdDev: stdDev,
-      skewness: !Number.isNaN(skewness) ? skewness : 0,
+      skewness: !Number.isNaN(skewness) ? skewness : 0
     }
   }
 

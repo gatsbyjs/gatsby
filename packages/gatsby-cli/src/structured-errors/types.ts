@@ -14,21 +14,23 @@ export interface ILocationPosition {
   column: number
 }
 
+export interface IStructuredStackFrame {
+  fileName: string
+  functionName?: string
+  lineNumber?: number
+  columnNumber?: number
+}
+
 export interface IStructuredError {
   code?: string
   text: string
-  stack: {
-    fileName: string
-    functionName?: string
-    lineNumber?: number
-    columnNumber?: number
-  }[]
+  stack: IStructuredStackFrame[]
   filePath?: string
   location?: {
     start: ILocationPosition
     end?: ILocationPosition
   }
-  error?: unknown
+  error?: Error
   group?: string
   level: IErrorMapEntry["level"]
   type?: IErrorMapEntry["type"]
@@ -46,12 +48,12 @@ export enum Level {
   ERROR = `ERROR`,
   WARNING = `WARNING`,
   INFO = `INFO`,
-  DEBUG = `DEBUG`,
+  DEBUG = `DEBUG`
 }
 
 export enum Type {
   GRAPHQL = `GRAPHQL`,
   CONFIG = `CONFIG`,
   WEBPACK = `WEBPACK`,
-  PLUGIN = `PLUGIN`,
+  PLUGIN = `PLUGIN`
 }

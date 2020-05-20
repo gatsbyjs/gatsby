@@ -47,28 +47,28 @@ module.exports = {
     social: [
       {
         name: `Twitter`,
-        url: `https://twitter.com/gatsbyjs`,
+        url: `https://twitter.com/gatsbyjs`
       },
       {
         name: `GitHub`,
-        url: `https://github.com/gatsbyjs`,
-      },
-    ],
+        url: `https://github.com/gatsbyjs`
+      }
+    ]
   },
   plugins: [
     {
       resolve: `gatsby-theme-blog`,
       options: {
-        basePath: `/blog`,
-      },
+        basePath: `/blog`
+      }
     },
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        basePath: `/notes`,
-      },
-    },
-  ],
+        basePath: `/notes`
+      }
+    }
+  ]
 }
 ```
 
@@ -159,13 +159,15 @@ Feel free to make the text of your bio anything you like, but the component will
 import React, { Fragment } from "react"
 import { Styled } from "theme-ui"
 
-export default () => (
-  <Fragment>
-    Words by <Styled.a href="http://example.com/">Your Name</Styled.a>.
-    <br />
-    Change me. Your awesome bio, about how great you are!
-  </Fragment>
-)
+export default function BioContent() {
+  return (
+    <Fragment>
+      Words by <Styled.a href="http://example.com/">Your Name</Styled.a>.
+      <br />
+      Change me. Your awesome bio, about how great you are!
+    </Fragment>
+  )
+}
 ```
 
 ### Shadow Theme-UI
@@ -195,10 +197,10 @@ export default merge(defaultTheme, {
       dark: {
         background: "indigo",
         text: "ghostwhite",
-        primary: "gold",
-      },
-    },
-  },
+        primary: "gold"
+      }
+    }
+  }
 })
 ```
 
@@ -226,16 +228,16 @@ module.exports = {
     {
       resolve: `gatsby-theme-blog`,
       options: {
-        basePath: `/`,
-      },
+        basePath: `/`
+      }
     },
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        basePath: `/notes`,
-      },
-    },
-  ],
+        basePath: `/notes`
+      }
+    }
+  ]
 }
 ```
 
@@ -268,21 +270,21 @@ module.exports = {
     menuLinks: [
       {
         name: `Blog`,
-        url: `/`,
+        url: `/`
       },
       {
         name: `Notes`,
-        url: `/notes`,
-      },
+        url: `/notes`
+      }
     ],
     // highlight-end
     social: [
       // ...social array is unchanged.
-    ],
+    ]
   },
   plugins: [
     // ...plugins array is unchanged.
-  ],
+  ]
 }
 ```
 
@@ -293,7 +295,7 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Styled, css } from "theme-ui"
 
-export default () => {
+export default function Navigation() {
   const data = useStaticQuery(
     graphql`
       query SiteMetaData {
@@ -312,7 +314,7 @@ export default () => {
   return (
     <nav
       css={css({
-        py: 2, // Short form for paddingTop and paddingBottom
+        py: 2 // Short form for paddingTop and paddingBottom
       })}
     >
       <ul
@@ -320,7 +322,7 @@ export default () => {
           display: `flex`,
           listStyle: `none`,
           margin: 0,
-          padding: 0,
+          padding: 0
         })}
       >
         {navLinks.map(link => (
@@ -328,8 +330,8 @@ export default () => {
             css={css({
               marginRight: 2,
               ":last-of-type": {
-                marginRight: 0,
-              },
+                marginRight: 0
+              }
             })}
           >
             <Styled.a
@@ -338,8 +340,8 @@ export default () => {
                 fontWeight: `bold`,
                 textDecoration: `none`,
                 ":hover": {
-                  textDecoration: `underline`,
-                },
+                  textDecoration: `underline`
+                }
               })}
               as={Link}
               to={link.url}
@@ -376,7 +378,7 @@ import React from "react"
 import { css } from "theme-ui"
 import Navigation from "../../components/navigation" // highlight-line
 
-export default () => {
+export default function Header() {
   return (
     <header>
       <div
@@ -384,7 +386,7 @@ export default () => {
           maxWidth: `container`,
           mx: `auto`,
           px: 3,
-          pt: 4,
+          pt: 4
         })}
       >
         <Navigation /> // highlight-line

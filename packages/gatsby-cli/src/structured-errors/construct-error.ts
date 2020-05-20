@@ -6,7 +6,7 @@ import { IConstructError, IStructuredError } from "./types"
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema
 const constructError = ({
-  details: { id, ...otherDetails },
+  details: { id, ...otherDetails }
 }: IConstructError): IStructuredError => {
   const result: IErrorMapEntry = (id && errorMap[id]) || defaultError
 
@@ -18,8 +18,8 @@ const constructError = ({
     text: result.text(otherDetails.context),
     stack: otherDetails.error
       ? sanitizeStructuredStackTrace(stackTrace.parse(otherDetails.error))
-      : null,
-    docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`,
+      : [],
+    docsUrl: result.docsUrl || `https://gatsby.dev/issue-how-to`
   }
 
   if (id) {

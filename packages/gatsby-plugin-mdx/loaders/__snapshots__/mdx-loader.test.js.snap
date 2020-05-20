@@ -8,7 +8,7 @@ import { mdx } from "@mdx-js/react";
 
 export const _frontmatter = {};
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -19,7 +19,7 @@ const makeShortcode = name =>
   };
 
 const layoutProps = {
-  _frontmatter
+  _frontmatter,
 };
 const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
@@ -49,10 +49,10 @@ import { mdx } from "@mdx-js/react";
 export const _frontmatter = {
   one: "two",
   three: 4,
-  array: [1, 2, 3]
+  array: [1, 2, 3],
 };
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -63,7 +63,7 @@ const makeShortcode = name =>
   };
 
 const layoutProps = {
-  _frontmatter
+  _frontmatter,
 };
 const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
@@ -93,10 +93,10 @@ import { mdx } from "@mdx-js/react";
 export const _frontmatter = {
   one: "two",
   three: 4,
-  array: [1, 2, 3]
+  array: [1, 2, 3],
 };
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -107,7 +107,7 @@ const makeShortcode = name =>
   };
 
 const layoutProps = {
-  _frontmatter
+  _frontmatter,
 };
 
 const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
@@ -137,15 +137,15 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const meta = {
-  author: "chris"
+  author: "chris",
 };
 export const _frontmatter = {
   one: "two",
   three: 4,
-  array: [1, 2, 3]
+  array: [1, 2, 3],
 };
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -157,7 +157,7 @@ const makeShortcode = name =>
 
 const layoutProps = {
   meta,
-  _frontmatter
+  _frontmatter,
 };
 
 const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
@@ -187,15 +187,15 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const meta = {
-  author: "chris"
+  author: "chris",
 };
 export const _frontmatter = {
   one: "two",
   three: 4,
-  array: [1, 2, 3]
+  array: [1, 2, 3],
 };
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -207,7 +207,7 @@ const makeShortcode = name =>
 
 const layoutProps = {
   meta,
-  _frontmatter
+  _frontmatter,
 };
 const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {
@@ -236,7 +236,7 @@ import { mdx } from "@mdx-js/react";
 
 export const _frontmatter = {};
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -247,7 +247,7 @@ const makeShortcode = name =>
   };
 
 const layoutProps = {
-  _frontmatter
+  _frontmatter,
 };
 
 const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
@@ -277,11 +277,11 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const meta = {
-  author: "chris"
+  author: "chris",
 };
 export const _frontmatter = {};
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -293,7 +293,7 @@ const makeShortcode = name =>
 
 const layoutProps = {
   meta,
-  _frontmatter
+  _frontmatter,
 };
 
 const MDXLayout = ({ children, ...props }) => <div>{children}</div>;
@@ -323,11 +323,11 @@ import { mdx } from "@mdx-js/react";
 /* @jsx mdx */
 
 export const meta = {
-  author: "chris"
+  author: "chris",
 };
 export const _frontmatter = {};
 
-const makeShortcode = name =>
+const makeShortcode = (name) =>
   function MDXDefaultShortcode(props) {
     console.warn(
       "Component " +
@@ -339,7 +339,7 @@ const makeShortcode = name =>
 
 const layoutProps = {
   meta,
-  _frontmatter
+  _frontmatter,
 };
 const MDXLayout = "wrapper";
 export default function MDXContent({ components, ...props }) {

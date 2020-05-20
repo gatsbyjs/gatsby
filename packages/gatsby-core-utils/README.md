@@ -17,7 +17,7 @@ const { createContentDigest } = require("gatsby-core-utils")
 
 const options = {
   key: "value",
-  foo: "bar",
+  foo: "bar"
 }
 
 const digest = createContentDigest(options)
@@ -66,7 +66,7 @@ const url = joinPath(BASEPATH, pathname)
 
 ### isCI
 
-A utility that enhances `isCI` from 'ci-info` with support for ZEIT's Now and Heroku detection
+A utility that enhances `isCI` from 'ci-info` with support for Vercel and Heroku detection
 
 ```js
 const { isCI } = require("gatsby-core-utils")

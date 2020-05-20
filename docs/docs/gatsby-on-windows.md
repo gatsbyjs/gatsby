@@ -2,7 +2,7 @@
 title: Gatsby on Windows
 ---
 
-## Setting up your environment for building native Node.js modules.
+## Setting up your environment for building native Node.js modules
 
 Many Gatsby plugins and themes require building native Node.js modules, e.g.
 [Sharp (a common Gatsby dependency used for image processing)](/packages/gatsby-plugin-sharp/).
@@ -19,7 +19,7 @@ your machine and npm appropriately.
 
 If your `windows-build-tools` installation stalls after Visual Studio Build Tools finishes, [this remedy](https://github.com/felixrieseberg/windows-build-tools/issues/47#issuecomment-296881488) might help.
 
-### If `npm install` still fails...
+### If `npm install` still fails
 
 Sometimes the `windows-build-tools` won't properly install the required
 libraries. This is true if you already have a regular .NET development

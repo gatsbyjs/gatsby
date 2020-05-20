@@ -1,23 +1,24 @@
 jest.mock(`fs`, () => {
   return {
-    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
+    readFileSync: jest.fn().mockImplementation(() => `someIconImage`)
   }
 })
 
-jest.mock(`gatsby-core-utils`, () => {
-  return {
-    createContentDigest: jest.fn(() => `contentDigest`),
-  }
-})
+const { onPreInit } = require(`../gatsby-node`)
+const { onRenderBody: ssrOnRenderBody } = require(`../gatsby-ssr`)
 
-const { onRenderBody } = require(`../gatsby-ssr`)
+const onRenderBody = (args, pluginOptions) => {
+  onPreInit({}, pluginOptions)
+  return ssrOnRenderBody(args, pluginOptions)
+}
 
 let headComponents
 const setHeadComponents = args => (headComponents = headComponents.concat(args))
 
+const defaultIcon = `pretend/this/exists.png`
 const ssrArgs = {
   setHeadComponents,
-  pathname: `/`,
+  pathname: `/`
 }
 
 describe(`gatsby-plugin-manifest`, () => {
@@ -31,8 +32,8 @@ describe(`gatsby-plugin-manifest`, () => {
     global.__PATH_PREFIX__ = `/path-prefix`
 
     onRenderBody(ssrArgs, {
-      icon: true,
-      theme_color: `#000000`,
+      icon: defaultIcon,
+      theme_color: `#000000`
     })
 
     headComponents
@@ -50,7 +51,7 @@ describe(`gatsby-plugin-manifest`, () => {
         theme_color: `#000000`,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false,
+        legacy: false
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -61,7 +62,7 @@ describe(`gatsby-plugin-manifest`, () => {
         theme_color_in_head: true,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false,
+        legacy: false
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -72,25 +73,25 @@ describe(`gatsby-plugin-manifest`, () => {
         theme_color_in_head: false,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false,
+        legacy: false
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Does not add a "theme_color" meta tag to head if "theme_color" option is not provided.`, () => {
       onRenderBody(ssrArgs, {
-        icon: true,
+        icon: defaultIcon,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false,
+        legacy: false
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Adds "icon" and "manifest" links and "theme_color" meta tag to head`, () => {
       onRenderBody(ssrArgs, {
-        icon: true,
-        theme_color: `#000000`,
+        icon: defaultIcon,
+        theme_color: `#000000`
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -99,13 +100,13 @@ describe(`gatsby-plugin-manifest`, () => {
       {
         ...ssrArgs,
         pathname: `/about-us`,
-        testName: `Adds correct (default) i18n "manifest" link to head`,
+        testName: `Adds correct (default) i18n "manifest" link to head`
       },
       {
         ...ssrArgs,
         pathname: `/es/sobre-nosotros`,
-        testName: `Adds correct (es) i18n "manifest" link to head`,
-      },
+        testName: `Adds correct (es) i18n "manifest" link to head`
+      }
     ]
 
     i18nArgs.forEach(({ testName, ...args }) =>
@@ -116,13 +117,13 @@ describe(`gatsby-plugin-manifest`, () => {
           localize: [
             {
               start_url: `/de/`,
-              lang: `de`,
+              lang: `de`
             },
             {
               start_url: `/es/`,
-              lang: `es`,
-            },
-          ],
+              lang: `es`
+            }
+          ]
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -133,53 +134,52 @@ describe(`gatsby-plugin-manifest`, () => {
     describe(`Does create legacy links`, () => {
       it(`if "legacy" not specified in automatic mode`, () => {
         onRenderBody(ssrArgs, {
-          icon: true,
+          icon: defaultIcon,
           theme_color: `#000000`,
           include_favicon: false,
           cache_busting_mode: `none`,
-          theme_color_in_head: false,
+          theme_color_in_head: false
         })
         expect(headComponents).toMatchSnapshot()
       })
 
       it(`if "legacy" not specified in hybrid mode.`, () => {
         onRenderBody(ssrArgs, {
-          icon: true,
+          icon: defaultIcon,
           theme_color: `#000000`,
           icons: [
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`,
+              type: `image/png`
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`,
-            },
+              type: `image/png`
+            }
           ],
           include_favicon: false,
           cache_busting_mode: `none`,
-          theme_color_in_head: false,
+          theme_color_in_head: false
         })
         expect(headComponents).toMatchSnapshot()
       })
 
       it(`if "legacy" not specified in manual mode.`, () => {
         onRenderBody(ssrArgs, {
-          icon: false,
           icons: [
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`,
+              type: `image/png`
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`,
-            },
-          ],
+              type: `image/png`
+            }
+          ]
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -188,53 +188,52 @@ describe(`gatsby-plugin-manifest`, () => {
     describe(`Does not create legacy links`, () => {
       it(`If "legacy" options is false and in automatic`, () => {
         onRenderBody(ssrArgs, {
-          icon: true,
+          icon: defaultIcon,
           legacy: false,
           include_favicon: false,
-          cache_busting_mode: false,
+          cache_busting_mode: false
         })
         expect(headComponents).toMatchSnapshot()
       })
 
       it(`If "legacy" options is false and in manual mode`, () => {
         onRenderBody(ssrArgs, {
-          icon: false,
           theme_color: `#000000`,
           legacy: false,
           icons: [
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`,
+              type: `image/png`
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`,
-            },
-          ],
+              type: `image/png`
+            }
+          ]
         })
         expect(headComponents).toMatchSnapshot()
       })
 
       it(`If "legacy" options is false and in hybrid mode`, () => {
         onRenderBody(ssrArgs, {
-          icon: true,
+          icon: defaultIcon,
           legacy: false,
           icons: [
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`,
+              type: `image/png`
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`,
-            },
+              type: `image/png`
+            }
           ],
           include_favicon: false,
-          cache_busting_mode: false,
+          cache_busting_mode: false
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -244,36 +243,35 @@ describe(`gatsby-plugin-manifest`, () => {
   describe(`Cache Busting`, () => {
     it(`doesn't add cache busting in manual mode`, () => {
       onRenderBody(ssrArgs, {
-        icon: false,
         icons: [
           {
             src: `/favicons/android-chrome-48x48.png`,
             sizes: `48x48`,
-            type: `image/png`,
+            type: `image/png`
           },
           {
             src: `/favicons/android-chrome-512x512.png`,
             sizes: `512x512`,
-            type: `image/png`,
-          },
+            type: `image/png`
+          }
         ],
-        cache_busting_mode: `name`,
+        cache_busting_mode: `name`
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`doesn't add cache busting if "cache_busting_mode" option is set to none`, () => {
-      onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `none` })
+      onRenderBody(ssrArgs, { icon: defaultIcon, cache_busting_mode: `none` })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Does file name cache busting if "cache_busting_mode" option is set to name`, () => {
-      onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `name` })
+      onRenderBody(ssrArgs, { icon: defaultIcon, cache_busting_mode: `name` })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Does query cache busting if "cache_busting_mode" option is set to query`, () => {
-      onRenderBody(ssrArgs, { icon: true, cache_busting_mode: `query` })
+      onRenderBody(ssrArgs, { icon: defaultIcon, cache_busting_mode: `query` })
       expect(headComponents).toMatchSnapshot()
     })
 
@@ -286,41 +284,40 @@ describe(`gatsby-plugin-manifest`, () => {
   describe(`Favicon`, () => {
     it(`Adds link favicon tag if "include_favicon" is set to true`, () => {
       onRenderBody(ssrArgs, {
-        icon: true,
-        include_favicon: true,
+        icon: defaultIcon,
+        include_favicon: defaultIcon,
         legacy: false,
-        cache_busting_mode: `none`,
+        cache_busting_mode: `none`
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Does not add a link favicon if "include_favicon" option is set to false`, () => {
       onRenderBody(ssrArgs, {
-        icon: true,
+        icon: defaultIcon,
         include_favicon: false,
         legacy: false,
-        cache_busting_mode: `none`,
+        cache_busting_mode: `none`
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Does not add a link favicon if in manual mode`, () => {
       onRenderBody(ssrArgs, {
-        icon: false,
         icons: [
           {
             src: `/favicons/android-chrome-48x48.png`,
             sizes: `48x48`,
-            type: `image/png`,
+            type: `image/png`
           },
           {
             src: `/favicons/android-chrome-512x512.png`,
             sizes: `512x512`,
-            type: `image/png`,
-          },
+            type: `image/png`
+          }
         ],
         legacy: false,
-        cache_busting_mode: `none`,
+        cache_busting_mode: `none`
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -332,28 +329,28 @@ describe(`gatsby-plugin-manifest`, () => {
         crossOrigin: `use-credentials`,
         legacy: false,
         include_favicon: false,
-        cache_busting_mode: `none`,
+        cache_busting_mode: `none`
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Add crossOrigin when 'crossOrigin' is anonymous`, () => {
       onRenderBody(ssrArgs, {
-        icon: true,
+        icon: defaultIcon,
         crossOrigin: `anonymous`,
         legacy: false,
         include_favicon: false,
-        cache_busting_mode: `none`,
+        cache_busting_mode: `none`
       })
       expect(headComponents).toMatchSnapshot()
     })
 
     it(`Does not add crossOrigin when 'crossOrigin' is blank`, () => {
       onRenderBody(ssrArgs, {
-        icon: true,
+        icon: defaultIcon,
         legacy: false,
         include_favicon: false,
-        cache_busting_mode: `none`,
+        cache_busting_mode: `none`
       })
       expect(headComponents).toMatchSnapshot()
     })

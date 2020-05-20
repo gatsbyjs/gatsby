@@ -9,7 +9,7 @@ import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
-import { BuildHTMLStage, IProgram } from "./types"
+import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
@@ -42,12 +42,12 @@ const doBuildRenderer = async (
 
 const buildRenderer = async (
   program: IProgram,
-  stage: BuildHTMLStage,
+  stage: Stage,
   parentSpan: IActivity
 ): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
-    parentSpan,
+    parentSpan
   })
 
   return doBuildRenderer(program, config)
@@ -73,7 +73,7 @@ const renderHTMLQueue = async (
   const envVars = [
     [`NODE_ENV`, process.env.NODE_ENV],
     [`gatsby_executing_command`, process.env.gatsby_executing_command],
-    [`gatsby_log_level`, process.env.gatsby_log_level],
+    [`gatsby_log_level`, process.env.gatsby_log_level]
   ]
 
   // const start = process.hrtime()
@@ -83,7 +83,7 @@ const renderHTMLQueue = async (
     await workerPool.renderHTML({
       envVars,
       htmlComponentRendererPath,
-      paths: pageSegment,
+      paths: pageSegment
     })
 
     if (activity && activity.tick) {
@@ -99,7 +99,7 @@ const doBuildPages = async (
   workerPool: IWorkerPool
 ): Promise<void> => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: pagePaths.length,
+    pagesCount: pagePaths.length
   })
 
   try {
@@ -119,10 +119,10 @@ export const buildHTML = async ({
   stage,
   pagePaths,
   activity,
-  workerPool,
+  workerPool
 }: {
   program: IProgram
-  stage: BuildHTMLStage
+  stage: Stage
   pagePaths: string[]
   activity: IActivity
   workerPool: IWorkerPool

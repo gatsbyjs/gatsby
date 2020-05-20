@@ -6,7 +6,7 @@ const CI_DEFINITIONS = [
   getEnvDetect({ key: `NOW_REGION`, name: `ZEIT Now v1` }),
   herokuDetect,
   getEnvFromCIInfo,
-  envFromCIWithNoName,
+  envFromCIWithNoName
 ]
 
 function lookupCI(): string | null {
@@ -52,7 +52,7 @@ function getEnvFromCIInfo(): string | null {
 
 function getEnvDetect({
   key,
-  name,
+  name
 }: {
   key: string
   name: string

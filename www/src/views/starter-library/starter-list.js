@@ -8,14 +8,14 @@ import {
   showcaseItem,
   withTitleHover,
   shortcutIcon,
-  meta,
+  meta
 } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "!raw-loader!../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
-const StartersList = ({ urlState, starters, count, sortRecent }) => {
+const StartersList = ({ urlState, starters, count }) => {
   if (!starters.length) {
     // empty state!
     const emptyStateReason =
@@ -31,7 +31,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
           height: `80%`,
           alignItems: `center`,
           justifyContent: `center`,
-          textAlign: `center`,
+          textAlign: `center`
         }}
       >
         <h1>
@@ -41,7 +41,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
               color: `textMuted`,
               display: `block`,
               fontWeight: `body`,
-              mt: 2,
+              mt: 2
             }}
           >
             Why not write one and
@@ -68,7 +68,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
             lastUpdated,
             owner,
             slug,
-            stars,
+            stars
           } = starter.fields.starterShowcase
           const { url: demoUrl } = starter
 
@@ -78,7 +78,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                 key={starter.id}
                 sx={{
                   ...showcaseItem,
-                  ...withTitleHover,
+                  ...withTitleHover
                 }}
               >
                 <ThumbnailLink
@@ -91,7 +91,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                     css={{
                       display: `flex`,
                       justifyContent: `space-between`,
-                      alignItems: `start`,
+                      alignItems: `start`
                     }}
                   >
                     <span
@@ -100,7 +100,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         fontSize: 0,
                         textTransform: `uppercase`,
                         letterSpacing: `tracked`,
-                        fontFamily: `heading`,
+                        fontFamily: `heading`
                       }}
                     >
                       {owner} /
@@ -120,7 +120,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                               px: `2px`,
                               pr: 2,
                               py: `2px`,
-                              mr: 2,
+                              mr: 2
                             }}
                           >
                             <span
@@ -129,7 +129,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                                 color: `textMuted`,
                                 mb: 0,
                                 mr: 2,
-                                "& svg": { height: 12, width: 12 },
+                                "& svg": { height: 12, width: 12 }
                               }}
                             />
                             {` `}
@@ -140,7 +140,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         sx={{
                           alignItems: `center`,
                           display: `inline-flex`,
-                          fontSize: 0,
+                          fontSize: 0
                         }}
                       >
                         <MdStar /> {stars}
@@ -160,7 +160,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                       textOverflow: `ellipsis`,
                       overflow: `hidden`,
                       whiteSpace: `nowrap`,
-                      marginBottom: 4,
+                      marginBottom: 4
                     }}
                   >
                     {description || `No description`}
@@ -168,7 +168,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                   <div
                     css={{
                       display: `flex`,
-                      justifyContent: `space-between`,
+                      justifyContent: `space-between`
                     }}
                   >
                     <div sx={{ display: `inline-block`, fontSize: 0 }}>
@@ -181,7 +181,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         rel="noopener noreferrer"
                         sx={{
                           ...shortcutIcon,
-                          svg: { verticalAlign: `text-top !important` },
+                          svg: { verticalAlign: `text-top !important` }
                         }}
                         aria-label={`Open source code for ${name}`}
                       >
@@ -194,7 +194,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
                         rel="noopener noreferrer"
                         sx={{
                           ...shortcutIcon,
-                          svg: { verticalAlign: `text-top !important` },
+                          svg: { verticalAlign: `text-top !important` }
                         }}
                         aria-label={`Open demo for ${name}`}
                       >

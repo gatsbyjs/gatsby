@@ -29,8 +29,8 @@ module.exports = {
   plugins: [
     {
       resolve: "gatsby-theme-blog",
-      options: {},
-    },
+      options: {}
+    }
   ],
   // Customize your site metadata:
   siteMetadata: {
@@ -41,18 +41,18 @@ module.exports = {
     social: [
       {
         name: "twitter",
-        url: "https://twitter.com/gatsbyjs",
+        url: "https://twitter.com/gatsbyjs"
       },
       {
         name: "github",
-        url: "https://github.com/gatsbyjs",
-      },
-    ],
-  },
+        url: "https://github.com/gatsbyjs"
+      }
+    ]
+  }
 }
 ```
 
-### 2. The starter scaffolds out example blog posts.
+### 2. The starter scaffolds out example blog posts
 
 ```mdx:title=/content/posts/hello-world.mdx
 ---

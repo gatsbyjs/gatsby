@@ -6,7 +6,7 @@ const {
   GraphQLUnionType,
   GraphQLBoolean,
   printType,
-  printSchema,
+  printSchema
 } = require(`graphql`)
 const { SchemaComposer } = require(`graphql-compose`)
 jest.mock(`../../utils/api-runner-node`)
@@ -16,10 +16,9 @@ const { build } = require(`..`)
 const {
   buildObjectType,
   buildUnionType,
-  buildInterfaceType,
+  buildInterfaceType
 } = require(`../types/type-builders`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -33,15 +32,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -85,9 +84,9 @@ describe(`Build schema`, () => {
           name: `Foo`,
           fields: {
             text: {
-              type: GraphQLString,
-            },
-          },
+              type: GraphQLString
+            }
+          }
         })
       )
       const schema = await buildSchema()
@@ -120,15 +119,15 @@ describe(`Build schema`, () => {
               type: `Boolean`,
               args: {
                 what: {
-                  type: `Boolean`,
-                },
+                  type: `Boolean`
+                }
               },
               resolve(parent, args) {
                 return Boolean(args.what)
-              },
-            },
+              }
+            }
           },
-          interfaces: [`Node`],
+          interfaces: [`Node`]
         })
       )
       const schema = await buildSchema()
@@ -144,7 +143,9 @@ describe(`Build schema`, () => {
       expect(fields[`withArgs`].args[0]).toBeDefined()
       expect(fields[`withArgs`].args[0].name).toEqual(`what`)
       expect(fields[`withArgs`].args[0].type).toBe(GraphQLBoolean)
-      expect(fields[`withArgs`].resolve({}, { what: true })).toBe(true)
+      expect(await fields[`withArgs`].resolve({}, { what: true }, {}, {})).toBe(
+        true
+      )
     })
 
     it(`allows adding array of types`, async () => {
@@ -153,20 +154,20 @@ describe(`Build schema`, () => {
           name: `Foo`,
           fields: {
             text: {
-              type: GraphQLString,
-            },
-          },
+              type: GraphQLString
+            }
+          }
         }),
         new GraphQLObjectType({
           name: `Bar`,
           fields: {
             text: {
-              type: GraphQLString,
-            },
-          },
+              type: GraphQLString
+            }
+          }
         }),
         `type Baz implements Node { text: String }`,
-        `type Author implements Node { text: String }`,
+        `type Author implements Node { text: String }`
       ])
       const schema = await buildSchema()
 
@@ -251,34 +252,34 @@ describe(`Build schema`, () => {
         buildInterfaceType({
           name: `FooBar`,
           fields: {
-            text: `String!`,
-          },
+            text: `String!`
+          }
         }),
         buildObjectType({
           name: `Foo`,
           fields: {
-            text: `String!`,
+            text: `String!`
           },
-          interfaces: [`Node`, `FooBar`],
+          interfaces: [`Node`, `FooBar`]
         }),
         buildObjectType({
           name: `Bar`,
           fields: {
-            text: `String!`,
+            text: `String!`
           },
-          interfaces: [`Node`, `FooBar`],
+          interfaces: [`Node`, `FooBar`]
         }),
         buildObjectType({
           name: `Author`,
           fields: {
-            text: `String!`,
+            text: `String!`
           },
-          interfaces: [`Node`, `FooBar`],
+          interfaces: [`Node`, `FooBar`]
         }),
         buildUnionType({
           name: `UFooBar`,
-          types: [`Foo`, `Bar`, `Author`],
-        }),
+          types: [`Foo`, `Bar`, `Author`]
+        })
       ])
 
       const schema = await buildSchema()
@@ -319,14 +320,14 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
         `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
-          name: `default-site-plugin`,
+          name: `default-site-plugin`
         }
       )
       const schema = await buildSchema()
@@ -343,13 +344,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
-          infer: false,
+          infer: false
         })
       )
     })
@@ -359,7 +360,7 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
@@ -368,22 +369,22 @@ describe(`Build schema`, () => {
             name: `PluginDefined`,
             interfaces: [`Node`],
             extensions: {
-              infer: false,
+              infer: false
             },
             fields: {
               bar: `Int`,
-              qux: `PluginDefinedNested`,
-            },
+              qux: `PluginDefinedNested`
+            }
           }),
           buildObjectType({
             name: `PluginDefinedNested`,
             fields: {
-              bar: `Int`,
-            },
-          }),
+              bar: `Int`
+            }
+          })
         ],
         {
-          name: `default-site-plugin`,
+          name: `default-site-plugin`
         }
       )
       const schema = await buildSchema()
@@ -400,13 +401,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `typeBuilder`,
           plugin: `default-site-plugin`,
-          infer: false,
+          infer: false
         })
       )
     })
@@ -418,22 +419,22 @@ describe(`Build schema`, () => {
             name: `PluginDefined`,
             interfaces: [`Node`],
             extensions: {
-              infer: true,
+              infer: true
             },
             fields: {
               foo: `Int`,
-              baz: `PluginDefinedNested`,
-            },
+              baz: `PluginDefinedNested`
+            }
           }),
           buildObjectType({
             name: `PluginDefinedNested`,
             fields: {
-              foo: `Int`,
-            },
-          }),
+              foo: `Int`
+            }
+          })
         ],
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
@@ -443,7 +444,7 @@ describe(`Build schema`, () => {
          }
          type PluginDefinedNested { bar: Int }`,
         {
-          name: `default-site-plugin`,
+          name: `default-site-plugin`
         }
       )
       const schema = await buildSchema()
@@ -460,13 +461,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
-          infer: false,
+          infer: false
         })
       )
     })
@@ -478,22 +479,22 @@ describe(`Build schema`, () => {
             name: `PluginDefined`,
             interfaces: [`Node`],
             extensions: {
-              infer: true,
+              infer: true
             },
             fields: {
               foo: `Int`,
-              baz: `PluginDefinedNested`,
-            },
+              baz: `PluginDefinedNested`
+            }
           }),
           buildObjectType({
             name: `PluginDefinedNested`,
             fields: {
-              foo: `Int`,
-            },
-          }),
+              foo: `Int`
+            }
+          })
         ],
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
@@ -502,22 +503,22 @@ describe(`Build schema`, () => {
             name: `PluginDefined`,
             interfaces: [`Node`],
             extensions: {
-              infer: false,
+              infer: false
             },
             fields: {
               bar: `Int`,
-              qux: `PluginDefinedNested`,
-            },
+              qux: `PluginDefinedNested`
+            }
           }),
           buildObjectType({
             name: `PluginDefinedNested`,
             fields: {
-              bar: `Int`,
-            },
-          }),
+              bar: `Int`
+            }
+          })
         ],
         {
-          name: `default-site-plugin`,
+          name: `default-site-plugin`
         }
       )
       const schema = await buildSchema()
@@ -534,13 +535,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `typeBuilder`,
           plugin: `default-site-plugin`,
-          infer: false,
+          infer: false
         })
       )
     })
@@ -551,24 +552,24 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       const PluginDefinedNestedType = new GraphQLObjectType({
         name: `PluginDefinedNested`,
         fields: {
-          bar: { type: GraphQLString },
-        },
+          bar: { type: GraphQLString }
+        }
       })
       const PluginDefinedType = new GraphQLObjectType({
         name: `PluginDefined`,
         fields: {
           bar: { type: GraphQLString },
-          qux: { type: PluginDefinedNestedType },
-        },
+          qux: { type: PluginDefinedNestedType }
+        }
       })
       createTypes([PluginDefinedType, PluginDefinedNestedType], {
-        name: `default-site-plugin`,
+        name: `default-site-plugin`
       })
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -584,13 +585,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `graphql-js`,
           plugin: `default-site-plugin`,
-          infer: true,
+          infer: true
         })
       )
     })
@@ -599,24 +600,24 @@ describe(`Build schema`, () => {
       const PluginDefinedNestedType = new GraphQLObjectType({
         name: `PluginDefinedNested`,
         fields: {
-          foo: { type: GraphQLString },
-        },
+          foo: { type: GraphQLString }
+        }
       })
       const PluginDefinedType = new GraphQLObjectType({
         name: `PluginDefined`,
         fields: {
           foo: { type: GraphQLString },
-          baz: { type: PluginDefinedNestedType },
-        },
+          baz: { type: PluginDefinedNestedType }
+        }
       })
       createTypes([PluginDefinedType, PluginDefinedNestedType], {
-        name: `some-gatsby-plugin`,
+        name: `some-gatsby-plugin`
       })
       createTypes(
         `type PluginDefined implements Node @infer { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
-          name: `default-site-plugin`,
+          name: `default-site-plugin`
         }
       )
       const schema = await buildSchema()
@@ -633,13 +634,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
-          infer: true,
+          infer: true
         })
       )
     })
@@ -649,14 +650,14 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node @infer { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
         `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       const schema = await buildSchema()
@@ -673,13 +674,13 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(PluginDefined._gqcExtensions).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `some-gatsby-plugin`,
-          infer: false,
+          infer: false
         })
       )
     })
@@ -689,14 +690,14 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
         `type PluginDefined implements Node { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
-          name: `some-other-gatsby-plugin`,
+          name: `some-other-gatsby-plugin`
         }
       )
       const schema = await buildSchema()
@@ -709,7 +710,7 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
@@ -728,7 +729,7 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       createTypes(
@@ -737,22 +738,22 @@ describe(`Build schema`, () => {
             name: `PluginDefined`,
             interfaces: [`Node`],
             extensions: {
-              infer: false,
+              infer: false
             },
             fields: {
               bar: `Int`,
-              qux: `PluginDefinedNested`,
-            },
+              qux: `PluginDefinedNested`
+            }
           }),
           buildObjectType({
             name: `PluginDefinedNested`,
             fields: {
-              bar: `Int`,
-            },
-          }),
+              bar: `Int`
+            }
+          })
         ],
         {
-          name: `some-other-gatsby-plugin`,
+          name: `some-other-gatsby-plugin`
         }
       )
       const schema = await buildSchema()
@@ -765,7 +766,7 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
@@ -784,24 +785,24 @@ describe(`Build schema`, () => {
         `type PluginDefined implements Node { foo: Int, baz: PluginDefinedNested }
          type PluginDefinedNested { foo: Int }`,
         {
-          name: `some-gatsby-plugin`,
+          name: `some-gatsby-plugin`
         }
       )
       const PluginDefinedNestedType = new GraphQLObjectType({
         name: `PluginDefinedNested`,
         fields: {
-          bar: { type: GraphQLString },
-        },
+          bar: { type: GraphQLString }
+        }
       })
       const PluginDefinedType = new GraphQLObjectType({
         name: `PluginDefined`,
         fields: {
           bar: { type: GraphQLString },
-          qux: { type: PluginDefinedNestedType },
-        },
+          qux: { type: PluginDefinedNestedType }
+        }
       })
       createTypes([PluginDefinedType, PluginDefinedNestedType], {
-        name: `some-other-gatsby-plugin`,
+        name: `some-other-gatsby-plugin`
       })
       const schema = await buildSchema()
       const nestedFields = schema.getType(`PluginDefinedNested`).getFields()
@@ -813,7 +814,7 @@ describe(`Build schema`, () => {
         `id`,
         `parent`,
         `children`,
-        `internal`,
+        `internal`
       ])
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
@@ -835,9 +836,9 @@ describe(`Build schema`, () => {
           fields: {
             body: {
               type: `String`,
-              resolve: () => `Mdx!`,
-            },
-          },
+              resolve: () => `Mdx!`
+            }
+          }
         })
       )
       createTypes(`
@@ -851,7 +852,9 @@ describe(`Build schema`, () => {
 
       expect(fields.body.type.toString()).toBe(`String!`)
       expect(typeof fields.body.resolve).toBe(`function`)
-      expect(fields.body.resolve()).toBe(`Mdx!`)
+      expect(await fields.body.resolve({}, {}, {}, { fieldName: `body` })).toBe(
+        `Mdx!`
+      )
     })
 
     it(`displays error message for reserved Node interface`, () => {
@@ -859,7 +862,7 @@ describe(`Build schema`, () => {
         `interface Node { foo: Boolean }`,
         `type Node { foo: Boolean }`,
         new GraphQLInterfaceType({ name: `Node`, fields: {} }),
-        buildInterfaceType({ name: `Node`, fields: {} }),
+        buildInterfaceType({ name: `Node`, fields: {} })
       ]
       return Promise.all(
         typeDefs.map(def => {
@@ -877,16 +880,16 @@ describe(`Build schema`, () => {
         [`TestSortInput`, `type TestSortInput { foo: Boolean }`],
         [
           `TestFilterInput`,
-          `type TestFilterInput implements Node { foo: Boolean }`,
+          `type TestFilterInput implements Node { foo: Boolean }`
         ],
         [
           `TestSortInput`,
-          new GraphQLObjectType({ name: `TestSortInput`, fields: {} }),
+          new GraphQLObjectType({ name: `TestSortInput`, fields: {} })
         ],
         [
           `TestFilterInput`,
-          buildObjectType({ name: `TestFilterInput`, fields: {} }),
-        ],
+          buildObjectType({ name: `TestFilterInput`, fields: {} })
+        ]
       ]
       expect.assertions(4)
       for (const [name, def] of typeDefs) {
@@ -907,7 +910,7 @@ describe(`Build schema`, () => {
       const typeDefs = [
         [`JSON`, `type JSON { foo: Boolean }`],
         [`Date`, new GraphQLObjectType({ name: `Date`, fields: {} })],
-        [`Float`, buildObjectType({ name: `Float`, fields: {} })],
+        [`Float`, buildObjectType({ name: `Float`, fields: {} })]
       ]
       expect.assertions(3)
       for (const [name, def] of typeDefs) {
@@ -969,9 +972,9 @@ describe(`Build schema`, () => {
         nested: {
           foo: {
             bar: `str`,
-            baz: 5,
-          },
-        },
+            baz: 5
+          }
+        }
       }
       store.dispatch(actions.createNode(node, { name: `test` }))
       const schema = await buildSchema()
@@ -1020,10 +1023,10 @@ describe(`Build schema`, () => {
       nested: {
         foo: {
           bar: `str`,
-          baz: 5,
+          baz: 5
         },
-        bar: `str`,
-      },
+        bar: `str`
+      }
     }
     store.dispatch(actions.createNode(node, { name: `test` }))
     const schema = await buildSchema()
@@ -1054,31 +1057,31 @@ describe(`Build schema`, () => {
               } else {
                 return info.originalResolver(parent, args, context, info)
               }
-            },
-          },
-        },
+            }
+          }
+        }
       })
       const schema = await buildSchema()
       const type = schema.getType(`Author`)
       const fields = type.getFields()
       expect(fields[`name`].resolve).toBeDefined()
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
           withResolverContext({}, schema),
           {
-            fieldName: `name`,
+            fieldName: `name`
           }
         )
       ).toEqual(`Hello Mikhail`)
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
           withResolverContext({}, schema),
           {
-            fieldName: `name`,
+            fieldName: `name`
           }
         )
       ).toEqual(`Mikhail`)
@@ -1091,8 +1094,8 @@ describe(`Build schema`, () => {
             args: {
               withHello: {
                 type: `Boolean`,
-                defaultValue: false,
-              },
+                defaultValue: false
+              }
             },
             resolve(parent, args, context, info) {
               if (args.withHello) {
@@ -1100,31 +1103,31 @@ describe(`Build schema`, () => {
               } else {
                 return info.originalResolver(parent, args, context, info)
               }
-            },
-          },
-        },
+            }
+          }
+        }
       })
       const schema = await buildSchema()
       const type = schema.getType(`Author`)
       const fields = type.getFields()
       expect(fields[`name`].resolve).toBeDefined()
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: true },
           withResolverContext({}, schema),
           {
-            fieldName: `name`,
+            fieldName: `name`
           }
         )
       ).toEqual(`Hello Mikhail`)
       expect(
-        fields[`name`].resolve(
+        await fields[`name`].resolve(
           { name: `Mikhail` },
           { withHello: false },
           withResolverContext({}, schema),
           {
-            fieldName: `name`,
+            fieldName: `name`
           }
         )
       ).toEqual(`Mikhail`)
@@ -1134,9 +1137,9 @@ describe(`Build schema`, () => {
       createCreateResolversMock({
         Author: {
           name: {
-            type: `Boolean`,
-          },
-        },
+            type: `Boolean`
+          }
+        }
       })
       const schema = await buildSchema()
       const type = schema.getType(`Author`)
@@ -1157,15 +1160,15 @@ describe(`Build schema`, () => {
             type: `[String]`,
             resolve() {
               return [`All good`]
-            },
+            }
           },
           categories: {
             type: `[String!]!`,
             resolve() {
               return [`Even better`]
-            },
-          },
-        },
+            }
+          }
+        }
       })
       const schema = await buildSchema()
       const type = schema.getType(`Post`)
@@ -1189,9 +1192,9 @@ describe(`Build schema`, () => {
       createCreateResolversMock({
         ThirdPartyFoo: {
           text: {
-            type: `Boolean`,
-          },
-        },
+            type: `Boolean`
+          }
+        }
       })
 
       const schema = await buildSchema()
@@ -1204,9 +1207,9 @@ describe(`Build schema`, () => {
       createCreateResolversMock({
         Author: {
           newField: {
-            type: `String`,
-          },
-        },
+            type: `String`
+          }
+        }
       })
 
       const schema = await buildSchema()
@@ -1220,9 +1223,9 @@ describe(`Build schema`, () => {
       createCreateResolversMock({
         FakeType: {
           newField: {
-            type: `String`,
-          },
-        },
+            type: `String`
+          }
+        }
       })
       const schema = await buildSchema()
       const type = schema.getType(`FakeType`)
@@ -1238,7 +1241,7 @@ describe(`Build schema`, () => {
                 return info.originalResolver(
                   {
                     ...parent,
-                    date: new Date(2018, 10, 10),
+                    date: new Date(2018, 10, 10)
                   },
                   args,
                   context,
@@ -1247,9 +1250,9 @@ describe(`Build schema`, () => {
               } else {
                 return info.originalResolver(parent, args, context, info)
               }
-            },
-          },
-        },
+            }
+          }
+        }
       })
       const schema = await buildSchema()
       const type = schema.getType(`PostFrontmatter`)
@@ -1260,7 +1263,7 @@ describe(`Build schema`, () => {
           { formatString: `YYYY` },
           withResolverContext({}, schema),
           {
-            fieldName: `date`,
+            fieldName: `date`
           }
         )
       ).toEqual(`2019`)
@@ -1270,7 +1273,7 @@ describe(`Build schema`, () => {
           { formatString: `YYYY` },
           withResolverContext({}, schema),
           {
-            fieldName: `date`,
+            fieldName: `date`
           }
         )
       ).toEqual(`2018`)
@@ -1297,9 +1300,9 @@ describe(`Build schema`, () => {
       createCreateResolversMock({
         ThirdPartyFoo: {
           text: {
-            type: `Boolean`,
-          },
-        },
+            type: `Boolean`
+          }
+        }
       })
 
       const schema = await buildSchema()
@@ -1345,9 +1348,9 @@ describe(`Build schema`, () => {
           return [
             {
               newField: {
-                type: GraphQLString,
-              },
-            },
+                type: GraphQLString
+              }
+            }
           ]
         } else {
           return []
@@ -1367,12 +1370,12 @@ describe(`Build schema`, () => {
           return [
             {
               newField: {
-                type: GraphQLString,
+                type: GraphQLString
               },
               "frontmatter.newField": {
-                type: GraphQLString,
-              },
-            },
+                type: GraphQLString
+              }
+            }
           ]
         } else {
           return []

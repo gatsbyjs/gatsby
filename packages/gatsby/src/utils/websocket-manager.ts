@@ -16,12 +16,12 @@ interface IPageQueryResult {
 }
 
 interface IStaticQueryResult {
-  id: number
+  id: string
   result: any // TODO: Improve this once we understand what the type is
 }
 
 type PageResultsMap = Map<string, IPageQueryResult>
-type QueryResultsMap = Map<number, IStaticQueryResult>
+type QueryResultsMap = Map<string, IStaticQueryResult>
 
 /**
  * Get cached page query result for given page path.
@@ -38,7 +38,7 @@ const getCachedPageData = async (
 
       return {
         result: pageData.result,
-        id: pagePath,
+        id: pagePath
       }
     } catch (err) {
       throw new Error(
@@ -49,7 +49,7 @@ const getCachedPageData = async (
 
   return {
     id: pagePath,
-    result: undefined,
+    result: undefined
   }
 }
 
@@ -97,7 +97,7 @@ const getCachedStaticQueryResults = (
     }
     cachedStaticQueryResults.set(staticQueryComponent.hash, {
       result: JSON.parse(fileResult),
-      id: staticQueryComponent.hash,
+      id: staticQueryComponent.hash
     })
   })
   return cachedStaticQueryResults
@@ -115,7 +115,7 @@ class WebsocketManager {
 
   init = ({
     directory,
-    server,
+    server
   }: {
     directory: string
     server: HTTPSServer | HTTPServer
@@ -126,7 +126,7 @@ class WebsocketManager {
     )
     this.staticQueryResults = new Map([
       ...this.staticQueryResults,
-      ...cachedStaticQueryResults,
+      ...cachedStaticQueryResults
     ])
 
     this.websocket = socketIO(server)
@@ -146,7 +146,7 @@ class WebsocketManager {
       this.staticQueryResults.forEach(result => {
         socket.send({
           type: `staticQueryResult`,
-          payload: result,
+          payload: result
         })
       })
       this.errors.forEach((message, errorID) => {
@@ -154,8 +154,8 @@ class WebsocketManager {
           type: `overlayError`,
           payload: {
             id: errorID,
-            message,
-          },
+            message
+          }
         })
       })
 
@@ -186,7 +186,7 @@ class WebsocketManager {
         socket.send({
           type: `pageQueryResult`,
           why: `getDataForPath`,
-          payload: this.pageResults.get(path),
+          payload: this.pageResults.get(path)
         })
 
         if (this.connectedClients > 0) {
@@ -195,8 +195,8 @@ class WebsocketManager {
             {
               siteMeasurements: {
                 clientsCount: this.connectedClients,
-                paths: hashPaths(Array.from(this.activePaths)),
-              },
+                paths: hashPaths(Array.from(this.activePaths))
+              }
             },
             { debounce: true }
           )
@@ -237,8 +237,8 @@ class WebsocketManager {
           {
             siteMeasurements: {
               clientsCount: this.connectedClients,
-              paths: hashPaths(Array.from(this.activePaths)),
-            },
+              paths: hashPaths(Array.from(this.activePaths))
+            }
           },
           { debounce: true }
         )
@@ -259,8 +259,8 @@ class WebsocketManager {
           {
             siteMeasurements: {
               clientsCount: this.connectedClients,
-              paths: hashPaths(Array.from(this.activePaths)),
-            },
+              paths: hashPaths(Array.from(this.activePaths))
+            }
           },
           { debounce: true }
         )

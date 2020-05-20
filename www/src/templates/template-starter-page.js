@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 
+import PageMetadata from "../components/page-metadata"
 import StarterHeader from "../views/starter/header"
 import StarterMeta from "../views/starter/meta"
 import Screenshot from "../views/shared/screenshot"
@@ -21,7 +21,7 @@ const getScreenshot = (data, fallback) => {
 
 class StarterTemplate extends React.Component {
   state = {
-    showAllDeps: false,
+    showAllDeps: false
   }
   render() {
     const { fallback, startersYaml } = this.props.data
@@ -29,7 +29,7 @@ class StarterTemplate extends React.Component {
       url: demoUrl,
       repo: repoUrl,
       fields: { starterShowcase },
-      childScreenshot,
+      childScreenshot
     } = startersYaml
 
     const screenshot = getScreenshot(childScreenshot, fallback)
@@ -38,7 +38,7 @@ class StarterTemplate extends React.Component {
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
     const allDeps = [
       ...gatsbyDependencies.map(([name]) => name),
-      ...miscDependencies.map(([name]) => name),
+      ...miscDependencies.map(([name]) => name)
     ]
     const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
     const showMore =
@@ -53,41 +53,20 @@ class StarterTemplate extends React.Component {
           display: `flex`,
           flexDirection: `column`,
           margin: `0 auto`,
-          maxWidth: 1080,
+          maxWidth: 1080
         }}
       >
+        <PageMetadata
+          title={`${repoName}: Gatsby Starter`}
+          description={`Gatsby Starters: ${repoName}`}
+          image={screenshot.childImageSharp.fluid}
+        />
         <div css={{ width: `100%` }}>
-          <Helmet>
-            <title>{`${repoName}: Gatsby Starter`}</title>
-            <meta
-              property="og:image"
-              content={screenshot.childImageSharp.fluid.src}
-            />
-            <meta property="og:image:alt" content="Gatsby Logo" />
-            <meta
-              name="twitter:image"
-              content={screenshot.childImageSharp.fluid.src}
-            />
-            <meta name="description" content={`Gatsby Starter: ${repoName}`} />
-            <meta
-              property="og:description"
-              content={`Gatsby Starter: ${repoName}`}
-            />
-            <meta
-              name="twitter:description"
-              content={`Gatsby Starter: ${repoName}`}
-            />
-            <meta property="og:site_name" content={repoName} />
-            <meta property="og:title" content={repoName} />
-            <meta property="og:type" content="article" />
-            <meta name="twitter.label1" content="Reading time" />
-            <meta name="twitter:data1" content={`1 min read`} />
-          </Helmet>
           <StarterHeader stub={starterShowcase.stub} />
           <div
             sx={{
               display: `flex`,
-              flexDirection: [`column-reverse`, `column`],
+              flexDirection: [`column-reverse`, `column`]
             }}
           >
             <StarterMeta

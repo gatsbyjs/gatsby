@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.5.0...gatsby-source-graphql@2.5.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.4.3...gatsby-source-graphql@2.5.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.4.2...gatsby-source-graphql@2.4.3) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.4.1...gatsby-source-graphql@2.4.2) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.4.0...gatsby-source-graphql@2.4.1) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.3.2...gatsby-source-graphql@2.4.0) (2020-04-14)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
 ## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-graphql@2.3.1...gatsby-source-graphql@2.3.2) (2020-04-06)
 
 ### Bug Fixes

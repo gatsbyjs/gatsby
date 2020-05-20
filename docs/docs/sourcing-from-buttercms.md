@@ -178,7 +178,7 @@ const IndexPage = ({ data }) => {
           alignItems: `center`,
           justifyContent: `center`,
           flexDirection: `column`,
-          background: `linear-gradient(-45deg, rgb(29, 64, 86) 0%, rgb(60, 24, 78) 100%)`,
+          background: `linear-gradient(-45deg, rgb(29, 64, 86) 0%, rgb(60, 24, 78) 100%)`
         }}
       >
         <h1
@@ -187,7 +187,7 @@ const IndexPage = ({ data }) => {
             color: `white`,
             fontSize: `2.5rem`,
             fontWeight: `100`,
-            maxWidth: `960px`,
+            maxWidth: `960px`
           }}
         >
           {home.headline}
@@ -198,7 +198,7 @@ const IndexPage = ({ data }) => {
             backgroundColor: `white`,
             border: `none`,
             fontSize: `1.5rem`,
-            borderRadius: `10px`,
+            borderRadius: `10px`
           }}
         >
           {home.call_to_action}
@@ -213,7 +213,7 @@ const IndexPage = ({ data }) => {
           display: `flex`,
           flexDirection: `column`,
           alignItems: `center`,
-          justifyContent: `center`,
+          justifyContent: `center`
         }}
       >
         {home.customer_logos.map(({ logo_image }) => (
@@ -345,7 +345,7 @@ const IndexPage = ({ data }) => {
           alignItems: `center`,
           justifyContent: `center`,
           flexDirection: `column`,
-          background: `linear-gradient(-45deg, rgb(29, 64, 86) 0%, rgb(60, 24, 78) 100%)`,
+          background: `linear-gradient(-45deg, rgb(29, 64, 86) 0%, rgb(60, 24, 78) 100%)`
         }}
       >
         <h1
@@ -354,7 +354,7 @@ const IndexPage = ({ data }) => {
             color: `white`,
             fontSize: `2.5rem`,
             fontWeight: `100`,
-            maxWidth: `960px`,
+            maxWidth: `960px`
           }}
         >
           {home.headline}
@@ -365,7 +365,7 @@ const IndexPage = ({ data }) => {
             backgroundColor: `white`,
             border: `none`,
             fontSize: `1.5rem`,
-            borderRadius: `10px`,
+            borderRadius: `10px`
           }}
         >
           {home.call_to_action}
@@ -378,7 +378,7 @@ const IndexPage = ({ data }) => {
           display: `flex`,
           flexDirection: `column`,
           alignItems: `center`,
-          justifyContent: `center`,
+          justifyContent: `center`
         }}
       >
         {home.customer_logos.map(({ logo_image }) => (
@@ -542,8 +542,8 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         slug: post.node.slug,
         previous,
-        next,
-      },
+        next
+      }
     })
   })
 
@@ -577,8 +577,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/case-study/${page.node.slug}`,
       component: customerCaseStudy,
       context: {
-        slug: page.node.slug,
-      },
+        slug: page.node.slug
+      }
     })
   })
 }
@@ -603,8 +603,8 @@ Suppose you want to add a CMS to a static FAQ page with a title and a list of qu
 Making your content dynamic with Butter is a two-step process:
 
 1. **Setup custom content fields in Butter**
-1. **Integrate the fields into your application**
-1. **To setup custom content fields, first sign in to the Butter dashboard.**
+2. **Integrate the fields into your application**
+3. **To setup custom content fields, first sign in to the Butter dashboard.**
 
 Create a new workspace or click on an existing one. Workspaces let you organize content fields in a friendly way for content editors and have no effect on development or the API. For example, a real-estate website might have a workspace called "Properties" and another called "About Page".
 
@@ -651,7 +651,7 @@ const Faq = ({ data }) => {
           alignItems: `center`,
           justifyContent: `center`,
           flexDirection: `column`,
-          background: `linear-gradient(-45deg, rgb(29, 64, 86) 0%, rgb(60, 24, 78) 100%)`,
+          background: `linear-gradient(-45deg, rgb(29, 64, 86) 0%, rgb(60, 24, 78) 100%)`
         }}
       >
         {headline}
@@ -664,7 +664,7 @@ const Faq = ({ data }) => {
               padding: `10px`,
               background: `whitesmoke`,
               borderRadius: `10px`,
-              margin: `5px`,
+              margin: `5px`
             }}
           >
             <h2 style={{ color: `#213b55` }}>{faq.question}</h2>
@@ -736,13 +736,13 @@ class BlogIndex extends React.Component {
           style={{
             alignItems: `center`,
             justifyContent: `center`,
-            margin: `20px 0px 20px 0px`,
+            margin: `20px 0px 20px 0px`
           }}
         >
           <div
             style={{
               maxWidth: `960px`,
-              padding: `30px`,
+              padding: `30px`
             }}
           >
             {posts.map(({ node }) => {
@@ -842,7 +842,7 @@ class BlogPostTemplate extends React.Component {
             display: `flex`,
             alignItems: `center`,
             justifyContent: `center`,
-            margin: `20px 0px 20px 0px`,
+            margin: `20px 0px 20px 0px`
           }}
         >
           <div style={{ maxWidth: `960px`, padding: `30px` }}>
@@ -863,7 +863,7 @@ class BlogPostTemplate extends React.Component {
                 flexWrap: `wrap`,
                 justifyContent: `space-between`,
                 listStyle: `none`,
-                padding: 0,
+                padding: 0
               }}
             >
               <li>

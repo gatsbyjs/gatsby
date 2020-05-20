@@ -7,7 +7,7 @@ const plugin = require(`../`)
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
-  pedantic: true,
+  pedantic: true
 })
 
 const extractObjectTag = mdast =>
@@ -93,7 +93,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     [`100%`, `100`],
     [`100`, `100%`],
     [`invalid`, `100`],
-    [`100`, `invalid`],
+    [`100`, `invalid`]
   ]
 
   _.map(shouldntTransform, ([width, height]) => {

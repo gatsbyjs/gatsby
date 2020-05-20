@@ -18,7 +18,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 ## Using `gatsby-plugin-manifest`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-manifest
@@ -46,9 +46,9 @@ npm install --save gatsby-plugin-manifest
         // An optional attribute which provides support for CORS check.
         // If you do not provide a crossOrigin option, it will skip CORS for manifest.
         // Any invalid keyword or empty string defaults to `anonymous`
-        crossOrigin: `use-credentials`,
-      },
-    },
+        crossOrigin: `use-credentials`
+      }
+    }
   ]
 }
 ```

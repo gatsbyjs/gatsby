@@ -7,7 +7,7 @@ tags: ["themes", "getting-started"]
 
 > _Updated July 9, 2019 to reflect using the `gatsby-plugin-mdx` package instead of the (now deprecated) gatsby-mdx package._
 
-### What is a Gatsby theme?
+## What is a Gatsby theme?
 
 <Pullquote cite="Jason Lengstorf">
   Gatsby themes allow you to focus only on the parts of the site and app
@@ -122,15 +122,15 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {},
+      options: {}
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: path.join(__dirname, `src/pages`),
-      },
-    },
-  ],
+        path: path.join(__dirname, `src/pages`)
+      }
+    }
+  ]
 }
 ```
 
@@ -138,7 +138,7 @@ Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ dir
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
-  plugins: [`theme`],
+  plugins: [`theme`]
 }
 ```
 
@@ -225,17 +225,19 @@ Next, you will navigate to the _theme_ directory. You will then create a _compon
 Inside of your _layout.js_ file, you can add your styling.
 
 ```jsx:title=packages/theme/src/components/layout.js
-export default ({ children }) => (
-  <div
-    style={{
-      // Layout styling
-      margin: `10%`,
-      backgroundColor: `#fafafa`,
-    }}
-  >
-    {children}
-  </div>
-)
+export default function Layout({ children }) {
+  return (
+    <div
+      style={{
+        // Layout styling
+        margin: `10%`,
+        backgroundColor: `#fafafa`
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 ```
 
 To make sure your _layout.js_ file is connected to your theme you will navigate to your _gatsby-config.js_ file in your _theme_ directory. You will add defaultLayouts under options and make sure that the _layout.js_ is required.
@@ -250,18 +252,18 @@ module.exports = {
       options: {
         // highlight-start
         defaultLayouts: {
-          default: require.resolve(`./src/components/layout.js`),
-        },
+          default: require.resolve(`./src/components/layout.js`)
+        }
         // highlight-end
-      },
+      }
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: path.join(__dirname, `src/pages`),
-      },
-    },
-  ],
+        path: path.join(__dirname, `src/pages`)
+      }
+    }
+  ]
 }
 ```
 
@@ -270,17 +272,19 @@ If you want to reuse a specific style, you can create styled components. In your
 Here is an example of how you can set-up your styled component in _header.js_. Please make sure you write css-in-javascript when styling your div.
 
 ```jsx:title=header.js
-export default ({ children }) => (
-  <section
-    style={{
-      // Header Specific Styling //
-      padding: "10px",
-      backgroundColor: "blue",
-    }}
-  >
-    {children}
-  </section>
-)
+export default function Header({ children }) {
+  return (
+    <section
+      style={{
+        // Header Specific Styling //
+        padding: "10px",
+        backgroundColor: "blue"
+      }}
+    >
+      {children}
+    </section>
+  )
+}
 ```
 
 To import your styled components, go to _index.js_ and export your component.

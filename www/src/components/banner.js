@@ -39,13 +39,13 @@ const Banner = () => (
       position: `fixed`,
       width: `100%`,
       zIndex: `banner`,
-      px: `env(safe-area-inset-left)`,
+      px: `env(safe-area-inset-left)`
     }}
   >
     <InnerContainer>
       <Content>
-        {`New! Get 20x faster builds with `}
-        <OutboundLink href="https://www.gatsbyjs.com/cloud">
+        {`New! Try Incremental Builds with `}
+        <OutboundLink href="https://www.gatsbyjs.com">
           Gatsby Cloud!
         </OutboundLink>
       </Content>

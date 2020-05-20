@@ -103,7 +103,7 @@ We ran into one schematic limitation working with Gatsby that’s helpful to be 
 
 The are some really promising discussions on the topic on GitHub, including an [RFC to refactor Gatsby’s schema generation](https://github.com/gatsbyjs/gatsby/issues/4261), but in the meantime, most users are getting around this issue by creating placeholder content on Contentful (or whatever their data source is) to guarantee a fully built-up schema.
 
-This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like ‘PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
+This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like `PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
 
 ### Netlify
 
@@ -218,7 +218,7 @@ Here’s why: Contentful’s Content Preview dashboard doesn’t give you that k
 createPage({
   component: contentPageTemplate,
   context,
-  path: `${language}/${slugs.join("/")}/`,
+  path: `${language}/${slugs.join("/")}/`
 })
 
 // On staging, recreate the page with a path corresponding to its ID
@@ -226,7 +226,7 @@ if (process.env.GATSBY_ENV === ENV.STAGING) {
   createPage({
     component: contentPageTemplate,
     context,
-    path: `${language}/${id}/`,
+    path: `${language}/${id}/`
   })
 }
 ```

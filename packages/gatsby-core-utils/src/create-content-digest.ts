@@ -9,8 +9,8 @@ const hasher = objectHash({
     map: true,
     object: true,
     array: false,
-    set: false,
-  },
+    set: false
+  }
 })
 
 const hashPrimitive = (input: BinaryLike | string): string =>

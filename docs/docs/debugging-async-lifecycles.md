@@ -27,7 +27,7 @@ exports.createPages = async function({ actions, graphql }) {
       actions.createPage({
         path: slug,
         component: require.resolve(`./src/templates/post.js`),
-        context: { slug },
+        context: { slug }
       })
     })
   })
@@ -60,7 +60,7 @@ exports.createPages = async function({ actions, graphql }) {
       actions.createPage({
         path: slug,
         component: require.resolve(`./src/templates/post.js`),
-        context: { slug },
+        context: { slug }
       })
     })
   })
@@ -86,7 +86,7 @@ exports.createPages = async function({ actions, graphql }) {
   // highlight-start
   const [pokemonData, rickAndMortyData] = await Promise.all([
     getJSON("https://some-rest-api.com/pokemon"),
-    getJSON("https://some-rest-api.com/rick-and-morty"),
+    getJSON("https://some-rest-api.com/rick-and-morty")
   ])
   // highlight-end
 

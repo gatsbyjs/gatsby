@@ -51,13 +51,13 @@ In addition to being open source, there are five main reasons we used Gatsby to 
 
 1. Gatsby is a cross-platform ecosystem out of the box.
 
-1. [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
+2. [GraphQL](https://graphql.org/) allows us to query the data from a canonical source, instead of regenerating the data into multiple files to fit a particular context.
 
-1. Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
+3. Anyone on our team can update the data. Team members need only Excel and GitHub to update the data, and we have one source of truth to maintain for each dataset.
 
-1. Gatsby is a modern, web-component framework that allows us to design the site in a more modular way, leading to better code reuse.
+4. Gatsby is a modern, web-component framework that allows us to design the site in a more modular way, leading to better code reuse.
 
-1. We're better aligned with industry best practices, which supports long-term site maintenance.
+5. We're better aligned with industry best practices, which supports long-term site maintenance.
 
 We'll look at each of these in the context of our homepage redesign.
 
@@ -199,8 +199,8 @@ exports.onClientEntry = () => {
         layout: "layout---index",
         layoutComponentChunkName: "component---src-layouts-index-js",
         jsonName: "explore-" + statePathId.toLowerCase() + ".json",
-        path: path,
-      },
+        path: path
+      }
     ])
   }
 }
@@ -222,7 +222,7 @@ const BASEURL = process.env.BASEURL || ""
 module.exports = {
   // This is currently the relative path in our Jekyll deployment. This path points to our Gatsby pages.
   // This prefix is prepended to load all our related images, code, and pages.
-  pathPrefix: `${BASEURL}/gatsby-public`,
+  pathPrefix: `${BASEURL}/gatsby-public`
 }
 ```
 

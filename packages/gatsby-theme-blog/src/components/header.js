@@ -5,6 +5,7 @@ import Switch from "./switch"
 import Bio from "../components/bio"
 import sun from "../../assets/sun.png"
 import moon from "../../assets/moon.png"
+import useBlogThemeConfig from "../hooks/configOptions"
 
 const rootPath = `${__PATH_PREFIX__}/`
 
@@ -14,7 +15,7 @@ const Title = ({ children, location }) => {
       <Styled.h1
         css={css({
           my: 0,
-          fontSize: 4,
+          fontSize: 4
         })}
       >
         <Styled.a
@@ -22,7 +23,7 @@ const Title = ({ children, location }) => {
           css={css({
             color: `inherit`,
             boxShadow: `none`,
-            textDecoration: `none`,
+            textDecoration: `none`
           })}
           to={`/`}
         >
@@ -35,7 +36,7 @@ const Title = ({ children, location }) => {
       <Styled.h3
         as="p"
         css={css({
-          my: 0,
+          my: 0
         })}
       >
         <Styled.a
@@ -43,7 +44,7 @@ const Title = ({ children, location }) => {
           css={css({
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `primary`,
+            color: `primary`
           })}
           to={`/`}
         >
@@ -79,12 +80,29 @@ const uncheckedIcon = (
 )
 
 export default ({ children, title, ...props }) => {
-  const [colorMode, setColorMode] = useColorMode()
-  const isDark = colorMode === `dark`
-  const toggleColorMode = e => {
-    setColorMode(isDark ? `light` : `dark`)
-  }
+  const blogThemeConfig = useBlogThemeConfig()
 
+  const { disableThemeUiStyling } = blogThemeConfig
+
+  var switchToggle
+  if (!disableThemeUiStyling) {
+    const [colorMode, setColorMode] = useColorMode()
+    const isDark = colorMode === `dark`
+    const toggleColorMode = e => {
+      setColorMode(isDark ? `light` : `dark`)
+    }
+    switchToggle = (
+      <Switch
+        aria-label={`Toggle dark mode ${isDark ? `off` : `on`}`}
+        checkedIcon={checkedIcon}
+        uncheckedIcon={uncheckedIcon}
+        checked={isDark}
+        onChange={toggleColorMode}
+      />
+    )
+  } else {
+    switchToggle = null
+  }
   return (
     <header>
       <div
@@ -92,7 +110,7 @@ export default ({ children, title, ...props }) => {
           maxWidth: `container`,
           mx: `auto`,
           px: 3,
-          pt: 4,
+          pt: 4
         })}
       >
         <div
@@ -100,18 +118,12 @@ export default ({ children, title, ...props }) => {
             display: `flex`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            mb: 4,
+            mb: 4
           })}
         >
           <Title {...props}>{title}</Title>
           {children}
-          <Switch
-            aria-label="Toggle dark mode"
-            checkedIcon={checkedIcon}
-            uncheckedIcon={uncheckedIcon}
-            checked={isDark}
-            onChange={toggleColorMode}
-          />
+          {switchToggle}
         </div>
         {props.location.pathname === rootPath && <Bio />}
       </div>

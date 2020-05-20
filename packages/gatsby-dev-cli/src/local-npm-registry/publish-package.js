@@ -10,7 +10,7 @@ const NPMRCContent = `${registryUrl.replace(
 )}/:_authToken="gatsby-dev"`
 
 const {
-  getMonorepoPackageJsonPath,
+  getMonorepoPackageJsonPath
 } = require(`../utils/get-monorepo-package-json-path`)
 const { registerCleanupTask } = require(`./cleanup-tasks`)
 
@@ -27,6 +27,7 @@ const adjustPackageJson = ({
   versionPostFix,
   packagesToPublish,
   ignorePackageJSONChanges,
+  root
 }) => {
   // we need to check if package depend on any other package to will be published and
   // adjust version selector to point to dev version of package so local registry is used
@@ -44,8 +45,19 @@ const adjustPackageJson = ({
       monorepoPKGjson.dependencies &&
       monorepoPKGjson.dependencies[packageThatWillBePublished]
     ) {
-      // change to "gatsby-dev" dist tag
-      monorepoPKGjson.dependencies[packageThatWillBePublished] = `gatsby-dev`
+      const currentVersion = JSON.parse(
+        fs.readFileSync(
+          getMonorepoPackageJsonPath({
+            packageName: packageThatWillBePublished,
+            root
+          }),
+          `utf-8`
+        )
+      ).version
+
+      monorepoPKGjson.dependencies[
+        packageThatWillBePublished
+      ] = `${currentVersion}-dev-${versionPostFix}`
     }
   })
 
@@ -53,7 +65,7 @@ const adjustPackageJson = ({
 
   const unignorePackageJSONChanges = ignorePackageJSONChanges(packageName, [
     monorepoPKGjsonString,
-    temporaryMonorepoPKGjsonString,
+    temporaryMonorepoPKGjsonString
   ])
 
   // change version and dependency versions
@@ -65,7 +77,7 @@ const adjustPackageJson = ({
       // restore original package.json
       fs.outputFileSync(monoRepoPackageJsonPath, monorepoPKGjsonString)
       unignorePackageJSONChanges()
-    }),
+    })
   }
 }
 
@@ -89,11 +101,11 @@ const publishPackage = async ({
   packagesToPublish,
   root,
   versionPostFix,
-  ignorePackageJSONChanges,
+  ignorePackageJSONChanges
 }) => {
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
-    root,
+    root
   })
 
   const { unadjustPackageJson, newPackageVersion } = adjustPackageJson({
@@ -102,7 +114,7 @@ const publishPackage = async ({
     root,
     versionPostFix,
     packagesToPublish,
-    ignorePackageJSONChanges,
+    ignorePackageJSONChanges
   })
 
   const pathToPackage = path.dirname(monoRepoPackageJsonPath)
@@ -114,8 +126,8 @@ const publishPackage = async ({
     `npm`,
     [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`],
     {
-      cwd: pathToPackage,
-    },
+      cwd: pathToPackage
+    }
   ]
 
   console.log(
@@ -133,6 +145,8 @@ const publishPackage = async ({
 
   uncreateTemporaryNPMRC()
   unadjustPackageJson()
+
+  return newPackageVersion
 }
 
 exports.publishPackage = publishPackage

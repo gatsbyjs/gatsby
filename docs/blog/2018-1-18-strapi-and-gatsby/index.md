@@ -179,10 +179,10 @@ After creating your fields, as above, save your new content type and wait for St
 
 Add some articles in the database. To do so, follow these instructions:
 
-1.  Visit the articles list page: `http://localhost:1337/admin/plugins/content-manager/article`.
-2.  Click on `Add New Article`.
-3.  Insert values, link to an author and submit the form.
-4.  Create two other articles.
+1. Visit the articles list page: `http://localhost:1337/admin/plugins/content-manager/article`.
+2. Click on `Add New Article`.
+3. Insert values, link to an author and submit the form.
+4. Create two other articles.
 
 Note: You can download the sample content from the video [here](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 
@@ -266,7 +266,7 @@ module.exports = {
   siteMetadata: {
     title: "My super blog",
     description: "Gatsby blog with Strapi",
-    author: "Strapi team",
+    author: "Strapi team"
   },
   plugins: [
     "gatsby-plugin-react-helmet",
@@ -274,8 +274,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     {
       resolve: "gatsby-source-strapi",
@@ -284,10 +284,10 @@ module.exports = {
         contentTypes: [
           // List of the Content Types you want to be able to request from Gatsby.
           "article",
-          "user",
+          "user"
         ],
-        queryLimit: 1000,
-      },
+        queryLimit: 1000
+      }
     },
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
@@ -300,11 +300,11 @@ module.exports = {
         background_color: "#663399",
         theme_color: "#663399",
         display: "minimal-ui",
-        icon: "src/images/gatsby-icon.png", // This path is relative to the root of the site.
-      },
+        icon: "src/images/gatsby-icon.png" // This path is relative to the root of the site.
+      }
     },
-    "gatsby-plugin-offline",
-  ],
+    "gatsby-plugin-offline"
+  ]
 }
 ```
 
@@ -544,8 +544,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         path: `/${node.id}`,
         component: path.resolve(`src/templates/article.js`),
         context: {
-          id: node.id,
-        },
+          id: node.id
+        }
       })
     })
   })
@@ -667,8 +667,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         path: `/${node.id}`,
         component: path.resolve(`src/templates/article.js`),
         context: {
-          id: node.id,
-        },
+          id: node.id
+        }
       })
     })
   })
@@ -693,8 +693,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         path: `/authors/${node.id}`,
         component: path.resolve(`src/templates/author.js`),
         context: {
-          id: node.id,
-        },
+          id: node.id
+        }
       })
     })
   })

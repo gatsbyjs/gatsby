@@ -22,7 +22,7 @@ After installing the dependencies, add the following to your `gatsby-config.js`.
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: ["gatsby-plugin-theme-ui"],
+  plugins: ["gatsby-plugin-theme-ui"]
 }
 ```
 
@@ -50,8 +50,8 @@ export default {
     text: "#333",
     background: "#fff",
     primary: "#639",
-    secondary: "#ff6347",
-  },
+    secondary: "#ff6347"
+  }
 }
 ```
 
@@ -63,24 +63,24 @@ export default {
     text: "#333",
     background: "#fff",
     primary: "#639",
-    secondary: "#ff6347",
+    secondary: "#ff6347"
   },
   // highlight-start
   fonts: {
     body: "system-ui, sans-serif",
     heading: "system-ui, sans-serif",
-    monospace: "Menlo, monospace",
+    monospace: "Menlo, monospace"
   },
   fontWeights: {
     body: 400,
     heading: 700,
-    bold: 700,
+    bold: 700
   },
   lineHeights: {
     body: 1.5,
-    heading: 1.125,
+    heading: 1.125
   },
-  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
+  fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72]
   // highlight-end
 }
 ```
@@ -93,25 +93,25 @@ export default {
     text: "#333",
     background: "#fff",
     primary: "#639",
-    secondary: "#ff6347",
+    secondary: "#ff6347"
   },
   fonts: {
     body: "system-ui, sans-serif",
     heading: "system-ui, sans-serif",
-    monospace: "Menlo, monospace",
+    monospace: "Menlo, monospace"
   },
   fontWeights: {
     body: 400,
     heading: 700,
-    bold: 700,
+    bold: 700
   },
   lineHeights: {
     body: 1.5,
-    heading: 1.125,
+    heading: 1.125
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 72],
   // highlight-start
-  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  space: [0, 4, 8, 16, 32, 64, 128, 256, 512]
   // highlight-end
 }
 ```
@@ -131,25 +131,25 @@ import { jsx } from "theme-ui"
 
 The [`sx` prop][] is used to style elements by referencing values from the theme object.
 
-[`sx` prop]: https://theme-ui.com/sx-prop
-
 ```jsx:title=src/components/header.js
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-export default props => (
-  <header
-    sx={{
-      // this uses the value from `theme.space[4]`
-      padding: 4,
-      // these use values from `theme.colors`
-      color: "background",
-      backgroundColor: "primary",
-    }}
-  >
-    {props.children}
-  </header>
-)
+export default function Header(props) {
+  return (
+    <header
+      sx={{
+        // this uses the value from `theme.space[4]`
+        padding: 4,
+        // these use values from `theme.colors`
+        color: "background",
+        backgroundColor: "primary"
+      }}
+    >
+      {props.children}
+    </header>
+  )
+}
 ```
 
 ## Using Theme UI in a Gatsby theme
@@ -172,8 +172,8 @@ import merge from "lodash.merge"
 export default merge({}, baseTheme, {
   colors: {
     text: "#222",
-    primary: "tomato",
-  },
+    primary: "tomato"
+  }
 })
 ```
 
@@ -196,16 +196,16 @@ export default {
       fontWeight: "heading",
       lineHeight: "heading",
       marginTop: 0,
-      marginBottom: 3,
+      marginBottom: 3
     },
     a: {
       color: "primary",
       ":hover, :focus": {
-        color: "secondary",
-      },
-    },
+        color: "secondary"
+      }
+    }
     // more styles can be added as needed
-  },
+  }
 }
 ```
 
@@ -219,3 +219,4 @@ To learn more about using Theme UI in your project, see the official [Theme UI][
 [typography.js]: /docs/typography-js
 [react context]: https://reactjs.org/docs/context.html
 [component shadowing api]: /docs/themes/api-reference#component-shadowing
+[`sx` prop]: https://theme-ui.com/sx-prop

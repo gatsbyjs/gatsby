@@ -1,24 +1,24 @@
 const Queue = require(`better-queue`)
 const { store } = require(`../redux`)
 const FastMemoryStore = require(`../query/better-queue-custom-store`)
-const queryRunner = require(`../query/query-runner`)
+const { queryRunner } = require(`../query/query-runner`)
 const { websocketManager } = require(`../utils/websocket-manager`)
-const GraphQLRunner = require(`./graphql-runner`).default
+const { GraphQLRunner } = require(`./graphql-runner`)
 
 const createBaseOptions = () => {
   return {
     concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
     // eslint-disable-next-line new-cap
-    store: FastMemoryStore(),
+    store: FastMemoryStore()
   }
 }
 
-const createBuildQueue = graphqlRunner => {
+const createBuildQueue = (graphqlRunner, runnerOptions = {}) => {
   if (!graphqlRunner) {
-    graphqlRunner = new GraphQLRunner(store)
+    graphqlRunner = new GraphQLRunner(store, runnerOptions)
   }
-  const handler = (queryJob, callback) =>
-    queryRunner(graphqlRunner, queryJob)
+  const handler = ({ job, activity }, callback) =>
+    queryRunner(graphqlRunner, job, activity?.span)
       .then(result => callback(null, result))
       .catch(callback)
   const queue = new Queue(handler, createBaseOptions())
@@ -28,7 +28,7 @@ const createBuildQueue = graphqlRunner => {
 const createDevelopQueue = getRunner => {
   const queueOptions = {
     ...createBaseOptions(),
-    priority: (job, cb) => {
+    priority: ({ job }, cb) => {
       if (job.id && websocketManager.activePaths.has(job.id)) {
         cb(null, 10)
       } else {
@@ -37,21 +37,21 @@ const createDevelopQueue = getRunner => {
     },
     merge: (oldTask, newTask, cb) => {
       cb(null, newTask)
-    },
+    }
   }
 
-  const handler = (queryJob, callback) => {
-    queryRunner(getRunner(), queryJob).then(
+  const handler = ({ job: queryJob, activity }, callback) => {
+    queryRunner(getRunner(), queryJob, activity?.span).then(
       result => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
             result,
-            id: queryJob.id,
+            id: queryJob.id
           })
         } else {
           websocketManager.emitStaticQueryData({
             result,
-            id: queryJob.id,
+            id: queryJob.id
           })
         }
 
@@ -108,12 +108,17 @@ const processBatch = async (queue, jobs, activity) => {
       //       `empty` fires when queue is empty (but tasks are still running)
       .on(`drain`, drainCallback)
 
-    jobs.forEach(job => queue.push(job))
+    jobs.forEach(job =>
+      queue.push({
+        job,
+        activity
+      })
+    )
   })
 }
 
 module.exports = {
   createBuildQueue,
   createDevelopQueue,
-  processBatch,
+  processBatch
 }

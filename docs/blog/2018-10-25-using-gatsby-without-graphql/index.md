@@ -98,7 +98,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
   // highlight-end
 }
@@ -113,7 +113,7 @@ The [`createPage` action](/docs/actions/#createPage) is passed an object contain
 In our example, we're accessing the context as [props to the component](https://github.com/jlengstorf/gatsby-with-unstructured-data/blob/0a91d87b9d4d24a0e6b04b33cc271e054b7467b6/src/templates/all-pokemon.js#L4). This allows us to completely circumvent Gatsby’s data layer; it’s just props.
 
 ```jsx:title=src/templates/all-pokemon.js
-export default ({ pageContext: { allPokemon } }) => (// highlight-line
+export default function AllPokemon({ pageContext: { allPokemon } }) (// highlight-line
     {...}
         {allPokemon.map(pokemon => ( // highlight-line
             <li
@@ -146,7 +146,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
 
   // highlight-start
@@ -155,7 +155,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve("./src/templates/pokemon.js"),
-      context: { pokemon },
+      context: { pokemon }
     })
   })
   // highlight-end
@@ -172,7 +172,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
 
   // Create a page for each Pokémon.
@@ -180,7 +180,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve("./src/templates/pokemon.js"),
-      context: { pokemon },
+      context: { pokemon }
     })
 
     // highlight-start
@@ -189,7 +189,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
       createPage({
         path: `/pokemon/${pokemon.name}/ability/${ability.name}/`,
         component: require.resolve("./src/templates/ability.js"),
-        context: { pokemon, ability },
+        context: { pokemon, ability }
       })
     })
     // highlight-end

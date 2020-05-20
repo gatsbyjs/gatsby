@@ -13,8 +13,8 @@ module.exports = function(node, key, text, mediaType, createContentDigest) {
       type: camelCase(`${node.internal.type} ${key} MappingNode`),
       mediaType: mediaType,
       content: str,
-      contentDigest: createContentDigest(str),
-    },
+      contentDigest: createContentDigest(str)
+    }
   }
 
   node.children = node.children.concat([mappingNode.id])

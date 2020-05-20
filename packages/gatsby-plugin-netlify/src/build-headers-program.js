@@ -10,7 +10,7 @@ import {
   CACHING_HEADERS,
   LINK_REGEX,
   NETLIFY_HEADERS_FILENAME,
-  PAGE_DATA_DIR,
+  PAGE_DATA_DIR
 } from "./constants"
 
 function getHeaderName(header) {
@@ -126,7 +126,7 @@ function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
 
     const filesByResourceType = {
       script: scripts.filter(Boolean),
-      fetch: json,
+      fetch: json
     }
 
     const pathKey = headersPath(pathPrefix, page.path)
@@ -234,7 +234,7 @@ const validateUserOptions = (pluginOptions, reporter) => headers => {
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
       `The "transformHeaders" option to gatsby-plugin-netlify must be a function ` +
-        `that returns a array of header strings.` +
+        `that returns an array of header strings. ` +
         `Check your gatsby-config.js.`
     )
   }
@@ -245,7 +245,7 @@ const validateUserOptions = (pluginOptions, reporter) => headers => {
 const mapUserLinkHeaders = ({
   manifest,
   pathPrefix,
-  publicFolder,
+  publicFolder
 }) => headers =>
   _.mapValues(headers, headerList =>
     _.map(headerList, transformLink(manifest, publicFolder, pathPrefix))
@@ -285,7 +285,7 @@ const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => headers => {
     pages,
     manifest,
     pathPrefix,
-    publicFolder,
+    publicFolder
   })
 
   return defaultMerge(headers, perPageHeaders)

@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
 import qs from "qs"
 import { navigate } from "gatsby"
+
+import PageMetadata from "../../components/page-metadata"
 import scrollToAnchor from "../../utils/scroll-to-anchor"
 import FeaturedSites from "./featured-sites"
 import FilteredShowcase from "./filtered-showcase"
@@ -9,12 +10,12 @@ import FilteredShowcase from "./filtered-showcase"
 class ShowcaseView extends Component {
   showcase = React.createRef()
   state = {
-    filters: [],
+    filters: []
   }
 
   componentDidMount() {
     const {
-      location: { search = `` },
+      location: { search = `` }
     } = this.props
 
     const { filters } = qs.parse(search.replace(`?`, ``))
@@ -26,7 +27,7 @@ class ShowcaseView extends Component {
 
   componentDidUpdate() {
     const {
-      location: { pathname, search },
+      location: { pathname, search }
     } = this.props
     const queryString = qs.stringify(this.state)
 
@@ -37,7 +38,7 @@ class ShowcaseView extends Component {
 
   setFilters = filters => {
     this.setState({
-      filters: [].concat(filters),
+      filters: [].concat(filters)
     })
 
     scrollToAnchor(this.showcase.current, () => {})()
@@ -49,13 +50,10 @@ class ShowcaseView extends Component {
 
     return (
       <>
-        <Helmet>
-          <title>Showcase</title>
-          <meta
-            name="description"
-            content="Gallery of sites using Gatsby across the web, find inspiration or inspect the code of popular projects."
-          />
-        </Helmet>
+        <PageMetadata
+          title="Showcase"
+          description="Gallery of sites using Gatsby across the web, find inspiration or inspect the code of popular projects."
+        />
         <FeaturedSites
           setFilters={this.setFilters}
           featured={data.featured.nodes}

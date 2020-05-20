@@ -1,13 +1,13 @@
 jest.mock(`chokidar`, () => {
   return {
-    watch: jest.fn(),
+    watch: jest.fn()
   }
 })
 jest.mock(`fs-extra`, () => {
   return {
     copy: jest.fn(),
     existsSync: jest.fn(),
-    removeSync: jest.fn(),
+    removeSync: jest.fn()
   }
 })
 jest.mock(`del`, () => jest.fn())
@@ -19,15 +19,15 @@ jest.mock(`verdaccio`, () => {
         {
           listen: (_, _2, cb2) => {
             cb2()
-          },
+          }
         },
         {
           port: `aa`,
           path: `bb`,
-          host: `cc,`,
+          host: `cc,`
         }
       )
-    },
+    }
   }
 })
 
@@ -42,7 +42,7 @@ beforeEach(() => {
   fs.existsSync.mockImplementation(() => true)
   chokidar.watch.mockImplementation(() => {
     const mock = {
-      on: jest.fn().mockImplementation(() => mock),
+      on: jest.fn().mockImplementation(() => mock)
     }
     on = mock.on
     return mock
@@ -53,8 +53,8 @@ const args = [
   process.cwd(),
   [`gatsby`],
   {
-    localPackages: [`gatsby`],
-  },
+    localPackages: [`gatsby`]
+  }
 ]
 
 const callEventCallback = (...args) =>
@@ -67,7 +67,7 @@ describe(`watching`, () => {
     watch(...args)
     expect(chokidar.watch).toHaveBeenCalledTimes(1)
     expect(chokidar.watch).toHaveBeenCalledWith(expect.any(Array), {
-      ignored: [expect.any(Function)],
+      ignored: [expect.any(Function)]
     })
   })
 
@@ -137,7 +137,7 @@ describe(`watching`, () => {
 
     it(`filters duplicate directories`, () => {
       watch(process.cwd(), [`gatsby`, `gatsby`], {
-        localPackages: [`gatsby`],
+        localPackages: [`gatsby`]
       })
 
       expect(chokidar.watch).toHaveBeenCalledWith(
@@ -154,7 +154,7 @@ describe(`watching`, () => {
 
       global.process = {
         ...realProcess,
-        exit: jest.fn(),
+        exit: jest.fn()
       }
     })
 
@@ -172,7 +172,7 @@ describe(`watching`, () => {
     it(`exits if scanOnce is defined`, async () => {
       watch(process.cwd(), [`gatsby`], {
         scanOnce: true,
-        localPackages: [`gatsby`],
+        localPackages: [`gatsby`]
       })
 
       await callReadyCallback()
@@ -183,6 +183,7 @@ describe(`watching`, () => {
 })
 
 const monoRepoPackages = [
+  `babel-plugin-optimize-hook-destructuring`,
   `babel-plugin-remove-graphql-queries`,
   `babel-preset-gatsby`,
   `babel-preset-gatsby-package`,
@@ -283,35 +284,35 @@ const monoRepoPackages = [
   `gatsby-transformer-toml`,
   `gatsby-transformer-xml`,
   `gatsby-transformer-yaml`,
-  `graphql-skip-limit`,
+  `graphql-skip-limit`
 ]
 
 const mockDepsChanges = packagesWithChangedDeps => ({ packageName }) =>
   Promise.resolve({
-    didDepsChanged: packagesWithChangedDeps.includes(packageName),
+    didDepsChanged: packagesWithChangedDeps.includes(packageName)
   })
 
 jest.mock(`../utils/check-deps-changes`, () => {
   return {
-    checkDepsChanges: jest.fn(),
+    checkDepsChanges: jest.fn()
   }
 })
 
 jest.mock(`../local-npm-registry/publish-package`, () => {
   return {
-    publishPackage: jest.fn(),
+    publishPackage: jest.fn()
   }
 })
 
 jest.mock(`../local-npm-registry/install-packages`, () => {
   return {
-    installPackages: jest.fn(),
+    installPackages: jest.fn()
   }
 })
 
 jest.mock(`../utils/promisified-spawn`, () => {
   return {
-    promisifiedSpawn: jest.fn(() => Promise.resolve()),
+    promisifiedSpawn: jest.fn(() => Promise.resolve())
   }
 })
 
@@ -325,7 +326,7 @@ describe(`dependency changes`, () => {
     include.forEach(includedPackage => {
       expect(publishPackage).toBeCalledWith(
         expect.objectContaining({
-          packageName: includedPackage,
+          packageName: includedPackage
         })
       )
     })
@@ -333,7 +334,7 @@ describe(`dependency changes`, () => {
     exclude.forEach(excludedPackage => {
       expect(publishPackage).not.toBeCalledWith(
         expect.objectContaining({
-          packageName: excludedPackage,
+          packageName: excludedPackage
         })
       )
     })
@@ -343,7 +344,7 @@ describe(`dependency changes`, () => {
     include.forEach(includedPackage => {
       expect(installPackages).toBeCalledWith(
         expect.objectContaining({
-          packagesToInstall: expect.arrayContaining([includedPackage]),
+          packagesToInstall: expect.arrayContaining([includedPackage])
         })
       )
     })
@@ -351,7 +352,7 @@ describe(`dependency changes`, () => {
     exclude.forEach(excludedPackage => {
       expect(installPackages).not.toBeCalledWith(
         expect.objectContaining({
-          packagesToInstall: expect.arrayContaining([excludedPackage]),
+          packagesToInstall: expect.arrayContaining([excludedPackage])
         })
       )
     })
@@ -373,7 +374,7 @@ describe(`dependency changes`, () => {
 
     global.process = {
       ...realProcess,
-      exit: jest.fn(),
+      exit: jest.fn()
     }
   })
 
@@ -396,7 +397,7 @@ describe(`dependency changes`, () => {
         scanOnce: true,
         quiet: true,
         monoRepoPackages,
-        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
@@ -405,12 +406,12 @@ describe(`dependency changes`, () => {
 
       assertPublish({
         include: [`gatsby`],
-        exclude: [`gatsby-plugin-sharp`],
+        exclude: [`gatsby-plugin-sharp`]
       })
 
       assertInstall({
         include: [`gatsby`],
-        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`]
       })
     })
 
@@ -421,7 +422,7 @@ describe(`dependency changes`, () => {
         scanOnce: true,
         quiet: true,
         monoRepoPackages,
-        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
@@ -435,12 +436,12 @@ describe(`dependency changes`, () => {
 
       assertPublish({
         include: [`gatsby`],
-        exclude: [`gatsby-plugin-sharp`],
+        exclude: [`gatsby-plugin-sharp`]
       })
 
       assertInstall({
         include: [`gatsby`],
-        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`]
       })
 
       assertCopy([`gatsby`, `gatsby-plugin-sharp`])
@@ -453,7 +454,7 @@ describe(`dependency changes`, () => {
         scanOnce: true,
         quiet: true,
         monoRepoPackages,
-        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       const filePath = path.join(
@@ -465,12 +466,12 @@ describe(`dependency changes`, () => {
 
       assertPublish({
         include: [`gatsby`, `gatsby-cli`],
-        exclude: [`gatsby-plugin-sharp`],
+        exclude: [`gatsby-plugin-sharp`]
       })
 
       assertInstall({
         include: [`gatsby`],
-        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby-cli`, `gatsby-plugin-sharp`]
       })
     })
 
@@ -486,8 +487,8 @@ describe(`dependency changes`, () => {
         localPackages: [
           `gatsby`,
           `gatsby-source-wordpress`,
-          `gatsby-plugin-sharp`,
-        ],
+          `gatsby-plugin-sharp`
+        ]
       })
 
       const filePath = path.join(
@@ -499,12 +500,12 @@ describe(`dependency changes`, () => {
 
       assertPublish({
         include: [`gatsby-source-wordpress`, `gatsby-source-filesystem`],
-        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       assertInstall({
         include: [`gatsby-source-wordpress`],
-        exclude: [`gatsby`, `gatsby-source-filesystem`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby`, `gatsby-source-filesystem`, `gatsby-plugin-sharp`]
       })
     })
 
@@ -520,8 +521,8 @@ describe(`dependency changes`, () => {
         localPackages: [
           `gatsby`,
           `gatsby-source-filesystem`,
-          `gatsby-plugin-sharp`,
-        ],
+          `gatsby-plugin-sharp`
+        ]
       })
 
       const filePath = path.join(
@@ -533,12 +534,12 @@ describe(`dependency changes`, () => {
 
       assertPublish({
         include: [`gatsby-source-filesystem`],
-        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       assertInstall({
         include: [`gatsby-source-filesystem`],
-        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`]
       })
     })
 
@@ -551,7 +552,7 @@ describe(`dependency changes`, () => {
         scanOnce: true,
         quiet: true,
         monoRepoPackages,
-        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       const filePath = path.join(
@@ -567,8 +568,8 @@ describe(`dependency changes`, () => {
           `gatsby`,
           `gatsby-source-filesystem`,
           `gatsby-source-wordpress`,
-          `gatsby-plugin-sharp`,
-        ],
+          `gatsby-plugin-sharp`
+        ]
       })
 
       assertInstall({
@@ -577,8 +578,8 @@ describe(`dependency changes`, () => {
           `gatsby`,
           `gatsby-source-filesystem`,
           `gatsby-source-wordpress`,
-          `gatsby-plugin-sharp`,
-        ],
+          `gatsby-plugin-sharp`
+        ]
       })
     })
 
@@ -595,8 +596,8 @@ describe(`dependency changes`, () => {
           `gatsby`,
           `gatsby-source-wordpress`,
           `gatsby-source-filesystem`,
-          `gatsby-plugin-sharp`,
-        ],
+          `gatsby-plugin-sharp`
+        ]
       })
 
       const filePath = path.join(
@@ -608,12 +609,12 @@ describe(`dependency changes`, () => {
 
       assertPublish({
         include: [`gatsby-source-filesystem`, `gatsby-source-wordpress`],
-        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       assertInstall({
         include: [`gatsby-source-filesystem`, `gatsby-source-wordpress`],
-        exclude: [`gatsby`, `gatsby-plugin-sharp`],
+        exclude: [`gatsby`, `gatsby-plugin-sharp`]
       })
     })
   })
@@ -639,7 +640,7 @@ describe(`dependency changes`, () => {
         scanOnce: true,
         quiet: true,
         monoRepoPackages,
-        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
@@ -673,7 +674,7 @@ describe(`dependency changes`, () => {
       checkDepsChanges.mockImplementationOnce(() =>
         Promise.resolve({
           didDepsChanged: false,
-          packageNotInstalled: true,
+          packageNotInstalled: true
         })
       )
 
@@ -681,7 +682,7 @@ describe(`dependency changes`, () => {
         scanOnce: true,
         quiet: true,
         monoRepoPackages,
-        localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        localPackages: [`gatsby`, `gatsby-plugin-sharp`]
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)

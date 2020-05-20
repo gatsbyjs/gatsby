@@ -10,10 +10,10 @@ When Gatsby creates its webpack config, this function will be called allowing yo
 
 Gatsby does multiple webpack builds with somewhat different configuration. Gatsby calls each build type a "stage". The following stages exist:
 
-1.  develop: when running the `gatsby develop` command. Has configuration for hot reloading and CSS injection into page
-2.  develop-html: same as develop but without react-hmre in the babel config for rendering the HTML component.
-3.  build-javascript: production JavaScript and CSS build. Creates route JS bundles as well as common chunks for JS and CSS.
-4.  build-html: production build static HTML pages
+1. develop: when running the `gatsby develop` command. Has configuration for hot reloading and CSS injection into page
+2. develop-html: same as develop but without react-hmre in the babel config for rendering the HTML component.
+3. build-javascript: production JavaScript and CSS build. Creates route JavaScript bundles as well as common chunks for JavaScript and CSS.
+4. build-html: production build static HTML pages
 
 Check [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js) for the source.
 
@@ -29,7 +29,7 @@ exports.onCreateWebpackConfig = ({
   rules,
   loaders,
   plugins,
-  actions,
+  actions
 }) => {
   actions.setWebpackConfig({
     module: {
@@ -45,16 +45,16 @@ exports.onCreateWebpackConfig = ({
             // the postcss loader comes with some nice defaults
             // including autoprefixer for our configured browsers
             loaders.postcss(),
-            `less-loader`,
-          ],
-        },
-      ],
+            `less-loader`
+          ]
+        }
+      ]
     },
     plugins: [
       plugins.define({
-        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`,
-      }),
-    ],
+        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`
+      })
+    ]
   })
 }
 ```
@@ -67,8 +67,8 @@ Instead of writing `import Header from '../../components/header'` over and over 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: [path.resolve(__dirname, "src"), "node_modules"],
-    },
+      modules: [path.resolve(__dirname, "src"), "node_modules"]
+    }
   })
 }
 ```
@@ -77,13 +77,13 @@ You can always find more information on _resolve_ and other options in the offic
 
 ### Importing non-webpack tools using `yarn`
 
-Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. eslint or typescript.
-But if you are using yarn, then the best practice is to set up your imports in package.json as shown below:
+Note that using absolute imports only applies to webpack resolutions and will not work for other tools, e.g. ESLint or TypeScript.
+But if you are using yarn, then the best practice is to set up your imports in `package.json` as shown below:
 
-```js
+```json:title=package.json
 {
   "dependencies": {
-      "hooks": "link:./src/hooks",
+    "hooks": "link:./src/hooks"
   }
 }
 ```
@@ -121,8 +121,8 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
       // Exclude all node_modules from transpilation, except for 'swiper' and 'dom7'
       exclude: modulePath =>
         /node_modules/.test(modulePath) &&
-        !/node_modules\/(swiper|dom7)/.test(modulePath),
-    },
+        !/node_modules\/(swiper|dom7)/.test(modulePath)
+    }
   ]
 
   // This will completely replace the webpack config with the modified object.

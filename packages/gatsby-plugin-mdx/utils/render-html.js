@@ -10,7 +10,7 @@ const { cloneDeep } = require(`lodash`)
 const DataLoader = require(`dataloader`)
 
 const queue = new PQueue({
-  concurrency: parseInt(process.env.GATSBY_MDX_CONCURRENCY) || 4,
+  concurrency: parseInt(process.env.GATSBY_MDX_CONCURRENCY) || 4
 })
 
 let count = 0
@@ -122,7 +122,7 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
       webpackConfig.output = {
         filename: `output.js`,
         path: path.join(cache.directory, `webpack`),
-        libraryTarget: `commonjs`,
+        libraryTarget: `commonjs`
       }
       webpackConfig.plugins = webpackConfig.plugins || []
       webpackConfig.plugins.push(new MdxHtmlBuilderWebpackPlugin())

@@ -9,10 +9,10 @@ module.exports = function(pageComponent) {
     themes: store.getState().flattenedPlugins.map(aPlugin => {
       return {
         themeDir: aPlugin.pluginFilepath,
-        themeName: aPlugin.name,
+        themeName: aPlugin.name
       }
     }),
-    projectRoot: store.getState().program.directory,
+    projectRoot: store.getState().program.directory
   })
   const matchingThemes = shadowingPlugin.getMatchingThemesForPath(pageComponent)
   if (matchingThemes.length > 1) {
@@ -29,7 +29,7 @@ module.exports = function(pageComponent) {
     const componentPath = shadowingPlugin.resolveComponentPath({
       matchingTheme: theme.themeName,
       themes: shadowingPlugin.themes,
-      component,
+      component
     })
     if (componentPath) {
       return componentPath

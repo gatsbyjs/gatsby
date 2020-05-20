@@ -5,7 +5,7 @@ import SearchIcon from "../../components/search-icon"
 import {
   MdArrowDownward,
   MdArrowForward as ArrowForwardIcon,
-  MdSort,
+  MdSort
 } from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -19,7 +19,7 @@ import {
   SidebarContainer,
   ContentHeader,
   ContentTitle,
-  ContentContainer,
+  ContentContainer
 } from "../shared/sidebar"
 import FooterLinks from "../../components/shared/footer-links"
 import ResetFilters from "../shared/reset-filters"
@@ -28,7 +28,7 @@ import { themedInput } from "../../utils/styles"
 
 export default class FilteredStarterLibrary extends Component {
   state = {
-    sitesToShow: 12,
+    sitesToShow: 12
   }
   setFiltersCategory = filtersCategory => {
     this.props.setURLState({ c: Array.from(filtersCategory) })
@@ -39,14 +39,14 @@ export default class FilteredStarterLibrary extends Component {
     this.props.setURLState({ v: Array.from(filtersVersion) })
   toggleSort = () =>
     this.props.setURLState({
-      sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
+      sort: this.props.urlState.sort === `recent` ? `stars` : `recent`
     })
   resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
   showMoreSites = starters => {
     const showAll =
       this.state.sitesToShow + 15 > starters.length ? starters.length : false
     this.setState({
-      sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
+      sitesToShow: showAll ? showAll : this.state.sitesToShow + 15
     })
   }
   onChangeUrlWithText = value => this.props.setURLState({ s: value })
@@ -58,7 +58,7 @@ export default class FilteredStarterLibrary extends Component {
       setFiltersDependency,
       setFiltersVersion,
       resetFilters,
-      toggleSort,
+      toggleSort
     } = this
     const filtersCategory = new Set(
       Array.isArray(urlState.c) ? urlState.c : [urlState.c]
@@ -164,8 +164,8 @@ export default class FilteredStarterLibrary extends Component {
               pt: 6,
               [mediaQueries.sm]: {
                 height: `headerHeight`,
-                pt: 0,
-              },
+                pt: 0
+              }
             }}
           >
             <ContentTitle
@@ -185,8 +185,8 @@ export default class FilteredStarterLibrary extends Component {
                 [mediaQueries.sm]: {
                   justifyContent: `flex-end`,
                   mb: 0,
-                  width: `50%`,
-                },
+                  width: `50%`
+                }
               }}
             >
               {/* TODO add sorting. */}
@@ -200,8 +200,8 @@ export default class FilteredStarterLibrary extends Component {
                     fontFamily: `heading`,
                     py: 1,
                     pr: 1,
-                    width: `10rem`,
-                  },
+                    width: `10rem`
+                  }
                 }}
                 onClick={toggleSort}
               >
@@ -212,7 +212,7 @@ export default class FilteredStarterLibrary extends Component {
                 <DebounceInput
                   sx={{
                     ...themedInput,
-                    pl: 7,
+                    pl: 7
                   }}
                   value={urlState.s}
                   onChange={this.onChangeUrlWithText}

@@ -29,7 +29,7 @@ msgstr "目次"
 msgid "In this section:"
 msgstr ""
 
-#: src/components/markdown-page-footer.js:24
+#: src/components/markdown-page-footer.js:32
 msgid "<0/> Edit this page on GitHub"
 msgstr ""
 
@@ -126,11 +126,11 @@ msgstr ""
 msgid "Expand All"
 msgstr ""
 
-#: src/components/sidebar/section-title.js:142
+#: src/components/sidebar/section-title.js:143
 msgid "{0} collapse"
 msgstr ""
 
-#: src/components/sidebar/section-title.js:142
+#: src/components/sidebar/section-title.js:144
 msgid "{0} expand"
 msgstr ""
 

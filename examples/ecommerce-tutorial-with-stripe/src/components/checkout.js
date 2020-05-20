@@ -1,16 +1,16 @@
-import React from 'react'
-import { loadStripe } from '@stripe/stripe-js'
+import React from "react"
+import { loadStripe } from "@stripe/stripe-js"
 
 const buttonStyles = {
-  fontSize: '13px',
-  textAlign: 'center',
-  color: '#fff',
-  outline: 'none',
-  padding: '12px 60px',
-  boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
-  backgroundColor: 'rgb(255, 178, 56)',
-  borderRadius: '6px',
-  letterSpacing: '1.5px',
+  fontSize: "13px",
+  textAlign: "center",
+  color: "#fff",
+  outline: "none",
+  padding: "12px 60px",
+  boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
+  backgroundColor: "rgb(255, 178, 56)",
+  borderRadius: "6px",
+  letterSpacing: "1.5px",
 }
 
 const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
@@ -25,7 +25,7 @@ const redirectToCheckout = async event => {
   })
 
   if (error) {
-    console.warn('Error:', error)
+    console.warn("Error:", error)
   }
 }
 

@@ -20,7 +20,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
   const dirs = [
     path.join(program.directory, "posts"),
     path.join(program.directory, "src/pages"),
-    path.join(program.directory, "src/data"),
+    path.join(program.directory, "src/data")
   ]
 
   dirs.forEach(dir => {
@@ -46,7 +46,9 @@ import { graphql } from "gatsby"
 
 import PostList from "../components/PostList"
 
-export default props => <PostList posts={props.allMdx.edges} />
+export default function MyPostsList(props) {
+  return <PostList posts={props.allMdx.edges} />
+}
 
 export const query = graphql`
   query {
@@ -88,7 +90,7 @@ import Footer from "../footer.js"
 
 const Layout = ({ children }) => {
   const {
-    site: { siteMetadata },
+    site: { siteMetadata }
   } = useStaticQuery(
     graphql`
       query {
@@ -128,7 +130,7 @@ your theme you can create a StaticQuery to access it:
 ```js:title=src/hooks/use-site-metadata.js
 import { graphql, useStaticQuery } from "gatsby"
 
-export default () => {
+export default function useSiteMetadata() {
   const data = useStaticQuery(graphql`
     {
       site {
@@ -156,7 +158,7 @@ import { Link } from "gatsby"
 
 import useSiteMetadata from "../hooks/use-site-metadata"
 
-export default () => {
+export default function Header() {
   const { title, social } = useSiteMetadata()
 
   return (

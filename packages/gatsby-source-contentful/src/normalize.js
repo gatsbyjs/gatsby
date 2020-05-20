@@ -17,7 +17,7 @@ const getLocalizedField = ({ field, locale, localesFallback }) => {
     return getLocalizedField({
       field,
       locale: { code: localesFallback[locale.code] },
-      localesFallback,
+      localesFallback
     })
   } else {
     return null
@@ -121,7 +121,7 @@ exports.buildResolvableSet = ({
   existingNodes = [],
   assets = [],
   locales,
-  defaultLocale,
+  defaultLocale
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(n => {
@@ -152,7 +152,7 @@ exports.buildForeignReferenceMap = ({
   defaultLocale,
   locales,
   space,
-  useNameForId,
+  useNameForId
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -193,7 +193,7 @@ exports.buildForeignReferenceMap = ({
                 foreignReferenceMap[v.sys.id].push({
                   name: `${contentTypeItemId}___NODE`,
                   id: entryItem.sys.id,
-                  spaceId: space.sys.id,
+                  spaceId: space.sys.id
                 })
               })
             }
@@ -210,7 +210,7 @@ exports.buildForeignReferenceMap = ({
             foreignReferenceMap[entryItemFieldValue.sys.id].push({
               name: `${contentTypeItemId}___NODE`,
               id: entryItem.sys.id,
-              spaceId: space.sys.id,
+              spaceId: space.sys.id
             })
           }
         }
@@ -232,8 +232,8 @@ function prepareTextNode(node, key, text, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
       mediaType: `text/markdown`,
       content: str,
-      contentDigest: digest(str),
-    },
+      contentDigest: digest(str)
+    }
   }
 
   node.children = node.children.concat([textNode.id])
@@ -253,8 +253,8 @@ function prepareRichTextNode(node, key, content, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
       mediaType: `text/richtext`,
       content: str,
-      contentDigest: digest(str),
-    },
+      contentDigest: digest(str)
+    }
   }
 
   node.children = node.children.concat([richTextNode.id])
@@ -272,8 +272,8 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
       type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
       mediaType: `application/json`,
       content: str,
-      contentDigest: digest(str),
-    },
+      contentDigest: digest(str)
+    }
   }
 
   node.children = node.children.concat([JSONNode.id])
@@ -295,7 +295,7 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
-  richTextOptions,
+  richTextOptions
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -313,11 +313,11 @@ exports.createNodesForContentType = ({
     const mId = makeMakeId({
       currentLocale: locale.code,
       defaultLocale,
-      createNodeId,
+      createNodeId
     })
     const getField = makeGetLocalizedField({
       locale,
-      localesFallback,
+      localesFallback
     })
 
     // Warn about any field conflicts
@@ -359,7 +359,7 @@ exports.createNodesForContentType = ({
             fieldProps,
             contentTypesById,
             getField,
-            defaultLocale,
+            defaultLocale
           })
         }
 
@@ -438,7 +438,7 @@ exports.createNodesForContentType = ({
             // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
             entryItemFields[foreignReference.name] = [
-              mId(foreignReference.spaceId, foreignReference.id),
+              mId(foreignReference.spaceId, foreignReference.id)
             ]
           }
         })
@@ -453,9 +453,9 @@ exports.createNodesForContentType = ({
         parent: contentTypeItemId,
         children: [],
         internal: {
-          type: `${makeTypeName(contentTypeItemId)}`,
+          type: `${makeTypeName(contentTypeItemId)}`
         },
-        sys: {},
+        sys: {}
       }
 
       // Revision applies to entries, assets, and content types
@@ -467,15 +467,6 @@ exports.createNodesForContentType = ({
       if (entryItem.sys.contentType) {
         entryNode.sys.contentType = entryItem.sys.contentType
       }
-
-      // Use default locale field.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // Ignore fields with "___node" as they're already handled
-        // and won't be a text field.
-        if (entryItemFieldKey.split(`___`).length > 1) {
-          return
-        }
-      })
 
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
@@ -576,8 +567,8 @@ exports.createNodesForContentType = ({
       displayField: contentTypeItem.displayField,
       description: contentTypeItem.description,
       internal: {
-        type: `${makeTypeName(`ContentType`)}`,
-      },
+        type: `${makeTypeName(`ContentType`)}`
+      }
     }
 
     // Get content digest of node.
@@ -603,7 +594,7 @@ exports.createAssetNodes = ({
   createNodeId,
   defaultLocale,
   locales,
-  space,
+  space
 }) => {
   const createNodePromises = []
   locales.forEach(locale => {
@@ -611,11 +602,11 @@ exports.createAssetNodes = ({
     const mId = makeMakeId({
       currentLocale: locale.code,
       defaultLocale,
-      createNodeId,
+      createNodeId
     })
     const getField = makeGetLocalizedField({
       locale,
-      localesFallback,
+      localesFallback
     })
 
     const assetNode = {
@@ -630,8 +621,8 @@ exports.createAssetNodes = ({
         : ``,
       node_locale: locale.code,
       internal: {
-        type: `${makeTypeName(`Asset`)}`,
-      },
+        type: `${makeTypeName(`Asset`)}`
+      }
     }
 
     // Get content digest of node.

@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import domReady from "@mikaelkristiansson/domready"
+import io from "socket.io-client"
 
 import socketIo from "./socketIo"
 import emitter from "./emitter"
@@ -28,6 +29,32 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       window.location.reload()
     })
   }
+
+  fetch(`/___services`)
+    .then(res => res.json())
+    .then(services => {
+      if (services.developstatusserver) {
+        const parentSocket = io(
+          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver}`
+        )
+
+        parentSocket.on(`develop:needs-restart`, msg => {
+          if (
+            window.confirm(
+              `The develop process needs to be restarted for the changes to ${msg.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
+            )
+          ) {
+            parentSocket.once(`develop:is-starting`, msg => {
+              window.location.reload()
+            })
+            parentSocket.once(`develop:started`, msg => {
+              window.location.reload()
+            })
+            parentSocket.emit(`develop:restart`)
+          }
+        })
+      }
+    })
 
   /**
    * Service Workers are persistent by nature. They stick around,
@@ -59,7 +86,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
-    loader.loadPage(window.location.pathname),
+    loader.loadPage(window.location.pathname)
   ]).then(() => {
     const preferDefault = m => (m && m.default) || m
     let Root = preferDefault(require(`./root`))

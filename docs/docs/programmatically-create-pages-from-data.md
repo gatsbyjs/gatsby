@@ -42,7 +42,7 @@ exports.createPages = async function({ actions, graphql }) {
     actions.createPage({
       path: slug,
       component: require.resolve(`./src/templates/blog-post.js`),
-      context: { slug: slug },
+      context: { slug: slug }
     })
   })
   // highlight-end
@@ -78,7 +78,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   return (
     <Layout>

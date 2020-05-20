@@ -24,7 +24,7 @@ const isValidDimensions = (...args) => args.every(n => _.isFinite(n))
 
 module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   const defaults = {
-    wrapperStyle: ``,
+    wrapperStyle: ``
   }
   const options = _.defaults(pluginOptions, defaults)
   visit(markdownAST, [`html`, `jsx`], node => {

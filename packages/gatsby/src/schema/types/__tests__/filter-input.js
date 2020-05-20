@@ -1,7 +1,6 @@
 const { build } = require(`../..`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -13,15 +12,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -29,29 +28,29 @@ const nodes = [
   {
     id: `parent`,
     nested: {
-      union___NODE: [`union1`, `union2`],
+      union___NODE: [`union1`, `union2`]
     },
     internal: {
       type: `Parent`,
-      contentDigest: `a`,
-    },
+      contentDigest: `a`
+    }
   },
   {
     id: `union1`,
     foo: `bar`,
     internal: {
       type: `Union1`,
-      contentDigest: `bar`,
-    },
+      contentDigest: `bar`
+    }
   },
   {
     id: `union2`,
     foo: `baz`,
     internal: {
       type: `Union2`,
-      contentDigest: `baz`,
-    },
-  },
+      contentDigest: `baz`
+    }
+  }
 ]
 
 describe(`Filter input`, () => {

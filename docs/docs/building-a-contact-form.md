@@ -134,8 +134,8 @@ const mailer = nodemailer.createTransport({
   service: "Gmail",
   auth: {
     user: process.env.production.GMAIL_ADDRESS,
-    pass: process.env.production.GMAIL_PASSWORD,
-  },
+    pass: process.env.production.GMAIL_PASSWORD
+  }
 })
 
 app.post("/contact", function(req, res) {
@@ -144,7 +144,7 @@ app.post("/contact", function(req, res) {
       from: req.body.from,
       to: [contactAddress],
       subject: req.body.subject || "[No subject]",
-      html: req.body.message || "[No message]",
+      html: req.body.message || "[No message]"
     },
     function(err, info) {
       if (err) return res.status(500).send(err)
@@ -156,12 +156,12 @@ app.post("/contact", function(req, res) {
 app.listen(3000)
 ```
 
-This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Now](https://zeit.co/now).
+This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Vercel](https://vercel.com/home).
 
-Once deployed, note the url of the deployment (something like `my-project-abcd123.now.sh`), and use it as your form action:
+Once deployed, note the url of the deployment (something like `my-project-abcd123.vercel.app`), and use it as your form action:
 
 ```jsx:title=src/pages/contact.js
-<form method="post" action="my-project-abcd123.now.sh/contact">
+<form method="post" action="my-project-abcd123.vercel.app/contact">
   ...
 </form>
 ```

@@ -4,7 +4,7 @@ import React from "react"
 import Link from "./localized-link"
 import {
   MdChevronRight as ChevronRight,
-  MdChevronLeft as ChevronLeft,
+  MdChevronLeft as ChevronLeft
 } from "react-icons/md"
 import { getItemList } from "../utils/sidebar/item-list"
 import getActiveItem from "../utils/sidebar/get-active-item"
@@ -24,10 +24,10 @@ const BreadcrumbNav = ({ children, mobile = false }) => (
       display: [
         `${mobile ? `inherit` : `none`}`,
         null,
-        `${mobile ? `none` : `inherit`}`,
+        `${mobile ? `none` : `inherit`}`
       ],
       fontSize: 1,
-      mb: [6, null, 8],
+      mb: [6, null, 8]
     }}
   >
     {children}
@@ -39,8 +39,8 @@ const Breadcrumb = ({ location }) => {
   // provide escape if no itemList is provided so breadcrumb isn't rendered
   if (itemList === undefined) return null
 
-  const activeItem = getActiveItem(itemList.items, location, undefined)
-  const activeItemParents = getActiveItemParents(itemList.items, activeItem, [])
+  const activeItem = getActiveItem(itemList.items, location)
+  const activeItemParents = getActiveItemParents(itemList.items, activeItem)
   const topLevel = itemList.key
   const topLevelTitle = itemList.breadcrumbTitle || itemList.title
   // return a shorter version of the breadcrumb on the intro page

@@ -65,8 +65,8 @@ A minimal config module would look like:
 ```javascript
 module.exports = {
   siteMetadata: {
-    title: `My Sweet Gatsby Site!`,
-  },
+    title: `My Sweet Gatsby Site!`
+  }
 }
 ```
 
@@ -131,15 +131,15 @@ something like the following:
 ```javascript
 module.exports = {
   siteMetadata: {
-    title: `My Sweet Gatsby Site!`,
+    title: `My Sweet Gatsby Site!`
   },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
+        path: `${__dirname}/src/pages/`
+      }
     },
     {
       resolve: `gatsby-transformer-remark`,
@@ -148,20 +148,20 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 690,
-            },
+              maxWidth: 690
+            }
           },
           {
-            resolve: `gatsby-remark-responsive-iframe`,
+            resolve: `gatsby-remark-responsive-iframe`
           },
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
-        ],
-      },
+          `gatsby-remark-smartypants`
+        ]
+      }
     },
-    `gatsby-plugin-sharp`,
-  ],
+    `gatsby-plugin-sharp`
+  ]
 }
 ```
 
@@ -234,8 +234,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             path: edge.node.fields.slug, // required
             component: blogPost,
             context: {
-              slug: edge.node.fields.slug,
-            },
+              slug: edge.node.fields.slug
+            }
           })
         })
 
@@ -292,7 +292,7 @@ exactly the data they need.
 
 There will be a more in-depth tutorial and GraphQL-specific documentation soon
 but in the meantime, check out https://graphql.org/ and play around on Gatsby's
-built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
+built-in GraphQL IDE (Graph_i_QL) which can be reached when you start the
 development server.
 
 At this point you should have working markdown pages when you run `npm run develop`! Now start gradually adding back what you had in your wrapper component

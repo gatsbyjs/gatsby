@@ -19,8 +19,8 @@ module.exports = {
       "Hogwarts Potions master, Head of Slytherin house and former Death Eater.",
     url: "https://www.doe.com", // No trailing slash allowed!
     image: "/images/snape.jpg", // Path to your image you placed in the 'static' folder
-    twitterUsername: "@occlumency",
-  },
+    twitterUsername: "@occlumency"
+  }
 }
 ```
 
@@ -28,7 +28,7 @@ module.exports = {
 
 First create a new component with this initial boilerplate.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
@@ -60,7 +60,7 @@ As the SEO component should also be usable in other files, e.g. a template file,
 
 Now define the query and pass it to `useStaticQuery`. You can also alias query items, so `title` gets renamed to `defaultTitle`.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
   const { location } = useLocation()
   const { site } = useStaticQuery(query)
@@ -88,7 +88,7 @@ const query = graphql`
 
 The next step is to destructure the data from the query and create an object that checks if the props were used. If not, the default values are applied. Aliasing the properties comes in handy here to avoid name collisions.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 const SEO = ({ title, description, image, article }) => {
   const { pathname } = useLocation()
   const { site } = useStaticQuery(query)
@@ -99,14 +99,14 @@ const SEO = ({ title, description, image, article }) => {
     defaultDescription,
     siteUrl,
     defaultImage,
-    twitterUsername,
+    twitterUsername
   } = site.siteMetadata
 
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`,
+    url: `${siteUrl}${pathname}`
   }
 
   return null
@@ -117,7 +117,7 @@ export default SEO
 
 The last step is to return this data with the help of `Helmet`. Your complete SEO component should look like this.
 
-```jsx:title=src/components/SEO.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
@@ -134,14 +134,14 @@ const SEO = ({ title, description, image, article }) => {
     defaultDescription,
     siteUrl,
     defaultImage,
-    twitterUsername,
+    twitterUsername
   } = site.siteMetadata
 
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
-    url: `${siteUrl}${pathname}`,
+    url: `${siteUrl}${pathname}`
   }
 
   return (
@@ -184,14 +184,14 @@ SEO.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
-  article: PropTypes.bool,
+  article: PropTypes.bool
 }
 
 SEO.defaultProps = {
   title: null,
   description: null,
   image: null,
-  article: false,
+  article: false
 }
 
 const query = graphql`

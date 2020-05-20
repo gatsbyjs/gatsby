@@ -7,7 +7,7 @@ const stripTrailingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
 // only add leading slash on relative urls
 const addLeadingSlash = (chain: Joi.StringSchema): Joi.StringSchema =>
   chain.when(Joi.string().uri({ relativeOnly: true }), {
-    then: chain.replace(/^([^/])/, `/$1`),
+    then: chain.replace(/^([^/])/, `/$1`)
   })
 
 export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
@@ -16,7 +16,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
     polyfill: Joi.boolean().default(true),
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({
-        allowRelative: true,
+        allowRelative: true
       })
     ),
     pathPrefix: addLeadingSlash(
@@ -24,7 +24,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         Joi.string()
           .uri({
             allowRelative: true,
-            relativeOnly: true,
+            relativeOnly: true
           })
           .default(``)
           // removes single / value
@@ -32,8 +32,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           .replace(/^\/$/, ``)
       )
     ),
+    linkPrefix: Joi.forbidden().error(
+      new Error(`"linkPrefix" should be changed to "pathPrefix"`)
+    ),
     siteMetadata: Joi.object({
-      siteUrl: stripTrailingSlash(Joi.string()).uri(),
+      siteUrl: stripTrailingSlash(Joi.string()).uri()
     }).unknown(),
     mapping: Joi.object(),
     plugins: Joi.array(),
@@ -41,38 +44,38 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       .items(
         Joi.object().keys({
           prefix: Joi.string().required(),
-          url: Joi.string().required(),
+          url: Joi.string().required()
         })
       )
       .single(),
-    developMiddleware: Joi.func(),
+    developMiddleware: Joi.func()
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(
     Joi.object({
       assetPrefix: Joi.string().uri({
         allowRelative: true,
-        relativeOnly: true,
+        relativeOnly: true
       }),
       pathPrefix: Joi.string()
         .uri({
           allowRelative: true,
-          relativeOnly: true,
+          relativeOnly: true
         })
-        .default(``),
+        .default(``)
     }),
     {
       then: Joi.object({
         assetPrefix: Joi.string()
           .uri({
-            allowRelative: false,
+            allowRelative: false
           })
           .error(
             new Error(
               `assetPrefix must be an absolute URI when used with pathPrefix`
             )
-          ),
-      }),
+          )
+      })
     }
   )
 
@@ -84,7 +87,7 @@ export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
     componentChunkName: Joi.string().required(),
     context: Joi.object(),
     pluginCreator___NODE: Joi.string(),
-    pluginCreatorId: Joi.string(),
+    pluginCreatorId: Joi.string()
   })
   .unknown()
 
@@ -104,8 +107,8 @@ export const nodeSchema: Joi.ObjectSchema<IGatsbyNode> = Joi.object()
         content: Joi.string().allow(``),
         description: Joi.string(),
         ignoreType: Joi.boolean(),
-        counter: Joi.number(),
+        counter: Joi.number()
       })
-      .unknown(false), // Don't allow non-standard fields
+      .unknown(false) // Don't allow non-standard fields
   })
   .unknown()

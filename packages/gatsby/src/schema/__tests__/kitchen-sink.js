@@ -7,7 +7,7 @@ const {
   GraphQLNonNull,
   GraphQLList,
   GraphQLObjectType,
-  getNamedType,
+  getNamedType
 } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
@@ -16,7 +16,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
@@ -31,15 +30,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -57,7 +56,7 @@ describe(`Kitchen sink schema test`, () => {
         schema,
         schemaComposer,
         context: {},
-        customContext: {},
+        customContext: {}
       })
     )
 
@@ -100,12 +99,12 @@ describe(`Kitchen sink schema test`, () => {
           image: File @fileByRelativePath
         }
 
-      `,
+      `
     })
     buildThirdPartySchemas().forEach(schema =>
       store.dispatch({
         type: `ADD_THIRD_PARTY_SCHEMA`,
-        payload: schema,
+        payload: schema
       })
     )
     await build({})
@@ -262,27 +261,27 @@ const buildThirdPartySchemas = () => {
       return {
         text: `Hello third-party schema!`,
         child: {
-          text: `Hello from children!`,
-        },
+          text: `Hello from children!`
+        }
       }
-    },
+    }
   })
   schemaComposer.Query.extendField(`thirdPartyUnion`, {
     resolve() {
       return {
         text: `Hello third-party schema!`,
         child: {
-          text: `Hello from children!`,
-        },
+          text: `Hello from children!`
+        }
       }
-    },
+    }
   })
   schemaComposer.Query.extendField(`thirdPartyInterface`, {
     resolve() {
       return {
-        text: `Hello third-party schema!`,
+        text: `Hello third-party schema!`
       }
-    },
+    }
   })
   schemaComposer.addSchemaMustHaveType(
     schemaComposer.getOTC(`ThirdPartyStuff3`)
@@ -295,19 +294,19 @@ const buildThirdPartySchemas = () => {
       return {
         query: { type: RootQueryType },
         manyQueries: {
-          type: new GraphQLNonNull(new GraphQLList(RootQueryType)),
+          type: new GraphQLNonNull(new GraphQLList(RootQueryType))
         },
-        nested: { type: Nested },
+        nested: { type: Nested }
       }
-    },
+    }
   })
   const Nested = new GraphQLObjectType({
     name: `Nested`,
     fields: () => {
       return {
-        query: { type: RootQueryType },
+        query: { type: RootQueryType }
       }
-    },
+    }
   })
   const schema = new GraphQLSchema({ query: RootQueryType })
 
@@ -322,9 +321,9 @@ const mockSetFieldsOnGraphQLNodeType = async ({ type: { name } }) => {
           type: `String`,
           resolve(parent) {
             return `decoration-${parent.id}`
-          },
-        },
-      },
+          }
+        }
+      }
     ]
   } else {
     return []
@@ -343,19 +342,19 @@ const mockCreateResolvers = ({ createResolvers }) => {
               filter: {
                 likes: {
                   ne: null,
-                  gt: 5,
-                },
+                  gt: 5
+                }
               },
               sort: {
                 fields: [`likes`],
-                order: [`DESC`],
-              },
+                order: [`DESC`]
+              }
             },
-            firstOnly: false,
+            firstOnly: false
           })
           return result.slice(0, 2)
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }

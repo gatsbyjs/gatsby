@@ -3,7 +3,7 @@ jest.mock(`../reporter`, () => {
     panic: jest.fn(),
     log: jest.fn(),
     stripIndent: jest.fn(str => str),
-    warn: jest.fn(),
+    warn: jest.fn()
   }
 })
 jest.mock(`../create-cli`)
@@ -12,13 +12,13 @@ const getCLI = () => {
   jest.resetModules()
 
   const reporter = require(`../reporter`)
-  const createCLI = require(`../create-cli`)
+  const { createCli } = require(`../create-cli`)
 
   require(`../`)
 
   return {
     reporter,
-    createCLI,
+    createCli
   }
 }
 
@@ -34,7 +34,7 @@ beforeEach(() => {
 const setup = version => {
   if (version) {
     Object.defineProperty(__process__, `version`, {
-      get: () => version,
+      get: () => version
     })
   }
 
@@ -58,6 +58,20 @@ describe(`error handling`, () => {
       expect.stringContaining(`https://gatsby.dev/upgrading-node-js`)
     )
   })
+
+  it(`allows prerelease versions`, () => {
+    const { reporter } = setup(`v15.0.0-pre`)
+
+    expect(reporter.panic).not.toHaveBeenCalled()
+  })
+
+  it(`warns on prerelease versions`, () => {
+    const { reporter } = setup(`v15.0.0-pre`)
+
+    expect(reporter.warn).toHaveBeenCalledWith(
+      expect.stringContaining(`prerelease`)
+    )
+  })
 })
 
 // describe(`deprecation warning`, () => {
@@ -79,10 +93,10 @@ describe(`normal behavior`, () => {
     })
   })
 
-  it(`invokes createCLI`, () => {
-    const { createCLI } = setup()
+  it(`invokes createCli`, () => {
+    const { createCli } = setup()
 
-    expect(createCLI).toHaveBeenCalledTimes(1)
-    expect(createCLI).toHaveBeenCalledWith(process.argv)
+    expect(createCli).toHaveBeenCalledTimes(1)
+    expect(createCli).toHaveBeenCalledWith(process.argv)
   })
 })

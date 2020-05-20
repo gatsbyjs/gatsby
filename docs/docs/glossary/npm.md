@@ -7,9 +7,11 @@ Learn what _npm_ is, how to use it, and how it fits in to the Gatsby ecosystem.
 
 ## What is npm?
 
-<abbr>
-  npm
-</abbr>, or Node package manager, is the default package manager for the [Node.js](/docs/glossary/node) JavaScript runtime. It lets you install and update libraries and frameworks (dependencies) for Node-based projects, and interact with the npm Registry. You'll use npm to install and upgrade Gatsby and its plugins.
+<abbr>npm</abbr>, or Node package manager, is the default package manager for
+the [Node.js](/docs/glossary/node) JavaScript runtime. It lets you install and
+update libraries and frameworks (dependencies) for Node-based projects, and
+interact with the npm Registry. You'll use npm to install and upgrade Gatsby and
+its plugins.
 
 npm is a [command line](/docs/glossary#command-line) tool. You'll need Terminal (Mac, Linux) or Command Prompt (Windows) in order to run its commands. To use one of npm's features, type `npm <command>` . For example, `npm help` displays a list of available features, including `install`, `uninstall`, `update`, and `search`.
 

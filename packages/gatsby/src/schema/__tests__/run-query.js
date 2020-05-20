@@ -1,11 +1,13 @@
 const { runQuery: nodesQuery } = require(`../../db/nodes`)
+const { didLastFilterUseSift } = require(`../../redux/run-sift`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
-// Note: loki does not match redux in certain edge cases in this file
-const IS_LOKI = require(`../../db/__tests__/fixtures/ensure-loki`)()
+const EXPECT_SIFT = true
+const EXPECT_FAST_FILTER = false
 
-const makeNodes = () => [
+const makeNodesUneven = () => [
+  // Note: This is assumed to be an uneven node count
   {
     id: `0`,
     internal: { type: `Test`, contentDigest: `0` },
@@ -19,29 +21,29 @@ const makeNodes = () => [
     strArray: `["testing", "serialization", "hacks"]`,
     nullArray: [1, null, 3, 4],
     key: {
-      withEmptyArray: [],
+      withEmptyArray: []
     },
     anotherKey: {
       withANested: {
         nestedKey: `foo`,
         emptyArray: [],
-        anotherEmptyArray: [],
-      },
+        anotherEmptyArray: []
+      }
     },
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of dash and adventure`,
       tags: [`moo`, `foo`],
-      blue: 100,
+      blue: 100
     },
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
-      { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      { aString: `some string`, aNumber: 2, anArray: [1, 2] }
     ],
     boolean: true,
     nil: `not null`,
     nestedRegex: {
-      field: `har har`,
+      field: `har har`
     },
     num_null_not: 1,
     num_not_null: 1,
@@ -55,6 +57,7 @@ const makeNodes = () => [
     obj_not_null: { y: 5 },
     null_obj_not: null,
     null_not_obj: null,
+    exh: 2
   },
   {
     id: `1`,
@@ -65,22 +68,23 @@ const makeNodes = () => [
     float: 2.5,
     hair: 2,
     anArray: [1, 2, 5, 4],
+    singleArray: [8],
     strArray: `[5,6,7,8]`,
     nullArray: [1, 3, 4],
     waxOnly: {
       foo: true,
-      bar: { baz: true },
+      bar: { baz: true }
     },
     anotherKey: {
       withANested: {
-        nestedKey: `foo`,
-      },
+        nestedKey: `foo`
+      }
     },
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of slash and adventure`,
       blue: 10010,
-      circle: `happy`,
+      circle: `happy`
     },
     boolean: false,
     nil: null,
@@ -90,28 +94,28 @@ const makeNodes = () => [
         {
           one: {
             two: {
-              three: 123,
-            },
-          },
+              three: 123
+            }
+          }
         },
         {
           one: {
             five: {
-              three: 153,
-            },
-          },
+              three: 153
+            }
+          }
         },
         {
           one: {
             two: {
-              three: 404,
-            },
-          },
-        },
-      ],
+              three: 404
+            }
+          }
+        }
+      ]
     },
     nestedRegex: {
-      field: ``,
+      field: ``
     },
     strSecondOnly: `needle`,
     boolSecondOnly: false,
@@ -127,6 +131,7 @@ const makeNodes = () => [
     null_obj_not: { y: 5 },
     not_null_obj: null,
     not_obj_null: { y: 5 },
+    exh: 3
   },
   {
     id: `2`,
@@ -140,14 +145,14 @@ const makeNodes = () => [
     waxOnly: null,
     anotherKey: {
       withANested: {
-        nestedKey: `bar`,
-      },
+        nestedKey: `bar`
+      }
     },
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of shave and adventure`,
       blue: 10010,
-      circle: `happy`,
+      circle: `happy`
     },
     data: {
       tags: [
@@ -156,25 +161,25 @@ const makeNodes = () => [
             document: [
               {
                 data: {
-                  tag: `Gatsby`,
-                },
-              },
-            ],
-          },
+                  tag: `Gatsby`
+                }
+              }
+            ]
+          }
         },
         {
           tag: {
             document: [
               {
                 data: {
-                  tag: `Design System`,
+                  tag: `Design System`
                 },
-                number: 5,
-              },
-            ],
-          },
-        },
-      ],
+                number: 5
+              }
+            ]
+          }
+        }
+      ]
     },
     num_not_null: null,
     null_not_num: 1,
@@ -188,8 +193,110 @@ const makeNodes = () => [
     null_not_obj: { y: 5 },
     not_null_obj: { y: 5 },
     not_obj_null: null,
-  },
+    exh: 1
+  }
 ]
+const makeNodesEven = () => [
+  // Deliberate even count of nodes to test lt/lte/gt/gte search
+  {
+    id: `0`,
+    internal: { type: `Test`, contentDigest: `0` },
+    exh: 2
+  },
+  {
+    id: `1`,
+    internal: { type: `Test`, contentDigest: `1` },
+    exh: 4
+  },
+  {
+    id: `2`,
+    internal: { type: `Test`, contentDigest: `2` },
+    exh: 1
+  },
+  {
+    id: `3`,
+    internal: { type: `Test`, contentDigest: `3` },
+    exh: 3
+  }
+]
+
+const makeNodesNeNull = () => [
+  // This set of nodes checks `ne` behavior with null and non-existing props in
+  // the target path, every step of the way.
+  {
+    id: `0`,
+    internal: { type: `Test`, contentDigest: `0` },
+    desc: `does not have the property chain at all`
+  },
+  {
+    id: `1`,
+    internal: { type: `Test`, contentDigest: `1` },
+    desc: `first start of path is null`,
+    a: null
+  },
+  {
+    id: `2`,
+    internal: { type: `Test`, contentDigest: `2` },
+    desc: `second start of path is undefined`,
+    a: {}
+  },
+  {
+    id: `3`,
+    internal: { type: `Test`, contentDigest: `3` },
+    desc: `second start of path is null`,
+    a: { b: null }
+  },
+  {
+    id: `4`,
+    internal: { type: `Test`, contentDigest: `4` },
+    desc: `third part is undefined`,
+    a: { b: {} }
+  },
+  {
+    id: `5`,
+    internal: { type: `Test`, contentDigest: `5` },
+    desc: `third part is null`,
+    a: { b: { c: null } }
+  },
+  {
+    id: `6`,
+    internal: { type: `Test`, contentDigest: `6` },
+    desc: `third part is true`,
+    a: { b: { c: true } }
+  },
+  {
+    id: `7`,
+    internal: { type: `Test`, contentDigest: `7` },
+    desc: `third part is false`,
+    a: { b: { c: false } }
+  },
+  {
+    id: `8`,
+    internal: { type: `Test`, contentDigest: `8` },
+    desc: `first step is a bool (would be prevented by schema in real world) `,
+    a: true
+  },
+  {
+    id: `9`,
+    internal: { type: `Test`, contentDigest: `9` },
+    desc: `second step is a bool (would be prevented by schema in real world)`,
+    a: { b: true }
+  }
+]
+
+function make100Nodes(even) {
+  const arr = []
+
+  for (let i = 0; i < (even ? 100 : 99); ++i) {
+    arr.push({
+      id: String(i),
+      internal: { type: `Test`, contentDigest: `a${i}b` },
+      exh: i + 1
+    })
+  }
+
+  return arr
+}
 
 function makeGqlType(nodes) {
   const { createSchemaComposer } = require(`../../schema/schema-composer`)
@@ -204,7 +311,7 @@ function makeGqlType(nodes) {
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleObject(inferenceMetadata),
+    exampleValue: getExampleObject(inferenceMetadata)
   })
   return { sc, type: tc.getType() }
 }
@@ -216,8 +323,12 @@ function resetDb(nodes) {
   )
 }
 
-async function runQuery(queryArgs, filtersCache) {
-  const nodes = makeNodes()
+async function runQuery(
+  queryArgs,
+  filtersCache,
+  nodes = makeNodesUneven(),
+  alwaysSift = !filtersCache
+) {
   resetDb(nodes)
   const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
@@ -226,21 +337,43 @@ async function runQuery(queryArgs, filtersCache) {
     queryArgs,
     gqlComposer: sc,
     nodeTypeNames: [gqlType.name],
-    filtersCache,
+    filtersCache
   }
-  return await nodesQuery(args)
+
+  let result = await nodesQuery(args)
+
+  // If the filters cache was set, then the test expects fast filters to handle
+  // the query and to skip Sift. If it's not set, then it can't use fast filters
+  // Might revise this when adding tests where we don't expect fast filters to
+  // support it yet..?
+  if (result && result.length) {
+    // Currently, empty results must go through Sift, so ignore those cases here
+    if (alwaysSift) {
+      expect(didLastFilterUseSift()).toBe(true)
+    } else {
+      expect(didLastFilterUseSift()).toBe(!filtersCache)
+    }
+  }
+
+  return result
 }
 
-async function runFilterOnCache(filter, filtersCache) {
-  return await runQuery({ filter }, filtersCache)
+async function runQuery2(queryArgs, filtersCache, alwaysSift) {
+  const nodes = makeNodesUneven()
+  return [await runQuery(queryArgs, filtersCache, nodes, alwaysSift), nodes]
+}
+
+async function runFilterOnCache(filter, filtersCache, alwaysSift) {
+  return await runQuery2({ filter }, filtersCache, alwaysSift)
 }
 
 it(`should use the cache argument`, async () => {
-  // Loki does not use this system at all
-  if (IS_LOKI) return
-
   const filtersCache = new Map()
-  const result = await runFilterOnCache({ hair: { eq: 2 } }, filtersCache)
+  const [result] = await runFilterOnCache(
+    { hair: { eq: 2 } },
+    filtersCache,
+    EXPECT_FAST_FILTER
+  )
 
   // Validate answer
   expect(result.length).toEqual(1)
@@ -248,690 +381,1420 @@ it(`should use the cache argument`, async () => {
 
   // Confirm cache is not ignored
   expect(filtersCache.size === 1).toBe(true)
-  filtersCache.forEach((filterCache, cacheKey) => {
-    // This test will change when the composition of the FilterCache changes
-    // For now it should be a Map of values to Set of nodes
-    expect(filterCache instanceof Map).toBe(true)
-    // There ought to be at least one value mapped (probably more, shrug)
-    expect(filterCache.size >= 1).toBe(true)
-  })
+  filtersCache.forEach(
+    (
+      filterCache /*: FilterCache */
+      //cacheKey /*: FilterCacheKey */
+    ) => {
+      // This test will change when the composition of the FilterCache changes
+      // For now it should be a Map of values to Set of nodes
+      expect(filterCache instanceof Object).toBe(true)
+      expect(filterCache.byValue instanceof Map).toBe(true)
+      expect(filterCache.meta instanceof Object).toBe(true)
+      // There ought to be at least one value mapped (probably more, shrug)
+      expect(filterCache.byValue.size >= 1).toBe(true)
+    }
+  )
 })
 
 // Make sure to test fast filters (with cache) and Sift (without cache)
 ;[
   { desc: `without cache`, cb: () => null }, // Forces no cache, must use Sift
-  { desc: `with cache`, cb: () => new Map() },
+  { desc: `with cache`, cb: () => new Map() }
 ].forEach(({ desc, cb: createFiltersCache }) => {
-  async function runFilter(filter) {
-    return runFilterOnCache(filter, createFiltersCache())
+  async function runFastFilter(filter) {
+    // Assume (and assert) that the query used fast filters if a cache was given
+    return runFilterOnCache(filter, createFiltersCache(), EXPECT_FAST_FILTER)
+  }
+  async function runSlowFilter(filter) {
+    // Assume (and assert) that the query used Sift even if a cache was given
+    // (These are cases we still need to support, at least, before dropping Sift)
+    return runFilterOnCache(filter, createFiltersCache(), EXPECT_SIFT)
   }
 
   describe(desc, () => {
     describe(`Filter fields`, () => {
-      it(`handles eq operator with number value`, async () => {
-        let result = await runFilter({ hair: { eq: 2 } })
+      describe(`$eq`, () => {
+        it(`handles eq operator with number value`, async () => {
+          const needle = 2
+          const [result, allNodes] = await runFastFilter({
+            hair: { eq: needle }
+          })
 
-        expect(result.length).toEqual(1)
-        expect(result[0].hair).toEqual(2)
-      })
-
-      it(`handles eq operator with false value`, async () => {
-        let result = await runFilter({ boolean: { eq: false } })
-
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`handles eq operator with 0`, async () => {
-        let result = await runFilter({ hair: { eq: 0 } })
-
-        expect(result.length).toEqual(1)
-        expect(result[0].hair).toEqual(0)
-      })
-
-      it(`handles eq operator with null`, async () => {
-        let result = await runFilter({ nil: { eq: null } })
-
-        // Also return nodes that do not have the property at all (NULL in db)
-        expect(result.length).toEqual(2)
-      })
-
-      // grapqhl would never pass on `undefined`
-      // it(`handles eq operator with undefined`, async () => {
-      //   let result = await runFilter({ undef: { eq: undefined } })
-      //
-      //   expect(result.length).toEqual(?)
-      //   expect(result[0].hair).toEqual(?)
-      // })
-
-      it(`handles eq operator with serialized array value`, async () => {
-        let result = await runFilter({ strArray: { eq: `[5,6,7,8]` } })
-
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`handles ne operator`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ hair: { ne: 2 } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-      })
-
-      it(`handles ne: true operator`, async () => {
-        let result = await runFilter({ boolean: { ne: true } })
-
-        expect(result.length).toEqual(2)
-      })
-
-      it(`handles nested ne: true operator`, async () => {
-        let result = await runFilter({ waxOnly: { foo: { ne: true } } })
-
-        expect(result.length).toEqual(2)
-      })
-
-      it(`handles ne operator with 0`, async () => {
-        let result = await runFilter({ hair: { ne: 0 } })
-
-        expect(result.length).toEqual(2)
-      })
-
-      it(`handles ne operator with null`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ nil: { ne: null } })
-
-        // Should only return nodes who do have the property, not set to null
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Max`)
-      })
-
-      // grapqhl would never pass on `undefined`
-      // it(`handles ne operator with undefined`, async () => {
-      //   let result = await runFilter({ undef: { ne: undefined } })
-      //
-      //   expect(result.length).toEqual(?)
-      // })
-
-      it(`handles deeply nested ne: true operator`, async () => {
-        let result = await runFilter({
-          waxOnly: { bar: { baz: { ne: true } } },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair === needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair).toEqual(needle))
         })
 
-        expect(result.length).toEqual(2)
-      })
+        it(`handles eq operator with false value`, async () => {
+          const needle = false
+          const [result, allNodes] = await runFastFilter({
+            boolean: { eq: needle }
+          })
 
-      it(`handles lt operator with number`, async () => {
-        let result = await runFilter({ hair: { lt: 2 } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(0)
-      })
-
-      it(`handles lt operator with null`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ nil: { lt: null } })
-
-        // Nothing is lt null
-        expect(result).toEqual(null)
-      })
-
-      it(`handles lte operator with number`, async () => {
-        let result = await runFilter({ hair: { lte: 1 } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(0)
-      })
-
-      it(`handles lte operator with null`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ nil: { lte: null } })
-
-        // lte null matches null but no nodes without the property (NULL)
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[0].nil).toEqual(null)
-      })
-
-      it(`handles gt operator with number`, async () => {
-        let result = await runFilter({ hair: { gt: 0 } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(2)
-      })
-
-      it(`handles gt operator with null`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ nil: { gt: null } })
-
-        // Nothing is gt null
-        expect(result).toEqual(null)
-      })
-
-      it(`handles gte operator with number`, async () => {
-        let result = await runFilter({ hair: { gte: 1 } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].hair).toEqual(1)
-        expect(result[1].hair).toEqual(2)
-      })
-
-      it(`handles gte operator with null`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ nil: { gte: null } })
-
-        // lte null matches null but no nodes without the property (NULL)
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[0].nil).toEqual(null)
-      })
-
-      it(`handles the regex operator without flags`, async () => {
-        let result = await runFilter({ name: { regex: `/^The.*Wax/` } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[1].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`handles the regex operator with i-flag`, async () => {
-        let result = await runFilter({ name: { regex: `/^the.*wax/i` } })
-
-        expect(result.length).toEqual(2)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[1].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`handles the nested regex operator`, async () => {
-        let result = await runFilter({
-          nestedRegex: { field: { regex: `/.*/` } },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.boolean === needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.boolean).toEqual(needle))
         })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].id).toEqual(`0`)
-        expect(result[1].id).toEqual(`1`)
-      })
+        it(`handles eq operator with 0`, async () => {
+          const needle = 0
+          const [result, allNodes] = await runFastFilter({
+            hair: { eq: needle }
+          })
 
-      it(`does not match double quote for string without it`, async () => {
-        if (IS_LOKI) return
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair === needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair).toEqual(needle))
+        })
 
-        let result = await runFilter({ name: { regex: `/"/` } })
+        it(`handles eq operator with null`, async () => {
+          const needle = null // note: this should find nodes with null OR undefined (apparently)
+          const [result, allNodes] = await runFastFilter({
+            nil: { eq: needle }
+          })
 
-        expect(result).toEqual(null)
-      })
+          // Also returns nodes that do not have the property at all (NULL in db)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil == needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.nil == null).toEqual(true))
+        })
 
-      it(`handles the in operator for strings`, async () => {
-        let result = await runFilter({ string: { in: [`b`, `c`] } })
+        // grapqhl would never pass on `undefined`
+        // it(`handles eq operator with undefined`, async () => {
+        //   const [result, allNodes] = await runFastFilter{ undef: { eq: undefined } })
+        //
+        //   expect(result.length).toEqual(?)
+        //   expect(result[0].hair).toEqual(?)
+        // })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].index).toEqual(1)
-      })
+        it(`handles eq operator with serialized array value`, async () => {
+          const needle = `[5,6,7,8]`
+          const [result, allNodes] = await runFastFilter({
+            strArray: { eq: needle }
+          })
 
-      it(`handles the in operator for ints`, async () => {
-        let result = await runFilter({ index: { in: [0, 2] } })
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.strArray === needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.strArray).toEqual(needle))
+        })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].index).toEqual(0)
-        expect(result[1].index).toEqual(2)
-      })
+        it(`finds numbers inside arrays`, async () => {
+          const needle = 3
+          const [result, allNodes] = await runFastFilter({
+            anArray: { eq: needle }
+          })
 
-      it(`handles the in operator for floats`, async () => {
-        let result = await runFilter({ float: { in: [1.5, 2.5] } })
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.anArray?.includes(needle)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.anArray?.includes(needle)).toEqual(true)
+          )
+        })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].index).toEqual(0)
-        expect(result[1].index).toEqual(1)
-      })
+        it(`finds numbers inside single-element arrays`, async () => {
+          const needle = 8
+          const [result, allNodes] = await runFastFilter({
+            singleArray: { eq: needle }
+          })
 
-      it(`handles the in operator for just null`, async () => {
-        if (IS_LOKI) return
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.singleArray?.includes(needle)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.singleArray?.includes(needle)).toEqual(true)
+          )
+        })
 
-        let result = await runFilter({ nil: { in: [null] } })
+        it(`does not coerce numbers against single-element arrays`, async () => {
+          const needle = `8` // note: `('8' == [8]) === true`
+          const [result] = await runFastFilter({
+            singleArray: { eq: needle }
+          })
 
-        // Do not include the nodes without a `nil` property
-        expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // May not have the property, or must be null
-          expect(edge.nil === undefined || edge.nil === null).toBe(true)
+          // Note: no coercion, so [8]=='8' is true but Sift ignores those
+          expect(result).toEqual(null)
         })
       })
 
-      it(`handles the in operator for double null`, async () => {
-        if (IS_LOKI) return
+      describe(`$ne`, () => {
+        it(`handles ne operator`, async () => {
+          const needle = 2
+          const [result, allNodes] = await runFastFilter({
+            hair: { ne: needle }
+          })
 
-        let result = await runFilter({ nil: { in: [null, null] } })
-
-        // Do not include the nodes without a `nil` property
-        expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // May not have the property, or must be null
-          expect(edge.nil === undefined || edge.nil === null).toBe(true)
-        })
-      })
-
-      it(`handles the in operator for null in int and null`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({ nil: { in: [5, null] } })
-
-        // Include the nodes without a `nil` property
-        expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // May not have the property, or must be null
-          expect(edge.nil === undefined || edge.nil === null).toBe(true)
-        })
-      })
-
-      it(`handles the in operator for int in int and null`, async () => {
-        let result = await runFilter({ index: { in: [2, null] } })
-
-        // Include the nodes without a `index` property (there aren't any)
-        expect(result.length).toEqual(1)
-        result.forEach(edge => {
-          expect(edge.index === 2).toBe(true)
-        })
-      })
-
-      it(`handles the in operator for booleans`, async () => {
-        let result = await runFilter({ boolean: { in: [true] } })
-
-        expect(result.length).toEqual(1)
-        expect(result[0].index).toEqual(0)
-        expect(result[0].boolean).toEqual(true)
-      })
-
-      it(`handles the in operator for array with one element`, async () => {
-        let result = await runFilter({ anArray: { in: [5] } })
-
-        // The first one has a 5, the second one does not have a 5, the third does
-        // not have the property at all (NULL). It should return the first and last.
-        // (If the target value has `null` then the third should be omitted)
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`handles the in operator for array some elements`, async () => {
-        let result = await runFilter({ anArray: { in: [20, 5, 300] } })
-
-        // Same as the test for just `[5]`. 20 and 300 do not appear anywhere.
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`handles the nested in operator for array of strings`, async () => {
-        let result = await runFilter({ frontmatter: { tags: { in: [`moo`] } } })
-
-        expect(result.length).toEqual(1)
-        expect(result[0].name).toEqual(`The Mad Max`)
-      })
-
-      it(`handles the elemMatch operator on a proper single tree`, async () => {
-        let result = await runFilter({
-          singleElem: {
-            things: {
-              elemMatch: {
-                one: {
-                  two: {
-                    three: { eq: 123 },
-                  },
-                },
-              },
-            },
-          },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair).not.toEqual(needle))
         })
 
-        expect(result.length).toEqual(1)
-      })
+        it(`coerces number to string`, async () => {
+          const needle = 2 // Note: `id` is a numstr
+          const [result, allNodes] = await runFastFilter({ id: { ne: needle } })
 
-      it(`handles the elemMatch operator on the second element`, async () => {
-        let result = await runFilter({
-          singleElem: {
-            things: {
-              elemMatch: {
-                one: {
-                  five: {
-                    three: { eq: 153 },
-                  },
-                },
-              },
-            },
-          },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.id !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.id).not.toEqual(needle))
         })
 
-        expect(result.length).toEqual(1)
-        // Should contain the entire array even only one matched
-        expect(result[0].singleElem.things[0].one.two.three).toEqual(123)
-        expect(result[0].singleElem.things[1].one.five.three).toEqual(153)
-      })
+        // This test causes a stack overflow right now
+        it.skip(`dpes not coerce string to number`, async () => {
+          const needle = `2` // Note: `id` is a numstr
+          const [result] = await runSlowFilter({ id: { hair: needle } })
 
-      it(`should return only one node if elemMatch hits multiples`, async () => {
-        let result = await runFilter({
-          singleElem: {
-            things: {
-              elemMatch: {
-                one: {
-                  two: {
-                    three: { lt: 1000 }, // one match is 123, the other 404
-                  },
-                },
-              },
-            },
-          },
+          // Slow filter because it's an empty result
+          expect(result).toEqual(null)
         })
 
-        // The `elemMatch` operator only returns the first nodde that matches so
-        // even though the `lt 1000` would match two elements in the `things` array
-        // it will return one node.
-        expect(result.length).toEqual(1)
-        expect(result[0].singleElem.things[0].one.two.three).toEqual(123)
-        expect(result[0].singleElem.things[2].one.two.three).toEqual(404)
-      })
+        it(`handles ne operator with true`, async () => {
+          const needle = true
+          const [result, allNodes] = await runFastFilter({
+            boolean: { ne: true }
+          })
 
-      it(`ignores the elemMatch operator on a partial sub tree`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({
-          singleElem: {
-            things: {
-              elemMatch: {
-                three: { eq: 123 },
-              },
-            },
-          },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.boolean !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.boolean).not.toEqual(needle))
         })
 
-        expect(result).toEqual(null)
-      })
+        describe(`exhaustive checks for null and partial paths`, () => {
+          // This group of tests exhausitvely checks what happens when you $ne on path a.b.c=value a node that
+          // has a partial path, either ending in null or undefined prematurely, for all partials of the path.
 
-      it(`handles the elemMatch operator for array of objects (1)`, async () => {
-        let result = await runFilter({
-          data: {
-            tags: {
-              elemMatch: {
-                tag: {
-                  document: {
-                    elemMatch: {
-                      data: {
-                        tag: { eq: `Gatsby` },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
+          it(`should deal with eq null`, async () => {
+            const needle = null
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Sift only returns id=6,7, where a.b.c===true/false.
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => !(node?.a?.b?.c == null)).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+
+          it(`should deal with eq true`, async () => {
+            const needle = true
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Note: Sift only omits id=6, where a.b.c===true (contrary to searching for null)
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => node?.a?.b?.c !== needle).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
+
+          it(`should deal with eq false`, async () => {
+            const needle = false
+            const allNodes = makeNodesNeNull()
+            const result = await runQuery(
+              { filter: { a: { b: { c: { ne: needle } } } } },
+              createFiltersCache(),
+              allNodes
+            )
+
+            // Note: Sift only omits id=7, where a.b.c===false (contrary to searching for null)
+
+            expect(result?.length).toEqual(
+              allNodes.filter(node => node?.a?.b?.c !== needle).length
+            )
+            expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+            result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+          })
         })
 
-        expect(result.length).toEqual(1)
-        expect(result[0].index).toEqual(2)
-      })
+        it(`handles nested ne operator with true`, async () => {
+          const needle = true
+          const [result, allNodes] = await runFastFilter({
+            waxOnly: { foo: { ne: true } }
+          })
 
-      it(`handles the elemMatch operator for array of objects (2)`, async () => {
-        let result = await runFilter({
-          data: {
-            tags: {
-              elemMatch: {
-                tag: {
-                  document: {
-                    elemMatch: {
-                      data: {
-                        tag: { eq: `Design System` },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
+          // Note: one node has this, one node has waxOnly=null, one node does not have the waxOnly property at all.
+          // Redux seems to return only the node that doesn't have the property at all (node.id=0)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.waxOnly?.foo !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.waxOnly?.foo).not.toEqual(needle))
         })
 
-        expect(result.length).toEqual(1)
-        expect(result[0].index).toEqual(2)
-      })
+        it(`handles ne operator with 0`, async () => {
+          const needle = 0
+          const [result, allNodes] = await runFastFilter({
+            hair: { ne: needle }
+          })
 
-      it(`works for elemMatch on boolean field`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({
-          boolean: {
-            elemMatch: {
-              eq: true,
-            },
-          },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair).not.toEqual(needle))
         })
 
-        // Does NOT contain nodes that do not have the field
-        expect(result.length).toEqual(1)
-        expect(result[0].boolean).toEqual(true)
-      })
+        it(`handles ne operator with null`, async () => {
+          const needle = 0
+          const [result, allNodes] = await runFastFilter({
+            nil: { ne: needle }
+          })
 
-      it(`skips nodes without the field for elemMatch on boolean`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({
-          boolSecondOnly: {
-            elemMatch: {
-              eq: false,
-            },
-          },
+          // Should only return nodes who do have the property, not set to null
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.nil).not.toEqual(needle))
         })
 
-        // Does NOT contain nodes that do not have the field so returns 2nd node
-        expect(result.length).toEqual(1)
-        expect(result[0].boolSecondOnly).toEqual(false)
-      })
+        // grapqhl would never pass on `undefined`
+        // it(`handles ne operator with undefined`, async () => {
+        //   const [result, allNodes] = await runFastFilter({ undef: { ne: undefined } })
+        //
+        //   expect(result.length).toEqual(?)
+        //   expect(result?.length).toEqual(allNodes.filter(node => node.nil !== needle).length)
+        //   expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+        //   result.forEach(node => expect(node.nil).not.toEqual(needle))
+        // })
 
-      it(`works for elemMatch on string field`, async () => {
-        if (IS_LOKI) return
+        it(`handles deeply nested ne: true operator`, async () => {
+          const needle = true
+          const [result, allNodes] = await runFastFilter({
+            waxOnly: { bar: { baz: { ne: needle } } }
+          })
 
-        let result = await runFilter({
-          string: {
-            elemMatch: {
-              eq: `a`,
-            },
-          },
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.waxOnly?.bar?.baz !== needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.waxOnly?.bar?.baz).not.toEqual(needle)
+          )
         })
 
-        // Does NOT contain nodes that do not have the field
-        expect(result.length).toEqual(1)
-        expect(result[0].string).toEqual(`a`)
-      })
+        it(`handles the ne operator for array field values`, async () => {
+          const needle = 1
+          const [result, allNodes] = await runFastFilter({
+            anArray: { ne: needle }
+          })
 
-      it(`should return all nodes for elemMatch on non-arrays too`, async () => {
-        if (IS_LOKI) return
+          // Sift returns only the node that doesn't have the property at all (the other two arrays contain 1)
 
-        let result = await runFilter({
-          name: {
-            elemMatch: {
-              eq: `The Mad Wax`,
-            },
-          },
-        })
-
-        // Can return more than one node
-        // Does NOT contain nodes that do not have the field
-        expect(result.length).toEqual(2)
-        expect(result[0].name).toEqual(`The Mad Wax`)
-        expect(result[1].name).toEqual(`The Mad Wax`)
-      })
-
-      it(`skips nodes without the field for elemMatch on string`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({
-          strSecondOnly: {
-            elemMatch: {
-              eq: `needle`,
-            },
-          },
-        })
-
-        // Does NOT contain nodes that do not have the field so returns 2nd node
-        expect(result.length).toEqual(1)
-        expect(result[0].strSecondOnly).toEqual(`needle`)
-      })
-
-      it(`works for elemMatch on number field`, async () => {
-        if (IS_LOKI) return
-
-        let result = await runFilter({
-          float: {
-            elemMatch: {
-              eq: 1.5,
-            },
-          },
-        })
-
-        // Does NOT contain nodes that do not have the field
-        expect(result.length).toEqual(1)
-        expect(result[0].float).toEqual(1.5)
-      })
-
-      it(`handles the nin operator for array [5]`, async () => {
-        let result = await runFilter({ anArray: { nin: [5] } })
-
-        // Since the array does not contain `null`, the query should also return the
-        // nodes that do not have the field at all (NULL).
-
-        expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // Either does not exist or does not contain
-          expect(edge.anArray === undefined || !edge.anArray.includes(5)).toBe(
-            true
+          expect(result?.length).toEqual(
+            allNodes.filter(node => !node.anArray?.includes(needle)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.anArray?.includes(needle)).not.toEqual(true)
           )
         })
       })
 
-      it(`handles the nin operator for array [null]`, async () => {
-        if (IS_LOKI) return
+      describe(`$lt`, () => {
+        it(`handles lt operator with number`, async () => {
+          const needle = 1
+          const [result, allNodes] = await runFastFilter({
+            hair: { lt: needle }
+          })
 
-        let result = await runFilter({ nullArray: { nin: [null] } })
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair < needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair < needle).toEqual(true))
+        })
 
-        // Since the array contains `null`, the query should NOT return the
-        // nodes that do not have the field at all (NULL).
+        async function confirmPosition(allNodes, needle) {
+          const result = await runQuery(
+            { filter: { exh: { lt: needle } } },
+            createFiltersCache(),
+            allNodes
+          )
 
-        expect(result.length).toEqual(1)
-        expect(result[0].nullArray.includes(null)).toBe(false)
-      })
+          // Just check whether the reported count is equal to the actual count
+          // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+          expect(result?.length ?? 0).toEqual(
+            allNodes.filter(node => node.exh < needle).length
+          )
+          if (result) result.forEach(node => expect(node.exh < needle))
+        }
 
-      it(`handles the nin operator for strings`, async () => {
-        let result = await runFilter({ string: { nin: [`b`, `c`] } })
+        ;[`uneven`, `even`].forEach(count => {
+          describe(`positional checks for count=` + count, () => {
+            for (let i = 0; i <= 5; i += 0.5) {
+              it(
+                `should be able to lt anywhere in an array i=` + i.toFixed(1),
+                async () => {
+                  // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
+                  // This checks the ordered search, to check before, on every, between, and after each position in the list
+                  await confirmPosition(
+                    count === `even` ? makeNodesEven() : makeNodesUneven(),
+                    i
+                  )
+                }
+              )
+            }
 
-        expect(result.length).toEqual(1)
-        result.forEach(edge => {
-          expect(edge.string).not.toEqual(`b`)
-          expect(edge.string).not.toEqual(`c`)
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
+            }
+          })
+        })
+
+        // Note: this test currently stackoverflows
+        it.skip(`should lt when type coercion fails direct value lookup`, async () => {
+          // Here 1.5 exists but only as number. However, `1.5 < '1.5' === true`
+          // This test checks whether we don't incorrectly assume that if the
+          // value wasn't mapped, that it can't be found.
+          const needle = `1.5`
+          const [result, allNodes] = await runFastFilter({
+            float: { lt: needle }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.float < needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.float < needle).toEqual(true))
+        })
+
+        it(`handles lt operator with null`, async () => {
+          const needle = null
+          // Note: Slow filter because it returns an empty result
+          const [result, allNodes] = await runFastFilter({
+            nil: { lt: needle }
+          })
+
+          // Nothing is lt null so zero nodes should match
+          // (Note: this is different from `lte`, which does return nulls here!)
+          expect(result).toEqual(null)
+          expect(
+            allNodes.filter(node => node.nil === needle).length
+          ).toBeGreaterThan(0) // They should _exist_...
         })
       })
 
-      it(`handles the nin operator for ints`, async () => {
-        let result = await runFilter({ index: { nin: [0, 2] } })
+      describe(`$lte`, () => {
+        it(`handles lte operator with number`, async () => {
+          const needle = 1
+          const [result, allNodes] = await runFastFilter({
+            hair: { lte: needle }
+          })
 
-        expect(result.length).toEqual(1)
-        result.forEach(edge => {
-          expect(edge.index).not.toEqual(0)
-          expect(edge.index).not.toEqual(2)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair <= needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair <= needle).toEqual(true))
+        })
+
+        async function confirmPosition(allNodes, needle) {
+          const result = await runQuery(
+            { filter: { exh: { lte: needle } } },
+            createFiltersCache(),
+            allNodes
+          )
+
+          // Just check whether the reported count is equal to the actual count
+          // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+          expect(result?.length ?? 0).toEqual(
+            allNodes.filter(node => node.exh <= needle).length
+          )
+          if (result) result.forEach(node => expect(node.exh <= needle))
+        }
+
+        ;[`uneven`, `even`].forEach(count => {
+          describe(`positional checks for count=` + count, () => {
+            for (let i = 0; i <= 5; i += 0.5) {
+              it(
+                `should be able to lte anywhere in an array i=` + i.toFixed(1),
+                async () => {
+                  // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
+                  // This checks the ordered search, to check before, on every, between, and after each position in the list
+                  await confirmPosition(
+                    count === `even` ? makeNodesEven() : makeNodesUneven(),
+                    i
+                  )
+                }
+              )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
+            }
+          })
+        })
+
+        // Note: this test currently stackoverflows
+        it.skip(`should lte when type coercion fails direct value lookup`, async () => {
+          // Here 1.5 exists but only as number. However, `1.5 <= '1.5' === true`
+          // This test checks whether we don't incorrectly assume that if the
+          // value wasn't mapped, that it can't be found.
+          const needle = `1.5`
+          const [result, allNodes] = await runFastFilter({
+            float: { lte: needle }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.float <= needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.float <= needle).toEqual(true))
+        })
+
+        it(`handles lte operator with null`, async () => {
+          const needle = null
+          const [result, allNodes] = await runFastFilter({
+            nil: { lte: needle }
+          })
+
+          // lte null matches null but no nodes without the property (NULL)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil === needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.nil === needle).toEqual(true))
         })
       })
 
-      it(`handles the nin operator for floats`, async () => {
-        let result = await runFilter({ float: { nin: [1.5] } })
+      describe(`$gt`, () => {
+        it(`handles gt operator with number`, async () => {
+          const needle = 1
+          const [result, allNodes] = await runFastFilter({
+            hair: { gt: needle }
+          })
 
-        expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // Might not have the property (-> undefined), must not be 1.5
-          expect(edge.float).not.toEqual(1.5)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair > needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair > needle).toEqual(true))
+        })
+
+        async function confirmPosition(allNodes, needle) {
+          const result = await runQuery(
+            { filter: { exh: { gt: needle } } },
+            createFiltersCache(),
+            allNodes
+          )
+
+          // Just check whether the reported count is equal to the actual count
+          // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+          expect(result?.length ?? 0).toEqual(
+            allNodes.filter(node => node.exh > needle).length
+          )
+          if (result) result.forEach(node => expect(node.exh > needle))
+        }
+
+        ;[`uneven`, `even`].forEach(count => {
+          describe(`positional checks for count=` + count, () => {
+            for (let i = 0; i <= 5; i += 0.5) {
+              it(
+                `should be able to gt anywhere in an array i=` + i.toFixed(1),
+                async () => {
+                  // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
+                  // This checks the ordered search, to check before, on every, between, and after each position in the list
+                  await confirmPosition(
+                    count === `even` ? makeNodesEven() : makeNodesUneven(),
+                    i
+                  )
+                }
+              )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
+            }
+          })
+        })
+
+        // Note: this test currently stackoverflows
+        it.skip(`should gt when type coercion fails direct value lookup`, async () => {
+          // Here 1.5 exists but only as number. However, `1.5 < '1.5' === true`
+          // This test checks whether we don't incorrectly assume that if the
+          // value wasn't mapped, that it can't be found.
+          const needle = `1.5`
+          const [result, allNodes] = await runFastFilter({
+            float: { gt: needle }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.float > needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.float > needle).toEqual(true))
+        })
+
+        it(`handles gt operator with null`, async () => {
+          const needle = null
+          // Note: Slow filter because it returns an empty result
+          const [result, allNodes] = await runFastFilter({
+            nil: { gt: needle }
+          })
+
+          // Nothing is gt null so zero nodes should match
+          // (Note: this is different from `gte`, which does return nulls here!)
+          expect(result).toEqual(null)
+          expect(
+            allNodes.filter(node => node.nil === needle).length
+          ).toBeGreaterThan(0) // They should _exist_...
         })
       })
 
-      it(`handles the nin operator for booleans`, async () => {
-        let result = await runFilter({ boolean: { nin: [true, null] } })
+      describe(`$gte`, () => {
+        it(`handles gte operator with number`, async () => {
+          const needle = 1
+          const [result, allNodes] = await runFastFilter({
+            hair: { gte: needle }
+          })
 
-        // Do not return the node that does not have the field because of `null`
-        expect(result.length).toEqual(1)
-        result.forEach(edge => {
-          // Must have the property, must not be true nor null
-          expect(edge.boolean !== undefined).toBe(true)
-          expect(edge.boolean !== true && edge.boolean !== null).toBe(true)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.hair >= needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.hair >= needle).toEqual(true))
+        })
+
+        async function confirmPosition(allNodes, needle) {
+          const result = await runQuery(
+            { filter: { exh: { gte: needle } } },
+            createFiltersCache(),
+            allNodes
+          )
+
+          // Just check whether the reported count is equal to the actual count
+          // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+          expect(result?.length ?? 0).toEqual(
+            allNodes.filter(node => node.exh >= needle).length
+          )
+          if (result) result.forEach(node => expect(node.exh >= needle))
+        }
+
+        ;[`uneven`, `even`].forEach(count => {
+          describe(`positional checks for count=` + count, () => {
+            for (let i = 0; i <= 5; i += 0.5) {
+              it(
+                `should be able to gte anywhere in an array i=` + i.toFixed(1),
+                async () => {
+                  // Test op on all positions in an even/uneven ordered node list. `exh` will only be 1,2,3,4 or 1,2,3
+                  // This checks the ordered search, to check before, on every, between, and after each position in the list
+                  await confirmPosition(
+                    count === `even` ? makeNodesEven() : makeNodesUneven(),
+                    i
+                  )
+                }
+              )
+            }
+
+            // Note: needle property ranges from 1 to 99 or 100. Needles should not exist, otherwise binary search
+            // is skipped entirely. This test is trying to verify the op when the needle misses with ~100 nodes.
+            for (const needle of [
+              0,
+              1.5,
+              33.5,
+              49.5,
+              50.5,
+              66.5,
+              98.5,
+              99.5,
+              100.5
+            ]) {
+              it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
+                // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
+                await confirmPosition(make100Nodes(count === `even`), needle)
+              })
+            }
+          })
+        })
+
+        // Note: this test currently stackoverflows
+        it.skip(`should gte when type coercion fails direct value lookup`, async () => {
+          // Here 1.5 exists but only as number. However, `1.5 < '1.5' === true`
+          // This test checks whether we don't incorrectly assume that if the
+          // value wasn't mapped, that it can't be found.
+          const needle = `1.5`
+          const [result, allNodes] = await runFastFilter({
+            float: { gte: needle }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.float >= needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.float >= needle).toEqual(true))
+        })
+
+        it(`handles gte operator with null`, async () => {
+          const needle = null
+          const [result, allNodes] = await runFastFilter({
+            nil: { gte: needle }
+          })
+
+          // gte null matches null but no nodes without the property (NULL)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil === needle).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.nil === needle).toEqual(true))
         })
       })
 
-      it(`handles the nin operator for double null`, async () => {
-        if (IS_LOKI) return
+      describe(`$regex`, () => {
+        it(`handles the regex operator without flags`, async () => {
+          const needleStr = `/^The.*Wax/`
+          const needleRex = /^The.*Wax/
+          const [result, allNodes] = await runFastFilter({
+            name: { regex: needleStr }
+          })
 
-        let result = await runFilter({ nil: { nin: [null, null] } })
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needleRex.test(node.name)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needleRex.test(node.name)).toEqual(true)
+          )
+        })
 
-        // Do not return the node that does not have the field because of `null`
-        expect(result.length).toEqual(1)
-        result.forEach(edge => {
-          // Must have the property, must not be null
-          expect(edge.nil !== undefined).toBe(true)
-          expect(edge.nil !== null).toBe(true)
+        it(`handles the regex operator with i-flag`, async () => {
+          // Note: needle is different from checked because `new RegExp('/a/i')` does _not_ work
+          const needleRex = /^the.*wax/i
+          const needleStr = `/^the.*wax/i`
+          const [result, allNodes] = await runFastFilter({
+            name: { regex: needleStr }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needleRex.test(node.name)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needleRex.test(node.name)).toEqual(true)
+          )
+        })
+
+        it(`rejects strings without forward slashes`, async () => {
+          await expect(
+            runFastFilter({
+              name: { regex: `^The.*Wax` }
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`rejects strings without trailing slash`, async () => {
+          await expect(
+            runFastFilter({
+              name: { regex: `/^The.*Wax` }
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`accepts strings without leading slash`, async () => {
+          // If this test starts failing, that might be okay and it should be dropped.
+          // At the time of writing it, this was a status quo edge case for Sift
+
+          // Passes because the requirement is mostly about a .split() failing
+          // for the other fail cases. As long as it passes a regex ultimately
+          // we don't really have to care / validate.
+
+          const needleRex = /(?:)/i // This was what it turned into
+          const needleStr = `^the.*wax/i`
+          const [result, allNodes] = await runFastFilter({
+            name: { regex: needleStr }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needleRex.test(node.name)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needleRex.test(node.name)).toEqual(true)
+          )
+        })
+
+        it(`rejects actual regex`, async () => {
+          await expect(
+            runFastFilter({
+              name: { regex: /^The.*Wax/ }
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`handles the nested regex operator and ignores partial paths`, async () => {
+          const needleStr = `/.*/`
+          const needleRex = /.*/
+          const [result, allNodes] = await runFastFilter({
+            nestedRegex: { field: { regex: needleStr } }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(
+              node =>
+                node.nestedRegex !== undefined &&
+                node.nestedRegex.field !== undefined &&
+                needleRex.test(node.nestedRegex.field)
+            ).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(
+              node.nestedRegex === undefined ||
+                needleRex.test(node.nestedRegex.field)
+            ).toEqual(true)
+          )
+        })
+
+        it(`does not match double quote for string without it`, async () => {
+          const [result, allNodes] = await runFastFilter({
+            name: { regex: `/"/` }
+          })
+
+          expect(result).toEqual(null)
+          expect(allNodes.filter(node => node.name === `"`).length).toEqual(0)
         })
       })
 
-      it(`handles the nin operator for null in int+null`, async () => {
-        if (IS_LOKI) return
+      describe(`$in`, () => {
+        it(`handles the in operator for strings`, async () => {
+          const needle = [`b`, `c`]
+          const [result, allNodes] = await runFastFilter({
+            string: { in: needle }
+          })
 
-        let result = await runFilter({ nil: { nin: [5, null] } })
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needle.includes(node.string)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needle.includes(node.string)).toEqual(true)
+          )
+        })
 
-        // Do not return the node that does not have the field because of `null`
-        expect(result.length).toEqual(1)
-        result.forEach(edge => {
-          // Must have the property, must not be 5 nor null
-          expect(edge.nil !== undefined).toBe(true)
-          expect(edge.nil !== 5 && edge.nil !== null).toBe(true)
+        it(`handles the in operator for ints`, async () => {
+          const needle = [0, 2]
+          const [result, allNodes] = await runFastFilter({
+            index: { in: needle }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needle.includes(node.index)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needle.includes(node.index)).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for floats`, async () => {
+          const needle = [1.5, 2.5]
+          const [result, allNodes] = await runFastFilter({
+            float: { in: needle }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => needle.includes(node.float)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(needle.includes(node.float)).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for just null`, async () => {
+          const [result, allNodes] = await runFastFilter({
+            nil: { in: [null] }
+          })
+
+          // May not have the property, or must be null
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil === undefined || node.nil === null)
+              .length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.nil === undefined || node.nil === null).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for double null`, async () => {
+          const [result, allNodes] = await runFastFilter({
+            nil: { in: [null, null] }
+          })
+
+          // May not have the property, or must be null
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil === undefined || node.nil === null)
+              .length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.nil === undefined || node.nil === null).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for null in int and null`, async () => {
+          const [result, allNodes] = await runFastFilter({
+            nil: { in: [5, null] }
+          })
+
+          // Include the nodes without a `nil` property
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.nil === undefined || node.nil === null)
+              .length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.nil === undefined || node.nil === null).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for int in int and null`, async () => {
+          const [result, allNodes] = await runFastFilter({
+            index: { in: [2, null] }
+          })
+
+          // Include the nodes without a `index` property (there aren't any)
+          expect(result?.length).toEqual(
+            allNodes.filter(
+              node =>
+                node.index === undefined ||
+                node.index === null ||
+                node.index === 2
+            ).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(
+              node.index === undefined ||
+                node.index === null ||
+                node.index === 2
+            ).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for booleans`, async () => {
+          const [result, allNodes] = await runFastFilter({
+            boolean: { in: [true] }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.boolean === true).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node => expect(node.boolean === true).toEqual(true))
+        })
+
+        it(`handles the in operator for array with one element`, async () => {
+          // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
+          const [result, allNodes] = await runFastFilter({
+            anArray: { in: [5] }
+          })
+
+          // The first one has a 5, the second one does not have a 5, the third does
+          // not have the property at all (NULL). It should return the first and last.
+          // (If the target value has `null` then the third should be omitted)
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.anArray?.includes(5)).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(node.anArray?.includes(5)).toEqual(true)
+          )
+        })
+
+        it(`handles the in operator for array some elements`, async () => {
+          // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
+          const needle = [20, 5, 300]
+          const [result, allNodes] = await runFastFilter({
+            anArray: { in: needle }
+          })
+
+          // Same as the test for just `[5]`. 20 and 300 do not appear anywhere.
+          expect(result?.length).toEqual(
+            allNodes.filter(node => node.anArray?.some(n => needle.includes(n)))
+              .length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(
+              node.anArray && needle.some(n => node.anArray.includes(n))
+            ).toEqual(true)
+          )
+        })
+
+        it(`handles the nested in operator for array of strings`, async () => {
+          const needle = [`moo`]
+          const [result, allNodes] = await runFastFilter({
+            frontmatter: { tags: { in: needle } }
+          })
+
+          expect(result?.length).toEqual(
+            allNodes.filter(node =>
+              node.frontmatter.tags?.some(n => needle.includes(n))
+            ).length
+          )
+          expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+          result.forEach(node =>
+            expect(
+              node.frontmatter?.tags &&
+                needle.some(n => node.frontmatter.tags.includes(n))
+            ).toEqual(true)
+          )
+        })
+
+        it(`refuses a non-arg number argument`, async () => {
+          await expect(
+            runFastFilter({
+              hair: { in: 2 }
+            })
+          ).rejects.toThrow()
+        })
+
+        // I'm convinced this only works in Sift because of a fluke
+        it.skip(`refuses a non-arg string argument`, async () => {
+          await expect(
+            runFastFilter({
+              name: { in: `The Mad Max` }
+            })
+          ).rejects.toThrow()
+        })
+
+        it(`refuses a non-arg boolean argument`, async () => {
+          await expect(
+            runFastFilter({
+              boolean: { in: true }
+            })
+          ).rejects.toThrow()
         })
       })
 
-      it(`handles the nin operator for int in int+null`, async () => {
-        let result = await runFilter({ index: { nin: [2, null] } })
+      describe(`$elemMatch`, () => {
+        it(`handles the elemMatch operator on a proper single tree`, async () => {
+          const [result] = await runFastFilter({
+            singleElem: {
+              things: {
+                elemMatch: {
+                  one: {
+                    two: {
+                      three: { eq: 123 }
+                    }
+                  }
+                }
+              }
+            }
+          })
 
-        // Do not return the node that does not have the field because of `null`
-        expect(result.length).toEqual(2)
-        result.forEach(edge => {
-          // Must have the property, must not be 2 nor null
-          expect(edge.index !== undefined).toBe(true)
-          expect(edge.index !== 2 && edge.index !== null).toBe(true)
+          expect(result.length).toEqual(1)
+          expect(
+            result[0]?.singleElem?.things.some(e => e?.one?.two?.three === 123)
+          ).toEqual(true)
+        })
+
+        it(`handles the elemMatch operator on the second element`, async () => {
+          const [result] = await runFastFilter({
+            singleElem: {
+              things: {
+                elemMatch: {
+                  one: {
+                    five: {
+                      three: { eq: 153 }
+                    }
+                  }
+                }
+              }
+            }
+          })
+
+          expect(result.length).toEqual(1)
+          // Should contain the entire array even only one matched
+          expect(result[0].singleElem.things[0].one.two.three).toEqual(123)
+          expect(result[0].singleElem.things[1].one.five.three).toEqual(153)
+        })
+
+        it(`should return only one node if elemMatch hits multiples`, async () => {
+          const [result] = await runFastFilter({
+            singleElem: {
+              things: {
+                elemMatch: {
+                  one: {
+                    two: {
+                      three: { lt: 1000 } // one match is 123, the other 404
+                    }
+                  }
+                }
+              }
+            }
+          })
+
+          // The `elemMatch` operator only returns the first nodde that matches so
+          // even though the `lt 1000` would match two elements in the `things` array
+          // it will return one node.
+          expect(result.length).toEqual(1)
+          expect(result[0].singleElem.things[0].one.two.three).toEqual(123)
+          expect(result[0].singleElem.things[2].one.two.three).toEqual(404)
+        })
+
+        it(`ignores the elemMatch operator on a partial sub tree`, async () => {
+          const [result] = await runFastFilter({
+            singleElem: {
+              things: {
+                elemMatch: {
+                  three: { eq: 123 }
+                }
+              }
+            }
+          })
+
+          expect(result).toEqual(null)
+        })
+
+        it(`handles the elemMatch operator for array of objects (1)`, async () => {
+          const [result] = await runFastFilter({
+            data: {
+              tags: {
+                elemMatch: {
+                  tag: {
+                    document: {
+                      elemMatch: {
+                        data: {
+                          tag: { eq: `Gatsby` }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          })
+
+          expect(result.length).toEqual(1)
+          expect(result[0].index).toEqual(2)
+        })
+
+        it(`handles the elemMatch operator for array of objects (2)`, async () => {
+          const [result] = await runFastFilter({
+            data: {
+              tags: {
+                elemMatch: {
+                  tag: {
+                    document: {
+                      elemMatch: {
+                        data: {
+                          tag: { eq: `Design System` }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          })
+
+          expect(result.length).toEqual(1)
+          expect(result[0].index).toEqual(2)
+        })
+
+        it(`works for elemMatch on boolean field`, async () => {
+          const [result] = await runFastFilter({
+            boolean: {
+              elemMatch: {
+                eq: true
+              }
+            }
+          })
+
+          // Does NOT contain nodes that do not have the field
+          expect(result.length).toEqual(1)
+          expect(result[0].boolean).toEqual(true)
+        })
+
+        it(`skips nodes without the field for elemMatch on boolean`, async () => {
+          const [result] = await runFastFilter({
+            boolSecondOnly: {
+              elemMatch: {
+                eq: false
+              }
+            }
+          })
+
+          // Does NOT contain nodes that do not have the field so returns 2nd node
+          expect(result.length).toEqual(1)
+          expect(result[0].boolSecondOnly).toEqual(false)
+        })
+
+        it(`works for elemMatch on string field`, async () => {
+          const [result] = await runFastFilter({
+            string: {
+              elemMatch: {
+                eq: `a`
+              }
+            }
+          })
+
+          // Does NOT contain nodes that do not have the field
+          expect(result.length).toEqual(1)
+          expect(result[0].string).toEqual(`a`)
+        })
+
+        it(`should return all nodes for elemMatch on non-arrays too`, async () => {
+          const [result] = await runFastFilter({
+            name: {
+              elemMatch: {
+                eq: `The Mad Wax`
+              }
+            }
+          })
+
+          // Can return more than one node
+          // Does NOT contain nodes that do not have the field
+          expect(result.length).toEqual(2)
+          expect(result[0].name).toEqual(`The Mad Wax`)
+          expect(result[1].name).toEqual(`The Mad Wax`)
+        })
+
+        it(`skips nodes without the field for elemMatch on string`, async () => {
+          const [result] = await runFastFilter({
+            strSecondOnly: {
+              elemMatch: {
+                eq: `needle`
+              }
+            }
+          })
+
+          // Does NOT contain nodes that do not have the field so returns 2nd node
+          expect(result.length).toEqual(1)
+          expect(result[0].strSecondOnly).toEqual(`needle`)
+        })
+
+        it(`works for elemMatch on number field`, async () => {
+          const [result] = await runFastFilter({
+            float: {
+              elemMatch: {
+                eq: 1.5
+              }
+            }
+          })
+
+          // Does NOT contain nodes that do not have the field
+          expect(result.length).toEqual(1)
+          expect(result[0].float).toEqual(1.5)
         })
       })
 
-      it(`handles the glob operator`, async () => {
-        let result = await runFilter({ name: { glob: `*Wax` } })
+      describe(`$nin`, () => {
+        it(`handles the nin operator for array [5]`, async () => {
+          const [result] = await runFastFilter({ anArray: { nin: [5] } })
 
-        expect(result.length).toEqual(2)
-        expect(result[0].name).toEqual(`The Mad Wax`)
+          // Since the array does not contain `null`, the query should also return the
+          // nodes that do not have the field at all (NULL).
+
+          expect(result.length).toEqual(2)
+          // Either does not exist or does not contain
+          result
+            .filter(node => node.anArray !== undefined)
+            .forEach(node => {
+              // In this test, if the property exists it should be an array
+              expect(Array.isArray(node.anArray)).toBe(true)
+              expect(node.anArray.includes(5)).toBe(false)
+            })
+        })
+
+        it(`handles the nin operator for array [null]`, async () => {
+          const [result] = await runFastFilter({
+            nullArray: { nin: [null] }
+          })
+
+          // Since the array contains `null`, the query should NOT return the
+          // nodes that do not have the field at all (NULL).
+
+          expect(result.length).toEqual(1)
+          expect(result[0].nullArray.includes(null)).toBe(false)
+        })
+
+        it(`handles the nin operator for strings`, async () => {
+          const [result] = await runFastFilter({
+            string: { nin: [`b`, `c`] }
+          })
+
+          expect(result.length).toEqual(1)
+          result.forEach(node => {
+            expect(node.string).not.toEqual(`b`)
+            expect(node.string).not.toEqual(`c`)
+          })
+        })
+
+        it(`handles the nin operator for ints`, async () => {
+          const [result] = await runFastFilter({ index: { nin: [0, 2] } })
+
+          expect(result.length).toEqual(1)
+          result.forEach(node => {
+            expect(node.index).not.toEqual(0)
+            expect(node.index).not.toEqual(2)
+          })
+        })
+
+        it(`handles the nin operator for floats`, async () => {
+          const [result] = await runFastFilter({ float: { nin: [1.5] } })
+
+          expect(result.length).toEqual(2)
+          result.forEach(node => {
+            // Might not have the property (-> undefined), must not be 1.5
+            expect(node.float).not.toEqual(1.5)
+          })
+        })
+
+        it(`handles the nin operator for boolean and null on boolean`, async () => {
+          const [result] = await runFastFilter({
+            boolean: { nin: [true, null] }
+          })
+
+          // Do not return the node that does not have the field because of `null`
+          expect(result.length).toEqual(1)
+          result.forEach(node => {
+            // Must have the property, must not be true nor null
+            expect(node.boolean !== undefined).toBe(true)
+            expect(node.boolean !== true && node.boolean !== null).toBe(true)
+          })
+        })
+
+        it(`handles the nin operator for double null`, async () => {
+          const [result] = await runFastFilter({
+            nil: { nin: [null, null] }
+          })
+
+          // Do not return the node that does not have the field because of `null`
+          expect(result.length).toEqual(1)
+          result.forEach(node => {
+            // Must have the property, must not be null
+            expect(node.nil !== undefined).toBe(true)
+            expect(node.nil !== null).toBe(true)
+          })
+        })
+
+        it(`handles the nin operator for null in int+null`, async () => {
+          const [result] = await runFastFilter({
+            nil: { nin: [5, null] }
+          })
+
+          // Do not return the node that does not have the field because of `null`
+          expect(result.length).toEqual(1)
+          result.forEach(node => {
+            // Must have the property, must not be 5 nor null
+            expect(node.nil !== undefined).toBe(true)
+            expect(node.nil !== 5 && node.nil !== null).toBe(true)
+          })
+        })
+
+        it(`handles the nin operator for int in int+null`, async () => {
+          const [result] = await runFastFilter({
+            index: { nin: [2, null] }
+          })
+
+          // Do not return the node that does not have the field because of `null`
+          expect(result.length).toEqual(2)
+          result.forEach(node => {
+            // Must have the property, must not be 2 nor null
+            expect(node.index !== undefined).toBe(true)
+            expect(node.index !== 2 && node.index !== null).toBe(true)
+          })
+        })
       })
 
-      it(`filters date fields`, async () => {
-        let result = await runFilter({ date: { ne: null } })
+      describe(`$glob`, () => {
+        // Note: glob internally uses $regex
 
-        expect(result.length).toEqual(2)
-        expect(result[0].index).toEqual(0)
-        expect(result[1].index).toEqual(2)
+        it(`handles the glob operator`, async () => {
+          const [result] = await runFastFilter({ name: { glob: `*Wax` } })
+
+          expect(result.length).toEqual(2)
+          expect(result[0].name).toEqual(`The Mad Wax`)
+        })
       })
 
-      it(`handles the eq operator for array field values`, async () => {
-        const result = await runFilter({ anArray: { eq: 5 } })
+      describe(`date`, () => {
+        it(`filters date fields`, async () => {
+          const [result] = await runFastFilter({ date: { ne: null } })
 
-        expect(result.length).toBe(1)
-        expect(result[0].index).toBe(1)
-      })
-
-      it(`handles the ne operator for array field values`, async () => {
-        const result = await runFilter({ anArray: { ne: 1 } })
-
-        expect(result.length).toBe(1)
-        expect(result[0].index).toBe(2)
+          expect(result.length).toEqual(2)
+          expect(result[0].index).toEqual(0)
+          expect(result[1].index).toEqual(2)
+        })
       })
     })
 
@@ -941,8 +1804,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`frontmatter.blue`],
-            order: [`desc`],
-          },
+            order: [`desc`]
+          }
         })
 
         expect(result.length).toEqual(3)
@@ -969,8 +1832,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_null_not`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -983,8 +1846,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_null_not`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -997,8 +1860,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_not_null`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1011,8 +1874,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_not_null`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1025,8 +1888,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_num_not`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1039,8 +1902,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_num_not`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1053,8 +1916,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_num`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1067,8 +1930,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_num`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1081,8 +1944,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_num`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1095,8 +1958,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_num`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1109,8 +1972,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_num_null`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1123,8 +1986,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_num_null`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1152,8 +2015,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_null_not`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1166,8 +2029,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_null_not`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1180,8 +2043,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_not_null`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1194,8 +2057,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_not_null`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1208,8 +2071,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_str_not`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1222,8 +2085,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_str_not`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1236,8 +2099,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_str`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1250,8 +2113,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_str`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1264,8 +2127,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_str`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1278,8 +2141,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_str`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1292,8 +2155,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_str_null`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1306,8 +2169,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_str_null`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1335,8 +2198,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_null_not`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1349,8 +2212,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_null_not`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1363,8 +2226,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_not_null`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1377,8 +2240,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_not_null`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1391,8 +2254,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_obj_not`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1405,8 +2268,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_obj_not`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1419,8 +2282,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_obj`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1433,8 +2296,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_obj`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1447,8 +2310,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_obj`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1461,8 +2324,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_obj`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1475,8 +2338,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_obj_null`],
-              order: [`asc`],
-            },
+              order: [`asc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1489,8 +2352,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_obj_null`],
-              order: [`desc`],
-            },
+              order: [`desc`]
+            }
           })
 
           expect(result.length).toEqual(3)
@@ -1505,8 +2368,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`waxOnly`],
-            order: [`desc`],
-          },
+            order: [`desc`]
+          }
         })
 
         // 0 doesnt have it, 1 has it as an object, 2 has it as null
@@ -1522,8 +2385,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`waxOnly`],
-            order: [`asc`],
-          },
+            order: [`asc`]
+          }
         })
 
         // 0 doesnt have it, 1 has it as an object, 2 has it as null
@@ -1539,8 +2402,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`frontmatter.blue`, `id`],
-            order: [`desc`], // `id` field will be sorted asc
-          },
+            order: [`desc`] // `id` field will be sorted asc
+          }
         })
 
         expect(result.length).toEqual(3)
@@ -1554,8 +2417,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`frontmatter.blue`, `id`],
-            order: [`desc`, `desc`], // `id` field will be sorted desc
-          },
+            order: [`desc`, `desc`] // `id` field will be sorted desc
+          }
         })
 
         expect(result.length).toEqual(3)

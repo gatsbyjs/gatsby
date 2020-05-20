@@ -7,7 +7,7 @@ const plugin = require(`../`)
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
-  pedantic: true,
+  pedantic: true
 })
 
 describe(`gatsby-remark-autolink-headers`, () => {
@@ -211,34 +211,35 @@ describe(`gatsby-remark-autolink-headers`, () => {
     expect(headers).toEqual([
       {
         id: `custom_h1`,
-        text: `Heading One`,
+        text: `Heading One`
       },
       {
         id: `custom-heading-two`,
-        text: `Heading Two`,
+        text: `Heading Two`
       },
       {
         id: `custom-withbold`,
-        text: `With Bold`,
+        text: `With Bold`
       },
       {
         id: `invalid-thisisitalic`,
-        text: `Invalid {#thisisitalic}`,
+        text: `Invalid {#thisisitalic}`
       },
       {
         id: `no-custom-id`,
-        text: `No custom ID`,
+        text: `No custom ID`
       },
       {
         id: `id-only`,
-        text: `{#id-only}`,
+        text: `{#id-only}`
       },
       {
         id: `text-after-custom-id`,
-        text: `{#text-after} custom ID`,
-      },
+        text: `{#text-after} custom ID`
+      }
     ])
   })
+
   it(`adds places anchor after header when isIconAfterHeader prop is passed`, () => {
     const markdownAST = remark.parse(`# Heading Uno`)
 
@@ -251,6 +252,103 @@ describe(`gatsby-remark-autolink-headers`, () => {
       expect(node.children[1].data.hProperties.class).toContain(`after`)
 
       expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`adds id to a markdown heading when elements prop is passed with matching heading type`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h1`] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`does not add data to a markdown heading when elements prop is passed with no matching heading type`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h2`] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data).not.toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`does not add data to a markdown heading with custom id when elements prop is passed with no matching heading type`, () => {
+    const markdownAST = remark.parse(`# Heading Uno {#custom_h1}`)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h2`] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data).not.toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`only adds ids to markdown headings whose heading type is included in the passed elements prop`, () => {
+    const markdownAST = remark.parse(`
+    # Heading One
+  
+    ## Heading Two
+  
+    ### Heading Three
+        `)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h2`] })
+
+    visit(transformed, `heading`, node => {
+      if (node.depth === 2) {
+        expect(node.data.id).toBeDefined()
+      } else {
+        expect(node.data).not.toBeDefined()
+      }
+    })
+  })
+
+  it(`does not add data to markdown headings when an empty array elements prop is passed`, () => {
+    const markdownAST = remark.parse(`
+    # Heading One
+  
+    ## Heading Two
+  
+    ### Heading Three
+        `)
+
+    const transformed = plugin({ markdownAST }, { elements: [] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data).not.toBeDefined()
+    })
+  })
+
+  it(`allows all six heading depths to be passed in the elements prop`, () => {
+    const markdownAST = remark.parse(`
+    # Heading One
+  
+    ## Heading Two
+  
+    ### Heading Three
+
+    #### Heading Four
+  
+    ##### Heading Five
+  
+    ###### Heading Six
+        `)
+
+    const transformed = plugin(
+      { markdownAST },
+      { elements: [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`] }
+    )
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
     })
   })
 })

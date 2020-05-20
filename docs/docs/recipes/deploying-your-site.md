@@ -26,7 +26,7 @@ gatsby build
 
 ```js:title=gatsby-config.js
 module.exports = {
-  pathPrefix: `/yourpathprefix`,
+  pathPrefix: `/yourpathprefix`
 }
 ```
 
@@ -82,28 +82,28 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 
-## Deploying to ZEIT Now
+## Deploying to Vercel
 
-Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
+Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application without leaving the command-line interface.
 
 ### Prerequisites
 
-- A [ZEIT Now](https://zeit.co/signup) account
+- A [Vercel](https://vercel.com/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
-- [Now CLI](https://zeit.co/download) package installed
+- [Vercel CLI](https://vercel.com/download) package installed
 - [Gatsby CLI](/docs/gatsby-cli) installed
 
 ### Directions
 
-1. Login into Now CLI using `now login`
+1. Login into Vercel CLI using `vercel login`
 
 2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
 
-3. Run `now` to deploy it
+3. Run `vercel` to deploy it
 
 ### Additional resources
 
-- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
+- [Deploying to Vercel](/docs/deploying-to-vercel/)
 
 ## Deploying to Cloudflare Workers
 
@@ -143,7 +143,7 @@ Use `gatsby-plugin-google-analytics` to track site activity and provide insights
 
 ### Verify the domain in search.google.com
 
-1. Navigate to the [Google search console](<(https://search.google.com/search-console/not-verified)>) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
+1. Navigate to the [Google search console](https://search.google.com/search-console/not-verified) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
 2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to the [Google documentation](https://support.google.com/a/answer/183895?hl=en).
 
 ### Linking the domain to Google Analytics admin
@@ -185,4 +185,4 @@ module.exports = {
 
 ### Additional resources
 
-- [adding-analytics](https://www.gatsbyjs.org/docs/adding-analytics/)
+- [adding-analytics](/docs/adding-analytics/)

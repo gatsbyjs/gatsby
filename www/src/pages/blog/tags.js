@@ -3,11 +3,11 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
 import { TiArrowRight } from "react-icons/ti"
 
+import PageMetadata from "../../components/page-metadata"
 import Link from "../../components/localized-link"
 import Button from "../../components/button"
 import Container from "../../components/container"
@@ -15,11 +15,7 @@ import SearchIcon from "../../components/search-icon"
 import FooterLinks from "../../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
-import {
-  colors,
-  space,
-  mediaQueries,
-} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { colors, space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const POPULAR_TAGS = [
   `themes`,
@@ -33,17 +29,17 @@ const POPULAR_TAGS = [
   `wordpress`,
   `releases`,
   `community`,
-  `contentful`,
+  `contentful`
 ]
+
+// Responsive tag list using grid
+// https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
 
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   grid-gap: ${space[2]};
-  ${mediaQueries.md} {
-    grid-template-columns: repeat(4, 1fr);
-  }
 `
 
 const PopularTagButton = ({ children, tag }) => (
@@ -63,17 +59,17 @@ class TagsPage extends React.Component {
         group: PropTypes.arrayOf(
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
-            totalCount: PropTypes.number.isRequired,
+            totalCount: PropTypes.number.isRequired
           }).isRequired
-        ),
-      }),
-    }),
+        )
+      })
+    })
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      filterQuery: ``,
+      filterQuery: ``
     }
   }
 
@@ -85,8 +81,8 @@ class TagsPage extends React.Component {
   render() {
     const {
       data: {
-        allMdx: { group },
-      },
+        allMdx: { group }
+      }
     } = this.props
     const { filterQuery } = this.state
     const uniqGroup = group
@@ -95,7 +91,7 @@ class TagsPage extends React.Component {
         const key = kebabCase(tag.fieldValue.toLowerCase())
         if (!lookup[key]) {
           lookup[key] = Object.assign(tag, {
-            slug: `/blog/tags/${key}`,
+            slug: `/blog/tags/${key}`
           })
         } else {
           lookup[key].totalCount += tag.totalCount
@@ -112,24 +108,21 @@ class TagsPage extends React.Component {
 
     let PopularTagButtons = []
     POPULAR_TAGS.forEach(key => {
-      PopularTagButtons.push(<PopularTagButton tag={key} />)
+      PopularTagButtons.push(<PopularTagButton key={key} tag={key} />)
     })
 
     return (
       <Container>
-        <Helmet>
-          <title>Tags</title>
-          <meta
-            name={`description`}
-            content={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
-          />
-        </Helmet>
+        <PageMetadata
+          title="Tags"
+          description={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
+        />
         <div>
           <h1
             css={{
               padding: `${space[6]} 0`,
               margin: 0,
-              borderBottom: `1px solid ${colors.ui.border}`,
+              borderBottom: `1px solid ${colors.ui.border}`
             }}
           >
             Tags ({Object.keys(uniqGroup).length || 0})
@@ -143,7 +136,7 @@ class TagsPage extends React.Component {
               flexFlow: `row nowrap`,
               justifyContent: `space-between`,
               pb: 4,
-              alignItems: `center`,
+              alignItems: `center`
             }}
           >
             <h2>All tags</h2>
@@ -168,7 +161,7 @@ class TagsPage extends React.Component {
               flexFlow: `row wrap`,
               justifyContent: `start`,
               p: 0,
-              m: 0,
+              m: 0
             }}
           >
             {results.length > 0 ? (
@@ -182,7 +175,7 @@ class TagsPage extends React.Component {
                       py: 3,
                       px: 1,
                       m: 4,
-                      listStyleType: `none`,
+                      listStyleType: `none`
                     }}
                   >
                     <Link to={tag.slug}>
@@ -225,10 +218,7 @@ export const pageQuery = graphql`
   query {
     allMdx(
       limit: 2000
-      filter: {
-        fields: { released: { eq: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-      }
+      filter: { fields: { released: { eq: true }, section: { eq: "blog" } } }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

@@ -20,7 +20,7 @@ I've long found it challenging to find just the right video to work on. Sometime
 
 My requirements for this Acroyoga videos site is that it be simple to add data to, load fast on mobile, and be generally intuitive to use. For this reason, I'm using Gatsby (and of course, React) and the Google Sheets API for this site. This simple stack will allow me to build a fast loading application that consumes data from a Google Sheet.
 
-As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: [https://github.com/kpennell/acrotagsgatsbyblog](https://github.com/kpennell/acrotagsgatsbyblog). Finally, if you want to check out the demo app, that can be found here: [https://acrotagsgatsbyblog.netlify.com](https://acrotagsgatsbyblog.netlify.com/).
+As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: https://github.com/kpennell/acrotagsgatsbyblog. Finally, if you want to check out the demo app, that can be found here: https://acrotagsgatsbyblog.netlify.com.
 
 ## Creating a Basic Gatsby Setup with Material-UI
 
@@ -37,14 +37,14 @@ module.exports = {
           // material-ui theme
           palette: {
             primary: {
-              main: "#BA3D3B", // or whatever colors you need
-            },
-          },
-        },
-      },
-    },
+              main: "#BA3D3B" // or whatever colors you need
+            }
+          }
+        }
+      }
+    }
     /* highlight-end */
-  ],
+  ]
 }
 ```
 
@@ -160,7 +160,7 @@ itemsArrayWithTagsArray.map((item, i) => {
     parent: `__SOURCE__`,
     internal: {
       type: `item`, // name of the graphQL query --> allItem {}
-      contentDigest: createContentDigest(item),
+      contentDigest: createContentDigest(item)
     },
     children: [],
     move: item.move,
@@ -170,7 +170,7 @@ itemsArrayWithTagsArray.map((item, i) => {
     tags: item.tags,
     level: item.level,
     instructor: item.instructor,
-    instructor_image: item.instructor_image,
+    instructor_image: item.instructor_image
   }
 
   createNode(itemNode)
@@ -203,8 +203,8 @@ tags.forEach(tag => {
     path: tagPath,
     component: path.resolve(`src/templates/single-tag.js`),
     context: {
-      tag,
-    },
+      tag
+    }
   })
 })
 ```
@@ -351,19 +351,19 @@ module.exports = {
       options: {
         nodeType: "item",
         imagePath: "thumbnail",
-        name: "optimized_thumbnail",
-      },
+        name: "optimized_thumbnail"
+      }
     },
     {
       resolve: "gatsby-plugin-remote-images",
       options: {
         nodeType: "item",
         imagePath: "instructor_image",
-        name: "optimized_instructor_image",
-      },
-    },
+        name: "optimized_instructor_image"
+      }
+    }
     /* highlight-end */
-  ],
+  ]
 }
 ```
 

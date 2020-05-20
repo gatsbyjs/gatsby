@@ -12,17 +12,9 @@ describe(`gatsby-plugin-preact`, () => {
         alias: {
           react: `preact/compat`,
           "react-dom": `preact/compat`,
-          "react-dom/server": `preact/compat`,
-        },
-      },
+          "react-dom/server": `preact/compat`
+        }
+      }
     })
-  })
-
-  it(`does not invoke setWebpackConfig when stage is develop`, () => {
-    const actions = { setWebpackConfig: jest.fn() }
-
-    onCreateWebpackConfig({ stage: `develop`, actions })
-
-    expect(actions.setWebpackConfig).not.toHaveBeenCalled()
   })
 })

@@ -1,6 +1,6 @@
 /*  eslint-disable new-cap */
 const graphql = require(`gatsby/graphql`)
-const murmurhash = require(`./murmur`)
+const { murmurhash } = require(`./murmur`)
 const nodePath = require(`path`)
 
 class StringInterpolationNotAllowedError extends Error {
@@ -38,6 +38,20 @@ class GraphQLSyntaxError extends Error {
 
 const isGlobalIdentifier = tag =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
+
+export function followVariableDeclarations(binding) {
+  const node = binding.path?.node
+  if (
+    node?.type === `VariableDeclarator` &&
+    node?.id.type === `Identifier` &&
+    node?.init?.type === `Identifier`
+  ) {
+    return followVariableDeclarations(
+      binding.path.scope.getBinding(node.init.name)
+    )
+  }
+  return binding
+}
 
 function getTagImport(tag) {
   const name = tag.node.name
@@ -208,7 +222,7 @@ export default function({ types: t }) {
               )
               path.unshiftContainer(`body`, importDeclaration)
             }
-          },
+          }
         }
 
         const nestedHookVisitor = {
@@ -260,7 +274,7 @@ export default function({ types: t }) {
               )
               path.unshiftContainer(`body`, importDeclaration)
             }
-          },
+          }
         }
 
         const tagsToRemoveImportsFrom = new Set()
@@ -296,14 +310,14 @@ export default function({ types: t }) {
           // modify StaticQuery elements and import data only if query is inside StaticQuery
           parent.traverse(nestedJSXVistor, {
             queryHash,
-            query,
+            query
           })
 
           // modify useStaticQuery elements and import data only if query is inside useStaticQuery
           parent.traverse(nestedHookVisitor, {
             queryHash,
             query,
-            templatePath,
+            templatePath
           })
 
           return null
@@ -340,33 +354,18 @@ export default function({ types: t }) {
                             varPath.traverse({
                               TaggedTemplateExpression(templatePath) {
                                 setImportForStaticQuery(templatePath)
-                              },
+                              }
                             })
                           }
-                        },
+                        }
                       })
                     }
-                  },
+                  }
                 })
-              },
+              }
             })
-          },
-        })
-
-        function followVariableDeclarations(binding) {
-          const node = binding.path?.node
-          if (
-            node &&
-            node.type === `VariableDeclarator` &&
-            node.id.type === `Identifier` &&
-            node.init.type === `Identifier`
-          ) {
-            return followVariableDeclarations(
-              binding.path.scope.getBinding(node.init.name)
-            )
           }
-          return binding
-        }
+        })
 
         // Traverse once again for useStaticQuery instances
         path.traverse({
@@ -389,16 +388,16 @@ export default function({ types: t }) {
 
               if (binding) {
                 followVariableDeclarations(binding).path.traverse({
-                  TaggedTemplateExpression,
+                  TaggedTemplateExpression
                 })
               }
             }
 
             hookPath.traverse({
               // Assume the query is inline in the component and extract that.
-              TaggedTemplateExpression,
+              TaggedTemplateExpression
             })
-          },
+          }
         })
 
         // Run it again to remove non-staticquery versions
@@ -420,12 +419,12 @@ export default function({ types: t }) {
             // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
             return null
-          },
+          }
         })
 
         tagsToRemoveImportsFrom.forEach(removeImport)
-      },
-    },
+      }
+    }
   }
 }
 
@@ -433,5 +432,5 @@ export {
   getGraphQLTag,
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
-  GraphQLSyntaxError,
+  GraphQLSyntaxError
 }

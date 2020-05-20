@@ -14,7 +14,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
       fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
-      [mediaQueries.lg]: { mx: 8 },
+      [mediaQueries.lg]: { mx: 8 }
     }}
   >
     {repoUrl && (
@@ -32,15 +32,15 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
             cursor: `pointer`,
             fontWeight: `body`,
             "&:hover": {
-              color: `link.hoverColor`,
-            },
-          },
+              color: `link.hoverColor`
+            }
+          }
         }}
       >
         <GithubIcon
           sx={{
             mb: 0,
-            mr: 2,
+            mr: 2
           }}
         />
         Source
@@ -55,14 +55,14 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
           flex: 1,
           justifyContent: `flex-end`,
           p: 4,
-          pl: 0,
-        },
+          pl: 0
+        }
       }}
     >
       <span
         sx={{
           color: `textMuted`,
-          mr: 4,
+          mr: 4
         }}
       >
         Try this starter
@@ -72,19 +72,20 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
-            marginRight: t => t.space[4],
-          },
+            marginRight: t => t.space[4]
+          }
         }}
       >
         <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
-      </a>{" "}
+      </a>
+      {` `}
       &nbsp;
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}
         sx={{
           "&&": {
-            borderBottom: 0,
-          },
+            borderBottom: 0
+          }
         }}
       >
         <TechWithIcon icon={NetlifyIcon}>Netlify</TechWithIcon>

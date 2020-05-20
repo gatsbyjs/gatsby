@@ -4,7 +4,7 @@ title: Creating a Source Plugin
 
 Source plugins are essentially out of the box integrations between Gatsby and various third-party systems.
 
-These systems can be CMSs like Contentful or WordPress, other cloud services like Lever and Strava, or your local filesystem -- literally anything that has an API. Currently, Gatsby has [over 400 source plugins](/plugins/?=gatsby-source).
+These systems can be CMSs like Contentful or WordPress, other cloud services like Lever and Strava, or your local filesystem -- literally anything that has an API. Currently, Gatsby has [over 500 source plugins](/plugins/?=gatsby-source).
 
 Once a source plugin brings data into Gatsby's system, it can be transformed further with **transformer plugins**. For step-by-step examples of how to create source and transformer plugins, check out the Gatsby [tutorials section](/tutorial/plugin-and-theme-tutorials/).
 
@@ -40,7 +40,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const myData = {
     key: 123,
     foo: `The foo field of my node`,
-    bar: `Baz`,
+    bar: `Baz`
   }
 
   const nodeContent = JSON.stringify(myData)
@@ -53,8 +53,8 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       type: `MyNodeType`,
       mediaType: `text/html`,
       content: nodeContent,
-      contentDigest: createContentDigest(myData),
-    },
+      contentDigest: createContentDigest(myData)
+    }
   }
 
   const node = Object.assign({}, myData, nodeMeta)
@@ -311,7 +311,7 @@ This can be achieved by the following steps:
 
 1. Install `gatsby-source-filesystem` as a dependency in your source plugin:
 
-```
+```shell
 npm install gatsby-source-filesystem
 ```
 
@@ -324,7 +324,7 @@ exports.onCreateNode = async ({
   actions: { createNode },
   getCache,
   createNodeId,
-  node,
+  node
 }) => {
   // because onCreateNode is called for all nodes, verify that you are only running this code on nodes created by your plugin
   if (node.internal.type === `your-source-node-type`) {
@@ -335,7 +335,7 @@ exports.onCreateNode = async ({
       getCache,
       createNode,
       createNodeId,
-      parentNodeId: node.id,
+      parentNodeId: node.id
     })
   }
 }
@@ -350,7 +350,7 @@ exports.onCreateNode = async ({
   actions: { createNode },
   getCache,
   createNodeId,
-  node,
+  node
 }) => {
   // because onCreateNode is called for all nodes, verify that you are only running this code on nodes created by your plugin
   if (node.internal.type === `your-source-node-type`) {
@@ -361,7 +361,7 @@ exports.onCreateNode = async ({
       getCache,
       createNode,
       createNodeId,
-      parentNodeId: node.id,
+      parentNodeId: node.id
     })
 
     // highlight-start
@@ -400,8 +400,8 @@ module.exports = {
     `your-source-plugin`,
     // required to generate optimized images
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-  ],
+    `gatsby-transformer-sharp`
+  ]
 }
 ```
 
@@ -482,5 +482,5 @@ Then the new data needs to be pulled in via a live update like a websocket (in t
 ## Additional resources
 
 - Working example repository on [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with the features in this guide implemented
-- Tutorial on [Creating a Pixabay Image Source Plugin](/tutorial/pixabay-source-plugin-tutorial/)
+- Tutorial on [Creating a Source Plugin](/tutorial/source-plugin-tutorial/)
 - [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers), a community-made npm package with helper functions to generate Node objects with required fields like IDs and the `contentDigest` MD5 hash.

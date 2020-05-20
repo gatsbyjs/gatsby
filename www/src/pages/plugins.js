@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import Rotator from "../components/rotator"
@@ -9,6 +8,7 @@ import Link from "../components/localized-link"
 import logo from "../assets/monogram.svg"
 import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 
 class Plugins extends Component {
@@ -16,25 +16,22 @@ class Plugins extends Component {
     const { location } = this.props
     return (
       <PageWithPluginSearchBar location={location} isPluginsIndex={true}>
-        <Helmet>
-          <title>Plugins</title>
-          <meta
-            name="description"
-            content="The library for searching and exploring Gatsby's vast plugin ecosystem to implement Node.js packages using Gatsby APIs"
-          />
-        </Helmet>
+        <PageMetadata
+          title="Plugins"
+          description="The library for searching and exploring Gatsby's vast plugin ecosystem to implement Node.js packages using Gatsby APIs"
+        />
         <Container
           overrideCSS={{
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
+            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`
           }}
         >
           <div
             css={{
               display: `flex`,
-              flexDirection: `column`,
+              flexDirection: `column`
             }}
           >
             <img
@@ -43,7 +40,7 @@ class Plugins extends Component {
                 display: `inline-block`,
                 height: t => t.space[12],
                 width: t => t.space[12],
-                mx: `auto`,
+                mx: `auto`
               }}
               alt=""
             />
@@ -53,7 +50,7 @@ class Plugins extends Component {
                 fontWeight: `heading`,
                 mx: 5,
                 mb: 0,
-                textAlign: `center`,
+                textAlign: `center`
               }}
             >
               Welcome to the Gatsby Plugin Library!
@@ -62,47 +59,47 @@ class Plugins extends Component {
               items={[
                 {
                   text: `SEO?`,
-                  pluginName: `gatsby-plugin-react-helmet`,
+                  pluginName: `gatsby-plugin-react-helmet`
                 },
                 {
                   text: `responsive images?`,
-                  pluginName: `gatsby-image`,
+                  pluginName: `gatsby-image`
                 },
                 {
                   text: `offline support?`,
-                  pluginName: `gatsby-plugin-offline`,
+                  pluginName: `gatsby-plugin-offline`
                 },
                 {
                   text: `Sass support?`,
-                  pluginName: `gatsby-plugin-sass`,
+                  pluginName: `gatsby-plugin-sass`
                 },
                 {
                   text: `a sitemap?`,
-                  pluginName: `gatsby-plugin-sitemap`,
+                  pluginName: `gatsby-plugin-sitemap`
                 },
                 {
                   text: `an RSS feed?`,
-                  pluginName: `gatsby-plugin-feed`,
+                  pluginName: `gatsby-plugin-feed`
                 },
                 {
                   text: `great typography?`,
-                  pluginName: `gatsby-plugin-typography`,
+                  pluginName: `gatsby-plugin-typography`
                 },
                 {
                   text: `TypeScript?`,
-                  pluginName: `gatsby-plugin-typescript`,
+                  pluginName: `gatsby-plugin-typescript`
                 },
                 {
                   text: `Google Analytics?`,
-                  pluginName: `gatsby-plugin-google-analytics`,
+                  pluginName: `gatsby-plugin-google-analytics`
                 },
                 {
                   text: `WordPress integration?`,
-                  pluginName: `gatsby-source-wordpress`,
+                  pluginName: `gatsby-source-wordpress`
                 },
                 {
-                  text: `anything?`,
-                },
+                  text: `anything?`
+                }
               ]}
               color="lilac"
             />
@@ -111,7 +108,7 @@ class Plugins extends Component {
               sx={{
                 color: `textMuted`,
                 fontSize: 2,
-                textAlign: `center`,
+                textAlign: `center`
               }}
             >
               Please use the search bar to find plugins that will make your

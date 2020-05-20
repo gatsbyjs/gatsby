@@ -86,11 +86,11 @@ module.exports = {
       proxy({
         target: "http://localhost:9000",
         pathRewrite: {
-          "/.netlify/functions/": "",
-        },
+          "/.netlify/functions/": ""
+        }
       })
     )
-  },
+  }
   // ...
 }
 ```
@@ -105,8 +105,8 @@ export function handler(event, context, callback) {
     // return null to show no errors
     statusCode: 200, // http status code
     body: JSON.stringify({
-      msg: "Hello, World! " + Math.round(Math.random() * 10),
-    }),
+      msg: "Hello, World! " + Math.round(Math.random() * 10)
+    })
   })
 }
 ```
@@ -142,10 +142,10 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/app/*`] },
-    },
+      options: { prefixes: [`/app/*`] }
+    }
     // ...
-  ],
+  ]
   // ... (including what you also wrote earlier)
 }
 ```
@@ -239,7 +239,7 @@ import React from "react"
 import { Link, navigate } from "gatsby"
 import { getUser, isLoggedIn, logout } from "../services/auth"
 
-export default () => {
+export default function NavBar() {
   const content = { message: "", login: true }
   const user = getUser()
   if (isLoggedIn()) {
@@ -255,7 +255,7 @@ export default () => {
         flex: "1",
         justifyContent: "space-between",
         borderBottom: "1px solid #d1c1e0",
-        backgroundColor: "aliceblue",
+        backgroundColor: "aliceblue"
       }}
     >
       <span>{content.message}</span>
@@ -344,8 +344,8 @@ fetch("/.netlify/functions/auth-hello", {
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: "Bearer " + user.token.access_token, // like this
-  },
+    Authorization: "Bearer " + user.token.access_token // like this
+  }
 }).then(/* etc */)
 ```
 
@@ -359,14 +359,14 @@ And then inside a Lambda function, you can now access the `user` object:
 export function handler(event, context, callback) {
   if (context.clientContext) {
     const {
-      user, // actual user info you can use for your serverless functions
+      user // actual user info you can use for your serverless functions
     } = context.clientContext
     callback(null, {
       statusCode: 200,
       body: JSON.stringify({
         msg: "auth-hello: " + Math.round(Math.random() * 10),
-        user,
-      }),
+        user
+      })
     })
   } else {
     console.log(`
@@ -378,8 +378,8 @@ export function handler(event, context, callback) {
       statusCode: 200,
       body: JSON.stringify({
         msg:
-          "auth-hello - no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity.",
-      }),
+          "auth-hello - no authentication detected. Note that netlify-lambda doesn't locally emulate Netlify Identity."
+      })
     })
   }
 }

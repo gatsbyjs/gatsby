@@ -18,7 +18,7 @@ import { nodeSchema } from "../../joi-schemas/joi"
 import {
   getCommonDir,
   truncatePath,
-  tooLongSegmentsInPath,
+  tooLongSegmentsInPath
 } from "../../utils/path"
 import apiRunnerNode from "../../utils/api-runner-node"
 import { trackCli } from "gatsby-telemetry"
@@ -57,6 +57,8 @@ import {
   ISetPageDataAction,
   IRemovePageDataAction,
   IGatsbyNode,
+  BabelStageKeys,
+  IGatsbyIncompleteJob
 } from "../types"
 import webpack from "webpack"
 
@@ -73,7 +75,7 @@ const {
   enqueueJob,
   createInternalJob,
   removeInProgressJob,
-  getInProcessJobPromise,
+  getInProcessJobPromise
 } = require(`../../utils/jobs-manager`)
 
 const isWindows = platform() === `win32`
@@ -113,7 +115,7 @@ const findChildren = (
 export const deletePage = (page: IPageInput): IDeletePageAction => {
   return {
     type: `DELETE_PAGE`,
-    payload: page,
+    payload: page
   }
 }
 
@@ -147,8 +149,8 @@ export const createPage = (
         context: {
           pluginName: name,
           pageObject: page,
-          message,
-        },
+          message
+        }
       })
     } else {
       return message
@@ -164,7 +166,7 @@ export const createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorId`,
+      `pluginCreatorId`
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -205,8 +207,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic({
           id: `11324`,
           context: {
-            message: error,
-          },
+            message: error
+          }
         })
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
@@ -224,8 +226,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         id: `11322`,
         context: {
           pluginName: name,
-          pageObject: page,
-        },
+          pageObject: page
+        }
       })
     } else {
       // For test
@@ -247,8 +249,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         context: {
           pluginName: name,
           pageObject: page,
-          component: page.component,
-        },
+          component: page.component
+        }
       })
     }
   }
@@ -260,8 +262,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         context: {
           pluginName: name,
           pageObject: page,
-          component: page.component,
-        },
+          component: page.component
+        }
       })
     } else {
       const message = `${name} must set the absolute path to the page component when create creating a page`
@@ -359,8 +361,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
         // we will only show truncatedPath in non-production scenario
         isProduction: process.env.NODE_ENV === `production`,
-        truncatedPath,
-      },
+        truncatedPath
+      }
     })
     page.path = truncatedPath
   }
@@ -375,7 +377,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
-    updatedAt: Date.now(),
+    updatedAt: Date.now()
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -422,8 +424,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panicOnBuild({
           id: `11327`,
           context: {
-            relativePath,
-          },
+            relativePath
+          }
         })
       }
 
@@ -431,8 +433,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panicOnBuild({
           id: `11328`,
           context: {
-            fileName,
-          },
+            fileName
+          }
         })
       }
     }
@@ -463,7 +465,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     type: `CREATE_PAGE`,
     contextModified,
     plugin,
-    payload: internalPage,
+    payload: internalPage
   }
 }
 
@@ -525,7 +527,7 @@ export const deleteNode = (
     return {
       type: `DELETE_NODE`,
       plugin,
-      payload: node,
+      payload: node
     }
   }
 
@@ -571,10 +573,9 @@ export const deleteNodes = (
   return {
     type: `DELETE_NODES`,
     plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
+    // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
-    fullNodes: nodeIds.map(getNode) as IGatsbyNode[],
+    fullNodes: nodeIds.map(getNode) as IGatsbyNode[]
   }
 }
 
@@ -651,8 +652,8 @@ const _createNode: CreateNode = (node, plugin, actionOptions) => {
         id: `11467`,
         context: {
           validationErrorMessage: result.error.message,
-          node,
-        },
+          node
+        }
       }
 
       const possiblyCodeFrame = getNonGatsbyCodeFrame()
@@ -662,8 +663,8 @@ const _createNode: CreateNode = (node, plugin, actionOptions) => {
         errorObj.location = {
           start: {
             line: possiblyCodeFrame.line,
-            column: possiblyCodeFrame.column,
-          },
+            column: possiblyCodeFrame.column
+          }
         }
       }
 
@@ -755,7 +756,7 @@ const _createNode: CreateNode = (node, plugin, actionOptions) => {
       ...actionOptions,
       plugin,
       type: `TOUCH_NODE`,
-      payload: node.id,
+      payload: node.id
     }
   } else {
     // Remove any previously created descendant nodes as they're all due
@@ -766,7 +767,7 @@ const _createNode: CreateNode = (node, plugin, actionOptions) => {
           ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          payload: node,
+          payload: node
         }
       }
       deleteActions = findChildren(oldNode.children)
@@ -779,7 +780,7 @@ const _createNode: CreateNode = (node, plugin, actionOptions) => {
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      payload: node,
+      payload: node
     }
   }
 
@@ -813,7 +814,7 @@ export const createNode = (...args: Parameters<CreateNode>) => (
     node,
     traceId,
     parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    traceTags: { nodeId: node.id, nodeType: node.internal.type }
   })
 }
 
@@ -851,7 +852,7 @@ export const touchNode = (
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: nodeId,
+    payload: nodeId
   }
 }
 
@@ -932,7 +933,7 @@ export const createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
-    addedField: name,
+    addedField: name
   }
 }
 
@@ -954,7 +955,7 @@ export const createParentChildLink = (
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
     plugin,
-    payload: parent,
+    payload: parent
   }
 }
 
@@ -972,7 +973,7 @@ export const setWebpackConfig = (
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -990,7 +991,7 @@ export const replaceWebpackConfig = (
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -999,7 +1000,7 @@ export const replaceWebpackConfig = (
  * setBabelPlugin and setBabelPreset for this.
  */
 export const setBabelOptions = (
-  options: Record<string, any>,
+  options: ISetBabelOptionsAction["payload"],
   plugin: IGatsbyPlugin
 ): ISetBabelOptionsAction => {
   // Validate
@@ -1027,7 +1028,7 @@ export const setBabelOptions = (
   return {
     type: `SET_BABEL_OPTIONS`,
     plugin,
-    payload: options,
+    payload: options
   }
 }
 
@@ -1035,9 +1036,9 @@ export const setBabelOptions = (
  * Add new plugins or merge options into existing Babel plugins.
  */
 export const setBabelPlugin = (
-  config: babel.ConfigItem,
+  config: babel.ConfigItem & { stage: BabelStageKeys },
   plugin: IGatsbyPlugin
-): ISetBabelPluginAction => {
+): ISetBabelPluginAction | never => {
   // Validate
   const pluginPlaceholder = `Your site's "gatsby-node.js"`
   const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
@@ -1057,7 +1058,7 @@ export const setBabelPlugin = (
   return {
     type: `SET_BABEL_PLUGIN`,
     plugin,
-    payload: config,
+    payload: config as ISetBabelPluginAction["payload"] // Safe because we check for name and options
   }
 }
 
@@ -1065,7 +1066,7 @@ export const setBabelPlugin = (
  * Add new presets or merge options into existing Babel presets.
  */
 export const setBabelPreset = (
-  config: babel.ConfigItem,
+  config: babel.ConfigItem & { stage: BabelStageKeys },
   plugin: IGatsbyPlugin
 ): ISetBabelPresetAction => {
   // Validate
@@ -1087,7 +1088,7 @@ export const setBabelPreset = (
   return {
     type: `SET_BABEL_PRESET`,
     plugin,
-    payload: config,
+    payload: config as ISetBabelPresetAction["payload"] // Safe because we check for name and options
   }
 }
 
@@ -1100,13 +1101,13 @@ export const setBabelPreset = (
  * Gatsby doesn't finish its process until all jobs are ended.
  */
 export const createJob = (
-  job: IJob,
-  plugin: IGatsbyPlugin | null = null
+  job: IGatsbyIncompleteJob["job"],
+  plugin: IGatsbyPlugin
 ): ICreateJobAction => {
   return {
     type: `CREATE_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1149,8 +1150,8 @@ export const createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
     plugin,
     payload: {
       job: internalJob,
-      plugin,
-    },
+      plugin
+    }
   })
 
   const enqueuedJobPromise = enqueueJob(internalJob)
@@ -1161,8 +1162,8 @@ export const createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
       plugin,
       payload: {
         jobContentDigest,
-        result,
-      },
+        result
+      }
     })
 
     // remove the job from our inProgressJobQueue as it's available in our done state.
@@ -1178,13 +1179,13 @@ export const createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
  * to update the job as it continues.
  */
 export const setJob = (
-  job: IJob,
-  plugin: IGatsbyPlugin | null = null
+  job: IGatsbyIncompleteJob["job"],
+  plugin: IGatsbyPlugin
 ): ISetJobAction => {
   return {
     type: `SET_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1194,13 +1195,13 @@ export const setJob = (
  * Gatsby doesn't finish its process until all jobs are ended.
  */
 export const endJob = (
-  job: IJob,
-  plugin: IGatsbyPlugin | null = null
+  job: IGatsbyIncompleteJob["job"],
+  plugin: IGatsbyPlugin
 ): IEndJobAction => {
   return {
     type: `END_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1215,7 +1216,7 @@ export const setPluginStatus = (
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
-    payload: status,
+    payload: status
   }
 }
 
@@ -1246,7 +1247,7 @@ export const createRedirect = ({
 }): ICreateRedirectAction => {
   let pathPrefix = ``
   if (`prefixPaths` in store.getState().program) {
-    pathPrefix = store.getState().config.pathPrefix
+    pathPrefix = store.getState().config.pathPrefix || ``
   }
 
   return {
@@ -1256,8 +1257,8 @@ export const createRedirect = ({
       isPermanent,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
-      ...rest,
-    },
+      ...rest
+    }
   }
 }
 
@@ -1268,7 +1269,7 @@ export const createPageDependency = (
   {
     path,
     nodeId,
-    connection,
+    connection
   }: { path: string; nodeId: string; connection: string },
   plugin = ``
 ): ICreatePageDependencyAction => {
@@ -1281,8 +1282,8 @@ export const createPageDependency = (
     payload: {
       path,
       nodeId,
-      connection,
-    },
+      connection
+    }
   }
 }
 
@@ -1292,7 +1293,7 @@ export const createPageDependency = (
 export const setPageData = (pageData: IPageData): ISetPageDataAction => {
   return {
     type: `SET_PAGE_DATA`,
-    payload: pageData,
+    payload: pageData
   }
 }
 
@@ -1302,6 +1303,6 @@ export const setPageData = (pageData: IPageData): ISetPageDataAction => {
 export const removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
   return {
     type: `REMOVE_PAGE_DATA`,
-    payload: id,
+    payload: id
   }
 }

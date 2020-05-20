@@ -27,26 +27,28 @@ Create a new component to hold the links. For now, it will act as a placeholder:
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
-  <div
-    style={{
-      display: "flex",
-      flex: "1",
-      justifyContent: "space-between",
-      borderBottom: "1px solid #d1c1e0",
-    }}
-  >
-    <span>You are not logged in</span>
+export default function NavBar() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flex: "1",
+        justifyContent: "space-between",
+        borderBottom: "1px solid #d1c1e0"
+      }}
+    >
+      <span>You are not logged in</span>
 
-    <nav>
-      <Link to="/">Home</Link>
-      {` `}
-      <Link to="/">Profile</Link>
-      {` `}
-      <Link to="/">Logout</Link>
-    </nav>
-  </div>
-)
+      <nav>
+        <Link to="/">Home</Link>
+        {` `}
+        <Link to="/">Profile</Link>
+        {` `}
+        <Link to="/">Logout</Link>
+      </nav>
+    </div>
+  )
+}
 ```
 
 And create the layout component that will wrap all pages and display navigation bar:
@@ -74,11 +76,13 @@ import React from "react"
 import Layout from "../components/layout" // highlight-line
 
 // highlight-start
-export default () => (
-  <Layout>
-    <h1>Hello world!</h1>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <h1>Hello world!</h1>
+    </Layout>
+  )
+}
 // highlight-end
 ```
 
@@ -102,7 +106,7 @@ export const handleLogin = ({ username, password }) => {
     return setUser({
       username: `john`,
       name: `Johnny`,
-      email: `johnny@example.org`,
+      email: `johnny@example.org`
     })
   }
 
@@ -197,12 +201,12 @@ import { handleLogin, isLoggedIn } from "../services/auth"
 class Login extends React.Component {
   state = {
     username: ``,
-    password: ``,
+    password: ``
   }
 
   handleUpdate = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     })
   }
 
@@ -255,7 +259,7 @@ Though the routing is working now, you still can access all routes without restr
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=src/components/privateRoute.js
-import React, { Component } from "react"
+import React from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 
@@ -306,7 +310,7 @@ import { Link, navigate } from "gatsby" // highlight-line
 import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
 
 // highlight-start
-export default () => {
+export default function NavBar() {
   let greetingMessage = ""
   if (isLoggedIn()) {
     greetingMessage = `Hello ${getUser().name}`
@@ -321,7 +325,7 @@ export default () => {
         display: "flex",
         flex: "1",
         justifyContent: "space-between",
-        borderBottom: "1px solid #d1c1e0",
+        borderBottom: "1px solid #d1c1e0"
       }}
     >
       <span>{greetingMessage}</span> {/* highlight-line */}
@@ -358,26 +362,28 @@ import { getUser, isLoggedIn } from "../services/auth" // highlight-line
 
 import Layout from "../components/layout"
 
-export default () => (
-  <Layout>
-    {/* highlight-start */}
-    <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
-    <p>
-      {isLoggedIn() ? (
-        <>
-          You are logged in, so check your{" "}
-          <Link to="/app/profile">profile</Link>
-        </>
-      ) : (
-        <>
-          You should <Link to="/app/login">log in</Link> to see restricted
-          content
-        </>
-      )}
-    </p>
-    {/* highlight-end */}
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      {/* highlight-start */}
+      <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
+      <p>
+        {isLoggedIn() ? (
+          <>
+            You are logged in, so check your{" "}
+            <Link to="/app/profile">profile</Link>
+          </>
+        ) : (
+          <>
+            You should <Link to="/app/login">log in</Link> to see restricted
+            content
+          </>
+        )}
+      </p>
+      {/* highlight-end */}
+    </Layout>
+  )
+}
 ```
 
 And the profile will show the user data:

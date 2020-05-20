@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import React, { Fragment } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Link from "./localized-link"
-import { Helmet } from "react-helmet"
 import url from "url"
 import Img from "gatsby-image"
 import qs from "qs"
@@ -13,10 +12,12 @@ import Modal from "./modal"
 import ShareMenu from "./share-menu"
 import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
+import PageMetadata from "../components/site-metadata"
 
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
 import { MdArrowUpward, MdLink } from "react-icons/md"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
+import { filterByCategories } from "../views/showcase/filtered-showcase"
 
 const gutter = 6
 const gutterDesktop = 8
@@ -24,21 +25,21 @@ const gutterDesktop = 8
 const styles = {
   link: {
     color: `link.color`,
-    textDecoration: `none`,
+    textDecoration: `none`
   },
   prevNextLink: {
     color: `lilac`,
     fontFamily: `heading`,
-    px: [6, null, null, 0],
+    px: [6, null, null, 0]
   },
   prevNextLinkSiteTitle: {
     color: `link.color`,
-    fontWeight: `bold`,
+    fontWeight: `bold`
   },
   prevNextImage: {
     borderRadius: 1,
-    boxShadow: `overlay`,
-  },
+    boxShadow: `overlay`
+  }
 }
 
 const cleanUrl = mainUrl => {
@@ -54,7 +55,7 @@ const Featured = () => (
       color: `textMuted`,
       display: `flex`,
       fontWeight: `bold`,
-      mr: 4,
+      mr: 4
     }}
   >
     <span
@@ -62,7 +63,7 @@ const Featured = () => (
         height: t => t.space[5],
         m: 0,
         mr: 2,
-        width: t => t.space[5],
+        width: t => t.space[5]
       }}
     >
       <FeaturedIcon />
@@ -77,13 +78,13 @@ const SourceLink = ({ ...props }) => (
     {...props}
     sx={{
       "&&": {
-        border: 0,
+        border: 0
       },
       display: `flex`,
       alignItems: `center`,
       mr: 3,
       color: `link.color`,
-      width: `100%`,
+      width: `100%`
     }}
   >
     <GithubIcon sx={{ fontSize: 3, mr: 2, color: `link.color` }} />
@@ -91,7 +92,7 @@ const SourceLink = ({ ...props }) => (
   </a>
 )
 
-function usePrevAndNextSite(item) {
+function usePrevAndNextSite(item, filters = []) {
   const { allSitesYaml } = useStaticQuery(graphql`
     query {
       allSitesYaml(
@@ -102,6 +103,7 @@ function usePrevAndNextSite(item) {
       ) {
         nodes {
           title
+          categories
           fields {
             slug
           }
@@ -119,7 +121,7 @@ function usePrevAndNextSite(item) {
     }
   `)
 
-  const sites = allSitesYaml.nodes
+  const sites = filterByCategories(allSitesYaml.nodes, filters)
   const currentIndex = sites.findIndex(node => node.fields.slug === item)
   const nextSite = sites[(currentIndex + 1) % sites.length]
   const previousSite =
@@ -141,8 +143,11 @@ function getExitLocation(filters = {}) {
 
 function ShowcaseModal({ children, location, isModal }) {
   if (!isModal) return children
-  const { previousSite, nextSite } = usePrevAndNextSite(location.pathname)
   const { filters } = location.state || {}
+  const { previousSite, nextSite } = usePrevAndNextSite(
+    location.pathname,
+    filters
+  )
   return (
     <Modal
       modalBackgroundPath={getExitLocation(filters)}
@@ -161,10 +166,10 @@ function ShowcaseModal({ children, location, isModal }) {
                 nextSite.childScreenshot.screenshotFile.childImageSharp.resize
                   .src,
               width: 100,
-              height: 100,
+              height: 100
             }}
             imgStyle={{
-              margin: 0,
+              margin: 0
             }}
             alt=""
           />
@@ -175,16 +180,16 @@ function ShowcaseModal({ children, location, isModal }) {
                 position: `absolute`,
                 top: 240,
                 width: 300,
-                transform: `translateX(-80px) rotate(90deg)`,
-              },
+                transform: `translateX(-80px) rotate(90deg)`
+              }
             }}
           >
             <MdArrowUpward
               sx={{
                 transform: `rotate(90deg)`,
                 [mediaQueries.md]: {
-                  transform: `none`,
-                },
+                  transform: `none`
+                }
               }}
             />
             <div> Next Site in Showcase </div>
@@ -204,10 +209,10 @@ function ShowcaseModal({ children, location, isModal }) {
                 previousSite.childScreenshot.screenshotFile.childImageSharp
                   .resize.src,
               width: 100,
-              height: 100,
+              height: 100
             }}
             imgStyle={{
-              margin: 0,
+              margin: 0
             }}
             alt=""
           />
@@ -219,16 +224,16 @@ function ShowcaseModal({ children, location, isModal }) {
                 position: `absolute`,
                 top: 240,
                 width: 300,
-                transform: `translateX(-80px) rotate(-90deg)`,
-              },
+                transform: `translateX(-80px) rotate(-90deg)`
+              }
             }}
           >
             <MdArrowUpward
               sx={{
                 transform: `rotate(-90deg)`,
                 [mediaQueries.md]: {
-                  transform: `none`,
-                },
+                  transform: `none`
+                }
               }}
             />
             <div> Previous Site in Showcase </div>
@@ -254,53 +259,27 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           maxWidth: isModal ? false : 1080,
           margin: isModal ? false : `0 auto`,
           width: `100%`,
-          order: 1,
+          order: 1
         }}
       >
         <div css={{ width: `100%` }}>
-          <Helmet titleTemplate="%s | GatsbyJS">
-            <title>{`${site.title}: Showcase`}</title>
-            <meta
-              property="og:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta
-              name="twitter:image"
-              content={`https://www.gatsbyjs.org${screenshotFile.resize.src}`}
-            />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta
-              name="og:title"
-              value={`${site.title}: Showcase | GatsbyJS`}
-            />
-            <meta
-              property="og:image:width"
-              content={screenshotFile.resize.width}
-            />
-            <meta
-              property="og:image:height"
-              content={screenshotFile.resize.height}
-            />
-            <meta
-              property="og:description"
-              content={site.description || site.main_url}
-            />
-            <meta
-              name="twitter:description"
-              content={site.description || site.main_url}
-            />
-          </Helmet>
+          <PageMetadata
+            title={`${site.title}: Showcase`}
+            description={site.description || site.main_url}
+            image={screenshotFile.resize}
+            twitterCard="summary_large_image"
+          />
           <div
             sx={{
               p: gutter,
               [mediaQueries.lg]: {
                 p: gutterDesktop,
                 pb: gutter,
-                pr: isModal ? 96 : false,
-              },
+                pr: isModal ? 96 : false
+              }
             }}
           >
-            <h1 sx={{ m: 0 }}>{site.title}</h1>
+            <h1 sx={{ m: 0, color: `inherit` }}>{site.title}</h1>
             <a href={site.main_url} sx={styles.link}>
               {cleanUrl(site.main_url)}
             </a>
@@ -326,8 +305,8 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
               mx: gutter,
               py: 4,
               [mediaQueries.lg]: {
-                mx: gutterDesktop,
-              },
+                mx: gutterDesktop
+              }
             }}
           >
             {site.featured && <Featured />}
@@ -335,14 +314,14 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
             <div
               sx={{
                 alignSelf: `center`,
-                ml: `auto`,
+                ml: `auto`
               }}
             >
               <div
                 css={{
                   display: `flex`,
                   position: `relative`,
-                  zIndex: 1,
+                  zIndex: 1
                 }}
               >
                 <Button
@@ -370,7 +349,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           <div
             sx={{
               p: gutter,
-              [mediaQueries.lg]: { p: gutterDesktop },
+              [mediaQueries.lg]: { p: gutterDesktop }
             }}
           >
             <p>{site.description}</p>

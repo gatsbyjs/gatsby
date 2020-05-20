@@ -43,9 +43,6 @@ function getSibling(index, list, direction) {
     }
     return prev
   } else {
-    reporter.warn(
-      `Did not provide direction to sibling function for building next and prev links`
-    )
     return null
   }
 }
@@ -60,13 +57,13 @@ function findDoc(doc) {
 
 function getPrevAndNext(slug) {
   const docIndex = flattenedDocs.findIndex(findDoc, {
-    link: slug,
+    link: slug
   })
   const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
-    link: slug,
+    link: slug
   })
   const contributingIndex = flattenedContributing.findIndex(findDoc, {
-    link: slug,
+    link: slug
   })
 
   // add values to page context for next and prev page

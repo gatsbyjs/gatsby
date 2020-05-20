@@ -8,7 +8,7 @@ const {
   GraphQLList,
   getNamedType,
   getNullableType,
-  isCompositeType,
+  isCompositeType
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -71,7 +71,7 @@ class LocalNodeModel {
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
-    this.replaceTypeKeyValueCache()
+    this.replaceFiltersCache()
   }
 
   /**
@@ -84,7 +84,7 @@ class LocalNodeModel {
    *   actually queried. If the filter targets `id` directly, only one Node is
    *   cached instead of a Set of Nodes. If null, don't create or use a cache.
    */
-  replaceTypeKeyValueCache(map = new Map()) {
+  replaceFiltersCache(map = new Map()) {
     this._filtersCache = map // See redux/nodes.js for usage
   }
 
@@ -201,7 +201,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
-    const { query, firstOnly, type, stats } = args || {}
+    const { query, firstOnly, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -213,11 +213,18 @@ class LocalNodeModel {
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
 
+    let materializationActivity
+    if (tracer) {
+      materializationActivity = reporter.phantomActivity(`Materialization`, {
+        parentSpan: tracer.getParentActivity().span
+      })
+      materializationActivity.start()
+    }
     const fields = getQueryFields({
       filter: query.filter,
       sort: query.sort,
       group: query.group,
-      distinct: query.distinct,
+      distinct: query.distinct
     })
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
@@ -229,6 +236,18 @@ class LocalNodeModel {
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
+    if (materializationActivity) {
+      materializationActivity.end()
+    }
+
+    let runQueryActivity
+    if (tracer) {
+      runQueryActivity = reporter.phantomActivity(`runQuery`, {
+        parentSpan: tracer.getParentActivity().span
+      })
+      runQueryActivity.start()
+    }
+
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
@@ -238,8 +257,23 @@ class LocalNodeModel {
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
       filtersCache: this._filtersCache,
-      stats,
+      stats
     })
+
+    if (runQueryActivity) {
+      runQueryActivity.end()
+    }
+
+    let trackInlineObjectsActivity
+    if (tracer) {
+      trackInlineObjectsActivity = reporter.phantomActivity(
+        `trackInlineObjects`,
+        {
+          parentSpan: tracer.getParentActivity().span
+        }
+      )
+      trackInlineObjectsActivity.start()
+    }
 
     let result = queryResult
     if (firstOnly) {
@@ -253,6 +287,10 @@ class LocalNodeModel {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
+    if (trackInlineObjectsActivity) {
+      trackInlineObjectsActivity.end()
+    }
+
     return this.trackPageDependencies(result, pageDependencies)
   }
 
@@ -264,7 +302,7 @@ class LocalNodeModel {
 
     this._prepareNodesQueues[typeName].push({
       queryFields,
-      fieldsToResolve,
+      fieldsToResolve
     })
 
     if (!this._prepareNodesPromises[typeName]) {
@@ -292,12 +330,12 @@ class LocalNodeModel {
       ) => {
         return {
           queryFields: _.merge(queryFields, nextQueryFields),
-          fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve),
+          fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve)
         }
       },
       {
         queryFields: {},
-        fieldsToResolve: {},
+        fieldsToResolve: {}
       }
     )
 
@@ -429,14 +467,14 @@ class ContextualNodeModel {
   withContext(context) {
     return new ContextualNodeModel(this.nodeModel, {
       ...this.context,
-      ...context,
+      ...context
     })
   }
 
   _getFullDependencies(pageDependencies) {
     return {
       path: this.context.path,
-      ...(pageDependencies || {}),
+      ...(pageDependencies || {})
     }
   }
 
@@ -666,12 +704,12 @@ function resolveField(
     withResolverContext({
       schema,
       schemaComposer,
-      nodeModel,
+      nodeModel
     }),
     {
       fieldName,
       schema,
-      returnType: gqlField.type,
+      returnType: gqlField.type
     }
   )
 }
@@ -692,7 +730,7 @@ const determineResolvableFields = (
     const typeComposer = schemaComposer.getAnyTC(type.name)
     const possibleTCs = [
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
+      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name))
     ]
     let needsResolve = false
     for (const tc of possibleTCs) {
@@ -726,9 +764,9 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode /*: boolean */,
-  path /*: Set<mixed> */
-) /*: void */ => {
+  isNode /* : boolean */,
+  path /* : Set<mixed> */
+) /* : void */ => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {
@@ -767,5 +805,5 @@ const deepObjectDifference = (from, to) => {
 }
 
 module.exports = {
-  LocalNodeModel,
+  LocalNodeModel
 }

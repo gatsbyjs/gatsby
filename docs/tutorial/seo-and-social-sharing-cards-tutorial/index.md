@@ -47,7 +47,7 @@ Using the power and flexibility of React, you can create a React component to po
 ```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
@@ -82,7 +82,7 @@ This component doesn't _do_ anything yet, but it's the foundation for a useful, 
 
 ```jsx:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta }) {
@@ -107,18 +107,18 @@ function SEO({ description, lang, meta }) {
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang
       }}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription
         },
         // highlight-start
         {
           name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
-        },
+          content: site.siteMetadata.keywords.join(",")
+        }
         // highlight-end
       ]}
     />
@@ -129,7 +129,7 @@ function SEO({ description, lang, meta }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  description: ``,
+  description: ``
 }
 // highlight-end
 
@@ -151,7 +151,7 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -183,43 +183,43 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription
         },
         {
           name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(",")
         },
         {
           property: `og:title`,
-          content: title,
+          content: title
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          content: metaDescription
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: `website`
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: site.siteMetadata.author
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: title
         },
         {
           name: `twitter:description`,
-          content: metaDescription,
-        },
+          content: metaDescription
+        }
         // highlight-start
       ]
         .concat(
@@ -227,26 +227,26 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
             ? [
                 {
                   property: "og:image",
-                  content: image,
+                  content: image
                 },
                 {
                   property: "og:image:width",
-                  content: metaImage.width,
+                  content: metaImage.width
                 },
                 {
                   property: "og:image:height",
-                  content: metaImage.height,
+                  content: metaImage.height
                 },
                 {
                   name: "twitter:card",
-                  content: "summary_large_image",
-                },
+                  content: "summary_large_image"
+                }
               ]
             : [
                 {
                   name: "twitter:card",
-                  content: "summary",
-                },
+                  content: "summary"
+                }
               ]
           // highlight-end
         )
@@ -258,7 +258,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  description: ``,
+  description: ``
 }
 
 SEO.propTypes = {
@@ -270,8 +270,8 @@ SEO.propTypes = {
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-  }),
+    width: PropTypes.number.isRequired
+  })
   // highlight-end
 }
 
@@ -287,14 +287,14 @@ A canonical link is a hint to a search engine that this is the _source_ for this
 To implement this functionality, you need to do the following:
 
 1. Enable passing a `pathname` prop to your SEO component
-1. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
+2. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
    - A canonical link should be _absolute_ (e.g. `https://your-site.com/canonical-link`), so you will need to prefix with this `siteUrl`
-1. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
+3. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
 
 ```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -327,7 +327,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
@@ -337,8 +337,8 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
           ? [
               {
                 rel: "canonical",
-                href: canonical,
-              },
+                href: canonical
+              }
             ]
           : []
       }
@@ -346,62 +346,62 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription
         },
         {
           name: "keywords",
-          content: site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(",")
         },
         {
           property: `og:title`,
-          content: title,
+          content: title
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          content: metaDescription
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: `website`
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: site.siteMetadata.author
         },
         {
           name: `twitter:title`,
-          content: title,
+          content: title
         },
         {
           name: `twitter:description`,
-          content: metaDescription,
-        },
+          content: metaDescription
+        }
       ]
         .concat(
           metaImage
             ? [
                 {
                   property: "og:image",
-                  content: image,
+                  content: image
                 },
                 {
                   property: "og:image:width",
-                  content: metaImage.width,
+                  content: metaImage.width
                 },
                 {
                   property: "og:image:height",
-                  content: metaImage.height,
+                  content: metaImage.height
                 },
                 {
                   name: "twitter:card",
-                  content: "summary_large_image",
-                },
+                  content: "summary_large_image"
+                }
               ]
             : [
                 {
                   name: "twitter:card",
-                  content: "summary",
-                },
+                  content: "summary"
+                }
               ]
         )
         .concat(meta)}
@@ -412,7 +412,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
 SEO.defaultProps = {
   lang: `en`,
   meta: [],
-  description: ``,
+  description: ``
 }
 
 SEO.propTypes = {
@@ -423,10 +423,10 @@ SEO.propTypes = {
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired
   }),
   // highlight-next-line
-  pathname: PropTypes.string,
+  pathname: PropTypes.string
 }
 
 export default SEO
@@ -612,8 +612,8 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 - Twitter uses `twitter:` keywords. See [Twitter Cards][twitter-cards] for more info
 - Slack reads tags in the following order ([source][slack-unfurl])
   1. oEmbed server
-  1. Twitter cards tags / Facebook Open Graph tags
-  1. HTML meta tags
+  2. Twitter cards tags / Facebook Open Graph tags
+  3. HTML meta tags
 - Both [Google][google-json-ld] and [Apple][apple-json-ld] offer support for JSON-LD, which is _not covered_ in this guide
   - If you'd like to learn more, check out [this excellent guide](https://nystudio107.com/blog/json-ld-structured-data-and-erotica) for more info on JSON-LD
 - Check out the [`gatsby-seo-example`][gatsby-seo-example] for a ready-to-use starter for powering your Markdown-based blog.

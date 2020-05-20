@@ -24,13 +24,13 @@ Use soft line wraps for paragraphs:
 
 ✅ DO:
 
-```md
+```markdown
 No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores, nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade ou expressão de gênero, nível de experiência, nacionalidade, aparência, raça, religião ou identidade e orientação sexual.
 ```
 
 ❌ DON'T:
 
-```md
+```markdown
 No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores,
 nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre
 de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade
@@ -49,9 +49,9 @@ Leave text in code blocks untranslated except for comments. You may optionally t
 ```jsx
 // Ejemplo
 import React from "react"
-export default () => (
-  <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
-)
+export default function HelloGatsby() {
+  return <div style={{ color: `purple`, fontSize: `72px` }}>Hello Gatsby!</div>
+}
 ```
 
 ✅ ALSO OKAY:
@@ -59,9 +59,9 @@ export default () => (
 ```jsx
 // Ejemplo
 import React from "react"
-export default () => (
-  <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
-)
+export default function HelloGatsby() {
+  return <div style={{ color: `purple`, fontSize: `72px` }}>¡Hola Gatsby!</div>
+}
 ```
 
 ❌ DON'T:
@@ -69,19 +69,23 @@ export default () => (
 ```jsx
 // Ejemplo
 import React from "react"
-export default () => (
-  // 'purple' is a CSS keyword
-  <div style={{ color: `morado`, fontSize: `72px` }}>¡Hola Gatsby!</div>
-)
+export default function HelloGatsby() {
+  return (
+    // 'purple' is a CSS keyword
+    <div style={{ color: `morado`, fontSize: `72px` }}>¡Hola Gatsby!</div>
+  )
+}
 ```
 
 ❌ DEFINITELY DON'T:
 
 ```jsx
 importar Reaccionar desde "reaccionar"
-exportar defecto () => (
-   <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
-)
+exportar defecto funcion HelloGatsby() {
+  retornar (
+     <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
+  );
+}
 ```
 
 ### Internal links
@@ -104,9 +108,6 @@ Translate link text but keep all slugs and hashes in links the same as they are 
 
 If an external link is to an article in a reference like [MDN] or [Wikipedia], and a version of that article exists in your language that is of decent quality, consider linking to that version instead.
 
-[mdn]: https://developer.mozilla.org/en-US/
-[wikipedia]: https://en.wikipedia.org/wiki/Main_Page
-
 ✅ OK:
 
 ```markdown
@@ -114,3 +115,6 @@ Los elementos de React son [inmutables](https://es.wikipedia.org/wiki/Objeto_inm
 ```
 
 For links that have no equivalent (Stack Overflow, YouTube videos, etc.), use the English link.
+
+[mdn]: https://developer.mozilla.org/en-US/
+[wikipedia]: https://en.wikipedia.org/wiki/Main_Page

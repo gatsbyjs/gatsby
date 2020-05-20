@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 
 import { EcosystemIcon } from "../assets/icons"
@@ -15,20 +15,20 @@ class EcosystemPage extends Component {
       location,
       data: {
         allStartersYaml: { nodes: startersData },
-        allNpmPackage: { nodes: pluginsData },
-      },
+        allNpmPackage: { nodes: pluginsData }
+      }
     } = this.props
 
     const starters = startersData.map(item => {
       const {
         fields: {
-          starterShowcase: { slug, name, description, stars },
+          starterShowcase: { slug, name, description, stars }
         },
         childScreenshot: {
           screenshotFile: {
-            childImageSharp: { fixed: thumbnail },
-          },
-        },
+            childImageSharp: { fixed: thumbnail }
+          }
+        }
       } = item
 
       return {
@@ -36,7 +36,7 @@ class EcosystemPage extends Component {
         name,
         description,
         stars,
-        thumbnail,
+        thumbnail
       }
     })
 
@@ -51,9 +51,7 @@ class EcosystemPage extends Component {
         pageTitle={pageTitle}
         pageIcon={EcosystemIcon}
       >
-        <Helmet>
-          <title>Ecosystem</title>
-        </Helmet>
+        <PageMetadata title="Ecosystem" />
         <EcosystemBoard
           icons={boardIcons}
           starters={starters}
