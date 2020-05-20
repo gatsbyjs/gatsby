@@ -6350,7 +6350,6 @@
   features:
     - TypeScript and Sass support
     - ESLint with basic react rules
-    - Progressive Web App
 - url: https://gatsby-starter-portfolio-minimal.netlify.app/
   repo: https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal
   description: A modern one-page portfolio with a clean yet expressive design.
