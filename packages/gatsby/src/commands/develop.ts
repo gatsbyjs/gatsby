@@ -7,7 +7,7 @@ import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import socket from "socket.io"
 import fs from "fs-extra"
-import { isCI } from "gatsby-core-utils"
+import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
@@ -102,7 +102,7 @@ class ControllableScript {
 let isRestarting
 
 module.exports = async (program: IProgram): Promise<void> => {
-  const developProcessPath = require.resolve(`./develop-process`)
+  const developProcessPath = slash(require.resolve(`./develop-process`))
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
