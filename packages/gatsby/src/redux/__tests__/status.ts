@@ -1,6 +1,7 @@
 import { statusReducer } from "../reducers/status"
+import { IGatsbyState } from "../types"
 
-const { actions } = require(`../actions`)
+import { actions } from "../actions"
 
 Date.now = jest.fn(() => 1482363367071)
 
@@ -24,7 +25,7 @@ describe(`Status actions/reducer`, () => {
   })
 
   it(`throws an error if status isn't an object`, done => {
-    function runReducer() {
+    function runReducer(): IGatsbyState["status"] {
       return statusReducer(
         undefined,
         actions.setPluginStatus(`test job`, { name: `test-plugin` })
@@ -36,7 +37,7 @@ describe(`Status actions/reducer`, () => {
   })
 
   it(`throws an error if the plugin name isn't set`, done => {
-    function runReducer() {
+    function runReducer(): IGatsbyState["status"] {
       return statusReducer(
         undefined,
         actions.setPluginStatus({ blah: `test job` })

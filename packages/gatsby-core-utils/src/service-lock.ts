@@ -1,7 +1,7 @@
 /*
  * Service lock: handles service discovery for Gatsby develop processes
  * The problem:  the develop process starts a proxy server, the actual develop process and a websocket server for communication. The two latter ones have random ports that need to be discovered. We also cannot run multiple of the same site at the same time.
- * The solution: lockfiles! We create a lockfolder in `.config/gatsby/sites/${sitePathHash} and then write a file to that lockfolder for every service with its port.
+ * The solution: lockfiles! We create a folder in `.config/gatsby/sites/${sitePathHash} and then for each service write a JSON file with its data (e.g. developstatusserver.json) and lock that file (with developstatusserver.json.lock) so nobody can start the same service again.
  *
  * NOTE(@mxstbr): This is NOT EXPORTED from the main index.ts due to this relying on Node.js-specific APIs but core-utils also being used in browser environments. See https://github.com/jprichardson/node-fs-extra/issues/743
  */
@@ -15,46 +15,48 @@ import { isCI } from "./ci"
 
 const globalConfigPath = xdgBasedir.config || tmp.fileSync().name
 
-const getLockfileDir = (programPath: string): string => {
+const getSiteDir = (programPath: string): string => {
   const hash = createContentDigest(programPath)
 
-  return path.join(globalConfigPath, `gatsby`, `sites`, `${hash}.lock`)
+  return path.join(globalConfigPath, `gatsby`, `sites`, hash)
 }
 
-const getDataFilePath = (lockfileDir: string, serviceName: string): string =>
-  path.join(lockfileDir, `${serviceName}.lock`)
+const DATA_FILE_EXTENSION = `.json`
+const getDataFilePath = (siteDir: string, serviceName: string): string =>
+  path.join(siteDir, `${serviceName}${DATA_FILE_EXTENSION}`)
 
 type UnlockFn = () => Promise<void>
 
 const memoryServices = {}
 export const createServiceLock = async (
   programPath: string,
-  name: string,
-  content: string
+  serviceName: string,
+  content: Record<string, any>
 ): Promise<UnlockFn | null> => {
   // NOTE(@mxstbr): In CI, we cannot reliably access the global config dir and do not need cross-process coordination anyway
   // so we fall back to storing the services in memory instead!
   if (isCI()) {
-    if (memoryServices[name]) return null
+    if (memoryServices[serviceName]) return null
 
-    memoryServices[name] = content
+    memoryServices[serviceName] = content
     return async (): Promise<void> => {
-      delete memoryServices[name]
+      delete memoryServices[serviceName]
     }
   }
 
-  const lockfileDir = getLockfileDir(programPath)
+  const siteDir = getSiteDir(programPath)
 
-  await fs.ensureDir(lockfileDir)
+  await fs.ensureDir(siteDir)
+
+  const serviceDataFile = getDataFilePath(siteDir, serviceName)
 
   try {
-    const unlock = await lockfile.lock(lockfileDir, {
+    await fs.writeFile(serviceDataFile, JSON.stringify(content))
+
+    const unlock = await lockfile.lock(serviceDataFile, {
       // Use the minimum stale duration
       stale: 5000,
     })
-
-    // Once the directory for this site is locked, we write a file to the dir with the service metadata
-    await fs.writeFile(getDataFilePath(lockfileDir, name), content)
 
     return unlock
   } catch (err) {
@@ -62,35 +64,36 @@ export const createServiceLock = async (
   }
 }
 
-export const getService = (
+export const getService = async (
   programPath: string,
-  name: string
+  serviceName: string
 ): Promise<string | null> => {
-  if (isCI()) return Promise.resolve(memoryServices[name] || null)
+  if (isCI()) return memoryServices[serviceName] || null
 
-  const lockfileDir = getLockfileDir(programPath)
+  const siteDir = getSiteDir(programPath)
 
   try {
-    return fs.readFile(getDataFilePath(lockfileDir, name), `utf8`)
+    return JSON.parse(
+      await fs.readFile(getDataFilePath(siteDir, serviceName), `utf8`)
+    )
   } catch (err) {
-    return Promise.resolve(null)
+    return null
   }
 }
 
 export const getServices = async (programPath: string): Promise<any> => {
   if (isCI()) return memoryServices
-  const lockfileDir = getLockfileDir(programPath)
+  const siteDir = getSiteDir(programPath)
 
-  const files = await fs.readdir(lockfileDir)
+  const serviceNames = (await fs.readdir(siteDir))
+    .filter(file => file.endsWith(DATA_FILE_EXTENSION))
+    .map(file => file.replace(DATA_FILE_EXTENSION, ``))
+
   const services = {}
-
   await Promise.all(
-    files
-      .filter(file => file.endsWith(`.lock`))
-      .map(async file => {
-        const service = file.replace(`.lock`, ``)
-        services[service] = await getService(programPath, service)
-      })
+    serviceNames.map(async service => {
+      services[service] = await getService(programPath, service)
+    })
   )
 
   return services

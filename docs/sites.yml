@@ -7,6 +7,16 @@
     - Web Development
     - Featured
     - Documentation
+- title: Spotify.Design
+  main_url: https://spotify.design/
+  url: https://spotify.design/
+  description: >
+    Spotify Design's team site! Read their blog and meet Spotify designers.
+  featured: true
+  categories:
+    - Featured
+    - Music
+    - Blog
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
