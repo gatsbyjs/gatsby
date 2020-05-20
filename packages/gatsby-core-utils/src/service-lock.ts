@@ -1,7 +1,7 @@
 /*
  * Service lock: handles service discovery for Gatsby develop processes
  * The problem:  the develop process starts a proxy server, the actual develop process and a websocket server for communication. The two latter ones have random ports that need to be discovered. We also cannot run multiple of the same site at the same time.
- * The solution: lockfiles! We create a folder in `.config/gatsby/sites/${sitePathHash}, lock it with a site.lock lockfile and then for each service (e.g. developstatusserver) write a file with its data.
+ * The solution: lockfiles! We create a folder in `.config/gatsby/sites/${sitePathHash} and then for each service write a JSON file with its data (e.g. developstatusserver.json) and lock that file (with developstatusserver.json.lock) so nobody can start the same service again.
  *
  * NOTE(@mxstbr): This is NOT EXPORTED from the main index.ts due to this relying on Node.js-specific APIs but core-utils also being used in browser environments. See https://github.com/jprichardson/node-fs-extra/issues/743
  */
@@ -15,33 +15,32 @@ import { isCI } from "./ci"
 
 const globalConfigPath = xdgBasedir.config || tmp.fileSync().name
 
-const LOCKFILE_NAME = `site.lock`
-
 const getSiteDir = (programPath: string): string => {
   const hash = createContentDigest(programPath)
 
   return path.join(globalConfigPath, `gatsby`, `sites`, hash)
 }
 
+const DATA_FILE_EXTENSION = `.json`
 const getDataFilePath = (siteDir: string, serviceName: string): string =>
-  path.join(siteDir, `${serviceName}.json`)
+  path.join(siteDir, `${serviceName}${DATA_FILE_EXTENSION}`)
 
 type UnlockFn = () => Promise<void>
 
 const memoryServices = {}
 export const createServiceLock = async (
   programPath: string,
-  name: string,
+  serviceName: string,
   content: Record<string, any>
 ): Promise<UnlockFn | null> => {
   // NOTE(@mxstbr): In CI, we cannot reliably access the global config dir and do not need cross-process coordination anyway
   // so we fall back to storing the services in memory instead!
   if (isCI()) {
-    if (memoryServices[name]) return null
+    if (memoryServices[serviceName]) return null
 
-    memoryServices[name] = content
+    memoryServices[serviceName] = content
     return async (): Promise<void> => {
-      delete memoryServices[name]
+      delete memoryServices[serviceName]
     }
   }
 
@@ -49,15 +48,15 @@ export const createServiceLock = async (
 
   await fs.ensureDir(siteDir)
 
+  const serviceDataFile = getDataFilePath(siteDir, serviceName)
+
   try {
-    const unlock = await lockfile.lock(siteDir, {
+    await fs.writeFile(serviceDataFile, JSON.stringify(content))
+
+    const unlock = await lockfile.lock(serviceDataFile, {
       // Use the minimum stale duration
       stale: 5000,
-      lockfilePath: path.join(siteDir, LOCKFILE_NAME),
     })
-
-    // Once the directory for this site is locked, we write a file to the dir with the service metadata
-    await fs.writeFile(getDataFilePath(siteDir, name), JSON.stringify(content))
 
     return unlock
   } catch (err) {
@@ -67,14 +66,16 @@ export const createServiceLock = async (
 
 export const getService = async (
   programPath: string,
-  name: string
+  serviceName: string
 ): Promise<string | null> => {
-  if (isCI()) return memoryServices[name] || null
+  if (isCI()) return memoryServices[serviceName] || null
 
   const siteDir = getSiteDir(programPath)
 
   try {
-    return JSON.parse(await fs.readFile(getDataFilePath(siteDir, name), `utf8`))
+    return JSON.parse(
+      await fs.readFile(getDataFilePath(siteDir, serviceName), `utf8`)
+    )
   } catch (err) {
     return null
   }
@@ -85,8 +86,8 @@ export const getServices = async (programPath: string): Promise<any> => {
   const siteDir = getSiteDir(programPath)
 
   const serviceNames = (await fs.readdir(siteDir))
-    .filter(file => file.endsWith(`.json`))
-    .map(file => file.replace(`.json`, ``))
+    .filter(file => file.endsWith(DATA_FILE_EXTENSION))
+    .map(file => file.replace(DATA_FILE_EXTENSION, ``))
 
   const services = {}
   await Promise.all(
