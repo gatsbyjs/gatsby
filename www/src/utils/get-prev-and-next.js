@@ -43,9 +43,6 @@ function getSibling(index, list, direction) {
     }
     return prev
   } else {
-    reporter.warn(
-      `Did not provide direction to sibling function for building next and prev links`
-    )
     return null
   }
 }
