@@ -194,7 +194,7 @@ export class GraphQLRunner {
               rootValue: context,
               contextValue: withResolverContext({
                 schema,
-                schemaComposer: schemaCustomization.composer,
+                schemaComposer: schemaCustomization.composer!,
                 context,
                 customContext: schemaCustomization.context,
                 nodeModel: this.nodeModel,
