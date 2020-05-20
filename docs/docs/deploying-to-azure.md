@@ -100,8 +100,8 @@ The really important field to specify is the `App artifact location`, this shoul
 
 | Setting                 | Value         |
 | ----------------------- | ------------- |
-| _App location_          | _Leave blank_ |
-| _Api location_          | _Leave blank_ |
+| _App location_          | / |
+| _Api location_          | **api** or _Leave blank_ |
 | _App artifact location_ | **public**     |
 
 Click the **Review + create** button.
