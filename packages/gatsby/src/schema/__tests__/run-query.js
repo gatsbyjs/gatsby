@@ -414,6 +414,15 @@ it(`should use the cache argument`, async () => {
 
   describe(desc, () => {
     describe(`Filter fields`, () => {
+      describe(`none`, () => {
+        it(`handles empty filter`, async () => {
+          const [result, allNodes] = await runFastFilter({})
+
+          // Expecting all nodes
+          expect(result?.length).toEqual(allNodes.length)
+        })
+      })
+
       describe(`$eq`, () => {
         it(`handles eq operator with number value`, async () => {
           const needle = 2

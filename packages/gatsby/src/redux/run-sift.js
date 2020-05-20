@@ -453,6 +453,8 @@ const applyFilters = (
 
     const cache = filtersCache.get(filterCacheKey).meta.nodesUnordered
 
+    lastFilterUsedSift = false
+
     if (firstOnly || cache.length) {
       return cache.slice(0)
     }
