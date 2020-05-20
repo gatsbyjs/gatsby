@@ -10,12 +10,7 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const { frontmatter } = page
 
   return (
-    <DocsMarkdownPage
-      page={page}
-      location={location}
-      prev={prev}
-      next={next}
-    >
+    <DocsMarkdownPage page={page} location={location} prev={prev} next={next}>
       {frontmatter.issue && (
         <a
           href={page.frontmatter.issue}

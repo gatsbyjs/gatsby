@@ -4,11 +4,32 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte"
+type FilterOp =
+  | "$eq"
+  | "$ne"
+  | "$lt"
+  | "$lte"
+  | "$gt"
+  | "$gte"
+  | "$in"
+  | "$nin"
+  | "$regex" // Note: this includes $glob
 // Note: `undefined` is an encoding for a property that does not exist
-type FilterValueNullable = string | number | boolean | null | undefined
+type FilterValueNullable =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | RegExp // Only valid for $regex
+  | Array<string | number | boolean | null | undefined>
 // This is filter value in most cases
-type FilterValue = string | number | boolean
+type FilterValue =
+  | string
+  | number
+  | boolean
+  | RegExp // Only valid for $regex
+  | Array<string | number | boolean>
 export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp
@@ -182,20 +203,23 @@ export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
 ): void {
-  if (op === `$ne`) {
-    postIndexingMetaSetupNe(filterCache)
+  if (op === `$ne` || op === `$nin`) {
+    postIndexingMetaSetupNeNin(filterCache)
   } else if ([`$lt`, `$lte`, `$gt`, `$gte`].includes(op)) {
     postIndexingMetaSetupLtLteGtGte(filterCache, op)
   }
 }
 
-function postIndexingMetaSetupNe(filterCache: IFilterCache): void {
+function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // Note: edge cases regarding `null` and `undefined`. Here `undefined` signals
   // that the property did not exist as sift does not support actual `undefined`
-  // values. For $ne, `null` only returns nodes that actually have the property
+  // values.
+  // For $ne, `null` only returns nodes that actually have the property
   // and in that case the property cannot be `null` either. For any other value,
   // $ne will return all nodes where the value is not actually the needle,
   // including nodes where the value is null.
+  // A $nin does the same as an $ne except it filters multiple values instead
+  // of just one.
 
   // For `$ne` we will take the list of all targeted nodes and eliminate the
   // bucket of nodes with a particular value, if it exists at all. So for that
@@ -604,6 +628,70 @@ export const getNodesFromCacheByValue = (
     return filterCache.byValue.get(filterValue)
   }
 
+  if (op === `$in`) {
+    if (!Array.isArray(filterValue)) {
+      // Sift assumes the value has an `indexOf` property. By this fluke,
+      // string args would work, but I don't think that's intentional/expected.
+      throw new Error("The argument to the `in` comparator should be an array")
+    }
+    const filterValueArr: Array<FilterValueNullable> = filterValue
+
+    const set = new Set<IGatsbyNode>()
+    if (filterValueArr.includes(null)) {
+      // Like all other ops, `in: [null]` behaves weirdly, allowing all nodes
+      // that do not actually have a (complete) path (v=undefined)
+      const nodes = filterCache.byValue.get(undefined)
+      if (nodes) {
+        nodes.forEach(v => set.add(v))
+      }
+    }
+
+    // For every value in the needle array, find the bucket of nodes for
+    // that value, add this bucket of nodes to one set, return the set.
+    filterValueArr
+      .slice(0) // Sort is inline so slice the original array
+      .sort((a, b) => {
+        if (a == null || b == null) return 0
+        return a < b ? -1 : a > b ? 1 : 0
+      }) // Just sort to preserve legacy order as much as possible.
+      .forEach((v: FilterValueNullable) =>
+        filterCache.byValue.get(v)?.forEach(v => set.add(v))
+      )
+
+    return set
+  }
+
+  if (op === `$nin`) {
+    // This is essentially the same as the $ne operator, just with multiple
+    // values to exclude.
+
+    if (!Array.isArray(filterValue)) {
+      throw new Error(`The $nin operator expects an array as value`)
+    }
+
+    const values: Set<FilterValueNullable> = new Set(filterValue)
+    const set = new Set(filterCache.meta.nodesUnordered)
+
+    // Do the action for "$ne" for each element in the set of values
+    values.forEach(filterValue => {
+      if (filterValue === null) {
+        // Edge case: $nin with `null` returns only the nodes that contain the
+        // full path and that don't resolve to null, so drop `undefined` as well
+        let cache = filterCache.byValue.get(undefined)
+        if (cache) cache.forEach(node => set.delete(node))
+        cache = filterCache.byValue.get(null)
+        if (cache) cache.forEach(node => set.delete(node))
+      } else {
+        // Not excluding null so it should include undefined leafs or leafs
+        // where only the partial path exists for whatever reason.
+        const cache = filterCache.byValue.get(filterValue)
+        if (cache) cache.forEach(node => set.delete(node))
+      }
+    })
+
+    return set
+  }
+
   if (op === `$ne`) {
     const set = new Set(filterCache.meta.nodesUnordered)
 
@@ -624,6 +712,33 @@ export const getNodesFromCacheByValue = (
     return set
   }
 
+  if (op === `$regex`) {
+    // Note: $glob is converted to $regex so $glob filters go through here, too
+    // Aside from the input pattern format, further behavior is exactly the same.
+
+    // The input to the filter must be a string (including leading/trailing slash and regex flags)
+    // By the time the filter reaches this point, the filterValue has to be a regex.
+
+    if (!(filterValue instanceof RegExp)) {
+      throw new Error(
+        `The value for the $regex comparator must be an instance of RegExp`
+      )
+    }
+    const regex = filterValue
+
+    const result = new Set<IGatsbyNode>()
+    filterCache.byValue.forEach((nodes, value) => {
+      // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
+      // Note: partial paths should also be included for regex (matching Sift behavior)
+      if (value !== undefined && regex.test(String(value))) {
+        nodes.forEach(node => result.add(node))
+      }
+    })
+
+    // TODO: we _can_ cache this set as well. Might make sense if it turns out that $regex is mostly used with literals
+    return result
+  }
+
   if (filterValue == null) {
     if (op === `$lt` || op === `$gt`) {
       // Nothing is lt/gt null
@@ -633,6 +748,20 @@ export const getNodesFromCacheByValue = (
     // This is an edge case and this value should be directly indexed
     // For `lte`/`gte` this should only return nodes for `null`, not a "range"
     return filterCache.byValue.get(filterValue)
+  }
+
+  if (Array.isArray(filterValue)) {
+    throw new Error(
+      "Array is an invalid filter value for the `" + op + "` comparator"
+    )
+  }
+
+  if (filterValue instanceof RegExp) {
+    // This is most likely an internal error, although it is possible for
+    // users to talk to this API more directly.
+    throw new Error(
+      `A RegExp instance is only valid for $regex and $glob comparators`
+    )
   }
 
   if (op === `$lt`) {

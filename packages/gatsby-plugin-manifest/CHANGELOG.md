@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.7...gatsby-plugin-manifest@2.4.8) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.6...gatsby-plugin-manifest@2.4.7) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.5...gatsby-plugin-manifest@2.4.6) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.4...gatsby-plugin-manifest@2.4.5) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.3...gatsby-plugin-manifest@2.4.4) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** remove fs from ssr ([#24097](https://github.com/gatsbyjs/gatsby/issues/24097)) ([846b59a](https://github.com/gatsbyjs/gatsby/commit/846b59a))
+
 ## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.2...gatsby-plugin-manifest@2.4.3) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

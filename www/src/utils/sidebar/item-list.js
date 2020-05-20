@@ -54,7 +54,7 @@ const itemListLookup = {
 
 function getItemList(path) {
   const { basePath } = getLocaleAndBasePath(path)
-  const [urlSegment] = basePath.split("/").slice(1)
+  const [urlSegment] = basePath.split(`/`).slice(1)
   return itemListLookup[urlSegment]
 }
 
