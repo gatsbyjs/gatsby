@@ -1,16 +1,16 @@
-import execa from "execa"
-import * as path from "path"
-import * as fs from "fs"
-import detectPort from "detect-port"
-import {
+const execa = require(`execa`)
+const path = require(`path`)
+const fs = require(`fs`)
+const detectPort = require(`detect-port`)
+const {
   getService,
   createServiceLock,
-} from "gatsby-core-utils/dist/service-lock"
+} = require(`gatsby-core-utils/dist/service-lock`)
 
 // NOTE(@mxstbr): The forceStart boolean enforces us to start the recipes graphql server
 // even if another instance might already be running. This is necessary to ensure the gatsby
 // develop command does not _not_ run the server if the user is running gatsby recipes at the same time.
-const startGraphQLServer = async (programPath, forceStart) => {
+exports.startGraphQLServer = async (programPath, forceStart) => {
   let { port } = (await getService(programPath, `recipesgraphqlserver`)) || {}
 
   if (!port || forceStart) {
@@ -52,5 +52,3 @@ const startGraphQLServer = async (programPath, forceStart) => {
     port,
   }
 }
-
-export default startGraphQLServer

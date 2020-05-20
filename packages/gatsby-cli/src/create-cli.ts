@@ -10,7 +10,7 @@ import clipboardy from "clipboardy"
 import { trackCli, setDefaultTags, setTelemetryEnabled } from "gatsby-telemetry"
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
-import startGraphQLServer from "gatsby-recipes/dist/graphql-server"
+import { startGraphQLServer } from "gatsby-recipes"
 
 const handlerP = (fn: Function) => (...args: unknown[]): void => {
   Promise.resolve(fn(...args)).then(
