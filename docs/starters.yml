@@ -6301,6 +6301,21 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://expo-gatsby-starter.netlify.app/
+  repo: https://github.com/Sidibedev/expo-gatsby-starter
+  description: A simple Expo and Gatsby starter.
+  tags:
+    - PWA
+    - SEO
+  features:
+    - SEO
+    - PWA
+    - Offline Support
+    - Upload Image
+    - Expo SDK
+    - Image manipulation
+    - 404 page
+    - Navigation
 - url: https://gatsby-starter-banshorian.netlify.app
   repo: https://github.com/webmaeistro/gatsby-starter-banshorian
   description: Starter for the gatsby-theme-banshorian. A creative cool-looking personal or work projects showcase / portfolio / CV. Based on byfolio.
