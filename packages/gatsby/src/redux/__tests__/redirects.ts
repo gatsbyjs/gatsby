@@ -1,12 +1,12 @@
-const { actions } = require(`../actions`)
-const { store } = require(`../index`)
+import { actions } from "../actions"
+import { store } from "../index"
 
 jest.mock(`../index`, () => {
   return {
     store: {
       getState: jest.fn(),
     },
-    dispath: () => {},
+    dispath: (): void => {},
     emitter: {
       on: jest.fn(),
     },
@@ -23,7 +23,9 @@ const protocolArr = [
 
 describe(`Add redirects`, () => {
   beforeEach(() => {
-    store.getState.mockReturnValue({ program: { pathPrefixs: false } })
+    ;(store.getState as jest.Mock).mockReturnValue({
+      program: { pathPrefixs: false },
+    })
   })
 
   it(`allows you to add redirects`, () => {
@@ -79,7 +81,7 @@ describe(`Add redirects`, () => {
 
 describe(`Add redirects with path prefixs`, () => {
   beforeEach(() => {
-    store.getState.mockReturnValue({
+    ;(store.getState as jest.Mock).mockReturnValue({
       program: {
         prefixPaths: true,
       },
