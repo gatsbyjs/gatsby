@@ -7,6 +7,7 @@ export async function recipesHandler(
 ): Promise<void> {
   trackCli(`RECIPE_RUN`, { name: recipe })
 
+  // TODO(@mxstbr): Make this match program.directory
   const projectRoot = process.cwd()
   const graphql = await startGraphQLServer(projectRoot)
 

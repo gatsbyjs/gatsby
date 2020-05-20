@@ -9,6 +9,8 @@ import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+// NOTE(@mxstbr): I explicitly import from /index because the file used to live at graphql.js, which means developers with old builds on their local machines will have that old version imported instead of the new one with changes
+import startGraphQLServer from "gatsby-recipes/dist/graphql/index.js"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -172,6 +174,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   })
 
+  startGraphQLServer(program.directory)
   developProcess.start()
   developProcess.on(`message`, handleChildProcessIPC)
 
