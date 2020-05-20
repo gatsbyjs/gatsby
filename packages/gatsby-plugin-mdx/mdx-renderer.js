@@ -1,5 +1,5 @@
 const React = require(`react`)
-const { useMDXComponents, mdx } = require(`@mdx-js/react`)
+const { mdx } = require(`@mdx-js/react`)
 const { useMDXScope } = require(`./context`)
 
 module.exports = function MDXRenderer({
@@ -7,7 +7,6 @@ module.exports = function MDXRenderer({
   children,
   ...props
 }) {
-  const mdxComponents = useMDXComponents(components)
   const mdxScope = useMDXScope(scope)
 
   // Memoize the compiled component
