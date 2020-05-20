@@ -57,6 +57,7 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  mapping?: Record<string, string>
 }
 
 export interface IGatsbyNode {
@@ -80,6 +81,7 @@ export interface IGatsbyPlugin {
   id: Identifier
   name: string
   version: string
+  [key: string]: any
 }
 
 export interface IGatsbyPluginContext {
@@ -101,10 +103,36 @@ export interface IGatsbyIncompleteJobV2 {
   plugin: IGatsbyPlugin
 }
 
+export interface IGatsbyIncompleteJob {
+  job: InternalJobInterface
+  plugin: IGatsbyPlugin
+}
+
 export interface IGatsbyCompleteJobV2 {
   result: JobResultInterface
   inputPaths: InternalJobInterface["inputPaths"]
 }
+
+export interface IPlugin {
+  name: string
+  options: Record<string, any>
+}
+
+interface IBabelStage {
+  plugins: IPlugin[]
+  presets: IPlugin[]
+  options: {
+    cacheDirectory: boolean
+    sourceType: string
+    sourceMaps?: string
+  }
+}
+
+type BabelStageKeys =
+  | "develop"
+  | "develop-html"
+  | "build-html"
+  | "build-javascript"
 
 export interface IGatsbyState {
   program: IProgram
@@ -179,10 +207,7 @@ export interface IGatsbyState {
   redirects: IRedirect[]
   babelrc: {
     stages: {
-      develop: any // TODO
-      "develop-html": any // TODO
-      "build-html": any // TODO
-      "build-javascript": any // TODO
+      [key in BabelStageKeys]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -259,6 +284,41 @@ export type ActionsUnion =
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | IAddPageDataStatsAction
+  | IRemoveTemplateComponentAction
+  | ISetBabelPluginAction
+  | ISetBabelPresetAction
+  | ISetBabelOptionsAction
+  | ICreateJobAction
+  | ISetJobAction
+  | IEndJobAction
+
+interface ISetBabelPluginAction {
+  type: `SET_BABEL_PLUGIN`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
+
+interface ISetBabelPresetAction {
+  type: `SET_BABEL_PRESET`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
+
+interface ISetBabelOptionsAction {
+  type: `SET_BABEL_OPTIONS`
+  payload: {
+    stage: BabelStageKeys
+    name: IPlugin["name"]
+    options: IPlugin["options"]
+  }
+}
 
 export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
@@ -283,9 +343,36 @@ export interface IRemoveStaleJobV2Action {
   }
 }
 
+interface ICreateJobAction {
+  type: `CREATE_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface ISetJobAction {
+  type: `SET_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface IEndJobAction {
+  type: `END_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
 export interface ICreatePageDependencyAction {
   type: `CREATE_COMPONENT_DEPENDENCY`
-  plugin: string
+  plugin?: string
   payload: {
     path: string
     nodeId?: string
@@ -421,6 +508,7 @@ export interface ICreatePageAction {
   type: `CREATE_PAGE`
   payload: IGatsbyPage
   plugin?: IGatsbyPlugin
+  contextModified?: boolean
 }
 
 export interface ICreateRedirectAction {
@@ -449,6 +537,13 @@ export interface ISetPageDataAction {
   payload: {
     id: Identifier
     resultHash: string
+  }
+}
+
+export interface IRemoveTemplateComponentAction {
+  type: `REMOVE_TEMPLATE_COMPONENT`
+  payload: {
+    componentPath: string
   }
 }
 
@@ -543,5 +638,13 @@ export interface ISetResolvedNodesAction {
   payload: {
     key: string
     nodes: IGatsbyState["resolvedNodesCache"]
+  }
+}
+
+export interface IAddPageDataStatsAction {
+  type: `ADD_PAGE_DATA_STATS`
+  payload: {
+    filePath: SystemPath
+    size: number
   }
 }
