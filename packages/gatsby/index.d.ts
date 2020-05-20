@@ -12,7 +12,7 @@ import {
   ComposeScalarTypeConfig,
   ComposeUnionTypeConfig,
 } from "graphql-compose"
-import { GraphQLOutputType } from "graphql"
+import { GraphQLOutputType, GraphQLFieldConfigMap } from "graphql"
 
 export {
   default as Link,
@@ -388,7 +388,7 @@ export interface GatsbyNode {
     args: ResolvableExtensionsArgs,
     options: PluginOptions,
     callback: PluginCallback
-  ): any[] | Promise<any[]>
+  ): string[]
 
   /**
    * Called during the creation of the GraphQL schema. Allows plugins
@@ -412,16 +412,16 @@ export interface GatsbyNode {
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
     options: PluginOptions
-  ): any
+  ): GraphQLFieldConfigMap<any, any>
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<GraphQLFieldConfigMap<any, any>>
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
     options: PluginOptions,
     callback: PluginCallback
-  ): void
+  ): GraphQLFieldConfigMap<any, any>
 
   /**
    * Extension point to tell plugins to source nodes. This API is called during
@@ -433,8 +433,8 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#sourceNodes
    */
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): any
-  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): Promise<any>
+  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): void
+  sourceNodes?(args: SourceNodesArgs, options: PluginOptions): Promise<void>
   sourceNodes?(
     args: SourceNodesArgs,
     options: PluginOptions,
@@ -478,11 +478,11 @@ export interface GatsbyNode {
    *
    * @see https://www.gatsbyjs.org/docs/node-apis/#createResolvers
    */
-  createResolvers?(args: CreateResolversArgs, options: PluginOptions): any
+  createResolvers?(args: CreateResolversArgs, options: PluginOptions): void
   createResolvers?(
     args: CreateResolversArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<void>
   createResolvers?(
     args: CreateResolversArgs,
     options: PluginOptions,
@@ -502,11 +502,11 @@ export interface GatsbyNode {
   createSchemaCustomization?(
     args: CreateSchemaCustomizationArgs,
     options: PluginOptions
-  ): any
+  ): void
   createSchemaCustomization?(
     args: CreateSchemaCustomizationArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<void>
   createSchemaCustomization?(
     args: CreateSchemaCustomizationArgs,
     options: PluginOptions,
@@ -596,11 +596,11 @@ export interface GatsbySSR {
    *   replaceHeadComponents(headComponents)
    * }
    */
-  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): any
+  onPreRenderHTML?(args: PreRenderHTMLArgs, options: PluginOptions): void
   onPreRenderHTML?(
     args: PreRenderHTMLArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<void>
   onPreRenderHTML?(
     args: PreRenderHTMLArgs,
     options: PluginOptions,
@@ -644,8 +644,8 @@ export interface GatsbySSR {
    *   ])
    * }
    */
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): any
-  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): Promise<any>
+  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): void
+  onRenderBody?(args: RenderBodyArgs, options: PluginOptions): Promise<void>
   onRenderBody?(
     args: RenderBodyArgs,
     options: PluginOptions,
@@ -668,11 +668,11 @@ export interface GatsbySSR {
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): any
+  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void
   replaceRenderer?(
     args: ReplaceRendererArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<void>
   replaceRenderer?(
     args: ReplaceRendererArgs,
     options: PluginOptions,
@@ -696,16 +696,16 @@ export interface GatsbySSR {
    *   return <Layout {...props}>{element}</Layout>
    * }
    */
-  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): any
+  wrapPageElement?(args: WrapPageElementNodeArgs, options: PluginOptions): React.ReactNode
   wrapPageElement?(
     args: WrapPageElementNodeArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<React.ReactNode>
   wrapPageElement?(
     args: WrapPageElementNodeArgs,
     options: PluginOptions,
     callback: PluginCallback
-  ): void
+  ): React.ReactNode
   /**
    * Allow a plugin to wrap the root element.
    *
@@ -728,16 +728,16 @@ export interface GatsbySSR {
    *   )
    * }
    */
-  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): any
+  wrapRootElement?(args: WrapRootElementNodeArgs, options: PluginOptions): React.ReactNode
   wrapRootElement?(
     args: WrapRootElementNodeArgs,
     options: PluginOptions
-  ): Promise<any>
+  ): Promise<React.ReactNode>
   wrapRootElement?(
     args: WrapRootElementNodeArgs,
     options: PluginOptions,
     callback: PluginCallback
-  ): void
+  ): React.ReactNode
 }
 
 export interface PluginOptions {
@@ -921,13 +921,13 @@ export interface WrapPageElementNodeArgs<
   DataType = object,
   PageContextType = object
 > extends NodePluginArgs {
-  element: object
+  element: React.ReactNode
   props: PageProps<DataType, PageContextType>
   pathname: string
 }
 
 export interface WrapRootElementNodeArgs extends NodePluginArgs {
-  element: object
+  element: React.ReactNode
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {
