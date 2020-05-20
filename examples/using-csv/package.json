@@ -4,9 +4,9 @@
   "description": "Gatsby example site using using-csv",
   "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.21.35",
+    "gatsby": "^2.21.37",
     "gatsby-plugin-google-analytics": "^2.3.1",
-    "gatsby-source-filesystem": "^2.3.3",
+    "gatsby-source-filesystem": "^2.3.4",
     "gatsby-transformer-csv": "^2.3.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"

@@ -4,7 +4,16 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp = "$eq" | "$ne" | "$lt" | "$lte" | "$gt" | "$gte" | "$in" | "$nin"
+type FilterOp =
+  | "$eq"
+  | "$ne"
+  | "$lt"
+  | "$lte"
+  | "$gt"
+  | "$gte"
+  | "$in"
+  | "$nin"
+  | "$regex" // Note: this includes $glob
 // Note: `undefined` is an encoding for a property that does not exist
 type FilterValueNullable =
   | string
@@ -12,9 +21,15 @@ type FilterValueNullable =
   | boolean
   | null
   | undefined
+  | RegExp // Only valid for $regex
   | Array<string | number | boolean | null | undefined>
 // This is filter value in most cases
-type FilterValue = string | number | boolean | Array<string | number | boolean>
+type FilterValue =
+  | string
+  | number
+  | boolean
+  | RegExp // Only valid for $regex
+  | Array<string | number | boolean>
 export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp
@@ -697,6 +712,33 @@ export const getNodesFromCacheByValue = (
     return set
   }
 
+  if (op === `$regex`) {
+    // Note: $glob is converted to $regex so $glob filters go through here, too
+    // Aside from the input pattern format, further behavior is exactly the same.
+
+    // The input to the filter must be a string (including leading/trailing slash and regex flags)
+    // By the time the filter reaches this point, the filterValue has to be a regex.
+
+    if (!(filterValue instanceof RegExp)) {
+      throw new Error(
+        `The value for the $regex comparator must be an instance of RegExp`
+      )
+    }
+    const regex = filterValue
+
+    const result = new Set<IGatsbyNode>()
+    filterCache.byValue.forEach((nodes, value) => {
+      // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
+      // Note: partial paths should also be included for regex (matching Sift behavior)
+      if (value !== undefined && regex.test(String(value))) {
+        nodes.forEach(node => result.add(node))
+      }
+    })
+
+    // TODO: we _can_ cache this set as well. Might make sense if it turns out that $regex is mostly used with literals
+    return result
+  }
+
   if (filterValue == null) {
     if (op === `$lt` || op === `$gt`) {
       // Nothing is lt/gt null
@@ -711,6 +753,14 @@ export const getNodesFromCacheByValue = (
   if (Array.isArray(filterValue)) {
     throw new Error(
       "Array is an invalid filter value for the `" + op + "` comparator"
+    )
+  }
+
+  if (filterValue instanceof RegExp) {
+    // This is most likely an internal error, although it is possible for
+    // users to talk to this API more directly.
+    throw new Error(
+      `A RegExp instance is only valid for $regex and $glob comparators`
     )
   }
 

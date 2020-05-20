@@ -19,7 +19,7 @@ describe(`gatsby repl`, () => {
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`repl`)
 
     // 2. Wait for the build process to finish
-    await timeout(4)
+    await timeout(5)
 
     // 3. Kill the repl
     childProcess.kill()
