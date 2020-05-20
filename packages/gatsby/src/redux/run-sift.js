@@ -20,18 +20,6 @@ const {
   getNode: siftGetNode,
 } = require(`./nodes`)
 
-const FAST_OPS = [
-  `$eq`,
-  `$ne`,
-  `$lt`,
-  `$lte`,
-  `$gt`,
-  `$gte`,
-  `$in`,
-  `$nin`,
-  `$regex`, // Note: this includes $glob
-]
-
 // More of a testing mechanic, to verify whether last runSift call used Sift
 let lastFilterUsedSift = false
 
@@ -148,10 +136,15 @@ function handleMany(siftArgs, nodes) {
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
+ * @param {undefined | null | FiltersCache} filtersCache
  * @returns {Array<IGatsbyNode> | null}
  */
-const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+  if (!filtersCache) {
+    // If no filter cache is passed on, explicitly don't use one
+    return null
+  }
+
   const nodesPerValueSets /*: Array<Set<IGatsbyNode>> */ = getBucketsForFilters(
     filters,
     nodeTypeNames,
@@ -193,6 +186,9 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   }
   return result
 }
+
+// Not a public API
+exports.filterWithoutSift = filterWithoutSift
 
 /**
  * @param {Array<DbQuery>} filters
@@ -257,11 +253,7 @@ const getBucketsForQueryFilter = (
 ) => {
   let {
     path: filterPath,
-    query: {
-      // Note: comparator is verified to be a FilterOp in filterWithoutSift
-      comparator /*: as FilterOp*/,
-      value: filterValue,
-    },
+    query: { comparator /*: as FilterOp*/, value: filterValue },
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
@@ -322,10 +314,6 @@ const collectBucketForElemMatch = (
       targetValue = q.query.value
       break
     }
-  }
-
-  if (!FAST_OPS.includes(comparator)) {
-    return false
   }
 
   if (!filtersCache.has(filterCacheKey)) {
@@ -513,40 +501,6 @@ const filterToStats = (
     }
   }
 }
-
-/**
- * Check if filter op is supported (not all are). If so, uses custom
- * fast indexes based on filter and types and returns any result it finds.
- * If conditions are not met or no nodes are found, returns undefined and
- * a slow run through Sift is executed instead.
- * This function is a noop if no filter cache is given to it.
- *
- * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
- * @param {Array<string>} nodeTypeNames
- * @param {undefined | null | FiltersCache} filtersCache
- * @returns {Array<IGatsbyNode> | null} Collection of results
- */
-const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
-  if (!filtersCache) {
-    // If no filter cache is passed on, explicitly don't use one
-    return null
-  }
-
-  if (
-    filters.some(
-      filter =>
-        filter.type === `query` && !FAST_OPS.includes(filter.query.comparator)
-    )
-  ) {
-    // If there's a filter with non-supported op, stop now.
-    return null
-  }
-
-  return runFiltersWithoutSift(filters, nodeTypeNames, filtersCache)
-}
-
-// Not a public API
-exports.filterWithoutSift = filterWithoutSift
 
 /**
  * Use sift to apply filters
