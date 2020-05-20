@@ -110,7 +110,7 @@ Continue to create the application.
 
 At this stage, your Static Web Apps instance is created in Azure but your app is not yet deployed. The GitHub Action that Azure creates in your repository will run automatically to perform the first build and deployment of your app, but it takes a couple of minutes to finish.
 
-You can check the status of your build and deploy action by clicking a big blue border at the top of your main window.
+You can check the status of your build and deploy action by clicking the blue information banner at the top of your main window.
 
 ### View your website
 
