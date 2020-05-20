@@ -4,7 +4,6 @@ const { useMDXScope } = require(`./context`)
 
 module.exports = function MDXRenderer({
   scope,
-  components,
   children,
   ...props
 }) {
