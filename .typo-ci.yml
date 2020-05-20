@@ -38,3 +38,4 @@ excluded_words:
   - agadoo
   - hevc
   - oss
+  - ESlint
