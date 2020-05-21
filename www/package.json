@@ -4,6 +4,13 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "gatsby": "^2.21.35",
+    "gatsby-remark-autolink-headers": "^2.3.3",
+    "gatsby-remark-copy-linked-files": "^2.3.3",
+    "gatsby-remark-embedder": "^2.0.1",
+    "gatsby-remark-graphviz": "^1.3.2",
+    "gatsby-remark-images": "^3.3.7",
+    "gatsby-remark-responsive-iframe": "^2.4.3",
+    "gatsby-remark-smartypants": "^2.3.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
