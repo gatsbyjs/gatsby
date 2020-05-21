@@ -2,18 +2,18 @@
 title: "Gatsby Recipes: What's all the fuss about?"
 date: 2020-05-21
 author: Paul Scanlon
-excerpt: ""
+excerpt: "Gatsby Recipes were just introduced just last month, as a new tool to automate common site building tasks. A Gatsby Recipe is a kind of task runner that can be authored in MDX and then executed from the command line using the Gatsby CLI. Gatsby now ships with a dozen or so default Recipes, and our amazing community has been busy coming up with more useful contributions! React developer Paul Scanlon discussed his process behind making his first two Recipes, and then walks through how to write your own."
 tags:
   - gatsby-recipes
   - mdx
   - building-sites-faster
 ---
 
-Gatsby Recipes were introduced just last month, as a new tool to automate common site building tasks. A Gatsby recipe is a kind of task runner that can be authored in MDX and then executed from the command line using the Gatsby CLI.
+Gatsby Recipes were introduced just last month, as a new tool to automate common site building tasks. A Gatsby Recipe is a kind of task runner that can be authored in MDX and then executed from the command line using the Gatsby CLI.
 
 Recipes can be used to automate npm installs, run npm scripts, add config options to `gatsby-config.js` and create files. A Recipe is a stepped list of tasks described in a human readable list which can be locally saved or remotely hosted, and the really good ones can be submitted via PR to be included in the Gatsby CLI.
 
-Gatsby ships with a number of default Recipes, but it’s also really easy to create your own! In this post we are going to look at writing a Recipe to install `gatsby-plugin-google-analytics` and add it to your project’s plugins. But first let’s take a look at why Recipes are so very useful and how I got started with doing some for tasks i found particularly taxing.
+Gatsby ships with a number of default Recipes, but it’s also really easy to create your own! In this post we are going to look at writing a Recipe to install `gatsby-plugin-google-analytics` and add it to your project’s plugins. But first let’s take a look at why Recipes are so very useful and how I got started with doing some for tasks I found particularly taxing.
 
 (You can read more about Recipes [here](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/), the experimental README is [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/README.md) and, to track the conversation, [here’s](https://github.com/gatsbyjs/gatsby/issues/22991) the Umbrella Issue on GitHub).
 
@@ -36,15 +36,15 @@ For example:
 import { Link } from ‘gatsby’
 ```
 
-The reason this will cause Storybook errors is because the `<Link />` component comes from Gatsby / `node_modules` which is as mentioned above, is un-transpiled ES6 code.
+The reason this will cause Storybook errors is because the `<Link />` component comes from Gatsby / `node_modules` which, as mentioned above, is (as yet) un-transpiled ES6 code.
 
-Storybook has anticipated this issue and there is a method whereby you can write your own Webpack config and pass it on to combine it with the default Storybook Webpack config to aid in transpiling of ES6 code located in `node_modules` to CommonJs
+Storybook has anticipated this issue, fortunately, and so there is a method whereby you can write your own Webpack config and pass it on to combine it with the default Storybook Webpack config. This then aids in the transpiling of any ES6 code located in `node_modules` to CommonJs.
 
-If (like me) Webpack scares you a little bit, you’ll likely want to avoid writing any Webpack config and just get on and develop your UI. You could try not creating any `.stories` that include a `<Link />` component but this will only get you so far.
+If (like me) Webpack scares you a little bit, you’ll likely want to avoid writing any Webpack config and just get on with developing your UI. You could try not creating any `.stories` that include a `<Link />` component but this will only get you so far.
 
 You may at some point also wish to create a story for a component that contains a `useStaticQuery` hook, and if you do that you’ll again see Storybook errors but this time relating to GraphQL queries. The reason for this is because the Gatsby build processes remove any GraphQL queries when you run either of the build processes; `gatsby develop` or `gatsby build`.
 
-So, as mentioned before, when you spin up Storybook these Gatsby-specific build processes are simply not run. In order to to strip out GraphQL queries we need to use Webpack again and utilize a package called `babel-plugin-remove-graphql-queries`
+So, as mentioned before, when you spin up Storybook these Gatsby-specific build processes are simply not run. In order to to strip out GraphQL queries we need to use Webpack again and utilize a package called `babel-plugin-remove-graphql-queries`.
 
 And if (like me) Babel also scares you a little bit, you might be having a think about giving up using Storybook and Gatsby all together.
 
@@ -178,17 +178,15 @@ Also, and especially on larger teams, these preferences for how files should be 
 
 In early 2018 I attempted to solve this problem by creating a node module aimed at automating the React “component” creation process, [node-tiny-template](https://www.npmjs.com/package/node-tiny-template):
 
-![Node Tiny Template](node-tiny-template.jpg "Node Tiny Template")
+![landing page for the Node Tiny Template](node-tiny-template.jpg "Node Tiny Template")
 
 The CLI args allow you to pass in the “component name” which can then be used for function declaration, the imports, the exports and test names, etc.
 
 Using the config file you can set options for casing, pascalCase, kebab-case etc and decide which files are generated and what their respective file extension should be. The “content” comes from handlebars template files, which receive values generated by the module and inject them when the file is written to disk.
 
-I really thought this package was cool... At least til I saw [plop](https://plopjs.com/). Plop is a neat little boilerplate tool, and it’s great for creating templates whenever you have to be creating component files/dirs, etc.
+I really thought this package was cool... At least til I saw [plop](https://plopjs.com/). Plop is a neat little boilerplate tool, and it’s great for creating templates whenever you have to be creating component files/dirs, etc. As nifty as both plop and node-tiny-template are, I do think both of these packages suffer from a faffy\* initial setup... which brings me back to Recipes.
 
-As nifty as both plop and node-tiny-template are, I do think both of these packages suffer from a faffy\* initial setup... which brings me back to Recipes.
-
-(\*faffy is what we Brits call something that is time-consuming to do or awkward/cumbersome to make use of).
+(\*faffy is what we Brits call something that is time-consuming to do or awkward/cumbersome to make use of. Recipes are the antidote for just about any sort of faffy task you can think of!).
 
 ## Next stop: Recipes as workflow?
 
