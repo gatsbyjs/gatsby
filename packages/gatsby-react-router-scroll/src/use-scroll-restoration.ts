@@ -2,20 +2,31 @@ import { ScrollContext } from "./scroll-handler"
 import { useRef, useContext, useLayoutEffect } from "react"
 import { useLocation } from "@reach/router"
 
-export function useScrollRestoration(identifier: string) {
+interface IScrollRestorationProps {
+  ref: React.MutableRefObject<HTMLElement | undefined>
+  onScroll(): void
+}
+
+export function useScrollRestoration(
+  identifier: string
+): IScrollRestorationProps {
   const location = useLocation()
   const state = useContext(ScrollContext)
   const ref = useRef<HTMLElement>()
 
-  useLayoutEffect(() => {
-    const position = state.read(location, identifier)
-    ref.current!.scrollTo(0, position)
+  useLayoutEffect((): void => {
+    if (ref.current) {
+      const position = state.read(location, identifier)
+      ref.current.scrollTo(0, position)
+    }
   }, [])
 
   return {
     ref,
-    onScroll() {
-      state.save(location, identifier, ref.current!.scrollTop)
+    onScroll(): void {
+      if (ref.current) {
+        state.save(location, identifier, ref.current.scrollTop)
+      }
     },
   }
 }

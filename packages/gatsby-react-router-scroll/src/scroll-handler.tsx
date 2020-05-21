@@ -25,37 +25,42 @@ export class ScrollHandler extends React.Component<
 
   _stateStorage: SessionStorage = new SessionStorage()
 
-  scrollListener = () => {
+  scrollListener = (): void => {
     const { key } = this.props.location
 
-    this._stateStorage.save(this.props.location, key, window.scrollY)
-  }
-
-  componentDidMount() {
-    window.addEventListener(`scroll`, this.scrollListener)
-
-    const scrollPosition = this._stateStorage.read(
-      this.props.location,
-      this.props.location.key
-    )
-    if (scrollPosition) {
-      this.windowScroll(scrollPosition, undefined)
-    } else if (this.props.location.hash) {
-      this.scrollToHash(decodeURI(this.props.location.hash), undefined)
+    if (key) {
+      this._stateStorage.save(this.props.location, key, window.scrollY)
     }
   }
 
-  componentWillUnmount() {
+  componentDidMount(): void {
+    window.addEventListener(`scroll`, this.scrollListener)
+    let scrollPosition
+    const { key, hash } = this.props.location
+
+    if (key) {
+      scrollPosition = this._stateStorage.read(this.props.location, key)
+    }
+
+    if (scrollPosition) {
+      this.windowScroll(scrollPosition, undefined)
+    } else if (hash) {
+      this.scrollToHash(decodeURI(hash), undefined)
+    }
+  }
+
+  componentWillUnmount(): void {
     window.removeEventListener(`scroll`, this.scrollListener)
   }
 
   componentDidUpdate(prevProps: LocationContext): void {
-    const { hash } = this.props.location
+    const { hash, key } = this.props.location
+    let scrollPosition
 
-    const scrollPosition = this._stateStorage.read(
-      this.props.location,
-      this.props.location.key
-    )
+    if (key) {
+      scrollPosition = this._stateStorage.read(this.props.location, key)
+    }
+
     if (scrollPosition) {
       this.windowScroll(scrollPosition, prevProps)
     } else if (hash) {
@@ -96,7 +101,7 @@ export class ScrollHandler extends React.Component<
     return shouldUpdateScroll.call(this, prevRouterProps, routerProps)
   }
 
-  render() {
+  render(): React.ReactNode {
     return (
       <ScrollContext.Provider value={this._stateStorage}>
         {this.props.children}

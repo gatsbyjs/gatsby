@@ -28,7 +28,7 @@ export class SessionStorage {
     }
   }
 
-  save(location: Location, key: string, value: number) {
+  save(location: Location, key: string, value: number): void {
     const stateKey = this.getStateKey(location, key)
     const storedValue = JSON.stringify(value)
 
@@ -50,7 +50,7 @@ export class SessionStorage {
     }
   }
 
-  getStateKey(location: Location, key: string) {
+  getStateKey(location: Location, key: string): string {
     const locationKey = location.key || location.pathname
     const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
     return key === null || typeof key === `undefined`

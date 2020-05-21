@@ -12,27 +12,28 @@ const propTypes = {
   children: PropTypes.element.isRequired,
 }
 
-type Props = {
+interface IProps {
   scrollKey: string
   shouldUpdateScroll?: Function
   children: React.ReactNode
 }
 
-type PropsWithContextAndLocation = Props & {
+interface IPropsWithContextAndLocation extends IProps {
   context: SessionStorage
   location: HLocation
 }
 
 class ScrollContainerImplementation extends React.Component<
-  PropsWithContextAndLocation
+  IPropsWithContextAndLocation
 > {
-  componentDidMount() {
+  componentDidMount(): void {
+    // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this) as Element
     const { location, scrollKey } = this.props
 
     if (!node) return
 
-    node.addEventListener("scroll", () => {
+    node.addEventListener(`scroll`, () => {
       this.props.context.save(location, scrollKey, node.scrollTop)
     })
 
@@ -40,16 +41,16 @@ class ScrollContainerImplementation extends React.Component<
     node.scrollTo(0, position)
   }
 
-  render() {
+  render(): React.ReactNode {
     return this.props.children
   }
 }
 
-export const ScrollContainer = (props: Props) => (
+export const ScrollContainer = (props: IProps): React.ReactNode => (
   <Location>
-    {({ location }) => (
+    {({ location }): React.ReactNode => (
       <ScrollContext.Consumer>
-        {context => (
+        {(context): React.ReactNode => (
           <ScrollContainerImplementation
             {...props}
             context={context}
