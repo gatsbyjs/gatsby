@@ -43,7 +43,7 @@ function DocsMarkdownPage({
   return (
     <PageWithSidebar
       location={location}
-      enableScrollSync={urlSegment === "tutorial"}
+      enableScrollSync={urlSegment === `tutorial`}
     >
       <PageMetadata
         title={frontmatter.title}

@@ -1,8 +1,9 @@
 import stackTrace from "stack-trace"
+import { Span } from "opentracing"
 import { ExecutionResultDataDefault } from "graphql/execution/execute"
 import { Store } from "redux"
 
-import GraphQLRunner from "../query/graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
 import { emitter } from "../redux"
 import { Reporter } from "../.."
@@ -17,7 +18,13 @@ type Runner = (
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
   reporter: Reporter,
-  { parentSpan, graphqlTracing } = { parentSpan: null, graphqlTracing: false }
+  {
+    parentSpan,
+    graphqlTracing,
+  }: { parentSpan: Span | undefined; graphqlTracing?: boolean } = {
+    parentSpan: undefined,
+    graphqlTracing: false,
+  }
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner = new GraphQLRunner(store, { graphqlTracing })

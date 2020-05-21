@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.23...gatsby-recipes@0.1.24) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.22...gatsby-recipes@0.1.23) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.21...gatsby-recipes@0.1.22) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.20...gatsby-recipes@0.1.21) (2020-05-18)
+
+### Features
+
+- **gatsby-recipes:** add preact recipe ([#24156](https://github.com/gatsbyjs/gatsby/issues/24156)) ([133040e](https://github.com/gatsbyjs/gatsby/commit/133040e))
+
+## [0.1.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.19...gatsby-recipes@0.1.20) (2020-05-18)
+
+### Features
+
+- **recipes:** add Ava recipe ([#23801](https://github.com/gatsbyjs/gatsby/issues/23801)) ([56c4732](https://github.com/gatsbyjs/gatsby/commit/56c4732))
+
+## [0.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.18...gatsby-recipes@0.1.19) (2020-05-14)
+
+### Bug Fixes
+
+- **gatsby-recipes:** format code blocks without indentation as that makes copy/paste difficult ([#24080](https://github.com/gatsbyjs/gatsby/issues/24080)) ([b27ce7e](https://github.com/gatsbyjs/gatsby/commit/b27ce7e))
+
+## [0.1.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.17...gatsby-recipes@0.1.18) (2020-05-13)
+
+### Bug Fixes
+
+- **gatsby-recipes:** support code blocks on cli ([#23996](https://github.com/gatsbyjs/gatsby/issues/23996)) ([6a322dc](https://github.com/gatsbyjs/gatsby/commit/6a322dc)), closes [#23981](https://github.com/gatsbyjs/gatsby/issues/23981) [#23980](https://github.com/gatsbyjs/gatsby/issues/23980) [#23925](https://github.com/gatsbyjs/gatsby/issues/23925) [#23971](https://github.com/gatsbyjs/gatsby/issues/23971) [#23972](https://github.com/gatsbyjs/gatsby/issues/23972) [#23938](https://github.com/gatsbyjs/gatsby/issues/23938) [#23979](https://github.com/gatsbyjs/gatsby/issues/23979) [#23961](https://github.com/gatsbyjs/gatsby/issues/23961) [#23956](https://github.com/gatsbyjs/gatsby/issues/23956) [#23708](https://github.com/gatsbyjs/gatsby/issues/23708) [#23587](https://github.com/gatsbyjs/gatsby/issues/23587) [#23951](https://github.com/gatsbyjs/gatsby/issues/23951) [#23967](https://github.com/gatsbyjs/gatsby/issues/23967) [#23946](https://github.com/gatsbyjs/gatsby/issues/23946)
+
+## [0.1.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.16...gatsby-recipes@0.1.17) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## [0.1.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.15...gatsby-recipes@0.1.16) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-recipes

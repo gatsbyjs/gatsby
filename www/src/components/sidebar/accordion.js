@@ -64,7 +64,11 @@ export default function Accordion({ itemRef, item }) {
           }}
         >
           {item.items.map(subitem => (
-            <Item item={subitem} key={subitem.title} />
+            <Item
+              item={subitem}
+              key={subitem.title}
+              isSteps={item.ui === `steps`}
+            />
           ))}
         </ul>
       )}

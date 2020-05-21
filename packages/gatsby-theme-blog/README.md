@@ -102,7 +102,7 @@ module.exports = {
     // Used for SEO
     description: `My site description...`,
     // Used for social links in the root footer
-    siteURL: `https://example.com`,
+    siteUrl: `https://example.com`,
     // Used for resolving images in social cards
     social: [
       {
