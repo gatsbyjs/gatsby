@@ -86,7 +86,7 @@
     "graphql-compose": "^6.3.8",
     "graphql-playground-middleware-express": "^1.7.14",
     "hasha": "^5.2.0",
-    "http-proxy": "^1.18.0",
+    "http-proxy": "^1.18.1",
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
     "is-relative-url": "^3.0.0",
