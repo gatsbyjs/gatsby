@@ -6,6 +6,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "postinstall": "cd ../gatsby-site-theme && yarn"
   }
 }
