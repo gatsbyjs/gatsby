@@ -4,7 +4,7 @@ const stringSimilarity = require(`string-similarity`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const resolveModuleExports = require(`../resolve-module-exports`)
-const getLatestAPIs = require(`../../utils/get-latest-apis`)
+const { getLatestAPIs } = require(`../../utils/get-latest-apis`)
 
 const getGatsbyUpgradeVersion = entries =>
   entries.reduce((version, entry) => {
@@ -42,8 +42,8 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
   })
 
   const gatsbyUpgradeVersion = getGatsbyUpgradeVersion(entries)
-  let errors = []
-  let fixes = [].concat(
+  const errors = []
+  const fixes = [].concat(
     gatsbyUpgradeVersion ? [`npm install gatsby@^${gatsbyUpgradeVersion}`] : []
   )
 

@@ -1,5 +1,6 @@
 import crypto from "crypto"
 import v8 from "v8"
+import { Span } from "opentracing"
 import {
   parse,
   validate,
@@ -11,7 +12,6 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import { IActivityArgs } from "gatsby-cli/lib/reporter"
 import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
@@ -24,7 +24,7 @@ import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
 
-export default class GraphQLRunner {
+export class GraphQLRunner {
   parseCache: Map<Query, DocumentNode>
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -135,11 +135,13 @@ export default class GraphQLRunner {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query(
     query: Query,
-    context: Record<string, any>,
-    { parentSpan, queryName }: IActivityArgs & { queryName: string }
+    context: Record<string, unknown>,
+    {
+      parentSpan,
+      queryName,
+    }: { parentSpan: Span | undefined; queryName: string }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 

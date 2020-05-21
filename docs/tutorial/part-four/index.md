@@ -4,13 +4,11 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-Welcome to Part Four of the tutorial! Halfway through! Hope things are starting
-to feel pretty comfortable 😀
+Welcome to Part Four of the tutorial! Halfway through! Hope things are starting to feel pretty comfortable 😀
 
 ## Recap of the first half of the tutorial
 
-So far, you've been learning how to use React.js—how powerful it is to be able to
-create your _own_ components to act as custom building blocks for websites.
+So far, you've been learning how to use React.js—how powerful it is to be able to create your _own_ components to act as custom building blocks for websites.
 
 You’ve also explored styling components using CSS Modules.
 
@@ -18,38 +16,26 @@ You’ve also explored styling components using CSS Modules.
 
 In the next four parts of the tutorial (including this one), you'll be diving into the Gatsby data layer, which is a powerful feature of Gatsby that lets you easily build sites from Markdown, WordPress, headless CMSs, and other data sources of all flavors.
 
-**NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on
-GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
+**NOTE:** Gatsby’s data layer is powered by GraphQL. For an in-depth tutorial on GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 
 ## Data in Gatsby
 
-A website has four parts: HTML, CSS, JS, and data. The first half of the
-tutorial focused on the first three. Now let’s learn how to use data in Gatsby
-sites.
+A website has four parts: HTML, CSS, JS, and data. The first half of the tutorial focused on the first three. Now let’s learn how to use data in Gatsby sites.
 
 **What is data?**
 
-A very computer science-y answer would be: data is things like `"strings"`,
-integers (`42`), objects (`{ pizza: true }`), etc.
+A very computer science-y answer would be: data is things like `"strings"`, integers (`42`), objects (`{ pizza: true }`), etc.
 
-For the purpose of working in Gatsby, however, a more useful answer is
-"everything that lives outside a React component".
+For the purpose of working in Gatsby, however, a more useful answer is "everything that lives outside a React component".
 
-So far, you've been writing text and adding images _directly_ in components.
-Which is an _excellent_ way to build many websites. But, often you want to store
-data _outside_ components and then bring the data _into_ the component as
-needed.
+So far, you've been writing text and adding images _directly_ in components. Which is an _excellent_ way to build many websites. But, often you want to store data _outside_ components and then bring the data _into_ the component as needed.
 
-If you're building a site with WordPress (so other contributors
-have a nice interface for adding & maintaining content) and Gatsby, the _data_
-for the site (pages and posts) are in WordPress and you _pull_ that data, as
-needed, into your components.
+If you're building a site with WordPress (so other contributors have a nice interface for adding & maintaining content) and Gatsby, the _data_ for the site (pages and posts) are in WordPress and you _pull_ that data, as needed, into your components.
 
 Data can also live in file types like Markdown, CSV, etc. as well as databases
 and APIs of all sorts.
 
-**Gatsby's data layer lets you pull data from these (and any other source)
-directly into your components** -- in the shape and form you want.
+**Gatsby's data layer lets you pull data from these (and any other source) directly into your components** -- in the shape and form you want.
 
 ## Using Unstructured Data vs GraphQL
 
@@ -68,17 +54,11 @@ If you're building a small site, one efficient way to build it is to pull in uns
 
 ### How Gatsby's data layer uses GraphQL to pull data into components
 
-There are many options for loading data into React components. One of the most
-popular and powerful of these is a technology called
-[GraphQL](https://graphql.org/).
+There are many options for loading data into React components. One of the most popular and powerful of these is a technology called [GraphQL](https://graphql.org/).
 
-GraphQL was invented at Facebook to help product engineers _pull_ needed data into
-components.
+GraphQL was invented at Facebook to help product engineers _pull_ needed data into components.
 
-GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're
-familiar with SQL, it works in a very similar way. Using a special syntax, you describe
-the data you want in your component and then that data is given
-to you.
+GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're familiar with SQL, it works in a very similar way. Using a special syntax, you describe the data you want in your component and then that data is given to you.
 
 Gatsby uses GraphQL to enable components to declare the data they need.
 
@@ -93,8 +73,7 @@ gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-w
 cd tutorial-part-four
 ```
 
-Then install some other needed dependencies at the root of the project. You'll use the Typography theme
-"Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
+Then install some other needed dependencies at the root of the project. You'll use the Typography theme "Kirkham", and you'll try out a CSS-in-JS library, ["Emotion"](https://emotion.sh/):
 
 ```shell
 npm install --save gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
@@ -300,8 +279,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 ### Use a StaticQuery
 
-[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries.
-Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
+[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:
 
@@ -366,11 +344,7 @@ Another success! 🎉
 
 ![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
-Why use two different queries here? These examples were quick introductions to
-the query types, how they are formatted, and where they can be used. For now,
-keep in mind that only pages can make page queries. Non-page components, such as
-Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater
-depth.
+Why use two different queries here? These examples were quick introductions to the query types, how they are formatted, and where they can be used. For now, keep in mind that only pages can make page queries. Non-page components, such as Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater depth.
 
 But let's restore the real title.
 
@@ -382,6 +356,4 @@ So almost everywhere, changes you make will immediately take effect. Edit the `g
 
 ## What's coming next?
 
-Next, you'll be learning about how to pull data into your Gatsby site using
-GraphQL with source plugins in [part five](/tutorial/part-five/) of the
-tutorial.
+Next, you'll be learning about how to pull data into your Gatsby site using GraphQL with source plugins in [part five](/tutorial/part-five/) of the tutorial.
