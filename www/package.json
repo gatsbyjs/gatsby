@@ -15,6 +15,7 @@
     "gatsby-remark-prismjs": "^3.5.2",
     "gatsby-remark-responsive-iframe": "^2.4.3",
     "gatsby-remark-smartypants": "^2.3.2",
+    "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
