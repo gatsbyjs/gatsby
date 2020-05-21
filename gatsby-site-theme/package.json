@@ -111,7 +111,7 @@
     "gatsby"
   ],
   "license": "MIT",
-  "main": "n/a",
+  "main": "index.js",
   "private": true,
   "lingui": {
     "sourceLocale": "en",
