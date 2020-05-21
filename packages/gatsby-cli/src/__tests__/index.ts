@@ -8,7 +8,17 @@ jest.mock(`../reporter`, () => {
 })
 jest.mock(`../create-cli`)
 
-const getCLI = () => {
+interface IGetCLI {
+  reporter: {
+    panic: jest.Mock
+    log: jest.Mock
+    stripIndent: jest.Mock
+    warn: jest.Mock
+  }
+  createCli: jest.Mock
+}
+
+const getCLI = (): IGetCLI => {
   jest.resetModules()
 
   const reporter = require(`../reporter`)
@@ -31,7 +41,7 @@ beforeEach(() => {
   global.process = __process__
 })
 
-const setup = version => {
+const setup = (version?: string): ReturnType<typeof getCLI> => {
   if (version) {
     Object.defineProperty(__process__, `version`, {
       get: () => version,
