@@ -4,6 +4,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "gatsby": "^2.21.35",
+    "gatsby-plugin-sharp": "^2.6.8",
     "gatsby-remark-autolink-headers": "^2.3.3",
     "gatsby-remark-code-titles": "^1.1.0",
     "gatsby-remark-copy-linked-files": "^2.3.3",
