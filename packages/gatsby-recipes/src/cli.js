@@ -136,7 +136,7 @@ const RecipesList = ({ setRecipe }) => {
     },
     {
       label: `Add Storybook - JavaScript`,
-      value: `storybook.mdx`,
+      value: `storybook-js.mdx`,
     },
     {
       label: `Add Storybook - TypeScript`,
