@@ -72,4 +72,4 @@ Page -> Node dependencies are used entirely during query execution to figure out
 
 ### getNodeAndSavePathDependency action
 
-The [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/#L108) action simply calls `getNode`, and then calls `createPageDependency` using that result. It is a programmer convenience.
+The [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/nodes.ts#L108) action simply calls `getNode`, and then calls `createPageDependency` using that result. It is a programmer convenience.
