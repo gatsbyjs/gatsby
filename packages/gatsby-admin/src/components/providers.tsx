@@ -12,6 +12,10 @@ const theme = {
     ...baseTheme.colors,
     background: baseTheme.colors.grey[90],
   },
+  fontWeights: {
+    ...baseTheme.fontWeights,
+    "500": 500,
+  },
   borders: {
     default: `1px solid ${baseTheme.colors.whiteFade[20]}`,
   },

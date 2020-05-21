@@ -1,5 +1,8 @@
+/** @jsx jsx */
 import React from "react"
+import { jsx, Flex } from "strict-ui"
 import { useQuery, useMutation } from "urql"
+import { Heading, HeadingProps } from "gatsby-interface"
 
 const InstallInput: React.FC<{}> = () => {
   const [value, setValue] = React.useState(``)
@@ -77,6 +80,10 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   )
 }
 
+const SectionHeading: React.FC<HeadingProps> = props => (
+  <Heading sx={{ color: `white`, fontWeight: `500` }} {...props} />
+)
+
 const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
     query: `
@@ -98,8 +105,8 @@ const Index: React.FC<{}> = () => {
   if (error) return <p>Oops something went wrong.</p>
 
   return (
-    <>
-      <h2>Plugins</h2>
+    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
+      <SectionHeading>Plugins</SectionHeading>
       <ul>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
@@ -110,7 +117,7 @@ const Index: React.FC<{}> = () => {
           ))}
       </ul>
       <InstallInput />
-      <h2>Themes</h2>
+      <SectionHeading>Themes</SectionHeading>
       <ul>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
@@ -136,7 +143,7 @@ const Index: React.FC<{}> = () => {
       </ul>
 
       <InstallInput />
-    </>
+    </Flex>
   )
 }
 
