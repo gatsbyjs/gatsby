@@ -15,14 +15,18 @@ const applyPlan = async stepPlan => {
   await asyncForEach(stepPlan, async resourcePlan => {
     const resource = resources[resourcePlan.resourceName]
 
-    const changedResources = await resource.create(
-      ctx,
-      resourcePlan.resourceDefinitions
-    )
+    try {
+      const changedResources = await resource.create(
+        ctx,
+        resourcePlan.resourceDefinitions
+      )
 
-    appliedResources = appliedResources.concat(changedResources)
+      appliedResources = appliedResources.concat(changedResources)
 
-    return
+      return
+    } catch (e) {
+      throw e
+    }
   })
 
   return appliedResources

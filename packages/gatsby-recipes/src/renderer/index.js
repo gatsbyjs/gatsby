@@ -48,5 +48,10 @@ module.exports = jsx => {
 
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
-  return render(component(...scopeValues))
+  try {
+    const result = render(component(...scopeValues))
+    return result
+  } catch (e) {
+    throw e
+  }
 }

@@ -8,7 +8,14 @@ const ErrorBoundary = require(`./error-boundary`)
 const transformToPlan = require(`./transform-to-plan-structure`)
 
 const promises = []
+const errors = []
 const cache = new Map()
+
+const getUserProps = props => {
+  // eslint-disable-next-line
+  const { mdxType, children, ...userProps } = props
+  return userProps
+}
 
 const Wrapper = ({ children }) => (
   <ErrorBoundary>
@@ -17,8 +24,7 @@ const Wrapper = ({ children }) => (
 )
 
 const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
-  // eslint-disable-next-line
-  const { mdxType, children, ...userProps } = props
+  const userProps = getUserProps(props)
 
   return (
     <Suspense fallback={<p>Reading resource...</p>}>
@@ -32,7 +38,19 @@ const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
   )
 }
 
+const validateResource = (resourceName, _context, props) => {
+  const userProps = getUserProps(props)
+  const { error } = resources[resourceName].validate(userProps)
+  return error
+}
+
 const readResource = (resourceName, context, props) => {
+  const error = validateResource(resourceName, context, props)
+  if (error) {
+    errors.push(error)
+    return null
+  }
+
   const key = JSON.stringify({ resourceName, ...props })
   const cachedResult = cache.get(key)
 
@@ -63,13 +81,19 @@ const render = async recipe => {
   try {
     // Run the first pass of the render to queue up all the promises and suspend
     RecipesReconciler.render(recipeWithWrapper, plan)
+
+    if (errors.length) {
+      const error = new Error(`Unable to validate resources`)
+      error.errors = errors
+      throw error
+    }
+
     // Await all promises for resources and cache results
     await Promise.all(promises)
     // Rerender with the resources and resolve the data
     const result = RecipesReconciler.render(recipeWithWrapper, plan)
     return transformToPlan(result)
   } catch (e) {
-    console.log(e)
     throw e
   }
 }

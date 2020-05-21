@@ -13,7 +13,6 @@ module.exports = async steps => {
 
   try {
     const firstStepPlan = await render(steps[0])
-    console.log(firstStepPlan)
     if (firstStepPlan.length) {
       errors.push({
         step: 0,
@@ -21,7 +20,6 @@ module.exports = async steps => {
       })
     }
   } catch (e) {
-    console.log(e)
     // This means the first step has a syntax error which is already
     // addressed above.
   }

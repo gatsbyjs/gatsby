@@ -1,9 +1,9 @@
 const { Machine, assign } = require(`xstate`)
 
-const createPlan = require(`./create-plan`)
-const applyPlan = require(`./apply-plan`)
-const validateSteps = require(`./validate-steps`)
-const parser = require(`./parser`)
+const createPlan = require(`../create-plan`)
+const applyPlan = require(`../apply-plan`)
+const validateSteps = require(`../validate-steps`)
+const parser = require(`../parser`)
 
 const recipeMachine = Machine(
   {
@@ -90,8 +90,12 @@ const recipeMachine = Machine(
         invoke: {
           id: `createPlan`,
           src: async (context, event) => {
-            const result = await createPlan(context)
-            return result
+            try {
+              const result = await createPlan(context)
+              return result
+            } catch (e) {
+              throw e
+            }
           },
           onDone: {
             target: `presentPlan`,
@@ -101,7 +105,9 @@ const recipeMachine = Machine(
           },
           onError: {
             target: `doneError`,
-            actions: assign({ error: (context, event) => event.data }),
+            actions: assign({
+              error: (context, event) => event.data.errors || event.data,
+            }),
           },
         },
       },
