@@ -86,6 +86,9 @@
     "unified": "^9.0.0",
     "yargs": "^10.1.2"
   },
+  "resolutions": {
+    "theme-ui": "0.4.0-alpha.3"
+  },
   "engines": {
     "yarn": "^1.17.3",
     "node": ">=10.13.0"
