@@ -1,13 +1,29 @@
 import React from "react"
+import { LocationContext } from "@reach/router"
 import PropTypes from "prop-types"
-import SessionStorage from "./StateStorage"
+import { SessionStorage } from "./session-storage"
 
-export default class ScrollContext extends React.Component {
-  constructor(props, context) {
-    super(props, context)
+export const ScrollContext = React.createContext<SessionStorage>(
+  new SessionStorage()
+)
+ScrollContext.displayName = `GatsbyScrollContext`
 
-    this._stateStorage = new SessionStorage()
+type ShouldUpdateScrollFn = (
+  prevRouterProps: LocationContext | undefined,
+  routerProps: LocationContext
+) => boolean
+type ShouldUpdateScroll = undefined | ShouldUpdateScrollFn
+
+export class ScrollHandler extends React.Component<
+  LocationContext & { shouldUpdateScroll: ShouldUpdateScroll }
+> {
+  static propTypes = {
+    shouldUpdateScroll: PropTypes.func,
+    children: PropTypes.element.isRequired,
+    location: PropTypes.object.isRequired,
   }
+
+  _stateStorage: SessionStorage = new SessionStorage()
 
   scrollListener = () => {
     const { key } = this.props.location
@@ -23,9 +39,9 @@ export default class ScrollContext extends React.Component {
       this.props.location.key
     )
     if (scrollPosition) {
-      this.windowScroll(scrollPosition)
+      this.windowScroll(scrollPosition, undefined)
     } else if (this.props.location.hash) {
-      this.scrollToHash(decodeURI(this.props.location.hash))
+      this.scrollToHash(decodeURI(this.props.location.hash), undefined)
     }
   }
 
@@ -33,7 +49,7 @@ export default class ScrollContext extends React.Component {
     window.removeEventListener(`scroll`, this.scrollListener)
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: LocationContext): void {
     const { hash } = this.props.location
 
     const scrollPosition = this._stateStorage.read(
@@ -47,13 +63,19 @@ export default class ScrollContext extends React.Component {
     }
   }
 
-  windowScroll = (position, prevProps) => {
+  windowScroll = (
+    position: number,
+    prevProps: LocationContext | undefined
+  ): void => {
     if (this.shouldUpdateScroll(prevProps, this.props)) {
       window.scroll(0, position)
     }
   }
 
-  scrollToHash = (hash, prevProps) => {
+  scrollToHash = (
+    hash: string,
+    prevProps: LocationContext | undefined
+  ): void => {
     const node = document.querySelector(hash)
 
     if (node && this.shouldUpdateScroll(prevProps, this.props)) {
@@ -61,7 +83,10 @@ export default class ScrollContext extends React.Component {
     }
   }
 
-  shouldUpdateScroll = (prevRouterProps, routerProps) => {
+  shouldUpdateScroll = (
+    prevRouterProps: LocationContext | undefined,
+    routerProps: LocationContext
+  ): boolean => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
@@ -72,12 +97,10 @@ export default class ScrollContext extends React.Component {
   }
 
   render() {
-    return this.props.children
+    return (
+      <ScrollContext.Provider value={this._stateStorage}>
+        {this.props.children}
+      </ScrollContext.Provider>
+    )
   }
-}
-
-ScrollContext.propTypes = {
-  shouldUpdateScroll: PropTypes.func,
-  children: PropTypes.element.isRequired,
-  location: PropTypes.object.isRequired,
 }
