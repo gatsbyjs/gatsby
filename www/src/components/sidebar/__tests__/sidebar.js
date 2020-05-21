@@ -85,31 +85,17 @@ describe(`sidebar`, () => {
     })
   })
 
-<<<<<<< HEAD
-  describe("toggle section", () => {
-    it("opens the section if it is not open", () => {
-      const { queryByText, getByLabelText } = renderSidebar("/plot-summary/")
-      fireEvent.click(getByLabelText(`Motifs`))
-      expect(queryByText("The Green Light")).toBeInTheDocument()
-    })
-
-    it("closes the section if it is already opened", () => {
-      const { queryByText, getByLabelText } = renderSidebar("/motifs/")
-      fireEvent.click(getByLabelText(`Motifs`))
-      expect(queryByText("The Green Light")).not.toBeInTheDocument()
-=======
   describe(`toggle section`, () => {
     it(`opens the section if it is not open`, () => {
       const { queryByText, getByLabelText } = renderSidebar(`/plot-summary/`)
-      fireEvent.click(getByLabelText(`Motifs expand`))
+      fireEvent.click(getByLabelText(`Motifs`))
       expect(queryByText(`The Green Light`)).toBeInTheDocument()
     })
 
     it(`closes the section if it is already opened`, () => {
       const { queryByText, getByLabelText } = renderSidebar(`/motifs/`)
-      fireEvent.click(getByLabelText(`Motifs collapse`))
+      fireEvent.click(getByLabelText(`Motifs`))
       expect(queryByText(`The Green Light`)).not.toBeInTheDocument()
->>>>>>> 37f18c78e1250dced16191883236e031280f831a
     })
   })
 
