@@ -14,8 +14,7 @@ In this tutorial, you'll be learning about how to pull data into your Gatsby sit
 
 GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
-You can access it when your site's development server is running—normally at
-`http://localhost:8000/___graphql`.
+You can access it when your site's development server is running—normally at `http://localhost:8000/___graphql`.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4" />
@@ -93,19 +92,15 @@ Alternatively, you can add fields by using the autocomplete shortcut (<kbd>Ctrl 
 
 ![filesystem-autocomplete](filesystem-autocomplete.png)
 
-Try adding a number of fields to your query, press <kbd>Ctrl + Enter</kbd>
-each time to re-run the query. You'll see the updated query results:
+Try adding a number of fields to your query, press <kbd>Ctrl + Enter</kbd> each time to re-run the query. You'll see the updated query results:
 
 ![allfile-query](allfile-query.png)
 
-The result is an array of `File` "nodes" (node is a fancy name for an object in a
-"graph"). Each `File` node object has the fields you queried for.
+The result is an array of `File` "nodes" (node is a fancy name for an object in a "graph"). Each `File` node object has the fields you queried for.
 
 ## Build a page with a GraphQL query
 
-Building new pages with Gatsby often starts in GraphiQL. You first sketch out
-the data query by playing in GraphiQL then copy this to a React page component
-to start building the UI.
+Building new pages with Gatsby often starts in GraphiQL. You first sketch out the data query by playing in GraphiQL then copy this to a React page component to start building the UI.
 
 Let's try this.
 
@@ -142,12 +137,9 @@ export const query = graphql`
 `
 ```
 
-The `console.log(data)` line is highlighted above. It's often helpful when
-creating a new component to console out the data you're getting from the GraphQL query
-so you can explore the data in your browser console while building the UI.
+The `console.log(data)` line is highlighted above. It's often helpful when creating a new component to console out the data you're getting from the GraphQL query so you can explore the data in your browser console while building the UI.
 
-If you visit the new page at `/my-files/` and open up your browser console
-you will see something like:
+If you visit the new page at `/my-files/` and open up your browser console you will see something like:
 
 ![data-in-console](data-in-console.png)
 

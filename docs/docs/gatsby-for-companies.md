@@ -16,9 +16,9 @@ Moreover, in software companies, technology decisions are often made bottoms-up 
 
 In these environments, if one developer is excited about Gatsby, they can build company projects in Gatsby. If several developers become excited by Gatsby, they may get a team or a group of teams using Gatsby.
 
-If you work in this organization, and want your organization to use Gatsby more, you can go a long way simply by [getting other developers excited by Gatsby](/docs/winning-over-developers).
+If you work in this organization, and want your organization to use Gatsby more, you can go a long way simply by [getting other developers excited by Gatsby](/docs/winning-over-developers/).
 
-After that, you'll find winning over [engineering leaders](/docs/winning-over-engineering-leaders), [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives). is significantly easier.
+After that, you'll find winning over [engineering leaders](/docs/winning-over-engineering-leaders/), [marketers](/docs/winning-over-marketers/) and [executives](/docs/winning-over-executives/). is significantly easier.
 
 ## Internet-adjacent organizations
 
@@ -30,6 +30,6 @@ Because developers are often not the decision-makers around technologies in thes
 
 If you're in an organization like this, it's important to:
 
-- strongly emphasize Gatsby's benefits in language familiar to [marketers](/docs/winning-over-marketers) and [executives](/docs/winning-over-executives).
+- strongly emphasize Gatsby's benefits in language familiar to [marketers](/docs/winning-over-marketers/) and [executives](/docs/winning-over-executives/).
 
 - position Gatsby as part of "digital transformation" initiatives your company undertakes. Faced with new competitors taking market share (e.g. Amazon in retail, Expedia and Airbnb in travel, PayPal in consumer finance), these businesses typically emphasize a priority as a company to be more Internet-native. This can provide an opening to pitch Gatsby as a way to do this.

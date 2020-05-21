@@ -15,8 +15,8 @@ import GatsbyIcon from "../components/gatsby-monogram"
 const GatsbyPluginBadge = ({ isOfficial }) => {
   const Icon = isOfficial ? GatsbyIcon : CommunityIcon
   const title = isOfficial
-    ? "Official Gatsby Plugin"
-    : "Community Gatsby Plugin"
+    ? `Official Gatsby Plugin`
+    : `Community Gatsby Plugin`
   const text = isOfficial ? `Official Plugin` : `Community Plugin`
 
   return (

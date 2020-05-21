@@ -7,6 +7,7 @@ const { render, Box, Text, Color, useInput, useApp, Static } = require(`ink`)
 const Spinner = require(`ink-spinner`).default
 const Link = require(`ink-link`)
 const MDX = require(`@mdx-js/runtime`)
+const hicat = require(`hicat`)
 import { trackCli } from "gatsby-telemetry"
 const {
   createClient,
@@ -79,6 +80,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-theme-blog`,
     },
     {
+      label: `Add Gatsby Theme Blog Core`,
+      value: `gatsby-theme-blog-core`,
+    },
+    {
       label: `Add persistent layout component with gatsby-plugin-layout`,
       value: `gatsby-plugin-layout`,
     },
@@ -142,7 +147,14 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Storybook - TypeScript`,
       value: `storybook-ts.mdx`,
     },
-    // TODO remaining recipes
+    {
+      label: `Add Ava`,
+      value: `ava.mdx`,
+    },
+    {
+      label: `Add Preact`,
+      value: `preact.mdx`,
+    },
   ]
 
   return (
@@ -196,6 +208,23 @@ function eliminateNewLines(children) {
 
 const components = {
   inlineCode: props => <Text {...props} />,
+  code: props => {
+    // eslint-disable-next-line
+    let language = "```"
+    if (props.className) {
+      // eslint-disable-next-line
+      language = props.className.split(`-`)[1]
+    }
+    const children = hicat(props.children.trim(), { lang: language })
+
+    const ansi = `\`\`\`${language}\n${children.ansi}\n\`\`\``
+
+    return (
+      <Div marginBottom={1}>
+        <Text>{ansi}</Text>
+      </Div>
+    )
+  },
   h1: props => (
     <Div marginBottom={1}>
       <Text bold underline {...props} />
@@ -337,7 +366,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         }
       }
 
-      log(`state`, subscriptionResponse)
+      log(`subscriptionResponse`, subscriptionResponse)
       const state =
         subscriptionResponse.data &&
         JSON.parse(subscriptionResponse.data.operation.state)
@@ -409,8 +438,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
       const PresentStep = ({ state }) => {
         const isPlan = state.context.plan && state.context.plan.length > 0
-        const isPresetPlanState = state.value === `present plan`
+        const isPresetPlanState = state.value === `presentPlan`
         const isRunningStep = state.value === `applyingPlan`
+
         if (isRunningStep) {
           return null
         }
@@ -480,40 +510,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       const Error = ({ state }) => {
         log(`errors`, state)
         if (state && state.context && state.context.error) {
-          // if (false) {
-          // return (
-          // <Div>
-          // <Color marginBottom={1} red>
-          // The following resources failed validation
-          // </Color>
-          // {state.context.error.map((err, i) => {
-          // log(`recipe er`, { err })
-          // return (
-          // <Div key={`error-box-${i}`}>
-          // <Text>Type: {err.resource}</Text>
-          // <Text>
-          // Resource:{` `}
-          // {JSON.stringify(err.resourceDeclaration, null, 4)}
-          // </Text>
-          // <Text>Recipe step: {err.step}</Text>
-          // <Text>
-          // Error{err.validationError.details.length > 1 && `s`}:
-          // </Text>
-          // {err.validationError.details.map((d, v) => (
-          // <Text key={`validation-error-${v}`}>
-          // {` `}‣ {d.message}
-          // </Text>
-          // ))}
-          // </Div>
-          // )
-          // })}
-          // </Div>
-          // )
-          // } else {
           return (
             <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
           )
-          // }
         }
 
         return null
@@ -529,7 +528,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
           {
             type: `mdx`,
             key: `mdx-${step}`,
-            value: state.context.stepsAsMdx[step],
+            value: state.context.steps[step],
           },
         ]
       }
@@ -591,7 +590,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Div>
           )}
           <MDX components={components}>
-            {state.context.stepsAsMdx[state.context.currentStep]}
+            {state.context.steps[state.context.currentStep]}
           </MDX>
           {!isDone && <PresentStep state={state} />}
           {!isDone && <RunningStep state={state} />}

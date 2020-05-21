@@ -53,7 +53,7 @@ Ideally you would:
   show a preview of the image while it loads.
 - Hold the image position so your page doesn't jump while images load.
 
-Doing this consistently across a site feels like sisyphean labor. You manually
+Doing this consistently across a site feels like a task that can never be completed. You manually
 optimize your images and then… several images are swapped in at the last minute
 or a design-tweak shaves 100px of width off your images.
 
