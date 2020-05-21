@@ -924,23 +924,41 @@ export interface ParentSpanPluginArgs extends NodePluginArgs {
  * Helpers exposed by Gatsby
  */
 export interface NodePluginArgs {
+  /** See docs */
   pathPrefix: string
+  /** See docs */
   boundActionCreators: Actions
+  /** See docs */
   actions: Actions
+  /** See docs */
   loadNodeContent: Function
+  /** See docs */
   store: Store
+  /** See docs */
   emitter: EventEmitter
+  /** See docs */
   getNodes: Function
+  /** See docs */
   getNode: Function
+  /** See docs */
   getNodesByType: Function
+  /** See docs */
   hasNodeChanged: Function
+  /** See docs */
   reporter: Reporter
+  /** See docs */
   getNodeAndSavePathDependency: Function
+  /** See docs */
   cache: Cache["cache"]
+  /** See docs */
   createNodeId: Function
+  /** See docs */
   createContentDigest: typeof createContentDigest
+  /** See docs */
   tracing: Tracing
+  /** See docs */
   schema: NodePluginSchema
+  /** See docs */
   [key: string]: unknown
 }
 
