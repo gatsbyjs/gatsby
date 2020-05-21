@@ -1,7 +1,7 @@
-const path = require(`path`)
-require(`dotenv`).config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
+// const path = require(`path`)
+// require(`dotenv`).config({
+//   path: `.env.${process.env.NODE_ENV}`,
+// })
 const { i18nEnabled, langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
