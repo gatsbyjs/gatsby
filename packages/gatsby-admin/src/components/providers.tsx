@@ -24,6 +24,7 @@ const theme = {
     "1px": `1px`,
     "100%": `100%`,
     "16px": `16px`,
+    initial: `initial`,
   },
 }
 
