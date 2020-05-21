@@ -54,7 +54,7 @@ describe(`recipes machine`, () => {
     service.start()
   })
 
-  it.skip(`it should error if part of the recipe fails schema validation`, done => {
+  it(`it should error if part of the recipe fails schema validation`, done => {
     const initialContext = {
       src: `
 # Hello, world
@@ -83,7 +83,7 @@ describe(`recipes machine`, () => {
     service.start()
   })
 
-  it.skip(`it should error if the introduction step has a command`, done => {
+  it(`it should error if the introduction step has a command`, done => {
     const initialContext = {
       src: `
 # Hello, world
