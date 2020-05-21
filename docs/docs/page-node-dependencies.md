@@ -11,7 +11,7 @@ title: Page -> Node Dependency Tracking
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/003129a9896cfe64595383b3fba6b3cd300387c8/packages/gatsby/src/redux/actions/add-page-dependency.ts#L5), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/nodes.ts#L108) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, when a node's content is changed the pages whose queries depend on that node will be re-run. This is one of the things that makes `develop` so awesome.
+In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions/add-page-dependency.ts#L5), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/nodes.ts#L108) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, when a node's content is changed the pages whose queries depend on that node will be re-run. This is one of the things that makes `develop` so awesome.
 
 ## How dependencies are recorded
 
