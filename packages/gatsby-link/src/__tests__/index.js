@@ -208,6 +208,12 @@ describe(`<Link />`, () => {
 })
 
 describe(`withPrefix`, () => {
+  it(`argument will be returned without any changes if its type is number`, () => {
+    const to = -1
+    const root = getWithPrefix(`/whether-prefix-exist`)(to)
+    expect(root).toEqual(to)
+  })
+
   describe(`works with default prefix`, () => {
     it(`default prefix does not return "//"`, () => {
       const to = `/`

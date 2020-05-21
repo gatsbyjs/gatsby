@@ -7,6 +7,10 @@ import { parsePath } from "./parse-path"
 export { parsePath }
 
 export function withPrefix(path) {
+  if (typeof path === `number`) {
+    return path
+  }
+
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
