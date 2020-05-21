@@ -6403,3 +6403,26 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://schoolfront.netlify.app
+  repo: https://github.com/orzechdev/schoolfront
+  description: School website starter
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - CMS:WordPress
+    - Blog
+    - Presentation
+  features:
+    - Main page
+    - Wordpress blog
+    - Contact page
+    - About page
+    - Open hours information
+    - Offered curriculum page
+    - Teachers list
+    - WCAG AA support
+    - SEO optimized
+    - Sitemap Generation
+    - GatsbyJS v2
+    - Styled Components
+    - Typescript
