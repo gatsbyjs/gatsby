@@ -89,10 +89,6 @@ const Index: React.FC<{}> = () => {
             shadowableFiles
           }
         }
-        npmPackageJson(id: "name") {
-          name
-          value
-        }
       }
     `,
   })
@@ -103,7 +99,6 @@ const Index: React.FC<{}> = () => {
 
   return (
     <>
-      <h1>{data.npmPackageJson.value.replace(/^"|"$/g, ``)}</h1>
       <h2>Plugins</h2>
       <ul>
         {data.allGatsbyPlugin.nodes
