@@ -2,11 +2,14 @@
   "name": "www",
   "version": "2.0.0",
   "dependencies": {
-    "gatsby": "^2.21.35"
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.21.35",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "postinstall": "cd ../gatsby-site-theme && yarn"
+    "postinstall": "echo 'Running postinstall' && cd ../gatsby-site-theme && yarn"
   }
 }
