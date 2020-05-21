@@ -7,11 +7,11 @@ You add plugins to read and understand folders with Markdown files and from them
 
 Here are the steps Gatsby follows for making this happen.
 
-1.  Read files into Gatsby from the filesystem
-2.  Transform Markdown to HTML and [frontmatter](#frontmatter-for-metadata-in-markdown-files) to data
-3.  Add a Markdown file
-4.  Create a page component for the Markdown files
-5.  Create static pages using Gatsby's Node.js `createPage` API
+1. Read files into Gatsby from the filesystem
+2. Transform Markdown to HTML and [frontmatter](#frontmatter-for-metadata-in-markdown-files) to data
+3. Add a Markdown file
+4. Create a page component for the Markdown files
+5. Create static pages using Gatsby's Node.js `createPage` API
 
 ## Read files into Gatsby from the filesystem
 
@@ -77,13 +77,13 @@ When you create a Markdown file, you can include a set of key value pairs that c
 
 ```markdown:title=src/markdown-pages/post-1.md
 ---
-path: "/blog/my-first-post"
+slug: "/blog/my-first-post"
 date: "2019-05-04"
 title: "My first blog post"
 ---
 ```
 
-What is important in this step is the key pair `path`. The value that is assigned to the key `path` is used in order to navigate to your post.
+What is important in this step is the key pair `slug`. The value that is assigned to the key `slug` is used in order to navigate to your post.
 
 ## Create a page template for the Markdown files
 
@@ -114,12 +114,12 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
+  query($slug: String!) {
+    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
-        path
+        slug
         title
       }
     }
@@ -129,11 +129,11 @@ export const pageQuery = graphql`
 
 Two things are important in the file above:
 
-1.  A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
+1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
 
-    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
+   **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 
-2.  The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that you'll find has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling/) in Gatsby.
+2. The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that you'll find has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling/) in Gatsby.
 
 ### Create static pages using Gatsby’s Node.js `createPage` API
 
@@ -144,12 +144,10 @@ Use the `graphql` to query Markdown file data as below. Next, use the `createPag
 **NOTE:** Gatsby calls the `createPages` API (if present) at build time with injected parameters, `actions` and `graphql`.
 
 ```javascript:title=gatsby-node.js
-const path = require(`path`)
-
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
-  const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`)
+  const blogPostTemplate = require.resolve(`./src/templates/blogTemplate.js`)
 
   const result = await graphql(`
     {
@@ -160,7 +158,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         edges {
           node {
             frontmatter {
-              path
+              slug
             }
           }
         }
@@ -176,9 +174,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
     createPage({
-      path: node.frontmatter.path,
+      path: node.frontmatter.slug,
       component: blogPostTemplate,
-      context: {}, // additional data can be passed via context
+      context: {
+        // additional data can be passed via context
+        slug: node.frontmatter.slug,
+      },
     })
   })
 }

@@ -328,7 +328,7 @@ projects.
 And so it was that my quest for having a very cheap, secure, fast, scalable,
 customizable and easy to maintain blog concluded. It's certainly not the most
 exciting or well-looking blog out there, but it's everything I wanted it to be
--- both as a developer and as a blogger.
+— both as a developer and as a blogger.
 
 Personally I cannot wait to see how far can the limits of technologies like
 Gatsby.js can be stretched, and with the advent and spread of new architectural

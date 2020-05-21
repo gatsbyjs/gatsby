@@ -528,7 +528,7 @@ Super fast CSS by default. 👏👏👏
 
 It's easy to create your own "Gatsbygram" site from an Instagram account.
 
-### Instructions on setting up your own Gatsbygram site.
+### Instructions on setting up your own Gatsbygram site
 
 ```bash
 # Clone the Gatsby repo.

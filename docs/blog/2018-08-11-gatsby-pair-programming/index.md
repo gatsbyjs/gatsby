@@ -18,19 +18,19 @@ My experience with Gatsby prior to this pair programming session was low, and my
 
 Here are my thoughts and experience with this. I hope this help you to do it and start contributing to projects as amazing as this one!
 
-### How did you feel before, during, and after pair programming?
+## How did you feel before, during, and after pair programming?
 
 Before, I was a little worried, to be honest. :) Now, I feel more confident contributing to the project. Actually, I just made my second contribution to it today!
 
 Also, usually when I’ve done pair programming, one person “drives” (types and programs) and the other one helps and makes sure there’s no typos or errors. In this pair programming, we both drove during the whole session and we were both really involved in it. I enjoyed this and enjoyed how we improvised throughout the process.
 
-### What was the most surprising thing about pair programming?
+## What was the most surprising thing about pair programming?
 
 The most surprising thing to me was Jason’s willingness to spend time with a complete stranger to help me with my questions. I’m grateful that he spent this time with me. Thanks man!
 
 Jason patiently explained the parts I didn’t understand about Gatsby and he also walked me through the project perfectly.
 
-### On a scale of 1–10, how likely are you to recommend it to a friend? (1–10 scale)
+## On a scale of 1–10, how likely are you to recommend it to a friend? (1–10 scale)
 
 10! No doubt. And higher than 10 if you have never done pair programming. Just take a simple task and go! It’s not about the code you will write, but the experience of developing with an expert. It’s just amazing. :)
 

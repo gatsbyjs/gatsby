@@ -8,9 +8,9 @@ Have you created a Gatsby starter you'd like to add to the [Starter Library](/st
 
 To get your site added to the starter library, follow the two steps below.
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
+1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
-2.  Edit the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file by adding your starter information to the bottom of the list in the following format:
+2. Edit the [`starters.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/starters.yml) file by adding your starter information to the bottom of the list in the following format:
 
 ```yaml:title=docs/starters.yml
 - url: Link to a demo of your starter

@@ -21,6 +21,7 @@ describe(`gatsby-plugin resource`, () => {
   let starterBlogRoot
   let helloWorldRoot
   let configPath
+  let emptyRoot
   beforeAll(async () => {
     tmpDir = await tmp.dir({
       unsafeCleanup: true,
@@ -28,6 +29,8 @@ describe(`gatsby-plugin resource`, () => {
     starterBlogRoot = path.join(tmpDir.path, `gatsby-starter-blog`)
     helloWorldRoot = path.join(tmpDir.path, `gatsby-starter-hello-world`)
     configPath = path.join(helloWorldRoot, `gatsby-config.js`)
+    emptyRoot = path.join(tmpDir.path, `empty-site-directory`)
+    await fs.ensureDir(emptyRoot)
     await fs.ensureDir(starterBlogRoot)
     await fs.copy(STARTER_BLOG_FIXTURE, starterBlogRoot)
     await fs.ensureDir(helloWorldRoot)
@@ -59,16 +62,33 @@ describe(`gatsby-plugin resource`, () => {
     })
   })
 
+  test(`all returns plugins as array`, async () => {
+    const result = await plugin.all({ root: STARTER_BLOG_FIXTURE })
+
+    expect(result).toMatchSnapshot()
+  })
+
   test(`does not add the same plugin twice by default`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
-    const newConfigSrc = addPluginToConfig(configSrc, {
+    let newConfigSrc = addPluginToConfig(configSrc, {
       name: `gatsby-plugin-react-helmet`,
     })
+    newConfigSrc = addPluginToConfig(newConfigSrc, {
+      name: `gatsby-plugin-foo`,
+    })
+    newConfigSrc = addPluginToConfig(newConfigSrc, {
+      name: `gatsby-plugin-mdx`,
+    })
     const plugins = getPluginsFromConfig(newConfigSrc)
+    const plugins1 = [...new Set(plugins)]
 
-    const result = [...new Set(plugins)]
+    newConfigSrc = addPluginToConfig(newConfigSrc, {
+      name: `gatsby-plugin-react-helmet`,
+    })
 
-    expect(result).toEqual(plugins)
+    const plugins2 = getPluginsFromConfig(newConfigSrc)
+
+    expect(plugins1).toEqual(plugins2)
   })
 
   // A key isn't required for gatsby plugin, but when you want to distinguish
@@ -153,6 +173,14 @@ describe(`gatsby-plugin resource`, () => {
 
     const result = getPluginsFromConfig(newConfigSrc)
 
+    expect(result).toMatchSnapshot()
+  })
+
+  test(`creates default gatsby-config.js if there isn't one already`, async () => {
+    const result = await plugin.create(
+      { root: emptyRoot },
+      { name: `gatsby-plugin-foo` }
+    )
     expect(result).toMatchSnapshot()
   })
 })

@@ -41,7 +41,7 @@ You can also install Gatsby locally using `yarn add gatsby-cli`. If you use this
 
 ### Using Yarn as your Gatsby package manager
 
-When you run `gatsby new` for the first time, you'll be prompted to choose npm or Yarn as your default package manager. You can choose Yarn then, or change it at a later time. To switch from npm to Yarn, edit the Gatsby CLI configuration file available at ``~/.config/gatsby/config.json` to add the following lines.
+When you run `gatsby new` for the first time, you'll be prompted to choose npm or Yarn as your default package manager. You can choose Yarn then, or change it at a later time. To switch from npm to Yarn, edit the Gatsby CLI configuration file available at `~/.config/gatsby/config.json` to add the following lines.
 
 ```shell
 {

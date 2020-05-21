@@ -4,15 +4,15 @@ title: Deploying to Aerobatic
 
 [Aerobatic](https://www.aerobatic.com) is a specialized static site host. You can easily deploy your Gatsby site to Aerobatic with the following steps:
 
-1.  Install the Aerobatic CLI:
+1. Install the Aerobatic CLI:
 
 `npm install aerobatic-cli -g`
 
-2.  Create a new Aerobatic site at the root of your Gatsby project:
+2. Create a new Aerobatic site at the root of your Gatsby project:
 
 `aero create --name <your-site-name>`
 
-3.  Deploy your Gatsby build output:
+3. Deploy your Gatsby build output:
 
 `aero deploy --directory public`
 
