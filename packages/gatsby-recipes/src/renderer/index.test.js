@@ -43,7 +43,7 @@ describe(`renderer`, () => {
           "resourceName": "File",
         },
         Object {
-          "currentState": "gatsby@2.21.28",
+          "currentState": "gatsby@2.22.5",
           "describe": "Install gatsby@latest",
           "newState": "gatsby@latest",
           "resourceDefinitions": Object {
