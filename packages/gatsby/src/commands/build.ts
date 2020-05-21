@@ -222,7 +222,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       error: err,
     })
   }
-  activity.done()
+  activity.end()
 
   let deletedPageKeys: string[] = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
