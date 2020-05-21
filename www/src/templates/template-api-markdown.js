@@ -26,7 +26,7 @@ const normalizeGatsbyApiCall = array =>
     return { name: entry.name, codeLocation }
   })
 
-const mergeFunctions = (data, context) => {
+const mergeFunctions = data => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
   // const docs = data.jsdoc.nodes.reduce((acc, node) => {
