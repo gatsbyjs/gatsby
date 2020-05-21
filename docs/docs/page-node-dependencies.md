@@ -62,7 +62,7 @@ Page -> Node dependencies are tracked via the `componentDataDependencies` redux 
 
 ## How dependency information is used
 
-Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty", and therefore which page's queries need to be re-executed. This occurs in `page-query-runner.js` in the [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89) and [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171) functions. This is described in greater detail in the [Query Execution](/docs/query-execution/) docs.
+Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty", and therefore which page's queries need to be re-executed. This occurs in `query/index.js` in the [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/c4c7563d8dc167561962c4ab7c6ef8f2e2d3eec9/packages/gatsby/src/query/index.js#L39) and [popNodeQueries](https://github.com/gatsbyjs/gatsby/blob/5c8dec1f71b38987ea637d42c077c06fdd4bc163/packages/gatsby/src/query/index.js#L71) functions. This is described in greater detail in the [Query Execution](/docs/query-execution/) docs.
 
 ## Other forms
 
