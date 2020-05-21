@@ -29,27 +29,28 @@ const normalizeGatsbyApiCall = array =>
 const mergeFunctions = (data, context) => {
   const normalized = normalizeGatsbyApiCall(data.nodeAPIs.group)
 
-  const docs = data.jsdoc.nodes.reduce((acc, node) => {
-    const doc = node.childrenDocumentationJs
-      .filter(def => def.kind !== `typedef`)
-      .map(def => {
-        if (!context.apiCalls) {
-          // When an api call list is not available, the line numbers from jsdoc
-          // might be useful. Just for actions.mdx right now.
-          def.codeLocation.file = node.relativePath
-          if (!def.codeLocation.file) {
-            def.codeLocation = null
-          }
-        } else {
-          // API pages having apiCalls did not query for this in the page query,
-          // so just remove it instead. Having one that returns nothing suppresses
-          // documentation git links completely.
-          def.codeLocation = null
-        }
-        return def
-      })
-    return acc.concat(doc)
-  }, [])
+  // const docs = data.jsdoc.nodes.reduce((acc, node) => {
+  //   const doc = node.childrenDocumentationJs
+  //     .filter(def => def.kind !== `typedef`)
+  //     .map(def => {
+  //       if (!context.apiCalls) {
+  //         // When an api call list is not available, the line numbers from jsdoc
+  //         // might be useful. Just for actions.mdx right now.
+  //         def.codeLocation.file = node.relativePath
+  //         if (!def.codeLocation.file) {
+  //           def.codeLocation = null
+  //         }
+  //       } else {
+  //         // API pages having apiCalls did not query for this in the page query,
+  //         // so just remove it instead. Having one that returns nothing suppresses
+  //         // documentation git links completely.
+  //         def.codeLocation = null
+  //       }
+  //       return def
+  //     })
+  //   return acc.concat(doc)
+  // }, [])
+  const docs = data.documentationJs.childrenDocumentationJs
 
   let funcs = sortBy(docs, func => func.name)
 
@@ -110,7 +111,7 @@ export default function APITemplate({ data, location, pageContext }) {
 }
 
 export const pageQuery = graphql`
-  query($path: String!, $jsdoc: [String], $apiCalls: String) {
+  query($path: String!, $jsdoc: String, $apiCalls: String) {
     mdx(fields: { slug: { eq: $path } }) {
       body
       excerpt
@@ -130,21 +131,18 @@ export const pageQuery = graphql`
       }
       ...MarkdownPageFooterMdx
     }
-    jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
-      nodes {
-        relativePath
-        childrenDocumentationJs {
-          memberof
-          name
-          ...DocumentationFragment
-          availableIn
-          codeLocation {
-            start {
-              line
-            }
-            end {
-              line
-            }
+    documentationJs(name: { eq: $jsdoc }) {
+      childrenDocumentationJs {
+        memberof
+        name
+        ...DocumentationFragment
+        availableIn
+        codeLocation {
+          start {
+            line
+          }
+          end {
+            line
           }
         }
       }

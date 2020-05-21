@@ -52,7 +52,11 @@ export const prefetchPathname: (path: string) => void
  * export default (props: IndexProps) => {
  *   ..
  */
-export type PageProps<DataType = object, PageContextType = object, LocationState = WindowLocation["state"]> = {
+export type PageProps<
+  DataType = object,
+  PageContextType = object,
+  LocationState = WindowLocation["state"]
+> = {
   /** The path for this current page */
   path: string
   /** The URI for the current page */
@@ -916,6 +920,9 @@ export interface ParentSpanPluginArgs extends NodePluginArgs {
   parentSpan: object
 }
 
+/**
+ * Helpers exposed by Gatsby
+ */
 export interface NodePluginArgs {
   pathPrefix: string
   boundActionCreators: Actions
@@ -975,6 +982,9 @@ export interface BuildArgs extends ParentSpanPluginArgs {
   }>
 }
 
+/**
+ * Gatsby Actions
+ */
 export interface Actions {
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
   deletePage(args: { path: string; component: string }): void
@@ -1380,4 +1390,53 @@ export interface Page<TContext = Record<string, unknown>> {
   matchPath?: string
   component: string
   context: TContext
+}
+
+type TypeOrTypeName = string | GraphQLOutputType
+
+/**
+ * Optional page dependency information.
+ *
+ * @typedef {Object} PageDependencies
+ * @property {string} path The path of the page that depends on the retrieved nodes' data
+ * @property {string} [connectionType] Mark this dependency as a connection
+ */
+interface PageDependencies {
+  path: string
+  connectionType?: string
+}
+
+interface QueryArguments {
+  type: TypeOrTypeName
+  query: { filter: Object; sort?: Object }
+  firstOnly?: boolean
+}
+
+/**
+ * Node model exposed by Gatsby
+ */
+export interface NodeModel {
+  getNodeById(
+    args: { id: string; type?: TypeOrTypeName },
+    pageDependencies?: PageDependencies
+  ): any | null
+  getNodesByIds(
+    args: { ids: Array<string>; type?: TypeOrTypeName },
+    pageDependencies?: PageDependencies
+  ): Array<any>
+  getAllNodes(
+    args: { type?: TypeOrTypeName },
+    pageDependencies?: PageDependencies
+  ): Array<any>
+  runQuery(
+    args: QueryArguments,
+    pageDependencies?: PageDependencies
+  ): Promise<any>
+  getTypes(): Array<string>
+  trackPageDependencies<NodeOrNodes extends Node | Node[]>(
+    result: NodeOrNodes,
+    pageDependencies?: PageDependencies
+  ): NodeOrNodes
+  findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null
+  trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node
 }
