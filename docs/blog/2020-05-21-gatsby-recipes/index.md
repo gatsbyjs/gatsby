@@ -1,5 +1,5 @@
 ---
-title: "Gatsby Recipes: What's all the fuss about?"
+title: "Gatsby Recipes: What's All the Fuss About?"
 date: 2020-05-21
 author: Paul Scanlon
 excerpt: "Gatsby Recipes were just introduced just last month, as a new tool to automate common site building tasks. A Gatsby Recipe is a kind of task runner that can be authored in MDX and then executed from the command line using the Gatsby CLI. Gatsby now ships with a dozen or so default Recipes, and our amazing community has been busy coming up with more useful contributions! React developer Paul Scanlon discussed his process behind making his first two Recipes, and then walks through how to write your own."
