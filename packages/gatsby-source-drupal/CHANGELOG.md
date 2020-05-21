@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.7...gatsby-source-drupal@3.5.8) (2020-05-21)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** added check for node.uri.value prefix ([#23672](https://github.com/gatsbyjs/gatsby/issues/23672)) ([5c8dec1](https://github.com/gatsbyjs/gatsby/commit/5c8dec1))
+
 ## [3.5.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.5.6...gatsby-source-drupal@3.5.7) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-source-drupal
