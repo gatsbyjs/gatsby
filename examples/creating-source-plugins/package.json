@@ -1,0 +1,14 @@
+{
+  "name": "creating-source-plugins",
+  "version": "1.0.0",
+  "description": "Monorepo for examples, api, and plugins for creating first class source plugins",
+  "main": "index.js",
+  "author": "@gillkyle",
+  "license": "MIT",
+  "workspaces": [
+    "api",
+    "example-site",
+    "source-plugin"
+  ],
+  "private": true
+}

@@ -15,16 +15,16 @@ your site.
    gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
    ```
 
-1. **Run the dev server** by changing directory to the scaffolded site and install dependencies
+2. **Run the dev server** by changing directory to the scaffolded site and install dependencies
 
    ```shell
    cd my-mdx-starter/
    gatsby develop
    ```
 
-1. **Open the site** running at `http://localhost:8000`
+3. **Open the site** running at `http://localhost:8000`
 
-1. **Update the MDX content** by opening the `my-mdx-starter` directory
+4. **Update the MDX content** by opening the `my-mdx-starter` directory
    in your code editor of choice and edit `src/pages/index.mdx`.
    Save your changes and the browser will update in real time!
 
@@ -43,7 +43,7 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
 
    > **Note:** If you're upgrading from v0, additionally [check out the MDX migration guide](https://mdxjs.com/migrating/v1).
 
-1. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
+2. **Update your `gatsby-config.js`** to use `gatsby-plugin-mdx`
 
    ```javascript:title=gatsby-config.js
    module.exports = {
@@ -54,7 +54,7 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
    }
    ```
 
-1. **Restart `gatsby develop`** and add an `.mdx` page to `src/pages
+3. **Restart `gatsby develop`** and add an `.mdx` page to \`src/pages
 
 > **Note:** If you want to query for frontmatter, exports, or other fields like
 > `tableOfContents` and you haven't previously added a `gatsby-source-filesystem`

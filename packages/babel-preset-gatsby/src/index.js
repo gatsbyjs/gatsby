@@ -71,6 +71,12 @@ module.exports = function preset(_, options = {}) {
     ],
     plugins: [
       [
+        resolve(`./optimize-hook-destructuring`),
+        {
+          lib: true,
+        },
+      ],
+      [
         resolve(`@babel/plugin-proposal-class-properties`),
         {
           loose: true,

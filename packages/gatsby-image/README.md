@@ -43,17 +43,17 @@ Large, unoptimized images dramatically slow down your site.
 But creating optimized images for websites has long been a thorny problem.
 Ideally you would:
 
-- Resize large images to the size needed by your design
+- Resize large images to the size needed by your design.
 - Generate multiple smaller images so smartphones and tablets don't download
-  desktop-sized images
-- Strip all unnecessary metadata and optimize JPEG and PNG compression
-- Efficiently lazy load images to speed initial page load and save bandwidth
+  desktop-sized images.
+- Strip all unnecessary metadata and optimize JPEG and PNG compression.
+- Efficiently lazy load images to speed initial page load and save bandwidth.
 - Use the "blur-up" technique or a
   "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to
-  show a preview of the image while it loads
-- Hold the image position so your page doesn't jump while images load
+  show a preview of the image while it loads.
+- Hold the image position so your page doesn't jump while images load.
 
-Doing this consistently across a site feels like sisyphean labor. You manually
+Doing this consistently across a site feels like a task that can never be completed. You manually
 optimize your images and then… several images are swapped in at the last minute
 or a design-tweak shaves 100px of width off your images.
 
@@ -70,7 +70,7 @@ With Gatsby, we can make images way _way_ better.
 processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
-1. Import `gatsby-image` and use it in place of the built-in `img`
+1. Import `gatsby-image` and use it in place of the built-in `img`.
 2. Write a GraphQL query using one of the included GraphQL "fragments"
    which specify the fields needed by `gatsby-image`.
 
@@ -225,6 +225,7 @@ Their fragments are:
 - `GatsbyImageSharpFluid_withWebp`
 - `GatsbyImageSharpFluid_withWebp_noBase64`
 - `GatsbyImageSharpFluid_withWebp_tracedSVG`
+- `GatsbyImageSharpFluidLimitPresentationSize`
 
 ### gatsby-source-contentful
 
@@ -262,7 +263,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 For more information about these options, please see the
-[Gatsby Image API](/docs/gatsby-image/#image-query-fragments).
+[Gatsby Image API](https://www.gatsbyjs.org/docs/gatsby-image/#image-query-fragments).
 
 _Please see the
 [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
@@ -318,37 +319,16 @@ prop. e.g. `<Img fluid={fluid} />`
 ### Avoiding stretched images using the fluid type
 
 As mentioned previously, images using the _fluid_ type are stretched to
-match the container's width. In the case where the image's width is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
+match the container's width and height. In the case where the image's width or height is smaller than the available viewport, the image will stretch to match the container, potentially leading to unwanted problems and worsened image quality.
 
-To counter this edge case one could wrap the _Img_ component in order to set a better, for that case, `maxWidth`:
-
-```jsx
-const NonStretchedImage = props => {
-  let normalizedProps = props
-  if (props.fluid && props.fluid.presentationWidth) {
-    normalizedProps = {
-      ...props,
-      style: {
-        ...(props.style || {}),
-        maxWidth: props.fluid.presentationWidth,
-        margin: "0 auto", // Used to center the image
-      },
-    }
-  }
-
-  return <Img {...normalizedProps} />
-}
-```
-
-**Note:** The `GatsbyImageSharpFluid` fragment does not include `presentationWidth`.
-You will need to add it in your graphql query as is shown in the following snippet:
+To counter this edge case one could use the `GatsbyImageSharpFluidLimitPresentationSize` fragment to ask for additional presentation size properties.
 
 ```graphql
 {
   childImageSharp {
     fluid(maxWidth: 500, quality: 100) {
       ...GatsbyImageSharpFluid
-      presentationWidth
+      ...GatsbyImageSharpFluidLimitPresentationSize
     }
   }
 }
@@ -452,7 +432,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
   to final image will not occur until after the component is mounted.
 - gatsby-image is now backed by the newer `<picture>` tag. This newer standard allows for
   media types to be chosen by the browser without using JavaScript. It also is
-  backward compatible to older browsers (IE 11, etc)
+  backward compatible to older browsers (IE 11, etc).
 - Gifs can't be resized the same way as pngs and jpegs, unfortunately—if you try
   to use a gif with `gatsby-image`, it won't work. For now, the best workaround is
   to [import the gif directly](/docs/adding-images-fonts-files).

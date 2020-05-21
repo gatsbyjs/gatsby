@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.5...babel-preset-gatsby@0.4.6) (2020-05-20)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.4.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.4...babel-preset-gatsby@0.4.5) (2020-05-20)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.4.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.3...babel-preset-gatsby@0.4.4) (2020-05-19)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.4.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.2...babel-preset-gatsby@0.4.3) (2020-05-18)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.4.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.1...babel-preset-gatsby@0.4.2) (2020-05-13)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.4.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.4.0...babel-preset-gatsby@0.4.1) (2020-05-05)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** remove prop-types in production for dependencies ([#23609](https://github.com/gatsbyjs/gatsby/issues/23609)) ([a844157](https://github.com/gatsbyjs/gatsby/commit/a844157))
+
+# [0.4.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.6...babel-preset-gatsby@0.4.0) (2020-04-27)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.3.6](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.5...babel-preset-gatsby@0.3.6) (2020-04-24)
+
+### Bug Fixes
+
+- **optimize-hook-destructuring:** handle skipped items ([#23438](https://github.com/gatsbyjs/gatsby/issues/23438)) ([2cf2dc5](https://github.com/gatsbyjs/gatsby/commit/2cf2dc5))
+
+## [0.3.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.4...babel-preset-gatsby@0.3.5) (2020-04-24)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.3.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.3...babel-preset-gatsby@0.3.4) (2020-04-22)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+## [0.3.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.2...babel-preset-gatsby@0.3.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [0.3.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.1...babel-preset-gatsby@0.3.2) (2020-04-16)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 ## [0.3.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.3.0...babel-preset-gatsby@0.3.1) (2020-03-23)
 
 **Note:** Version bump only for package babel-preset-gatsby

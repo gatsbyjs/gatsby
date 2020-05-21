@@ -145,7 +145,7 @@ module.exports = {
         // Defaults to false
         keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
         },
         // The normalizers option allows you to manipulate the array of internal
@@ -161,7 +161,7 @@ module.exports = {
           ...normalizers,
           {
             name: "nameOfTheFunction",
-            normalizer: function({ entities }) {
+            normalizer: function ({ entities }) {
               // manipulate entities here
               return entities
             },
@@ -830,7 +830,7 @@ and also your `wordpress-source-plugin` options from `gatsby-config.js`. To lear
 ```javascript
 const dropUnusedMediaNormalizer = {
   name: "dropUnusedMediaNormalizer",
-  normalizer: function({ entities }) {
+  normalizer: function ({ entities }) {
     return entities.filter(
       e => !(e.__type === "wordpress__wp_media" && !e.post)
     )

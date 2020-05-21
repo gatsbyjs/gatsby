@@ -130,8 +130,9 @@ class StickyResponsiveSidebar extends Component {
             <ChevronSvg
               size={16}
               cssProps={{
-                transform: `translate(${5 -
-                  iconOffset}px, -5px) rotate(270deg)`,
+                transform: `translate(${
+                  5 - iconOffset
+                }px, -5px) rotate(270deg)`,
                 transition: t =>
                   `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}

@@ -33,7 +33,7 @@ const colorToHex = color =>
     ? rgbArray(color)
     : hexRgb(color, { format: `array` })
 
-export const a11y = function(hex, bg) {
+export const a11y = function (hex, bg) {
   const text = colorToHex(hex)
   const background = colorToHex(bg)
 
@@ -64,7 +64,7 @@ export const a11y = function(hex, bg) {
   }
 }
 
-export const colorable = function(hex) {
+export const colorable = function (hex) {
   let result = {}
 
   result.hex = hex

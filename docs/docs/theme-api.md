@@ -86,7 +86,9 @@ Taking the `Header` example from before, when you write your shadowing file at `
 import Header from "gatsby-theme-amazing/src/components/header"
 
 // these props are the same as the original component would get
-export default props => <Header {...props} myProp="true" />
+export default function MyHeader(props) {
+  return <Header {...props} myProp="true" />
+}
 ```
 
 Taking this approach means that when you upgrade your theme later you can also take advantage of all the updates to the `Header` component because you haven't fully replaced it, just modified it.

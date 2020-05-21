@@ -15,7 +15,10 @@ const read = async ({ publicDir }, pagePath) => {
 
 const remove = async ({ publicDir }, pagePath) => {
   const filePath = getFilePath({ publicDir }, pagePath)
-  return fs.remove(filePath)
+  if (fs.existsSync(filePath)) {
+    return await fs.remove(filePath)
+  }
+  return Promise.resolve()
 }
 
 const write = async ({ publicDir }, page, result) => {

@@ -22,7 +22,7 @@ releases before today's first beta release. It's been a really enjoyable
 experience watching Gatsby v1 take form and helping shape that and the growing
 community around it.
 
-### What's part of v1
+## What's part of v1
 
 From Gatsby's initial release just over two years ago, Gatsby has let you build
 static websites using React.js components as well as markdown, JSON, and YAML.
@@ -56,7 +56,7 @@ individuals and companies.
 - [Guten Ye](https://github.com/gutenye)
 - [Rico Sta. Cruz](https://github.com/rstacruz)
 
-### Companies who sponsored time working on Gatsby v1.
+### Companies who sponsored time working on Gatsby v1
 
 - [Thinkmill](https://www.thinkmill.com.au/)
 - [Expo](https://expo.io/)

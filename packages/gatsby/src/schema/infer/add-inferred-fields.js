@@ -406,10 +406,7 @@ const getSimpleFieldConfig = ({
 
 const createTypeName = selector => {
   const keys = selector.split(`.`)
-  const suffix = keys
-    .slice(1)
-    .map(_.upperFirst)
-    .join(``)
+  const suffix = keys.slice(1).map(_.upperFirst).join(``)
   return `${keys[0]}${suffix}`
 }
 

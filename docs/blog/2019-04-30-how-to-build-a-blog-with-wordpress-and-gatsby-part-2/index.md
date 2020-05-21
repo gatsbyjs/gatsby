@@ -18,7 +18,7 @@ In the last post, I covered setting up [WordPress for use with Gatsby](/blog/201
 
 I have set up a WordPress site for you to use with the plugins mentioned in the last post as well as some dummy content to use. If you're curious, my favorite lorem generator is [Fillerama](http://fillerama.io/) which offers random content from Futurama, Monty Python, Star Wars, and more. This is where the content came from.
 
-https://giphy.com/gifs/french-week-sDcfxFDozb3bO
+https://giphy.com/gifs/movie-funny-HfJdu4HABDU3e
 
 ## Gatsby.js starter
 
@@ -82,7 +82,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
-    "prettier": "^1.16.4"
+    "prettier": "2.0.4"
   },
   "keywords": ["gatsby"],
   "license": "MIT",
@@ -108,7 +108,7 @@ You can see there are several dependencies installed right off the bat. I'll jus
 
 Whew! That was a mouthful.
 
-https://giphy.com/gifs/monty-python-and-the-holy-grail-eb3WAhXzlUAFi
+https://giphy.com/gifs/movie-funny-HfJdu4HABDU3e
 
 ### Running the site
 
@@ -196,7 +196,7 @@ module.exports = {
           "**/users",
         ],
         excludedRoutes: [],
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
         },
       },

@@ -11,7 +11,7 @@ tags:
   - community
 ---
 
-_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool, joining us at our next Gatsby Days—currently scheduled for October 19th in Amsterdam—would also be pretty awesome)._
+_Welcome to the Gatsby Days 2020 Video Blog: Los Angeles Edition. In this series of eleven videos, you can catch up with all the wit and wisdom shared at the presentations from our February community gathering in LA. If you weren’t able to make it in person, these videos are the next best thing to owning a time machine! (Though owning a time machine would be super cool for sure, joining us at our next Gatsby Days—currently scheduled as a virtual event June 2nd-3rd—would be pretty awesome, too 💜. Follow [Gatsby on Twitter](https://twitter.com/gatsbyjs) to keep up with when registration starts, speaker announcements and other developments)._
 
 As the co-founder and CEO of Gatsby, Kyle Mathews kicked off Gatsby Days LA 2020 with a keynote address that spanned Gatsby’s past, present, and future. Learn what sparked Kyle and co-founder Sam Bhagwat to develop a framework that could combine the best of static-site generation, content management system (CMS), and React technologies. Next, hear how Gatsby today is helping produce amazing developer experiences for building ridiculously fast websites.
 

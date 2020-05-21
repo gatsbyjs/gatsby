@@ -17,8 +17,8 @@ In a decoupled architecture, Drupal's only responsibility is content. Rather tha
 
 A decoupled Drupal architecture offers two key advantages over a tightly coupled one.
 
-- **You can use one content management system to serve multiple frontends** &mdash; for example, your Gatsby site, your mobile application, and your smart TV application.
-- **You can develop, change, and upgrade the frontend and backend independently of each other. **Upgrading Drupal doesn't require you to modify your site's appearance.
+- **You can use one content management system to serve multiple frontends** — for example, your Gatsby site, your mobile application, and your smart TV application.
+- **You can develop, change, and upgrade the frontend and backend independently of each other.** Upgrading Drupal doesn't require you to modify your site's appearance.
 
 To use Drupal as a content source for Gatsby, add the [`gatsby-source-drupal`](/packages/gatsby-source-drupal/) plugin to your project. As with Gatsby itself, you install the `gatsby-source-drupal` plugin using [npm](/docs/glossary/#npm).
 

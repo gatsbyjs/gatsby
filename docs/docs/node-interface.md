@@ -33,7 +33,7 @@ A key reserved for plugins who wish to extend other nodes.
 
 A digest "Hash", or short digital summary, of the content of this node (for example, `md5sum`).
 
-The digest should be unique to the content of this node since it's used for caching. If the content changes, this digest should also change. There's a helper function called [createContentDigest](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-core-utils/src/create-content-digest.js) to create an `md5` digest.
+The digest should be unique to the content of this node since it's used for caching. If the content changes, this digest should also change. There's a helper function called [createContentDigest](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-core-utils/src/create-content-digest.ts) to create an `md5` digest.
 
 ### `mediaType`
 

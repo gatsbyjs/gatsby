@@ -24,14 +24,19 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
         )
 
         if (!fs.existsSync(publicPath)) {
-          fs.copy(details.absolutePath, publicPath, err => {
-            if (err) {
-              console.error(
-                `error copying file from ${details.absolutePath} to ${publicPath}`,
-                err
-              )
+          fs.copy(
+            details.absolutePath,
+            publicPath,
+            { dereference: true },
+            err => {
+              if (err) {
+                console.error(
+                  `error copying file from ${details.absolutePath} to ${publicPath}`,
+                  err
+                )
+              }
             }
-          })
+          )
         }
 
         return `${pathPrefix}/static/${fileName}`

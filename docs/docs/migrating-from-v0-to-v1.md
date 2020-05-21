@@ -292,7 +292,7 @@ exactly the data they need.
 
 There will be a more in-depth tutorial and GraphQL-specific documentation soon
 but in the meantime, check out https://graphql.org/ and play around on Gatsby's
-built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
+built-in GraphQL IDE (Graph_i_QL) which can be reached when you start the
 development server.
 
 At this point you should have working markdown pages when you run `npm run develop`! Now start gradually adding back what you had in your wrapper component

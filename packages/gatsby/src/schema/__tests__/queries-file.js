@@ -3,7 +3,6 @@ const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 

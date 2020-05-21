@@ -102,7 +102,7 @@ At the root of a Gatsby app run `gatsby build` to do a production build of a sit
 | `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See https://www.gatsbyjs.org/docs/performance-tracing/         |                               |
 | `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                   |            `false`            |
 
-For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud) this provides another way to prefix paths.
+For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud),the environment variable `PREFIX_PATHS` can be set to `true` to provide another way to prefix paths.
 
 ### `serve`
 
@@ -117,7 +117,7 @@ At the root of a Gatsby app run `gatsby serve` to serve the production build of 
 |  `-o`, `--open`  | Open the site in your (default) browser for you                                          |                               |
 | `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). | `env.PREFIX_PATHS` or `false` |
 
-For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag this provides another way to prefix paths.
+For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud),the environment variable `PREFIX_PATHS` can be set to `true` to provide another way to prefix paths.
 
 ### `clean`
 

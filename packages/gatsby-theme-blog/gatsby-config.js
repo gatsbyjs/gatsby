@@ -1,4 +1,5 @@
 module.exports = options => {
+  let {disableThemeUiStyling = false} = options
   return {
     plugins: [
       {
@@ -8,7 +9,9 @@ module.exports = options => {
       `gatsby-plugin-react-helmet`,
       `gatsby-plugin-twitter`,
       `gatsby-plugin-emotion`,
-      `gatsby-plugin-theme-ui`,
-    ],
+      !disableThemeUiStyling && {
+        resolve: `gatsby-plugin-theme-ui`,
+      }
+    ].filter(Boolean)
   }
 }

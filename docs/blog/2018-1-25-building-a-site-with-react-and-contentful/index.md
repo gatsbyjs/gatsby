@@ -117,7 +117,7 @@ Here are more examples of pages I created. This is the photo gallery page:
 ```jsx
 import React from "react"
 
-export default ({ data }) => {
+export default function Gallery({ data }) {
   console.log(data)
   // The next line is where the code drills deeper into the data structure to finally get to photos.
   // In order to create the correct order here, follow the structure of the GraphQL query.
@@ -171,7 +171,7 @@ Because each entry was inconsistent, my friends helped me figure out a way to us
 ```jsx
 import React from "react"
 
-export default ({ data }) => {
+export default function TricksCommands({ data }) {
   const tricks = data.allContentfulTricksCommands.edges
   console.log(tricks)
   console.log(data)

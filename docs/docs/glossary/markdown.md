@@ -12,7 +12,7 @@ Markdown is a plain text syntax for writing text documents that can be transform
 Markdown dates back to 2004, when John Gruber published the original [Markdown syntax guide](https://daringfireball.net/projects/markdown/syntax). Gruber, along with Aaron Swartz, created Markdown with two goals:
 
 1. to make Markdown <q>as easy-to-read and easy-to-write as is feasible.</q>; and
-1. to support inline HTML within Markdown-formatted text.
+2. to support inline HTML within Markdown-formatted text.
 
 Text-to-HTML filters such as [Textile](https://textile-lang.com/) define a syntax that replaces a wide range of HTML elements. Other filters, such as [reStructuredText](https://docutils.readthedocs.io/en/sphinx-docs/user/rst/quickstart.html), do not support inline HTML tags.
 
