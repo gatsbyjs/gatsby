@@ -135,6 +135,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `wordpress.mdx`,
     },
     {
+      label: `Add Storybook - JavaScript`,
+      value: `storybook.mdx`,
+    },
+    {
       label: `Add Storybook - TypeScript`,
       value: `storybook-ts.mdx`,
     },
