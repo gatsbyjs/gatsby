@@ -7,6 +7,16 @@
     - Web Development
     - Featured
     - Documentation
+- title: Spotify.Design
+  main_url: https://spotify.design/
+  url: https://spotify.design/
+  description: >
+    Spotify Design's team site! Read their blog and meet Spotify designers.
+  featured: true
+  categories:
+    - Featured
+    - Music
+    - Blog
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -5241,6 +5251,19 @@
   source_url: https://github.com/ERS-HCL/gatsby-ershcl-app
   built_by: Tarun Kumar Sukhu
   built_by_url: https://github.com/tsukhu
+- title: Ben Shi
+  url: https://hbish.com/
+  main_url: https://hbish.com/
+  source_url: https://github.com/hbish/hbish.com
+  description: >
+    A personal website of Ben Shi, a technologist from Sydney, Australia.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Ben Shi
+  built_by_url: https://hbish.com/
+  featured: false
 - title: Sandbox
   url: https://www.sandboxneu.com/
   main_url: https://www.sandboxneu.com/
@@ -10647,4 +10670,53 @@
     - Programming
   built_by: Chad Lee
   built_by_url: https://github.com/chadly
+  featured: false
+- title: KAIGO in JAPAN
+  main_url: https://kaigo-in-japan.jp
+  url: https://kaigo-in-japan.jp
+  description: >
+    KAIGO in JAPAN is a website for those who are planning to work in the care work field in Japan. We built a multilingual site on Gatsby. One of them is a special language called Easy-Japanese with various ruby tags.
+  categories:
+    - Healthcare
+    - Nonprofit
+    - Web Development
+    - Programming
+  built_by: hgw
+  built_by_url: https://shunyahagiwara.com/
+- title: Dondoko Susumu Website
+  url: https://xn--28jma5da5l6e.com/en/
+  main_url: https://xn--28jma5da5l6e.com/en/
+  source_url: https://github.com/dondoko-susumu/website-v2
+  description: >
+    The Web site of Dondoko Susumu, a Japanese cartoonist. His cartoons have been posted. It is internationalized into 12 languages.
+  categories:
+    - Blog
+    - Entertainment
+    - Gallery
+    - Landing Page
+  built_by: Dondoko Susumu
+  built_by_url: https://xn--28jma5da5l6e.com/en/
+- title: Raymond Ware
+  url: https://www.raymondware.com
+  main_url: https://www.raymondware.com
+  description: >
+    Seattle web developer portfolio site.
+  categories:
+    - Portfolio
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Raymond Ware
+  built_by_url: https://github.com/raymondware
+  featured: false
+- title: Blog - Thanawat Gulati
+  main_url: https://testing.thanawatgulati.com
+  url: https://testing.thanawatgulati.com
+  source_url: https://github.com/thanawatgulati/thanawatgulati-blog
+  description: >
+    Thanawat Gulati - Blog , Work experience portfolio and more.
+  categories:
+    - Blog
+  built_by: Thanawat Gulati
+  built_by_url: https://twitter.com/mjamesvevo
   featured: false

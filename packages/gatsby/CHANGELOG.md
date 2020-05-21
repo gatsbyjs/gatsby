@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.22.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.3...gatsby@2.22.4) (2020-05-20)
+
+**Note:** Version bump only for package gatsby
+
+## [2.22.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.2...gatsby@2.22.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby
+
+## [2.22.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.1...gatsby@2.22.2) (2020-05-20)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** create lock per service, rather than per site ([#24252](https://github.com/gatsbyjs/gatsby/issues/24252)) ([718deb3](https://github.com/gatsbyjs/gatsby/commit/718deb3))
+
+## [2.22.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.0...gatsby@2.22.1) (2020-05-20)
+
+**Note:** Version bump only for package gatsby
+
+# [2.22.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.40...gatsby@2.22.0) (2020-05-19)
+
+### Features
+
+- **gatsby:** Prompt users to restart process on gatsby-config & gatsby-node changes ([#22759](https://github.com/gatsbyjs/gatsby/issues/22759)) ([d4ec5e5](https://github.com/gatsbyjs/gatsby/commit/d4ec5e5))
+
+## [2.21.40](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.39...gatsby@2.21.40) (2020-05-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.39](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.38...gatsby@2.21.39) (2020-05-19)
+
+### Performance Improvements
+
+- **gatsby:** Enable fast filters for $regex/$glob ([#24188](https://github.com/gatsbyjs/gatsby/issues/24188)) ([acfc455](https://github.com/gatsbyjs/gatsby/commit/acfc455))
+
+## [2.21.38](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.37...gatsby@2.21.38) (2020-05-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.37](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.36...gatsby@2.21.37) (2020-05-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.36](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.35...gatsby@2.21.36) (2020-05-18)
+
+**Note:** Version bump only for package gatsby
+
+## [2.21.35](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.34...gatsby@2.21.35) (2020-05-18)
+
+### Performance Improvements
+
+- **gatsby:** Enable fast filters for \$nin comparator ([#24184](https://github.com/gatsbyjs/gatsby/issues/24184)) ([8e3428f](https://github.com/gatsbyjs/gatsby/commit/8e3428f))
+
+## [2.21.34](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.33...gatsby@2.21.34) (2020-05-18)
+
+### Features
+
+- **gatsby:** Warn when pageContext is over 500k ([#23310](https://github.com/gatsbyjs/gatsby/issues/23310)) ([02bdba9](https://github.com/gatsbyjs/gatsby/commit/02bdba9))
+
 ## [2.21.33](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.32...gatsby@2.21.33) (2020-05-15)
 
 ### Performance Improvements

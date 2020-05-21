@@ -147,6 +147,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Ava`,
       value: `ava.mdx`,
     },
+    {
+      label: `Add Preact`,
+      value: `preact.mdx`,
+    },
   ]
 
   return (
