@@ -22,7 +22,7 @@ info setting up SSL certificate (may require elevated permissions/sudo)
 Password:
 ```
 
-On windows, the prompt will differ:
+On Windows, the prompt will differ:
 
 ```text
 A password is required to access the secure certificate authority key
@@ -49,7 +49,7 @@ To install `certutil`, you need to install the `nss tools` package(s). The exact
 
 #### Linux
 
-On a linux OS, you should be able to run one of the following, depending on your Linux distro:
+On a Linux OS, you should be able to run one of the following, depending on your Linux distro:
 
 ```shell
 # Debian based (Ubuntu)
@@ -62,7 +62,7 @@ sudo yum install nss-tools
 sudo zypper install mozilla-nss-tools
 ```
 
-#### MacOS
+#### macOS
 
 Run the following command:
 
