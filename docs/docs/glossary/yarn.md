@@ -57,8 +57,8 @@ Using Yarn to install packages generates a `yarn.lock` file. The `yarn.lock` tra
 
 ### Learn more about Yarn
 
+- [The package.json guide](https://nodejs.dev/learn/the-package-json-guide) from Nodejs.dev
 - [Yarn](https://yarnpkg.com/) official website
-- [The package.json guide](https://nodejs.dev/the-package-json-guide) from Nodejs.dev
 - [Building a Theme](/tutorial/building-a-theme/)
 - [Gatsby Theme Authoring](https://egghead.io/courses/gatsby-theme-authoring) from egghead.io
 - [How to change your default package manager for your next project?](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) from the Gatsby CLI docs
