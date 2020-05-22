@@ -24,5 +24,5 @@ const CodeBlock = preProps => {
 
 export default {
   pre: CodeBlock,
-  ...headings
+  ...headings,
 }

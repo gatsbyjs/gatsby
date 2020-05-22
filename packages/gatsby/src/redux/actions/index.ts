@@ -6,13 +6,13 @@ import * as internalActions from "./internal"
 import * as publicActions from "./public"
 import {
   actions as restrictedActions,
-  availableActionsByAPI
+  availableActionsByAPI,
 } from "./restricted"
 
 export const actions = {
   ...internalActions,
   ...publicActions,
-  ...restrictedActions
+  ...restrictedActions,
 }
 
 // Deprecated, remove in v3

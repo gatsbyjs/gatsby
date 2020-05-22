@@ -64,7 +64,7 @@ class Search extends Component {
     searchResults: [],
     isLoading: true,
     isError: false,
-    searchQuery: ""
+    searchQuery: "",
   }
   /**
    * React lifecycle method to fetch the data
@@ -155,7 +155,7 @@ class Search extends Component {
                 width: "100%",
                 borderCollapse: "collapse",
                 borderRadius: "4px",
-                border: "1px solid #d3d3d3"
+                border: "1px solid #d3d3d3",
               }}
             >
               <thead style={{ border: "1px solid #808080" }}>
@@ -167,7 +167,7 @@ class Search extends Component {
                       fontSize: "14px",
                       fontWeight: 600,
                       borderBottom: "2px solid #d3d3d3",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Book ISBN
@@ -179,7 +179,7 @@ class Search extends Component {
                       fontSize: "14px",
                       fontWeight: 600,
                       borderBottom: "2px solid #d3d3d3",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Book Title
@@ -191,7 +191,7 @@ class Search extends Component {
                       fontSize: "14px",
                       fontWeight: 600,
                       borderBottom: "2px solid #d3d3d3",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Book Author
@@ -205,7 +205,7 @@ class Search extends Component {
                       <td
                         style={{
                           fontSize: "14px",
-                          border: "1px solid #d3d3d3"
+                          border: "1px solid #d3d3d3",
                         }}
                       >
                         {item.isbn}
@@ -213,7 +213,7 @@ class Search extends Component {
                       <td
                         style={{
                           fontSize: "14px",
-                          border: "1px solid #d3d3d3"
+                          border: "1px solid #d3d3d3",
                         }}
                       >
                         {item.title}
@@ -221,7 +221,7 @@ class Search extends Component {
                       <td
                         style={{
                           fontSize: "14px",
-                          border: "1px solid #d3d3d3"
+                          border: "1px solid #d3d3d3",
                         }}
                       >
                         {item.author}
@@ -290,10 +290,10 @@ exports.createPages = ({ actions }) => {
                 searchSanitizer: "Lower Case",
                 TitleIndex: true,
                 AuthorIndex: true,
-                SearchByTerm: true
-              }
-            }
-          }
+                SearchByTerm: true,
+              },
+            },
+          },
         })
         resolve()
       })
@@ -350,7 +350,7 @@ class ClientSearch extends Component {
     removeStopWords: false,
     searchQuery: "",
     selectedStrategy: "",
-    selectedSanitizer: ""
+    selectedSanitizer: "",
   }
   /**
    * React lifecycle method that will inject the data into the state.
@@ -363,7 +363,7 @@ class ClientSearch extends Component {
         indexByAuthor: engine.AuthorIndex,
         termFrequency: engine.SearchByTerm,
         selectedSanitizer: engine.searchSanitizer,
-        selectedStrategy: engine.indexStrategy
+        selectedStrategy: engine.indexStrategy,
       }
     }
     return null
@@ -382,7 +382,7 @@ class ClientSearch extends Component {
       removeStopWords,
       termFrequency,
       indexByTitle,
-      indexByAuthor
+      indexByAuthor,
     } = this.state
     const { books } = this.props
 
@@ -472,7 +472,7 @@ class ClientSearch extends Component {
                 width: "100%",
                 borderCollapse: "collapse",
                 borderRadius: "4px",
-                border: "1px solid #d3d3d3"
+                border: "1px solid #d3d3d3",
               }}
             >
               <thead style={{ border: "1px solid #808080" }}>
@@ -484,7 +484,7 @@ class ClientSearch extends Component {
                       fontSize: "14px",
                       fontWeight: 600,
                       borderBottom: "2px solid #d3d3d3",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Book ISBN
@@ -496,7 +496,7 @@ class ClientSearch extends Component {
                       fontSize: "14px",
                       fontWeight: 600,
                       borderBottom: "2px solid #d3d3d3",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Book Title
@@ -508,7 +508,7 @@ class ClientSearch extends Component {
                       fontSize: "14px",
                       fontWeight: 600,
                       borderBottom: "2px solid #d3d3d3",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Book Author
@@ -522,7 +522,7 @@ class ClientSearch extends Component {
                       <td
                         style={{
                           fontSize: "14px",
-                          border: "1px solid #d3d3d3"
+                          border: "1px solid #d3d3d3",
                         }}
                       >
                         {item.isbn}
@@ -530,7 +530,7 @@ class ClientSearch extends Component {
                       <td
                         style={{
                           fontSize: "14px",
-                          border: "1px solid #d3d3d3"
+                          border: "1px solid #d3d3d3",
                         }}
                       >
                         {item.title}
@@ -538,7 +538,7 @@ class ClientSearch extends Component {
                       <td
                         style={{
                           fontSize: "14px",
-                          border: "1px solid #d3d3d3"
+                          border: "1px solid #d3d3d3",
                         }}
                       >
                         {item.author}

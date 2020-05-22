@@ -29,7 +29,7 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
-      force: true
+      force: true,
     })
   })
 
@@ -58,7 +58,7 @@ exports.onPostBuild = () => {
 // XXX this should probably be a plugin or something.
 exports.sourceNodes = async ({
   actions: { createTypes, createNode },
-  createContentDigest
+  createContentDigest,
 }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
@@ -126,24 +126,24 @@ exports.sourceNodes = async ({
     children: [],
     internal: {
       type: `Example`,
-      contentDigest: createContentDigest(resultData)
-    }
+      contentDigest: createContentDigest(resultData),
+    },
   })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
   const currentCommitSHA = require(`child_process`)
     .execSync(`git rev-parse HEAD`, {
-      encoding: `utf-8`
+      encoding: `utf-8`,
     })
     .trim()
 
   actions.setWebpackConfig({
     plugins: [
       plugins.define({
-        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA)
-      })
-    ]
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
   })
 }
 
@@ -169,8 +169,8 @@ exports.createResolvers = ({ createResolvers }) => {
           }
 
           return []
-        }
-      }
-    }
+        },
+      },
+    },
   })
 }

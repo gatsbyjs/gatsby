@@ -15,9 +15,9 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-      plugins: [`gatsby-remark-smartypants`]
-    }
-  }
+      plugins: [`gatsby-remark-smartypants`],
+    },
+  },
 ]
 ```
 
@@ -37,11 +37,11 @@ plugins: [
         {
           resolve: "gatsby-remark-smartypants",
           options: {
-            dashes: "oldschool"
-          }
-        }
-      ]
-    }
-  }
+            dashes: "oldschool",
+          },
+        },
+      ],
+    },
+  },
 ]
 ```

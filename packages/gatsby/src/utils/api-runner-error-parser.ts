@@ -7,10 +7,10 @@ const errorParser = ({ err }: { err: unknown }): IMatch => {
       cb: (match: RegExpMatchArray): IMatch => {
         return {
           id: `11330`,
-          context: { sourceMessage: match[0], arg: match[1] }
+          context: { sourceMessage: match[0], arg: match[1] },
         }
-      }
-    }
+      },
+    },
   ]
 
   let structured: IMatch | undefined
@@ -33,7 +33,7 @@ const errorParser = ({ err }: { err: unknown }): IMatch => {
     const matched = errorMessage?.match(regex)
     if (matched) {
       structured = {
-        ...cb(matched)
+        ...cb(matched),
       }
       break
     }
@@ -44,7 +44,7 @@ const errorParser = ({ err }: { err: unknown }): IMatch => {
     return {
       id: `11321`,
       context: { sourceMessage: errorMessage || `` },
-      error: err instanceof Error ? err : undefined
+      error: err instanceof Error ? err : undefined,
     }
   }
 

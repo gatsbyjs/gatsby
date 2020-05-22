@@ -8,7 +8,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 const LayerContentWrapper = ({
   index,
   displayCodeFullWidth = false,
-  children
+  children,
 }) => (
   <div
     id={`tabpanel${index}`}
@@ -27,11 +27,11 @@ const LayerContentWrapper = ({
         gridTemplateAreas: displayCodeFullWidth
           ? `"content" "example"`
           : `"example content"`,
-        gridGap: 6
+        gridGap: 6,
       },
       "& p:last-child": {
-        mb: 0
-      }
+        mb: 0,
+      },
     }}
   >
     {children}
@@ -43,7 +43,7 @@ const ExampleWrapper = ({ children }) => (
     sx={{
       gridArea: `example`,
       borderRadius: 2,
-      overflow: `auto`
+      overflow: `auto`,
     }}
   >
     {children}
@@ -57,7 +57,7 @@ const CodeWrapper = ({
   sourcesLength = 0,
   sourceIndex,
   setSourceIndex,
-  children
+  children,
 }) => (
   <Fragment>
     {title && (
@@ -71,7 +71,7 @@ const CodeWrapper = ({
           borderTopRightRadius: 2,
           borderTopLeftRadius: 2,
           width: `100%`,
-          mx: `auto`
+          mx: `auto`,
         }}
         className="gatsby-code-title"
       >
@@ -91,23 +91,23 @@ const CodeWrapper = ({
               whiteSpace: `nowrap`,
               ":focus, :hover, :active": {
                 boxShadow: `floating`,
-                color: `white`
+                color: `white`,
               },
               ":hover": {
-                backgroundColor: `purple.40`
+                backgroundColor: `purple.40`,
               },
               ":focus": {
-                backgroundColor: `purple.50`
+                backgroundColor: `purple.50`,
               },
               ":active": {
-                backgroundColor: `purple.60`
+                backgroundColor: `purple.60`,
               },
               ":focus::before": {
-                content: `"cycle source "`
+                content: `"cycle source "`,
               },
               ":hover::before": {
-                content: `"cycle source "`
-              }
+                content: `"cycle source "`,
+              },
             }}
             onClick={() => setSourceIndex((sourceIndex + 1) % sourcesLength)}
             aria-label="Update code source"

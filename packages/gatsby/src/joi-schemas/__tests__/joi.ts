@@ -7,7 +7,7 @@ describe(`gatsby config`, () => {
     const result = await gatsbyConfigSchema.validate(config)
     expect(result).toEqual(
       expect.objectContaining({
-        pathPrefix: ``
+        pathPrefix: ``,
       })
     )
   })
@@ -15,34 +15,34 @@ describe(`gatsby config`, () => {
   it(`strips trailing slashes from url fields`, async () => {
     const config = {
       pathPrefix: `/blog///`,
-      assetPrefix: `https://cdn.example.com/`
+      assetPrefix: `https://cdn.example.com/`,
     }
 
     const result = await gatsbyConfigSchema.validate(config)
     expect(result).toEqual(
       expect.objectContaining({
         pathPrefix: `/blog`,
-        assetPrefix: `https://cdn.example.com`
+        assetPrefix: `https://cdn.example.com`,
       })
     )
   })
 
   it(`allows assetPrefix to be full URL`, async () => {
     const config = {
-      assetPrefix: `https://cdn.example.com/`
+      assetPrefix: `https://cdn.example.com/`,
     }
 
     const result = await gatsbyConfigSchema.validate(config)
     expect(result).toEqual(
       expect.objectContaining({
-        assetPrefix: `https://cdn.example.com`
+        assetPrefix: `https://cdn.example.com`,
       })
     )
   })
 
   it(`allows assetPrefix to be a URL with nested paths`, async () => {
     const config = {
-      assetPrefix: `https://cdn.example.com/some/nested/path`
+      assetPrefix: `https://cdn.example.com/some/nested/path`,
     }
 
     const result = await gatsbyConfigSchema.validate(config)
@@ -52,7 +52,7 @@ describe(`gatsby config`, () => {
   it(`allows relative paths for url fields`, async () => {
     const config = {
       pathPrefix: `/blog`,
-      assetPrefix: `https://cdn.example.com`
+      assetPrefix: `https://cdn.example.com`,
     }
 
     const result = await gatsbyConfigSchema.validate(config)
@@ -62,14 +62,14 @@ describe(`gatsby config`, () => {
   it(`strips trailing slash and add leading slash to pathPrefix`, async () => {
     const config = {
       pathPrefix: `blog/`,
-      assetPrefix: `https://cdn.example.com/`
+      assetPrefix: `https://cdn.example.com/`,
     }
 
     const result = await gatsbyConfigSchema.validate(config)
     expect(result).toEqual(
       expect.objectContaining({
         pathPrefix: `/blog`,
-        assetPrefix: `https://cdn.example.com`
+        assetPrefix: `https://cdn.example.com`,
       })
     )
   })
@@ -77,7 +77,7 @@ describe(`gatsby config`, () => {
   it(`does not allow pathPrefix to be full URL`, async () => {
     expect.assertions(1)
     const config = {
-      pathPrefix: `https://google.com`
+      pathPrefix: `https://google.com`,
     }
 
     try {
@@ -91,7 +91,7 @@ describe(`gatsby config`, () => {
     expect.assertions(1)
     const config = {
       assetPrefix: `/assets`,
-      pathPrefix: `/blog`
+      pathPrefix: `/blog`,
     }
 
     try {
@@ -111,8 +111,8 @@ describe(`node schema`, () => {
         contentDigest: `bar`,
 
         // this is added by gatsby
-        owner: `gatsby-source-foo`
-      }
+        owner: `gatsby-source-foo`,
+      },
     }
 
     const { error } = nodeSchema.validate(node)
@@ -127,8 +127,8 @@ describe(`node schema`, () => {
         contentDigest: `bar`,
 
         // this is added by gatsby
-        owner: `gatsby-source-foo`
-      }
+        owner: `gatsby-source-foo`,
+      },
     }
 
     const { error } = nodeSchema.validate(node)
@@ -147,8 +147,8 @@ describe(`node schema`, () => {
         customField: `this should cause failure`,
 
         // this is added by gatsby
-        owner: `gatsby-source-foo`
-      }
+        owner: `gatsby-source-foo`,
+      },
     }
 
     const { error } = nodeSchema.validate(node)

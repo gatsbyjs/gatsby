@@ -2,18 +2,18 @@ jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
   return {
     ...fs,
-    readFileSync: jest.fn(file => `${file}::file`)
+    readFileSync: jest.fn(file => `${file}::file`),
   }
 })
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panic: jest.fn(),
-    info: jest.fn()
+    info: jest.fn(),
   }
 })
 jest.mock(`devcert`, () => {
   return {
-    certificateFor: jest.fn()
+    certificateFor: jest.fn(),
   }
 })
 
@@ -42,7 +42,7 @@ describe(`gets ssl certs`, () => {
           name: `mock-cert`,
           certFile: `foo.crt`,
           keyFile: `foo.key`,
-          directory: `/app/directory`
+          directory: `/app/directory`,
         })
       ).resolves.toMatchSnapshot()
     })
@@ -52,7 +52,7 @@ describe(`gets ssl certs`, () => {
           name: `mock-cert`,
           certFile: `/foo.crt`,
           keyFile: `/foo.key`,
-          directory: `/app/directory`
+          directory: `/app/directory`,
         })
       ).resolves.toMatchSnapshot()
     })
@@ -64,8 +64,8 @@ describe(`gets ssl certs`, () => {
         getCaPath: true,
         skipCertutilInstall: false,
         ui: {
-          getWindowsEncryptionPassword: expect.any(Function)
-        }
+          getWindowsEncryptionPassword: expect.any(Function),
+        },
       })
       expect(reporter.info.mock.calls).toMatchSnapshot()
     })

@@ -43,7 +43,7 @@ export const sanitizeStructuredStackTrace = (
       fileName: callSite.getFileName(),
       functionName: callSite.getFunctionName(),
       columnNumber: callSite.getColumnNumber(),
-      lineNumber: callSite.getLineNumber()
+      lineNumber: callSite.getLineNumber(),
     }
   })
 }
@@ -71,14 +71,14 @@ export function getErrorFormatter(): PrettyError {
 
   prettyError.appendStyle({
     "pretty-error": {
-      marginTop: 1
+      marginTop: 1,
     },
     "pretty-error > header": {
-      background: `red`
+      background: `red`,
     },
     "pretty-error > header > colon": {
-      color: `white`
-    }
+      color: `white`,
+    },
   })
 
   if (process.env.FORCE_COLOR === `0`) {

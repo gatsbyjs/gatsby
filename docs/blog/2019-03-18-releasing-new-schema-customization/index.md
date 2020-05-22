@@ -52,12 +52,12 @@ createResolvers({
       type: `[String!]!`,
       resolve(source, args, context, info) {
         const authors = context.nodeModel.getAllNodes({
-          type: `AuthorJson`
+          type: `AuthorJson`,
         })
         return authors.map(author => author.name)
-      }
-    }
-  }
+      },
+    },
+  },
 })
 ```
 
@@ -80,22 +80,22 @@ exports.sourceNodes = ({ actions, schema }) => {
           resolve(parent, args, context) {
             return context.nodeModel.getNodeById({
               id: parent.author,
-              type: `BlogJson`
+              type: `BlogJson`,
             })
-          }
+          },
         },
         author: {
           type: `AuthorJson`,
           resolve(parent, args, context) {
             return context.nodeModel.getNodeById({
               id: parent.author,
-              type: `AuthorJson`
+              type: `AuthorJson`,
             })
-          }
-        }
+          },
+        },
       },
-      interfaces: [`Node`]
-    })
+      interfaces: [`Node`],
+    }),
   ])
 }
 ```

@@ -25,13 +25,13 @@ class Plugins extends Component {
             alignItems: `center`,
             display: `flex`,
             flexDirection: `column`,
-            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`
+            minHeight: `calc(100vh - (${sizes.headerHeight} + ${sizes.bannerHeight}))`,
           }}
         >
           <div
             css={{
               display: `flex`,
-              flexDirection: `column`
+              flexDirection: `column`,
             }}
           >
             <img
@@ -40,7 +40,7 @@ class Plugins extends Component {
                 display: `inline-block`,
                 height: t => t.space[12],
                 width: t => t.space[12],
-                mx: `auto`
+                mx: `auto`,
               }}
               alt=""
             />
@@ -50,7 +50,7 @@ class Plugins extends Component {
                 fontWeight: `heading`,
                 mx: 5,
                 mb: 0,
-                textAlign: `center`
+                textAlign: `center`,
               }}
             >
               Welcome to the Gatsby Plugin Library!
@@ -59,47 +59,47 @@ class Plugins extends Component {
               items={[
                 {
                   text: `SEO?`,
-                  pluginName: `gatsby-plugin-react-helmet`
+                  pluginName: `gatsby-plugin-react-helmet`,
                 },
                 {
                   text: `responsive images?`,
-                  pluginName: `gatsby-image`
+                  pluginName: `gatsby-image`,
                 },
                 {
                   text: `offline support?`,
-                  pluginName: `gatsby-plugin-offline`
+                  pluginName: `gatsby-plugin-offline`,
                 },
                 {
                   text: `Sass support?`,
-                  pluginName: `gatsby-plugin-sass`
+                  pluginName: `gatsby-plugin-sass`,
                 },
                 {
                   text: `a sitemap?`,
-                  pluginName: `gatsby-plugin-sitemap`
+                  pluginName: `gatsby-plugin-sitemap`,
                 },
                 {
                   text: `an RSS feed?`,
-                  pluginName: `gatsby-plugin-feed`
+                  pluginName: `gatsby-plugin-feed`,
                 },
                 {
                   text: `great typography?`,
-                  pluginName: `gatsby-plugin-typography`
+                  pluginName: `gatsby-plugin-typography`,
                 },
                 {
                   text: `TypeScript?`,
-                  pluginName: `gatsby-plugin-typescript`
+                  pluginName: `gatsby-plugin-typescript`,
                 },
                 {
                   text: `Google Analytics?`,
-                  pluginName: `gatsby-plugin-google-analytics`
+                  pluginName: `gatsby-plugin-google-analytics`,
                 },
                 {
                   text: `WordPress integration?`,
-                  pluginName: `gatsby-source-wordpress`
+                  pluginName: `gatsby-source-wordpress`,
                 },
                 {
-                  text: `anything?`
-                }
+                  text: `anything?`,
+                },
               ]}
               color="lilac"
             />
@@ -108,7 +108,7 @@ class Plugins extends Component {
               sx={{
                 color: `textMuted`,
                 fontSize: 2,
-                textAlign: `center`
+                textAlign: `center`,
               }}
             >
               Please use the search bar to find plugins that will make your

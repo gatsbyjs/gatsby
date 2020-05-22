@@ -23,7 +23,7 @@ In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link 
 
 ```js:title=gatsby-config.js
 module.exports = {
-  pathPrefix: `/examplerepository`
+  pathPrefix: `/examplerepository`,
 }
 ```
 

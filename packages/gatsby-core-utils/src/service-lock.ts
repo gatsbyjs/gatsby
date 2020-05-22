@@ -50,7 +50,7 @@ export const createServiceLock = async (
   try {
     const unlock = await lockfile.lock(lockfileDir, {
       // Use the minimum stale duration
-      stale: 5000
+      stale: 5000,
     })
 
     // Once the directory for this site is locked, we write a file to the dir with the service metadata

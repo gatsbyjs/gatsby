@@ -10,7 +10,7 @@ module.exports = async (oldVal, newVal) => {
     bColor: chalk.green,
     includeChangeCounts: true,
     contextLines: 3,
-    expand: false
+    expand: false,
   }
 
   let diffText = diff(oldVal, newVal, options)

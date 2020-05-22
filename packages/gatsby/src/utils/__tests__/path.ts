@@ -3,7 +3,7 @@ import {
   withBasePath,
   getCommonDir,
   truncatePath,
-  tooLongSegmentsInPath
+  tooLongSegmentsInPath,
 } from "../path"
 import os from "os"
 
@@ -66,49 +66,49 @@ describe(`paths`, () => {
         {
           path1: `/Users/misiek/dev/gatsby-project`,
           path2: `/Users/misiek/dev/gatsby-project/src/pages/index.js`,
-          expected: `/Users/misiek/dev/gatsby-project`
-        }
+          expected: `/Users/misiek/dev/gatsby-project`,
+        },
       ],
       [
         `posix: path1 is sub-path of path2`,
         {
           path1: `/Users/misiek/dev/gatsby-project/src/pages/index.js`,
           path2: `/Users/misiek/dev/gatsby-project`,
-          expected: `/Users/misiek/dev/gatsby-project`
-        }
+          expected: `/Users/misiek/dev/gatsby-project`,
+        },
       ],
       [
         `posix: paths are not sub-paths of one another`,
         {
           path1: `/Users/misiek/dev/gatsby-project/monorepo-packages/site`,
           path2: `/Users/misiek/dev/gatsby-project/node_modules/gatsby-theme-foo/src/pages/index.js`,
-          expected: `/Users/misiek/dev/gatsby-project`
-        }
+          expected: `/Users/misiek/dev/gatsby-project`,
+        },
       ],
       [
         `win32: path2 is sub-path of path1`,
         {
           path1: `C:\\Users\\misiek\\dev\\gatsby-project`,
           path2: `C:\\Users\\misiek\\dev\\gatsby-project/src/pages/index.js`,
-          expected: `C:/Users/misiek/dev/gatsby-project`
-        }
+          expected: `C:/Users/misiek/dev/gatsby-project`,
+        },
       ],
       [
         `win32: path1 is sub-path of path2`,
         {
           path1: `C:\\Users\\misiek\\dev\\gatsby-project/src/pages/index.js`,
           path2: `C:\\Users\\misiek\\dev\\gatsby-project`,
-          expected: `C:/Users/misiek/dev/gatsby-project`
-        }
+          expected: `C:/Users/misiek/dev/gatsby-project`,
+        },
       ],
       [
         `win32: paths are not sub-paths of one another`,
         {
           path1: `C:\\Users\\misiek\\dev\\gatsby-project\\monorepo-packages\\site`,
           path2: `C:\\Users\\misiek\\dev\\gatsby-project\\node_modules\\gatsby-theme-foo\\src\\pages\\index.js`,
-          expected: `C:/Users/misiek/dev/gatsby-project`
-        }
-      ]
+          expected: `C:/Users/misiek/dev/gatsby-project`,
+        },
+      ],
     ])(`%s`, (_label, { path1, path2, expected }) => {
       expect(getCommonDir(path1, path2)).toBe(expected)
     })
@@ -120,16 +120,16 @@ describe(`paths`, () => {
         `doesn't touch short paths`,
         {
           input: `/short/path/`,
-          expected: []
-        }
+          expected: [],
+        },
       ],
       [
         `finds long segments`,
         {
           input: `/lo${`o`.repeat(500)}ng/path/`,
-          expected: [`lo${`o`.repeat(500)}ng`]
-        }
-      ]
+          expected: [`lo${`o`.repeat(500)}ng`],
+        },
+      ],
     ])(`%s`, (_label, { input, expected }) => {
       expect(tooLongSegmentsInPath(input)).toEqual(expected)
     })

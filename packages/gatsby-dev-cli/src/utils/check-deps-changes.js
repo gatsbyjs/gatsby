@@ -1,13 +1,13 @@
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const {
-  getMonorepoPackageJsonPath
+  getMonorepoPackageJsonPath,
 } = require(`./get-monorepo-package-json-path`)
 const request = require(`request`)
 
 function difference(object, base) {
   function changes(object, base) {
-    return _.transform(object, function(result, value, key) {
+    return _.transform(object, function (result, value, key) {
       if (!_.isEqual(value, base[key])) {
         result[key] =
           _.isObject(value) && _.isObject(base[key])
@@ -33,7 +33,7 @@ exports.checkDepsChanges = async ({
   monoRepoPackages,
   root,
   isInitialScan,
-  ignoredPackageJSON
+  ignoredPackageJSON,
 }) => {
   let localPKGjson
   let packageNotInstalled = false
@@ -49,7 +49,7 @@ exports.checkDepsChanges = async ({
       )
       return {
         didDepsChanged: false,
-        packageNotInstalled
+        packageNotInstalled,
       }
     }
 
@@ -78,14 +78,14 @@ exports.checkDepsChanges = async ({
       )
       return {
         didDepsChanged: true,
-        packageNotInstalled
+        packageNotInstalled,
       }
     }
   }
 
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
-    root
+    root,
   })
   const monorepoPKGjsonString = fs.readFileSync(
     monoRepoPackageJsonPath,
@@ -98,7 +98,7 @@ exports.checkDepsChanges = async ({
       // so we need to not cause false positives
       return {
         didDepsChanged: false,
-        packageNotInstalled
+        packageNotInstalled,
       }
     }
   }
@@ -178,12 +178,12 @@ exports.checkDepsChanges = async ({
       }
       return {
         didDepsChanged: needPublishing,
-        packageNotInstalled
+        packageNotInstalled,
       }
     }
   }
   return {
     didDepsChanged: false,
-    packageNotInstalled
+    packageNotInstalled,
   }
 }

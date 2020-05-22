@@ -3,7 +3,7 @@ import { errorMap, defaultError } from "../error-map"
 test(`it defaults to generic error`, () => {
   expect(defaultError).toEqual(
     expect.objectContaining({
-      level: `ERROR`
+      level: `ERROR`,
     })
   )
 
@@ -17,7 +17,7 @@ test(`it supports structured lookups`, () => {
     expect.objectContaining({
       text: expect.any(Function),
       docsUrl: `https://gatsby.dev/debug-html`,
-      level: `ERROR`
+      level: `ERROR`,
     })
   )
 })

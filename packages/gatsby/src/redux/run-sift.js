@@ -9,14 +9,14 @@ const {
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
-  dbQueryToSiftQuery
+  dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
   addResolvedNodes,
-  getNode: siftGetNode
+  getNode: siftGetNode,
 } = require(`./nodes`)
 
 const FAST_OPS = [
@@ -28,7 +28,7 @@ const FAST_OPS = [
   `$gte`,
   `$in`,
   `$nin`,
-  `$regex` // Note: this includes $glob
+  `$regex`, // Note: this includes $glob
 ]
 
 // More of a testing mechanic, to verify whether last runSift call used Sift
@@ -113,7 +113,7 @@ function handleFirst(siftArgs, nodes) {
     ? 0
     : nodes.findIndex(
         sift({
-          $and: siftArgs
+          $and: siftArgs,
         })
       )
 
@@ -129,7 +129,7 @@ function handleMany(siftArgs, nodes) {
     ? nodes
     : nodes.filter(
         sift({
-          $and: siftArgs
+          $and: siftArgs,
         })
       )
 
@@ -259,8 +259,8 @@ const getBucketsForQueryFilter = (
     query: {
       // Note: comparator is verified to be a FilterOp in filterWithoutSift
       comparator /*: as FilterOp*/,
-      value: filterValue
-    }
+      value: filterValue,
+    },
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
@@ -380,7 +380,7 @@ const runFilterAndSort = (args: Object) => {
     firstOnly = false,
     nodeTypeNames,
     filtersCache,
-    stats
+    stats,
   } = args
 
   const result = applyFilters(
@@ -488,7 +488,7 @@ const filterToStats = (
   } else {
     return {
       filterPath: filterPath.concat(filter.path),
-      comparatorPath: comparatorPath.concat(filter.query.comparator)
+      comparatorPath: comparatorPath.concat(filter.query.comparator),
     }
   }
 }

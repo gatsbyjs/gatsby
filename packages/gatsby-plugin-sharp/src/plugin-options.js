@@ -6,7 +6,7 @@ const pluginDefaults = {
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
   lazyImageGeneration: true,
-  defaultQuality: 50
+  defaultQuality: 50,
 }
 
 const generalArgs = {
@@ -25,7 +25,7 @@ const generalArgs = {
   toFormat: ``,
   toFormatBase64: ``,
   sizeByPixelDensity: false,
-  rotate: 0
+  rotate: 0,
 }
 
 let pluginOptions = Object.assign({}, pluginDefaults)
@@ -61,7 +61,7 @@ exports.createTransformObject = args => {
     trim: args.trim ? args.trim : undefined,
     duotone: args.duotone ? args.duotone : null,
     fit: args.fit,
-    background: args.background
+    background: args.background,
   }
 
   // get all non falsey values
@@ -155,7 +155,7 @@ exports.removeDefaultValues = (args, pluginOptions) => {
     trim: args.trim ? args.trim : undefined,
     duotone: args.duotone || undefined,
     fit: args.fit,
-    background: args.background
+    background: args.background,
   }
 
   return _.omitBy(options, _.isNil)

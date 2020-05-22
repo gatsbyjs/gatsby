@@ -5,6 +5,6 @@ export const create = (): Worker =>
   new Worker(require.resolve(`./child`), {
     numWorkers: cpuCoreCount(),
     forkOptions: {
-      silent: false
-    }
+      silent: false,
+    },
   })

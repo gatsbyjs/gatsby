@@ -483,7 +483,7 @@ const possibleStandardNames = {
   y: `y`,
   ychannelselector: `yChannelSelector`,
   z: `z`,
-  zoomandpan: `zoomAndPan`
+  zoomandpan: `zoomAndPan`,
 }
 
 module.exports = possibleStandardNames

@@ -187,12 +187,12 @@ exports.createPages = ({ actions }) => {
   const dogData = [
     {
       name: "Fido",
-      breed: "Sheltie"
+      breed: "Sheltie",
     },
     {
       name: "Sparky",
-      breed: "Corgi"
-    }
+      breed: "Corgi",
+    },
   ]
   // highlight-end
 }
@@ -207,19 +207,19 @@ exports.createPages = ({ actions }) => {
   const dogData = [
     {
       name: "Fido",
-      breed: "Sheltie"
+      breed: "Sheltie",
     },
     {
       name: "Sparky",
-      breed: "Corgi"
-    }
+      breed: "Corgi",
+    },
   ]
   // highlight-start
   dogData.forEach(dog => {
     createPage({
       path: `/${dog.name}`,
       component: require.resolve(`./src/templates/dog-template.js`),
-      context: { dog }
+      context: { dog },
     })
   })
   // highlight-end

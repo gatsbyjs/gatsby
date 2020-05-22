@@ -9,7 +9,7 @@ it(`should create empty plan when the step has no resources`, done => {
     src: `
 # Hello, world!
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -33,7 +33,7 @@ it(`should create plan for File resources`, done => {
 
 <File path="./hi.md" content="#yo" />
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -66,7 +66,7 @@ it(`it should error if part of the recipe fails schema validation`, done => {
 
 ---
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -89,7 +89,7 @@ it(`it should error if the introduction step has a command`, done => {
 
 <File path="./hi.md" contentz="#yo" />
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -107,7 +107,7 @@ it(`it should error if the introduction step has a command`, done => {
 
 it(`it should error if no src or recipePath has been given`, done => {
   const initialContext = {
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -130,7 +130,7 @@ it(`it should error if invalid jsx is passed`, done => {
 
 <File path="./hi.md" contentz="#yo" /
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -156,7 +156,7 @@ it(`it should switch to done after the final apply step`, done => {
 
 <File path="${filePath}" content="#yo" />
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -195,7 +195,7 @@ it(`should store created/changed/deleted resources on the context after applying
 
 <File path="${filePath3}" content="#yo" />
     `,
-    currentStep: 0
+    currentStep: 0,
   }
   const service = interpret(
     recipeMachine.withContext(initialContext)
@@ -225,7 +225,7 @@ it.skip(`should create a plan from a url`, done => {
   const url = `https://gist.githubusercontent.com/johno/20503d2a2c80529096e60cd70260c9d8/raw/0145da93c17dcbf5d819a1ef3c97fa8713fad490/test-recipe.mdx`
   const initialContext = {
     recipePath: url,
-    currentStep: 0
+    currentStep: 0,
   }
 
   const service = interpret(

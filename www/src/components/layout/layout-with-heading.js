@@ -15,8 +15,8 @@ const LayoutWithHeading = props => {
 
         [mediaQueries.md]: {
           ml: t => t.sizes.pageHeadingDesktopWidth,
-          pb: 0
-        }
+          pb: 0,
+        },
       }}
     >
       {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
@@ -29,7 +29,7 @@ LayoutWithHeading.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
   pageTitle: PropTypes.string,
-  pageIcon: PropTypes.string
+  pageIcon: PropTypes.string,
 }
 
 export default LayoutWithHeading

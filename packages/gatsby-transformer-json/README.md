@@ -21,10 +21,10 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/`
-      }
-    }
-  ]
+        path: `./src/data/`,
+      },
+    },
+  ],
 }
 ```
 
@@ -120,19 +120,19 @@ Which would return:
     edges: [
       {
         node: {
-          value: "a"
-        }
+          value: "a",
+        },
       },
       {
         node: {
-          value: "b"
-        }
+          value: "b",
+        },
       },
       {
         node: {
-          value: "c"
-        }
-      }
+          value: "c",
+        },
+      },
     ]
   }
 }
@@ -152,10 +152,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-json`,
       options: {
-        typeName: `Json` // a fixed string
-      }
-    }
-  ]
+        typeName: `Json`, // a fixed string
+      },
+    },
+  ],
 }
 ```
 
@@ -201,10 +201,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-json`,
       options: {
-        typeName: ({ node, object, isArray }) => object.level
-      }
-    }
-  ]
+        typeName: ({ node, object, isArray }) => object.level,
+      },
+    },
+  ],
 }
 ```
 

@@ -50,7 +50,7 @@ function mett(): IMett {
           callback(e, eventName)
         })
       }
-    }
+    },
   }
 }
 

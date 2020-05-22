@@ -8,7 +8,7 @@ const Filters = ({
   filters,
   categoryKeys,
   aggregatedCategories,
-  setFilters
+  setFilters,
 }) => (
   <SidebarContainer>
     <SidebarHeader />

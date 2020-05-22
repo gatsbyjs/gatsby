@@ -38,10 +38,10 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "posts",
-        path: `${__dirname}/content/posts/`
-      }
-    }
-  ]
+        path: `${__dirname}/content/posts/`,
+      },
+    },
+  ],
 }
 ```
 
@@ -118,7 +118,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       // Generated value based on filepath with "blog" prefix. you
       // don't need a separating "/" before the value because
       // createFilePath returns a path with the leading "/".
-      value: `/blog${value}`
+      value: `/blog${value}`,
     })
   }
 }
@@ -207,7 +207,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: path.resolve(`./src/components/posts-page-layout.js`),
       // You can use the values in this context in
       // our page layout component
-      context: { id: node.id }
+      context: { id: node.id },
     })
   })
 }

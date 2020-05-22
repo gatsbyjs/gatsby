@@ -92,7 +92,7 @@ const getNode = node => {
 
               return {
                 name: attributeName,
-                value: attributeValue
+                value: attributeValue,
               }
             }
           }
@@ -102,7 +102,7 @@ const getNode = node => {
         .filter(property => property)
         .reduce((properties, property) => {
           return { ...properties, [property.name]: property.value }
-        }, {})
+        }, {}),
     ].concat(node.children.map(getNode))
   }
 
@@ -128,7 +128,7 @@ const jsxToJson = input => {
     throw new Error(
       JSON.stringify({
         location: e.loc,
-        validationError: `Could not parse "${input}"`
+        validationError: `Could not parse "${input}"`,
       })
     )
   }

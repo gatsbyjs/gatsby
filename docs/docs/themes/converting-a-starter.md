@@ -37,8 +37,8 @@ const createPosts = (createPage, createRedirect, edges) => {
       context: {
         id: node.id,
         prev,
-        next
-      }
+        next,
+      },
     })
   })
 }
@@ -57,8 +57,8 @@ const createPosts = (createPage, createRedirect, edges) => {
       context: {
         id: node.id,
         prev,
-        next
-      }
+        next,
+      },
     })
   })
 }

@@ -34,7 +34,7 @@ module.exports = async context => {
         planForNextStep.push({
           resourceName: key,
           resourceDefinitions: cmd,
-          ...commandPlan
+          ...commandPlan,
         })
       } catch (e) {
         console.log(e)

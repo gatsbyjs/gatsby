@@ -23,7 +23,7 @@ export const startDevelopProxy = (input: {
     target: `http://localhost:${input.targetPort}`,
     changeOrigin: true,
     preserveHeaderKeyCase: true,
-    autoRewrite: true
+    autoRewrite: true,
   })
 
   // Noop on proxy errors, as this throws a bunch of "Socket hang up"
@@ -67,6 +67,6 @@ export const startDevelopProxy = (input: {
     },
     serveSite: (): void => {
       shouldServeRestartingScreen = false
-    }
+    },
   }
 }

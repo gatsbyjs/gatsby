@@ -19,7 +19,7 @@ Firstly, add a `pathPrefix` value to your `gatsby-config.js`.
 
 ```js:title=gatsby-config.js
 module.exports = {
-  pathPrefix: `/blog`
+  pathPrefix: `/blog`,
 }
 ```
 

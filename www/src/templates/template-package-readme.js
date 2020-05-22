@@ -28,17 +28,17 @@ const GatsbyPluginBadge = ({ isOfficial }) => {
           border: 0,
           color: `textMuted`,
           display: `flex`,
-          fontWeight: `body`
+          fontWeight: `body`,
         },
         "&&:hover": {
-          color: `textMuted`
-        }
+          color: `textMuted`,
+        },
       }}
     >
       <span
         sx={{
           display: `inline-block`,
-          mr: 2
+          mr: 2,
         }}
         title={title}
       >
@@ -51,7 +51,7 @@ const GatsbyPluginBadge = ({ isOfficial }) => {
 
 export default function PackageReadmeTemplate({
   location,
-  data: { npmPackage }
+  data: { npmPackage },
 }) {
   const readmePage = npmPackage.readme.childMarkdownRemark
   const isOfficial = npmPackage.fields.official
@@ -79,14 +79,14 @@ export default function PackageReadmeTemplate({
             justifyContent: `space-between`,
             pb: 6,
             "&&:hover": {
-              color: `inherit`
-            }
+              color: `inherit`,
+            },
           }}
         >
           <div
             css={{
               display: `flex`,
-              justifyContent: `space-between`
+              justifyContent: `space-between`,
             }}
           >
             <GatsbyPluginBadge isOfficial={isOfficial} />

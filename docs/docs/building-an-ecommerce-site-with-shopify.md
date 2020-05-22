@@ -34,9 +34,9 @@ plugins: [
       shopName: `[some-shop]`,
 
       // The storefront access token
-      accessToken: `[token]`
-    }
-  }
+      accessToken: `[token]`,
+    },
+  },
 ]
 ```
 
@@ -184,8 +184,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/product/${node.handle}`,
       component: path.resolve(`./src/templates/product.js`),
       context: {
-        product: node
-      }
+        product: node,
+      },
     })
   })
 }

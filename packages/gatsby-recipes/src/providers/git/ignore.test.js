@@ -11,7 +11,7 @@ describe(`git ignore resource`, () => {
       resourceName: `GitIgnore`,
       context: { root },
       initialObject: { name: `.cache` },
-      partialUpdate: { id: `.cache`, name: `.cache` }
+      partialUpdate: { id: `.cache`, name: `.cache` },
     })
   })
 

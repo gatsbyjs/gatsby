@@ -176,7 +176,7 @@ const formatDate = (dateString, desktopViewport = false) => {
   var options = {
     month: `long`,
     day: `numeric`,
-    year: `numeric`
+    year: `numeric`,
   }
 
   return date.toLocaleDateString(`en-EN`, desktopViewport ? options : {})
@@ -186,7 +186,7 @@ const HomepageBlogPost = ({
   post,
   first = false,
   fullWidth = false,
-  desktopViewport = false
+  desktopViewport = false,
 }) => {
   const {
     fields: { slug, excerpt },
@@ -194,14 +194,14 @@ const HomepageBlogPost = ({
       author: {
         id: authorName,
         avatar: {
-          childImageSharp: { fixed: authorFixed }
+          childImageSharp: { fixed: authorFixed },
         },
-        fields: { slug: authorSlug }
+        fields: { slug: authorSlug },
       },
       date,
       title,
-      cover
-    }
+      cover,
+    },
   } = post
 
   return (
@@ -241,7 +241,7 @@ HomepageBlogPost.propTypes = {
   post: PropTypes.object.isRequired,
   first: PropTypes.bool,
   fullWidth: PropTypes.bool,
-  desktopViewport: PropTypes.bool
+  desktopViewport: PropTypes.bool,
 }
 
 export const homepageBlogPostFragment = graphql`

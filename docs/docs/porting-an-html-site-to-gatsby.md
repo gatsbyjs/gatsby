@@ -147,7 +147,7 @@ Gatsby projects have a config file at `/gatsby-config.js` where site metadata an
  */
 
 module.exports = {
-  plugins: ["gatsby-plugin-react-helmet"] // highlight-line
+  plugins: ["gatsby-plugin-react-helmet"], // highlight-line
 }
 ```
 
@@ -507,7 +507,7 @@ If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`,
 
 module.exports = {
   pathPrefix: "/blog", // highlight-line
-  plugins: ["gatsby-plugin-react-helmet"]
+  plugins: ["gatsby-plugin-react-helmet"],
 }
 ```
 

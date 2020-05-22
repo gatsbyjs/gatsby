@@ -55,7 +55,7 @@ async function fetch({
   _excludedRoutes,
   _restApiRoutePrefix,
   typePrefix,
-  refactoredEntityTypes
+  refactoredEntityTypes,
 }) {
   // If the site is hosted on wordpress.com, the API Route differs.
   // Same entity types are exposed (excepted for medias and users which need auth)
@@ -100,25 +100,25 @@ Mama Route URL: ${url}
   try {
     let options = {
       method: `get`,
-      url: url
+      url: url,
     }
     if (shouldUseHtaccess(_auth)) {
       options.auth = {
         username: _auth.htaccess_user,
-        password: _auth.htaccess_pass
+        password: _auth.htaccess_pass,
       }
     }
 
     if (_accessToken) {
       options.headers = {
-        Authorization: `Bearer ${_accessToken}`
+        Authorization: `Bearer ${_accessToken}`,
       }
     }
 
     if (_cookies) {
       options.headers = {
         ...options.headers,
-        Cookie: getCookieString(_cookies)
+        Cookie: getCookieString(_cookies),
       }
     }
 
@@ -133,8 +133,8 @@ Mama Route URL: ${url}
       name: allRoutes.data.name,
       description: allRoutes.data.description,
       url: allRoutes.data.url,
-      home: allRoutes.data.home
-    }
+      home: allRoutes.data.home,
+    },
   ]
 
   if (allRoutes) {
@@ -148,7 +148,7 @@ Mama Route URL: ${url}
       _includedRoutes,
       _excludedRoutes,
       typePrefix,
-      refactoredEntityTypes
+      refactoredEntityTypes,
     })
 
     if (_verbose) {
@@ -172,7 +172,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _auth,
           _cookies,
           _accessToken,
-          _concurrentRequests
+          _concurrentRequests,
         })
       )
       if (_verbose) console.log(``)
@@ -206,8 +206,8 @@ async function getWPCOMAccessToken(_auth) {
         client_id: _auth.wpcom_app_clientId,
         username: _auth.wpcom_user,
         password: _auth.wpcom_pass,
-        grant_type: `password`
-      })
+        grant_type: `password`,
+      }),
     }
     result = await axios(options)
     result = result.data.access_token
@@ -232,8 +232,8 @@ async function getJWToken(_auth, url) {
       method: `post`,
       data: {
         username: _auth.jwt_user,
-        password: _auth.jwt_pass
-      }
+        password: _auth.jwt_pass,
+      },
     }
     result = await axios(options)
     result = result.data.token
@@ -258,7 +258,7 @@ async function fetchData({
   _auth,
   _cookies,
   _accessToken,
-  _concurrentRequests
+  _concurrentRequests,
 }) {
   const { type, url, optionPageId } = route
 
@@ -281,7 +281,7 @@ async function fetchData({
     _cookies,
     _accessToken,
     _verbose,
-    _concurrentRequests
+    _concurrentRequests,
   })
 
   let entities = []
@@ -297,7 +297,7 @@ async function fetchData({
         return {
           ...r,
           ...(optionPageId ? { __acfOptionPageId: optionPageId } : {}),
-          __type: type
+          __type: type,
         }
       })
       entities = entities.concat(routeResponse)
@@ -317,14 +317,14 @@ async function fetchData({
             await fetchData({
               route: {
                 url: useApiUrl(apiUrl, menu.meta.links.self),
-                type: `${type}_items`
+                type: `${type}_items`,
               },
               apiUrl,
               _verbose,
               _perPage,
               _auth,
               _cookies,
-              _accessToken
+              _accessToken,
             })
           )
         }
@@ -341,7 +341,7 @@ async function fetchData({
             _perPage,
             _auth,
             _accessToken,
-            _cookies
+            _cookies,
           })
         )
       }
@@ -384,7 +384,7 @@ async function getPages(
     _cookies,
     _accessToken,
     _concurrentRequests,
-    _verbose
+    _verbose,
   },
   page = 1
 ) {
@@ -396,27 +396,27 @@ async function getPages(
         method: `get`,
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
-          page: page
-        })}`
+          page: page,
+        })}`,
       }
 
       if (_accessToken) {
         o.headers = {
-          Authorization: `Bearer ${_accessToken}`
+          Authorization: `Bearer ${_accessToken}`,
         }
       }
 
       if (_cookies) {
         o.headers = {
           ...o.headers,
-          Cookie: getCookieString(_cookies)
+          Cookie: getCookieString(_cookies),
         }
       }
 
       if (shouldUseHtaccess(_auth)) {
         o.auth = {
           username: _auth.htaccess_user,
-          password: _auth.htaccess_pass
+          password: _auth.htaccess_pass,
         }
       }
 
@@ -453,7 +453,7 @@ Pages to be requested : ${totalPages}`)
     )
 
     const pages = await requestInQueue(pageOptions, {
-      concurrent: _concurrentRequests
+      concurrent: _concurrentRequests,
     })
 
     const pageData = pages.map(page => page.data)
@@ -496,7 +496,7 @@ function getValidRoutes({
   _includedRoutes,
   _excludedRoutes,
   typePrefix,
-  refactoredEntityTypes
+  refactoredEntityTypes,
 }) {
   let validRoutes = []
 
@@ -524,15 +524,15 @@ function getValidRoutes({
       : `options/`
     validRoutes.push({
       url: `${url}/${acfRestNamespace}/${optionsRoute}`,
-      type: `${typePrefix}acf_options`
+      type: `${typePrefix}acf_options`,
     })
     // ACF to REST V2 does not allow ACF Option Page ID specification
     if (_acfOptionPageIds.length > 0 && acfRestNamespace.includes(`3`)) {
-      _acfOptionPageIds.forEach(function(acfOptionPageId) {
+      _acfOptionPageIds.forEach(function (acfOptionPageId) {
         validRoutes.push({
           url: `${url}/acf/v3/options/${acfOptionPageId}`,
           type: `${typePrefix}acf_options`,
-          optionPageId: acfOptionPageId
+          optionPageId: acfOptionPageId,
         })
       })
       if (_verbose)
@@ -572,7 +572,7 @@ function getValidRoutes({
         `**/embed`,
         `**/proxy`,
         `/`,
-        `/jwt-auth/**`
+        `/jwt-auth/**`,
       ]
 
       const routePath = getRoutePath(url, key)
@@ -626,7 +626,7 @@ function getValidRoutes({
 
         validRoutes.push({
           url: buildFullUrl(url, key, _hostingWPCOM),
-          type: validType
+          type: validType,
         })
       } else {
         if (_verbose) {

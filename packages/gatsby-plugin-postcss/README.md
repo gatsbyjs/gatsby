@@ -48,9 +48,9 @@ const postcssPresetEnv = require(`postcss-preset-env`)
 module.exports = () => ({
   plugins: [
     postcssPresetEnv({
-      stage: 0
-    })
-  ]
+      stage: 0,
+    }),
+  ],
 })
 ```
 
@@ -63,9 +63,9 @@ plugins: [
     resolve: `gatsby-plugin-postcss`,
     options: {
       cssLoaderOptions: {
-        camelCase: false
-      }
-    }
-  }
+        camelCase: false,
+      },
+    },
+  },
 ]
 ```

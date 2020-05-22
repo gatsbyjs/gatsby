@@ -51,10 +51,10 @@ module.exports = {
     {
       resolve: `gatsby-source-drupal-preview`,
       options: {
-        baseUrl: `...`
-      }
-    }
-  ]
+        baseUrl: `...`,
+      },
+    },
+  ],
 }
 ```
 

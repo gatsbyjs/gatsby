@@ -18,11 +18,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`
-      }
+        path: `${__dirname}/src/pages/`,
+      },
     },
-    "gatsby-transformer-javascript-frontmatter"
-  ]
+    "gatsby-transformer-javascript-frontmatter",
+  ],
 }
 ```
 
@@ -42,7 +42,7 @@ exports.frontmatter = {
   layoutType: "post",
   path: "choropleth-on-d3v4",
   category: "data science",
-  description: "Things about the choropleth."
+  description: "Things about the choropleth.",
 }
 
 export default MyComponent
@@ -57,7 +57,7 @@ export const frontmatter = {
   layoutType: "post",
   path: "choropleth-on-d3v4",
   category: "data science",
-  description: "Things about the choropleth."
+  description: "Things about the choropleth.",
 }
 ```
 

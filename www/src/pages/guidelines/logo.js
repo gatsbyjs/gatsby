@@ -13,14 +13,14 @@ import BoxWithBorder from "../../components/guidelines/box-with-border"
 import {
   Intro,
   PageHeading,
-  SectionHeading
+  SectionHeading,
 } from "../../components/guidelines/typography"
 import {
   Container,
   Section,
   Columns,
   ContentColumn,
-  CopyColumn
+  CopyColumn,
 } from "../../components/guidelines/containers"
 
 import GatsbyLogo from "../../components/guidelines/logo"
@@ -89,8 +89,8 @@ const Monogram = ({ size, ...props }) => (
         svg: {
           display: `block`,
           height: `100%`,
-          width: `100%`
-        }
+          width: `100%`,
+        },
       }}
     >
       <GatsbyMonogram />
@@ -117,8 +117,8 @@ const GatsbyLogoContainered = ({
       svg: {
         display: `block`,
         width: height ? `auto` : `100%`,
-        height: height ? height : false
-      }
+        height: height ? height : false,
+      },
     }}
   >
     <GatsbyLogo inverted={inverted} invertedWordmark={invertedWordmark} />
@@ -145,7 +145,7 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
         right: 0,
         bottom: 0,
         height: `100%`,
-        width: `100%`
+        width: `100%`,
       }}
     >
       <Box
@@ -153,8 +153,8 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
         css={{
           svg: {
             display: `block`,
-            height: `100%`
-          }
+            height: `100%`,
+          },
         }}
       >
         <GatsbyLogo inverted={inverted} color={color} />
@@ -369,7 +369,7 @@ const Logo = ({ data, location }) => {
               maxWidth="542px"
               mb={4}
               dangerouslySetInnerHTML={{
-                __html: PartnershipLockups
+                __html: PartnershipLockups,
               }}
               css={{ svg: { display: `block`, width: `100%` } }}
             />
@@ -407,18 +407,18 @@ const Logo = ({ data, location }) => {
               maxWidth="257px"
               mb={4}
               dangerouslySetInnerHTML={{
-                __html: Wordmark
+                __html: Wordmark,
               }}
               css={{
                 svg: { display: `block`, width: `100%` },
-                color: isDark ? `white` : `black`
+                color: isDark ? `white` : `black`,
               }}
             />
             <Box
               maxWidth="257px"
               mb={3}
               dangerouslySetInnerHTML={{
-                __html: ManuallyTracked
+                __html: ManuallyTracked,
               }}
               css={{ svg: { display: `block`, width: `100%` } }}
             />
@@ -528,7 +528,7 @@ const Logo = ({ data, location }) => {
             <Box
               mb={4}
               dangerouslySetInnerHTML={{
-                __html: Clearspace
+                __html: Clearspace,
               }}
               css={{ svg: { display: `block`, maxWidth: 506 } }}
             />
@@ -542,7 +542,7 @@ const Logo = ({ data, location }) => {
             <Box
               mb={4}
               dangerouslySetInnerHTML={{
-                __html: ClearspaceMonogram
+                __html: ClearspaceMonogram,
               }}
               css={{ svg: { display: `block`, maxWidth: 122 } }}
             />
@@ -575,7 +575,7 @@ const Logo = ({ data, location }) => {
                   zIndex: 1,
                   height: 24,
                   top: `auto`,
-                  bottom: 0
+                  bottom: 0,
                 }}
               >
                 <GatsbyLogoContainered height="24px" />
@@ -639,7 +639,7 @@ const Logo = ({ data, location }) => {
                   <a
                     css={{
                       color: theme.colors.purple[`50`],
-                      textDecoration: `none`
+                      textDecoration: `none`,
                     }}
                     href={node.href}
                     key={`logo-footnotes-${index}`}

@@ -137,8 +137,8 @@ for (const person of nodes) {
     path: `employees/${person.elements.urlslug.value}`,
     component: path.resolve(`./src/templates/person.js`),
     context: {
-      slug: person.elements.urlslug.value
-    }
+      slug: person.elements.urlslug.value,
+    },
   })
 }
 ```
@@ -185,8 +185,8 @@ for (const person of nodes) {
     component: path.resolve(`./src/templates/person.js`),
     context: {
       slug: person.elements.urlslug.value,
-      lang: person.preferred_language
-    }
+      lang: person.preferred_language,
+    },
   })
 }
 ```

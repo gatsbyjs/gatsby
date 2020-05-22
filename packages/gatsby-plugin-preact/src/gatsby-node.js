@@ -15,8 +15,8 @@ exports.onCreateWebpackConfig = ({ actions }) => {
       alias: {
         react: `preact/compat`,
         "react-dom": `preact/compat`,
-        "react-dom/server": `preact/compat`
-      }
-    }
+        "react-dom/server": `preact/compat`,
+      },
+    },
   })
 }

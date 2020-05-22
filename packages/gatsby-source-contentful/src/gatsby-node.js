@@ -17,7 +17,7 @@ const restrictedNodeFields = [
   `fields`,
   `id`,
   `internal`,
-  `parent`
+  `parent`,
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
@@ -43,7 +43,7 @@ exports.sourceNodes = async (
     store,
     cache,
     getCache,
-    reporter
+    reporter,
   },
   pluginOptions
 ) => {
@@ -104,16 +104,16 @@ exports.sourceNodes = async (
     contentTypeItems,
     defaultLocale,
     locales,
-    space
+    space,
   } = await fetchData({
     syncToken,
     reporter,
-    pluginConfig
+    pluginConfig,
   })
 
   const entryList = normalize.buildEntryList({
     currentSyncData,
-    contentTypeItems
+    contentTypeItems,
   })
 
   // Remove deleted entries & assets.
@@ -128,7 +128,7 @@ exports.sourceNodes = async (
             spaceId: space.sys.id,
             id: node.sys.id,
             currentLocale: locale.code,
-            defaultLocale
+            defaultLocale,
           })
         )
         return getNode(nodeId)
@@ -174,7 +174,7 @@ exports.sourceNodes = async (
     assets,
     defaultLocale,
     locales,
-    space
+    space,
   })
 
   // Build foreign reference map before starting to insert any nodes
@@ -185,7 +185,7 @@ exports.sourceNodes = async (
     defaultLocale,
     locales,
     space,
-    useNameForId: pluginConfig.get(`useNameForId`)
+    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   const newOrUpdatedEntries = []
@@ -237,7 +237,7 @@ exports.sourceNodes = async (
         locales,
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
-        richTextOptions: pluginConfig.get(`richText`)
+        richTextOptions: pluginConfig.get(`richText`),
       })
     )
   }
@@ -251,7 +251,7 @@ exports.sourceNodes = async (
         createNodeId,
         defaultLocale,
         locales,
-        space
+        space,
       })
     )
   }
@@ -264,7 +264,7 @@ exports.sourceNodes = async (
       cache,
       getCache,
       getNodes,
-      reporter
+      reporter,
     })
   }
 

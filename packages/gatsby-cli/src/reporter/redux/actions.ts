@@ -11,7 +11,7 @@ import {
   setActivityErrored as internalSetActivityErrored,
   setActivityStatusText as internalSetActivityStatusText,
   setActivityTotal as internalSetActivityTotal,
-  activityTick as internalActivityTick
+  activityTick as internalActivityTick,
 } from "./internal-actions"
 
 const actions = {
@@ -24,7 +24,7 @@ const actions = {
   setActivityErrored: internalSetActivityErrored,
   setActivityStatusText: internalSetActivityStatusText,
   setActivityTotal: internalSetActivityTotal,
-  activityTick: internalActivityTick
+  activityTick: internalActivityTick,
 }
 
 const boundActions = bindActionCreators<typeof actions, any>(

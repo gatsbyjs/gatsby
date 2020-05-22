@@ -71,7 +71,7 @@ examine the active `.env.*` file and attach those values.
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`
+  path: `.env.${process.env.NODE_ENV}`,
 })
 ```
 
@@ -115,10 +115,10 @@ module.exports = {
     {
       resolve: `gatsby-source-patronus`,
       options: {
-        apiKey: process.env.API_KEY
-      }
-    }
-  ]
+        apiKey: process.env.API_KEY,
+      },
+    },
+  ],
 }
 ```
 
@@ -170,13 +170,13 @@ const activeEnv =
 console.log(`Using environment config: '${activeEnv}'`)
 
 require("dotenv").config({
-  path: `.env.${activeEnv}`
+  path: `.env.${activeEnv}`,
 })
 
 module.exports = {
   siteMetadata: {
     title: "Gatsby Default Starter",
-    apiUrl: process.env.API_URL
+    apiUrl: process.env.API_URL,
   },
   plugins: [
     {
@@ -188,10 +188,10 @@ module.exports = {
         // Setting this parameter is optional
         anonymize: true,
         // Setting this parameter is also optional
-        respectDNT: true
-      }
-    }
-  ]
+        respectDNT: true,
+      },
+    },
+  ],
 }
 ```
 

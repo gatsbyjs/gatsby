@@ -31,20 +31,20 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `Test`
+          type: `Test`,
         },
-        pickle: true
+        pickle: true,
       },
       {
-        name: `tests`
+        name: `tests`,
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
     expect(action).toMatchSnapshot({
-      payload: { internal: { counter: expect.any(Number) } }
+      payload: { internal: { counter: expect.any(Number) } },
     })
     expect(fromMapToObject(nodeReducer(undefined, action))).toMatchSnapshot({
-      hi: { internal: { counter: expect.any(Number) } }
+      hi: { internal: { counter: expect.any(Number) } },
     })
   })
 
@@ -56,7 +56,7 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `Test`
+          type: `Test`,
         },
         pickle: true,
         deep: {
@@ -64,13 +64,13 @@ describe(`Create and update nodes`, (): void => {
             0,
             1,
             {
-              boom: true
-            }
-          ]
-        }
+              boom: true,
+            },
+          ],
+        },
       },
       {
-        name: `tests`
+        name: `tests`,
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
@@ -82,18 +82,18 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `Test`
+          type: `Test`,
         },
         pickle: false,
         deep: {
-          array: [1, 2]
+          array: [1, 2],
         },
         deep2: {
-          boom: `foo`
-        }
+          boom: `foo`,
+        },
       },
       {
-        name: `tests`
+        name: `tests`,
       }
     )(dispatch)
     const updateAction = dispatch.mock.calls[1][0]
@@ -114,12 +114,12 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `Test`
+          type: `Test`,
         },
-        pickle: true
+        pickle: true,
       },
       {
-        name: `tests`
+        name: `tests`,
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
@@ -139,12 +139,12 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `Test`
+          type: `Test`,
         },
-        pickle: true
+        pickle: true,
       },
       {
-        name: `tests`
+        name: `tests`,
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
@@ -154,16 +154,16 @@ describe(`Create and update nodes`, (): void => {
       {
         node: state.get(`hi`),
         name: `joy`,
-        value: `soul's delight`
+        value: `soul's delight`,
       },
       {
-        name: `test`
+        name: `test`,
       }
     )
 
     state = nodeReducer(state, addFieldAction)
     expect(fromMapToObject(state)).toMatchSnapshot({
-      hi: { internal: { counter: expect.any(Number) } }
+      hi: { internal: { counter: expect.any(Number) } },
     })
   })
 
@@ -175,12 +175,12 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `Test`
+          type: `Test`,
         },
-        pickle: true
+        pickle: true,
       },
       {
-        name: `tests`
+        name: `tests`,
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
@@ -190,10 +190,10 @@ describe(`Create and update nodes`, (): void => {
       {
         node: state.get(`hi`),
         name: `joy`,
-        value: `soul's delight`
+        value: `soul's delight`,
       },
       {
-        name: `test`
+        name: `test`,
       }
     )
     state = nodeReducer(state, addFieldAction)
@@ -203,10 +203,10 @@ describe(`Create and update nodes`, (): void => {
         {
           node: state.get(`hi`),
           name: `joy`,
-          value: `soul's delight`
+          value: `soul's delight`,
         },
         {
-          name: `test2`
+          name: `test2`,
         }
       )
     }
@@ -223,12 +223,12 @@ describe(`Create and update nodes`, (): void => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          type: `mineOnly`
+          type: `mineOnly`,
         },
-        pickle: true
+        pickle: true,
       },
       {
-        name: `pluginA`
+        name: `pluginA`,
       }
     )(dispatch)
 
@@ -240,12 +240,12 @@ describe(`Create and update nodes`, (): void => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `mineOnly`
+            type: `mineOnly`,
           },
-          pickle: true
+          pickle: true,
         },
         {
-          name: `pluginB`
+          name: `pluginB`,
         }
       )(dispatch)
     }
@@ -263,16 +263,16 @@ describe(`Create and update nodes`, (): void => {
           children: [],
           parent: `test`,
           fields: {
-            test: `I can't do this but I like to test boundaries`
+            test: `I can't do this but I like to test boundaries`,
           },
           internal: {
             contentDigest: `hasdfljds`,
-            type: `mineOnly`
+            type: `mineOnly`,
           },
-          pickle: true
+          pickle: true,
         },
         {
-          name: `pluginA`
+          name: `pluginA`,
         }
       )(dispatch)
     }

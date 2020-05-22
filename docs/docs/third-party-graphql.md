@@ -25,10 +25,10 @@ module.exports = {
         // This is the field under which it's accessible
         fieldName: "swapi",
         // URL to query from
-        url: "https://api.graphcms.com/simple/v1/swapi"
-      }
-    }
-  ]
+        url: "https://api.graphcms.com/simple/v1/swapi",
+      },
+    },
+  ],
 }
 ```
 
@@ -86,8 +86,8 @@ exports.createPages = async ({ actions, graphql }) => {
       path: name,
       component: path.resolve(`./src/components/Species.js`),
       context: {
-        speciesId: id
-      }
+        speciesId: id,
+      },
     })
   })
 }

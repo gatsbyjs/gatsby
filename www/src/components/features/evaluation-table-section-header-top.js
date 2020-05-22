@@ -23,21 +23,21 @@ const superHeader = ({ columnHeaders }) => (
           bg: `ui.background`,
           "span:first-of-type": {
             borderTopLeftRadius: 2,
-            textAlign: `left`
+            textAlign: `left`,
           },
           "&:last-child": {
-            borderTopRightRadius: 2
+            borderTopRightRadius: 2,
           },
           [mediaQueries.xs]: {
             display: `table-cell`,
-            width: 125
+            width: 125,
           },
           [mediaQueries.md]: {
-            width: 150
+            width: 150,
           },
           [mediaQueries.lg]: {
-            width: 175
-          }
+            width: 175,
+          },
         }}
       >
         <span
@@ -45,7 +45,7 @@ const superHeader = ({ columnHeaders }) => (
             WebkitHyphens: `auto`,
             MsHyphens: `auto`,
             hyphens: `auto`,
-            display: `inline-block`
+            display: `inline-block`,
           }}
         >
           {header}

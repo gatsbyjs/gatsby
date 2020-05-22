@@ -21,8 +21,8 @@ export async function recipesHandler(
       // Chalk doesn't want to output color in a child process
       // as it (correctly) thinks it's not in a normal terminal environemnt.
       // Since we're just returning data, we'll override that.
-      FORCE_COLOR: `true`
-    }
+      FORCE_COLOR: `true`,
+    },
   })
 
   // eslint-disable-next-line no-unused-expressions
@@ -32,7 +32,7 @@ export async function recipesHandler(
 
   process.on(`exit`, () => {
     subprocess.kill(`SIGTERM`, {
-      forceKillAfterTimeout: 2000
+      forceKillAfterTimeout: 2000,
     })
   })
 

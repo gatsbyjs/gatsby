@@ -6,7 +6,7 @@ const FuturaParagraph = ({ children }) => (
     sx={{
       fontFamily: `heading`,
       fontSize: 3,
-      mb: 0
+      mb: 0,
     }}
   >
     {children}

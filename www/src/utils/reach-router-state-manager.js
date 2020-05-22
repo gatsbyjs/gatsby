@@ -7,7 +7,7 @@ class RRSM extends Component {
   state = emptySearchState
 
   static defaultProps = {
-    defaultSearchState: {}
+    defaultSearchState: {},
   }
 
   setUrlState = newState => {
@@ -45,7 +45,7 @@ class RRSM extends Component {
       <Fragment>
         {render({
           setURLState: this.setUrlState,
-          urlState: this.state
+          urlState: this.state,
         })}
       </Fragment>
     )

@@ -10,7 +10,7 @@ import {
   Actions,
   ActivityLogLevels,
   ActivityStatuses,
-  ActivityTypes
+  ActivityTypes,
 } from "../constants"
 import {
   IPendingActivity,
@@ -22,20 +22,20 @@ import {
   IUpdateActivity,
   IActivityErrored,
   IGatsbyCLIState,
-  ISetLogs
+  ISetLogs,
 } from "./types"
 import {
   delayedCall,
   getActivity,
   getElapsedTimeMS,
-  getGlobalStatus
+  getGlobalStatus,
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
   [ActivityStatuses.Failed]: ActivityLogLevels.Failed,
-  [ActivityStatuses.Success]: ActivityLogLevels.Success
+  [ActivityStatuses.Success]: ActivityLogLevels.Success,
 }
 
 let weShouldExit = false
@@ -57,7 +57,7 @@ export const setStatus = (status: string, force: boolean = false) => (
     if (status === `IN_PROGRESS` || force || weShouldExit) {
       dispatch({
         type: Actions.SetStatus,
-        payload: status
+        payload: status,
       })
     } else {
       cancelDelayedSetStatus = delayedCall(() => {
@@ -83,7 +83,7 @@ export const createLog = ({
   activity_total,
   activity_type,
   activity_uuid,
-  stack
+  stack,
 }: {
   level: string
   text?: string
@@ -121,15 +121,15 @@ export const createLog = ({
       activity_type,
       activity_uuid,
       timestamp: new Date().toJSON(),
-      stack
-    }
+      stack,
+    },
   }
 }
 
 type ActionsToEmit = Array<IPendingActivity | ReturnType<typeof setStatus>>
 export const createPendingActivity = ({
   id,
-  status = ActivityStatuses.NotStarted
+  status = ActivityStatuses.NotStarted,
 }: {
   id: string
   status?: ActivityStatuses
@@ -149,8 +149,8 @@ export const createPendingActivity = ({
     payload: {
       id,
       type: ActivityTypes.Pending,
-      status
-    }
+      status,
+    },
   })
 
   return actionsToEmit
@@ -165,7 +165,7 @@ export const startActivity = ({
   type,
   status = ActivityStatuses.InProgress,
   current,
-  total
+  total,
 }: {
   id: string
   text: string
@@ -195,8 +195,8 @@ export const startActivity = ({
       startTime: process.hrtime(),
       statusText: ``,
       current,
-      total
-    }
+      total,
+    },
   })
 
   return actionsToEmit
@@ -208,7 +208,7 @@ type QueuedEndActivity = Array<
 
 export const endActivity = ({
   id,
-  status
+  status,
 }: {
   id: string
   status: ActivityStatuses
@@ -229,13 +229,13 @@ export const endActivity = ({
         id,
         status: ActivityStatuses.Cancelled,
         type: activity.type,
-        duration: durationS
-      }
+        duration: durationS,
+      },
     })
   } else if (activity.status === ActivityStatuses.InProgress) {
     trackCli(`ACTIVITY_DURATION`, {
       name: activity.text,
-      duration: Math.round(durationMS)
+      duration: Math.round(durationMS),
     })
 
     if (activity.errored) {
@@ -248,8 +248,8 @@ export const endActivity = ({
         id,
         status,
         duration: durationS,
-        type: activity.type
-      }
+        type: activity.type,
+      },
     })
 
     if (activity.type !== ActivityTypes.Hidden) {
@@ -269,7 +269,7 @@ export const endActivity = ({
           activity_uuid: activity.uuid,
           activity_current: activity.current,
           activity_total: activity.total,
-          activity_type: activity.type
+          activity_type: activity.type,
         })
       )
     }
@@ -305,13 +305,13 @@ export const updateActivity = ({
     payload: {
       uuid: activity.uuid,
       id,
-      ...rest
-    }
+      ...rest,
+    },
   }
 }
 
 export const setActivityErrored = ({
-  id
+  id,
 }: {
   id: string
 }): IActivityErrored | null => {
@@ -323,38 +323,38 @@ export const setActivityErrored = ({
   return {
     type: Actions.ActivityErrored,
     payload: {
-      id
-    }
+      id,
+    },
   }
 }
 
 export const setActivityStatusText = ({
   id,
-  statusText
+  statusText,
 }: {
   id: string
   statusText: string
 }): IUpdateActivity | null =>
   updateActivity({
     id,
-    statusText
+    statusText,
   })
 
 export const setActivityTotal = ({
   id,
-  total
+  total,
 }: {
   id: string
   total: number
 }): IUpdateActivity | null =>
   updateActivity({
     id,
-    total
+    total,
   })
 
 export const activityTick = ({
   id,
-  increment = 1
+  increment = 1,
 }: {
   id: string
   increment: number
@@ -366,13 +366,13 @@ export const activityTick = ({
 
   return updateActivity({
     id,
-    current: (activity.current || 0) + increment
+    current: (activity.current || 0) + increment,
   })
 }
 
 export const setLogs = (logs: IGatsbyCLIState): ISetLogs => {
   return {
     type: Actions.SetLogs,
-    payload: logs
+    payload: logs,
   }
 }

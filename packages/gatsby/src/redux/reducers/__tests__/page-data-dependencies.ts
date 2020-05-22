@@ -8,13 +8,13 @@ describe(`add page data dependency`, () => {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
-        nodeId: `123`
-      }
+        nodeId: `123`,
+      },
     }
 
     expect(reducer(undefined, action)).toEqual({
       connections: new Map(),
-      nodes: new Map([[`123`, new Set([`/hi/`])]])
+      nodes: new Map([[`123`, new Set([`/hi/`])]]),
     })
   })
   it(`lets you add a node dependency to multiple paths`, () => {
@@ -22,22 +22,22 @@ describe(`add page data dependency`, () => {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
-        nodeId: `1.2.3`
-      }
+        nodeId: `1.2.3`,
+      },
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
-        nodeId: `1.2.3`
-      }
+        nodeId: `1.2.3`,
+      },
     }
     const action3: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/blog/`,
-        nodeId: `1.2.3`
-      }
+        nodeId: `1.2.3`,
+      },
     }
 
     let state = reducer(undefined, action)
@@ -46,7 +46,7 @@ describe(`add page data dependency`, () => {
 
     expect(state).toEqual({
       connections: new Map(),
-      nodes: new Map([[`1.2.3`, new Set([`/hi/`, `/hi2/`, `/blog/`])]])
+      nodes: new Map([[`1.2.3`, new Set([`/hi/`, `/hi2/`, `/blog/`])]]),
     })
   })
   it(`lets you add a connection dependency`, () => {
@@ -54,15 +54,15 @@ describe(`add page data dependency`, () => {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
-        connection: `Markdown.Remark`
-      }
+        connection: `Markdown.Remark`,
+      },
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
-        connection: `Markdown.Remark`
-      }
+        connection: `Markdown.Remark`,
+      },
     }
 
     let state = reducer(undefined, action)
@@ -70,7 +70,7 @@ describe(`add page data dependency`, () => {
 
     expect(state).toEqual({
       connections: new Map([[`Markdown.Remark`, new Set([`/hi/`, `/hi2/`])]]),
-      nodes: new Map()
+      nodes: new Map(),
     })
   })
   it(`removes duplicate paths`, () => {
@@ -79,16 +79,16 @@ describe(`add page data dependency`, () => {
       payload: {
         path: `/hi/`,
         nodeId: `1`,
-        connection: `MarkdownRemark`
-      }
+        connection: `MarkdownRemark`,
+      },
     }
     const action2: ICreatePageDependencyAction = {
       type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
         nodeId: `1`,
-        connection: `MarkdownRemark`
-      }
+        connection: `MarkdownRemark`,
+      },
     }
 
     let state = reducer(undefined, action)
@@ -106,8 +106,8 @@ describe(`add page data dependency`, () => {
       payload: {
         path: `/hi/`,
         connection: `MarkdownRemark`,
-        nodeId: `SuperCoolNode`
-      }
+        nodeId: `SuperCoolNode`,
+      },
     }
 
     const state = reducer(undefined, action)

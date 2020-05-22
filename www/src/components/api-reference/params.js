@@ -10,7 +10,7 @@ const List = ({ elements, level, ignoreParams }) => (
       listStyleType: `none`,
       mt: 3,
       ml: 4,
-      mb: 0
+      mb: 0,
     }}
   >
     {elements

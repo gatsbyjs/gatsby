@@ -21,14 +21,14 @@ const subHeaderTitleStyles = {
   display: `block`,
   height: t => [t.space[6], t.space[7]],
   margin: `auto`,
-  marginBottom: 0
+  marginBottom: 0,
 }
 
 const renderSubHeader = props => (
   <tr
     key="subhead"
     style={{
-      display: !props.display ? `none` : `table-row`
+      display: !props.display ? `none` : `table-row`,
     }}
   >
     <Td>{props.category}</Td>

@@ -1,6 +1,6 @@
 import {
   setFeedbackDisabledValue,
-  showFeedbackRequest
+  showFeedbackRequest,
 } from "../utils/feedback"
 import { IProgram } from "./types"
 

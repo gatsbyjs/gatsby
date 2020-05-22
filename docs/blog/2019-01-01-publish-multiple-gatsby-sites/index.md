@@ -132,7 +132,7 @@ const Layout = ({ children, data }) => (
 )
 
 Layout.propTypes = {
-  children: PropTypes.func
+  children: PropTypes.func,
 }
 
 export default Layout
@@ -343,7 +343,7 @@ Now add the following code to the top of your `gatsby-config.js` file in your sh
 const activeEnv = process.env.ACTIVE_ENV | "development"
 
 require("dotenv").config({
-  path: `.env.${activeEnv}`
+  path: `.env.${activeEnv}`,
 })
 ```
 
@@ -396,9 +396,9 @@ describe("Layout component", () => {
       data: {
         title: "mock title",
         content: "mock content",
-        href: "google.com"
-      }
-    }
+        href: "google.com",
+      },
+    },
   }
 
   it("should render", () => {

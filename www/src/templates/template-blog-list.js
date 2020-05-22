@@ -35,8 +35,8 @@ class BlogPostsIndex extends React.Component {
               pb: 6,
               [breakpointGutter]: {
                 pb: 0,
-                border: 0
-              }
+                border: 0,
+              },
             }}
           >
             <h1 sx={{ mb: 0 }}>Blog</h1>
@@ -71,17 +71,17 @@ class BlogPostsIndex extends React.Component {
                     `transform ${t.transition.default},  box-shadow ${t.transition.default}, padding ${t.transition.default}`,
                   "&:hover": {
                     transform: t => `translateY(-${t.space[1]})`,
-                    boxShadow: `overlay`
+                    boxShadow: `overlay`,
                   },
                   "&:active": {
                     boxShadow: `cardActive`,
-                    transform: `translateY(0)`
-                  }
+                    transform: `translateY(0)`,
+                  },
                 },
                 [mediaQueries.md]: {
                   marginLeft: t => `-${t.space[9]}`,
-                  marginRight: t => `-${t.space[9]}`
-                }
+                  marginRight: t => `-${t.space[9]}`,
+                },
               }}
             />
           ))}

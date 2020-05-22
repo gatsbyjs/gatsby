@@ -12,7 +12,7 @@ import {
   MdSentimentNeutral,
   MdSentimentVerySatisfied,
   MdSend,
-  MdRefresh
+  MdRefresh,
 } from "react-icons/md"
 
 const Form = styled(`form`)`
@@ -47,12 +47,12 @@ const Rating = ({ children }) => (
       width: `99.99%`,
 
       "&:focus-within": {
-        ...themedInputFocus
+        ...themedInputFocus,
       },
 
       "[disabled] &": {
-        opacity: `0.5`
-      }
+        opacity: `0.5`,
+      },
     }}
   >
     {children}
@@ -76,7 +76,7 @@ const textareaStyles = {
   px: 3,
   py: 2,
   lineHeight: `default`,
-  overflowY: `scroll`
+  overflowY: `scroll`,
 }
 
 const FeedbackForm = ({
@@ -87,7 +87,7 @@ const FeedbackForm = ({
   titleRef,
   rating,
   comment,
-  submitting
+  submitting,
 }) => (
   <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
     <Form

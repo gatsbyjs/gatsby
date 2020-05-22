@@ -47,7 +47,7 @@ const buildRenderer = async (
 ): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
-    parentSpan
+    parentSpan,
   })
 
   return doBuildRenderer(program, config)
@@ -73,7 +73,7 @@ const renderHTMLQueue = async (
   const envVars = [
     [`NODE_ENV`, process.env.NODE_ENV],
     [`gatsby_executing_command`, process.env.gatsby_executing_command],
-    [`gatsby_log_level`, process.env.gatsby_log_level]
+    [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
   // const start = process.hrtime()
@@ -83,7 +83,7 @@ const renderHTMLQueue = async (
     await workerPool.renderHTML({
       envVars,
       htmlComponentRendererPath,
-      paths: pageSegment
+      paths: pageSegment,
     })
 
     if (activity && activity.tick) {
@@ -99,7 +99,7 @@ const doBuildPages = async (
   workerPool: IWorkerPool
 ): Promise<void> => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: pagePaths.length
+    pagesCount: pagePaths.length,
   })
 
   try {
@@ -119,7 +119,7 @@ export const buildHTML = async ({
   stage,
   pagePaths,
   activity,
-  workerPool
+  workerPool,
 }: {
   program: IProgram
   stage: Stage

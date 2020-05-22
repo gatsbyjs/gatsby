@@ -32,7 +32,7 @@ class EvaluationTable extends Component {
           // scrolling library
           display: `table`,
           overflowX: `scroll`,
-          width: `100%`
+          width: `100%`,
         }}
       >
         <tbody>
@@ -46,7 +46,7 @@ class EvaluationTable extends Component {
                 <SectionHeaderTop
                   key={`section-header-${s}`}
                   columnHeaders={columnHeaders}
-                />
+                />,
               ].concat(
                 flatten(
                   section.map((row, i) =>
@@ -65,7 +65,7 @@ class EvaluationTable extends Component {
                             sx={{
                               display: `table-cell`,
                               "&:hover": {
-                                cursor: j >= 0 ? `pointer` : `inherit`
+                                cursor: j >= 0 ? `pointer` : `inherit`,
                               },
                               borderBottom: t =>
                                 !showTooltip(s, i)
@@ -77,18 +77,16 @@ class EvaluationTable extends Component {
                               textAlign: `left`,
                               verticalAlign: `middle`,
                               fontSize: 1,
-                              lineHeight: `solid`
+                              lineHeight: `solid`,
                             }}
                             id={
                               j === 0
-                                ? row.Feature.toLowerCase()
-                                    .split(` `)
-                                    .join(`-`)
+                                ? row.Feature.toLowerCase().split(` `).join(`-`)
                                 : undefined
                             }
                             onClick={() => {
                               this.setState({
-                                [`${s},${i}`]: !showTooltip(s, i)
+                                [`${s},${i}`]: !showTooltip(s, i),
                               })
                             }}
                           >
@@ -99,7 +97,7 @@ class EvaluationTable extends Component {
                       // table row containing details of each feature
                       <tr
                         style={{
-                          display: showTooltip(s, i) ? `table-row` : `none`
+                          display: showTooltip(s, i) ? `table-row` : `none`,
                         }}
                         key={`section-${s}-second-row-${i}`}
                       >
@@ -108,21 +106,21 @@ class EvaluationTable extends Component {
                             paddingBottom: t => `calc(${t.space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {
-                                px: 3
-                              }
-                            }
+                                px: 3,
+                              },
+                            },
                           }}
                           colSpan="5"
                         >
                           {
                             <span
                               dangerouslySetInnerHTML={{
-                                __html: row.Description
+                                __html: row.Description,
                               }}
                             />
                           }
                         </td>
-                      </tr>
+                      </tr>,
                     ])
                   )
                 )

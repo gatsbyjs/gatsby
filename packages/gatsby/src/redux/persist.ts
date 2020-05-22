@@ -7,7 +7,7 @@ import {
   moveSync, // Note: moveSync over renameSync because /tmp may be on other mount
   readFileSync,
   removeSync,
-  writeFileSync
+  writeFileSync,
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"

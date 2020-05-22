@@ -33,7 +33,7 @@ let packagesWithTs = packages
     project =>
       glob.sync(`/**/*.ts`, {
         root: project,
-        ignore: `**/node_modules/**`
+        ignore: `**/node_modules/**`,
       }).length
   )
 
@@ -99,7 +99,7 @@ packagesWithTs.forEach(project => {
     ),
     `-p`,
     project,
-    `--noEmit`
+    `--noEmit`,
   ]
 
   try {

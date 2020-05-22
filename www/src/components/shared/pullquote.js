@@ -182,7 +182,7 @@ const Pullquote = ({ citation, narrow = false, children }) => {
 
 Pullquote.propTypes = {
   children: PropTypes.node.isRequired,
-  narrow: PropTypes.bool
+  narrow: PropTypes.bool,
 }
 
 export default Pullquote

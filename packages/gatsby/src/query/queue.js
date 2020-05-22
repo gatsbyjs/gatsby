@@ -9,7 +9,7 @@ const createBaseOptions = () => {
   return {
     concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
     // eslint-disable-next-line new-cap
-    store: FastMemoryStore()
+    store: FastMemoryStore(),
   }
 }
 
@@ -37,7 +37,7 @@ const createDevelopQueue = getRunner => {
     },
     merge: (oldTask, newTask, cb) => {
       cb(null, newTask)
-    }
+    },
   }
 
   const handler = ({ job: queryJob, activity }, callback) => {
@@ -46,12 +46,12 @@ const createDevelopQueue = getRunner => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
             result,
-            id: queryJob.id
+            id: queryJob.id,
           })
         } else {
           websocketManager.emitStaticQueryData({
             result,
-            id: queryJob.id
+            id: queryJob.id,
           })
         }
 
@@ -111,7 +111,7 @@ const processBatch = async (queue, jobs, activity) => {
     jobs.forEach(job =>
       queue.push({
         job,
-        activity
+        activity,
       })
     )
   })
@@ -120,5 +120,5 @@ const processBatch = async (queue, jobs, activity) => {
 module.exports = {
   createBuildQueue,
   createDevelopQueue,
-  processBatch
+  processBatch,
 }

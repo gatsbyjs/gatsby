@@ -97,13 +97,13 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
         fields: [
           {
             name: `email`,
-            value: emailRef.current.value
-          }
+            value: emailRef.current.value,
+          },
         ],
         context: {
           pageUri: window.location.href,
-          pageName: document.title
-        }
+          pageName: document.title,
+        },
       }
 
       if (sfdcCampaignId) {
@@ -172,8 +172,8 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
           ...themedInput,
           width: `100%`,
           "&:focus": {
-            ...formInputFocus
-          }
+            ...formInputFocus,
+          },
         }}
       />
       {fieldErrors.email && <ErrorMessage>{fieldErrors.email}</ErrorMessage>}
@@ -191,13 +191,13 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
               alignItems: `center`,
               display: `flex`,
               justifyContent: `space-between`,
-              width: `100%`
+              width: `100%`,
             },
             [mediaQueries.lg]: {
               ml: 2,
               mt: 0,
-              width: `auto`
-            }
+              width: `auto`,
+            },
           }}
         >
           <span>
@@ -211,7 +211,7 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
           value="Subscribe"
           sx={{
             ...buttonStyles().default,
-            mt: 3
+            mt: 3,
           }}
         />
       )}
@@ -223,7 +223,7 @@ function EmailCaptureForm({
   formId = `089352d8-a617-4cba-ba46-6e52de5b6a1d`,
   signupMessage = `Enjoyed this post? Receive the next one in your inbox!`,
   isHomepage = false,
-  className = ``
+  className = ``,
 }) {
   const [successMessage, setSuccessMessage] = React.useState(``)
 
@@ -257,7 +257,7 @@ function EmailCaptureForm({
               fontWeight: `bold`,
               fontSize: 3,
               fontFamily: `heading`,
-              lineHeight: `dense`
+              lineHeight: `dense`,
             }}
           >
             {signupMessage}
@@ -265,7 +265,7 @@ function EmailCaptureForm({
           {successMessage ? (
             <div
               dangerouslySetInnerHTML={{
-                __html: successMessage
+                __html: successMessage,
               }}
             />
           ) : (

@@ -14,15 +14,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
-    }
+    },
   }
 })
 
@@ -51,29 +51,29 @@ describe(`merges explicit and inferred type definitions`, () => {
           nested: {
             foo: true,
             conflict: 1,
-            extraExtra: true
-          }
+            extraExtra: true,
+          },
         },
         nestedArray: [
           {
             foo: true,
             conflict: 1,
             extra: true,
-            nested: { foo: true, conflict: 1, extraExtraExtra: true }
-          }
-        ]
+            nested: { foo: true, conflict: 1, extraExtraExtra: true },
+          },
+        ],
       },
       {
         id: `id2`,
         internal: { type: `ArrayTest`, contentDigest: `0` },
-        array: [{ foo: true }]
+        array: [{ foo: true }],
       },
       {
         id: `id3`,
         internal: { type: `LinkTest`, contentDigest: `0` },
         link___NODE: `id1`,
-        links___NODE: [`id1`]
-      }
+        links___NODE: [`id1`],
+      },
     ]
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
@@ -118,7 +118,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         conflictScalarReverse: Nested!
         conflictScalarArray: [Int!]!
         conflcitScalarArrayReverse: [Nested!]!
-      }`
+      }`,
     ]
 
     typeDefs.forEach(def =>
@@ -131,7 +131,7 @@ describe(`merges explicit and inferred type definitions`, () => {
 
   const buildTestSchemaWithTypeBuilders = async ({
     infer,
-    addDefaultResolvers
+    addDefaultResolvers,
   }) => {
     let extensions = {}
     if (infer != null) {
@@ -146,16 +146,16 @@ describe(`merges explicit and inferred type definitions`, () => {
         fields: {
           bar: `Boolean!`,
           conflict: `String!`,
-          notExtra: `Boolean`
-        }
+          notExtra: `Boolean`,
+        },
       }),
       buildObjectType({
         name: `Nested`,
         fields: {
           bar: `Boolean!`,
           conflict: `String!`,
-          nested: `NestedNested`
-        }
+          nested: `NestedNested`,
+        },
       }),
       buildObjectType({
         name: `Test`,
@@ -173,9 +173,9 @@ describe(`merges explicit and inferred type definitions`, () => {
           conflictScalar: `Int!`,
           conflictScalarReverse: `Nested!`,
           conflictScalarArray: `[Int!]!`,
-          conflcitScalarArrayReverse: `[Nested!]!`
-        }
-      })
+          conflcitScalarArrayReverse: `[Nested!]!`,
+        },
+      }),
     ]
 
     typeDefs.forEach(def =>
@@ -188,7 +188,7 @@ describe(`merges explicit and inferred type definitions`, () => {
 
   ;[
     [`sdl`, buildTestSchemaWithSdl],
-    [`typeBuilders`, buildTestSchemaWithTypeBuilders]
+    [`typeBuilders`, buildTestSchemaWithTypeBuilders],
   ].forEach(([name, buildTestSchema]) => {
     describe(`with ${name}`, () => {
       it(`with default strategy (implicit "@infer(noDefaultResolvers: false)")`, async () => {
@@ -241,7 +241,7 @@ describe(`merges explicit and inferred type definitions`, () => {
 
       it(`with @infer (implicit "noDefaultResolvers: true")`, async () => {
         const schema = await buildTestSchema({
-          infer: true
+          infer: true,
         })
 
         const fields = schema.getType(`Test`).getFields()
@@ -292,7 +292,7 @@ describe(`merges explicit and inferred type definitions`, () => {
 
       it(`with @dontInfer directive (implicit "noDefaultResolvers: true")`, async () => {
         const schema = await buildTestSchema({
-          infer: false
+          infer: false,
         })
         const fields = schema.getType(`Test`).getFields()
         const nestedFields = schema.getType(`Nested`).getFields()
@@ -343,7 +343,7 @@ describe(`merges explicit and inferred type definitions`, () => {
       it(`with "infer(noDefaultResolvers: false)"`, async () => {
         const schema = await buildTestSchema({
           infer: true,
-          addDefaultResolvers: true
+          addDefaultResolvers: true,
         })
         const fields = schema.getType(`Test`).getFields()
         const nestedFields = schema.getType(`Nested`).getFields()
@@ -394,7 +394,7 @@ describe(`merges explicit and inferred type definitions`, () => {
       it(`with "infer(noDefaultResolvers: true)"`, async () => {
         const schema = await buildTestSchema({
           infer: true,
-          addDefaultResolvers: false
+          addDefaultResolvers: false,
         })
         const fields = schema.getType(`Test`).getFields()
         const nestedFields = schema.getType(`Nested`).getFields()
@@ -445,7 +445,7 @@ describe(`merges explicit and inferred type definitions`, () => {
       it(`with "@dontInfer(noDefaultResolvers: false)"`, async () => {
         const schema = await buildTestSchema({
           infer: false,
-          addDefaultResolvers: true
+          addDefaultResolvers: true,
         })
 
         const fields = schema.getType(`Test`).getFields()
@@ -497,7 +497,7 @@ describe(`merges explicit and inferred type definitions`, () => {
       it(`with "@dontInfer(noDefaultResolvers: true)"`, async () => {
         const schema = await buildTestSchema({
           infer: false,
-          addDefaultResolvers: false
+          addDefaultResolvers: false,
         })
 
         const fields = schema.getType(`Test`).getFields()
@@ -584,38 +584,38 @@ describe(`merges explicit and inferred type definitions`, () => {
         name: `Test`,
         interfaces: [`Node`],
         extensions: {
-          infer: true
+          infer: true,
         },
         fields: {
           explicitDate: {
             type: `Date`,
             extensions: {
-              dateformat: {}
-            }
-          }
-        }
+              dateformat: {},
+            },
+          },
+        },
       }),
       buildObjectType({
         name: `LinkTest`,
         interfaces: [`Node`],
         extensions: {
-          infer: true
+          infer: true,
         },
         fields: {
           link: {
             type: `Test!`,
             extensions: {
-              link: {}
-            }
+              link: {},
+            },
           },
           links: {
             type: `[Test!]!`,
             extensions: {
-              link: {}
-            }
-          }
-        }
-      })
+              link: {},
+            },
+          },
+        },
+      }),
     ]
     store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
     await build({})

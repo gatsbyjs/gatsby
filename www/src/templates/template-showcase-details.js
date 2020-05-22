@@ -19,7 +19,7 @@ export default function ShowcaseTemplate({ data, location }) {
     !data.sitesYaml.childScreenshot.screenshotFile
   ) {
     data.sitesYaml.childScreenshot = {
-      screenshotFile: data.fallback
+      screenshotFile: data.fallback,
     }
   }
 

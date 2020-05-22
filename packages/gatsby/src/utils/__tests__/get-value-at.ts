@@ -41,13 +41,13 @@ describe(`getValueAt util`, () => {
     const obj = {
       foo: [
         [{ foo: [`bar`] }, { foo: [`baz`, `qux`] }],
-        [{ foo: [`foo`, `bar`] }, { foo: [`qux`] }]
-      ]
+        [{ foo: [`foo`, `bar`] }, { foo: [`qux`] }],
+      ],
     }
     const value = getValueAt(obj, `foo.foo`)
     expect(value).toEqual([
       [[`bar`], [`baz`, `qux`]],
-      [[`foo`, `bar`], [`qux`]]
+      [[`foo`, `bar`], [`qux`]],
     ])
   })
 
@@ -56,18 +56,18 @@ describe(`getValueAt util`, () => {
       foo: [
         [
           { foo: [{ foo: { bar: `bar` } }] },
-          { foo: [{ foo: { bar: `baz` } }, { foo: { bar: `qux` } }] }
+          { foo: [{ foo: { bar: `baz` } }, { foo: { bar: `qux` } }] },
         ],
         [
           { foo: [{ foo: { bar: `foo` } }, { foo: { bar: `bar` } }] },
-          { foo: [{ foo: { bar: `qux` } }] }
-        ]
-      ]
+          { foo: [{ foo: { bar: `qux` } }] },
+        ],
+      ],
     }
     const value = getValueAt(obj, `foo.foo.foo.bar`)
     expect(value).toEqual([
       [[`bar`], [`baz`, `qux`]],
-      [[`foo`, `bar`], [`qux`]]
+      [[`foo`, `bar`], [`qux`]],
     ])
   })
 

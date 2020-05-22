@@ -18,7 +18,7 @@ const recipeMachine = Machine(
       plan: [],
       commands: [],
       stepResources: [],
-      stepsAsMdx: []
+      stepsAsMdx: [],
     },
     states: {
       parsingRecipe: {
@@ -34,7 +34,7 @@ const recipeMachine = Machine(
             } else {
               throw new Error(
                 JSON.stringify({
-                  validationError: `A recipe must be specified`
+                  validationError: `A recipe must be specified`,
                 })
               )
             }
@@ -52,20 +52,20 @@ const recipeMachine = Machine(
                 } catch (e) {
                   return {
                     error: `Could not parse recipe ${context.recipePath}`,
-                    e
+                    e,
                   }
                 }
-              }
-            })
+              },
+            }),
           },
           onDone: {
             target: `validateSteps`,
             actions: assign({
               steps: (context, event) => event.data.commands,
-              stepsAsMdx: (context, event) => event.data.stepsAsMdx
-            })
-          }
-        }
+              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+            }),
+          },
+        },
       },
       validateSteps: {
         invoke: {
@@ -82,10 +82,10 @@ const recipeMachine = Machine(
           onError: {
             target: `doneError`,
             actions: assign({
-              error: (context, event) => JSON.parse(event.data.message)
-            })
-          }
-        }
+              error: (context, event) => JSON.parse(event.data.message),
+            }),
+          },
+        },
       },
       validatePlan: {
         invoke: {
@@ -103,10 +103,10 @@ const recipeMachine = Machine(
           onError: {
             target: `doneError`,
             actions: assign({
-              error: (context, event) => JSON.parse(event.data.message)
-            })
-          }
-        }
+              error: (context, event) => JSON.parse(event.data.message),
+            }),
+          },
+        },
       },
       creatingPlan: {
         entry: [`deleteOldPlan`],
@@ -119,19 +119,19 @@ const recipeMachine = Machine(
           onDone: {
             target: `present plan`,
             actions: assign({
-              plan: (context, event) => event.data
-            })
+              plan: (context, event) => event.data,
+            }),
           },
           onError: {
             target: `doneError`,
-            actions: assign({ error: (context, event) => event.data })
-          }
-        }
+            actions: assign({ error: (context, event) => event.data }),
+          },
+        },
       },
       "present plan": {
         on: {
-          CONTINUE: `applyingPlan`
-        }
+          CONTINUE: `applyingPlan`,
+        },
       },
       applyingPlan: {
         invoke: {
@@ -153,28 +153,28 @@ const recipeMachine = Machine(
               .catch(error => cb({ type: `onError`, data: error }))
 
             return () => clearInterval(interval)
-          }
+          },
         },
         on: {
           RESET: {
             actions: assign({
-              elapsed: 0
-            })
+              elapsed: 0,
+            }),
           },
           TICK: {
             actions: assign({
-              elapsed: context => (context.elapsed += 10000)
-            })
+              elapsed: context => (context.elapsed += 10000),
+            }),
           },
           onDone: {
             target: `hasAnotherStep`,
-            actions: [`addResourcesToContext`]
+            actions: [`addResourcesToContext`],
           },
           onError: {
             target: `doneError`,
-            actions: assign({ error: (context, event) => event.data })
-          }
-        }
+            actions: assign({ error: (context, event) => event.data }),
+          },
+        },
       },
       hasAnotherStep: {
         entry: [`incrementStep`],
@@ -184,35 +184,35 @@ const recipeMachine = Machine(
               target: `creatingPlan`,
               // The 'searchValid' guard implementation details are
               // specified in the machine config
-              cond: `hasNextStep`
+              cond: `hasNextStep`,
             },
             {
               target: `done`,
               // The 'searchValid' guard implementation details are
               // specified in the machine config
-              cond: `atLastStep`
-            }
-          ]
-        }
+              cond: `atLastStep`,
+            },
+          ],
+        },
       },
       done: {
-        type: `final`
+        type: `final`,
       },
       doneError: {
-        type: `final`
-      }
-    }
+        type: `final`,
+      },
+    },
   },
   {
     actions: {
       incrementStep: assign((context, event) => {
         return {
-          currentStep: context.currentStep + 1
+          currentStep: context.currentStep + 1,
         }
       }),
       deleteOldPlan: assign((context, event) => {
         return {
-          plan: []
+          plan: [],
         }
       }),
       addResourcesToContext: assign((context, event) => {
@@ -221,22 +221,22 @@ const recipeMachine = Machine(
           const messages = event.data.map(e => {
             return {
               _message: e._message,
-              _currentStep: context.currentStep
+              _currentStep: context.currentStep,
             }
           })
           return {
-            stepResources: stepResources.concat(messages)
+            stepResources: stepResources.concat(messages),
           }
         }
         return undefined
-      })
+      }),
     },
     guards: {
       hasNextStep: (context, event) =>
         context.currentStep < context.steps.length,
       atLastStep: (context, event) =>
-        context.currentStep === context.steps.length
-    }
+        context.currentStep === context.steps.length,
+    },
   }
 )
 

@@ -21,29 +21,29 @@ const makeNodesUneven = () => [
     strArray: `["testing", "serialization", "hacks"]`,
     nullArray: [1, null, 3, 4],
     key: {
-      withEmptyArray: []
+      withEmptyArray: [],
     },
     anotherKey: {
       withANested: {
         nestedKey: `foo`,
         emptyArray: [],
-        anotherEmptyArray: []
-      }
+        anotherEmptyArray: [],
+      },
     },
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of dash and adventure`,
       tags: [`moo`, `foo`],
-      blue: 100
+      blue: 100,
     },
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
-      { aString: `some string`, aNumber: 2, anArray: [1, 2] }
+      { aString: `some string`, aNumber: 2, anArray: [1, 2] },
     ],
     boolean: true,
     nil: `not null`,
     nestedRegex: {
-      field: `har har`
+      field: `har har`,
     },
     num_null_not: 1,
     num_not_null: 1,
@@ -57,7 +57,7 @@ const makeNodesUneven = () => [
     obj_not_null: { y: 5 },
     null_obj_not: null,
     null_not_obj: null,
-    exh: 2
+    exh: 2,
   },
   {
     id: `1`,
@@ -73,18 +73,18 @@ const makeNodesUneven = () => [
     nullArray: [1, 3, 4],
     waxOnly: {
       foo: true,
-      bar: { baz: true }
+      bar: { baz: true },
     },
     anotherKey: {
       withANested: {
-        nestedKey: `foo`
-      }
+        nestedKey: `foo`,
+      },
     },
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of slash and adventure`,
       blue: 10010,
-      circle: `happy`
+      circle: `happy`,
     },
     boolean: false,
     nil: null,
@@ -94,28 +94,28 @@ const makeNodesUneven = () => [
         {
           one: {
             two: {
-              three: 123
-            }
-          }
+              three: 123,
+            },
+          },
         },
         {
           one: {
             five: {
-              three: 153
-            }
-          }
+              three: 153,
+            },
+          },
         },
         {
           one: {
             two: {
-              three: 404
-            }
-          }
-        }
-      ]
+              three: 404,
+            },
+          },
+        },
+      ],
     },
     nestedRegex: {
-      field: ``
+      field: ``,
     },
     strSecondOnly: `needle`,
     boolSecondOnly: false,
@@ -131,7 +131,7 @@ const makeNodesUneven = () => [
     null_obj_not: { y: 5 },
     not_null_obj: null,
     not_obj_null: { y: 5 },
-    exh: 3
+    exh: 3,
   },
   {
     id: `2`,
@@ -145,14 +145,14 @@ const makeNodesUneven = () => [
     waxOnly: null,
     anotherKey: {
       withANested: {
-        nestedKey: `bar`
-      }
+        nestedKey: `bar`,
+      },
     },
     frontmatter: {
       date: `2006-07-22T22:39:53.000Z`,
       title: `The world of shave and adventure`,
       blue: 10010,
-      circle: `happy`
+      circle: `happy`,
     },
     data: {
       tags: [
@@ -161,25 +161,25 @@ const makeNodesUneven = () => [
             document: [
               {
                 data: {
-                  tag: `Gatsby`
-                }
-              }
-            ]
-          }
+                  tag: `Gatsby`,
+                },
+              },
+            ],
+          },
         },
         {
           tag: {
             document: [
               {
                 data: {
-                  tag: `Design System`
+                  tag: `Design System`,
                 },
-                number: 5
-              }
-            ]
-          }
-        }
-      ]
+                number: 5,
+              },
+            ],
+          },
+        },
+      ],
     },
     num_not_null: null,
     null_not_num: 1,
@@ -193,31 +193,31 @@ const makeNodesUneven = () => [
     null_not_obj: { y: 5 },
     not_null_obj: { y: 5 },
     not_obj_null: null,
-    exh: 1
-  }
+    exh: 1,
+  },
 ]
 const makeNodesEven = () => [
   // Deliberate even count of nodes to test lt/lte/gt/gte search
   {
     id: `0`,
     internal: { type: `Test`, contentDigest: `0` },
-    exh: 2
+    exh: 2,
   },
   {
     id: `1`,
     internal: { type: `Test`, contentDigest: `1` },
-    exh: 4
+    exh: 4,
   },
   {
     id: `2`,
     internal: { type: `Test`, contentDigest: `2` },
-    exh: 1
+    exh: 1,
   },
   {
     id: `3`,
     internal: { type: `Test`, contentDigest: `3` },
-    exh: 3
-  }
+    exh: 3,
+  },
 ]
 
 const makeNodesNeNull = () => [
@@ -226,62 +226,62 @@ const makeNodesNeNull = () => [
   {
     id: `0`,
     internal: { type: `Test`, contentDigest: `0` },
-    desc: `does not have the property chain at all`
+    desc: `does not have the property chain at all`,
   },
   {
     id: `1`,
     internal: { type: `Test`, contentDigest: `1` },
     desc: `first start of path is null`,
-    a: null
+    a: null,
   },
   {
     id: `2`,
     internal: { type: `Test`, contentDigest: `2` },
     desc: `second start of path is undefined`,
-    a: {}
+    a: {},
   },
   {
     id: `3`,
     internal: { type: `Test`, contentDigest: `3` },
     desc: `second start of path is null`,
-    a: { b: null }
+    a: { b: null },
   },
   {
     id: `4`,
     internal: { type: `Test`, contentDigest: `4` },
     desc: `third part is undefined`,
-    a: { b: {} }
+    a: { b: {} },
   },
   {
     id: `5`,
     internal: { type: `Test`, contentDigest: `5` },
     desc: `third part is null`,
-    a: { b: { c: null } }
+    a: { b: { c: null } },
   },
   {
     id: `6`,
     internal: { type: `Test`, contentDigest: `6` },
     desc: `third part is true`,
-    a: { b: { c: true } }
+    a: { b: { c: true } },
   },
   {
     id: `7`,
     internal: { type: `Test`, contentDigest: `7` },
     desc: `third part is false`,
-    a: { b: { c: false } }
+    a: { b: { c: false } },
   },
   {
     id: `8`,
     internal: { type: `Test`, contentDigest: `8` },
     desc: `first step is a bool (would be prevented by schema in real world) `,
-    a: true
+    a: true,
   },
   {
     id: `9`,
     internal: { type: `Test`, contentDigest: `9` },
     desc: `second step is a bool (would be prevented by schema in real world)`,
-    a: { b: true }
-  }
+    a: { b: true },
+  },
 ]
 
 function make100Nodes(even) {
@@ -291,7 +291,7 @@ function make100Nodes(even) {
     arr.push({
       id: String(i),
       internal: { type: `Test`, contentDigest: `a${i}b` },
-      exh: i + 1
+      exh: i + 1,
     })
   }
 
@@ -311,7 +311,7 @@ function makeGqlType(nodes) {
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleObject(inferenceMetadata)
+    exampleValue: getExampleObject(inferenceMetadata),
   })
   return { sc, type: tc.getType() }
 }
@@ -337,7 +337,7 @@ async function runQuery(
     queryArgs,
     gqlComposer: sc,
     nodeTypeNames: [gqlType.name],
-    filtersCache
+    filtersCache,
   }
 
   let result = await nodesQuery(args)
@@ -400,7 +400,7 @@ it(`should use the cache argument`, async () => {
 // Make sure to test fast filters (with cache) and Sift (without cache)
 ;[
   { desc: `without cache`, cb: () => null }, // Forces no cache, must use Sift
-  { desc: `with cache`, cb: () => new Map() }
+  { desc: `with cache`, cb: () => new Map() },
 ].forEach(({ desc, cb: createFiltersCache }) => {
   async function runFastFilter(filter) {
     // Assume (and assert) that the query used fast filters if a cache was given
@@ -418,7 +418,7 @@ it(`should use the cache argument`, async () => {
         it(`handles eq operator with number value`, async () => {
           const needle = 2
           const [result, allNodes] = await runFastFilter({
-            hair: { eq: needle }
+            hair: { eq: needle },
           })
 
           expect(result?.length).toEqual(
@@ -431,7 +431,7 @@ it(`should use the cache argument`, async () => {
         it(`handles eq operator with false value`, async () => {
           const needle = false
           const [result, allNodes] = await runFastFilter({
-            boolean: { eq: needle }
+            boolean: { eq: needle },
           })
 
           expect(result?.length).toEqual(
@@ -444,7 +444,7 @@ it(`should use the cache argument`, async () => {
         it(`handles eq operator with 0`, async () => {
           const needle = 0
           const [result, allNodes] = await runFastFilter({
-            hair: { eq: needle }
+            hair: { eq: needle },
           })
 
           expect(result?.length).toEqual(
@@ -457,7 +457,7 @@ it(`should use the cache argument`, async () => {
         it(`handles eq operator with null`, async () => {
           const needle = null // note: this should find nodes with null OR undefined (apparently)
           const [result, allNodes] = await runFastFilter({
-            nil: { eq: needle }
+            nil: { eq: needle },
           })
 
           // Also returns nodes that do not have the property at all (NULL in db)
@@ -479,7 +479,7 @@ it(`should use the cache argument`, async () => {
         it(`handles eq operator with serialized array value`, async () => {
           const needle = `[5,6,7,8]`
           const [result, allNodes] = await runFastFilter({
-            strArray: { eq: needle }
+            strArray: { eq: needle },
           })
 
           expect(result?.length).toEqual(
@@ -492,7 +492,7 @@ it(`should use the cache argument`, async () => {
         it(`finds numbers inside arrays`, async () => {
           const needle = 3
           const [result, allNodes] = await runFastFilter({
-            anArray: { eq: needle }
+            anArray: { eq: needle },
           })
 
           expect(result?.length).toEqual(
@@ -507,7 +507,7 @@ it(`should use the cache argument`, async () => {
         it(`finds numbers inside single-element arrays`, async () => {
           const needle = 8
           const [result, allNodes] = await runFastFilter({
-            singleArray: { eq: needle }
+            singleArray: { eq: needle },
           })
 
           expect(result?.length).toEqual(
@@ -522,7 +522,7 @@ it(`should use the cache argument`, async () => {
         it(`does not coerce numbers against single-element arrays`, async () => {
           const needle = `8` // note: `('8' == [8]) === true`
           const [result] = await runFastFilter({
-            singleArray: { eq: needle }
+            singleArray: { eq: needle },
           })
 
           // Note: no coercion, so [8]=='8' is true but Sift ignores those
@@ -534,7 +534,7 @@ it(`should use the cache argument`, async () => {
         it(`handles ne operator`, async () => {
           const needle = 2
           const [result, allNodes] = await runFastFilter({
-            hair: { ne: needle }
+            hair: { ne: needle },
           })
 
           expect(result?.length).toEqual(
@@ -567,7 +567,7 @@ it(`should use the cache argument`, async () => {
         it(`handles ne operator with true`, async () => {
           const needle = true
           const [result, allNodes] = await runFastFilter({
-            boolean: { ne: true }
+            boolean: { ne: true },
           })
 
           expect(result?.length).toEqual(
@@ -639,7 +639,7 @@ it(`should use the cache argument`, async () => {
         it(`handles nested ne operator with true`, async () => {
           const needle = true
           const [result, allNodes] = await runFastFilter({
-            waxOnly: { foo: { ne: true } }
+            waxOnly: { foo: { ne: true } },
           })
 
           // Note: one node has this, one node has waxOnly=null, one node does not have the waxOnly property at all.
@@ -654,7 +654,7 @@ it(`should use the cache argument`, async () => {
         it(`handles ne operator with 0`, async () => {
           const needle = 0
           const [result, allNodes] = await runFastFilter({
-            hair: { ne: needle }
+            hair: { ne: needle },
           })
 
           expect(result?.length).toEqual(
@@ -667,7 +667,7 @@ it(`should use the cache argument`, async () => {
         it(`handles ne operator with null`, async () => {
           const needle = 0
           const [result, allNodes] = await runFastFilter({
-            nil: { ne: needle }
+            nil: { ne: needle },
           })
 
           // Should only return nodes who do have the property, not set to null
@@ -691,7 +691,7 @@ it(`should use the cache argument`, async () => {
         it(`handles deeply nested ne: true operator`, async () => {
           const needle = true
           const [result, allNodes] = await runFastFilter({
-            waxOnly: { bar: { baz: { ne: needle } } }
+            waxOnly: { bar: { baz: { ne: needle } } },
           })
 
           expect(result?.length).toEqual(
@@ -706,7 +706,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the ne operator for array field values`, async () => {
           const needle = 1
           const [result, allNodes] = await runFastFilter({
-            anArray: { ne: needle }
+            anArray: { ne: needle },
           })
 
           // Sift returns only the node that doesn't have the property at all (the other two arrays contain 1)
@@ -725,7 +725,7 @@ it(`should use the cache argument`, async () => {
         it(`handles lt operator with number`, async () => {
           const needle = 1
           const [result, allNodes] = await runFastFilter({
-            hair: { lt: needle }
+            hair: { lt: needle },
           })
 
           expect(result?.length).toEqual(
@@ -777,7 +777,7 @@ it(`should use the cache argument`, async () => {
               66.5,
               98.5,
               99.5,
-              100.5
+              100.5,
             ]) {
               it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
                 // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -794,7 +794,7 @@ it(`should use the cache argument`, async () => {
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
           const [result, allNodes] = await runFastFilter({
-            float: { lt: needle }
+            float: { lt: needle },
           })
 
           expect(result?.length).toEqual(
@@ -808,7 +808,7 @@ it(`should use the cache argument`, async () => {
           const needle = null
           // Note: Slow filter because it returns an empty result
           const [result, allNodes] = await runFastFilter({
-            nil: { lt: needle }
+            nil: { lt: needle },
           })
 
           // Nothing is lt null so zero nodes should match
@@ -824,7 +824,7 @@ it(`should use the cache argument`, async () => {
         it(`handles lte operator with number`, async () => {
           const needle = 1
           const [result, allNodes] = await runFastFilter({
-            hair: { lte: needle }
+            hair: { lte: needle },
           })
 
           expect(result?.length).toEqual(
@@ -876,7 +876,7 @@ it(`should use the cache argument`, async () => {
               66.5,
               98.5,
               99.5,
-              100.5
+              100.5,
             ]) {
               it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
                 // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -893,7 +893,7 @@ it(`should use the cache argument`, async () => {
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
           const [result, allNodes] = await runFastFilter({
-            float: { lte: needle }
+            float: { lte: needle },
           })
 
           expect(result?.length).toEqual(
@@ -906,7 +906,7 @@ it(`should use the cache argument`, async () => {
         it(`handles lte operator with null`, async () => {
           const needle = null
           const [result, allNodes] = await runFastFilter({
-            nil: { lte: needle }
+            nil: { lte: needle },
           })
 
           // lte null matches null but no nodes without the property (NULL)
@@ -922,7 +922,7 @@ it(`should use the cache argument`, async () => {
         it(`handles gt operator with number`, async () => {
           const needle = 1
           const [result, allNodes] = await runFastFilter({
-            hair: { gt: needle }
+            hair: { gt: needle },
           })
 
           expect(result?.length).toEqual(
@@ -974,7 +974,7 @@ it(`should use the cache argument`, async () => {
               66.5,
               98.5,
               99.5,
-              100.5
+              100.5,
             ]) {
               it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
                 // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -991,7 +991,7 @@ it(`should use the cache argument`, async () => {
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
           const [result, allNodes] = await runFastFilter({
-            float: { gt: needle }
+            float: { gt: needle },
           })
 
           expect(result?.length).toEqual(
@@ -1005,7 +1005,7 @@ it(`should use the cache argument`, async () => {
           const needle = null
           // Note: Slow filter because it returns an empty result
           const [result, allNodes] = await runFastFilter({
-            nil: { gt: needle }
+            nil: { gt: needle },
           })
 
           // Nothing is gt null so zero nodes should match
@@ -1021,7 +1021,7 @@ it(`should use the cache argument`, async () => {
         it(`handles gte operator with number`, async () => {
           const needle = 1
           const [result, allNodes] = await runFastFilter({
-            hair: { gte: needle }
+            hair: { gte: needle },
           })
 
           expect(result?.length).toEqual(
@@ -1073,7 +1073,7 @@ it(`should use the cache argument`, async () => {
               66.5,
               98.5,
               99.5,
-              100.5
+              100.5,
             ]) {
               it(`should pivot upward when needle does not exist, needle=${needle}`, async () => {
                 // This caught a bug in the binary search algo which was incorrectly generating the next pivot index.
@@ -1090,7 +1090,7 @@ it(`should use the cache argument`, async () => {
           // value wasn't mapped, that it can't be found.
           const needle = `1.5`
           const [result, allNodes] = await runFastFilter({
-            float: { gte: needle }
+            float: { gte: needle },
           })
 
           expect(result?.length).toEqual(
@@ -1103,7 +1103,7 @@ it(`should use the cache argument`, async () => {
         it(`handles gte operator with null`, async () => {
           const needle = null
           const [result, allNodes] = await runFastFilter({
-            nil: { gte: needle }
+            nil: { gte: needle },
           })
 
           // gte null matches null but no nodes without the property (NULL)
@@ -1120,7 +1120,7 @@ it(`should use the cache argument`, async () => {
           const needleStr = `/^The.*Wax/`
           const needleRex = /^The.*Wax/
           const [result, allNodes] = await runFastFilter({
-            name: { regex: needleStr }
+            name: { regex: needleStr },
           })
 
           expect(result?.length).toEqual(
@@ -1137,7 +1137,7 @@ it(`should use the cache argument`, async () => {
           const needleRex = /^the.*wax/i
           const needleStr = `/^the.*wax/i`
           const [result, allNodes] = await runFastFilter({
-            name: { regex: needleStr }
+            name: { regex: needleStr },
           })
 
           expect(result?.length).toEqual(
@@ -1152,7 +1152,7 @@ it(`should use the cache argument`, async () => {
         it(`rejects strings without forward slashes`, async () => {
           await expect(
             runFastFilter({
-              name: { regex: `^The.*Wax` }
+              name: { regex: `^The.*Wax` },
             })
           ).rejects.toThrow()
         })
@@ -1160,7 +1160,7 @@ it(`should use the cache argument`, async () => {
         it(`rejects strings without trailing slash`, async () => {
           await expect(
             runFastFilter({
-              name: { regex: `/^The.*Wax` }
+              name: { regex: `/^The.*Wax` },
             })
           ).rejects.toThrow()
         })
@@ -1176,7 +1176,7 @@ it(`should use the cache argument`, async () => {
           const needleRex = /(?:)/i // This was what it turned into
           const needleStr = `^the.*wax/i`
           const [result, allNodes] = await runFastFilter({
-            name: { regex: needleStr }
+            name: { regex: needleStr },
           })
 
           expect(result?.length).toEqual(
@@ -1191,7 +1191,7 @@ it(`should use the cache argument`, async () => {
         it(`rejects actual regex`, async () => {
           await expect(
             runFastFilter({
-              name: { regex: /^The.*Wax/ }
+              name: { regex: /^The.*Wax/ },
             })
           ).rejects.toThrow()
         })
@@ -1200,7 +1200,7 @@ it(`should use the cache argument`, async () => {
           const needleStr = `/.*/`
           const needleRex = /.*/
           const [result, allNodes] = await runFastFilter({
-            nestedRegex: { field: { regex: needleStr } }
+            nestedRegex: { field: { regex: needleStr } },
           })
 
           expect(result?.length).toEqual(
@@ -1222,7 +1222,7 @@ it(`should use the cache argument`, async () => {
 
         it(`does not match double quote for string without it`, async () => {
           const [result, allNodes] = await runFastFilter({
-            name: { regex: `/"/` }
+            name: { regex: `/"/` },
           })
 
           expect(result).toEqual(null)
@@ -1234,7 +1234,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the in operator for strings`, async () => {
           const needle = [`b`, `c`]
           const [result, allNodes] = await runFastFilter({
-            string: { in: needle }
+            string: { in: needle },
           })
 
           expect(result?.length).toEqual(
@@ -1249,7 +1249,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the in operator for ints`, async () => {
           const needle = [0, 2]
           const [result, allNodes] = await runFastFilter({
-            index: { in: needle }
+            index: { in: needle },
           })
 
           expect(result?.length).toEqual(
@@ -1264,7 +1264,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the in operator for floats`, async () => {
           const needle = [1.5, 2.5]
           const [result, allNodes] = await runFastFilter({
-            float: { in: needle }
+            float: { in: needle },
           })
 
           expect(result?.length).toEqual(
@@ -1278,7 +1278,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for just null`, async () => {
           const [result, allNodes] = await runFastFilter({
-            nil: { in: [null] }
+            nil: { in: [null] },
           })
 
           // May not have the property, or must be null
@@ -1294,7 +1294,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for double null`, async () => {
           const [result, allNodes] = await runFastFilter({
-            nil: { in: [null, null] }
+            nil: { in: [null, null] },
           })
 
           // May not have the property, or must be null
@@ -1310,7 +1310,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for null in int and null`, async () => {
           const [result, allNodes] = await runFastFilter({
-            nil: { in: [5, null] }
+            nil: { in: [5, null] },
           })
 
           // Include the nodes without a `nil` property
@@ -1326,7 +1326,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for int in int and null`, async () => {
           const [result, allNodes] = await runFastFilter({
-            index: { in: [2, null] }
+            index: { in: [2, null] },
           })
 
           // Include the nodes without a `index` property (there aren't any)
@@ -1350,7 +1350,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the in operator for booleans`, async () => {
           const [result, allNodes] = await runFastFilter({
-            boolean: { in: [true] }
+            boolean: { in: [true] },
           })
 
           expect(result?.length).toEqual(
@@ -1363,7 +1363,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the in operator for array with one element`, async () => {
           // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
           const [result, allNodes] = await runFastFilter({
-            anArray: { in: [5] }
+            anArray: { in: [5] },
           })
 
           // The first one has a 5, the second one does not have a 5, the third does
@@ -1382,7 +1382,7 @@ it(`should use the cache argument`, async () => {
           // Note: `node.anArray` doesn't exist or it's an array of multiple numbers
           const needle = [20, 5, 300]
           const [result, allNodes] = await runFastFilter({
-            anArray: { in: needle }
+            anArray: { in: needle },
           })
 
           // Same as the test for just `[5]`. 20 and 300 do not appear anywhere.
@@ -1401,7 +1401,7 @@ it(`should use the cache argument`, async () => {
         it(`handles the nested in operator for array of strings`, async () => {
           const needle = [`moo`]
           const [result, allNodes] = await runFastFilter({
-            frontmatter: { tags: { in: needle } }
+            frontmatter: { tags: { in: needle } },
           })
 
           expect(result?.length).toEqual(
@@ -1421,7 +1421,7 @@ it(`should use the cache argument`, async () => {
         it(`refuses a non-arg number argument`, async () => {
           await expect(
             runFastFilter({
-              hair: { in: 2 }
+              hair: { in: 2 },
             })
           ).rejects.toThrow()
         })
@@ -1430,7 +1430,7 @@ it(`should use the cache argument`, async () => {
         it.skip(`refuses a non-arg string argument`, async () => {
           await expect(
             runFastFilter({
-              name: { in: `The Mad Max` }
+              name: { in: `The Mad Max` },
             })
           ).rejects.toThrow()
         })
@@ -1438,7 +1438,7 @@ it(`should use the cache argument`, async () => {
         it(`refuses a non-arg boolean argument`, async () => {
           await expect(
             runFastFilter({
-              boolean: { in: true }
+              boolean: { in: true },
             })
           ).rejects.toThrow()
         })
@@ -1452,12 +1452,12 @@ it(`should use the cache argument`, async () => {
                 elemMatch: {
                   one: {
                     two: {
-                      three: { eq: 123 }
-                    }
-                  }
-                }
-              }
-            }
+                      three: { eq: 123 },
+                    },
+                  },
+                },
+              },
+            },
           })
 
           expect(result.length).toEqual(1)
@@ -1473,12 +1473,12 @@ it(`should use the cache argument`, async () => {
                 elemMatch: {
                   one: {
                     five: {
-                      three: { eq: 153 }
-                    }
-                  }
-                }
-              }
-            }
+                      three: { eq: 153 },
+                    },
+                  },
+                },
+              },
+            },
           })
 
           expect(result.length).toEqual(1)
@@ -1494,12 +1494,12 @@ it(`should use the cache argument`, async () => {
                 elemMatch: {
                   one: {
                     two: {
-                      three: { lt: 1000 } // one match is 123, the other 404
-                    }
-                  }
-                }
-              }
-            }
+                      three: { lt: 1000 }, // one match is 123, the other 404
+                    },
+                  },
+                },
+              },
+            },
           })
 
           // The `elemMatch` operator only returns the first nodde that matches so
@@ -1515,10 +1515,10 @@ it(`should use the cache argument`, async () => {
             singleElem: {
               things: {
                 elemMatch: {
-                  three: { eq: 123 }
-                }
-              }
-            }
+                  three: { eq: 123 },
+                },
+              },
+            },
           })
 
           expect(result).toEqual(null)
@@ -1533,14 +1533,14 @@ it(`should use the cache argument`, async () => {
                     document: {
                       elemMatch: {
                         data: {
-                          tag: { eq: `Gatsby` }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+                          tag: { eq: `Gatsby` },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           })
 
           expect(result.length).toEqual(1)
@@ -1556,14 +1556,14 @@ it(`should use the cache argument`, async () => {
                     document: {
                       elemMatch: {
                         data: {
-                          tag: { eq: `Design System` }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+                          tag: { eq: `Design System` },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           })
 
           expect(result.length).toEqual(1)
@@ -1574,9 +1574,9 @@ it(`should use the cache argument`, async () => {
           const [result] = await runFastFilter({
             boolean: {
               elemMatch: {
-                eq: true
-              }
-            }
+                eq: true,
+              },
+            },
           })
 
           // Does NOT contain nodes that do not have the field
@@ -1588,9 +1588,9 @@ it(`should use the cache argument`, async () => {
           const [result] = await runFastFilter({
             boolSecondOnly: {
               elemMatch: {
-                eq: false
-              }
-            }
+                eq: false,
+              },
+            },
           })
 
           // Does NOT contain nodes that do not have the field so returns 2nd node
@@ -1602,9 +1602,9 @@ it(`should use the cache argument`, async () => {
           const [result] = await runFastFilter({
             string: {
               elemMatch: {
-                eq: `a`
-              }
-            }
+                eq: `a`,
+              },
+            },
           })
 
           // Does NOT contain nodes that do not have the field
@@ -1616,9 +1616,9 @@ it(`should use the cache argument`, async () => {
           const [result] = await runFastFilter({
             name: {
               elemMatch: {
-                eq: `The Mad Wax`
-              }
-            }
+                eq: `The Mad Wax`,
+              },
+            },
           })
 
           // Can return more than one node
@@ -1632,9 +1632,9 @@ it(`should use the cache argument`, async () => {
           const [result] = await runFastFilter({
             strSecondOnly: {
               elemMatch: {
-                eq: `needle`
-              }
-            }
+                eq: `needle`,
+              },
+            },
           })
 
           // Does NOT contain nodes that do not have the field so returns 2nd node
@@ -1646,9 +1646,9 @@ it(`should use the cache argument`, async () => {
           const [result] = await runFastFilter({
             float: {
               elemMatch: {
-                eq: 1.5
-              }
-            }
+                eq: 1.5,
+              },
+            },
           })
 
           // Does NOT contain nodes that do not have the field
@@ -1677,7 +1677,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nin operator for array [null]`, async () => {
           const [result] = await runFastFilter({
-            nullArray: { nin: [null] }
+            nullArray: { nin: [null] },
           })
 
           // Since the array contains `null`, the query should NOT return the
@@ -1689,7 +1689,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nin operator for strings`, async () => {
           const [result] = await runFastFilter({
-            string: { nin: [`b`, `c`] }
+            string: { nin: [`b`, `c`] },
           })
 
           expect(result.length).toEqual(1)
@@ -1721,7 +1721,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nin operator for boolean and null on boolean`, async () => {
           const [result] = await runFastFilter({
-            boolean: { nin: [true, null] }
+            boolean: { nin: [true, null] },
           })
 
           // Do not return the node that does not have the field because of `null`
@@ -1735,7 +1735,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nin operator for double null`, async () => {
           const [result] = await runFastFilter({
-            nil: { nin: [null, null] }
+            nil: { nin: [null, null] },
           })
 
           // Do not return the node that does not have the field because of `null`
@@ -1749,7 +1749,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nin operator for null in int+null`, async () => {
           const [result] = await runFastFilter({
-            nil: { nin: [5, null] }
+            nil: { nin: [5, null] },
           })
 
           // Do not return the node that does not have the field because of `null`
@@ -1763,7 +1763,7 @@ it(`should use the cache argument`, async () => {
 
         it(`handles the nin operator for int in int+null`, async () => {
           const [result] = await runFastFilter({
-            index: { nin: [2, null] }
+            index: { nin: [2, null] },
           })
 
           // Do not return the node that does not have the field because of `null`
@@ -1804,8 +1804,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`frontmatter.blue`],
-            order: [`desc`]
-          }
+            order: [`desc`],
+          },
         })
 
         expect(result.length).toEqual(3)
@@ -1832,8 +1832,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_null_not`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1846,8 +1846,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_null_not`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1860,8 +1860,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_not_null`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1874,8 +1874,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`num_not_null`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1888,8 +1888,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_num_not`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1902,8 +1902,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_num_not`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1916,8 +1916,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_num`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1930,8 +1930,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_num`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1944,8 +1944,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_num`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1958,8 +1958,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_num`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1972,8 +1972,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_num_null`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -1986,8 +1986,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_num_null`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2015,8 +2015,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_null_not`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2029,8 +2029,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_null_not`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2043,8 +2043,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_not_null`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2057,8 +2057,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`str_not_null`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2071,8 +2071,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_str_not`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2085,8 +2085,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_str_not`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2099,8 +2099,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_str`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2113,8 +2113,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_str`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2127,8 +2127,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_str`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2141,8 +2141,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_str`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2155,8 +2155,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_str_null`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2169,8 +2169,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_str_null`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2198,8 +2198,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_null_not`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2212,8 +2212,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_null_not`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2226,8 +2226,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_not_null`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2240,8 +2240,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`obj_not_null`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2254,8 +2254,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_obj_not`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2268,8 +2268,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_obj_not`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2282,8 +2282,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_obj`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2296,8 +2296,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`null_not_obj`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2310,8 +2310,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_obj`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2324,8 +2324,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_null_obj`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2338,8 +2338,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_obj_null`],
-              order: [`asc`]
-            }
+              order: [`asc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2352,8 +2352,8 @@ it(`should use the cache argument`, async () => {
           let result = await runQuery({
             sort: {
               fields: [`not_obj_null`],
-              order: [`desc`]
-            }
+              order: [`desc`],
+            },
           })
 
           expect(result.length).toEqual(3)
@@ -2368,8 +2368,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`waxOnly`],
-            order: [`desc`]
-          }
+            order: [`desc`],
+          },
         })
 
         // 0 doesnt have it, 1 has it as an object, 2 has it as null
@@ -2385,8 +2385,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`waxOnly`],
-            order: [`asc`]
-          }
+            order: [`asc`],
+          },
         })
 
         // 0 doesnt have it, 1 has it as an object, 2 has it as null
@@ -2402,8 +2402,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`frontmatter.blue`, `id`],
-            order: [`desc`] // `id` field will be sorted asc
-          }
+            order: [`desc`], // `id` field will be sorted asc
+          },
         })
 
         expect(result.length).toEqual(3)
@@ -2417,8 +2417,8 @@ it(`should use the cache argument`, async () => {
           limit: 10,
           sort: {
             fields: [`frontmatter.blue`, `id`],
-            order: [`desc`, `desc`] // `id` field will be sorted desc
-          }
+            order: [`desc`, `desc`], // `id` field will be sorted desc
+          },
         })
 
         expect(result.length).toEqual(3)

@@ -3,7 +3,7 @@ jest.mock(`../reporter`, () => {
     panic: jest.fn(),
     log: jest.fn(),
     stripIndent: jest.fn(str => str),
-    warn: jest.fn()
+    warn: jest.fn(),
   }
 })
 jest.mock(`../create-cli`)
@@ -18,7 +18,7 @@ const getCLI = () => {
 
   return {
     reporter,
-    createCli
+    createCli,
   }
 }
 
@@ -34,7 +34,7 @@ beforeEach(() => {
 const setup = version => {
   if (version) {
     Object.defineProperty(__process__, `version`, {
-      get: () => version
+      get: () => version,
     })
   }
 

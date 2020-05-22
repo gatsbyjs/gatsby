@@ -10,7 +10,7 @@ internals.configSchema = Joi.object().keys({
   name: Joi.string().default(`Anon`),
   args: Joi.object(),
   resolve: Joi.func(),
-  description: Joi.string()
+  description: Joi.string(),
 })
 
 module.exports = (schema, config = {}) => {

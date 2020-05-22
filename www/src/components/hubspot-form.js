@@ -17,42 +17,42 @@ export default class GatsbyHubspotForm extends Component {
       <div
         sx={{
           "& form": {
-            margin: 0
+            margin: 0,
           },
           "& .hs-form fieldset": {
             maxWidth: `none`,
-            width: `100%`
+            width: `100%`,
           },
           "& .hs-form-field": {
-            pb: 5
+            pb: 5,
           },
           "& ul.hs-error-msgs": {
             listStyleType: `none`,
             margin: 0,
             color: `warning`,
-            fontSize: 1
+            fontSize: 1,
           },
           "& .hs-form input": {
-            ...formInput
+            ...formInput,
           },
           '& .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="number"]': {
             width: `100% !important`,
             ":focus": {
-              ...formInputFocus
-            }
+              ...formInputFocus,
+            },
           },
           "& label": {
             // a bit unsure about the implications of the next line
             display: `inline-block`,
             fontSize: 1,
-            pb: 1
+            pb: 1,
           },
           "& .hs-form-required": {
-            color: `textMuted`
+            color: `textMuted`,
           },
           "& .hs-button.primary": {
-            ...buttonStyles().default
-          }
+            ...buttonStyles().default,
+          },
         }}
       >
         <HubspotForm

@@ -39,15 +39,15 @@ In `gatsby-node.js` you can carry out functions with these APIs, such as:
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const nodeData = {
     title: "Test Node",
-    description: "Testing the node "
+    description: "Testing the node ",
   }
   const newNode = {
     ...nodeData,
     id: createNodeId("TestNode-testid"),
     internal: {
       type: "TestNode",
-      contentDigest: createContentDigest(nodeData)
-    }
+      contentDigest: createContentDigest(nodeData),
+    },
   }
   actions.createNode(newNode)
 }

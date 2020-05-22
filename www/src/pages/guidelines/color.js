@@ -9,13 +9,13 @@ import {
   Section,
   Columns,
   CopyColumn,
-  ContentColumn
+  ContentColumn,
 } from "../../components/guidelines/containers"
 import {
   Intro,
   PageHeading,
   SectionHeading,
-  SectionSubheading
+  SectionSubheading,
 } from "../../components/guidelines/typography"
 
 import LazyModal from "../../components/lazy-modal"
@@ -41,7 +41,7 @@ class Color extends React.Component {
     super(props)
     this.state = {
       isModalOpen: false,
-      color: false
+      color: false,
     }
   }
 
@@ -246,11 +246,11 @@ class Color extends React.Component {
               transform: `0`,
               padding: 0,
               borderRadius: 0,
-              border: 0
+              border: 0,
             },
             overlay: {
-              zIndex: 1000
-            }
+              zIndex: 1000,
+            },
           }}
         >
           <ColorModal

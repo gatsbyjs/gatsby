@@ -8,8 +8,8 @@ const BabelPluginRemoveElementByName = (api, { names }) => {
         if (names.includes(path.node.openingElement.name.name)) {
           path.remove()
         }
-      }
-    }
+      },
+    },
   }
 }
 
@@ -17,7 +17,7 @@ module.exports = (src, options) => {
   try {
     const { code } = babel.transform(`<>${src}</>`, {
       configFile: false,
-      plugins: [[BabelPluginRemoveElementByName, options], jsxSyntax]
+      plugins: [[BabelPluginRemoveElementByName, options], jsxSyntax],
     })
 
     return code.replace(/^<>/, ``).replace(/<\/>;$/, ``)

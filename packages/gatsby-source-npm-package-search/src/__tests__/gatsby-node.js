@@ -13,7 +13,7 @@ describe(`gatsby-source-npm-package-search`, () => {
 
     beforeEach(async () => {
       boundActionCreators = {
-        createNode: jest.fn()
+        createNode: jest.fn(),
       }
       createNodeId = jest.fn(id => id)
       createContentDigest = jest.fn(() => `digest`)
@@ -24,17 +24,17 @@ describe(`gatsby-source-npm-package-search`, () => {
         browse.mockReturnValue([
           {
             objectID: `foo`,
-            readme: `readme`
-          }
+            readme: `readme`,
+          },
         ])
         await sourceNodes(
           {
             boundActionCreators,
             createNodeId,
-            createContentDigest
+            createContentDigest,
           },
           {
-            keywords: [`foo`, `bar`]
+            keywords: [`foo`, `bar`],
           }
         )
       })
@@ -57,17 +57,17 @@ describe(`gatsby-source-npm-package-search`, () => {
       beforeEach(async () => {
         browse.mockReturnValue([
           {
-            objectID: packageName
-          }
+            objectID: packageName,
+          },
         ])
         await sourceNodes(
           {
             boundActionCreators,
             createNodeId,
-            createContentDigest
+            createContentDigest,
           },
           {
-            keywords: [`foo`, `bar`]
+            keywords: [`foo`, `bar`],
           }
         )
       })

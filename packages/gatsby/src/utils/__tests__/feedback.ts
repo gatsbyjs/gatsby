@@ -1,7 +1,7 @@
 import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
 import {
   setFeedbackDisabledValue,
-  userPassesFeedbackRequestHeuristic
+  userPassesFeedbackRequestHeuristic,
 } from "../feedback"
 jest.mock(`date-fns/getDayOfYear`, (): (() => number) => (): number => {
   // This is required for Hueristic 1 to always match up
@@ -12,7 +12,7 @@ jest.mock(`date-fns/getDayOfYear`, (): (() => number) => (): number => {
 jest.mock(`gatsby-core-utils`, () => {
   return {
     ...jest.requireActual(`gatsby-core-utils`),
-    getGatsbyVersion: jest.fn(() => `2.1.1`)
+    getGatsbyVersion: jest.fn(() => `2.1.1`),
   }
 })
 

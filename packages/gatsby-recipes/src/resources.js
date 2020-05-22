@@ -11,7 +11,7 @@ const configResource = {
   read: () => {},
   update: () => {},
   destroy: () => {},
-  plan: () => {}
+  plan: () => {},
 }
 
 const componentResourceMapping = {
@@ -22,7 +22,7 @@ const componentResourceMapping = {
   NPMPackage: npmPackageResource,
   NPMScript: npmPackageScriptResource,
   NPMPackageJson: npmPackageJsonResource,
-  GitIgnore: gitIgnoreResource
+  GitIgnore: gitIgnoreResource,
 }
 
 module.exports = componentResourceMapping

@@ -5,7 +5,7 @@ import { withI18n } from "@lingui/react"
 import Link from "./localized-link"
 import {
   MdArrowBack as ArrowBackIcon,
-  MdArrowForward as ArrowForwardIcon
+  MdArrowForward as ArrowForwardIcon,
 } from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -13,20 +13,20 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 const prevNextLinkStyles = {
   // bump specificity to override the border applied to Link's by default
   "&&": {
-    borderBottom: 0
+    borderBottom: 0,
   },
   color: `gatsby`,
   fontFamily: `heading`,
   fontSize: 3,
   fontWeight: `bold`,
-  lineHeight: `dense`
+  lineHeight: `dense`,
 }
 const prevNextLabelStyles = {
   color: `textMuted`,
   fontSize: 2,
   fontWeight: `body`,
   mb: 2,
-  mt: 0
+  mt: 0,
 }
 
 const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
@@ -41,8 +41,8 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
         [mediaQueries.sm]: {
           display: `flex`,
           justifyContent: `space-between`,
-          width: `100%`
-        }
+          width: `100%`,
+        },
       }}
       {...props}
     >
@@ -55,17 +55,17 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
             <span
               sx={{
                 [mediaQueries.md]: {
-                  ml: `-1.5em`
+                  ml: `-1.5em`,
                 },
                 display: `inline-flex`,
-                alignItems: `center`
+                alignItems: `center`,
               }}
             >
               <ArrowBackIcon
                 sx={{
                   flexShrink: 0,
                   mr: `0.5em`,
-                  verticalAlign: `sub`
+                  verticalAlign: `sub`,
                 }}
               />
               {prev.title}
@@ -77,7 +77,7 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
         sx={{
           textAlign: `right`,
           mt: 5,
-          [mediaQueries.sm]: { mt: 0, width: `48%` }
+          [mediaQueries.sm]: { mt: 0, width: `48%` },
         }}
       >
         {next && (
@@ -88,10 +88,10 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
             <span
               sx={{
                 [mediaQueries.md]: {
-                  mr: `-1.5em`
+                  mr: `-1.5em`,
                 },
                 display: `inline-flex`,
-                alignItems: `center`
+                alignItems: `center`,
               }}
             >
               {next.title}
@@ -99,7 +99,7 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
                 sx={{
                   flexShrink: 0,
                   ml: `0.5em`,
-                  verticalAlign: `sub`
+                  verticalAlign: `sub`,
                 }}
               />
             </span>

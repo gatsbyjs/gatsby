@@ -13,7 +13,7 @@ const TechWithIcon = ({ icon, height, children }) => {
         css={{
           height: `${h}`,
           margin: 0,
-          verticalAlign: `text-bottom`
+          verticalAlign: `text-bottom`,
         }}
       />
     </span>

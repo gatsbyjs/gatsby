@@ -6,7 +6,7 @@ const isURL = (possibleUrl: string): boolean =>
 export const getPublicPath = ({
   assetPrefix,
   pathPrefix,
-  prefixPaths
+  prefixPaths,
 }: {
   assetPrefix?: string
   pathPrefix?: string

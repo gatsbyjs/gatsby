@@ -80,7 +80,7 @@ You can access theme values with a function which I did in this case to be able 
 const Circle = ({ color, className }) => (
   <div
     sx={{
-      variant: `gradients.${color}`
+      variant: `gradients.${color}`,
     }}
     className={className}
   />

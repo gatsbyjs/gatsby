@@ -36,8 +36,8 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
           left: indent,
           position: `absolute`,
           right: 0,
-          top: `auto`
-        }
+          top: `auto`,
+        },
       }}
     >
       <Link
@@ -55,21 +55,21 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
             color: `navigation.linkDefault`,
             fontWeight: `body`,
             ...(isDraft && {
-              color: `textMuted`
+              color: `textMuted`,
             }),
             ...(inActiveTree && {
               color: `link.color`,
-              fontWeight: `semiBold`
+              fontWeight: `semiBold`,
             }),
             "&:hover": {
               bg: `sidebar.itemHoverBackground`,
               color: `navigation.linkHover`,
               "&:before": {
                 bg: `link.color`,
-                transform: `scale(1)`
-              }
+                transform: `scale(1)`,
+              },
             },
-            ...overrideCSS
+            ...overrideCSS,
           },
           "&:before, &:after": {
             content: `''`,
@@ -81,20 +81,20 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
             height: bulletSize,
             position: `absolute`,
             transition: `default`,
-            width: bulletSize
+            width: bulletSize,
           },
           "&:before": {
             bg: isActive && `link.color`,
             borderRadius: 6,
-            transform: isActive ? `scale(1)` : `scale(0.1)`
+            transform: isActive ? `scale(1)` : `scale(0.1)`,
           },
           "&:after": {
             bg: `link.color`,
             borderRadius: 2,
             opacity: isActive ? 1 : 0,
             transform: `translateX(-${bulletSizeActive - bulletSize}px)`,
-            width: isActive ? bulletSizeActive : 0
-          }
+            width: isActive ? bulletSizeActive : 0,
+          },
         }}
         onClick={onLinkClick}
         to={item.link}
@@ -114,7 +114,7 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
               position: `absolute`,
               top: bulletOffsetTop,
               width: bulletSize,
-              zIndex: -1
+              zIndex: -1,
             }}
           />
         )}

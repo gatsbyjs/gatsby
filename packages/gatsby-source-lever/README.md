@@ -26,10 +26,10 @@ module.exports = {
         site: "lever",
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems
-        verboseOutput: false
-      }
-    }
-  ]
+        verboseOutput: false,
+      },
+    },
+  ],
 }
 ```
 
@@ -118,8 +118,8 @@ exports.createPages = ({ graphql, actions }) => {
             path: `/${edge.node.id}/`,
             component: slash(pageTemplate),
             context: {
-              id: edge.node.id
-            }
+              id: edge.node.id,
+            },
           })
         })
       })

@@ -13,9 +13,9 @@ const Container = ({ children, withSidebar = true, overrideCSS }) => (
       p: 6,
       position: `relative`,
       [mediaQueries.lg]: {
-        py: 9
+        py: 9,
       },
-      ...overrideCSS
+      ...overrideCSS,
     }}
   >
     {children}

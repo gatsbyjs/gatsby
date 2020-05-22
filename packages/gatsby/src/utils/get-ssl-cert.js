@@ -21,14 +21,14 @@ const getWindowsEncryptionPassword = async () => {
       `If this is the first time this has run, then this is to set the password`,
       `for future use.  If any new certificates are signed later, you will need`,
       `to use this same password.`,
-      ``
+      ``,
     ].join(`\n`)
   )
   const results = await prompts({
     type: `password`,
     name: `value`,
     message: `Please enter the CA password`,
-    validate: input => input.length > 0 || `You must enter a password.`
+    validate: input => input.length > 0 || `You must enter a password.`,
   })
   return results.value
 }
@@ -39,7 +39,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
   if (certFile ? !keyFile : keyFile) {
     report.panic({
       id: `11521`,
-      context: {}
+      context: {},
     })
   }
 
@@ -52,7 +52,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
       : certPath
     return await {
       key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath)
+      cert: fs.readFileSync(certPath),
     }
   }
 
@@ -76,23 +76,23 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
       getCaPath: true,
       skipCertutilInstall: false,
       ui: {
-        getWindowsEncryptionPassword
-      }
+        getWindowsEncryptionPassword,
+      },
     })
     if (caPath) {
       process.env.NODE_EXTRA_CA_CERTS = caPath
     }
     return {
       key,
-      cert
+      cert,
     }
   } catch (err) {
     report.panic({
       id: `11522`,
       error: err,
       context: {
-        message: err.message
-      }
+        message: err.message,
+      },
     })
   }
 

@@ -10,7 +10,7 @@ module.exports = steps => {
       return {
         step: 0,
         resource: key,
-        validationError: `Resources e.g. ${key} should not be placed in the introduction step`
+        validationError: `Resources e.g. ${key} should not be placed in the introduction step`,
       }
     })
   } else {

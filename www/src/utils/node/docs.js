@@ -58,8 +58,8 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: node.fields.slug,
           jsdoc: node.frontmatter.jsdoc,
           apiCalls: node.frontmatter.apiCalls,
-          ...prevAndNext
-        }
+          ...prevAndNext,
+        },
       })
     } else {
       // Docs template
@@ -69,8 +69,8 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           slug: node.fields.slug,
           locale,
-          ...prevAndNext
-        }
+          ...prevAndNext,
+        },
       })
     }
   })

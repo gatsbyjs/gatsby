@@ -1,6 +1,6 @@
 export default {
   root: {
-    fontFamily: `body`
+    fontFamily: `body`,
   },
   pre: {
     variant: `prism`,
@@ -12,13 +12,13 @@ export default {
     bg: `prism.background`,
     overflow: `auto`,
     borderRadius: 10,
-    p: 3
+    p: 3,
   },
   code: {
     fontFamily: `monospace`,
     // from typography overrideThemeStyles
     // "h1 code, h2 code, h3 code, h4 code, h5 code, h6 code"
-    fontSize: `inherit`
+    fontSize: `inherit`,
   },
   inlineCode: {
     borderRadius: `0.3em`,
@@ -26,31 +26,31 @@ export default {
     bg: `highlight`,
     paddingTop: `0.15em`,
     paddingBottom: `0.05em`,
-    paddingX: `0.2em`
+    paddingX: `0.2em`,
   },
   // from typography overrideThemeStyles
   a: {
-    color: `primary`
+    color: `primary`,
   },
   hr: {
-    borderColor: `muted`
+    borderColor: `muted`,
   },
   p: {
     code: {
-      fontSize: `inherit`
-    }
+      fontSize: `inherit`,
+    },
   },
   li: {
     code: {
-      fontSize: `inherit`
-    }
+      fontSize: `inherit`,
+    },
   },
   blockquote: {
     color: `inherit`,
     borderLeftColor: `inherit`,
     opacity: 0.8,
     "&.translation": {
-      fontSize: `1em`
-    }
-  }
+      fontSize: `1em`,
+    },
+  },
 }

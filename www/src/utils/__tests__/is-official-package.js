@@ -6,8 +6,8 @@ describe(`isOfficialPackage`, () => {
       isOfficialPackage({
         name: `gatsby`,
         repository: {
-          url: `https://github.com/gatsbyjs/gatsby`
-        }
+          url: `https://github.com/gatsbyjs/gatsby`,
+        },
       })
     ).toBeTruthy()
   })
@@ -17,8 +17,8 @@ describe(`isOfficialPackage`, () => {
       isOfficialPackage({
         name: `@kyleamathews/gatsby`,
         repository: {
-          url: `https://github.com/gatsbyjs/gatsby`
-        }
+          url: `https://github.com/gatsbyjs/gatsby`,
+        },
       })
     ).toBeFalsy()
   })
@@ -26,7 +26,7 @@ describe(`isOfficialPackage`, () => {
   it(`returns false when the package has no repository`, () => {
     expect(
       isOfficialPackage({
-        name: `gatsby-theme-fake`
+        name: `gatsby-theme-fake`,
       })
     ).toBeFalsy()
   })
@@ -36,8 +36,8 @@ describe(`isOfficialPackage`, () => {
       isOfficialPackage({
         name: `gatsby-theme-my-blog`,
         repository: {
-          url: `https://github.com/kyelamathews/gatsby-theme-my-blog`
-        }
+          url: `https://github.com/kyelamathews/gatsby-theme-my-blog`,
+        },
       })
     ).toBeFalsy()
   })

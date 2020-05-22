@@ -94,9 +94,9 @@ Some ideas for debugging these errors include verifying the following:
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/` // location of yaml files
-      }
-    }
+        path: `./src/data/`, // location of yaml files
+      },
+    },
   ]
 }
 ```

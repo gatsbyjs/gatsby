@@ -7,7 +7,7 @@ import Link, {
   push,
   replace,
   navigateTo,
-  parsePath
+  parsePath,
 } from "gatsby-link"
 import PageRenderer from "./public-page-renderer"
 import loader from "./loader"
@@ -85,7 +85,7 @@ StaticQuery.propTypes = {
   data: PropTypes.object,
   query: PropTypes.string.isRequired,
   render: PropTypes.func,
-  children: PropTypes.func
+  children: PropTypes.func,
 }
 
 function graphql() {
@@ -111,5 +111,5 @@ export {
   StaticQuery,
   PageRenderer,
   useStaticQuery,
-  prefetchPathname
+  prefetchPathname,
 }

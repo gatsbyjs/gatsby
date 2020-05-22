@@ -10,7 +10,7 @@ import AppLayer from "./text-content/AppLayer.md"
 import {
   LayerContentWrapper,
   ExampleWrapper,
-  CodeWrapper
+  CodeWrapper,
 } from "../model-wrapper"
 
 // This content is only used when you click "cycle sources" in the Content pane
@@ -21,7 +21,7 @@ const sources = [
     content: `site:
   title: Home
   description: Gatsby tips
-`
+`,
   },
   {
     title: `site-data.json`,
@@ -32,7 +32,7 @@ const sources = [
     "description": "Gatsby tips"
   }
 }
-`
+`,
   },
   {
     title: `gatsby-config.js (CMS)`,
@@ -42,7 +42,7 @@ const sources = [
   \`gatsby-source-wordpress\`,
   \`gatsby-source-drupal\`,
   ...
-]`
+]`,
   },
   {
     title: `gatsby-config.js (SaaS)`,
@@ -52,7 +52,7 @@ const sources = [
   \`gatsby-source-shopify\`,
   \`gatsby-source-firebase\`,
   ...
-]`
+]`,
   },
   {
     title: `SQL Database`,
@@ -61,8 +61,8 @@ const sources = [
 | ID |  Title  |    Desc     |
 +----+---------+-------------+
 |  1 | Home    | Gatsby tips |
-+----+---------+-------------+`
-  }
++----+---------+-------------+`,
+  },
 ]
 const ContentSource = ({ sourceIndex, setSourceIndex }) => (
   <CodeWrapper
@@ -159,13 +159,13 @@ const AppLayerContent = ({ index }) => (
           display: `flex`,
           flexDirection: `column`,
           height: `100%`,
-          background: `ui.background`
+          background: `ui.background`,
         }}
       >
         <div
           sx={{
             p: 3,
-            borderBottom: t => `1px solid ${t.colors.ui.border}`
+            borderBottom: t => `1px solid ${t.colors.ui.border}`,
           }}
         >
           Home
@@ -174,7 +174,7 @@ const AppLayerContent = ({ index }) => (
           sx={{
             p: 3,
             height: `100%`,
-            background: `ui.background`
+            background: `ui.background`,
           }}
         >
           Gatsby tips
@@ -192,5 +192,5 @@ export {
   BuildLayerContent,
   DataLayerContent,
   ViewLayerContent,
-  AppLayerContent
+  AppLayerContent,
 }

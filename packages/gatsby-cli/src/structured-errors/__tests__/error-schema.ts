@@ -7,7 +7,7 @@ test(`throws invalid on an invalid error`, () => {
 test(`does not throw on a valid schema`, () => {
   expect(
     errorSchema.validate({
-      context: {}
+      context: {},
     })
   ).resolves.toEqual(expect.any(Object))
 })

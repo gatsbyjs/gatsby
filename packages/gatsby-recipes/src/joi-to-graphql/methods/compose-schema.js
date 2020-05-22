@@ -9,7 +9,7 @@ const internals = {}
 internals.inputSchema = Joi.object().keys({
   query: Joi.object(),
   mutation: Joi.object(),
-  subscription: Joi.object()
+  subscription: Joi.object(),
 })
 
 module.exports = (schema = {}) => {
@@ -22,21 +22,21 @@ module.exports = (schema = {}) => {
   if (schema.query) {
     attrs.query = new GraphQLObjectType({
       name: `Query`,
-      fields: internals.buildFields(schema.query)
+      fields: internals.buildFields(schema.query),
     })
   }
 
   if (schema.mutation) {
     attrs.query = new GraphQLObjectType({
       name: `Mutation`,
-      fields: internals.buildFields(schema.mutation)
+      fields: internals.buildFields(schema.mutation),
     })
   }
 
   if (schema.subscription) {
     attrs.query = new GraphQLObjectType({
       name: `Subscription`,
-      fields: internals.buildFields(schema.subscription)
+      fields: internals.buildFields(schema.subscription),
     })
   }
 
@@ -51,13 +51,13 @@ internals.buildFields = obj => {
       attrs[key] = {
         type: typeDictionary[obj[key]._type],
         resolve: obj[key]._meta.find(item => item.resolve instanceof Function)
-          .resolve
+          .resolve,
       }
     } else {
       attrs[key] = {
         type: obj[key],
         args: obj[key]._typeConfig.args,
-        resolve: obj[key]._typeConfig.resolve
+        resolve: obj[key]._typeConfig.resolve,
       }
     }
   }

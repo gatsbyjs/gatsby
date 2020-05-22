@@ -32,21 +32,21 @@ export const createTimerReporter = ({
   text,
   id,
   span,
-  reporter
+  reporter,
 }: ICreateTimerReporterArguments): ITimerReporter => {
   return {
     start(): void {
       reporterActions.startActivity({
         id,
         text: text || `__timer__`,
-        type: ActivityTypes.Spinner
+        type: ActivityTypes.Spinner,
       })
     },
 
     setStatus(statusText: string): void {
       reporterActions.setActivityStatusText({
         id,
-        statusText
+        statusText,
       })
     },
 
@@ -57,7 +57,7 @@ export const createTimerReporter = ({
       span.finish()
 
       reporterActions.setActivityErrored({
-        id
+        id,
       })
 
       return reporter.panicOnBuild(errorMeta, error)
@@ -68,7 +68,7 @@ export const createTimerReporter = ({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Failed
+        status: ActivityStatuses.Failed,
       })
 
       return reporter.panic(errorMeta, error)
@@ -79,10 +79,10 @@ export const createTimerReporter = ({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Success
+        status: ActivityStatuses.Success,
       })
     },
 
-    span
+    span,
   }
 }

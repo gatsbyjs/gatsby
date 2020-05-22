@@ -136,10 +136,10 @@ plugins: [
     options: {
       tableOfContents: {
         heading: null,
-        maxDepth: 6
-      }
-    }
-  }
+        maxDepth: 6,
+      },
+    },
+  },
 ]
 ```
 

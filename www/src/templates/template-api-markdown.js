@@ -14,13 +14,13 @@ const normalizeGatsbyApiCall = array =>
             return {
               file: l.file,
               start: { line: l.codeLocation.start.line },
-              end: { line: l.codeLocation.end.line }
+              end: { line: l.codeLocation.end.line },
             }
           })
         : {
             file: entry.nodes[0].file,
             start: { line: entry.nodes[0].codeLocation.start.line },
-            end: { line: entry.nodes[0].codeLocation.end.line }
+            end: { line: entry.nodes[0].codeLocation.end.line },
           }
 
     return { name: entry.name, codeLocation }
@@ -56,7 +56,7 @@ const mergeFunctions = (data, context) => {
   const mergedFuncs = funcs.map(func => {
     return {
       ...func,
-      ...normalized.find(n => n.name === func.name)
+      ...normalized.find(n => n.name === func.name),
     }
   })
 
@@ -83,10 +83,10 @@ export default function APITemplate({ data, location, pageContext }) {
       items: mergedFuncs.map(mergedFunc => {
         return {
           url: `#${mergedFunc.name}`,
-          title: mergedFunc.name
+          title: mergedFunc.name,
         }
-      })
-    }
+      }),
+    },
   ]
   const { tableOfContentsDepth: depth = 0 } = frontmatter
   const tableOfContentsDepth = Math.max(depth, 2)

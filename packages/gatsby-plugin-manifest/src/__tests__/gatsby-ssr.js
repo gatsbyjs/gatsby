@@ -1,6 +1,6 @@
 jest.mock(`fs`, () => {
   return {
-    readFileSync: jest.fn().mockImplementation(() => `someIconImage`)
+    readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
   }
 })
 
@@ -18,7 +18,7 @@ const setHeadComponents = args => (headComponents = headComponents.concat(args))
 const defaultIcon = `pretend/this/exists.png`
 const ssrArgs = {
   setHeadComponents,
-  pathname: `/`
+  pathname: `/`,
 }
 
 describe(`gatsby-plugin-manifest`, () => {
@@ -33,7 +33,7 @@ describe(`gatsby-plugin-manifest`, () => {
 
     onRenderBody(ssrArgs, {
       icon: defaultIcon,
-      theme_color: `#000000`
+      theme_color: `#000000`,
     })
 
     headComponents
@@ -51,7 +51,7 @@ describe(`gatsby-plugin-manifest`, () => {
         theme_color: `#000000`,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false
+        legacy: false,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -62,7 +62,7 @@ describe(`gatsby-plugin-manifest`, () => {
         theme_color_in_head: true,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false
+        legacy: false,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -73,7 +73,7 @@ describe(`gatsby-plugin-manifest`, () => {
         theme_color_in_head: false,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false
+        legacy: false,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -83,7 +83,7 @@ describe(`gatsby-plugin-manifest`, () => {
         icon: defaultIcon,
         include_favicon: false,
         cache_busting_mode: false,
-        legacy: false
+        legacy: false,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -91,7 +91,7 @@ describe(`gatsby-plugin-manifest`, () => {
     it(`Adds "icon" and "manifest" links and "theme_color" meta tag to head`, () => {
       onRenderBody(ssrArgs, {
         icon: defaultIcon,
-        theme_color: `#000000`
+        theme_color: `#000000`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -100,13 +100,13 @@ describe(`gatsby-plugin-manifest`, () => {
       {
         ...ssrArgs,
         pathname: `/about-us`,
-        testName: `Adds correct (default) i18n "manifest" link to head`
+        testName: `Adds correct (default) i18n "manifest" link to head`,
       },
       {
         ...ssrArgs,
         pathname: `/es/sobre-nosotros`,
-        testName: `Adds correct (es) i18n "manifest" link to head`
-      }
+        testName: `Adds correct (es) i18n "manifest" link to head`,
+      },
     ]
 
     i18nArgs.forEach(({ testName, ...args }) =>
@@ -117,13 +117,13 @@ describe(`gatsby-plugin-manifest`, () => {
           localize: [
             {
               start_url: `/de/`,
-              lang: `de`
+              lang: `de`,
             },
             {
               start_url: `/es/`,
-              lang: `es`
-            }
-          ]
+              lang: `es`,
+            },
+          ],
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -138,7 +138,7 @@ describe(`gatsby-plugin-manifest`, () => {
           theme_color: `#000000`,
           include_favicon: false,
           cache_busting_mode: `none`,
-          theme_color_in_head: false
+          theme_color_in_head: false,
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -151,17 +151,17 @@ describe(`gatsby-plugin-manifest`, () => {
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`
+              type: `image/png`,
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`
-            }
+              type: `image/png`,
+            },
           ],
           include_favicon: false,
           cache_busting_mode: `none`,
-          theme_color_in_head: false
+          theme_color_in_head: false,
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -172,14 +172,14 @@ describe(`gatsby-plugin-manifest`, () => {
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`
+              type: `image/png`,
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`
-            }
-          ]
+              type: `image/png`,
+            },
+          ],
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -191,7 +191,7 @@ describe(`gatsby-plugin-manifest`, () => {
           icon: defaultIcon,
           legacy: false,
           include_favicon: false,
-          cache_busting_mode: false
+          cache_busting_mode: false,
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -204,14 +204,14 @@ describe(`gatsby-plugin-manifest`, () => {
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`
+              type: `image/png`,
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`
-            }
-          ]
+              type: `image/png`,
+            },
+          ],
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -224,16 +224,16 @@ describe(`gatsby-plugin-manifest`, () => {
             {
               src: `/favicons/android-chrome-48x48.png`,
               sizes: `48x48`,
-              type: `image/png`
+              type: `image/png`,
             },
             {
               src: `/favicons/android-chrome-512x512.png`,
               sizes: `512x512`,
-              type: `image/png`
-            }
+              type: `image/png`,
+            },
           ],
           include_favicon: false,
-          cache_busting_mode: false
+          cache_busting_mode: false,
         })
         expect(headComponents).toMatchSnapshot()
       })
@@ -247,15 +247,15 @@ describe(`gatsby-plugin-manifest`, () => {
           {
             src: `/favicons/android-chrome-48x48.png`,
             sizes: `48x48`,
-            type: `image/png`
+            type: `image/png`,
           },
           {
             src: `/favicons/android-chrome-512x512.png`,
             sizes: `512x512`,
-            type: `image/png`
-          }
+            type: `image/png`,
+          },
         ],
-        cache_busting_mode: `name`
+        cache_busting_mode: `name`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -287,7 +287,7 @@ describe(`gatsby-plugin-manifest`, () => {
         icon: defaultIcon,
         include_favicon: defaultIcon,
         legacy: false,
-        cache_busting_mode: `none`
+        cache_busting_mode: `none`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -297,7 +297,7 @@ describe(`gatsby-plugin-manifest`, () => {
         icon: defaultIcon,
         include_favicon: false,
         legacy: false,
-        cache_busting_mode: `none`
+        cache_busting_mode: `none`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -308,16 +308,16 @@ describe(`gatsby-plugin-manifest`, () => {
           {
             src: `/favicons/android-chrome-48x48.png`,
             sizes: `48x48`,
-            type: `image/png`
+            type: `image/png`,
           },
           {
             src: `/favicons/android-chrome-512x512.png`,
             sizes: `512x512`,
-            type: `image/png`
-          }
+            type: `image/png`,
+          },
         ],
         legacy: false,
-        cache_busting_mode: `none`
+        cache_busting_mode: `none`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -329,7 +329,7 @@ describe(`gatsby-plugin-manifest`, () => {
         crossOrigin: `use-credentials`,
         legacy: false,
         include_favicon: false,
-        cache_busting_mode: `none`
+        cache_busting_mode: `none`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -340,7 +340,7 @@ describe(`gatsby-plugin-manifest`, () => {
         crossOrigin: `anonymous`,
         legacy: false,
         include_favicon: false,
-        cache_busting_mode: `none`
+        cache_busting_mode: `none`,
       })
       expect(headComponents).toMatchSnapshot()
     })
@@ -350,7 +350,7 @@ describe(`gatsby-plugin-manifest`, () => {
         icon: defaultIcon,
         legacy: false,
         include_favicon: false,
-        cache_busting_mode: `none`
+        cache_busting_mode: `none`,
       })
       expect(headComponents).toMatchSnapshot()
     })

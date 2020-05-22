@@ -12,7 +12,7 @@ const Header = ({ stub }) => (
     sx={{
       p: 6,
       [mediaQueries.sm]: { pb: 0 },
-      [mediaQueries.lg]: { p: 8, pb: 0 }
+      [mediaQueries.lg]: { p: 8, pb: 0 },
     }}
   >
     <div sx={{ pb: 1 }}>
@@ -25,10 +25,10 @@ const Header = ({ stub }) => (
             color: `link.color`,
             fontWeight: `body`,
             "&:hover": {
-              color: `link.hoverColor`
-            }
+              color: `link.hoverColor`,
+            },
           },
-          ...withTitleHover
+          ...withTitleHover,
         }}
       >
         <MdArrowBack sx={{ mr: 1 }} />

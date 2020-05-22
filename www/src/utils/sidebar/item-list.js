@@ -36,7 +36,7 @@ const extendSidebarData = item => {
     key: item[0].key,
     disableExpandAll: item[0].disableExpandAll,
     disableAccordions: item[0].disableAccordions,
-    items: extendItemList(item[0].items)
+    items: extendItemList(item[0].items),
   }
 }
 
@@ -49,7 +49,7 @@ const itemListLookup = {
   docs: itemListDocs,
   contributing: itemListContributing,
   tutorial: itemListTutorial,
-  features: itemListFeatures
+  features: itemListFeatures,
 }
 
 function getItemList(path) {
@@ -63,5 +63,5 @@ export {
   itemListTutorial,
   itemListContributing,
   itemListFeatures,
-  getItemList
+  getItemList,
 }

@@ -13,7 +13,7 @@ it(`generates title and og:title when a title prop is provided`, () => {
   expect(contents.title).toEqual(`Documentation`)
   expect(contents.metaTags).toContainEqual({
     property: `og:title`,
-    content: `Documentation`
+    content: `Documentation`,
   })
 })
 
@@ -22,11 +22,11 @@ it(`generates description and og:description when a description prop is provided
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     name: `description`,
-    content: `Blazing fast static site generator`
+    content: `Blazing fast static site generator`,
   })
   expect(contents.metaTags).toContainEqual({
     property: `og:description`,
-    content: `Blazing fast static site generator`
+    content: `Blazing fast static site generator`,
   })
 })
 
@@ -35,7 +35,7 @@ it(`generates a type property if a type prop is provided`, () => {
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     property: `og:type`,
-    content: `article`
+    content: `article`,
   })
 })
 
@@ -44,7 +44,7 @@ it(`generates twitter:card data if twitterCard prop is provided`, () => {
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     name: `twitter:card`,
-    content: `summary_large_image`
+    content: `summary_large_image`,
   })
 })
 
@@ -53,11 +53,11 @@ it(`generates twitter label data if timeToRead prop is provided`, () => {
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     name: `twitter:label1`,
-    content: `Reading time`
+    content: `Reading time`,
   })
   expect(contents.metaTags).toContainEqual({
     name: `twitter:data1`,
-    content: `2 min read`
+    content: `2 min read`,
   })
 })
 
@@ -67,7 +67,7 @@ it(`generates an og:image if an image prop is provided`, () => {
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     property: `og:image`,
-    content: `https://www.gatsbyjs.org/assets/gatsby-logo.png`
+    content: `https://www.gatsbyjs.org/assets/gatsby-logo.png`,
   })
 })
 
@@ -77,10 +77,10 @@ it(`generates og:image dimensions only if they are provided in the image prop`, 
   const contents = Helmet.peek()
   expect(contents.metaTags).toContainEqual({
     property: `og:image:width`,
-    content: 600
+    content: 600,
   })
   expect(contents.metaTags).toContainEqual({
     property: `og:image:height`,
-    content: 400
+    content: 400,
   })
 })

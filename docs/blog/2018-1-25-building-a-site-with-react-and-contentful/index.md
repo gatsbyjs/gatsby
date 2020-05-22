@@ -58,15 +58,15 @@ Gatsby-config.js file:
 ```js
 module.exports = {
   siteMetadata: {
-    title: `Taking Care of Watson`
+    title: `Taking Care of Watson`,
   },
   plugins: [
     `gatsby-plugin-glamor`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`
-      }
+        pathToConfigModule: `src/utils/typography`,
+      },
     },
     //Here's where I include the gatsby-source-contentful plugin.
     // And also I added the spaceID and accessToken I got from my Contentful account.
@@ -74,12 +74,12 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `g0b694a663ft`,
-        accessToken: `cc94019b03af3894ec87eded57fffd67c6785f1c6fb6b2c3e67ded27682b0c02`
-      }
+        accessToken: `cc94019b03af3894ec87eded57fffd67c6785f1c6fb6b2c3e67ded27682b0c02`,
+      },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`
-  ]
+    `gatsby-plugin-sharp`,
+  ],
 }
 ```
 
@@ -188,7 +188,7 @@ export default function TricksCommands({ data }) {
           gatsby-transformer-remark plugin and this `dangerouslySetInnerHTML`.
           <div
             dangerouslySetInnerHTML={{
-              __html: trick.node.commandDescription.childMarkdownRemark.html
+              __html: trick.node.commandDescription.childMarkdownRemark.html,
             }}
           />
           {trick.node.exampleOfTheCommandInAction && (

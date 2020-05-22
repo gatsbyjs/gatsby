@@ -13,8 +13,8 @@ describe(`redirects`, () => {
       type: `CREATE_REDIRECT`,
       payload: {
         fromPath: `/page-internal`,
-        toPath: `/page-internal/`
-      }
+        toPath: `/page-internal/`,
+      },
     }
 
     const state = reducer(undefined, action)
@@ -22,8 +22,8 @@ describe(`redirects`, () => {
     expect(state).toEqual([
       {
         fromPath: `/page-internal`,
-        toPath: `/page-internal/`
-      }
+        toPath: `/page-internal/`,
+      },
     ])
   })
 
@@ -32,8 +32,8 @@ describe(`redirects`, () => {
       type: `CREATE_REDIRECT`,
       payload: {
         fromPath: `/page-external`,
-        toPath: `https://example.com`
-      }
+        toPath: `https://example.com`,
+      },
     }
 
     const state = reducer(undefined, action)
@@ -41,8 +41,8 @@ describe(`redirects`, () => {
     expect(state).toEqual([
       {
         fromPath: `/page-external`,
-        toPath: `https://example.com`
-      }
+        toPath: `https://example.com`,
+      },
     ])
   })
 
@@ -51,7 +51,7 @@ describe(`redirects`, () => {
     [`http`, `http://example.com`],
     [`//`, `//example.com`],
     [`ftp`, `ftp://example.com`],
-    [`mailto`, `mailto:example@email.com`]
+    [`mailto`, `mailto:example@email.com`],
   ]
 
   protocolArr.forEach(([protocol, toPath], index) => {
@@ -61,15 +61,15 @@ describe(`redirects`, () => {
         type: `CREATE_REDIRECT`,
         payload: {
           fromPath,
-          toPath
-        }
+          toPath,
+        },
       }
 
       expect(reducer(undefined, action)).toEqual([
         {
           fromPath,
-          toPath
-        }
+          toPath,
+        },
       ])
     })
   })
@@ -81,7 +81,7 @@ describe(`redirects`, () => {
     ): ICreateRedirectAction {
       return {
         type: `CREATE_REDIRECT`,
-        payload: { fromPath, toPath }
+        payload: { fromPath, toPath },
       }
     }
 
@@ -91,8 +91,8 @@ describe(`redirects`, () => {
     expect(state).toEqual([
       {
         fromPath: `/page`,
-        toPath: `/other-page`
-      }
+        toPath: `/other-page`,
+      },
     ])
   })
 
@@ -100,7 +100,7 @@ describe(`redirects`, () => {
     function createRedirect(redirect: IRedirect): ICreateRedirectAction {
       return {
         type: `CREATE_REDIRECT`,
-        payload: redirect
+        payload: redirect,
       }
     }
 
@@ -109,7 +109,7 @@ describe(`redirects`, () => {
       createRedirect({
         fromPath: `/page`,
         toPath: `/en/page`,
-        Language: `en`
+        Language: `en`,
       })
     )
     state = reducer(
@@ -117,7 +117,7 @@ describe(`redirects`, () => {
       createRedirect({
         fromPath: `/page`,
         toPath: `/pt/page`,
-        Language: `pt`
+        Language: `pt`,
       })
     )
 
@@ -125,13 +125,13 @@ describe(`redirects`, () => {
       {
         fromPath: `/page`,
         toPath: `/en/page`,
-        Language: `en`
+        Language: `en`,
       },
       {
         fromPath: `/page`,
         toPath: `/pt/page`,
-        Language: `pt`
-      }
+        Language: `pt`,
+      },
     ])
   })
 })

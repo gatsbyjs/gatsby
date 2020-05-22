@@ -54,13 +54,13 @@ class StickyResponsiveSidebar extends Component {
               pointerEvents: `auto`,
               top: t =>
                 `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
-              width: `sidebarWidth.default`
+              width: `sidebarWidth.default`,
             },
             [mediaQueries.lg]: {
-              width: `sidebarWidth.large`
+              width: `sidebarWidth.large`,
             },
             opacity: menuOpacity,
-            pointerEvents: open ? `auto` : `none`
+            pointerEvents: open ? `auto` : `none`,
           }}
         >
           <div
@@ -74,8 +74,8 @@ class StickyResponsiveSidebar extends Component {
                 `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               [mediaQueries.md]: {
                 boxShadow: `none`,
-                transform: `none !important`
-              }
+                transform: `none !important`,
+              },
             }}
           >
             <SidebarComponent
@@ -99,7 +99,7 @@ class StickyResponsiveSidebar extends Component {
             visibility: `visible`,
             width: t => t.space[10],
             zIndex: `floatingActionButton`,
-            [mediaQueries.md]: { display: `none` }
+            [mediaQueries.md]: { display: `none` },
           }}
           onClick={this._openSidebar}
           role="button"
@@ -116,7 +116,7 @@ class StickyResponsiveSidebar extends Component {
               flexDirection: `column`,
               height: t => t.space[5],
               visibility: `visible`,
-              width: t => t.space[5]
+              width: t => t.space[5],
             }}
           >
             <ChevronSvg
@@ -124,16 +124,17 @@ class StickyResponsiveSidebar extends Component {
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
                 transition: t =>
-                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`
+                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
             />
             <ChevronSvg
               size={16}
               cssProps={{
-                transform: `translate(${5 -
-                  iconOffset}px, -5px) rotate(270deg)`,
+                transform: `translate(${
+                  5 - iconOffset
+                }px, -5px) rotate(270deg)`,
                 transition: t =>
-                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`
+                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
             />
           </div>

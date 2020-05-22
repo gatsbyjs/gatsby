@@ -25,8 +25,8 @@ For the plugin to be discovered when you run `gatsby develop`, the plugin's root
 module.exports = {
   plugins: [
     `gatsby-third-party-plugin`,
-    `my-own-plugin` // highlight-line
-  ]
+    `my-own-plugin`, // highlight-line
+  ],
 }
 ```
 
@@ -53,10 +53,10 @@ module.exports = {
     // highlight-start
     {
       // including a plugin from outside the plugins folder needs the path to it
-      resolve: require.resolve(`../path/to/gatsby-local-plugin`)
-    }
+      resolve: require.resolve(`../path/to/gatsby-local-plugin`),
+    },
     // highlight-end
-  ]
+  ],
 }
 ```
 

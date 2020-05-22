@@ -16,7 +16,7 @@ describe(`Load plugins`, () => {
           path: plugin.pluginOptions.path.replace(
             slash(process.cwd()),
             `<PROJECT_ROOT>`
-          )
+          ),
         }
       }
 
@@ -24,7 +24,7 @@ describe(`Load plugins`, () => {
         ...plugin,
         id: ``,
         resolve: ``,
-        version: `1.0.0`
+        version: `1.0.0`,
       }
     })
 
@@ -40,9 +40,9 @@ describe(`Load plugins`, () => {
     const config = {
       plugins: [
         {
-          resolve: `___TEST___`
-        }
-      ]
+          resolve: `___TEST___`,
+        },
+      ],
     }
 
     let plugins = await loadPlugins(config)
@@ -59,10 +59,10 @@ describe(`Load plugins`, () => {
         {
           resolve: `___TEST___`,
           option: {
-            test: true
-          }
-        }
-      ]
+            test: true,
+          },
+        },
+      ],
     }
 
     try {
@@ -79,10 +79,10 @@ describe(`Load plugins`, () => {
           resolve: `gatsby-plugin-page-creator`,
           options: {
             path: `${__dirname}/src/pages`,
-            ignore: [`___Test___.(js|ts)?(x)`]
-          }
-        }
-      ]
+            ignore: [`___Test___.(js|ts)?(x)`],
+          },
+        },
+      ],
     }
 
     let plugins = await loadPlugins(config)
@@ -95,7 +95,7 @@ describe(`Load plugins`, () => {
   describe(`TypeScript support`, () => {
     it(`loads gatsby-plugin-typescript if not provided`, async () => {
       const config = {
-        plugins: []
+        plugins: [],
       }
 
       let plugins = await loadPlugins(config)
@@ -111,15 +111,15 @@ describe(`Load plugins`, () => {
             nodeAPIs: [
               `resolvableExtensions`,
               `onCreateBabelConfig`,
-              `onCreateWebpackConfig`
+              `onCreateWebpackConfig`,
             ],
             pluginOptions: {
-              plugins: []
+              plugins: [],
             },
             resolve: ``,
             ssrAPIs: [],
-            version: `1.0.0`
-          })
+            version: `1.0.0`,
+          }),
         ])
       )
     })
@@ -130,10 +130,10 @@ describe(`Load plugins`, () => {
           {
             resolve: `gatsby-plugin-typescript`,
             options: {
-              jsxPragma: `h`
-            }
-          }
-        ]
+              jsxPragma: `h`,
+            },
+          },
+        ],
       }
 
       let plugins = await loadPlugins(config)
@@ -149,16 +149,16 @@ describe(`Load plugins`, () => {
             nodeAPIs: [
               `resolvableExtensions`,
               `onCreateBabelConfig`,
-              `onCreateWebpackConfig`
+              `onCreateWebpackConfig`,
             ],
             pluginOptions: {
               plugins: [],
-              jsxPragma: `h`
+              jsxPragma: `h`,
             },
             resolve: ``,
             ssrAPIs: [],
-            version: `1.0.0`
-          })
+            version: `1.0.0`,
+          }),
         ])
       )
     })
@@ -167,8 +167,8 @@ describe(`Load plugins`, () => {
       const config = {
         plugins: [
           `gatsby-plugin-typescript`,
-          { resolve: `gatsby-plugin-typescript` }
-        ]
+          { resolve: `gatsby-plugin-typescript` },
+        ],
       }
 
       let plugins = await loadPlugins(config)

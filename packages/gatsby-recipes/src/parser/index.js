@@ -16,7 +16,7 @@ const jsxToJson = require(`./jsx-to-json`)
 const asRoot = nodes => {
   return {
     type: `root`,
-    children: nodes
+    children: nodes,
   }
 }
 
@@ -59,10 +59,7 @@ const extractCommands = steps => {
   return commands
 }
 
-const u = unified()
-  .use(remarkParse)
-  .use(remarkStringify)
-  .use(remarkMdx)
+const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
 
 const handleImports = tree => {
   let imports = {}
@@ -94,7 +91,7 @@ const unwrapImports = async (tree, imports) =>
       try {
         names = toJson(node.value)
         removeElementByName(node.value, {
-          names: Object.keys(imports)
+          names: Object.keys(imports),
         })
       } catch (e) {
         throw e
@@ -161,7 +158,7 @@ const parse = async src => {
       steps,
       commands,
       stepsAsMdx: steps.map(toMdx),
-      stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx)
+      stepsAsMdxWithoutJsx: steps.map(toMdxWithoutJsx),
     }
   } catch (e) {
     throw e
@@ -192,7 +189,7 @@ const getSource = async (pathOrUrl, projectRoot) => {
     if (res.status !== 200) {
       throw new Error(
         JSON.stringify({
-          fetchError: `Could not fetch ${pathOrUrl} from official recipes`
+          fetchError: `Could not fetch ${pathOrUrl} from official recipes`,
         })
       )
     }

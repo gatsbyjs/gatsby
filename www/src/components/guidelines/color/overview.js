@@ -22,13 +22,13 @@ const swatchStyle = {
   mr: 2,
   position: `relative`,
   textAlign: `center`,
-  width: swatchWidth
+  width: swatchWidth,
 }
 const colorNumber = {
   ...swatchStyle,
   color: `grey.50`,
   fontSize: 1,
-  transform: `rotate(-45deg)`
+  transform: `rotate(-45deg)`,
 }
 
 const colores = node => {
@@ -88,8 +88,8 @@ const Palette = ({ color, handler }) => {
             WebkitAppearance: `none`,
             "&&:hover span, &&:focus span": {
               borderColor: `link.hoverBorder`,
-              color: `link.hoverColor`
-            }
+              color: `link.hoverColor`,
+            },
           }}
         >
           <SectionSubheading
@@ -101,7 +101,7 @@ const Palette = ({ color, handler }) => {
             fontSize={4}
             color="link.color"
             sx={{
-              borderBottom: t => `1px solid ${t.colors.link.border}`
+              borderBottom: t => `1px solid ${t.colors.link.border}`,
             }}
             title={`Open “${name}” color modal`}
           >

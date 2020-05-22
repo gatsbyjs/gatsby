@@ -7,10 +7,10 @@ describe(`gatsby-source-faker`, () => {
 
   const pluginOptions = {
     schema: {
-      name: [`firstName`, `lastName`]
+      name: [`firstName`, `lastName`],
     },
     count: 3, // how many fake objects you need
-    type: `NameData` // Name of the graphql query node
+    type: `NameData`, // Name of the graphql query node
   }
 
   beforeEach(() => {
@@ -26,13 +26,13 @@ describe(`gatsby-source-faker`, () => {
       id: `id`,
       internal: {
         type: pluginOptions.type,
-        contentDigest: `digest`
+        contentDigest: `digest`,
       },
       parent: null,
       name: {
         firstName: expect.any(String),
-        lastName: expect.any(String)
-      }
+        lastName: expect.any(String),
+      },
     })
   })
 })

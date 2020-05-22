@@ -10,7 +10,7 @@ Add the plugin to your gatsby-config.js
 
 ```js
 module.exports = {
-  plugins: ["gatsby-plugin-benchmark-reporting"]
+  plugins: ["gatsby-plugin-benchmark-reporting"],
 }
 ```
 

@@ -11,7 +11,7 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
       rel="dns-prefetch"
       key="dns-prefetch-google-analytics"
       href="https://www.google-analytics.com"
-    />
+    />,
   ])
 
   const attachCode = `
@@ -25,8 +25,8 @@ export const onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
     <script
       key="ga-linker"
       dangerouslySetInnerHTML={{
-        __html: attachCode
+        __html: attachCode,
       }}
-    />
+    />,
   ])
 }

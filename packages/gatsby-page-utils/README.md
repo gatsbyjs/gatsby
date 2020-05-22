@@ -13,7 +13,7 @@ const {
   createPath,
   ignorePath,
   validatePath,
-  watchDirectory
+  watchDirectory,
 } = require(`gatsby-page-utils`)
 
 // ...
@@ -38,7 +38,7 @@ watchDirectory(
     const createdPath = createPath(addedPath)
     const page = {
       path: createdPath,
-      component: systemPath.join(pagesDirectory, addedPath)
+      component: systemPath.join(pagesDirectory, addedPath),
     }
 
     // Add page
@@ -51,7 +51,7 @@ watchDirectory(
       if (page.component === componentPath) {
         deletePage({
           path: createPath(removedPath),
-          component: componentPath
+          component: componentPath,
         })
       }
     })

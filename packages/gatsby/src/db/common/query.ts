@@ -24,7 +24,7 @@ export enum DbComparator {
   IN = `$in`,
   NIN = `$nin`,
   REGEX = `$regex`,
-  GLOB = `$glob`
+  GLOB = `$glob`,
 }
 
 const DB_COMPARATOR_VALUES: Set<string> = new Set(Object.values(DbComparator))
@@ -63,7 +63,7 @@ function createDbQueriesFromObjectNested(
           return {
             type: `elemMatch`,
             path: path,
-            nestedQuery: query
+            nestedQuery: query,
           }
         })
       } else if (isDbComparator(key)) {
@@ -73,9 +73,9 @@ function createDbQueriesFromObjectNested(
             path,
             query: {
               comparator: key,
-              value: filter[key]
-            }
-          }
+              value: filter[key],
+            },
+          },
         ]
       } else {
         return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
@@ -108,15 +108,15 @@ export function dbQueryToSiftQuery(query: DbQuery): object {
   const result = {}
   if (query.type === `elemMatch`) {
     result[query.path.join(`.`)] = {
-      $elemMatch: dbQueryToSiftQuery(query.nestedQuery)
+      $elemMatch: dbQueryToSiftQuery(query.nestedQuery),
     }
   } else if (query.path.length) {
     result[query.path.join(`.`)] = {
-      [query.query.comparator]: query.query.value
+      [query.query.comparator]: query.query.value,
     }
   } else {
     return {
-      [query.query.comparator]: query.query.value
+      [query.query.comparator]: query.query.value,
     }
   }
   return result
@@ -166,7 +166,7 @@ export function objectToDottedField(
       const pathResult = objectToDottedField(value, path.concat(key))
       result = {
         ...result,
-        ...pathResult
+        ...pathResult,
       }
     } else {
       result[path.concat(key).join(`.`)] = value

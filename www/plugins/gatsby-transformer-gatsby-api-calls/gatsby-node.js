@@ -9,7 +9,7 @@ const ignorePatterns = [
   `**/__mocks__/**`,
   `babel.config.js`,
   `graphql.js`,
-  `**/flow-typed/**`
+  `**/flow-typed/**`,
 ]
 
 exports.onCreateNode = async ({
@@ -17,7 +17,7 @@ exports.onCreateNode = async ({
   actions,
   loadNodeContent,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 }) => {
   if (
     node.internal.type !== `File` ||
@@ -40,8 +40,8 @@ exports.onCreateNode = async ({
         children: [],
         ...call,
         internal: {
-          type: `GatsbyAPICall`
-        }
+          type: `GatsbyAPICall`,
+        },
       }
 
       apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)

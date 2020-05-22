@@ -12,7 +12,7 @@ function transformPackageJson(json) {
     _.entries(deps).map(([name, version]) => {
       return {
         name,
-        version
+        version,
       }
     })
 
@@ -28,7 +28,7 @@ function transformPackageJson(json) {
     `devDependencies`,
     `peerDependencies`,
     `optionalDependecies`,
-    `bundledDependecies`
+    `bundledDependecies`,
   ])
   json.dependencies = transformDeps(json.dependencies)
   json.devDependencies = transformDeps(json.devDependencies)
@@ -57,8 +57,8 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     children: [],
     internal: {
       type: `SitePage`,
-      contentDigest: createContentDigest(page)
-    }
+      contentDigest: createContentDigest(page),
+    },
   })
 
   flattenedPlugins.forEach(plugin => {
@@ -72,8 +72,8 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       children: [],
       internal: {
         contentDigest: createContentDigest(plugin),
-        type: `SitePlugin`
-      }
+        type: `SitePlugin`,
+      },
     })
   })
 
@@ -85,11 +85,11 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     delete configCopy.plugins
     const node = {
       siteMetadata: {
-        ...configCopy.siteMetadata
+        ...configCopy.siteMetadata,
       },
       port: state.program.proxyPort,
       host: state.program.host,
-      ...configCopy
+      ...configCopy,
     }
     createNode({
       ...node,
@@ -98,8 +98,8 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       children: [],
       internal: {
         contentDigest: createContentDigest(node),
-        type: `Site`
-      }
+        type: `Site`,
+      },
     })
   }
 
@@ -119,8 +119,8 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     children: [],
     internal: {
       contentDigest: createContentDigest(metadataNode),
-      type: `SiteBuildMetadata`
-    }
+      type: `SiteBuildMetadata`,
+    },
   })
 
   const pathToGatsbyConfig = systemPath.join(
@@ -161,20 +161,20 @@ exports.createResolvers = ({ createResolvers }) => {
         resolve(source, args, context, info) {
           const { buildTime } = context.nodeModel.getNodeById({
             id: `SiteBuildMetadata`,
-            type: `SiteBuildMetadata`
+            type: `SiteBuildMetadata`,
           })
           return info.originalResolver(
             {
               ...source,
-              buildTime
+              buildTime,
             },
             args,
             context,
             info
           )
-        }
-      }
-    }
+        },
+      },
+    },
   }
   createResolvers(resolvers)
 }
@@ -196,8 +196,8 @@ exports.onCreatePage = ({ createContentDigest, page, actions }) => {
       description:
         page.pluginCreatorId === `Plugin default-site-plugin`
           ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId
-    }
+          : page.pluginCreatorId,
+    },
   })
 }
 

@@ -30,7 +30,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
     nextjs: false,
     jekyll: false,
     hugo: false,
-    nuxtjs: false
+    nuxtjs: false,
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
@@ -56,7 +56,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
               gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
               gridAutoRows: `1fr`,
               gridGap: 2,
-              pb: 4
+              pb: 4,
             }}
           >
             {featureComparisonOptions.jamstack.map(

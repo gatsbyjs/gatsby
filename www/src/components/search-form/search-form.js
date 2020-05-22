@@ -67,8 +67,8 @@ function SearchForm({ i18n }) {
           openOnFocus: true,
           autoselect: true,
           hint: false,
-          keyboardShortcuts: [`s`]
-        }
+          keyboardShortcuts: [`s`],
+        },
       })
       searchInput.current.focus()
     }
@@ -113,8 +113,8 @@ function SearchForm({ i18n }) {
         // maxWidth: [`100%`, `100%`, `100%`, null, `24rem`],
         "& .algolia-autocomplete": {
           width: `100%`,
-          display: `block !important`
-        }
+          display: `block !important`,
+        },
       }}
       className="searchWrap"
       onMouseOver={() => loadAlgoliaJS()}
@@ -128,7 +128,7 @@ function SearchForm({ i18n }) {
           position: `relative`,
           width: [`100%`, `100%`, `100%`, focused ? `14rem` : 24, `100%`],
           transition: t =>
-            `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`
+            `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
         }}
       >
         <input
@@ -140,12 +140,12 @@ function SearchForm({ i18n }) {
               null,
               null,
               focused ? `themedInput.background` : `transparent`,
-              `themedInput.background`
+              `themedInput.background`,
             ],
             pl: [7, null, null, focused ? 7 : 24, 7],
             width: [`100%`, null, null, focused ? `14rem` : 24, `100%`],
             transition: t =>
-              `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`
+              `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
           type="search"
           placeholder={i18n._(t`Search gatsbyjs.org`)}

@@ -8,7 +8,7 @@ import TableOfContents from "../docs-table-of-contents"
 
 const tableOfContentsNoUrl = {
   location: {
-    pathname: ``
+    pathname: ``,
   },
   depth: 2,
   items: [
@@ -20,41 +20,41 @@ const tableOfContentsNoUrl = {
           title: `new`,
           items: [
             {
-              title: `Arguments`
+              title: `Arguments`,
             },
             {
               url: `#examples`,
-              title: `Examples`
-            }
-          ]
-        }
-      ]
-    }
-  ]
+              title: `Examples`,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 }
 
 const tableOfContentsSimple = {
   location: {
-    pathname: ``
+    pathname: ``,
   },
   depth: null,
   items: [
     {
       url: `#how-to-use-gatsby-cli`,
-      title: `How to use gatsby-cli`
-    }
-  ]
+      title: `How to use gatsby-cli`,
+    },
+  ],
 }
 
 const tableOfContentsDeep = {
   location: {
-    pathname: ``
+    pathname: ``,
   },
   depth: 2,
   items: [
     {
       url: `#how-to-use-gatsby-cli`,
-      title: `How to use gatsby-cli`
+      title: `How to use gatsby-cli`,
     },
     {
       url: `#api-commands`,
@@ -66,13 +66,13 @@ const tableOfContentsDeep = {
           items: [
             {
               url: `#arguments`,
-              title: `Arguments`
+              title: `Arguments`,
             },
             {
               url: `#examples`,
-              title: `Examples`
-            }
-          ]
+              title: `Examples`,
+            },
+          ],
         },
         {
           url: `#develop`,
@@ -80,13 +80,13 @@ const tableOfContentsDeep = {
           items: [
             {
               url: `#options`,
-              title: `Options`
+              title: `Options`,
             },
             {
               url: `#preview-changes-on-other-devices`,
-              title: `Preview changes on other devices`
-            }
-          ]
+              title: `Preview changes on other devices`,
+            },
+          ],
         },
         {
           url: `#build`,
@@ -94,9 +94,9 @@ const tableOfContentsDeep = {
           items: [
             {
               url: `#options-1`,
-              title: `Options`
-            }
-          ]
+              title: `Options`,
+            },
+          ],
         },
         {
           url: `#serve`,
@@ -104,9 +104,9 @@ const tableOfContentsDeep = {
           items: [
             {
               url: `#options-2`,
-              title: `Options`
-            }
-          ]
+              title: `Options`,
+            },
+          ],
         },
         {
           url: `#info`,
@@ -114,13 +114,13 @@ const tableOfContentsDeep = {
           items: [
             {
               url: `#options-3`,
-              title: `Options`
-            }
-          ]
+              title: `Options`,
+            },
+          ],
         },
         {
           url: `#clean`,
-          title: `clean`
+          title: `clean`,
         },
         {
           url: `#plugin`,
@@ -128,25 +128,25 @@ const tableOfContentsDeep = {
           items: [
             {
               url: `#docs`,
-              title: `docs`
-            }
-          ]
+              title: `docs`,
+            },
+          ],
         },
         {
           url: `#repl`,
-          title: `Repl`
+          title: `Repl`,
         },
         {
           url: `#disabling-colored-output`,
-          title: `Disabling colored output`
-        }
-      ]
+          title: `Disabling colored output`,
+        },
+      ],
     },
     {
       url: `#how-to-change-your-default-package-manager-for-your-next-project`,
-      title: `How to change your default package manager for your next project?`
-    }
-  ]
+      title: `How to change your default package manager for your next project?`,
+    },
+  ],
 }
 
 Object.defineProperty(window, `IntersectionObserver`, {
@@ -154,9 +154,9 @@ Object.defineProperty(window, `IntersectionObserver`, {
   value: jest.fn().mockImplementation(() => {
     return {
       observe: jest.fn(),
-      unobserve: jest.fn()
+      unobserve: jest.fn(),
     }
-  })
+  }),
 })
 
 Object.defineProperty(window, `matchMedia`, {
@@ -165,9 +165,9 @@ Object.defineProperty(window, `matchMedia`, {
     return {
       matches: false,
       addListener: jest.fn(),
-      removeListener: jest.fn()
+      removeListener: jest.fn(),
     }
-  })
+  }),
 })
 
 const testHeadingsRecursively = (getByTestId, items, depth) => {

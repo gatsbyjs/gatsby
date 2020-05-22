@@ -16,11 +16,11 @@ const nodes = [
     children: [],
     internal: {
       type: `File`,
-      contentDigest: `file1`
+      contentDigest: `file1`,
     },
     name: `1.png`,
     dir: basePath,
-    absolutePath: filePath(`1.png`)
+    absolutePath: filePath(`1.png`),
   },
   {
     id: `file2`,
@@ -28,11 +28,11 @@ const nodes = [
     children: [],
     internal: {
       type: `File`,
-      contentDigest: `file2`
+      contentDigest: `file2`,
     },
     name: `2.png`,
     dir: basePath,
-    absolutePath: filePath(`2.png`)
+    absolutePath: filePath(`2.png`),
   },
   {
     id: `file3`,
@@ -40,11 +40,11 @@ const nodes = [
     children: [`test1`],
     internal: {
       type: `File`,
-      contentDigest: `file3`
+      contentDigest: `file3`,
     },
     name: `test.txt`,
     dir: basePath,
-    absolutePath: filePath(`test.txt`)
+    absolutePath: filePath(`test.txt`),
   },
   {
     id: `file4`,
@@ -52,11 +52,11 @@ const nodes = [
     children: [`test2`],
     internal: {
       type: `File`,
-      contentDigest: `file4`
+      contentDigest: `file4`,
     },
     name: `parent.txt`,
     dir: basePath,
-    absolutePath: filePath(`parent.txt`)
+    absolutePath: filePath(`parent.txt`),
   },
   {
     id: `file5`,
@@ -64,11 +64,11 @@ const nodes = [
     children: [`file4`],
     internal: {
       type: `File`,
-      contentDigest: `file5`
+      contentDigest: `file5`,
     },
     name: `root.txt`,
     dir: `/`,
-    absolutePath: `/root.txt`
+    absolutePath: `/root.txt`,
   },
   {
     id: `test1`,
@@ -76,26 +76,26 @@ const nodes = [
     children: [],
     internal: {
       type: `Test`,
-      contentDigest: `filenested`
+      contentDigest: `filenested`,
     },
     file: `./1.png`,
     files: [`./1.png`, `./2.png`],
     nested: {
       file: `./1.png`,
-      files: [`./1.png`, `./2.png`]
+      files: [`./1.png`, `./2.png`],
     },
     array: [
       {
         file: `./1.png`,
-        files: [`./1.png`, `./2.png`]
+        files: [`./1.png`, `./2.png`],
       },
       {
         file: `./2.png`,
-        files: [`./2.png`]
-      }
+        files: [`./2.png`],
+      },
     ],
     arrayOfArray: [[`./1.png`], [`./2.png`]],
-    arrayOfArrayOfObjects: [[{ nested: `./1.png` }], [{ nested: `./2.png` }]]
+    arrayOfArrayOfObjects: [[{ nested: `./1.png` }], [{ nested: `./2.png` }]],
   },
   {
     id: `test2`,
@@ -103,10 +103,10 @@ const nodes = [
     children: [],
     internal: {
       type: `TestChild`,
-      contentDigest: `test2`
+      contentDigest: `test2`,
     },
-    file: `./1.png`
-  }
+    file: `./1.png`,
+  },
 ]
 
 describe(`Query fields of type File`, () => {
@@ -120,7 +120,7 @@ describe(`Query fields of type File`, () => {
       undefined,
       withResolverContext({
         schema,
-        schemaComposer
+        schemaComposer,
       })
     )
 
@@ -165,24 +165,24 @@ describe(`Query fields of type File`, () => {
         files: [{ name: `1.png` }, { name: `2.png` }],
         nested: {
           file: { name: `1.png` },
-          files: [{ name: `1.png` }, { name: `2.png` }]
+          files: [{ name: `1.png` }, { name: `2.png` }],
         },
         array: [
           {
             file: { name: `1.png` },
-            files: [{ name: `1.png` }, { name: `2.png` }]
+            files: [{ name: `1.png` }, { name: `2.png` }],
           },
           {
             file: { name: `2.png` },
-            files: [{ name: `2.png` }]
-          }
+            files: [{ name: `2.png` }],
+          },
         ],
         arrayOfArray: [[{ name: `1.png` }], [{ name: `2.png` }]],
         arrayOfArrayOfObjects: [
           [{ nested: { name: `1.png` } }],
-          [{ nested: { name: `2.png` } }]
-        ]
-      }
+          [{ nested: { name: `2.png` } }],
+        ],
+      },
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
@@ -225,19 +225,19 @@ describe(`Query fields of type File`, () => {
         files: [{ name: `1.png` }, { name: `2.png` }],
         nested: {
           file: { name: `1.png` },
-          files: [{ name: `1.png` }, { name: `2.png` }]
+          files: [{ name: `1.png` }, { name: `2.png` }],
         },
         array: [
           {
             file: { name: `1.png` },
-            files: [{ name: `1.png` }, { name: `2.png` }]
+            files: [{ name: `1.png` }, { name: `2.png` }],
           },
           {
             file: { name: `2.png` },
-            files: [{ name: `2.png` }]
-          }
-        ]
-      }
+            files: [{ name: `2.png` }],
+          },
+        ],
+      },
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
@@ -254,8 +254,8 @@ describe(`Query fields of type File`, () => {
     const results = await runQuery(query)
     const expected = {
       testChild: {
-        file: { name: `1.png` }
-      }
+        file: { name: `1.png` },
+      },
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)

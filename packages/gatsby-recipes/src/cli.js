@@ -15,7 +15,7 @@ const {
   useSubscription,
   Provider,
   defaultExchanges,
-  subscriptionExchange
+  subscriptionExchange,
 } = require(`urql`)
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const fetch = require(`node-fetch`)
@@ -63,11 +63,11 @@ const RecipesList = ({ setRecipe }) => {
   const items = [
     {
       label: `Add a custom ESLint config`,
-      value: `eslint.mdx`
+      value: `eslint.mdx`,
     },
     {
       label: `Add Jest`,
-      value: `jest.mdx`
+      value: `jest.mdx`,
     },
     // Waiting on joi2graphql support for Joi.object().unknown()
     // with a JSON type.
@@ -77,80 +77,80 @@ const RecipesList = ({ setRecipe }) => {
     // },
     {
       label: `Add Gatsby Theme Blog`,
-      value: `gatsby-theme-blog`
+      value: `gatsby-theme-blog`,
     },
     {
       label: `Add Gatsby Theme Blog Core`,
-      value: `gatsby-theme-blog-core`
+      value: `gatsby-theme-blog-core`,
     },
     {
       label: `Add persistent layout component with gatsby-plugin-layout`,
-      value: `gatsby-plugin-layout`
+      value: `gatsby-plugin-layout`,
     },
     {
       label: `Add Theme UI`,
-      value: `theme-ui.mdx`
+      value: `theme-ui.mdx`,
     },
     {
       label: `Add Emotion`,
-      value: `emotion.mdx`
+      value: `emotion.mdx`,
     },
     {
       label: `Add support for MDX Pages`,
-      value: `mdx-pages.mdx`
+      value: `mdx-pages.mdx`,
     },
     {
       label: `Add support for MDX Pages with images`,
-      value: `mdx-images.mdx`
+      value: `mdx-images.mdx`,
     },
     {
       label: `Add Styled Components`,
-      value: `styled-components.mdx`
+      value: `styled-components.mdx`,
     },
     {
       label: `Add Tailwind`,
-      value: `tailwindcss.mdx`
+      value: `tailwindcss.mdx`,
     },
     {
       label: `Add Sass`,
-      value: `sass.mdx`
+      value: `sass.mdx`,
     },
     {
       label: `Add Typescript`,
-      value: `typescript.mdx`
+      value: `typescript.mdx`,
     },
     {
       label: `Add Cypress testing`,
-      value: `cypress.mdx`
+      value: `cypress.mdx`,
     },
     {
       label: `Add animated page transition support`,
-      value: `animated-page-transitions.mdx`
+      value: `animated-page-transitions.mdx`,
     },
     {
       label: `Add plugins to make site a PWA`,
-      value: `pwa.mdx`
+      value: `pwa.mdx`,
     },
     {
       label: `Add React Helmet`,
-      value: `gatsby-plugin-react-helmet.mdx`
+      value: `gatsby-plugin-react-helmet.mdx`,
     },
     {
       label: `Add Storybook - JavaScript`,
-      value: `storybook-js.mdx`
+      value: `storybook-js.mdx`,
     },
     {
       label: `Add Storybook - TypeScript`,
-      value: `storybook-ts.mdx`
+      value: `storybook-ts.mdx`,
     },
     {
       label: `Add Ava`,
-      value: `ava.mdx`
+      value: `ava.mdx`,
     },
     {
       label: `Add Preact`,
-      value: `preact.mdx`
-    }
+      value: `preact.mdx`,
+    },
   ]
 
   return (
@@ -194,7 +194,7 @@ function eliminateNewLines(children) {
 
     if (child.props.children) {
       child = React.cloneElement(child, {
-        children: eliminateNewLines(child.props.children)
+        children: eliminateNewLines(child.props.children),
       })
     }
 
@@ -270,7 +270,7 @@ const components = {
   NPMPackage: () => null,
   File: () => null,
   GatsbyShadowFile: () => null,
-  NPMScript: () => null
+  NPMScript: () => null,
 }
 
 let logStream
@@ -296,7 +296,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     const subscriptionClient = new SubscriptionClient(
       `ws://localhost:${graphqlPort}/graphql`,
       {
-        reconnect: true
+        reconnect: true,
       },
       ws
     )
@@ -315,9 +315,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         subscriptionExchange({
           forwardSubscription(operation) {
             return subscriptionClient.request(operation)
-          }
-        })
-      ]
+          },
+        }),
+      ],
     })
 
     const RecipeInterpreter = () => {
@@ -333,7 +333,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
               state
             }
           }
-        `
+        `,
         },
         (_prev, now) => now
       )
@@ -392,7 +392,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
                 try {
                   await createOperation({
                     recipePath: recipeItem.value,
-                    projectRoot
+                    projectRoot,
                   })
                 } catch (e) {
                   log(`error creating operation`, e)
@@ -554,15 +554,15 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
           {
             type: `mdx`,
             key: `mdx-${step}`,
-            value: state.context.stepsAsMdx[step]
-          }
+            value: state.context.stepsAsMdx[step],
+          },
         ]
       }
       lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
         staticMessages[res._currentStep].push({
           type: `resource`,
           key: `finished-stuff-${i}`,
-          value: res._message
+          value: res._message,
         })
       })
 

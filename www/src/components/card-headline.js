@@ -6,7 +6,7 @@ const CardHeadline = ({ children }) => (
     sx={{
       fontSize: 4,
       lineHeight: `dense`,
-      mt: 0
+      mt: 0,
     }}
   >
     {children}

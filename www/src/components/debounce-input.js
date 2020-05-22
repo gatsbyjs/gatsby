@@ -6,16 +6,16 @@ class DebounceInput extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,
-    delay: PropTypes.number
+    delay: PropTypes.number,
   }
 
   static defaultProps = {
     value: ``,
-    delay: 500
+    delay: 500,
   }
 
   state = {
-    inputValue: ``
+    inputValue: ``,
   }
 
   componentDidMount() {

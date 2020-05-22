@@ -62,7 +62,7 @@ Add the following to register the plugin:
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
@@ -72,10 +72,10 @@ module.exports = {
       options: {
         repositoryName: `your-repository-name`,
         accessToken: `${process.env.API_KEY}`,
-        linkResolver: ({ node, key, value }) => post => `/${post.uid}`
-      }
-    }
-  ]
+        linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
+      },
+    },
+  ],
 }
 ```
 
@@ -113,8 +113,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `/${edge.node.uid}`,
       component: template,
       context: {
-        uid: edge.node.uid
-      }
+        uid: edge.node.uid,
+      },
     })
   })
 }

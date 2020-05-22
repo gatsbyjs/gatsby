@@ -32,9 +32,9 @@ Copy the snippet below to the newly created `.eslintrc.js` file. Then add additi
 ```js:title=.eslintrc.js
 module.exports = {
   globals: {
-    __PATH_PREFIX__: true
+    __PATH_PREFIX__: true,
   },
-  extends: `react-app`
+  extends: `react-app`,
 }
 ```
 

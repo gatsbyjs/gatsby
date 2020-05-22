@@ -19,7 +19,7 @@ export const hasLocalEslint = (directory: string): boolean => {
 
   log(`Checking for eslint config file`)
   const eslintFiles = glob.sync(`.eslintrc?(.js|.json|.yaml|.yml)`, {
-    cwd: directory
+    cwd: directory,
   })
 
   if (eslintFiles.length) {

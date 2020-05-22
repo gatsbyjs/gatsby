@@ -167,7 +167,7 @@ export const routeThroughBrowserOrApp = (
   return false
 }
 
-export default function(root, pluginOptions, cb) {
+export default function (root, pluginOptions, cb) {
   const clickHandler = routeThroughBrowserOrApp(cb, pluginOptions)
 
   root.addEventListener(`click`, clickHandler)

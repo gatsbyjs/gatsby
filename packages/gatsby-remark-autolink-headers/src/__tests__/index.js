@@ -7,7 +7,7 @@ const plugin = require(`../`)
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
-  pedantic: true
+  pedantic: true,
 })
 
 describe(`gatsby-remark-autolink-headers`, () => {
@@ -211,32 +211,32 @@ describe(`gatsby-remark-autolink-headers`, () => {
     expect(headers).toEqual([
       {
         id: `custom_h1`,
-        text: `Heading One`
+        text: `Heading One`,
       },
       {
         id: `custom-heading-two`,
-        text: `Heading Two`
+        text: `Heading Two`,
       },
       {
         id: `custom-withbold`,
-        text: `With Bold`
+        text: `With Bold`,
       },
       {
         id: `invalid-thisisitalic`,
-        text: `Invalid {#thisisitalic}`
+        text: `Invalid {#thisisitalic}`,
       },
       {
         id: `no-custom-id`,
-        text: `No custom ID`
+        text: `No custom ID`,
       },
       {
         id: `id-only`,
-        text: `{#id-only}`
+        text: `{#id-only}`,
       },
       {
         id: `text-after-custom-id`,
-        text: `{#text-after} custom ID`
-      }
+        text: `{#text-after} custom ID`,
+      },
     ])
   })
 

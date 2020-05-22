@@ -15,8 +15,8 @@ interface IState {
   }
 }
 
-export default function({
-  types: t
+export default function ({
+  types: t,
 }: {
   types: typeof BabelTypes
 }): PluginObj<Program> {
@@ -62,7 +62,7 @@ export default function({
           []
         )
       )
-    }
+    },
   }
 
   return {
@@ -71,7 +71,7 @@ export default function({
       // this is a workaround to run before preset-env destroys destructured assignments
       Program<Program>(path: NodePath<Program>, state: any): void {
         path.traverse(visitor, state)
-      }
-    }
+      },
+    },
   }
 }

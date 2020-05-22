@@ -143,7 +143,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`
+    author: `@gatsbyjs`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -151,8 +151,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`
-      }
+        path: `${__dirname}/src/images`,
+      },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -165,8 +165,8 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png` // This path is relative to the root of the site.
-      }
+        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
     },
     {
       resolve: "gatsby-source-wordpress",
@@ -182,7 +182,7 @@ module.exports = {
         perPage: 100,
         searchAndReplaceContentUrls: {
           sourceUrl: "https://www.using-wordpress-with-gatsby.iamtimsmith.com",
-          replacementUrl: "https://localhost:8000"
+          replacementUrl: "https://localhost:8000",
         },
         // Set how many simultaneous requests are sent at once.
         concurrentRequests: 10,
@@ -193,20 +193,20 @@ module.exports = {
           "**/media",
           "**/tags",
           "**/taxonomies",
-          "**/users"
+          "**/users",
         ],
         excludedRoutes: [],
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
-        }
-      }
+        },
+      },
     },
     `gatsby-plugin-sass`,
-    `gatsby-plugin-sitemap`
+    `gatsby-plugin-sitemap`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
-  ]
+  ],
 }
 ```
 
@@ -299,8 +299,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `/post/${post.node.slug}`,
       component: BlogPostTemplate,
       context: {
-        id: post.node.wordpress_id
-      }
+        id: post.node.wordpress_id,
+      },
     })
   })
 }

@@ -9,11 +9,11 @@ export default merge(typography, {
   colors,
   fonts: {
     heading: `Montserrat, sans-serif`,
-    monospace: `Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`
+    monospace: `Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace`,
   },
   sizes: {
-    container: 672
+    container: 672,
   },
   styles,
-  prism
+  prism,
 })

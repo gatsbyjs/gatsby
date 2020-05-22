@@ -36,7 +36,7 @@ const read = async ({ root }, id) => {
   return {
     id,
     name: id,
-    value: JSON.stringify(pkg[id], null, 2)
+    value: JSON.stringify(pkg[id], null, 2),
   }
 }
 
@@ -49,7 +49,7 @@ const destroy = async ({ root }, { id }) => {
 const schema = {
   name: Joi.string(),
   value: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
@@ -69,7 +69,7 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
     currentState: JSON.stringify(currentState, null, 2),
     newState: JSON.stringify(newState, null, 2),
     describe: `Add ${key} to package.json`,
-    diff: `` // TODO: Make diff
+    diff: ``, // TODO: Make diff
   }
 }
 
@@ -79,7 +79,7 @@ module.exports.all = async ({ root }) => {
   return Object.keys(pkg).map(key => {
     return {
       name: key,
-      value: JSON.stringify(pkg[key])
+      value: JSON.stringify(pkg[key]),
     }
   })
 }
@@ -89,5 +89,5 @@ module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
 module.exports.config = {
-  serial: true
+  serial: true,
 }

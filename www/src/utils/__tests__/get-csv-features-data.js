@@ -6,43 +6,43 @@ const mockNodes = [
     Gatsby: `3`,
     Jamstack: `3`,
     Cms: `2`,
-    Description: ``
+    Description: ``,
   },
   {
     Category: `Developer Experience`,
     Gatsby: `3`,
     Jamstack: `3`,
     Cms: `2`,
-    Description: ``
+    Description: ``,
   },
   {
     Category: `Governance`,
     Gatsby: `3`,
     Jamstack: `2`,
     Cms: `3`,
-    Description: ``
+    Description: ``,
   },
   {
     Category: `Accessibility`,
     Gatsby: `2`,
     Jamstack: `2`,
     Cms: `3`,
-    Description: ``
+    Description: ``,
   },
   {
     Category: `Documentation`,
     Gatsby: `3`,
     Jamstack: `3`,
     Cms: `3`,
-    Description: ``
+    Description: ``,
   },
   {
     Category: `Ecosystem`,
     Gatsby: `3`,
     Jamstack: `2`,
     Cms: `2`,
-    Description: ``
-  }
+    Description: ``,
+  },
 ]
 
 test(`it gets the correct number of sections and headers`, () => {

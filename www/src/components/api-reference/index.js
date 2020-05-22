@@ -9,7 +9,7 @@ export default ({
   docs,
   relativeFilePath = null,
   showTopLevelSignatures = false,
-  ignoreParams = []
+  ignoreParams = [],
 }) => (
   <React.Fragment>
     {docs.map((definition, i) => (

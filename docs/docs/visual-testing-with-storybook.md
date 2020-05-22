@@ -30,7 +30,7 @@ When you first install Storybook the only configuration file that will exist is 
 ```js:title=.storybook/main.js
 module.exports = {
   stories: ["../stories/**/*.stories.js"],
-  addons: ["@storybook/addon-actions", "@storybook/addon-links"]
+  addons: ["@storybook/addon-actions", "@storybook/addon-links"],
 }
 ```
 
@@ -82,21 +82,21 @@ module.exports = {
     // use @babel/preset-react for JSX and env (instead of staged presets)
     config.module.rules[0].use[0].options.presets = [
       require.resolve("@babel/preset-react"),
-      require.resolve("@babel/preset-env")
+      require.resolve("@babel/preset-env"),
     ]
 
     config.module.rules[0].use[0].options.plugins = [
       // use @babel/plugin-proposal-class-properties for class arrow functions
       require.resolve("@babel/plugin-proposal-class-properties"),
       // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-      require.resolve("babel-plugin-remove-graphql-queries")
+      require.resolve("babel-plugin-remove-graphql-queries"),
     ]
 
     // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
     config.resolve.mainFields = ["browser", "module", "main"]
 
     return config
-  }
+  },
   // highlight-end
 }
 ```
@@ -112,7 +112,7 @@ import { action } from "@storybook/addon-actions"
 // so Gatsby Link doesn't throw any errors.
 global.___loader = {
   enqueue: () => {},
-  hovering: () => {}
+  hovering: () => {},
 }
 
 // __PATH_PREFIX__ is used inside gatsby-link an other various places. For storybook not to crash, you need to set it as well.
@@ -147,9 +147,9 @@ config.module.rules.push({
     plugins: [
       require.resolve("@babel/plugin-proposal-class-properties"),
       // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-      require.resolve("babel-plugin-remove-graphql-queries")
-    ]
-  }
+      require.resolve("babel-plugin-remove-graphql-queries"),
+    ],
+  },
 })
 
 config.resolve.extensions.push(".ts", ".tsx")
@@ -173,14 +173,14 @@ module.exports = {
     // use @babel/preset-react for JSX and env (instead of staged presets)
     config.module.rules[0].use[0].options.presets = [
       require.resolve("@babel/preset-react"),
-      require.resolve("@babel/preset-env")
+      require.resolve("@babel/preset-env"),
     ]
 
     config.module.rules[0].use[0].options.plugins = [
       // use @babel/plugin-proposal-class-properties for class arrow functions
       require.resolve("@babel/plugin-proposal-class-properties"),
       // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-      require.resolve("babel-plugin-remove-graphql-queries")
+      require.resolve("babel-plugin-remove-graphql-queries"),
     ]
 
     // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
@@ -195,16 +195,16 @@ module.exports = {
         plugins: [
           require.resolve("@babel/plugin-proposal-class-properties"),
           // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-          require.resolve("babel-plugin-remove-graphql-queries")
-        ]
-      }
+          require.resolve("babel-plugin-remove-graphql-queries"),
+        ],
+      },
     })
 
     config.resolve.extensions.push(".ts", ".tsx")
 
     // highlight-end
     return config
-  }
+  },
 }
 ```
 
@@ -231,14 +231,14 @@ module.exports = (baseConfig, env, defaultConfig) => {
   // use @babel/preset-react for JSX and env (instead of staged presets)
   defaultConfig.module.rules[0].use[0].options.presets = [
     require.resolve("@babel/preset-react"),
-    require.resolve("@babel/preset-env")
+    require.resolve("@babel/preset-env"),
   ]
 
   defaultConfig.module.rules[0].use[0].options.plugins = [
     // use @babel/plugin-proposal-class-properties for class arrow functions
     require.resolve("@babel/plugin-proposal-class-properties"),
     // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-    require.resolve("babel-plugin-remove-graphql-queries")
+    require.resolve("babel-plugin-remove-graphql-queries"),
   ]
 
   // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
@@ -279,7 +279,7 @@ First, create the story file. Storybook looks for all files with a `.stories.js`
 import React from "react"
 
 export default {
-  title: "Dashboard/header"
+  title: "Dashboard/header",
 }
 
 export const exampleStory = () => (

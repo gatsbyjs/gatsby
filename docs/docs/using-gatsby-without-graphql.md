@@ -21,7 +21,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon } // highlight-line
+    context: { allPokemon }, // highlight-line
   })
 
   // Create a page for each Pokémon.
@@ -29,7 +29,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`, // highlight-line
       component: require.resolve("./src/templates/pokemon.js"),
-      context: { pokemon } // highlight-line
+      context: { pokemon }, // highlight-line
     })
   })
 }

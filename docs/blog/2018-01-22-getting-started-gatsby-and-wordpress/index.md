@@ -26,9 +26,9 @@ Essentially the Gatsby home base. The two things defined here initially (in the 
 ```javascript
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Default Starter"
+    title: "Gatsby Default Starter",
   },
-  plugins: ["gatsby-plugin-react-helmet"]
+  plugins: ["gatsby-plugin-react-helmet"],
 }
 ```
 
@@ -107,8 +107,8 @@ _.each(result.data.allWordpressPost.edges, edge => {
     // In the ^template's GraphQL query, 'id' will be available
     // as a GraphQL variable to query for this posts's data.
     context: {
-      id: edge.node.id
-    }
+      id: edge.node.id,
+    },
   })
 })
 ```

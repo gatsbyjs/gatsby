@@ -12,7 +12,7 @@ module.exports = async function preprocessSource(
   if (extensions.includes(ext)) {
     const code = await mdx(contents, {
       filepath: filename,
-      ...options
+      ...options,
     })
     return code
   }

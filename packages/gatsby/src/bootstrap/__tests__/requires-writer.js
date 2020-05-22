@@ -10,7 +10,7 @@ const generatePagesState = pages => {
     state.set(page.path, {
       component: ``,
       componentChunkName: ``,
-      ...page
+      ...page,
     })
   })
 
@@ -20,7 +20,7 @@ const generatePagesState = pages => {
 jest.mock(`fs-extra`, () => {
   return {
     writeFile: () => Promise.resolve(),
-    move: () => {}
+    move: () => {},
   }
 })
 
@@ -28,7 +28,7 @@ const mockFsExtra = require(`fs-extra`)
 
 describe(`requires-writer`, () => {
   const program = {
-    directory: `/dir`
+    directory: `/dir`,
   }
   let originalDateNow = global.Date.now
 
@@ -48,19 +48,19 @@ describe(`requires-writer`, () => {
           component: `component1`,
           componentChunkName: `chunkName1`,
           matchPath: `matchPath1`,
-          path: `/path1`
+          path: `/path1`,
         },
         {
           component: `component2`,
           componentChunkName: `chunkName2`,
-          path: `/path2`
-        }
+          path: `/path2`,
+        },
       ])
 
       const spy = jest.spyOn(mockFsExtra, `writeFile`)
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       expect(spy).toBeCalledWith(
@@ -86,28 +86,28 @@ describe(`requires-writer`, () => {
     it(`should be sorted by specificity`, async () => {
       const pages = generatePagesState([
         {
-          path: `/`
+          path: `/`,
         },
         {
           path: `/app/`,
-          matchPath: `/app/*`
+          matchPath: `/app/*`,
         },
         {
           path: `/app/projects/`,
-          matchPath: `/app/projects/*`
+          matchPath: `/app/projects/*`,
         },
         {
           path: `/app/clients/`,
-          matchPath: `/app/clients/*`
+          matchPath: `/app/clients/*`,
         },
         {
-          path: `/app/login/`
-        }
+          path: `/app/login/`,
+        },
       ])
 
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -120,27 +120,27 @@ describe(`requires-writer`, () => {
     it(`should have static pages that live inside a matchPath`, async () => {
       const pages = generatePagesState([
         {
-          path: `/`
+          path: `/`,
         },
         {
           path: `/app/`,
-          matchPath: `/app/*`
+          matchPath: `/app/*`,
         },
         {
           path: `/app/clients/`,
-          matchPath: `/app/clients/*`
+          matchPath: `/app/clients/*`,
         },
         {
-          path: `/app/clients/static`
+          path: `/app/clients/static`,
         },
         {
-          path: `/app/login/`
-        }
+          path: `/app/login/`,
+        },
       ])
 
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -151,20 +151,20 @@ describe(`requires-writer`, () => {
       const pages = generatePagesState([
         {
           path: `/another-custom-404`,
-          matchPath: `/*`
+          matchPath: `/*`,
         },
         {
-          path: `/`
+          path: `/`,
         },
         {
           path: `/custom-404`,
-          matchPath: `/*`
-        }
+          matchPath: `/*`,
+        },
       ])
 
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -173,44 +173,44 @@ describe(`requires-writer`, () => {
 
     const pagesInput = [
       {
-        path: `/`
+        path: `/`,
       },
       {
         path: `/custom-404`,
-        matchPath: `/*`
+        matchPath: `/*`,
       },
       {
         path: `/mp4`,
-        matchPath: `/mp1/mp2/mp3/mp4/*`
+        matchPath: `/mp1/mp2/mp3/mp4/*`,
       },
       {
-        path: `/some-page`
+        path: `/some-page`,
       },
       {
-        path: `/mp1/mp2`
+        path: `/mp1/mp2`,
       },
       {
         path: `/mp1/with-params`,
-        matchPath: `/mp1/:param`
+        matchPath: `/mp1/:param`,
       },
       {
-        path: `/ap1/ap2`
+        path: `/ap1/ap2`,
       },
       {
-        path: `/mp1/mp2/hello`
+        path: `/mp1/mp2/hello`,
       },
       {
         path: `/mp1`,
-        matchPath: `/mp1/*`
+        matchPath: `/mp1/*`,
       },
       {
         path: `/mp2`,
-        matchPath: `/mp1/mp2/*`
+        matchPath: `/mp1/mp2/*`,
       },
       {
         path: `/mp3`,
-        matchPath: `/mp1/mp2/mp3/*`
-      }
+        matchPath: `/mp1/mp2/mp3/*`,
+      },
     ]
 
     it(`sorts pages based on matchPath/path specificity`, async () => {
@@ -218,7 +218,7 @@ describe(`requires-writer`, () => {
 
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -244,14 +244,14 @@ describe(`requires-writer`, () => {
       pages = generatePagesState([...pagesInput].reverse())
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       const matchPathsForInvertedInput = matchPaths
       pages = generatePagesState(pagesInput)
       await requiresWriter.writeAll({
         pages,
-        program
+        program,
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -262,7 +262,7 @@ describe(`requires-writer`, () => {
         const pages = generatePagesState([...pagesInput].reverse())
         await requiresWriter.writeAll({
           pages,
-          program
+          program,
         })
 
         const allMatchingPages = matchPaths
@@ -271,7 +271,7 @@ describe(`requires-writer`, () => {
 
         return {
           allMatchingPages,
-          selectedPage: allMatchingPages[0]
+          selectedPage: allMatchingPages[0],
         }
       }
 
@@ -334,13 +334,13 @@ describe(`requires-writer`, () => {
           component: `component1`,
           componentChunkName: `chunkName1`,
           matchPath: `matchPath1`,
-          path: `/path1`
+          path: `/path1`,
         },
         {
           component: `component2`,
           componentChunkName: `chunkName2`,
-          path: `/path2`
-        }
+          path: `/path2`,
+        },
       ])
 
       const pages = [...pagesInput.values()]

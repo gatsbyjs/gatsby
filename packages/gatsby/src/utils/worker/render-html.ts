@@ -6,7 +6,7 @@ import { getPageHtmlFilePath } from "../../utils/page-html"
 export const renderHTML = ({
   htmlComponentRendererPath,
   paths,
-  envVars
+  envVars,
 }: {
   htmlComponentRendererPath: string
   paths: string
@@ -33,7 +33,7 @@ export const renderHTML = ({
         } catch (e) {
           // add some context to error so we can display more helpful message
           e.context = {
-            path
+            path,
           }
           reject(e)
         }

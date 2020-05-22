@@ -36,9 +36,9 @@ Add `gatsby-theme-docz` under `plugins` in `gatsby-config.js`:
 module.exports = {
   plugins: [
     //highlight-next-line
-    `gatsby-theme-docz`
+    `gatsby-theme-docz`,
     // Your plugins go here
-  ]
+  ],
 }
 ```
 
@@ -69,14 +69,14 @@ import PropTypes from "prop-types"
 
 const scales = {
   small: {
-    fontSize: "16px"
+    fontSize: "16px",
   },
   normal: {
-    fontSize: "18px"
+    fontSize: "18px",
   },
   big: {
-    fontSize: "22px"
-  }
+    fontSize: "22px",
+  },
 }
 
 export const Button = ({ children, scale }) => (
@@ -85,11 +85,11 @@ export const Button = ({ children, scale }) => (
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  scale: PropTypes.oneOf(["small", "normal", "big"])
+  scale: PropTypes.oneOf(["small", "normal", "big"]),
 }
 
 Button.defaultProps = {
-  scale: "normal"
+  scale: "normal",
 }
 ```
 
@@ -168,11 +168,11 @@ module.exports = {
       resolve: `gatsby-theme-docz`,
       options: {
         // Your options here
-      }
-    }
+      },
+    },
     //highlight-end
     // Your plugins go here
-  ]
+  ],
 }
 ```
 

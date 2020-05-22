@@ -17,9 +17,9 @@ module.exports = ({ createResolvers, reporter }, pluginOptions = {}) => {
             )
           }
           return info.originalResolver(parent, args, context, info)
-        }
-      }
-    }
+        },
+      },
+    },
   }
 
   createResolvers(resolvers)

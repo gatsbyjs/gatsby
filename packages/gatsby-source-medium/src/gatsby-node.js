@@ -65,7 +65,7 @@ exports.sourceNodes = async (
       return {
         ...resource,
         medium_id: resource.id,
-        id: createNodeId(resource.id ? resource.id : resource.userId)
+        id: createNodeId(resource.id ? resource.id : resource.userId),
       }
     })
 
@@ -82,13 +82,13 @@ exports.sourceNodes = async (
         links = {
           author___NODE: getID(
             resources.find(r => r.userId === resource.creatorId)
-          )
+          ),
         }
       } else if (resource.type === `User`) {
         links = {
           posts___NODE: resources
             .filter(r => r.type === `Post` && r.creatorId === resource.userId)
-            .map(r => r.id)
+            .map(r => r.id),
         }
       }
 
@@ -99,8 +99,8 @@ exports.sourceNodes = async (
         children: [],
         internal: {
           type: `Medium${resource.type}`,
-          contentDigest
-        }
+          contentDigest,
+        },
       }
 
       createNode(node)

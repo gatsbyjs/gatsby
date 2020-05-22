@@ -22,7 +22,7 @@ Create a new contentType schema called `localeText` to use with the schemas in y
 ```js:title=contentTypes/localeText.js
 const supportedLanguages = [
   { id: "en", title: "English", isDefault: true },
-  { id: "es", title: "Spanish" }
+  { id: "es", title: "Spanish" },
   // Add as many languages as you need to support
 ]
 
@@ -33,15 +33,15 @@ export default {
     {
       title: "Translations",
       name: "translations",
-      options: { collapsible: true }
-    }
+      options: { collapsible: true },
+    },
   ],
   fields: supportedLanguages.map(lang => ({
     title: lang.title,
     name: lang.id,
     type: "string",
-    fieldset: lang.isDefault ? null : "translations"
-  }))
+    fieldset: lang.isDefault ? null : "translations",
+  })),
 }
 ```
 
@@ -58,13 +58,13 @@ export default {
   fields: [
     {
       type: "localeString",
-      name: "title"
+      name: "title",
     },
     {
       type: "localeText",
-      name: "description"
-    }
-  ]
+      name: "description",
+    },
+  ],
 }
 ```
 
@@ -165,8 +165,8 @@ function localize(Component) {
     static propTypes = {
       data: Proptypes.object,
       pageContext: Proptypes.shape({
-        locale: Proptypes.string
-      })
+        locale: Proptypes.string,
+      }),
     }
     constructor(props) {
       super(props)
@@ -237,8 +237,8 @@ const createLocalePage = (page, createPage) => {
     ...rest,
     context: {
       ...context,
-      locale: process.env.LOCALE
-    }
+      locale: process.env.LOCALE,
+    },
   })
 
   if (extraLanguages.length) {
@@ -252,8 +252,8 @@ const createLocalePage = (page, createPage) => {
         // to its path: "/es/blog/<some-slug>" for example
         context: {
           ...context,
-          locale: code
-        }
+          locale: code,
+        },
       })
     })
   }
@@ -267,8 +267,8 @@ exports.createPages = ({ actions }) => {
     path: "some-page",
     component: path.resolve(`./src/templates/some-page.js`),
     context: {
-      slug: "some-page-slug"
-    }
+      slug: "some-page-slug",
+    },
   }
 
   createLocalePage(page, createPage)

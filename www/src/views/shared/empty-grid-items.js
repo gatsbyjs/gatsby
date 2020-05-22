@@ -12,7 +12,7 @@ const EmptyGridItems = ({ styles }) => {
         aria-hidden="true"
         sx={{
           ...styles,
-          my: 0
+          my: 0,
         }}
       />
     )

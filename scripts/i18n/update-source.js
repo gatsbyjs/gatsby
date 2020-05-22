@@ -24,7 +24,7 @@ const pathsToCopy = [
   `docs/docs`,
   `docs/tutorial`,
   `docs/contributing`,
-  `docs/accessibility-statement.md`
+  `docs/accessibility-statement.md`,
 ]
 
 function cloneOrUpdateRepo(repoName, repoUrl) {

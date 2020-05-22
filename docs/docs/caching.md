@@ -51,14 +51,10 @@ When deploying with Vercel, follow the instructions in the [Vercel documentation
 
 ---
 
-<sup>
-  1
-</sup> You can use 'no-cache' instead of 'max-age=0, must-revalidate'. Despite
+<sup>1</sup> You can use 'no-cache' instead of 'max-age=0, must-revalidate'. Despite
 what the name might imply, 'no-cache' permits a cache to serve cached content as
 long as it validates the cache freshness first.
-<sup>
-  [2][3]
-</sup> In either case, clients have to make a round trip to the origin
+<sup>[2][3]</sup> In either case, clients have to make a round trip to the origin
 server on each request. However, if you are correctly utilizing ETags or Last-Modified
 validation you will avoid downloading assets when the cached copy is still valid
 (e.g. the file hasn't changed on the origin server since it was cached).

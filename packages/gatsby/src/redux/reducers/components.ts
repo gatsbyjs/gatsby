@@ -29,7 +29,7 @@ export const componentsReducer = (
           componentPath: action.payload.componentPath,
           query: state.get(action.payload.componentPath)?.query || ``,
           pages: new Set([action.payload.path]),
-          isInBootstrap: programStatus === `BOOTSTRAPPING`
+          isInBootstrap: programStatus === `BOOTSTRAPPING`,
         })
         service = interpret(machine).start()
         // .onTransition(nextState => {
@@ -47,7 +47,7 @@ export const componentsReducer = (
         } else if (action.contextModified) {
           service.send({
             type: `PAGE_CONTEXT_MODIFIED`,
-            path: action.payload.path
+            path: action.payload.path,
           })
         }
       }
@@ -56,7 +56,7 @@ export const componentsReducer = (
         action.payload.componentPath,
         Object.assign(
           {
-            query: ``
+            query: ``,
           },
           service.state.context
         )
@@ -78,12 +78,12 @@ export const componentsReducer = (
       } else {
         service.send({
           type: `QUERY_CHANGED`,
-          query: action.payload.query
+          query: action.payload.query,
         })
       }
 
       state.set(action.payload.componentPath, {
-        ...service.state.context
+        ...service.state.context,
       })
       return state
     }
@@ -100,14 +100,14 @@ export const componentsReducer = (
       } else {
         action.payload.componentPath = normalize(action.payload.componentPath)
         servicesToSendEventTo = [
-          services.get(action.payload.componentPath)
+          services.get(action.payload.componentPath),
         ].filter(Boolean)
       }
 
       servicesToSendEventTo.forEach(service =>
         service.send({
           type: action.type,
-          ...action.payload
+          ...action.payload,
         })
       )
 
@@ -122,7 +122,7 @@ export const componentsReducer = (
         // a page component could have thousands of pages will processing.
         // This can be done once we start modeling Pages as well.
         service.send({
-          type: `QUERIES_COMPLETE`
+          type: `QUERIES_COMPLETE`,
         })
       }
       return state
@@ -136,7 +136,7 @@ export const componentsReducer = (
       const service = services.get(normalize(action.payload.component))
       service.send({
         type: `DELETE_PAGE`,
-        page: action.payload
+        page: action.payload,
       })
       return state
     }

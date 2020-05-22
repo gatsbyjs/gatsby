@@ -12,7 +12,7 @@ export const getConfigStore = (): Configstore => {
       `gatsby`,
       {},
       {
-        globalConfigPath: true
+        globalConfigPath: true,
       }
     )
   }

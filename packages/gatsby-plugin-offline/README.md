@@ -30,9 +30,9 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        precachePages: [`/about-us/`, `/projects/*`]
-      }
-    }
+        precachePages: [`/about-us/`, `/projects/*`],
+      },
+    },
   ]
   ```
 
@@ -45,9 +45,9 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        appendScript: require.resolve(`src/custom-sw-code.js`)
-      }
-    }
+        appendScript: require.resolve(`src/custom-sw-code.js`),
+      },
+    },
   ]
   ```
 
@@ -77,10 +77,10 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
       resolve: `gatsby-plugin-offline`,
       options: {
         workboxConfig: {
-          importWorkboxFrom: `cdn`
-        }
-      }
-    }
+          importWorkboxFrom: `cdn`,
+        },
+      },
+    },
   ]
   ```
 
@@ -95,9 +95,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-offline`,
     options: {
-      importWorkboxFrom: `cdn`
-    }
-  }
+      importWorkboxFrom: `cdn`,
+    },
+  },
 ]
 ```
 
@@ -109,10 +109,10 @@ plugins: [
     resolve: `gatsby-plugin-offline`,
     options: {
       workboxConfig: {
-        importWorkboxFrom: `cdn`
-      }
-    }
-  }
+        importWorkboxFrom: `cdn`,
+      },
+    },
+  },
 ]
 ```
 
@@ -132,7 +132,7 @@ const options = {
   modifyURLPrefix: {
     // If `pathPrefix` is configured by user, we should replace
     // the default prefix with `pathPrefix`.
-    "/": `${pathPrefix}/`
+    "/": `${pathPrefix}/`,
   },
   cacheId: `gatsby-plugin-offline`,
   // Don't cache-bust JS or CSS files, and anything in the static directory,
@@ -143,26 +143,26 @@ const options = {
       // Use cacheFirst since these don't need to be revalidated (same RegExp
       // and same reason as above)
       urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `CacheFirst`
+      handler: `CacheFirst`,
     },
     {
       // page-data.json files are not content hashed
       urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`
+      handler: `NetworkFirst`,
     },
     {
       // Add runtime caching of various other page resources
       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `StaleWhileRevalidate`
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Google Fonts CSS (doesn't end in .css so we need to specify it)
       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `StaleWhileRevalidate`
-    }
+      handler: `StaleWhileRevalidate`,
+    },
   ],
   skipWaiting: true,
-  clientsClaim: true
+  clientsClaim: true,
 }
 ```
 

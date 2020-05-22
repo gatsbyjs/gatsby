@@ -5,23 +5,23 @@ jest.mock(`../../utils/sidebar/item-list`, () => {
       items: [
         {
           title: `Why Contribute to Gatsby?`,
-          link: `/contributing/why-contribute-to-gatsby/`
+          link: `/contributing/why-contribute-to-gatsby/`,
         },
         {
           title: `Gatsby's Governance Model*`,
-          link: `/contributing/gatsby-governance-model/`
-        }
-      ]
+          link: `/contributing/gatsby-governance-model/`,
+        },
+      ],
     },
     itemListDocs: {
       title: `Documentation`,
       items: [
         {
           title: `Introduction`,
-          link: `/docs/`
-        }
-      ]
-    }
+          link: `/docs/`,
+        },
+      ],
+    },
   }
 })
 import React from "react"

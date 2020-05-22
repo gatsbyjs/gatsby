@@ -13,12 +13,12 @@ const Post = ({
   data: {
     post,
     site: {
-      siteMetadata: { title }
-    }
+      siteMetadata: { title },
+    },
   },
   location,
   previous,
-  next
+  next,
 }) => (
   <Layout location={location} title={title}>
     <SEO

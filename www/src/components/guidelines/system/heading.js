@@ -11,7 +11,7 @@ Heading.defaultProps = {
   lineHeight: `dense`,
   letterSpacing: `tight`,
   mt: 0,
-  mb: 0
+  mb: 0,
 }
 
 export default Heading

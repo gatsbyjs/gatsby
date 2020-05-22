@@ -5,7 +5,7 @@ const {
   lexicographicSortSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLSchema
+  GraphQLSchema,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
@@ -23,15 +23,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
-    }
+    },
   }
 })
 
@@ -53,7 +53,7 @@ const addNodeField = ({ node, name, value }) => {
   store.dispatch({
     type: `ADD_FIELD_TO_NODE`,
     payload: node,
-    addedField: name
+    addedField: name,
   })
 }
 
@@ -85,17 +85,17 @@ const createExternalSchema = () => {
             externalFoo: {
               type: GraphQLString,
               resolve: parentValue =>
-                `${parentValue}.ExternalType.externalFoo.defaultResolver`
-            }
-          }
+                `${parentValue}.ExternalType.externalFoo.defaultResolver`,
+            },
+          },
         }),
-        resolve: () => `Query.external`
+        resolve: () => `Query.external`,
       },
       external2: {
         type: GraphQLString,
-        resolve: () => `Query.external2`
-      }
-    }
+        resolve: () => `Query.external2`,
+      },
+    },
   })
   return new GraphQLSchema({ query })
 }
@@ -120,16 +120,16 @@ describe(`build and update individual types`, () => {
       children: [],
       numberKey: 1,
       stringKey: `5`,
-      dateKey: `2018-05-05`
+      dateKey: `2018-05-05`,
     },
     {
       id: `Nested1`,
       internal: { type: `Nested`, contentDigest: `0` },
       children: [],
       nested: {
-        foo: { bar: { baz: `string` } }
-      }
-    }
+        foo: { bar: { baz: `string` } },
+      },
+    },
   ]
 
   const initialFooFields = [
@@ -139,7 +139,7 @@ describe(`build and update individual types`, () => {
     `internal`,
     `numberKey`,
     `stringKey`,
-    `dateKey`
+    `dateKey`,
   ]
 
   let schema
@@ -166,7 +166,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Foo2`,
       internal: { type: `Foo`, contentDigest: `0` },
-      newField: 1
+      newField: 1,
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -184,7 +184,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Foo2`,
       internal: { type: `Foo`, contentDigest: `0` },
-      numberKey: 2
+      numberKey: 2,
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -201,7 +201,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Foo2`,
       internal: { type: `Foo`, contentDigest: `0` },
-      numberKey: 0.5
+      numberKey: 0.5,
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -215,7 +215,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
-      numberKey: 1
+      numberKey: 1,
     }
     const newSchema = await addNodeAndRebuild(node)
     expect(newSchema.getType(`Bar`)).toBeDefined()
@@ -240,8 +240,8 @@ describe(`build and update individual types`, () => {
       internal: { type: `Foo`, contentDigest: `0` },
       fields: {
         bar: { baz: `baz` },
-        baz: [[{ foo: `1` }, { bar: 5 }], [{ foobar: true }]]
-      }
+        baz: [[{ foo: `1` }, { bar: 5 }], [{ foobar: true }]],
+      },
     }
     const newSchema = await addNodeAndRebuild(node)
     expect(newSchema.getType(`FooFields`)).toBeDefined()
@@ -277,8 +277,8 @@ describe(`build and update individual types`, () => {
       id: `Nested2`,
       internal: { type: `Nested`, contentDigest: `0` },
       nested: {
-        foo: { another: { bar: `baz` } }
-      }
+        foo: { another: { bar: `baz` } },
+      },
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -315,7 +315,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
-      related___NODE: `Foo1`
+      related___NODE: `Foo1`,
     }
     const newSchema = await addNodeAndRebuild(node)
     const print = typePrinter(newSchema)
@@ -337,7 +337,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Foo2`,
       internal: { type: `Foo`, contentDigest: `0` },
-      related___NODE: `Foo1`
+      related___NODE: `Foo1`,
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -355,7 +355,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
-      related___NODE: [`Foo1`]
+      related___NODE: [`Foo1`],
     }
     let newSchema = await addNodeAndRebuild(node)
     let field = newSchema.getType(`Bar`).getFields().related
@@ -364,7 +364,7 @@ describe(`build and update individual types`, () => {
     const node2 = {
       id: `Bar2`,
       internal: { type: `Bar`, contentDigest: `0` },
-      related___NODE: [`Nested1`]
+      related___NODE: [`Nested1`],
     }
     newSchema = await addNodeAndRebuild(node2)
     field = newSchema.getType(`Bar`).getFields().related
@@ -379,7 +379,7 @@ describe(`build and update individual types`, () => {
     const node = {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
-      related___NODE: `Foo1`
+      related___NODE: `Foo1`,
     }
     let newSchema = await addNodeAndRebuild(node)
     let field = newSchema.getType(`Bar`).getFields().related
@@ -388,7 +388,7 @@ describe(`build and update individual types`, () => {
     const node2 = {
       id: `Bar2`,
       internal: { type: `Bar`, contentDigest: `0` },
-      related___NODE: `Nested1`
+      related___NODE: `Nested1`,
     }
     newSchema = await addNodeAndRebuild(node2)
     field = newSchema.getType(`Bar`).getFields().related
@@ -404,8 +404,8 @@ describe(`build and update individual types`, () => {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
       fields: {
-        field1: `test`
-      }
+        field1: `test`,
+      },
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -418,7 +418,7 @@ describe(`build and update individual types`, () => {
       `BarFieldsEnum`,
       `BarConnection`,
       `BarEdge`,
-      `BarGroupConnection`
+      `BarGroupConnection`,
     ]
 
     const types = Object.keys(newSchema.getTypeMap()).sort()
@@ -488,14 +488,14 @@ describe(`build and update individual types`, () => {
       id: `Nested2`,
       internal: { type: `Nested`, contentDigest: `0` },
       nested: {
-        foo: { baz: { deep: false } }
-      }
+        foo: { baz: { deep: false } },
+      },
     }
     const newSchema = await addNodeAndRebuild(node)
 
     const expectedNewTypes = [
       `NestedNestedFooBaz`,
-      `NestedNestedFooBazFilterInput`
+      `NestedNestedFooBazFilterInput`,
     ]
 
     const types = Object.keys(newSchema.getTypeMap()).sort()
@@ -522,14 +522,14 @@ describe(`build and update individual types`, () => {
         id: `Bar1`,
         internal: { type: `Bar`, contentDigest: `0` },
         parent: `Foo1`,
-        value: 0
+        value: 0,
       },
       {
         id: `Baz1`,
         internal: { type: `Baz`, contentDigest: `0` },
         parent: `Foo1`,
-        value: 0
-      }
+        value: 0,
+      },
     ]
     const parent = createNodes()[0]
     nodes.forEach(node => {
@@ -555,14 +555,14 @@ describe(`build and update individual types`, () => {
         id: `Bar1`,
         internal: { type: `Bar`, contentDigest: `0` },
         parent: `Foo1`,
-        value: 0
+        value: 0,
       },
       {
         id: `Bar2`,
         internal: { type: `Bar`, contentDigest: `0` },
         parent: `Foo1`,
-        value: 0
-      }
+        value: 0,
+      },
     ]
     const parent = createNodes()[0]
     nodes.forEach(node => {
@@ -585,7 +585,7 @@ describe(`build and update individual types`, () => {
     addNodeField({
       node,
       name: `added`,
-      value: `foo`
+      value: `foo`,
     })
 
     const newSchema = await rebuildTestSchema()
@@ -613,7 +613,7 @@ describe(`build and update individual types`, () => {
     addNodeField({
       node,
       name: `added`,
-      value: [[{ nested: `str` }, { int: 5 }], [{ bool: true }]]
+      value: [[{ nested: `str` }, { int: 5 }], [{ bool: true }]],
     })
 
     const newSchema = await rebuildTestSchema()
@@ -623,7 +623,7 @@ describe(`build and update individual types`, () => {
       `NestedFieldsFilterInput`,
       `NestedFieldsAdded`,
       `NestedFieldsAddedFilterInput`,
-      `NestedFieldsAddedFilterListInput`
+      `NestedFieldsAddedFilterListInput`,
     ]
 
     expect(types).toEqual(initialTypes.concat(expectedNewTypes).sort())
@@ -665,7 +665,7 @@ describe(`build and update individual types`, () => {
       id: `Bar1`,
       internal: { type: `Bar`, contentDigest: `0` },
       children: [],
-      bar: 5
+      bar: 5,
     })
     expect(schema.getType(`Foo`)).toBeDefined()
     expect(schema.getType(`Bar`)).toBeDefined()
@@ -682,14 +682,14 @@ describe(`build and update individual types`, () => {
         id: `Foo2`,
         internal: { type: `Foo`, contentDigest: `0` },
         children: [],
-        newKey1: `str`
+        newKey1: `str`,
       },
       {
         id: `Foo3`,
         internal: { type: `Foo`, contentDigest: `0` },
         children: [],
-        newKey2: `str`
-      }
+        newKey2: `str`,
+      },
     ])
     let fooFields = Object.keys(schema.getType(`Foo`).getFields())
     expect(fooFields).toEqual(initialFooFields.concat([`newKey1`, `newKey2`]))
@@ -709,9 +709,9 @@ describe(`build and update individual types`, () => {
       nested: {
         date: `2019-09-09`,
         nested: {
-          date: `2019-09-09`
-        }
-      }
+          date: `2019-09-09`,
+        },
+      },
     }
     const newSchema = await addNodeAndRebuild(node)
 
@@ -732,8 +732,8 @@ describe(`build and update individual types`, () => {
         internal: { type: `Nested`, contentDigest: `0` },
         children: [],
         nested: {
-          foo: { bar: { baz: `string`, test: `test` } }
-        }
+          foo: { bar: { baz: `string`, test: `test` } },
+        },
       }
     }
     addNode(child())
@@ -760,7 +760,7 @@ describe(`build and update individual types`, () => {
       id: `Foo1`,
       internal: { type: `Foo`, contentDigest: `0` },
       children: [],
-      test: `test`
+      test: `test`,
     }
     const oldNode = createNodes()[0]
     updateNode(node, oldNode)
@@ -790,7 +790,7 @@ describe(`build and update individual types`, () => {
         internal: { type: `Foo`, contentDigest: `0` },
         children: [],
         numberKey: `string`,
-        dateKey: { nowItsObject: true }
+        dateKey: { nowItsObject: true },
       }
     }
 
@@ -857,21 +857,21 @@ describe(`rebuilds node types having existing relations`, () => {
           id: `Foo1`,
           internal: { type: `Foo`, contentDigest: `0` },
           children: [],
-          foo: `string`
+          foo: `string`,
         },
         {
           id: `Bar1`,
           internal: { type: `Bar`, contentDigest: `0` },
           children: [],
-          bar: 5
+          bar: 5,
         },
         {
           id: `Baz1`,
           internal: { type: `Baz`, contentDigest: `0` },
           children: [],
           baz: 7,
-          bar___NODE: `Bar1`
-        }
+          bar___NODE: `Bar1`,
+        },
       ].filter(node => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
@@ -896,13 +896,13 @@ describe(`rebuilds node types having existing relations`, () => {
           id: `Foo1`,
           internal: { type: `Foo`, contentDigest: `0` },
           children: [],
-          foo___NODE: `Foo2`
+          foo___NODE: `Foo2`,
         },
         {
           id: `Foo2`,
           internal: { type: `Foo`, contentDigest: `0` },
-          children: []
-        }
+          children: [],
+        },
       ].filter(node => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
@@ -921,14 +921,14 @@ describe(`rebuilds node types having existing relations`, () => {
           id: `Foo1`,
           internal: { type: `Foo`, contentDigest: `0` },
           children: [],
-          bar___NODE: `Bar1`
+          bar___NODE: `Bar1`,
         },
         {
           id: `Bar1`,
           internal: { type: `Bar`, contentDigest: `0` },
           children: [],
-          foo___NODE: `Foo1`
-        }
+          foo___NODE: `Foo1`,
+        },
       ].filter(node => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
@@ -948,20 +948,20 @@ describe(`rebuilds node types having existing relations`, () => {
           id: `Foo1`,
           internal: { type: `Foo`, contentDigest: `0` },
           children: [],
-          bar___NODE: `Bar1`
+          bar___NODE: `Bar1`,
         },
         {
           id: `Bar1`,
           internal: { type: `Bar`, contentDigest: `0` },
           children: [],
-          baz___NODE: `Baz1`
+          baz___NODE: `Baz1`,
         },
         {
           id: `Baz1`,
           internal: { type: `Baz`, contentDigest: `0` },
           children: [],
-          foo___NODE: `Foo1`
-        }
+          foo___NODE: `Foo1`,
+        },
       ].filter(node => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
@@ -1007,22 +1007,22 @@ describe(`compatibility with createTypes`, () => {
         buildObjectType({
           name: `Baz`,
           fields: {
-            baz: `Int!`
+            baz: `Int!`,
           },
           extensions: {
-            infer: true
+            infer: true,
           },
-          interfaces: [`Node`]
+          interfaces: [`Node`],
         }),
         buildObjectType({
           name: `BarBaz`,
           fields: {
-            barBaz: `String`
+            barBaz: `String`,
           },
           extensions: {
-            infer: false
-          }
-        })
+            infer: false,
+          },
+        }),
       ])
     )
     await build({})
@@ -1039,17 +1039,17 @@ describe(`compatibility with createTypes`, () => {
         fields: {
           bar: {
             bar: 1,
-            foo: `str`
-          }
-        }
+            foo: `str`,
+          },
+        },
       },
       {
         id: `Baz1`,
         internal: { type: `Baz`, contentDigest: `0` },
         children: [],
         baz: `foo`,
-        bar: `bar`
-      }
+        bar: `bar`,
+      },
     ])
 
     const print = typePrinter(newSchema)
@@ -1100,9 +1100,9 @@ describe(`compatibility with createTypes`, () => {
         fields: {
           baz: {
             foo: 1,
-            bar: `str`
-          }
-        }
+            bar: `str`,
+          },
+        },
       },
       {
         id: `Bar1`,
@@ -1110,15 +1110,15 @@ describe(`compatibility with createTypes`, () => {
         children: [],
         foo: 5,
         bar: 5,
-        baz: `str`
+        baz: `str`,
       },
       {
         id: `BarBaz1`,
         internal: { type: `BarBaz`, contentDigest: `0` },
         children: [],
         baz: `foo`,
-        bar: `bar`
-      }
+        bar: `bar`,
+      },
     ])
 
     const print = typePrinter(newSchema)
@@ -1161,8 +1161,8 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       id: `Foo1`,
       internal: { type: `Foo`, contentDigest: `0` },
       children: [],
-      field: `5`
-    }
+      field: `5`,
+    },
   ]
 
   beforeEach(async () => {
@@ -1177,18 +1177,18 @@ describe(`Compatibility with addThirdPartySchema`, () => {
           args: { fooArg: { type: `String` } },
           resolve(value, args) {
             return {
-              field: args.fooArg
+              field: args.fooArg,
             }
-          }
+          },
         },
         externalFoo: {
           args: { injectedFooArg: { type: `String` } },
           resolve(value, args, context, info) {
             const original = info.originalResolver(value, args, context, info)
             return args.injectedFooArg + `(${original})`
-          }
-        }
-      }
+          },
+        },
+      },
     })
     createNodes().forEach(addNode)
     await build({})
@@ -1224,18 +1224,18 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       schema: newSchema,
       source: query,
       rootValue: {},
-      contextValue: {}
+      contextValue: {},
     })
     expect(result).toEqual({
       data: {
         external: {
           externalFoo: `wrapDefaultResolver(Query.external.ExternalType.externalFoo.defaultResolver)`,
           foo: {
-            field: `overriddenField`
-          }
+            field: `overriddenField`,
+          },
         },
-        external2: `Query.external2`
-      }
+        external2: `Query.external2`,
+      },
     })
   })
 
@@ -1246,9 +1246,9 @@ describe(`Compatibility with addThirdPartySchema`, () => {
           resolve(value, args, context, info) {
             const original = info.originalResolver(value, args, context, info)
             return `newResolver(${original})`
-          }
-        }
-      }
+          },
+        },
+      },
     })
 
     const newSchema = await rebuildTestSchema()
@@ -1271,15 +1271,15 @@ describe(`Compatibility with addThirdPartySchema`, () => {
       schema: newSchema,
       source: query,
       rootValue: {},
-      contextValue: {}
+      contextValue: {},
     })
     expect(result).toEqual({
       data: {
         external: {
-          externalFoo: `newResolver(Query.external.ExternalType.externalFoo.defaultResolver)`
+          externalFoo: `newResolver(Query.external.ExternalType.externalFoo.defaultResolver)`,
         },
-        external2: `Query.external2`
-      }
+        external2: `Query.external2`,
+      },
     })
   })
 })

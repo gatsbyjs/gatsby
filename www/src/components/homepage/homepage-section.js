@@ -85,7 +85,7 @@ const HomepageSection = ({
   title,
   introduction,
   links,
-  className
+  className,
 }) => (
   <section
     sx={{
@@ -98,12 +98,12 @@ const HomepageSection = ({
         my: `-1px`,
         mx: 0,
         py: 5,
-        px: `5%`
+        px: `5%`,
       },
       [mediaQueries.xxl]: {
         py: 7,
-        px: `8%`
-      }
+        px: `8%`,
+      },
     }}
     className={className}
   >
@@ -149,7 +149,7 @@ HomepageSection.propTypes = {
   title: PropTypes.string,
   introduction: PropTypes.string,
   links: PropTypes.array,
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 export default HomepageSection

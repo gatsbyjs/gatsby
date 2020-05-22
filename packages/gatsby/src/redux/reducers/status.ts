@@ -3,7 +3,7 @@ import { ActionsUnion, IGatsbyState } from "../types"
 
 const defaultState: IGatsbyState["status"] = {
   PLUGINS_HASH: ``,
-  plugins: {}
+  plugins: {},
 }
 
 export const statusReducer = (
@@ -16,7 +16,7 @@ export const statusReducer = (
     case `UPDATE_PLUGINS_HASH`:
       return {
         ...state,
-        PLUGINS_HASH: action.payload
+        PLUGINS_HASH: action.payload,
       }
     case `SET_PLUGIN_STATUS`:
       if (!action.plugin || !action.plugin?.name) {
@@ -39,8 +39,8 @@ export const statusReducer = (
             {},
             state.plugins[action.plugin.name],
             action.payload
-          )
-        }
+          ),
+        },
       }
     default:
       return state

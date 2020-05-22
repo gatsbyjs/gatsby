@@ -19,15 +19,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
-    }
+    },
   }
 })
 
@@ -43,7 +43,7 @@ const buildTestSchema = async nodes => {
     nodeStore,
     types: [],
     thirdPartySchemas: [],
-    inferenceMetadata: store.getState().inferenceMetadata
+    inferenceMetadata: store.getState().inferenceMetadata,
   })
   return { schema, schemaComposer }
 }
@@ -54,8 +54,8 @@ const queryResult = async (nodes, query) => {
       schema,
       nodeStore,
       createPageDependency,
-      schemaComposer
-    })
+      schemaComposer,
+    }),
   })
 }
 
@@ -67,8 +67,8 @@ describe(`GraphQL Input args`, () => {
         internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: null,
-        bar: `baz`
-      }
+        bar: `baz`,
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -93,8 +93,8 @@ describe(`GraphQL Input args`, () => {
         internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: {},
-        bar: `baz`
-      }
+        bar: `baz`,
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -119,8 +119,8 @@ describe(`GraphQL Input args`, () => {
         internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: [],
-        bar: `baz`
-      }
+        bar: `baz`,
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -145,8 +145,8 @@ describe(`GraphQL Input args`, () => {
         internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         foo: [undefined, null, null],
-        bar: `baz`
-      }
+        bar: `baz`,
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -171,13 +171,13 @@ describe(`GraphQL Input args`, () => {
         internal: { type: `Bar`, contentDigest: `0` },
         children: [],
         linked___NODE: `baz`,
-        foo: `bar`
+        foo: `bar`,
       },
       {
         id: `baz`,
         internal: { type: `Foo`, contentDigest: `0` },
-        children: []
-      }
+        children: [],
+      },
     ]
     const result = await queryResult(
       nodes,
@@ -211,9 +211,9 @@ describe(`GraphQL Input args`, () => {
         foo: {
           parent: `parent`,
           children: [`bar`],
-          "foo-moo": `tasty`
-        }
-      }
+          "foo-moo": `tasty`,
+        },
+      },
     ]
     const { schema } = await buildTestSchema(nodes)
     const fields = schema.getType(`TestFilterInput`).getFields()
@@ -233,8 +233,8 @@ describe(`GraphQL Input args`, () => {
         children: [],
         int32: 42,
         float: 2.5,
-        longint: 3000000000
-      }
+        longint: 3000000000,
+      },
     ]
     const { schema } = await buildTestSchema(nodes)
     const fields = schema.getType(`TestFilterInput`).getFields()
