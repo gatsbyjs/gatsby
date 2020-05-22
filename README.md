@@ -163,6 +163,19 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
 
+## Resources
+
+- [GatsbyJS.org](https://www.gatsbyjs.org/)
+- [Gatsby Documentation](https://gatsbyjs.org/docs/)
+- [Gatsby Tutorials](https://gatsbyjs.org/tutorial/)
+- [Gatsby Project Showcase](https://www.gatsbyjs.org/showcase/)
+- [Gatsby Starters](https://www.gatsbyjs.org/starters/)
+- [Gatsby Twitter](https://twitter.com/gatsbyjs)
+- [Gatsby YouTube](https://www.youtube.com/channel/UCjnp770qk7ujOq8Q9wiC82w)
+- [Gatsby Discord](https://gatsby.dev/discord)
+- [Gatsby Spectrum](https://spectrum.chat/gatsby-js)
+
+
 ## :memo: License
 
 Licensed under the [MIT License](./LICENSE).
