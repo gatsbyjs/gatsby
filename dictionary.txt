@@ -4,8 +4,12 @@
 .htaccess
 .html
 .jpg
+.js
 .md
+.mdx
 .png
+.scss
+.tsx
 .yaml
 .yml
 0Auth
@@ -130,9 +134,11 @@ Albright
 Alexa
 Algolia
 Algolia's
+Alhough
 Allanson
 Aloglia
 Amberley
+Amberly
 Ambras
 Amongst
 Amplify2
@@ -141,6 +147,7 @@ Anand
 Andreessen
 AniLink
 AniLink's
+Api
 AppSync
 Applingua
 Appveyor
@@ -367,6 +374,7 @@ Dev
 Dev.
 DevOps
 DevTools
+Devops
 Devrel
 Dgraph
 Dierks
@@ -426,6 +434,7 @@ Evoq
 Ex-PayPal-ers
 ExitWP
 Expedia
+F12
 F8
 FOMO
 FOUC
@@ -492,6 +501,7 @@ Gatsby-Contentful-Netlify
 Gatsby-Source-Filesystem
 Gatsby-ers
 Gatsby-ites
+Gatsby-source-cloudinary
 Gatsby-transformer-cloudinary
 Gatsby.js
 GatsbyJS
@@ -511,6 +521,7 @@ GitLab's
 GitX
 Gitalk
 Github
+Gitlab
 Gitpod
 Gitter
 Gitub
@@ -540,12 +551,14 @@ GraphQLArgs
 GraphQLInputObjectType
 GraphQLObjectType
 GraphQLObjectTypes
+GraphQl
 Graph_i_QL
 GraphiQL
 GraphiQL's
 GraphiQl
 Graphiql
 Graphql
+Graphql-js
 Greif
 GroupConnection
 Gruber
@@ -727,6 +740,7 @@ MDN
 MDN's
 MDX
 MDX-embed
+MDXProvider
 MERN
 METROGLAM
 MQL's
@@ -803,6 +817,7 @@ Netlify
 Netlify's
 NetlifyCMS
 NewThing
+NewsletterCTA
 NextJS
 Nginx
 Ngo's
@@ -912,6 +927,7 @@ Prisma's
 Prismic
 Prismic's
 Prismic-Powered
+PrivateRoute
 ProPublica
 ProPublica's
 Probst
@@ -968,6 +984,7 @@ Reddit
 Redux
 Reduxjs
 ReferenceError
+RenderProp
 Repl
 Repo
 Resolvers
@@ -1045,6 +1062,7 @@ Siteleaf
 Sitesi
 Sivers
 SkipNav
+Sku
 Slade
 Smutz
 SnipCard
@@ -1063,6 +1081,7 @@ Src
 StackPath
 Stallings
 StaticGen
+StaticQueries
 StaticQuery
 StaticQuery's
 Statickit
@@ -1077,6 +1096,7 @@ StriVectin's
 Strivectin
 Strivectin's
 StubList
+StyleGuidist
 StyledComponent
 Styleguidist
 Stylesheets
@@ -1133,6 +1153,7 @@ TruDesigns
 Tumblbug
 Tumblr
 Twilio
+Typechecking
 UI
 UI's
 UI-based
@@ -1152,6 +1173,8 @@ Uloth
 Ultra-schnellen
 Unbundling
 Unconference
+Unist
+Unist's
 Unsplash
 Unvisited
 Url
@@ -1301,6 +1324,7 @@ aspirational
 assetPrefix
 assetsByChunkName
 async
+async-requires
 atomiks
 auth
 autobuilds
@@ -1315,6 +1339,7 @@ axe
 axe-core
 axios
 babel-preset-gatsby
+babylon-traverse
 backend
 backends
 backticks
@@ -1326,6 +1351,7 @@ barebones
 base64
 baseGithub
 baseUrl
+basepath
 batchGet
 behaviour
 behaviours
@@ -1361,6 +1387,7 @@ buildwithgatsby
 bulma
 bundler
 buzzfeed-esque
+cache-dir
 cafile
 café
 camelCase
@@ -1408,6 +1435,7 @@ compile-to-js
 componentChunkName
 componentChunkNames
 componentDidMount
+componentPath
 componentization
 componentized
 composability
@@ -1448,6 +1476,7 @@ createPage
 createPageDependency
 createPages
 createPagesStatefully
+createParentChildLink
 createRedirect
 createRemoteFileNode
 createResolvers
@@ -1474,6 +1503,7 @@ d3
 da
 dangerouslySetInnerHTML
 data-centric
+data.json
 dataPath
 dataPaths
 dataPaths.
@@ -1515,6 +1545,7 @@ discussable
 disqus
 distro
 distros
+dnf
 doopoll
 dotenv
 doubleBind
@@ -1539,10 +1570,13 @@ emotion-js
 enablement
 eng
 english
+enqueuedDirtyActions
 enqueueing
+entrypoint
 enum
 enums
 env
+errror
 erstellen
 eslint-jsx-plugin-a11y
 eslint-plugin-jsx-a11y
@@ -1568,6 +1602,7 @@ favourite
 favourites
 feat_img
 fetchPageResourcesMap
+fieldName
 fieldValue
 fieldname
 filepath
@@ -1577,7 +1612,9 @@ filesystem-autocomplete
 filesystem-based
 filesystem-explorer-options
 filesystem-query
+findDirtyIds
 findIdsWithoutDataDependencies
+findRootNodeAncestor
 firebase
 firehose
 firewalled
@@ -1719,6 +1756,7 @@ getInitialProps
 getNodeAndSavePathDependency
 getResourcesForPathname
 gh-pages
+gif
 github
 glamor
 globals
@@ -1766,6 +1804,7 @@ headComponents.
 headlessly
 headmatter
 headmouse
+headstart
 heroku
 heroku-buildpack-static
 hinzufügen
@@ -1806,6 +1845,7 @@ infrastructure-centric
 ing
 init
 initialSvg
+initialise
 inkteam
 inlined
 inlines
@@ -1817,12 +1857,14 @@ integrations
 intellisense
 internalComponentName
 interwebs
+ip
 isEven
 isPlaying
 ish
 iteratively
 jQuery
 jQuery-like
+jaeger-client
 jamstacked
 jank
 javascript
@@ -1885,11 +1927,13 @@ mailgun
 mailto
 marcy
 markdown-autocomplete
+markdownRemark
 markdownlint
 matchPath
 matchPaths
 matchers
 matchpaths
+materialisation
 maximise
 maximising
 mccrodp
@@ -1945,11 +1989,13 @@ nav
 navbar
 navbars
 navigations
+netlify
 netlify-cli
 netlifyFunctions
 neverending
 nextein
 no-brainer
+nodeID
 nodeId
 nodemailer
 nodesPromise
@@ -1968,12 +2014,14 @@ nullable
 nutzen
 nvm
 nvm's
+oAuth
 oEmbed
 oauth
 observability
 ok
 ol'
 old2
+omitGoogleFont
 onClientEntry
 onCreateNode
 onCreatePage
@@ -1986,8 +2034,10 @@ onRouteChange
 onRouteUpdate
 onboarding
 onboards
+onwards
 opentracing
 operandi
+optimisation
 optimisations
 optimise
 optimised
@@ -1999,7 +2049,9 @@ overengineering
 overridable
 oversized
 package.json
+pacman
 pageContext
+pageQuery
 pagerduty
 pageviews
 paintDrip
@@ -2011,6 +2063,7 @@ parseable
 parsers
 pathPrefix
 pathPrefix.
+pathToConfigModule
 pathname
 pathnames
 paywalled
@@ -2037,6 +2090,9 @@ polyfill
 polyfilling
 polyfills
 popNodeQueries
+postcss
+postcss-loader
+postprocessing
 powershell
 pragma
 pragmas
@@ -2114,6 +2170,7 @@ pseudo-gamifying
 publicURL
 pullquotes
 pwa
+query-queue.js
 queryable
 querying-data-with-graphql
 quickstart
@@ -2157,10 +2214,13 @@ reimplementing
 reinstalls
 reinvoked
 relativePath
+remoteImages
 renamings
+renderProp
 renderer
 renderers
 rendr
+replaceComponentQuery
 replatform
 replatforms
 repo
@@ -2187,8 +2247,12 @@ roadmaps
 rockstar
 rollout
 rollouts
+rootNodeMap
 roundtrip
 rsync
+runInitialQuerys
+runQueries
+runQueriesForPathnames
 runtimes
 résumé
 s3.
@@ -2202,6 +2266,7 @@ sci-fi
 scss
 scss-file
 searchability
+searchbar
 semver
 serialised
 serializer
@@ -2215,6 +2280,7 @@ setState
 setTimeout
 sexualized
 shadowable
+sharable
 shareability
 shared-ui
 shortcode
@@ -2227,6 +2293,7 @@ siftifyArgs
 signup
 signups
 simple-auth
+siteMedata
 siteMetadata
 siteName
 siteUrl
@@ -2248,8 +2315,10 @@ sqlite
 sqlite3
 src
 ssh-ing
+ssl
 ssr
 stabilise
+startSpan
 stateful
 stormfront
 stringified
@@ -2276,6 +2345,7 @@ subreddit
 subreddits
 subscribable
 subtasks
+sucessfully
 summarise
 superfast
 superpowered
@@ -2309,6 +2379,7 @@ touchpoint
 touchpoints
 traceID
 traceId
+trackInlineObjectsinRootNode
 tradeoff
 tradeoffs
 trainings
@@ -2328,6 +2399,8 @@ tweetstorm
 typeBuilder
 typeName.
 typeOwners
+typecheck
+typechecking
 un-transpiled
 uncheck
 uncollapse
@@ -2336,7 +2409,6 @@ und
 underexplored
 underprovide
 unist
-unist's
 unist-util-visit
 unlabelled
 unmount
@@ -2355,14 +2427,17 @@ upstreams
 uptime
 upvotes
 url
+urlPath
 urls
 useEffect
 useState
 useStaticQuery
+usecase
 usecases
 user-impactful
 userland
 using-gatsby-source-graphql
+utils
 v0
 v1
 v1's
@@ -2377,6 +2452,7 @@ v7
 v8
 validator
 ve
+vehiclePage
 viewport
 viewport.
 visualise
@@ -2418,6 +2494,7 @@ workspaces
 wp-graphql
 wp-graphql-woocommerce
 wrapPageElement
+wrapRootElement
 writability
 writeup
 www
@@ -2430,6 +2507,9 @@ yay
 yet-another-SaaS
 yourSite
 youʼre
+zipkin
+zipkin-javascript-opentracing
+zipkin-transport-http
 zsh
 zu
 ½
@@ -2450,3 +2530,4 @@ zu
 створення
 створюємо
 інструмент
+️
