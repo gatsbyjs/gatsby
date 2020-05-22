@@ -19,7 +19,7 @@ function isItemInActiveTree(item, activeItem, activeItemParents) {
 
 function getOpenItemHash(itemList, activeItem, activeItemParents) {
   let result = {}
-  for (let item of itemList) {
+  for (const item of itemList) {
     if (item.items) {
       result[item.title] = isItemInActiveTree(
         item,
@@ -103,7 +103,7 @@ export default withI18n()(function Sidebar({
   const getItemState = React.useCallback(
     item => {
       return {
-        isExpanded: openSectionHash[item.title] || disableAccordions,
+        isExpanded: openSectionHash[item.title] || disableAccordions || false,
         isActive: item.title === activeItem.title,
         inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
       }
