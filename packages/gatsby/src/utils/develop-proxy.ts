@@ -1,6 +1,5 @@
 import { createServer } from "http"
 import httpProxy from "http-proxy"
-import fs from "fs-extra"
 import { getServices } from "gatsby-core-utils/dist/service-lock"
 import restartingScreen from "./restarting-screen"
 
@@ -24,6 +23,7 @@ export const startDevelopProxy = (input: {
     changeOrigin: true,
     preserveHeaderKeyCase: true,
     autoRewrite: true,
+    ws: true,
   })
 
   // Noop on proxy errors, as this throws a bunch of "Socket hang up"
@@ -40,13 +40,6 @@ export const startDevelopProxy = (input: {
       return
     }
 
-    if (req.url === `/socket.io/socket.io.js`) {
-      res.end(
-        fs.readFileSync(require.resolve(`socket.io-client/dist/socket.io.js`))
-      )
-      return
-    }
-
     if (
       shouldServeRestartingScreen ||
       req.url === `/___debug-restarting-screen`
@@ -56,6 +49,10 @@ export const startDevelopProxy = (input: {
     }
 
     proxy.web(req, res)
+  })
+
+  server.on(`upgrade`, function (req, socket, head) {
+    proxy.ws(req, socket, head)
   })
 
   server.listen(input.proxyPort)
