@@ -1,5 +1,6 @@
 import { createServer } from "http"
 import httpProxy from "http-proxy"
+import fs from "fs-extra"
 import { getServices } from "gatsby-core-utils/dist/service-lock"
 import restartingScreen from "./restarting-screen"
 
@@ -37,6 +38,13 @@ export const startDevelopProxy = (input: {
         res.setHeader(`Content-Type`, `application/json`)
         res.end(JSON.stringify(services))
       })
+      return
+    }
+
+    if (req.url === `/socket.io/socket.io.js`) {
+      res.end(
+        fs.readFileSync(require.resolve(`socket.io-client/dist/socket.io.js`))
+      )
       return
     }
 
