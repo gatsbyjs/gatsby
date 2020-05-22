@@ -2,7 +2,7 @@
 title: It’s Gatsby’s 5th Birthday 🎂 (and everyone’s invited!)
 date: 2020-05-22
 author: Kyle Mathews
-excerpt: “Five years ago today, a nascent Gatsby emerged in the form of Issue /#1 on the brand new Gatsbyjs GitHub repo. Here are some thoughts about where we began and how Gatsby has evolved during this most interesting demi-decade.”
+excerpt: “Five years ago today, a nascent Gatsby emerged in the form of Issue 1 on the brand new Gatsbyjs GitHub repo. Here are some thoughts about where we began and how Gatsby has evolved during this most interesting demi-decade.”
 tags:
   - community
   - gatsby-cloud
