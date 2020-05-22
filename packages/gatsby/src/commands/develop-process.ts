@@ -44,7 +44,6 @@ import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { rebuild as rebuildSchema } from "../schema"
 import { websocketManager } from "../utils/websocket-manager"
-import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
 import { initTracer } from "../utils/tracer"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -65,9 +64,6 @@ import {
 } from "../utils/feedback"
 
 import { Stage, IProgram } from "./types"
-
-// checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 // const isInteractive = process.stdout.isTTY
 
@@ -428,29 +424,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     }
 
     throw e
-  }
-
-  // Check if https is enabled, then create or get SSL cert.
-  // Certs are named 'devcert' and issued to the host.
-  if (program.https) {
-    const sslHost =
-      program.host === `0.0.0.0` || program.host === `::`
-        ? `localhost`
-        : program.host
-
-    if (REGEX_IP.test(sslHost)) {
-      report.panic(
-        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
-      )
-    }
-
-    program.ssl = await getSslCert({
-      name: sslHost,
-      caFile: program[`ca-file`],
-      certFile: program[`cert-file`],
-      keyFile: program[`key-file`],
-      directory: program.directory,
-    })
   }
 
   // Start bootstrap process.
