@@ -1,10 +1,1 @@
-<svg class="svg-icon-docs" viewBox="0 0 32 32" focusable="false">
-  <path class="svg-stroke svg-stroke-dark svg-fill-accent svg-fill-transparent" d="M6 10c0-1.6 1.4-3 3-3h3v5H6v-2z"/>
-  <path d="M9 7c1.6 0 3 1.4 3 3v12c0 1.6 1.3 3 3 3s3-1.4 3-3h6V10c0-1.6-1.4-3-3-3H9z" class="svg-fill-background"/>
-  <path d="M9 7h12c1.6 0 3 1.4 3 3v12" fill="transparent" class="svg-stroke svg-stroke-dark"/>
-  <path d="M15 25c-1.7 0-3-1.4-3-3V10c0-1.6-1.4-3-3-3" fill="transparent" class="svg-stroke svg-stroke-dark"/>
-  <path class="svg-stroke svg-stroke-dark svg-fill-light" d="M15 25h9c1.6 0 3-1.4 3-3v-1h-9v1c0 1.6-1.4 3-3 3z"/>
-  <circle cx="20.2" cy="11.6" r="1" class="svg-fill-dark"/>
-  <circle cx="16" cy="11.6" r="1" class="svg-fill-dark"/>
-  <path d="M21.2 14.5v1.3c0 .6-.3 1.1-.8 1.6s-1.3.9-2.2.9c-.9 0-1.7-.4-2.2-.9-.5-.5-.8-1-.8-1.6v-1.3h6z" class="svg-fill-dark"/>
-</svg>
+<svg class="svg-icon-docs" focusable="false" viewBox="0 0 32 32"><path d="M6 10c0-1.6 1.4-3 3-3h3v5H6v-2z" class="svg-stroke svg-stroke-dark svg-fill-accent svg-fill-transparent"/><path d="M9 7c1.6 0 3 1.4 3 3v12c0 1.6 1.3 3 3 3s3-1.4 3-3h6V10c0-1.6-1.4-3-3-3H9z" class="svg-fill-background"/><path fill="transparent" d="M9 7h12c1.6 0 3 1.4 3 3v12" class="svg-stroke svg-stroke-dark"/><path fill="transparent" d="M15 25c-1.7 0-3-1.4-3-3V10c0-1.6-1.4-3-3-3" class="svg-stroke svg-stroke-dark"/><path d="M15 25h9c1.6 0 3-1.4 3-3v-1h-9v1c0 1.6-1.4 3-3 3z" class="svg-stroke svg-stroke-dark svg-fill-light"/><circle cx="20.2" cy="11.6" r="1" class="svg-fill-dark"/><circle cx="16" cy="11.6" r="1" class="svg-fill-dark"/><path d="M21.2 14.5v1.3c0 .6-.3 1.1-.8 1.6s-1.3.9-2.2.9c-.9 0-1.7-.4-2.2-.9-.5-.5-.8-1-.8-1.6v-1.3h6z" class="svg-fill-dark"/></svg>

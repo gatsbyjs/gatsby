@@ -1,18 +1,1 @@
-<svg width="38" height="42" viewBox="0 0 38 42" xmlns="http://www.w3.org/2000/svg" focusable="false">
-  <g fill="none" fill-rule="evenodd">
-    <path d="M19 39.124l16-8.2v-19.85L19 2.877l-16 8.2v19.85l16 8.198zM5 29.702V12.298l14-7.174 14 7.174v17.404l-14 7.174-14-7.174z" fill="#639"/>
-    <path d="M18.143 4.486l-15 25A1 1 0 004 31h30a1 1 0 00.857-1.514l-15-25a.999.999 0 00-1.714 0zM32.233 29H5.767L19 6.944 32.234 29z" fill="#639"/>
-    <g transform="translate(15)" fill="#ffb238">
-      <circle cx="4" cy="4" r="4"/>
-      <circle cx="4" cy="38" r="4"/>
-    </g>
-    <g transform="rotate(60 11.5 33.99)" fill="#ffb238">
-      <circle cx="4" cy="4" r="4"/>
-      <circle cx="4" cy="38" r="4"/>
-    </g>
-    <g transform="rotate(120 11.5 25.33)" fill="#ffb238">
-      <circle cx="4" cy="4" r="4"/>
-      <circle cx="4" cy="38" r="4"/>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="42" focusable="false" viewBox="0 0 38 42"><g fill="none" fill-rule="evenodd"><path fill="#639" d="M19 39.124l16-8.2v-19.85L19 2.877l-16 8.2v19.85l16 8.198zM5 29.702V12.298l14-7.174 14 7.174v17.404l-14 7.174-14-7.174z"/><path fill="#639" d="M18.143 4.486l-15 25A1 1 0 004 31h30a1 1 0 00.857-1.514l-15-25a.999.999 0 00-1.714 0zM32.233 29H5.767L19 6.944 32.234 29z"/><g fill="#ffb238" transform="translate(15)"><circle cx="4" cy="4" r="4"/><circle cx="4" cy="38" r="4"/></g><g fill="#ffb238" transform="rotate(60 11.5 33.99)"><circle cx="4" cy="4" r="4"/><circle cx="4" cy="38" r="4"/></g><g fill="#ffb238" transform="rotate(120 11.5 25.33)"><circle cx="4" cy="4" r="4"/><circle cx="4" cy="38" r="4"/></g></g></svg>
