@@ -256,3 +256,5 @@ const Navigation = ({ pathname }) => {
     </header>
   )
 }
+
+export default Navigation
