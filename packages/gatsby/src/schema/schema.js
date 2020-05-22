@@ -26,8 +26,8 @@ const { addInferredType, addInferredTypes } = require(`./infer`)
 const {
   findOne,
   findManyPaginated,
-  tracingResolver,
-  defaultTracingResolver,
+  wrappingResolver,
+  defaultResolver,
 } = require(`./resolvers`)
 const {
   processFieldExtensions,
@@ -856,8 +856,8 @@ function attachTracingResolver({ schemaComposer }) {
         const field = typeComposer.getField(fieldName)
         typeComposer.extendField(fieldName, {
           resolve: field.resolve
-            ? tracingResolver(field.resolve)
-            : defaultTracingResolver,
+            ? wrappingResolver(field.resolve)
+            : defaultResolver,
         })
       })
     }

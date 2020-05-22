@@ -85,13 +85,13 @@ const SocialNavItem = ({ href, title, children }) => (
 )
 
 const navItems = [
-  { id: "docs", text: t`Docs` },
-  { id: "tutorial", text: t`Tutorial` },
-  { id: "plugins", text: t`Plugins` },
-  { id: "features", text: t`Features` },
-  { id: "blog", text: t`Blog` },
-  { id: "showcase", text: t`Showcase` },
-  { id: "contributing", text: t`Contributing` },
+  { id: `docs`, text: t`Docs` },
+  { id: `tutorial`, text: t`Tutorial` },
+  { id: `plugins`, text: t`Plugins` },
+  { id: `features`, text: t`Features` },
+  { id: `blog`, text: t`Blog` },
+  { id: `showcase`, text: t`Showcase` },
+  { id: `contributing`, text: t`Contributing` },
 ]
 
 const Navigation = ({ pathname, i18n }) => {

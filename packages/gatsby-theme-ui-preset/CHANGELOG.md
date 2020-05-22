@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.39...gatsby-theme-ui-preset@0.0.40) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.38...gatsby-theme-ui-preset@0.0.39) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.37...gatsby-theme-ui-preset@0.0.38) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.36...gatsby-theme-ui-preset@0.0.37) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.35...gatsby-theme-ui-preset@0.0.36) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.34...gatsby-theme-ui-preset@0.0.35) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.33...gatsby-theme-ui-preset@0.0.34) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.32...gatsby-theme-ui-preset@0.0.33) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.31...gatsby-theme-ui-preset@0.0.32) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.30...gatsby-theme-ui-preset@0.0.31) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.29...gatsby-theme-ui-preset@0.0.30) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.28...gatsby-theme-ui-preset@0.0.29) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.27...gatsby-theme-ui-preset@0.0.28) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.26...gatsby-theme-ui-preset@0.0.27) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.25...gatsby-theme-ui-preset@0.0.26) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.24...gatsby-theme-ui-preset@0.0.25) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.23...gatsby-theme-ui-preset@0.0.24) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.22...gatsby-theme-ui-preset@0.0.23) (2020-05-15)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.21...gatsby-theme-ui-preset@0.0.22) (2020-05-15)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.20...gatsby-theme-ui-preset@0.0.21) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.19...gatsby-theme-ui-preset@0.0.20) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
+## [0.0.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.18...gatsby-theme-ui-preset@0.0.19) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-theme-ui-preset
+
 ## [0.0.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.17...gatsby-theme-ui-preset@0.0.18) (2020-05-13)
 
 **Note:** Version bump only for package gatsby-theme-ui-preset

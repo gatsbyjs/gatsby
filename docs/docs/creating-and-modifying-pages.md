@@ -159,11 +159,12 @@ Your template file would look like this:
 
 ```javascript:title=src/templates/product.js
 function Product({ pageContext }) {
+  const { product } = pageContext
   return (
     <div>
-      Name: {pageContext.name}
-      Price: {pageContext.price}
-      Description: {pageContext.description}
+      Name: {product.name}
+      Price: {product.price}
+      Description: {product.description}
     </div>
   )
 }

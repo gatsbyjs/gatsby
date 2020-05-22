@@ -9,6 +9,7 @@ import logo from "../assets/monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/tech-logos"
 import FuturaParagraph from "./futura-paragraph"
 import TechWithIcon from "./tech-with-icon"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const lineAnimation = keyframes({
   to: { strokeDashoffset: 10 },
@@ -218,8 +219,11 @@ const Diagram = () => (
         sx={{
           flex: `1 1 100%`,
           fontFamily: `heading`,
-          p: 6,
+          py: 6,
           textAlign: `center`,
+          [mediaQueries.sm]: {
+            px: 6,
+          },
         }}
       >
         <h1

@@ -88,6 +88,8 @@ ALGOLIA_ADMIN_KEY=insertValue
 
 The `queries` allow you to grab the data you want Algolia to index directly from Gatsby's GraphQL layer by exporting from `src/utils/algolia.js` an array of objects, each containing a required GraphQL query and an optional index name, transformer function and settings object.
 
+> Note: The excerpts below are pruned to 5000 characters. This is because, by default, Algolia has an upper bound of 10KB for an index entry. If you hit this boundary, you'll be presented with an error like this: `AlgoliaSearchError: Record at the position XX objectID=xx-xx-xx-xx-xx is too big size=10356 bytes. Contact us if you need an extended quota`. Make sure that your overall record is within this limit.
+
 ```js:title=src/utils/algolia.js
 const pageQuery = `{
   pages: allMarkdownRemark(
