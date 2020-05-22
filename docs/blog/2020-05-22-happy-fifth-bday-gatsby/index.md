@@ -36,7 +36,7 @@ So I set out to create a framework that would be:
 - Plugins support
 - Hot reloading built in
 - A Docker image that autobuilds/server site.
-- RSS/Atom support - necessary for anything blog like
+- RSS/Atom support - necessary for anything blog-like
 
 Some of these things, ok lots of these things, are well known and appreciated parts of Gatsby’s current v2: code splitting, Themes. Others are maybe less well known and appreciated, though we did build them. ([Gatsby Docker images](https://github.com/gatsbyjs/gatsby-docker) comes to mind).
 
