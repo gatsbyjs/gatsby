@@ -26,7 +26,7 @@ Wonderfully, though, fundraisers are popping up all over the place to provide so
 - [Building a prototype](#building-a-prototype)
 - [How to Get Involved](#how-to-get-involved)
 
-### About the project
+## About the project
 
 The Service Relief Project is a boilerplate for launching blazing-fast zero-cost directories of local fundraisers to help your local businesses affected by mandated shutdowns around the world.
 
@@ -59,7 +59,7 @@ Here are a few of the sites that have already launched using this project:
 - [Sioux Falls Service Relief](https://siouxfallsservicerelief.com/)
 - [Asheville Service Relief](https://ashevilleservicerelief.com/)
 
-### How it all began
+## How it all began
 
 On Monday, March 16th, Gatsby made the decision to close down for two days. Even though we're a completely remote company, we chose to do this to give our team members the time they needed to care for their families and adjust to the new world we found ourselves in.
 
@@ -75,7 +75,7 @@ That's where Gatsby came in. For the Seattle Service Relief site, I generated a 
 
 That was Monday. All day Tuesday I kept pondering the Seattle Service Relief project and wondering if there might be something bigger that we could do with the website. Though a palpable feeling of uncertainty permeated any and all conversations with my fellow Gatsby-ites, there was also a chord strumming just loudly and universally with the desire to do something, anything to help as a company.
 
-### Assembling a team
+## Assembling a team
 
 I am grateful to be surrounded by coworkers that are deeply passionate about helping others and, after a quick brainstorm with [Dustin Schau](https://twitter.com/SchauDustin) (Head of Product, Gatsby), I decided to float the idea in our **#random** Slack channel at work to see if anyone else was interested in helping out:
 
@@ -89,7 +89,7 @@ The response I recieved was incredible. Folks from every team at Gatsby chimed i
 
 Inspired by the support, I built
 
-### Building a prototype
+## Building a prototype
 
 At 6:30pm CST on March 18th, 8 members of the Gatsby team jumped on a Zoom call after-hours to discuss how we could help make this project a reality.
 
@@ -113,17 +113,17 @@ Over the next hour and a half, we developed a prototype using the following tool
 
 In our off-hours over the next 5 days, **6 team members made 76 commits, merged 11 pull requests, and made 19 releases**. In addition, Amberley Romo [created an outstanding readme](https://github.com/service-relief/service-relief/blob/master/examples/starter/README.md) for how to build your own Service Relief website.
 
-### The Ripple Effect
+## The Ripple Effect
 
 Within 48 hours of launching the Service Relief Project site and starter, local fundraising information sites have been launched in _eleven_ more states beyond the initial Seattle site! From Provo, Utah, to Sioux Falls, South Dakota and from Austin, Texas to Asheville, North Carolina - and half a dozen more places in between - people have been able to use our project to quickly launch their own service worker relief sites.
 
-### How to Get Involved
+## How to Get Involved
 
 What started as a project to help a friend help his community has turned into a worldwide project to help small businesses affected by the mandated shutdowns around the world.
 
 Here are a few ways that you can get involved:
 
-##### 1. Build your own Service Relief directory
+### 1. Build your own Service Relief directory
 
 In less than 30 minutes you can launch a new site for your local community using the Service Relief Project. You'll need a few things to get started, including:
 
@@ -134,11 +134,11 @@ Detailed instructions are available at https://www.servicerelief.us/start/ and y
 
 I'll also be publishing my personal workflow for building and deploying your Service Relief Project website using Gatsby Cloud + Netlify soon.
 
-##### 2. Share this project with others
+### 2. Share this project with others
 
 Getting the word out to your network is the best way to raise awareness of this project. We'll be listing all published Service Relief websites on https://www.servicerelief.us/.
 
-##### 3. Contribute to the project on GitHub
+### 3. Contribute to the project on GitHub
 
 We've published this entire [project on GitHub](https://github.com/service-relief) to open it up for the world to contribute back. Here's what you'll see there:
 

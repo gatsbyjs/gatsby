@@ -6,7 +6,6 @@ const { store } = require(`../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../redux/actions/restricted`)
 const { createTypes, createFieldExtension, createResolverContext } = actions
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {

@@ -169,9 +169,15 @@ class GatsbyLink extends React.Component {
           ) {
             e.preventDefault()
 
+            let shouldReplace = replace
+            const isCurrent = encodeURI(to) === window.location.pathname
+            if (typeof replace !== `boolean` && isCurrent) {
+              shouldReplace = true
+            }
+
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            navigate(to, { state, replace })
+            navigate(to, { state, replace: shouldReplace })
           }
 
           return true
