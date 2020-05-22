@@ -1,6 +1,19 @@
+const fs = require("fs")
+const path = require("path")
+const yaml = require(`js-yaml`)
 const unified = require("unified")
 
+const authorNames = yaml
+  .load(fs.readFileSync("./docs/blog/author.yaml"))
+  .flatMap(author => author.id.split(" "))
+
+const packages = fs
+  .readdirSync("./packages")
+  .filter(f => fs.statSync(path.join("./packages", f)).isDirectory())
+
 const words = [
+  ...authorNames,
+  ...packages,
   "➡️",
   "90s",
   "3G",
@@ -131,7 +144,10 @@ const words = [
   "uncomment",
   "unoptimized",
   "unvisited",
+  "unmount",
+  "unmounting",
   "README",
+  "rerender",
   "renderers",
   "rehydrate",
   "rehydrates",
@@ -155,6 +171,7 @@ const words = [
   "shortcode",
   "shortcodes",
   "stringified",
+  "stylings",
   "stylesheet", // should be style sheet?
   "stylesheets",
   "superset",
@@ -177,10 +194,6 @@ const words = [
   "transpiled",
   "transpiler",
   "tradeoffs", // also trade-offs
-  "v4",
-  "v2",
-  "v1",
-  "v0",
   "viewport",
   "webpages",
   "webhook",
@@ -195,6 +208,12 @@ const words = [
   "tada",
 
   // Abbreviations
+  "JSON",
+  "YAML",
+  "URI",
+  "MDX",
+  "MDN",
+  "MDN's",
   "OWASP",
   "CSRF",
   "a11y",
@@ -247,6 +266,8 @@ const words = [
   "XSS",
   "JS",
   "GQL",
+  "HOC",
+  "HOCs",
 
   // People names
   "Chedeau's",
@@ -275,6 +296,11 @@ const words = [
   "Berners-Lee",
 
   // Brand/product/library names
+  "react-intl",
+  "react-intl's",
+  "i18next",
+  "W3C",
+  "W3C's",
   "oEmbed",
   "devcert",
   "CodeSandbox",
@@ -333,12 +359,13 @@ const words = [
   "zsh",
   "Netlify",
   "Netlify's",
+  "Node.js",
+  "PDFs",
   "JSON",
   "YAML",
   "MDX",
   "MDN",
   "MDN's",
-  "Node.js",
   "Node.js's",
   "GraphCMS",
   "Hasura",
@@ -387,9 +414,18 @@ const words = [
   "WebAIM",
   "Deque",
   "IndexedDB",
+  "FormatJS",
+  "WebGL",
+  "Mediacurrent",
+  "Mediacurrent's",
+  "axe",
+
+  // MDX
+  "EmailCaptureForm",
 
   // plugin names -- should these be backticked?
   "eslint-plugin-jsx-a11y",
+  "react-konva",
   "graphql-js",
   "netlify-cli",
   "wp-graphql",
@@ -405,13 +441,7 @@ const words = [
   "react-i18next",
   "gatsby-plugin-i18n",
   "gatsby-plugin-csp",
-  "gatsby-link",
-  "gatsby-image",
   "gatsby-image's",
-  "gatsby-remark",
-  "gatsby-remark-images",
-  "gatsby-remark-embed-video",
-  "gatsby-plugin-sharp",
   "gatsby-plugin-netlify",
   "gatsby-plugin-create-client-paths",
   "gatsby-plugin-remove-trailing-slashes",
@@ -460,6 +490,31 @@ const words = [
   "GqlType",
 
   // questionable?
+  "touchNode",
+  "createPageDependency",
+  "getNodeAndSavePathDependency",
+  "findIdsWithoutDataDependencies",
+  ".babelrc",
+  "v4",
+  "v3",
+  "v2",
+  "v1",
+  "v0",
+  "onPreRouteUpdate",
+  "onRouteUpdate",
+  "RootQueryType",
+  "graphql",
+  "h1",
+  "h1s",
+  "h2",
+  "devDependencies",
+  "HashHistory",
+  "hashrouter",
+  "browserrouter",
+  "src",
+  "onCreatePage",
+  "SitePlugin",
+  "SitePage",
   "traceID",
   "resave",
   "gatsbyjs.org's",
@@ -480,6 +535,7 @@ const words = [
   "2-3x",
   "10x",
   "100K",
+  "useStaticQuery",
   "StaticQuery", // should be backticked
   "gqlType",
   "gqlTypes",
