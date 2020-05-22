@@ -121,8 +121,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `packages`,
-        path: `${__dirname}/../packages/`,
+        name: `gatsby-core`,
+        path: `${__dirname}/../packages/gatsby/`,
         ignore: [`**/dist/**`],
       },
     },
