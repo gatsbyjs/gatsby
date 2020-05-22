@@ -14,15 +14,15 @@ Today I'm excited to share with you a release we've been working on for the past
 
 Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, `gatsby-theme-blog`.
 
-With new features and even more options to customize your theme, you can go from this:
+// TODO: Change these so the cropping/background isn't so weird
 
-![Blog page with default theme styles](./default-styles.png)
+With new features and even more options to customize your theme, you can completely change the look of your site with only a few options!
 
-To this:
+|                      Dark Preset                       |                        Sketchy Preset                         |
+| :----------------------------------------------------: | :-----------------------------------------------------------: |
+| ![Blog page with dark theme styles](./dark-preset.png) | ![Blog page with sketchy preset styles](./sketchy-preset.png) |
 
-![Blog page with sketchy preset styles](./sketchy-preset.png)
-
-And the only code needed was this:
+All by changing the options you pass into your theme.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -44,13 +44,27 @@ module.exports = {
 
 ## New features
 
+So let's unpack all the great new things in blog theme 2.0.
+
 ### Image support
+
+With MDX you've always been able to add inline images in your posts, but now you can make use of featured images as well! Add `image` to your frontmatter and don't forget an `imageAlt`!
+
+What's even better is that images can be relative paths to files in your project, or an external URL. And either way, you only need to remember one frontmatter key, `image`. The theme processes the rest for you.
 
 ### Improved SEO
 
+And what about getting that amazing social sharing image to make your post pop on twitter or LinkedIn? You're good to go! Your featured image is automatically used for social sharing. And if you'd rather use a different image, for dimension reasons or otherwise, `socialImage` is available in your frontmatter as well.
+
+Don't have an image for this post? That's ok! The theme will revert to a social sharing card that doesn't leave a big file avatar.
+
 ### Webfont configuration
 
+Another great feature is out of the box support for webfonts. You can include the webfont URL of your choosing and pass it into the theme options as `webfontURL`. It will automatically get included with `react-helmet` and your site will use it.
+
 ### Line highlighting in code snippets
+
+The included `@theme-ui/prism` package now comes with support for line highlighting in your MDX code snippets! Using `// highlight-line` or a combination of `// highlight-start` and `// highlight-end` will trigger the highlighting styles available on each of the prism themes in Theme UI. If you're interested in changing or overriding it locally you can add styles to `.highlight` in your `gatsby-plugin-theme-ui` shadowed files.
 
 ## Changing the look is easier than ever before
 
@@ -62,7 +76,30 @@ In Blog Theme 2.0 you can pass in a Theme UI preset to style your site. The defa
 
 You can make use of those [provided by Theme UI](https://theme-ui.com/packages/presets), or try out something from the larger community, like [sketchy-preset](https://github.com/beerose/theme-ui-sketchy).
 
+All of these presets act as base styles and your local shadowed styles are automatically deep merged with them, with local styles taking precedent.
+
+If you'd rather not use any preset and set everything locally yourself, there is also an `ignorePreset` option.
+
 ### Prism
+
+Another option for presets are prism highlighting. Theme UI comes with a number of built-in [prism presets](https://theme-ui.com/packages/prism#syntax-themes) that you can reference directly by name and the theme will do the rest for you.
+
+```
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-theme-blog`,
+      options: {
+        prismPreset: `prism-okaidia`, // highlight-line
+      },
+    },
+  ],
+}
+```
+
+You're also welcome to install other presets locally and pass the package name.
+
+All prism presets take precedence over styles in your `preset` theme, but are less specific than local shadowing.
 
 ## The new `gatsby-theme-blog-core`
 
