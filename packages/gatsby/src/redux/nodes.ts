@@ -147,58 +147,6 @@ export const saveResolvedNodes = async (
   }
 }
 
-/**
- * Get node and save path dependency.
- */
-export const getResolvedNode = (
-  typeName: string,
-  id: string
-): IGatsbyNode | null => {
-  const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
-
-  if (!nodes) {
-    return null
-  }
-
-  const node = nodes.get(id)
-
-  if (!node) {
-    return null
-  }
-
-  const resolvedNodes = resolvedNodesCache.get(typeName)
-
-  if (resolvedNodes) {
-    node.__gatsby_resolved = resolvedNodes.get(id)
-  }
-
-  return node
-}
-
-export const addResolvedNodes = (
-  typeName: string,
-  resolvedNodes: IGatsbyNode[] = []
-): IGatsbyNode[] => {
-  const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
-
-  if (!nodes) {
-    return []
-  }
-
-  const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
-
-  nodes.forEach(node => {
-    if (resolvedNodesFromCache) {
-      node.__gatsby_resolved = resolvedNodesFromCache.get(node.id)
-    }
-    resolvedNodes.push(node)
-  })
-
-  return resolvedNodes
-}
-
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
@@ -419,13 +367,13 @@ function addNodeToFilterCache(
     const resolvedNodes = resolvedNodesCache.get(typeName)
     node.__gatsby_resolved = resolvedNodes?.get(node.id)
   }
-
   // - for plain query, valueOffset === node
   // - for elemMatch, valueOffset is sub-tree of the node to continue matching
   let v = valueOffset as any
   let i = 0
   while (i < chain.length && v) {
     const nextProp = chain[i++]
+    // if (chain.length === i && Array.isArray(v)) break
     v = v[nextProp]
   }
 

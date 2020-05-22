@@ -1,6 +1,5 @@
 // @flow
 
-const { default: sift } = require(`sift`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
@@ -9,19 +8,13 @@ const {
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
-  dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
   ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
-  addResolvedNodes,
-  getNode: siftGetNode,
 } = require(`./nodes`)
-
-// More of a testing mechanic, to verify whether last runSift call used Sift
-let lastFilterUsedSift = false
 
 /**
  * Creates a key for one filterCache inside FiltersCache
@@ -83,48 +76,6 @@ const prepareQueryArgs = (filterFields = {}) =>
 // Run Sift
 /////////////////////////////////////////////////////////////////////
 
-function isEqId(siftArgs) {
-  // The `id` of each node is invariably unique. So if a query is doing id $eq(string) it can find only one node tops
-  return (
-    siftArgs.length > 0 &&
-    siftArgs[0].id &&
-    Object.keys(siftArgs[0].id).length === 1 &&
-    Object.keys(siftArgs[0].id)[0] === `$eq`
-  )
-}
-
-function handleFirst(siftArgs, nodes) {
-  if (nodes.length === 0) {
-    return []
-  }
-
-  const index = _.isEmpty(siftArgs)
-    ? 0
-    : nodes.findIndex(
-        sift({
-          $and: siftArgs,
-        })
-      )
-
-  if (index !== -1) {
-    return [nodes[index]]
-  } else {
-    return []
-  }
-}
-
-function handleMany(siftArgs, nodes) {
-  let result = _.isEmpty(siftArgs)
-    ? nodes
-    : nodes.filter(
-        sift({
-          $and: siftArgs,
-        })
-      )
-
-  return result?.length ? result : null
-}
-
 /**
  * Given the path of a set of filters, return the sets of nodes that pass the
  * filter.
@@ -136,15 +87,10 @@ function handleMany(siftArgs, nodes) {
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | null | FiltersCache} filtersCache
+ * @param {FiltersCache} filtersCache
  * @returns {Array<IGatsbyNode> | null}
  */
 const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
-  if (!filtersCache) {
-    // If no filter cache is passed on, explicitly don't use one
-    return null
-  }
-
   const nodesPerValueSets /*: Array<Set<IGatsbyNode>> */ = getBucketsForFilters(
     filters,
     nodeTypeNames,
@@ -353,12 +299,10 @@ const collectBucketForElemMatch = (
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | null | FiltersCache} args.filtersCache May be null or
- *   undefined. A cache of indexes where you can look up Nodes grouped by a
- *   FilterCacheKey, which yields a Map which holds a Set of Nodes for the value
- *   that the filter is trying to query against.
+ * @property {FiltersCache} args.filtersCache A cache of indexes where you can
+ *   look up Nodes grouped by a FilterCacheKey, which yields a Map which holds
+ *   a Set of Nodes for the value that the filter is trying to query against.
  *   This object lives in query/query-runner.js and is passed down runQuery.
- *   If it is undefined or null, do not consider to use a fast index at all.
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
@@ -371,6 +315,12 @@ const runFilterAndSort = (args: Object) => {
     filtersCache,
     stats,
   } = args
+
+  if (!filtersCache) {
+    throw new Error(
+      `The filters cache is no longer optional after the removal of Sift.`
+    )
+  }
 
   const result = applyFilters(
     filter,
@@ -386,10 +336,6 @@ const runFilterAndSort = (args: Object) => {
 
 exports.runSift = runFilterAndSort
 
-exports.didLastFilterUseSift = function _didLastFilterUseSift() {
-  return lastFilterUsedSift
-}
-
 /**
  * Applies filter. First through a simple approach, which is much faster than
  * running sift, but not as versatile and correct. If no nodes were found then
@@ -398,7 +344,7 @@ exports.didLastFilterUseSift = function _didLastFilterUseSift() {
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | null | FiltersCache} filtersCache
+ * @param {FiltersCache} filtersCache
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
@@ -433,7 +379,7 @@ const applyFilters = (
     }
   }
 
-  if (filtersCache && filters.length === 0) {
+  if (filters.length === 0) {
     let filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
     if (!filtersCache.has(filterCacheKey)) {
       ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
@@ -441,46 +387,31 @@ const applyFilters = (
 
     const cache = filtersCache.get(filterCacheKey).meta.nodesUnordered
 
-    lastFilterUsedSift = false
-
     if (firstOnly || cache.length) {
       return cache.slice(0)
     }
     return null
   }
 
-  const result /*: Array<IGatsbyNode> | null */ = filterWithoutSift(
+  let fastResult /*: Array<IGatsbyNode> | null */ = filterWithoutSift(
     filters,
     nodeTypeNames,
     filtersCache
   )
 
-  lastFilterUsedSift = false
-  if (result) {
-    if (stats) {
-      stats.totalIndexHits++
-    }
-    if (firstOnly) {
-      return result.slice(0, 1)
-    }
-    return result
+  if (!fastResult) {
+    if (firstOnly) return []
+    return null
   }
-  lastFilterUsedSift = true
-
-  const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
-    filters,
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields
-  )
 
   if (stats) {
-    if (!siftResult || siftResult.length === 0) {
-      stats.totalSiftHits++
-    }
+    stats.totalIndexHits++
   }
 
-  return siftResult
+  if (firstOnly) {
+    return fastResult.slice(0, 1)
+  }
+  return fastResult
 }
 
 const filterToStats = (
@@ -499,75 +430,6 @@ const filterToStats = (
       filterPath: filterPath.concat(filter.path),
       comparatorPath: comparatorPath.concat(filter.query.comparator),
     }
-  }
-}
-
-/**
- * Use sift to apply filters
- *
- * @param {Array<DbQuery>} filters Resolved
- * @param {boolean} firstOnly
- * @param {Array<string>} nodeTypeNames
- * @param resolvedFields
- * @returns {Array<IGatsbyNode> | null} Collection of results.
- *   Collection will be limited to 1 if `firstOnly` is true
- */
-const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
-  let nodes /*: IGatsbyNode[]*/ = []
-  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
-
-  return runSiftOnNodes(
-    nodes,
-    filters.map(f => dbQueryToSiftQuery(f)),
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields,
-    siftGetNode
-  )
-}
-
-/**
- * Given a list of filtered nodes and sorting parameters, sort the nodes
- *
- * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
- * @param {Array<DbQuery>} filters Resolved
- * @param {boolean} firstOnly
- * @param {Array<string>} nodeTypeNames
- * @param resolvedFields
- * @param {function(id: string): IGatsbyNode | undefined} getNode
- * @returns {Array<IGatsbyNode> | null} Collection of results.
- *   Collection will be limited to 1 if `firstOnly` is true
- */
-const runSiftOnNodes = (
-  nodes,
-  filters,
-  firstOnly,
-  nodeTypeNames,
-  resolvedFields,
-  getNode
-) => {
-  // If the the query for single node only has a filter for an "id"
-  // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(filters)) {
-    const node = getNode(filters[0].id.$eq)
-
-    if (
-      !node ||
-      (node.internal && !nodeTypeNames.includes(node.internal.type))
-    ) {
-      if (firstOnly) {
-        return []
-      }
-      return null
-    }
-
-    return [node]
-  }
-
-  if (firstOnly) {
-    return handleFirst(filters, nodes)
-  } else {
-    return handleMany(filters, nodes)
   }
 }
 
