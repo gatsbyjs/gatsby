@@ -2,7 +2,6 @@ import path from "path"
 import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
-import { uniq } from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
@@ -28,6 +27,7 @@ import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
+import { mapPagesToStaticQueryHashes } from "../utils/map-pages-to-static-query-hashes"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -109,42 +109,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const workerPool = WorkerPool.create()
 
-  const { pages, staticQueryComponents } = store.getState()
-  const modules = stats.compilation.modules
-  const mapPagesToDependencies = Array.from(pages).reduce(
-    (map, [path, page]) => {
-      const { component } = page
-      const module = modules.find(module => module.resource === component)
-      const dependencies = uniq(
-        module.dependencies.filter(m => m.module).map(m => m.module.resource)
-      )
-      map.set(path, {
-        component,
-        dependencies,
-      })
-      return map
-    },
-    new Map()
-  )
+  const state = store.getState()
 
-  const mapComponentsToStaticQueryHashes = Array.from(
-    staticQueryComponents
-  ).reduce((map, [id, { componentPath, hash }]) => {
-    map.set(componentPath, hash)
-    return map
-  }, new Map())
-
-  const mapPagesToStaticQueryHashes = Array.from(mapPagesToDependencies).reduce(
-    (map, [page, { dependencies }]) => {
-      map.set(
-        page,
-        dependencies
-          .map(dependency => mapComponentsToStaticQueryHashes.get(dependency))
-          .filter(Boolean)
-      )
-      return map
-    },
-    new Map()
+  const mapOfPagesToStaticQueryHashes = mapPagesToStaticQueryHashes(
+    state,
+    stats
   )
 
   const webpackCompilationHash = stats.hash
@@ -169,8 +138,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await processPageQueries()
 
-  mapPagesToStaticQueryHashes.forEach(async (staticQueryHashes, page) => {
-    await pageDataUtil.write({ publicDir }, page, { staticQueryHashes })
+  mapOfPagesToStaticQueryHashes.forEach(async (staticQueryHashes, pagePath) => {
+    const page = state.pages.get(pagePath)
+
+    await pageDataUtil.writePageData({ publicDir }, page, {
+      staticQueryHashes,
+    })
   })
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {

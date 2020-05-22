@@ -2,6 +2,7 @@ import url from "url"
 import fs from "fs"
 import openurl from "better-opn"
 import chokidar from "chokidar"
+import path from "path"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
@@ -62,6 +63,8 @@ import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
+import { mapPagesToStaticQueryHashes } from "../utils/map-pages-to-static-query-hashes"
+import pageDataUtil from "../utils/page-data"
 
 import { Stage, IProgram } from "./types"
 
@@ -676,6 +679,26 @@ module.exports = async (program: IProgram): Promise<void> => {
       }
       webpackActivity.end()
       webpackActivity = null
+    }
+
+    if (isSuccessful) {
+      const state = store.getState()
+      const mapOfPagesToStaticQueryHashes = mapPagesToStaticQueryHashes(
+        state,
+        stats
+      )
+
+      const publicDir = path.join(program.directory, `public`)
+
+      mapOfPagesToStaticQueryHashes.forEach(
+        async (staticQueryHashes, pagePath) => {
+          const page = state.pages.get(pagePath)
+
+          await pageDataUtil.writePageData({ publicDir }, page, {
+            staticQueryHashes,
+          })
+        }
+      )
     }
 
     done()

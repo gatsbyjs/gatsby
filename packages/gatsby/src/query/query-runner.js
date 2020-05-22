@@ -7,7 +7,6 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
-const pageDataUtil = require(`../utils/page-data`)
 const { getCodeFrame } = require(`./graphql-errors`)
 const { default: errorParser } = require(`./error-parser`)
 
@@ -134,10 +133,22 @@ module.exports = async (graphqlRunner, queryJob: QueryJob) => {
     resultHashes.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
-      const publicDir = path.join(program.directory, `public`)
-      const { pages } = store.getState()
-      const page = pages.get(queryJob.id)
-      await pageDataUtil.writePageData({ publicDir }, page, result)
+      // const publicDir = path.join(program.directory, `public`)
+      // const { pages } = store.getState()
+      // const page = pages.get(queryJob.id)
+      // We need to save this temporarily in cache because
+      // this might be incomplete at the moment
+      // since it will not contain included static queries yet
+      // Those will be added later and that is when this file will
+      // be written to `public`
+      // await pageDataUtil.writePageData({ publicDir }, page, result)
+      const resultPath = path.join(
+        program.directory,
+        `.cache`,
+        `json`,
+        `${queryJob.id.replace(/\//g, `_`)}.json`
+      )
+      await fs.outputFile(resultPath, resultJSON)
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

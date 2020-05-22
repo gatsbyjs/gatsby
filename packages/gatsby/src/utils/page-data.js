@@ -21,13 +21,22 @@ const remove = async ({ publicDir }, pagePath) => {
   return Promise.resolve()
 }
 
-const writePageData = async ({ publicDir }, page, result) => {
-  const filePath = getFilePath({ publicDir }, page.path)
+const writePageData = async ({ publicDir }, page, { staticQueryHashes }) => {
+  const inputFilePath = path.join(
+    publicDir,
+    `..`,
+    `.cache`,
+    `json`,
+    `${page.path.replace(/\//g, `_`)}.json`
+  )
+  const outputFilePath = getFilePath({ publicDir }, page.path)
+  const result = await fs.readJSON(inputFilePath)
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
     matchPath: page.matchPath,
     result,
+    staticQueryHashes,
   }
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -36,36 +45,16 @@ const writePageData = async ({ publicDir }, page, result) => {
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
-      filePath,
+      filePath: outputFilePath,
       size: pageDataSize,
     },
   })
 
-  await fs.outputFile(filePath, bodyStr)
-}
-
-const write = async ({ publicDir }, pagePath, data) => {
-  const filePath = getFilePath({ publicDir }, pagePath)
-  console.log(filePath)
-
-  // TODO: Gracefully check if the file exists or not
-  // while we're pretty sure it does at the point in time where this fn is called
-
-  const fileContents = await fs.readJSON(filePath)
-
-  const body = {
-    ...data,
-    ...fileContents,
-  }
-
-  const bodyStr = JSON.stringify(body)
-
-  await fs.outputFile(filePath, bodyStr)
+  await fs.outputFile(outputFilePath, bodyStr)
 }
 
 module.exports = {
   read,
-  write,
   writePageData,
   remove,
   fixedPagePath,
