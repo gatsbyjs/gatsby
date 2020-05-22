@@ -6,7 +6,7 @@
   "author": "Chen-Tai Hou <ctxhou@gmail.com>",
   "dependencies": {
     "cxs": "^6.2.0",
-    "gatsby": "^2.21.35",
+    "gatsby": "^2.21.37",
     "gatsby-plugin-cxs": "^2.3.1",
     "gatsby-plugin-google-analytics": "^2.3.1",
     "gatsby-plugin-offline": "^2.2.10",

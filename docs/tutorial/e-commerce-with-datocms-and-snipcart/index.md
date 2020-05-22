@@ -408,7 +408,7 @@ You've already done most of the work needed to launch your new online store. All
 - update the value of `data-item-url` in your product HTML
 - use your live Snipcart API key
 
-The `data-item-url` attribute needs to match the live page where the products can be bought, which Snipcart crawls to verify the the order. In testing, a slash is fine. To get your site ready to go live, you'll need to replace the slash with the actual URL.
+The `data-item-url` attribute needs to match the live page where the products can be bought, which Snipcart crawls to verify the order. In testing, a slash is fine. To get your site ready to go live, you'll need to replace the slash with the actual URL.
 
 ```jsx:title=index.js
 data-item-url={`URL of your live product page`}

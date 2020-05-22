@@ -16,15 +16,15 @@ describe(`gatsby develop`, () => {
 
   it(`starts a gatsby site on port 8000`, async () => {
     // 1. Start the `gatsby develop` command
-    const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`develop`)
+    const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
+      `develop`,
+      log => log.includes("To create a production build, use gatsby build")
+    )
 
-    // 2. Wait for the build process to finish
-    await timeout(15)
+    // 2. kill the `gatsby develop` command so we can get logs
+    await childProcess
 
-    // 3. kill the `gatsby develop` command so we can get logs
-    childProcess.kill()
-
-    // 4. Make sure logs for the user contain expected results
+    // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
     logs.should.contain(`success open and validate gatsby-configs`)
     logs.should.contain(`success load plugins`)

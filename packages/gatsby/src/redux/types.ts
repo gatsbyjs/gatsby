@@ -57,6 +57,7 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  mapping?: Record<string, string>
 }
 
 export interface IGatsbyNode {
@@ -80,6 +81,7 @@ export interface IGatsbyPlugin {
   id: Identifier
   name: string
   version: string
+  [key: string]: any
 }
 
 export interface IGatsbyPluginContext {
@@ -97,6 +99,11 @@ export interface IGatsbyStaticQueryComponents {
 type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
+  job: InternalJobInterface
+  plugin: IGatsbyPlugin
+}
+
+export interface IGatsbyIncompleteJob {
   job: InternalJobInterface
   plugin: IGatsbyPlugin
 }
@@ -269,16 +276,21 @@ export type ActionsUnion =
   | ISetSchemaAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
+  | IAddPageDataStatsAction
   | IRemoveTemplateComponentAction
   | ISetBabelPluginAction
   | ISetBabelPresetAction
   | ISetBabelOptionsAction
+  | ICreateJobAction
+  | ISetJobAction
+  | IEndJobAction
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -328,6 +340,33 @@ export interface IRemoveStaleJobV2Action {
   payload: {
     contentDigest: string
   }
+}
+
+interface ICreateJobAction {
+  type: `CREATE_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface ISetJobAction {
+  type: `SET_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
+}
+
+interface IEndJobAction {
+  type: `END_JOB`
+  payload: {
+    id: string
+    job: IGatsbyIncompleteJob["job"]
+  }
+  plugin: IGatsbyIncompleteJob["plugin"]
 }
 
 export interface ICreatePageDependencyAction {
@@ -586,4 +625,17 @@ export interface IDeleteNodeAction {
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   payload: Identifier[]
+}
+
+export interface IAddPageDataStatsAction {
+  type: `ADD_PAGE_DATA_STATS`
+  payload: {
+    filePath: SystemPath
+    size: number
+  }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }
