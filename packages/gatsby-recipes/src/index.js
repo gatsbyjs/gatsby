@@ -1,4 +1,9 @@
-module.exports = recipe => {
+export { startGraphQLServer } from "./graphql-server"
+
+// data = { recipe?: string, graphqlPort: number, projectRoot: string }
+const recipesHandler = async data => {
   const cli = require(`import-jsx`)(require.resolve(`./cli`))
-  cli(recipe)
+  return cli(data)
 }
+
+export default recipesHandler
