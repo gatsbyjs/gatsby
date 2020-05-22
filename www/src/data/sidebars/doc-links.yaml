@@ -129,9 +129,9 @@
             - title: Using Babel Plugin Macros
               link: /docs/babel-plugin-macros/
               breadcrumbTitle: Babel Plugin Macros
-            - title: Adding a Custom Webpack Config
+            - title: Adding a Custom webpack Config
               link: /docs/add-custom-webpack-config/
-              breadcrumbTitle: Webpack Config
+              breadcrumbTitle: webpack Config
             - title: Customizing html.js
               link: /docs/custom-html/
               breadcrumbTitle: html.js
@@ -666,7 +666,7 @@
               link: /docs/static-vs-normal-queries/
         - title: Write out Pages
           link: /docs/write-pages/
-        - title: Webpack & SSR
+        - title: webpack & SSR
           link: /docs/webpack-and-ssr/
           items:
             - title: Building the JavaScript App

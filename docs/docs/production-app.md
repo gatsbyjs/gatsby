@@ -12,7 +12,7 @@ title: Building the JavaScript App
 
 Gatsby generates your site's HTML pages, but also creates a JavaScript runtime that takes over in the browser once the initial HTML has loaded. This enables other pages to load instantaneously. Read on to find out how that runtime is generated.
 
-## Webpack config
+## webpack config
 
 The [build-javascript.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.js) Gatsby file is the entry point to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g. `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
 
@@ -45,9 +45,9 @@ The config is quite large, but here are some of the important values in the fina
     splitChunks: {
       chunks: `all`,
       cacheGroups: {
-        // disable Webpack's default cacheGroup
+        // disable webpack's default cacheGroup
         default: false,
-        // disable Webpack's default vendor cacheGroup
+        // disable webpack's default vendor cacheGroup
         vendors: false,
         // Create a framework bundle that contains React libraries
         // They hardly change so we bundle them together to improve
@@ -85,7 +85,7 @@ There's a lot going on here. And this is just a sample of the output that doesn'
 
 The splitChunks section is the most complex part of the Gatsby webpack config as it configures how Gatsby generates the most optimized bundles for your website. This is referred to as Granular Chunks as Gatsby tries to make the generated JavaScript files as granular as possible by deduplicating all modules. You can read more about [SplitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) and [chunks](https://webpack.js.org/concepts/under-the-hood/#chunks) on the [official webpack website](https://webpack.js.org/).
 
-Once Webpack has finished compilation, it will have produced a few key types of bundles:
+Once webpack has finished compilation, it will have produced a few key types of bundles:
 
 ### app-[contenthash].js
 
