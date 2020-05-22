@@ -36,7 +36,6 @@
     "graphql-type-json": "^0.3.1",
     "hicat": "^0.7.0",
     "html-tag-names": "^1.1.5",
-    "import-jsx": "^4.0.0",
     "ink-box": "^1.0.0",
     "ink-link": "^1.1.0",
     "ink-select-input": "^3.1.2",
