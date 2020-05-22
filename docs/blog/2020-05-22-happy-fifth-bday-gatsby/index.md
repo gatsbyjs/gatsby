@@ -1,5 +1,3 @@
-
-
 ---
 title: “It’s Gatsby’s 5th Birthday 🎂 (and everyone’s invited!)”
 date: 2020-05-22
@@ -45,6 +43,10 @@ A couple months after that Issue #1 braindump I was messing around with an issue
 > So in practice how this would work is there'd be a base documentation site hosted on github. When you want a new docs site you'd just set the github url for the base site and then start adding markdown files. Anything else you'd want to modify could be set in the site config file.
 
 This idea of “composable” websites eventually resulted in Gatsby Themes, plugins that include a gatsby-config.js file and add pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Essentially, modules that can be put together to form a single, holistic Gatsby site. Which in turn led to Gatsby Recipes as a way to address the challenge of translating an idea -- “I want to do x” -- to how “x” is done in Gatsby. Recipes help users take the literally thousands of plugins and themes that the Gatsby open source ecosystem now offers, and apply them to accomplishing desired tasks in the CLI while also enabling them to automate the process.
+
+Gatsby is a great tool for so very many diverse and creative projects and it has been a genuine thrill over the past five years to see what's been built with it. And how many people have been busy building: as of now, our repo shows there are 200k public Gatsby sites on GitHub. 200k / ( 365 days * 5 years old) = 110 sites a day 🎉!
+
+![screen shot of user count on gatsby github repository](https://lh6.googleusercontent.com/m_BAZRYXtxDgy4f4oxrtxMgtbGnIxlCpfXJUHS6oCoE_c1kTOslsjJFvJ1wKWkYjvWkwbIJuNBnNng78Z5je9se6KDleT5YEatR7N-0-NTB-VFLvfu3s-4CN7RTcIRMVZ6GOM55P)
 ## Many hands
 There are so many other amazing and cool things that have happened in the first five years of Gatsby that there is no possible way to talk about them all. But one thing is true about every single one of all of these things. None of this would have happened without the incredible community that has come together around Gatsby.
 
