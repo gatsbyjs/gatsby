@@ -34,7 +34,3 @@ src/cache
 
 # Env variables
 .env*
-
-# Lingui
-src/data/locales/**/messages.js
-src/data/locales/_build

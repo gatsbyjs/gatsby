@@ -1,7 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "@lingui/react"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
 import StarterTemplate from "../template-starter-page"
@@ -69,11 +68,9 @@ const getProps = (starter = {}, fallback = {}) => {
 test(`it can be rendered`, () => {
   expect(() =>
     render(
-      <I18nProvider>
-        <ThemeProvider theme={theme}>
-          <StarterTemplate {...getProps()} />
-        </ThemeProvider>
-      </I18nProvider>
+      <ThemeProvider theme={theme}>
+        <StarterTemplate {...getProps()} />
+      </ThemeProvider>
     )
   ).not.toThrow()
 })

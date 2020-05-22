@@ -41,13 +41,6 @@ exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
 }
 
-exports.onPostBootstrap = () => {
-  // Compile language strings if locales are enabled
-  if (i18nEnabled) {
-    child_process.execSync(`yarn lingui:build`)
-  }
-}
-
 exports.onPostBuild = () => {
   fs.copySync(
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,

@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { t, Trans } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 import Link from "./localized-link"
 import {
   MdArrowBack as ArrowBackIcon,
@@ -29,14 +27,14 @@ const prevNextLabelStyles = {
   mt: 0,
 }
 
-const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
+const PrevAndNext = ({ prev = null, next = null, ...props }) => {
   if (!prev && !next) {
     return null
   }
 
   return (
     <nav
-      aria-label={i18n._(t`pagination`)}
+      aria-label="pagination"
       sx={{
         [mediaQueries.sm]: {
           display: `flex`,
@@ -110,4 +108,4 @@ const PrevAndNext = ({ prev = null, next = null, i18n, ...props }) => {
   )
 }
 
-export default withI18n()(PrevAndNext)
+export default PrevAndNext
