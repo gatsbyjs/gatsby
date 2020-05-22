@@ -22,6 +22,7 @@
     "acorn-jsx": "^5.2.0",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
+    "detect-port": "^1.3.0",
     "execa": "^4.0.1",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
