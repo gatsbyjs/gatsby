@@ -133,7 +133,6 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {

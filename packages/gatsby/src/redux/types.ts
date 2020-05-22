@@ -81,6 +81,7 @@ export interface IGatsbyPlugin {
   id: Identifier
   name: string
   version: string
+  [key: string]: any
 }
 
 export interface IGatsbyPluginContext {
@@ -275,6 +276,7 @@ export type ActionsUnion =
   | ISetSchemaAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
@@ -631,4 +633,9 @@ export interface IAddPageDataStatsAction {
     filePath: SystemPath
     size: number
   }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }
