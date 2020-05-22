@@ -47,9 +47,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       <div css={{ [mediaQueries.sm]: { width: `48%` } }}>
         {prev && (
           <Link to={prev.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>
-              <Trans>Previous</Trans>
-            </p>
+            <p sx={prevNextLabelStyles}>Previous</p>
             <span
               sx={{
                 [mediaQueries.md]: {
@@ -80,9 +78,7 @@ const PrevAndNext = ({ prev = null, next = null, ...props }) => {
       >
         {next && (
           <Link to={next.link} sx={prevNextLinkStyles}>
-            <p sx={prevNextLabelStyles}>
-              <Trans>Next</Trans>
-            </p>
+            <p sx={prevNextLabelStyles}>Next</p>
             <span
               sx={{
                 [mediaQueries.md]: {
