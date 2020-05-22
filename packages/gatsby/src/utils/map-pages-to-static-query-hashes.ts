@@ -27,7 +27,7 @@ export function mapPagesToStaticQueryHashes(
 
   const mapComponentsToStaticQueryHashes = Array.from(
     staticQueryComponents
-  ).reduce((map, [id, { componentPath, hash }]) => {
+  ).reduce((map, [, { componentPath, hash }]) => {
     map.set(componentPath, hash)
     return map
   }, new Map())
