@@ -1,8 +1,34 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
+const minimatch = require(`minimatch`)
+
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
+const findApiCalls = require(`../find-api-calls`)
+
+const ignorePatterns = [
+  `**/commonjs/**`,
+  `**/node_modules/**`,
+  `**/__tests__/**`,
+  `**/dist/**`,
+  `**/__mocks__/**`,
+  `babel.config.js`,
+  `graphql.js`,
+  `**/flow-typed/**`,
+]
+
+function isCodeFile(node) {
+  return (
+    node.internal.type === `File` &&
+    node.sourceInstanceName === `packages` &&
+    [`js`].includes(node.extension) &&
+    minimatch(node.relativePath, `gatsby/**`) &&
+    !ignorePatterns.some(ignorePattern =>
+      minimatch(node.relativePath, ignorePattern)
+    )
+  )
+}
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
@@ -76,8 +102,38 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = async ({
+  node,
+  actions,
+  getNode,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode, createParentChildLink, createNodeField } = actions
+
+  if (isCodeFile(node)) {
+    const calls = await findApiCalls({ node, loadNodeContent })
+    if (calls.length > 0) {
+      calls.forEach(call => {
+        const apiCallNode = {
+          id: createNodeId(`findApiCalls-${JSON.stringify(call)}`),
+          parent: node.id,
+          children: [],
+          ...call,
+          internal: {
+            type: `GatsbyAPICall`,
+          },
+        }
+        apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
+
+        createNode(apiCallNode)
+        createParentChildLink({ parent: node, child: apiCallNode })
+      })
+    }
+    return
+  }
+
   const slug = getMdxContentSlug(node, getNode(node.parent))
   if (!slug) return
 

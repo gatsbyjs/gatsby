@@ -131,6 +131,7 @@ export interface IGatsbyPlugin {
   id: Identifier
   name: string
   version: string
+  [key: string]: any
 }
 
 export interface IGatsbyPluginContext {
@@ -302,13 +303,10 @@ export type ActionsUnion =
   | ICreateNodeFieldAction
   | ICreateParentChildLinkAction
   | ISetWebpackConfigAction
-  | IReplaceWebpackConfigAction
   | ISetBabelOptionsAction
   | ISetBabelPresetAction
-  | ICreateJobAction
   | IEndJobAction
   | ICreateRedirectAction
-  | ISetPluginStatusAction
   | ITouchNodeAction
   | IValidationErrorAction
   | IDeleteNodesAction
@@ -318,13 +316,11 @@ export type ActionsUnion =
   | IAddFieldToNodeAction
   | IAddThirdPartySchema
   | ICreateFieldExtension
-  | ICreateNodeAction
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
-  | IDeleteNodesAction
   | IDeleteComponentDependenciesAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
@@ -342,7 +338,6 @@ export type ActionsUnion =
   | ISetWebpackCompilationHashAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
@@ -502,7 +497,7 @@ export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   plugin: IGatsbyPlugin
   fullNodes: IGatsbyNode[]
-  payload: string[]
+  payload: Identifier[]
 }
 
 export interface ISetPageDataAction {
@@ -537,18 +532,6 @@ export interface IReplaceComponentQueryAction {
   payload: {
     query: string
     componentPath: string
-  }
-}
-
-export interface IReplaceStaticQueryAction {
-  type: `REPLACE_STATIC_QUERY`
-  plugin: IGatsbyPlugin | null | undefined
-  payload: {
-    name: string
-    componentPath: string
-    id: string
-    query: string
-    hash: string
   }
 }
 
@@ -649,11 +632,6 @@ export interface ICreateResolverContext {
     | { [camelCasedPluginNameWithoutPrefix: string]: IGatsbyPluginContext }
 }
 
-export interface ICreateRedirectAction {
-  type: `CREATE_REDIRECT`
-  payload: IRedirect
-}
-
 export interface ISetResolvedThemesAction {
   type: `SET_RESOLVED_THEMES`
   payload: any // TODO
@@ -661,21 +639,6 @@ export interface ISetResolvedThemesAction {
 
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
-}
-
-export interface IRemovePageDataAction {
-  type: `REMOVE_PAGE_DATA`
-  payload: {
-    id: Identifier
-  }
-}
-
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
 }
 
 export interface IRemoveTemplateComponentAction {
@@ -687,6 +650,7 @@ export interface IRemoveTemplateComponentAction {
 
 export interface IReplaceStaticQueryAction {
   type: `REPLACE_STATIC_QUERY`
+  plugin: IGatsbyPlugin | null | undefined
   payload: IGatsbyStaticQueryComponents
 }
 
@@ -735,11 +699,6 @@ export interface ISetSiteConfig {
   payload: IGatsbyState["config"]
 }
 
-export interface ICreateNodeAction {
-  type: `CREATE_NODE`
-  payload: IGatsbyNode
-}
-
 export interface IAddFieldToNodeAction {
   type: `ADD_FIELD_TO_NODE`
   payload: IGatsbyNode
@@ -750,15 +709,15 @@ export interface IAddChildNodeToParentNodeAction {
   payload: IGatsbyNode
 }
 
-export interface IDeleteNodesAction {
-  type: `DELETE_NODES`
-  payload: Identifier[]
-}
-
 export interface IAddPageDataStatsAction {
   type: `ADD_PAGE_DATA_STATS`
   payload: {
     filePath: SystemPath
     size: number
   }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }

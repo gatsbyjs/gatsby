@@ -109,7 +109,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const developPort = await getRandomPort()
 
   const developProcess = new ControllableScript(`
-    const cmd = require("${developProcessPath}");
+    const cmd = require(${JSON.stringify(developProcessPath)});
     const args = ${JSON.stringify({
       ...program,
       port: developPort,
@@ -128,11 +128,9 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   let unlock
   if (!isCI()) {
-    unlock = await createServiceLock(
-      program.directory,
-      `developstatusserver`,
-      statusServerPort.toString()
-    )
+    unlock = await createServiceLock(program.directory, `developstatusserver`, {
+      port: statusServerPort,
+    })
 
     if (!unlock) {
       console.error(

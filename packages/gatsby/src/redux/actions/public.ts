@@ -645,7 +645,7 @@ const _createNode: CreateNode = (node, plugin, actionOptions) => {
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, nodeSchema)
+  const result = (Joi as any).validate(node, nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj: IGatsbyError = {
