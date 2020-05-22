@@ -28,7 +28,7 @@ Use [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/) which will expose
 
 ## Query Builder.io data
 
-The `@Builder.io/gatsby` plugin will add `allBuilderModels` to GraphQL, under which you can specify which model you'd like to get entries from.
+The `@Builder.io/gatsby` plugin will add `allBuilderModels` to graphQL, under which you can specify which model you'd like to get entries from.
 
 For example to get the entries from your models `myHeader`, `myFooter`:
 
@@ -45,7 +45,7 @@ For example to get the entries from your models `myHeader`, `myFooter`:
 }
 ```
 
-Or you can query by `urlPath` for your page models:
+Or you can query by urlPath for your page models:
 
 ```graphql
 query($path: String!) {

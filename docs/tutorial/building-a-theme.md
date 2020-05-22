@@ -332,7 +332,7 @@ exports.sourceNodes = ({ actions }) => {
 1. You'll use the `createTypes` to create the new `Event` type
 2. The `Event` type will implement the typical Gatsby `Node` interface.
 3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
-4. In addition to an `id` field, you'll create new fields for each data point associated with an event (`name`, `location`, `startDate`, `endDate`, `url`). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
+4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
 5. You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
 
 ### Define resolvers for any custom fields (slug)
@@ -1087,7 +1087,7 @@ Once this is running, you'll observe two things:
 
 However, you don't have any event data in the site. Copy the `events.yml` file from `gatsby-theme-events/data` into `site/events`. Then, restart the dev server:
 
-![Running the site, the base path is now `/events`](./images/building-a-theme-changed-basepath.png)
+![Running the site, the basepath is now `/events`](./images/building-a-theme-changed-basepath.png)
 
 The events listing page will now be accessible at `http://localhost:8000/events`. Hitting `http://localhost:8000/` will return a 404.
 
@@ -1546,7 +1546,7 @@ Congratulations! You've set up, built, and customized your first Gatsby theme!
 ### Further reading
 
 - Check out the [Gatsby themes docs](/docs/themes/) to keep learning.
-- Have an idea for a theme you'd like to build? Get a head start on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-theme-workspace).
+- Have an idea for a theme you'd like to build? Get a headstart on a local theme development workspace using the [Theme Workspace starter](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-theme-workspace).
 - Have you built a Gatsby starter before? Perhaps [convert that starter to a theme](/docs/themes/converting-a-starter).
 
 ### Livestreams

@@ -17,7 +17,7 @@ Found a theme you'd like to use on your project? Awesome! You can configure it f
 
 ### Directions
 
-1. Create a Gatsby site
+1. Create a gatsby site
 
 ```shell
 gatsby new {your-project-name}

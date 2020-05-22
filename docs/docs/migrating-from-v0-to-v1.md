@@ -24,7 +24,7 @@ git mv utils src
 ## Replace react-router's Link component with gatsby-link
 
 `gatsby-link` is a wrapper for the `<Link>` component in react-router. It
-automatically prefixes URLs and handles prefetching. Add `gatsby-link` to your
+automatically prefixes urls and handles prefetching. Add `gatsby-link` to your
 project by running:
 
 `npm install --save gatsby-link`
@@ -285,7 +285,7 @@ export const pageQuery = graphql`
 `
 ```
 
-At the bottom of the file you'll notice the GraphQL query. This is how pages and
+At the bottom of the file you'll notice the graphql query. This is how pages and
 templates in Gatsby v1 get their data. In v0, wrapper components had little
 control over what data they got. In v1, templates and pages can query for
 exactly the data they need.
@@ -317,7 +317,7 @@ your `html.js` should look like:
 </body>
 ```
 
-## `_template.js` is now `src/layouts/index.js`
+## \_template.js is now src/layouts/index.js
 
 You should be able to copy your `_template.js` file directly making only one
 change making `this.props.children` a function call so `this.props.children()`.

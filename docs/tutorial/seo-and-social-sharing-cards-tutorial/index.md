@@ -6,7 +6,7 @@ Perhaps you've been approached by an SEO _expert_ who can maximize your revenue 
 
 - Implement SEO patterns with [react-helmet][react-helmet]
 - Create an optimized social sharing card for Twitter, Facebook, and Slack
-- Tweak the SEO component exposed in the default Gatsby starter ([`gatsby-starter-default`][gatsby-starter-default])
+- Tweak the SEO component exposed in the default gatsby starter ([`gatsby-starter-default`][gatsby-starter-default])
 
 ## Implementation
 
@@ -34,7 +34,7 @@ GraphQL is a crucial feature enabled via Gatsby (note: you don't [_have_ to use 
 
 ### `StaticQuery`
 
-Gatsby distinguishes between page-level queries and component queries. The former can use page GraphQL queries while the latter can use [`StaticQuery`][gatsby-static-query]. A `StaticQuery` will be parsed, evaluated, and injected at _build time_ into the component that is requesting the data, allowing to fall back to sane defaults, while also providing an extensible, reusable component.
+Gatsby distinguishes between page-level queries and component queries. The former can use page GraphQL queries while the latter can use [`StaticQuery`][gatsby-static-query]. A StaticQuery will be parsed, evaluated, and injected at _build time_ into the component that is requesting the data, allowing to fall back to sane defaults, while also providing an extensible, reusable component.
 
 ### Creating the SEO component
 
@@ -78,7 +78,7 @@ function SEO({ description }) {
 export default SEO
 ```
 
-This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `useStaticQuery` functionality enabled via Gatsby to query site metadata (e.g. details in `gatsby-config.js`) with description and keywords. At this point, the `SEO` component returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
+This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `useStaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords. At this point, the `SEO` component returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
 
 ```jsx:title=src/components/seo.js
 import React from "react"
@@ -574,7 +574,7 @@ There are a few aspects worth nothing here:
 
 ## The Payoff
 
-Using the techniques outlined in this post, you've made your Gatsby application SEO-friendly as well as shareable on common social networks. Check out the following examples of a sample blog post.
+Using the techniques outlined in this post, you've made your Gatsby application SEO-friendly as well as sharable on common social networks. Check out the following examples of a sample blog post.
 
 ### Google
 

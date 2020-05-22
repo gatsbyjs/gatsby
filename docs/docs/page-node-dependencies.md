@@ -32,7 +32,7 @@ Page -> Node dependencies are tracked via the `componentDataDependencies` redux 
 }
 ```
 
-**Nodes** is a map of `nodeID` to the set of pages that depend on that node. E.g
+**Nodes** is a map of nodeID to the set of pages that depend on that node. E.g
 
 ```javascript
 // state.componentDataDependencies.nodes
@@ -70,6 +70,6 @@ Page -> Node dependencies are used entirely during query execution to figure out
 
 [redux/actions/add-page-dependency.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions/add-page-dependency.ts) is a wrapper around the `createPageDependency` action that performs some additional performance optimizations. It should be used instead of the raw action.
 
-### `getNodeAndSavePathDependency` action
+### getNodeAndSavePathDependency action
 
 The [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/nodes.ts#L108) action simply calls `getNode`, and then calls `createPageDependency` using that result. It is a programmer convenience.

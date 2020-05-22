@@ -168,7 +168,7 @@ If you want to add some options, you could switch to the object syntax:
 
 When modifying nodes, you'll want to walk the tree and then implement new functionality on specific nodes.
 
-A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
+A node module to help with is [unist-util-visit](https://github.com/syntax-tree/unist-util-visit), a walker for `unist` nodes. For reference, Unist (Unified Syntax Tree) is a standard for Markdown syntax trees and parsers that include well known parsers in the Gatsby world like Remark and MDX.
 
 As an example from `unist-util-visit`'s README file, it allows for an interface to visit particular nodes based on a particular type:
 
@@ -185,7 +185,7 @@ function visitor(node) {
 }
 ```
 
-Here, it finds all text nodes and will `console.log` the nodes. The second argument can be replaced with any type described in unist's [Markdown AST (mdast) specification](https://github.com/syntax-tree/mdast#nodes) including types such as `paragraph`, `blockquote`, `link`, `image` or in our use case, `heading`.
+Here, it finds all text nodes and will `console.log` the nodes. The second argument can be replaced with any type described in Unist's [Markdown AST (mdast) specification](https://github.com/syntax-tree/mdast#nodes) including types such as `paragraph`, `blockquote`, `link`, `image` or in our usecase, `heading`.
 
 With this technique in mind, you can similarly traverse the AST from your plugin and add additional functionality, like so:
 
@@ -231,7 +231,7 @@ Looking again at the AST node for heading:
 
 You have context about the text as well as what depth the heading is (for instance here you have a depth of 1 which would equate to an `h1` element)
 
-With the inner function of the `visit` call, you parse out all of the text and if it will map to a `h1`, you set the type of the node to `html` and set the node's value to be some custom HTML.
+With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
 ```js
 const visit = require("unist-util-visit")

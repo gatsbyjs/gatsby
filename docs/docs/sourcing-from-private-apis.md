@@ -20,7 +20,7 @@ There are 3 approaches that you can use to source data from your private API:
 
 3. Depending on your build process and the availability of your private API, you may need to make other adjustments accordingly.
 
-   - If your private API is only available within your company network, then you would need to expose the private API to your CI server that runs the build, else you would need to run the Gatsby build in your own computer.
+   - If your private API is only available within your company network, then you would need to expose the private API to your CI server that runs the build, else you would need to run the gatsby build in your own computer.
    - You may also need to configure the endpoints of the API differently for development or production. Refer the [environment variables](/docs/environment-variables/) guide to learn how to do that.
 
 4. To ensure your site does not show outdated data, you may want to setup an automated process to trigger the process to rebuild your site whenever the data is updated. For instance, if you host your site in Netlify, you can [make a request for its webhook to trigger a new build](https://docs.netlify.com/site-deploys/notifications/).

@@ -58,7 +58,7 @@ const HomePage = () => {
 
 Below the `HomePage` component declaration, export a new constant called `query`. The name of the constant isn't important, as Gatsby looks for an exported `graphql` string from the file rather than a specific variable. Note that you can only have one page query per file.
 
-Then, set the `const` variable's value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks:
+Then, set the const variable's value to be a `graphql` [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) with the query between two backticks:
 
 ```diff:title=src/pages/index.js
 const HomePage = () => {

@@ -52,21 +52,21 @@ Most of the code backing this section is in [pages-writer.js](https://github.com
 
 The dynamic files that are created are (all under the `.cache` directory).
 
-- [`pages.json`](#pagesjson)
-- [`sync-requires.js`](#sync-requiresjs)
-- [`async-requires.js`](#async-requiresjs)
-- [`data.json`](#datajson)
+- [pages.json](#pagesjson)
+- [sync-requires.js](#sync-requiresjs)
+- [async-requires.js](#async-requiresjs)
+- [data.json](#datajson)
 
 ## pages.json
 
 This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
 
-- [`componentChunkName`](/docs/gatsby-internals-terminology/#componentchunkname)
-- [`jsonName`](/docs/gatsby-internals-terminology/#jsonname)
-- [`path`](/docs/gatsby-internals-terminology/#path)
-- [`matchPath`](/docs/gatsby-internals-terminology/#matchpath)
+- [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname)
+- [jsonName](/docs/gatsby-internals-terminology/#jsonname)
+- [path](/docs/gatsby-internals-terminology/#path)
+- [matchPath](/docs/gatsby-internals-terminology/#matchpath)
 
-The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [`matchPath`](/docs/gatsby-internals-terminology/#matchpath) for more info.
+The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/gatsby-internals-terminology/#matchpath) for more info.
 
 e.g
 
@@ -85,7 +85,7 @@ e.g
 
 ## sync-requires.js
 
-This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [`componentChunkName`](/docs/gatsby-internals-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {
@@ -94,17 +94,17 @@ exports.components = {
 }
 ```
 
-It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) so that it can map `componentChunkName`s to their component implementations. Whereas the [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) must use `async-requires.js` (below) since it performs [code splitting](/docs/how-code-splitting-works/).
+It is used during [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js) so that it can map componentChunkNames to their component implementations. Whereas the [production-app.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/production-app.js) must use `async-requires.js` (below) since it performs [code splitting](/docs/how-code-splitting-works/).
 
-## `async-requires.js`
+## async-requires.js
 
 ---
 
-`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it uses `import` and adds a `webpackChunkName` hint so that we can eventually link the `componentChunkName` to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
+`async-requires.js` is very similar to `sync-requires.js`, in that it is a dynamically generated JavaScript file. The difference is that it is written to be used for code splitting via webpack. So, instead of using `require` with the component's path, it uses `import` and adds a `webpackChunkName` hint so that we can eventually link the componentChunkName to its resulting file (more info in [Code Splitting](/docs/how-code-splitting-works/) docs). `components` is a function, so that it can be lazily initialized.
 
 `async-requires.js` also exports a `data` function that imports `data.json` ([see below](/docs/write-pages/#datajson))
 
-An example of `async-requires` is:
+An example of async-requires is:
 
 ```javascript
 exports.components = {
@@ -120,9 +120,9 @@ exports.data = () => import("/home/site/.cache/data.json")
 
 Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-generation/). And `async-requires.js` is used by [Building the JavaScript App](/docs/production-app/).
 
-## `data.json`
+## data.json
 
-This is a generated JSON file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
+This is a generated json file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
 
 ```javascript
 {
@@ -142,11 +142,11 @@ This is a generated JSON file. It contains the entire `pages.json` contents ([as
  }
 ```
 
-`data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load JSON results](/docs/production-app/#load-page-resources) for a page.
+`data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load json results](/docs/production-app/#load-page-resources) for a page.
 
 It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 
 1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
-2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual JSON result by looking it up in `data.json.dataPaths[jsonName]`.
+2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
 
 Now that Gatsby has written out page data, it can start on the [webpack section](/docs/webpack-and-ssr/).

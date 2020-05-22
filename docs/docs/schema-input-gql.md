@@ -13,7 +13,7 @@ title: Inferring Input Filters
 
 ## Input Filters vs gqlType
 
-In [gqlTypes](/docs/schema-gql-type), we inferred a Gatsby Node's main fields. These allow us to query a node's children, parent and object fields. But these are only useful once a top level GraphQL Query has returned results. In order to query by those fields, we must create GraphQL objects for input filters. E.g, querying for all `markdownRemark` nodes that have 4 paragraphs.
+In [gqlTypes](/docs/schema-gql-type), we inferred a Gatsby Node's main fields. These allow us to query a node's children, parent and object fields. But these are only useful once a top level GraphQL Query has returned results. In order to query by those fields, we must create GraphQL objects for input filters. E.g, querying for all markdownRemark nodes that have 4 paragraphs.
 
 ```graphql
 {

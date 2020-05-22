@@ -60,7 +60,7 @@ query MyPokemonQuery {
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [source plugin tutorial](/tutorial/source-plugin-tutorial/)
-- The `createNode` function [documentation](/docs/actions/#createNode)
+- The createNode function [documentation](/docs/actions/#createNode)
 
 ## Sourcing Markdown data for blog posts and pages with GraphQL
 
@@ -403,7 +403,7 @@ plugins: [
 
 8. Query data with the [GraphiQL editor](/docs/introducing-graphiql/) at `http://localhost:8000/___graphql`. The Contentful plugin adds several new node types to your site, including every content type in your Contentful website. Your example space with a "Blog Post" content type produces a `allContentfulBlogPost` node type in GraphQL.
 
-![the GraphQL interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
+![the graphql interface, with a sample query outlined below](../images/recipe-sourcing-contentful-graphql.png)
 
 To query for Blog Post titles from Contentful, use the following GraphQL query:
 

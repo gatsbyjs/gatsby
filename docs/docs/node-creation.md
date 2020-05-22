@@ -8,7 +8,7 @@ A node is stored in redux under the `nodes` namespace, whose state is a map of t
 
 ## Sourcing Nodes
 
-The creation of nodes occurs primarily in the [`sourceNodes`](/docs/node-apis/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `null`. Nodes created via transform plugins (who implement [`onCreateNode`](/docs/node-apis/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [traceID illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
+The creation of nodes occurs primarily in the [sourceNodes](/docs/node-apis/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `null`. Nodes created via transform plugins (who implement [onCreateNode](/docs/node-apis/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [traceID illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
 
 ## Parent/Child/Refs
 
@@ -30,7 +30,7 @@ An important note here is that we do not store a distinct collection of each typ
 
 ### Explicitly recording a parent/child relationship
 
-This occurs when a transformer plugin implements [`onCreateNode`](/docs/node-apis/#onCreateNode) in order to create some child of the originally created node. In this case, the transformer plugin will call [`createParentChildLink`](/docs/actions/#createParentChildLink), with the original node, and the newly created node. All this does is push the child's node ID onto the parent's `children` collection and resave the parent to redux.
+This occurs when a transformer plugin implements [onCreateNode](/docs/node-apis/#onCreateNode) in order to create some child of the originally created node. In this case, the transformer plugin will call [createParentChildLink](/docs/actions/#createParentChildLink), with the original node, and the newly created node. All this does is push the child's node ID onto the parent's `children` collection and resave the parent to redux.
 
 This does **not** automatically create a `parent` field on the child node. If a plugin author wishes to allow child nodes to navigate to their parents in GraphQL queries, they must explicitly set `childNode.parent: 'parent.id'` when creating the child node.
 

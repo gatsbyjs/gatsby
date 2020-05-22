@@ -74,7 +74,7 @@ module.exports = {
 }
 ```
 
-Save that and restart the Gatsby development server. Then open up GraphiQL again.
+Save that and restart the gatsby development server. Then open up GraphiQL again.
 
 In the explorer pane, you'll see `allFile` and `file` available as selections:
 

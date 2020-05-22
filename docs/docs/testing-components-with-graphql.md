@@ -42,7 +42,7 @@ describe("Index", () =>
   }))
 ```
 
-If you run this test you will get an error, as the `StaticQuery` in the `Layout` component is not mocked. You can fix this by mocking it, like so:
+If you run this test you will get an error, as the StaticQuery in the `Layout` component is not mocked. You can fix this by mocking it, like so:
 
 ```js:title=src/__tests__/index.js
 import React from "react"
@@ -105,7 +105,7 @@ Here it is, trimmed to one node for brevity:
 GraphiQL doesn't know about any fragments defined by Gatsby, so if your query
 uses them then you'll need to replace those with the content of the fragment. If
 you're using `gatsby-transformer-sharp` you'll find the fragments in
-[`gatsby-transformer-sharp/src/fragments.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/fragments.js).
+[gatsby-transformer-sharp/src/fragments.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/fragments.js).
 So, for example if your query includes:
 
 ```graphql
@@ -175,7 +175,7 @@ describe("Index", () => {
 Run the tests and they should now pass. Take a look in `__snapshots__` to see
 the output.
 
-## Testing `StaticQuery`
+## Testing StaticQuery
 
 The method above works for page queries, as you can pass the data in directly to
 the component. This doesn't work for components that use `StaticQuery` though,
@@ -222,7 +222,7 @@ export default function MyHeader(props) {
 ```
 
 This is almost ready: all you need to do is export the pure component that you
-are passing to `StaticQuery`. Rename it first to avoid confusion:
+are passing to StaticQuery. Rename it first to avoid confusion:
 
 ```jsx:title=src/components/header.js
 import React from "react"
@@ -289,7 +289,7 @@ possible since we have also made `Header` a function component.
 Now you have two components exported from the file: the component that includes
 the StaticQuery data which is still the default export, and another component
 that you can test. This means you can test the component independently of the
-GraphQL. In addition, whether you utilize StaticQuery or `useStaticQuery`, your
+GraphQL. In addition, whether you utilize StaticQuery or useStaticQuery, your
 test should still function properly.
 
 This is a good example of the benefits of keeping components "pure", meaning

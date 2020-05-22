@@ -156,7 +156,7 @@ export default function Home() {
 - Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
 - Styling with [Layout Components](/docs/layout-components/)
 
-## Creating pages programmatically with `createPage`
+## Creating pages programmatically with createPage
 
 You can create pages programmatically in the `gatsby-node.js` file with helper methods Gatsby provides.
 
@@ -198,7 +198,7 @@ exports.createPages = ({ actions }) => {
 }
 ```
 
-3. Loop through the data in `gatsby-node.js` and provide the path, template, and context (data that will be passed in the props' `pageContext`) to `createPage` for each invocation
+3. Loop through the data in `gatsby-node.js` and provide the path, template, and context (data that will be passed in the props' pageContext) to `createPage` for each invocation
 
 ```javascript:title=gatsby-node.js
 exports.createPages = ({ actions }) => {

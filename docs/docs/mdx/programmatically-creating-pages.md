@@ -214,7 +214,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 ```
 
 For further reading, check out the
-[`createPages`](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+[createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages)
 API.
 
 ## Make a template for your posts
@@ -224,7 +224,7 @@ will be rendered as the template for all posts. There's a component,
 `MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
 programmatically accessed MDX content.
 
-For now, to update imports within `.mdx` files, you should rerun your Gatsby development environment. Otherwise, it will raise a `ReferenceError`. To import things dynamically, you can use the `MDXProvider` component and provide it all the common components you'll be using, such as `Link`.
+For now, to update imports within .mdx files, you should rerun your Gatsby development environment. Otherwise, it will raise a `ReferenceError`. To import things dynamically, you can use the `MDXProvider` component and provide it all the common components you'll be using, such as `Link`.
 
 First, create a component that accepts the queried MDX data (which will be
 added in the next step).

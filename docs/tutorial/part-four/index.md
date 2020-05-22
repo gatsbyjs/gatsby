@@ -8,7 +8,7 @@ Welcome to Part Four of the tutorial! Halfway through! Hope things are starting 
 
 ## Recap of the first half of the tutorial
 
-So far, you've been learning how to use React—how powerful it is to be able to create your _own_ components to act as custom building blocks for websites.
+So far, you've been learning how to use React.js—how powerful it is to be able to create your _own_ components to act as custom building blocks for websites.
 
 You’ve also explored styling components using CSS Modules.
 
@@ -169,7 +169,7 @@ export default typography
 export const rhythm = typography.rhythm
 ```
 
-`gatsby-config.js` (must be in the root of your project, not under `src`)
+`gatsby-config.js` (must be in the root of your project, not under src)
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -259,7 +259,7 @@ export const query = graphql`
 
 It worked! 🎉
 
-![Page title pulling from site metadata](site-metadata-title.png)
+![Page title pulling from siteMetadata](site-metadata-title.png)
 
 The basic GraphQL query that retrieves the `title` in your `about.js` changes above is:
 
@@ -277,9 +277,9 @@ The basic GraphQL query that retrieves the `title` in your `about.js` changes ab
 
 Page queries live outside of the component definition -- by convention at the end of a page component file -- and are only available on page components.
 
-### Use a `StaticQuery`
+### Use a StaticQuery
 
-[`StaticQuery`](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
+[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:
 
@@ -342,9 +342,9 @@ export default function Layout({ children }) {
 
 Another success! 🎉
 
-![Page title and layout title both pulling from site metadata](site-metadata-two-titles.png)
+![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
-Why use two different queries here? These examples were quick introductions to the query types, how they are formatted, and where they can be used. For now, keep in mind that only pages can make page queries. Non-page components, such as Layout, can use `StaticQuery`. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater depth.
+Why use two different queries here? These examples were quick introductions to the query types, how they are formatted, and where they can be used. For now, keep in mind that only pages can make page queries. Non-page components, such as Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater depth.
 
 But let's restore the real title.
 

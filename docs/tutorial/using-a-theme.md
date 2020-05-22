@@ -21,7 +21,7 @@ cd my-blog
 gatsby develop
 ```
 
-![Default screen when starting a project using Gatsby blog starter](./images/starter-blog-theme-default.png)
+![Default screen when starting a project using gatsby blog starter](./images/starter-blog-theme-default.png)
 
 ## Replace your avatar
 

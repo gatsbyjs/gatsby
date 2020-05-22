@@ -95,7 +95,7 @@ There are a couple of things to note here.
 
 ### Relative image paths and `gatsby-config.js`
 
-You might expect the relative path to be relative to the file the code sits in, in this case that's `index.js`. However, that doesn't work. The relative path is actually based on the line of code you put in the `gatsby-source-filesystem` config, which points to `src/data`.
+You might expect the relative path to be relative to the file the code sits in, in this case that's index.js. However, that doesn't work. The relative path is actually based on the line of code you put in the `gatsby-source-filesystem` config, which points to `src/data`.
 
 ### Image fragments
 

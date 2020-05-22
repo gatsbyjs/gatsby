@@ -22,10 +22,10 @@ Cloudinary provides a couple of amazing solutions to this problem, namely:
 - Offers a wider range of transformations than [gatsby-image](/docs/using-gatsby-image/).
 - [Digital Asset Management](https://cloudinary.com/documentation/digital_asset_management_overview) for enterprise assets
 
-## gatsby-source-cloudinary
+## Gatsby-source-cloudinary
 
 This plugin fetches media assets from Cloudinary that are specified in a folder. It then transforms these images into Cloudinary file nodes, which can be queried with GraphQL in a Gatsby project.
-`gatsby-source-cloudinary` applies [f_auto and q_auto](https://cloudinary.com/documentation/image_transformations) transformation parameters which aid in automatic optimization of format and quality for media assets by over 70 percent.
+`gatsby-source-cloudinary` applies [f_auto and q_auto](https://cloudinary.com/documentation/image_transformations) transformation parameters which aid in automatic optimisation of format and quality for media assets by over 70 percent.
 
 ### Prerequisites
 
