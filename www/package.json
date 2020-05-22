@@ -137,7 +137,6 @@
     "sorting": "origin"
   },
   "scripts": {
-    "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "start": "npm run develop",
