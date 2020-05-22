@@ -25,6 +25,11 @@ const DATA_FILE_EXTENSION = `.json`
 const getDataFilePath = (siteDir: string, serviceName: string): string =>
   path.join(siteDir, `${serviceName}${DATA_FILE_EXTENSION}`)
 
+const lockfileOptions = {
+  // Use the minimum stale duration
+  stale: 5000,
+}
+
 type UnlockFn = () => Promise<void>
 
 const memoryServices = {}
@@ -53,10 +58,7 @@ export const createServiceLock = async (
   try {
     await fs.writeFile(serviceDataFile, JSON.stringify(content))
 
-    const unlock = await lockfile.lock(serviceDataFile, {
-      // Use the minimum stale duration
-      stale: 5000,
-    })
+    const unlock = await lockfile.lock(serviceDataFile, lockfileOptions)
 
     return unlock
   } catch (err) {
@@ -71,11 +73,16 @@ export const getService = async (
   if (isCI()) return memoryServices[serviceName] || null
 
   const siteDir = getSiteDir(programPath)
+  const serviceDataFile = getDataFilePath(siteDir, serviceName)
 
   try {
-    return JSON.parse(
-      await fs.readFile(getDataFilePath(siteDir, serviceName), `utf8`)
-    )
+    if (await lockfile.check(serviceDataFile, lockfileOptions)) {
+      return JSON.parse(
+        await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`)
+      )
+    }
+
+    return null
   } catch (err) {
     return null
   }

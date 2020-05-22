@@ -15,6 +15,7 @@ const HomepageFeatures = () => (
       flex: `0 1 auto`,
       flexWrap: `wrap`,
       px: 8,
+      pb: [8, 0],
     }}
   >
     <Card>

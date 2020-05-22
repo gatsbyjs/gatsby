@@ -459,7 +459,7 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 // highlight-end
 ```
 
-Then export a new function `onCreateNode`, and call `createRemoteFileNode` in it whenever a node of of type `Post` is created:
+Then export a new function `onCreateNode`, and call `createRemoteFileNode` in it whenever a node of type `Post` is created:
 
 ```javascript:title=source-plugin/gatsby-node.js
 // called each time a node is created

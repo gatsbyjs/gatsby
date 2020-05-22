@@ -15,6 +15,7 @@ import { jobsV2Reducer } from "./jobsv2"
 import { pageDataStatsReducer } from "./page-data-stats"
 import { componentsReducer } from "./components"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
+import { nodesTouchedReducer } from "./nodes-touched"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
 
@@ -26,7 +27,7 @@ module.exports = {
   nodes: nodeReducer,
   nodesByType: nodesByType,
   resolvedNodesCache: require(`./resolved-nodes`),
-  nodesTouched: require(`./nodes-touched`),
+  nodesTouched: nodesTouchedReducer,
   lastAction: lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),
