@@ -1,7 +1,10 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
 const MDX = require(`@mdx-js/runtime`).default
+const ansi2HTML = require(`ansi-html`)
 const {
   createClient,
   useMutation,
@@ -13,7 +16,7 @@ const {
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const semver = require(`semver`)
 
-const SelectInput = 'select'
+const SelectInput = "select"
 
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
@@ -22,26 +25,20 @@ if (semver.lt(React.version, `16.8.0`)) {
   )
 }
 
-const PROJECT_ROOT = '/Users/johno-mini/c/gatsby/starters/blog'
+const PROJECT_ROOT = "/Users/kylemathews/projects/gatsby/starters/blog"
 
-const Boxen = 'div'
-const Text = 'p'
-const Static = 'div'
-const Color = 'span'
-const Spinner = () => <div>Loading...</div>
+const Boxen = "div"
+const Text = "p"
+const Static = "div"
+const Color = "span"
+const Spinner = () => <span>Loading...</span>
 
 const WelcomeMessage = () => (
   <>
-    <Boxen
-      borderStyle="double"
-      borderColor="magentaBright"
-      float="left"
-      padding={1}
-      margin={{ bottom: 1, left: 2 }}
-    >
+    <Boxen float="left" padding={1} margin={{ bottom: 1, left: 2 }}>
       Thank you for trying the experimental version of Gatsby Recipes!
     </Boxen>
-    <Div marginBottom={2} alignItems="center">
+    <Div margin-bottom={2}>
       Please ask questions, share your recipes, report bugs, and subscribe for
       updates in our umbrella issue at
       https://github.com/gatsbyjs/gatsby/issues/22991
@@ -127,11 +124,11 @@ const RecipesList = ({ setRecipe }) => {
   ]
 
   return (
-    <SelectInput
-      onChange={e => setRecipe(e.target.value)}
-    >
+    <SelectInput onChange={e => setRecipe(e.target.value)}>
       {items.map(item => (
-        <option key={item.value} value={item.value}>{item.label}</option>
+        <option key={item.value} value={item.value}>
+          {item.label}
+        </option>
       ))}
     </SelectInput>
   )
@@ -159,7 +156,11 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) => {
+const RecipeGui = ({
+  recipe = `jest.mdx`,
+  graphqlPort = 4000,
+  projectRoot = PROJECT_ROOT,
+}) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
@@ -237,13 +238,15 @@ const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) =
 
       log(`subscriptionResponse.data`, subscriptionResponse.data)
 
+      function Wrapper({ children }) {
+        return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
+      }
+
       if (showRecipesList) {
         return (
-          <>
+          <Wrapper>
             <WelcomeMessage />
-            <Text bold underline>
-              Select a recipe to run
-            </Text>
+            <Text>Select a recipe to run</Text>
             <RecipesList
               setRecipe={async recipeItem => {
                 console.log(recipeItem)
@@ -258,21 +261,21 @@ const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) =
                 }
               }}
             />
-          </>
+          </Wrapper>
         )
       }
 
       if (!state) {
-        console.log('Loading recipe!')
+        console.log("Loading recipe!")
         return (
-          <Text>
+          <Wrapper>
             <Spinner /> Loading recipe
-          </Text>
+          </Wrapper>
         )
       }
 
       console.log(state)
-      console.log('!!!!!!')
+      console.log("!!!!!!")
 
       const isDone = state.value === `done`
 
@@ -286,49 +289,60 @@ const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) =
         log(`stepResources`, state.context.stepResources)
       }
 
-      const PresentStep = ({ state }) => {
-        const isPlan = state.context.plan && state.context.plan.length > 0
-        const isPresetPlanState = state.value === `presentPlan`
-        const isRunningStep = state.value === `applyingPlan`
+      const PresentStep = ({ step }) => {
+        // const isPlan = state.context.plan && state.context.plan.length > 0
+        // const isPresetPlanState = state.value === `presentPlan`
+        // const isRunningStep = state.value === `applyingPlan`
 
-        if (isRunningStep) {
-          console.log('running step')
-          return null
-        }
+        // console.log(`PresentStep`, { isRunningStep, isPlan, isPresetPlanState })
 
-        if (!isPlan || !isPresetPlanState) {
-          return (
-            <Div marginTop={1}>
-              <button onClick={() => sendEvent({ event: `CONTINUE` })}>Go!</button>
-            </Div>
-          )
-        }
+        // if (isRunningStep) {
+        // console.log("running step")
+        // return null
+        // }
+
+        // if (!isPlan || !isPresetPlanState) {
+        // return (
+        // <Div margin-top={1}>
+        // <button onClick={() => sendEvent({ event: `CONTINUE` })}>
+        // Go!
+        // </button>
+        // </Div>
+        // )
+        // }
+        //
+        // {plan.map((p, i) => (
+        // <Div margin-top={1} key={`${p.resourceName} plan ${i}`}>
+        // <Text>{p.resourceName}:</Text>
+        // <Text> * {p.describe}</Text>
+        // {p.diff && p.diff !== `` && (
+        // <>
+        // <Text>---</Text>
+        // <pre
+        // sx={{
+        // lineHeight: 0.7,
+        // background: `#f5f3f2`,
+        // padding: [3],
+        // "& > span": {
+        // display: `block`,
+        // },
+        // }}
+        // dangerouslySetInnerHTML={{ __html: ansi2HTML(p.diff) }}
+        // />
+        // <Text>---</Text>
+        // </>
+        // )}
+        // </Div>
+        // ))}
+        // <Div margin-top={1}>
+        // <button onClick={() => sendEvent({ event: "CONTINUE" })}>
+        // Go!
+        // </button>
+        // </Div>
 
         return (
           <Div>
-            <Div>
-              <Text bold italic marginBottom={2}>
-                Proposed changes
-              </Text>
-            </Div>
-            {state.context.plan.map((p, i) => (
-              <Div marginTop={1} key={`${p.resourceName} plan ${i}`}>
-                <Text italic>{p.resourceName}:</Text>
-                <Text> * {p.describe}</Text>
-                {p.diff && p.diff !== `` && (
-                  <>
-                    <Text>---</Text>
-                    <Text>{p.diff}</Text>
-                    <Text>---</Text>
-                  </>
-                )}
-              </Div>
-            ))}
-            <Div marginTop={1}>
-              <button onClick={() => sendEvent({ event: 'CONTINUE'})}>
-                Go!
-              </button>
-            </Div>
+            <Text margin-bottom={2}>Proposed changes</Text>
           </Div>
         )
       }
@@ -345,7 +359,7 @@ const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) =
           <Div>
             {state.context.plan.map((p, i) => (
               <Div key={`${p.resourceName}-${i}`}>
-                <Text italic>{p.resourceName}:</Text>
+                <Text>{p.resourceName}:</Text>
                 <Text>
                   {` `}
                   <Spinner /> {p.describe}
@@ -398,7 +412,7 @@ const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) =
       if (isDone) {
         process.nextTick(() => {
           subscriptionClient.close()
-          log('The recipe finished successfully')
+          log("The recipe finished successfully")
           lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
             log(`✅ ${res._message}\n`)
           })
@@ -406,24 +420,46 @@ const RecipeGui = ({ recipe, graphqlPort = 4000, projectRoot = PROJECT_ROOT }) =
       }
 
       return (
-        <>
-          <Div>
-          </Div>
+        <Wrapper>
+          <Div></Div>
           {state.context.currentStep === 0 && <WelcomeMessage />}
-          {state.context.currentStep > 0 && !isDone && (
-            <Div marginTop={7}>
-              <Text underline bold>
-                Step {state.context.currentStep} /{` `}
-                {state.context.steps.length - 1}
-              </Text>
-            </Div>
-          )}
-          <MDX components={components}>
-            {state.context.steps[state.context.currentStep]}
-          </MDX>
-          {!isDone && <PresentStep state={state} />}
-          {!isDone && <RunningStep state={state} />}
-        </>
+          <br />
+          <h2>Proposed changes</h2>
+          <button>Apply changes</button>
+          <div>count {state.context.plan?.length}</div>
+          <div sx={{ marginBottom: 4 }}>
+            {state.context.plan?.map(p => (
+              <div>
+                {p.resourceName} — {p.describe}
+              </div>
+            ))}
+          </div>
+
+          {state.context.steps.map((step, i) => {
+            return (
+              <div>
+                <h4 sx={{ marginBottom: 3, marginTop: 0 }}>
+                  {i + 1}/{state.context.steps.length}
+                </h4>
+                <div
+                  key={`step-${i}`}
+                  sx={{
+                    border: `1px solid`,
+                    marginBottom: 4,
+                    padding: 3,
+                    borderRadius: 20,
+                    "& > h1": {
+                      marginTop: 0,
+                    },
+                  }}
+                >
+                  <MDX components={components}>{step}</MDX>
+                  <PresentStep step={step} />
+                </div>
+              </div>
+            )
+          })}
+        </Wrapper>
       )
     }
 
