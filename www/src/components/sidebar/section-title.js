@@ -165,7 +165,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
       </span>
       <button
         aria-controls={uid}
-        aria-expanded={isExpanded}
+        aria-expanded={!!isExpanded}
         aria-label={
           isExpanded
             ? i18n._(t`${item.title} collapse`)
