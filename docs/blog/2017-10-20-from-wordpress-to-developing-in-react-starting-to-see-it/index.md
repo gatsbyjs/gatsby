@@ -170,5 +170,5 @@ impressive gains on loading time. We’ll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.
 
 The web is always changing. And the way forward isn't always easy to see. Now,
-with GatsbyJS, we're beginning to feel like we can visualise where things are
+with GatsbyJS, we're beginning to feel like we can visualize where things are
 going.

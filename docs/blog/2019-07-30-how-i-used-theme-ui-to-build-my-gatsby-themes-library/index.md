@@ -32,7 +32,7 @@ I really liked the prominent and actionable hero section of the [Refactoring UI 
 
 The design you see live on the website now is pretty much the design I created in Figma — which speaks to the ease of use of a Figma (+ Tailwind styles) => Theme UI (+ Tailwind preset) workflow!
 
-As mentioned I also wanted a rad hero section, nothing boring but also not something that is overused (and potentially can also slow down your website) like particles.js. Since I'm pretty proficient with Cinema4D and 3D in general I just tried to visualize "Gatsby Themes" with 3D models. I drew some inspiration from [Kyle Gill's illustrations](https://kylegill.com/blog/2019-04-22-a-simple-guide-to-gatsby-themes/index). I rendered the scene with Arnold, modified it a bit with Photoshop and et voilá: You can see the finished result on my social preview image now.
+As mentioned I also wanted a rad hero section, nothing boring but also not something that is overused (and potentially can also slow down your website) like particles.js. Since I'm pretty proficient with Cinema4D and 3D in general I just tried to visualize "Gatsby Themes" with 3D models. I drew some inspiration from [Kyle Gill's illustrations](https://kylegill.com/blog/2019-04-22-a-simple-guide-to-gatsby-themes/index). I rendered the scene with Arnold, modified it a bit with Photoshop and et voilà: You can see the finished result on my social preview image now.
 
 <figure>
   <img
