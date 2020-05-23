@@ -18,8 +18,10 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
+import { Box } from "theme-ui"
+
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import { Box, Flex, Text } from "../../components/guidelines/system"
+import { Flex, Text } from "../../components/guidelines/system"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const ColorExample = ({ hex, token }) => (
@@ -137,9 +139,11 @@ const DesignTokens = ({ location }) => (
                     {` `}
                     <Box
                       key={`${index}-${space}`}
-                      height={space}
-                      width={space}
-                      bg="grey.30"
+                      sx={{
+                        height: space,
+                        width: space,
+                        bg: `grey.30`,
+                      }}
                     />
                     <SrOnly>
                       A box with <code>space[{index}]</code> set as value for
@@ -181,16 +185,21 @@ const DesignTokens = ({ location }) => (
         >
           {Object.keys(theme.shadows).map((shadow, i) => (
             <Box
-              bg="white"
-              borderRadius="2"
               key={`tokens-shadow-${i}`}
-              mb={10}
-              mr={4}
-              p={4}
-              width="50%"
-              boxShadow={shadow}
-              height={0}
-              pb={`${0.3 * 100}%`}
+              sx={{
+                bg: `white`,
+                borderRadius: 2,
+                mb: 10,
+                mr: 10,
+                p: 4,
+                boxShadow: shadow,
+                width: `100%`,
+                height: 0,
+                pb: `${0.3 * 100}%`,
+                [mediaQueries.sm]: {
+                  width: `50%`,
+                },
+              }}
             >
               <code>shadows.{shadow}</code>
             </Box>
@@ -266,10 +275,12 @@ const DesignTokens = ({ location }) => (
                     {` `}
                     <Box
                       key={`${index}-radius`}
-                      height={40}
-                      width={80}
-                      bg="grey.30"
-                      borderRadius={index}
+                      sx={{
+                        height: 40,
+                        width: 80,
+                        bg: `grey.30`,
+                        borderRadius: index,
+                      }}
                     />
                     <SrOnly>
                       A 80&times;40px box with <code>radii[{index}]</code>
@@ -513,7 +524,7 @@ const DesignTokens = ({ location }) => (
             <code>breakpoints</code> scale is available.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth width="100%">
+        <ContentColumn fullWidth>
           <Flex>
             <table css={{ width: `50%` }}>
               <thead>
@@ -536,7 +547,12 @@ const DesignTokens = ({ location }) => (
               </tbody>
             </table>
 
-            <Box as="table" ml={10}>
+            <Box
+              as="table"
+              sx={{
+                ml: 10,
+              }}
+            >
               <thead>
                 <tr>
                   <th scope="col">Token</th>
