@@ -1318,7 +1318,6 @@ metafields
 Metalsmith
 METROGLAM
 Meuleman
-Michal
 Michał
 Microfrontends
 microservices

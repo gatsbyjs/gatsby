@@ -66,7 +66,7 @@ It's been a pretty busy month on the monorepo. We've merged in a _lot_ of your c
 
 ### GraphiQL Code Exporter
 
-Back in June, [Michal](https://twitter.com/mipiechowiak) from the Gatsby core team worked on adding [GraphiQL Explorer](https://github.com/OneGraph/graphiql-explorer) to GraphiQL in Gatsby. One of the next steps he mentioned was the addition of code snippet generation using graphiql-code-exporter.
+Back in June, [Michał](https://twitter.com/mipiechowiak) from the Gatsby core team worked on adding [GraphiQL Explorer](https://github.com/OneGraph/graphiql-explorer) to GraphiQL in Gatsby. One of the next steps he mentioned was the addition of code snippet generation using graphiql-code-exporter.
 
 Gatsby now includes Code Exporter in GraphiQL out of the box starting from v2.15.3, thanks to [Dan Kirkham](https://twitter.com/herecydev).
 
