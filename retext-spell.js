@@ -1,4 +1,4 @@
-const fs = require(`fs`)
+// const fs = require(`fs`)
 
 // const errors = fs.readFileSync(`./errors.txt`, `utf-8`)
 // const matches = errors.matchAll(/`(.*)` is misspelt/g)
