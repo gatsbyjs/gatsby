@@ -2013,9 +2013,7 @@ tempPromise
 terrabytes
 Terraform
 test-repo
-testand
 theatre
-themable
 Theme-UI
 themeable
 ThemeForest
@@ -2062,9 +2060,7 @@ TransitionLink
 TransitionPortal
 TransitionState
 transpilation
-Transpilation
 transpile
-Transpile
 transpiled
 transpiler
 transpiles
@@ -2072,7 +2068,6 @@ transpiling
 travis
 Trello
 triaging
-Triaging
 Trinier
 Triptcip
 TruDesigns
@@ -2088,8 +2083,7 @@ TXT
 typeBuilder
 typecheck
 typechecking
-Typechecking
-typeName.
+typeName
 typeOwners
 Udacity
 Udemy
@@ -2127,7 +2121,6 @@ unstyled
 untracked
 untrusted
 unvisited
-Unvisited
 updatedAt
 updaters
 upstreams
@@ -2156,20 +2149,16 @@ UX
 UX/UI
 v0
 v1
-V1
 v1's
 v16
 v2
 V2
-v2.
 v2's
-V2's
 v3
 v4
 v5
 v7
 v8
-V8
 Valeriy
 validator
 Vasan
