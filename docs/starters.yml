@@ -6307,8 +6307,6 @@
   tags:
     - Language:TypeScript
     - Styling:CSS-in-JS
-    - Styled Components
-    - Google Fonts
   features:
     - Typescript installed and configured
     - Styled Components via Emotion
