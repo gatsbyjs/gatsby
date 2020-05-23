@@ -17,7 +17,7 @@
 1000x
 100DaysOfGatsby
 100K
-100kb's
+100kb
 100M
 100ms
 100px
@@ -39,7 +39,6 @@
 1600px
 1600s
 18F
-18F's
 1920s
 1990s
 1M
@@ -107,7 +106,7 @@ a11y
 A11y
 Abhishek
 about-uncentered
-Abramov's
+Abramov
 ACF
 Acquia
 Acroyoga
@@ -130,7 +129,6 @@ AEM
 Ahhh
 Airbnb
 Airtable
-Airtable's
 Akamai
 akismet
 al
@@ -139,7 +137,6 @@ Albright
 Alexa
 algolia
 Algolia
-Algolia's
 Allanson
 allfile-query
 allWordpressPage
@@ -151,7 +148,6 @@ analytics
 Anand
 Andreessen
 AniLink
-AniLink's
 animejs
 anonymized
 API
@@ -186,11 +182,9 @@ AST
 async
 async-requires
 Aten
-Aten's
 atomiks
 auth
 Auth0
-Auth0's
 autobuilds
 autocomplete
 autocompletion
@@ -238,7 +232,6 @@ Besties
 better-sqlite's
 bg
 Bhagwat
-Bhagwat's
 BigCommerce
 bigtime
 bikeshed
@@ -301,7 +294,6 @@ cache-dir
 café
 cafile
 Cagan
-Cagan's
 Callout
 Callum
 camelCase
@@ -322,7 +314,7 @@ CDN
 CDN-backed
 CDNs
 centralised
-Cereda's
+Cereda
 CFP
 changelog
 Changelog
@@ -330,7 +322,7 @@ changelogs
 chatbots
 Chatterjee
 cheatsheet
-Chedeau's
+Chedeau
 Chernev
 Chertorogov
 Chiang
@@ -358,7 +350,6 @@ Cloudflare
 CloudFormation
 CloudFront
 Cloudinary
-Cloudinary's
 Cluj-Napoca
 cmd
 CMOs
@@ -385,7 +376,6 @@ codebases
 codeblocks
 Codebrahma
 Codecademy
-Codecademy's
 CodeCommit
 codecs
 codemod
@@ -435,7 +425,6 @@ Contentful
 contentful-import
 Contentful-like
 Contentful-powered
-Contentful's
 Contentstack
 contentType
 Constraint-based
@@ -475,7 +464,7 @@ createRemoteFileNode
 createResolvers
 createTypes
 Crist
-Critchlow's
+Critchlow
 CRM
 cron
 cross-env
@@ -501,7 +490,7 @@ cypress-axe
 D3
 da
 Dabit
-Dalgleish's
+Dalgleish
 dangerouslySetInnerHTML
 Dashbored
 data-centric
@@ -587,7 +576,6 @@ drilldowns
 dropdown
 dropdowns
 DrupalCon
-DrupalCon's
 DrupalCons
 Drupalgeddon
 DSchau
@@ -609,7 +597,6 @@ Ehmke
 EJ
 Eka
 Elevar
-Elevar's
 Eleventy
 EmailCaptureForm
 emotion-js
@@ -631,7 +618,6 @@ ES5
 ES6
 ES7
 Escalade
-Escalade's
 ESLint
 eslint-plugin-jsx-a11y
 Espen
@@ -639,13 +625,11 @@ Estevez
 et
 ETags
 Etsy
-Etsy's
 Ettig
 EventBrite
 Evergage
 evergrowing
 Evie
-Evie's
 evolutions
 Evoq
 ex-PayPal-ers
@@ -707,10 +691,8 @@ Fonnegra
 FormatJS
 formatter
 Formik
-Formik's
 FormKeep
 Formspree
-Formspree's
 Forrester
 FOUC
 Franke
@@ -854,7 +836,6 @@ gatsbybot
 Gatsbybot
 gatsbygram
 Gatsbygram
-Gatsbygram's
 gatsbyjs
 Gatsbyjs
 GatsbyJS
@@ -883,7 +864,6 @@ gif
 GIFs
 Gitalk
 GitLab
-GitLab's
 Gitpod
 Gitter
 GitX
@@ -916,7 +896,6 @@ GraphiQl
 GraphiQL
 graphiql-code-exporter
 graphiql-filesystem
-GraphiQL's
 graphql
 GraphQL
 GraphQL-based
@@ -927,7 +906,6 @@ graphql-reference
 GraphQL-schema
 graphql-skip-limit
 GraphQL-specific
-GraphQL's
 GraphQLArgs
 GraphQLInputObjectType
 GraphQLObjectType
@@ -966,7 +944,6 @@ half-hearted
 handleQuery
 handoff
 Hapticmedia
-Hapticmedia's
 hardcode
 hardcoded
 hardcoding
@@ -1076,7 +1053,6 @@ iteratively
 J2EE
 Jaeger
 jaeger-client
-Jaeger's
 Jamstack
 JAMstack
 JAMStack
@@ -1086,7 +1062,7 @@ jank
 Jarmo
 JavaScripter
 Jeremey
-Jetson's
+Jetson
 Jing
 JIRA
 Joomla
@@ -1128,7 +1104,6 @@ Kentico
 Kenyő
 Kepford
 Khaled
-Khaled's
 Khosla
 kickass
 kickstart
@@ -1137,7 +1112,6 @@ kintoblock
 KintoBlock
 KintoBlocks
 KintoHub
-KintoHub's
 Kirkham
 Kissling
 Knut
@@ -1147,7 +1121,6 @@ Koenig
 Koerselman
 Konga
 Kontent
-Kontent's
 Koppers
 Koranda
 Korey
@@ -1178,7 +1151,6 @@ Lannon
 Lanyon
 late-1980s
 LaunchDarkly
-LaunchDarkly's
 Lazar
 Lazy-load
 LeanJS
@@ -1187,12 +1159,10 @@ learnt
 lego
 LekoArts
 Lengstorf
-Lengstorf's
 Lennart
 Léonie
 Lerna
 lerna-monorepo
-Lerna's
 levelup
 Libère
 libvips
@@ -1234,10 +1204,8 @@ MacWright
 macwright.org
 Madalyn
 Magento
-Magento's
 MagMutal
 MagMutual
-MagMutual's
 Mahmoud
 Mailchimp
 mailgun
@@ -1266,13 +1234,11 @@ MD5
 mdast
 mdast-util-to-string
 MDN
-MDN's
 mdx
 MDX
 MDX-embed
 MDXProvider
 Mediacurrent
-Mediacurrent's
 Meenan
 Meetfabric
 Megazord
@@ -1318,7 +1284,7 @@ modularized
 modularizing
 modus
 Monahan
-mongo's
+mongo
 monorepo
 monorepos
 Morby
@@ -1327,7 +1293,7 @@ Moto
 Moveable
 Moz
 mParticle
-MQL's
+MQL
 MSSQL
 Muha
 Mulesoft
@@ -1335,7 +1301,6 @@ multilanguage
 multimillion-dollar
 Multithreading
 Murr
-Murr's
 must-revalidate
 MVC
 MVPs
@@ -1358,7 +1323,6 @@ Neo-esque
 netlify
 Netlify
 netlify-cli
-Netlify's
 NetlifyCMS
 netlifyFunctions
 neverending
@@ -1368,7 +1332,7 @@ nextein
 NextJS
 NG
 Nginx
-Ngo's
+Ngo
 Nicky
 Nie
 Nik
@@ -1380,7 +1344,7 @@ NodeJS
 nodemailer
 NodeSchool
 nodesPromise
-Nolen's
+Nolen
 non-Prismic
 non-scalable
 non-webpack
@@ -1392,7 +1356,6 @@ npm
 NPM
 npm-check
 npm-force-resolutions
-npm's
 npx
 nullability
 nullable
@@ -1401,7 +1364,6 @@ nutzen
 Nuxt
 NVDA
 nvm
-nvm's
 NYCHA
 NYU
 OAuth
@@ -1422,7 +1384,6 @@ onClientEntry
 onCreateNode
 onCreatePage
 OneGraph
-OneGraph's
 OneShopper
 Onix
 onPostBootstrap
@@ -1466,12 +1427,11 @@ pageContext
 pageQuery
 pagerduty
 PageRenderer
-PageRenderer's
 PageSpeed
 pageviews
 Pai
 paintDrip
-Palantir's
+Palantir
 parallelize
 parallelizing
 Parallelizing
@@ -1514,12 +1474,12 @@ pjax
 pleaaase
 pluggable
 PNG
-POC's
+POC
 podcasters
 pogo
 poject
 PokéAPI
-PokéAPI's
+PokéAPI
 Pokémon
 polyfill
 polyfilling
@@ -1605,12 +1565,9 @@ prerender
 prerendering
 presentational
 Prima
-Prima's
 Prisma
-Prisma's
 Prismic
 Prismic-Powered
-Prismic's
 PrismJS
 PrivateRoute
 Probst
@@ -1626,7 +1583,6 @@ Pronovix
 PropShop
 PropTypes
 ProPublica
-ProPublica's
 prototyped
 proxying
 Prozzi
@@ -1654,8 +1610,8 @@ querying-data-with-graphql
 quickstart
 Quickstart
 Raae
-Raae's
-Rahić's
+Raae
+Rahić
 Rascia
 Razuvaev
 Re-engageable
@@ -1668,7 +1624,6 @@ react-hmre
 react-i18next
 React-i18next
 react-intl
-React-intl
 react-intl's
 react-konva
 react-netlify-identity
@@ -1729,7 +1684,6 @@ replaceComponentQuery
 replatform
 replatforms
 repo
-repo's
 repos
 reposting
 repurpose
@@ -1760,7 +1714,6 @@ ROI
 rollout
 rollouts
 Romo
-Romo's
 rootNodeMap
 RootQueryType
 Rosen
@@ -1774,11 +1727,11 @@ runInitialQuerys
 runQueries
 runQueriesForPathnames
 runtimes
-Ruzicka's
+Ruzicka
 S3
 S3-compliant
 SaaS
-Saccone's
+Saccone
 Sacha
 Sakura
 salesy
@@ -1790,7 +1743,6 @@ scalable
 Scanlon
 scannability
 Schau
-Schau's
 schemas
 Scholnick
 sci-fi
@@ -1808,7 +1760,6 @@ searchbar
 Secutiry
 semver
 SendGrid
-SendGrid's
 SEO
 SEO-friendly
 SEO-optimized
@@ -1844,7 +1795,6 @@ signup
 signups
 simple-auth
 Simplecast
-Simplecast's
 Siri
 Sissener
 Sitecore
@@ -1871,10 +1821,8 @@ snapshotting
 SnipCard
 Snipcart
 Snipcart-specific
-Snipcart's
 snuck
 Soper
-Soper's
 sorryNotSorry
 Soukka
 source-filesystem
@@ -1893,7 +1841,6 @@ Squarespace
 src
 Src
 SSG
-SSG's
 SSGs
 ssh-ing
 SSL
@@ -1909,18 +1856,14 @@ Statickit
 Staticman
 StaticQueries
 StaticQuery
-StaticQuery's
 Stefanovic
-Stoiber's
+Stoiber
 stormfront
 Strapi
 Strattic
 Strava
 stringified
-Strivectin
 StriVectin
-Strivectin's
-StriVectin's
 StubList
 StyledComponent
 Styleguidist
@@ -1939,7 +1882,6 @@ subheaders
 subheadline
 submenu
 subobject
-subobject's
 subpage
 subpages
 subprocesses
@@ -1999,7 +1941,6 @@ TLS
 Tobias
 ToDesktop
 Tolinski
-Tolinski's
 TOML
 toolchain
 toolkits
@@ -2054,7 +1995,6 @@ Uglify
 UI
 UI-based
 UI-free
-UI's
 UI/UX
 UIs
 Uloth
@@ -2071,7 +2011,6 @@ underprovide
 unist
 Unist
 unist-util-visit
-Unist's
 unlabelled
 unmount
 unmounting
@@ -2112,11 +2051,9 @@ UX
 UX/UI
 v0
 v1
-v1's
 v16
 v2
 V2
-v2's
 v3
 v4
 v5
@@ -2144,20 +2081,17 @@ VoiceOver
 voilà
 Vojtech
 Vojtěch
-Vojtěch's
 VPs
 VS2015
 VS201x
 VSCode
 vscode-icons
-VSCode's
 Vu
 Vue
 VueJS
 VuePress
 W3
 W3C
-W3C's
 waitlist
 wakeups
 walkthrough
@@ -2166,7 +2100,6 @@ Washingtonpost.com
 WCAG
 WeakMap
 WebAIM
-WebAIM's
 webapps
 Webby
 WebGL
@@ -2177,7 +2110,6 @@ webpack
 Webpack
 webpack-merge
 webpack-runtime
-webpack's
 WebpackError
 webpacks
 webpage
@@ -2186,7 +2118,6 @@ webpagetest
 Webpagetest
 WebPagetest
 webpagetest.org
-webpagetest's
 webserver
 websocket
 WebStorm
@@ -2260,7 +2191,6 @@ zipkin
 Zipkin
 zipkin-javascript-opentracing
 zipkin-transport-http
-Zipkin's
 Zlab
 ZoomText
 zsh
