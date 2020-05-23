@@ -59,7 +59,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Can I use Gatsby Image with images from external sources like Cloudinary or an AWS bucket? And if it's indeed possible, will this impact my build time if I have thousands of images?
 **Answer:** Yes, build-times do go up with image processing as it's very CPU intensive.
 
-**Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin javascript should not include in Frontend and vice versa?
+**Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin JavaScript should not include in Frontend and vice versa?
 **Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out [Building Apps with Gatsby](/docs/adding-app-and-website-functionality/) for details about how to build the admin section.
 
 ### GraphQL / Data Layer

@@ -255,7 +255,7 @@ If you'd like to dive into the single-tag or single-instructor templates more, t
 
 When I first learned Gatsby, I found the folder structure, node and page creation methods really byzantine and confusing. I struggled to understand why there was no App.js and familiar parent-child component tree. I dug through the files looking for the React-router setup and was at a loss when I didn't find one. But once I got the hang of the Gatsby way of doing things, I began to love how easy it was to not only create prebuilt fast-loading pages (made up of React components) but also to link these pages together.
 
-This video explorer site allows users to easily filter videos by clicking/tapping on the tags or instructors. This links them to a new page with only the matching videos. Thanks to Gatsby's Link component, coding this functionality is very easy. Here is a card for one of the videos (ie rows in the Google Sheet).
+This video explorer site allows users to easily filter videos by clicking/tapping on the tags or instructors. This links them to a new page with only the matching videos. Thanks to Gatsby's Link component, coding this functionality is very easy. Here is a card for one of the videos (i.e. rows in the Google Sheet).
 
 ![Video Card showing Acroyoga](./images/word-image-2.png)
 

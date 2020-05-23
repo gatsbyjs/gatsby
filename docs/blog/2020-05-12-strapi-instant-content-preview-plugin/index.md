@@ -13,7 +13,7 @@ tags:
 
 ![](./gatsby_strapi.jpg "Gatsby and Strapi logos")
 
-Strapi is the #1 open source headless CMS frontend developers all over the world love. You can easily and quickly manage your content through an API and it's made entirely with Node & React. Gatsby developers will feel right at home in a Javascript environment that they know like the back of their hand.
+Strapi is the #1 open source headless CMS frontend developers all over the world love. You can easily and quickly manage your content through an API and it's made entirely with Node & React. Gatsby developers will feel right at home in a JavaScript environment that they know like the back of their hand.
 
 A lot of developers in the community are already familiar with setting up Gatsby with Strapi, and happy with how easy it is to combine the two. People really appreciate how [the Gatsby source plugin](https://www.gatsbyjs.org/packages/gatsby-source-strapi/) works great for easily and seamlessly pulling any Strapi content into any Gatsby application.
 
@@ -54,7 +54,7 @@ Now it's time to deploy your Gatsby app!
 
 2. When asked to select the repository you want to use:
 
-- Select the new forked Strapi Starter Gatsby Blog repository and specify the Gatsby project folder, ie `frontend` in the starter.
+- Select the new forked Strapi Starter Gatsby Blog repository and specify the Gatsby project folder, i.e. `frontend` in the starter.
 
 ![https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/repository.png](https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/repository.png "Strapi starter for Gatsby blog repository screen shot")
 

@@ -66,7 +66,7 @@ Navigate inside of the `lerna-monorepo-starter` directory and install the packag
 
 Open Chrome, and navigate to `http://localhost:8000`. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
 
-Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of json files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these json files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
+Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of JSON files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these JSON files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
 
 So imagine our application is starting to grow, the shop and the blog start intertwining with each other. You may not notice the lack of separation until its too late and your code is tangled tighter than the ivy across the side of your grandma’s cottage.
 
@@ -359,7 +359,7 @@ This will allow us to transition between our two sites. Do the same for the shop
 
 Congratulations, the site now behaves in exactly the same way as when we started. This might make it seem like monorepos have little use, but you’ll find that using a monorepo is a way of keeping packages independent from each other while easily reusing assets.
 
-You can stop the tutorial now and you’ll have a working knowedge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
+You can stop the tutorial now and you’ll have a working knowledge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
 
 ### Part Two
 
@@ -547,7 +547,7 @@ I'm also running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-works
 
 I’ll be adding to this section as I get feedback or stumble across issues myself.
 
-If you get an error that says ‘lerna: command not found’ after installing it globally, then install it locally as a project dependency and run it using `yarn lerna <command>`.
+If you get an error that says `lerna: command not found` after installing it globally, then install it locally as a project dependency and run it using `yarn lerna <command>`.
 
 Running your application:
 

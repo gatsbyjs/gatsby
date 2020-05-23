@@ -388,6 +388,6 @@ You're about half-way done with the actual Gatsby.js build. In this post I cover
 
 https://giphy.com/gifs/great-dicaprio-leonardo-rY93u9tQbybks
 
-The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on Gitub.
+The [code for this tutorial](https://github.com/iamtimsmith/building-a-blog-with-wordpress-and-gatsby) can be found on GitHub.
 
 See you in [How To Build A Blog with WordPress and Gatsby.js - Part 3](/blog/2019-05-02-how-to-build-a-blog-with-wordpress-and-gatsby-part-3)!

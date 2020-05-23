@@ -68,7 +68,7 @@ It's a pretty bare bones example of how to use the theme but it does demonstrate
 
 ## 4. gatsby-plugin-prop-shop
 
-I think perhaps this a unique concept that the masses just aren't ready for yet 🤔. With this plugin you can get an overview of all _PropTypes_ in your components, turns out that most developers building Gatsby sites don't use _PropTypes_. In fact i've been working on a much larger project where _PropTypes_ haven't be used at all...if you're doing this...then just stop it!
+I think perhaps this a unique concept that the masses just aren't ready for yet 🤔. With this plugin you can get an overview of all _PropTypes_ in your components, turns out that most developers building Gatsby sites don't use _PropTypes_. In fact I've been working on a much larger project where _PropTypes_ haven't be used at all...if you're doing this...then just stop it!
 
 I'm a massive TypeScript fan but when not using TypeScript, _PropTypes_ are the next best thing. And when building component libraries (which I've done a lot of) I have found it crucially important to provide a consistent API for props.
 

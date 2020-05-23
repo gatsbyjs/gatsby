@@ -117,7 +117,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 ---
 
-**Q:** As a jaded javascripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
+**Q:** As a jaded JavaScripter who is getting tired of the whole 'new framework of the week', why should I care about Gatsby over other projects? Why would it be worth my time to help build the Gatsby community and contribute my time to creating plugins and troubleshooting the inevitable bugs that it will bring? What makes you special? — PenguinMan98
 
 **A:** From a technical perspective, Gatsby has a powerful approach to managing data and a performance sensitive mindset. This means that you get to spend less time "making sure the site is performant" and more time building your product.
 

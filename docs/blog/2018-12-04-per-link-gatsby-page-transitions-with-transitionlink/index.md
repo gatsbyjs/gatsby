@@ -13,7 +13,7 @@ There was one problem though. Once I finally got around to adding transitions to
 
 TransitionLink is a simple way of declaring a page transition via props on a Link component. For both entering and exiting pages you can specify a number of timing values, pass state, and add a trigger a function.
 
-TransitionLink is compatible with declarative react animation libraries like [react-pose](https://popmotion.io/pose/) and [react-spring](https://react-spring.surge.sh/). It's also compatible with imperative animation libraries like [gsap](https://greensock.com) and [anime.js](http://animejs.com/)
+TransitionLink is compatible with declarative react animation libraries like [react-pose](https://popmotion.io/pose/) and [react-spring](https://react-spring.surge.sh/). It's also compatible with imperative animation libraries like [GSAP](https://greensock.com) and [anime.js](http://animejs.com/)
 
 Check it out [in use](https://gatsby-plugin-transition-link.netlify.com/).
 
@@ -107,7 +107,7 @@ const FadeLink = ({ to, children }) => (
 
 The beauty of this is that if you decide a certain page requires something more complex than a fade, you can add more transitions as needed.
 
-Here's an example of a more complicated TransitionLink using [gsap](https://greensock.com) to create a colored ripple that moves outwards from the users mouse click, eventually covering the whole page.
+Here's an example of a more complicated TransitionLink using [GSAP](https://greensock.com) to create a colored ripple that moves outwards from the users mouse click, eventually covering the whole page.
 
 ```jsx
 <TransitionLink
