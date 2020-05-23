@@ -94,7 +94,7 @@ They suggest that a link be added to the home page of Gatsby pointing to it and 
 
 It wasn’t just Gatsby but the whole collaborative team of Gatsby, Git, GitHub, and Netlify that broke through to every student this term. It was amazing to witness this as a teacher. I also tried to show them blogs and Markdown but that wasn’t super smooth and none of the students added that part to their final project.
 
-In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CAAS sites.
+In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CaaS sites.
 
 ### Phil's final thoughts:
 

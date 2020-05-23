@@ -298,7 +298,6 @@ Buzzfeed
 Buzzfeed-esque
 C'mon
 CaaS
-CAAS
 cache-dir
 café
 cafile
@@ -1805,7 +1804,6 @@ runtimes
 Ruzicka's
 S3
 S3-compliant
-Saas
 SaaS
 Saccone's
 Sacha
