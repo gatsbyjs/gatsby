@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import styled from "@emotion/styled"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { MdWarning } from "react-icons/md"
 
 import {
@@ -29,7 +29,6 @@ import {
   lineHeights,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import {
-  Box,
   Button,
   Flex,
   Link,
@@ -37,10 +36,31 @@ import {
   Text,
 } from "../../components/guidelines/system"
 
-const ExampleBox = styled(Box)({ pt: 4 })
+import { Box } from "theme-ui"
+
+const ExampleBox = ({ children, ...rest }) => (
+  <Box
+    sx={{
+      ...rest,
+    }}
+  >
+    {children}
+  </Box>
+)
 
 const MarketingColumn = ({ children, title }) => (
-  <Box width={{ lg: 1 / 2 }} px={{ md: 8 }} py={{ xxs: 4, lg: 0 }}>
+  <Box
+    sx={{
+      px: 0,
+      py: 4,
+      width: `100%`,
+      [mediaQueries.sm]: {
+        px: 8,
+        py: 0,
+        width: `50%`,
+      },
+    }}
+  >
     <Heading fontSize={5} mb={3} fontWeight="heading">
       {title}
     </Heading>
@@ -62,9 +82,15 @@ const Typeface = ({ children, fontFamily }) => (
 )
 
 const SidebarUL = ({ children }) => (
-  <Text as="ul" m={0} p={0} css={{ listStyle: `none` }}>
+  <ul
+    sx={{
+      m: 0,
+      p: 0,
+      listStyle: `none`,
+    }}
+  >
     {children}
-  </Text>
+  </ul>
 )
 
 const SidebarLI = ({ children }) => (
@@ -88,7 +114,12 @@ const Weight = ({ children, fontFamily, fontWeight }) => (
 const Typography = ({ location }) => (
   <Layout location={location} pageTitle="Typography">
     <Container>
-      <div css={{ position: `relative`, zIndex: 1 }}>
+      <div
+        sx={{
+          position: `relative`,
+          zIndex: 1,
+        }}
+      >
         <PageHeading>Typography</PageHeading>
         <Intro>
           Typography provides the core structure of a well-designed interface.
@@ -113,20 +144,26 @@ const Typography = ({ location }) => (
             to increase the reading experience.
           </p>
         </CopyColumn>
-        <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
-          <Flex flexDirection="column">
+        <ContentColumn>
+          <div
+            sx={{
+              display: `flex`,
+              alignItems: `flex-end`,
+              height: `100%`,
+            }}
+          >
             <Typeface fontFamily="heading">Futura PT</Typeface>
-          </Flex>
+          </div>
         </ContentColumn>
       </Columns>
       <Columns>
         <CopyColumn>
           <SectionSubheading>The native font stack</SectionSubheading>
-          <p>
+          <Text as="p">
             The “native font stack” depends on the user’s operating system and
             device; depending on that, we use San Francisco UI, Roboto or Segoe
             UI.
-          </p>
+          </Text>
           <Text as="p">
             Our monospace font stack also makes use of the default fonts
             available: That’s usually San Francisco Mono, Menlo or Monaco on Mac
@@ -138,11 +175,20 @@ const Typography = ({ location }) => (
             available.
           </Text>
         </CopyColumn>
-        <ContentColumn css={{ alignSelf: `flex-end`, display: `flex` }}>
-          <Flex flexDirection="column">
-            <Typeface fontFamily="system">Sans-serif</Typeface>
-            <Typeface fontFamily="monospace">Monospace</Typeface>
-          </Flex>
+        <ContentColumn>
+          <div
+            sx={{
+              display: `flex`,
+              flexDiretion: `column`,
+              alignItems: `flex-end`,
+              height: `100%`,
+            }}
+          >
+            <div>
+              <Typeface fontFamily="system">Sans-serif</Typeface>
+              <Typeface fontFamily="monospace">Monospace</Typeface>
+            </div>
+          </div>
         </ContentColumn>
       </Columns>
     </Section>
@@ -218,7 +264,16 @@ const Typography = ({ location }) => (
         <ContentColumn>
           <SectionSubheading mt={0}>Font Weights</SectionSubheading>
           <Flex flexWrap="wrap" flexDirection="row">
-            <Box maxWidth={{ xl: `40%` }} mr={{ xl: 6 }}>
+            <Box
+              sx={{
+                width: `100%`,
+                mr: 0,
+                [mediaQueries.sm]: {
+                  maxWidth: `40%`,
+                  mr: 6,
+                },
+              }}
+            >
               <Weight fontFamily="heading" fontWeight="extraBold">
                 {fontWeights.extraBold}
               </Weight>
@@ -230,7 +285,14 @@ const Typography = ({ location }) => (
               </Box>
             </Box>
 
-            <Box maxWidth={{ xl: `40%` }}>
+            <Box
+              sx={{
+                width: `100%`,
+                [mediaQueries.sm]: {
+                  maxWidth: `40%`,
+                },
+              }}
+            >
               <Weight fontFamily="heading" fontWeight="bold">
                 {fontWeights.bold}
               </Weight>
@@ -242,7 +304,11 @@ const Typography = ({ location }) => (
                 </Text>
               </Box>
             </Box>
-            <Box>
+            <Box
+              sx={{
+                width: `100%`,
+              }}
+            >
               <Weight fontFamily="heading" fontWeight="body">
                 {fontWeights.body}
               </Weight>
@@ -270,7 +336,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox>
+          <ExampleBox pt={4}>
             <Text as="p" mb={0}>
               <strong>Tight</strong> — <code>letterSpacings.tight</code> —{` `}
               <code>{letterSpacings.tight}</code>
@@ -283,7 +349,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox>
+          <ExampleBox pt={4}>
             <Text as="p" mb={0}>
               <strong>Tracked</strong> — <code>letterSpacings.tracked</code> —
               {` `}
@@ -309,7 +375,7 @@ const Typography = ({ location }) => (
 
           <SectionSubheading pt={6}>Line Heights</SectionSubheading>
 
-          <ExampleBox>
+          <ExampleBox pt={4}>
             <Text as="p" mb={0}>
               <strong>Default</strong> — <code>lineHeights.default</code> —{` `}
               <code>{lineHeights.default}</code>
@@ -324,7 +390,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox>
+          <ExampleBox pt={4}>
             <Text as="p" mb={0}>
               <strong>Solid</strong> — <code>lineHeights.solid</code> —{` `}
               <code>{lineHeights.solid}</code>
@@ -336,7 +402,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox>
+          <ExampleBox pt={4}>
             <Text as="p" mb={0}>
               <strong>Dense</strong> — <code>lineHeights.dense</code> —{` `}
               <code>{lineHeights.dense}</code>
@@ -350,7 +416,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox>
+          <ExampleBox pt={4}>
             <Text as="p" mb={0}>
               <strong>Loose</strong> — <code>lineHeights.loose</code> —{` `}
               <code>{lineHeights.loose}</code>
@@ -380,7 +446,13 @@ const Typography = ({ location }) => (
           </p>
         </CopyColumn>
         <ContentColumn>
-          <Box maxWidth="35rem">
+          <Box
+            sx={{
+              [mediaQueries.sm]: {
+                maxWidth: `35rem`,
+              },
+            }}
+          >
             <Text
               as="p"
               fontFamily="heading"
@@ -395,10 +467,15 @@ const Typography = ({ location }) => (
               The Future is Fast
             </Text>
             <Heading
-              fontSize={{ xxs: 9, sm: 12, lg: 13 }}
-              letterSpacing="tight"
-              lineHeight="solid"
-              mb={5}
+              sx={{
+                fontSize: 9,
+                letterSpacing: `tight`,
+                lineHeight: `solid`,
+                mb: 5,
+                [mediaQueries.sm]: {
+                  fontSize: 13,
+                },
+              }}
             >
               Create digital experiences on the edge—faster
             </Heading>
@@ -406,7 +483,15 @@ const Typography = ({ location }) => (
               Gatsby provides a modern framework for turning content into
               feature-rich, visually engaging apps and websites.
             </Heading>
-            <Text fontSize={{ xxs: 2, md: 3 }} mb={7}>
+            <Text
+              sx={{
+                fontSize: 2,
+                mb: 7,
+                [mediaQueries.sm]: {
+                  fontSize: 3,
+                },
+              }}
+            >
               <p>
                 Over the last few years, the modern JavaScript ecosystem has
                 created tools that allow developers to build quicker with fewer
@@ -444,7 +529,13 @@ const Typography = ({ location }) => (
     </Section>
 
     <Container py={8} my={8} textAlign="center">
-      <Text fontSize={1}>Simple landing page</Text>
+      <Text
+        sx={{
+          fontSize: 1,
+        }}
+      >
+        Simple landing page
+      </Text>
 
       <Box maxWidth={1040} mx="auto">
         <PageHeading
@@ -464,9 +555,26 @@ const Typography = ({ location }) => (
         <Button mx="auto" mb={4}>
           Start a free trial
         </Button>
-        <Text fontSize={1}>14 day free trial — no credit card required</Text>
+        <Text
+          sx={{
+            fontSize: 1,
+          }}
+        >
+          14 day free trial — no credit card required
+        </Text>
 
-        <Box display={{ md: `flex ` }} mt={12} pb={12} textAlign="left">
+        <Box
+          sx={{
+            mt: 6,
+            pb: 0,
+            textAlign: `left`,
+            [mediaQueries.sm]: {
+              display: `flex`,
+              mt: 12,
+              pb: 12,
+            },
+          }}
+        >
           <MarketingColumn title="Modern web tech without the headache">
             Enjoy the power of the latest web technologies – React.js, Webpack,
             modern JavaScript and CSS and more — all set up and waiting for you
@@ -478,7 +586,17 @@ const Typography = ({ location }) => (
             databases, your file system, and more.
           </MarketingColumn>
         </Box>
-        <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+        <Box
+          sx={{
+            mt: 0,
+            pb: 0,
+            textAlign: `left`,
+            [mediaQueries.sm]: {
+              display: `flex`,
+              pb: 12,
+            },
+          }}
+        >
           <MarketingColumn title="Future-proof your website">
             Do not build a website with last decade’s tech. The future of the
             web is mobile, JavaScript and APIs—the JAMstack. Every website is a
@@ -492,7 +610,17 @@ const Typography = ({ location }) => (
             deployed easily on various services.
           </MarketingColumn>
         </Box>
-        <Box display={{ md: `flex ` }} pb={12} textAlign="left">
+        <Box
+          sx={{
+            mt: 0,
+            pb: 0,
+            textAlign: `left`,
+            [mediaQueries.sm]: {
+              display: `flex`,
+              pb: 12,
+            },
+          }}
+        >
           <MarketingColumn title="Speed past the competition">
             Gatsby.js builds the fastest possible website. Instead of waiting to
             generate pages when requested, pre-build pages and lift them into a
@@ -511,7 +639,13 @@ const Typography = ({ location }) => (
     </Container>
 
     <Container>
-      <Box bt={1} py={8} my={8}>
+      <Box
+        sx={{
+          bt: 1,
+          py: 8,
+          my: 8,
+        }}
+      >
         <Text color="grey.60" fontSize={1} textAlign="center">
           Cards
         </Text>
@@ -527,14 +661,24 @@ const Typography = ({ location }) => (
         Long-form text (with sidebar on large screens)
       </Text>
       <Flex as="section" py={4} my={4}>
-        <Box mt={8} mr="auto" pr={7} display={{ xxs: `none`, md: `block` }}>
+        <Box
+          sx={{
+            display: `none`,
+            [mediaQueries.sm]: {
+              mt: 8,
+              mr: `auto`,
+              pr: 7,
+              display: `block`,
+            },
+          }}
+        >
           <Box
             sx={{
               borderRightWidth: 1,
               borderRightStyle: `solid`,
               borderColor: `ui.border`,
+              pr: 7,
             }}
-            pr={7}
           >
             <Heading fontWeight="heading" fontSize={3} mb={5}>
               Documentation
@@ -570,7 +714,13 @@ const Typography = ({ location }) => (
           </Box>
         </Box>
 
-        <Box maxWidth="48rem" mx="auto" css={{ minWidth: `0` }}>
+        <Box
+          sx={{
+            minWidth: `0`,
+            maxWidth: `48rem`,
+            mx: `auto`,
+          }}
+        >
           <PageHeading
             fontSize={{ md: 11 }}
             lineHeight="solid"
@@ -632,11 +782,16 @@ const Typography = ({ location }) => (
               <code>useStaticQuery</code>.
             </p>
             <Box
-              bg="grey.10"
-              color="grey.80"
-              p={5}
-              my={6}
-              fontSize={{ xxs: 1, md: 2 }}
+              sx={{
+                fontSize: 1,
+                my: 6,
+                p: 5,
+                color: `grey.80`,
+                bg: `grey.10`,
+                [mediaQueries.sm]: {
+                  fontSize: 2,
+                },
+              }}
             >
               💡 For a great introduction to using the command line, check out
               {` `}
