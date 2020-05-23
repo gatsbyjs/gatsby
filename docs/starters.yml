@@ -6403,3 +6403,14 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-jest-enzyme-eslint.netlify.app
+  repo: https://github.com/markbello/gatsby-starter-jest-enzyme-eslint
+  description: gatsby-starter-default with Jest, Enzyme, and ESLint
+  tags:
+    - Testing
+    - Linting
+  features:
+    - Jest testing set up
+    - Enzyme for shallow rendering and snapshot testing
+    - ESLint for linting
+    - No frills, minimally opinionated
