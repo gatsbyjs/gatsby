@@ -556,7 +556,7 @@ While writing this post I scraped a few accounts and published their resulting
 - https://iceland-gatsbygram.netlify.com
 - https://tinyhouses-gatsbygram.netlify.com
 
-_With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
+_With thanks to Sam Bhagwat, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
 and Addy Osmani for their reviews._
 
 _And a special thanks to Kristo Jorgenson for his

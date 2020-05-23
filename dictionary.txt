@@ -12,14 +12,12 @@
 .tsx
 .yaml
 .yml
-0Auth
 1000px
 1000s
 1000x
 100DaysOfGatsby
 100K
 100M
-100daysofGatsby
 100kb's
 100ms
 100px
@@ -115,7 +113,6 @@ ASKGatsbyJS
 AST
 Abhishek
 Abramov's
-Abromov's
 Acquia
 Acroyoga
 Acroyoga-focused
@@ -134,11 +131,8 @@ Albright
 Alexa
 Algolia
 Algolia's
-Alhough
 Allanson
-Aloglia
 Amberley
-Amberly
 Ambras
 Amongst
 Amplify2
@@ -147,7 +141,7 @@ Anand
 Andreessen
 AniLink
 AniLink's
-Api
+API
 AppSync
 Applingua
 Appveyor
@@ -186,7 +180,6 @@ Berriman
 Besties
 Bhagwat
 Bhagwat's
-Bhagwatt
 BigCommerce
 Bing
 Biscardi

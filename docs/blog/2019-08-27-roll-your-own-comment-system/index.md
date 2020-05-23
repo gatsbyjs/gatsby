@@ -75,7 +75,7 @@ VALUES
   ('Bogus', 'Testing the comments API', 'how-to-bake-a-cake', null);
 ```
 
-You could probably get more fancy with it and add website, email, upvotes and other features, but I just wanted it to be simple. I'm not adding in any login or 0Auth/user authentication either, which makes it even more simple, but comes with the drawbacks of an anonymous online system.
+You could probably get more fancy with it and add website, email, upvotes and other features, but I just wanted it to be simple. I'm not adding in any login or OAuth/user authentication either, which makes it even more simple, but comes with the drawbacks of an anonymous online system.
 
 ## API
 
