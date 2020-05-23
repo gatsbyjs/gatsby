@@ -1922,9 +1922,7 @@ SSG
 SSG's
 SSGs
 ssh-ing
-ssl
 SSL
-ssr
 SSR
 SSRing
 stabilise

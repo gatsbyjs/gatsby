@@ -12,7 +12,7 @@ title: How APIs/Plugins Are Run
 
 For most sites, plugins take up the majority of the build time. So what's really happening when APIs are called?
 
-_Note: this section only explains how `gatsby-node` plugins are run. Not browser or ssr plugins_
+_Note: this section only explains how `gatsby-node` plugins are run. Not browser or SSR plugins_
 
 ## Early in the build
 
