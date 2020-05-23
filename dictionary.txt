@@ -128,7 +128,6 @@ Addy
 Adekunle
 Adnan
 AEM
-afore
 Ahhh
 Airbnb
 Airtable
@@ -2272,11 +2271,8 @@ XSL
 XSS
 XState
 xyz
-yaml
-Yaml
 YAML
 Yandex
-yarning
 yay
 yet-another-SaaS
 Yotpo

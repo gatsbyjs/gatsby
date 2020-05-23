@@ -69,7 +69,7 @@ Users should be able to:
 - [x] Share sites by copying the URL
 - [x] Filter by category
 - [x] Search sites
-- [x] Submit their own site to the showcase through yaml file (Shannon writes the instructions)
+- [x] Submit their own site to the showcase through YAML file (Shannon writes the instructions)
 - [x] See featured sites
 
 ## Ways you can help

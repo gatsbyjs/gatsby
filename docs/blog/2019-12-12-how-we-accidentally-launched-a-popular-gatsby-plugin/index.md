@@ -66,7 +66,7 @@ I noticed there were some more downsides to Amplify:
 
 - Being able to add additional metadata (such as different headers for certain files) was absent.
 
-So, I decided to experiment a bit and a week later, launched a plugin that fixed all of the afore mentioned problems:
+So, I decided to experiment a bit and a week later, launched a plugin that fixed all of the aforementioned problems:
 
 - Gatsby redirects now work just like they do on other hosting providers, and can be configured to be permanently or temporarily.
 
