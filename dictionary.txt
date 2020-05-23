@@ -633,7 +633,6 @@ ES7
 Escalade
 Escalade's
 ESLint
-eslint-jsx-plugin-a11y
 eslint-plugin-jsx-a11y
 Espen
 Estevez
@@ -678,8 +677,6 @@ Feedly
 Fenton
 fetchPageResourcesMap
 fieldname
-fieldName
-fieldValue
 Figma
 filepath
 filepaths
@@ -695,11 +692,9 @@ findDirtyIds
 findIdsWithoutDataDependencies
 findRootNodeAncestor
 firebase
-FireFox
 firehose
 Firestore
 firewalled
-flavour
 Flexbox
 Flickr
 Flipkart

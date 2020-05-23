@@ -648,7 +648,7 @@ If multiple field extensions are added to a field, resolvers are processed in th
 first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
 extension resolvers execute from left to right.
 
-Finally, note that in order to get the current fieldValue, you use `context.defaultFieldResolver`.
+Finally, note that in order to get the current `fieldValue`, you use `context.defaultFieldResolver`.
 
 ## createResolvers API
 
