@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.27...gatsby-recipes@0.1.28) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.26...gatsby-recipes@0.1.27) (2020-05-22)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Re-add missing dependency ([#24334](https://github.com/gatsbyjs/gatsby/issues/24334)) ([576861a](https://github.com/gatsbyjs/gatsby/commit/576861a))
+
+## [0.1.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.25...gatsby-recipes@0.1.26) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.24...gatsby-recipes@0.1.25) (2020-05-21)
+
+### Features
+
+- **gatsby-recipes:** Implement initial custom react renderer for recipes ([#24065](https://github.com/gatsbyjs/gatsby/issues/24065)) ([f2227fc](https://github.com/gatsbyjs/gatsby/commit/f2227fc)), closes [/github.com/gatsbyjs/gatsby/issues/22991#issuecomment-625985760](https://github.com//github.com/gatsbyjs/gatsby/issues/22991/issues/issuecomment-625985760)
+
 ## [0.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.23...gatsby-recipes@0.1.24) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-recipes

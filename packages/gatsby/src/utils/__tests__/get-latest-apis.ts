@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 jest.mock(`fs-extra`, () => {
   return {
-    exists: jest.fn(),
     readJSON: jest.fn(),
     writeFile: jest.fn(),
+    pathExists: jest.fn(),
   }
 })
 jest.mock(`axios`, () => {
@@ -10,10 +11,11 @@ jest.mock(`axios`, () => {
     get: jest.fn(),
   }
 })
+
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const axios = require(`axios`)
-const getLatestAPIs = require(`../get-latest-apis`)
+import { getLatestAPIs, IAPIResponse } from "../get-latest-apis"
 
 beforeEach(() => {
   ;[fs, axios].forEach(mock =>
@@ -21,7 +23,7 @@ beforeEach(() => {
   )
 })
 
-const getMockAPIFile = () => {
+const getMockAPIFile = (): IAPIResponse => {
   return {
     node: {},
     browser: {},
@@ -31,7 +33,7 @@ const getMockAPIFile = () => {
 
 describe(`default behavior: has network connectivity`, () => {
   beforeEach(() => {
-    fs.exists.mockResolvedValueOnce(false)
+    fs.pathExists.mockResolvedValueOnce(false)
     axios.get.mockResolvedValueOnce({ data: getMockAPIFile() })
   })
 
@@ -63,7 +65,7 @@ describe(`downloading APIs failure`, () => {
 
   it(`falls back to downloaded cached file, if it exists`, async () => {
     const apis = getMockAPIFile()
-    fs.exists.mockResolvedValueOnce(true)
+    fs.pathExists.mockResolvedValueOnce(true)
     fs.readJSON.mockResolvedValueOnce(apis)
 
     const data = await getLatestAPIs()
@@ -77,7 +79,7 @@ describe(`downloading APIs failure`, () => {
 
   it(`falls back to local api.json if latest-apis.json not cached`, async () => {
     const apis = getMockAPIFile()
-    fs.exists.mockResolvedValueOnce(false)
+    fs.pathExists.mockResolvedValueOnce(false)
     fs.readJSON.mockResolvedValueOnce(apis)
 
     await getLatestAPIs()

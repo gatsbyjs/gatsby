@@ -1,46 +1,63 @@
-import spawn from "cross-spawn"
-import { join } from "path"
+import execa, { sync } from "execa"
+import { join, resolve } from "path"
 import { createLogsMatcher } from "./matcher"
 
 // Use as `GatsbyCLI.cwd('execution-folder').invoke('new', 'foo')`
 export const GatsbyCLI = {
   from(relativeCwd) {
     return {
-      invoke(...args) {
-        const results = spawn.sync(
-          join(__dirname, `../../../packages/gatsby-cli/lib/index.js`),
-          args,
-          {
-            cwd: join(__dirname, `../`, `./${relativeCwd}`),
-          }
-        )
+      invoke(args) {
+        try {
+          const results = sync(
+            resolve(`./node_modules/.bin/gatsby`),
+            [].concat(args),
+            {
+              cwd: join(__dirname, `../`, `./${relativeCwd}`),
+            }
+          )
 
-        if (results.error) {
-          return [1, createLogsMatcher(results.error.toString().split("\n"))]
+          return [
+            results.exitCode,
+            createLogsMatcher(results.stdout.toString().split("\n")),
+          ]
+        } catch (err) {
+          return [
+            err.exitCode,
+            createLogsMatcher(err.stdout.toString().split("\n")),
+          ]
         }
-
-        return [
-          results.status,
-          createLogsMatcher(results.output.toString().split("\n")),
-        ]
       },
 
-      invokeAsync: (...args) => {
-        const res = spawn(
-          join(__dirname, `../../../packages/gatsby-cli/lib/index.js`),
-          args,
+      invokeAsync: (args, onExit) => {
+        const res = execa(
+          resolve(`./node_modules/.bin/gatsby`),
+          [].concat(args),
           {
             cwd: join(__dirname, `../`, `./${relativeCwd}`),
           }
         )
 
         const logs = []
-
         res.stdout.on("data", data => {
-          logs.push(data.toString())
+          if (!res.killed) {
+            logs.push(data.toString())
+          }
+
+          if (onExit && onExit(data.toString())) {
+            res.cancel()
+          }
         })
 
-        return [res, () => createLogsMatcher(logs)]
+        return [
+          res.catch(err => {
+            if (err.isCanceled) {
+              return
+            }
+
+            throw err
+          }),
+          () => createLogsMatcher(logs),
+        ]
       },
     }
   },
