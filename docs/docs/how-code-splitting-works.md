@@ -175,7 +175,7 @@ Here's how it works. All links on Gatsby sites use the [gatsby-link](https://git
 
 At this stage, you know the page that you're navigating to, and can retrieve its `componentChunkName` and `jsonName`, but how do you figure out the generated chunkGroup for the component?
 
-`static-entry.js` [requires `chunk-map.json`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L20) and then [injects it into the CDATA](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L342) of the html as `window.___chunkMapping` so that it is available to all code in [production-app.js](/docs/production-app/). E.g:
+`static-entry.js` [requires `chunk-map.json`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L20) and then [injects it into the CDATA](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L342) of the HTML as `window.___chunkMapping` so that it is available to all code in [production-app.js](/docs/production-app/). E.g:
 
 ```html
 /*

@@ -65,7 +65,7 @@ Or replace `@emotion/core` with the name of the library that is missing. Install
 
 ## Errors in styling
 
-The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JSS solutions.
+The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JS solutions.
 
 ### Inconsistent CSS styles between develop and build using styled-components or emotion
 

@@ -419,9 +419,7 @@ composability
 composable
 concurrents
 conf
-Conf
 config
-Config
 configs
 configurator
 configurators
@@ -440,7 +438,7 @@ Contentful-powered
 Contentful's
 Contentstack
 contentType
-Contraint-based
+Constraint-based
 copiloting
 copywriting
 Coraline
@@ -486,9 +484,7 @@ CSP
 CSRF
 CSRs
 css-in-javascript
-css-in-js
 CSS-in-JS
-CSS-in-JSS
 CSUN
 CSV
 CTO
@@ -995,7 +991,6 @@ Hexo
 hinzufügen
 HIPAA
 Hmmm
-hoc
 HOC
 HOCs
 Holík
@@ -1010,8 +1005,6 @@ Hovlandsdal
 Howley
 Hoyer
 HQ2
-html
-Html
 html-react-parser
 HTML5
 html5up
@@ -1027,7 +1020,6 @@ i18next
 IaC
 IAM
 iam_timsmith
-IAM.
 id0
 id1
 IDB

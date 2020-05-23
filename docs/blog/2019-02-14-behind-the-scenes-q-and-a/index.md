@@ -44,7 +44,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it possible to dictate code splitting manually, e.g. component level code splitting?
 **Answer:** Yup! React. Lazy is great + standard async imports.
 
-**Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our SSR generated html to match the final rendered DOM.
+**Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our SSR generated HTML to match the final rendered DOM.
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
 **Question:** Is there a way to enable SSR on run time to things like a post preview?

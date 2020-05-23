@@ -420,7 +420,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     // This plugin transforms JSON file nodes.
     `gatsby-transformer-json`,
-    // This plugin sets up the popular css-in-js library
+    // This plugin sets up the popular CSS-in-JS library
     // Glamor. It handles adding a Babel plugin and webpack
     // configuration as well as setting up optimized server
     // rendering and client re-hydration.
@@ -457,7 +457,7 @@ module.exports = {
 
 ## Styles
 
-Gatsbygram uses two popular and complementary css-in-js libraries,
+Gatsbygram uses two popular and complementary CSS-in-JS libraries,
 [Typography.js](https://github.com/KyleAMathews/typography.js) and
 [Glamor](https://github.com/threepointone/glamor).
 

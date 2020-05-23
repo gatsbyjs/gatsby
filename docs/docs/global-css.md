@@ -94,7 +94,7 @@ a {
 
 Then, include the stylesheet in your site's `gatsby-browser.js` file.
 
-> **NOTE:** This solution works when including CSS as those styles are extracted when building the JavaScript but not for css-in-js.
+> **NOTE:** This solution works when including CSS as those styles are extracted when building the JavaScript but not for CSS-in-JS.
 > Including styles in a layout component or a global-styles.js is your best bet for that.
 
 ```javascript:title=gatsby-browser.js

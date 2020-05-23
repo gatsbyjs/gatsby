@@ -560,7 +560,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 This approach becomes a lot more powerful when plugins provide custom field
 extensions. A _very_ basic markdown transformer plugin could for example provide
-an extension to convert markdown strings into html:
+an extension to convert markdown strings into HTML:
 
 ```js:title=gatsby-transformer-basic-md/src/gatsby-node.js
 const remark = require(`remark`)

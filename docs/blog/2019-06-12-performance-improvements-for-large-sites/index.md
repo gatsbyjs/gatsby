@@ -62,7 +62,7 @@ Prefetching FTW! Gatsby already prefetches any links on the page so that when th
 
 ### Gatsby sites are now more "live"
 
-Previously in Gatsby, all resources are content-hashed (except the html files). This includes the pages-manifest. So once a Gatsby site is loaded in the browser, the user will only ever see the resources generated during that build. If they stay on the site for days, they'll never see new content until they refresh.
+Previously in Gatsby, all resources are content-hashed (except the HTML files). This includes the pages-manifest. So once a Gatsby site is loaded in the browser, the user will only ever see the resources generated during that build. If they stay on the site for days, they'll never see new content until they refresh.
 
 The new `page-data.json` resources are **not** content-hashed. This means that if a user is on the site and a rebuild occurs resulting in changed `page-data.json`, the user will then see that new information when they navigate to that page.
 
