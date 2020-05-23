@@ -1243,7 +1243,6 @@ livestreams
 Liviu
 lo-fi
 localhost
-localise
 localStorage
 lockfile
 lodash
@@ -1253,7 +1252,6 @@ lookups
 lorem
 lowdb
 LTS
-ludicriously
 Luhr
 Lullabot
 macOS

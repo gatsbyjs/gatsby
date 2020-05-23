@@ -2,7 +2,7 @@
 title: "Behind the Scenes: What makes Gatsby Great"
 date: 2019-04-02
 author: Dustin Schau
-excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicriously fast experience that your users will love."
+excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicrously fast experience that your users will love."
 tags:
   - performance
   - apis
@@ -28,7 +28,7 @@ In an effort to answer this initial question, this post outlines several foundat
 2. Route-based code splitting
 3. Modern APIs
 
-Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicriously fast.
+Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicrously fast.
 
 Let's dive deep.
 
