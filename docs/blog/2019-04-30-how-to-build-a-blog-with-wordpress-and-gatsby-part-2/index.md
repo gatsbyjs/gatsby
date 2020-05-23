@@ -104,7 +104,7 @@ These files will be present in all Gatsby starters you use, so it's worth your t
 }
 ```
 
-You can see there are several dependencies installed right off the bat. I'll just cover a few of them. Gatsby-Image creates an effect similar to Medium and also allows you to use responsive images and optimize your site. Gatsby-Transformer-Sharp is what creates the responsive and optimized images, then allows you to query for those through GraphQL. You also have Gatsby-Source-Filesystem which could be used to pull in markdown files for content, but you're using WordPress instead. The last package I want to mention is Gatsby-Plugin-React-Helmet, which allows you to create meta tags for the site's head which helps with Search Engine Optimization, or SEO.
+You can see there are several dependencies installed right off the bat. I'll just cover a few of them. gatsby-image creates an effect similar to Medium and also allows you to use responsive images and optimize your site. gatsby-transformer-sharp is what creates the responsive and optimized images, then allows you to query for those through GraphQL. You also have gatsby-source-filesystem which could be used to pull in markdown files for content, but you're using WordPress instead. The last package I want to mention is gatsby-plugin-react-helmet, which allows you to create meta tags for the site's head which helps with Search Engine Optimization, or SEO.
 
 Whew! That was a mouthful.
 

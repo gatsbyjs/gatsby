@@ -751,7 +751,6 @@ gatsby-cli
 Gatsby-CLI
 Gatsby-Cloudinary
 gatsby-config
-Gatsby-Contentful-Netlify
 gatsby-contentful-starter
 gatsby-dark-mode
 gatsby-default-starter
@@ -795,7 +794,6 @@ gatsby-plugin-remove-trailing-slashes
 gatsby-plugin-s3
 gatsby-plugin-sass
 gatsby-plugin-schema-snapshot
-gatsby-plugin-schema-snapshot.
 gatsby-plugin-segment-js
 gatsby-plugin-sharp
 gatsby-plugin-sitemap
@@ -821,7 +819,6 @@ gatsby-source-contentful
 gatsby-source-datocms
 gatsby-source-drupal
 gatsby-source-filesystem
-Gatsby-Source-Filesystem
 gatsby-source-ghost
 gatsby-source-graphql
 gatsby-source-prismic
