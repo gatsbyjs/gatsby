@@ -6,14 +6,13 @@ const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
 import _ from "lodash"
 const {
-  toDottedFields,
   objectToDottedField,
-  liftResolvedFields,
   createDbQueriesFromObject,
   prefixResolvedFields,
   dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
+  ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
@@ -21,19 +20,14 @@ const {
   getNode: siftGetNode,
 } = require(`./nodes`)
 
-const FAST_OPS = [
-  `$eq`,
-  // "$lt",
-  `$lte`,
-  // "$gt",
-  // "$gte"
-]
+// More of a testing mechanic, to verify whether last runSift call used Sift
+let lastFilterUsedSift = false
 
 /**
  * Creates a key for one filterCache inside FiltersCache
  *
  * @param {Array<string>} typeNames
- * @param {DbQuery} filter
+ * @param {DbQuery | null} filter If null the key will have empty path/op parts
  * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
  */
 const createFilterCacheKey = (typeNames, filter) => {
@@ -84,11 +78,6 @@ const prepareQueryArgs = (filterFields = {}) =>
     }
     return acc
   }, {})
-
-const getFilters = filters =>
-  Object.keys(filters).map(key => {
-    return { [key]: filters[key] }
-  })
 
 /////////////////////////////////////////////////////////////////////
 // Run Sift
@@ -147,10 +136,15 @@ function handleMany(siftArgs, nodes) {
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
- * @returns {Array<IGatsbyNode> | undefined}
+ * @param {undefined | null | FiltersCache} filtersCache
+ * @returns {Array<IGatsbyNode> | null}
  */
-const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+  if (!filtersCache) {
+    // If no filter cache is passed on, explicitly don't use one
+    return null
+  }
+
   const nodesPerValueSets /*: Array<Set<IGatsbyNode>> */ = getBucketsForFilters(
     filters,
     nodeTypeNames,
@@ -159,7 +153,7 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
 
   if (!nodesPerValueSets) {
     // Let Sift take over as fallback
-    return undefined
+    return null
   }
 
   // Put smallest last (we'll pop it)
@@ -188,10 +182,13 @@ const runFiltersWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   // case for all value pairs? How likely is that to ever be reused?
 
   if (result.length === 0) {
-    return undefined
+    return null
   }
   return result
 }
+
+// Not a public API
+exports.filterWithoutSift = filterWithoutSift
 
 /**
  * @param {Array<DbQuery>} filters
@@ -256,11 +253,7 @@ const getBucketsForQueryFilter = (
 ) => {
   let {
     path: filterPath,
-    query: {
-      // Note: comparator is verified to be a FilterOp in filterWithoutSift
-      comparator /*: as FilterOp*/,
-      value: filterValue,
-    },
+    query: { comparator /*: as FilterOp*/, value: filterValue },
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
@@ -321,10 +314,6 @@ const collectBucketForElemMatch = (
       targetValue = q.query.value
       break
     }
-  }
-
-  if (!FAST_OPS.includes(comparator)) {
-    return false
   }
 
   if (!filtersCache.has(filterCacheKey)) {
@@ -397,6 +386,10 @@ const runFilterAndSort = (args: Object) => {
 
 exports.runSift = runFilterAndSort
 
+exports.didLastFilterUseSift = function _didLastFilterUseSift() {
+  return lastFilterUsedSift
+}
+
 /**
  * Applies filter. First through a simple approach, which is much faster than
  * running sift, but not as versatile and correct. If no nodes were found then
@@ -407,7 +400,7 @@ exports.runSift = runFilterAndSort
  * @param {Array<string>} nodeTypeNames
  * @param {undefined | null | FiltersCache} filtersCache
  * @param resolvedFields
- * @returns {Array<IGatsbyNode> | undefined} Collection of results. Collection
+ * @returns {Array<IGatsbyNode> | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
  */
 const applyFilters = (
@@ -440,7 +433,29 @@ const applyFilters = (
     }
   }
 
-  const result = filterWithoutSift(filters, nodeTypeNames, filtersCache)
+  if (filtersCache && filters.length === 0) {
+    let filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
+    if (!filtersCache.has(filterCacheKey)) {
+      ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
+    }
+
+    const cache = filtersCache.get(filterCacheKey).meta.nodesUnordered
+
+    lastFilterUsedSift = false
+
+    if (firstOnly || cache.length) {
+      return cache.slice(0)
+    }
+    return null
+  }
+
+  const result /*: Array<IGatsbyNode> | null */ = filterWithoutSift(
+    filters,
+    nodeTypeNames,
+    filtersCache
+  )
+
+  lastFilterUsedSift = false
   if (result) {
     if (stats) {
       stats.totalIndexHits++
@@ -450,8 +465,9 @@ const applyFilters = (
     }
     return result
   }
+  lastFilterUsedSift = true
 
-  const siftResult = filterWithSift(
+  const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
     filters,
     firstOnly,
     nodeTypeNames,
@@ -487,60 +503,20 @@ const filterToStats = (
 }
 
 /**
- * Check if filter op is supported (not all are). If so, uses custom
- * fast indexes based on filter and types and returns any result it finds.
- * If conditions are not met or no nodes are found, returns undefined and
- * a slow run through Sift is executed instead.
- * This function is a noop if no filter cache is given to it.
- *
- * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
- * @param {Array<string>} nodeTypeNames
- * @param {undefined | null | FiltersCache} filtersCache
- * @returns {Array<IGatsbyNode> | undefined} Collection of results
- */
-const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
-  if (!filtersCache) {
-    // If no filter cache is passed on, explicitly don't use one
-    return undefined
-  }
-
-  if (filters.length === 0) {
-    // If no filters are given, go through Sift. This does not appear to be
-    // slower than shortcutting it here.
-    return undefined
-  }
-
-  if (
-    filters.some(
-      filter =>
-        filter.type === `query` && !FAST_OPS.includes(filter.query.comparator)
-    )
-  ) {
-    // If there's a filter with non-supported op, stop now.
-    return undefined
-  }
-
-  return runFiltersWithoutSift(filters, nodeTypeNames, filtersCache)
-}
-
-// Not a public API
-exports.filterWithoutSift = filterWithoutSift
-
-/**
  * Use sift to apply filters
  *
  * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ * @returns {Array<IGatsbyNode> | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
 const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
   let nodes /*: IGatsbyNode[]*/ = []
   nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
 
-  return _runSiftOnNodes(
+  return runSiftOnNodes(
     nodes,
     filters.map(f => dbQueryToSiftQuery(f)),
     firstOnly,
@@ -552,52 +528,17 @@ const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
 
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
- * Note: this entry point is used by GATSBY_DB_NODES=loki
- *
- * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
- * @param args Legacy api arg, see _runSiftOnNodes
- * @param {?function(id: string): IGatsbyNode | undefined} getNode
- * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
- *   Collection will be limited to 1 if `firstOnly` is true
- */
-const runSiftOnNodes = (nodes, args, getNode = siftGetNode) => {
-  const {
-    queryArgs: { filter } = { filter: {} },
-    firstOnly = false,
-    resolvedFields = {},
-    nodeTypeNames,
-  } = args
-
-  let siftFilter = getFilters(
-    liftResolvedFields(toDottedFields(prepareQueryArgs(filter)), resolvedFields)
-  )
-
-  return _runSiftOnNodes(
-    nodes,
-    siftFilter,
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields,
-    getNode
-  )
-}
-
-exports.runSiftOnNodes = runSiftOnNodes
-
-/**
- * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
  * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
  * @param {Array<DbQuery>} filters Resolved
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
  * @param resolvedFields
- * @param {function(id: string): IGatsbyNode | undefined} getNode Note: this is
- *   different for loki
- * @returns {Array<IGatsbyNode> | undefined | null} Collection of results.
+ * @param {function(id: string): IGatsbyNode | undefined} getNode
+ * @returns {Array<IGatsbyNode> | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
-const _runSiftOnNodes = (
+const runSiftOnNodes = (
   nodes,
   filters,
   firstOnly,
@@ -633,13 +574,14 @@ const _runSiftOnNodes = (
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
  *
- * @param {Array<IGatsbyNode> | undefined | null} nodes Pre-filtered list of nodes
+ * @param {Array<IGatsbyNode> | null} nodes Pre-filtered list of nodes
  * @param {Object | undefined} sort Sorting arguments
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | undefined | null} Same as input, except sorted
  */
 const sortNodes = (nodes, sort, resolvedFields, stats) => {
-  if (!sort || nodes?.length <= 1) {
+  // `undefined <= 1` and `undefined > 1` are both false so invert the result...
+  if (!sort || !(nodes?.length > 1)) {
     return nodes
   }
 

@@ -28,7 +28,7 @@ For example, festival programme items rarely change after their initial publicat
 What if we could just keep the entire site static, only updating it if changes were made in one of the data sources?
 We could then put it on a pay-per-request static file hosting service (like [AWS S3](https://aws.amazon.com/s3/)), where we can basically scale to infinity if need be, while keeping the costs low during the down periods.
 
-When our company was approached by a [new client](https://www.oerol.nl/en/) (that had sadly earned a reputation for its website failing during peak hours), it felt like the stars were aligned, and we decided to go* full [JAMStack](https://jamstack.wtf/)*.
+When our company was approached by a [new client](https://www.oerol.nl/en/) (that had sadly earned a reputation for its website failing during peak hours), it felt like the stars were aligned, and we decided to go _full [JAMStack](https://jamstack.wtf/)_.
 
 ## Enter Gatsby
 

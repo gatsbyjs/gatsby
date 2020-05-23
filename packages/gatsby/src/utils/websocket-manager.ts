@@ -16,12 +16,12 @@ interface IPageQueryResult {
 }
 
 interface IStaticQueryResult {
-  id: number
+  id: string
   result: any // TODO: Improve this once we understand what the type is
 }
 
 type PageResultsMap = Map<string, IPageQueryResult>
-type QueryResultsMap = Map<number, IStaticQueryResult>
+type QueryResultsMap = Map<string, IStaticQueryResult>
 
 /**
  * Get cached page query result for given page path.

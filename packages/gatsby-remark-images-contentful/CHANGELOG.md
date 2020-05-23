@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.1...gatsby-remark-images-contentful@2.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.0...gatsby-remark-images-contentful@2.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.2.5...gatsby-remark-images-contentful@2.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+## [2.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.2.4...gatsby-remark-images-contentful@2.2.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
 ## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.2.3...gatsby-remark-images-contentful@2.2.4) (2020-04-17)
 
 ### Bug Fixes

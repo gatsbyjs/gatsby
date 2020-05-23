@@ -25,8 +25,8 @@ Fun fact--that website in question is [reactjs.org](https://reactjs.org) which, 
 In an effort to answer this initial question, this post outlines several foundational techniques that Gatsby enables _by default_ to deliver this experience. Specifically:
 
 1. Server-side rendering (SSR) at **build time**
-1. Route-based code splitting
-1. Modern APIs
+2. Route-based code splitting
+3. Modern APIs
 
 Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicriously fast.
 
@@ -195,7 +195,7 @@ export default function Contact() {
 
 Pretty vanilla looking component! We are rendering a `form` with some validation and functionality provided by the excellent libraries [`yup`](https://www.npmjs.com/package/yup) and [`Formik`](https://github.com/jaredpalmer/formik). The likelihood that these libraries are used in _all_ routes in our application is unlikely--yet this is traditionally the approach that many take with bundling their client-side JS libraries. This means that even if a particular route (e.g. `/about`) is _not using_ certain libraries that they will still likely be included in a monolithic JavaScript bundle containing all dependencies. However--Gatsby, your friendly _web app compiler_, is a little smarter!
 
-We use code-splitting (enabled via our internalized dependency [Webpack](https://webpack.js.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
+We use code-splitting (enabled via our internalized dependency [webpack](https://webpack.js.org)), and in particular, our approach prioritizes app-level dependencies (libraries used by the majority or all routes) coupled with route-based code splitting for dependencies that are likely only used on a particular route. To more fully understand this, let's take a look at a sample structure produced by our build process: `gatsby build`.
 
 ```text:title=public/
 ├── 404
@@ -232,7 +232,7 @@ are bundled on _every_ route because they are used on _every_ route.
 
 Consider the output of [`webpack-bundle-analyzer`](https://github.com/webpack-contrib/webpack-bundle-analyzer), which makes this even clearer.
 
-![Webpack Bundle Analyzer](./images/bundle-analyzer.png)
+![webpack Bundle Analyzer](./images/bundle-analyzer.png)
 
 ### `component---{route-name}-{unique-hash}.js`
 
@@ -317,15 +317,15 @@ To tie it all together, the build process produces a `contact/index.html` file c
 
 This is an optimized, HTML representation of the React component at `src/pages/contact.js` containing the **minimal** resources required for the page. Our users only load the resources they need for every single route. No more, no less. 🔥
 
-_Want to dive deeper? Much of this is encapsulated in our internal [Webpack config](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js)_
+_Want to dive deeper? Much of this is encapsulated in our internal [webpack config](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js)_
 
 ## Modern APIs in Gatsby
 
 Gatsby uses modern browser APIs to both maximize performance and user experience--which oftentimes go hand in hand!--only loading assets when they are necessary and likely to be requested. Specifically, the following APIs are crucial to the end user experience in Gatsby:
 
 1. `IntersectionObserver` - an API to conditionally perform some action when an element enters the viewport/view
-1. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
-1. `srcset` powering responsive images - a API to load the _smallest possible_ image that matches the viewport of the requesting device
+2. `link rel="prefetch"` - an API to prefetch resources in the background when the browser is idle
+3. `srcset` powering responsive images - a API to load the _smallest possible_ image that matches the viewport of the requesting device
 
 Let's get to it.
 
@@ -349,7 +349,7 @@ The `Link` component exported by `gatsby` ships with an `IntersectionObserver`. 
 1. An `IntersectionObserver` is registered for all links
    - This will register an **idle** `prefetch` for a request for that link's resources
    - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L25-L41)
-1. On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
+2. On `hover` a `fetch` will be used to send a **non-idle** request for that link's resources
    - This will use an `onMouseEnter` prop to make the resources available via our internal loader
    - [See the code for `gatsby-link`](https://github.com/gatsbyjs/gatsby/blob/e0db68141c146ec532db22b0da2d86fcc467f37e/packages/gatsby-link/src/index.js#L131-L135)
 

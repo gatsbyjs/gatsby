@@ -176,6 +176,7 @@ async function watch(
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
+  let isPublishing = false
 
   const waitFor = new Set()
   let anyPackageNotInstalled = false
@@ -211,6 +212,12 @@ async function watch(
       )
 
       if (relativePackageFile === `package.json`) {
+        // package.json files will change during publish to adjust version of package (and dependencies), so ignore
+        // changes during this process
+        if (isPublishing) {
+          return
+        }
+
         // Compare dependencies with local version
 
         const didDepsChangedPromise = checkDepsChanges({
@@ -292,6 +299,7 @@ async function watch(
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
+          isPublishing = true
           await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
@@ -299,6 +307,7 @@ async function watch(
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
+          isPublishing = false
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]

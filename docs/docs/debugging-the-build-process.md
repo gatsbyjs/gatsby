@@ -67,12 +67,12 @@ To read more about Gatsby's build process, check out the differences between [bu
 
 If you use VS Code and its integrated terminal, you can configure it to automatically create the debug config for you.
 
-1.  Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
-    ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
+1. Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
+   ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2.  Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/gatsby/dist/bin/gatsby develop` instead of `gatsby develop`
+2. Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/gatsby/dist/bin/gatsby develop` instead of `gatsby develop`
 
-3.  Set breakpoints and debug!
+3. Set breakpoints and debug!
 
 > **Note:** If the breakpoint is not being hit on `const value = createFilePath({ node, getNode })`
 > try running `gatsby clean` to delete the `.cache` and `public` folder and try again.

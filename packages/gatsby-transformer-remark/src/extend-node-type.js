@@ -21,6 +21,7 @@ const {
   findLastTextNode,
 } = require(`./hast-processing`)
 const codeHandler = require(`./code-handler`)
+const { getHeadingID } = require(`./utils/get-heading-id`)
 const { timeToRead } = require(`./utils/time-to-read`)
 
 let fileNodes
@@ -271,6 +272,7 @@ module.exports = (
         const ast = await getAST(markdownNode)
         const headings = select(ast, `heading`).map(heading => {
           return {
+            id: getHeadingID(heading),
             value: mdastToString(heading),
             depth: heading.depth,
           }
@@ -338,7 +340,7 @@ module.exports = (
       }
     }
 
-    async function markdownASTToHTMLAst(ast) {
+    function markdownASTToHTMLAst(ast) {
       return toHAST(ast, {
         allowDangerousHTML: true,
         handlers: { code: codeHandler },

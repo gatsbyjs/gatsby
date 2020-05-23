@@ -171,7 +171,7 @@ Check it out, and hope it's helpful!
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
-**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, e-commerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
+**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, e-commerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi).
 
 A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by creating an account on GitHub.
 

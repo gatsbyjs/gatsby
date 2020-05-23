@@ -36,7 +36,7 @@ During the [sourceNodes](/docs/node-apis/#sourceNodes) phase, let's say that [ga
 
 There are 3 categories of node fields that we can query.
 
-### Fields on the created node object. E.g.
+### Fields on the created node object
 
 ```graphql
 node {
@@ -47,7 +47,7 @@ node {
 }
 ```
 
-### Child/Parent. E.g.:
+### Child/Parent
 
 ```graphql
 node {
@@ -84,9 +84,9 @@ Fields on the node that were created directly by the source and transform plugin
 
 The creation of these fields is handled by the [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
-1.  It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
-2.  It's value is a foreign key reference to some other node (ends in `___NODE`)
-3.  It's a plain object or value (e.g. String, number, etc)
+1. It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
+2. It's value is a foreign key reference to some other node (ends in `___NODE`)
+3. It's a plain object or value (e.g. String, number, etc)
 
 #### Mapping field
 
@@ -106,7 +106,7 @@ Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which 
 
 #### Foreign Key reference (`___NODE`)
 
-If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/tutorial/pixabay-source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
+If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/tutorial/source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
 This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g. `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g. for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 

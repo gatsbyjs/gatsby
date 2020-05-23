@@ -7,11 +7,11 @@ tags: ["gatsby-inc", "releases", "gatsby-cloud"]
 
 I'm excited to announce Gatsby Recipes, a new tool to automate common site building tasks.
 
-Recipes are run from the CLI and automate common tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up Typescript, and many more.
+Recipes are run from the CLI and automate common tasks like creating pages and layouts, installing and setting up plugins, adding a blog to a site, setting up TypeScript, and many more.
 
-Gatsby ships with a number of default recipes and it's easy to create your own for use on your sites. Recipes allow you to install NPM packages, add Gatsby plugins, generate pages and other code. Recipes are written using markdown and React components.
+Gatsby ships with a number of default recipes and it's easy to create your own for use on your sites. Recipes allow you to install NPM packages, add Gatsby plugins, generate pages and other code. Recipes are written using Markdown and React components.
 
-To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding Typescript, ThemeUI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
+To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding TypeScript, ThemeUI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
 
 **Watch me add [ThemeUI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
 
@@ -51,7 +51,7 @@ We're very excited to ship Recipes. We care a lot about the Gatsby developer exp
 
 ### What does a recipe look like?
 
-Recipes are written in MDX, so a combination of Markdown and React components. The React components instruct Gatsby Recipes to make sure things exist like files or NPM packages e.g. .
+Recipes are written in MDX, so a combination of Markdown and React components. The React components instruct Gatsby Recipes to make sure things exist like files or NPM packages e.g. Emotion.
 
 A full recipe for adding the CSS-in-JS library Emotion looks like the following:
 
