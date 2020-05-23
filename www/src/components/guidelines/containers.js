@@ -76,14 +76,14 @@ export const CopyColumn = ({
       fontSize: 2,
       mr: 0,
       mb: 4,
-      maxWidth: "30rem",
-      width: "100%",
-      flex: "0 0 auto",
+      maxWidth: `30rem`,
+      width: `100%`,
+      flex: `0 0 auto`,
       [mediaQueries.sm]: {
         mr: copyColumnGutter,
         mb: 0,
         maxWidth: `none`,
-        width: narrow ? copyColumnWidth : "30rem",
+        width: narrow ? copyColumnWidth : `30rem`,
       },
     }}
   >
