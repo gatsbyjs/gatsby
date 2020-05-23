@@ -1,5 +1,11 @@
-// const fs = require(`fs`)
+const fs = require(`fs`)
 
+const words = fs.readFileSync(`./dictionary.txt`, `utf-8`).split(`\n`)
+words.sort((a, b) => a.localeCompare(b))
+// for (const word of words) {
+//   console.log(word)
+// }
+fs.writeFileSync(`./dictionary.txt`, words.join(`\n`))
 // const errors = fs.readFileSync(`./errors.txt`, `utf-8`)
 // const matches = errors.matchAll(/`(.*)` is misspelt/g)
 
