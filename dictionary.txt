@@ -1286,6 +1286,7 @@ modus
 Monahan
 mongo
 monorepo
+monorepos
 Morby
 moreIncrementalSvg
 Moto
