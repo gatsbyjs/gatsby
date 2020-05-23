@@ -98,7 +98,7 @@ const popNodeQueries = state => {
     return dirtyIds
   }, new Set())
 
-  // boundActionCreators.deleteComponentsDependencies([...uniqDirties])
+  boundActionCreators.deleteComponentsDependencies([...uniqDirties])
 
   queuedDirtyActions = []
   return uniqDirties
