@@ -189,8 +189,7 @@ import EmailCaptureForm from "@components/email-capture-form"
 **NOTE:** Do _not_ import a component using relative path directories:
 
 ```mdx
-// DO NOT DO THIS
-import EmailCaptureForm from "../../www/src/components/email-capture-form"
+// DO NOT DO THIS import EmailCaptureForm from "../../www/src/components/email-capture-form"
 ```
 
 Doing so will break localized versions of the page, which are stored in other repos.

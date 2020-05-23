@@ -5,9 +5,7 @@ author: "Amberley Romo"
 tags: ["getting-started", "wordpress"]
 ---
 
-_This post was originally published on
-[my blog](https://amberley.blog/2018-01-18-getting-started-with-gatsby-wordpress/)
-on January 18, 2018._
+_This post was originally published on [my blog](https://amberley.blog/2018-01-18-getting-started-with-gatsby-wordpress/) on January 18, 2018._
 
 Earlier this week I began rebuilding my blog using GatsbyJS + WordPress. As I familiarized with Gatsby, I found myself flipping through a million tabs, and I thought it might be useful to summarize concepts and to aggregate links I found helpful.
 

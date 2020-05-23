@@ -95,8 +95,7 @@ If it's determined to be a worthwhile feature, the next decision point is whethe
 
 If it's a core change, is it a breaking change? Breaking changes should be labeled with `breaking change` and typically closed. Note that they may sometimes be left open with the note that the functionality can only be added in a major release.
 
-Non-breaking changes can be labeled as `help wanted` and it is often best to ask the creator of the issue if they'd be interested in helping develop the PR.
-![Flow chart for handling a Feature Request](./FeatureFlow.png)
+Non-breaking changes can be labeled as `help wanted` and it is often best to ask the creator of the issue if they'd be interested in helping develop the PR. ![Flow chart for handling a Feature Request](./FeatureFlow.png)
 
 #### Documentation
 
@@ -104,8 +103,7 @@ Issues can be filed requesting documentation on a particular topic. Sometimes th
 
 Alternatively, the issue may be something the team is unable to address. Consider using a [saved reply](#saved-replies) in that circumstance.
 
-Otherwise, label the issue with `documentation` and ask the issuer filer if they'd like to help with a PR.
-![Flow chart for handling a Documentation Request](./DocumentationFlow.png)
+Otherwise, label the issue with `documentation` and ask the issuer filer if they'd like to help with a PR. ![Flow chart for handling a Documentation Request](./DocumentationFlow.png)
 
 #### Maintenance
 

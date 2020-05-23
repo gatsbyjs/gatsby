@@ -105,8 +105,7 @@ Here are some more values that community members listed that we hadn’t listed 
 
 ### Plugins
 
-> Plugin ecosystem: it's growing quickly and it's a nice way to contribute and engage with others. I've met some great folks because of it
-> Plugins and ability to use npm gives you a huge ecosystem to draw on.
+> Plugin ecosystem: it's growing quickly and it's a nice way to contribute and engage with others. I've met some great folks because of it Plugins and ability to use npm gives you a huge ecosystem to draw on.
 
 ### Accessibility
 

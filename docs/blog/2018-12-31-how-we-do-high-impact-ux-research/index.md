@@ -53,15 +53,13 @@ An example of risk-based testing at Gatsby:
 
 We had 90,000 new visitors to gatsbyjs.org homepage in October out of 100,000 total visitors, and most of them arrived at Gatsby via organic search. That’s a huge influx of new visitors, and we didn’t know anything about them!
 
-_Question:_ Can you tell which number from the list below describes our scenario?
-A few ways of thinking about risk-based testing:
+_Question:_ Can you tell which number from the list below describes our scenario? A few ways of thinking about risk-based testing:
 
 1. we need to test the functionality that probably won’t break but would be very bad if it did (high impact, low probability of failure)
 2. we need to test the functionality (and come up with contingency plans!) that probably will break and will be very bad when they do (high impact, high probability of failure)
 3. we don’t test the functionality of things that probably won’t break and it doesn’t matter if they break (low impact, low probability of failure)
 
-_Answer:_
-Because of the high number of visitors to the homepage, the homepage can make a large impact (positive or negative) and because we didn’t have data on how frequently the homepage succeeds or fails to meet user needs, we had an unknown probability of failure. So that matches number one and two (1 & 2) most closely, though we needed to do more research to calculate the probability of the homepage failing to reach its goals.
+_Answer:_ Because of the high number of visitors to the homepage, the homepage can make a large impact (positive or negative) and because we didn’t have data on how frequently the homepage succeeds or fails to meet user needs, we had an unknown probability of failure. So that matches number one and two (1 & 2) most closely, though we needed to do more research to calculate the probability of the homepage failing to reach its goals.
 
 Identifying these risks to the homepage led us to our current research project.
 
@@ -69,10 +67,7 @@ Identifying these risks to the homepage led us to our current research project.
 
 We needed to know two things to assess how the homepage was serving user needs, e.g. calculate the probability of failure.
 
-Question 1
-_How accurate are people’s first impressions of Gatsby when they land on the homepage?_
-Answer
-_Not super accurate!_
+Question 1 _How accurate are people’s first impressions of Gatsby when they land on the homepage?_ Answer _Not super accurate!_
 
 ![image of gatsbyjs.org homepage above the fold](gatsby-days-dot-org-homepage.png)
 
@@ -80,10 +75,7 @@ When looking at the image above, users had a lot of unanswered questions about G
 
 ![image of diagram below the fold on gatsbyjs.org homepage](gatsby-days-dot-org-diagram.png)
 
-Question 2
-_How do people evaluate whether they want to use Gatsby for a project?_
-Answer
-_People look for answers to these questions: (1) how quickly they can set up a site, (2) how Gatsby compares to their other choices (Angular, Vue, etc.) (3) licensing info, (4) is it free, (5) how well does it scale._
+Question 2 _How do people evaluate whether they want to use Gatsby for a project?_ Answer _People look for answers to these questions: (1) how quickly they can set up a site, (2) how Gatsby compares to their other choices (Angular, Vue, etc.) (3) licensing info, (4) is it free, (5) how well does it scale._
 
 The answers to the last question were also not very visible on the homepage, so this led us to a .org homepage redesign project! Stay tuned for the results of that, coming soon :)
 
@@ -111,8 +103,7 @@ Another part of doing low-effort research is recruiting. Someone recently reache
 
 Try bringing dinner or lunch for a coworker, mom, dad, friend, your spouse or children and ask them if you can watch them try to complete a task for a few minutes. If you have a friend at another company that has people that would use your product, ask your friend for referrals and offer them and their referrals something nice like an Amazon gift card. If you go watch a group of people while they work, bring lunch as a gift. Relationship building efforts go a long way, and most people love food and Amazon gift cards.
 
-Use a recruitment service
-We used userinterviews.com and didn’t subscribe (just did a pay-as-you-go thing).
+Use a recruitment service We used userinterviews.com and didn’t subscribe (just did a pay-as-you-go thing).
 
 ### Gather minimum data necessary
 

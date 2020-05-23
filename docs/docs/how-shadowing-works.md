@@ -4,9 +4,7 @@ title: How Shadowing Works
 
 Shadowing is a powerful feature that allows theme users to override components, objects, and anything else in a theme's `src` directory.
 
-> **Note** This is a technical deep dive into how Shadowing works. If you'd
-> like to learn about what Shadowing is, see the [What is Component Shadowing?](/blog/2019-04-29-component-shadowing/)
-> blog post.
+> **Note** This is a technical deep dive into how Shadowing works. If you'd like to learn about what Shadowing is, see the [What is Component Shadowing?](/blog/2019-04-29-component-shadowing/) blog post.
 
 Shadowing works by using a [webpack resolver plugin](https://webpack.js.org/api/resolvers/) that maps themes in a `gatsby-config.js` to possible shadowed files. This gets especially mind melty because themes can add parent themes to a configuration so you need to be able to walk the composition of themes to determine the "last shadow" since the last shadowed theme file wins in the algorithm.
 
@@ -45,8 +43,7 @@ This means that `gatsby-theme-tomato-portfolio` receives priority for component 
 
 Component shadowing is a bit meta because it is implemented as an internal Gatsby plugin that applies a webpack plugin which modifies how module resolution happens for files that are shadowed.
 
-The plugin consists of a `gatsby-node.js` and the webpack plugin code.
-The `gatsby-node` file is pretty straightforward:
+The plugin consists of a `gatsby-node.js` and the webpack plugin code. The `gatsby-node` file is pretty straightforward:
 
 ```js
 const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
@@ -285,8 +282,7 @@ export default function MyAuthor(props) {
 
 This is the first case we'll handle when attempting to resolve the file.
 
-In order to do this we need to leverage the **issuer** of the request. This points to the file that the request came from. This means it refers to _where_ the `import` occurs.
-The **request** refers to what the import points to.
+In order to do this we need to leverage the **issuer** of the request. This points to the file that the request came from. This means it refers to _where_ the `import` occurs. The **request** refers to what the import points to.
 
 This is implemented by another method on the plugin's class which we call `requestPathIsIssuerShadowPath` which has the following method signature:
 
@@ -320,8 +316,7 @@ const baseDirs = [
 ]
 ```
 
-This constructs the shadowable files for `gatsby-theme-tomato`'s Box component.
-Then, we join the component path and end up with:
+This constructs the shadowable files for `gatsby-theme-tomato`'s Box component. Then, we join the component path and end up with:
 
 ```js
 const fullPaths = [
@@ -358,10 +353,8 @@ Now, all usages of the Box in `gatsby-theme-tomato` will be also wrapped in a pu
 
 If a theme sets [`module` config](https://webpack.js.org/configuration/resolve/#resolvemodules) the issuer will be null. As such we need to first check that the `request.context.issuer` is present before we attempt to resolve the shadowed component.
 
-It's important to note that we don't recommend appending to the modules list in themes.
-Though, if you do, we will make sure we don't arbitrarily error.
+It's important to note that we don't recommend appending to the modules list in themes. Though, if you do, we will make sure we don't arbitrarily error.
 
 ## Summary
 
-Shadowing uses a predictable algorithm that leverages webpack to dynamically change module resolution based on a `gatsby-config` and theme composition.
-The last theme will take precedence in the shadowing algorithm, and the user's `src` directory is always take into account first.
+Shadowing uses a predictable algorithm that leverages webpack to dynamically change module resolution based on a `gatsby-config` and theme composition. The last theme will take precedence in the shadowing algorithm, and the user's `src` directory is always take into account first.

@@ -45,8 +45,7 @@ Gatsby generates websites and web applications for production through a compilat
 
 ### Gatsby Project
 
-Now that you are set up, you can use the Gatsby and npm CLI tools in your terminal to get this site ported!
-Make a new project using the Gatsby hello world starter with the following command:
+Now that you are set up, you can use the Gatsby and npm CLI tools in your terminal to get this site ported! Make a new project using the Gatsby hello world starter with the following command:
 
 ```shell
 gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-hello-world

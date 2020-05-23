@@ -134,11 +134,9 @@ So far, we've talked about the more traditional approach of using standard CSS s
 
 ### CSS Modules
 
-Let's explore **CSS Modules**. Quoting from
-[the CSS Module homepage](https://github.com/css-modules/css-modules):
+Let's explore **CSS Modules**. Quoting from [the CSS Module homepage](https://github.com/css-modules/css-modules):
 
-> A **CSS Module** is a CSS file in which all class names and animation names
-> are scoped locally by default.
+> A **CSS Module** is a CSS file in which all class names and animation names are scoped locally by default.
 
 CSS Modules are very popular because they let you write CSS normally but with a lot more safety. The tool automatically generates unique class and animation names, so you don't have to worry about selector name collisions.
 
@@ -174,8 +172,7 @@ You'll notice you imported a CSS module file named `container.module.css`. Let's
 
 You'll notice that the file name ends with `.module.css` instead of the usual `.css`. This is how you tell Gatsby that this CSS file should be processed as a CSS module rather than plain CSS.
 
-3. Create a new page component by creating a file at
-   `src/pages/about-css-modules.js`:
+3. Create a new page component by creating a file at `src/pages/about-css-modules.js`:
 
 ```jsx:title=src/pages/about-css-modules.js
 import React from "react"
@@ -256,8 +253,7 @@ The `console.log(styles)` code will log the resulting import so you can see the 
 
 If you compare that to your CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to `src-pages----about-css-modules-module---avatar---2lRF7`. These are the class names CSS Modules generates. They're guaranteed to be unique across your site. And because you have to import them to use the classes, there's never any question about where some CSS is being used.
 
-4. Create a new `<User />` component inline in the `about-css-modules.js` page
-   component. Modify `about-css-modules.js` so it looks like the following:
+4. Create a new `<User />` component inline in the `about-css-modules.js` page component. Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx:title=src/pages/about-css-modules.js
 import React from "react"

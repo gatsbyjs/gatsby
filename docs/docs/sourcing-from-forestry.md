@@ -152,11 +152,7 @@ You should now be viewing your Forestry login page. Login to view your dashboard
 
 ### Making Changes
 
-You can now make changes in your Forestry admin dashboard and see them as commits in your GitHub repo!
-Open the Forestry dashboard on your deployed site at `/admin`, allow access to GitHub when the permissions
-window pops up (check for blocked pop ups if you don't see it), and try creating and publishing a
-new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
-containing a Markdown file with your blog post content!
+You can now make changes in your Forestry admin dashboard and see them as commits in your GitHub repo! Open the Forestry dashboard on your deployed site at `/admin`, allow access to GitHub when the permissions window pops up (check for blocked pop ups if you don't see it), and try creating and publishing a new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo containing a Markdown file with your blog post content!
 
 Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/mdx/writing-pages/).
 

@@ -6,8 +6,7 @@ Gatsby can help your site rank and perform better in search engines. Using Gatsb
 
 ## Server rendering
 
-Because Gatsby pages are server-side rendered, all the page content is available to Googlebot and other search engine crawlers.
-You can see this by viewing the source for this page in your browser, Right-Click => View source. You'll see the fully rendered HTML document.
+Because Gatsby pages are server-side rendered, all the page content is available to Googlebot and other search engine crawlers. You can see this by viewing the source for this page in your browser, Right-Click => View source. You'll see the fully rendered HTML document.
 
 When you've installed [`gatsby-plugin-offline`](/packages/gatsby-plugin-offline/), you'll see a partial HTML document that does not contain the HTML you were hoping for. By using `gatsby-plugin-offline`, we can optimize bandwidth consumption and not let your users download too much data. Serving a partial HTML document is okay. Google and other search engines will still see the full HTML because `gatsby-plugin-offline` only starts working on the second-page load. A search engine always runs a page in Sandbox mode, which essentially is the first visit.
 

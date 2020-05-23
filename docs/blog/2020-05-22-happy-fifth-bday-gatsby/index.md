@@ -11,8 +11,7 @@ tags:
 
 The web is an incredible place. I’m so happy I get to help build it. I’ve been building websites and web apps for a long time now, and I spent a lot of that time thinking about and experimenting with what a perfect toolset for building for the web would look like. Five years ago those thoughts coalesced into the unveiling of a nascent framework I had decided to call Gatsby:
 
-> There's a lot of static site generators out there and I've played with several and written my own for my blog. They're all pretty much the same and not particularly interesting. I think a React.js based SSG can push the state of the art in three ways — easy no-page transitions, react.js style components, and leveraging the growing react.js ecosystem of tools and components.
-> Most stuff on the web are sites, not apps. And react.js components are just as powerful for sites as they are for apps so a kickass tool for building react.js sites would be very valuable.
+> There's a lot of static site generators out there and I've played with several and written my own for my blog. They're all pretty much the same and not particularly interesting. I think a React.js based SSG can push the state of the art in three ways — easy no-page transitions, react.js style components, and leveraging the growing react.js ecosystem of tools and components. Most stuff on the web are sites, not apps. And react.js components are just as powerful for sites as they are for apps so a kickass tool for building react.js sites would be very valuable.
 
 -- Opened as Issue #1, “Braindump of ideas,” by @KyleAMathews on the brand new Gatsbyjs/Gatsby GitHub repo, May 22, 2015.
 
@@ -60,8 +59,7 @@ There are so many other amazing and cool things that have happened in the first 
 
 Gatsby’s source code has lived on GitHub since Day Zero. The Gatsby community is composed of the tens of thousands of developers building websites on Gatsby, and the 3300+ contributors that have helped write code, write docs, write blog posts…All. The. Writing, particularly apt for a project named after one of the greatest works of literature. It’s exactly zero exaggeration to say Gatsby would not be the incredibly flexible tool for creating for the web it has grown to become without the rich ecosystem surrounding it.
 
-So it seems especially fitting that Gatsby’s fifth birthday is marked by another milestone: a couple days ago, we crossed 2,000 plugins -- created and contributed to by those same amazing community members 🎉.
- ![Gatsby plugin library home page showing 2000 plugins](https://lh6.googleusercontent.com/KqOZPwfYA989MOvcpi93cDXCcIwDt_T4PEkbIIIxEzNzVhJpd8VayWjTPQlxS56oFjmhqVWcij6z3UDSbbTQ_i-Z1V3ak9BaMD4S4ZfYi70ZKbCFJKeRn6pgiSQHYCSBp25IWUPH)
+So it seems especially fitting that Gatsby’s fifth birthday is marked by another milestone: a couple days ago, we crossed 2,000 plugins -- created and contributed to by those same amazing community members 🎉.  ![Gatsby plugin library home page showing 2000 plugins](https://lh6.googleusercontent.com/KqOZPwfYA989MOvcpi93cDXCcIwDt_T4PEkbIIIxEzNzVhJpd8VayWjTPQlxS56oFjmhqVWcij6z3UDSbbTQ_i-Z1V3ak9BaMD4S4ZfYi70ZKbCFJKeRn6pgiSQHYCSBp25IWUPH)
 
 ## Community in the Cloud
 

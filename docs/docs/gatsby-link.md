@@ -191,11 +191,11 @@ _**Note:** `navigate` was previously named `navigateTo`. `navigateTo` is depreca
 
 Instead, Gatsby exports a `navigate` helper function that accepts `to` and `options` arguments.
 
-| Argument          | Required | Description                                                                                     |
-| ----------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `to`              | yes      | The page to navigate to (e.g. `/blog/`).                                                        |
-| `options.state`   | no       | An object. Values passed here will be available in `location.state` in the target page’s props. |
-| `options.replace` | no       | A boolean value. If true, replaces the current URL in history.                                  |
+| Argument | Required | Description |
+| --- | --- | --- |
+| `to` | yes | The page to navigate to (e.g. `/blog/`). |
+| `options.state` | no | An object. Values passed here will be available in `location.state` in the target page’s props. |
+| `options.replace` | no | A boolean value. If true, replaces the current URL in history. |
 
 By default, `navigate` operates the same way as a clicked `Link` component.
 
@@ -279,8 +279,7 @@ const Form = () => (
 
 ## Add the path prefix to paths using `withPrefix`
 
-It is common to host sites in a sub-directory of a site. Gatsby lets you [set
-the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
+It is common to host sites in a sub-directory of a site. Gatsby lets you [set the path prefix for your site](/docs/path-prefix/). After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in development and production.
 
 For pathnames you construct manually, there's a helper function, `withPrefix` that prepends your path prefix in production (but doesn't during development where paths don't need to be prefixed).
 
@@ -303,15 +302,9 @@ const IndexLayout = ({ children, location }) => {
 
 This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
 
-Sometimes you won't know ahead of time whether a link will be internal or not,
-such as when the data is coming from a CMS.
-In these cases you may find it useful to make a component which inspects the
-link and renders either with Gatsby's `<Link>` or with a regular `<a>` tag
-accordingly.
+Sometimes you won't know ahead of time whether a link will be internal or not, such as when the data is coming from a CMS. In these cases you may find it useful to make a component which inspects the link and renders either with Gatsby's `<Link>` or with a regular `<a>` tag accordingly.
 
-Since deciding whether a link is internal or not depends on the site in
-question, you may need to customize the heuristic to your environment, but the
-following may be a good starting point:
+Since deciding whether a link is internal or not depends on the site in question, you may need to customize the heuristic to your environment, but the following may be a good starting point:
 
 ```jsx
 import { Link as GatsbyLink } from "gatsby"

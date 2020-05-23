@@ -2,13 +2,11 @@
 title: Deploying to S3/Cloudfront
 ---
 
-This guide walks through how to host and publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/).
-Optionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
+This guide walks through how to host and publish your next Gatsby site to AWS using [S3](https://aws.amazon.com/s3/). Optionally - but very recommended - you can add CloudFront, a global CDN to make your site _even faster_.
 
 ## Getting Started: AWS CLI
 
-Create an [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create an access id and secret for it.
-You'll need these in the next step.
+Create an [IAM account](https://console.aws.amazon.com/iam/home?#) with administration permissions and create an access id and secret for it. You'll need these in the next step.
 
 Install the AWS CLI and configure it (ensure Python is installed before running these commands):
 
@@ -51,8 +49,7 @@ And finally, add the deployment script to your `package.json`:
 }
 ```
 
-That's it!
-Run `npm run build && npm run deploy` to do a build and have it immediately deployed to S3!
+That's it! Run `npm run build && npm run deploy` to do a build and have it immediately deployed to S3!
 
 ## Deploying with `.env` variables
 

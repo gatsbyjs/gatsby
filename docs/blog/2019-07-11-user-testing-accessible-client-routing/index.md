@@ -150,10 +150,7 @@ As a bonus in user testing session #4, we had some user feedback with the keyboa
 
 Rather than making regions focusable (which would make them reachable, but not operable)–a common misconception when developing for assistive technologies which have their own ways to navigate–**adding a button target** came up again as an idea to receive focus in an area of the page. A control like this could:
 
-a) receive focus, both in the natural tab order and programmatically with scripting
-b) be labeled to act as a focus management target
-c) be small enough in dimensions to not be cut off when zoomed in, and
-d) operate as a skip link back somewhere (which might make labeling for assistive technology tricky...but it can be sorted out)
+a) receive focus, both in the natural tab order and programmatically with scripting b) be labeled to act as a focus management target c) be small enough in dimensions to not be cut off when zoomed in, and d) operate as a skip link back somewhere (which might make labeling for assistive technology tricky...but it can be sorted out)
 
 At this point, we were strongly considering moving to a component-based approach instead of trying to handle this all dynamically with routing and programmatic focus alone. But we had one more test to conduct.
 

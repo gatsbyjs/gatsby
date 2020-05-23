@@ -8,10 +8,7 @@ Build blazing-fast websites without the hosting hassles of managing complex, cos
 
 ## A website built with Gatsby is:
 
-- **Fast:** Think rocket ship vs. Winnebago. Gatsby takes fast to a whole new level with
-  websites that live on the edge—right where your customers are. Pages load in milliseconds
-  rather than seconds. Gatsby lets teams create lightning-fast, content-driven websites without
-  needing to become performance experts.
+- **Fast:** Think rocket ship vs. Winnebago. Gatsby takes fast to a whole new level with websites that live on the edge—right where your customers are. Pages load in milliseconds rather than seconds. Gatsby lets teams create lightning-fast, content-driven websites without needing to become performance experts.
 
 - **Simple:** No servers. No databases. Traditional hosting is time consuming, costly, complex, and puts your site at risk of crashing if your content goes viral. Avoid the pitfalls of hosting with a serverless architecture. A site that never goes down because it’s built on the edge, instantly scaling for traffic spikes.
 

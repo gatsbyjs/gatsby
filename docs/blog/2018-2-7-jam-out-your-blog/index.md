@@ -87,8 +87,7 @@ So, a service that works on top of GitHub where I, or anyone with a GitHub accou
 2. Share access to the repo with anyone on your team.
 3. Log in via [Prose.io](http://prose.io/).
 4. Select your website's repo from the Prose interface.
-5. Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
-   set up a repository for the website
+5. Done. You can edit existing posts, preview posts, and commit any changes directly within the interface. set up a repository for the website
 
 https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic
 

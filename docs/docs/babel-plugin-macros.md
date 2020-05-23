@@ -29,8 +29,7 @@ To use an installed macro, import it in your code like so:
 import preval from "preval.macro"
 ```
 
-You can then use the imported variable however the macro's documentation says.
-`preval.macro` is used as a template literal tag:
+You can then use the imported variable however the macro's documentation says. `preval.macro` is used as a template literal tag:
 
 ```javascript
 import preval from "preval.macro"

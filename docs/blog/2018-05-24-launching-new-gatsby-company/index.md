@@ -75,8 +75,7 @@ We reached the point where we needed a website for the startup and after having 
 
 Spinning up a local DB & server felt like a return to 2006, while template-based site generation felt far inferior to React’s elegant component model.
 
-After some exploration with React server rendering for our app, I realized that React could actually be used as the basis for a static site generator. I got really excited about the potential and started scribbling notes in my notebook from time to time. Eventually, I took a week to build this out and launched Gatsby in late May 2015.
-To my surprise and delight, people started using Gatsby almost immediately after I open sourced it. I spoke about Gatsby at the React conference in January of 2016 and was surprised at how many people knew about it and were using it.
+After some exploration with React server rendering for our app, I realized that React could actually be used as the basis for a static site generator. I got really excited about the potential and started scribbling notes in my notebook from time to time. Eventually, I took a week to build this out and launched Gatsby in late May 2015. To my surprise and delight, people started using Gatsby almost immediately after I open sourced it. I spoke about Gatsby at the React conference in January of 2016 and was surprised at how many people knew about it and were using it.
 
 ### Growing momentum—can Gatsby be much much more?
 

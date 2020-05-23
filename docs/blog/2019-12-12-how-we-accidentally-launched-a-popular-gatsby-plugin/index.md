@@ -12,29 +12,23 @@ tags:
   - festival
 ---
 
-It all started when we ([Oberon](https://www.oberon.nl/)) noticed a certain pattern among a subset of our clients — festivals.
-Their sites tend to have lots of issues with server load and costs.
+It all started when we ([Oberon](https://www.oberon.nl/)) noticed a certain pattern among a subset of our clients — festivals. Their sites tend to have lots of issues with server load and costs.
 
 They are, after all websites that remain largely unused for most of the year — until they’re not. And at those few yearly moments (such as at the start of a ticket sale), server loads can get really, really high.
 
-This makes most festival websites not _particularly good_ candidates for hosting on servers that are shared by multiple sites, because they can bring down all other sites during this brief period.
-Additionally, clients are paying a fixed hosting fee for a server that mostly remains unused throughout the year.
+This makes most festival websites not _particularly good_ candidates for hosting on servers that are shared by multiple sites, because they can bring down all other sites during this brief period. Additionally, clients are paying a fixed hosting fee for a server that mostly remains unused throughout the year.
 
-In the past we’ve ‘resolved’ these issues by adding an additional caching layer like [Squid](http://www.squid-cache.org/), [CloudFront](https://aws.amazon.com/cloudfront/), etc.
-Adding these kinds of extra layers does make you think about why these sites are built as dynamic applications anyway.
+In the past we’ve ‘resolved’ these issues by adding an additional caching layer like [Squid](http://www.squid-cache.org/), [CloudFront](https://aws.amazon.com/cloudfront/), etc. Adding these kinds of extra layers does make you think about why these sites are built as dynamic applications anyway.
 
 For example, festival programme items rarely change after their initial publication, and it’s not like most of the content on these type of sites is particularly ‘realtime’ anyway.
 
-What if we could just keep the entire site static, only updating it if changes were made in one of the data sources?
-We could then put it on a pay-per-request static file hosting service (like [AWS S3](https://aws.amazon.com/s3/)), where we can basically scale to infinity if need be, while keeping the costs low during the down periods.
+What if we could just keep the entire site static, only updating it if changes were made in one of the data sources? We could then put it on a pay-per-request static file hosting service (like [AWS S3](https://aws.amazon.com/s3/)), where we can basically scale to infinity if need be, while keeping the costs low during the down periods.
 
 When our company was approached by a [new client](https://www.oerol.nl/en/) (that had sadly earned a reputation for its website failing during peak hours), it felt like the stars were aligned, and we decided to go _full [JAMStack](https://jamstack.wtf/)_.
 
 ## Enter Gatsby
 
-Gatsby is a static site generator, based on React.
-You can connect Gatsby up to a variety of sources, and query all of it through GraphQL.
-Source data can come from anywhere: a REST API, CSV file, database, you name it. It doesn’t need to originate from a GQL source.
+Gatsby is a static site generator, based on React. You can connect Gatsby up to a variety of sources, and query all of it through GraphQL. Source data can come from anywhere: a REST API, CSV file, database, you name it. It doesn’t need to originate from a GQL source.
 
 In addition to generating everything as static assets, Gatsby also does some additional magic (mainly prefetching and codesplitting) to make your site even better.
 
@@ -46,15 +40,13 @@ We have been using React for about 4 years now, and we’ve largely pivoted to u
 
 Whilst the transition to Gatsby itself was a breeze, this part is where things got a little tricky.
 
-Because we were already hosting our image assets on S3, it seemed only logical to put the rest of the site on there as well.
-At the time however, [AWS Amplify](https://aws.amazon.com/amplify/faqs/) was the only way to go if you wanted to use Gatsby in combination with AWS.
+Because we were already hosting our image assets on S3, it seemed only logical to put the rest of the site on there as well. At the time however, [AWS Amplify](https://aws.amazon.com/amplify/faqs/) was the only way to go if you wanted to use Gatsby in combination with AWS.
 
 AWS Amplify is a suite of services and tools including continuous integration, code hosting, and [much, MUCH more.](https://aws.amazon.com/amplify/faqs/)
 
 I noticed there were some more downsides to Amplify:
 
-- [Gatsby’s redirect functionality](/docs/actions/#createRedirect) did not work, at all.
-  Our client absolutely needed redirects that they could control from the CMS, and in turn, we wanted to control them with the same data source that was already present in Gatsby, not having to write an additional script that would add a lot of overhead.
+- [Gatsby’s redirect functionality](/docs/actions/#createRedirect) did not work, at all. Our client absolutely needed redirects that they could control from the CMS, and in turn, we wanted to control them with the same data source that was already present in Gatsby, not having to write an additional script that would add a lot of overhead.
 
 - [Gatsby’s recommended caching headers](/docs/caching/) were not applied — not very good for your lighthouse scores, and one of the primary reasons we chose Gatsby in the first place.
 
@@ -78,8 +70,7 @@ So, I decided to experiment a bit and a week later, launched a plugin that fixed
 
 - You can now set additional metadata on objects, meaning you can (for example) specify [a custom content type for your objects](https://github.com/jariz/gatsby-plugin-s3/blob/master/recipes/custom-content-type.md).
 
-You can get it here:
-[gatsbyjs.org/packages/gatsby-plugin-s3](/packages/gatsby-plugin-s3/?=plugin-s3)
+You can get it here: [gatsbyjs.org/packages/gatsby-plugin-s3](/packages/gatsby-plugin-s3/?=plugin-s3)
 
 ## The result
 

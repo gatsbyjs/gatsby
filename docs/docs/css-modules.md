@@ -63,8 +63,7 @@ A site user could then write their own CSS styles matching HTML elements with a 
 
 ## When to use CSS Modules
 
-CSS Modules are highly recommended for those new to building with Gatsby (and React in general) as they allow you to write regular, portable CSS files while gaining
-performance benefits like only bundling referenced code.
+CSS Modules are highly recommended for those new to building with Gatsby (and React in general) as they allow you to write regular, portable CSS files while gaining performance benefits like only bundling referenced code.
 
 ## How to build a page using CSS Modules
 

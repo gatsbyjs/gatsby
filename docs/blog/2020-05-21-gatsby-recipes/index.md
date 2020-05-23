@@ -68,8 +68,7 @@ gatsby recipes
 
 You should see from the list there are two options for Storybook.
 
-**Add Storybook - JavaScript**
-**Add Storybook - TypeScript**
+**Add Storybook - JavaScript** **Add Storybook - TypeScript**
 
 These are both largely the same with only some small differences to manage `.ts|tsx` as well as `.js|jsx` files and a little difference in the way they process props which populate the Storybook prop table.
 
@@ -77,8 +76,7 @@ If you’ve got this far I’m sure you’ll agree that running a simple CLI com
 
 If you’re interested, here is where you can read more about my Recipes👇
 
-[Storybook - Js](https://paulie.dev/posts/2020/04/gatsby-recipe-storybook-js/)
-[Storybook - Ts](https://paulie.dev/posts/2020/05/gatsby-recipe-storybook-ts/)
+[Storybook - Js](https://paulie.dev/posts/2020/04/gatsby-recipe-storybook-js/) [Storybook - Ts](https://paulie.dev/posts/2020/05/gatsby-recipe-storybook-ts/)
 
 ## Fancy writing your own Recipe?
 

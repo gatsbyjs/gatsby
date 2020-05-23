@@ -4,8 +4,7 @@ title: Using Prismic with GraphQL Source Plugin
 
 ## Prismic + Gatsby features
 
-Prismic is a headless CMS that provides a web application that allows content writers to focus on creating and updating the content of their website. Essentially, it differentiates itself thanks to its UX that allows a lot of flexibility without complicating it. The Slices feature plays a big role in this, they essentially correspond to components in the web application that non-technical people can use to assemble their page.
-Used alongside Gatsby it lets you create fast, editable sites.
+Prismic is a headless CMS that provides a web application that allows content writers to focus on creating and updating the content of their website. Essentially, it differentiates itself thanks to its UX that allows a lot of flexibility without complicating it. The Slices feature plays a big role in this, they essentially correspond to components in the web application that non-technical people can use to assemble their page. Used alongside Gatsby it lets you create fast, editable sites.
 
 Note that the Gatsby Prismic source plugin you will use during this tutorial, as a main feature, allows for **real previews** of your pages so you can know how they will look like before publishing or building them. You can generate **shareable links** that can even be seen by non-Prismic users.
 

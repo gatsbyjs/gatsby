@@ -3,8 +3,7 @@ title: "Recipes: Continuous Integration on Gitlab"
 tableOfContentsDepth: 1
 ---
 
-Continuous Integration works by pushing small code chunks to your application’s code base hosted in a Git repository, and, to every push, run a pipeline of scripts to build, test, and validate the code changes before merging them into the main branch.
-This recipe helps you set up CI/CD on Gitlab and automate your production build!.
+Continuous Integration works by pushing small code chunks to your application’s code base hosted in a Git repository, and, to every push, run a pipeline of scripts to build, test, and validate the code changes before merging them into the main branch. This recipe helps you set up CI/CD on Gitlab and automate your production build!.
 
 ## Prerequisites
 

@@ -293,6 +293,5 @@ This is a very simple story without much going on, but honestly, nothing else re
 
 ## Other resources
 
-- For more information on Storybook, visit
-  [the Storybook site](https://storybook.js.org/).
+- For more information on Storybook, visit [the Storybook site](https://storybook.js.org/).
 - Get started with a [Jest and Storybook starter](https://github.com/Mathspy/gatsby-storybook-jest-starter)

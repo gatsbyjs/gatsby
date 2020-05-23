@@ -2,21 +2,15 @@
 title: Writing Pages in MDX
 ---
 
-After [installing](/docs/mdx/getting-started) `gatsby-plugin-mdx`, MDX files
-located in `src/pages` will turn into pages.
+After [installing](/docs/mdx/getting-started) `gatsby-plugin-mdx`, MDX files located in `src/pages` will turn into pages.
 
-Pages are rendered at a URL that is constructed from the filesystem
-path inside `src/pages`. An MDX file at `src/pages/awesome.mdx` will
-result in a page being rendered at `mysite.com/awesome`.
+Pages are rendered at a URL that is constructed from the filesystem path inside `src/pages`. An MDX file at `src/pages/awesome.mdx` will result in a page being rendered at `mysite.com/awesome`.
 
-> `gatsby-plugin-mdx` looks for MDX files and automatically
-> transpiles them so that Gatsby internals can render them.
+> `gatsby-plugin-mdx` looks for MDX files and automatically transpiles them so that Gatsby internals can render them.
 
 ## Using frontmatter in MDX
 
-By default, `gatsby-plugin-mdx` supports [frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files)
-so you can define things like titles and paths to use in your GraphQL
-queries. You can declare frontmatter at the beginning of your MDX document:
+By default, `gatsby-plugin-mdx` supports [frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) so you can define things like titles and paths to use in your GraphQL queries. You can declare frontmatter at the beginning of your MDX document:
 
 ```mdx
 ---
@@ -46,12 +40,9 @@ query {
 }
 ```
 
-> **Note:** To query `MDX` content, it must be included in the node system using a
-> source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
-> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
+> **Note:** To query `MDX` content, it must be included in the node system using a source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
 
-Frontmatter is also available in `props.pageContext.frontmatter` and
-can be accessed in blocks of JSX in your MDX document:
+Frontmatter is also available in `props.pageContext.frontmatter` and can be accessed in blocks of JSX in your MDX document:
 
 ```mdx
 ---
@@ -67,8 +58,7 @@ author: Jay Gatsby
 
 ## Importing JSX components and MDX documents
 
-Similarly to what you'd do in plain React, you can import and render JSX components
-directly in MDX files. You can also import other MDX documents.
+Similarly to what you'd do in plain React, you can import and render JSX components directly in MDX files. You can also import other MDX documents.
 
 ```mdx:title=src/pages/chart.mdx
 import { Chart } from "../components/chart"
@@ -82,9 +72,7 @@ The chart is rendered inside our MDX document.
 <FAQ />
 ```
 
-The `<Chart />` component coming from a `.js` file would be written like any
-other React component, while the `<FAQ />` component coming from an `.mdx`
-file might look something like this:
+The `<Chart />` component coming from a `.js` file would be written like any other React component, while the `<FAQ />` component coming from an `.mdx` file might look something like this:
 
 <!-- prettier-ignore -->
 ```mdx:title=src/components/faq.mdx
@@ -111,8 +99,7 @@ export default function Layout({ children }) {
 }
 ```
 
-> **Note**: the default export concept used in this code block is explained in more detail
-> in the docs below on [defining layouts](#defining-a-layout)
+> **Note**: the default export concept used in this code block is explained in more detail in the docs below on [defining layouts](#defining-a-layout)
 
 You can read more about using React components from other libraries in the [Importing and Using components in MDX guide](/docs/mdx/importing-and-using-components/).
 
@@ -132,18 +119,13 @@ Markdown and more content...
 
 ## Using JavaScript exports
 
-MDX supports `export` syntax as well, which enables specific use cases like providing data
-for queries and rendering or overriding the default layout on MDX documents. You
-don't need to export MDX documents to import them in other files.
+MDX supports `export` syntax as well, which enables specific use cases like providing data for queries and rendering or overriding the default layout on MDX documents. You don't need to export MDX documents to import them in other files.
 
 ### Exporting page metadata
 
-You can provide additional data about a given document by exporting.
-`gatsby-plugin-mdx` will automatically add it to the GraphQL schema so you
-can use the exported data in your queries and in rendering.
+You can provide additional data about a given document by exporting. `gatsby-plugin-mdx` will automatically add it to the GraphQL schema so you can use the exported data in your queries and in rendering.
 
-Data exported in MDX documents in this manner is also made available on the
-variable name you've assigned it.
+Data exported in MDX documents in this manner is also made available on the variable name you've assigned it.
 
 You can export variables, objects, or other data structures:
 
@@ -164,10 +146,7 @@ export const names = ["Abdullah", "Adam", "Alice", "Aida"]
 <ul>{names.map(name => <li>{name}</li>)}</ul>
 ```
 
-The fields `name` and `path` defined on `metadata` could now alternatively
-be accessed on MDX nodes in other areas of your Gatsby project by a GraphQL
-query like this (this query fetches all MDX nodes and the data exports
-associated with them):
+The fields `name` and `path` defined on `metadata` could now alternatively be accessed on MDX nodes in other areas of your Gatsby project by a GraphQL query like this (this query fetches all MDX nodes and the data exports associated with them):
 
 ```graphql
 query MdxExports {
@@ -186,9 +165,7 @@ query MdxExports {
 
 ### Defining a layout
 
-If you have [provided a default layout](/packages/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
-through the `gatsby-plugin-mdx` plugin options, the exported component you define
-from this file will replace the default.
+If you have [provided a default layout](/packages/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js` through the `gatsby-plugin-mdx` plugin options, the exported component you define from this file will replace the default.
 
 <!-- prettier-ignore -->
 ```mdx:title=src/pages/layout-example.mdx
@@ -199,8 +176,7 @@ import PurpleBorder from "../components/purple-border"
 export default PurpleBorder
 ```
 
-The `<PurpleBorder />` component might look something like this, wrapping the MDX
-document in a `<div>` with a 1px purple border:
+The `<PurpleBorder />` component might look something like this, wrapping the MDX document in a `<div>` with a 1px purple border:
 
 ```jsx:title=src/components/purple-border.js
 import React from "react"
@@ -214,10 +190,7 @@ export default PurpleBorder
 
 ## GraphQL queries
 
-You can fetch data to use in your MDX file by exporting a `pageQuery`
-in the same way you would for a `.js` page. The queried data is passed
-as a prop, and can be accessed inside any JSX block when writing in
-MDX:
+You can fetch data to use in your MDX file by exporting a `pageQuery` in the same way you would for a `.js` page. The queried data is passed as a prop, and can be accessed inside any JSX block when writing in MDX:
 
 <!-- prettier-ignore -->
 ```mdx
@@ -241,8 +214,4 @@ export const pageQuery = graphql`
 `
 ```
 
-> Note: For now, this only works [if the `.mdx` file exporting the query is placed in
-> `src/pages`](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-437161966).
-> Exporting GraphQL queries from `.mdx` files that are used for programmatic page creation in
-> `gatsby-node.js` via `actions.createPage` [is not currently
-> supported](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-489005677).
+> Note: For now, this only works [if the `.mdx` file exporting the query is placed in `src/pages`](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-437161966). Exporting GraphQL queries from `.mdx` files that are used for programmatic page creation in `gatsby-node.js` via `actions.createPage` [is not currently supported](https://github.com/ChristopherBiscardi/gatsby-mdx/issues/187#issuecomment-489005677).

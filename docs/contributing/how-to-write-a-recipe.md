@@ -92,9 +92,7 @@ When writing a recipe, try to include each of the below items wherever relevant.
 
 #### Directions
 
-1. Open the index page component (src/pages/index.js), import the <Link />
-   component from Gatsby, add a <Link /> component above the header, and give
-   it a `to` property with the value of "/contact/" for the pathname:
+1. Open the index page component (src/pages/index.js), import the <Link /> component from Gatsby, add a <Link /> component above the header, and give it a `to` property with the value of "/contact/" for the pathname:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -110,8 +108,7 @@ export default function Home() {
 }
 ```
 
-2. Run `gatsby develop` and navigate to the index page. You should have a link
-   that takes you to the contact page when clicked!
+2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
 #### Additional resources
 

@@ -38,8 +38,7 @@ Gatsby Recipes use [MDX](/docs/glossary/mdx/). They're a readable mix of Markdow
 ```markdown
 # Setup Styled Components
 
-[Styled Components](https://styled-components.com/) is visual primitives for the component age.
-Use the best bits of ES6 and CSS to style your apps without stress 💅
+[Styled Components](https://styled-components.com/) is visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress 💅
 
 ---
 
@@ -59,8 +58,7 @@ Install the Styled Components plugin in gatsby-config.js
 
 Sweet, now it's ready to go.
 
-Let's also write out an example page you can use to play
-with Styled Components.
+Let's also write out an example page you can use to play with Styled Components.
 
 <File
   path="src/pages/styled-components-example.js"

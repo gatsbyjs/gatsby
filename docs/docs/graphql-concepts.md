@@ -2,22 +2,13 @@
 title: GraphQL Concepts
 ---
 
-There are many options for loading data into React components. One of the most
-popular and powerful of these is a technology called
-[GraphQL](https://graphql.org/).
+There are many options for loading data into React components. One of the most popular and powerful of these is a technology called [GraphQL](https://graphql.org/).
 
-GraphQL was invented at Facebook to help product engineers _pull_ needed data into
-React components.
+GraphQL was invented at Facebook to help product engineers _pull_ needed data into React components.
 
-GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're
-familiar with SQL, it works in a very similar way. Using a special syntax, you describe
-the data you want in your component and then that data is given
-to you.
+GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're familiar with SQL, it works in a very similar way. Using a special syntax, you describe the data you want in your component and then that data is given to you.
 
-Gatsby uses GraphQL to enable [page and StaticQuery
-components](/docs/building-with-components/) to declare what data they and their
-sub-components need. Then, Gatsby makes that data available in
-the browser when needed by your components.
+Gatsby uses GraphQL to enable [page and StaticQuery components](/docs/building-with-components/) to declare what data they and their sub-components need. Then, Gatsby makes that data available in the browser when needed by your components.
 
 Data from any number of sources is made queryable in one unified layer, a key part of the Gatsby building process:
 
@@ -84,9 +75,7 @@ export const query = graphql`
 `
 ```
 
-The result of the query is automatically inserted into your React component
-on the `data` prop. GraphQL and Gatsby let you ask for data and then
-immediately start using it.
+The result of the query is automatically inserted into your React component on the `data` prop. GraphQL and Gatsby let you ask for data and then immediately start using it.
 
 **Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
 
@@ -110,8 +99,7 @@ The four words `site`, `id`, `siteMetadata`, and `title` are marked as "Fields".
 
 ## How to learn GraphQL
 
-Your experience developing with Gatsby might be the first time you've seen GraphQL! We hope you love it as much
-as we do and find it useful for all your projects.
+Your experience developing with Gatsby might be the first time you've seen GraphQL! We hope you love it as much as we do and find it useful for all your projects.
 
 When starting out with GraphQL, we recommend the following two tutorials:
 
@@ -122,21 +110,13 @@ When starting out with GraphQL, we recommend the following two tutorials:
 
 ## How do GraphQL and Gatsby work together?
 
-One of the great things about GraphQL is how flexible it is. People use GraphQL
-with [many different programming languages](https://graphql.org/code/) and for web and native apps.
+One of the great things about GraphQL is how flexible it is. People use GraphQL with [many different programming languages](https://graphql.org/code/) and for web and native apps.
 
-Most people run GraphQL on a server to respond live to requests for
-data from clients. You define a schema (a schema is a formal way of describing
-the shape of your data) for your GraphQL server and then your GraphQL resolvers
-retrieve data from databases and/or other APIs.
+Most people run GraphQL on a server to respond live to requests for data from clients. You define a schema (a schema is a formal way of describing the shape of your data) for your GraphQL server and then your GraphQL resolvers retrieve data from databases and/or other APIs.
 
-Gatsby uses GraphQL at _build-time_ and _not_ for live
-sites. This is unique, and it means you don't need to run additional services (e.g. a database
-and Node.js service) to use GraphQL for production websites.
+Gatsby uses GraphQL at _build-time_ and _not_ for live sites. This is unique, and it means you don't need to run additional services (e.g. a database and Node.js service) to use GraphQL for production websites.
 
-Gatsby is a great framework for building apps so it's possible and encouraged
-to pair Gatsby's native build-time GraphQL with GraphQL queries running against
-a live GraphQL server from the browser.
+Gatsby is a great framework for building apps so it's possible and encouraged to pair Gatsby's native build-time GraphQL with GraphQL queries running against a live GraphQL server from the browser.
 
 ## Where does Gatsby's GraphQL schema come from?
 
@@ -158,11 +138,9 @@ Gatsby will create a schema that looks something like this:
 title: String
 ```
 
-This makes it easy to pull data from anywhere and immediately start writing
-GraphQL queries against your data.
+This makes it easy to pull data from anywhere and immediately start writing GraphQL queries against your data.
 
-This _can_ cause confusion as some data sources allow you to define
-a schema even when there's not any data added for parts or all of the schema. If parts of the data haven't been added, then those parts of the schema might not be recreated in Gatsby.
+This _can_ cause confusion as some data sources allow you to define a schema even when there's not any data added for parts or all of the schema. If parts of the data haven't been added, then those parts of the schema might not be recreated in Gatsby.
 
 ## Powerful data transformations
 

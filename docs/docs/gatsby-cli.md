@@ -33,9 +33,9 @@ gatsby new [<site-name> [<starter-url>]]
 
 #### Arguments
 
-| Argument    | Description                                                                                                                                                                                              |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| site-name   | Your Gatsby site name, which is also used to create a project directory.                                                                                                                                 |
+| Argument | Description |
+| --- | --- |
+| site-name | Your Gatsby site name, which is also used to create a project directory. |
 | starter-url | A Gatsby starter URL or local file path. Defaults to [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default); see the [Gatsby starters](/docs/starters/) docs for more information. |
 
 > Note: The `site-name` should only consist of letters and numbers. If you specify a `.`, `./` or a `<space>` in the name, `gatsby new` will throw an error.
@@ -83,8 +83,7 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
 
-Follow the [Local HTTPS guide](/docs/local-https/)
-to find out how you can set up an HTTPS development server using Gatsby.
+Follow the [Local HTTPS guide](/docs/local-https/) to find out how you can set up an HTTPS development server using Gatsby.
 
 #### Preview changes on other devices
 
@@ -113,14 +112,14 @@ At the root of a Gatsby site, compile your application and make it ready for dep
 
 #### Options
 
-|            Option            | Description                                                                                                                                  |
-| :--------------------------: | -------------------------------------------------------------------------------------------------------------------------------------------- |
-|       `--prefix-paths`       | Build site with link paths prefixed (set pathPrefix in your config)                                                                          |
-|        `--no-uglify`         | Build site without uglifying JS bundles (for debugging)                                                                                      |
-|         `--profile`          | Build site with react profiling. See [Profiling Site Performance with React Profiler](/docs/profiling-site-performance-with-react-profiler/) |
-| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/)                                    |
-|     `--graphql-tracing`      | Trace (see above) every graphql resolver, may have performance implications.                                                                 |
-| `--no-color`, `--no-colors`  | Disables colored terminal output                                                                                                             |
+| Option | Description |
+| :-: | --- |
+| `--prefix-paths` | Build site with link paths prefixed (set pathPrefix in your config) |
+| `--no-uglify` | Build site without uglifying JS bundles (for debugging) |
+| `--profile` | Build site with react profiling. See [Profiling Site Performance with React Profiler](/docs/profiling-site-performance-with-react-profiler/) |
+| `--open-tracing-config-file` | Tracer configuration file (OpenTracing compatible). See [Performance Tracing](/docs/performance-tracing/) |
+| `--graphql-tracing` | Trace (see above) every graphql resolver, may have performance implications. |
+| `--no-color`, `--no-colors` | Disables colored terminal output |
 
 In addition to these build options, there are some optional [build environment variables](/docs/environment-variables/#build-variables) for more advanced configurations that can adjust how a build runs. For example, setting `CI=true` as an environment variable will tailor output for [dumb terminals](https://en.wikipedia.org/wiki/Computer_terminal#Dumb_terminals).
 
@@ -132,11 +131,11 @@ At the root of a Gatsby site, serve the production build of your site for testin
 
 #### Options
 
-|      Option      | Description                                                                              |
-| :--------------: | ---------------------------------------------------------------------------------------- |
-|  `-H`, `--host`  | Set host. Defaults to localhost                                                          |
-|  `-p`, `--port`  | Set port. Defaults to 9000                                                               |
-|  `-o`, `--open`  | Open the site in your (default) browser for you                                          |
+| Option | Description |
+| :-: | --- |
+| `-H`, `--host` | Set host. Defaults to localhost |
+| `-p`, `--port` | Set port. Defaults to 9000 |
+| `-o`, `--open` | Open the site in your (default) browser for you |
 | `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). |
 
 ### `info`
@@ -147,8 +146,8 @@ At the root of a Gatsby site, get helpful environment information which will be 
 
 #### Options
 
-|       Option        | Description                                             |
-| :-----------------: | ------------------------------------------------------- |
+| Option | Description |
+| :-: | --- |
 | `-C`, `--clipboard` | Automagically copy environment information to clipboard |
 
 ### `clean`
@@ -222,8 +221,7 @@ Which package manager would you like to use ? › - Use arrow-keys. Return to su
 
 Once you’ve made your choice, the CLI won’t ask for your preference again for any subsequent project.
 
-If you want to change this for your next project you have to edit the config file created automatically by the CLI.
-This file is available on your system at: `~/.config/gatsby/config.json`
+If you want to change this for your next project you have to edit the config file created automatically by the CLI. This file is available on your system at: `~/.config/gatsby/config.json`
 
 In it you’re going to see something like this.
 

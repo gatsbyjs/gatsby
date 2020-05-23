@@ -16,8 +16,7 @@ We’re excited to announce the official release of Gatsby Preview for [Cosmic](
 1. First go to the [Gatsby Getting Started Page](https://www.gatsbyjs.com/get-started/) and follow the links for Cosmic.
 2. Select the [Cosmic-powered Gatsby Blog](https://www.cosmicjs.com/apps/gatsby-blog)
 3. You will then be asked for your GitHub and Cosmic authentication, so make sure you have both accounts set up ([sign up for Cosmic here](https://app.cosmicjs.com/signup)).
-4. After onboarding, go to any Post in your Cosmic Bucket and find the big, beautiful, purple button to preview your content.
-   ![Cosmic Gatsby Preview Screenshot](./cosmic-js-gatsby-preview-screenshot.jpg)
+4. After onboarding, go to any Post in your Cosmic Bucket and find the big, beautiful, purple button to preview your content. ![Cosmic Gatsby Preview Screenshot](./cosmic-js-gatsby-preview-screenshot.jpg)
 
 #### What happens?
 

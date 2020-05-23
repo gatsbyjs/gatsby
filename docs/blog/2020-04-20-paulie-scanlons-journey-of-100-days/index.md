@@ -38,9 +38,7 @@ Using the Skin UI editor and live preview you can tinker with Theme UI's theme o
 
 I believe this project has legs, but I also need to do a bit more work on it before it's all singing and all dancing. I have it on good authority that something similar will make its way in to [Blocks UI](https://blocks-ui.com/)... psst hey Gatsby I'm available to help build it 😊.
 
-[Visit site](https://www.skin-ui.com/) |
-[GitHub](https://github.com/PaulieScanlon/skin-ui) |
-[Blog post](https://paulie.dev/posts/2020/04/skin-ui/)
+[Visit site](https://www.skin-ui.com/) | [GitHub](https://github.com/PaulieScanlon/skin-ui) | [Blog post](https://paulie.dev/posts/2020/04/skin-ui/)
 
 ![Screenshot of Terminal, a zero-component Gatsby theme](./gatsby-theme-terminal.jpg "Screenshot of Terminal, a zero-component Gatsby theme")
 
@@ -50,9 +48,7 @@ This was my second attempt at developing a theme and after making a bit of a mes
 
 Having worked on Gatsby Themes for about a year now I think this approach can be really powerful. Component shadowing is awesome, don't get me wrong, but if you decouple the "components" from a theme and just provide _data_ and _styles_ the user then has full control over their UI. No more hacking over the top of CSS and no real need to shadow a "component" to change the way it looks or functions. This approach means you can just build anything you want using the components from Theme UI and boom 💥 you've got yourself a totally custom blog, site or application.
 
-[View demo](https://gatsby-theme-terminal.netlify.com/) |
-[GitHub](https://github.com/PaulieScanlon/gatsby-theme-terminal) |
-[Blog post](https://paulie.dev/posts/2020/02/gatsby-theme-terminal/)
+[View demo](https://gatsby-theme-terminal.netlify.com/) | [GitHub](https://github.com/PaulieScanlon/gatsby-theme-terminal) | [Blog post](https://paulie.dev/posts/2020/02/gatsby-theme-terminal/)
 
 ![Screenshot of starter instructions for Gatsby Terminal theme](./gatsby-starter-terminal.jpg "Screenshot of starter instructions for Gatsby Terminal theme.")
 
@@ -80,9 +76,7 @@ I've created a [PR](https://github.com/system-ui/theme-ui/pull/669) for Theme UI
 
 (If anyone in Gatsby Admin happens to read this, again, I'm available to help build it.)
 
-[View demo](https://gatsby-plugin-prop-shop.netlify.com/prop-shop/) |
-[GitHub](https://github.com/PaulieScanlon/gatsby-plugin-prop-shop) |
-[Blog post](https://paulie.dev/posts/2020/02/prop-shop/)
+[View demo](https://gatsby-plugin-prop-shop.netlify.com/prop-shop/) | [GitHub](https://github.com/PaulieScanlon/gatsby-plugin-prop-shop) | [Blog post](https://paulie.dev/posts/2020/02/prop-shop/)
 
 ![Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript](./theme-ui-components.jpg "Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript")
 
@@ -104,9 +98,7 @@ Spotting a gap in the market I developed this plugin to bring all the same embed
 
 That's all possible with this plugin. There are few shortcomings with the way the props are required for each of the components and I do hope to develop this further so it's easier to use but for now if you want to embed Twitter, YouTube Instagram and many more in to your `.mdx` without imports, this is the plugin for you!
 
-[View Demo](https://gatsby-mdx-embed.netlify.com/) |
-[GitHub](https://github.com/PaulieScanlon/gatsby-mdx-embed) |
-[Blog post](https://paulie.dev/posts/2020/01/gatsby-mdx-embed/)
+[View Demo](https://gatsby-mdx-embed.netlify.com/) | [GitHub](https://github.com/PaulieScanlon/gatsby-mdx-embed) | [Blog post](https://paulie.dev/posts/2020/01/gatsby-mdx-embed/)
 
 ![Screen shot of Gatsby Grid System plugin](./gatsby-remark-grid-system.jpg "Screen shot of Gatsby Grid System plugin")
 
@@ -116,9 +108,7 @@ OK, true confession, I started building this plugin before the challenge came ab
 
 This plugin was a head first dive into the [Markdown Abstract Syntax Tree](https://github.com/syntax-tree/mdast) and allowed me to understand what markdown and MDX do under the hood. Using visitor patterns I was able to bring responsive mobile first layouts to tired old single column markdown files.
 
-[View Demo](https://gatsby-remark-grid-system.netlify.com/) |
-[GitHub](https://github.com/PaulieScanlon/gatsby-remark-grid-system) |
-[Blog post](https://paulie.dev/posts/2019/12/26/gatsby-remark-grid-system/)
+[View Demo](https://gatsby-remark-grid-system.netlify.com/) | [GitHub](https://github.com/PaulieScanlon/gatsby-remark-grid-system) | [Blog post](https://paulie.dev/posts/2019/12/26/gatsby-remark-grid-system/)
 
 ![Code sample of a plugin called gatsby-mdx-routes](./gatsby-mdx-routes.jpg "Code sample of a plugin called gatsby-mdx-routes")
 
@@ -130,9 +120,7 @@ Extracting navigation routes for locally sourced `.mdx` files using GraphQL in y
 
 There are a few areas where it doesn't quite perform, namely in the recursive pattern, but developing this plugin really enhanced my JavaScript knowledge. And, dare I say it, but I think I finally understand [Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
 
-[View Demo](https://gatsby-mdx-routes.netlify.com/) |
-[GitHub](https://github.com/PaulieScanlon/gatsby-mdx-routes) |
-[Blog post](https://paulie.dev/posts/2019/12/12/gatsby-mdx-routes/)
+[View Demo](https://gatsby-mdx-routes.netlify.com/) | [GitHub](https://github.com/PaulieScanlon/gatsby-mdx-routes) | [Blog post](https://paulie.dev/posts/2019/12/12/gatsby-mdx-routes/)
 
 ![demo of gatsby-remark-sticky-table, a plugin for making sticky header tables in markdown](./gatsby-remark-sticky-table.jpg "demo image of gatsby-remark-sticky-table, a plugin for making sticky header tables in markdown")
 
@@ -144,9 +132,7 @@ I developed this plugin back in December 2019 and as my following grew so to did
 
 So if you do want big tables in your blog but don't want neverending page scrolls, then keep it sticky with [gatsby-remark-sticky-table](https://github.com/PaulieScanlon/gatsby-remark-sticky-table)
 
-[View Demo](https://gatsby-remark-sticky-table.netlify.com/) |
-[GitHub](https://github.com/PaulieScanlon/gatsby-remark-sticky-table) |
-[Blog post](https://paulie.dev/posts/2019/11/24/gatsby-remark-sticky-table/)
+[View Demo](https://gatsby-remark-sticky-table.netlify.com/) | [GitHub](https://github.com/PaulieScanlon/gatsby-remark-sticky-table) | [Blog post](https://paulie.dev/posts/2019/11/24/gatsby-remark-sticky-table/)
 
 ![](./gatsby-theme-gatstats.jpg)
 
@@ -160,10 +146,7 @@ Knowing what I know now, post my 100 Days journey, I think it's time to retire t
 
 (Apologies in advance if you're using this theme. They'll be an update soon about how to migrate).
 
-[View Demo](https://gatsby-theme-gatstats.netlify.com/) |
-[Storybook](https://gatsby-theme-gatstats.netlify.com/storybook/)
-[GitHub](https://github.com/PaulieScanlon/gatsby-theme-gatstats) |
-[Blog post](https://paulie.dev/posts/2019/11/12/gatsby-theme-gatstats/)
+[View Demo](https://gatsby-theme-gatstats.netlify.com/) | [Storybook](https://gatsby-theme-gatstats.netlify.com/storybook/) [GitHub](https://github.com/PaulieScanlon/gatsby-theme-gatstats) | [Blog post](https://paulie.dev/posts/2019/11/12/gatsby-theme-gatstats/)
 
 ... and that's it 💥
 

@@ -14,9 +14,7 @@ To resolve your issue, please select the appropriate category:
 For bug reports, include in your issue:
 
 - Gatsby version, Node.js version, OS version
-- The contents of your `gatsby-config.js` and `package.json` as well as your
-  `gatsby-node.js`, `gatsby-browser.js`, and `gatsby-ssr.js` files depending on
-  changes you've made there.
+- The contents of your `gatsby-config.js` and `package.json` as well as your `gatsby-node.js`, `gatsby-browser.js`, and `gatsby-ssr.js` files depending on changes you've made there.
 - A [reproduction](/contributing/how-to-make-a-reproducible-test-case/) for debugging and taking action
 
 Please do not use the issue tracker for personal support requests. [Stack Overflow](https://stackoverflow.com/questions/ask?tags=gatsby) (**gatsby** tag) and the [Gatsby Discord](https://gatsby.dev/discord) are better places to get help.

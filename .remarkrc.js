@@ -46,6 +46,8 @@ module.exports = {
     ["remark-lint-no-shortcut-reference-link", false],
     // We use brackets in a lot of places as argument lists and do not want to escape them.
     ["remark-lint-no-undefined-references", false],
-    ["remark-lint-first-heading-level", 2]
+    ["remark-lint-first-heading-level", 2],
+    // We disabled table formatting due to a bug in Prettier that causes wrong table alignment.
+    ["remark-lint-table-pipe-alignment", false]
   ],
 }

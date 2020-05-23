@@ -16,15 +16,13 @@ We interviewed 6 authors of and/or contributors to popular plugins:
 - [Jacob Bolda](https://github.com/jbolda), who created [`gatsby-source-airtable`](https://www.gatsbyjs.org/packages/gatsby-source-airtable/?=airtable)
 - [Tyler Barnes](https://github.com/TylerBarnes), who created [`gatsby-plugin-transition-link`](https://www.gatsbyjs.org/packages/gatsby-plugin-transition-link/?=transition-link) and is working on an alternative WordPress source plugin
 - [Christopher Biscardi](https://github.com/ChristopherBiscardi), who created [`gatsby-mdx`](https://github.com/ChristopherBiscardi/gatsby-mdx)
-- [Mike Allanson](https://github.com/m-allanson), who built proprietary plugins to pull data from a custom CMS for the [The State of European Tech 2018](http://2018.stateofeuropeantech.com/) and
-  [The State of European Tech 2017](http://2017.stateofeuropeantech.com) sites
+- [Mike Allanson](https://github.com/m-allanson), who built proprietary plugins to pull data from a custom CMS for the [The State of European Tech 2018](http://2018.stateofeuropeantech.com/) and [The State of European Tech 2017](http://2017.stateofeuropeantech.com) sites
 - [Michal Piechowiak](https://github.com/pieh), who contributed to the [`gatsby-source-wordpress`](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/?=gatsby-source-wordpress) plugin
 - [Ali Mahmoud](https://github.com/babbins) who is well-acquainted with the challenges and joys of maintaining the [`gatsby-plugin-pointer-events`](https://www.gatsbyjs.org/packages/gatsby-plugin-pointer-events/?=gatsby-plugin-pointer) plugin, which was created by [Tim Brown](https://github.com/brimtown)
 
 Thanks to all for taking the time to give thoughtful interviews!
 
-> Are you a plugin author/maintainer? If you have additional feedback that is not covered by this article, please [let us know here](https://docs.google.com/forms/d/e/1FAIpQLSfhZOKcnbGvAYAzwWUXuVNkeGFGDHZP8DNdabj7CUG27kBngg/viewform?usp=sf_link)
-> If you're thinking of creating a plugin, [sign up for a CLI usability test](https://calendly.com/shannon-soper/gatsby-research-call-gatsby-cli). You'll get to try out some new things in the CLI!
+> Are you a plugin author/maintainer? If you have additional feedback that is not covered by this article, please [let us know here](https://docs.google.com/forms/d/e/1FAIpQLSfhZOKcnbGvAYAzwWUXuVNkeGFGDHZP8DNdabj7CUG27kBngg/viewform?usp=sf_link) If you're thinking of creating a plugin, [sign up for a CLI usability test](https://calendly.com/shannon-soper/gatsby-research-call-gatsby-cli). You'll get to try out some new things in the CLI!
 
 ## Why do people decide to create a plugin?
 
@@ -34,8 +32,7 @@ For example, Tyler Barnes is working on alternative WordPress source plugin, wit
 
 Why? Pulling all data and images every time he started `gatsby develop` was annoying — some of the sites were big and it could take 2 minutes to download. Local images would get dumped so he’d wait 10 minutes for the images to get processed again. Some cheaper servers were limited and would crash when trying to handle large numbers of images. He said he “wanted to make WP and Gatsby work on a crappy server.”
 
-What did he do to solve his problem?
-He commits the data instead so it’s available on the local machine instead. He was using gatsby-source-wordpress and adding extra stuff to it (permalink support, etc.) and then turned that functionality into a plugin. He basically added the features necessary to make it work like Netlify CMS and didn’t need to use the source plugin anymore.
+What did he do to solve his problem? He commits the data instead so it’s available on the local machine instead. He was using gatsby-source-wordpress and adding extra stuff to it (permalink support, etc.) and then turned that functionality into a plugin. He basically added the features necessary to make it work like Netlify CMS and didn’t need to use the source plugin anymore.
 
 Creating a plugin isn't the only kind of contribution that helps others; @pieh's story of how he started to contribute to Gatsby involves editing a plugin:“`gatsby-source-wordpress` didn’t handle gallery type fields which I needed for some freelance work. It was my first PR to work on that plugin”.
 

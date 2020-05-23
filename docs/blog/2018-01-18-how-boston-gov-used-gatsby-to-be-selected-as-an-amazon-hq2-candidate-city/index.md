@@ -25,8 +25,7 @@ They needed tools that let them get off the ground immediately, iterate quickly,
 
 With Gatsby, the team was able to complete the website from basic comps in around a week, compared to about a month for similar projects in the past. “We generally haven’t been able to do anything as fast,” Crist said.
 
-As an engineer, Crist really appreciated Gatsby’s out-of-the-box hot reloading support.
-“The fact that you can save your code, tab back to your browser, and see the change sped up development so much,” Crist said.
+As an engineer, Crist really appreciated Gatsby’s out-of-the-box hot reloading support. “The fact that you can save your code, tab back to your browser, and see the change sped up development so much,” Crist said.
 
 And the whole team appreciated Gatsby’s support for component libraries.
 

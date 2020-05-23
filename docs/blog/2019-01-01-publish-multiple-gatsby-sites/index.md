@@ -26,8 +26,7 @@ Think of monorepos like a well-organised supermarket. Each aisle contains a part
 
 With monorepos the code is split into specific packages (aisles). Meaning you can easily navigate the project to find the component or module you want to work on. It also means not needing to maintain separate repos when making changes that affect multiple parts of your stack (the single shop).
 
-Everything is accessible from a single place, while still being organised enough to navigate painlessly.
-Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
+Everything is accessible from a single place, while still being organised enough to navigate painlessly. Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
 
 *Development* — We’ll configure an existing application, built with [Gatsby](/), into a monorepo. I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it.
 
@@ -307,9 +306,7 @@ I’ve made a slight change in this file, so that running both packages won’t 
 
 There are two major issues we need to address:
 
-Having to run each package manually is a pain.
-Our website doesn’t recognise that we’re linking between two different packages.
-We’ll resolve the first issue by creating a top level script that runs both the blog and shop in parallel. The second issue we’ll solve by adding `.env` variables that will hold the addresses for the blog/shop urls. The variables will be different for the production environment and will hold the live urls.
+Having to run each package manually is a pain. Our website doesn’t recognise that we’re linking between two different packages. We’ll resolve the first issue by creating a top level script that runs both the blog and shop in parallel. The second issue we’ll solve by adding `.env` variables that will hold the addresses for the blog/shop urls. The variables will be different for the production environment and will hold the live urls.
 
 Add the following to the scripts block of your top level `package.json` file.
 
@@ -524,8 +521,7 @@ Note: `public: true` needs to be specified since you’ll most likely have a fre
 
 Push these changes to your repo to kick off your build pipeline. If everything was successful then your build will have passed and your site will have deployed. Go to Travis, open up your blog build so you have access to the logs. Scroll right to the bottom to where it says ‘deploying application’ and uncollapse the section. This’ll be the URL that Vercel deployed your site to. It should look something like `https://buildsjdoe383jd.vercel.app`. Copy that url and go back to your command line. Run the following command:
 
-`now alias <your randomly generated URL> <your chosen alias>`
-I chose ‘lerna-monorepo-blog’ as my alias, so that one won’t be available for you to use, so choose your own. When you’ve run the command, there will be feedback saying that the alias was successfully created. If not, then it’s likely the command was written incorrectly or the alias is already in use by someone else. Once you’ve added an alias successfully for the blog, do the same for your shop package.
+`now alias <your randomly generated URL> <your chosen alias>` I chose ‘lerna-monorepo-blog’ as my alias, so that one won’t be available for you to use, so choose your own. When you’ve run the command, there will be feedback saying that the alias was successfully created. If not, then it’s likely the command was written incorrectly or the alias is already in use by someone else. Once you’ve added an alias successfully for the blog, do the same for your shop package.
 
 Even if you push everything forward now the site’s navigation will still be broken. The very last thing we need to do is add our alias URL as an environment variables in our `.env.production` file. In your blog package’s `.env.production` go ahead and add the following:
 

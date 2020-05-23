@@ -67,8 +67,7 @@ The dependence on React has been a barrier to wider adoption within ProPublica -
 
 After reading a blog post by Tom MacWright, I realized that a lot of the stuff I was doing with heavy D3 code could be accomplished more directly using React; that technique shows up in Stuck Kids.
 
-https://macwright.org/2016/10/11/d3-and-react.html
-macwright.org
+https://macwright.org/2016/10/11/d3-and-react.html macwright.org
 
 Mixing d3 and React. Use JSX instead of the d3 selection API and keep everything else.
 
@@ -124,8 +123,7 @@ For translation, pulling from Google Sheets is really powerful.
 
 **David:** I used that technique quite extensively at NPR. ProPublica uses the same techniques as well as ArchieML in Google Docs, which is helpful for longer pieces of text and more complex data structures.
 
-http://archieml.org/
-ArchieML.org
+http://archieml.org/ ArchieML.org
 
 Archie Markup Language (ArchieML). ArchieML is a text format optimized for human writability, with a syntax designed to be as simple as possible.
 
@@ -137,8 +135,7 @@ I hope to write a source plugin for Gatsby that pulls in ArchieML as structured 
 
 In creating an effective content authoring and publishing workflow, a recipe I've seen succeed in a lot of different domains is to:
 
-(1) find the best tool or format for authoring, and then
-(2) write a Gatsby source plugin for that (if it doesn't already exist)
+(1) find the best tool or format for authoring, and then (2) write a Gatsby source plugin for that (if it doesn't already exist)
 
 ## Why web performance matters for publications
 

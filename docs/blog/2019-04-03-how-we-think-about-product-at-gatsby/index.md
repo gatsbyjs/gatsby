@@ -85,9 +85,7 @@ We typically think of MVPs and Minimum Viable Products, but that often means tha
 
 ### How we focus on personas
 
-Because we want to stay user-focused, we will also be doing discovery and usability research against specific personas that are important to Gatsby. As we learn more about our audience, we’ll get a better understanding of current personas and start to see new personas that we should define.
-How we prioritize
-Since we’ll be doing a lot of discovery, usability research, and prototyping, that means we’ll have quite a bit of prioritization to do.
+Because we want to stay user-focused, we will also be doing discovery and usability research against specific personas that are important to Gatsby. As we learn more about our audience, we’ll get a better understanding of current personas and start to see new personas that we should define. How we prioritize Since we’ll be doing a lot of discovery, usability research, and prototyping, that means we’ll have quite a bit of prioritization to do.
 
 We’ll prioritize based on OKRs we talked about before. Objectives show what we want to accomplish and key results show how we’ll measure that we’ve accomplished it.
 
@@ -119,9 +117,7 @@ Specifically for product, we create Product Requirement Documents (PRDs) that wi
 
 ### RFCs
 
-At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what’s changing in the codebase and why. It’s basically a technical proposal for a spec change.
-How do PRDs relate to RFCs?
-PRDs lay out what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
+At Gatsby, we also create Request for Comment (RFC) docs. These are detailed proposals that explain what’s changing in the codebase and why. It’s basically a technical proposal for a spec change. How do PRDs relate to RFCs? PRDs lay out what the product, product feature, or product change is and why we are doing it. RFCs relate to what is changing in the codebase and why.
 
 ### Rolling with changes
 

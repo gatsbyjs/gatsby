@@ -2,20 +2,15 @@
 title: Deploying to Microsoft Internet Information Server (IIS)
 ---
 
-Deploying to Microsoft IIS is mostly copy & paste.
-After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
+Deploying to Microsoft IIS is mostly copy & paste. After `gatsby build` copy the contents of the `public` folder into the `wwwroot` folder of your IIS web.
 
-One important and sometimes overlooked aspect is to configure caching correctly.
-The following configuration will give you a good starting point in line with Gatsby's [suggested approach to caching](/docs/caching/).
+One important and sometimes overlooked aspect is to configure caching correctly. The following configuration will give you a good starting point in line with Gatsby's [suggested approach to caching](/docs/caching/).
 
-Install the [IIS URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) module if it's not already there.
-It's required to define the `outboundRules` in the `web.config` given below.
+Install the [IIS URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite) module if it's not already there. It's required to define the `outboundRules` in the `web.config` given below.
 
-Add a `web.config` file to the `static` folder inside your Gatsby solution. It will be copied unchanged to the `public` folder
-during `gatsby build`.
+Add a `web.config` file to the `static` folder inside your Gatsby solution. It will be copied unchanged to the `public` folder during `gatsby build`.
 
-Please note that local settings you make for your web in IIS Manager change the `web.config` file;
-you have to be careful to copy any changes to `web.config` on your server back to the version in your Gatsby `static` folder.
+Please note that local settings you make for your web in IIS Manager change the `web.config` file; you have to be careful to copy any changes to `web.config` on your server back to the version in your Gatsby `static` folder.
 
 ```xml:file=static\web.config
 <?xml version="1.0" encoding="UTF-8"?>

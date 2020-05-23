@@ -6,16 +6,13 @@ In this guide, you'll be learning to use something called GraphiQL, a tool that 
 
 ## What is GraphiQL?
 
-GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool
-you'll use often while building Gatsby websites.
+GraphiQL is the GraphQL integrated development environment (IDE). It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
-You can access it when your site's development server is running--normally at
-`http://localhost:8000/___graphql`.
+You can access it when your site's development server is running--normally at `http://localhost:8000/___graphql`.
 
 ## Example of using GraphiQL
 
-When you have `http://localhost:8000/___graphql` open, it will look something like what this video shows. In the video below, watch someone poke around the built-in `Site` "type" and see what fields are available
-on it—including the `siteMetadata` object.
+When you have `http://localhost:8000/___graphql` open, it will look something like what this video shows. In the video below, watch someone poke around the built-in `Site` "type" and see what fields are available on it—including the `siteMetadata` object.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4" />

@@ -8,15 +8,11 @@ tags:
   - getting-started
 ---
 
-Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites.
-[Yarn workspaces][] are an excellent way to set up a project for theme development because they allow you to keep multiple packages in a single parent directory and link dependencies together.
-For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project.
-In this post, we'll walk through how to use Yarn workspaces to set up a development environment for creating custom themes.
+Gatsby [themes][themes-tag] are a new way to share functionality across multiple Gatsby sites. [Yarn workspaces][] are an excellent way to set up a project for theme development because they allow you to keep multiple packages in a single parent directory and link dependencies together. For Gatsby theme development, that means you can keep multiple themes and example sites together in a single project. In this post, we'll walk through how to use Yarn workspaces to set up a development environment for creating custom themes.
 
 ## Installation and directory structure
 
-First, if you don't have Yarn installed already, follow the directions here to [install Yarn][].
-Next, create a new directory for the entire project, where you'll be adding your theme and an example site later.
+First, if you don't have Yarn installed already, follow the directions here to [install Yarn][]. Next, create a new directory for the entire project, where you'll be adding your theme and an example site later.
 
 Create two subdirectories in this folder: one for the theme itself and one for the example site.
 
@@ -33,9 +29,7 @@ Add a `package.json` to the root directory with these subdirectories in the `wor
 }
 ```
 
-Change to each subdirectory and run `yarn init -y` to create a `package.json` for each one.
-Be sure the `name` field in your theme's `package.json` matches the directory name exactly.
-This is currently a limitation of Gatsby theme shadowing, not Yarn workspaces.
+Change to each subdirectory and run `yarn init -y` to create a `package.json` for each one. Be sure the `name` field in your theme's `package.json` matches the directory name exactly. This is currently a limitation of Gatsby theme shadowing, not Yarn workspaces.
 
 Your directory structure should now look like this:
 
@@ -54,8 +48,7 @@ yarn workspace example add gatsby react react-dom
 
 The `yarn workspace <package>` command will run Yarn commands for a specific workspace without needing to switch directories.
 
-Then add the following as peer dependencies to the theme.
-This will ensure that the end user of your theme can choose any compatible version of Gatsby.
+Then add the following as peer dependencies to the theme. This will ensure that the end user of your theme can choose any compatible version of Gatsby.
 
 ```shell
 yarn workspace gatsby-theme-example-workspaces add --peer gatsby react react-dom
@@ -90,8 +83,7 @@ Change the `main` field in your theme's `package.json` to point to the `gatsby-c
 
 ## Example site setup
 
-Add the theme as a dependency to the example site.
-By specifying the version here, Yarn will install the local dependency that hasn't been published to npm yet.
+Add the theme as a dependency to the example site. By specifying the version here, Yarn will install the local dependency that hasn't been published to npm yet.
 
 ```shell
 yarn workspace example add gatsby-theme-example-workspaces@1.0.0
@@ -148,8 +140,7 @@ Open your browser to `http://localhost:8000` where you should see your _Hello, w
 
 ## Adding functionality to the theme
 
-Currently, the theme does nothing.
-This is the minimal amount of code required to develop a theme with Yarn workspaces.
+Currently, the theme does nothing. This is the minimal amount of code required to develop a theme with Yarn workspaces.
 
 To demonstrate the theme in action, use `gatsby-plugin-page-creator` to add a page from the theme.
 
@@ -185,9 +176,7 @@ export default function ThemePage(props) {
 
 Stop and restart the Gatsby development server to pick up the new page from the theme. The theme's page should be visible at `http://localhost:8000/theme-page`.
 
-That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with.
-Be sure to look for more posts on developing Gatsby themes in the near future,
-and you can read more about themes here on the [blog][themes-tag].
+That's it! By now you should have a basic Yarn workspaces setup to develop Gatsby themes with. Be sure to look for more posts on developing Gatsby themes in the near future, and you can read more about themes here on the [blog][themes-tag].
 
 [themes-tag]: /blog/tags/themes
 [yarn workspaces]: https://yarnpkg.com/lang/en/docs/workspaces/

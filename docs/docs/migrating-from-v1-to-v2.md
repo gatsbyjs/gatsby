@@ -453,11 +453,9 @@ import { navigate } from "@reach/router"
 - `strict`
 - `location`
 
-`exact` and `strict` are no longer necessary as @reach/router does matching
-this way by default.
+`exact` and `strict` are no longer necessary as @reach/router does matching this way by default.
 
-You could pass `location` before to manually compute whether the
-link is active or not. For advanced link stylings, use `getProps` now.
+You could pass `location` before to manually compute whether the link is active or not. For advanced link stylings, use `getProps` now.
 
 #### Use `getProps` for advanced link styling
 
@@ -508,8 +506,7 @@ export default function Routes() {
 }
 ```
 
-Here's a more complex example of migrating a `<PrivateRoute>` component (used
-in store.gatsbyjs.org) from React Router to @reach/router.
+Here's a more complex example of migrating a `<PrivateRoute>` component (used in store.gatsbyjs.org) from React Router to @reach/router.
 
 ```diff
  import * as React from 'react';
@@ -555,8 +552,7 @@ Here's links to diffs for three sites with client routes upgraded to @reach/rout
 
 ### APIs `onPreRouteUpdate` and `onRouteUpdate` no longer called with the route update action
 
-React Router v4 would tell us the "action" (push/replace) that triggered the route
-transition. We passed this as one of the arguments along with `location` to plugins. @reach/router doesn't support this so we've removed it from the API calls.
+React Router v4 would tell us the "action" (push/replace) that triggered the route transition. We passed this as one of the arguments along with `location` to plugins. @reach/router doesn't support this so we've removed it from the API calls.
 
 ### Browser API `replaceRouterComponent` was removed
 
@@ -564,8 +560,7 @@ transition. We passed this as one of the arguments along with `location` to plug
 
 We did, erroneously, suggest using this API for adding support for Redux, etc. where you need to wrap the root Gatsby component with your own component.
 
-If you were using `replaceRouterComponent` for this, you'll need to migrate to
-`wrapRootElement`:
+If you were using `replaceRouterComponent` for this, you'll need to migrate to `wrapRootElement`:
 
 ```diff
 import * as React from 'react'
@@ -595,8 +590,7 @@ Now, to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
-Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API:
-We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
+Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API: We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
 -export const wrapRootComponent = ({ Root }) => {

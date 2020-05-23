@@ -31,11 +31,7 @@ No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores
 ❌ DON'T:
 
 ```markdown
-No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores,
-nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre
-de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade
-ou expressão de gênero, nível de experiência, nacionalidade, aparência, raça, religião ou identidade
-e orientação sexual.
+No intuito de promover um ambiente aberto e acolhedor, nós, como contribuidores e mantenedores, nos comprometemos em tornar a participação em nossos projetos e em nossa comunidade o mais livre de assédio para todos, independentemente da idade, corpo, tamanho, deficiência, etnia, identidade ou expressão de gênero, nível de experiência, nacionalidade, aparência, raça, religião ou identidade e orientação sexual.
 ```
 
 Using soft line wraps ensures that paragraphs are always matched with the original source paragraphs when syncing, and prevents weird errors with mismatched lines.

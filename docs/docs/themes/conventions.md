@@ -6,8 +6,7 @@ As methodologies for building Gatsby Themes begin to formalize and standardize, 
 
 ## Naming
 
-It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you
-can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme-` enables Gatsby in identifying theme packages for compilation.
+It's required to prefix themes with `gatsby-theme-`. So if you'd like to name your theme "awesome" you can name it `gatsby-theme-awesome` and place that as the `name` key in your `package.json`. Prefixing themes with `gatsby-theme-` enables Gatsby in identifying theme packages for compilation.
 
 ## Initializing required directories
 
@@ -123,9 +122,7 @@ export default Layout
 
 ## Site metadata
 
-For commonly customized things, such as site title and social media handles, you
-can have the user set site metadata in their `gatsby-config.js`. Then, throughout
-your theme you can create a StaticQuery to access it:
+For commonly customized things, such as site title and social media handles, you can have the user set site metadata in their `gatsby-config.js`. Then, throughout your theme you can create a StaticQuery to access it:
 
 ```js:title=src/hooks/use-site-metadata.js
 import { graphql, useStaticQuery } from "gatsby"
@@ -176,18 +173,13 @@ export default function Header() {
 
 ## Breaking changes
 
-Since themes will typically be installed by an end user from npm, it's
-important to follow [semantic versioning](https://semver.org/), commonly
-referred to as semver.
+Since themes will typically be installed by an end user from npm, it's important to follow [semantic versioning](https://semver.org/), commonly referred to as semver.
 
-This will allow your users to quickly discern how a dependency update might
-affect them. Patches and minor versions are not considered breaking changes,
-major versions are.
+This will allow your users to quickly discern how a dependency update might affect them. Patches and minor versions are not considered breaking changes, major versions are.
 
 ### Patch _(0.0.X)_
 
-Patches are defined as bug fixes that are done in a backwards-compatible way. This
-means that public facing APIs are unaffected.
+Patches are defined as bug fixes that are done in a backwards-compatible way. This means that public facing APIs are unaffected.
 
 #### Examples of patch versions
 
@@ -196,8 +188,7 @@ means that public facing APIs are unaffected.
 
 ### Minor _(0.X.0)_
 
-Minor versions are defined as new features or functionality that are added in a
-backwards-compatible way. This means that _existing_ public facing APIs are unaffected.
+Minor versions are defined as new features or functionality that are added in a backwards-compatible way. This means that _existing_ public facing APIs are unaffected.
 
 #### Examples of minor versions
 
@@ -209,11 +200,9 @@ backwards-compatible way. This means that _existing_ public facing APIs are unaf
 
 ### Major _(X.0.0)_
 
-Major versions are any bugfixes or new features that have been added without full
-backwards-compatibility. These are often called "breaking changes".
+Major versions are any bugfixes or new features that have been added without full backwards-compatibility. These are often called "breaking changes".
 
-These changes should be accompanied with a migration guide that users can follow along
-for performing a theme upgrade.
+These changes should be accompanied with a migration guide that users can follow along for performing a theme upgrade.
 
 #### Examples of major versions
 
@@ -225,7 +214,5 @@ for performing a theme upgrade.
 - **Changing queries** since a user could be using the original data in shadowed components.
 - **Removing or changing the behaviour** of your theme's configuration.
 - **Removing attributes in schema definitions** because it can break end user queries.
-- **Removing default data** this could change your generated schema and break a user's site if they
-  depend on some part of that generated schema.
-- **Changing plugins or plugin configuration** such as removing a remark plugin as it will change
-  the behavior of MD/MDX rendering.
+- **Removing default data** this could change your generated schema and break a user's site if they depend on some part of that generated schema.
+- **Changing plugins or plugin configuration** such as removing a remark plugin as it will change the behavior of MD/MDX rendering.

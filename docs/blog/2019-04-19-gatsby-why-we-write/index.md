@@ -16,8 +16,7 @@ Writing is core to the success we've enjoyed so far, and it's core to our strate
 
 ## Principle 1: We write
 
-Some Inkteam members who have been regularly writing (speaking, appearing on podcasts, streaming): [Jason](/contributors/jason-lengstorf/), [Marcy](https://egghead.io/podcasts/heading-gatsby-s-learning-experience-and-bridging-gaps-with-marcy-sutton), [Amberley](/contributors/amberley-romo/), [Linda](/contributors/linda-watkins/), [Dustin](/contributors/dustin-schau/), [Shannon](/contributors/shannon-soper/), [Jim](/contributors/jim-ettig/), [Marisa](/contributors/marisa-morby/), [Preston](/contributors/preston-so/), [Mikhail](/contributors/mikhail-novikov/), [Sid](/contributors/sidhartha-chatterjee/), [Andrew](https://www.gatsbyjs.com/gatsby-days-preview-andrew/), [Mike](/contributors/mike-allanson/), [John](/docs/mdx/), [me](/contributors/sam-bhagwat/), and
-[Kyle](/contributors/kyle-mathews/),
+Some Inkteam members who have been regularly writing (speaking, appearing on podcasts, streaming): [Jason](/contributors/jason-lengstorf/), [Marcy](https://egghead.io/podcasts/heading-gatsby-s-learning-experience-and-bridging-gaps-with-marcy-sutton), [Amberley](/contributors/amberley-romo/), [Linda](/contributors/linda-watkins/), [Dustin](/contributors/dustin-schau/), [Shannon](/contributors/shannon-soper/), [Jim](/contributors/jim-ettig/), [Marisa](/contributors/marisa-morby/), [Preston](/contributors/preston-so/), [Mikhail](/contributors/mikhail-novikov/), [Sid](/contributors/sidhartha-chatterjee/), [Andrew](https://www.gatsbyjs.com/gatsby-days-preview-andrew/), [Mike](/contributors/mike-allanson/), [John](/docs/mdx/), [me](/contributors/sam-bhagwat/), and [Kyle](/contributors/kyle-mathews/),
 
 And it's not just the Inkteam. The documentation, while curated by the Inkteam, has largely been authored by enthusiastic community members, along with about half of our blog posts.
 

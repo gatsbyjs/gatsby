@@ -32,8 +32,7 @@ So far, you've been writing text and adding images _directly_ in components. Whi
 
 If you're building a site with WordPress (so other contributors have a nice interface for adding & maintaining content) and Gatsby, the _data_ for the site (pages and posts) are in WordPress and you _pull_ that data, as needed, into your components.
 
-Data can also live in file types like Markdown, CSV, etc. as well as databases
-and APIs of all sorts.
+Data can also live in file types like Markdown, CSV, etc. as well as databases and APIs of all sorts.
 
 **Gatsby's data layer lets you pull data from these (and any other source) directly into your components** -- in the shape and form you want.
 

@@ -39,8 +39,7 @@ Some notable files and their definitions:
 
 ## Creating pages automatically
 
-Gatsby core automatically turns React components in `src/pages` into pages with URLs.
-For example, components at `src/pages/index.js` and `src/pages/about.js` would automatically create pages from those filenames for the site's index page (`/`) and `/about`.
+Gatsby core automatically turns React components in `src/pages` into pages with URLs. For example, components at `src/pages/index.js` and `src/pages/about.js` would automatically create pages from those filenames for the site's index page (`/`) and `/about`.
 
 ### Prerequisites
 

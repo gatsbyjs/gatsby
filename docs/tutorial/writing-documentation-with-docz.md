@@ -123,10 +123,7 @@ name: Button
 menu: Components
 ---
 
-// highlight-start
-import { Playground, Props } from "docz"
-import { Button } from "./button"
-// highlight-end
+// highlight-start import { Playground, Props } from "docz" import { Button } from "./button" // highlight-end
 
 # Button
 

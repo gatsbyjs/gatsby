@@ -1,6 +1,8 @@
 ---
 title: >
   Gatsby Themes: Watch Us Build a Theme Live
+
+
 date: 2019-02-11
 author: Jason Lengstorf
 tags:

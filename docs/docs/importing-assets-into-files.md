@@ -8,8 +8,7 @@ There are two major ways to import assets, such as images, fonts, and files, int
 
 With webpack you can **`import` a file right in a JavaScript module**. This tells webpack to include that file in the bundle. Unlike CSS imports, importing a file gives you a string value. This imported file's value is the final path you can reference in your code, e.g. as the `src` attribute of an image or the `href` of a link to a PDF.
 
-To reduce the number of requests to the server, importing images that are less than 10,000 bytes returns a
-[data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) instead of a path. This applies to the following file extensions: `svg`, `jpg`, `jpeg`, `png`, `gif`, `mp4`, `webm`, `wav`, `mp3`, `m4a`, `aac`, and `oga`.
+To reduce the number of requests to the server, importing images that are less than 10,000 bytes returns a [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) instead of a path. This applies to the following file extensions: `svg`, `jpg`, `jpeg`, `png`, `gif`, `mp4`, `webm`, `wav`, `mp3`, `m4a`, `aac`, and `oga`.
 
 Here's an example:
 

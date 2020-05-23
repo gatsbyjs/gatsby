@@ -14,12 +14,7 @@ One of our community's values is that ["you belong here"](/blog/2018-09-07-gatsb
 
 ## Gatsby Contributor Covenant Code of Conduct
 
-In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to make participation in our project and
-our community a harassment-free experience for everyone, regardless of age, body
-size, disability, ethnicity, gender identity and expression, level of
-experience, nationality, personal appearance, race, religion, or sexual identity
-and orientation.
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to make participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 [Read the full code of conduct](/contributing/code-of-conduct/)
 
@@ -44,37 +39,25 @@ Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby com
 
 ### Twitter
 
-For the latest news about Gatsby,
-[follow **@gatsbyjs** on Twitter](https://twitter.com/gatsbyjs).
+For the latest news about Gatsby, [follow **@gatsbyjs** on Twitter](https://twitter.com/gatsbyjs).
 
 ## Where to get support
 
 ### Stack Overflow
 
-Many members of the community use Stack Overflow to ask questions. Read through
-the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
-tagged with `gatsby` or
-[ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
+Many members of the community use Stack Overflow to ask questions. Read through the [existing questions](http://stackoverflow.com/questions/tagged/gatsby) tagged with `gatsby` or [ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 
 ### Discord
 
-If you need an answer right away, check out the
-[Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
-useful resources.
+If you need an answer right away, check out the [Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to useful resources.
 
 ### Hashnode
 
-Many members of the community also use Hashnode to ask questions and share their tips. Read through
-the [existing questions and posts](https://hashnode.com/n/gatsby)
-tagged with `gatsby` or
-[ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
+Many members of the community also use Hashnode to ask questions and share their tips. Read through the [existing questions and posts](https://hashnode.com/n/gatsby) tagged with `gatsby` or [ask your own question](https://hashnode.com/create/question) or [share your story](https://hashnode.com/create/story) and add the `gatsby` tag.
 
 ### DEV Community
 
-DEV Community is another informative platform to ask questions and share tips as well. Read through
-the [existing questions and posts](https://dev.to/t/gatsby)
-tagged with `gatsby` or
-[ask for help](https://dev.to/new/help). You could also [write your post](https://dev.to/new/gatsby) with the `gatsby` tag.
+DEV Community is another informative platform to ask questions and share tips as well. Read through the [existing questions and posts](https://dev.to/t/gatsby) tagged with `gatsby` or [ask for help](https://dev.to/new/help). You could also [write your post](https://dev.to/new/gatsby) with the `gatsby` tag.
 
 ## Learn More About Gatsby:
 

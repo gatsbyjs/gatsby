@@ -36,8 +36,7 @@ On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages conte
 
 ## The Decoupled Dream Team
 
-[Gatsby](/), is instrumental to the decoupled infrastructure. The static site generator creates flat HTML, CSS, and JS files that post anywhere and load in the browser quickly. The JSON API Drupal module exposes feeds of data from the decoupled Drupal CMS to Gatsby.
-In this build, Netlify deploys Gatsby. It functions to expose an API and rebuild the site as needed. When a user enters content into Drupal and promotes it to CitySprings.com, it triggers a custom Netlify build hook that tells Netlify to re-query the JSON API for new or changed data.
+[Gatsby](/), is instrumental to the decoupled infrastructure. The static site generator creates flat HTML, CSS, and JS files that post anywhere and load in the browser quickly. The JSON API Drupal module exposes feeds of data from the decoupled Drupal CMS to Gatsby. In this build, Netlify deploys Gatsby. It functions to expose an API and rebuild the site as needed. When a user enters content into Drupal and promotes it to CitySprings.com, it triggers a custom Netlify build hook that tells Netlify to re-query the JSON API for new or changed data.
 
 ## Trends in Modern Web Development
 

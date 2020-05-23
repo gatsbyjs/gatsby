@@ -44,8 +44,7 @@ npm install --save gatsby-source-graphql
 
 ### Configure the plugin
 
-The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array.
-This example uses the local Gentics Mesh Demo server that you have just started.
+The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses the local Gentics Mesh Demo server that you have just started.
 
 ```javascript:title=gatsby-config.js
 {
@@ -192,7 +191,6 @@ Hopefully you've seen how easy it is to start working with Gentics Mesh and Gats
 
 ## Learn more
 
-There is a lot more to learn on how Gentics Mesh API can help you build your site.
-One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. vehicle → vehiclePage, category → catgoryPage.)
+There is a lot more to learn on how Gentics Mesh API can help you build your site. One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. vehicle → vehiclePage, category → catgoryPage.)
 
 This workflow is also explained hands-on in [this in-depth guide](https://getmesh.io/blog/gentics-mesh-gatsby/) which shows how to build a basic vehicle inventory with Gatsby.

@@ -8,8 +8,7 @@ The Gatsby team is passionate about helping you create websites that work for ev
 
 Back in the early days of the Web, Tim Berners-Lee, inventor of the World Wide Web, [said](https://www.w3.org/Press/IPO-announce):
 
-> "The power of the Web is in its universality.
-> Access by everyone regardless of disability is an essential aspect."
+> "The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect."
 
 The web of today is an important resource in many aspects of life such as health care, education, or commerce. Accessibility is an important consideration when building for the web.
 

@@ -6,21 +6,15 @@ Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
-- In your site's gatsby-node.js by implementing the API
-  [`createPages`](/docs/node-apis/#createPages)
+- In your site's gatsby-node.js by implementing the API [`createPages`](/docs/node-apis/#createPages)
 - Gatsby core automatically turns React components in `src/pages` into pages
 - Plugins can also implement `createPages` and create pages for you
 
-You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).
+You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage) to modify pages created in core or plugins or to create [client-only routes](/docs/client-only-routes-and-user-authentication/).
 
 ## Debugging help
 
-To see what pages are being created by your code or plugins, you can query for
-page information while developing in Graph_i_QL. Paste the following query in
-the Graph_i_QL IDE for your site. The Graph_i_QL IDE is available when running
-your sites development server at `HOST:PORT/___graphql` e.g.
-`http://localhost:8000/___graphql`.
+To see what pages are being created by your code or plugins, you can query for page information while developing in Graph_i_QL. Paste the following query in the Graph_i_QL IDE for your site. The Graph_i_QL IDE is available when running your sites development server at `HOST:PORT/___graphql` e.g. `http://localhost:8000/___graphql`.
 
 ```graphql
 {
@@ -47,11 +41,9 @@ You can also query for any `context` data you or plugins added to pages.
 
 ## Creating pages in gatsby-node.js
 
-Often you will need to programmatically create pages. For example, you have
-markdown files where each should be a page.
+Often you will need to programmatically create pages. For example, you have markdown files where each should be a page.
 
-This example assumes that each markdown page has a `path` set in the frontmatter
-of the markdown file.
+This example assumes that each markdown page has a `path` set in the frontmatter of the markdown file.
 
 ```javascript:title=gatsby-node.js
 // Implement the Gatsby API “createPages”. This is called once the
@@ -192,19 +184,15 @@ Another disadvantage of querying all of your data in `gatsby-node.js` is that yo
 
 ## Modifying pages created by core or plugins
 
-Gatsby core and plugins can automatically create pages for you. Sometimes the
-default isn't quite what you want and you need to modify the created page
-objects.
+Gatsby core and plugins can automatically create pages for you. Sometimes the default isn't quite what you want and you need to modify the created page objects.
 
 ### Removing trailing slashes
 
-A common reason for needing to modify automatically created pages is to remove
-trailing slashes.
+A common reason for needing to modify automatically created pages is to remove trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
-_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
-[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
+_Note: There's also a plugin that will remove all trailing slashes from pages automatically: [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
 _Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
 

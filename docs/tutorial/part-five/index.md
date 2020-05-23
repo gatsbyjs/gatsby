@@ -104,8 +104,7 @@ Building new pages with Gatsby often starts in GraphiQL. You first sketch out th
 
 Let's try this.
 
-Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just
-created:
+Create a new file at `src/pages/my-files.js` with the `allFile` GraphQL query you just created:
 
 ```jsx:title=src/pages/my-files.js
 import React from "react"

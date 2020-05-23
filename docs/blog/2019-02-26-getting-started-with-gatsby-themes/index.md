@@ -203,8 +203,7 @@ yarn workspace site develop
 
 ### Customizing the Index Page
 
-You can override the index page from your theme by creating one in site. To do so, change directory into
-the _site_ directory, and create an _index.mdx_ file in the pages folder.
+You can override the index page from your theme by creating one in site. To do so, change directory into the _site_ directory, and create an _index.mdx_ file in the pages folder.
 
 `site/src/pages/index.mdx`
 
@@ -295,8 +294,7 @@ export { default as Header } from "./src/components/header"
 
 If you want to use this component in your site, you will then go to your page (_index.mdx_) and import the specific components.
 
-`import { Header } from 'theme';`
-You can then use it to style specific things in your file.
+`import { Header } from 'theme';` You can then use it to style specific things in your file.
 
 ```mdx
 <Header>Header content goes here</Header>

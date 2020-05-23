@@ -2,8 +2,7 @@
 title: Using the Static Folder
 ---
 
-In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend
-[Importing Assets Directly](/docs/importing-assets-into-files/) in JavaScript files, because of the benefits it provides:
+In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend [Importing Assets Directly](/docs/importing-assets-into-files/) in JavaScript files, because of the benefits it provides:
 
 - Scripts and stylesheets are minified and bundled together to avoid extra network requests.
 - Missing files cause compilation errors instead of 404 errors for your users.
@@ -43,14 +42,10 @@ Keep in mind the downsides of this approach:
 
 ## When to use the `static` folder
 
-Normally we recommend importing [stylesheets, images, and font assets](/docs/importing-assets-into-files/) from JavaScript. The `static`
-folder is useful as a workaround for a number of less common cases:
+Normally we recommend importing [stylesheets, images, and font assets](/docs/importing-assets-into-files/) from JavaScript. The `static` folder is useful as a workaround for a number of less common cases:
 
-- You need a file with a specific name in the build output, such as
-  [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+- You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 - You have thousands of images and need to dynamically reference their paths.
-- You want to include a small script like
-  [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the
-  bundled code.
+- You want to include a small script like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
 - Some libraries may be incompatible with webpack and you have no other option but to include it as a `<script>` tag.
 - You need to import JSON file that doesn't have a consistent schema, like [TopoJSON files](https://en.wikipedia.org/wiki/GeoJSON#TopoJSON), which is difficult to handle with GraphQL. Note that importing JSON files directly inside a page, a template, or a component using `import` syntax results in adding that file to the app bundle and increasing the size of all site's pages. Instead, it's better to place your JSON file inside the `static` folder and use the dynamic import syntax (`import('/static/myjson.json')`) within the `componentDidMount` lifecycle or the `useEffect` hook.

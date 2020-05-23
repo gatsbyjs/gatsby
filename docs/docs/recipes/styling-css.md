@@ -208,8 +208,7 @@ export default function Home() {
 
 3. Run `gatsby develop` to see the changes.
 
-**Note:**
-Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
+**Note:** Notice that the file extension is `.module.css` instead of `.css`, which tells Gatsby that this is a CSS module.
 
 ### Additional resources
 

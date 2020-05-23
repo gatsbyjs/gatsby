@@ -16,8 +16,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
 ### Create a local Git repository
 
-1. Initialize a Git repository, place yourself in the root directory of your Gatsby app and type
-   `git init`.
+1. Initialize a Git repository, place yourself in the root directory of your Gatsby app and type `git init`.
 2. Next, create a file called `.gitignore` in the root of your project and give it the following content:
 
    ```bash
@@ -71,11 +70,11 @@ Next, configure your new app and link it to your GitHub repository.
 
 2. Enter the **Static Web Apps details**.
 
-   | Setting  | Value                                                                         |
-   | -------- | ----------------------------------------------------------------------------- |
-   | _Name_   | Name your app. Valid characters are `a-z` (case insensitive), `0-9`, and `_`. |
-   | _Region_ | Select Region closest to you                                                  |
-   | _SKU_    | **Free**                                                                      |
+   | Setting | Value |
+   | --- | --- |
+   | _Name_ | Name your app. Valid characters are `a-z` (case insensitive), `0-9`, and `_`. |
+   | _Region_ | Select Region closest to you |
+   | _SKU_ | **Free** |
 
 3. Click the **Sign-in with GitHub** button and authenticate with GitHub.
 4. Enter the **Source Control Details**.

@@ -34,8 +34,7 @@ First, open a new terminal window and run the following command to create a new 
 gatsby new prismic-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change `prismic-tutorial` in the command above to whatever name you prefer!
-Now move into the newly created directory and install the Gatsby plugin for Prismic:
+This will create a new directory called `prismic-tutorial` that contains the starters site, but you can change `prismic-tutorial` in the command above to whatever name you prefer! Now move into the newly created directory and install the Gatsby plugin for Prismic:
 
 ```shell
 cd prismic-tutorial

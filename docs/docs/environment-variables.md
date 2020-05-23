@@ -21,29 +21,19 @@ If you want to define other environments then you'll need to do a little more wo
 
 ## Accessing Environment Variables in JavaScript
 
-All of the Project and OS Env Vars are only directly available at build time, or
-when Node.js is running. They aren't immediately available at run time of the client code; they
-need to be actively captured and embedded into client-side JavaScript.
-This is achieved during the build using webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
+All of the Project and OS Env Vars are only directly available at build time, or when Node.js is running. They aren't immediately available at run time of the client code; they need to be actively captured and embedded into client-side JavaScript. This is achieved during the build using webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
 
-Once the environment variables have been embedded into the client-side code, they are accessible from the
-global variable `process.env`.
-OS Env Vars are accessible in Node.js from the same `process.env` global variable.
+Once the environment variables have been embedded into the client-side code, they are accessible from the global variable `process.env`. OS Env Vars are accessible in Node.js from the same `process.env` global variable.
 
-Note that since these variables are embedded at build time, you will need to restart your dev server
-or rebuild your site after changing them.
+Note that since these variables are embedded at build time, you will need to restart your dev server or rebuild your site after changing them.
 
 ## Defining Environment Variables
 
 ### Client-side JavaScript
 
-For Project Env Vars that you want to access in client-side browser JavaScript, you can define
-an environment config file, `.env.development` and/or `.env.production`, in your root folder.
-Depending on your active environment, the correct one will be found and its values embedded as environment variables in the browser JavaScript.
+For Project Env Vars that you want to access in client-side browser JavaScript, you can define an environment config file, `.env.development` and/or `.env.production`, in your root folder. Depending on your active environment, the correct one will be found and its values embedded as environment variables in the browser JavaScript.
 
-In addition to these Project Environment Variables defined in `.env.*` files, you could also define
-OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in
-browser JavaScript.
+In addition to these Project Environment Variables defined in `.env.*` files, you could also define OS Env Vars. OS Env Vars which are prefixed with `GATSBY_` will become available in browser JavaScript.
 
 ```text:title=.env.*
 GATSBY_API_URL=https://dev.example.com/api
@@ -51,10 +41,7 @@ GATSBY_API_URL=https://dev.example.com/api
 
 ### Server-side Node.js
 
-Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`.
-OS Env Vars will already be available when Node is running, so you can add environment variables the
-typical ways, e.g. by adding environment variables through your hosting/build tool, your OS, or when
-calling Gatsby on the command line.
+Gatsby runs several Node.js scripts at build time, notably `gatsby-config.js` and `gatsby-node.js`. OS Env Vars will already be available when Node is running, so you can add environment variables the typical ways, e.g. by adding environment variables through your hosting/build tool, your OS, or when calling Gatsby on the command line.
 
 In Linux terminals this can be done with:
 
@@ -64,10 +51,7 @@ MY_ENV_VAR=foo npm run develop
 
 In Windows it's a little more complex. [Check out this Stack Overflow article for some options](https://stackoverflow.com/questions/1420719/powershell-setting-an-environment-variable-for-a-single-command-only)
 
-Project environment variables that you defined in the `.env.*` files will _NOT_ be immediately available
-in your Node.js scripts. To use those variables, use NPM package [dotenv](https://www.npmjs.com/package/dotenv) to
-examine the active `.env.*` file and attach those values.
-`dotenv` is already a dependency of Gatsby, so you can require it in your `gatsby-config.js` or `gatsby-node.js` like this:
+Project environment variables that you defined in the `.env.*` files will _NOT_ be immediately available in your Node.js scripts. To use those variables, use NPM package [dotenv](https://www.npmjs.com/package/dotenv) to examine the active `.env.*` file and attach those values. `dotenv` is already a dependency of Gatsby, so you can require it in your `gatsby-config.js` or `gatsby-node.js` like this:
 
 ```javascript:title=gatsby-config.js
 require("dotenv").config({
@@ -124,8 +108,7 @@ module.exports = {
 
 ## Reserved Environment Variables:
 
-> You can not override certain environment variables as some are used internally
-> for optimizations during build, such as:
+> You can not override certain environment variables as some are used internally for optimizations during build, such as:
 
 - `NODE_ENV`
 - `PUBLIC_DIR`

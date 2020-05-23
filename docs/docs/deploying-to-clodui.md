@@ -28,8 +28,7 @@ Follow these steps to deploy your website to Clodui.
    ```shell
    npm install @clodui/cli -g
    ```
-3. Set environment variables `CLODUI_USERNAME`, `CLODUI_PASSWORD` with Clodui username and password respectively.
-   In Linux/macOS terminal this can be done by:
+3. Set environment variables `CLODUI_USERNAME`, `CLODUI_PASSWORD` with Clodui username and password respectively. In Linux/macOS terminal this can be done by:
 
    ```shell
    export CLODUI_USERNAME=<Clodui username>
@@ -67,8 +66,7 @@ Follow these steps to deploy your website to Clodui.
 
 ## Deploying from GitHub Actions
 
-[GitHub Actions](https://github.com/features/actions) allows you to automate deployment workflows. Use custom
-[Clodui Actions](https://github.com/marketplace/actions/clodui-actions) to deploy changes to your Clodui website.
+[GitHub Actions](https://github.com/features/actions) allows you to automate deployment workflows. Use custom [Clodui Actions](https://github.com/marketplace/actions/clodui-actions) to deploy changes to your Clodui website.
 
 To enable continuous deployment, add this to your GitHub workflow file as a next step after building the Gatsby website.
 

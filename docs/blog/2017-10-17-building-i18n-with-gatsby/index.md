@@ -5,72 +5,41 @@ author: "Samuel Goudie"
 tags: ["i18n"]
 ---
 
-Languages are a key part of who we are; they are an expression of our identity.
-Serving users content in their own language is a powerful thing, and it allows
-you to include nuances and specific cultural references in a way Google
-Translate just wouldn't allow.
+Languages are a key part of who we are; they are an expression of our identity. Serving users content in their own language is a powerful thing, and it allows you to include nuances and specific cultural references in a way Google Translate just wouldn't allow.
 
-When we were looking for a new framework for the new
-[doopoll](https://doopoll.co) marketing site, we knew we'd want to support i18n
-from the start.
+When we were looking for a new framework for the new [doopoll](https://doopoll.co) marketing site, we knew we'd want to support i18n from the start.
 
-We were wowed with Gatsby's simplicity and speed, but couldn't find any clear
-process for supporting i18n. With a little bit of digging and experimenting,
-we've found that it's just as easy as the rest of the process.
+We were wowed with Gatsby's simplicity and speed, but couldn't find any clear process for supporting i18n. With a little bit of digging and experimenting, we've found that it's just as easy as the rest of the process.
 
-Here is how we set up i18n for our Gatsby marketing site, and a few tips along
-the way.
+Here is how we set up i18n for our Gatsby marketing site, and a few tips along the way.
 
 ---
 
 ## Quick intro to i18n
 
-Just in case you're new to i18n, don't worry, it's pretty simple! All we do is
-take hard-coded strings like "Hello" and replace them with a variable so that
-when the language changes, so does the string.
+Just in case you're new to i18n, don't worry, it's pretty simple! All we do is take hard-coded strings like "Hello" and replace them with a variable so that when the language changes, so does the string.
 
-So for example rather than write `<h1>Hello</h1>`. I might write
-`<h1>{t(hello)}` (more on this later), and the user would see 'Hello',
-'Bonjour', or 'Hola' depending on what language they had switched to, and
-whether we'd added a translation for it.
+So for example rather than write `<h1>Hello</h1>`. I might write `<h1>{t(hello)}` (more on this later), and the user would see 'Hello', 'Bonjour', or 'Hola' depending on what language they had switched to, and whether we'd added a translation for it.
 
 ### TIP: A quick note on language codes
 
-[Each language has a unique code](https://www.science.co.il/language/Codes.php).
-We use this code to reference a language in our code. If you see a hyphen and
-then some letters after it, they refer to the locale. So for example:
+[Each language has a unique code](https://www.science.co.il/language/Codes.php). We use this code to reference a language in our code. If you see a hyphen and then some letters after it, they refer to the locale. So for example:
 
-en = English cy = Welsh es = Spanish en-GB = British English en-US = American
-English
+en = English cy = Welsh es = Spanish en-GB = British English en-US = American English
 
-The locale allows us to make changes to spelling (for example, "colour" vs.
-"color"), but can also be used for other functions such as currency.
+The locale allows us to make changes to spelling (for example, "colour" vs. "color"), but can also be used for other functions such as currency.
 
 ## Working with translators
 
-At doopoll we speak multiple languages, but just like design, development, and
-copywriting, translation requires time and skill to get it right. That's why we
-work with our awesome friends at [Applingua](https://applingua.com/) who handle
-all of our translation, and push new strings straight to our Git Repo 🙌.
+At doopoll we speak multiple languages, but just like design, development, and copywriting, translation requires time and skill to get it right. That's why we work with our awesome friends at [Applingua](https://applingua.com/) who handle all of our translation, and push new strings straight to our Git Repo 🙌.
 
-There are other options out there. You can even crowd source your translations!
-However, in our experience, if you're going to be updating your site regularly
-it pays to build a good working relationship with a translator. They will
-understand your brand, and how to effectively communicate your tone of voice in
-a different language.
+There are other options out there. You can even crowd source your translations! However, in our experience, if you're going to be updating your site regularly it pays to build a good working relationship with a translator. They will understand your brand, and how to effectively communicate your tone of voice in a different language.
 
 ## Choosing a package
 
-There are a few React i18n packages out there. We considered
-[react-intl](https://github.com/yahoo/react-intl) and the community
-[Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n). However, we
-opted for [react-i18next](https://github.com/i18next/react-i18next/) because we
-use a version of i18next in our core Meteor app, and our translators are
-familiar with the system.
-[It's well documented too](https://react.i18next.com/).
+There are a few React i18n packages out there. We considered [react-intl](https://github.com/yahoo/react-intl) and the community [Gatsby plugin](https://www.npmjs.com/package/gatsby-plugin-i18n). However, we opted for [react-i18next](https://github.com/i18next/react-i18next/) because we use a version of i18next in our core Meteor app, and our translators are familiar with the system. [It's well documented too](https://react.i18next.com/).
 
-We also wanted to use a non-specific Gatsby solution so we can use a similar
-implementation in other projects.
+We also wanted to use a non-specific Gatsby solution so we can use a similar implementation in other projects.
 
 To get started, you'll need to install a few packages:
 
@@ -78,10 +47,7 @@ To get started, you'll need to install a few packages:
 
 ## Setting up
 
-This is straight from the
-[i18n code examples](https://react.i18next.com/latest/i18next-instance),
-but copied here for convenience. You'll need to create an i18n component and
-import it somewhere (we did it in our index layout):
+This is straight from the [i18n code examples](https://react.i18next.com/latest/i18next-instance), but copied here for convenience. You'll need to create an i18n component and import it somewhere (we did it in our index layout):
 
 ```jsx
 import i18n from "i18next"
@@ -116,13 +82,9 @@ export default i18n
 
 ## Locales
 
-Next we'll create a folder for our translation strings. We used a folder called
-locales in our src folder (react-i18next likes that!). Within the locales folder
-we create a folder for each language using the language code. Then within that
-we create a JSON file for each component we want to translate.
+Next we'll create a folder for our translation strings. We used a folder called locales in our src folder (react-i18next likes that!). Within the locales folder we create a folder for each language using the language code. Then within that we create a JSON file for each component we want to translate.
 
-For our site we're currently supporting English and Welsh, so our locales folder
-looks like this.
+For our site we're currently supporting English and Welsh, so our locales folder looks like this.
 
 ```text
 - src
@@ -157,9 +119,7 @@ And the `cy` component would look like this:
 
 ### TIP: Using the locales folder with Gatsby
 
-To get the locales folder into the right place for Gatsby we just need to add a
-little hook to our `gatsby-node.js` file. It copies the locales folder post
-build and gets everything in the right place:
+To get the locales folder into the right place for Gatsby we just need to add a little hook to our `gatsby-node.js` file. It copies the locales folder post build and gets everything in the right place:
 
 ```javascript
 const fs = require("fs-extra")
@@ -176,11 +136,9 @@ exports.onPostBuild = () => {
 
 ## Using with a component
 
-With the packages installed and locales setup, we're ready to wire up a
-component!
+With the packages installed and locales setup, we're ready to wire up a component!
 
-React-i18next uses a HOC to wrap your component and provide some props to handle
-language switching. Here's our `PageHeader` component:
+React-i18next uses a HOC to wrap your component and provide some props to handle language switching. Here's our `PageHeader` component:
 
 ```jsx
 import React, { Component } from "react"
@@ -202,15 +160,11 @@ class PageHeader extends Component {
 export default translate("PageHeader")(PageHeader)
 ```
 
-Pretty simple! The string provided to `translate` is the corresponding JSON file
-name for the translation, and the second instance is the component itself. We
-keep these names the same to make it easier to match up translation files and
-components.
+Pretty simple! The string provided to `translate` is the corresponding JSON file name for the translation, and the second instance is the component itself. We keep these names the same to make it easier to match up translation files and components.
 
 ### TIP: React Helmet
 
-You can also use translation strings for page titles! Here's an example with
-React Helmet:
+You can also use translation strings for page titles! Here's an example with React Helmet:
 
 ```jsx
 <div className="Pricing">
@@ -220,8 +174,7 @@ React Helmet:
 
 ## Switching Languages
 
-Finally, to make it easy for our users to switch language we need to create a
-little component. Here's an example from our site:
+Finally, to make it easy for our users to switch language we need to create a little component. Here's an example from our site:
 
 ```jsx
 import React, { Component } from "react"
@@ -273,13 +226,9 @@ class LanguageSwitcher extends Component {
 export default translate("LanguageSwitcher")(LanguageSwitcher)
 ```
 
-This is a pretty small component. We're getting the `language` in the
-i18n prop so that we can check which language is currently active and show
-that in our menu.
+This is a pretty small component. We're getting the `language` in the i18n prop so that we can check which language is currently active and show that in our menu.
 
-The `handleLanguageChange` function just wraps the `react-i18n` function passed
-in as a prop through `translate`. Pretty much everything is handled for us.
-Hooray! 🎉
+The `handleLanguageChange` function just wraps the `react-i18n` function passed in as a prop through `translate`. Pretty much everything is handled for us. Hooray! 🎉
 
 ## SSR
 
@@ -332,7 +281,4 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
 
 ## Finishing up
 
-As you can see, i18n in Gatsby is actually pretty simple when you know how! We
-had to work a few things out for ourselves (the locales folder being one of
-them!), so hopefully reading this will allow you to get started serving
-international users even quicker.
+As you can see, i18n in Gatsby is actually pretty simple when you know how! We had to work a few things out for ourselves (the locales folder being one of them!), so hopefully reading this will allow you to get started serving international users even quicker.

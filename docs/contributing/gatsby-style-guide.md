@@ -2,19 +2,15 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building out a more comprehensive Docs section. It
-will be full of relevant articles written to be easily understood by the many people who love building with Gatsby.
+The Gatsby community is building out a more comprehensive Docs section. It will be full of relevant articles written to be easily understood by the many people who love building with Gatsby.
 
 The community plans, writes, and maintains these Docs on GitHub.
 
 ## Welcome!
 
-You don't have to be an expert in a
-topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
+You don't have to be an expert in a topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
-If you’d like to help by writing an article, find a stub article in the Gatsby
-Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then
-[open a pull request (PR)](/contributing/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
+If you’d like to help by writing an article, find a stub article in the Gatsby Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then [open a pull request (PR)](/contributing/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
 
 If you can't find a stub about the topic you'd like to write about, you can open a PR in GitHub that creates the stub and includes your draft article. Feel free to ask questions in the PR comments if you're not sure where to put a new article in the directory structure.
 
@@ -22,8 +18,7 @@ Before you begin writing, make sure to read the rest of this style guide.
 
 ## What kinds of docs can I write?
 
-Docs can cover a broad range of topics. Please see the following
-examples:
+Docs can cover a broad range of topics. Please see the following examples:
 
 - [Reference guides](/docs/add-404-page/)
 - [Reference guide overviews](/docs/styling/)
@@ -40,11 +35,9 @@ Please see the [Docs templates](/contributing/docs-templates/) for guidelines on
 
 Before you begin writing, answer these questions. Sample answers have been included:
 
-Question: Who will read my writing?
-_Answer: Developers with knowledge and experience coding in HTML, CSS, and JS but not necessarily React or GraphQL._
+Question: Who will read my writing? _Answer: Developers with knowledge and experience coding in HTML, CSS, and JS but not necessarily React or GraphQL._
 
-Question: What do I hope my readers will know and/or be able to do after reading it?
-_Answer (example): I hope my readers will be able to successfully add search to their Gatsby site._
+Question: What do I hope my readers will know and/or be able to do after reading it? _Answer (example): I hope my readers will be able to successfully add search to their Gatsby site._
 
 Once you answer those questions, create an outline of the topic and think about any coding examples you'll use (if applicable). This helps to organize your thoughts and make the writing process easier.
 
@@ -70,13 +63,9 @@ Possible sources of great research materials:
 
 ### Write drafts and get feedback
 
-Technical writing, or the literature of science and technology, is difficult
-because it requires you to take a technical (usually abstract) topic and explain
-it in a clear, accurate, and objective manner. You'll likely go through several
-rounds of proofreading and editing before you're happy with your writing.
+Technical writing, or the literature of science and technology, is difficult because it requires you to take a technical (usually abstract) topic and explain it in a clear, accurate, and objective manner. You'll likely go through several rounds of proofreading and editing before you're happy with your writing.
 
-Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the
-[Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
+Also, there's a community of contributors to support you. Bounce ideas off of them and ask for input on your writing in the [Gatsby Discord](https://gatsby.dev/discord) and in the [GitHub repo](https://github.com/gatsbyjs/gatsby).
 
 ## Word choice
 
@@ -98,20 +87,15 @@ For even more inclusive docs, avoid phrases that assume a reader's experience or
 
 ### Avoid emojis, slang, and metaphors
 
-Avoid using emojis or emoticons in the Docs and idiomatic expressions / slang, or metaphors. Gatsby has a global community, and
-the cultural meaning of an emoji, emoticon, or slang may be different around the world. Use your best judgment!
-Also, emojis can render differently on different systems.
+Avoid using emojis or emoticons in the Docs and idiomatic expressions / slang, or metaphors. Gatsby has a global community, and the cultural meaning of an emoji, emoticon, or slang may be different around the world. Use your best judgment! Also, emojis can render differently on different systems.
 
 ### Define jargon
 
-Articles should be written with short, clear sentences, and use as little jargon
-as necessary.
+Articles should be written with short, clear sentences, and use as little jargon as necessary.
 
 > Jargon: (n.) special words or expressions that are used by a particular profession or group and are difficult for others to understand: legal jargon.
 
-All jargon should be defined immediately in plain English. In
-other words, pretend like your readers have basic coding experience but not necessarily experience with PWAs and the JAMstack (see what happened there? I just used two jargon words that need to be defined); you
-need to define words that newcomers might have a hard time understanding.
+All jargon should be defined immediately in plain English. In other words, pretend like your readers have basic coding experience but not necessarily experience with PWAs and the JAMstack (see what happened there? I just used two jargon words that need to be defined); you need to define words that newcomers might have a hard time understanding.
 
 ## Writing style
 
@@ -173,9 +157,7 @@ This method allows people who would _not_ like to learn more about xyz to stop r
 
 ### Abbreviate terms
 
-If you want to abbreviate a term in your article, write it out fully first, then
-put the abbreviation in parentheses. After that, you may use the abbreviation going for the rest of the article. For example, "In computer science, an
-abstract syntax tree (AST) is ..."
+If you want to abbreviate a term in your article, write it out fully first, then put the abbreviation in parentheses. After that, you may use the abbreviation going for the rest of the article. For example, "In computer science, an abstract syntax tree (AST) is ..."
 
 ### Use SEO optimized titles
 
@@ -183,15 +165,11 @@ This explains how to account for Search Engine Optimization (SEO) and create a d
 
 When you create the new guide or tutorial under `/docs/`, you’ll either create a file or a folder if there will be images pulled into the doc.
 
-File:
-`querying-data-with-graphql.md`
+File: `querying-data-with-graphql.md`
 
 or
 
-Folder:
-`querying-data-with-graphql`
-`querying-data-with-graphql/index.md`
-`querying-data-with-graphql/graphql-image.png`
+Folder: `querying-data-with-graphql` `querying-data-with-graphql/index.md` `querying-data-with-graphql/graphql-image.png`
 
 The `.md` title or the folder title gets turned into the URL route automatically.
 
@@ -203,8 +181,7 @@ Here are some title examples:
 - Adding a 404 Page
 - Querying Data with GraphQL
 
-The folder name is used in the URL, so only use dashes -, numbers 0-9, and
-lowercase letters a-z for it.
+The folder name is used in the URL, so only use dashes -, numbers 0-9, and lowercase letters a-z for it.
 
 Here are some folder name examples:
 
@@ -212,9 +189,7 @@ Here are some folder name examples:
 - adding-a-404-page
 - querying-data-with-graphql
 
-Note: Just to clarify, you can include special characters in the article title
-but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name:
-what-is-graphql).
+Note: Just to clarify, you can include special characters in the article title but _not_ in the `.md` file name or folder name (e.g. title: What is GraphQL? and Folder Name: what-is-graphql).
 
 ## Grammar and formatting
 
@@ -239,11 +214,7 @@ Titles should aim to be brief while still conveying a comprehensive meaning of t
 Use the following as reference when creating and editing docs:
 
 - [formatting inline code and code blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
-- [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
-  If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself.
-  A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
-  Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
-  For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
+- [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images). If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source. And don't forget image alt text for accessibility! For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 
 #### Code formatting: Type tab
@@ -386,27 +357,22 @@ Proper nouns should use correct capitalization when possible. Below is a list of
 - Node.js
 - webpack ([should always in lower-case letters, even at the beginning of a sentence](https://webpack.js.org/branding/#the-name))
 
-A full-stack developer (adjective form with a dash) works on the full stack
-(noun form with no dash). The same goes with many other compound terms.
+A full-stack developer (adjective form with a dash) works on the full stack (noun form with no dash). The same goes with many other compound terms.
 
-Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example,
-a frontend developer works on the frontend. The same goes for backend.
+Use frontend for both adjective and noun forms as it's [more common and easier to maintain](https://github.com/gatsbyjs/gatsby/pull/8873#issuecomment-444255465). For example, a frontend developer works on the frontend. The same goes for backend.
 
 End users are spelled out with two words, rather than hyphenating with a dash.
 
 ### Use active voice
 
-Use active voice instead of passive voice. Generally, it's a more concise and
-straightforward way to communicate a subject. For example:
+Use active voice instead of passive voice. Generally, it's a more concise and straightforward way to communicate a subject. For example:
 
 - (passive) The for loop in JavaScript is used by programmers to...
 - (active) Programmers use the for loop in JavaScript to...
 
 ### Make lists clear with the Oxford Comma
 
-Use the Oxford Comma except in titles. It is a comma used after the penultimate
-item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian
-painter, sculptor, and architect. It makes things clearer.
+Use the Oxford Comma except in titles. It is a comma used after the penultimate item in a list of three or more items, before ‘and’ or ‘or’ e.g. an Italian painter, sculptor, and architect. It makes things clearer.
 
 [Confusion can happen when you don't use the Oxford comma](https://img.buzzfeed.com/buzzfeed-static/static/2015-02/22/18/enhanced/webdr11/enhanced-buzz-32156-1424646300-12.jpg?downsize=715:*&output-format=auto&output-quality=auto).
 
@@ -419,18 +385,13 @@ For words that have multiple spellings, prefer the US English word over British 
 
 ### Use apps that help you edit
 
-Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical
-about this tool, but it will automatically detect widely agreed-upon
-style issues:
+Use the [Hemingway App](https://hemingwayapp.com/). There’s nothing magical about this tool, but it will automatically detect widely agreed-upon style issues:
 
 - passive voice
 - unnecessary adverbs
 - words that have more common equivalents
 
-The Hemingway App will assign a “grade level” for your writing. You should aim
-for a grade level of 6. Another tool available is the De-Jargonizer, originally
-designed for scientific communication but might help avoid overspecialized
-wording.
+The Hemingway App will assign a “grade level” for your writing. You should aim for a grade level of 6. Another tool available is the De-Jargonizer, originally designed for scientific communication but might help avoid overspecialized wording.
 
 ## Best practices
 

@@ -56,7 +56,6 @@ We are very excited about new developments in the React and JavaScript world tha
 
 Further reading:
 
-[Adding App and Website Functionality](/docs/adding-app-and-website-functionality/)
-[Understanding React Hydration](/docs/react-hydration/)
+[Adding App and Website Functionality](/docs/adding-app-and-website-functionality/) [Understanding React Hydration](/docs/react-hydration/)
 
 _This article was edited to remove an implication that images are as impactful on performance as JavaScript_

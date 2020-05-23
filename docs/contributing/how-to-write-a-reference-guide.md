@@ -77,8 +77,7 @@ title: Querying Data with GraphQL
 
 ## Introductory paragraph
 
-The introductory paragraph should be a 1-2 sentence explanation of the main
-topic and answer the following question:
+The introductory paragraph should be a 1-2 sentence explanation of the main topic and answer the following question:
 
 What is the purpose of this guide?
 
@@ -90,13 +89,11 @@ If applicable, list any prerequisites to reading and understanding your article.
 
 What are the facts you know about the topic of this guide?
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+Keep paragraphs short (around 1-4 sentences). People are more likely to read several short paragraphs instead of a huge block of text.
 
 ## Example
 
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
+Readers will likely use doc articles as a quick reference to look up syntax. Articles should have a basic, real-world example that shows common use cases of its syntax.
 
 Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
 
