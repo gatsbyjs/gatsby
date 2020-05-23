@@ -101,12 +101,21 @@ const Guidance = ({ children, image }) => (
   </div>
 )
 
-const Monogram = ({ size, ...props }) => (
+const Monogram = ({ size, isLast }) => (
   <Box
-    mt={6}
-    display="flex"
-    css={{ flexShrink: 0, alignItems: `center`, flexDirection: `column` }}
-    {...props}
+    sx={{
+      display: isLast ? `none` : `flex`,
+      flexShrink: 0,
+      alignItems: `center`,
+      flexDirection: `column`,
+      mt: 0,
+      mr: 4,
+      [mediaQueries.sm]: {
+        display: isLast ? `block` : `flex`,
+        mt: 6,
+        mr: 6,
+      },
+    }}
   >
     <Flex
       width={size}
@@ -374,42 +383,10 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Flex alignItems="flex-end" flexWrap="wrap">
-              <Monogram
-                size={128}
-                sx={{
-                  mr: 4,
-                  [mediaQueries.sm]: {
-                    mr: 6,
-                  },
-                }}
-              />
-              <Monogram
-                size={64}
-                sx={{
-                  mr: 4,
-                  [mediaQueries.sm]: {
-                    mr: 6,
-                  },
-                }}
-              />
-              <Monogram
-                size={32}
-                sx={{
-                  mr: 4,
-                  [mediaQueries.sm]: {
-                    mr: 6,
-                  },
-                }}
-              />
-              <Monogram
-                size={16}
-                sx={{
-                  display: `none`,
-                  [mediaQueries.sm]: {
-                    display: `block`,
-                  },
-                }}
-              />
+              <Monogram size={128} />
+              <Monogram size={64} />
+              <Monogram size={32} />
+              <Monogram size={16} isLast />
             </Flex>
           </ContentColumn>
         </Columns>
@@ -467,8 +444,10 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Box
-              maxWidth="257px"
-              mb={4}
+              sx={{
+                maxWidth: `257px`,
+                mb: 4,
+              }}
               dangerouslySetInnerHTML={{
                 __html: Wordmark,
               }}
@@ -478,8 +457,10 @@ const Logo = ({ data, location }) => {
               }}
             />
             <Box
-              maxWidth="257px"
-              mb={3}
+              sx={{
+                maxWidth: `257px`,
+                mb: 3,
+              }}
               dangerouslySetInnerHTML={{
                 __html: ManuallyTracked,
               }}
@@ -662,13 +643,17 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <div css={{ position: `relative` }}>
+            <div
+              sx={{
+                position: `relative`,
+              }}
+            >
               <GatsbyLogoContainered opacity={0.025} />
               <div
-                css={{
+                sx={{
                   position: `absolute`,
                   zIndex: 1,
-                  height: 24,
+                  height: `24px`,
                   top: `auto`,
                   bottom: 0,
                 }}
@@ -732,7 +717,7 @@ const Logo = ({ data, location }) => {
                 <Text as="li" key={`logo-footnotes-${index}`} mb={3}>
                   {node.description}:<br />
                   <a
-                    css={{
+                    sx={{
                       color: theme.colors.purple[`50`],
                       textDecoration: `none`,
                     }}
