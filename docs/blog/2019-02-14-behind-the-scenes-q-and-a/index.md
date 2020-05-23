@@ -78,7 +78,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 **Question:** Should I stop using WordPress altogether? Does WordPress play well with Gatsby or is Contentful better? Looks like JAMstack is a WordPress killer. **Answer:** It's not a 100% replacement yet — best to start experimenting with things and see how it feels!
 
-**Question:** How do content managers preview their changes? **Answer:** We have some tooling planned for this :) Stay tuned! [Announcing Gatsby Preview ](/blog/2018-07-17-announcing-gatsby-preview/)
+**Question:** How do content managers preview their changes? **Answer:** We have some tooling planned for this :) Stay tuned! [Announcing Gatsby Preview](/blog/2018-07-17-announcing-gatsby-preview/)
 
 **Question:** Is there a good starting point to compare building sites with Gatsby that developers would have built on platforms like WordPress or Craft, etc previously? **Answer:** People have written about their experiences on our blog. Here are some [blog posts about WordPress](/blog/tags/wordpress).
 
@@ -106,11 +106,11 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Gatsby for Dynamic Web Apps
 
-**Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time? **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/) and [Building Apps with Gatsby ](/docs/adding-app-and-website-functionality/)
+**Question:** Are there data fetching hooks that we can use for client-side loading of authenticated content that isn't serialized at build-time? **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/) and [Building Apps with Gatsby](/docs/adding-app-and-website-functionality/)
 
 **Question:** How to do SSR loading for Dynamic content- for example, a blog, as it uses build time SSR technique? **Answer:** Gatsby's data layer and source plugins can fetch data dynamically at build time to grab your data. Then whenever your data changes, you rebuild your site with the updated content. Builds are fast so you can update the site every few minutes if necessary.
 
-**Question:** Is Dynamic content SEO Friendly when we use data layer ? **Answer:** Yep! Check out [SEO with Gatsby ](/docs/seo/)
+**Question:** Is Dynamic content SEO Friendly when we use data layer ? **Answer:** Yep! Check out [SEO with Gatsby](/docs/seo/)
 
 **Question:** How do you keep on top of things like price changes and stock availability with a static generated site? **Answer:** We actually do this on the GatsbyJS store. Check out the code, and hope it's helpful: [Gatsby Swag Store](https://github.com/gatsbyjs/store.gatsbyjs.org)
 
@@ -130,7 +130,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Scaling Gatsby (Gatsby for Large Apps)
 
-**Question:** I'm working for an e-commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time? **Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington ](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/)
+**Question:** I'm working for an e-commerce company. We have millions of products in our shop. The product detail site is somewhat the same but for the data. Is there a way to generate all those pages for each of those products in a feasible time? **Answer:** Gatsby generally maxes out at 50k pages or so (right now) but you could break up the page, check out [Building a large, internationalized e-commerce website with Gatsby at Daniel Wellington](/blog/2019-01-28-building-a-large-ecommerce-website-with-gatsby-at-daniel-wellington/)
 
 **Question:** How do you suggest to setup delta builds? Say I have 10 pages and am changing only one. Is it possible to build just the one and not all 10? **Answer:** This is incremental builds! We're thinking on it and certainly want to deliver this feature--it'd be a great one!
 
@@ -144,7 +144,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Gatsby Use Cases
 
-**Question:** To use gatsby for a blog - is this overengineering? **Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — https://overreacted.io/
+**Question:** To use gatsby for a blog - is this overengineering? **Answer:** Definitely not! [Here are some blogs built with Gatsby](/showcase/?filters%5B0%5D=Blog). One notable one is Dan Abramov's — <https://overreacted.io/>
 
 **Question:** Is it overkill to build every site with Gatsby.js? **Answer:** We don't think so :)
 
