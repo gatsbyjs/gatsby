@@ -6305,7 +6305,8 @@
   repo: https://github.com/noahub/gatsby-typescript-starter
   description: This starter ships with the main Gatsby configuration files you need to build a basic site using React and Typescript.
   tags:
-    - Typescript
+    - Language:TypeScript
+    - Styling:CSS-in-JS
     - Styled Components
     - Google Fonts
   features:
