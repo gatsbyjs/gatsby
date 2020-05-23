@@ -18,7 +18,7 @@ This framework would have to be:
 - **simple**, not requiring any setup to start using and with thoughtful APIs to
   extend the framework.
 - **fast**, doesn't lose customers to slow page loads. Takes advantage of
-  HTTP/2, browser caching, service workers, inlined critical css, and code
+  HTTP/2, browser caching, service workers, inlined critical CSS, and code
   splitting so your site always loads incredibly fast—no matter what you build.
 - **JavaScript-driven**, the web is huge and intensely competitive. Sites that
   win are fast and richly interactive. Your framework must make it trivial to

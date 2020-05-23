@@ -13,7 +13,7 @@ Date of interview: December 13 2018
 
 **Q:** How do you see the future of Browser-apps/PWA in comparison to "old2 executables" on windows? — spYro
 
-**A:** I think the future of browser apps is bright :smiley: more and more software (particularly business software) is delivered over the web (or Electron for desktop apps). Web developer tooling and browsers get an incredible amounts of investment and most people find building with html/css/js much nicer than the equivalent native UI toolkits. So I expect the strong trend to deliver applications over the internet or through Electron-like solutions to continue.
+**A:** I think the future of browser apps is bright :smiley: more and more software (particularly business software) is delivered over the web (or Electron for desktop apps). Web developer tooling and browsers get an incredible amounts of investment and most people find building with HTML/CSS/JS much nicer than the equivalent native UI toolkits. So I expect the strong trend to deliver applications over the internet or through Electron-like solutions to continue.
 
 — kylemathews
 

@@ -16,7 +16,7 @@ This tutorial will take about two hours to complete. If you're unfamiliar with L
 
 If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
 
-The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be a headache to keep track of. These are some of the problems monorepos solve.
+The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of CSS style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be a headache to keep track of. These are some of the problems monorepos solve.
 
 ![Monorepo Diagram](./images/monorepo-diagram.jpeg)
 
@@ -117,7 +117,7 @@ The Layout component behaves as the entry point of each Gatsby application, whic
 
 We’ll avoid code duplication by abstracting the parts of the layout that won’t need to change based on the page, like the use of the Header component. We’ll keep each package’s individual logic, like the `graphql` query.
 
-In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`. Create an `index.js` file and move over the contents of the `src/layouts/index.js` file here. Once that’s done get rid of the `graphql` query. Move over the css file so the imports don’t break.
+In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`. Create an `index.js` file and move over the contents of the `src/layouts/index.js` file here. Once that’s done get rid of the `graphql` query. Move over the CSS file so the imports don’t break.
 
 Back in the `src/layouts` file we can get rid of everything and replace it with this:
 

@@ -486,7 +486,6 @@ CRV
 CSP
 CSRF
 CSRs
-css
 css-in-javascript
 css-in-js
 CSS-in-JS
@@ -1825,7 +1824,6 @@ Scotty
 ScriptLoader
 scss
 SCSS
-scss-file
 SDK
 SDKs
 SDL
