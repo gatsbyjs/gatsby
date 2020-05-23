@@ -89,11 +89,14 @@ export const CopyColumn = ({
   >
     <div
       sx={{
-        position: sticky ? `sticky` : `relative`,
-        top: t =>
-          sticky
-            ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
-            : false,
+        position: `relative`,
+        [mediaQueries.sm]: {
+          position: sticky ? `sticky` : `relative`,
+          top: t =>
+            sticky
+              ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
+              : false,
+        },
       }}
     >
       {children}
