@@ -192,7 +192,7 @@ const Typography = ({ location }) => (
         </ContentColumn>
       </Columns>
     </Section>
-    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+    <Section pr={0}>
       <SectionHeading>Scale</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -641,7 +641,6 @@ const Typography = ({ location }) => (
     <Container>
       <Box
         sx={{
-          bt: 1,
           py: 8,
           my: 8,
         }}
@@ -650,8 +649,8 @@ const Typography = ({ location }) => (
           Cards
         </Text>
         <Flex mt={7} flexWrap="wrap" justifyContent="space-around">
-          <Starter mx={6} />
-          <Blog mx={6} />
+          <Starter />
+          <Blog />
         </Flex>
       </Box>
     </Container>

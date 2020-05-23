@@ -1,21 +1,47 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { MdArrowForward } from "react-icons/md"
 
-import { Box, Flex, Heading, Link, Text } from "../system"
+import { Box } from "theme-ui"
+import { Flex, Heading, Link, Text } from "../system"
 import ImagePlaceholder from "../image-placeholder"
 import Avatar from "../avatar"
 
-const BlogCard = ({ ...props }) => (
+const BlogCard = () => (
   <Box
-    {...props}
-    minWidth="16rem"
-    maxWidth="30rem"
-    borderRadius={1}
-    boxShadow="raised"
+    sx={{
+      minWidth: `16rem`,
+      maxWidth: `30rem`,
+      borderRadius: 1,
+      boxShadow: `raised`,
+      mx: 0,
+      [mediaQueries.sm]: {
+        mx: 6,
+      },
+    }}
   >
     <ImagePlaceholder aspectRatio={1 / 2} mb={2} />
-    <Box p={{ xxs: 4, md: 5 }}>
-      <Heading fontSize={{ xxs: 4, md: 6, lg: 7 }} fontWeight="heading">
+    <Box
+      sx={{
+        p: 4,
+        [mediaQueries.sm]: {
+          p: 5,
+        },
+      }}
+    >
+      <Heading
+        sx={{
+          fontSize: 4,
+          [mediaQueries.sm]: {
+            fontSize: 6,
+          },
+          [mediaQueries.md]: {
+            fontSize: 7,
+          },
+        }}
+        fontWeight="heading"
+      >
         Using decoupled Drupal with Gatsby with Kyle Mathews
       </Heading>
 

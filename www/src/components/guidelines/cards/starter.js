@@ -1,11 +1,20 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { MdStar } from "react-icons/md"
 
-import { Box, Flex, Heading, Text } from "../system"
+import { Box } from "theme-ui"
+import { Flex, Heading, Text } from "../system"
 import ImagePlaceholder from "../image-placeholder"
 
 const Card = () => (
-  <Box width="20rem" mb={8}>
+  <Box
+    sx={{
+      width: `20rem`,
+      mb: 8,
+      mx: 0,
+    }}
+  >
     <ImagePlaceholder borderRadius={1} boxShadow="raised" mb={2} />
     <Flex>
       <Text
