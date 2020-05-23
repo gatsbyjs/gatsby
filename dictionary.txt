@@ -927,9 +927,6 @@ graphiql-code-exporter
 graphiql-filesystem
 GraphiQL's
 graphql
-graphQL
-Graphql
-GraphQl
 GraphQL
 GraphQL-based
 graphql-compose
@@ -939,7 +936,6 @@ graphql-reference
 GraphQL-schema
 graphql-skip-limit
 GraphQL-specific
-GraphQL.
 GraphQL's
 GraphQLArgs
 GraphQLInputObjectType

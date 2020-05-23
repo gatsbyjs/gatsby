@@ -29,7 +29,7 @@ On the other hand, we wanted to reevaluate our approach to schemas in general. I
 
 There are two main additions to the API:
 
-1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [Graphql SDL](https://graphql.org/learn/schema/).
+1. A `createTypes` action that allows one to add, extend or fix the types by passing their type definition using [GraphQL SDL](https://graphql.org/learn/schema/).
 2. A `createResolvers` [Gatsby Node API](/docs/node-apis/) that can add or override resolvers on any types and fields in the schema. It can also add new fields with such resolvers.
 
 Why the two APIs? `createTypes` primary purpose is to _fix_ the definition for an automatically generated Node type. Often one is totally happy with the default resolvers that Gatsby provides and the only issue is that inference can change based on data changes.

@@ -324,7 +324,7 @@ https://youtu.be/UaFgCubwRD8
 
 _Important links from Video:_
 
-- The graphQL interface from your local host: `http://localhost:8000/___graphql`
+- The GraphQL interface from your local host: `http://localhost:8000/___graphql`
 
 #### Articles list
 
