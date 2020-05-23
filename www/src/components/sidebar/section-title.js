@@ -39,7 +39,7 @@ const Chevron = ({ isExpanded }) => (
 // Common styled heading component used in different types of SectionTitles
 const SectionHeading = ({ children, disabled, item }) => {
   const { getItemState } = useSidebarContext()
-  const { isExpanded } = getItemState(item)
+  const { isExpanded = false } = getItemState(item)
   return (
     <h3
       sx={{
