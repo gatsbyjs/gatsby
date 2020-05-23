@@ -26,7 +26,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Functional Questions (How do I do X with Gatsby?)
 
-**Question:** Can I serialize an api to be stored and accessed client-side only?
+**Question:** Can I serialize an API to be stored and accessed client-side only?
 **Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to invoke that API at _build time_
 
 **Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
