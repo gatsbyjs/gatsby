@@ -48,7 +48,7 @@ Static site generators like Gatsby play a huge part in making all of this possib
 
 So you might be thinking if there's no traditional CMS and your site is pure HTML, that means you have to work on all of your content and SEO directly in code. While this is one way to do it, there is a better way for marketing teams.
 
-Since we're building websites that are modular, it's still possible to use any CMS that has a robust API to send content to your site. Instead of storing all of your content in GitHub, you can pull it right out of a CMS of your choosing and use a static site generator to build a speedy, optimised website.
+Since we're building websites that are modular, it's still possible to use any CMS that has a robust API to send content to your site. Instead of storing all of your content in GitHub, you can pull it right out of a CMS of your choosing and use a static site generator to build a speedy, optimized website.
 
 ![Headless CMS](./images/headlesscms.jpeg)
 
@@ -130,7 +130,7 @@ I've already covered some of the benefits of opting to use JAMstack instead of a
 
 **Overall benefits:**
 
-- Improved technical knowledge and skills - including shipping content and working with code every day during the build. End result = easier to manage, improve and optimise the site content after it launched.
+- Improved technical knowledge and skills - including shipping content and working with code every day during the build. End result = easier to manage, improve and optimize the site content after it launched.
 - Became well versed in how the site is structured, resulting in greater understanding and communication between teams (dev + design + marketing).
 - The development cycle and the content were being worked on simultaneously and you could see the iterative improvements being made instantly. No long dev cycles followed by a mad dash to get all of the marketing content in at the last minute.
 

@@ -66,7 +66,7 @@ With Gatsby, the architecture of our website simplifies a great deal.
 
 This is the section of the post that business owners and marketing directors have been patiently waiting for. History and architecture aside, there’s a lot of hard, tangible, measurable results Gatsby can deliver to your business. Here’s some of them.
 
-### Search Engine Optimisation (SEO)
+### Search Engine Optimization (SEO)
 
 A higher organic search ranking ensures pages on your site appear closer to the top of your audience’s search results, and increases the chances of them visiting your site and engaging with your business. It plays a big part in bringing traffic to your site.
 

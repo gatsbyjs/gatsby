@@ -1400,14 +1400,8 @@ opentracing
 OpenTracing
 operandi
 OptimalSort
-optimisation
-Optimisation
-optimisations
-optimise
-optimised
 Optimizely
 Orestis
-organised
 orgs
 Osmani
 OSS
@@ -2124,7 +2118,6 @@ Wechat
 Wedekind
 WeKnow
 well-architected
-well-organised
 whacky
 What-QL
 Whatsapp
