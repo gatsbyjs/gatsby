@@ -1,6 +1,5 @@
 .babelrc
 .env
-.gitignored
 .htaccess
 .html
 .jpg

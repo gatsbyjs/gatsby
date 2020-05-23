@@ -171,7 +171,7 @@ While not "out-of-the-box", with a little elbow grease (as of early 2020) to get
   require("ts-node").register({ files: true })
   ```
   From these files, you can import `.ts` or .`tsx` files.
-- To generate types for your GraphQL queries, use the plugin [gatsby-plugin-codegen](https://www.npmjs.com/package/gatsby-plugin-codegen) (I [.gitignored](https://github.com/microsoft/TypeScript-website/blob/0df8f249d812acb37541c9f0aa39f4c35dafe8b6/packages/typescriptlang-org/.gitignore#L71-L74) some of its output)
+- To generate types for your GraphQL queries, use the plugin [gatsby-plugin-codegen](https://www.npmjs.com/package/gatsby-plugin-codegen) (I [`.gitignore`d](https://github.com/microsoft/TypeScript-website/blob/0df8f249d812acb37541c9f0aa39f4c35dafe8b6/packages/typescriptlang-org/.gitignore#L71-L74) some of its output)
 
 If you're not gonna go all-in on TypeScript, (which is totally reasonable!) you can get a lot of tooling wins in VS Code by using JSDoc to annotate functions in your `gatsby-node.js`:
 
