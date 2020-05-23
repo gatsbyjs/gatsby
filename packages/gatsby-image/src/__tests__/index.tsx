@@ -1,10 +1,11 @@
+import "@babel/polyfill"
 import React from "react"
 import { render, cleanup, fireEvent } from "@testing-library/react"
-import Image from "../"
+import { Image, IFixedObject, IFluidObject, IGatsbyImageProps } from "../"
 
 afterAll(cleanup)
 
-const fixedShapeMock = {
+const fixedShapeMock: IFixedObject = {
   width: 100,
   height: 100,
   src: `test_image.jpg`,
@@ -13,7 +14,7 @@ const fixedShapeMock = {
   base64: `string_of_base64`,
 }
 
-const fluidShapeMock = {
+const fluidShapeMock: IFluidObject = {
   aspectRatio: 1.5,
   src: `test_image.jpg`,
   srcSet: `some srcSet`,
@@ -22,7 +23,7 @@ const fluidShapeMock = {
   base64: `string_of_base64`,
 }
 
-const fixedImagesShapeMock = [
+const fixedImagesShapeMock: IFixedObject[] = [
   {
     width: 100,
     height: 100,
@@ -42,7 +43,7 @@ const fixedImagesShapeMock = [
   },
 ]
 
-const fluidImagesShapeMock = [
+const fluidImagesShapeMock: IFluidObject[] = [
   {
     aspectRatio: 2,
     src: `test_image.jpg`,
@@ -64,10 +65,10 @@ const fluidImagesShapeMock = [
 
 const setup = (
   fluid = false,
-  props = {},
-  onLoad = () => {},
-  onError = () => {}
-) => {
+  props: IGatsbyImageProps = {},
+  onLoad: IGatsbyImageProps["onLoad"] = (): void => {},
+  onError: IGatsbyImageProps["onError"] = (): void => {}
+): HTMLElement => {
   const { container } = render(
     <Image
       backgroundColor
@@ -93,9 +94,9 @@ const setup = (
 
 const setupImages = (
   fluidImages = false,
-  onLoad = () => {},
-  onError = () => {}
-) => {
+  onLoad: IGatsbyImageProps["onLoad"] = (): void => {},
+  onError: IGatsbyImageProps["onError"] = (): void => {}
+): HTMLElement => {
   const { container } = render(
     <Image
       backgroundColor
@@ -123,12 +124,12 @@ describe(`<Image />`, () => {
     // None of the media conditions above match.
     window.matchMedia = jest.fn(media =>
       media === `only screen and (min-width: 1024px)`
-        ? {
+        ? ({
             matches: true,
-          }
-        : {
+          } as MediaQueryList)
+        : ({
             matches: false,
-          }
+          } as MediaQueryList)
     )
   })
   afterEach(() => {
@@ -156,7 +157,7 @@ describe(`<Image />`, () => {
   })
 
   it(`should have correct src, title, alt, and crossOrigin attributes`, () => {
-    const imageTag = setup().querySelector(`picture img`)
+    const imageTag = setup().querySelector(`picture img`)!
     expect(imageTag.getAttribute(`src`)).toEqual(`test_image.jpg`)
     expect(imageTag.getAttribute(`srcSet`)).toEqual(`some srcSet`)
     expect(imageTag.getAttribute(`title`)).toEqual(`Title for the image`)
@@ -167,7 +168,7 @@ describe(`<Image />`, () => {
   })
 
   it(`should have correct placeholder src, title, style and class attributes`, () => {
-    const placeholderImageTag = setup().querySelector(`img`)
+    const placeholderImageTag = setup().querySelector(`img`)!
     expect(placeholderImageTag.getAttribute(`src`)).toEqual(`string_of_base64`)
     expect(placeholderImageTag.getAttribute(`title`)).toEqual(
       `Title for the image`
@@ -184,11 +185,11 @@ describe(`<Image />`, () => {
     expect(component).toMatchSnapshot()
   })
 
-  it(`should have the "critical" prop set "loading='eager'"`, () => {
+  it(`should have the the "critical" prop set "loading='eager'"`, () => {
     jest.spyOn(global.console, `log`)
 
     const props = { critical: true }
-    const imageTag = setup(false, props).querySelector(`picture img`)
+    const imageTag = setup(false, props).querySelector(`picture img`)!
     expect(imageTag.getAttribute(`loading`)).toEqual(`eager`)
     expect(console.log).toBeCalled()
   })
@@ -244,7 +245,7 @@ describe(`<Image />`, () => {
         placeholderClassName={`placeholder`}
       />
     )
-    const aspectPreserver = container.querySelector(`div div div`)
+    const aspectPreserver = container.querySelector(`div div div`)!
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
       expect.stringMatching(/padding-bottom: 20%/)
     )
@@ -274,7 +275,7 @@ describe(`<Image />`, () => {
         placeholderClassName={`placeholder`}
       />
     )
-    const aspectPreserver = container.querySelector(`div div`)
+    const aspectPreserver = container.querySelector(`div div`)!
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
       expect.stringMatching(/width: 1024px; height: 768px;/)
     )
@@ -295,7 +296,7 @@ describe(`<Image />`, () => {
         placeholderClassName={`placeholder`}
       />
     )
-    const aspectPreserver = container.querySelector(`div div div`)
+    const aspectPreserver = container.querySelector(`div div div`)!
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
       expect.stringMatching(/padding-bottom: 50%/)
     )
@@ -316,7 +317,7 @@ describe(`<Image />`, () => {
         placeholderClassName={`placeholder`}
       />
     )
-    const aspectPreserver = container.querySelector(`div div`)
+    const aspectPreserver = container.querySelector(`div div`)!
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
       expect.stringMatching(/width: 100px; height: 100px;/)
     )
@@ -327,7 +328,7 @@ describe(`<Image />`, () => {
     const onErrorMock = jest.fn()
     const imageTag = setup(true, {}, onLoadMock, onErrorMock).querySelector(
       `picture img`
-    )
+    )!
     fireEvent.load(imageTag)
     fireEvent.error(imageTag)
 
@@ -336,27 +337,29 @@ describe(`<Image />`, () => {
   })
 
   it(`should have an "aria-hidden" attribute on the fluid element`, () => {
-    const divTag = setup(true).querySelector(`.gatsby-image-wrapper > div`)
+    const divTag = setup(true).querySelector(`.gatsby-image-wrapper > div`)!
     expect(divTag.getAttribute(`aria-hidden`)).toBe(`true`)
   })
 
   it(`should have an "aria-hidden" attribute on the background element`, () => {
-    const BgTag = setup(true).querySelector(`.gatsby-image-wrapper > div + div`)
+    const BgTag = setup(true).querySelector(
+      `.gatsby-image-wrapper > div + div`
+    )!
     expect(BgTag.getAttribute(`aria-hidden`)).toBe(`true`)
   })
 
   it(`should have an "aria-hidden" attribute on the Placeholder component when fluid`, () => {
-    const placeholderImageTag = setup(true).querySelector(`img`)
+    const placeholderImageTag = setup(true).querySelector(`img`)!
     expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
   })
 
   it(`should have an "aria-hidden" attribute on the Placeholder component when fixed`, () => {
-    const placeholderImageTag = setup().querySelector(`img`)
+    const placeholderImageTag = setup().querySelector(`img`)!
     expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(`true`)
   })
 
   it(`should not have an "aria-hidden" attribute on the Image`, () => {
-    const placeholderImageTag = setup().querySelector(`picture img`)
+    const placeholderImageTag = setup().querySelector(`picture img`)!
     expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(null)
   })
 })

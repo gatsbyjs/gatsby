@@ -15,6 +15,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@testing-library/react": "^9.5.0",
+    "@types/react": "^16.9.31",
     "babel-preset-gatsby-package": "^0.4.2",
     "cross-env": "^5.2.1"
   },
@@ -33,6 +34,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },

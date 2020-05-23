@@ -1,7 +1,140 @@
 import React from "react"
-import PropTypes from "prop-types"
 
-const logDeprecationNotice = (prop, replacement) => {
+type Loading = "lazy" | "eager"
+type CrossOrigin = "anonymous" | "use-credentials" | ""
+
+interface IImageObject {
+  width: number
+  height: number
+  src: string
+  srcSet: string
+  base64?: string
+  tracedSVG?: string
+  srcWebp?: string
+  srcSetWebp?: string
+  media?: string
+}
+
+export interface IFixedObject {
+  width: number
+  height: number
+  src: IImageObject["src"]
+  srcSet: IImageObject["srcSet"]
+  base64?: IImageObject["base64"]
+  tracedSVG?: IImageObject["tracedSVG"]
+  srcWebp?: IImageObject["srcWebp"]
+  srcSetWebp?: IImageObject["srcSetWebp"]
+  media?: IImageObject["media"]
+}
+
+export interface IFluidObject {
+  aspectRatio: number
+  src: IImageObject["src"]
+  srcSet: IImageObject["srcSet"]
+  sizes: string
+  base64?: IImageObject["base64"]
+  tracedSVG?: IImageObject["tracedSVG"]
+  srcWebp?: IImageObject["srcWebp"]
+  srcSetWebp?: IImageObject["srcSetWebp"]
+  media?: IImageObject["media"]
+  maxWidth?: number
+  maxHeight?: number
+}
+
+interface INoscriptImgProps {
+  src?: string
+  sizes?: string
+  title?: string
+  srcSet?: string
+  alt?: string
+  width?: number
+  height?: number
+  crossOrigin?: CrossOrigin
+  loading?: Loading
+  draggable?: boolean
+  imageVariants: ImageVariants[]
+}
+
+type ImageVariants = IFixedObject | IFluidObject
+
+// If you modify these propTypes, please don't forget to update following files as well:
+// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
+// https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
+export interface IGatsbyImageProps {
+  resolutions?: IFixedObject
+  sizes?: IFluidObject
+  fixed?: IFixedObject | IFixedObject[]
+  fluid?: IFluidObject | IFluidObject[]
+  fadeIn?: boolean
+  durationFadeIn?: number
+  title?: string
+  alt?: string
+  className?: string | object
+  critical?: boolean
+  crossOrigin?: CrossOrigin
+  style?: React.CSSProperties
+  imgStyle?: React.CSSProperties
+  placeholderStyle?: object
+  placeholderClassName?: string
+  placeholderRef?: React.RefObject<HTMLImageElement>
+  backgroundColor?: string | boolean
+  onLoad?: () => void
+  onError?: React.ReactEventHandler<HTMLImageElement>
+  onStartLoad?: (param: { wasCached: boolean }) => void
+  Tag?: string | React.ReactType
+  itemProp?: string
+  loading?: Loading
+  draggable?: boolean
+}
+
+interface IGatsbyImageState {
+  isVisible: boolean
+  imgLoaded: boolean
+  imgCached: boolean
+  fadeIn: boolean
+}
+
+type ConvertedProps = Omit<IGatsbyImageProps, "resolutions" | "sizes">
+
+interface IPlaceholderImageProps {
+  title?: IGatsbyImageProps["title"]
+  alt?: IGatsbyImageProps["alt"]
+  style?: IGatsbyImageProps["style"]
+  className?: IGatsbyImageProps["className"]
+  itemProp?: IGatsbyImageProps["itemProp"]
+}
+
+interface IPlaceholderProps {
+  src: string
+  imageVariants: ImageVariants[]
+  generateSources: (props: ImageVariants[]) => React.ReactElement[]
+  spreadProps: IPlaceholderImageProps
+  ariaHidden: boolean
+}
+
+interface IImgPropTypes {
+  alt?: IGatsbyImageProps["alt"]
+  title?: IGatsbyImageProps["title"]
+  width?: IImageObject["width"]
+  height?: IImageObject["height"]
+  sizes?: IFluidObject["sizes"]
+  srcSet?: IImageObject["srcSet"]
+  src: IImageObject["src"]
+  crossOrigin?: IGatsbyImageProps["crossOrigin"]
+  style?: React.CSSProperties
+  onLoad?: IGatsbyImageProps["onLoad"]
+  onError?: IGatsbyImageProps["onError"]
+  itemProp?: IGatsbyImageProps["itemProp"]
+  loading?: IGatsbyImageProps["loading"]
+  draggable?: IGatsbyImageProps["draggable"]
+  ariaHidden?: boolean
+}
+
+function isIFluidObject(variant: ImageVariants): variant is IFluidObject {
+  return (variant as IFluidObject).sizes !== undefined
+}
+
+const logDeprecationNotice = (prop: string, replacement: string): void => {
   if (process.env.NODE_ENV === `production`) {
     return
   }
@@ -19,8 +152,8 @@ const logDeprecationNotice = (prop, replacement) => {
 }
 
 // Handle legacy props during their deprecation phase
-const convertProps = props => {
-  let convertedProps = { ...props }
+const convertProps = (props: IGatsbyImageProps): ConvertedProps => {
+  const convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
   if (resolutions) {
@@ -37,12 +170,21 @@ const convertProps = props => {
     convertedProps.loading = `eager`
   }
 
+  if (critical) {
+    logDeprecationNotice(`critical`, `the native "loading" attribute`)
+    convertedProps.loading = `eager`
+  }
+
   // convert fluid & fixed to arrays so we only have to work with arrays
   if (convertedProps.fluid) {
-    convertedProps.fluid = groupByMedia([].concat(convertedProps.fluid))
+    convertedProps.fluid = groupByMedia(
+      ([] as IFluidObject[]).concat(convertedProps.fluid)
+    ) as IFluidObject[]
   }
   if (convertedProps.fixed) {
-    convertedProps.fixed = groupByMedia([].concat(convertedProps.fixed))
+    convertedProps.fixed = groupByMedia(
+      ([] as IFixedObject[]).concat(convertedProps.fixed)
+    ) as IFixedObject[]
   }
 
   return convertedProps
@@ -54,38 +196,33 @@ const convertProps = props => {
  * @param currentData  {{media?: string}[]}   The props to check for images.
  * @return {boolean}
  */
-const hasArtDirectionSupport = currentData =>
-  !!currentData &&
-  Array.isArray(currentData) &&
-  currentData.some(image => typeof image.media !== `undefined`)
+const hasArtDirectionSupport = (currentData: ImageVariants[]): boolean =>
+  !!currentData && currentData.some(image => typeof image.media !== `undefined`)
+
+const isBrowser = typeof window !== `undefined`
 
 /**
  * Tries to detect if a media query matches the current viewport.
  * @property media   {{media?: string}}  A media query string.
  * @return {boolean}
  */
-const matchesMedia = ({ media }) =>
+const matchesMedia = ({ media }: { media?: string }): boolean =>
   media ? isBrowser && !!window.matchMedia(media).matches : false
-
-/**
- * Find the source of an image to use as a key in the image cache.
- * Use `the first image in either `fixed` or `fluid`
- * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string}
- */
-const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = fluid ? getCurrentSrcData(fluid) : getCurrentSrcData(fixed)
-
-  return data.src
-}
 
 /**
  * Returns the current src - Preferably with art-direction support.
  * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
  * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
-const getCurrentSrcData = currentData => {
-  if (isBrowser && hasArtDirectionSupport(currentData)) {
+const getCurrentSrcData = (
+  currentData: ImageVariants | ImageVariants[]
+): ImageVariants => {
+  if (
+    isBrowser &&
+    currentData &&
+    Array.isArray(currentData) &&
+    hasArtDirectionSupport(currentData)
+  ) {
     // Do we have an image for the current Viewport?
     const foundMedia = currentData.findIndex(matchesMedia)
     if (foundMedia !== -1) {
@@ -104,21 +241,40 @@ const getCurrentSrcData = currentData => {
   return currentData[0]
 }
 
-// Cache if we've seen an image before so we don't bother with
-// lazy-loading & fading in on subsequent mounts.
-const imageCache = Object.create({})
-const inImageCache = props => {
-  const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  return imageCache[src] || false
+/**
+ * Find the source of an image to use as a key in the image cache.
+ * Use `the first image in either `fixed` or `fluid`
+ * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
+ * @return {string}
+ */
+const getImageSrcKey = ({
+  fluid,
+  fixed,
+}: Pick<IGatsbyImageProps, "fluid" | "fixed">): string | undefined => {
+  const data = fluid
+    ? getCurrentSrcData(fluid)
+    : fixed
+    ? getCurrentSrcData(fixed)
+    : undefined
+
+  return data && data.src
 }
 
-const activateCacheForImage = props => {
+// Cache if we've seen an image before so we don't bother with
+// lazy-loading & fading in on subsequent mounts.
+const imageCache: { [key: string]: boolean } = Object.create({})
+const inImageCache = (props: IGatsbyImageProps): boolean => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
-  imageCache[src] = true
+  return src && imageCache[src] ? imageCache[src] : false
+}
+
+const activateCacheForImage = (props: IGatsbyImageProps): void => {
+  const convertedProps = convertProps(props)
+  // Find src
+  const src = getImageSrcKey(convertedProps)
+  if (src) imageCache[src] = true
 }
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -126,13 +282,12 @@ const hasNativeLazyLoadSupport =
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
-const isBrowser = typeof window !== `undefined`
 const hasIOSupport = isBrowser && window.IntersectionObserver
 
-let io
+let io: IntersectionObserver | undefined
 const listeners = new WeakMap()
 
-function getIO() {
+function getIO(): IntersectionObserver | undefined {
   if (
     typeof io === `undefined` &&
     typeof window !== `undefined` &&
@@ -145,7 +300,7 @@ function getIO() {
             const cb = listeners.get(entry.target)
             // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
             if (entry.isIntersecting || entry.intersectionRatio > 0) {
-              io.unobserve(entry.target)
+              io!.unobserve(entry.target)
               listeners.delete(entry.target)
               cb()
             }
@@ -159,27 +314,31 @@ function getIO() {
   return io
 }
 
-function generateImageSources(imageVariants) {
-  return imageVariants.map(({ src, srcSet, srcSetWebp, media, sizes }) => (
-    <React.Fragment key={src}>
-      {srcSetWebp && (
+function generateImageSources(imageVariants: ImageVariants[]): JSX.Element[] {
+  return imageVariants.map(variant => (
+    <React.Fragment key={variant.src}>
+      {variant.srcSetWebp && (
         <source
           type="image/webp"
-          media={media}
-          srcSet={srcSetWebp}
-          sizes={sizes}
+          media={variant.media}
+          srcSet={variant.srcSetWebp}
+          sizes={isIFluidObject(variant) ? variant.sizes : undefined}
         />
       )}
-      <source media={media} srcSet={srcSet} sizes={sizes} />
+      <source
+        media={variant.media}
+        srcSet={variant.srcSet}
+        sizes={isIFluidObject(variant) ? variant.sizes : undefined}
+      />
     </React.Fragment>
   ))
 }
 
 // Return an array ordered by elements having a media prop, does not use
 // native sort, as a stable sort is not guaranteed by all browsers/versions
-function groupByMedia(imageVariants) {
-  const withMedia = []
-  const without = []
+function groupByMedia(imageVariants: ImageVariants[]): ImageVariants[] {
+  const withMedia: ImageVariants[] = []
+  const without: ImageVariants[] = []
   imageVariants.forEach(variant =>
     (variant.media ? withMedia : without).push(variant)
   )
@@ -193,28 +352,36 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without]
 }
 
-function generateTracedSVGSources(imageVariants) {
+function generateTracedSVGSources(
+  imageVariants: ImageVariants[]
+): React.ReactElement[] {
   return imageVariants.map(({ src, media, tracedSVG }) => (
     <source key={src} media={media} srcSet={tracedSVG} />
   ))
 }
 
-function generateBase64Sources(imageVariants) {
+function generateBase64Sources(
+  imageVariants: ImageVariants[]
+): React.ReactElement[] {
   return imageVariants.map(({ src, media, base64 }) => (
     <source key={src} media={media} srcSet={base64} />
   ))
 }
 
-function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
-  const src = isWebp ? srcSetWebp : srcSet
-  const mediaAttr = media ? `media="${media}" ` : ``
+function generateNoscriptSource(
+  variant: ImageVariants,
+  isWebp?: boolean
+): string {
+  const src = isWebp ? variant.srcSetWebp : variant.srcSet
+  const mediaAttr = variant.media ? `media="${variant.media}" ` : ``
   const typeAttr = isWebp ? `type='image/webp' ` : ``
-  const sizesAttr = sizes ? `sizes="${sizes}" ` : ``
+  const sizesAttr =
+    isIFluidObject(variant) && variant.sizes ? `sizes="${variant.sizes}" ` : ``
 
   return `<source ${typeAttr}${mediaAttr}srcset="${src}" ${sizesAttr}/>`
 }
 
-function generateNoscriptSources(imageVariants) {
+function generateNoscriptSources(imageVariants: ImageVariants[]): string {
   return imageVariants
     .map(
       variant =>
@@ -224,7 +391,7 @@ function generateNoscriptSources(imageVariants) {
     .join(``)
 }
 
-const listenToIntersections = (el, cb) => {
+const listenToIntersections = (el: Element, cb: () => void): (() => void) => {
   const observer = getIO()
 
   if (observer) {
@@ -232,13 +399,13 @@ const listenToIntersections = (el, cb) => {
     listeners.set(el, cb)
   }
 
-  return () => {
-    observer.unobserve(el)
+  return (): void => {
+    observer!.unobserve(el)
     listeners.delete(el)
   }
 }
 
-const noscriptImg = props => {
+const noscriptImg = (props: INoscriptImgProps): string => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute
@@ -262,79 +429,106 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = React.forwardRef((props, ref) => {
-  const { src, imageVariants, generateSources, spreadProps, ariaHidden } = props
+const Placeholder = React.forwardRef(
+  (props: IPlaceholderProps, ref: React.Ref<HTMLImageElement>) => {
+    const {
+      src,
+      imageVariants,
+      generateSources,
+      spreadProps,
+      ariaHidden,
+    } = props
 
-  const baseImage = (
-    <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
-  )
+    const baseImage = (
+      <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
+    )
 
-  return imageVariants.length > 1 ? (
-    <picture>
-      {generateSources(imageVariants)}
-      {baseImage}
-    </picture>
-  ) : (
-    baseImage
-  )
-})
+    return imageVariants.length > 1 ? (
+      <picture>
+        {generateSources(imageVariants)}
+        {baseImage}
+      </picture>
+    ) : (
+      baseImage
+    )
+  }
+)
 
-const Img = React.forwardRef((props, ref) => {
-  const {
-    sizes,
-    srcSet,
-    src,
-    style,
-    onLoad,
-    onError,
-    loading,
-    draggable,
-    // `ariaHidden`props is used to exclude placeholders from the accessibility tree.
-    ariaHidden,
-    ...otherProps
-  } = props
+const Img = React.forwardRef(
+  (props: IImgPropTypes, ref: React.Ref<HTMLImageElement>) => {
+    const {
+      alt,
+      sizes,
+      srcSet,
+      src,
+      style,
+      onLoad,
+      onError,
+      loading,
+      draggable,
+      // `ariaHidden`props is used to exclude placeholders from the accessibility tree.
+      ariaHidden,
+      ...otherProps
+    } = props
 
-  return (
-    <img
-      aria-hidden={ariaHidden}
-      sizes={sizes}
-      srcSet={srcSet}
-      src={src}
-      {...otherProps}
-      onLoad={onLoad}
-      onError={onError}
-      ref={ref}
-      loading={loading}
-      draggable={draggable}
-      style={{
-        position: `absolute`,
-        top: 0,
-        left: 0,
-        width: `100%`,
-        height: `100%`,
-        objectFit: `cover`,
-        objectPosition: `center`,
-        ...style,
-      }}
-    />
-  )
-})
+    return (
+      <img
+        alt={alt}
+        aria-hidden={ariaHidden}
+        sizes={sizes}
+        srcSet={srcSet}
+        src={src}
+        {...otherProps}
+        onLoad={onLoad}
+        onError={onError}
+        ref={ref}
+        loading={loading}
+        draggable={draggable}
+        style={{
+          position: `absolute`,
+          top: 0,
+          left: 0,
+          width: `100%`,
+          height: `100%`,
+          objectFit: `cover`,
+          objectPosition: `center`,
+          ...style,
+        }}
+      />
+    )
+  }
+)
 
-Img.propTypes = {
-  style: PropTypes.object,
-  onError: PropTypes.func,
-  onLoad: PropTypes.func,
-}
+export class Image extends React.Component<
+  IGatsbyImageProps,
+  IGatsbyImageState
+> {
+  private seenBefore: boolean
+  private isCritical: boolean
+  private addNoScript: boolean
+  private useIOSupport: boolean
+  private placeholderRef: React.RefObject<HTMLImageElement>
+  private imageRef: React.RefObject<HTMLImageElement>
+  private cleanUpListeners?: void | (() => void)
 
-class Image extends React.Component {
-  constructor(props) {
+  static defaultProps = {
+    fadeIn: true,
+    durationFadeIn: 500,
+    alt: ``,
+    Tag: `div`,
+    // We set it to `lazy` by default because it's best to default to a performant
+    // setting and let the user "opt out" to `eager`
+    loading: `lazy`,
+  }
+
+  constructor(props: IGatsbyImageProps) {
     super(props)
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
     this.seenBefore = isBrowser && inImageCache(props)
 
-    this.isCritical = props.loading === `eager` || props.critical
+    this.isCritical = props.loading === `eager` || props.critical || false
 
     this.addNoScript = !(this.isCritical && !props.fadeIn)
     this.useIOSupport =
@@ -343,7 +537,7 @@ class Image extends React.Component {
       !this.isCritical &&
       !this.seenBefore
 
-    const isVisible =
+    const isVisible: boolean =
       this.isCritical ||
       (isBrowser && (hasNativeLazyLoadSupport || !this.useIOSupport))
 
@@ -351,7 +545,7 @@ class Image extends React.Component {
       isVisible,
       imgLoaded: false,
       imgCached: false,
-      fadeIn: !this.seenBefore && props.fadeIn,
+      fadeIn: (!this.seenBefore && props.fadeIn) || false,
     }
 
     this.imageRef = React.createRef()
@@ -360,7 +554,7 @@ class Image extends React.Component {
     this.handleRef = this.handleRef.bind(this)
   }
 
-  componentDidMount() {
+  public componentDidMount(): void {
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
@@ -372,14 +566,14 @@ class Image extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount(): void {
     if (this.cleanUpListeners) {
       this.cleanUpListeners()
     }
   }
 
   // Specific to IntersectionObserver based lazy-load support
-  handleRef(ref) {
+  private handleRef(ref: HTMLImageElement): void {
     if (this.useIOSupport && ref) {
       this.cleanUpListeners = listenToIntersections(ref, () => {
         const imageInCache = inImageCache(this.props)
@@ -410,7 +604,7 @@ class Image extends React.Component {
     }
   }
 
-  handleImageLoaded() {
+  private handleImageLoaded(): void {
     activateCacheForImage(this.props)
 
     this.setState({ imgLoaded: true })
@@ -420,7 +614,7 @@ class Image extends React.Component {
     }
   }
 
-  render() {
+  public render(): JSX.Element | null {
     const {
       title,
       alt,
@@ -437,32 +631,34 @@ class Image extends React.Component {
       itemProp,
       loading,
       draggable,
-    } = convertProps(this.props)
+    } = convertProps(this.props) as ConvertedProps & { Tag: React.ReactType }
 
-    const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
-    const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
+    const shouldReveal: boolean =
+      this.state.fadeIn === false || this.state.imgLoaded
+    const shouldFadeIn: boolean =
+      this.state.fadeIn === true && !this.state.imgCached
 
-    const imageStyle = {
+    const imageStyle: React.CSSProperties = {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
       ...imgStyle,
     }
 
-    const bgColor =
+    const bgColor: string | undefined =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
-    const delayHideStyle = {
+    const delayHideStyle: React.CSSProperties = {
       transitionDelay: `${durationFadeIn}ms`,
     }
 
-    const imagePlaceholderStyle = {
+    const imagePlaceholderStyle: React.CSSProperties = {
       opacity: this.state.imgLoaded ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
       ...placeholderStyle,
     }
 
-    const placeholderImageProps = {
+    const placeholderImageProps: IPlaceholderImageProps = {
       title,
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
@@ -471,8 +667,8 @@ class Image extends React.Component {
     }
 
     if (fluid) {
-      const imageVariants = fluid
-      const image = getCurrentSrcData(fluid)
+      const imageVariants = fluid as IFluidObject[]
+      const image = getCurrentSrcData(fluid) as IFluidObject
 
       return (
         <Tag
@@ -579,10 +775,10 @@ class Image extends React.Component {
     }
 
     if (fixed) {
-      const imageVariants = fixed
-      const image = getCurrentSrcData(fixed)
+      const imageVariants = fixed as IFixedObject[]
+      const image = getCurrentSrcData(fixed) as IFixedObject
 
-      const divStyle = {
+      const divStyle: React.CSSProperties = {
         position: `relative`,
         overflow: `hidden`,
         display: `inline-block`,
@@ -650,7 +846,6 @@ class Image extends React.Component {
                 title={title}
                 width={image.width}
                 height={image.height}
-                sizes={image.sizes}
                 src={image.src}
                 crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
@@ -686,71 +881,3 @@ class Image extends React.Component {
     return null
   }
 }
-
-Image.defaultProps = {
-  fadeIn: true,
-  durationFadeIn: 500,
-  alt: ``,
-  Tag: `div`,
-  // We set it to `lazy` by default because it's best to default to a performant
-  // setting and let the user "opt out" to `eager`
-  loading: `lazy`,
-}
-
-const fixedObject = PropTypes.shape({
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
-  srcSet: PropTypes.string.isRequired,
-  base64: PropTypes.string,
-  tracedSVG: PropTypes.string,
-  srcWebp: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-  media: PropTypes.string,
-})
-
-const fluidObject = PropTypes.shape({
-  aspectRatio: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
-  srcSet: PropTypes.string.isRequired,
-  sizes: PropTypes.string.isRequired,
-  base64: PropTypes.string,
-  tracedSVG: PropTypes.string,
-  srcWebp: PropTypes.string,
-  srcSetWebp: PropTypes.string,
-  media: PropTypes.string,
-  maxWidth: PropTypes.number,
-  maxHeight: PropTypes.number,
-})
-
-// If you modify these propTypes, please don't forget to update following files as well:
-// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
-// https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
-// https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
-Image.propTypes = {
-  resolutions: fixedObject,
-  sizes: fluidObject,
-  fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
-  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
-  fadeIn: PropTypes.bool,
-  durationFadeIn: PropTypes.number,
-  title: PropTypes.string,
-  alt: PropTypes.string,
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
-  critical: PropTypes.bool,
-  crossOrigin: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  style: PropTypes.object,
-  imgStyle: PropTypes.object,
-  placeholderStyle: PropTypes.object,
-  placeholderClassName: PropTypes.string,
-  backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  onLoad: PropTypes.func,
-  onError: PropTypes.func,
-  onStartLoad: PropTypes.func,
-  Tag: PropTypes.string,
-  itemProp: PropTypes.string,
-  loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
-  draggable: PropTypes.bool,
-}
-
-export default Image
