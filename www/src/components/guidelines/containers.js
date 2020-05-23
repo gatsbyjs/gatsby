@@ -117,7 +117,7 @@ export const ContentColumn = ({ children, fullWidth, ...rest }) => (
       overflow: `hidden`,
       position: `relative`,
       [mediaQueries.sm]: {
-        width: fullWidth ? `auto` : `50rem`,
+        width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
       },
     }}
