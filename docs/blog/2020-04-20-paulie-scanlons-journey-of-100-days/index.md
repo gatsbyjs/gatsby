@@ -26,7 +26,7 @@ With Gatsby you get back all that good stuff we kind of lost when "Websites" bec
 
 When the [#100DaysOfGatsby](/blog/tags/100-days-of-gatsby/) challenge was first announced I thought, _Yes, please_. I'm totally up for getting involved, but it soon transpired that pretty much every challenge was something I'd already learnt myself. _No matter,_ I thought. I can still continue to develop my React, JavaScript and Gatsby skills and by using the [hashtag](https://twitter.com/hashtag/100DaysOfGatsby) I hoped to share what I'd learnt and to find other folks out there doing the same.
 
-So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby eco-system. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
+So for **100** days I posted literally **every day** about the work I've been doing in and around the Gatsby ecosystem. If you have a spare 103 minutes you can read about the full 100 days [here](https://paulie.dev/posts/2020/01/100DaysOfGatsby/). But because I know you're all busy busy people, here is the tl;dr summary version.
 
 ![Screen shot of Skin UI, a Gatsby app by Paulie Scanlon](./skin-ui.jpg)
 
@@ -84,7 +84,7 @@ I've created a [PR](https://github.com/system-ui/theme-ui/pull/669) for Theme UI
 [GitHub](https://github.com/PaulieScanlon/gatsby-plugin-prop-shop) |
 [Blog post](https://paulie.dev/posts/2020/02/prop-shop/)
 
-![Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript](./theme-ui-components.jpg "Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, convering package to TypeScript")
+![Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, converting package to TypeScript](./theme-ui-components.jpg "Screen shot of pull request to Gatsby GitHub repo for Theme UI Components contribution, converting package to TypeScript")
 
 ## 5. @theme-ui/components
 

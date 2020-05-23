@@ -35,7 +35,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it possible to have the gatsby-\*.js files be rewritten in TypeScript?
 **Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have an out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
 
-**Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
+**Question:** Gatsby transformers support Markdown and AsciiDoc. Possible support for Sphinx reStructuredText?
 **Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! Check out [Creating a Source Plugin](/docs/creating-a-source-plugin/).
 
 **Question:** How did you implement the GitHub PR test for lighthouse scoring?

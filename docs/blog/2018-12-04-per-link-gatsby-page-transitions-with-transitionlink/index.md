@@ -107,7 +107,7 @@ const FadeLink = ({ to, children }) => (
 
 The beauty of this is that if you decide a certain page requires something more complex than a fade, you can add more transitions as needed.
 
-Here's an example of a more complicated TransitionLink using [gsap](https://greensock.com) to create a coloured ripple that moves outwards from the users mouse click, eventually covering the whole page.
+Here's an example of a more complicated TransitionLink using [gsap](https://greensock.com) to create a colored ripple that moves outwards from the users mouse click, eventually covering the whole page.
 
 ```jsx
 <TransitionLink

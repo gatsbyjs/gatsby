@@ -13,7 +13,7 @@ Last week I decided to install the React 16.8 alpha on a branch and experiment w
 
 ## Converting to Hooks and lessons learned
 
-The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React devTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
+The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React DevTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
 
 ```jsx
 export const PureRandomQuote = ({
@@ -119,7 +119,7 @@ function useMediaQuery() {
 
 Hooks bring many benefits to React functional components. Specific benefits include:
 
-- Abstracting logic with custom Hooks over render props for reduced syntax and elements in devTools
+- Abstracting logic with custom Hooks over render props for reduced syntax and elements in DevTools
 - Improved ability to share logic across components
 - Ability to call `useState` without the need for state updater functions if referencing the current version of state
 - Encapsulating side effects into their own function by area of concern

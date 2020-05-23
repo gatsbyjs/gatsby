@@ -28,7 +28,7 @@ Meanwhile your entire engineering organization grinds to a halt as everyone who 
 
 If you're building a website, Gatsby puts an end to traffic-spike-induced downtime.
 
-Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS Cloudfront. And CDNs are much less likely to go down.
+Gatsby sites are simply files that can be pushed to a CDN like Cloudflare or Netlify or AWS CloudFront. And CDNs are much less likely to go down.
 
 ## A site that's always ready for your guests
 

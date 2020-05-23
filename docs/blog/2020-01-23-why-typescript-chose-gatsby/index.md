@@ -156,7 +156,7 @@ His long term vision is to think of Gatsby as a compiler which takes a set of in
 
 ### Ecosystem Wins
 
-Gatsby has a massive community, and a lot of the time I'm able to just re-use someone elses work. The TypeScript team only has a few [unique](https://github.com/microsoft/TypeScript-Website/blob/v2/packages/gatsby-remark-shiki/README.md) [needs](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/typescript-vfs) in [our code samples](http://www.typescriptlang.org/v2/dev/twoslash/) but other than that, it's a pretty vanilla website.
+Gatsby has a massive community, and a lot of the time I'm able to just re-use someone else's work. The TypeScript team only has a few [unique](https://github.com/microsoft/TypeScript-Website/blob/v2/packages/gatsby-remark-shiki/README.md) [needs](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/typescript-vfs) in [our code samples](http://www.typescriptlang.org/v2/dev/twoslash/) but other than that, it's a pretty vanilla website.
 
 It's been great to just add a single line into the [`gatsby-config.js`](https://github.com/microsoft/TypeScript-Website/blob/v2/packages/typescriptlang-org/gatsby-config.js), run `yarn add gatsby-plugin-something` and suddenly a whole new set of features are set up. Plugins tend to be small and easy to audit, I've used a few.
 

@@ -164,7 +164,7 @@ The main goal is to improve visibility and encourage more community engagement. 
 
 ## What's next?
 
-You might've noticed a trend in our work last year. Lots of it focussed on foundational improvements to Gatsby unlocking even bigger DX wins and new features that were just _not_ possible before.
+You might've noticed a trend in our work last year. Lots of it focused on foundational improvements to Gatsby unlocking even bigger DX wins and new features that were just _not_ possible before.
 
 This year, we're going to build on those improvements with a focus on _improving_ the Gatsby Developer Experience.
 

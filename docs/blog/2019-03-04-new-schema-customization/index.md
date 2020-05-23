@@ -113,7 +113,7 @@ exports.sourceNodes = ({ actions }) => {
 
 Gatsby will now know that you want a Date and not override it with a string.
 
-You can specify types for some or all of the fields that you have on the given node type. Gatsby will add missing fields. This behaviour can be controlled with `@infer` and `@dontInfer` directives.
+You can specify types for some or all of the fields that you have on the given node type. Gatsby will add missing fields. This behavior can be controlled with `@infer` and `@dontInfer` directives.
 
 ```graphql
 # For this type `name` won't be added
@@ -126,7 +126,7 @@ type AuthorJson implements Node @dontInfer(noDefaultResolvers: true) {
   birthday: Date
 }
 
-# For this type both `name` and `birthday` fields will be added. Current default behaviour, but allows one to be explicit about it.
+# For this type both `name` and `birthday` fields will be added. Current default behavior, but allows one to be explicit about it.
 type AuthorJson implements Node @infer {
   id: ID!
 }
@@ -229,7 +229,7 @@ When you have many connections, this becomes pretty tedious, especially destruct
 
 ### Inference quirks
 
-We've had some quirks in inference that were dependant on ordering. We've made all inference deterministic.
+We've had some quirks in inference that were dependent on ordering. We've made all inference deterministic.
 
 1. Mix of date and non-date strings is always a string
 2. Conflicting field names always prefer Node references first and then the canonical name of the field.

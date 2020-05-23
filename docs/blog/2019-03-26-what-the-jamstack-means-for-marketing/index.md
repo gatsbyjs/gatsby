@@ -145,7 +145,7 @@ To be frank, all of these downsides are things that are worth enduring to get a 
 **Tips for a successful JAMstack launch**
 Since you're going to be working so closely with developers, it would be a good idea to sit down from the outset and plan out how things are going to work. Your developers are going to need to know exactly what functionality you need so that it can be built into the site. If you're using a headless CMS, you'll need to be clear about what data and content you expect to be pulled out of the CMS and into your static site.
 
-You will likely require integrations with your favourite tools and services and tracking for analytics. Depending on what stack you decide to use, the answer to how this will be connected together might be different. So it's important to iron out these expectations from the start so nothing gets missed.
+You will likely require integrations with your favorite tools and services and tracking for analytics. Depending on what stack you decide to use, the answer to how this will be connected together might be different. So it's important to iron out these expectations from the start so nothing gets missed.
 
 ## Conclusion
 

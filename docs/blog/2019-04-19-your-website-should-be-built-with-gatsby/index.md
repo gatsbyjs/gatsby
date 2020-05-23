@@ -88,7 +88,7 @@ Every second counts. Mobile websites that take [more than 3 seconds to load have
 
 ### Developer Experience and User Experience
 
-Simply put, Gatsby makes it very easy to make sites beautiful, snappy and satisfying for users. The performance optimizations make page transitions seem instantaneous. It also comes with out-of-the-box functionality for creating very satisfying interactive behaviours.
+Simply put, Gatsby makes it very easy to make sites beautiful, snappy and satisfying for users. The performance optimizations make page transitions seem instantaneous. It also comes with out-of-the-box functionality for creating very satisfying interactive behaviors.
 
 Gatsby has an excellent dedicated product team, supported by a booming open-source developer community. The technology is incredible, and it’s continuing to grow, with updated revisions of the core product, and with an ecosystem of code libraries that can be plugged in for quick access to impressive functionality.
 

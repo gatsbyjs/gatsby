@@ -62,9 +62,9 @@ Now it's time to deploy your Gatsby app!
 
 ![https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/skip.png](https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/skip.png "screen shot of sample cut and paste webhook url")
 
-4. Paste your Strapi `API_URL` for both of your Builds Environment variables and Preview Environment variables. That usually means pasting the url of your Strapi instances deployed on Heroku (eg: https://your-app.herokuapp.com)
+4. Paste your Strapi `API_URL` for both of your Builds Environment variables and Preview Environment variables. That usually means pasting the url of your Strapi instances deployed on Heroku (e.g.: https://your-app.herokuapp.com)
 
-_Note: Be sure to paste your Heroku url without the trailing slash (eg: "https://your-app.herokuapp.com" and not "https://your-app.herokuapp.com/")._
+_Note: Be sure to paste your Heroku url without the trailing slash (e.g.: "https://your-app.herokuapp.com" and not "https://your-app.herokuapp.com/")._
 
 ![https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/env.png](https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/env.png "screen shot of environment variables form")
 

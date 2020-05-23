@@ -76,7 +76,7 @@ When you write a query in GraphiQL, this will automatically generate code for yo
 
 ### Notable PRs
 
-It's _really_ hard to pick out favourites from all the incredible contributions you folks make so apologies in advance if I missed anything (let [us](https://twitter.com/gatsbyjs) know on Twitter). Here are my favourites from the past month:
+It's _really_ hard to pick out favorites from all the incredible contributions you folks make so apologies in advance if I missed anything (let [us](https://twitter.com/gatsbyjs) know on Twitter). Here are my favorites from the past month:
 
 - [Jeremy Albright](https://github.com/Js-Brecht) did some really solid work and fixed an issue where Gatsby CLI would leave your terminal in an inconsistent state in [#16714](https://github.com/gatsbyjs/gatsby/pull/16714)
 - [Nicolas Goutay](https://github.com/phacks) fixed a memory leak in IntersectionObservers (with help from [atomiks](https://github.com/atomiks)) in [#17056](https://github.com/gatsbyjs/gatsby/pull/17056)

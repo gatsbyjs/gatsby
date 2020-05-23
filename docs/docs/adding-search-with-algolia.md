@@ -7,7 +7,7 @@ Once you've added some content to your site, you'll want to make it easy for you
 Two things before you begin:
 
 1. Beyond this guide, you may also want to checkout Algolia's extensive [docs on how to get started in React](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react).
-2. If you're looking to add search to a documentation site, you can let Algolia handle most of the steps outlined below by using their [Docsearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
+2. If you're looking to add search to a documentation site, you can let Algolia handle most of the steps outlined below by using their [DocSearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
 
 ## Why Use Algolia?
 

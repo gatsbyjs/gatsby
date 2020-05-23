@@ -84,7 +84,7 @@ In order to meet our deadline, we kicked off all streams of work on day one. The
 
 The tight deadlines forced us to begin development almost immediately. The challenge we faced was how to develop without specs, wireframes, or a complete information architecture. What we decided to do was start with the skeleton of a component library and a simplified app, so that we could iterate on both as the design progressed. Each iteration was focused on critical features and functionality.
 
-Initially we focused on the component library – our experience with building component libraries and design systems meant that we knew what baseline elements and configuration we would need. We set up a system of design tokens to allow global values like brand colours to be changed quickly and easily. The moving targets of design and UX meant that we sometimes had to redo work, but overall the iterative approach was truly agile.
+Initially we focused on the component library – our experience with building component libraries and design systems meant that we knew what baseline elements and configuration we would need. We set up a system of design tokens to allow global values like brand colors to be changed quickly and easily. The moving targets of design and UX meant that we sometimes had to redo work, but overall the iterative approach was truly agile.
 
 ![Abstract's version control listing the components within the Change incorporated sketch file](change-inc.jpg)
 

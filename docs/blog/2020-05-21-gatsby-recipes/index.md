@@ -25,10 +25,10 @@ I’m a React UI Developer and I work on a lot of Greenfield Component Library b
 
 To get the two playing nicely together it requires a little under the hood knowledge about Gatsby and Storybook, and this knowledge supplies the foundation for writing a Recipe to handle it:
 
-- Gatsby is written in ES6 and isn’t transpiled to CommonJs until either the `gatsby develop` or `gatsby build` processes are run.
-- Storybook requires all module code to be transpiled to CommonJs
+- Gatsby is written in ES6 and isn’t transpiled to CommonJS until either the `gatsby develop` or `gatsby build` processes are run.
+- Storybook requires all module code to be transpiled to CommonJS
 
-The problem here is when you run Storybook it has no knowledge of the Gatsby build processes and will only transpile “your” ES6 code to CommonJs. This is mostly fine apart from when you attempt to create a story for a Gatsby component, or a story that embeds or composes a Gatsby component. Once such component is `<Link />`
+The problem here is when you run Storybook it has no knowledge of the Gatsby build processes and will only transpile “your” ES6 code to CommonJS. This is mostly fine apart from when you attempt to create a story for a Gatsby component, or a story that embeds or composes a Gatsby component. Once such component is `<Link />`
 
 For example:
 
@@ -38,7 +38,7 @@ import { Link } from ‘gatsby’
 
 The reason this will cause Storybook errors is because the `<Link />` component comes from Gatsby / `node_modules` which, as mentioned above, is (as yet) un-transpiled ES6 code.
 
-Storybook has anticipated this issue, fortunately, and so there is a method whereby you can write your own Webpack config and pass it on to combine it with the default Storybook Webpack config. This then aids in the transpiling of any ES6 code located in `node_modules` to CommonJs.
+Storybook has anticipated this issue, fortunately, and so there is a method whereby you can write your own Webpack config and pass it on to combine it with the default Storybook Webpack config. This then aids in the transpiling of any ES6 code located in `node_modules` to CommonJS.
 
 If (like me) Webpack scares you a little bit, you’ll likely want to avoid writing any Webpack config and just get on with developing your UI. You could try not creating any `.stories` that include a `<Link />` component but this will only get you so far.
 

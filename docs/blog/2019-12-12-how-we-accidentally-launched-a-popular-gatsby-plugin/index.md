@@ -70,7 +70,7 @@ So, I decided to experiment a bit and a week later, launched a plugin that fixed
 
 - Gatsby redirects now work just like they do on other hosting providers, and can be configured to be permanently or temporarily.
 
-- It applies the recommended caching headers by default which can also be fully customised.
+- It applies the recommended caching headers by default which can also be fully customized.
 
 - If a client route is requested from the server side, it redirects them back to the starting point of the client route. (aka `/users/1` now redirects to `/users/` instead of 404'ing). Preferably we’d rewrite the url completely, but this is not possible with S3 and [gatsby-plugin-netlify](https://www.npmjs.com/package/gatsby-plugin-netlify) does exactly the same.
 
