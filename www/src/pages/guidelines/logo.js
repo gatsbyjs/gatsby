@@ -3,9 +3,7 @@ import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Img from "gatsby-image"
-import styled from "@emotion/styled"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
-import themeGet from "@styled-system/theme-get"
 import { useColorMode } from "theme-ui"
 
 import Link from "../../components/localized-link"
@@ -38,30 +36,51 @@ import { Box, Button, Flex, Text } from "../../components/guidelines/system"
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import palette from "../../utils/guidelines/extend-palette-info"
 
-const List = styled(`ul`)`
-  margin-left: 0;
-  padding: 0;
-  list-style: none;
-`
+const List = ({ children }) => (
+  <ul
+    sx={{
+      marginLeft: 0,
+      padding: 0,
+      listStyle: `none`,
+    }}
+  >
+    {children}
+  </ul>
+)
 
-const ListItem = styled(`li`)`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${props =>
-    encodeURIComponent(
-      themeGet(`colors.green.50`)(props)
-    )}' d='M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z' /%3E%3C/svg%3E");
-  background-position: 0 0.25em;
-  background-repeat: no-repeat;
-  background-size: 1em;
-  padding-left: 1.5em;
-  margin-bottom: 1em;
-`
+const listItemStyle = {
+  backgroundPosition: `0 0.25em`,
+  backgroundRepeat: `no-repeat`,
+  backgroundSize: `1em`,
+  paddingLeft: `1.5em`,
+  marginBottom: `1em`,
+}
 
-const DontListItem = styled(ListItem)`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${props =>
-    encodeURIComponent(
-      themeGet(`colors.red.50`)(props)
-    )}' d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /%3E%3C/svg%3E");
-`
+const ListItem = ({ children }) => (
+  <li
+    sx={{
+      ...listItemStyle,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
+        theme.colors.green[`50`]
+      )}' d='M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z' /%3E%3C/svg%3E")`,
+    }}
+  >
+    {children}
+  </li>
+)
+
+const DontListItem = ({ children }) => (
+  <li
+    sx={{
+      ...listItemStyle,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
+        theme.colors.red[`50`]
+      )}' d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /%3E%3C/svg%3E")`,
+    }}
+  >
+    {children}
+  </li>
+)
 
 const Guidance = ({ children, image }) => (
   <div
