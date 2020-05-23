@@ -1320,7 +1320,6 @@ navbars
 navigations
 Nearform
 Neo-esque
-netlify
 Netlify
 netlify-cli
 NetlifyCMS
