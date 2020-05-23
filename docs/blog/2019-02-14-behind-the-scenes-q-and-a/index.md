@@ -160,7 +160,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Would it makes sense to still use Gatsby for a more "dynamic" type of app?
 **Answer:** Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: [Dynamic Apps Webinar](https://www.gatsbyjs.com/build-web-apps-webinar).
 
-**Question:** What is the recommended approach for sites that have integrations like an oauth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?
+**Question:** What is the recommended approach for sites that have integrations like an OAuth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?
 **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/).
 
 **Question:** Dustin mentioned a recording on building dynamic apps with Gatsby. Is that available?

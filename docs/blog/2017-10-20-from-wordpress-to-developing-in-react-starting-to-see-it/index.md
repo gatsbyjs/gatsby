@@ -10,7 +10,7 @@ specialist. My use of JavaScript has been limited to animations and DOM
 manipulation. However, at
 [Indigo Tree](https://indigotree.co.uk)
 we're branching out from our staple of WordPress and trying different methods of
-creating websites with functionality that our clients require, whilst maximising
+creating websites with functionality that our clients require, whilst maximizing
 their budget.
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of

@@ -10,7 +10,7 @@ tags:
   - deployment
 ---
 
-Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
+Gatsby is **great** from a multitude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
 
 As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
@@ -149,7 +149,7 @@ Let's continue.
 
 Gatsby--like other tools--uses the filesystem as a convention for mapping to routes for instance, given the following directory structure:
 
-_also note we expose a [programatic API](/docs/node-apis/#createPages) for dynamic route creation_
+_also note we expose a [programmatic API](/docs/node-apis/#createPages) for dynamic route creation_
 
 ```text
 ├── src/

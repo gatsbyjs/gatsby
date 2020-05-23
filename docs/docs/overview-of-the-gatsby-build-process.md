@@ -239,7 +239,7 @@ Imports the composed GraphQL schema and builds it.
 
 13. `createPages`
 
-Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
+Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programmatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
 
 Plugins can handle the [`onCreatePage` event](/docs/node-apis/#onCreatePage) at this point for use cases like manipulating the path of pages.
 

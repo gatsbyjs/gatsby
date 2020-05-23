@@ -122,7 +122,7 @@ export const query = graphql`
 
 ## Generating a page for each product
 
-You can [programatically create pages](/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
+You can [programmatically create pages](/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
 
 Create a template for your product pages by adding a new file, `/src/templates/product.js`.
 

@@ -363,7 +363,7 @@ render() {
   const { submitting, success, error, comments, newComment: { name, text } } = this.state
 ```
 
-I made some simple error or success messages to show after submnitting the form.
+I made some simple error or success messages to show after submitting the form.
 
 ```jsx:title=components/comments.js
 const showError = () =>

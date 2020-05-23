@@ -12,7 +12,7 @@ canonicalLink: https://kymellis.co/jamstack-marketing-headless-cms/
 
 There's an emerging trend in modern web development called the JAMstack. It's largely being discussed in developer circles, but I was lucky enough to work on a site relaunch project as a marketer where I got to see the JAMstack in action.
 
-It got me excited about the future because I've been in marketing for the best part of a decade and I've never witnessed a site that I've worked on go from zero to hero so quickly. There's often a disjoint in the decision making process when companies with resources (i.e. some money, developers and a marketing team) decide to launch or relaunch a marketing website. So in this post I'm going to summarise:
+It got me excited about the future because I've been in marketing for the best part of a decade and I've never witnessed a site that I've worked on go from zero to hero so quickly. There's often a disjoint in the decision making process when companies with resources (i.e. some money, developers and a marketing team) decide to launch or relaunch a marketing website. So in this post I'm going to summarize:
 
 - What the JAMstack is and what it means for tech-savvy marketers
 - An example of a JAMstack site that I worked on
@@ -110,7 +110,7 @@ As always, there is still work to do to ensure the site ranks well for the most 
 
 - [Ghost](https://ghost.org/) delivering content via the API
 - A frontend built in React with [Gatsby](https://gatsbyjs.org/) (our static site generator of choice)
-- Deployed with [Netlifly](https://netlify.com/) (really nifty content delivery network)
+- Deployed with [Netlify](https://netlify.com/) (really nifty content delivery network)
 - [Algolia](https://algolia.com/) powering the search functionality
 - [Zapier](https://zapier.com/) to automate community feedback into Slack for content improvements
 

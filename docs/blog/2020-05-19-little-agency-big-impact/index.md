@@ -27,7 +27,7 @@ In short, he concludes, "Gatsby makes things faster in every possible way."
 
 Delivering responsive, interactive client sites with Gatsby
 
-Today, Pooley uses Gatsby as the frontend framework whenever the agency builds a client site. He integrates Gatsby with a headless Prismic CMS, uses Shopify for e-commerce sites, and employs Nelify for hosting.
+Today, Pooley uses Gatsby as the frontend framework whenever the agency builds a client site. He integrates Gatsby with a headless Prismic CMS, uses Shopify for e-commerce sites, and employs Netlify for hosting.
 
 The site created for [Kua Coffee](https://kuacoffee.co/) is a prime example of the beautifully designed, interactive websites that Little & Big produces with Gatsby. Kua is a six-person charity that strives to improve the sustainability of coffee production and consumption. Little & Big helped refine the organization's brand and create an engaging web presence.
 

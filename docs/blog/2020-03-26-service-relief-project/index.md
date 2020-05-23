@@ -81,7 +81,7 @@ I am grateful to be surrounded by coworkers that are deeply passionate about hel
 
 ![Slack messages from that thread](./images/conversation-slack-random.png)
 
-The response I recieved was incredible. Folks from every team at Gatsby chimed in with their support and stepping up to contribute. Within ten minutes team members purchased a half-dozen domain names for their own local areas and a dedicated Slack channel was created to house our internal discussion.
+The response I received was incredible. Folks from every team at Gatsby chimed in with their support and stepping up to contribute. Within ten minutes team members purchased a half-dozen domain names for their own local areas and a dedicated Slack channel was created to house our internal discussion.
 
 > "BTW - It's this stuff that makes me proud to work here!" - Jim Ettig, VP Sales
 

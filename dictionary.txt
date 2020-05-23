@@ -1287,10 +1287,7 @@ Materialisation
 Mateusz
 MathJax
 Matomo
-maximise
-maximising
 mccrodp
-McDonalds
 MD5
 mdast
 mdast-util-to-string
@@ -1325,7 +1322,6 @@ Michal
 Michał
 Microfrontends
 microservices
-Microservices
 microsites
 middleware
 mind-blowingly
@@ -1333,9 +1329,7 @@ mindblown
 mini-css-extract-plugin
 minification
 minified
-Minified
 minifies
-Minifies
 minimalistic
 minimatch
 misconfigured
@@ -1346,16 +1340,13 @@ mockups
 Modayil
 modelling
 modularity
-Modularity
 modularize
 modularized
 modularizing
-Modularizing
 modus
 Monahan
 mongo's
 monorepo
-Monorepo
 monorepos
 Morby
 moreIncrementalSvg
@@ -1370,7 +1361,6 @@ Mulesoft
 multilanguage
 multimillion-dollar
 Multithreading
-multititude
 Murr
 Murr's
 must-revalidate
@@ -1379,8 +1369,6 @@ MVPs
 mysql
 mysql2sqlite
 namespace
-Namespace
-namespace.
 namespaced
 namespaces
 Nanberg
@@ -1393,9 +1381,7 @@ navbar
 navbars
 navigations
 Nearform
-Nelify
 Neo-esque
-Netlifly
 netlify
 Netlify
 netlify-cli
@@ -1433,10 +1419,8 @@ npm
 NPM
 npm-check
 npm-force-resolutions
-npm.
 npm's
 npx
-npx.
 nullability
 nullable
 Nunjucks
@@ -1447,8 +1431,6 @@ nvm
 nvm's
 NYCHA
 NYU
-oauth
-oAuth
 OAuth
 observability
 Oduye
@@ -1462,7 +1444,6 @@ old2
 Olivas
 omitGoogleFont
 onboarding
-Onboarding
 onboards
 onClientEntry
 onCreateNode
@@ -1472,7 +1453,7 @@ OneGraph's
 OneShopper
 Onix
 onPostBootstrap
-onPreBootstrap.
+onPreBootstrap
 onPreExtractQueries
 onPreRouteUpdate
 onRenderBody
@@ -1496,7 +1477,6 @@ Orestis
 organised
 orgs
 Orgs
-orl
 Osmani
 OSS
 OSX
@@ -1532,7 +1512,6 @@ parsers
 pathname
 pathnames
 pathPrefix
-pathPrefix.
 pathToConfigModule
 Paulie
 Pavel
@@ -1548,7 +1527,6 @@ Peeters
 perceptable
 perf
 performant
-Performant
 performantly
 permalink
 permalinked
@@ -1570,13 +1548,10 @@ pogo
 poject
 PokéAPI
 PokéAPI's
-pokémon
 Pokémon
 polyfill
-Polyfill
 polyfilling
 polyfills
-Polyfills
 Polypane
 Pooley
 popNodeQueries
@@ -1592,7 +1567,6 @@ Poumián
 powershell
 PowerShell
 pragma
-Pragma
 pragmas
 PRDs
 pre
@@ -1642,24 +1616,17 @@ Preact
 prebuild
 prebuilds
 prebuilt
-Prebuilt
 precache
 precompiled
 preconfigured
 prefetch
-Prefetch
 prefetched
-Prefetched
 prefetches
 prefetching
-Prefetching
 preload
-Preload
 preloaded
 preloading
-Preloading
 preloads
-Preloads
 prepend
 prepended
 prepends
@@ -1685,12 +1652,8 @@ ProcessedNodeType
 ProcessedTypeNode
 ProductHive
 profiler
-Profiler
 profilers
-programatic
-programatically
 programmatically
-Programmatically
 programme
 Pronovix
 PropShop
@@ -1699,10 +1662,8 @@ ProPublica
 ProPublica's
 prototyped
 proxying
-Proxying
 Prozzi
 PRPL
-PRPL.
 PRs
 Prskavec
 pseudo-gamifying
@@ -1711,7 +1672,6 @@ publicURL
 pullquotes
 PurgeCSS
 PurifyCSS
-pwa
 PWA
 PWAs
 Q2
@@ -1764,13 +1724,11 @@ rebrand
 rebranding
 reCAPTCHA
 Recharts
-recieved
 recognise
 recompiles
 reconciler
 Recurly
 recurse
-Recurse
 Reddit
 redux
 Redux
@@ -1804,7 +1762,6 @@ replaceComponentQuery
 replatform
 replatforms
 repo
-Repo
 repo's
 repos
 reposting
@@ -1817,12 +1774,9 @@ resave
 resolvableExtensions
 resolveRecursive
 resolvers
-Resolvers
 reStructuredText
-resumé
 résumé
 reusability
-Reusability
 revalidated
 reviewable
 rfcs
@@ -1833,7 +1787,6 @@ Ria
 Ribeiro
 Rimal
 roadmap
-Roadmap
 roadmaps
 rockstar
 ROI
@@ -1857,7 +1810,6 @@ runtimes
 Ruzicka's
 S3
 S3-compliant
-s3.
 Saas
 SaaS
 Saccone's
@@ -1874,7 +1826,6 @@ scannability
 Schau
 Schau's
 schemas
-Schemas
 Scholnick
 sci-fi
 Scotty
@@ -1896,12 +1847,9 @@ SendGrid's
 SEO
 SEO-friendly
 SEO-optimized
-serialised
 serializer
 serializers
-Serveless
 serverless
-Serverless
 serverside
 service-centric
 SES
@@ -1928,9 +1876,7 @@ Sidhartha
 siftified
 siftifyArgs
 signup
-Signup
 signups
-Signups
 simple-auth
 Simplecast
 Simplecast's
@@ -1938,7 +1884,6 @@ Siri
 Sissener
 Sitecore
 Siteleaf
-siteMedata
 siteMetadata
 siteName
 SitePage
@@ -1955,7 +1900,6 @@ SKU
 SKUs
 Slade
 smartive
-smoothes
 SMT
 Smutz
 snapshotting
@@ -2017,11 +1961,8 @@ StriVectin's
 StubList
 StyledComponent
 Styleguidist
-StyleGuidist
 stylesheet
 stylesheets
-Stylesheets
-Styling:SCSS
 stylings
 Sub-theming
 subcomponents
@@ -2034,7 +1975,6 @@ subfolders
 subheaders
 subheadline
 submenu
-submnitting
 subobject
 subobject's
 subpage
@@ -2044,8 +1984,6 @@ subreddit
 subreddits
 subscribable
 subtasks
-sucessfully
-summarise
 Sunil
 superfast
 superpowered
@@ -2057,7 +1995,6 @@ SVGs
 Swartz
 Syfy
 symlink
-synchronised
 syntaxes
 tachyons
 Tachyons

@@ -119,7 +119,7 @@ Many of Gatsby's key features emerged from conversation between contributors. If
 
 Open source is great for developers. It lets you:
 
-- create a body of work and experience that looks great on a resumé or CV
+- create a body of work and experience that looks great on a résumé or CV
 - build a referral network for paid work
 - turn it into a sustainable source of income
 

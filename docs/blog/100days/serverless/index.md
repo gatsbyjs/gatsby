@@ -26,7 +26,7 @@ _Path B_ welcomes you to the world of functions-as-a-service from the major clou
 
 #### Path A
 
-Visit the [Power of Serveless](https://serverless.css-tricks.com/services/forms), a directory of serverless services. You’ll find many form options that work well with a Gatsby site. If you are already using Netlify, we recommend their [built-in form service](https://www.netlify.com/products/forms/). If you are using Formik’s React library, you may want to try their [new form service](https://formik.com/). [Statickit](https://statickit.com/), [FormKeep](https://formkeep.com/), and [Getform](https://getform.io/) also seem worth comparing. Each service has its own documentation and support that you can use.
+Visit the [Power of Serverless](https://serverless.css-tricks.com/services/forms), a directory of serverless services. You’ll find many form options that work well with a Gatsby site. If you are already using Netlify, we recommend their [built-in form service](https://www.netlify.com/products/forms/). If you are using Formik’s React library, you may want to try their [new form service](https://formik.com/). [Statickit](https://statickit.com/), [FormKeep](https://formkeep.com/), and [Getform](https://getform.io/) also seem worth comparing. Each service has its own documentation and support that you can use.
 
 #### Path B:
 

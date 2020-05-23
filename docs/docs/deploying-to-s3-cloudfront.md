@@ -65,7 +65,7 @@ Some deployments require passing environment variables. To deploy with environme
 }
 ```
 
-This command requires `dotenv` first, runs build next, and finally deploys to s3. `dotenv`, a dependency of Gatsby that doesn't need to be installed directly, loads environment variables and makes them available globally.
+This command requires `dotenv` first, runs build next, and finally deploys to S3. `dotenv`, a dependency of Gatsby that doesn't need to be installed directly, loads environment variables and makes them available globally.
 
 If you have multiple AWS profiles in your machine, you can deploy by declaring your `AWS_PROFILE` before the deploy script:
 

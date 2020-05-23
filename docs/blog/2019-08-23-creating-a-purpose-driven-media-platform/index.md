@@ -52,7 +52,7 @@ We proposed a headless Content Management System (CMS) with server-side renderin
 
 Compared to more traditional approaches, we found that JAMstack offered faster site performance, improved security, more cost-effective hosting, a quicker and more focused developer experience, and more practical scalability. The key tools we used to build the site were [Contentful](https://www.contentful.com/) (as a [headless CMS](/docs/headless-cms/)) and the React-based web framework [Gatsby](/), with GraphQL to build the pages. The impressive performance benefits Gatsby brought us were immediately evident. These technologies were great to work with and fitted really well into our skillset.
 
-From the start, this was an incredibly ambitious project. Building a publishing platform from scratch is not as common a task as you might think. We took a breath at the start of the project to ask ourselves: What effort could we make now that would save us time in the long run, but at the same time deliver something really harmonious? Given the short time frame, how could we work smarter? How could we maximise our efficiency without cutting corners?
+From the start, this was an incredibly ambitious project. Building a publishing platform from scratch is not as common a task as you might think. We took a breath at the start of the project to ask ourselves: What effort could we make now that would save us time in the long run, but at the same time deliver something really harmonious? Given the short time frame, how could we work smarter? How could we maximize our efficiency without cutting corners?
 
 ![Change incorporated rendered on three mobile devices](change-inc-ui.jpg)
 
@@ -90,7 +90,7 @@ Initially we focused on the component library – our experience with building c
 
 ## Building longevity into an MVP
 
-In order to optimise the investment, we ensured we built a system that functioned as a publishing platform, but as the needs of Change Incorporated evolve and grow, the system can grow with them. Being decoupled from any presentational aspects, using Contentful will allow them to serve any theoretical endpoint down the road, such as native apps, digital magazines, serialised content, etc.
+In order to optimise the investment, we ensured we built a system that functioned as a publishing platform, but as the needs of Change Incorporated evolve and grow, the system can grow with them. Being decoupled from any presentational aspects, using Contentful will allow them to serve any theoretical endpoint down the road, such as native apps, digital magazines, serialized content, etc.
 
 This system means that in future, anything created within it should function as part of the system by default – inheriting the system’s responsiveness, the type hierarchy, the fonts, the fluid grid. It’s a very extensible approach; a solid modern foundation to take and grow as a publishing platform.
 
