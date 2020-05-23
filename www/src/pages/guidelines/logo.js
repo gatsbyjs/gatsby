@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
@@ -63,7 +64,13 @@ const DontListItem = styled(ListItem)`
 `
 
 const Guidance = ({ children, image }) => (
-  <Box mb={5} mr="20px" width={`calc(50% - 20px)`}>
+  <div
+    sx={{
+      mb: 5,
+      mr: 5,
+      width: `calc(50% - 1.25rem)`,
+    }}
+  >
     {image && (
       <BoxWithBorder withBorder width="100%">
         <Img fluid={image.childImageSharp.fluid} />
@@ -72,7 +79,7 @@ const Guidance = ({ children, image }) => (
     <Text fontSize={1} color="grey.50" mt={2}>
       {children}
     </Text>
-  </Box>
+  </div>
 )
 
 const Monogram = ({ size, ...props }) => (
@@ -149,7 +156,12 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
       }}
     >
       <Box
-        height={{ xxs: `40px`, xxl: `48px` }}
+        sx={{
+          height: `40px`,
+          [mediaQueries.sm]: {
+            height: `48px`,
+          },
+        }}
         css={{
           svg: {
             display: `block`,
@@ -343,10 +355,42 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Flex alignItems="flex-end" flexWrap="wrap">
-              <Monogram size={128} mr={{ xxs: 4, lg: 6 }} />
-              <Monogram size={64} mr={{ xxs: 4, lg: 6 }} />
-              <Monogram size={32} mr={{ xxs: 4, lg: 6 }} />
-              <Monogram size={16} display={{ xxs: `none`, lg: `block` }} />
+              <Monogram
+                size={128}
+                sx={{
+                  mr: 4,
+                  [mediaQueries.sm]: {
+                    mr: 6,
+                  },
+                }}
+              />
+              <Monogram
+                size={64}
+                sx={{
+                  mr: 4,
+                  [mediaQueries.sm]: {
+                    mr: 6,
+                  },
+                }}
+              />
+              <Monogram
+                size={32}
+                sx={{
+                  mr: 4,
+                  [mediaQueries.sm]: {
+                    mr: 6,
+                  },
+                }}
+              />
+              <Monogram
+                size={16}
+                sx={{
+                  display: `none`,
+                  [mediaQueries.sm]: {
+                    display: `block`,
+                  },
+                }}
+              />
             </Flex>
           </ContentColumn>
         </Columns>
@@ -446,18 +490,50 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <LogoContainer bg="white" withBorder mb={4} />
-            <Box display={{ md: `flex` }}>
+            <Box
+              sx={{
+                display: `flex`,
+                flexDirection: `column`,
+                [mediaQueries.sm]: {
+                  flexDirection: `row`,
+                },
+              }}
+            >
               <ColorSwatch
                 color={palette.purple.colors[`60`]}
-                mr={{ md: 4 }}
-                mb={{ xxs: 4, md: 0 }}
+                sx={{
+                  mr: 0,
+                  mb: 4,
+                  width: `100%`,
+                  [mediaQueries.sm]: {
+                    mr: 4,
+                    mb: 0,
+                  },
+                }}
               />
               <ColorSwatch
                 color={palette.black.color}
-                mr={{ md: 4 }}
-                mb={{ xxs: 4, md: 0 }}
+                sx={{
+                  mr: 0,
+                  mb: 4,
+                  width: `100%`,
+                  [mediaQueries.sm]: {
+                    mr: 4,
+                    mb: 0,
+                  },
+                }}
               />
-              <ColorSwatch color={palette.white.color} />
+              <ColorSwatch
+                color={palette.white.color}
+                sx={{
+                  mr: 0,
+                  mb: 4,
+                  width: `100%`,
+                  [mediaQueries.sm]: {
+                    mb: 0,
+                  },
+                }}
+              />
             </Box>
           </ContentColumn>
         </Columns>
