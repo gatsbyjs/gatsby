@@ -32,7 +32,8 @@ import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-
 
 import ColorSwatch from "../../components/guidelines/color/card"
 
-import { Box, Button, Flex, Text } from "../../components/guidelines/system"
+import { Button, Text } from "../../components/guidelines/system"
+import { Box, Flex } from "theme-ui"
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import palette from "../../utils/guidelines/extend-palette-info"
 
@@ -118,8 +119,10 @@ const Monogram = ({ size, isLast }) => (
     }}
   >
     <Flex
-      width={size}
-      mb={4}
+      sx={{
+        width: size,
+        mb: 4,
+      }}
       css={{
         svg: {
           display: `block`,
@@ -145,10 +148,12 @@ const GatsbyLogoContainered = ({
 }) => (
   <Box
     {...rest}
-    height={height}
-    maxWidth="400px"
-    css={{
+    sx={{
+      height: height,
+      maxWidth: `400px`,
       opacity: opacity || 1,
+    }}
+    css={{
       svg: {
         display: `block`,
         width: height ? `auto` : `100%`,
@@ -171,9 +176,9 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
     {...rest}
   >
     <Flex
-      alignItems="center"
-      justifyContent="center"
-      css={{
+      sx={{
+        alignItems: `center`,
+        justifyContent: `center`,
         position: `absolute`,
         top: 0,
         left: 0,
@@ -234,14 +239,16 @@ const Logo = ({ data, location }) => {
               contains everything you need.
             </p>
             <Box
-              bg="highlightedBox.background"
-              py={3}
-              px={4}
-              my={4}
-              fontSize={1}
-              borderRadius={2}
-              maxWidth="30rem"
-              color="highlightedBox.color"
+              sx={{
+                py: 3,
+                px: 4,
+                my: 4,
+                fontSize: 1,
+                borderRadius: 2,
+                maxWidth: `30rem`,
+                bg: `highlightedBox.background`,
+                color: `highlightedBox.color`,
+              }}
             >
               Please{` `}
               <a href="https://github.com/gatsbyjs/gatsby/issues">
@@ -382,7 +389,12 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <Flex alignItems="flex-end" flexWrap="wrap">
+            <Flex
+              sx={{
+                alignItems: `flex-end`,
+                flexWrap: `wrap`,
+              }}
+            >
               <Monogram size={128} />
               <Monogram size={64} />
               <Monogram size={32} />
@@ -404,15 +416,23 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <Flex alignItems="flex-end" flexWrap="wrap" />
-            <Box
-              maxWidth="542px"
-              mb={4}
-              dangerouslySetInnerHTML={{
-                __html: PartnershipLockups,
+            <Flex
+              sx={{
+                alignItems: `flex-end`,
+                flexWrap: `wrap`,
               }}
-              css={{ svg: { display: `block`, width: `100%` } }}
-            />
+            >
+              <Box
+                sx={{
+                  maxWidth: `542px`,
+                  mb: 4,
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: PartnershipLockups,
+                }}
+                css={{ svg: { display: `block`, width: `100%` } }}
+              />
+            </Flex>
           </ContentColumn>
         </Columns>
       </Section>
@@ -602,7 +622,9 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Box
-              mb={4}
+              sx={{
+                mb: 4,
+              }}
               dangerouslySetInnerHTML={{
                 __html: Clearspace,
               }}
@@ -687,7 +709,11 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <Flex flexWrap="wrap">
+            <Flex
+              sx={{
+                flexWrap: `wrap`,
+              }}
+            >
               {data.allGuidanceYaml.nodes.map((node, index) => (
                 <Guidance
                   image={node.image && node.image}
