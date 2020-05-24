@@ -21,9 +21,8 @@ const ignorePatterns = [
 function isCodeFile(node) {
   return (
     node.internal.type === `File` &&
-    node.sourceInstanceName === `packages` &&
+    node.sourceInstanceName === `gatsby-core` &&
     [`js`].includes(node.extension) &&
-    minimatch(node.relativePath, `gatsby/**`) &&
     !ignorePatterns.some(ignorePattern =>
       minimatch(node.relativePath, ignorePattern)
     )
