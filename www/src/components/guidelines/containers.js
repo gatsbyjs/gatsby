@@ -76,24 +76,27 @@ export const CopyColumn = ({
       fontSize: 2,
       mr: 0,
       mb: 4,
-      maxWidth: "30rem",
-      width: "100%",
-      flex: "0 0 auto",
+      maxWidth: `30rem`,
+      width: `100%`,
+      flex: `0 0 auto`,
       [mediaQueries.sm]: {
         mr: copyColumnGutter,
         mb: 0,
         maxWidth: `none`,
-        width: narrow ? copyColumnWidth : "30rem",
+        width: narrow ? copyColumnWidth : `30rem`,
       },
     }}
   >
     <div
       sx={{
-        position: sticky ? `sticky` : `relative`,
-        top: t =>
-          sticky
-            ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
-            : false,
+        position: `relative`,
+        [mediaQueries.sm]: {
+          position: sticky ? `sticky` : `relative`,
+          top: t =>
+            sticky
+              ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
+              : false,
+        },
       }}
     >
       {children}
@@ -114,7 +117,7 @@ export const ContentColumn = ({ children, fullWidth, ...rest }) => (
       overflow: `hidden`,
       position: `relative`,
       [mediaQueries.sm]: {
-        width: fullWidth ? `auto` : `50rem`,
+        width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
       },
     }}
