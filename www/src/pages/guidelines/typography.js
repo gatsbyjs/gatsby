@@ -28,15 +28,9 @@ import {
   letterSpacings,
   lineHeights,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import {
-  Button,
-  Flex,
-  Link,
-  Heading,
-  Text,
-} from "../../components/guidelines/system"
+import { Box, Flex } from "theme-ui"
+import { Button, Link, Heading, Text } from "../../components/guidelines/system"
 
-import { Box } from "theme-ui"
 
 const ExampleBox = ({ children, ...rest }) => (
   <Box
@@ -230,9 +224,11 @@ const Typography = ({ location }) => (
                 current, borne back ceaselessly into the past.
               </Text>
               <Box
-                fontSize={0}
-                mb={fontSizes.length === index + 1 ? 0 : 3}
-                color="textMuted"
+                sx={{
+                  fontSize: 0,
+                  mb: fontSizes.length === index + 1 ? 0 : 3,
+                  color: `textMuted`,
+                }}
               >
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
@@ -263,7 +259,12 @@ const Typography = ({ location }) => (
         </CopyColumn>
         <ContentColumn>
           <SectionSubheading mt={0}>Font Weights</SectionSubheading>
-          <Flex flexWrap="wrap" flexDirection="row">
+          <Flex
+            sx={{
+              flexWrap: `wrap`,
+              flexDirection: `row`,
+            }}
+          >
             <Box
               sx={{
                 width: `100%`,
@@ -277,7 +278,11 @@ const Typography = ({ location }) => (
               <Weight fontFamily="heading" fontWeight="extraBold">
                 {fontWeights.extraBold}
               </Weight>
-              <Box pb={4}>
+              <Box
+                sx={{
+                  pb: 4,
+                }}
+              >
                 <code>fontWeights.extraBold</code>
                 <Text as="p" pt={4}>
                   Use this for the main headline, set in Futura PT Bold, only.
@@ -296,7 +301,11 @@ const Typography = ({ location }) => (
               <Weight fontFamily="heading" fontWeight="bold">
                 {fontWeights.bold}
               </Weight>
-              <Box pb={4}>
+              <Box
+                sx={{
+                  pb: 4,
+                }}
+              >
                 <code>fontWeights.bold</code> — <code>bold</code>
                 <Text as="p" pt={4}>
                   Use this for the all headlines but the main page title, and to
@@ -537,7 +546,12 @@ const Typography = ({ location }) => (
         Simple landing page
       </Text>
 
-      <Box maxWidth={1040} mx="auto">
+      <Box
+        sx={{
+          maxWidth: 1040,
+          mx: `auto`,
+        }}
+      >
         <PageHeading
           fontSize={{ md: 11 }}
           lineHeight="solid"
@@ -648,7 +662,13 @@ const Typography = ({ location }) => (
         <Text color="grey.60" fontSize={1} textAlign="center">
           Cards
         </Text>
-        <Flex mt={7} flexWrap="wrap" justifyContent="space-around">
+        <Flex
+          sx={{
+            flexWrap: `wrap`,
+            justifyContent: `space-around`,
+            mt: 7,
+          }}
+        >
           <Starter />
           <Blog />
         </Flex>
@@ -659,7 +679,13 @@ const Typography = ({ location }) => (
       <Text color="grey.60" fontSize={1} textAlign="center">
         Long-form text (with sidebar on large screens)
       </Text>
-      <Flex as="section" py={4} my={4}>
+      <Flex
+        sx={{
+          py: 4,
+          my: 4,
+        }}
+        as="section"
+      >
         <Box
           sx={{
             display: `none`,
