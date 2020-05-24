@@ -42,7 +42,7 @@ digraph graphname {
 
 ## For each unique Type
 
-The majority of schema generation code kicks off in [build-node-types.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js). The below steps will be executed for each unique type.
+The majority of schema generation code kicks off in [build-node-types.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/__tests__/build-node-types.js). The below steps will be executed for each unique type.
 
 ### 1. Plugins create custom fields
 
