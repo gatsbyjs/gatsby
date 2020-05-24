@@ -1,4 +1,5 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { MdWarning } from "react-icons/md"
 import Link from "../../components/localized-link"
 
@@ -18,10 +19,10 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
-import { Box } from "theme-ui"
+import { Box, Flex } from "theme-ui"
 
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import { Flex, Text } from "../../components/guidelines/system"
+import { Text } from "../../components/guidelines/system"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const ColorExample = ({ hex, token }) => (
@@ -49,7 +50,11 @@ const ColorExample = ({ hex, token }) => (
         verticalAlign: `middle`,
       }}
     >
-      <Flex alignItems="center">
+      <Flex
+        sx={{
+          alignItems: `center`,
+        }}
+      >
         <Text color={hex} fontWeight="bold" fontSize={6} mr={8}>
           Aa
         </Text>
