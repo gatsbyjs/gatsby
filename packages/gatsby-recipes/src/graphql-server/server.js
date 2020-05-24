@@ -14,8 +14,8 @@ const { interpret } = require(`xstate`)
 const pkgDir = require(`pkg-dir`)
 const cors = require(`cors`)
 
-const recipeMachine = require(`./recipe-machine`)
-const createTypes = require(`./create-types`)
+const recipeMachine = require(`../recipe-machine`)
+const createTypes = require(`../create-types`)
 
 const SITE_ROOT = pkgDir.sync(process.cwd())
 

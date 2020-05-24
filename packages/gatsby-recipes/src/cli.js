@@ -293,7 +293,7 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-module.exports = ({ recipe, graphqlPort, projectRoot }) => {
+module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
@@ -610,7 +610,8 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     const Recipe = () => <Wrapper />
 
     // Enable experimental mode for more efficient reconciler and renderer
-    render(<Recipe />, { experimental: true })
+    const { waitUntilExit } = render(<Recipe />, { experimental: true })
+    await waitUntilExit()
   } catch (e) {
     log(e)
   }
