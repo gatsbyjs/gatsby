@@ -1,12 +1,21 @@
-const getNodesOfType = (node, state) => {
+import { IGatsbyNode, IGatsbyState, ActionsUnion } from "../types"
+
+const getNodesOfType = (
+  node: IGatsbyNode,
+  state: IGatsbyState["nodesByType"]
+): Map<string, IGatsbyNode> => {
   const { type } = node.internal
   if (!state.has(type)) {
     state.set(type, new Map())
   }
-  return state.get(type)
+  return state.get(type) as Map<string, IGatsbyNode>
 }
 
-module.exports = (state = new Map(), action) => {
+// module.exports = (
+export const nodesByTypeReducer = (
+  state: IGatsbyState["nodesByType"] = new Map(),
+  action: ActionsUnion
+): IGatsbyState["nodesByType"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
