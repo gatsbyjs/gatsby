@@ -8,7 +8,7 @@ JavaScript, being a dynamic and loosely-typed language, is especially prone to d
 
 ## How to use ESLint
 
-Gatsby ships with a built-in [ESLint](https://eslint.org) setup. For _most_ users, our built-in ESlint setup is all you need. If you know however that you'd like to customize your ESlint config e.g. your company has their own custom ESlint setup, this shows how this can be done.
+Gatsby ships with a built-in [ESLint](https://eslint.org) setup. For _most_ users, our built-in ESLint setup is all you need. If you know however that you'd like to customize your ESLint config e.g. your company has their own custom ESLint setup, this shows how this can be done.
 
 You'll replicate (mostly) the [ESLint config Gatsby ships with](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/eslint-config.ts) so you can then add additional presets, plugins, and rules.
 

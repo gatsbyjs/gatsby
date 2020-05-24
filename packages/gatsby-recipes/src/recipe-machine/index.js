@@ -1,10 +1,9 @@
 const { Machine, assign } = require(`xstate`)
 
-const createPlan = require(`./create-plan`)
-const applyPlan = require(`./apply-plan`)
-const validateSteps = require(`./validate-steps`)
-const validateRecipe = require(`./validate-recipe`)
-const parser = require(`./parser`)
+const createPlan = require(`../create-plan`)
+const applyPlan = require(`../apply-plan`)
+const validateSteps = require(`../validate-steps`)
+const parser = require(`../parser`)
 
 const recipeMachine = Machine(
   {
@@ -24,7 +23,7 @@ const recipeMachine = Machine(
       parsingRecipe: {
         invoke: {
           id: `parseRecipe`,
-          src: async (context, event) => {
+          src: async (context, _event) => {
             let parsed
 
             if (context.src) {
@@ -61,8 +60,7 @@ const recipeMachine = Machine(
           onDone: {
             target: `validateSteps`,
             actions: assign({
-              steps: (context, event) => event.data.commands,
-              stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              steps: (context, event) => event.data.stepsAsMdx,
             }),
           },
         },
@@ -78,27 +76,6 @@ const recipeMachine = Machine(
 
             return undefined
           },
-          onDone: `validatePlan`,
-          onError: {
-            target: `doneError`,
-            actions: assign({
-              error: (context, event) => JSON.parse(event.data.message),
-            }),
-          },
-        },
-      },
-      validatePlan: {
-        invoke: {
-          id: `validatePlan`,
-          src: async (context, event) => {
-            const result = await validateRecipe(context.steps)
-            if (result.length > 0) {
-              // is stringifying the only way to pass data around in errors 🤔
-              throw new Error(JSON.stringify(result))
-            }
-
-            return result
-          },
           onDone: `creatingPlan`,
           onError: {
             target: `doneError`,
@@ -113,32 +90,40 @@ const recipeMachine = Machine(
         invoke: {
           id: `createPlan`,
           src: async (context, event) => {
-            const result = await createPlan(context)
-            return result
+            try {
+              const result = await createPlan(context)
+              return result
+            } catch (e) {
+              throw e
+            }
           },
           onDone: {
-            target: `present plan`,
+            target: `presentPlan`,
             actions: assign({
               plan: (context, event) => event.data,
             }),
           },
           onError: {
             target: `doneError`,
-            actions: assign({ error: (context, event) => event.data }),
+            actions: assign({
+              error: (context, event) => event.data.errors || event.data,
+            }),
           },
         },
       },
-      "present plan": {
+      presentPlan: {
         on: {
           CONTINUE: `applyingPlan`,
         },
       },
       applyingPlan: {
+        // cb mechanism can be used to emit events/actions between UI and the server/renderer
+        // https://xstate.js.org/docs/guides/communication.html#invoking-callbacks
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {
             cb(`RESET`)
-            if (context.plan.length == 0) {
+            if (context.plan.length === 0) {
               return cb(`onDone`)
             }
 

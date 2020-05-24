@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should store created/changed/deleted resources on the context after applying plan 1`] = `
+exports[`recipe-machine stores created/changed/deleted resources on the context after applying plan 1`] = `
 Array [
   Object {
     "_currentStep": 1,

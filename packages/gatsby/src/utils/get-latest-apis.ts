@@ -1,12 +1,18 @@
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const axios = require(`axios`)
+import path from "path"
+import fs from "fs-extra"
+import axios from "axios"
 
 const API_FILE = `https://unpkg.com/gatsby/apis.json`
 const ROOT = path.join(__dirname, `..`, `..`)
 const OUTPUT_FILE = path.join(ROOT, `latest-apis.json`)
 
-module.exports = async function getLatestAPI() {
+export interface IAPIResponse {
+  browser: Record<string, any>
+  node: Record<string, any>
+  ssr: Record<string, any>
+}
+
+export const getLatestAPIs = async (): Promise<IAPIResponse> => {
   try {
     const { data } = await axios.get(API_FILE, { timeout: 5000 })
 
@@ -14,7 +20,7 @@ module.exports = async function getLatestAPI() {
 
     return data
   } catch (e) {
-    if (await fs.exists(OUTPUT_FILE)) {
+    if (await fs.pathExists(OUTPUT_FILE)) {
       return fs.readJSON(OUTPUT_FILE)
     }
     // possible offline/network issue
