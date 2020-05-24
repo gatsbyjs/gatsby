@@ -105,7 +105,7 @@ Libraries used on every Gatsby page are bundled into the commons javascript file
 
 ##### component---[name]-[contenthash].js
 
-This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](/docs/how-code-splitting-works/).
+This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/how-code-splitting-works.md).
 
 ## production-app.js
 
