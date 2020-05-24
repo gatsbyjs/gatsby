@@ -278,6 +278,7 @@ export type ActionsUnion =
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
@@ -647,4 +648,9 @@ export interface IAddPageDataStatsAction {
     filePath: SystemPath
     size: number
   }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }

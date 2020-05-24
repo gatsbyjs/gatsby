@@ -627,7 +627,7 @@
     - Components lazy loading (social sharing)
     - ESLint (google config)
     - Prettier code styling
-    - Webpack `BundleAnalyzerPlugin`
+    - webpack `BundleAnalyzerPlugin`
 - url: https://gatsby-starter-i18n-lingui.netlify.com/
   repo: https://github.com/dcroitoru/gatsby-starter-i18n-lingui
   description: n/a
@@ -723,7 +723,7 @@
     - ESLint (google config)
     - Prettier code styling
     - Custom webpack CommonsChunkPlugin settings
-    - Webpack BundleAnalyzerPlugin
+    - webpack BundleAnalyzerPlugin
 - url: http://gatsby-photon.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-photon
   description: Single page starter based on the Photon site template
@@ -4421,7 +4421,7 @@
     - Offline-ready
     - Responsive design
     - Nodemon for restarting dev server on changes
-    - Webpack aliasing for components, assets, etc
+    - webpack aliasing for components, assets, etc
 - url: https://gatsby-starter-saas-marketing.netlify.com/
   repo: https://github.com/keegn/gatsby-starter-saas-marketing
   description: A simple one page marketing site starter for SaaS companies and products
@@ -6301,6 +6301,38 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://expo-gatsby-starter.netlify.app/
+  repo: https://github.com/Sidibedev/expo-gatsby-starter
+  description: A simple Expo and Gatsby starter.
+  tags:
+    - PWA
+    - SEO
+  features:
+    - SEO
+    - PWA
+    - Offline Support
+    - Upload Image
+    - Expo SDK
+    - Image manipulation
+    - 404 page
+    - Navigation
+- url: https://gatsby-starter-banshorian.netlify.app
+  repo: https://github.com/webmaeistro/gatsby-starter-banshorian
+  description: Starter for the gatsby-theme-banshorian. A creative cool-looking personal or work projects showcase / portfolio / CV. Based on byfolio.
+  tags:
+    - Styling:Other
+    - Portfolio
+    - Transitions
+    - Linting
+    - Testing
+    - PWA
+  features:
+    - GatsbyJS v2
+    - Style-Components Using @emotion
+    - Edit Everything From gatsby.config
+    - Developer Friendly
+    - Isomorphic Skills Tiles
+    - Transitions Between Pages and Menu
 - url: https://a2zarslaan.github.io/gatsby-starter-sasslan/
   repo: https://github.com/a2zarslaan/gatsby-starter-sasslan
   description: A minimalistic Gatsby starter template featuring SASS and CSS 7-1 architecture.
@@ -6333,19 +6365,16 @@
   features:
     - TypeScript and Sass support
     - ESLint with basic react rules
-    - Progressive Web App
 - url: https://gatsby-starter-portfolio-minimal.netlify.app/
   repo: https://github.com/konstantinmuenster/gatsby-starter-portfolio-minimal
   description: A modern one-page portfolio with a clean yet expressive design.
   tags:
     - Portfolio
-    - Personal Website
     - Markdown
     - MDX
     - PWA
-    - One-page
+    - Onepage
     - Styling:CSS-in-JS
-    - Animations
   features:
     - Quick and Easy Setup - Add content and deploy
     - Content via Markdown/MDX - No external CMS needed
@@ -6355,3 +6384,22 @@
     - Progressive Web App/PWA - Offline Support
     - Fast and Accessible
     - SEO
+- url: https://gatsby-theme-clarisse.netlify.app
+  repo: https://github.com/tacogator/gatsby-starter-blog-material-clarisse
+  description: A minimalist blog starter with Material-UI
+  tags:
+    - Blog
+    - SEO
+    - Portfolio
+    - Landing Page
+    - Styling:Material
+    - Markdown
+    - MDX
+  features:
+    - SEO-ready
+    - Clean design with emphasis on Call-to-action
+    - Built-in Tag/Category support
+    - Write post in markdown or MDX
+    - Desktop and mobile responsive layout
+    - Customizable branding & navigation
+    - Material-UI

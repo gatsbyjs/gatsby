@@ -354,6 +354,58 @@ export const ensureIndexByQuery = (
   postIndexingMetaSetup(filterCache, op)
 }
 
+export function ensureEmptyFilterCache(
+  filterCacheKey,
+  nodeTypeNames: string[],
+  filtersCache: FiltersCache
+): void {
+  // This is called for queries without any filters
+  // We want to cache the result since it's basically a set of nodes by type(s)
+  // There are sites that have multiple queries which are empty
+
+  const state = store.getState()
+  const resolvedNodesCache = state.resolvedNodesCache
+  const nodesUnordered: Array<IGatsbyNode> = []
+
+  filtersCache.set(filterCacheKey, {
+    op: `$eq`, // Ignore.
+    byValue: new Map<FilterValueNullable, Set<IGatsbyNode>>(),
+    meta: {
+      nodesUnordered, // This is what we want
+    },
+  })
+
+  if (nodeTypeNames.length === 1) {
+    getNodesByType(nodeTypeNames[0]).forEach(node => {
+      if (!node.__gatsby_resolved) {
+        const typeName = node.internal.type
+        const resolvedNodes = resolvedNodesCache.get(typeName)
+        const resolved = resolvedNodes?.get(node.id)
+        if (resolved !== undefined) {
+          node.__gatsby_resolved = resolved
+        }
+      }
+      nodesUnordered.push(node)
+    })
+  } else {
+    // Here we must first filter for the node type
+    // This loop is expensive at scale (!)
+    state.nodes.forEach(node => {
+      if (nodeTypeNames.includes(node.internal.type)) {
+        if (!node.__gatsby_resolved) {
+          const typeName = node.internal.type
+          const resolvedNodes = resolvedNodesCache.get(typeName)
+          const resolved = resolvedNodes?.get(node.id)
+          if (resolved !== undefined) {
+            node.__gatsby_resolved = resolved
+          }
+        }
+        nodesUnordered.push(node)
+      }
+    })
+  }
+}
+
 function addNodeToFilterCache(
   node: IGatsbyNode,
   chain: Array<string>,
