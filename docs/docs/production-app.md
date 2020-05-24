@@ -113,7 +113,7 @@ This is the entry point to webpack that outputs `app-[contenthash].js` bundle. I
 
 ### First load
 
-To show how `production-app` works, let's imagine that you've just refreshed the browser on your site's `/blog/2` page. The HTML loads immediately, painting your page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in your JavaScript code (inserted during [Page HTML Generation](/docs/html-generation/#6-inject-page-info-to-cdata)).
+To show how `production-app` works, let's imagine that you've just refreshed the browser on your site's `/blog/2` page. The HTML loads immediately, painting your page quickly. It includes a CDATA section which injects page information into the `window` object so it's available in your JavaScript code (inserted during [Page HTML Generation](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/html-generation.md/#6-inject-page-info-to-cdata)).
 
 ```html
 /*
@@ -130,7 +130,7 @@ To show how `production-app` works, let's imagine that you've just refreshed the
 */
 ```
 
-Then, the app, webpack-runtime, component, shared libraries, and data json bundles are loaded via `<link>` and `<script>` (see [HTML tag generation](/docs/html-generation/#5-add-preload-link-and-script-tags)). Now, your `production-app` code starts running.
+Then, the app, webpack-runtime, component, shared libraries, and data json bundles are loaded via `<link>` and `<script>` (see [HTML tag generation](https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/html-generation.md/#5-add-preload-link-and-script-tags)). Now, your `production-app` code starts running.
 
 ### onClientEntry (api-runner-browser)
 
