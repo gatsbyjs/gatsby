@@ -565,7 +565,7 @@ Attributes:
 
 - intermediate to advanced at React
 - frontend developer
-- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
+- prefer using a search engine and/or `ctrl/cmd + f` to find things on the gatsbyjs.org site
 
 Looking for:
 
