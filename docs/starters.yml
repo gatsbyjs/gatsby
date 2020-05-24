@@ -2038,6 +2038,16 @@
     - Shopify Store Credentials included
     - Optimized images with gatsby-image.
     - SEO
+- url: https://gatsby-starter-hello-world-shopify.netlify.app/
+  repo: https://github.com/ohduran/gatsby-starter-hello-world-shopify
+  description: Boilerplate with the barebones to set up your Shopify Store using Gatsby
+  tags:
+    - E-commerce
+  features:
+    - Shopping Cart
+    - Shopify Integration
+    - Product Grid
+    - Shopify Store Credentials included
 - url: https://gatejs.netlify.com
   repo: https://github.com/sarasate/gate
   description: API Doc generator inspired by Stripe's API docs
