@@ -58,6 +58,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     },
   })
 
+  console.debug({ queryString })
   const { data, error } = await graphql(queryString)
 
   if (!data || error) {

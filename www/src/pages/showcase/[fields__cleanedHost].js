@@ -7,8 +7,6 @@ function Showcase(props) {
   const isModal =
     location.state && location.state.isModal && window.innerWidth > 750
 
-  console.log(props)
-
   const categories = data.categories || []
 
   /*
