@@ -6405,7 +6405,7 @@
     - Material-UI
 - url: https://ph0en1x.ru/
   repo: https://github.com/eduard-kirilov/gatsby-ts-apollo-starter
-  description: This product is the starting template for setting up any project that requires the technological stack described below.
+  description: This starter is a ready-made configuration that includes Gatsby, React, Redux, Apollo, GraphQL, TypeScript, Styled-Components, Material-UI, Jest, Enzyme.
   tags:
     - E-commerce
     - SEO
