@@ -44,9 +44,11 @@ export const startDevelopProxy = (input: {
   proxy.on(`error`, noop)
 
   const server = createServer((req, res) => {
-    const wasAdminRequest = serveAdmin(req, res)
-    if (wasAdminRequest) {
-      return
+    if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
+      const wasAdminRequest = serveAdmin(req, res)
+      if (wasAdminRequest) {
+        return
+      }
     }
 
     // Add a route at localhost:8000/___services for service discovery

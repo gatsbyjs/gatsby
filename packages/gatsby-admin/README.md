@@ -25,9 +25,9 @@ yarn run watch
 ~/my-gatsby-site
 $ gatsby-dev --packages gatsby gatsby-cli gatsby-recipes gatsby-core-utils gatsby-admin
 
-# In another tab
+# In another tab, start your site with the Admin feature flag set
 ~/my-gatsby-site
-$ gatsby develop
+$ GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
 ```
 
 Then visit `localhost:8000/\_\_\_admin and you should see Gatsby Admin for your site!
