@@ -1,5 +1,5 @@
 ---
-title: "Gatsby Web Creators Series 2: Creative Scripting with Browser JS, Node, and React"
+title: "Gatsby Web Creators Series 2: Creative Scripting with JavaScript, Node, and React"
 date: 2020-04-30
 author: Marcy Sutton
 image: "images/gatsby-web-creators.jpg"
@@ -18,7 +18,7 @@ Good news! In May 2020, the Gatsby team is doing a second series of Gatsby Web C
 
 ![Gatsby Web Creators on Twitch](./gatsby-web-creators.jpg)
 
-In Series 2, we'll begin with an artistic approach to browser JS, fetch resources from web APIs to display in a UI (likely dog related...), introduce Node.js as a server-side tool, and move into React.js and Gatsby to round it all out.
+In Series 2, we'll begin with an artistic approach to browser JavaScript, fetch resources from web APIs to display in a UI (likely dog related...), introduce Node.js as a server-side tool, and move into React and Gatsby to round it all out.
 
 It's ambitious, but creative task-based lessons should give viewers the knowledge and skills necessary to dive into modern, accessible web scripting.
 
