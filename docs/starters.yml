@@ -6403,3 +6403,15 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsbyfire.netlify.app/
+  repo: https://github.com/GeorgeSteel/GatsbyFire
+  description: A Gatsby Starter to build a complete webapp with Gatsby & Firebase by using the library reactfire
+  tags:
+    - Firebase
+    - Web Development
+  features:
+    - Based on reactfire library
+    - Routing based on reach-router
+    - The default example also includes how to create private routes
+    - gatsby build without issues
+   
