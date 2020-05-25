@@ -4,6 +4,10 @@ title: Migrating Remark to MDX
 
 For people who already have an existing blog using gatsby-transformer-remark, but want to use MDX, you can swap out the remark transformer plugin with gatsby-plugin-mdx and touch little code otherwise.
 
+## Prerequisites
+
+- An existing site that builds pages using `gatsby-transformer-remark` ([gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) will be used as a reference in this guide).
+
 ## Adding in gatsby-plugin-mdx
 
 Add gatsby-plugin-mdx (and its peer dependencies) to your package.json and remove gatsby-transformer-remark.
@@ -74,13 +78,13 @@ Similar to gatsby-node, whenever you use `allMarkdownRemark` in a GraphQL query,
 
 Then in your blogpost template, to render the MDX, pull in the `MDXRenderer` react component from `gatsby-plugin-mdx`.
 
-```js
+```js:title=src/templates/blog-post.js
 import { MDXRenderer } from "gatsby-plugin-mdx"
 ```
 
 And in the graphql query, change the `html` field in `mdx` to `body`.
 
-```graphql
+```graphql:title=src/templates/blog-post.js
 mdx(fields: { slug: { eq: $slug } }) {
   id
   excerpt(pruneLength: 160)
@@ -93,7 +97,7 @@ mdx(fields: { slug: { eq: $slug } }) {
 
 And finally swap out the component with `dangerouslySetInnerHTML` to a `MDXRenderer` component:
 
-```diff
+```diff:title=src/templates/blog-post.js
 const post = data.mdx
 
 // ...
@@ -102,6 +106,18 @@ const post = data.mdx
 +<MDXRenderer>{post.body}</MDXRenderer>
 ```
 
-## What's next?
+## Update markdown files that includes HTML
 
-Go check out the [Importing and Using Components in MDX guide](/docs/mdx/importing-and-using-components) to find out how you can insert React components in your MDX files.
+As MDX uses [JSX](/docs/glossary/jsx/) instead of HTML, examine anywhere you put in HTML and make sure that it is valid JSX.
+
+For instance, any HTML component with the `class` attribute needs to be changed to `className`.
+
+```diff
+-<span class="highlight">Hello World</span>
++<span className="highlight">Hello World</span>
+```
+
+## Additional Resources:
+
+- Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components) to find out how you can insert React components in your MDX files.
+- Follow [Using MDX Plugins](/docs/mdx/plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
