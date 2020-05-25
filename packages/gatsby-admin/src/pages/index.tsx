@@ -8,7 +8,6 @@ import {
   Text,
   Button,
   InputField,
-  InputFieldLabel,
   InputFieldControl,
 } from "gatsby-interface"
 
