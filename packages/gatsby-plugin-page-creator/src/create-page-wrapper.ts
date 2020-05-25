@@ -1,4 +1,4 @@
-import { Actions, CreatePagesArgs } from "gatsby"
+import { Actions } from "gatsby"
 import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
 import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
@@ -20,8 +20,8 @@ export function createPage(
   pagesDirectory: string,
   actions: Actions,
   ignore: string[],
-  graphql: CreatePagesArgs["graphql"]
-) {
+  graphql: any
+): void {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {

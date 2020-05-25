@@ -10,7 +10,7 @@ export function generateQueryFromString(
   fileAbsolutePath: string
 ): string {
   const needsAllPrefix = queryStringParent.startsWith(`all`) === false
-  let fields = extractUrlParamsForQuery(fileAbsolutePath)
+  const fields = extractUrlParamsForQuery(fileAbsolutePath)
 
   return `{${
     needsAllPrefix ? `all` : ``
