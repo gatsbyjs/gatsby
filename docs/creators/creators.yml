@@ -531,3 +531,14 @@
   for_hire: true
   hiring: false
   portfolio: true
+  - name: Secuoyas
+  type: agency
+  description: >-
+    We are digital studio. We craft outstanding strategies, systems, services and products for people {designing relationships}
+  location: Spain
+  website: https://secuoyas.com/
+  github: https://github.com/secuoyas-experience
+  image: images/secuoyas.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
