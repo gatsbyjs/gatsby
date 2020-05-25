@@ -11,6 +11,8 @@ The easiest way to work on Admin locally is to develop Admin itself.
 1. Make sure to have the dependencies installed by running `yarn` in the root folder
 2. Start the develop process for the Admin site by running `yarn workspace gatsby-admin run develop`
 
+> If you see eslint errors you'll need to temporarily replace all references to `___loader` with `window.___loader` in `packages/gatsby-link/index.js`.
+
 ### Using it with a local site
 
 To try Admin with one of your sites locally, use the `gatsby-dev-cli` to copy the local versions of `gatsby`, `gatsby-cli`, `gatsby-recipes`, `gatsby-core-utils` and `gatsby-admin` into your project:
