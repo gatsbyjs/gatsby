@@ -22,7 +22,6 @@ exports.createPagesStatefully = async (
   const { deletePage } = actions
   const { program } = store.getState()
 
-  const root = program.directory
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
   if (!pagesPath) {

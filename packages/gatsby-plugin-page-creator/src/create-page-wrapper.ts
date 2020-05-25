@@ -1,20 +1,27 @@
-const { createPath, validatePath, ignorePath } = require(`gatsby-page-utils`)
-const { createClientOnlyPage } = require(`./create-client-only-page`)
-const {
-  createPagesFromCollectionBuilder,
-} = require(`./create-pages-from-collection-builder`)
-const systemPath = require(`path`)
-const fs = require(`fs-extra`)
+import { Actions, CreatePagesArgs } from "gatsby"
+import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
+import { createClientOnlyPage } from "./create-client-only-page"
+import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
+import systemPath from "path"
+import fs from "fs-extra"
 
-const pathIsCCollectionBuilder = path => {
+function pathIsCCollectionBuilder(path: string): boolean {
   if (fs.existsSync(path) === false) return false
   const js = fs.readFileSync(path).toString()
   return js.includes(`createPagesFromData`)
 }
 
-const pathIsClientOnlyRoute = path => /\[.*\]/.test(path)
+function pathIsClientOnlyRoute(path: string): boolean {
+  return /\[.*\]/.test(path)
+}
 
-exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
+export function createPage(
+  filePath: string,
+  pagesDirectory: string,
+  actions: Actions,
+  ignore: string[],
+  graphql: CreatePagesArgs["graphql"]
+) {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {
@@ -49,6 +56,7 @@ exports.createPage = (filePath, pagesDirectory, actions, ignore, graphql) => {
   const page = {
     path: createdPath,
     component: absolutePath,
+    context: {},
   }
 
   // Add page

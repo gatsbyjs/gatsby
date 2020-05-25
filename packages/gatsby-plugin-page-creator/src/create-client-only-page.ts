@@ -1,18 +1,16 @@
-const { createPath } = require(`gatsby-page-utils`)
+import { Actions } from "gatsby"
+import { createPath } from "gatsby-page-utils"
 
 // Changes something like
 //   `/Users/site/src/pages/foo/[id]/`
 // to
 //   `/foo/:id`
-function translateInterpolationToMatchPath(createdPath) {
+function translateInterpolationToMatchPath(createdPath: string): string {
   const [, path] = createdPath.split(`src/pages`)
   return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
 }
 
-exports.createClientOnlyPage = function createClientOnlyPage(
-  absolutePath,
-  actions
-) {
+export function createClientOnlyPage(absolutePath: string, actions: Actions) {
   // Create page object
   const createdPath = createPath(absolutePath)
   const matchPath = translateInterpolationToMatchPath(createdPath)
@@ -21,6 +19,7 @@ exports.createClientOnlyPage = function createClientOnlyPage(
     path: createdPath,
     matchPath: matchPath,
     component: absolutePath,
+    context: {},
   }
 
   // Add page

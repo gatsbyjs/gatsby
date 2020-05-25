@@ -17,16 +17,22 @@ export function generateQueryFromString(
   }${queryStringParent}{nodes{${fields}}}}`
 }
 
+// Takes a query result of something like `{ fields: { value: 'foo' }}` with a filepath of `/fields__value` and
+// translates the object into `{ fields__value: 'foo' }`. This is necassary to pass the value
+// into a query function for each individual page.
 export function reverseLookupParams(
   queryResults: string,
   absolutePath: string
 ): Record<string, string> {
   const reversedParams = {}
-  const parts = absolutePath.split(`/`).filter(s => s.startsWith(`[`))
 
-  parts.forEach(part => {
-    const extracted = /^\[([a-zA-Z_]+)\]/.exec(part)[1]
-    const results = _.get(queryResults, extracted.replace(/__/g, "."))
+  absolutePath.split(`/`).forEach(part => {
+    const regex = /^\[([a-zA-Z_]+)\]/.exec(part)
+
+    if (regex === null) return
+    const extracted = regex[1]
+
+    const results = _.get(queryResults, extracted.replace(/__/g, `.`))
     reversedParams[extracted] = results
   })
 
