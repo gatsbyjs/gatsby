@@ -1,5 +1,4 @@
 const { graphql, GraphQLString } = require(`graphql`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)

@@ -20,7 +20,7 @@ Errors while building static HTML files generally happen for one of the followin
 3. You mix up `import` and `require` calls in the same file. This might lead to
    "WebpackError: Invariant Violation: Minified React error #130" [since Webpack 4
    is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
-   The solution is to only use `import`.
+   The solution is to only use `import` and this also extends to `gatsby-ssr` and `gatsby-browser` files.
 
 4. Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
    build being inconsistent. It's possible that a change in a file like `gatsby-ssr` or `gatsby-browser` has a structure that is
@@ -78,4 +78,4 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
 }
 ```
 
-Another solution is to use a package like [react-loadable](https://github.com/jamiebuilds/react-loadable). The module that tries to use `window` will be dynamically loaded only on the client side (and not during SSR).
+Another solution is to use a package like [loadable-components](https://github.com/gregberge/loadable-components). The module that tries to use `window` will be dynamically loaded only on the client side (and not during SSR).

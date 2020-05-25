@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import warning from "warning"
 import PropTypes from "prop-types"
+import { ScrollBehaviorContext } from "./ScrollBehaviorContext"
 
 const propTypes = {
   scrollKey: PropTypes.string.isRequired,
@@ -9,16 +10,9 @@ const propTypes = {
   children: PropTypes.element.isRequired,
 }
 
-const contextTypes = {
-  // This is necessary when rendering on the client. However, when rendering on
-  // the server, this container will do nothing, and thus does not require the
-  // scroll behavior context.
-  scrollBehavior: PropTypes.object,
-}
-
 class ScrollContainer extends React.Component {
-  constructor(props, context) {
-    super(props, context)
+  constructor(props) {
+    super(props)
 
     // We don't re-register if the scroll key changes, so make sure we
     // unregister with the initial scroll key just in case the user changes it.
@@ -26,7 +20,7 @@ class ScrollContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.context.scrollBehavior.registerElement(
+    this.props.context.registerElement(
       this.props.scrollKey,
       ReactDOM.findDOMNode(this), // eslint-disable-line react/no-find-dom-node
       this.shouldUpdateScroll
@@ -56,7 +50,7 @@ class ScrollContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.context.scrollBehavior.unregisterElement(this.scrollKey)
+    this.props.context.unregisterElement(this.scrollKey)
   }
 
   shouldUpdateScroll = (prevRouterProps, routerProps) => {
@@ -67,7 +61,7 @@ class ScrollContainer extends React.Component {
 
     // Hack to allow accessing scrollBehavior._stateStorage.
     return shouldUpdateScroll.call(
-      this.context.scrollBehavior.scrollBehavior,
+      this.props.context.scrollBehavior,
       prevRouterProps,
       routerProps
     )
@@ -78,7 +72,12 @@ class ScrollContainer extends React.Component {
   }
 }
 
-ScrollContainer.propTypes = propTypes
-ScrollContainer.contextTypes = contextTypes
+const ScrollContainerConsumer = props => (
+  <ScrollBehaviorContext.Consumer>
+    {context => <ScrollContainer {...props} context={context} />}
+  </ScrollBehaviorContext.Consumer>
+)
 
-export default ScrollContainer
+ScrollContainerConsumer.propTypes = propTypes
+
+export default ScrollContainerConsumer

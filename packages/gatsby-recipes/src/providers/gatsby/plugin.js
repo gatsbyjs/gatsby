@@ -314,15 +314,15 @@ module.exports.all = async ({ root }) => {
   const plugins = getPluginsFromConfig(configSrc)
 
   // TODO: Consider mapping to read function
-  return plugins.map(name => {
+  return plugins.map(plugin => {
     const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
       root,
-      name
+      plugin.name
     )
 
     return {
-      id: name,
-      name,
+      id: plugin.name,
+      ...plugin,
       shadowedFiles,
       shadowableFiles,
     }
