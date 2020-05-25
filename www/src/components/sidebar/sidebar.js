@@ -153,6 +153,7 @@ export default withI18n()(function Sidebar({
             border: 0,
             display: `block`,
             overflowY: `auto`,
+            overscrollBehavior: `contain`,
             transition: t =>
               `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             zIndex: 10,
