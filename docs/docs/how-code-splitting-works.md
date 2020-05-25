@@ -8,7 +8,7 @@ But how do you figure out what modules/files to split? Thankfully, there is a na
 
 ## .cache/async-requires.js
 
-During the [Write Out Pages](/docs/write-pages/#async-requiresjs) bootstrap phase, you output `.cache/async-requires.js`. This file is key to code splitting. It exports a `components` object that maps [ComponentChunkNames](/docs/behind-the-scenes-terminology/#componentchunkname) to functions that import the component's file on disk. E.g
+During the [Write Out Pages](/docs/write-pages/#async-requiresjs) bootstrap phase, you output `.cache/async-requires.js`. This file is key to code splitting. It exports a `components` object that maps [ComponentChunkNames](/docs/gatsby-internals-terminology/#componentchunkname) to functions that import the component's file on disk. E.g
 
 ```javascript
 exports.components = {
