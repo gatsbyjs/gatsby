@@ -1,5 +1,6 @@
 // Move this to gatsby-core-utils?
 
+import { generateQueryFromString, reverseLookupParams } from "./extract-query"
 const { createPath } = require(`gatsby-page-utils`)
 const { getParams } = require(`./get-params`)
 const { babelParseToAst } = require(`gatsby/dist/utils/babel-parse-to-ast`)
@@ -15,27 +16,6 @@ const t = require(`@babel/types`)
 function translateInterpolationToMatchPath(createdPath) {
   const [, path] = createdPath.split(`src/pages`)
   return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
-}
-
-// Input str could be:
-//   Product
-//   allProduct
-//   allProduct(filter: thing)
-// End result should be something like { allProducts { nodes { id }}}
-function generateQueryFromString(str, fields) {
-  const needsAllPrefix = str.startsWith(`all`) === false
-
-  return `{${needsAllPrefix ? `all` : ``}${str}{nodes{${fields}}}}`
-}
-
-// Changes something like
-//   `/Users/site/src/pages/foo/[id]/[baz]`
-// to
-//   `id,baz`
-function extractUrlParamsForQuery(createdPath) {
-  const parts = /(\[[a-zA-Z_]+\])/.exec(createdPath)
-
-  return parts.map(p => p.replace(`[`, ``).replace(`]`, ``)).join(`,`)
 }
 
 function isCreatePagesFromData(path) {
@@ -73,12 +53,10 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
 
       queryString = generateQueryFromString(
         queryAst.quasis[0].value.raw,
-        extractUrlParamsForQuery(absolutePath)
+        absolutePath
       )
     },
   })
-
-  console.log({ queryString })
 
   const { data, error } = await graphql(queryString)
 
@@ -104,13 +82,13 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
     const path = derivePath(absolutePath, node)
     const params = getParams(matchPath, path)
 
-    console.log({ node })
+    const nodeParams = reverseLookupParams(node, absolutePath)
 
     actions.createPage({
       path: path,
       component: absolutePath,
       context: {
-        ...node,
+        ...nodeParams,
         __params: params,
       },
     })

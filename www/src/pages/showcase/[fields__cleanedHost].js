@@ -2,9 +2,12 @@ import React from "react"
 import { graphql, createPagesFromData } from "gatsby"
 import ShowcaseDetails from "../../components/showcase-details"
 
-function Showcase({ location, data }) {
+function Showcase(props) {
+  const { location, data } = props
   const isModal =
     location.state && location.state.isModal && window.innerWidth > 750
+
+  console.log(props)
 
   const categories = data.categories || []
 
@@ -38,13 +41,13 @@ export default createPagesFromData(
 )
 
 export const query = graphql`
-  query Showcase($host: String!) {
+  query Showcase($fields__cleanedHost: String!) {
     fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
       childImageSharp {
         ...ScreenshotDetails
       }
     }
-    sitesYaml(fields: { cleanedHost: { eq: $host } }) {
+    sitesYaml(fields: { cleanedHost: { eq: $fields__cleanedHost } }) {
       id
       title
       main_url
