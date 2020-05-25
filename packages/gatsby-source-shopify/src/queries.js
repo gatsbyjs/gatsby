@@ -34,6 +34,7 @@ export const ARTICLES_QUERY = `
           contentHtml
           excerpt
           excerptHtml
+          handle
           id
           image {
             altText
@@ -63,6 +64,7 @@ export const BLOGS_QUERY = `
       edges {
         cursor
         node {
+          handle
           id
           title
           url
@@ -232,18 +234,21 @@ export const SHOP_POLICIES_QUERY = `
     shop {
       privacyPolicy {
         body
+        handle
         id
         title
         url
       }
       refundPolicy {
         body
+        handle
         id
         title
         url
       }
       termsOfService {
         body
+        handle
         id
         title
         url
