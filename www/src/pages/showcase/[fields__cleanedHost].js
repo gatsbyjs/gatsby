@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql, createPagesFromData } from "gatsby"
-import ShowcaseDetails from "../components/showcase-details"
+import ShowcaseDetails from "../../components/showcase-details"
 
 function Showcase({ location, data }) {
   const isModal =
@@ -34,7 +34,7 @@ function Showcase({ location, data }) {
 
 export default createPagesFromData(
   Showcase,
-  `allSitesYaml(filter: { main_url: { ne: null }, fields: { ne: null, slug: { ne: null }, hasScreenshot: { ne: null } } }`
+  `allSitesYaml(filter: { main_url: { nin: [] }, fields: { slug: { nin: [] }, hasScreenshot: { nin: [] } } })`
 )
 
 export const query = graphql`

@@ -63,8 +63,6 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
 
   let queryString = ``
 
-  // -- Use the ast to find the component and query, and change the code
-  // -- to export default the component, instead of our fancy api
   traverse(ast, {
     // TODO: Throw an error if this is not the export default ? just to encourage default habits
     CallExpression(path) {
@@ -80,12 +78,13 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     },
   })
 
+  console.log({ queryString })
+
   const { data, error } = await graphql(queryString)
 
   if (!data || error) {
     console.warn(`Tried to create pages from the collection builder found at ${route}.
-Unfortunately, the query came back empty. There may be an error in your query.
-    `)
+Unfortunately, the query came back empty. There may be an error in your query.`)
     console.error(error)
     return
   }
@@ -104,6 +103,8 @@ Unfortunately, the query came back empty. There may be an error in your query.
 
     const path = derivePath(absolutePath, node)
     const params = getParams(matchPath, path)
+
+    console.log({ node })
 
     actions.createPage({
       path: path,

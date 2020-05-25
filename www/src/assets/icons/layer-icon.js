@@ -1,5 +1,8 @@
 import React from "react"
-import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+// import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+const colors = {
+  grey: [],
+}
 
 const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
   const icons = {
