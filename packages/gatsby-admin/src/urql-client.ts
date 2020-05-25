@@ -1,11 +1,18 @@
-const { createClient, defaultExchanges, subscriptionExchange } = require(`urql`)
-const { SubscriptionClient } = require(`subscriptions-transport-ws`)
+import {
+  Client,
+  createClient,
+  defaultExchanges,
+  subscriptionExchange,
+} from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
 
 interface ICreateUrqlClientOptions {
   port: number
 }
 
-export const createUrqlClient = ({ port }: ICreateUrqlClientOptions) => {
+export const createUrqlClient = ({
+  port,
+}: ICreateUrqlClientOptions): Client => {
   const subscriptionClient = new SubscriptionClient(
     `ws://localhost:${port}/graphql`,
     {
