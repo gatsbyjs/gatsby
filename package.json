@@ -87,7 +87,8 @@
     "yargs": "^10.1.2"
   },
   "resolutions": {
-    "theme-ui": "0.4.0-alpha.3"
+    "theme-ui": "0.4.0-alpha.3",
+    "csstype": "2.6.10"
   },
   "engines": {
     "yarn": "^1.17.3",

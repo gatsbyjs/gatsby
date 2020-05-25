@@ -4160,7 +4160,7 @@
     "@theme-ui/css" "^0.4.0-highlight.0"
     deepmerge "^4.2.2"
 
-"@theme-ui/components@^0.4.0-alpha.3":
+"@theme-ui/components@>= 0.4.0-alpha.0", "@theme-ui/components@^0.4.0-alpha.3":
   version "0.4.0-highlight.0"
   resolved "https://registry.yarnpkg.com/@theme-ui/components/-/components-0.4.0-highlight.0.tgz#e4eafd517e347b3c8f380906f504103e215ca222"
   integrity sha512-dwVKGcXf29m4nehEKwaX/Vbl5fi/xhMNqHIYo1hnYmInKdUOnKDJOyxiiu4iNdmjTuXmpjj9WxBap1WHM07hkQ==
@@ -8960,15 +8960,10 @@ cssstyle@^2.2.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^2.2.0, csstype@^2.6.9:
+csstype@2.6.10, csstype@^2.2.0, csstype@^2.5.7, csstype@^2.6.10, csstype@^2.6.9:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.10.tgz#e63af50e66d7c266edb6b32909cfd0aabe03928b"
   integrity sha512-D34BqZU4cIlMCY93rZHbrq9pjTAQJ3U8S8rfBqjwHxkGPThWFjzZDQpgMJY0QViLxth6ZKYiwFBo14RdN44U/w==
-
-csstype@^2.5.7:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.5.tgz#1cd1dff742ebf4d7c991470ae71e12bb6751e034"
-  integrity sha512-JsTaiksRsel5n7XwqPAfB0l3TFKdpjW/kgAELf9vrb5adGA7UCPLajKK5s3nFrcFm3Rkyp/Qkgl73ENc1UY3cA==
 
 csvtojson@^1.1:
   version "1.1.12"
@@ -23752,11 +23747,12 @@ stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
 
-strict-ui@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/strict-ui/-/strict-ui-0.1.1.tgz#e9a602b6791aed4870db19fa480766be6a0e29c7"
-  integrity sha512-2JcfNb0yacYlBP0/5kvQvoC0s5IdOLuHgbNaYNSjzAkxUJzp6P05S/OW929+oJF39su9JtNjaCNTu9pYjr//4w==
+strict-ui@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/strict-ui/-/strict-ui-0.1.2.tgz#934283395c5446fb53178cb6c79bd316fd49391a"
+  integrity sha512-1rZUAx4PdPux7bI7Wkqd3Y9PZ5kQ5oVkJxLJFhaTaAPhSvrCb1IHVUH0quxtR19H9z5Xj/l5069NK21dnK829A==
   dependencies:
+    "@theme-ui/components" ">= 0.4.0-alpha.0"
     "@theme-ui/css" ">= 0.4.0-alpha.0"
     "@types/reflexbox" "^4.0.0"
     emotion "^10.0.27"
