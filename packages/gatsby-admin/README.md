@@ -17,8 +17,6 @@ The easiest way to work on Admin locally is to develop Admin itself.
 
 To try Admin with one of your sites locally, use the `gatsby-dev-cli` to copy the local versions of `gatsby`, `gatsby-cli`, `gatsby-recipes`, `gatsby-core-utils` and `gatsby-admin` into your project:
 
-> NOTE(@mxstbr): This is currently untested, but _should_ work.
-
 ```sh
 # Make sure to build the latest local versions of all packages
 ~/gatsby
@@ -31,3 +29,5 @@ $ gatsby-dev --packages gatsby gatsby-cli gatsby-recipes gatsby-core-utils gatsb
 ~/my-gatsby-site
 $ gatsby develop
 ```
+
+Then visit `localhost:8000/\_\_\_admin and you should see Gatsby Admin for your site!

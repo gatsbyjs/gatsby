@@ -4181,12 +4181,7 @@
     "@theme-ui/css" "^0.4.0-highlight.0"
     deepmerge "^4.2.2"
 
-"@theme-ui/css@0.3.x":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@theme-ui/css/-/css-0.3.1.tgz#b85c7e8fae948dc0de65aa30b853368993e25cb3"
-  integrity sha512-QB2/fZBpo4inaLHL3OrB8NOBgNfwnj8GtHzXWHb9iQSRjmtNX8zPXBe32jLT7qQP0+y8JxPT4YChZIkm5ZyIdg==
-
-"@theme-ui/css@^0.4.0-alpha.2", "@theme-ui/css@^0.4.0-highlight.0":
+"@theme-ui/css@>= 0.4.0-alpha.0", "@theme-ui/css@^0.4.0-alpha.2", "@theme-ui/css@^0.4.0-highlight.0":
   version "0.4.0-highlight.0"
   resolved "https://registry.yarnpkg.com/@theme-ui/css/-/css-0.4.0-highlight.0.tgz#ee239d61ce7c7e076ffb49a7c5fcd5b9f1bbfb48"
   integrity sha512-0O9ERm3l4arXip9EmaVl83I84l0ZhEj1ZUrKHrNbjiW2/rhIdEWUQOdYcWdBCb8/nr5NwRMOJQ4rdqiUj7S5IQ==
@@ -23757,16 +23752,16 @@ stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
 
-strict-ui@^0.0.19:
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/strict-ui/-/strict-ui-0.0.19.tgz#ac83f43215972a0f37351a9f06ace8e8c14c6f48"
-  integrity sha512-6xzwG/fWzJu/D23D1QnhE3Rnh0NIzmIOUxXefJO7AL+eY50/5UclLoQgG+ln5c/896NrbujNePRaLcaRm2Yh9g==
+strict-ui@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/strict-ui/-/strict-ui-0.1.1.tgz#e9a602b6791aed4870db19fa480766be6a0e29c7"
+  integrity sha512-2JcfNb0yacYlBP0/5kvQvoC0s5IdOLuHgbNaYNSjzAkxUJzp6P05S/OW929+oJF39su9JtNjaCNTu9pYjr//4w==
   dependencies:
-    "@theme-ui/css" "0.3.x"
+    "@theme-ui/css" ">= 0.4.0-alpha.0"
     "@types/reflexbox" "^4.0.0"
     emotion "^10.0.27"
     reflexbox "^4.0.6"
-    theme-ui "0.3.x"
+    theme-ui ">= 0.4.0-alpha.0"
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"
@@ -24613,7 +24608,7 @@ text-table@0.2.0, text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-theme-ui@0.3.x, theme-ui@0.4.0-alpha.3, theme-ui@^0.2.49, theme-ui@^0.2.52, theme-ui@^0.4.0-alpha.3:
+theme-ui@0.4.0-alpha.3, "theme-ui@>= 0.4.0-alpha.0", theme-ui@^0.2.49, theme-ui@^0.2.52, theme-ui@^0.4.0-alpha.3:
   version "0.4.0-alpha.3"
   resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.4.0-alpha.3.tgz#6114a4ea9d8ec3d5866de240667d7187b35631e9"
   integrity sha512-kxJ6BWCtbO/uyUJ760mep4VCyklyKpCWDD6KiCoMH9G0ib6X+jLkuSAt13CSQzqgBlGzind94kOL/KR1TcPSSw==
