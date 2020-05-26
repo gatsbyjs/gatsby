@@ -23747,10 +23747,10 @@ stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
 
-strict-ui@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/strict-ui/-/strict-ui-0.1.2.tgz#934283395c5446fb53178cb6c79bd316fd49391a"
-  integrity sha512-1rZUAx4PdPux7bI7Wkqd3Y9PZ5kQ5oVkJxLJFhaTaAPhSvrCb1IHVUH0quxtR19H9z5Xj/l5069NK21dnK829A==
+strict-ui@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/strict-ui/-/strict-ui-0.1.3.tgz#3e73ef91b58ca86e24dac464dceddbbb5a2acadd"
+  integrity sha512-bbvWCY89TXb9Bkv7M0CWeFIJ8LXRvAxCqDkG3E87UGGuKAKShQzuziebnNEHgdgxQwvr/OJUxL/PJUIp+A0hwA==
   dependencies:
     "@theme-ui/components" ">= 0.4.0-alpha.0"
     "@theme-ui/css" ">= 0.4.0-alpha.0"

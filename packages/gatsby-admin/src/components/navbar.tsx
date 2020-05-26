@@ -2,6 +2,7 @@
 import { jsx, Flex } from "strict-ui"
 import { Text, BaseAnchor } from "gatsby-interface"
 import { useQuery } from "urql"
+import useDevelopRestart from "../hooks/use-develop-restart"
 
 const Navbar: React.FC<{}> = () => {
   const [{ data }] = useQuery({
@@ -13,6 +14,8 @@ const Navbar: React.FC<{}> = () => {
       }
     `,
   })
+
+  const [state, restartDevelopProcess] = useDevelopRestart()
 
   return (
     <Flex
@@ -42,7 +45,15 @@ const Navbar: React.FC<{}> = () => {
           </Text>
         )}
       </Flex>
-      <Flex alignItems="center">
+      <Flex alignItems="center" gap={5}>
+        {state === `needs-restart` && (
+          <Text sx={{ color: `white` }} onClick={restartDevelopProcess}>
+            restart develop process
+          </Text>
+        )}
+        {state === `is-restarting` && (
+          <Text sx={{ color: `white` }}>restarting develop process...</Text>
+        )}
         <BaseAnchor
           href={`/`}
           target="_blank"
