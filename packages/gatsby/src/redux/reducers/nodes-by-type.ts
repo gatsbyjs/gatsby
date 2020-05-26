@@ -8,7 +8,15 @@ const getNodesOfType = (
   if (!state.has(type)) {
     state.set(type, new Map())
   }
-  return state.get(type) as Map<string, IGatsbyNode>
+  const nodeByType = state.get(type)
+
+  if (!nodeByType) {
+    throw new Error(
+      `An error occurred finding a node by it's type. This is likely a bug in gatsby. If you experience this error please open an issue.`
+    )
+  }
+
+  return nodeByType
 }
 
 export const nodesByTypeReducer = (
