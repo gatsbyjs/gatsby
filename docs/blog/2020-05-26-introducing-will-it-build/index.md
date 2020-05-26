@@ -1,8 +1,8 @@
 ---
-title: ‘Introducing Will It Build: A new builds benchmarking service for Gatsby Cloud’
+title: "Introducing Will It Build: A new builds benchmarking service for Gatsby Cloud"
 date: 2020-05-26
 author: Shannon Soper
-excerpt: ‘The first -- and only -- publicly available static site benchmarking service, Will It Build demonstrates the progress of build times for sample Gatsby benchmark sites on Gatsby Cloud. Thanks to our new Incremental Builds feature, data and content changes now go from edit to live in seconds! See for yourself: all of our data can be queried right on the site using our exposed GraphQL API at willit.build/api-playground.’
+excerpt: "The first -- and only -- publicly available static site benchmarking service, Will It Build demonstrates the progress of build times for sample Gatsby benchmark sites on Gatsby Cloud. Thanks to our new Incremental Builds feature, data and content changes now go from edit to live in seconds! See for yourself: all of our data can be queried right on the site using our exposed GraphQL API at willit.build/api-playground."
 tags:
   - willitbuild
   - gatsby-cloud
