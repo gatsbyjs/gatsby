@@ -10772,6 +10772,30 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Pittica
+  url: https://pittica.com
+  main_url: https://pittica.com
+  source_url: https://github.com/pittica/site
+  description: >
+    Digital agency site.
+  categories:
+    - Design
+    - Web Development
+    - Agency
+  built_by: Lucio Benini
+  built_by_url: https://pittica.com
+  featured: false
+- title: MyHumus
+  url: https://myhumus.com
+  main_url: https://myhumus.com
+  source_url: https://github.com/my-humus/site
+  description: >
+    Digital agency site.
+  categories:
+    - Blog
+    - Food
+  built_by: Lucio Benini
+  built_by_url: https://pittica.com
 - title: Wanaboat.fr
   main_url: https://www.wanaboat.fr
   url: https://www.wanaboat.fr
