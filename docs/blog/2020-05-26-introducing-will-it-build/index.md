@@ -32,4 +32,4 @@ It's also a nifty way to demonstrate the three different types of builds that ha
 
 3. **Data change from CMS (a.k.a Incremental Builds):** A data change is a tweak made through the CMS (eg. Contentful). For example when a content editor publishes a new article or fixes a typo, this represents a data change because the codebase itself hasn't changed. Since the initial build is already established, subsequent incremental builds can run a comparison against it to determine what has changed. These builds are the fastest of all and only available on Gatsby Cloud.
 
-What are you still doing here? Get on over to [Willit.build](https://willit.build/) and try it out for yourself
+What are you still doing here? Get on over to [Willit.build](https://willit.build/) and try it out for yourself!
