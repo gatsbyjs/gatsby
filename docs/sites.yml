@@ -10745,6 +10745,11 @@
   source_url: https://github.com/Zellement/effico
   description: >
     Commercial and domestic electrical contractors.
+  categories:
+    - Business
+  built_by: Dan Farrow
+  built_by_url: https://www.zellement.com
+  featured: false
 - title: Sheringham Flooring
   main_url: https://www.sheringhamflooring.com
   url: https://www.sheringhamflooring.com
