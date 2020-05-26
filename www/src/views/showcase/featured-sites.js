@@ -42,7 +42,7 @@ const GradientOverlay = () => {
   return (
     <div
       sx={{
-        background: t =>
+        background: () =>
           `linear-gradient(90deg, ${hex2rgba(gradientColor, 0)} 0%, ${hex2rgba(
             gradientColor,
             1

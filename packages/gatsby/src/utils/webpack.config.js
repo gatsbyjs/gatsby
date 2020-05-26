@@ -404,6 +404,9 @@ module.exports = async (
         "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
           require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
         ),
+        "socket.io-client": path.dirname(
+          require.resolve(`socket.io-client/package.json`)
+        ),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
