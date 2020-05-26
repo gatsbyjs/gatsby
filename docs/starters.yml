@@ -1,26 +1,3 @@
-- url: https://gatsby-lotus-starter.netlify.app/
-  repo: https://github.com/DecliningLotus/gatsby-lotus-starter
-  description: A fully featured Gatsby Bootstrap starter.
-  tags:
-    - Linting
-    - Netlify
-    - PWA
-    - SEO
-    - Styling:Bootstrap
-    - Styling:PostCSS
-    - Styling:SCSS
-  features:
-    - Bootstrap + React Bootstrap
-    - React Icons
-    - Typefaces + Font Preloader
-    - SVGO Optimizations
-    - Optimized SEO
-    - SASS Support
-    - Sitemap Generation
-    - Progressive Web App
-    - Offline Support
-    - Semantic Release
-    - Netlify + CircleCI Support
 - url: https://ghost-balsa.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
@@ -6258,3 +6235,26 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-lotus-starter.netlify.app/
+  repo: https://github.com/DecliningLotus/gatsby-lotus-starter
+  description: A fully featured Gatsby Bootstrap starter.
+  tags:
+    - Linting
+    - Netlify
+    - PWA
+    - SEO
+    - Styling:Bootstrap
+    - Styling:PostCSS
+    - Styling:SCSS
+  features:
+    - Bootstrap + React Bootstrap
+    - React Icons
+    - Typefaces + Font Preloader
+    - SVGO Optimizations
+    - Optimized SEO
+    - SASS Support
+    - Sitemap Generation
+    - Progressive Web App
+    - Offline Support
+    - Semantic Release
+    - Netlify + CircleCI Support
