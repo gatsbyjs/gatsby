@@ -96,7 +96,7 @@ The homepage should be ordered by explaining the following:
 
 We left the prototype workshop with a few concerns that could be validated through testing:
 
-- Logos of companies could turn off developers because some consider logos to be cliche and therefore meaningless. Alternatively, the logos could provide social proof that world-class engineers use Gatsby. One possibility is to combine the logos with case studies so they aren’t in the classic “logos floating on white space” design that most startups use.
+- Logos of companies could turn off developers because some consider logos to be cliché and therefore meaningless. Alternatively, the logos could provide social proof that world-class engineers use Gatsby. One possibility is to combine the logos with case studies so they aren’t in the classic “logos floating on white space” design that most startups use.
 - We debated how to help developers know that Gatsby also has some upcoming commercial offerings. What do we call the commercial offerings so they make sense to first time visitors?
 
 ### Settled concerns:
