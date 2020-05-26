@@ -14,7 +14,7 @@ export const Container = ({ children, ...rest }) => (
     sx={{
       ...rest,
       ...container,
-      [mediaQueries.sm]: {
+      [mediaQueries.md]: {
         px: 10,
       },
     }}
@@ -30,6 +30,9 @@ export const Section = ({ children, ...rest }) => (
       ...container,
       py: 4,
       [mediaQueries.sm]: {
+        py: 5,
+      },
+      [mediaQueries.md]: {
         py: 8,
         px: 10,
       },
@@ -50,7 +53,7 @@ export const Columns = ({ children, ...rest }) => (
       flexDirection: `column`,
       mt: 4,
       mb: 8,
-      [mediaQueries.sm]: {
+      [mediaQueries.lg]: {
         flexDirection: `row`,
       },
     }}
@@ -79,8 +82,10 @@ export const CopyColumn = ({
       maxWidth: `30rem`,
       width: `100%`,
       flex: `0 0 auto`,
-      [mediaQueries.sm]: {
+      [mediaQueries.md]: {
         mr: copyColumnGutter,
+      },
+      [mediaQueries.lg]: {
         mb: 0,
         maxWidth: `none`,
         width: narrow ? copyColumnWidth : `30rem`,
@@ -90,7 +95,7 @@ export const CopyColumn = ({
     <div
       sx={{
         position: `relative`,
-        [mediaQueries.sm]: {
+        [mediaQueries.md]: {
           position: sticky ? `sticky` : `relative`,
           top: t =>
             sticky
@@ -116,7 +121,7 @@ export const ContentColumn = ({ children, fullWidth, ...rest }) => (
       width: `100%`,
       overflow: `hidden`,
       position: `relative`,
-      [mediaQueries.sm]: {
+      [mediaQueries.lg]: {
         width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
       },
