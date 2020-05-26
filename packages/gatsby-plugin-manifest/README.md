@@ -203,7 +203,7 @@ module.exports = {
           // For all the options available, please see:
           // https://developer.mozilla.org/en-US/docs/Web/Manifest
           // https://w3c.github.io/manifest/#purpose-member
-          purpose: `maskable`,
+          purpose: `any maskable`,
         },
       },
     },
