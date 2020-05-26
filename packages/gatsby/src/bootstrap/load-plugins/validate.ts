@@ -3,8 +3,8 @@ import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import * as reporter from "gatsby-cli/lib/reporter"
-import {resolveModuleExports} from "../resolve-module-exports"
-import {getLatestAPIs} from "../../utils/get-latest-apis"
+import { resolveModuleExports } from "../resolve-module-exports"
+import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { IPluginInfo, IFlattenedPlugin } from "./types"
 
 interface IApi {
