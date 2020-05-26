@@ -192,6 +192,8 @@ Locate the `header.js` file inside `src/components` and remove everything so onl
 ```jsx:title=src/components/header.js
 import React from "react"
 import { Link } from "gatsby"
+import PropTypes from "prop-types"
+
 const Header = ({ siteTitle, menuLinks }) => (
   <header
     style={{
