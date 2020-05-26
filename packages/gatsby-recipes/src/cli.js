@@ -159,6 +159,10 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Preact`,
       value: `preact.mdx`,
     },
+    {
+      label: `Add Gitlab CI/CD`,
+      value: `gitlab-ci-cd.mdx`,
+    },
   ]
 
   return (
