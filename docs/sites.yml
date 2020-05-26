@@ -10772,6 +10772,15 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Wanaboat.fr
+  main_url: https://www.wanaboat.fr
+  url: https://www.wanaboat.fr
+  description: >
+    This a boating classifieds website. It presents dinghys, catamarans and anything that floats or goes on the water and is for sale in France and Europe.
+  categories:
+    - Directory
+  built_by: Olivier L. Developer
+  built_by_url: https://www.olivierlivet.net/
 - title: maxemitchell.com
   url: https://www.maxemitchell.com/
   main_url: https://www.maxemitchell.com/
