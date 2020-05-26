@@ -6301,6 +6301,29 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-starter-voyager.netlify.app/
+  repo: https://github.com/gregdferrell/gatsby-starter-voyager
+  description: A feature-rich starter blog.
+  tags:
+    - Blog
+    - Markdown
+    - Pagination
+    - RSS
+    - SEO
+    - Styling:SCSS
+    - Styling:Other
+  features:
+    - Beautiful starter blog with content in markdown
+    - Responsive, mobile-first design using tachyons.scss, flexbox, SCSS & CSS modules
+    - Fast, with top-notch lighthouse audit scores
+    - View posts by tag & author
+    - Pagination & next/prev navigation
+    - Social sharing links on blog posts (twitter, facebook, pinterest)
+    - SEO component with social sharing cards for twitter & facebook
+    - Structured data, schema.org
+    - Sitemap & RSS feed
+    - Support for email subscription to Mailchimp campaign
+    - Support for Google analytics
 - url: https://expo-gatsby-starter.netlify.app/
   repo: https://github.com/Sidibedev/expo-gatsby-starter
   description: A simple Expo and Gatsby starter.
