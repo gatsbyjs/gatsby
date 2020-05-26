@@ -4,14 +4,17 @@ const { slash } = require(`gatsby-core-utils`)
 const isOfficialPackage = require(`../is-official-package`)
 const yaml = require(`js-yaml`)
 const { plugins: featuredPlugins } = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+  fs.readFileSync(
+    path.resolve(__dirname, `../../data/ecosystem/featured-items.yaml`)
+  )
 )
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const packageTemplate = path.resolve(
-    `src/templates/template-package-readme.js`
+    __dirname,
+    `../../templates/template-package-readme.js`
   )
 
   const { data, errors } = await graphql(`

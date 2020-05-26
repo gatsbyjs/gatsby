@@ -8,7 +8,9 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
 const yaml = require(`js-yaml`)
 const ecosystemFeaturedItems = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+  fs.readFileSync(
+    path.resolve(__dirname, `../../data/ecosystem/featured-items.yaml`)
+  )
 )
 
 if (
@@ -32,7 +34,10 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  const starterTemplate = path.resolve(`src/templates/template-starter-page.js`)
+  const starterTemplate = path.resolve(
+    __dirname,
+    `../../templates/template-starter-page.js`
+  )
 
   const { data, errors } = await graphql(`
     query {

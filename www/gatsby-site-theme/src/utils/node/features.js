@@ -8,7 +8,8 @@ exports.createPages = async ({ actions }) => {
   const { createPage } = actions
 
   const featureComparisonPageTemplate = path.resolve(
-    `src/templates/template-feature-comparison.js`
+    __dirname,
+    `../../templates/template-feature-comparison.js`
   )
 
   // Create feature comparison pages

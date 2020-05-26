@@ -52,11 +52,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-  const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
-  const tagTemplate = path.resolve(`src/templates/tags.js`)
+  const blogPostTemplate = path.resolve(
+    __dirname,
+    `../../templates/template-blog-post.js`
+  )
+  const blogListTemplate = path.resolve(
+    __dirname,
+    `../../templates/template-blog-list.js`
+  )
+  const tagTemplate = path.resolve(__dirname, `../../templates/tags.js`)
   const contributorPageTemplate = path.resolve(
-    `src/templates/template-contributor-page.js`
+    __dirname,
+    `../../templates/template-contributor-page.js`
   )
 
   const { data, errors } = await graphql(`

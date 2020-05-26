@@ -6,7 +6,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const creatorPageTemplate = path.resolve(
-    `src/templates/template-creator-details.js`
+    __dirname,
+    `../../templates/template-creator-details.js`
   )
 
   const { data, errors } = await graphql(`

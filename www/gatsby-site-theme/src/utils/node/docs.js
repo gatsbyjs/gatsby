@@ -39,8 +39,14 @@ const slugToAnchor = slug =>
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
-  const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
+  const docsTemplate = path.resolve(
+    __dirname,
+    `../../templates/template-docs-markdown.js`
+  )
+  const apiTemplate = path.resolve(
+    __dirname,
+    `../../templates/template-api-markdown.js`
+  )
 
   const { data, errors } = await graphql(`
     query {
