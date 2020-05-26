@@ -11,7 +11,7 @@ interface IApi {
   version?: string
 }
 
-interface IEntry {
+export interface IEntry {
   exportName: string
   pluginName: string
   pluginVersion: string

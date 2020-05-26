@@ -30,7 +30,7 @@ export interface IPluginInfoOptions {
 }
 
 export interface IFlattenedPlugin extends IPluginInfo {
-  skipSSR: boolean
+  skipSSR?: boolean
   ssrAPIs: string[]
   nodeAPIs: string[]
   browserAPIs: string[]
