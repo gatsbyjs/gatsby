@@ -2,7 +2,7 @@
 title: "Gatsby Recipes: What's All the Fuss About?"
 date: 2020-05-21
 author: Paul Scanlon
-excerpt: "Gatsby Recipes were just introduced just last month, as a new tool to automate common site building tasks. A Gatsby Recipe is a kind of task runner that can be authored in MDX and then executed from the command line using the Gatsby CLI. Gatsby now ships with a dozen or so default Recipes, and our amazing community has been busy coming up with more useful contributions! React developer Paul Scanlon discussed his process behind making his first two Recipes, and then walks through how to write your own."
+excerpt: "Gatsby Recipes were introduced just last month, as a new tool to automate common site building tasks. A Gatsby Recipe is a kind of task runner that can be authored in MDX and then executed from the command line using the Gatsby CLI. Gatsby now ships with a dozen or so default Recipes, and our amazing community has been busy coming up with more useful contributions! React developer Paul Scanlon discussed his process behind making his first two Recipes, and then walks through how to write your own."
 tags:
   - gatsby-recipes
   - mdx
@@ -28,7 +28,7 @@ To get the two playing nicely together it requires a little under the hood knowl
 - Gatsby is written in ES6 and isn’t transpiled to CommonJs until either the `gatsby develop` or `gatsby build` processes are run.
 - Storybook requires all module code to be transpiled to CommonJs
 
-The problem here is when you run Storybook it has no knowledge of the Gatsby build processes and will only transpile “your” ES6 code to CommonJs. This is mostly fine apart from when you attempt to create a story for a Gatsby component, or a story that embeds or composes a Gatsby component. Once such component is `<Link />`
+The problem here is when you run Storybook it has no knowledge of the Gatsby build processes and will only transpile “your” ES6 code to CommonJs. This is mostly fine apart from when you attempt to create a story for a Gatsby component, or a story that embeds or composes a Gatsby component. One such component is `<Link />`
 
 For example:
 
@@ -36,7 +36,7 @@ For example:
 import { Link } from ‘gatsby’
 ```
 
-The reason this will cause Storybook errors is because the `<Link />` component comes from Gatsby / `node_modules` which, as mentioned above, is (as yet) un-transpiled ES6 code.
+The reason this will cause Storybook to error is because the `<Link />` component comes from Gatsby / `node_modules` which, as mentioned above, is (as yet) un-transpiled ES6 code.
 
 Storybook has anticipated this issue, fortunately, and so there is a method whereby you can write your own Webpack config and pass it on to combine it with the default Storybook Webpack config. This then aids in the transpiling of any ES6 code located in `node_modules` to CommonJs.
 
@@ -68,8 +68,8 @@ gatsby recipes
 
 You should see from the list there are two options for Storybook.
 
-**Add Storybook - JavaScript**
-**Add Storybook - TypeScript**
+- **Add Storybook - JavaScript**
+- **Add Storybook - TypeScript**
 
 These are both largely the same with only some small differences to manage `.ts|tsx` as well as `.js|jsx` files and a little difference in the way they process props which populate the Storybook prop table.
 
@@ -77,12 +77,12 @@ If you’ve got this far I’m sure you’ll agree that running a simple CLI com
 
 If you’re interested, here is where you can read more about my Recipes👇
 
-[Storybook - Js](https://paulie.dev/posts/2020/04/gatsby-recipe-storybook-js/)
-[Storybook - Ts](https://paulie.dev/posts/2020/05/gatsby-recipe-storybook-ts/)
+- [Storybook - Js](https://paulie.dev/posts/2020/04/gatsby-recipe-storybook-js/)
+- [Storybook - Ts](https://paulie.dev/posts/2020/05/gatsby-recipe-storybook-ts/)
 
 ## Fancy writing your own Recipe?
 
-The Recipe we’re going to write will install `gatsby-plugin-google-analytics` and add it to the plugins array in `gatsby-config`
+The Recipe we’re going to write will install `gatsby-plugin-google-analytics` and add it to the plugins array in `gatsby-config.js`
 
 This recipe will utilize two of the Recipe components/providers. The first is `<NPMPackage />` the second is `<GatsbyPlugin />`
 
@@ -152,7 +152,7 @@ Now that you’ve written your first Recipe, it’s time to run it! 👇
 gatsby recipes ./gatsby-recipe-ga.mdx
 ```
 
-You should see the CLI start up. It’ll look to the root of your project and run your new Recipe. You’ll be prompted at each step to confirm the install -- hitting Enter will do the trick here.
+You should see the CLI start up. It’ll look to the root of your project and run your new Recipe. You’ll be prompted at each step to confirm the install -- hitting _Enter_ will do the trick here.
 
 If all has gone to plan, the plugin will have been installed from `npm` and `gatsby-config.js` will have been updated with all the required options for the plugin to work.
 
@@ -174,13 +174,13 @@ One such task might be creating new components. On any typical project this woul
 
 Of course within each of those files are a number of imports, exports, interfaces, function declarations and tests. Doing this each and every time you create a new component is tedious and can sometimes be prone to human error.
 
-Also, and especially on larger teams, these preferences for how files should be named -- and/or how the imports, exports and declarations should be written is rarely documented in a “style guide” because that alone is also a rather tiresome task! but in experience it's something that's rather crucial to have "locked down" at the start of a project.
+Also, and especially on larger teams, these preferences for how files should be named -- and/or how the imports, exports and declarations should be written is rarely documented in a “style guide” because that alone is also a rather tiresome task! but in my experience it's something that's rather crucial to have "locked down" at the start of a project.
 
 In early 2018 I attempted to solve this problem by creating a node module aimed at automating the React “component” creation process, [node-tiny-template](https://www.npmjs.com/package/node-tiny-template):
 
 ![landing page for the Node Tiny Template](node-tiny-template.jpg "Node Tiny Template")
 
-The CLI args allow you to pass in the “component name” which can then be used for function declaration, the imports, the exports and test names, etc.
+The CLI args allow you to pass in the “component name” which can then be used for the function declaration, the imports, the exports and test names, etc.
 
 Using the config file you can set options for casing, pascalCase, kebab-case etc and decide which files are generated and what their respective file extension should be. The “content” comes from handlebars template files, which receive values generated by the module and inject them when the file is written to disk.
 
