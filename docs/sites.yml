@@ -10655,6 +10655,17 @@
   built_by: Chad Lee
   built_by_url: https://github.com/chadly
   featured: false
+- title: I Love You Infinity
+  url: https://iloveyouinfinity.com
+  main_url: https://iloveyouinfinity.com
+  description: >
+    An infinite sound experiment to help raise awareness about autism and love.
+  categories:
+    - Nonprofit
+    - Healthcare
+  built_by: Good Praxis
+  built_by_url: https://goodpraxis.coop
+  featured: false
 - title: KAIGO in JAPAN
   main_url: https://kaigo-in-japan.jp
   url: https://kaigo-in-japan.jp
