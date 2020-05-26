@@ -230,7 +230,7 @@ export interface GatsbyNode {
       traceId: "initial-createPages"
     },
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -252,7 +252,7 @@ export interface GatsbyNode {
       traceId: "initial-createPagesStatefully"
     },
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -263,7 +263,7 @@ export interface GatsbyNode {
   onCreateBabelConfig?(
     args: CreateBabelConfigArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -283,7 +283,7 @@ export interface GatsbyNode {
   onCreateDevServer?(
     args: CreateDevServerArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -302,7 +302,7 @@ export interface GatsbyNode {
   onCreateNode?<TNode extends object = {}>(
     args: CreateNodeArgs<TNode>,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -316,7 +316,7 @@ export interface GatsbyNode {
   onCreatePage?<TContext = Record<string, unknown>>(
     args: CreatePageArgs<TContext>,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -326,49 +326,49 @@ export interface GatsbyNode {
   onCreateWebpackConfig?(
     args: CreateWebpackConfigArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
   onPostBootstrap?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /** The last extension point called after all other parts of the build process are complete. */
   onPostBuild?(
     args: BuildArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /** Called at the end of the bootstrap process after all other extension APIs have been called. */
   onPreBootstrap?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /** The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start. */
   onPreBuild?(
     args: BuildArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /** Called once Gatsby has initialized itself and is ready to bootstrap your site. */
   onPreExtractQueries?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. */
   onPreInit?(
     args: ParentSpanPluginArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -378,7 +378,7 @@ export interface GatsbyNode {
   preprocessSource?(
     args: PreprocessSourceArgs,
     options?: PluginOptions,
-    callback?: PluginCallback
+    callback?: PluginCallback<void>
   ): void
 
   /**
@@ -387,7 +387,7 @@ export interface GatsbyNode {
   resolvableExtensions?(
     args: ResolvableExtensionsArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback?: PluginCallback<string[]>
   ): string[]
 
   /**
@@ -420,8 +420,8 @@ export interface GatsbyNode {
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
     options: PluginOptions,
-    callback: PluginCallback
-  ): GraphQLFieldConfigMap<any, any>
+    callback: PluginCallback<GraphQLFieldConfigMap<any, any>>
+  ): void
 
   /**
    * Extension point to tell plugins to source nodes. This API is called during
@@ -438,7 +438,7 @@ export interface GatsbyNode {
   sourceNodes?(
     args: SourceNodesArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback: PluginCallback<void>
   ): void
 
   /**
@@ -486,7 +486,7 @@ export interface GatsbyNode {
   createResolvers?(
     args: CreateResolversArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback: PluginCallback<void>
   ): void
 
   /**
@@ -510,7 +510,7 @@ export interface GatsbyNode {
   createSchemaCustomization?(
     args: CreateSchemaCustomizationArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback: PluginCallback<void>
   ): void
 }
 
@@ -604,7 +604,7 @@ export interface GatsbySSR {
   onPreRenderHTML?(
     args: PreRenderHTMLArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback: PluginCallback<void>
   ): void
 
   /**
@@ -649,7 +649,7 @@ export interface GatsbySSR {
   onRenderBody?(
     args: RenderBodyArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback: PluginCallback<void>
   ): void
 
   /**
@@ -676,7 +676,7 @@ export interface GatsbySSR {
   replaceRenderer?(
     args: ReplaceRendererArgs,
     options: PluginOptions,
-    callback: PluginCallback
+    callback: PluginCallback<void>
   ): void
 
   /**
@@ -704,8 +704,8 @@ export interface GatsbySSR {
   wrapPageElement?(
     args: WrapPageElementNodeArgs,
     options: PluginOptions,
-    callback: PluginCallback
-  ): React.ReactNode
+    callback: PluginCallback<void>
+  ): void
   /**
    * Allow a plugin to wrap the root element.
    *
@@ -736,8 +736,8 @@ export interface GatsbySSR {
   wrapRootElement?(
     args: WrapRootElementNodeArgs,
     options: PluginOptions,
-    callback: PluginCallback
-  ): React.ReactNode
+    callback: PluginCallback<React.ReactNode>
+  ): void
 }
 
 export interface PluginOptions {
@@ -745,7 +745,7 @@ export interface PluginOptions {
   [key: string]: unknown
 }
 
-export type PluginCallback = (err: Error | null, result?: any) => void
+export type PluginCallback<T> = (err: Error | null, result?: T) => void
 
 export interface CreatePagesArgs extends ParentSpanPluginArgs {
   graphql<TData, TVariables = any>(
