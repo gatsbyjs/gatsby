@@ -48,7 +48,7 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
-    sireUrl?: string
+    siteUrl?: string
     // siteMetadata is free form
     [key: string]: unknown
   }
