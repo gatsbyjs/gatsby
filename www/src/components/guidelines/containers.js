@@ -1,39 +1,65 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import styled from "@emotion/styled"
-import propTypes from "@styled-system/prop-types"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-import { Box } from "./system"
-
-export const Container = styled(Box)()
-
-Container.defaultProps = {
+const container = {
+  boxSizing: `border-box`,
   position: `relative`,
-  pr: { xxs: 6, md: 10 },
-  pl: { xxs: 6, md: 10 },
+  px: 6,
   zIndex: 1,
 }
 
-export const Section = styled(Container)()
+export const Container = ({ children, ...rest }) => (
+  <div
+    sx={{
+      ...rest,
+      ...container,
+      [mediaQueries.md]: {
+        px: 10,
+      },
+    }}
+  >
+    {children}
+  </div>
+)
 
-Section.propTypes = {
-  ...propTypes.space,
-}
-
-Section.defaultProps = {
-  ...Container.defaultProps,
-  as: `section`,
-  pt: { xxs: 4, sm: 5, md: 8 },
-  pb: { xxs: 4, sm: 5, md: 8 },
-}
+export const Section = ({ children, ...rest }) => (
+  <section
+    sx={{
+      ...rest,
+      ...container,
+      py: 4,
+      [mediaQueries.sm]: {
+        py: 5,
+      },
+      [mediaQueries.md]: {
+        py: 8,
+        px: 10,
+      },
+    }}
+  >
+    {children}
+  </section>
+)
 
 export const copyColumnWidth = `20rem`
 export const copyColumnGutter = 10
 
 export const Columns = ({ children, ...rest }) => (
-  <Box {...rest} display={{ lg: `flex` }} mt={4} mb={8}>
+  <div
+    sx={{
+      ...rest,
+      display: `flex`,
+      flexDirection: `column`,
+      mt: 4,
+      mb: 8,
+      [mediaQueries.lg]: {
+        flexDirection: `row`,
+      },
+    }}
+  >
     {children}
-  </Box>
+  </div>
 )
 
 export const CopyColumn = ({
@@ -42,48 +68,65 @@ export const CopyColumn = ({
   narrow = true,
   ...rest
 }) => (
-  <Box
-    {...rest}
-    fontSize={2}
-    mr={{ md: copyColumnGutter }}
-    mb={{ xs: 4, lg: 0 }}
-    maxWidth={{ xxs: `30rem`, lg: `none` }}
-    width={{ lg: narrow ? copyColumnWidth : `30rem` }}
-    flex={{ lg: `0 0 auto` }}
+  <div
     css={{
       "p, ul, ol": {
         maxWidth: `40rem`,
+      },
+    }}
+    sx={{
+      ...rest,
+      fontSize: 2,
+      mr: 0,
+      mb: 4,
+      maxWidth: `30rem`,
+      width: `100%`,
+      flex: `0 0 auto`,
+      [mediaQueries.md]: {
+        mr: copyColumnGutter,
+      },
+      [mediaQueries.lg]: {
+        mb: 0,
+        maxWidth: `none`,
+        width: narrow ? copyColumnWidth : `30rem`,
       },
     }}
   >
     <div
       sx={{
-        position: sticky ? `sticky` : `relative`,
-        top: t =>
-          sticky
-            ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
-            : false,
+        position: `relative`,
+        [mediaQueries.md]: {
+          position: sticky ? `sticky` : `relative`,
+          top: t =>
+            sticky
+              ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
+              : false,
+        },
       }}
     >
       {children}
     </div>
-  </Box>
+  </div>
 )
 
-export const ContentColumn = ({ children, fullWidth, ...props }) => (
-  <Box
-    width={{ lg: fullWidth ? `auto` : `50rem` }}
-    maxWidth={{ lg: fullWidth ? `none` : false }}
+export const ContentColumn = ({ children, fullWidth, ...rest }) => (
+  <div
     css={{
-      flexGrow: 0,
-      overflow: `hidden`,
-      position: `relative`,
       "p, ul, ol": {
         maxWidth: `40rem`,
       },
     }}
-    {...props}
+    sx={{
+      ...rest,
+      width: `100%`,
+      overflow: `hidden`,
+      position: `relative`,
+      [mediaQueries.lg]: {
+        width: fullWidth ? `100%` : `50rem`,
+        maxWidth: fullWidth ? `none` : false,
+      },
+    }}
   >
     {children}
-  </Box>
+  </div>
 )

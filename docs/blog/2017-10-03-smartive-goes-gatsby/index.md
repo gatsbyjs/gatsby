@@ -36,7 +36,7 @@ the major drawbacks at that time were:
 - Pulling in external resources, such as blog posts, was quite unhandy and
   sometimes even impossible
 - Build process optimization was almost impossible and in our case resulted in a
-  Webpack setup on top of Wintersmith which was not really maintainable
+  webpack setup on top of Wintersmith which was not really maintainable
 
 ### React to the Rescue!
 

@@ -250,6 +250,7 @@ export const createWebpackUtils = (
         options: {
           limit: 10000,
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          fallback: require.resolve(`file-loader`),
           ...options,
         },
       }
@@ -627,7 +628,9 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      disableRefreshCheck: true,
+      overlay: {
+        sockIntegration: `whm`,
+      },
     })
 
   plugins.extractText = (options: any): Plugin =>
