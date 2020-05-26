@@ -10772,3 +10772,18 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Stackrole
+  main_url: https://stackrole.com
+  url: https://stackrole.com
+  description: >
+    We help Startups and Individuals launch their blazing fast JAMstack website with GatsbyJS and Netlify CMS, Deployed on Netlify
+  categories:
+    - Agency
+    - Blog
+    - User Experience
+    - Web Development
+    - Portfolio
+    - JavaScript
+  built_by: Stackrole
+  built_by_url: https://stackrole.com
+  featured: false
