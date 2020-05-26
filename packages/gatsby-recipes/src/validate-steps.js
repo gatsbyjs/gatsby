@@ -1,19 +1,28 @@
-const ALLOWED_STEP_O_COMMANDS = [`Config`]
+const validate = require(`./parser/validate`)
+const render = require(`./renderer`)
 
-module.exports = steps => {
-  const commandKeys = Object.keys(steps[0]).filter(
-    cmd => !ALLOWED_STEP_O_COMMANDS.includes(cmd)
-  )
+module.exports = async steps => {
+  const errors = []
 
-  if (commandKeys.length) {
-    return commandKeys.map(key => {
-      return {
+  steps.map((stepMdx, i) => {
+    const syntaxError = validate(stepMdx)
+    if (syntaxError) {
+      errors.push(syntaxError)
+    }
+  })
+
+  try {
+    const firstStepPlan = await render(steps[0])
+    if (firstStepPlan.length) {
+      errors.push({
         step: 0,
-        resource: key,
-        validationError: `Resources e.g. ${key} should not be placed in the introduction step`,
-      }
-    })
-  } else {
-    return []
+        validationError: `Resources should not be placed in the introduction step (0)`,
+      })
+    }
+  } catch (e) {
+    // This means the first step has a syntax error which is already
+    // addressed above.
   }
+
+  return errors
 }

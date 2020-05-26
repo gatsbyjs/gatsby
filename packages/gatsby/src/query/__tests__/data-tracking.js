@@ -112,8 +112,12 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   }
 
   jest.doMock(`../query-runner`, () => {
-    const actualQueryRunner = jest.requireActual(`../query-runner`)
-    return jest.fn(actualQueryRunner)
+    const { queryRunner: actualQueryRunner } = jest.requireActual(
+      `../query-runner`
+    )
+    return {
+      queryRunner: jest.fn(actualQueryRunner),
+    }
   })
 
   jest.doMock(`../../utils/api-runner-node`, () => apiName => {
@@ -133,7 +137,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
-  const queryRunner = require(`../query-runner`)
+  const { queryRunner } = require(`../query-runner`)
   const { boundActionCreators } = require(`../../redux/actions`)
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
     (acc, actionName) => {
