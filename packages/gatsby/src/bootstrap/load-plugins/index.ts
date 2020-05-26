@@ -9,11 +9,14 @@ import {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
+  ExportType,
   ICurrentAPIs,
 } from "./validate"
 import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
 
-const getAPI = (api: ICurrentAPIs): ICurrentAPIs =>
+const getAPI = (
+  api: { [exportType in ExportType]: { [api: string]: boolean } }
+): ICurrentAPIs =>
   _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
     merged[key] = _.keys(api[key])
     return merged
