@@ -10655,6 +10655,20 @@
   built_by: Chad Lee
   built_by_url: https://github.com/chadly
   featured: false
+- title: Ajith's blog
+  url: https://ajith.blog
+  main_url: https://ajith.blog
+  source_url: https://github.com/ajithrnayak/ajith_blog
+  description: >
+    I build apps and sometimes write about the observations and frustrations at work here.
+  categories:
+    - Blog
+    - Mobile Development
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Ajith R Nayak
+  built_by_url: https://ajith.xyz
 - title: I Love You Infinity
   url: https://iloveyouinfinity.com
   main_url: https://iloveyouinfinity.com
