@@ -10772,6 +10772,22 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Rudra Narayan
+  url: https://rudra.dev
+  main_url: https://rudra.dev
+  source_url: https://github.com/mrprofessor/rudra.dev
+  description: >
+    Rudra Narayan | Thoughts, obsessions and rants
+  categories:
+    - Blog
+    - Portfolio
+    - SEO
+    - Programming
+    - Landing Page
+    - Technology
+  built_by: Rudra Narayan
+  built_by_url: https://github.com/mrprofessor
+  featured: false
 - title: Stackrole
   main_url: https://stackrole.com
   url: https://stackrole.com
