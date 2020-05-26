@@ -1,7 +1,9 @@
 const React = require(`react`)
 
 const { render } = require(`./render`)
-const { File, NPMPackage } = require(`./resource-components`)
+const { resourceComponents } = require(`./resource-components`)
+
+const { File, NPMPackage } = resourceComponents
 
 const fixture = (
   <doc>
