@@ -9,7 +9,7 @@ const links = [
   { to: `/guidelines/logo/`, text: t`Logo & Assets` },
 ]
 
-const FooterLinks = props => (
+const FooterLinks = () => (
   <footer>
     <ul
       sx={{

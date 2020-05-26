@@ -77,7 +77,8 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         }}
       >
         <TechWithIcon icon={CodesandboxIcon}>CodeSandbox</TechWithIcon>
-      </a>{" "}
+      </a>
+      {` `}
       &nbsp;
       <a
         href={`https://app.netlify.com/start/deploy?repository=${repoUrl}`}

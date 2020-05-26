@@ -1,8 +1,33 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
+const minimatch = require(`minimatch`)
+
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
+const findApiCalls = require(`../find-api-calls`)
+
+const ignorePatterns = [
+  `**/commonjs/**`,
+  `**/node_modules/**`,
+  `**/__tests__/**`,
+  `**/dist/**`,
+  `**/__mocks__/**`,
+  `babel.config.js`,
+  `graphql.js`,
+  `**/flow-typed/**`,
+]
+
+function isCodeFile(node) {
+  return (
+    node.internal.type === `File` &&
+    node.sourceInstanceName === `gatsby-core` &&
+    [`js`].includes(node.extension) &&
+    !ignorePatterns.some(ignorePattern =>
+      minimatch(node.relativePath, ignorePattern)
+    )
+  )
+}
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
@@ -10,16 +35,6 @@ const slugToAnchor = slug =>
     .split(`/`) // split on dir separators
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
-
-const docSlugFromPath = parsedFilePath => {
-  if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-    return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
-  } else if (parsedFilePath.dir === ``) {
-    return `/${parsedFilePath.name}/`
-  } else {
-    return `/${parsedFilePath.dir}/`
-  }
-}
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -86,15 +101,45 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+exports.onCreateNode = async ({
+  node,
+  actions,
+  getNode,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode, createParentChildLink, createNodeField } = actions
+
+  if (isCodeFile(node)) {
+    const calls = await findApiCalls({ node, loadNodeContent })
+    if (calls.length > 0) {
+      calls.forEach(call => {
+        const apiCallNode = {
+          id: createNodeId(`findApiCalls-${JSON.stringify(call)}`),
+          parent: node.id,
+          children: [],
+          ...call,
+          internal: {
+            type: `GatsbyAPICall`,
+          },
+        }
+        apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
+
+        createNode(apiCallNode)
+        createParentChildLink({ parent: node, child: apiCallNode })
+      })
+    }
+    return
+  }
+
   const slug = getMdxContentSlug(node, getNode(node.parent))
   if (!slug) return
 
-  const locale = "en"
-  const section = slug.split("/")[1]
+  const locale = `en`
+  const section = slug.split(`/`)[1]
   // fields for blog pages are handled in `utils/node/blog.js`
-  if (section === "blog") return
+  if (section === `blog`) return
 
   // Add slugs and other fields for docs pages
   if (slug) {

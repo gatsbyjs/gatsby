@@ -222,6 +222,15 @@ You can create test recipes that you run in a test site. You'll need to [use `ga
 One note, as you'll be testing changes to the Gatsby CLI — instead of running the global gatsby-cli package (i.e. what you'd
 run by typing `gatsby`, you'll want to run the version copied over by `gatsby-dev-cli` by running `./node_modules/.bin/gatsby`.
 
+When debugging the CLI, you may run into errors without stacktraces. In order
+to work around that, you can use the node inspector:
+
+```sh
+DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
+```
+
+Then, open up Chrome and click the node icon in dev tools.
+
 ### Official recipes
 
 MDX source for the official recipes lives at [https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes/recipes).
