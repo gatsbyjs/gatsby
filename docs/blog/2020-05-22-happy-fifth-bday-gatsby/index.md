@@ -71,4 +71,4 @@ It’s truly exciting to look back to see how far we have come in the last five 
 
 So no matter what happens over the next five years, there are things that will not alter. Gatsby the open source framework is always going to be open source. Always going to be free, always going to be supported, and always with the community as co-pilot.
 
-_Ready to dive in for even more Gatsby goodness?  Join us at our first-ever virtual Gatsby Days, two half days of speakers, demos, and All Things Gatsby coming up on June 2 & 3rd. Register now: https://www.gatsbyjs.com/virtual-gatsby-days-registration/_
+_Ready to dive in for even more Gatsby goodness? Join us at our first-ever virtual Gatsby Days, two half days of speakers, demos, and All Things Gatsby coming up on June 2 & 3rd. Register now: https://www.gatsbyjs.com/virtual-gatsby-days-registration/_

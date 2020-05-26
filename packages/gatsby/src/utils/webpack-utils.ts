@@ -250,6 +250,7 @@ export const createWebpackUtils = (
         options: {
           limit: 10000,
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          fallback: require.resolve(`file-loader`),
           ...options,
         },
       }

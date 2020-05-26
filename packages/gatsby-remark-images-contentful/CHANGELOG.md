@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.2...gatsby-remark-images-contentful@2.3.3) (2020-05-25)
+
+### Bug Fixes
+
+- **gatsby-remark-images-contentful:** use `url` for cache key instead of `fileName` ([#24338](https://github.com/gatsbyjs/gatsby/issues/24338)) ([08503b2](https://github.com/gatsbyjs/gatsby/commit/08503b2))
+
 ## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@2.3.1...gatsby-remark-images-contentful@2.3.2) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful
