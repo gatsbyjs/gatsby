@@ -11,7 +11,6 @@ const getNodesOfType = (
   return state.get(type) as Map<string, IGatsbyNode>
 }
 
-// module.exports = (
 export const nodesByTypeReducer = (
   state: IGatsbyState["nodesByType"] = new Map(),
   action: ActionsUnion
