@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.29...gatsby-recipes@0.1.30) (2020-05-26)
+
+### Bug Fixes
+
+- **recipes:** icon format ([#24445](https://github.com/gatsbyjs/gatsby/issues/24445)) ([775b997](https://github.com/gatsbyjs/gatsby/commit/775b997))
+
 ## [0.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.28...gatsby-recipes@0.1.29) (2020-05-25)
 
 ### Bug Fixes
