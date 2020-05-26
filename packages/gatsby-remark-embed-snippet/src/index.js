@@ -13,6 +13,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   md: `markup`,
   sh: `bash`,
   rb: `ruby`,
+  rs: `rust`,
   py: `python`,
   ps1: `powershell`,
   psm1: `powershell`,
@@ -51,6 +52,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
       // Embed specific lines numbers of a file
       let lines = []
+      var sname = "";
       const rangePrefixIndex = snippetPath.indexOf(`#L`)
       if (rangePrefixIndex > -1) {
         const range = snippetPath.slice(rangePrefixIndex + 2)
@@ -61,7 +63,14 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
         }
         // Remove everything after the range prefix from file path
         snippetPath = snippetPath.slice(0, rangePrefixIndex)
+      } else {
+        var snamePrefixIndex = snippetPath.indexOf(`#SN`)
+        if (snamePrefixIndex > -1) {
+          sname = snippetPath.slice(snamePrefixIndex + 3)
+          snippetPath = snippetPath.slice(0, snamePrefixIndex)
+        }
       }
+
 
       if (!fs.existsSync(snippetPath)) {
         throw Error(`Invalid snippet specified; no such file "${snippetPath}"`)
@@ -73,6 +82,25 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
           .split(`\n`)
           .filter((_, lineNumber) => lines.includes(lineNumber + 1))
           .join(`\n`)
+      } else if (sname.length) {
+        let index1 = code.indexOf(`START SNIPPET ${sname}`)
+        if (index1 > -1) {
+          let index2 = code.indexOf(`\n`, index1)
+          if (index2 > -1) {
+            index2 = index2 + 1  // skip the newline
+            let index3 = code.indexOf(`END SNIPPET ${sname}`, index2)
+            if (index3 > -1) {
+              let index4 = code.lastIndexOf(`\n`, index3)
+              code = code.slice(index2, index4)
+            } else {
+              code = code.slice(index2)
+            }
+          } else {
+            code = ``
+          }
+        } else {
+          code = ``
+        }
       }
 
       // PrismJS's theme styles are targeting pre[class*="language-"]

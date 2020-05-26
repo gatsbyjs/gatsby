@@ -86,6 +86,83 @@ window.addEventListener('resize', () => {
     expect(codeBlock.value).not.toContain(notInSnippet)
   })
 
+  it(`should display a code block between START SNIPPET and END SNIPPET`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+// START SNIPPET foo
+${codeBlockValue}
+// END SNIPPET foo
+console.log('finish up')
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block from START SNIPPET to end of file`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+// START SNIPPET foo
+${codeBlockValue}
+`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block from the correct snippet`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+// START SNIPPET bar
+console.log('Do not stop here!')
+// END SNIPPET bar
+console.log('Or here')
+// START SNIPPET foo
+${codeBlockValue}
+// END SNIPPET foo
+`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should handle missing snippet name`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+  // START SNIPPET goo
+  nothing_to_do();
+  // END SNIPPET goo
+  stuff();
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(``)
+  })
+
   it(`should error if an invalid file path is specified`, () => {
     fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
 
@@ -185,6 +262,20 @@ window.addEventListener('resize', () => {
       fs.readFileSync.mockReturnValue(`name: Brian Vaughn`)
 
       const markdownAST = remark.parse(`\`embed:hello-world.yaml\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should set the correct Prism language for Rust files`, () => {
+      fs.readFileSync.mockReturnValue(`extern crate lazy_static;`)
+
+      const markdownAST = remark.parse(`\`embed:hello-world.rs\``)
       const transformed = plugin(
         { markdownAST },
         {

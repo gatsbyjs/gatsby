@@ -181,6 +181,148 @@ The resulting HTML generated from the markdown file above would look something l
 </div>
 ```
 
+## Including portions of a file as a snippet
+
+### Specifying line ranges
+
+You can specify that you only want to include specific ranges of line numbers in the embed using the syntax:
+
+- #Lx - Embed one line from a file
+- #Lx-y - Embed a range of lines from a file
+- #Lx-y,a-b - Embed non-consecutive ranges of lines from a file
+
+**Markdown example**:
+
+```markdown
+This is the JSX of my app:
+
+`embed:App.js#L6-8`
+```
+
+With this example snippet:
+
+```js
+import React from "react"
+import ReactDOM from "react-dom"
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello world</h1>
+    </div>
+  )
+}
+```
+
+Will produce something like this:
+
+```markdown
+This is the JSX of my app:
+
+    <div className="App">
+      <h1>Hello world</h1>
+    </div>
+```
+
+### Omitting lines
+
+It's also possible to specify ranges of lines to be hidden from an embedded file by adding `// hide-range` comments to your files.
+
+**JavaScript example**:
+
+```jsx
+// hide-range{1-2}
+import React from "react"
+import ReactDOM from "react-dom"
+
+function App() {
+  return (
+    <div className="App">
+      <ul>
+        <li>Not hidden</li>
+        <li>Not hidden</li>
+        {/* hide-range{1-2} */}
+        <li>Hidden</li>
+        <li>Hidden</li>
+        {/* hide-next-line */}
+        <li>Hidden</li>
+      </ul>
+    </div>
+  )
+}
+
+// hide-range{1-2}
+const rootElement = document.getElementById("root")
+ReactDOM.render(<App />, rootElement)
+```
+
+Will produce something like this:
+
+```jsx
+function App() {
+  return (
+    <div className="App">
+      <ul>
+        <li>Not hidden</li>
+        <li>Not hidden</li>
+      </ul>
+    </div>
+  )
+}
+```
+
+### Specifying snippets by name
+
+As an alternative to selecting a range of lines from a file, you can add `START SNIPPET <snippet-name>` and `END SNIPPET <snippet-name>` in comments in your files. The inclusion of a name for a snippet allows you to create an example file that contains multiple snippets that you reference from different places.
+
+You specify that you want to only include a named snippet from the embed using the syntax `#SNsnippet-name`.
+
+**Rust example**:
+
+```markdown
+The function to use is:
+
+`embed:api.rs#SNfuncA`
+
+And it is invoked via
+
+`embed:api.rs#SNinvokeA`
+```
+
+With this example file `api.rs`:
+
+```rust
+// BEGIN SNIPPET funcA
+fn factorial(x: u8) -> u32 {
+    if x <= 1 { 1u32 }
+    else { (x as u32) * factorial(x - 1) }
+}
+// END SNIPPET funcA
+
+pub fn main() -> () {
+    let x: u8 = 5;
+    // BEGIN SNIPPET invokeA
+    let xfact = factorial(x);
+    // END SNIPPET invokeA
+    println!("{} factorial is {}", &x, &xfact);
+}
+```
+
+Will produce something like this:
+
+```markdown
+The function to use is
+
+fn factorial(x: u8) -> u32 {
+if x <= 1 { 1u32 }
+else { (x as u32) \* factorial(x - 1) }
+}
+
+And it is invoked via
+
+let xfact = factorial(x);
+```
+
 ## Code snippet syntax highlighting
 
 ### Highlighting Lines
@@ -243,92 +385,4 @@ bar: "not highlighted"
 # highlight-range{1-2}
 baz: "highlighted"
 quz: "highlighted"
-```
-
-### Hide Lines
-
-It's also possible to specify a range of lines to be hidden.
-
-You can either specify line ranges in the embed using the syntax:
-
-- #Lx - Embed one line from a file
-- #Lx-y - Embed a range of lines from a file
-- #Lx-y,a-b - Embed non-consecutive ranges of lines from a file
-
-**Markdown example**:
-
-```markdown
-This is the JSX of my app:
-
-`embed:App.js#L6-8`
-```
-
-With this example snippet:
-
-```js
-import React from "react"
-import ReactDOM from "react-dom"
-
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello world</h1>
-    </div>
-  )
-}
-```
-
-Will produce something like this:
-
-```markdown
-This is the JSX of my app:
-
-    <div className="App">
-      <h1>Hello world</h1>
-    </div>
-```
-
-**JavaScript example**:
-
-You can also add `// hide-range` comments to your files.
-
-```jsx
-// hide-range{1-2}
-import React from "react"
-import ReactDOM from "react-dom"
-
-function App() {
-  return (
-    <div className="App">
-      <ul>
-        <li>Not hidden</li>
-        <li>Not hidden</li>
-        {/* hide-range{1-2} */}
-        <li>Hidden</li>
-        <li>Hidden</li>
-        {/* hide-next-line */}
-        <li>Hidden</li>
-      </ul>
-    </div>
-  )
-}
-
-// hide-range{1-2}
-const rootElement = document.getElementById("root")
-ReactDOM.render(<App />, rootElement)
-```
-
-Will produce something like this:
-
-```jsx
-function App() {
-  return (
-    <div className="App">
-      <ul>
-        <li>Not hidden</li>
-        <li>Not hidden</li>
-      </ul>
-    </div>
-  )
-}
 ```
