@@ -111,7 +111,7 @@ const Monogram = ({ size, isLast }) => (
       flexDirection: `column`,
       mt: 0,
       mr: 4,
-      [mediaQueries.sm]: {
+      [mediaQueries.md]: {
         display: isLast ? `block` : `flex`,
         mt: 6,
         mr: 6,
@@ -191,7 +191,7 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
       <Box
         sx={{
           height: `40px`,
-          [mediaQueries.sm]: {
+          [mediaQueries.lg]: {
             height: `48px`,
           },
         }}
@@ -514,7 +514,7 @@ const Logo = ({ data, location }) => {
               sx={{
                 display: `flex`,
                 flexDirection: `column`,
-                [mediaQueries.sm]: {
+                [mediaQueries.md]: {
                   flexDirection: `row`,
                 },
               }}
@@ -525,7 +525,7 @@ const Logo = ({ data, location }) => {
                   mr: 0,
                   mb: 4,
                   width: `100%`,
-                  [mediaQueries.sm]: {
+                  [mediaQueries.md]: {
                     mr: 4,
                     mb: 0,
                   },
@@ -537,7 +537,7 @@ const Logo = ({ data, location }) => {
                   mr: 0,
                   mb: 4,
                   width: `100%`,
-                  [mediaQueries.sm]: {
+                  [mediaQueries.md]: {
                     mr: 4,
                     mb: 0,
                   },
@@ -549,7 +549,7 @@ const Logo = ({ data, location }) => {
                   mr: 0,
                   mb: 4,
                   width: `100%`,
-                  [mediaQueries.sm]: {
+                  [mediaQueries.md]: {
                     mb: 0,
                   },
                 }}
