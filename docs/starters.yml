@@ -6205,11 +6205,7 @@
   repo: https://github.com/creationspirit/gatsby-babylonjs-starter
   description: A Gatsby starter with example Babylonjs scene boilerplate.
   tags:
-    - Babylon.js
-    - Personal
-    - Protfolio
-    - WebGL
-    - Graphics
+    - Portfolio
   features:
     - Babylon.js 3D graphics
     - Built on top of Gatsby's default starter
