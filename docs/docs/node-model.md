@@ -1,7 +1,7 @@
 ---
 title: Node Model
 description: Documentation explaining the model of nodes in Gatsby's GraphQL data layer
-jsdoc: ["gatsby/src/schema/node-model.js"]
+jsdoc: ["src/schema/node-model.js"]
 apiCalls: NodeModel
 contentsHeading: Methods
 ---
