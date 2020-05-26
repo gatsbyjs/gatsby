@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.28...gatsby-recipes@0.1.29) (2020-05-25)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add explicit dependencies ([#24355](https://github.com/gatsbyjs/gatsby/issues/24355)) ([ea88112](https://github.com/gatsbyjs/gatsby/commit/ea88112)), closes [#24354](https://github.com/gatsbyjs/gatsby/issues/24354)
+- **gatsby-recipes:** Remove import-jsx, use built cli ([#24354](https://github.com/gatsbyjs/gatsby/issues/24354)) ([ac86cbe](https://github.com/gatsbyjs/gatsby/commit/ac86cbe)), closes [/github.com/gatsbyjs/gatsby/issues/22991#issuecomment-632713137](https://github.com//github.com/gatsbyjs/gatsby/issues/22991/issues/issuecomment-632713137)
+- **recipes:** Brand name Tailwindcss -> Tailwind CSS ([#24407](https://github.com/gatsbyjs/gatsby/issues/24407)) ([0057e1d](https://github.com/gatsbyjs/gatsby/commit/0057e1d))
+
+### Features
+
+- **recipes:** add recipe for Gitlab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
+
 ## [0.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.27...gatsby-recipes@0.1.28) (2020-05-22)
 
 **Note:** Version bump only for package gatsby-recipes
