@@ -18,7 +18,7 @@ Will It Build demonstrates the progress of build times for sample Gatsby benchma
 
 For those curious as to how it all works, we have open sourced [the example benchmark sites](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks) as well as [the benchmark plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting) that reports back the results. Additionally, all of our data can be queried right on the site using our exposed GraphQL API at [willit.build/api-playground](https://willit.build/api-playground).
 
-<Pullquote>One of the coolest things about WIllit.build is how clearly it shows the drastic reduction in build times that our new [Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) feature makes possible on Gatsby Cloud </Pullquote>
+<Pullquote>One of the coolest things about WIllit.build is how clearly it shows the drastic reduction in build times that our new Incremental Builds feature makes possible on Gatsby Cloud </Pullquote>
 
 ![screen shot of contentful benchmark build times for 8000 page website](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
 
