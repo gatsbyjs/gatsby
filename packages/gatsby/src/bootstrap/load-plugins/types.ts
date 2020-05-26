@@ -1,5 +1,5 @@
 export interface ISiteConfig {
-  plugins?: IPluginRefObject[]
+  plugins?: PluginRef[]
 }
 
 // There are two top-level "Plugin" concepts:
@@ -39,6 +39,7 @@ export interface IFlattenedPlugin extends IPluginInfo {
 export interface IPluginRefObject {
   resolve: string
   options?: IPluginRefOptions
+  parentDir?: string
 }
 
 export type PluginRef = string | IPluginRefObject

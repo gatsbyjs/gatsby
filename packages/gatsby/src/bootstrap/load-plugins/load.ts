@@ -148,7 +148,10 @@ export function loadPlugins(
       plugin.options = plugin.options || {}
 
       // Throw an error if there is an "option" key.
-      if (_.isEmpty(plugin.options) && !_.isEmpty(plugin.option)) {
+      if (
+        _.isEmpty(plugin.options) &&
+        !_.isEmpty((plugin as { option?: unknown }).option)
+      ) {
         throw new Error(
           `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`
         )
@@ -248,7 +251,8 @@ export function loadPlugins(
 
   if (config.plugins) {
     const pageCreatorPlugin = config.plugins.find(
-      plugin =>
+      (plugin): plugin is IPluginRefObject =>
+        typeof plugin !== `string` &&
         plugin.resolve === `gatsby-plugin-page-creator` &&
         slash((plugin.options && plugin.options.path) || ``) ===
           slash(path.join(program.directory, `src/pages`))
@@ -262,7 +266,7 @@ export function loadPlugins(
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(
     plugin =>
-      plugin.resolve === `gatsby-plugin-typescript` ||
+      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
       plugin === `gatsby-plugin-typescript`
   )
 
