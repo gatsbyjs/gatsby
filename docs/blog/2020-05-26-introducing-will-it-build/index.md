@@ -20,7 +20,7 @@ For those curious as to how it all works, we have open sourced [the example benc
 
 One of the coolest things about WIllit.build is how clearly it shows the drastic reduction in build times that our new [Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) feature makes possible on Gatsby Cloud:
 
-![](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
+![screen shot of contentful benchmark build times for 8000 page website](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
 
 ## Three types of builds (fast, faster, fastest)
 
