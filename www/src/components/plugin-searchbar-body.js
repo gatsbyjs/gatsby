@@ -247,7 +247,7 @@ class Search extends Component {
           >
             <Stats
               translations={{
-                stats: function (n, ms) {
+                stats: function (n) {
                   return `${n} results`
                 },
               }}
