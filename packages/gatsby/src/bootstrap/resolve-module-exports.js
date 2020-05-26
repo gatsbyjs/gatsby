@@ -55,7 +55,7 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
     },
 
     ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-      const node = astPath.node.declaration
+      const declaration = astPath.node.declaration
 
       // get foo from `export const foo = bar`
       if (
@@ -63,7 +63,7 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
         get(astPath, `node.declaration.declarations[0].id.name`)
       ) {
         isES6 = true
-        exportNames.push(node.declarations[0].id.name)
+        exportNames.push(declaration.declarations[0].id.name)
       }
 
       // get foo from `export function foo()`
@@ -72,7 +72,7 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
         get(astPath, `node.declaration.id.name`)
       ) {
         isES6 = true
-        exportNames.push(node.id.name)
+        exportNames.push(declaration.id.name)
       }
     },
 
