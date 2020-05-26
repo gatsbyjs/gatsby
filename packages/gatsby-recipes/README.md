@@ -147,9 +147,9 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name** name of the plugin
-- **options** object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
-- **key** string used to distinguish between multiple plugin instances
+- **name**: name of the plugin
+- **options**: object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
+- **key**: string used to distinguish between multiple plugin instances
 
 ### `<GatsbyShadowFile>`
 
@@ -159,8 +159,8 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **theme** the name of the theme (or plugin) which provides the file you'd like to shadow
-- **path** the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
+- **theme**: the name of the theme (or plugin) which provides the file you'd like to shadow
+- **path**: the path to the file within the theme. E.g. the example file above lives at `node_modules/gatsby-theme-blog/src/components/seo.js`
 
 ### `<NPMPackage>`
 
@@ -182,8 +182,8 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **name:** name of the command
-- **command** the command that's run when the script is called
+- **name**: name of the command
+- **command**: the command that's run when the script is called
 
 ### `<File>`
 
@@ -196,8 +196,8 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **path** path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
-- **content** URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
+- **path**: path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
+- **content**: URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
 
