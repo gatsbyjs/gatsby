@@ -9,6 +9,7 @@ tags:
   - incremental-builds
   - performance
 ---
+
 ## The first -- and only -- publicly available static site benchmarking service
 
 Today we are thrilled to announce that [Will It Build](https://willit.build/) is live! This benchmarking website lets you view and compare build times for Gatsby-built websites and applications on Gatsby Cloud.
@@ -22,12 +23,13 @@ One of the coolest things about WIllit.build is how clearly it shows the drastic
 ![](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
 
 ## Three types of builds (fast, faster, fastest)
+
 It's also a nifty way to demonstrate the three different types of builds that happen with a static website. With Gatsby, different situations can lead to radically different build times. Not all updates are equal, and Will It Build was created in part to benchmark the different types.
 
-1.  __Uncached/Code changes:__ Initial site builds are always going to take the longest time to build, because Gatsby Cloud needs to establish a baseline build and create the cache. Any time you push a code change through source control like GitHub, that will also trigger a full rebuild. These take the longest (but since many sites don't change their source code all that frequently it's not a huge issue). Even so, Gatsby sites are already optimized for fast builds no matter where they run...though they build fastest on Gatsby Cloud's specialized infrastructure.
+1.  **Uncached/Code changes:** Initial site builds are always going to take the longest time to build, because Gatsby Cloud needs to establish a baseline build and create the cache. Any time you push a code change through source control like GitHub, that will also trigger a full rebuild. These take the longest (but since many sites don't change their source code all that frequently it's not a huge issue). Even so, Gatsby sites are already optimized for fast builds no matter where they run...though they build fastest on Gatsby Cloud's specialized infrastructure.
 
-2.  __Cached code changes:__ These are changes that make use of an available cache and don't require the full rebuild. Much faster!
+2.  **Cached code changes:** These are changes that make use of an available cache and don't require the full rebuild. Much faster!
 
-3.  __Data change from CMS (a.k.a Incremental Builds):__ A data change is a tweak made through the CMS (eg. Contentful). For example when a content editor publishes a new article or fixes a typo, this represents a data change because the codebase itself hasn't changed. Since the initial build is already established, subsequent incremental builds can run a comparison against it to determine what has changed. These builds are the fastest of all and only available on Gatsby Cloud.
+3.  **Data change from CMS (a.k.a Incremental Builds):** A data change is a tweak made through the CMS (eg. Contentful). For example when a content editor publishes a new article or fixes a typo, this represents a data change because the codebase itself hasn't changed. Since the initial build is already established, subsequent incremental builds can run a comparison against it to determine what has changed. These builds are the fastest of all and only available on Gatsby Cloud.
 
 What are you still doing here? Get on over to [Willit.build](https://willit.build/) and try it out for yourself
