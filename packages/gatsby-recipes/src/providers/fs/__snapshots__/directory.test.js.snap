@@ -11,7 +11,6 @@ Object {
 exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
 Object {
   "describe": "Create directory \\"directory\\"",
-  "newState": "directory",
 }
 `;
 
@@ -34,6 +33,5 @@ Object {
 exports[`directory resource e2e directory resource test: Directory update plan 1`] = `
 Object {
   "describe": "Create directory \\"directory1\\"",
-  "newState": "directory1",
 }
 `;
