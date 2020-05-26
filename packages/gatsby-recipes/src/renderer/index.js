@@ -4,7 +4,7 @@ const { transform } = require(`@babel/standalone`)
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 
 const { render } = require(`./render`)
-const resourceComponents = require(`./resource-components`)
+const { resourceComponents } = require(`./resource-components`)
 
 const scope = {
   React,

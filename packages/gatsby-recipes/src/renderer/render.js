@@ -6,6 +6,7 @@ const resources = require(`../resources`)
 const RecipesReconciler = require(`./reconciler`)
 const ErrorBoundary = require(`./error-boundary`)
 const transformToPlan = require(`./transform-to-plan-structure`)
+const { ResourceProvider } = require(`./resource-provider`)
 
 const promises = []
 const errors = []
@@ -25,16 +26,14 @@ const Wrapper = ({ children }) => (
 
 const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
   const userProps = getUserProps(props)
+  const resourceData = readResource(Resource, { root: process.cwd() }, props)
 
   return (
-    <Suspense fallback={<p>Reading resource...</p>}>
+    <ResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>
-        {JSON.stringify({
-          ...readResource(Resource, { root: process.cwd() }, props),
-          _props: userProps,
-        })}
+        {JSON.stringify({ ...resourceData, _props: userProps })}
       </Resource>
-    </Suspense>
+    </ResourceProvider>
   )
 }
 
