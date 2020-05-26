@@ -15,6 +15,7 @@
     "@babel/standalone": "^7.9.6",
     "@babel/template": "^7.8.6",
     "@babel/types": "^7.9.6",
+    "@hapi/hoek": "8.x.x",
     "@hapi/joi": "^15.1.1",
     "@mdx-js/mdx": "^1.6.1",
     "@mdx-js/react": "^1.6.1",
