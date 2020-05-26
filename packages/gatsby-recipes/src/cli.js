@@ -136,6 +136,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-plugin-react-helmet.mdx`,
     },
     {
+      label: `Add Headless WordPress integration`,
+      value: `wordpress.mdx`,
+    },
+    {
       label: `Add Storybook - JavaScript`,
       value: `storybook-js.mdx`,
     },
