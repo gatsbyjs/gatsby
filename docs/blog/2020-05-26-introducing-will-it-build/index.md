@@ -14,11 +14,11 @@ tags:
 
 Today we are thrilled to announce that [Will It Build](https://willit.build/) is live! This benchmarking website lets you view and compare build times for Gatsby-built websites and applications on Gatsby Cloud.
 
-Will It Build demonstrates the progress of build times for sample Gatsby benchmark sites on Gatsby Cloud. We prototyped some generic versions of the many types of sites that can be built with Gatsby, from basic developer blog to large social network with an image on every page, using multiple popular CMS's and content sources. Currently we are showing results for Wordpress, Contentful, Drupal, and DatoCMS as well as sites using MDX and Markdown as the data source. (We will be adding more, so contact [partners@gatsbyjs.com](mailto:partners@gatsbyjs.com) to get the guide for how to create a benchmark for your CMS or service!)
+Will It Build demonstrates the progress of build times for sample Gatsby benchmark sites on Gatsby Cloud. We prototyped some generic versions of the many types of sites that can be built with Gatsby, from a basic developer blog to a large social network with an image on every page, using multiple popular CMS's and content sources. Currently we are showing results for Wordpress, Contentful, Drupal, and DatoCMS as well as sites using MDX and Markdown as the data source. (We will be adding more, so contact [partners@gatsbyjs.com](mailto:partners@gatsbyjs.com) to get the guide for how to create a benchmark for your CMS or service!)
 
 For those curious as to how it all works, we have open sourced [the example benchmark sites](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks) as well as [the benchmark plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting) that reports back the results. Additionally, all of our data can be queried right on the site using our exposed GraphQL API at [willit.build/api-playground](https://willit.build/api-playground).
 
-One of the coolest things about WIllit.build is how clearly it shows the drastic reduction in build times that our new [Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) feature makes possible on Gatsby Cloud:
+<Pullquote>One of the coolest things about WIllit.build is how clearly it shows the drastic reduction in build times that our new [Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) feature makes possible on Gatsby Cloud </Pullquote>
 
 ![screen shot of contentful benchmark build times for 8000 page website](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
 
