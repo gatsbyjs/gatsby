@@ -14,7 +14,7 @@ We pictured a world in which rich, dynamic web applications were built and serve
 
 This is a really exciting vision, but it only works if builds are lightning quick. If our data changes thousands of times a day, and it takes hours to rebuild the site, the math doesn't work.
 
-Happily, this vision has gotten significantly more tangible recently, with our [incremental builds launch](https://gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) last week 🎉
+Happily, this vision has gotten significantly more tangible recently, with our [incremental builds launch](/blog/2020-04-22-announcing-incremental-builds/) last week 🎉
 
 ## What are incremental builds?
 
@@ -84,7 +84,7 @@ It's important to clarify that in order to achieve the results that we have, we 
 
 Because Gatsby Cloud only has to build Gatsby sites, we can make all kinds of assumptions and optimizations around that. Other CI/CD platforms can't optimize their cloud infrastructure for a specific kind of site, since they need to support many different build processes and application types.
 
-That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](https://www.gatsbyjs.org/docs/page-build-optimizations-for-incremental-data-changes/) for "incremental data changes", to handle the content-diffing mentioned earlier.
+That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](/docs/conditional-page-builds/) for "conditional page builds", to handle the content-diffing mentioned earlier.
 
 We do believe that Gatsby Cloud should be the best place to build your Gatsby project, since we're able to make Gatsby-specific optimizations. But we also want Gatsby builds to be fast, no matter where they're built.
 
