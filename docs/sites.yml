@@ -224,12 +224,6 @@
     - Sports
   built_by: Escalade Sports
   built_by_url: https://www.escaladesports.com/
-- title: NEON
-  main_url: http://neonrated.com/
-  url: http://neonrated.com/
-  featured: false
-  categories:
-    - Gallery
 - title: GraphCMS
   main_url: https://graphcms.com/
   url: https://graphcms.com/
@@ -9196,8 +9190,8 @@
   built_by_url: https://pagepro.co
   featured: false
 - title: Tools of Golf
-  main_url: https://toolsof.golf
-  url: https://toolsof.golf/titleist-915-d2-driver
+  main_url: https://thetoolsofgolf.com/
+  url: https://thetoolsofgolf.com//titleist-915-d2-driver
   description: >
     Tools of Golf is a community dedicated to golf nerds and gear heads.
   categories:
@@ -10354,16 +10348,6 @@
   categories:
     - Business
     - Science
-  built_by: Jellypepper
-  built_by_url: https://jellypepper.com/
-- title: Futrli
-  main_url: https://www.futrli.com/
-  url: https://www.futrli.com/
-  description: >
-    Keep and find more cash. Grow your business. Futrli is your artificial intelligence small business accountant.
-  categories:
-    - Business
-    - Finance
   built_by: Jellypepper
   built_by_url: https://jellypepper.com/
 - title: Hasura
