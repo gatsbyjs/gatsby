@@ -84,7 +84,7 @@ It's important to clarify that in order to achieve the results that we have, we 
 
 Because Gatsby Cloud only has to build Gatsby sites, we can make all kinds of assumptions and optimizations around that. Other CI/CD platforms can't optimize their cloud infrastructure for a specific kind of site, since they need to support many different build processes and application types.
 
-That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](/docs/conditional-page-builds/) for "incremental data changes", to handle the content-diffing mentioned earlier.
+That said, it's important to us that Gatsby builds quickly on all platforms! And some of this **is** portable. For example, there is [experimental support](/docs/conditional-page-builds/) for "conditional page builds", to handle the content-diffing mentioned earlier.
 
 We do believe that Gatsby Cloud should be the best place to build your Gatsby project, since we're able to make Gatsby-specific optimizations. But we also want Gatsby builds to be fast, no matter where they're built.
 
