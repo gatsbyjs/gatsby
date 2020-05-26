@@ -10772,6 +10772,20 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: maxemitchell.com
+  url: https://www.maxemitchell.com/
+  main_url: https://www.maxemitchell.com/
+  source_url: https://github.com/maxemitchell/portfolio
+  description: >
+    This is a personal portfolio website to highlight my photography, videography, coding projects, and work/education experience.
+  categories:
+    - Portfolio
+    - Gallery
+    - Portfolio
+    - Open Source
+    - Design
+  built_by: Max Mitchell
+  built_by_url: https://github.com/maxemitchell
 - title: Nick Offerman
   url: https://nickofferman.co/
   main_url: https://nickofferman.co/
