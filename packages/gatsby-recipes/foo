@@ -1,0 +1,7 @@
+set -euxo pipefail
+IFS=$'\n\t'
+
+false | cat
+false
+
+echo ok

@@ -53,6 +53,7 @@
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.5",
     "react-reconciler": "^0.25.1",
+    "remark-mdx": "^1.6.1",
     "remark-stringify": "^8.0.0",
     "semver": "^7.3.2",
     "single-trailing-newline": "^1.0.0",
