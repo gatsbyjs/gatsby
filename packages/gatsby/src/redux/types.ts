@@ -617,9 +617,7 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: {
-    id: Identifier
-  }
+  payload: IGatsbyNode
 }
 
 export interface IDeleteNodesAction {
