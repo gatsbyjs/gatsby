@@ -6301,6 +6301,14 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://creationspirit.github.io/gatsby-babylonjs-starter/
+  repo: https://github.com/creationspirit/gatsby-babylonjs-starter
+  description: A Gatsby starter with example Babylonjs scene boilerplate.
+  tags:
+    - Portfolio
+  features:
+    - Babylon.js 3D graphics
+    - Built on top of Gatsby's default starter
 - url: https://gatsby-starter-voyager.netlify.app/
   repo: https://github.com/gregdferrell/gatsby-starter-voyager
   description: A feature-rich starter blog.
