@@ -627,7 +627,7 @@
     - Components lazy loading (social sharing)
     - ESLint (google config)
     - Prettier code styling
-    - Webpack `BundleAnalyzerPlugin`
+    - webpack `BundleAnalyzerPlugin`
 - url: https://gatsby-starter-i18n-lingui.netlify.com/
   repo: https://github.com/dcroitoru/gatsby-starter-i18n-lingui
   description: n/a
@@ -723,7 +723,7 @@
     - ESLint (google config)
     - Prettier code styling
     - Custom webpack CommonsChunkPlugin settings
-    - Webpack BundleAnalyzerPlugin
+    - webpack BundleAnalyzerPlugin
 - url: http://gatsby-photon.surge.sh/
   repo: https://github.com/codebushi/gatsby-starter-photon
   description: Single page starter based on the Photon site template
@@ -4421,7 +4421,7 @@
     - Offline-ready
     - Responsive design
     - Nodemon for restarting dev server on changes
-    - Webpack aliasing for components, assets, etc
+    - webpack aliasing for components, assets, etc
 - url: https://gatsby-starter-saas-marketing.netlify.com/
   repo: https://github.com/keegn/gatsby-starter-saas-marketing
   description: A simple one page marketing site starter for SaaS companies and products
@@ -6301,6 +6301,29 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-starter-voyager.netlify.app/
+  repo: https://github.com/gregdferrell/gatsby-starter-voyager
+  description: A feature-rich starter blog.
+  tags:
+    - Blog
+    - Markdown
+    - Pagination
+    - RSS
+    - SEO
+    - Styling:SCSS
+    - Styling:Other
+  features:
+    - Beautiful starter blog with content in markdown
+    - Responsive, mobile-first design using tachyons.scss, flexbox, SCSS & CSS modules
+    - Fast, with top-notch lighthouse audit scores
+    - View posts by tag & author
+    - Pagination & next/prev navigation
+    - Social sharing links on blog posts (twitter, facebook, pinterest)
+    - SEO component with social sharing cards for twitter & facebook
+    - Structured data, schema.org
+    - Sitemap & RSS feed
+    - Support for email subscription to Mailchimp campaign
+    - Support for Google analytics
 - url: https://expo-gatsby-starter.netlify.app/
   repo: https://github.com/Sidibedev/expo-gatsby-starter
   description: A simple Expo and Gatsby starter.

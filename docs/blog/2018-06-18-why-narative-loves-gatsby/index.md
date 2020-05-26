@@ -29,7 +29,7 @@ Great performance out-of-the-box is a huge win. Our team does not have to focus 
 
 ## Developing with Gatsby is fast, really fast
 
-Gatsby does not only allow us to deliver fast websites, it has also sped up our development time. The developer experience is another focus of the team behind Gatsby - and it shows. Features such as live reload are ready to go at when you start a new project. There's no need to setup a custom Webpack configuration as the basics are completed for you. Building your website and deploying is also carefully thought out by Gatsby and often requires running a single command and using one of the many integrations for hosting. Furthermore, the documentation is comprehensive and has plenty of content from introductory guides to complex use cases. This has been amazing for training and on boarding new members of our team, especially if they're already familiar with React.
+Gatsby does not only allow us to deliver fast websites, it has also sped up our development time. The developer experience is another focus of the team behind Gatsby - and it shows. Features such as live reload are ready to go at when you start a new project. There's no need to setup a custom webpack configuration as the basics are completed for you. Building your website and deploying is also carefully thought out by Gatsby and often requires running a single command and using one of the many integrations for hosting. Furthermore, the documentation is comprehensive and has plenty of content from introductory guides to complex use cases. This has been amazing for training and on boarding new members of our team, especially if they're already familiar with React.
 
 ## Separation between view and data layers
 
