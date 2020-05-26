@@ -59,6 +59,7 @@
     "style-to-object": "^0.3.0",
     "subscriptions-transport-ws": "^0.9.16",
     "svg-tag-names": "^2.0.1",
+    "unified": "^8.4.2",
     "unist-util-visit": "^2.0.2",
     "urql": "^1.9.7",
     "ws": "^7.3.0",
