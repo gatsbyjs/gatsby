@@ -18,6 +18,8 @@ import { componentDataDependenciesReducer } from "./component-data-dependencies"
 import { nodesTouchedReducer } from "./nodes-touched"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
+import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
+import { pendingPageDataWritesReducer } from "./pending-page-data-writes"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -49,4 +51,6 @@ module.exports = {
   inferenceMetadata: require(`./inference-metadata`),
   pageDataStats: pageDataStatsReducer,
   pageData: pageDataReducer,
+  staticQueriesByTemplate: staticQueriesByTemplateReducer,
+  pendingPageDataWrites: pendingPageDataWritesReducer,
 }

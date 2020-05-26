@@ -53,9 +53,53 @@ const writePageData = async ({ publicDir }, page, { staticQueryHashes }) => {
   await fs.outputFile(outputFilePath, bodyStr)
 }
 
+const flush = async () => {
+  const {
+    pendingPageDataWrites,
+    components,
+    pages,
+    staticQueriesByTemplate,
+    program,
+  } = store.getState()
+
+  console.log({
+    pendingPageDataWrites,
+  })
+
+  const { pagePaths, templatePaths } = pendingPageDataWrites
+
+  const pagesToWrite = Array.from(templatePaths).reduce(
+    (set, componentPath) => {
+      const { pages } = components.get(componentPath)
+      pages.forEach(set.add.bind(set))
+      return set
+    },
+    new Set(pagePaths.values())
+  )
+
+  for (const pagePath of pagesToWrite) {
+    const page = pages.get(pagePath)
+    await writePageData(
+      { publicDir: path.join(program.directory, `public`) },
+      page,
+      {
+        staticQueryHashes: staticQueriesByTemplate.get(page.componentPath),
+      }
+    )
+    console.log({ pagePath })
+  }
+
+  store.dispatch({
+    type: `CLEAR_PENDING_PAGE_DATA_WRITES`,
+  })
+
+  return
+}
+
 module.exports = {
   read,
   writePageData,
   remove,
   fixedPagePath,
+  flush,
 }

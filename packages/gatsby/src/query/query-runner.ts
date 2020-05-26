@@ -168,6 +168,12 @@ export const queryRunner = async (
         `${queryJob.id.replace(/\//g, `_`)}.json`
       )
       await fs.outputFile(resultPath, resultJSON)
+      store.dispatch({
+        type: `ADD_PENDING_PAGE_DATA_WRITE`,
+        payload: {
+          path: queryJob.id,
+        },
+      })
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

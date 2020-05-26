@@ -1,6 +1,6 @@
 import url from "url"
 import fs from "fs"
-import path from "path"
+import { isEqual } from "lodash"
 import openurl from "better-opn"
 import chokidar from "chokidar"
 import { SchemaComposer } from "graphql-compose"
@@ -64,7 +64,10 @@ import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-import { mapPagesToStaticQueryHashes } from "../utils/map-pages-to-static-query-hashes"
+import {
+  mapPagesToStaticQueryHashes,
+  mapTemplatesToStaticQueryHashes,
+} from "../utils/map-pages-to-static-query-hashes"
 import pageDataUtil from "../utils/page-data"
 
 import { Stage, IProgram } from "./types"
@@ -670,7 +673,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, async function (
     stats,
     done
   ) {
@@ -720,22 +723,39 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
     if (isSuccessful) {
       const state = store.getState()
-      const mapOfPagesToStaticQueryHashes = mapPagesToStaticQueryHashes(
+      const mapOfTemplatesToStaticQueryHashes = mapTemplatesToStaticQueryHashes(
         state,
         stats
       )
 
-      const publicDir = path.join(program.directory, `public`)
-
-      mapOfPagesToStaticQueryHashes.forEach(
-        async (staticQueryHashes, pagePath) => {
-          const page = state.pages.get(pagePath)
-
-          await pageDataUtil.writePageData({ publicDir }, page, {
-            staticQueryHashes,
-          })
+      mapOfTemplatesToStaticQueryHashes.forEach(
+        (staticQueryHashes, componentPath) => {
+          if (
+            !isEqual(
+              state.staticQueriesByTemplate.get(componentPath)?.sort(),
+              staticQueryHashes.map(toString)?.sort()
+            )
+          ) {
+            store.dispatch({
+              type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+              payload: {
+                componentPath,
+              },
+            })
+            store.dispatch({
+              type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
+              payload: {
+                componentPath,
+                staticQueryHashes,
+              },
+            })
+          }
         }
       )
+
+      await pageDataUtil.flush()
+
+      console.log(store.getState().pendingPageDataWrites)
     }
 
     done()
