@@ -1,18 +1,23 @@
-const allLangs = require("../../i18n.json")
-const defaultLang = "en"
+const allLangs = require(`../../i18n.json`)
+const defaultLang = `en`
 
 // Only allow languages defined in the LOCALES env variable.
 // This allows us to compile only languages that are "complete" or test only
 // a single language
-function getLanguages() {
+function getLanguages(localeStr) {
   // If `LOCALES` isn't defined, only have default language (English)
-  if (!process.env.LOCALES) {
+  if (!localeStr) {
     return []
   }
 
-  const langCodes = process.env.LOCALES.split(" ")
+  const langCodes = localeStr.split(` `)
   const langs = []
   for (let code of langCodes) {
+    if (code === defaultLang) {
+      throw new Error(
+        `${code} is the default locale and should not be put in the locale list.`
+      )
+    }
     const lang = allLangs.find(lang => lang.code === code)
     // Error if one of the locales provided isn't a valid locale
     if (!lang) {
@@ -25,8 +30,10 @@ function getLanguages() {
   return langs
 }
 
-const langs = getLanguages()
+const langs = getLanguages(process.env.LOCALES)
 const langCodes = langs.map(lang => lang.code)
+
+const i18nEnabled = langs.length > 0
 
 function isDefaultLang(locale) {
   return locale === defaultLang
@@ -34,30 +41,26 @@ function isDefaultLang(locale) {
 
 /**
  * Get the path prefixed with the locale
- * @param {*} locale the locale to prefix with
- * @param {*} path the path to prefix
+ * @param {string} locale the locale to prefix with
+ * @param {string} path the path to prefix
  */
 function localizedPath(locale, path) {
-  const isIndex = path === `/`
-
   // Our default language isn't prefixed for back-compat
   if (isDefaultLang(locale)) {
     return path
   }
 
-  const [, base] = path.split("/")
+  const [, base] = path.split(`/`)
 
   // If for whatever reason we receive an already localized path
   // (e.g. if the path was made with location.pathname)
   // just return it as-is.
-  if (langCodes.includes(base)) {
+  if (base === locale) {
     return path
   }
 
-  // If it's another language, add the "path"
-  // However, if the homepage/index page is linked don't add the "to"
-  // Because otherwise this would add a trailing slash
-  return `${locale}${isIndex ? `` : `${path}`}`
+  // If it's another language, prefix with the locale
+  return `/${locale}${path}`
 }
 
 /**
@@ -65,19 +68,23 @@ function localizedPath(locale, path) {
  *
  * e.g. /es/tutorial/ -> { locale: "es", basePath: "/tutorial/"}
  * @param {string} path the path to extract locale information from
+ * @param {Array} langCodes a list of valid language codes, defaulting to
+ * the ones defined in `process.env.LOCALES`
  */
-function getLocaleAndBasePath(path) {
-  const [, code, ...rest] = path.split("/")
-  if (langCodes.includes(code)) {
-    return { locale: code, basePath: `/${rest.join("/")}` }
+function getLocaleAndBasePath(path, codes = langCodes) {
+  const [, code, ...rest] = path.split(`/`)
+  if (codes.includes(code)) {
+    return { locale: code, basePath: `/${rest.join(`/`)}` }
   }
   return { locale: defaultLang, basePath: path }
 }
 
 module.exports = {
+  i18nEnabled,
   langCodes,
   langs,
   defaultLang,
+  getLanguages,
   localizedPath,
   getLocaleAndBasePath,
 }

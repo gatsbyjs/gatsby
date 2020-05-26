@@ -33,6 +33,8 @@ module.exports = {
         experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
         // Set Variation ID. 0 for original 1,2,3....
         variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
+        // Defers execution of google analytics script after page load
+        defer: false,
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
@@ -100,6 +102,10 @@ you can set a link e.g. in your imprint as follows:
 ### `respectDNT`
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
+
+If you are testing this, make sure to disable Do Not Track settings in your own browser.
+For Chrome, Settings > Privacy and security > More
+Then disable `Send a "Do Not Track" request with your browsing traffic`
 
 ### `exclude`
 

@@ -70,7 +70,7 @@ changes you want to make so it applies only required changes, thus making the
 rendering much faster.
 
 If you use React with
-[server-side rendering](https://facebook.github.io/react/docs/react-dom-server.html),
+[server-side rendering](https://reactjs.org/docs/react-dom-server.html),
 your flow looks something like this:
 
 - A browser requests a page

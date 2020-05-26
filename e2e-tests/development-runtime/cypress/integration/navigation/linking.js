@@ -26,9 +26,7 @@ describe(`navigation`, () => {
   })
 
   it(`can navigate back using history`, () => {
-    cy.getTestElement(`page-two`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`page-two`).click().waitForRouteChange()
 
     cy.go(`back`).waitForRouteChange()
 
@@ -37,15 +35,11 @@ describe(`navigation`, () => {
 
   describe(`non-existent route`, () => {
     beforeEach(() => {
-      cy.getTestElement(`broken-link`)
-        .click()
-        .waitForRouteChange()
+      cy.getTestElement(`broken-link`).click().waitForRouteChange()
     })
 
     it(`displays 404 page on broken link`, () => {
-      cy.get(`h1`)
-        .invoke(`text`)
-        .should(`eq`, `Gatsby.js development 404 page`)
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
 
       /*
        * Two route updates:
@@ -58,9 +52,7 @@ describe(`navigation`, () => {
     it(`can display a custom 404 page`, () => {
       cy.get(`button`).click()
 
-      cy.getTestElement(`page-title`)
-        .invoke(`text`)
-        .should(`eq`, `NOT FOUND`)
+      cy.getTestElement(`page-title`).invoke(`text`).should(`eq`, `NOT FOUND`)
 
       /*
        * Two route updates:
@@ -82,9 +74,7 @@ describe(`navigation`, () => {
 
     it(`Can navigate on client`, () => {
       cy.visit(`/`).waitForRouteChange()
-      cy.getTestElement(`page-with-unicode-path`)
-        .click()
-        .waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`).click().waitForRouteChange()
 
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)
@@ -96,9 +86,7 @@ describe(`navigation`, () => {
         failOnStatusCode: false,
       }).waitForRouteChange()
 
-      cy.get(`h1`)
-        .invoke(`text`)
-        .should(`eq`, `Gatsby.js development 404 page`)
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
@@ -107,9 +95,7 @@ describe(`navigation`, () => {
         .then(win => win.___navigate(`/안녕404/`))
         .waitForRouteChange()
 
-      cy.get(`h1`)
-        .invoke(`text`)
-        .should(`eq`, `Gatsby.js development 404 page`)
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
     })
   })
 })

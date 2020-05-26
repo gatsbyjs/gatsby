@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import Link from "gatsby-link"
+import Link from "./localized-link"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 

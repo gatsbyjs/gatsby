@@ -1,24 +1,27 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
+const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
 const yaml = require(`js-yaml`)
 const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
+const { i18nEnabled } = require(`./src/utils/i18n`)
 
 const docs = require(`./src/utils/node/docs.js`)
+const blog = require(`./src/utils/node/blog.js`)
 const showcase = require(`./src/utils/node/showcase.js`)
 const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, showcase, starters, creators, packages, features]
+const sections = [docs, blog, showcase, starters, creators, packages, features]
 
 exports.createPages = async helpers => {
   const { actions } = helpers
   const { createRedirect } = actions
 
   redirects.forEach(redirect => {
-    createRedirect({ isPermanent: true, ...redirect })
+    createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
   Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
@@ -26,6 +29,7 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
+      force: true,
     })
   })
 
@@ -35,6 +39,13 @@ exports.createPages = async helpers => {
 // Create slugs for files, set released status for blog posts.
 exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
+}
+
+exports.onPostBootstrap = () => {
+  // Compile language strings if locales are enabled
+  if (i18nEnabled) {
+    child_process.execSync(`yarn lingui:build`)
+  }
 }
 
 exports.onPostBuild = () => {
@@ -48,7 +59,6 @@ exports.onPostBuild = () => {
 exports.sourceNodes = async ({
   actions: { createTypes, createNode },
   createContentDigest,
-  schema,
 }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in

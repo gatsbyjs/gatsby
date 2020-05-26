@@ -1,6 +1,6 @@
 /*  eslint-disable new-cap */
 const graphql = require(`gatsby/graphql`)
-const murmurhash = require(`./murmur`)
+const { murmurhash } = require(`./murmur`)
 const nodePath = require(`path`)
 
 class StringInterpolationNotAllowedError extends Error {
@@ -38,6 +38,20 @@ class GraphQLSyntaxError extends Error {
 
 const isGlobalIdentifier = tag =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
+
+export function followVariableDeclarations(binding) {
+  const node = binding.path?.node
+  if (
+    node?.type === `VariableDeclarator` &&
+    node?.id.type === `Identifier` &&
+    node?.init?.type === `Identifier`
+  ) {
+    return followVariableDeclarations(
+      binding.path.scope.getBinding(node.init.name)
+    )
+  }
+  return binding
+}
 
 function getTagImport(tag) {
   const name = tag.node.name
@@ -159,16 +173,13 @@ function isUseStaticQuery(path) {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `useStaticQuery` &&
-      path
-        .get(`callee`)
-        .get(`object`)
-        .referencesImport(`gatsby`)) ||
+      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
     (path.node.callee.name === `useStaticQuery` &&
       path.get(`callee`).referencesImport(`gatsby`))
   )
 }
 
-export default function({ types: t }) {
+export default function ({ types: t }) {
   return {
     visitor: {
       Program(path, state) {
@@ -221,11 +232,6 @@ export default function({ types: t }) {
               const filename = state.file.opts.filename
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
-
-              // Remove query variable since it is useless now
-              if (this.templatePath.parentPath.isVariableDeclarator()) {
-                this.templatePath.parentPath.remove()
-              }
 
               // only remove the import if its like:
               // import { useStaticQuery } from 'gatsby'
@@ -357,21 +363,6 @@ export default function({ types: t }) {
             })
           },
         })
-
-        function followVariableDeclarations(binding) {
-          const node = binding.path?.node
-          if (
-            node &&
-            node.type === `VariableDeclarator` &&
-            node.id.type === `Identifier` &&
-            node.init.type === `Identifier`
-          ) {
-            return followVariableDeclarations(
-              binding.path.scope.getBinding(node.init.name)
-            )
-          }
-          return binding
-        }
 
         // Traverse once again for useStaticQuery instances
         path.traverse({

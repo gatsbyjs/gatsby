@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
-import LaunchDemoIcon from "react-icons/lib/md/launch"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import MdStar from "react-icons/lib/md/star"
+import Link from "../../components/localized-link"
+import { MdLaunch as LaunchDemoIcon, MdStar } from "react-icons/md"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import {
   showcaseList,
   showcaseItem,
@@ -16,7 +15,7 @@ import EmptyGridItems from "../shared/empty-grid-items"
 import V2Icon from "!raw-loader!../../assets/icons/v2icon.svg"
 import { get } from "lodash-es"
 
-const StartersList = ({ urlState, starters, count, sortRecent }) => {
+const StartersList = ({ urlState, starters, count }) => {
   if (!starters.length) {
     // empty state!
     const emptyStateReason =
@@ -218,7 +217,7 @@ const StartersList = ({ urlState, starters, count, sortRecent }) => {
 export default StartersList
 
 function sortingFunction() {
-  return function({ node: nodeA }, { node: nodeB }) {
+  return function ({ node: nodeA }, { node: nodeB }) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)
     return metricB - metricA

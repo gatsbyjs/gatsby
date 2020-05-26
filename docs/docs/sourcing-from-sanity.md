@@ -4,7 +4,7 @@ title: Sourcing from Sanity
 
 ## What is Sanity.io?
 
-[Sanity](https:///www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
+[Sanity](https://www.sanity.io) is a hosted backend for structured content that comes with an open source editor built in React. It has powerful real-time APIs for both reading and writing data.
 
 You can use Sanity as a headless CMS that lets your authors work in a user friendly environment, or as a pure data backend for your apps. We make it easier for you to reuse content across multiple websites, apps, print, voice assistants, and other channels.
 
@@ -12,7 +12,7 @@ You can use Sanity as a headless CMS that lets your authors work in a user frien
 
 Begin with setting up a Gatsby project. If you want to start from scratch, the [Quick Start guide](/docs/quick-start) is a good place to begin. Come back to this guide when you're set up.
 
-You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be an useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
+You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be a useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
 
 This guide will cover how configure and use the [`gatsby-source-sanity`](https://www.npmjs.com/package/gatsby-source-sanity) plugin.
 
@@ -237,22 +237,24 @@ SANITY_TOKEN = my-super-secret-token
 ```
 
 ```js:title=gatsby-config.js
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: "gatsby-source-sanity",
       options: {
         projectId: process.env.SANITY_PROJECT_ID,
-        dataset: process.env.SANITY_DATASET
-        token: process.env.SANITY_TOKEN
-      }
-    }
-  ]
+        dataset: process.env.SANITY_DATASET,
+        token: process.env.SANITY_TOKEN,
+      },
+    },
+  ],
 }
 ```
 
 This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+
+<CloudCallout />

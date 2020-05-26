@@ -2,8 +2,10 @@
 import { jsx } from "theme-ui"
 import React from "react"
 import Link from "./localized-link"
-import ChevronRight from "react-icons/lib/md/chevron-right"
-import ChevronLeft from "react-icons/lib/md/chevron-left"
+import {
+  MdChevronRight as ChevronRight,
+  MdChevronLeft as ChevronLeft,
+} from "react-icons/md"
 import { getItemList } from "../utils/sidebar/item-list"
 import getActiveItem from "../utils/sidebar/get-active-item"
 import getActiveItemParents from "../utils/sidebar/get-active-item-parents"
@@ -37,8 +39,8 @@ const Breadcrumb = ({ location }) => {
   // provide escape if no itemList is provided so breadcrumb isn't rendered
   if (itemList === undefined) return null
 
-  const activeItem = getActiveItem(itemList.items, location, undefined)
-  const activeItemParents = getActiveItemParents(itemList.items, activeItem, [])
+  const activeItem = getActiveItem(itemList.items, location)
+  const activeItemParents = getActiveItemParents(itemList.items, activeItem)
   const topLevel = itemList.key
   const topLevelTitle = itemList.breadcrumbTitle || itemList.title
   // return a shorter version of the breadcrumb on the intro page

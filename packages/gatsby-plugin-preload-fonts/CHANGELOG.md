@@ -3,6 +3,94 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.7...gatsby-plugin-preload-fonts@1.2.8) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.6...gatsby-plugin-preload-fonts@1.2.7) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.5...gatsby-plugin-preload-fonts@1.2.6) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.4...gatsby-plugin-preload-fonts@1.2.5) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.3...gatsby-plugin-preload-fonts@1.2.4) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.2...gatsby-plugin-preload-fonts@1.2.3) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.1...gatsby-plugin-preload-fonts@1.2.2) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.2.0...gatsby-plugin-preload-fonts@1.2.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+# [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.1.4...gatsby-plugin-preload-fonts@1.2.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.1.3...gatsby-plugin-preload-fonts@1.1.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.1.2...gatsby-plugin-preload-fonts@1.1.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.1.1...gatsby-plugin-preload-fonts@1.1.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.1.0...gatsby-plugin-preload-fonts@1.1.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+# [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.36...gatsby-plugin-preload-fonts@1.1.0) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.0.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.35...gatsby-plugin-preload-fonts@1.0.36) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-preload-fonts:** lookup routes with and without trailing slash ([#21890](https://github.com/gatsbyjs/gatsby/issues/21890)) ([6475398](https://github.com/gatsbyjs/gatsby/commit/6475398)), closes [#21814](https://github.com/gatsbyjs/gatsby/issues/21814)
+
+## [1.0.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.34...gatsby-plugin-preload-fonts@1.0.35) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.0.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.33...gatsby-plugin-preload-fonts@1.0.34) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.0.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.32...gatsby-plugin-preload-fonts@1.0.33) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.0.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.31...gatsby-plugin-preload-fonts@1.0.32) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.0.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.30...gatsby-plugin-preload-fonts@1.0.31) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
+## [1.0.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.29...gatsby-plugin-preload-fonts@1.0.30) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-preload-fonts
+
 ## [1.0.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preload-fonts@1.0.28...gatsby-plugin-preload-fonts@1.0.29) (2020-03-02)
 
 ### Features

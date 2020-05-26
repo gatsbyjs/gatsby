@@ -4,7 +4,7 @@
  * @returns {Object} headers and sections for features tables
  */
 
-export const getFeaturesData = function(data) {
+export const getFeaturesData = function (data) {
   const sections = (data || [])
     .map((row, i) => (row.Category ? i : -1))
     .filter(rowNum => rowNum !== -1)

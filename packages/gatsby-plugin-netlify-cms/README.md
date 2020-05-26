@@ -80,8 +80,12 @@ The js module might look like this:
 import CMS from "netlify-cms-app"
 
 /**
- * Any imported styles will automatically be applied to the editor preview
- * pane, there is no need to use `registerPreviewStyle` for imported styles.
+ * Any imported styles should be automatically be applied to the editor preview
+ * pane thus eliminating the need to use `registerPreviewStyle` for imported
+ * styles. However if you are experiencing build errors regarding importing css,
+ * sass or scss into a cms module when deploying to the netlify platform, you
+ * may need to follow the implementation found in netlify documentation here:
+ * https://www.netlifycms.org/docs/beta-features/#raw-css-in-registerpreviewstyle
  * All of the example imports below would result in styles being applied to the
  * preview pane.
  */

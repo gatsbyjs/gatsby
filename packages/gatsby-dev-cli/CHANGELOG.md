@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.4...gatsby-dev-cli@2.7.5) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.3...gatsby-dev-cli@2.7.4) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** fix `set-path-to-repo` command after yargs bump ([#23899](https://github.com/gatsbyjs/gatsby/issues/23899)) ([b130a8e](https://github.com/gatsbyjs/gatsby/commit/b130a8e))
+
+## [2.7.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.2...gatsby-dev-cli@2.7.3) (2020-05-08)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.7.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.1...gatsby-dev-cli@2.7.2) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** fix "expected manifest" errors ([#23871](https://github.com/gatsbyjs/gatsby/issues/23871)) ([a29aca1](https://github.com/gatsbyjs/gatsby/commit/a29aca1))
+
+## [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.0...gatsby-dev-cli@2.7.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.6.4...gatsby-dev-cli@2.7.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.6.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.6.3...gatsby-dev-cli@2.6.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.6.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.6.2...gatsby-dev-cli@2.6.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.6.1...gatsby-dev-cli@2.6.2) (2020-04-08)
+
+### Bug Fixes
+
+- **docs:** remove double words ([#22494](https://github.com/gatsbyjs/gatsby/issues/22494)) ([75f6ee2](https://github.com/gatsbyjs/gatsby/commit/75f6ee2))
+
+## [2.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.6.0...gatsby-dev-cli@2.6.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.47...gatsby-dev-cli@2.6.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.5.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.46...gatsby-dev-cli@2.5.47) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [2.5.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.45...gatsby-dev-cli@2.5.46) (2020-03-10)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** Include theme src directories ([#22147](https://github.com/gatsbyjs/gatsby/issues/22147)) ([8dab4c3](https://github.com/gatsbyjs/gatsby/commit/8dab4c3))
+
+## [2.5.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.44...gatsby-dev-cli@2.5.45) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 ## [2.5.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.5.43...gatsby-dev-cli@2.5.44) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-dev-cli
@@ -309,7 +375,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- check for for both unix and win32 path separators ([#8837](https://github.com/gatsbyjs/gatsby/issues/8837)) ([57cd191](https://github.com/gatsbyjs/gatsby/commit/57cd191))
+- check for both unix and win32 path separators ([#8837](https://github.com/gatsbyjs/gatsby/issues/8837)) ([57cd191](https://github.com/gatsbyjs/gatsby/commit/57cd191))
 
 <a name="2.4.4"></a>
 

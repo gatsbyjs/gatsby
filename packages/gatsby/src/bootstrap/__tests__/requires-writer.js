@@ -293,7 +293,7 @@ describe(`requires-writer`, () => {
         expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2"`)
       })
 
-      it(`will find path with dynamic paramter before path with wildcard`, async () => {
+      it(`will find path with dynamic parameter before path with wildcard`, async () => {
         const { allMatchingPages, selectedPage } = await testScenario(
           `/mp1/test`
         )
@@ -324,6 +324,31 @@ describe(`requires-writer`, () => {
 
         expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2/*"`)
       })
+    })
+  })
+
+  describe(`getComponents`, () => {
+    it(`should return components in a deterministic order`, () => {
+      const pagesInput = generatePagesState([
+        {
+          component: `component1`,
+          componentChunkName: `chunkName1`,
+          matchPath: `matchPath1`,
+          path: `/path1`,
+        },
+        {
+          component: `component2`,
+          componentChunkName: `chunkName2`,
+          path: `/path2`,
+        },
+      ])
+
+      const pages = [...pagesInput.values()]
+      const pagesReversed = [...pagesInput.values()].reverse()
+
+      expect(requiresWriter.getComponents(pages)).toEqual(
+        requiresWriter.getComponents(pagesReversed)
+      )
     })
   })
 })

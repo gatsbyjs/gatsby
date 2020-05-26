@@ -8,7 +8,7 @@ tags: ["jekyll", "plugins", "getting-started", "gatsby-apis"]
 
 _This article is the first of a two part series, on the engineering behind my [website](https://jiahao.codes). Originally published [here](https://jiahao.codes/blog/why-i-upgraded-my-website/)_
 
-For the past couple of weeks, I’ve been rebuilding my personal website from scratch, live at [https://jiahao.codes](https://jiahao.codes) with the source code on [GitHub](https://github.com/jiahaog/jiahao.codes). In this article, I'll tell the story of this long overdue rewrite and talk about the new static site framework I eventually settled on, Gatsby.
+For the past couple of weeks, I’ve been rebuilding my personal website from scratch, live at https://jiahao.codes with the source code on [GitHub](https://github.com/jiahaog/jiahao.codes). In this article, I'll tell the story of this long overdue rewrite and talk about the new static site framework I eventually settled on, Gatsby.
 
 ## Background
 
@@ -44,7 +44,7 @@ It offers much much more, however. Gatsby lets me leverage all the modern tools 
 
 Let me briefly give a high level overview of how Gatsby works from my short experience using it.
 
-Developing the application is the same as developing a React application, with useful things like [hot module replacement](https://webpack.js.org/guides/hot-module-replacement/) to aid easy development already set up by Gatsby. What’s different is that there is a framework in place to use [GraphQL](http://graphql.org/) queries to pull content into the client side browser environment. React components can define a query and the component will be hydrated with the result of the query as props when it is rendered.
+Developing the application is the same as developing a React application, with useful things like [hot module replacement](https://webpack.js.org/guides/hot-module-replacement/) to aid easy development already set up by Gatsby. What’s different is that there is a framework in place to use [GraphQL](https://graphql.org/) queries to pull content into the client side browser environment. React components can define a query and the component will be hydrated with the result of the query as props when it is rendered.
 
 For example, I defined a `PostTemplate` which will be used to render pages for articles.
 
@@ -86,7 +86,7 @@ export const pageQuery = graphql`
 
 When the `<PostTemplate />` component needs to be rendered into a page, the accompanying exported `pageQuery`, a GraphQL query is made, and the results are passed in as props into the component.
 
-The real magic happens when the website is compiled into a production bundle. Running `npm run build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into a HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without JavaScript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
+The real magic happens when the website is compiled into a production bundle. Running `npm run build` will tell Gatsby to perform all the GraphQL queries defined and render all the React components into an HTML document, using a technique known as server-side rendering. This means that everything “React” is serialized and compiled to static HTML, ready to be viewed without JavaScript. Visitors to the site will then be able to quickly load and interact with the static version of the page.
 
 Not only that, within the HTML document, there are instructions to load the JavaScript bundle of your application asynchronously. When it has been loaded, the content displayed in the browser will be dynamically replaced by the React application, gaining interactivity. This also happens with the other pages of your site — Gatsby will ensure that they are asynchronously loaded so that when you click on a link, the data is already cached on the browser for React to swap out the DOM elements that need to be changed. Everything is done to give the illusion of speed to the viewer while asynchronously loading everything in the background.
 
@@ -100,7 +100,7 @@ Because of the APIs exposed by Gatsby for interfacing with its internals, powerf
 
 The [Node.js APIs](/docs/node-apis/) let plugins extend or modify the heavy lifting performed by the Node.js process when compiling the application. Your gatsby-node.js file can export functions which modify the GraphQL data that is provided to React components when they are rendered. The APIs are also used by plugins to extend the internals of Gatsby e.g. the default webpack config can also be customized here.
 
-Take the example of what happens during the processing of markdown files into pages. The [gatsby-source-filesystem](/packages/gatsby-source-filesystem) plugin scans directories and from files it finds, creates File nodes. These File nodes are then processed by [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/tree/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-transformer-remark) , parsing the markup into HTML with the [Remark](https://remark.js.org/) markdown processor.
+Take the example of what happens during the processing of markdown files into pages. The [gatsby-source-filesystem](/packages/gatsby-source-filesystem) plugin scans directories and from files it finds, creates File nodes. These File nodes are then processed by [gatsby-transformer-remark](https://github.com/gatsbyjs/gatsby/tree/a3fea82b4d4b4c644156e841401821933e8d694a/packages/gatsby-transformer-remark), parsing the markup into HTML with the [Remark](https://remark.js.org/) markdown processor.
 
 #### Server-side Rendering APIs
 

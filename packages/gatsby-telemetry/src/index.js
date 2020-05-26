@@ -28,7 +28,7 @@ module.exports = {
   startBackgroundUpdate: _ => {
     setTimeout(tick, interval)
   },
-  isTrackingEnabled: () => instance.isTrackingEnabled,
+  isTrackingEnabled: () => instance.isTrackingEnabled(),
   aggregateStats: data => instance.aggregateStats(data),
   addSiteMeasurement: (event, obj) => instance.addSiteMeasurement(event, obj),
   expressMiddleware: source => (req, res, next) => {

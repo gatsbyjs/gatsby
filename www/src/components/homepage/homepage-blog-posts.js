@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
-import { Link } from "gatsby"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import Link from "../localized-link"
+import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
 import HomepageBlogPost from "./homepage-blog-post"
 import {
@@ -10,7 +10,10 @@ import {
   HorizontalScrollerContent,
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
-import { breakpoints, mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import {
+  breakpoints,
+  mediaQueries,
+} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
@@ -43,7 +46,6 @@ const PostsColumn = styled(`div`)`
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
   font-family: ${p => p.theme.fonts.heading};
-  overflow: hidden;
   width: auto;
 
   a {
@@ -129,7 +131,7 @@ class HomepageBlogPosts extends Component {
     this.desktopMediaQuery.removeListener(this.updateViewPortState)
   }
 
-  updateViewPortState = e => {
+  updateViewPortState = () => {
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
 

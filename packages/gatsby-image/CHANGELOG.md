@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.4...gatsby-image@2.4.5) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.3...gatsby-image@2.4.4) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.2...gatsby-image@2.4.3) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix fluid not respecting maxWidth/maxHeight ([#17006](https://github.com/gatsbyjs/gatsby/issues/17006)) ([ad7cd6b](https://github.com/gatsbyjs/gatsby/commit/ad7cd6b))
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.1...gatsby-image@2.4.2) (2020-05-06)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.0...gatsby-image@2.4.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.5...gatsby-image@2.4.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.4...gatsby-image@2.3.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.3...gatsby-image@2.3.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.2...gatsby-image@2.3.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.1...gatsby-image@2.3.2) (2020-04-07)
+
+### Bug Fixes
+
+- **gatsby-image:** apply IE polyfill styles to placeholder images too ([#22863](https://github.com/gatsbyjs/gatsby/issues/22863)) ([80c453e](https://github.com/gatsbyjs/gatsby/commit/80c453e))
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.0...gatsby-image@2.3.1) (2020-03-23)
+
+### Bug Fixes
+
+- **gatsby-image:** check if imageRef is still available ([#22255](https://github.com/gatsbyjs/gatsby/issues/22255)) ([363279a](https://github.com/gatsbyjs/gatsby/commit/363279a))
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.45...gatsby-image@2.3.0) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.44...gatsby-image@2.2.45) (2020-03-18)
+
+### Bug Fixes
+
+- **gatsby-image:** When art-directing images, default the padding aspect ratio to first image without a media query when no media query matches ([#21431](https://github.com/gatsbyjs/gatsby/issues/21431)) ([df7e93d](https://github.com/gatsbyjs/gatsby/commit/df7e93d))
+
+## [2.2.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.43...gatsby-image@2.2.44) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.2.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.42...gatsby-image@2.2.43) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.2.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.2.41...gatsby-image@2.2.42) (2020-03-02)
 
 **Note:** Version bump only for package gatsby-image

@@ -36,6 +36,12 @@ Then the plugin can begin to hook into Gatsby through [Node](/docs/node-apis/) a
 
 Your plugin doesn't have to be in your project in order to be tested or worked on. If you'd like to [decouple](/docs/glossary#decoupled) your plugin from your site you can follow one of the methods described below. This is a useful thing to do if you want to publish the plugin as its own package, or test/develop a forked version of a community authored plugin.
 
+To get started developing a plugin outside of your site's root folder, you can quickly generate one using `gatsby new` with the [starter for plugins](https://github.com/gatsbyjs/gatsby/tree/master/starters/gatsby-starter-plugin):
+
+```shell
+gatsby new gatsby-plugin-foo https://github.com/gatsbyjs/gatsby-starter-plugin
+```
+
 ### Using `require.resolve` and a filepath
 
 Including a `plugins` folder is not the only way to reference a local plugin. Alternatively, you can include a plugin in your `gatsby-config.js` file by directly referencing its path (relative to the `gatsby-config.js` file) with `require`.

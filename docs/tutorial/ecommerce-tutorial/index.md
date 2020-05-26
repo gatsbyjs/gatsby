@@ -7,7 +7,7 @@ In this advanced tutorial, you’ll learn how to use Gatsby to build the UI for 
 - Demo running [on Netlify](https://gatsby-ecommerce-stripe.netlify.com/)
 - Code hosted [on GitHub](https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe)
 
-## Why use Gatsby for an e-commerce site?
+## Why use Gatsby for an E-commerce site?
 
 Benefits of using Gatsby for e-commerce sites include the following:
 
@@ -32,8 +32,8 @@ Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) tha
 Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
 
 ```shell
-gatsby new ecommerce-gatsby-tutorial
-cd ecommerce-gatsby-tutorial
+gatsby new e-commerce-gatsby-tutorial
+cd e-commerce-gatsby-tutorial
 ```
 
 ### See your site hot reload in the browser!
@@ -228,7 +228,7 @@ Now you can add the plugin configuration in your `gatsby-config` file:
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby e-commerce Starter`,
+    title: `Gatsby E-commerce Starter`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -278,33 +278,35 @@ In your components folder add a new `Products` folder. This folder will include 
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
 
-export default props => (
-  <StaticQuery
-    query={graphql`
-      query SkusForProduct {
-        skus: allStripeSku {
-          edges {
-            node {
-              id
-              currency
-              price
-              attributes {
-                name
+export default function Skus(props) {
+  return (
+    <StaticQuery
+      query={graphql`
+        query SkusForProduct {
+          skus: allStripeSku {
+            edges {
+              node {
+                id
+                currency
+                price
+                attributes {
+                  name
+                }
               }
             }
           }
         }
-      }
-    `}
-    render={({ skus }) => (
-      <div>
-        {skus.edges.map(({ node: sku }) => (
-          <p key={sku.id}>{sku.attributes.name}</p>
-        ))}
-      </div>
-    )}
-  />
-)
+      `}
+      render={({ skus }) => (
+        <div>
+          {skus.edges.map(({ node: sku }) => (
+            <p key={sku.id}>{sku.attributes.name}</p>
+          ))}
+        </div>
+      )}
+    />
+  )
+}
 ```
 
 You can validate your query and see what data is being returned in GraphiQL, which is available at `http://localhost:8000/___graphql` when running `gatsby develop`.

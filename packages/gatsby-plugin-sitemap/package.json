@@ -1,21 +1,21 @@
 {
   "name": "gatsby-plugin-sitemap",
   "description": "Gatsby plugin that automatically creates a sitemap for your site",
-  "version": "2.2.27",
+  "version": "2.4.3",
   "author": "Nicholas Young &lt;nicholas@nicholaswyoung.com&gt;",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
+    "@babel/runtime": "^7.9.6",
     "minimatch": "^3.0.4",
     "pify": "^3.0.0",
     "sitemap": "^1.13.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "babel-preset-gatsby-package": "^0.4.2",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
@@ -34,11 +34,11 @@
     "directory": "packages/gatsby-plugin-sitemap"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   }
 }

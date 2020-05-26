@@ -1,12 +1,12 @@
 // @flow
-const fs = require(`fs`)
-const traverse = require(`@babel/traverse`).default
-const get = require(`lodash/get`)
-const { codeFrameColumns } = require(`@babel/code-frame`)
-const { babelParseToAst } = require(`../utils/babel-parse-to-ast`)
-const report = require(`gatsby-cli/lib/reporter`)
+import fs from "fs"
+import traverse from "@babel/traverse"
+import get from "lodash/get"
+import { codeFrameColumns } from "@babel/code-frame"
+import { babelParseToAst } from "../utils/babel-parse-to-ast"
+import report from "gatsby-cli/lib/reporter"
 
-const testRequireError = require(`../utils/test-require-error`).default
+import { testRequireError } from "../utils/test-require-error"
 
 const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   let absPath
@@ -54,14 +54,26 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       isES6 = true
     },
 
-    // get foo from `export const foo = bar`
     ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-      const exportName = get(
-        astPath,
-        `node.declaration.declarations[0].id.name`
-      )
-      isES6 = true
-      if (exportName) exportNames.push(exportName)
+      const declaration = astPath.node.declaration
+
+      // get foo from `export const foo = bar`
+      if (
+        get(astPath, `node.declaration.type`) === `VariableDeclaration` &&
+        get(astPath, `node.declaration.declarations[0].id.name`)
+      ) {
+        isES6 = true
+        exportNames.push(declaration.declarations[0].id.name)
+      }
+
+      // get foo from `export function foo()`
+      if (
+        get(astPath, `node.declaration.type`) === `FunctionDeclaration` &&
+        get(astPath, `node.declaration.id.name`)
+      ) {
+        isES6 = true
+        exportNames.push(declaration.id.name)
+      }
     },
 
     // get foo from `export { foo } from 'bar'`
@@ -70,6 +82,15 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       const exportName = get(astPath, `node.exported.name`)
       isES6 = true
       if (exportName) exportNames.push(exportName)
+    },
+
+    // export default () => {}
+    // const foo = () => {}; export default foo
+    ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
+      const name = get(astPath, `node.declaration.name`)
+      const exportName = `export default${name ? ` ${name}` : ``}`
+      isES6 = true
+      exportNames.push(exportName)
     },
 
     AssignmentExpression: function AssignmentExpression(astPath) {

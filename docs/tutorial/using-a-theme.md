@@ -96,15 +96,17 @@ Open up the `bio-content.js` file and make some content edits:
 ```jsx:title=bio-content.js
 import React, { Fragment } from "react"
 
-export default () => (
-  {/* highlight-start */}
-  <Fragment>
-    This is my updated bio.
-    <br />
-    It's shadowing the content from the theme.
-  </Fragment>
-  {/* highlight-end */}
-)
+export default function Bio() {
+  return (
+    {/* highlight-start */}
+    <Fragment>
+      This is my updated bio.
+      <br />
+      It's shadowing the content from the theme.
+    </Fragment>
+    {/* highlight-end */}
+  )
+}
 ```
 
 At this point, you should have an updated avatar, updated site details, and an updated bio:
@@ -182,3 +184,7 @@ To see what other theme colors you can customize, check out the `colors.js` file
 ## Wrapping up
 
 This was a step-by-step introduction to using a Gatsby theme through looking at a specific example. Note that different themes will be built differently, to accept different customization options. To dive deeper, check out the [Gatsby Theme docs](/docs/themes/).
+
+## What's next?
+
+- [Using multiple themes together](/tutorial/using-multiple-themes-together/)

@@ -106,7 +106,7 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 ## Lists
 
-In this example, leading and trailing spaces are shown with with dots: ⋅
+In this example, leading and trailing spaces are shown with dots: ⋅
 
 ```no-highlight
 1. First ordered list item

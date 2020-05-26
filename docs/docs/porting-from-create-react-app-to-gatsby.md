@@ -53,7 +53,7 @@ After installation, the key things that need to change are:
 
 1. ensuring any calls to browser-based APIs still work (if there are any)
 
-1. converting routes into pages in the `/pages` directory
+2. converting routes into pages in the `/pages` directory
 
 The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
 
@@ -119,11 +119,11 @@ The `gatsby build` command also won't be able to use browser APIs, so some code 
 
 Some common globals that would need to be protected are:
 
-- `window`
-- `localStorage`
-- `sessionStorage`
-- `navigator`
-- `document`
+- [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window)
+- [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+- [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator)
+- [`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)
 
 Additionally, some packages that depend on globals existing (e.g. `react-router-dom`) may need to be [patched](/docs/debugging-html-builds/#fixing-third-party-modules) or migrated to other packages.
 
@@ -290,9 +290,24 @@ function App() {
 export default App
 ```
 
-In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js`:
+In Gatsby, if you want your providers to be global across pages you would move those providers to `gatsby-browser.js` and `gatsby-ssr.js` :
 
 ```jsx:title=gatsby/gatsby-browser.js
+import React from "react"
+
+const defaultTheme = "light"
+export const ThemeContext = React.createContext(defaultTheme)
+
+export const wrapRootElement = ({ element }) => {
+  return (
+    <ThemeContext.Provider value={defaultTheme}>
+      {element}
+    </ThemeContext.Provider>
+  )
+}
+```
+
+```jsx:title=gatsby/gatsby-ssr.js
 import React from "react"
 
 const defaultTheme = "light"

@@ -1,5 +1,5 @@
 import React from "react"
-import MdWarning from "react-icons/lib/md/warning"
+import { MdWarning } from "react-icons/md"
 
 import Layout from "../../components/guidelines/layout"
 import { Box, Flex, Text } from "../../components/guidelines/system"

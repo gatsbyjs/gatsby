@@ -145,7 +145,10 @@ class GatsbyLink<TState> extends React.Component<
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }: LinkGetProps): IGetProps => {
+  defaultGetProps = ({
+    isPartiallyCurrent,
+    isCurrent,
+  }: LinkGetProps): IGetProps => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -213,9 +216,15 @@ class GatsbyLink<TState> extends React.Component<
           ) {
             e.preventDefault()
 
+            let shouldReplace = replace
+            const isCurrent = encodeURI(to) === window.location.pathname
+            if (typeof replace !== `boolean` && isCurrent) {
+              shouldReplace = true
+            }
+
             // Make sure the necessary scripts and data are
             // loaded before continuing.
-            navigate(to, { state, replace })
+            navigate(to, { state, replace: shouldReplace })
           }
         }}
         {...rest}

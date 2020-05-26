@@ -17,8 +17,9 @@ jest.mock(`sharp`, () => {
 })
 
 jest.mock(`potrace`, () => {
+  const circleSvgString = `<svg height="100" width="100"><circle cx="50" cy="50" r="40" /></svg>`
   return {
-    trace: (_, _2, cb) => cb(null, ``),
+    trace: (_, _2, cb) => cb(null, circleSvgString),
     Potrace: {
       TURNPOLICY_MAJORITY: `wat`,
     },

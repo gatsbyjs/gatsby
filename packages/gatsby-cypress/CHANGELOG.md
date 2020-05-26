@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.4.1...gatsby-cypress@0.4.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.4.0...gatsby-cypress@0.4.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.3.4...gatsby-cypress@0.4.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.3.3...gatsby-cypress@0.3.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.3.2...gatsby-cypress@0.3.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [0.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.3.1...gatsby-cypress@0.3.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.3.0...gatsby-cypress@0.3.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.24...gatsby-cypress@0.3.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [0.2.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.23...gatsby-cypress@0.2.24) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.22...gatsby-cypress@0.2.23) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-cypress
+
 ## [0.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.2.21...gatsby-cypress@0.2.22) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-cypress

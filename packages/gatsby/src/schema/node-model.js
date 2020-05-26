@@ -71,21 +71,21 @@ class LocalNodeModel {
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
-    this.replaceTypeKeyValueCache()
+    this.replaceFiltersCache()
   }
 
   /**
    * Replace the cache either with the value passed on (mainly for tests) or
    * an empty new Map.
    *
-   * @param {undefined | Map<string, Map<string, Set<Node>> | Map<string, Node>>} map
+   * @param {undefined | null | FiltersCache} map
    *   (This cached is used in redux/nodes.js and caches a set of buckets (Sets)
    *   of Nodes based on filter and tracks this for each set of types which are
    *   actually queried. If the filter targets `id` directly, only one Node is
-   *   cached instead of a Set of Nodes.
+   *   cached instead of a Set of Nodes. If null, don't create or use a cache.
    */
-  replaceTypeKeyValueCache(map = new Map()) {
-    this._typedKeyValueIndexes = map // See redux/nodes.js for usage
+  replaceFiltersCache(map = new Map()) {
+    this._filtersCache = map // See redux/nodes.js for usage
   }
 
   withContext(context) {
@@ -201,7 +201,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies) {
-    const { query, firstOnly, type } = args || {}
+    const { query, firstOnly, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -213,6 +213,13 @@ class LocalNodeModel {
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
 
+    let materializationActivity
+    if (tracer) {
+      materializationActivity = reporter.phantomActivity(`Materialization`, {
+        parentSpan: tracer.getParentActivity().span,
+      })
+      materializationActivity.start()
+    }
     const fields = getQueryFields({
       filter: query.filter,
       sort: query.sort,
@@ -229,6 +236,18 @@ class LocalNodeModel {
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
 
+    if (materializationActivity) {
+      materializationActivity.end()
+    }
+
+    let runQueryActivity
+    if (tracer) {
+      runQueryActivity = reporter.phantomActivity(`runQuery`, {
+        parentSpan: tracer.getParentActivity().span,
+      })
+      runQueryActivity.start()
+    }
+
     const queryResult = await this.nodeStore.runQuery({
       queryArgs: query,
       firstOnly,
@@ -237,8 +256,24 @@ class LocalNodeModel {
       gqlType,
       resolvedFields: fieldsToResolve,
       nodeTypeNames,
-      typedKeyValueIndexes: this._typedKeyValueIndexes,
+      filtersCache: this._filtersCache,
+      stats,
     })
+
+    if (runQueryActivity) {
+      runQueryActivity.end()
+    }
+
+    let trackInlineObjectsActivity
+    if (tracer) {
+      trackInlineObjectsActivity = reporter.phantomActivity(
+        `trackInlineObjects`,
+        {
+          parentSpan: tracer.getParentActivity().span,
+        }
+      )
+      trackInlineObjectsActivity.start()
+    }
 
     let result = queryResult
     if (firstOnly) {
@@ -250,6 +285,10 @@ class LocalNodeModel {
       }
     } else if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
+    }
+
+    if (trackInlineObjectsActivity) {
+      trackInlineObjectsActivity.end()
     }
 
     return this.trackPageDependencies(result, pageDependencies)
@@ -725,9 +764,9 @@ const addRootNodeToInlineObject = (
   rootNodeMap,
   data,
   nodeId,
-  isNode /*: boolean */,
-  path /*: Set<mixed> */
-) /*: void */ => {
+  isNode /* : boolean */,
+  path /* : Set<mixed> */
+) /* : void */ => {
   const isPlainObject = _.isPlainObject(data)
 
   if (isPlainObject || _.isArray(data)) {

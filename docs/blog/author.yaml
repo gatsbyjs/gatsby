@@ -3,7 +3,7 @@
   avatar: avatars/kyle-mathews.jpeg
   twitter: "@kylemathews"
 - id: Dustin Schau
-  bio: Software Engineer @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
+  bio: Head of Product @ GatsbyJS. Likes all things JavaScript, and travel. Doesn't totally suck 👋
   avatar: avatars/dustin-schau.png
   twitter: "@schaudustin"
 - id: Kostas Bariotis
@@ -153,7 +153,7 @@
   avatar: avatars/dennis-brotzky.jpg
   twitter: "@_brotzky"
 - id: Tony Spiro
-  bio: Cosmic JS Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
+  bio: Cosmic Co-founder. Building (blazing fast) apps faster @ https://cosmicjs.com
   avatar: avatars/tony-spiro.jpg
   twitter: "@tonyspiro"
 - id: Khaled Garbaya
@@ -161,7 +161,7 @@
   avatar: avatars/khaled-garbaya.jpg
   twitter: "@khaled_garbaya"
 - id: Mikhail Novikov
-  bio: GraphQL sommelier. Did Reindex, GraphQL Delegation, Schema Stitching, Launchpad. Organizer @GraphQLFinland.
+  bio: Gatsby Core Tech Lead
   avatar: avatars/freiksenet.jpg
   twitter: "@freiksenet"
 - id: Horacio Herrera
@@ -320,7 +320,7 @@
   avatar: avatars/thomas-wang.jpeg
   twitter: "@thomaswangio"
 - id: Hashim Warren
-  bio: Marketer turned Web Developer  - https://hashim.xyz
+  bio: Full Stack Marketer, writing copy and code - https://www.configmag.com
   avatar: avatars/hashim-warren.jpg
   twitter: "@hashim_warren"
 - id: Caitlin Cashin
@@ -392,3 +392,41 @@
   bio: Teacher, speaker, and community organizer who learned to code via Neopets. Loves theater, karaoke, and dogs.
   avatar: avatars/aisha-blake.jpg
   twitter: "@AishaBlake"
+- id: Rich Manalang
+  bio: Principal developer advocate at LaunchDarkly
+  avatar: avatars/rich-manalang.jpeg
+  twitter: "@rmanalan"
+- id: Bob Orchard
+  bio: Semi-stack developer with a design background. Senior Product Manager at Gatsby Cloud. I love to make things with my hands, travel, and tinker with new tech.
+  avatar: avatars/bob-orchard.jpg
+  twitter: "@boborchard"
+- id: Greg Thomas
+  bio: "Writer, musician, historian, and dedicated service provider for the dog."
+  avatar: avatars/greg-thomas.jpg
+- id: Laci Texter
+  bio: "Runner of rivers and city blocks, car-a-oke queen, and very fond of snail mail. Enjoys the art/science/sport of communication. Senior Brand Marketing Manager for Gatsby."
+  avatar: avatars/laci-texter.jpg
+  twitter: "@textercomm"
+- id: Debra Combs
+  bio: "Product Manager, Writer, Gamer, and lover of laughter."
+  avatar: avatars/debra-combs.png
+- id: Joel Varty
+  bio: "Dad to teens, HS football coach, president of Agility CMS."
+  avatar: avatars/joel-varty.jpg
+  twitter: "@joelvarty"
+- id: Paul Scanlon
+  bio: "Front End React UI Developer/UX Engineer based in Worthing, UK. After all is said and done, structure + order = fun."
+  avatar: avatars/paul-scanlon.jpg
+  twitter: "@PaulieScanlon"
+- id: Jake Lumetta
+  bio: "Jake is the CEO of ButterCMS. He loves whipping up Butter puns and building tools that make developers' lives better."
+  avatar: avatars/jake-lumetta.jpg
+  twitter: "@jakelumetta"
+- id: Maxime Castres
+  bio: "Growth Hacker @ Strapi. Gathering interesting individuals to build the best community."
+  avatar: avatars/maxime-castres.jpg
+  twitter: "@MaxCastres"
+- id: Eric Howey
+  bio: "Dad all the time, mental health therapist full time, web developer in my spare time. I listen and care."
+  avatar: avatars/eric-howey.jpg
+  twitter: "@erchwy"

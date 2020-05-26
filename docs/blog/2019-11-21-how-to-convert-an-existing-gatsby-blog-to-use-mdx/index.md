@@ -93,7 +93,7 @@ For reference, here's the full configuration for `gatsby-plugin-mdx`.
 },
 ```
 
-Then, replace `gatsby-plugin-feed` with `gatsby-plugin-feed-mdx`. This will allow the the RSS feed of the site to parse MDX.
+Then, replace `gatsby-plugin-feed` with `gatsby-plugin-feed-mdx`. This will allow the RSS feed of the site to parse MDX.
 
 ```diff:title=gatsby-config.js
 - `gatsby-plugin-feed`,

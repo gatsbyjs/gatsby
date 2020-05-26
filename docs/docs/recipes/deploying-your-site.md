@@ -82,25 +82,107 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 - [Hosting on Netlify](/docs/hosting-on-netlify)
 - [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
 
-## Deploying to ZEIT Now
+## Deploying to Vercel
 
-Use [Now CLI](https://zeit.co/download) to deploy your Gatsby application without leaving the command-line interface.
+Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application without leaving the command-line interface.
 
 ### Prerequisites
 
-- A [ZEIT Now](https://zeit.co/signup) account
+- A [Vercel](https://vercel.com/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
-- [Now CLI](https://zeit.co/download) package installed
+- [Vercel CLI](https://vercel.com/download) package installed
 - [Gatsby CLI](/docs/gatsby-cli) installed
 
 ### Directions
 
-1. Login into Now CLI using `now login`
+1. Login into Vercel CLI using `vercel login`
 
 2. Change to the directory of your Gatsby.js application in the Terminal if you aren't already there
 
-3. Run `now` to deploy it
+3. Run `vercel` to deploy it
 
 ### Additional resources
 
-- [Deploying to ZEIT Now](/docs/deploying-to-zeit-now/)
+- [Deploying to Vercel](/docs/deploying-to-vercel/)
+
+## Deploying to Cloudflare Workers
+
+Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to deploy your Gatsby application globally without leaving the command-line interface.
+
+### Prerequisites
+
+- An account on [Cloudflare](https://dash.cloudflare.com/sign-up)
+- A [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for \$5/month to enable the KV store, which is required to serve the Gatsby files.
+- A [Gatsby site](/docs/quick-start) set up with Gatsby's CLI
+- [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/install/) installed globally (`npm i -g @cloudflare/wrangler`)
+
+### Directions
+
+1. Build your Gatsby application using `gatsby build`
+2. Run `wrangler config` where you'll be prompted for your [Cloudflare API token](https://developers.cloudflare.com/workers/quickstart/#api-token)
+3. Run `wrangler init --site`
+4. Configure `wrangler.toml`. First add [account ID](https://developers.cloudflare.com/workers/quickstart/#account-id-and-zone-id) field and then either
+   1. A free workers.dev domain by setting `workers_dev = true`
+   2. A custom domain on Cloudflare by setting `workers_dev = false`, `zone_id = "abdc..` and `route = customdomain.com/*`
+5. In `wrangler.toml` set `bucket = "./public"`
+6. Run `wrangler publish` and your site will be deployed in seconds!
+
+### Additional resources
+
+- [Hosting on Cloudflare](/docs/deploying-to-cloudflare-workers)
+
+## Setting up Google Analytics
+
+Use `gatsby-plugin-google-analytics` to track site activity and provide insights into how users access your website.
+
+### Prerequisites
+
+- A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
+- The [Gatsby CLI](/docs/gatsby-cli) installed
+- A domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
+
+### Verify the domain in search.google.com
+
+1. Navigate to the [Google search console](https://search.google.com/search-console/not-verified) to verify the domain by clicking on **Search Property** > **Add Property**. Type in your domain and press Continue.
+2. Add a **TXT** record to your DNS configuration. Follow the directions for your provider, or refer to the [Google documentation](https://support.google.com/a/answer/183895?hl=en).
+
+### Linking the domain to Google Analytics admin
+
+1. Log into [Google Analytics](https://analytics.google.com/analytics/).
+2. Click **Admin**.
+3. Select **Create Property** in the Property column.
+4. Choose **Web**.
+5. Fill in the details and click **Create**.
+
+### Getting your Google Analytics `Tracking ID`
+
+1. Sign in to your Google Analytics account.
+2. Click **Admin**.
+3. Select an account from the menu in the ACCOUNT column.
+4. Select a property from the menu in the PROPERTY column.
+5. Under Property, click **Tracking Info** > **Tracking Code**. Your Tracking ID is displayed at the top of the page.
+
+### Using the ID in the plugin
+
+1. Run `npm install gatsby-plugin-google-analytics` in your terminal.
+2. Add the following to your `gatsby-config.js` file.
+
+```javascript:title="gatsby-config.js"
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
+        trackingId: "UA-XXXXXXXXX-X",
+      },
+    },
+  ],
+}`
+```
+
+3. Build and deploy your site to start seeing traffic in your [Google Analytics dashboard](https://analytics.google.com/analytics/web/).
+
+### Additional resources
+
+- [adding-analytics](/docs/adding-analytics/)

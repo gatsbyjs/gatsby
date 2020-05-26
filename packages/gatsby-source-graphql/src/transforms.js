@@ -4,7 +4,7 @@ const {
   cloneType,
   healSchema,
   visitSchema,
-} = require(`graphql-tools-fork`)
+} = require(`graphql-tools`)
 
 class NamespaceUnderFieldTransform {
   constructor({ typeName, fieldName, resolver }) {

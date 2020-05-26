@@ -1,14 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
-import { graphql, Link } from "gatsby"
-import { Helmet } from "react-helmet"
+import { graphql } from "gatsby"
+import Link from "../components/localized-link"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
 const removeProtocol = input => input.replace(/^https?:\/\//, ``)
 
@@ -68,9 +69,10 @@ class CreatorTemplate extends Component {
 
     return (
       <React.Fragment>
-        <Helmet>
-          <title>{`${creator.name} - Creator`}</title>
-        </Helmet>
+        <PageMetadata
+          title={`${creator.name} - Creator`}
+          description={creator.description}
+        />
         <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"
@@ -219,8 +221,8 @@ class CreatorTemplate extends Component {
                       <Img
                         alt={`${site.title}`}
                         fixed={
-                          site.childScreenshot.screenshotFile
-                            .childImageSharp.fixed
+                          site.childScreenshot.screenshotFile.childImageSharp
+                            .fixed
                         }
                       />
                     </Link>

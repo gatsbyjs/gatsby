@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.2...gatsby-plugin-guess-js@1.3.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.1...gatsby-plugin-guess-js@1.3.2) (2020-05-07)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.3.0...gatsby-plugin-guess-js@1.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.2.4...gatsby-plugin-guess-js@1.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.2.3...gatsby-plugin-guess-js@1.2.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.2.2...gatsby-plugin-guess-js@1.2.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [1.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.2.1...gatsby-plugin-guess-js@1.2.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.2.0...gatsby-plugin-guess-js@1.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+# [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.33...gatsby-plugin-guess-js@1.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [1.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.32...gatsby-plugin-guess-js@1.1.33) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency guess-webpack to ~0.4.17 ([#22319](https://github.com/gatsbyjs/gatsby/issues/22319)) ([770c365](https://github.com/gatsbyjs/gatsby/commit/770c365))
+
+## [1.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.31...gatsby-plugin-guess-js@1.1.32) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
+## [1.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.30...gatsby-plugin-guess-js@1.1.31) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-guess-js
+
 ## [1.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-guess-js@1.1.29...gatsby-plugin-guess-js@1.1.30) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-guess-js

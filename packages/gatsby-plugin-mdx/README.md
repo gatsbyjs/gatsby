@@ -36,10 +36,11 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
       - [Imports](#imports)
       - [Shortcodes](#shortcodes)
       - [Gatsby remark plugins](#gatsby-remark-plugins)
-      - [MD plugins](#md-plugins)
-      - [HAST plugins](#hast-plugins)
+      - [Remark plugins](#remark-plugins)
+      - [Rehype plugins](#rehype-plugins)
       - [Media types](#media-types)
         - [Explanation](#explanation)
+      - [shouldBlockNodeFromTransformation](#shouldblocknodefromtransformation)
     - [Components](#components)
       - [MDXProvider](#mdxprovider)
         - [Related](#related)
@@ -51,7 +52,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 Install with npm:
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
@@ -334,6 +335,7 @@ images can be optimized by Gatsby and you should continue using it.
 // gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -357,7 +359,9 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
-#### MD plugins
+> Note that in the case of `gatsby-remark-images` the plugin needs to be included as both a sub-plugin of gatsby-plugin-mdx and a string entry in the plugins array.
+
+#### Remark plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -379,7 +383,7 @@ module.exports = {
 }
 ```
 
-#### HAST plugins
+#### Rehype plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -512,7 +516,7 @@ The following components can be customized with the MDXProvider:
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
 
-It's important to define the `components` you pass in in a stable way
+It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
@@ -556,6 +560,22 @@ export const pageQuery = graphql`
     }
   }
 `
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
 ```
 
 ## License

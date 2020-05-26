@@ -7,7 +7,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
 const { addDerivedType } = require(`../types/derived-types`)
-const is32BitInteger = require(`./is-32-bit-integer`)
+import { is32BitInteger } from "../../utils/is-32-bit-integer"
 
 const addInferredFields = ({
   schemaComposer,
@@ -406,10 +406,7 @@ const getSimpleFieldConfig = ({
 
 const createTypeName = selector => {
   const keys = selector.split(`.`)
-  const suffix = keys
-    .slice(1)
-    .map(_.upperFirst)
-    .join(``)
+  const suffix = keys.slice(1).map(_.upperFirst).join(``)
   return `${keys[0]}${suffix}`
 }
 

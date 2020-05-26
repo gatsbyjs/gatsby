@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.8...gatsby-plugin-sharp@2.6.9) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.7...gatsby-plugin-sharp@2.6.8) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.6...gatsby-plugin-sharp@2.6.7) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.5...gatsby-plugin-sharp@2.6.6) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.4...gatsby-plugin-sharp@2.6.5) (2020-05-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** presentation sizes ([#23905](https://github.com/gatsbyjs/gatsby/issues/23905)) ([900e6e8](https://github.com/gatsbyjs/gatsby/commit/900e6e8))
+
+## [2.6.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.3...gatsby-plugin-sharp@2.6.4) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.2...gatsby-plugin-sharp@2.6.3) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.1...gatsby-plugin-sharp@2.6.2) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix fluid not respecting maxWidth/maxHeight ([#17006](https://github.com/gatsbyjs/gatsby/issues/17006)) ([ad7cd6b](https://github.com/gatsbyjs/gatsby/commit/ad7cd6b))
+
+## [2.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.6.0...gatsby-plugin-sharp@2.6.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.7...gatsby-plugin-sharp@2.6.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.5.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.6...gatsby-plugin-sharp@2.5.7) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.5.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.5...gatsby-plugin-sharp@2.5.6) (2020-04-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** error if we can't determine dimensio… ([#23156](https://github.com/gatsbyjs/gatsby/issues/23156)) ([e11c970](https://github.com/gatsbyjs/gatsby/commit/e11c970))
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.5.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.4...gatsby-plugin-sharp@2.5.5) (2020-04-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** trim option failed ([#22997](https://github.com/gatsbyjs/gatsby/issues/22997)) ([0558443](https://github.com/gatsbyjs/gatsby/commit/0558443))
+
+## [2.5.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.3...gatsby-plugin-sharp@2.5.4) (2020-04-04)
+
+### Bug Fixes
+
+- **dependencies:** bump potrace version ([#22803](https://github.com/gatsbyjs/gatsby/issues/22803)) ([7a8f016](https://github.com/gatsbyjs/gatsby/commit/7a8f016))
+
+## [2.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.2...gatsby-plugin-sharp@2.5.3) (2020-03-24)
+
+### Bug Fixes
+
+- **docs:** remove double words ([#22494](https://github.com/gatsbyjs/gatsby/issues/22494)) ([75f6ee2](https://github.com/gatsbyjs/gatsby/commit/75f6ee2))
+- **gatsby-plugin-sharp:** Apply transformArgs on compressJpg a… ([#22538](https://github.com/gatsbyjs/gatsby/issues/22538)) ([4fd158f](https://github.com/gatsbyjs/gatsby/commit/4fd158f))
+
+## [2.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.1...gatsby-plugin-sharp@2.5.2) (2020-03-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** fix Traced SVG scaling issue in Internet Explorer ([#22358](https://github.com/gatsbyjs/gatsby/issues/22358)) ([6d4fa76](https://github.com/gatsbyjs/gatsby/commit/6d4fa76))
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.5.0...gatsby-plugin-sharp@2.5.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.13...gatsby-plugin-sharp@2.5.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.12...gatsby-plugin-sharp@2.4.13) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.11...gatsby-plugin-sharp@2.4.12) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.10...gatsby-plugin-sharp@2.4.11) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.9...gatsby-plugin-sharp@2.4.10) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.4.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.8...gatsby-plugin-sharp@2.4.9) (2020-03-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** add inside and outside fit opt… ([#14852](https://github.com/gatsbyjs/gatsby/issues/14852)) ([1aa2974](https://github.com/gatsbyjs/gatsby/commit/1aa2974)), closes [#13078](https://github.com/gatsbyjs/gatsby/issues/13078) [/github.com/gatsbyjs/gatsby/pull/13078#issuecomment-482247808](https://github.com//github.com/gatsbyjs/gatsby/pull/13078/issues/issuecomment-482247808)
+
+## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.7...gatsby-plugin-sharp@2.4.8) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.6...gatsby-plugin-sharp@2.4.7) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.5...gatsby-plugin-sharp@2.4.6) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.4.4...gatsby-plugin-sharp@2.4.5) (2020-02-01)
 
 ### Bug Fixes

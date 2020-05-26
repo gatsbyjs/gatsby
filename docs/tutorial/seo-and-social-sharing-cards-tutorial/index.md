@@ -44,10 +44,10 @@ Using the power and flexibility of React, you can create a React component to po
 >
 > If you're not using those starters, [follow this guide for installation instructions][gatsby-plugin-react-helmet]
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 // highlight-start
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 // highlight-end
 
@@ -80,9 +80,9 @@ export default SEO
 
 This component doesn't _do_ anything yet, but it's the foundation for a useful, extensible component. It leverages the `useStaticQuery` functionality enabled via Gatsby to query siteMetadata (e.g. details in `gatsby-config.js`) with description and keywords. At this point, the `SEO` component returns `null` to render nothing. Next, you will _actually_ render something and build out the prototype for this SEO component.
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta }) {
@@ -117,7 +117,7 @@ function SEO({ description, lang, meta }) {
         // highlight-start
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         // highlight-end
       ]}
@@ -148,10 +148,10 @@ In addition to SEO for actual _search_ engines you also want those pretty cards 
 - Title for embedded results
 - (Optionally) display an image and a card if an image is passed in to the component
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types" // highlight-line
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -176,7 +176,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
   // highlight-start
   const image =
     metaImage && metaImage.src
-      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
       : null
   // highlight-end
 
@@ -194,7 +194,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
         },
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
@@ -269,8 +269,8 @@ SEO.propTypes = {
   // highlight-start
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }),
   // highlight-end
 }
@@ -287,14 +287,14 @@ A canonical link is a hint to a search engine that this is the _source_ for this
 To implement this functionality, you need to do the following:
 
 1. Enable passing a `pathname` prop to your SEO component
-1. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
-   - A canonical link should be _absolute_ (e.g. https://your-site.com/canonical-link), so you will need to prefix with this `siteUrl`
-1. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
+2. Prefix your `pathname` prop with your `siteUrl` (from `gatsby-config.js`)
+   - A canonical link should be _absolute_ (e.g. `https://your-site.com/canonical-link`), so you will need to prefix with this `siteUrl`
+3. Tie into the `link` prop of `react-helmet` to create a `<link rel="canonical" >` tag
 
-```js:title=src/components/seo.js
+```jsx:title=src/components/seo.js
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 // highlight-next-line
@@ -318,12 +318,10 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
   const metaDescription = description || site.siteMetadata.description
   const image =
     metaImage && metaImage.src
-      ? `${data.site.siteMetadata.siteUrl}${metaImage.src}`
+      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
       : null
   // highlight-start
-  const canonical = pathname
-    ? `${data.site.siteMetadata.siteUrl}${pathname}`
-    : null
+  const canonical = pathname ? `${site.siteMetadata.siteUrl}${pathname}` : null
   // highlight-end
 
   return (
@@ -352,7 +350,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
         },
         {
           name: "keywords",
-          content: data.site.siteMetadata.keywords.join(","),
+          content: site.siteMetadata.keywords.join(","),
         },
         {
           property: `og:title`,
@@ -424,8 +422,8 @@ SEO.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.shape({
     src: PropTypes.string.isRequired,
-    height: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }),
   // highlight-next-line
   pathname: PropTypes.string,
@@ -444,7 +442,7 @@ You created an extensible SEO component. It takes a `title` prop and then (optio
 
 ### In a page component
 
-```js:title=src/pages/index.js
+```jsx:title=src/pages/index.js
 import React from "react"
 
 import Layout from "../components/layout"
@@ -477,7 +475,7 @@ mkdir -p content/blog/2019-01-04-hello-world-seo
 touch content/blog/2019-01-04-hello-world-seo/index.md
 ```
 
-```md:title=content/blog/2019-01-04-hello-world-seo/index.md
+```markdown:title=content/blog/2019-01-04-hello-world-seo/index.md
 ---
 date: 2019-01-04
 featured: images/featured.jpg
@@ -498,7 +496,7 @@ Make sure to use appropriately sized images for social sharing. Facebook and Twi
 
 #### Querying with GraphQL
 
-```js:title=src/templates/blog-post.js
+```jsx:title=src/templates/blog-post.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 
@@ -511,7 +509,6 @@ class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
     const siteTitle = this.props.data.site.siteMetadata.title
-    const { previous, next } = this.props.pageContext
     const image = post.frontmatter.image
       ? post.frontmatter.image.childImageSharp.resize
       : null // highlight-line
@@ -615,8 +612,8 @@ This tutorial is merely a shallow dive into the depths of SEO. Consider it a pri
 - Twitter uses `twitter:` keywords. See [Twitter Cards][twitter-cards] for more info
 - Slack reads tags in the following order ([source][slack-unfurl])
   1. oEmbed server
-  1. Twitter cards tags / Facebook Open Graph tags
-  1. HTML meta tags
+  2. Twitter cards tags / Facebook Open Graph tags
+  3. HTML meta tags
 - Both [Google][google-json-ld] and [Apple][apple-json-ld] offer support for JSON-LD, which is _not covered_ in this guide
   - If you'd like to learn more, check out [this excellent guide](https://nystudio107.com/blog/json-ld-structured-data-and-erotica) for more info on JSON-LD
 - Check out the [`gatsby-seo-example`][gatsby-seo-example] for a ready-to-use starter for powering your Markdown-based blog.

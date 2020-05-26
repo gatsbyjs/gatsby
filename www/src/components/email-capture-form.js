@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React from "react"
 import styled from "@emotion/styled"
 
-import SendIcon from "react-icons/lib/md/send"
+import { MdSend as SendIcon } from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
@@ -82,7 +82,7 @@ const SuccessMessage = styled(`div`)`
 
 function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
   const emailRef = React.useRef(null)
-  const [errorMessage, setErrorMessage] = React.useState("")
+  const [errorMessage, setErrorMessage] = React.useState(``)
   const [fieldErrors, setFieldErrors] = React.useState({})
 
   const onSubmit = React.useCallback(
@@ -220,12 +220,12 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
 }
 
 function EmailCaptureForm({
-  formId = "089352d8-a617-4cba-ba46-6e52de5b6a1d",
+  formId = `089352d8-a617-4cba-ba46-6e52de5b6a1d`,
   signupMessage = `Enjoyed this post? Receive the next one in your inbox!`,
   isHomepage = false,
   className = ``,
 }) {
-  const [successMessage, setSuccessMessage] = React.useState("")
+  const [successMessage, setSuccessMessage] = React.useState(``)
 
   const FormComponent = props => (
     <Form

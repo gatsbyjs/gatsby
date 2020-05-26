@@ -58,7 +58,6 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 let mockPersistedState = {}
-let lokiStorage = {}
 jest.mock(`../../redux/persist`, () => {
   return {
     readFromCache: () => mockPersistedState,
@@ -68,18 +67,7 @@ jest.mock(`../../redux/persist`, () => {
   }
 })
 
-let mockedLokiFsAdapter = {
-  loadDatabase: (dbname, callback) => {
-    callback(lokiStorage[dbname])
-  },
-
-  saveDatabase: (dbname, dbstring, callback) => {
-    lokiStorage[dbname] = dbstring
-    callback(null)
-  },
-}
-
-let pluginOptions = {}
+const pluginOptions = {}
 
 let mockAPIs = {}
 const setAPIhooks = hooks => (mockAPIs = { ...mockAPIs, ...hooks })
@@ -117,7 +105,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     jest.resetModules()
     if (clearCache) {
       mockPersistedState = {}
-      lokiStorage = {}
     }
   } else if (clearCache) {
     console.error(`Can't clear cache without restarting`)
@@ -125,8 +112,12 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   }
 
   jest.doMock(`../query-runner`, () => {
-    const actualQueryRunner = jest.requireActual(`../query-runner`)
-    return jest.fn(actualQueryRunner)
+    const { queryRunner: actualQueryRunner } = jest.requireActual(
+      `../query-runner`
+    )
+    return {
+      queryRunner: jest.fn(actualQueryRunner),
+    }
   })
 
   jest.doMock(`../../utils/api-runner-node`, () => apiName => {
@@ -146,7 +137,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
-  const queryRunner = require(`../query-runner`)
+  const { queryRunner } = require(`../query-runner`)
   const { boundActionCreators } = require(`../../redux/actions`)
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
     (acc, actionName) => {
@@ -161,20 +152,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   )
   const apiRunner = require(`../../utils/api-runner-node`)
 
-  if (restart) {
-    const { backend } = require(`../../db/nodes`)
-    if (backend === `loki`) {
-      const loki = require(`../../db/loki`)
-      const dbSaveFile = `${__dirname}/fixtures/loki.db`
-      await loki.start({
-        saveFile: dbSaveFile,
-        lokiDBOptions: {
-          adapter: mockedLokiFsAdapter,
-        },
-      })
-    }
-  }
-
   queryRunner.mockClear()
 
   store.dispatch({
@@ -184,7 +161,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     },
   })
 
-  await require(`../../utils/source-nodes`)({})
+  await require(`../../utils/source-nodes`).default({})
   // trigger page-hot-reloader (if it was setup in previous test)
   emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
 
@@ -430,7 +407,7 @@ describe(`query caching between builds`, () => {
             siteMetadata: {
               title: `My Site`,
               description: `Description of site
-            
+
               --edited
               edited content #${nodeChangeCounter++}
               `,
@@ -509,7 +486,7 @@ describe(`query caching between builds`, () => {
             id: `test-2`,
             slug: `bar`,
             content: `Dolor sit amet.
-            
+
             --edited
             edited content #${nodeChangeCounter++}
             `,
@@ -607,7 +584,7 @@ describe(`query caching between builds`, () => {
           createNotUsedNode({
             id: `not-used`,
             content: `Content
-            
+
             --edited
             edited content #${nodeChangeCounter++}`,
           })
@@ -679,7 +656,7 @@ describe(`query caching between builds`, () => {
             id: `test-1`,
             slug: `foo`,
             content: `Lorem ipsum.
-            
+
             --edited
             edited content #${nodeChangeCounter++}`,
           })
@@ -838,7 +815,7 @@ describe(`query caching between builds`, () => {
             siteMetadata: {
               title: `My Site`,
               description: `Description of site
-            
+
               --edited
               edited content #${nodeChangeCounter++}
               `,

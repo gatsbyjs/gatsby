@@ -86,7 +86,9 @@ Taking the `Header` example from before, when you write your shadowing file at `
 import Header from "gatsby-theme-amazing/src/components/header"
 
 // these props are the same as the original component would get
-export default props => <Header {...props} myProp="true" />
+export default function MyHeader(props) {
+  return <Header {...props} myProp="true" />
+}
 ```
 
 Taking this approach means that when you upgrade your theme later you can also take advantage of all the updates to the `Header` component because you haven't fully replaced it, just modified it.
@@ -107,7 +109,7 @@ and here is the path where you would shadow it in your site:
 <your-site>/src/gatsby-theme-amazing/components/header.js
 ```
 
-Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of Webpack, so the module graph needs to include the shadowable file.
+Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of webpack, so the module graph needs to include the shadowable file.
 
 Since you can use multiple themes in a given site, there are many potential places to shadow a given file (one for each theme and one for the user's site). In the event that multiple themes are attempting to shadow `gatsby-theme-amazing/src/components/header.js`, the last theme included in the plugins array will win. The site itself takes the highest priority in shadowing.
 

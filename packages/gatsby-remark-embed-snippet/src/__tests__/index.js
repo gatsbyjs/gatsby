@@ -36,6 +36,56 @@ describe(`gatsby-remark-embed-snippet`, () => {
     )
   })
 
+  it(`should display a code block of a single line`, () => {
+    const codeBlockValue = `  console.log('hello world')`
+    fs.readFileSync.mockReturnValue(`function test() {
+${codeBlockValue}
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block of a range of lines`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+${codeBlockValue}
+}`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2-4\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).toEqual(codeBlockValue)
+  })
+
+  it(`should display a code block of a range of non-consecutive lines`, () => {
+    const notInSnippet = `lineShouldNotBeInSnippet();`
+    fs.readFileSync.mockReturnValue(`function test() {
+  if (window.location.search.indexOf('query') > -1) {
+    console.log('The user is searching')
+  }
+}
+${notInSnippet}
+window.addEventListener('resize', () => {
+  test();
+})`)
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js#L2-4,7-9\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    const codeBlock = transformed.children[0].children[0]
+
+    expect(codeBlock.value).not.toContain(notInSnippet)
+  })
+
   it(`should error if an invalid file path is specified`, () => {
     fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
 
