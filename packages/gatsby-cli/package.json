@@ -57,7 +57,8 @@
     "@types/hosted-git-info": "^3.0.0",
     "@types/yargs": "^15.0.4",
     "babel-preset-gatsby-package": "^0.4.2",
-    "cross-env": "^5.2.1"
+    "cross-env": "^5.2.1",
+    "typescript": "^3.9.2"
   },
   "optionalDependencies": {
     "ink": "^2.7.1",
