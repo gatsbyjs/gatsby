@@ -1,12 +1,23 @@
-const _ = require(`lodash`)
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const crypto = require(`crypto`)
-const { slash } = require(`gatsby-core-utils`)
-const { store, emitter } = require(`../redux/`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const { match } = require(`@reach/router/lib/utils`)
+import _ from "lodash"
+import path from "path"
+import fs from "fs-extra"
+import crypto from "crypto"
+import { slash } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
+import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
+import { store, emitter } from "../redux/"
+import { IGatsbyState, IGatsbyPage } from "../redux/types"
+
+interface IGatsbyPageComponent {
+  component: string
+  componentChunkName: string
+}
+
+interface IGatsbyPageMatchPath {
+  path: string
+  matchPath: string | undefined
+}
 
 // path ranking algorithm copied (with small adjustments) from `@reach/router` (internal util, not exported from the package)
 // https://github.com/reach/router/blob/28a79e7fc3a3487cb3304210dc3501efb8a50eba/src/lib/utils.js#L216-L254
@@ -18,11 +29,17 @@ const DYNAMIC_POINTS = 2
 const SPLAT_PENALTY = 1
 const ROOT_POINTS = 1
 
-const isRootSegment = segment => segment === ``
-const isDynamic = segment => paramRe.test(segment)
-const isSplat = segment => segment === `*`
+const isRootSegment = (segment: string): boolean => segment === ``
+const isDynamic = (segment: string): boolean => paramRe.test(segment)
+const isSplat = (segment: string): boolean => segment === `*`
 
-const rankRoute = path =>
+const segmentize = (uri: string): string[] =>
+  uri
+    // strip starting/ending slashes
+    .replace(/(^\/+|\/+$)/g, ``)
+    .split(`/`)
+
+const rankRoute = (path: string): number =>
   segmentize(path).reduce((score, segment) => {
     score += SEGMENT_POINTS
     if (isRootSegment(segment)) score += ROOT_POINTS
@@ -31,24 +48,18 @@ const rankRoute = path =>
     else score += STATIC_POINTS
     return score
   }, 0)
-
-const segmentize = uri =>
-  uri
-    // strip starting/ending slashes
-    .replace(/(^\/+|\/+$)/g, ``)
-    .split(`/`)
 // end of copied `@reach/router` internals
 
-let lastHash = null
+let lastHash: string | null = null
 
-const resetLastHash = () => {
+export const resetLastHash = (): void => {
   lastHash = null
 }
 
-const pickComponentFields = page =>
+const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
   _.pick(page, [`component`, `componentChunkName`])
 
-const getComponents = pages =>
+export const getComponents = (pages: IGatsbyPage[]): IGatsbyPageComponent[] =>
   _(pages)
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
@@ -59,17 +70,36 @@ const getComponents = pages =>
  * Get all dynamic routes and sort them by most specific at the top
  * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
  */
-const getMatchPaths = pages => {
-  const createMatchPathEntry = (page, index) => {
+const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
+  interface IMatchPathEntry extends IGatsbyPage {
+    index: number
+    score: number
+    matchPath: string
+  }
+
+  const createMatchPathEntry = (
+    page: IGatsbyPage,
+    index: number
+  ): IMatchPathEntry => {
+    const { matchPath } = page
+
+    if (matchPath === undefined) {
+      return reporter.panic(
+        `Error: matchPath property is undefined for page ${page.path}, should be a string`
+      ) as never
+    }
+
     return {
       ...page,
+      matchPath,
       index,
-      score: rankRoute(page.matchPath),
+      score: rankRoute(matchPath),
     }
   }
 
-  const matchPathPages = []
-  pages.forEach((page, index) => {
+  const matchPathPages: IMatchPathEntry[] = []
+
+  pages.forEach((page: IGatsbyPage, index: number): void => {
     if (page.matchPath) {
       matchPathPages.push(createMatchPathEntry(page, index))
     }
@@ -81,8 +111,9 @@ const getMatchPaths = pages => {
   // More info in https://github.com/gatsbyjs/gatsby/issues/16097
   // small speedup: don't bother traversing when no matchPaths found.
   if (matchPathPages.length) {
-    const newMatches = []
-    pages.forEach((page, index) => {
+    const newMatches: IMatchPathEntry[] = []
+
+    pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
         pageWithMatchPath =>
           !page.matchPath && match(pageWithMatchPath.matchPath, page.path)
@@ -121,14 +152,17 @@ const getMatchPaths = pages => {
     })
 }
 
-const createHash = (matchPaths, components) =>
+const createHash = (
+  matchPaths: IGatsbyPageMatchPath[],
+  components: IGatsbyPageComponent[]
+): string =>
   crypto
     .createHash(`md5`)
     .update(JSON.stringify({ matchPaths, components }))
     .digest(`hex`)
 
 // Write out pages information.
-const writeAll = async state => {
+export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
@@ -161,7 +195,7 @@ const preferDefault = m => m && m.default || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
-      c =>
+      (c: IGatsbyPageComponent): string =>
         `  "${
           c.componentChunkName
         }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
@@ -174,7 +208,7 @@ const preferDefault = m => m && m.default || m
 const preferDefault = m => m && m.default || m
 \n`
   asyncRequires += `exports.components = {\n${components
-    .map(c => {
+    .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
         path.join(program.directory, `.cache`),
@@ -188,7 +222,7 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  const writeAndMove = (file, data) => {
+  const writeAndMove = (file: string, data: string): Promise<void> => {
     const destination = joinPath(program.directory, `.cache`, file)
     const tmp = `${destination}.${Date.now()}`
     return fs
@@ -206,7 +240,7 @@ const preferDefault = m => m && m.default || m
 }
 
 const debouncedWriteAll = _.debounce(
-  async () => {
+  async (): Promise<void> => {
     const activity = reporter.activityTimer(`write out requires`, {
       id: `requires-writer`,
     })
@@ -229,31 +263,24 @@ const debouncedWriteAll = _.debounce(
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
  * files as required
  */
-const startListener = () => {
-  emitter.on(`CREATE_PAGE`, () => {
+export const startListener = (): void => {
+  emitter.on(`CREATE_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
-  emitter.on(`CREATE_PAGE_END`, () => {
+  emitter.on(`CREATE_PAGE_END`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
-  emitter.on(`DELETE_PAGE`, () => {
+  emitter.on(`DELETE_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
 
-  emitter.on(`DELETE_PAGE_BY_PATH`, () => {
+  emitter.on(`DELETE_PAGE_BY_PATH`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
-}
-
-module.exports = {
-  writeAll,
-  resetLastHash,
-  startListener,
-  getComponents,
 }

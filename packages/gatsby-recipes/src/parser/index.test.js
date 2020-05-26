@@ -6,6 +6,10 @@ const parser = require(`.`)
 const fixturePath = path.join(__dirname, `fixtures/prettier-git-hook.mdx`)
 const fixtureSrc = fs.readFileSync(fixturePath, `utf8`)
 
+// There are network calls being made and thoses tests often doesn't finish
+// within default 5s timeout on CI
+jest.setTimeout(100000)
+
 test(`fetches a recipe from unpkg when official short form`, async () => {
   const result = await parser(`theme-ui`)
 
