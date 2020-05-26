@@ -202,7 +202,7 @@ Array [
 ]
 `;
 
-exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
+exports[`Load plugins Loads plugins defined with an object but without an options key 1`] = `
 Array [
   Object {
     "browserAPIs": Array [],
@@ -667,3 +667,5 @@ Array [
   },
 ]
 `;
+
+exports[`Load plugins Throws an error when a plugin is defined with an option key 1`] = `"Plugin \\"___TEST___\\" has an \\"option\\" key in the configuration. Did you mean \\"options\\"?"`;

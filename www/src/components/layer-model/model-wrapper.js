@@ -9,36 +9,34 @@ const LayerContentWrapper = ({
   index,
   displayCodeFullWidth = false,
   children,
-}) => {
-  return (
-    <div
-      id={`tabpanel${index}`}
-      aria-labelledby={`tab${index}`}
-      role="tabpanel"
-      sx={{
-        pt: 4,
-        px: 0,
-        display: `grid`,
-        gridTemplateRows: `repeat(2, auto)`,
-        gridTemplateAreas: `"content" "example"`,
-        gridGap: 2,
-        [mediaQueries.lg]: {
-          gridTemplateRows: displayCodeFullWidth ? `repeat(2, auto)` : `1fr`,
-          gridTemplateColumns: displayCodeFullWidth ? `auto` : `repeat(2, 1fr)`,
-          gridTemplateAreas: displayCodeFullWidth
-            ? `"content" "example"`
-            : `"example content"`,
-          gridGap: 6,
-        },
-        "& p:last-child": {
-          mb: 0,
-        },
-      }}
-    >
-      {children}
-    </div>
-  )
-}
+}) => (
+  <div
+    id={`tabpanel${index}`}
+    aria-labelledby={`tab${index}`}
+    role="tabpanel"
+    sx={{
+      pt: 4,
+      px: 0,
+      display: `grid`,
+      gridTemplateRows: `repeat(2, auto)`,
+      gridTemplateAreas: `"content" "example"`,
+      gridGap: 2,
+      [mediaQueries.lg]: {
+        gridTemplateRows: displayCodeFullWidth ? `repeat(2, auto)` : `1fr`,
+        gridTemplateColumns: displayCodeFullWidth ? `auto` : `repeat(2, 1fr)`,
+        gridTemplateAreas: displayCodeFullWidth
+          ? `"content" "example"`
+          : `"example content"`,
+        gridGap: 6,
+      },
+      "& p:last-child": {
+        mb: 0,
+      },
+    }}
+  >
+    {children}
+  </div>
+)
 
 const ExampleWrapper = ({ children }) => (
   <div
