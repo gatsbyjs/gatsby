@@ -65,7 +65,7 @@ Last fall [Tyler Barnes](https://github.com/TylerBarnes) — a long-time Gatsby/
 
 They’ve been making incredible progress. Check out [the umbrella issue for the epic](https://github.com/gatsbyjs/gatsby/issues/19292). A number of people are experimenting with the alphas and even shipping sites! If you’re interested in this space, please dive in.
 
-What’s amazing about this work is that **you’ll soon be able to seamlessly swap out the WordPress presentation layer for Gatsby **without** anyone working in the WordPress CMS noticing**. As a developer, you’ll be able to deliver way faster sites, enjoy far simpler hosting, put WordPress behind a firewall (maybe even skip some of those security updates! 😅🤪), and enjoy all the advantages of working in the world of modern React/JavaScript tooling.
+What’s amazing about this work is that _you’ll soon be able to seamlessly swap out the WordPress presentation layer for Gatsby **without** anyone working in the WordPress CMS noticing_. As a developer, you’ll be able to deliver way faster sites, enjoy far simpler hosting, put WordPress behind a firewall (maybe even skip some of those security updates! 😅🤪), and enjoy all the advantages of working in the world of modern React/JavaScript tooling.
 
 ## Working with images is a pain, and the distinction between page and static query seems a wrong API. The [issue #10482](https://github.com/gatsbyjs/gatsby/issues/10482) seems to fix both. What's the plan?
 
@@ -89,7 +89,7 @@ Yup! We hired recently [Shane Thomas](https://www.drupal.org/u/codekarate) to wo
 
 ## Will Gatsby v3 have any breaking changes?
 
-A few, though we don’t anticipate it being a difficult upgrade. We’ve been collecting ideas in this issue (none of them are for sure yet) [https://github.com/gatsbyjs/gatsby/issues/15277](https://github.com/gatsbyjs/gatsby/issues/15277)
+A few, though we don’t anticipate it being a difficult upgrade. We’ve been collecting ideas in this issue (none of them are for sure yet) https://github.com/gatsbyjs/gatsby/issues/15277
 
 ## Shadowing pages is difficult. Query collection gets in the way of shadowing pages effectively when using different data sources. Known issue? Being addressed?
 
@@ -109,9 +109,9 @@ Awww thanks! I don’t know there’s anything magic other than just caring enou
 
 ## Is native TypeScript on the roadmap?
 
-Yes! This is something we’re pretty excited about shipping. If you’re interested in learning more or helping out, check out this issue [Sidhartha Chatterjee](https://github.com/sidharthachatterjee) put together — [https://github.com/gatsbyjs/gatsby/issues/18983](https://github.com/gatsbyjs/gatsby/issues/18983)
+Yes! This is something we’re pretty excited about shipping. If you’re interested in learning more or helping out, check out this issue [Sidhartha Chatterjee](https://github.com/sidharthachatterjee) put together — https://github.com/gatsbyjs/gatsby/issues/18983
 
-[Blaine Kasten](https://twitter.com/blainekasten) has also been leading the effort to convert the entire codebase to TypeScript which has been a massive effort by dozens of people — [https://github.com/gatsbyjs/gatsby/issues/21995](https://github.com/gatsbyjs/gatsby/issues/21995)
+[Blaine Kasten](https://twitter.com/blainekasten) has also been leading the effort to convert the entire codebase to TypeScript which has been a massive effort by dozens of people — https://github.com/gatsbyjs/gatsby/issues/21995
 
 ## Are you guys trying to catch up to Next.js's smaller JavaScript bundle size?
 

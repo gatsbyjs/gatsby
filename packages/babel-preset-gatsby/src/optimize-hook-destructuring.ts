@@ -52,8 +52,14 @@ export default function ({
       if (!(onlyBuiltIns ? isBuiltInHook : isHook).test(hookName)) return
 
       path.parent.id = t.objectPattern(
-        path.parent.id.elements.map((element, i) =>
-          t.objectProperty(t.numericLiteral(i), element!)
+        path.parent.id.elements.reduce(
+          (acc: BabelTypes.ObjectProperty[], element, i) => {
+            if (element) {
+              acc.push(t.objectProperty(t.numericLiteral(i), element))
+            }
+            return acc
+          },
+          []
         )
       )
     },

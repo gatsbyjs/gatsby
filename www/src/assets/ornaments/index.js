@@ -7,5 +7,5 @@ export {
   CirclesOrnament,
   NewsletterFormOrnament,
   QuotationMarkOrnament,
-  StarOrnament
+  StarOrnament,
 }

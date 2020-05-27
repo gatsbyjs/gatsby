@@ -247,15 +247,49 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`calculate height based on width when maxWidth & maxHeight are present`, async () => {
-      const args = { maxWidth: 20, maxHeight: 20 }
-      const result = await fluid({
-        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
-      })
+      const testsCases = [
+        { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.fill },
+          result: [20, 20],
+        },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.inside },
+          result: [20, 10],
+        },
+        {
+          args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.outside },
+          result: [41, 20],
+        },
+        { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.fill },
+          result: [200, 200],
+        },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.inside },
+          result: [200, 97],
+        },
+        {
+          args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.outside },
+          result: [413, 200],
+        },
+      ]
+      const fileObject = getFileObject(
+        path.join(__dirname, `images/144-density.png`)
+      )
 
-      expect(result.presentationWidth).toEqual(20)
-      expect(result.presentationHeight).toEqual(10)
-      expect(boundActionCreators.createJobV2).toMatchSnapshot()
+      for (const testCase of testsCases) {
+        boundActionCreators.createJobV2.mockClear()
+        const result = await fluid({
+          file: fileObject,
+          args: testCase.args,
+        })
+
+        expect(boundActionCreators.createJobV2.mock.calls).toMatchSnapshot()
+        expect(result.presentationWidth).toEqual(testCase.result[0])
+        expect(result.presentationHeight).toEqual(testCase.result[1])
+      }
     })
 
     it(`should throw if maxWidth is less than 1`, async () => {

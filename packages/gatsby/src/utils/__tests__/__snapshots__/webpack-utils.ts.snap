@@ -14,7 +14,12 @@ Object {
         "compact": false,
         "configFile": false,
         "presets": Array [
-          "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
+          Array [
+            "<PROJECT_ROOT>/packages/babel-preset-gatsby/dependencies.js",
+            Object {
+              "stage": "develop",
+            },
+          ],
         ],
         "sourceMaps": false,
       },

@@ -3,6 +3,186 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.35...gatsby-cli@2.12.36) (2020-05-26)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.34...gatsby-cli@2.12.35) (2020-05-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.33...gatsby-cli@2.12.34) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.32...gatsby-cli@2.12.33) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.31...gatsby-cli@2.12.32) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.30...gatsby-cli@2.12.31) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.29...gatsby-cli@2.12.30) (2020-05-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.28...gatsby-cli@2.12.29) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.27...gatsby-cli@2.12.28) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.26...gatsby-cli@2.12.27) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.25...gatsby-cli@2.12.26) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.24...gatsby-cli@2.12.25) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.23...gatsby-cli@2.12.24) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Fix recipes cli invocation ([#24201](https://github.com/gatsbyjs/gatsby/issues/24201)) ([e6e7463](https://github.com/gatsbyjs/gatsby/commit/e6e7463))
+
+## [2.12.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.22...gatsby-cli@2.12.23) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.21...gatsby-cli@2.12.22) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Improve wording for 98124 error message ([#24186](https://github.com/gatsbyjs/gatsby/issues/24186)) ([0d68336](https://github.com/gatsbyjs/gatsby/commit/0d68336))
+
+## [2.12.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.20...gatsby-cli@2.12.21) (2020-05-14)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.19...gatsby-cli@2.12.20) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.18...gatsby-cli@2.12.19) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.17...gatsby-cli@2.12.18) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.16...gatsby-cli@2.12.17) (2020-05-12)
+
+### Features
+
+- **gatsby:** Add tracing for graphql resolvers ([#23589](https://github.com/gatsbyjs/gatsby/issues/23589)) ([e124aae](https://github.com/gatsbyjs/gatsby/commit/e124aae))
+
+## [2.12.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.15...gatsby-cli@2.12.16) (2020-05-11)
+
+### Bug Fixes
+
+- **gatsby-cli:** don't fail when using `--log-pages` and/or `--write-to-file` ([#23951](https://github.com/gatsbyjs/gatsby/issues/23951)) ([f7dc43f](https://github.com/gatsbyjs/gatsby/commit/f7dc43f))
+
+## [2.12.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.14...gatsby-cli@2.12.15) (2020-05-08)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.13...gatsby-cli@2.12.14) (2020-05-08)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.12...gatsby-cli@2.12.13) (2020-05-07)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.11...gatsby-cli@2.12.12) (2020-05-07)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.10...gatsby-cli@2.12.11) (2020-05-06)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.9...gatsby-cli@2.12.10) (2020-05-05)
+
+### Bug Fixes
+
+- Add 98124 error to better help with "Can't resolve [...]" errors ([#23741](https://github.com/gatsbyjs/gatsby/issues/23741)) ([9970faf](https://github.com/gatsbyjs/gatsby/commit/9970faf))
+
+## [2.12.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.8...gatsby-cli@2.12.9) (2020-05-05)
+
+### Bug Fixes
+
+- **gatsby:** log config validation errors ([#23620](https://github.com/gatsbyjs/gatsby/issues/23620)) ([62d6bb4](https://github.com/gatsbyjs/gatsby/commit/62d6bb4))
+
+## [2.12.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.7...gatsby-cli@2.12.8) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.6...gatsby-cli@2.12.7) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.5...gatsby-cli@2.12.6) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.4...gatsby-cli@2.12.5) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.3...gatsby-cli@2.12.4) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.2...gatsby-cli@2.12.3) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.1...gatsby-cli@2.12.2) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.0...gatsby-cli@2.12.1) (2020-04-28)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.22...gatsby-cli@2.12.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.21...gatsby-cli@2.11.22) (2020-04-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.20...gatsby-cli@2.11.21) (2020-04-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.19...gatsby-cli@2.11.20) (2020-04-25)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.18...gatsby-cli@2.11.19) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.11.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.17...gatsby-cli@2.11.18) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.11.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.11.16...gatsby-cli@2.11.17) (2020-04-24)
 
 **Note:** Version bump only for package gatsby-cli

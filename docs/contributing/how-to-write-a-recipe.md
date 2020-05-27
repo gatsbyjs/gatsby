@@ -22,7 +22,7 @@ If you're finding a recipe is becoming too long to fit on the Docs Recipes page 
 
 ## Recipe categories
 
-Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an h2 heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
+Grouping recipes by topic will allow users to navigate and learn by subject matter. As recipes following the new format are introduced, you might find a section needs an `h2` heading added for the group. The older-style recipes should be gradually replaced with actionable recipes following the template below.
 
 Recipes should fall into these categories to start (suggest your idea in a GitHub issue!):
 
@@ -100,12 +100,14 @@ When writing a recipe, try to include each of the below items wherever relevant.
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
-  <div style={{ color: `purple` }}>
-    <Link to="/contact/">Contact</Link>
-    <p>What a world.</p>
-  </div>
-)
+export default function Home() {
+  return (
+    <div style={{ color: `purple` }}>
+      <Link to="/contact/">Contact</Link>
+      <p>What a world.</p>
+    </div>
+  )
+}
 ```
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link
