@@ -72,13 +72,18 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
           var optionStr = snippetPath.slice(optionIndex)
           snippetPath = snippetPath.slice(0, optionIndex)
           try {
-            var optVal = JSON.parse(optionStr.replace(/snippet\s*:/, `"snippet":`))
-            if (typeof optVal != "undefined" && typeof optVal.snippet != "undefined") {
+            var optVal = JSON.parse(
+              optionStr.replace(/snippet\s*:/, `"snippet":`)
+            )
+            if (
+              typeof optVal != `undefined` &&
+              typeof optVal.snippet != `undefined`
+            ) {
               sname = optVal.snippet
             } else {
               throw Error(`Invalid snippet options specified: ${optionStr}`)
             }
-          } catch(err) {
+          } catch (err) {
             throw Error(`Invalid snippet options specified: ${optionStr}`)
           }
         }
