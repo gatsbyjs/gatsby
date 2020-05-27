@@ -69,7 +69,7 @@ const Palette = ({ color, handler }) => {
         display: `flex`,
         flexDirection: `column`,
         mb: 4,
-        [mediaQueries.sm]: {
+        [mediaQueries.lg]: {
           flexDirection: `row`,
           alignItems: `center`,
           mb: 0,
@@ -78,7 +78,7 @@ const Palette = ({ color, handler }) => {
     >
       <Box
         sx={{
-          [mediaQueries.sm]: {
+          [mediaQueries.lg]: {
             textAlign: `right`,
             width: `8rem`,
             mr: copyColumnGutter,
@@ -139,7 +139,7 @@ const Overview = ({ handler }) => (
       <Box
         sx={{
           display: `none`,
-          [mediaQueries.sm]: {
+          [mediaQueries.lg]: {
             display: `flex`,
             alignItems: `flex-end`,
           },
@@ -159,12 +159,20 @@ const Overview = ({ handler }) => (
     </Flex>
     <Box
       sx={{
-        [mediaQueries.sm]: {
+        [mediaQueries.lg]: {
           display: `flex`,
         },
       }}
     >
-      <SectionHeading width="12rem">Primary</SectionHeading>
+      <SectionHeading
+        sx={{
+          [mediaQueries.lg]: {
+            width: `12rem`,
+          },
+        }}
+      >
+        Primary
+      </SectionHeading>
       <Box>
         <Palette color="purple" handler={handler} />
         <Palette color="orange" handler={handler} />
@@ -172,12 +180,20 @@ const Overview = ({ handler }) => (
     </Box>
     <Box
       sx={{
-        [mediaQueries.sm]: {
+        [mediaQueries.lg]: {
           display: `flex`,
         },
       }}
     >
-      <SectionHeading width="12rem">Secondary</SectionHeading>
+      <SectionHeading
+        sx={{
+          [mediaQueries.lg]: {
+            width: `12rem`,
+          },
+        }}
+      >
+        Secondary
+      </SectionHeading>
       <Box>
         <Palette color="magenta" handler={handler} />
         <Palette color="blue" handler={handler} />
@@ -189,12 +205,20 @@ const Overview = ({ handler }) => (
     </Box>
     <Box
       sx={{
-        [mediaQueries.sm]: {
+        [mediaQueries.lg]: {
           display: `flex`,
         },
       }}
     >
-      <SectionHeading width="12rem">Neutral</SectionHeading>
+      <SectionHeading
+        sx={{
+          [mediaQueries.lg]: {
+            width: `12rem`,
+          },
+        }}
+      >
+        Neutral
+      </SectionHeading>
       <Box>
         <Palette color="grey" handler={handler} />
         {/* <Palette color="blackFade" handler={handler} />
