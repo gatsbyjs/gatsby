@@ -10861,3 +10861,16 @@
   built_by: Stackrole
   built_by_url: https://stackrole.com
   featured: false
+- title: Aparna Joshi
+  url: https://aparnajoshi.netlify.app/
+  main_url: https://aparnajoshi.netlify.app/
+  description: >
+    Hi, I`m a Software Engineer working in Citrix, Bangalore. I spend my free time learning stuff that interests me. I write articles that educates me.
+  categories:
+    - Blog
+    - Science
+    - Technology
+    - Programming
+  built_by: Aparna Joshi
+  built_by_url: https://github.com/AparnaJoshi007/explained/
+  featured: false
