@@ -116,7 +116,7 @@ describe(`gatsby-plugin-preact`, () => {
                       "enforce": true,
                       "name": "framework",
                       "priority": 40,
-                      "test": /\\(\\?<!node_modules\\.\\*\\)\\[\\\\\\\\\\\\/\\]node_modules\\[\\\\\\\\\\\\/\\]\\(preact\\|prop-types\\)\\[\\\\\\\\\\\\/\\]/,
+                      "test": [Function],
                     },
                     "vendors": false,
                   },

@@ -30,12 +30,15 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     if (
       webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test
     ) {
+      const frameworkRegex =
+        webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test
+
       // replace react libs with preact
-      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = [
-        /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/,
-      ].concat(
-        webpackConfig.optimization.splitChunks.cacheGroups.framework.test
-      )
+      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = module =>
+        /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/.test(
+          module.resource
+        ) || frameworkRegex.test(module.resource)
+
       actions.replaceWebpackConfig(webpackConfig)
     }
   }
