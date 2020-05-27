@@ -13,10 +13,18 @@ const normalize = require(`../normalize`)
 
 const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
 
+const createMockCache = () => {
+  return {
+    get: jest.fn(),
+    set: jest.fn(),
+    directory: __dirname,
+  }
+}
+
 describe(`gatsby-node`, () => {
   const actions = {}
   const store = {}
-  const cache = {}
+  const cache = createMockCache()
   const getCache = jest.fn()
   const reporter = {
     info: jest.fn(),
