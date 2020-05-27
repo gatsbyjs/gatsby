@@ -84,7 +84,6 @@ const manifestOptions = {
       type: `image/png`,
     },
   ],
-  icon_options: {},
 }
 
 // Some of these tests check the number of sharp calls to assert that the
