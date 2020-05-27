@@ -104,9 +104,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(`error fetching content types`, e)
+    reporter.panic(`Error fetching content types`, e)
   }
-  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
+  reporter.info(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
@@ -124,6 +124,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     locales,
     space,
   }
+
+  console.timeEnd(`Fetch Contentful data`)
 
   return result
 }

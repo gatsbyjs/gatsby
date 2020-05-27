@@ -117,6 +117,8 @@ exports.sourceNodes = async (
     pluginConfig,
   })
 
+  console.time(`Process Contentful data`)
+
   // Remove deleted entries and assets from cached sync data set
   previousSyncData.entries = previousSyncData.entries.filter(
     entry =>
@@ -219,7 +221,6 @@ exports.sourceNodes = async (
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
 
-  console.timeEnd(`Fetch Contentful data`)
   reporter.info(`Building Contentful reference map`)
 
   // Create map of resolvable ids so we can check links against them while creating
@@ -276,10 +277,17 @@ exports.sourceNodes = async (
       }
     })
 
-  reporter.info(`Creating Contentful nodes`)
+  console.timeEnd(`Process Contentful data`)
+  console.time(`Create Contentful nodes`)
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
+
+    if (entryList[i].length) {
+      reporter.info(
+        `Creating ${entryList[i].length} Contentful ${contentTypeItem.name} nodes`
+      )
+    }
 
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
@@ -304,6 +312,10 @@ exports.sourceNodes = async (
     )
   }
 
+  if (assets.length) {
+    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
+  }
+
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
     await Promise.all(
@@ -317,6 +329,8 @@ exports.sourceNodes = async (
       })
     )
   }
+
+  console.timeEnd(`Create Contentful nodes`)
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
