@@ -4,7 +4,9 @@ import StoreStateContext from "../context"
 import { ActivityStatuses } from "../../../constants"
 import { createLabel } from "./utils"
 
-const getLabel = (level: ActivityStatuses): ReturnType<typeof createLabel> => {
+const getLabel = (
+  level: ActivityStatuses | string
+): ReturnType<typeof createLabel> => {
   switch (level) {
     case ActivityStatuses.InProgress:
       return createLabel(`In Progress`, `white`)
@@ -44,7 +46,7 @@ const useTerminalResize = (): Array<number> => {
 interface IDevelopProps {
   pagesCount: number
   appName: string
-  status: ActivityStatuses
+  status: ActivityStatuses | string
 }
 
 const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
