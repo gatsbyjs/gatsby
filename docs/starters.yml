@@ -6486,3 +6486,12 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://jolly-tree-003047c03.azurestaticapps.net/
+  repo: https://github.com/floAr/gatsby-starter-azure_swa
+  description: A simple GatsbyJS starter making use of the new Azure Static Web App service.
+  tags:
+    - Redux
+    - Styling:None
+    - Azure
+  features:
+    - CI/CD using github actions
