@@ -9,12 +9,10 @@ export const pendingPageDataWritesReducer = (
 ): IGatsbyState["pendingPageDataWrites"] => {
   switch (action.type) {
     case `ADD_PENDING_PAGE_DATA_WRITE`:
-      console.debug(`ADD_PENDING_PAGE_DATA_WRITE`)
       state.pagePaths.add(action.payload.path)
       return state
 
     case `ADD_PENDING_TEMPLATE_DATA_WRITE`:
-      console.debug(`ADD_PENDING_TEMPLATE_DATA_WRITE`)
       state.templatePaths.add(action.payload.componentPath)
       return state
 
