@@ -29,7 +29,7 @@ The answer:
 
 ## Principle 2: content acts as a guide unlocking the power of Gatsby.
 
-Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, Webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
+Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
 
 You can do almost anything you want with Gatsby, you just have to:
 
