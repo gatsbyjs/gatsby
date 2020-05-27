@@ -208,7 +208,7 @@ const modalContent = (palette, color) => {
               sx={{
                 width: `100%`,
                 flexShrink: 0,
-                "& p": { color: c.hex }
+                "& p": { color: c.hex },
               }}
             >
               {getA11yLabel(c.a11y) === `AA` && <AADescription />}
