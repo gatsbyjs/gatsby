@@ -1,7 +1,6 @@
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-const { i18nEnabled, langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -50,28 +49,6 @@ if (process.env.AIRTABLE_API_KEY) {
       ],
     },
   })
-}
-
-if (i18nEnabled) {
-  dynamicPlugins.push(
-    ...langCodes.map(code => {
-      return {
-        resolve: `gatsby-source-git`,
-        options: {
-          name: `docs-${code}`,
-          remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
-          branch: `master`,
-          patterns: [`docs/**`],
-        },
-      }
-    }),
-    {
-      resolve: `gatsby-plugin-i18n`, // local plugin
-      options: {
-        languages: langCodes,
-      },
-    }
-  )
 }
 
 module.exports = {
