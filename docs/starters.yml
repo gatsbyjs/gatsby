@@ -6486,6 +6486,15 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-moonclerk.netlify.app
+  repo: https://github.com/moonclerk/gatsby-starter-moonclerk
+  description: A Gatsby starter for creating SaaS landing pages using MoonClerk to accept payments.
+  tags:
+    - SEO
+    - Landing Page
+    - Styling:CSS-in-JS
+    - Netlify
+    - Onepage
 - url: https://schoolfront.netlify.app
   repo: https://github.com/orzechdev/schoolfront
   description: School website starter
