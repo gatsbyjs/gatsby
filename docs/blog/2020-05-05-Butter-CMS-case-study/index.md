@@ -45,7 +45,7 @@ In addition, the team could address special content needs. For example, the team
 
 > _Pretty much everything that I can put in ButterCMS, I will. Anything touched by any kind of content creator, I just put that on ButterCMS so they can edit it and then just create a front viewport in my web stack. It’s working out very well._
 
-Today, content on the Car Loans Canada website loads significantly faster than it did before moving to Gatsby and ButterCMS. And it’s not just optimization: the content itself has been upgraded, including structure and visuals, to create better and richer content experiences. All of which could be done fearlessly thanks to Gatsby’s best-practice front end development patterns like route-based code splitting, PRPL, service workers, and offline support with dynamic data integrations.
+Today, content on the Car Loans Canada website loads significantly faster than it did before moving to Gatsby and ButterCMS. And it’s not just optimization: the content itself has been upgraded, including structure and visuals, to create better and richer content experiences. All of which could be done fearlessly thanks to Gatsby’s best-practice front end development patterns like route-based code splitting, [PRPL](/docs/prpl-pattern/), service workers, and offline support with dynamic data integrations.
 
 So far, the new site is performing wonderfully, Josh reports. The team is seeing impressive outcomes from the blazing fast performance, including:
 
