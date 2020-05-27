@@ -5739,11 +5739,12 @@
     - Styled 404 page
     - Lightweight
     - Styled Components
-- url: https://gatsby-minimalistic-dmin.netlify.com/
-  repo: https://github.com/EllisMin/gatsby-minimalistic-dmin
-  description: A ready-to-use, customizable personal blog with minimalistic design
+- url: https://gatsby-blog-mdx.now.sh/
+  repo: https://github.com/EllisMin/gatsby-blog-mdx
+  description: A ready-to-use, customizable personal blog with minimalist design
   tags:
     - Blog
+    - MDX
     - Markdown
     - Netlify
     - SEO
@@ -5752,13 +5753,13 @@
   features:
     - Simple blog with responsive design
     - Light / Dark Mode Switch
-    - Markdown / HTML to create post & About page
+    - MDX & Markdown to create post & About page
     - Code syntax highlighting (Light / Dark)
-    - Facebook Comments plugin
+    - Facebook | Disqus | Utterances comments
     - Social Media Links & Share buttons
+    - SEO + Sitemap + RSS
     - Googly Analytics Support
     - Easy & Highly Customizable
-    - Styled Components
 - url: https://gatsby-airtable-listing.netlify.com/
   repo: https://github.com/wkocjan/gatsby-airtable-listing
   description: Airtable theme for Gatsby
