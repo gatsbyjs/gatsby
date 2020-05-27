@@ -267,68 +267,68 @@ module.exports = {
         allowLinker: true,
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-feed`,
-    //   options: {
-    //     feeds: [
-    //       {
-    //         title: `GatsbyJS`,
-    //         query: `
-    //           {
-    //             allMdx(
-    //               sort: { order: DESC, fields: [frontmatter___date] }
-    //               limit: 10,
-    //               filter: {
-    //                 fields: { section: { eq: "blog" }, released: { eq: true } }
-    //               }
-    //             ) {
-    //               nodes {
-    //                 html
-    //                 frontmatter {
-    //                   title
-    //                   date
-    //                   author {
-    //                     id
-    //                   }
-    //                 }
-    //                 fields {
-    //                   excerpt
-    //                   slug
-    //                 }
-    //               }
-    //             }
-    //           }
-    //         `,
-    //         output: `/blog/rss.xml`,
-    //         setup: ({
-    //           query: {
-    //             site: { siteMetadata },
-    //           },
-    //         }) => {
-    //           return {
-    //             title: siteMetadata.title,
-    //             description: siteMetadata.description,
-    //             feed_url: siteMetadata.siteUrl + `/blog/rss.xml`,
-    //             site_url: siteMetadata.siteUrl,
-    //             generator: `GatsbyJS`,
-    //           }
-    //         },
-    //         serialize: ({ query: { site, allMdx } }) =>
-    //           allMdx.nodes.map(node => {
-    //             return {
-    //               title: node.frontmatter.title,
-    //               description: node.fields.excerpt,
-    //               url: site.siteMetadata.siteUrl + node.fields.slug,
-    //               guid: site.siteMetadata.siteUrl + node.fields.slug,
-    //               custom_elements: [{ "content:encoded": node.html }],
-    //               author: node.frontmatter.author.id,
-    //               date: node.frontmatter.date,
-    //             }
-    //           }),
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        feeds: [
+          {
+            title: `GatsbyJS`,
+            query: `
+              {
+                allMdx(
+                  sort: { order: DESC, fields: [frontmatter___date] }
+                  limit: 10,
+                  filter: {
+                    fields: { section: { eq: "blog" }, released: { eq: true } }
+                  }
+                ) {
+                  nodes {
+                    html
+                    frontmatter {
+                      title
+                      date
+                      author {
+                        id
+                      }
+                    }
+                    fields {
+                      excerpt
+                      slug
+                    }
+                  }
+                }
+              }
+            `,
+            output: `/blog/rss.xml`,
+            setup: ({
+              query: {
+                site: { siteMetadata },
+              },
+            }) => {
+              return {
+                title: siteMetadata.title,
+                description: siteMetadata.description,
+                feed_url: siteMetadata.siteUrl + `/blog/rss.xml`,
+                site_url: siteMetadata.siteUrl,
+                generator: `GatsbyJS`,
+              }
+            },
+            serialize: ({ query: { site, allMdx } }) =>
+              allMdx.nodes.map(node => {
+                return {
+                  title: node.frontmatter.title,
+                  description: node.fields.excerpt,
+                  url: site.siteMetadata.siteUrl + node.fields.slug,
+                  guid: site.siteMetadata.siteUrl + node.fields.slug,
+                  custom_elements: [{ "content:encoded": node.html }],
+                  author: node.frontmatter.author.id,
+                  date: node.frontmatter.date,
+                }
+              }),
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-netlify`,
       options: {
