@@ -20,12 +20,12 @@ const useDevelopRestart = (): [RestartState, RestartFn] => {
 
           setRestartFn(
             (): RestartFn => (): void => {
+              setState(`is-restarting`)
+              parentSocket.emit(`develop:restart`)
+
               parentSocket.once(`develop:started`, () => {
                 setState(`idle`)
               })
-
-              setState(`is-restarting`)
-              parentSocket.emit(`develop:restart`)
             }
           )
 
