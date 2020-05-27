@@ -34,21 +34,27 @@ export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp
   // In this map `undefined` values represent nodes that did not have the path
-  // The individual arrays are ordered asc by id (relevant for merging/deduping)
-  // The arrays may contain duplicates (!), can happen for elemMatch
+  // The individual arrays are ordered asc by internal.counter which will
+  // preserve insertion order and guarantee uniqueness and it's a number so our
+  // .sort() calls can subtract one from the other which is nice :)
+  // This arrays may contain duplicates (!) because those only get filtered in the
+  // last step.
+  // TODO: We might decide to make sure these buckets _are_ deduped for eq perf
   byValue: Map<FilterValueNullable, Array<IGatsbyNode>>
   meta: {
-    // Unordered unfiltered flat list of _all_ nodes of requested type(s)
+    // Used by ne/nin, which will create a Set from this array and then remove another set(s) and sort
     nodesUnordered?: Array<IGatsbyNode>
+    // Flat list of all nodes by requested types, ordered by counter (cached for empty filters)
+    orderedByCounter?: Array<IGatsbyNode>
     // Ordered list of all values (by `<`) found by this filter. No null / undefs
     valuesAsc?: Array<FilterValue>
-    // Flat lits of nodes, ordered by valueAsc, but not ordered per value group
+    // Flat list of nodes, ordered by valueAsc
     nodesByValueAsc?: Array<IGatsbyNode>
     // Ranges of nodes per value, maps to the nodesByValueAsc array
     valueRangesAsc?: Map<FilterValue, [number, number]>
     // Ordered list of all values (by `>`) found by this filter. No null / undefs
     valuesDesc?: Array<FilterValue>
-    // Flat list of nodes, ordered by valueDesc, but not ordered per value group
+    // Flat list of nodes, ordered by valueDesc
     nodesByValueDesc?: Array<IGatsbyNode>
     // Ranges of nodes per value, maps to the nodesByValueDesc array
     valueRangesDesc?: Map<FilterValue, [number, number]>
@@ -209,6 +215,11 @@ export function postIndexingMetaSetup(
     postIndexingMetaSetupNeNin(filterCache)
   } else if ([`$lt`, `$lte`, `$gt`, `$gte`].includes(op)) {
     postIndexingMetaSetupLtLteGtGte(filterCache, op)
+  } else {
+    // Loop through byValue and make sure the buckets are sorted by counter
+    for (const bucket of filterCache.byValue) {
+      bucket[1].sort((a, b) => a.internal.counter - b.internal.counter)
+    }
   }
 }
 
@@ -229,6 +240,8 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   const arr: Array<IGatsbyNode> = []
   filterCache.meta.nodesUnordered = arr
   filterCache.byValue.forEach(v => {
+    v.sort((a, b) => a.internal.counter - b.internal.counter)
+
     v.forEach(node => {
       arr.push(node)
     })
@@ -240,7 +253,8 @@ function postIndexingMetaSetupLtLteGtGte(
   op: FilterOp
 ): void {
   // Create an ordered array of individual nodes, ordered (grouped) by the
-  // value to which the filter resolves. Nodes per value are ordered by id, asc.
+  // value to which the filter resolves. Nodes per value are ordered by
+  // internal.counter, asc.
   // This way non-eq ops can simply slice the array to get a range.
 
   const entriesNullable: Array<[FilterValueNullable, Array<IGatsbyNode>]> = [
@@ -281,6 +295,7 @@ function postIndexingMetaSetupLtLteGtGte(
   const orderedValues: Array<FilterValue> = []
   const offsets: Map<FilterValue, [number, number]> = new Map()
   entries.forEach(([v, bucket]: [FilterValue, Array<IGatsbyNode>]) => {
+    bucket.sort((a, b) => a.internal.counter - b.internal.counter)
     // Record the range containing all nodes with as filter value v
     // The last value of the range should be the offset of the next value
     // (So you should be able to do `nodes.slice(start, stop)` to get them)
@@ -366,14 +381,13 @@ export function ensureEmptyFilterCache(
 
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
-  const nodesUnordered: Array<IGatsbyNode> = []
+  const orderedByCounter: Array<IGatsbyNode> = []
 
   filtersCache.set(filterCacheKey, {
     op: `$eq`, // Ignore.
     byValue: new Map<FilterValueNullable, Array<IGatsbyNode>>(),
     meta: {
-      // TODO: I think this needs to be ordered by id now
-      nodesUnordered, // This is what we want
+      orderedByCounter, // This is what we want
     },
   })
 
@@ -387,7 +401,7 @@ export function ensureEmptyFilterCache(
           node.__gatsby_resolved = resolved
         }
       }
-      nodesUnordered.push(node)
+      orderedByCounter.push(node)
     })
   } else {
     // Here we must first filter for the node type
@@ -402,10 +416,12 @@ export function ensureEmptyFilterCache(
             node.__gatsby_resolved = resolved
           }
         }
-        nodesUnordered.push(node)
+        orderedByCounter.push(node)
       }
     })
   }
+
+  orderedByCounter.sort((a, b) => a.internal.counter - b.internal.counter)
 }
 
 function addNodeToFilterCache(
@@ -674,19 +690,17 @@ export const getNodesFromCacheByValue = (
   const op = filterCache.op
 
   if (op === `$eq`) {
+    // Arrays in byValue are assumed to be ordered by counter
+
     if (filterValue == null) {
       // Edge case; fetch all nodes for `null` and `undefined` because `$eq`
       // also returns nodes without the path when searching for `null`. Not
       // ops do so, so we map non-existing paths to `undefined`.
-
-      const nullArr = filterCache.byValue.get(null) ?? []
-      const undefArr = filterCache.byValue.get(undefined) ?? []
-      // TODO: proper merge sort
-      return nullArr
-        .concat(undefArr)
-        .sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+      return (filterCache.byValue.get(null) ?? []).concat(
+        filterCache.byValue.get(undefined) ?? []
+      )
     }
-    // Arrays in byValue are assumed to be ordered by id
+
     return filterCache.byValue.get(filterValue)
   }
 
@@ -710,20 +724,20 @@ export const getNodesFromCacheByValue = (
       }
     }
 
+    // TODO: we can also mergeSort for every step. this may perform worse because of how memory in js works.
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
     filterValueArr
-      .slice(0) // Sort is inline so slice the original array
-      .sort((a, b) => {
-        if (a == null || b == null) return 0
-        return a < b ? -1 : a > b ? 1 : 0
-      }) // Just sort to preserve legacy order as much as possible.
+      // .slice(0) // Sort is inline so slice the original array
+      // .sort((a, b) => {
+      //   if (a == null || b == null) return 0
+      //   return a < b ? -1 : a > b ? 1 : 0
+      // }) // Just sort to preserve legacy order as much as possible.
       .forEach((v: FilterValueNullable) =>
         filterCache.byValue.get(v)?.forEach(v => arr.push(v))
       )
 
-    // TODO: proper merge sort
-    return arr.sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    return arr.sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (op === `$nin`) {
@@ -756,7 +770,7 @@ export const getNodesFromCacheByValue = (
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we dont have to resort here
-    return [...set].sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (op === `$ne`) {
@@ -778,7 +792,7 @@ export const getNodesFromCacheByValue = (
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we dont have to resort here
-    return [...set].sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (op === `$regex`) {
@@ -806,7 +820,7 @@ export const getNodesFromCacheByValue = (
 
     // TODO: we _can_ cache this list as well. Might make sense if it turns out that $regex is mostly used with literals
     // TODO: it may make sense to first collect all buckets and then to .concat them, or merge sort them
-    return result.sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    return result.sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (filterValue == null) {
@@ -843,7 +857,9 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[0])
+      return nodes!
+        .slice(0, range[0])
+        .sort((A, B) => A.internal.counter - B.internal.counter)
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -877,7 +893,9 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue < filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until)
+    return nodes!
+      .slice(0, until)
+      .sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (op === `$lte`) {
@@ -889,7 +907,9 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[1])
+      return nodes!
+        .slice(0, range[1])
+        .sort((A, B) => A.internal.counter - B.internal.counter)
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -923,7 +943,9 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue <= filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until)
+    return nodes!
+      .slice(0, until)
+      .sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (op === `$gt`) {
@@ -935,7 +957,10 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[0]).reverse()
+      return nodes!
+        .slice(0, range[0])
+        .reverse()
+        .sort((A, B) => A.internal.counter - B.internal.counter)
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -969,7 +994,10 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue > filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until).reverse()
+    return nodes!
+      .slice(0, until)
+      .reverse()
+      .sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   if (op === `$gte`) {
@@ -981,7 +1009,10 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[1]).reverse()
+      return nodes!
+        .slice(0, range[1])
+        .reverse()
+        .sort((A, B) => A.internal.counter - B.internal.counter)
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -1015,9 +1046,58 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue >= filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until).reverse()
+    return nodes!
+      .slice(0, until)
+      .reverse()
+      .sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
   // Unreachable because we checked all values of FilterOp (which op is)
   return undefined
+}
+
+/**
+ * Finds the intersection of two arrays in O(n) with n = min(a.length, b.length)
+ * The returned set should not contain duplicate nodes.
+ *
+ * The input should be ordered by node.internal.counter and it will return a
+ * list that is also ordered by node.internal.counter
+ */
+export function intersectNodesByCounter(
+  a: Array<IGatsbyNode>,
+  b: Array<IGatsbyNode>
+): Array<IGatsbyNode> {
+  let pointerA = 0
+  let pointerB = 0
+  // TODO: perf check: is it helpful to init the array to min(maxA,maxB) items?
+  const result: Array<IGatsbyNode> = []
+  const maxA = a.length
+  const maxB = b.length
+  let lastAdded: IGatsbyNode | undefined = undefined // Used to dedupe the list
+
+  while (pointerA < maxA && pointerB < maxB) {
+    const nodeA = a[pointerA]
+    const nodeB = b[pointerB]
+    const counterA = nodeA.internal.counter
+    const counterB = nodeB.internal.counter
+
+    if (counterA < counterB) {
+      pointerA++
+    } else if (counterA > counterB) {
+      pointerB++
+    } else {
+      // nodeA===nodeB. Make sure we didn't just add this node already.
+      // Since input arrays are sorted, the same node should be grouped
+      // back to back, so even if both input arrays contained the same node
+      // twice, this check would prevent the result from getting duplicate nodes
+      if (lastAdded !== nodeA) {
+        result.push(nodeA)
+        lastAdded = nodeA
+      }
+      pointerA++
+      pointerB++
+    }
+  }
+
+  return result
 }

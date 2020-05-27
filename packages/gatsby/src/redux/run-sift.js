@@ -18,6 +18,7 @@ const {
   getNodesFromCacheByValue,
   addResolvedNodes,
   getNode: siftGetNode,
+  intersectNodesByCounter,
 } = require(`./nodes`)
 
 // More of a testing mechanic, to verify whether last runSift call used Sift
@@ -126,48 +127,6 @@ function handleMany(siftArgs, nodes) {
 }
 
 /**
- * finds the intersection of two arrays in O(n) with n = min(a.length, b.length)
- *
- * @param {Array<IGatsbyNode>} a Ordered by id, ascending
- * @param {Array<IGatsbyNode>} b Ordered by id, ascending
- * @returns {Array<IGatsbyNode>} Ordered by id, ascending
- */
-function intersectNodes(a, b) {
-  let pointerA = 0
-  let pointerB = 0
-  let result = []
-  let maxA = a.length
-  let maxB = b.length
-  let lastAdded = undefined // Used to dedupe the list
-
-  while (pointerA < maxA && pointerB < maxB) {
-    const nodeA = a[pointerA]
-    const nodeB = b[pointerB]
-    const idA = nodeA.id
-    const idB = nodeB.id
-
-    if (idA < idB) {
-      pointerA++
-    } else if (idA > idB) {
-      pointerB++
-    } else {
-      // nodeA===nodeB. Make sure we didn't just add this node already.
-      // Since input arrays are sorted by id, the same node should be grouped
-      // back to back, so even if both input arrays contained the same node
-      // twice, this check would prevent the result from getting duplicate nodes
-      if (lastAdded !== nodeA) {
-        result.push(nodeA)
-        lastAdded = nodeA
-      }
-      pointerA++
-      pointerB++
-    }
-  }
-
-  return result
-}
-
-/**
  * Given the path of a set of filters, return the sets of nodes that pass the
  * filter.
  * Only nodes of given node types will be considered
@@ -216,7 +175,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
 
   while (nodesPerValueArrs.length > 1) {
     nodesPerValueArrs.push(
-      intersectNodes(nodesPerValueArrs.pop(), nodesPerValueArrs.pop())
+      intersectNodesByCounter(nodesPerValueArrs.pop(), nodesPerValueArrs.pop())
     )
   }
 
@@ -482,7 +441,7 @@ const applyFilters = (
       ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
     }
 
-    const cache = filtersCache.get(filterCacheKey).meta.nodesUnordered
+    const cache = filtersCache.get(filterCacheKey).meta.orderedByCounter
 
     lastFilterUsedSift = false
 
