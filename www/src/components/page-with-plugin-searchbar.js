@@ -24,11 +24,11 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
           borderRightWidth: `1px`,
           display: `block`,
           position: `fixed`,
-          width: `pluginsSidebarWidthDefault`,
+          width: `pluginsSidebarWidthDefault`
         },
         [mediaQueries.lg]: {
-          width: `pluginsSidebarWidthLarge`,
-        },
+          width: `pluginsSidebarWidthLarge`
+        }
       }}
       aria-label="Plugin navigation"
     >
@@ -41,11 +41,11 @@ const PageWithPluginSearchBar = ({ isPluginsIndex, location, children }) => (
         display: isPluginsIndex ? `none` : false,
         [mediaQueries.md]: {
           display: `block`,
-          pl: t => t.sizes.pluginsSidebarWidthDefault,
+          pl: t => t.sizes.pluginsSidebarWidthDefault
         },
         [mediaQueries.lg]: {
-          pl: t => t.sizes.pluginsSidebarWidthLarge,
-        },
+          pl: t => t.sizes.pluginsSidebarWidthLarge
+        }
       }}
     >
       {children}

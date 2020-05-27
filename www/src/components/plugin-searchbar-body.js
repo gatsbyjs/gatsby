@@ -8,7 +8,7 @@ import {
   Stats,
   RefinementList,
   InfiniteHits,
-  ToggleRefinement,
+  ToggleRefinement
 } from "react-instantsearch-dom"
 import { navigate as reachNavigate } from "@reach/router"
 import Link from "../components/localized-link"
@@ -20,7 +20,7 @@ import { debounce, unescape } from "lodash-es"
 
 import {
   space,
-  mediaQueries,
+  mediaQueries
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
@@ -208,7 +208,7 @@ class Search extends Component {
             borderColor: `ui.border`,
             display: `flex`,
             flexDirection: `column`,
-            width: `100%`,
+            width: `100%`
           }}
         >
           <Global styles={searchBoxStyles} />
@@ -221,7 +221,7 @@ class Search extends Component {
                 items.map(({ count, ...item }) => {
                   return {
                     ...item,
-                    count: count || 0,
+                    count: count || 0
                   }
                 })
               }
@@ -242,14 +242,14 @@ class Search extends Component {
               display: `flex`,
               height: searchMetaHeight,
               px: 6,
-              fontSize: 0,
+              fontSize: 0
             }}
           >
             <Stats
               translations={{
-                stats: function (n) {
+                stats: function(n) {
                   return `${n} results`
-                },
+                }
               }}
             />
             <SkipNavLink />
@@ -262,8 +262,8 @@ class Search extends Component {
               [mediaQueries.md]: {
                 height: t =>
                   `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
-                overflowY: `scroll`,
-              },
+                overflowY: `scroll`
+              }
             }}
           >
             <InfiniteHits
@@ -284,7 +284,7 @@ class Search extends Component {
             lineHeight: 0,
             height: 20,
             mt: 6,
-            display: `none`,
+            display: `none`
           }}
         >
           <a
@@ -308,9 +308,9 @@ class Search extends Component {
                   background: `url(${AlgoliaLogo})`,
                   backgroundRepeat: `no-repeat`,
                   backgroundPosition: `50%`,
-                  backgroundSize: `100%`,
-                },
-              },
+                  backgroundSize: `100%`
+                }
+              }
             }}
           >
             Algolia
@@ -346,7 +346,7 @@ const Result = ({ hit, pathname, query }) => {
           "&:hover": {
             bg: selected
               ? `sidebar.itemHoverBackground`
-              : `sidebar.itemHoverBackground`,
+              : `sidebar.itemHoverBackground`
           },
           "&:before": {
             bg: `ui.border`,
@@ -358,8 +358,8 @@ const Result = ({ hit, pathname, query }) => {
             top: `auto`,
             width: `100%`,
             [mediaQueries.md]: {
-              display: `none`,
-            },
+              display: `none`
+            }
           },
           "&:after": {
             bg: selected ? `gatsby` : false,
@@ -368,9 +368,9 @@ const Result = ({ hit, pathname, query }) => {
             left: 0,
             position: `absolute`,
             top: 0,
-            width: 4,
-          },
-        },
+            width: 4
+          }
+        }
       }}
     >
       <div
@@ -378,7 +378,7 @@ const Result = ({ hit, pathname, query }) => {
           alignItems: `baseline`,
           display: `flex`,
           justifyContent: `space-between`,
-          mb: 3,
+          mb: 3
         }}
       >
         <h2
@@ -389,7 +389,7 @@ const Result = ({ hit, pathname, query }) => {
             fontFamily: `body`,
             fontSize: 1,
             fontWeight: `bold`,
-            my: 0,
+            my: 0
           }}
         >
           {hit.name}
@@ -406,7 +406,7 @@ const Result = ({ hit, pathname, query }) => {
             color: selected ? `lilac` : `textMuted`,
             display: `flex`,
             lineHeight: `solid`,
-            fontSize: 0,
+            fontSize: 0
           }}
         >
           <span
@@ -420,7 +420,7 @@ const Result = ({ hit, pathname, query }) => {
           <span
             css={{
               width: `5em`,
-              textAlign: `right`,
+              textAlign: `right`
             }}
           >
             {hit.humanDownloadsLast30Days}
@@ -432,7 +432,7 @@ const Result = ({ hit, pathname, query }) => {
       <div
         sx={{
           color: selected ? `inherit` : `textMuted`,
-          fontSize: 1,
+          fontSize: 1
         }}
       >
         {removeMD(unescape(hit.description))}
@@ -462,7 +462,7 @@ class PluginSearchBar extends Component {
     reachNavigate(
       `${this.props.location.pathname}?=${encodeURIComponent(value.query)}`,
       {
-        replace: true,
+        replace: true
       }
     )
   }

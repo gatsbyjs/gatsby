@@ -24,8 +24,8 @@ plugins: [
   {
     resolve: `gatsby-plugin-lodash`,
     options: {
-      disabledFeatures: [`shorthands`, `cloning`],
-    },
-  },
+      disabledFeatures: [`shorthands`, `cloning`]
+    }
+  }
 ]
 ```

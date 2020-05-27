@@ -4,7 +4,7 @@ describe(`Merge gatsby config`, () => {
   it(`Merging empty config is an identity operation`, () => {
     const emptyConfig = {}
     const basicConfig = {
-      plugins: [`gatsby-plugin-mdx`],
+      plugins: [`gatsby-plugin-mdx`]
     }
 
     expect(mergeGatsbyConfig(basicConfig, emptyConfig)).toEqual(basicConfig)
@@ -13,26 +13,26 @@ describe(`Merge gatsby config`, () => {
 
   it(`Merging plugins concatenates them`, () => {
     const basicConfig = {
-      plugins: [`gatsby-plugin-mdx`],
+      plugins: [`gatsby-plugin-mdx`]
     }
     const morePlugins = {
-      plugins: [`a-plugin`, `b-plugin`, { resolve: `c-plugin`, options: {} }],
+      plugins: [`a-plugin`, `b-plugin`, { resolve: `c-plugin`, options: {} }]
     }
     expect(mergeGatsbyConfig(basicConfig, morePlugins)).toEqual({
       plugins: [
         `gatsby-plugin-mdx`,
         `a-plugin`,
         `b-plugin`,
-        { resolve: `c-plugin`, options: {} },
-      ],
+        { resolve: `c-plugin`, options: {} }
+      ]
     })
     expect(mergeGatsbyConfig(morePlugins, basicConfig)).toEqual({
       plugins: [
         `a-plugin`,
         `b-plugin`,
         { resolve: `c-plugin`, options: {} },
-        `gatsby-plugin-mdx`,
-      ],
+        `gatsby-plugin-mdx`
+      ]
     })
   })
 
@@ -43,9 +43,9 @@ describe(`Merge gatsby config`, () => {
         {
           resolve: `scoped-plugin`,
           options: {},
-          parentDir: `/path/to/scoped-basic/parent`,
-        },
-      ],
+          parentDir: `/path/to/scoped-basic/parent`
+        }
+      ]
     }
     const morePlugins = {
       plugins: [
@@ -54,14 +54,14 @@ describe(`Merge gatsby config`, () => {
         `b-plugin`,
         {
           resolve: `c-plugin`,
-          options: {},
+          options: {}
         },
         {
           resolve: `scoped-plugin`,
           options: {},
-          parentDir: `/path/to/scoped-more/parent`,
-        },
-      ],
+          parentDir: `/path/to/scoped-more/parent`
+        }
+      ]
     }
     expect(mergeGatsbyConfig(basicConfig, morePlugins)).toEqual({
       plugins: [
@@ -69,15 +69,15 @@ describe(`Merge gatsby config`, () => {
         {
           resolve: `scoped-plugin`,
           options: {},
-          parentDir: `/path/to/scoped-basic/parent`,
+          parentDir: `/path/to/scoped-basic/parent`
         },
         `a-plugin`,
         `b-plugin`,
         {
           resolve: `c-plugin`,
-          options: {},
-        },
-      ],
+          options: {}
+        }
+      ]
     })
     expect(mergeGatsbyConfig(morePlugins, basicConfig)).toEqual({
       plugins: [
@@ -86,14 +86,14 @@ describe(`Merge gatsby config`, () => {
         `b-plugin`,
         {
           resolve: `c-plugin`,
-          options: {},
+          options: {}
         },
         {
           resolve: `scoped-plugin`,
           options: {},
-          parentDir: `/path/to/scoped-more/parent`,
-        },
-      ],
+          parentDir: `/path/to/scoped-more/parent`
+        }
+      ]
     })
   })
 
@@ -101,21 +101,21 @@ describe(`Merge gatsby config`, () => {
     const a = {
       siteMetadata: {
         title: `my site`,
-        something: { else: 1 },
-      },
+        something: { else: 1 }
+      }
     }
 
     const b = {
       siteMetadata: {
-        something: { nested: 2 },
-      },
+        something: { nested: 2 }
+      }
     }
 
     expect(mergeGatsbyConfig(a, b)).toEqual({
       siteMetadata: {
         title: `my site`,
-        something: { else: 1, nested: 2 },
-      },
+        something: { else: 1, nested: 2 }
+      }
     })
   })
 
@@ -123,22 +123,22 @@ describe(`Merge gatsby config`, () => {
     const a = {
       proxy: {
         prefix: `/something-not/api`,
-        url: `http://examplesite.com/api/`,
-      },
+        url: `http://examplesite.com/api/`
+      }
     }
 
     const b = {
       proxy: {
         prefix: `/api`,
-        url: `http://examplesite.com/api/`,
-      },
+        url: `http://examplesite.com/api/`
+      }
     }
 
     expect(mergeGatsbyConfig(a, b)).toEqual({
       proxy: {
         prefix: `/api`,
-        url: `http://examplesite.com/api/`,
-      },
+        url: `http://examplesite.com/api/`
+      }
     })
   })
 })

@@ -38,10 +38,10 @@ module.exports = {
       resolve: "gatsby-source-sanity",
       options: {
         projectId: "<yourProjectId>",
-        dataset: "<yourDatasetName>",
-      },
-    },
-  ],
+        dataset: "<yourDatasetName>"
+      }
+    }
+  ]
 }
 ```
 
@@ -59,10 +59,10 @@ module.exports = {
         dataset: "<yourDatasetName>",
         watchMode: true,
         overlayDrafts: true,
-        token: process.env.SANITY_READ_TOKEN,
-      },
-    },
-  ],
+        token: process.env.SANITY_READ_TOKEN
+      }
+    }
+  ]
 }
 ```
 
@@ -109,8 +109,8 @@ export default post => (
           <pre data-language={node.language}>
             <code>{node.code}</code>
           </pre>
-        ),
-      },
+        )
+      }
     }}
     blocks={post._bodyRaw}
   />

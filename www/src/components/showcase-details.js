@@ -25,21 +25,21 @@ const gutterDesktop = 8
 const styles = {
   link: {
     color: `link.color`,
-    textDecoration: `none`,
+    textDecoration: `none`
   },
   prevNextLink: {
     color: `lilac`,
     fontFamily: `heading`,
-    px: [6, null, null, 0],
+    px: [6, null, null, 0]
   },
   prevNextLinkSiteTitle: {
     color: `link.color`,
-    fontWeight: `bold`,
+    fontWeight: `bold`
   },
   prevNextImage: {
     borderRadius: 1,
-    boxShadow: `overlay`,
-  },
+    boxShadow: `overlay`
+  }
 }
 
 const cleanUrl = mainUrl => {
@@ -55,7 +55,7 @@ const Featured = () => (
       color: `textMuted`,
       display: `flex`,
       fontWeight: `bold`,
-      mr: 4,
+      mr: 4
     }}
   >
     <span
@@ -63,7 +63,7 @@ const Featured = () => (
         height: t => t.space[5],
         m: 0,
         mr: 2,
-        width: t => t.space[5],
+        width: t => t.space[5]
       }}
     >
       <FeaturedIcon />
@@ -78,13 +78,13 @@ const SourceLink = ({ ...props }) => (
     {...props}
     sx={{
       "&&": {
-        border: 0,
+        border: 0
       },
       display: `flex`,
       alignItems: `center`,
       mr: 3,
       color: `link.color`,
-      width: `100%`,
+      width: `100%`
     }}
   >
     <GithubIcon sx={{ fontSize: 3, mr: 2, color: `link.color` }} />
@@ -166,10 +166,10 @@ function ShowcaseModal({ children, location, isModal }) {
                 nextSite.childScreenshot.screenshotFile.childImageSharp.resize
                   .src,
               width: 100,
-              height: 100,
+              height: 100
             }}
             imgStyle={{
-              margin: 0,
+              margin: 0
             }}
             alt=""
           />
@@ -180,16 +180,16 @@ function ShowcaseModal({ children, location, isModal }) {
                 position: `absolute`,
                 top: 240,
                 width: 300,
-                transform: `translateX(-80px) rotate(90deg)`,
-              },
+                transform: `translateX(-80px) rotate(90deg)`
+              }
             }}
           >
             <MdArrowUpward
               sx={{
                 transform: `rotate(90deg)`,
                 [mediaQueries.md]: {
-                  transform: `none`,
-                },
+                  transform: `none`
+                }
               }}
             />
             <div> Next Site in Showcase </div>
@@ -209,10 +209,10 @@ function ShowcaseModal({ children, location, isModal }) {
                 previousSite.childScreenshot.screenshotFile.childImageSharp
                   .resize.src,
               width: 100,
-              height: 100,
+              height: 100
             }}
             imgStyle={{
-              margin: 0,
+              margin: 0
             }}
             alt=""
           />
@@ -224,16 +224,16 @@ function ShowcaseModal({ children, location, isModal }) {
                 position: `absolute`,
                 top: 240,
                 width: 300,
-                transform: `translateX(-80px) rotate(-90deg)`,
-              },
+                transform: `translateX(-80px) rotate(-90deg)`
+              }
             }}
           >
             <MdArrowUpward
               sx={{
                 transform: `rotate(-90deg)`,
                 [mediaQueries.md]: {
-                  transform: `none`,
-                },
+                  transform: `none`
+                }
               }}
             />
             <div> Previous Site in Showcase </div>
@@ -259,7 +259,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           maxWidth: isModal ? false : 1080,
           margin: isModal ? false : `0 auto`,
           width: `100%`,
-          order: 1,
+          order: 1
         }}
       >
         <div css={{ width: `100%` }}>
@@ -275,8 +275,8 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
               [mediaQueries.lg]: {
                 p: gutterDesktop,
                 pb: gutter,
-                pr: isModal ? 96 : false,
-              },
+                pr: isModal ? 96 : false
+              }
             }}
           >
             <h1 sx={{ m: 0, color: `inherit` }}>{site.title}</h1>
@@ -305,8 +305,8 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
               mx: gutter,
               py: 4,
               [mediaQueries.lg]: {
-                mx: gutterDesktop,
-              },
+                mx: gutterDesktop
+              }
             }}
           >
             {site.featured && <Featured />}
@@ -314,14 +314,14 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
             <div
               sx={{
                 alignSelf: `center`,
-                ml: `auto`,
+                ml: `auto`
               }}
             >
               <div
                 css={{
                   display: `flex`,
                   position: `relative`,
-                  zIndex: 1,
+                  zIndex: 1
                 }}
               >
                 <Button
@@ -349,7 +349,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
           <div
             sx={{
               p: gutter,
-              [mediaQueries.lg]: { p: gutterDesktop },
+              [mediaQueries.lg]: { p: gutterDesktop }
             }}
           >
             <p>{site.description}</p>

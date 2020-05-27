@@ -89,8 +89,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
-        name: "pages",
-      },
+        name: "pages"
+      }
     },
     {
       resolve: "gatsby-source-cosmicjs",
@@ -98,11 +98,11 @@ module.exports = {
         bucketSlug: "gatsby-blog-cosmic-js", // Your Cosmic bucket slug
         objectTypes: ["posts", "settings"], // List of the object types you want to be able to request from Gatsby.
         apiAccess: {
-          read_key: "",
-        },
-      },
-    },
-  ],
+          read_key: ""
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -146,7 +146,7 @@ class BlogIndex extends React.Component {
             <div key={node.slug}>
               <h3
                 style={{
-                  marginBottom: rhythm(1 / 4),
+                  marginBottom: rhythm(1 / 4)
                 }}
               >
                 <Link style={{ boxShadow: "none" }} to={`posts/${node.slug}`}>
@@ -253,14 +253,14 @@ class BlogPostTemplate extends React.Component {
         <Helmet title={`${post.title} | ${siteTitle}`} />
         <div
           style={{
-            marginTop: rhythm(1.4),
+            marginTop: rhythm(1.4)
           }}
         >
           <Link to="/">← Back to Posts</Link>
         </div>
         <h1
           style={{
-            marginTop: rhythm(1),
+            marginTop: rhythm(1)
           }}
         >
           {post.title}
@@ -270,7 +270,7 @@ class BlogPostTemplate extends React.Component {
             ...scale(-1 / 5),
             display: "block",
             marginBottom: rhythm(0.6),
-            marginTop: rhythm(-0.6),
+            marginTop: rhythm(-0.6)
           }}
         >
           {post.created}
@@ -283,7 +283,7 @@ class BlogPostTemplate extends React.Component {
             backgroundSize: "cover",
             backgroundPosition: "center",
             marginBottom: rhythm(0.6),
-            position: "relative",
+            position: "relative"
           }}
         />
         <div
@@ -292,7 +292,7 @@ class BlogPostTemplate extends React.Component {
         />
         <hr
           style={{
-            marginBottom: rhythm(1),
+            marginBottom: rhythm(1)
           }}
         />
         <Bio settings={author} />
@@ -303,7 +303,7 @@ class BlogPostTemplate extends React.Component {
             flexWrap: "wrap",
             justifyContent: "space-between",
             listStyle: "none",
-            padding: 0,
+            padding: 0
           }}
         >
           {previous && (
@@ -368,7 +368,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const indexPage = path.resolve("./src/pages/index.js")
   createPage({
     path: `posts`,
-    component: indexPage,
+    component: indexPage
   })
 
   const blogPost = path.resolve("./src/templates/blog-post.js")
@@ -409,8 +409,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: {
         slug: post.node.slug,
         previous,
-        next,
-      },
+        next
+      }
     })
   })
 }

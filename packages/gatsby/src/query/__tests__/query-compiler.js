@@ -1,7 +1,7 @@
 jest.mock(`glob`, () => {
   const sync = jest.fn().mockImplementation(() => [])
   return {
-    sync,
+    sync
   }
 })
 
@@ -13,7 +13,7 @@ const glob = require(`glob`)
 const {
   resolveThemes,
   parseQueries,
-  processQueries,
+  processQueries
 } = require(`../query-compiler`)
 
 const base = path.resolve(``)
@@ -31,7 +31,7 @@ describe(`Runner`, () => {
         additional: [],
         addError: e => {
           errors.push(e)
-        },
+        }
       })
 
       expect(errors).toEqual([])
@@ -49,7 +49,7 @@ describe(`Runner`, () => {
         additional: [],
         addError: e => {
           errors.push(e)
-        },
+        }
       })
 
       expect(errors).toEqual([])
@@ -68,7 +68,7 @@ describe(`Runner`, () => {
         additional: [path.join(base, `node_modules`, theme)],
         addError: e => {
           errors.push(e)
-        },
+        }
       })
 
       expect(errors).toEqual([])
@@ -94,8 +94,8 @@ describe(`resolveThemes`, () => {
       resolveThemes([
         {
           name: theme,
-          themeDir: path.join(base, `gatsby-theme-example`),
-        },
+          themeDir: path.join(base, `gatsby-theme-example`)
+        }
       ])
     ).toEqual([expect.stringContaining(theme)])
   })
@@ -107,8 +107,8 @@ describe(`resolveThemes`, () => {
       resolveThemes([
         {
           name: theme,
-          themeDir: path.join(base, theme),
-        },
+          themeDir: path.join(base, theme)
+        }
       ])
     ).toEqual([expect.stringContaining(theme.split(`/`).join(path.sep))])
   })
@@ -135,7 +135,7 @@ describe(`actual compiling`, () => {
                }
             }
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -143,7 +143,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot()
@@ -161,9 +161,9 @@ describe(`actual compiling`, () => {
             }
           }`,
         {
-          isStaticQuery: true,
+          isStaticQuery: true
         }
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -171,11 +171,11 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot({
-      id: expect.any(String),
+      id: expect.any(String)
     })
   })
 
@@ -194,7 +194,7 @@ describe(`actual compiling`, () => {
           fragment PostsJsonFragment on PostsJson {
             id
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -202,7 +202,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot()
@@ -225,7 +225,7 @@ describe(`actual compiling`, () => {
         `fragment PostsJsonFragment on PostsJson {
              id
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -233,7 +233,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot()
@@ -261,7 +261,7 @@ describe(`actual compiling`, () => {
           fragment AnotherPostsJsonFragment on PostsJson {
             text
           }`
-      ),
+      )
     ]
 
     const errors = []
@@ -270,7 +270,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot()
@@ -310,7 +310,7 @@ describe(`actual compiling`, () => {
           id
         }
         `
-      ),
+      )
     ]
 
     const errors = []
@@ -319,7 +319,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors.length).toEqual(0)
     expect(result.get(`mockFile1`)).toMatchInlineSnapshot(`
@@ -419,7 +419,7 @@ describe(`actual compiling`, () => {
             ...Bar
           }
         }`
-      ),
+      )
     ]
 
     const errors = []
@@ -428,12 +428,12 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors.length).toEqual(1)
     expect(errors[0]).toMatchInlineSnapshot(
       {
-        location: expect.any(Object),
+        location: expect.any(Object)
       },
       `
       Object {
@@ -480,7 +480,7 @@ describe(`actual compiling`, () => {
           fragment UnusedFragment on PostsJson {
             id
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -488,7 +488,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result.get(`mockFile`)).toMatchSnapshot()
@@ -505,7 +505,7 @@ describe(`actual compiling`, () => {
                }
             }
           }`
-      ),
+      )
     ]
 
     const errors = []
@@ -514,7 +514,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -557,7 +557,7 @@ describe(`actual compiling`, () => {
              id
              ...UnknownFragment
           }`
-      ),
+      )
     ]
 
     const errors = []
@@ -566,7 +566,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -603,7 +603,7 @@ describe(`actual compiling`, () => {
           fragment PostsJsonFragment on PostsJson {
             id
           }`
-      ),
+      )
     ]
 
     const errors = []
@@ -612,7 +612,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
 
     expect(errors).toMatchInlineSnapshot(
@@ -668,7 +668,7 @@ describe(`actual compiling`, () => {
         `fragment PostsJsonFragment on PostsJson {
             id
           }`
-      ),
+      )
     ]
 
     const errors = []
@@ -677,7 +677,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toEqual([])
     expect(result).toMatchSnapshot()
@@ -705,7 +705,7 @@ describe(`actual compiling`, () => {
         `fragment PostsJsonFragment on PostsJson {
             id
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -713,7 +713,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(_.orderBy(errors, e => e.id)).toMatchInlineSnapshot(`
       Array [
@@ -791,7 +791,7 @@ describe(`actual compiling`, () => {
             id
           }
         }`
-      ),
+      )
     ]
 
     const errors = []
@@ -800,7 +800,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -851,7 +851,7 @@ describe(`actual compiling`, () => {
               }
             }
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -859,7 +859,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchSnapshot()
     expect(result).toMatchSnapshot()
@@ -884,7 +884,7 @@ describe(`actual compiling`, () => {
               }
             }
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -892,7 +892,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -923,7 +923,7 @@ describe(`actual compiling`, () => {
                id
             }
           }`
-      ),
+      )
     ]
     const errors = []
     const result = processQueries({
@@ -931,7 +931,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -976,7 +976,7 @@ describe(`actual compiling`, () => {
             }
           }
         }`
-      ),
+      )
     ]
 
     const errors = []
@@ -985,7 +985,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`Array []`)
     expect(result).toMatchInlineSnapshot(`
@@ -1033,7 +1033,7 @@ describe(`actual compiling`, () => {
             }
           }
         }`
-      ),
+      )
     ]
 
     const errors = []
@@ -1042,7 +1042,7 @@ describe(`actual compiling`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     expect(errors).toMatchInlineSnapshot(`
       Array [
@@ -1092,7 +1092,7 @@ describe(`Extra fields`, () => {
       parsedQueries: nodes,
       addError: e => {
         errors.push(e)
-      },
+      }
     })
     return [result, errors]
   }
@@ -1315,12 +1315,12 @@ const createGatsbyDoc = (
       start: {
         // so no idea, but it seems to work correctly on websites
         line: 1,
-        column: 0,
+        column: 0
       },
       end: {
         line: 1,
-        column: 0,
-      },
-    },
+        column: 0
+      }
+    }
   }
 }

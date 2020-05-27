@@ -10,7 +10,7 @@ const {
   isExport,
   isExportDefault,
   BLOCKS_REGEX,
-  EMPTY_NEWLINE,
+  EMPTY_NEWLINE
 } = require(`@mdx-js/mdx/util`)
 
 // Some packages are required implicitly from @mdx-js/mdx (not listed in package.json).
@@ -32,7 +32,7 @@ const DEFAULT_OPTIONS = {
   remarkPlugins: [],
   rehypePlugins: [],
   compilers: [],
-  blocks: [BLOCKS_REGEX],
+  blocks: [BLOCKS_REGEX]
 }
 
 /**
@@ -57,7 +57,7 @@ const hasDefaultExport = (str, options) => {
       return eat(subvalue)({
         type: isExport(subvalue) ? `export` : `import`,
         default: getDefaultExportBlock(subvalue),
-        value: subvalue,
+        value: subvalue
       })
     }
 
@@ -88,7 +88,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function (content) {
+module.exports = async function(content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,
@@ -123,7 +123,7 @@ module.exports = async function (content) {
     mdxNode = await createMDXNode({
       id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
       node: fileNode,
-      content,
+      content
     })
   } catch (e) {
     return callback(e)
@@ -170,7 +170,7 @@ ${contentWithoutFrontmatter}`
     getNodes,
     reporter,
     cache,
-    pathPrefix,
+    pathPrefix
   })
 
   try {
@@ -179,8 +179,8 @@ ${contentWithoutFrontmatter}`
       plugins: [
         requireFromMDX(`@babel/plugin-syntax-jsx`),
         requireFromMDX(`@babel/plugin-syntax-object-rest-spread`),
-        require(`../utils/babel-plugin-html-attr-to-jsx-attr`),
-      ],
+        require(`../utils/babel-plugin-html-attr-to-jsx-attr`)
+      ]
     })
     debugMore(`transformed code`, result.code)
     return callback(

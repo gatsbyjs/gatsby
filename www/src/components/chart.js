@@ -15,25 +15,25 @@ const highchartsOptions = {
   chart: {
     backgroundColor: null,
     style: {
-      fontFamily: `Overpass, sans-serif`,
-    },
+      fontFamily: `Overpass, sans-serif`
+    }
   },
   title: {
     style: {
-      color: `#241236`,
+      color: `#241236`
     },
-    align: `left`,
+    align: `left`
   },
   legend: {
     align: `left`,
-    verticalAlign: `bottom`,
+    verticalAlign: `bottom`
   },
   tooltip: {
     backgroundColor: `#FFFFFF`,
-    borderRadius: radii[1],
+    borderRadius: radii[1]
   },
   credits: {
-    enabled: false,
+    enabled: false
   },
   xAxis: {
     gridLineWidth: 1,
@@ -41,20 +41,20 @@ const highchartsOptions = {
     lineColor: `#F3F3F3`,
     minorGridLineColor: `#F3F3F3`,
     tickColor: `#F3F3F3`,
-    tickWidth: 1,
+    tickWidth: 1
   },
   yAxis: {
     gridLineColor: `#F3F3F3`,
     lineColor: `#F3F3F3`,
     minorGridLineColor: `#F3F3F3`,
     tickColor: `#F3F3F3`,
-    tickWidth: 1,
+    tickWidth: 1
   },
   plotOptions: {
     areaspline: {
-      fillOpacity: 0.65,
-    },
-  },
+      fillOpacity: 0.65
+    }
+  }
 }
 
 const LazyHighChart = loadable(() => import(`react-highcharts`))
@@ -65,44 +65,44 @@ const DateChart = props => {
   const config = {
     chart: {
       type: `spline`,
-      zoomType: `x`,
+      zoomType: `x`
     },
     tooltip: {
-      pointFormat: `<span style="color:{point.color}">●</span> {series.name}: <b>{point.y:.2f}%</b><br/>`,
+      pointFormat: `<span style="color:{point.color}">●</span> {series.name}: <b>{point.y:.2f}%</b><br/>`
     },
     title: {
-      text: props.title,
+      text: props.title
     },
     xAxis: {
       type: `datetime`,
       title: {
-        text: `Date`,
-      },
+        text: `Date`
+      }
     },
     yAxis: {
       title: {
-        text: yAxisLabel,
+        text: yAxisLabel
       },
       labels: {
-        format: `{value}%`,
-      },
+        format: `{value}%`
+      }
     },
     series: seriesData.map(series => {
       return {
         name: series.name,
         data: series.data.map(edge => [
           dateToUTC(edge.date),
-          100 * parseFloat(edge.value),
-        ]),
+          100 * parseFloat(edge.value)
+        ])
       }
-    }),
+    })
   }
   return (
     <div className="gatsby-highcharts">
       <LazyHighChart
         config={{
           ...highchartsOptions,
-          ...config,
+          ...config
         }}
       />
     </div>

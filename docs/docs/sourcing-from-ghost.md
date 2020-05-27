@@ -40,10 +40,10 @@ module.exports = {
       resolve: `gatsby-source-ghost`,
       options: {
         apiUrl: `https://gatsby.ghost.io`,
-        contentApiKey: `9cc5c67c358edfdd81455149d0`,
-      },
-    },
-  ],
+        contentApiKey: `9cc5c67c358edfdd81455149d0`
+      }
+    }
+  ]
 }
 ```
 
@@ -93,8 +93,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: node.url,
       component: postTemplate,
       context: {
-        slug: node.slug,
-      },
+        slug: node.slug
+      }
     })
   })
 }

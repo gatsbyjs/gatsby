@@ -178,10 +178,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
-  ],
+        pathToConfigModule: `src/utils/typography`
+      }
+    }
+  ]
 }
 ```
 
@@ -205,7 +205,7 @@ The place for these common bits of data is the `siteMetadata` object in the `gat
 module.exports = {
   // highlight-start
   siteMetadata: {
-    title: `Title from siteMetadata`,
+    title: `Title from siteMetadata`
   },
   // highlight-end
   plugins: [
@@ -213,10 +213,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
-  ],
+        pathToConfigModule: `src/utils/typography`
+      }
+    }
+  ]
 }
 ```
 

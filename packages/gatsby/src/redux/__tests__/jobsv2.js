@@ -9,15 +9,15 @@ describe(`Job v2 actions/reducer`, () => {
   const plugin = {
     name: `test-plugin`,
     version: `1.0.0`,
-    resolve: `/node_modules/test-plugin`,
+    resolve: `/node_modules/test-plugin`
   }
   const createGlobalState = defaultState => {
     return {
       program: {
-        directory: __dirname,
+        directory: __dirname
       },
       jobsV2: jobsReducer(undefined, {}),
-      ...defaultState,
+      ...defaultState
     }
   }
 
@@ -54,7 +54,7 @@ describe(`Job v2 actions/reducer`, () => {
           name: `TEST_JOB`,
           inputPaths: [],
           outputDir: `/public/static`,
-          args: {},
+          args: {}
         },
         plugin
       )
@@ -71,7 +71,7 @@ describe(`Job v2 actions/reducer`, () => {
     expect(globalState.jobsV2.complete.size).toBe(1)
     expect(values[0]).toEqual({
       result: `myresult`,
-      inputPaths: [],
+      inputPaths: []
     })
     expect(jobsManager.removeInProgressJob).toHaveBeenCalledTimes(1)
     expect(jobsManager.enqueueJob).toMatchSnapshot()
@@ -86,7 +86,7 @@ describe(`Job v2 actions/reducer`, () => {
       name: `TEST_JOB`,
       inputPaths: [],
       outputDir: `/public/static`,
-      args: {},
+      args: {}
     }
 
     await expect(dispatch(actions.createJobV2(job, plugin))).resolves.toBe(

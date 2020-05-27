@@ -196,13 +196,13 @@ const Header = ({ siteTitle, menuLinks }) => (
   <header
     style={{
       background: "rebeccapurple",
-      marginBottom: "1.45rem",
+      marginBottom: "1.45rem"
     }}
   >
     <div
       style={{
         background: "rebeccapurple",
-        marginBottom: "1.45rem",
+        marginBottom: "1.45rem"
       }}
     >
       <div
@@ -212,7 +212,7 @@ const Header = ({ siteTitle, menuLinks }) => (
           padding: "1.45rem 1.0875rem",
           display: "flex",
           justifyItems: "space-between",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <h1 style={{ margin: 0, flex: 1 }}>
@@ -220,7 +220,7 @@ const Header = ({ siteTitle, menuLinks }) => (
             to="/"
             style={{
               color: "white",
-              textDecoration: "none",
+              textDecoration: "none"
             }}
           >
             {siteTitle}
@@ -235,7 +235,7 @@ const Header = ({ siteTitle, menuLinks }) => (
                   key={link.name}
                   style={{
                     listStyleType: `none`,
-                    padding: `1rem`,
+                    padding: `1rem`
                   }}
                 >
                   <Link style={{ color: `white` }} to={link.link}>
@@ -253,11 +253,11 @@ const Header = ({ siteTitle, menuLinks }) => (
 )
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
+  siteTitle: PropTypes.string
 }
 
 Header.defaultProps = {
-  siteTitle: ``,
+  siteTitle: ``
 }
 
 export default Header

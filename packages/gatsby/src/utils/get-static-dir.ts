@@ -17,7 +17,7 @@ export const copyStaticDirs = (): void => {
     : flattenedPlugins.map(plugin => {
         return {
           themeDir: plugin.pluginFilepath,
-          themeName: plugin.name,
+          themeName: plugin.name
         }
       })
 
@@ -32,7 +32,7 @@ export const copyStaticDirs = (): void => {
   const staticDir = nodePath.join(process.cwd(), `static`)
   if (!fs.existsSync(staticDir)) return undefined
   return fs.copySync(staticDir, nodePath.join(process.cwd(), `public`), {
-    dereference: true,
+    dereference: true
   })
 }
 

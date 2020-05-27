@@ -11,5 +11,5 @@ export {
   EcosystemIcon,
   PluginsIcon,
   ShowcaseIcon,
-  TutorialIcon,
+  TutorialIcon
 }

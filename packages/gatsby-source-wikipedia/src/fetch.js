@@ -15,7 +15,7 @@ const fetchNodesFromSearch = ({ query, limit = 15 }) =>
         description: result.description,
         updatedAt: metadata.updated,
         queryIndex: queryIndex + 1,
-        rendered,
+        rendered
       }
     })
   )
@@ -29,7 +29,7 @@ const getMetaData = name =>
       redirects: `resolve`,
       prop: `extracts|revisions`,
       explaintext: 1,
-      exsentences: 1,
+      exsentences: 1
     })}`
   )
     .then(response => response.json())
@@ -50,7 +50,7 @@ const getMetaData = name =>
         title: page.title,
         extract: page.extract,
         urlId: page.title.replace(/\s/g, `_`),
-        updated,
+        updated
       }
     })
 
@@ -61,7 +61,7 @@ const search = ({ query, limit }) =>
       search: query,
       format: `json`,
       redirects: `resolve`,
-      limit,
+      limit
     })}`
   )
     .then(response => response.json())
@@ -70,7 +70,7 @@ const search = ({ query, limit }) =>
         return {
           title,
           description: descriptions[i],
-          id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1],
+          id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1]
         }
       })
     )

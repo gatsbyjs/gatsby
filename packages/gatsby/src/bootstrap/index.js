@@ -43,7 +43,7 @@ type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
   parentSpan: Object,
-  graphqlTracing: boolean,
+  graphqlTracing: boolean
 }
 
 module.exports = async (args: BootstrapArgs) => {
@@ -79,12 +79,12 @@ module.exports = async (args: BootstrapArgs) => {
     ...args,
     browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
-    directory,
+    directory
   }
 
   store.dispatch({
     type: `SET_PROGRAM`,
-    payload: program,
+    payload: program
   })
 
   let activityForJobs
@@ -107,7 +107,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Try opening the site's gatsby-config.js file.
   let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   const { configModule, configFilePath } = await getConfigFile(
@@ -122,8 +122,8 @@ module.exports = async (args: BootstrapArgs) => {
       id: `10126`,
       context: {
         configName: `gatsby-config`,
-        path: program.directory,
-      },
+        path: program.directory
+      }
     })
   }
 
@@ -135,19 +135,19 @@ module.exports = async (args: BootstrapArgs) => {
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
       configFilePath,
-      rootDir: program.directory,
+      rootDir: program.directory
     })
     config = themes.config
 
     store.dispatch({
       type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes,
+      payload: themes.themes
     })
   } else if (config) {
     const plugins = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
-      rootDir: program.directory,
+      rootDir: program.directory
     })
     config = plugins.config
   }
@@ -166,7 +166,7 @@ module.exports = async (args: BootstrapArgs) => {
   store.dispatch(removeStaleJobs(store.getState()))
 
   activity = reporter.activityTimer(`load plugins`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
@@ -176,16 +176,16 @@ module.exports = async (args: BootstrapArgs) => {
   // so we report an array of unique pairs
   const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
-    plugins: pluginsStr,
+    plugins: pluginsStr
   })
 
   telemetry.decorateEvent(`DEVELOP_STOP`, {
-    plugins: pluginsStr,
+    plugins: pluginsStr
   })
 
   // onPreInit
   activity = reporter.activityTimer(`onPreInit`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
@@ -200,7 +200,7 @@ module.exports = async (args: BootstrapArgs) => {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
       {
-        parentSpan: bootstrapSpan,
+        parentSpan: bootstrapSpan
       }
     )
     activity.start()
@@ -208,13 +208,13 @@ module.exports = async (args: BootstrapArgs) => {
       `public/**/*.{html,css}`,
       `!public/page-data/**/*`,
       `!public/static`,
-      `!public/static/**/*.{html,css}`,
+      `!public/static/**/*.{html,css}`
     ])
     activity.end()
   }
 
   activity = reporter.activityTimer(`initialize cache`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
@@ -234,7 +234,7 @@ module.exports = async (args: BootstrapArgs) => {
     ), // ignore as this file isn't required),
     Promise.resolve(
       md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
-    ), // ignore as this file isn't required),
+    ) // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
@@ -266,14 +266,14 @@ module.exports = async (args: BootstrapArgs) => {
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
     store.dispatch({
-      type: `DELETE_CACHE`,
+      type: `DELETE_CACHE`
     })
   }
 
   // Update the store with the new plugins hash.
   store.dispatch({
     type: `UPDATE_PLUGINS_HASH`,
-    payload: pluginsHash,
+    payload: pluginsHash
   })
 
   // Now that we know the .cache directory is safe, initialize the cache
@@ -286,7 +286,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   activity = reporter.activityTimer(`copy gatsby files`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
@@ -294,10 +294,10 @@ module.exports = async (args: BootstrapArgs) => {
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, {
-      clobber: true,
+      clobber: true
     })
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
-      clobber: true,
+      clobber: true
     })
     await fs.ensureDirSync(`${cacheDirectory}/json`)
 
@@ -340,7 +340,7 @@ module.exports = async (args: BootstrapArgs) => {
     flattenedPlugins.map(plugin => {
       return {
         resolve: hasAPIFile(`ssr`, plugin),
-        options: plugin.pluginOptions,
+        options: plugin.pluginOptions
       }
     }),
     plugin => plugin.resolve
@@ -350,7 +350,7 @@ module.exports = async (args: BootstrapArgs) => {
     flattenedPlugins.map(plugin => {
       return {
         resolve: hasAPIFile(`browser`, plugin),
-        options: plugin.pluginOptions,
+        options: plugin.pluginOptions
       }
     }),
     plugin => plugin.resolve
@@ -402,27 +402,27 @@ module.exports = async (args: BootstrapArgs) => {
 
   // onPreBootstrap
   activity = reporter.activityTimer(`onPreBootstrap`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
-    parentSpan: activity.span,
+    parentSpan: activity.span
   })
   activity.end()
 
   // Prepare static schema types
   activity = reporter.activityTimer(`createSchemaCustomization`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await createSchemaCustomization({
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.end()
 
   // Source nodes
   activity = reporter.activityTimer(`source and transform nodes`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await require(`../utils/source-nodes`).default({ parentSpan: activity.span })
@@ -437,7 +437,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Create Schema.
   activity = reporter.activityTimer(`building schema`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await require(`../schema`).build({ parentSpan: activity.span })
@@ -449,22 +449,22 @@ module.exports = async (args: BootstrapArgs) => {
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {
     traceId: `initial-resolvableExtensions`,
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
-    payload: _.flattenDeep([extensions, apiResults]),
+    payload: _.flattenDeep([extensions, apiResults])
   })
 
   const graphqlRunner = createGraphQLRunner(store, reporter, {
     graphqlTracing: args.graphqlTracing,
-    parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan,
+    parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan
   })
 
   // Collect pages.
   activity = reporter.activityTimer(`createPages`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await apiRunnerNode(
@@ -473,7 +473,7 @@ module.exports = async (args: BootstrapArgs) => {
       graphql: graphqlRunner,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
-      parentSpan: activity.span,
+      parentSpan: activity.span
     },
     { activity }
   )
@@ -491,7 +491,7 @@ module.exports = async (args: BootstrapArgs) => {
   // "createPages" API is called every time (during development)
   // that data changes.
   activity = reporter.activityTimer(`createPagesStatefully`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await apiRunnerNode(
@@ -500,16 +500,16 @@ module.exports = async (args: BootstrapArgs) => {
       graphql: graphqlRunner,
       traceId: `initial-createPagesStatefully`,
       waitForCascadingActions: true,
-      parentSpan: activity.span,
+      parentSpan: activity.span
     },
     {
-      activity,
+      activity
     }
   )
   activity.end()
 
   activity = reporter.activityTimer(`onPreExtractQueries`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await apiRunnerNode(`onPreExtractQueries`, { parentSpan: activity.span })
@@ -517,7 +517,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Update Schema for SitePage.
   activity = reporter.activityTimer(`update schema`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await require(`../schema`).rebuildWithSitePage({ parentSpan: activity.span })
@@ -527,7 +527,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Write out files.
   activity = reporter.activityTimer(`write out requires`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   try {
@@ -539,14 +539,14 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Write out redirects.
   activity = reporter.activityTimer(`write out redirect data`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await writeRedirects()
   activity.end()
 
   activity = reporter.activityTimer(`onPostBootstrap`, {
-    parentSpan: bootstrapSpan,
+    parentSpan: bootstrapSpan
   })
   activity.start()
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })

@@ -40,7 +40,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const myData = {
     key: 123,
     foo: `The foo field of my node`,
-    bar: `Baz`,
+    bar: `Baz`
   }
 
   const nodeContent = JSON.stringify(myData)
@@ -53,8 +53,8 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
       type: `MyNodeType`,
       mediaType: `text/html`,
       content: nodeContent,
-      contentDigest: createContentDigest(myData),
-    },
+      contentDigest: createContentDigest(myData)
+    }
   }
 
   const node = Object.assign({}, myData, nodeMeta)
@@ -324,7 +324,7 @@ exports.onCreateNode = async ({
   actions: { createNode },
   getCache,
   createNodeId,
-  node,
+  node
 }) => {
   // because onCreateNode is called for all nodes, verify that you are only running this code on nodes created by your plugin
   if (node.internal.type === `your-source-node-type`) {
@@ -335,7 +335,7 @@ exports.onCreateNode = async ({
       getCache,
       createNode,
       createNodeId,
-      parentNodeId: node.id,
+      parentNodeId: node.id
     })
   }
 }
@@ -350,7 +350,7 @@ exports.onCreateNode = async ({
   actions: { createNode },
   getCache,
   createNodeId,
-  node,
+  node
 }) => {
   // because onCreateNode is called for all nodes, verify that you are only running this code on nodes created by your plugin
   if (node.internal.type === `your-source-node-type`) {
@@ -361,7 +361,7 @@ exports.onCreateNode = async ({
       getCache,
       createNode,
       createNodeId,
-      parentNodeId: node.id,
+      parentNodeId: node.id
     })
 
     // highlight-start
@@ -400,8 +400,8 @@ module.exports = {
     `your-source-plugin`,
     // required to generate optimized images
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-  ],
+    `gatsby-transformer-sharp`
+  ]
 }
 ```
 

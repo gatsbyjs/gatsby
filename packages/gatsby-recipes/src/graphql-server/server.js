@@ -5,7 +5,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
   execute,
-  subscribe,
+  subscribe
 } = require(`graphql`)
 const { PubSub } = require(`graphql-subscriptions`)
 const { SubscriptionServer } = require(`subscriptions-transport-ws`)
@@ -25,7 +25,7 @@ const PORT = process.argv[2] || 4000
 const emitOperation = state => {
   console.log(state)
   pubsub.publish(`operation`, {
-    state: JSON.stringify(state),
+    state: JSON.stringify(state)
   })
 }
 
@@ -34,7 +34,7 @@ let service
 const applyPlan = ({ recipePath, projectRoot }) => {
   const initialState = {
     context: { recipePath, projectRoot, steps: [], currentStep: 0 },
-    value: `init`,
+    value: `init`
   }
 
   // Interpret the machine, and add a listener for whenever a transition occurs.
@@ -47,19 +47,19 @@ const applyPlan = ({ recipePath, projectRoot }) => {
       state: state.value,
       context: state.context,
       stepResources: state.context.stepResources,
-      plan: state.context.plan,
+      plan: state.context.plan
     })
     if (state.changed) {
       console.log(`===state.changed`, {
         state: state.value,
-        currentStep: state.context.currentStep,
+        currentStep: state.context.currentStep
       })
       // Wait until plans are created before updating the UI
       if (state.value !== `creatingPlan`) {
         emitOperation({
           context: state.context,
           lastEvent: state.event,
-          value: state.value,
+          value: state.value
         })
       }
     }
@@ -76,15 +76,15 @@ const applyPlan = ({ recipePath, projectRoot }) => {
 const OperationType = new GraphQLObjectType({
   name: `Operation`,
   fields: {
-    state: { type: GraphQLString },
-  },
+    state: { type: GraphQLString }
+  }
 })
 
 const { queryTypes, mutationTypes } = createTypes()
 
 const rootQueryType = new GraphQLObjectType({
   name: `Root`,
-  fields: () => queryTypes,
+  fields: () => queryTypes
 })
 
 const rootMutationType = new GraphQLObjectType({
@@ -96,25 +96,25 @@ const rootMutationType = new GraphQLObjectType({
         type: GraphQLString,
         args: {
           recipePath: { type: GraphQLString },
-          projectRoot: { type: GraphQLString },
+          projectRoot: { type: GraphQLString }
         },
         resolve: (_data, args) => {
           console.log(`received operation`, args.recipePath)
           applyPlan(args)
-        },
+        }
       },
       sendEvent: {
         type: GraphQLString,
         args: {
-          event: { type: GraphQLString },
+          event: { type: GraphQLString }
         },
         resolve: (_, args) => {
           console.log(`event received`, args)
           service.send(args.event)
-        },
-      },
+        }
+      }
     }
-  },
+  }
 })
 
 const rootSubscriptionType = new GraphQLObjectType({
@@ -124,16 +124,16 @@ const rootSubscriptionType = new GraphQLObjectType({
       operation: {
         type: OperationType,
         subscribe: () => pubsub.asyncIterator(`operation`),
-        resolve: payload => payload,
-      },
+        resolve: payload => payload
+      }
     }
-  },
+  }
 })
 
 const schema = new GraphQLSchema({
   query: rootQueryType,
   mutation: rootMutationType,
-  subscription: rootSubscriptionType,
+  subscription: rootSubscriptionType
 })
 
 const app = express()
@@ -148,7 +148,7 @@ app.use(
   graphqlHTTP({
     schema,
     graphiql: true,
-    context: { root: SITE_ROOT },
+    context: { root: SITE_ROOT }
   })
 )
 
@@ -157,11 +157,11 @@ server.listen(PORT, () => {
     {
       execute,
       subscribe,
-      schema,
+      schema
     },
     {
       server,
-      path: `/graphql`,
+      path: `/graphql`
     }
   )
 })

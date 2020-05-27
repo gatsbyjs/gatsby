@@ -326,7 +326,7 @@ const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
           strokeLinejoin="round"
         />
       </svg>
-    ),
+    )
   }
   return icons[name]
 }

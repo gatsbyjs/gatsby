@@ -14,7 +14,7 @@ describe(`gatsby-source-medium`, () => {
     beforeEach(() => {
       axios.get.mockResolvedValue({ data: fakeMediumData })
       actions = {
-        createNode: jest.fn(),
+        createNode: jest.fn()
       }
       createNodeId = jest.fn(id => id)
       createContentDigest = jest.fn().mockReturnValue(`digest`)

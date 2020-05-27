@@ -20,8 +20,8 @@ exports.onRenderBody = function onRenderBody(
           })('https://earlymonitoring.firebaseapp.com/index.min.js', ${JSON.stringify(
             appId
           )});
-        `,
-      },
-    }),
+        `
+      }
+    })
   ])
 }

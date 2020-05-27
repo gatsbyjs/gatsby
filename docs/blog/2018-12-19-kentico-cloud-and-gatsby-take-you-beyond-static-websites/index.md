@@ -85,7 +85,7 @@ graphql(`
     createPage({
       path: edge.node.elements.url.value,
       component: path.resolve(`src/templates/phase.js`),
-      context: { id: edge.node.system.id },
+      context: { id: edge.node.system.id }
     })
   )
   resolve()

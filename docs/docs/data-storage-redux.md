@@ -44,9 +44,9 @@ module.exports = {
     const { createRedirect } = actions
     createRedirect({
       fromPath: "/legacy-path",
-      toPath: "/current-path",
+      toPath: "/current-path"
     })
-  },
+  }
 }
 ```
 

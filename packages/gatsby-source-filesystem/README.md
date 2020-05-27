@@ -30,18 +30,18 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/`,
-      },
+        path: `${__dirname}/src/pages/`
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `data`,
         path: `${__dirname}/src/data/`,
-        ignore: [`**/\.*`], // ignore files starting with a dot
-      },
-    },
-  ],
+        ignore: [`**/\.*`] // ignore files starting with a dot
+      }
+    }
+  ]
 }
 ```
 
@@ -142,14 +142,14 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     const relativeFilePath = createFilePath({
       node,
       getNode,
-      basePath: "data/faqs/",
+      basePath: "data/faqs/"
     })
 
     // Creates new query'able field with name of 'slug'
     createNodeField({
       node,
       name: "slug",
-      value: `/faqs${relativeFilePath}`,
+      value: `/faqs${relativeFilePath}`
     })
   }
 }
@@ -188,7 +188,7 @@ createRemoteFileNode({
 
   // OPTIONAL
   // Sets the file extension
-  ext: ".jpg",
+  ext: ".jpg"
 })
 ```
 
@@ -204,7 +204,7 @@ exports.downloadMediaFiles = ({
   getCache,
   createNode,
   createNodeId,
-  _auth,
+  _auth
 }) => {
   nodes.map(async node => {
     let fileNode
@@ -218,7 +218,7 @@ exports.downloadMediaFiles = ({
           getCache,
           createNode,
           createNodeId,
-          auth: _auth,
+          auth: _auth
         })
       } catch (e) {
         // Ignore
@@ -250,7 +250,7 @@ createRemoteFileNode({
   createNodeId,
   // if necessary!
   ext: ".jpg",
-  name: "image",
+  name: "image"
 })
 ```
 
@@ -280,7 +280,7 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
         createMySqlNodes(result, results, createNode, {
           createNode,
           createNodeId,
-          getCache,
+          getCache
         })
       )
     db.end()
@@ -303,7 +303,7 @@ function attach(node, key, value, ctx) {
         buffer: value,
         getCache: ctx.getCache,
         createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
+        createNodeId: ctx.createNodeId
       })
     )
     value = `Buffer`

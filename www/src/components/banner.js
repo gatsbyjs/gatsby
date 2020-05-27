@@ -39,7 +39,7 @@ const Banner = () => (
       position: `fixed`,
       width: `100%`,
       zIndex: `banner`,
-      px: `env(safe-area-inset-left)`,
+      px: `env(safe-area-inset-left)`
     }}
   >
     <InnerContainer>

@@ -3,7 +3,7 @@ import path from "path"
 
 import {
   remove as removePageHtmlFile,
-  getPageHtmlFilePath,
+  getPageHtmlFilePath
 } from "../utils/page-html"
 import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
 import { IGatsbyState } from "../redux/types"

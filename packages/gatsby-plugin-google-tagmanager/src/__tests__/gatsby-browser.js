@@ -38,8 +38,8 @@ describe(`onRouteUpdate`, () => {
 
     expect(window.dataLayer).toEqual([
       {
-        event: `gatsby-route-change`,
-      },
+        event: `gatsby-route-change`
+      }
     ])
   })
 
@@ -61,7 +61,7 @@ describe(`onRouteUpdate`, () => {
     onRouteUpdate(
       {},
       {
-        includeInDevelopment: true,
+        includeInDevelopment: true
       }
     )
 
@@ -79,7 +79,7 @@ describe(`onRouteUpdate`, () => {
     onRouteUpdate(
       {},
       {
-        routeChangeEventName: customEventName,
+        routeChangeEventName: customEventName
       }
     )
 
@@ -87,8 +87,8 @@ describe(`onRouteUpdate`, () => {
 
     expect(window.dataLayer).toEqual([
       {
-        event: customEventName,
-      },
+        event: customEventName
+      }
     ])
   })
 
@@ -102,7 +102,7 @@ describe(`onRouteUpdate`, () => {
     onRouteUpdate(
       {},
       {
-        dataLayerName,
+        dataLayerName
       }
     )
 

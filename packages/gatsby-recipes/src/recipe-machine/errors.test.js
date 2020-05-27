@@ -12,7 +12,7 @@ describe(`recipe-machine errors`, () => {
 
 <File path="./hi.md" contentz="#yo" />
     `,
-      currentStep: 0,
+      currentStep: 0
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -38,7 +38,7 @@ describe(`recipe-machine errors`, () => {
 
 <File path="./hi.md" content="#yo" />
     `,
-      currentStep: 0,
+      currentStep: 0
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -55,7 +55,7 @@ describe(`recipe-machine errors`, () => {
 
   it(`errors if no src or recipePath has been given`, done => {
     const initialContext = {
-      currentStep: 0,
+      currentStep: 0
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -78,7 +78,7 @@ describe(`recipe-machine errors`, () => {
 
 <File path="./hi.md" contentz="#yo" /
     `,
-      currentStep: 0,
+      currentStep: 0
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)

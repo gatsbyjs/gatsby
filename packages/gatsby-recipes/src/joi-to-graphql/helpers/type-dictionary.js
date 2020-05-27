@@ -9,7 +9,7 @@ const {
   GraphQLList,
   GraphQLBoolean,
   GraphQLNonNull,
-  GraphQLEnumType,
+  GraphQLEnumType
 } = require(`graphql`)
 
 module.exports = {
@@ -21,5 +21,5 @@ module.exports = {
   array: GraphQLList,
   boolean: GraphQLBoolean,
   required: GraphQLNonNull,
-  enum: GraphQLEnumType,
+  enum: GraphQLEnumType
 }

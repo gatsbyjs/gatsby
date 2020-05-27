@@ -15,5 +15,5 @@ export default {
   EggheadEmbed,
   ComponentModel,
   a: MdxLink,
-  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>
 }

@@ -26,7 +26,7 @@ class ImageWithIEPolyfill extends Component {
     const polyfillStyle = {
       objectFit: objectFit,
       objectPosition: objectPosition,
-      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`,
+      fontFamily: `"object-fit: ${objectFit}; object-position: ${objectPosition}"`
     }
 
     return (
@@ -36,11 +36,11 @@ class ImageWithIEPolyfill extends Component {
         {...props}
         imgStyle={{
           ...props.imgStyle,
-          ...polyfillStyle,
+          ...polyfillStyle
         }}
         placeholderStyle={{
           ...props.placeholderStyle,
-          ...polyfillStyle,
+          ...polyfillStyle
         }}
       />
     )
@@ -53,12 +53,12 @@ class ImageWithIEPolyfill extends Component {
 // https://github.com/gatsbyjs/gatsby/blob/master/docs/docs/gatsby-image.md#gatsby-image-props
 ImageWithIEPolyfill.propTypes = {
   objectFit: PropTypes.string,
-  objectPosition: PropTypes.string,
+  objectPosition: PropTypes.string
 }
 
 ImageWithIEPolyfill.defaultProps = {
   objectFit: `cover`,
-  objectPosition: `50% 50%`,
+  objectPosition: `50% 50%`
 }
 
 export default forwardRef((props, ref) => (

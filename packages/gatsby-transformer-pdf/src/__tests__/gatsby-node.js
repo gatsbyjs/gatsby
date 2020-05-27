@@ -12,11 +12,11 @@ describe(`gatsby-transformer-pdf`, () => {
     node = {
       id: `dummy`,
       extension: `pdf`,
-      absolutePath: path.resolve(__dirname, `../__fixtures__/dummy.pdf`),
+      absolutePath: path.resolve(__dirname, `../__fixtures__/dummy.pdf`)
     }
     actions = {
       createNode: jest.fn(),
-      createParentChildLink: jest.fn(),
+      createParentChildLink: jest.fn()
     }
     loadNodeContent = jest.fn()
     createNodeId = jest.fn(node => node)
@@ -30,7 +30,7 @@ describe(`gatsby-transformer-pdf`, () => {
       actions,
       loadNodeContent,
       createNodeId,
-      createContentDigest,
+      createContentDigest
     })
     expect(createNodeId).not.toHaveBeenCalled()
   })
@@ -41,14 +41,14 @@ describe(`gatsby-transformer-pdf`, () => {
       actions,
       loadNodeContent,
       createNodeId,
-      createContentDigest,
+      createContentDigest
     })
     expect(actions.createNode).toHaveBeenCalledWith({
       children: [],
       content: expect.any(String),
       id: `dummy >>> pdf`,
       internal: { contentDigest: `digest`, type: `pdf` },
-      parent: `dummy`,
+      parent: `dummy`
     })
     expect(actions.createParentChildLink).toHaveBeenCalledWith({
       child: {
@@ -56,9 +56,9 @@ describe(`gatsby-transformer-pdf`, () => {
         content: expect.any(String),
         id: `dummy >>> pdf`,
         internal: { contentDigest: `digest`, type: `pdf` },
-        parent: `dummy`,
+        parent: `dummy`
       },
-      parent: node,
+      parent: node
     })
     expect(actions.createNode.mock.calls[0][0].content).toMatchSnapshot()
   })

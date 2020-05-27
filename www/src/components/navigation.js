@@ -6,7 +6,7 @@ import { t, Trans } from "@lingui/macro"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import {
   FaTwitter as TwitterIcon,
-  FaDiscord as DiscordIcon,
+  FaDiscord as DiscordIcon
 } from "react-icons/fa"
 
 import Link from "./localized-link"
@@ -25,8 +25,8 @@ const navItemHorizontalSpacing = [1, null, 2]
 
 const overrideDefaultMdLineHeight = {
   [mediaQueries.md]: {
-    lineHeight: t => t.sizes.headerHeight,
-  },
+    lineHeight: t => t.sizes.headerHeight
+  }
 }
 
 const navItemStyles = {
@@ -36,12 +36,12 @@ const navItemStyles = {
   fontSize: 3,
   lineHeight: t => t.sizes.headerHeight,
   [mediaQueries.md]: {
-    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`
   },
   position: `relative`,
   textDecoration: `none`,
   zIndex: 1,
-  "&:hover, &:focus": { color: `navigation.linkHover` },
+  "&:hover, &:focus": { color: `navigation.linkHover` }
 }
 
 const NavItem = ({ linkTo, children }) => (
@@ -49,7 +49,7 @@ const NavItem = ({ linkTo, children }) => (
     sx={{
       display: `block`,
       m: 0,
-      mx: navItemHorizontalSpacing,
+      mx: navItemHorizontalSpacing
     }}
   >
     <Link
@@ -60,8 +60,8 @@ const NavItem = ({ linkTo, children }) => (
         ...navItemStyles,
         "&.active": {
           borderBottomColor: `lilac`,
-          color: `navigation.linkActive`,
-        },
+          color: `navigation.linkActive`
+        }
       }}
     >
       {children}
@@ -77,7 +77,7 @@ const SocialNavItem = ({ href, title, children }) => (
       ...navItemStyles,
       ...overrideDefaultMdLineHeight,
       color: `navigation.socialLink`,
-      px: navItemHorizontalSpacing,
+      px: navItemHorizontalSpacing
     }}
   >
     {children}
@@ -91,7 +91,7 @@ const navItems = [
   { id: `features`, text: t`Features` },
   { id: `blog`, text: t`Blog` },
   { id: `showcase`, text: t`Showcase` },
-  { id: `contributing`, text: t`Contributing` },
+  { id: `contributing`, text: t`Contributing` }
 ]
 
 const Navigation = ({ pathname, i18n }) => {
@@ -123,8 +123,8 @@ const Navigation = ({ pathname, i18n }) => {
         //   background: `red`,
         // },
         [breakpointGutter]: {
-          position: isHomepage ? `absolute` : `fixed`,
-        },
+          position: isHomepage ? `absolute` : `fixed`
+        }
       }}
     >
       <div
@@ -145,8 +145,8 @@ const Navigation = ({ pathname, i18n }) => {
             left: 0,
             position: `absolute`,
             right: 0,
-            zIndex: -1,
-          },
+            zIndex: -1
+          }
         }}
       >
         <Link
@@ -161,7 +161,7 @@ const Navigation = ({ pathname, i18n }) => {
             textDecoration: `none`,
             /* chop logo down to just the monogram for small screens */
             width: [`24px`, null, `auto`],
-            overflow: [`hidden`, null, `visible`],
+            overflow: [`hidden`, null, `visible`]
           }}
           aria-label={i18n._(t`Gatsby, Back to homepage`)}
         >
@@ -171,7 +171,7 @@ const Navigation = ({ pathname, i18n }) => {
               height: `logo`,
               width: `auto`,
               maxWidth: `none`,
-              m: 0,
+              m: 0
             }}
             alt={i18n._(t`Gatsby Logo`)}
             aria-hidden="true"
@@ -189,8 +189,8 @@ const Navigation = ({ pathname, i18n }) => {
               flexShrink: 1,
               m: 0,
               minWidth: 0,
-              mr: `auto`,
-            },
+              mr: `auto`
+            }
           }}
         >
           <ul
@@ -203,8 +203,8 @@ const Navigation = ({ pathname, i18n }) => {
                 m: 0,
                 maskImage: t =>
                   `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
-                overflowX: `auto`,
-              },
+                overflowX: `auto`
+              }
             }}
           >
             {navItems.map(({ id, text }) => (
@@ -218,7 +218,7 @@ const Navigation = ({ pathname, i18n }) => {
         <div
           sx={{
             alignSelf: `flex-end`,
-            display: `flex`,
+            display: `flex`
           }}
         >
           <SocialNavItem
@@ -230,7 +230,7 @@ const Navigation = ({ pathname, i18n }) => {
           <div
             sx={{
               display: `none`,
-              [mediaQueries.xl]: { display: `flex` },
+              [mediaQueries.xl]: { display: `flex` }
             }}
           >
             <SocialNavItem href="https://twitter.com/gatsbyjs" title="Twitter">
@@ -247,8 +247,8 @@ const Navigation = ({ pathname, i18n }) => {
               color: `navigation.socialLink`,
               ml: navItemHorizontalSpacing,
               "&:hover": {
-                color: `navigation.linkHover`,
-              },
+                color: `navigation.linkHover`
+              }
             }}
           >
             <DarkModeToggle />

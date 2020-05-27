@@ -314,7 +314,7 @@ const Img = React.forwardRef((props, ref) => {
         height: `100%`,
         objectFit: `cover`,
         objectPosition: `center`,
-        ...style,
+        ...style
       }}
     />
   )
@@ -323,7 +323,7 @@ const Img = React.forwardRef((props, ref) => {
 Img.propTypes = {
   style: PropTypes.object,
   onError: PropTypes.func,
-  onLoad: PropTypes.func,
+  onLoad: PropTypes.func
 }
 
 class Image extends React.Component {
@@ -351,7 +351,7 @@ class Image extends React.Component {
       isVisible,
       imgLoaded: false,
       imgCached: false,
-      fadeIn: !this.seenBefore && props.fadeIn,
+      fadeIn: !this.seenBefore && props.fadeIn
     }
 
     this.imageRef = React.createRef()
@@ -403,7 +403,7 @@ class Image extends React.Component {
             // TODO fix imgCached behaviour as it's now false when it's lazyloaded
             imgCached: !!(
               this.imageRef.current && this.imageRef.current.currentSrc
-            ),
+            )
           })
         })
       })
@@ -436,7 +436,7 @@ class Image extends React.Component {
       Tag,
       itemProp,
       loading,
-      draggable,
+      draggable
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -445,21 +445,21 @@ class Image extends React.Component {
     const imageStyle = {
       opacity: shouldReveal ? 1 : 0,
       transition: shouldFadeIn ? `opacity ${durationFadeIn}ms` : `none`,
-      ...imgStyle,
+      ...imgStyle
     }
 
     const bgColor =
       typeof backgroundColor === `boolean` ? `lightgray` : backgroundColor
 
     const delayHideStyle = {
-      transitionDelay: `${durationFadeIn}ms`,
+      transitionDelay: `${durationFadeIn}ms`
     }
 
     const imagePlaceholderStyle = {
       opacity: this.state.imgLoaded ? 0 : 1,
       ...(shouldFadeIn && delayHideStyle),
       ...imgStyle,
-      ...placeholderStyle,
+      ...placeholderStyle
     }
 
     const placeholderImageProps = {
@@ -467,7 +467,7 @@ class Image extends React.Component {
       alt: !this.state.isVisible ? alt : ``,
       style: imagePlaceholderStyle,
       className: placeholderClassName,
-      itemProp,
+      itemProp
     }
 
     if (fluid) {
@@ -482,7 +482,7 @@ class Image extends React.Component {
             overflow: `hidden`,
             maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
             maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
-            ...style,
+            ...style
           }}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
@@ -492,7 +492,7 @@ class Image extends React.Component {
             aria-hidden
             style={{
               width: `100%`,
-              paddingBottom: `${100 / image.aspectRatio}%`,
+              paddingBottom: `${100 / image.aspectRatio}%`
             }}
           />
 
@@ -509,7 +509,7 @@ class Image extends React.Component {
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 right: 0,
                 left: 0,
-                ...(shouldFadeIn && delayHideStyle),
+                ...(shouldFadeIn && delayHideStyle)
               }}
             />
           )}
@@ -569,8 +569,8 @@ class Image extends React.Component {
                   title,
                   loading,
                   ...image,
-                  imageVariants,
-                }),
+                  imageVariants
+                })
               }}
             />
           )}
@@ -588,7 +588,7 @@ class Image extends React.Component {
         display: `inline-block`,
         width: image.width,
         height: image.height,
-        ...style,
+        ...style
       }
 
       if (style.display === `inherit`) {
@@ -612,7 +612,7 @@ class Image extends React.Component {
                 width: image.width,
                 opacity: !this.state.imgLoaded ? 1 : 0,
                 height: image.height,
-                ...(shouldFadeIn && delayHideStyle),
+                ...(shouldFadeIn && delayHideStyle)
               }}
             />
           )}
@@ -674,8 +674,8 @@ class Image extends React.Component {
                   title,
                   loading,
                   ...image,
-                  imageVariants,
-                }),
+                  imageVariants
+                })
               }}
             />
           )}
@@ -694,7 +694,7 @@ Image.defaultProps = {
   Tag: `div`,
   // We set it to `lazy` by default because it's best to default to a performant
   // setting and let the user "opt out" to `eager`
-  loading: `lazy`,
+  loading: `lazy`
 }
 
 const fixedObject = PropTypes.shape({
@@ -706,7 +706,7 @@ const fixedObject = PropTypes.shape({
   tracedSVG: PropTypes.string,
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
-  media: PropTypes.string,
+  media: PropTypes.string
 })
 
 const fluidObject = PropTypes.shape({
@@ -720,7 +720,7 @@ const fluidObject = PropTypes.shape({
   srcSetWebp: PropTypes.string,
   media: PropTypes.string,
   maxWidth: PropTypes.number,
-  maxHeight: PropTypes.number,
+  maxHeight: PropTypes.number
 })
 
 // If you modify these propTypes, please don't forget to update following files as well:
@@ -750,7 +750,7 @@ Image.propTypes = {
   Tag: PropTypes.string,
   itemProp: PropTypes.string,
   loading: PropTypes.oneOf([`auto`, `lazy`, `eager`]),
-  draggable: PropTypes.bool,
+  draggable: PropTypes.bool
 }
 
 export default Image

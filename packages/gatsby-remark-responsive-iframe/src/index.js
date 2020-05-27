@@ -24,7 +24,7 @@ const isValidDimensions = (...args) => args.every(n => _.isFinite(n))
 
 module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   const defaults = {
-    wrapperStyle: ``,
+    wrapperStyle: ``
   }
   const options = _.defaults(pluginOptions, defaults)
   visit(markdownAST, [`html`, `jsx`], node => {
@@ -69,9 +69,8 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
     const rawHTML = oneLine`
       <div
         class="gatsby-resp-iframe-wrapper"
-        style="padding-bottom: ${
-          (height / width) * 100
-        }%; position: relative; height: 0; overflow: hidden;
+        style="padding-bottom: ${(height / width) *
+          100}%; position: relative; height: 0; overflow: hidden;
         ${options.wrapperStyle}"
       >
         ${newIframe}

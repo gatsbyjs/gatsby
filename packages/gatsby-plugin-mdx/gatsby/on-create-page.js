@@ -16,7 +16,7 @@ module.exports = async ({ page, actions }, pluginOptions) => {
     const content = await fs.readFile(page.component, `utf8`)
     const code = await mdx(content, {
       filepath: page.component,
-      ...options,
+      ...options
     })
 
     // grab the exported frontmatter
@@ -28,9 +28,9 @@ module.exports = async ({ page, actions }, pluginOptions) => {
         {
           context: {
             frontmatter: {
-              ...frontmatter,
-            },
-          },
+              ...frontmatter
+            }
+          }
         },
         page
       )

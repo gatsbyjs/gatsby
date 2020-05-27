@@ -179,9 +179,12 @@ export default function Contact() {
         initialValues={{ email: ``, name: ``, message: `` }}
         onSubmit={handleSubmit}
         validationSchema={yup.object().shape({
-          email: yup.string().email().required(),
+          email: yup
+            .string()
+            .email()
+            .required(),
           name: yup.string().required(),
-          message: yup.string().required(),
+          message: yup.string().required()
         })}
       >
         {props => (

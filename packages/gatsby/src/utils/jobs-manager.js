@@ -11,7 +11,7 @@ const MESSAGE_TYPES = {
   JOB_CREATED: `JOB_CREATED`,
   JOB_COMPLETED: `JOB_COMPLETED`,
   JOB_FAILED: `JOB_FAILED`,
-  JOB_NOT_WHITELISTED: `JOB_NOT_WHITELISTED`,
+  JOB_NOT_WHITELISTED: `JOB_NOT_WHITELISTED`
 }
 
 let activityForJobs = null
@@ -94,7 +94,7 @@ const runLocalWorker = async (workerFn, job) => {
           workerFn({
             inputPaths: job.inputPaths,
             outputDir: job.outputDir,
-            args: job.args,
+            args: job.args
           })
         )
       } catch (err) {
@@ -141,12 +141,12 @@ const runExternalWorker = job => {
   const deferred = pDefer()
   externalJobsMap.set(job.id, {
     job,
-    deferred,
+    deferred
   })
 
   process.send({
     type: MESSAGE_TYPES.JOB_CREATED,
-    payload: job,
+    payload: job
   })
 
   return deferred.promise
@@ -216,7 +216,7 @@ exports.createInternalJob = (job, plugin) => {
   const inputPathsWithContentDigest = inputPaths.map(path => {
     return {
       path: convertPathsToAbsolute(path),
-      contentDigest: createFileHash(path),
+      contentDigest: createFileHash(path)
     }
   })
 
@@ -232,8 +232,8 @@ exports.createInternalJob = (job, plugin) => {
       name: plugin.name,
       version: plugin.version,
       resolve: plugin.resolve,
-      isLocal: !plugin.resolve.includes(`/node_modules/`),
-    },
+      isLocal: !plugin.resolve.includes(`/node_modules/`)
+    }
   }
 
   // generate a contentDigest based on all parameters including file content
@@ -244,7 +244,7 @@ exports.createInternalJob = (job, plugin) => {
     ),
     outputDir: internalJob.outputDir,
     args: internalJob.args,
-    plugin: internalJob.plugin,
+    plugin: internalJob.plugin
   })
 
   return internalJob
@@ -277,7 +277,7 @@ exports.enqueueJob = async job => {
   const deferred = pDefer()
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
-    deferred,
+    deferred
   })
 
   try {

@@ -16,13 +16,13 @@ const SearchIcon = ({ focused }) => (
       pointerEvents: `none`,
       transform: `translateY(-50%)`,
       fill: t =>
-        focused ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon,
+        focused ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon
     }}
   />
 )
 
 SearchIcon.propTypes = {
-  overrideCSS: PropTypes.object,
+  overrideCSS: PropTypes.object
 }
 
 export default SearchIcon

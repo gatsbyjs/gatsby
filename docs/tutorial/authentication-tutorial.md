@@ -34,7 +34,7 @@ export default function NavBar() {
         display: "flex",
         flex: "1",
         justifyContent: "space-between",
-        borderBottom: "1px solid #d1c1e0",
+        borderBottom: "1px solid #d1c1e0"
       }}
     >
       <span>You are not logged in</span>
@@ -106,7 +106,7 @@ export const handleLogin = ({ username, password }) => {
     return setUser({
       username: `john`,
       name: `Johnny`,
-      email: `johnny@example.org`,
+      email: `johnny@example.org`
     })
   }
 
@@ -201,12 +201,12 @@ import { handleLogin, isLoggedIn } from "../services/auth"
 class Login extends React.Component {
   state = {
     username: ``,
-    password: ``,
+    password: ``
   }
 
   handleUpdate = event => {
     this.setState({
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     })
   }
 
@@ -325,7 +325,7 @@ export default function NavBar() {
         display: "flex",
         flex: "1",
         justifyContent: "space-between",
-        borderBottom: "1px solid #d1c1e0",
+        borderBottom: "1px solid #d1c1e0"
       }}
     >
       <span>{greetingMessage}</span> {/* highlight-line */}

@@ -5,14 +5,14 @@ jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
   return {
-    push: jest.fn(),
+    push: jest.fn()
   }
 })
 jest.mock(`gatsby/dist/redux/actions`, () => {
   return {
     boundActionCreators: {
-      createJobV2: jest.fn().mockReturnValue(Promise.resolve()),
-    },
+      createJobV2: jest.fn().mockReturnValue(Promise.resolve())
+    }
   }
 })
 
@@ -28,7 +28,7 @@ const {
   queueImageResizing,
   getImageSize,
   stats,
-  setBoundActionCreators,
+  setBoundActionCreators
 } = require(`../`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -41,9 +41,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -51,7 +51,7 @@ describe(`gatsby-plugin-sharp`, () => {
   const args = {
     duotone: false,
     grayscale: false,
-    rotate: false,
+    rotate: false
   }
   const absolutePath = path.join(__dirname, `images/test.png`)
   const file = getFileObject(absolutePath)
@@ -82,7 +82,7 @@ describe(`gatsby-plugin-sharp`, () => {
           // Resize 144-density.png (281x136) with a 3px width
           const result = queueImageResizing({
             file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-            args: { width: 3 },
+            args: { width: 3 }
           })
 
           // Width should be: w = (3 * 136) / 281 = 1.451957295
@@ -106,7 +106,7 @@ describe(`gatsby-plugin-sharp`, () => {
               path.join(__dirname, `images/144-density.png`),
               testName
             ),
-            args: { width: 3 },
+            args: { width: 3 }
           })
 
           const queueResultName = path.parse(queueResult.src).name
@@ -131,7 +131,7 @@ describe(`gatsby-plugin-sharp`, () => {
         it.skip(`should process immediately when asked`, async () => {
           const result = queueImageResizing({
             file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-            args: { width: 3 },
+            args: { width: 3 }
           })
 
           await result.finishedPromise
@@ -144,18 +144,18 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`should return the same result when using createJob as createJobV2`, async () => {
       scheduleJob.mockClear()
       const boundActionCreators = {
-        createJobV2: jest.fn(() => Promise.resolve()),
+        createJobV2: jest.fn(() => Promise.resolve())
       }
       setBoundActionCreators(boundActionCreators)
       const resultV2 = await queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { width: 3 },
+        args: { width: 3 }
       })
 
       setBoundActionCreators({})
       const result = await queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args: { width: 3 },
+        args: { width: 3 }
       })
       expect(boundActionCreators.createJobV2).toHaveBeenCalledTimes(1)
       expect(scheduleJob).toHaveBeenCalledTimes(1)
@@ -205,8 +205,8 @@ describe(`gatsby-plugin-sharp`, () => {
       const result = await fluid({
         file,
         args: {
-          pathPrefix,
-        },
+          pathPrefix
+        }
       })
 
       expect(result.src.indexOf(pathPrefix)).toBe(0)
@@ -216,7 +216,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
     it(`keeps original file name`, async () => {
       const result = await fluid({
-        file,
+        file
       })
 
       expect(path.parse(result.src).name).toBe(file.name)
@@ -228,7 +228,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = { maxWidth: 400 }
       await fluid({
         file,
-        args,
+        args
       })
 
       expect(args).toEqual({ maxWidth: 400 })
@@ -239,7 +239,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = { maxHeight: 20 }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       expect(result.presentationWidth).toEqual(41)
@@ -251,29 +251,29 @@ describe(`gatsby-plugin-sharp`, () => {
         { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
         {
           args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.fill },
-          result: [20, 20],
+          result: [20, 20]
         },
         {
           args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.inside },
-          result: [20, 10],
+          result: [20, 10]
         },
         {
           args: { maxWidth: 20, maxHeight: 20, fit: sharp.fit.outside },
-          result: [41, 20],
+          result: [41, 20]
         },
         { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
         {
           args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.fill },
-          result: [200, 200],
+          result: [200, 200]
         },
         {
           args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.inside },
-          result: [200, 97],
+          result: [200, 97]
         },
         {
           args: { maxWidth: 200, maxHeight: 200, fit: sharp.fit.outside },
-          result: [413, 200],
-        },
+          result: [413, 200]
+        }
       ]
       const fileObject = getFileObject(
         path.join(__dirname, `images/144-density.png`)
@@ -283,7 +283,7 @@ describe(`gatsby-plugin-sharp`, () => {
         boundActionCreators.createJobV2.mockClear()
         const result = await fluid({
           file: fileObject,
-          args: testCase.args,
+          args: testCase.args
         })
 
         expect(boundActionCreators.createJobV2.mock.calls).toMatchSnapshot()
@@ -296,7 +296,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = { maxWidth: 0 }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       await expect(result).rejects.toThrow()
@@ -308,7 +308,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = { srcSetBreakpoints }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       // width of the image tested
@@ -328,7 +328,7 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = { srcSetBreakpoints }
       const result = fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       await expect(result).rejects.toThrow()
@@ -340,11 +340,11 @@ describe(`gatsby-plugin-sharp`, () => {
       const maxWidth = 200
       const args = {
         maxWidth,
-        srcSetBreakpoints,
+        srcSetBreakpoints
       }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       expect(result.srcSet).toEqual(expect.stringContaining(`${maxWidth}w`))
@@ -357,16 +357,16 @@ describe(`gatsby-plugin-sharp`, () => {
         70,
         150,
         250,
-        300, // this shouldn't be in the output as it's wider than the original
+        300 // this shouldn't be in the output as it's wider than the original
       ]
       const maxWidth = 500 // this also shouldn't be in the output
       const args = {
         maxWidth,
-        srcSetBreakpoints,
+        srcSetBreakpoints
       }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       // width of the image tested
@@ -391,11 +391,11 @@ describe(`gatsby-plugin-sharp`, () => {
       const maxWidth = 100
       const args = {
         maxWidth,
-        srcSetBreakpoints,
+        srcSetBreakpoints
       }
       const result = await fluid({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       const originalWidth = 281
@@ -421,7 +421,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
     it(`should give the same result with createJob as with createJobV2`, async () => {
       const boundActionCreators = {
-        createJobV2: jest.fn(() => Promise.resolve()),
+        createJobV2: jest.fn(() => Promise.resolve())
       }
       setBoundActionCreators(boundActionCreators)
       const resultV2 = await fixed({ file, args: { width: 1 } })
@@ -439,7 +439,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       const result = await fixed({
         file,
-        args,
+        args
       })
 
       expect(result.width).toEqual(1)
@@ -453,7 +453,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       const result = await fixed({
         file,
-        args,
+        args
       })
 
       expect(result.width).toEqual(width)
@@ -466,7 +466,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       const result = await fixed({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-        args,
+        args
       })
 
       expect(result.width).toEqual(21)
@@ -478,7 +478,7 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`converts image to base64`, async () => {
       const result = await base64({
         file,
-        args,
+        args
       })
 
       expect(result).toMatchSnapshot()
@@ -501,19 +501,19 @@ describe(`gatsby-plugin-sharp`, () => {
       const args = {
         maxWidth: 100,
         width: 100,
-        tracedSVG: { color: `#FF0000` },
+        tracedSVG: { color: `#FF0000` }
       }
 
       let result = await fixed({
         file,
-        args,
+        args
       })
 
       expect(result.tracedSVG).toBeUndefined()
 
       result = await fluid({
         file,
-        args,
+        args
       })
 
       expect(result.tracedSVG).toBeUndefined()
@@ -525,19 +525,19 @@ describe(`gatsby-plugin-sharp`, () => {
         width: 100,
         generateTracedSVG: true,
         tracedSVG: { color: `#FF0000` },
-        base64: false,
+        base64: false
       }
 
       const fixedSvg = await fixed({
         file,
-        args,
+        args
       })
 
       expect(fixedSvg).toMatchSnapshot()
 
       const fluidSvg = await fluid({
         file,
-        args,
+        args
       })
 
       expect(fluidSvg).toMatchSnapshot()
@@ -548,7 +548,7 @@ describe(`gatsby-plugin-sharp`, () => {
     const args = {
       maxWidth: 100,
       width: 100,
-      duotone: { highlight: `#ffffff`, shadow: `#cccccc`, opacity: 50 },
+      duotone: { highlight: `#ffffff`, shadow: `#cccccc`, opacity: 50 }
     }
 
     it(`fixed`, async () => {
@@ -570,7 +570,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       const alphaResult = await stats({
         file: getFileObject(path.join(__dirname, `images/alphatest.png`)),
-        args,
+        args
       })
       expect(alphaResult).toMatchSnapshot()
       expect(alphaResult.isTransparent).toEqual(true)
@@ -587,7 +587,7 @@ function getFileObject(absolutePath, name = `test`) {
     absolutePath,
     extension: `png`,
     internal: {
-      contentDigest: `1234`,
-    },
+      contentDigest: `1234`
+    }
   }
 }

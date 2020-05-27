@@ -288,11 +288,11 @@ class Comments extends Component {
       name: "",
       text: "",
       slug: this.props.slug,
-      parentCommentId: null,
+      parentCommentId: null
     },
     submitting: false,
     success: false,
-    error: false,
+    error: false
   }
 
   state = this.initialState
@@ -318,10 +318,10 @@ onSubmitComment = async event => {
     const response = await fetch("https://www.example.com/comments", {
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       method: "post",
-      body: JSON.stringify(newComment),
+      body: JSON.stringify(newComment)
     })
 
     // Append comment and reset newComment
@@ -332,10 +332,10 @@ onSubmitComment = async event => {
         name: "",
         text: "",
         slug,
-        parentCommentId: null,
+        parentCommentId: null
       },
       success: true,
-      error: false,
+      error: false
     }))
   } catch (error) {
     this.setState({ ...this.initialState, error: true })
@@ -351,7 +351,7 @@ handleChange = event => {
   const { name, value } = event.target
 
   this.setState({
-    newComment: { ...newComment, [name]: value },
+    newComment: { ...newComment, [name]: value }
   })
 }
 ```

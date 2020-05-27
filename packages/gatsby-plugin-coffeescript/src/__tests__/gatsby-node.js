@@ -3,7 +3,7 @@ jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 const {
   resolvableExtensions,
   onCreateWebpackConfig,
-  preprocessSource,
+  preprocessSource
 } = require(`../gatsby-node`)
 
 describe(`gatsby-plugin-coffeescript`, () => {
@@ -13,7 +13,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
 
   it(`modifies webpack config with coffeescript extensions`, () => {
     const actions = {
-      setWebpackConfig: jest.fn(),
+      setWebpackConfig: jest.fn()
     }
     const loaders = { js: () => `babel-loader` }
 
@@ -28,10 +28,10 @@ describe(`gatsby-plugin-coffeescript`, () => {
         rules: [
           {
             test: /\.coffee$/,
-            use: [`babel-loader`, `/resolved/path/coffee-loader`],
-          },
-        ],
-      },
+            use: [`babel-loader`, `/resolved/path/coffee-loader`]
+          }
+        ]
+      }
     })
   })
 
@@ -40,7 +40,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
       expect(
         preprocessSource({
           filename: `test.js`,
-          contents: `alert('hello');`,
+          contents: `alert('hello');`
         })
       ).toBe(null)
     })
@@ -50,7 +50,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
         preprocessSource(
           {
             filename: `test.coffee`,
-            contents: `alert "I knew it!" if elvis?`,
+            contents: `alert "I knew it!" if elvis?`
           },
           {}
         )

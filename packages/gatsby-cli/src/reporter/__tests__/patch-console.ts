@@ -5,7 +5,7 @@ describe(`patchConsole`, () => {
   const reporter = {
     log: jest.fn(),
     warn: jest.fn(),
-    info: jest.fn(),
+    info: jest.fn()
   }
 
   patchConsole((reporter as unknown) as typeof gatsbyReporter)

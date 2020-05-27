@@ -286,7 +286,7 @@ return (
 <Img
   fluid={{
     ...data.file.childImageSharp.fluid,
-    aspectRatio: 1.6, // 1280 / 800 = 1.6
+    aspectRatio: 1.6 // 1280 / 800 = 1.6
   }}
   alt="A corgi smiling happily"
 />
@@ -342,8 +342,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: path.resolve(`./src/components/markdown-layout.js`),
       // highlight-start
       context: {
-        slug: node.fields.slug,
-      },
+        slug: node.fields.slug
+      }
       // highlight-end
     })
   })

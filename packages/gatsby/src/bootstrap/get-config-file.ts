@@ -41,8 +41,8 @@ export async function getConfigFile(
         error: err,
         context: {
           configName,
-          message: err.message,
-        },
+          message: err.message
+        }
       })
     } else if (nearMatch) {
       report.panic({
@@ -50,15 +50,15 @@ export async function getConfigFile(
         error: err,
         context: {
           configName,
-          nearMatch,
-        },
+          nearMatch
+        }
       })
     } else if (existsSync(path.join(rootDir, `src`, configName + `.js`))) {
       report.panic({
         id: `10125`,
         context: {
-          configName,
-        },
+          configName
+        }
       })
     }
   }

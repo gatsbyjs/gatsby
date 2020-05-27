@@ -23,7 +23,7 @@ module.exports = async (
     getNode,
     reporter,
     cache,
-    createContentDigest,
+    createContentDigest
   },
   pluginOptions
 ) => {
@@ -35,7 +35,7 @@ module.exports = async (
     showCaptions: false,
     pathPrefix,
     withWebp: false,
-    loading: `lazy`,
+    loading: `lazy`
   }
 
   // This will only work for markdown syntax image tags
@@ -44,7 +44,7 @@ module.exports = async (
   // This will also allow the use of html image tags
   const rawHtmlNodes = select(markdownAST, `html`)
 
-  const generateImagesAndUpdateNode = async function (node, resolve) {
+  const generateImagesAndUpdateNode = async function(node, resolve) {
     // Ignore if it is not contentful image
 
     if (node.url.indexOf(`images.ctfassets.net`) === -1) {
@@ -75,7 +75,7 @@ module.exports = async (
       response = await axios({
         method: `GET`,
         url: originalImg, // for some reason there is a './' prefix
-        responseType: `stream`,
+        responseType: `stream`
       })
     } catch (err) {
       reporter.panic(
@@ -94,7 +94,7 @@ module.exports = async (
     const responsiveSizesResult = await buildResponsiveSizes({
       metadata,
       imageUrl: originalImg,
-      options,
+      options
     })
 
     // Calculate the paddingBottom %
@@ -243,7 +243,7 @@ ${rawHTML}
             }
 
             let imageRefs = []
-            $(`img`).each(function () {
+            $(`img`).each(function() {
               imageRefs.push($(this))
             })
 

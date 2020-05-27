@@ -25,11 +25,11 @@ module.exports = {
       options: {
         postsPath: "/blog",
         colors: {
-          primary: "tomato",
-        },
-      },
-    },
-  ],
+          primary: "tomato"
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -45,7 +45,7 @@ module.exports = themeOptions => {
   return {
     plugins: [
       // ...
-    ],
+    ]
   }
 }
 ```
@@ -119,7 +119,7 @@ Gatsby themes can compose horizontally and vertically. Vertical composition refe
 
 ```js:title=gatsby-theme-child/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-parent`],
+  plugins: [`gatsby-theme-parent`]
 }
 ```
 
@@ -127,7 +127,7 @@ Horizontal composition is when two different themes are used together, such as `
 
 ```js:title=my-site/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-blog`, `gatsby-theme-notes`],
+  plugins: [`gatsby-theme-blog`, `gatsby-theme-notes`]
 }
 ```
 

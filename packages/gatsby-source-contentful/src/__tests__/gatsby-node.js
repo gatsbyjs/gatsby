@@ -3,7 +3,7 @@
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
   return {
-    createContentDigest: () => `contentDigest`,
+    createContentDigest: () => `contentDigest`
   }
 })
 
@@ -19,7 +19,7 @@ describe(`gatsby-node`, () => {
   const cache = {}
   const getCache = jest.fn()
   const reporter = {
-    info: jest.fn(),
+    info: jest.fn()
   }
   const createNodeId = jest.fn(value => value)
   let currentNodeMap
@@ -35,7 +35,7 @@ describe(`gatsby-node`, () => {
       expect(getNode(contentTypeId)).toMatchObject({
         name: contentType.name,
         displayField: contentType.displayField,
-        description: contentType.description,
+        description: contentType.description
       })
     })
   }
@@ -56,7 +56,7 @@ describe(`gatsby-node`, () => {
             spaceId: entry.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
-            id: entry.sys.id,
+            id: entry.sys.id
           })
         )
 
@@ -78,7 +78,7 @@ describe(`gatsby-node`, () => {
                   spaceId: entry.sys.space.sys.id,
                   defaultLocale: defaultLocale,
                   currentLocale: locale,
-                  id: value.sys.id,
+                  id: value.sys.id
                 })
               )
               matchedObject[`${field}___NODE`] = linkId
@@ -118,7 +118,7 @@ describe(`gatsby-node`, () => {
       for (const [nodeId, value] of references) {
         const matchedObject = {
           ...nodeMap.get(nodeId),
-          ...value,
+          ...value
         }
 
         nodeMap.set(nodeId, matchedObject)
@@ -141,7 +141,7 @@ describe(`gatsby-node`, () => {
             spaceId: entry.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
-            id: entry.sys.id,
+            id: entry.sys.id
           })
         )
 
@@ -169,7 +169,7 @@ describe(`gatsby-node`, () => {
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
-            id: asset.sys.id,
+            id: asset.sys.id
           })
         )
 
@@ -181,7 +181,7 @@ describe(`gatsby-node`, () => {
             locale,
             defaultLocale
           ),
-          file: getFieldValue(asset.fields.file, locale, defaultLocale),
+          file: getFieldValue(asset.fields.file, locale, defaultLocale)
         })
       })
     })
@@ -197,7 +197,7 @@ describe(`gatsby-node`, () => {
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
-            id: asset.sys.id,
+            id: asset.sys.id
           })
         )
 
@@ -222,7 +222,7 @@ describe(`gatsby-node`, () => {
     actions.setPluginStatus = jest.fn()
     store.getState = jest.fn(() => {
       return {
-        status: {},
+        status: {}
       }
     })
   })
@@ -239,7 +239,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     testIfContentTypesExists(startersBlogFixture.initialSync.contentTypeItems)
@@ -268,7 +268,7 @@ describe(`gatsby-node`, () => {
         spaceId: createdBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
-        id: createdBlogEntry.sys.id,
+        id: createdBlogEntry.sys.id
       })
     )
 
@@ -281,7 +281,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     // check if blog posts do not exists
@@ -298,7 +298,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
     testIfContentTypesExists(
       startersBlogFixture.createBlogPost.contentTypeItems
@@ -334,7 +334,7 @@ describe(`gatsby-node`, () => {
         spaceId: updatedBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
-        id: updatedBlogEntry.sys.id,
+        id: updatedBlogEntry.sys.id
       })
     )
 
@@ -347,7 +347,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     // create blog post
@@ -359,7 +359,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     updatedBlogEntryIds.forEach(blogEntryId => {
@@ -375,7 +375,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     testIfContentTypesExists(
@@ -413,7 +413,7 @@ describe(`gatsby-node`, () => {
         spaceId: removedBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
-        id: removedBlogEntry.sys.id,
+        id: removedBlogEntry.sys.id
       })
     )
 
@@ -426,7 +426,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     // create blog post
@@ -438,7 +438,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     let authorIds = []
@@ -458,7 +458,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     testIfContentTypesExists(
@@ -491,7 +491,7 @@ describe(`gatsby-node`, () => {
         spaceId: removedAssetEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
-        id: removedAssetEntry.sys.id,
+        id: removedAssetEntry.sys.id
       })
     )
 
@@ -504,7 +504,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     // create blog post
@@ -516,7 +516,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     // check if blog post exists
@@ -533,7 +533,7 @@ describe(`gatsby-node`, () => {
       reporter,
       createNodeId,
       cache,
-      getCache,
+      getCache
     })
 
     testIfContentTypesExists(startersBlogFixture.removeAsset.contentTypeItems)

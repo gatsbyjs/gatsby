@@ -84,8 +84,8 @@ export default {
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   colors: {
     ...baseTheme.colors,
-    primary: `tomato`,
-  },
+    primary: `tomato`
+  }
 }
 ```
 
@@ -207,7 +207,7 @@ export default function CallToAction(props) {
       css={{
         backgroundColor: "rebeccapurple",
         color: "white",
-        boxShadow: "none",
+        boxShadow: "none"
       }}
       {...props}
     />
@@ -225,8 +225,8 @@ export default {
   ...theme,
   colors: {
     ...colors,
-    primary: "tomato",
-  },
+    primary: "tomato"
+  }
 }
 ```
 

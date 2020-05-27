@@ -6,7 +6,7 @@ module.exports = async ({
   context,
   resourceName,
   initialObject,
-  partialUpdate,
+  partialUpdate
 }) => {
   // Test the plan
   const createPlan = await resource.plan(context, initialObject)
@@ -18,7 +18,7 @@ module.exports = async ({
   const createResponse = await resource.create(context, initialObject)
   const validateResult = Joi.validate(createResponse, {
     ...resource.schema,
-    ...resourceSchema,
+    ...resourceSchema
   })
   expect(validateResult.error).toBeNull()
   expect(createResponse).toMatchSnapshot(`${resourceName} create`)

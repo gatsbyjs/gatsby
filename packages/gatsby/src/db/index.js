@@ -29,5 +29,5 @@ function startAutosave() {
 
 module.exports = {
   startAutosave,
-  saveState,
+  saveState
 }

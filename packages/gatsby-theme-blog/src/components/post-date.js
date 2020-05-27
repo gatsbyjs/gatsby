@@ -6,7 +6,7 @@ const PostDate = props => (
     sx={{
       fontSize: 1,
       mt: -3,
-      mb: 3,
+      mb: 3
     }}
     {...props}
   />

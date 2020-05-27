@@ -98,7 +98,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
   // highlight-end
 }
@@ -146,7 +146,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
 
   // highlight-start
@@ -155,7 +155,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve("./src/templates/pokemon.js"),
-      context: { pokemon },
+      context: { pokemon }
     })
   })
   // highlight-end
@@ -172,7 +172,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   createPage({
     path: `/`,
     component: require.resolve("./src/templates/all-pokemon.js"),
-    context: { allPokemon },
+    context: { allPokemon }
   })
 
   // Create a page for each Pokémon.
@@ -180,7 +180,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve("./src/templates/pokemon.js"),
-      context: { pokemon },
+      context: { pokemon }
     })
 
     // highlight-start
@@ -189,7 +189,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
       createPage({
         path: `/pokemon/${pokemon.name}/ability/${ability.name}/`,
         component: require.resolve("./src/templates/ability.js"),
-        context: { pokemon, ability },
+        context: { pokemon, ability }
       })
     })
     // highlight-end

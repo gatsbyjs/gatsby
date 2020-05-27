@@ -7,7 +7,7 @@ Various lifecycle methods (see: [Gatsby Node APIs](/docs/node-apis/)) within Gat
 In the context of Gatsby, this means that if you are invoking asynchronous functionality (e.g. data requests, `graphql` calls, etc.) and not correctly returning the Promise an internal issue can arise where the result of those call(s) happens _after_ the lifecycle method has already been marked as completed. Consider an example:
 
 ```js:title=gatsby-node.js
-exports.createPages = async function ({ actions, graphql }) {
+exports.createPages = async function({ actions, graphql }) {
   // highlight-start
   graphql(`
     {
@@ -27,7 +27,7 @@ exports.createPages = async function ({ actions, graphql }) {
       actions.createPage({
         path: slug,
         component: require.resolve(`./src/templates/post.js`),
-        context: { slug },
+        context: { slug }
       })
     })
   })
@@ -40,7 +40,7 @@ Can you spot the error? In this case, an asynchronous action (`graphql`) was inv
 The fix is surprisingly simple--just one line to change!
 
 ```js:title=gatsby-node.js
-exports.createPages = async function ({ actions, graphql }) {
+exports.createPages = async function({ actions, graphql }) {
   // highlight-next-line
   await graphql(`
     {
@@ -60,7 +60,7 @@ exports.createPages = async function ({ actions, graphql }) {
       actions.createPage({
         path: slug,
         component: require.resolve(`./src/templates/post.js`),
-        context: { slug },
+        context: { slug }
       })
     })
   })
@@ -82,11 +82,11 @@ const fetch = require("node-fetch")
 
 const getJSON = uri => fetch(uri).then(response => response.json())
 
-exports.createPages = async function ({ actions, graphql }) {
+exports.createPages = async function({ actions, graphql }) {
   // highlight-start
   const [pokemonData, rickAndMortyData] = await Promise.all([
     getJSON("https://some-rest-api.com/pokemon"),
-    getJSON("https://some-rest-api.com/rick-and-morty"),
+    getJSON("https://some-rest-api.com/rick-and-morty")
   ])
   // highlight-end
 

@@ -29,7 +29,7 @@ class SimpleEvaluationTable extends Component {
                       sx={{
                         display: `table-cell`,
                         "&:hover": {
-                          cursor: `pointer`,
+                          cursor: `pointer`
                         },
                         borderBottom: t =>
                           !showTooltip(idx)
@@ -41,11 +41,11 @@ class SimpleEvaluationTable extends Component {
                         textAlign: `left`,
                         verticalAlign: `middle`,
                         fontSize: 1,
-                        lineHeight: `solid`,
+                        lineHeight: `solid`
                       }}
                       onClick={() => {
                         this.setState({
-                          [`feature-cell-${idx}`]: !showTooltip(idx),
+                          [`feature-cell-${idx}`]: !showTooltip(idx)
                         })
                       }}
                     >
@@ -56,7 +56,7 @@ class SimpleEvaluationTable extends Component {
                 // table row containing details of each feature
                 <tr
                   style={{
-                    display: showTooltip(idx) ? `table-row` : `none`,
+                    display: showTooltip(idx) ? `table-row` : `none`
                   }}
                   key={`feature-second-row-${idx}`}
                 >
@@ -65,21 +65,21 @@ class SimpleEvaluationTable extends Component {
                       paddingBottom: t => `calc(${t.space[5]} - 1px)`,
                       "&&": {
                         [mediaQueries.xs]: {
-                          px: 3,
-                        },
-                      },
+                          px: 3
+                        }
+                      }
                     }}
                     colSpan="5"
                   >
                     {
                       <span
                         dangerouslySetInnerHTML={{
-                          __html: node.Description,
+                          __html: node.Description
                         }}
                       />
                     }
                   </td>
-                </tr>,
+                </tr>
               ])
             )}
           </tbody>

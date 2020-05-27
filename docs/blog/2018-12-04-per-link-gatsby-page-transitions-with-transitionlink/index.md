@@ -114,12 +114,12 @@ Here's an example of a more complicated TransitionLink using [gsap](https://gree
   exit={{
     length: 0.6,
     trigger: ({ exit, e, node }) =>
-      this.createRipple(exit, e, props.color, node),
+      this.createRipple(exit, e, props.color, node)
   }}
   entry={{
     delay: 0.3,
     length: 0.6,
-    trigger: ({ entry, node }) => this.slideIn(entry, node, "left"),
+    trigger: ({ entry, node }) => this.slideIn(entry, node, "left")
   }}
 >
   {props.children}

@@ -6,23 +6,23 @@ const verdaccioConfig = {
   port: 4873, // default
   web: {
     enable: true,
-    title: `gatsby-dev`,
+    title: `gatsby-dev`
   },
   logs: [{ type: `stdout`, format: `pretty-timestamped`, level: `warn` }],
   packages: {
     "**": {
       access: `$all`,
       publish: `$all`,
-      proxy: `npmjs`,
-    },
+      proxy: `npmjs`
+    }
   },
   uplinks: {
     npmjs: {
       url: `https://registry.npmjs.org/`,
       // default is 2 max_fails - on flaky networks that cause a lot of failed installations
-      max_fails: 10,
-    },
-  },
+      max_fails: 10
+    }
+  }
 }
 
 exports.verdaccioConfig = verdaccioConfig

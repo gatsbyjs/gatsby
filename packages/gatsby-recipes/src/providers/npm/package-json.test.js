@@ -8,7 +8,7 @@ const root = path.join(__dirname, `fixtures`)
 const name = `husky`
 const initialValue = JSON.stringify(
   {
-    hooks: {},
+    hooks: {}
   },
   null,
   2
@@ -16,8 +16,8 @@ const initialValue = JSON.stringify(
 const updateValue = JSON.stringify(
   {
     hooks: {
-      "pre-commit": `lint-staged`,
-    },
+      "pre-commit": `lint-staged`
+    }
   },
   null,
   2
@@ -30,18 +30,18 @@ describe(`packageJson resource`, () => {
       resourceName: `PackageJson`,
       context: { root },
       initialObject: { name, value: initialValue },
-      partialUpdate: { value: updateValue },
+      partialUpdate: { value: updateValue }
     })
   })
 
   test(`handles object values`, async () => {
     const result = await pkgJson.create(
       {
-        root,
+        root
       },
       {
         name,
-        value: JSON.parse(initialValue),
+        value: JSON.parse(initialValue)
       }
     )
 

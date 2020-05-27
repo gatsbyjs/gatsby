@@ -13,7 +13,7 @@ describe(`file resource`, () => {
       resourceName: `File`,
       context: { root },
       initialObject: { path: `file.txt`, content },
-      partialUpdate: { content: content + `1` },
+      partialUpdate: { content: content + `1` }
     })
   })
   test(`e2e remote file resource test`, async () => {
@@ -22,7 +22,7 @@ describe(`file resource`, () => {
       resourceName: `File`,
       context: { root },
       initialObject: { path: `file.txt`, content: url },
-      partialUpdate: { content: url2 },
+      partialUpdate: { content: url2 }
     })
   })
 })

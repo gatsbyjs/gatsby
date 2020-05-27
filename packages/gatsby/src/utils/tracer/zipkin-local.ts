@@ -14,13 +14,13 @@ let recorder: ZipkinBatchRecorder
 export const create = (): ZipkinTracer => {
   logger = new HttpLogger({
     // endpoint of local docker zipkin instance
-    endpoint: `http://localhost:9411/api/v1/spans`,
+    endpoint: `http://localhost:9411/api/v1/spans`
   }) as ZipkinHttpLogger
 
   recorder = new zipkin.BatchRecorder({
     logger,
     // timeout = 60 hours, must be longer than site's build time
-    timeout: 60 * 60 * 60 * 1000000,
+    timeout: 60 * 60 * 60 * 1000000
   }) as ZipkinBatchRecorder
 
   const tracer = new ZipkinTracer({
@@ -35,7 +35,7 @@ export const create = (): ZipkinTracer => {
     sampler: new zipkin.sampler.CountingSampler(1),
     traceId128Bit: true,
     recorder,
-    kind: `client`,
+    kind: `client`
   })
 
   return tracer
@@ -53,7 +53,7 @@ const _processQueue = async (): Promise<void> => {
         method: `POST`,
         body: postBody,
         headers: logger.headers,
-        timeout: logger.timeout,
+        timeout: logger.timeout
       })
 
       if (response.status !== 202) {

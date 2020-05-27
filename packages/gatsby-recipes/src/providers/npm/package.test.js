@@ -23,7 +23,7 @@ describe.skip(`npm package resource`, () => {
       resourceName: `NPMPackage`,
       context: { root },
       initialObject: { name: `is-sorted`, version: `1.0.0` },
-      partialUpdate: { name: `is-sorted`, version: `1.0.2` },
+      partialUpdate: { name: `is-sorted`, version: `1.0.2` }
     })
   })
 })
@@ -33,13 +33,13 @@ describe(`package manager client commands`, () => {
     const yarnInstall = pkg.generateClientComands({
       packageManager: `yarn`,
       depType: ``,
-      packageNames: [`gatsby`],
+      packageNames: [`gatsby`]
     })
 
     const yarnDevInstall = pkg.generateClientComands({
       packageManager: `yarn`,
       depType: `development`,
-      packageNames: [`eslint`],
+      packageNames: [`eslint`]
     })
 
     expect(yarnInstall).toMatchSnapshot()
@@ -49,13 +49,13 @@ describe(`package manager client commands`, () => {
     const yarnInstall = pkg.generateClientComands({
       packageManager: `npm`,
       depType: ``,
-      packageNames: [`gatsby`],
+      packageNames: [`gatsby`]
     })
 
     const yarnDevInstall = pkg.generateClientComands({
       packageManager: `npm`,
       depType: `development`,
-      packageNames: [`eslint`],
+      packageNames: [`eslint`]
     })
 
     expect(yarnInstall).toMatchSnapshot()

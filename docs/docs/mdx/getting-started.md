@@ -49,8 +49,8 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
    module.exports = {
      plugins: [
        // ....
-       `gatsby-plugin-mdx`,
-     ],
+       `gatsby-plugin-mdx`
+     ]
    }
    ```
 

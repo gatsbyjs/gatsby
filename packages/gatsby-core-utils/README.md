@@ -17,7 +17,7 @@ const { createContentDigest } = require("gatsby-core-utils")
 
 const options = {
   key: "value",
-  foo: "bar",
+  foo: "bar"
 }
 
 const digest = createContentDigest(options)

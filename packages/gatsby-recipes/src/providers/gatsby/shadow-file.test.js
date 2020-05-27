@@ -25,12 +25,12 @@ describe(`Shadow File resource`, () => {
       context: { root },
       initialObject: {
         theme: `gatsby-theme-blog`,
-        path: `src/components/author.js`,
+        path: `src/components/author.js`
       },
       partialUpdate: {
         theme: `gatsby-theme-blog`,
-        path: `src/components/author.js`,
-      },
+        path: `src/components/author.js`
+      }
     })
   })
 })
@@ -39,7 +39,7 @@ const shadowFile = require(`./shadow-file`)
 const {
   relativePathForShadowedFile,
   createPathToThemeFile,
-  splitId,
+  splitId
 } = require(`./shadow-file.js`)
 
 describe(`shadow-file create relative path for theme file`, () => {
@@ -47,7 +47,7 @@ describe(`shadow-file create relative path for theme file`, () => {
     expect(
       relativePathForShadowedFile({
         theme: `foo-theme`,
-        filePath: `src/foo.js`,
+        filePath: `src/foo.js`
       })
     ).toEqual(`src/foo-theme/foo.js`)
   })
@@ -55,7 +55,7 @@ describe(`shadow-file create relative path for theme file`, () => {
     expect(
       relativePathForShadowedFile({
         theme: `@bar/foo-theme`,
-        filePath: `src/foo.js`,
+        filePath: `src/foo.js`
       })
     ).toEqual(`src/@bar/foo-theme/foo.js`)
   })
@@ -68,7 +68,7 @@ describe(`shadow-file create full path to theme file`, () => {
       createPathToThemeFile({
         root: `/sup/`,
         theme: `foo-theme`,
-        filePath: `src/foo.js`,
+        filePath: `src/foo.js`
       })
     ).toEqual(`/sup/node_modules/foo-theme/src/foo.js`)
   })
@@ -77,7 +77,7 @@ describe(`shadow-file create full path to theme file`, () => {
       createPathToThemeFile({
         root: `/sup/`,
         theme: `@bar/foo-theme`,
-        filePath: `src/foo.js`,
+        filePath: `src/foo.js`
       })
     ).toEqual(`/sup/node_modules/@bar/foo-theme/src/foo.js`)
   })
@@ -87,21 +87,21 @@ describe(`shadow-file should split the id correctly`, () => {
   it(`should split the id correctly for a non-scoped npm package`, () => {
     expect(splitId(`src/foo/bar.js`)).toEqual({
       theme: `foo`,
-      filePath: `bar.js`,
+      filePath: `bar.js`
     })
     expect(splitId(`src/foo/bar/index.js`)).toEqual({
       theme: `foo`,
-      filePath: `bar/index.js`,
+      filePath: `bar/index.js`
     })
   })
   it(`should split the id correctly for a scoped npm package`, () => {
     expect(splitId(`src/@foo/theme-name/bar.js`)).toEqual({
       theme: `@foo/theme-name`,
-      filePath: `bar.js`,
+      filePath: `bar.js`
     })
     expect(splitId(`src/@foo/theme-name/bar/index.js`)).toEqual({
       theme: `@foo/theme-name`,
-      filePath: `bar/index.js`,
+      filePath: `bar/index.js`
     })
   })
 })

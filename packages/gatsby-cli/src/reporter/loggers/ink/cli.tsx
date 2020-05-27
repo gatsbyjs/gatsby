@@ -25,7 +25,7 @@ interface ICLIState {
 
 class CLI extends React.Component<ICLIProps, ICLIState> {
   readonly state: ICLIState = {
-    hasError: false,
+    hasError: false
   }
   memoizedReactElementsForMessages: React.ReactElement[] = []
 
@@ -34,8 +34,8 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       error: {
         stack: info.componentStack,
         text: error.message,
-        context: {},
-      },
+        context: {}
+      }
     })
   }
 
@@ -46,7 +46,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
   render(): React.ReactElement {
     const {
       logs: { messages, activities },
-      showStatusBar,
+      showStatusBar
     } = this.props
 
     const { hasError, error } = this.state

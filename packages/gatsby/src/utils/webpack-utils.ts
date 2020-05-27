@@ -150,35 +150,35 @@ export const createWebpackUtils = (
     json: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`json-loader`),
+        loader: require.resolve(`json-loader`)
       }
     },
 
     yaml: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`yaml-loader`),
+        loader: require.resolve(`yaml-loader`)
       }
     },
 
     null: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`null-loader`),
+        loader: require.resolve(`null-loader`)
       }
     },
 
     raw: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`raw-loader`),
+        loader: require.resolve(`raw-loader`)
       }
     },
 
     style: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`style-loader`),
+        loader: require.resolve(`style-loader`)
       }
     },
 
@@ -188,7 +188,7 @@ export const createWebpackUtils = (
         // use MiniCssExtractPlugin only on production builds
         loader: PRODUCTION
           ? MiniCssExtractPlugin.loader
-          : require.resolve(`style-loader`),
+          : require.resolve(`style-loader`)
       }
     },
 
@@ -202,8 +202,8 @@ export const createWebpackUtils = (
           camelCase: `dashesOnly`,
           // https://github.com/webpack-contrib/css-loader/issues/406
           localIdentName: `[name]--[local]--[hash:base64:5]`,
-          ...options,
-        },
+          ...options
+        }
       }
     },
 
@@ -226,11 +226,11 @@ export const createWebpackUtils = (
             return [
               flexbugs,
               autoprefixer({ overrideBrowserslist, flexbox: `no-2009` }),
-              ...plugins,
+              ...plugins
             ]
           },
-          ...postcssOpts,
-        },
+          ...postcssOpts
+        }
       }
     },
 
@@ -239,8 +239,8 @@ export const createWebpackUtils = (
         loader: require.resolve(`file-loader`),
         options: {
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
-          ...options,
-        },
+          ...options
+        }
       }
     },
 
@@ -250,8 +250,8 @@ export const createWebpackUtils = (
         options: {
           limit: 10000,
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
-          ...options,
-        },
+          ...options
+        }
       }
     },
 
@@ -259,16 +259,16 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
-          ...options,
+          ...options
         },
-        loader: require.resolve(`./babel-loader`),
+        loader: require.resolve(`./babel-loader`)
       }
     },
 
     dependencies: options => {
       return {
         options,
-        loader: require.resolve(`babel-loader`),
+        loader: require.resolve(`babel-loader`)
       }
     },
 
@@ -277,23 +277,23 @@ export const createWebpackUtils = (
 
       return {
         options,
-        loader: require.resolve(`eslint-loader`),
+        loader: require.resolve(`eslint-loader`)
       }
     },
 
     imports: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`imports-loader`),
+        loader: require.resolve(`imports-loader`)
       }
     },
 
     exports: (options = {}) => {
       return {
         options,
-        loader: require.resolve(`exports-loader`),
+        loader: require.resolve(`exports-loader`)
       }
-    },
+    }
   }
 
   /**
@@ -329,9 +329,9 @@ export const createWebpackUtils = (
           loaders.js({
             ...options,
             configFile: true,
-            compact: PRODUCTION,
-          }),
-        ],
+            compact: PRODUCTION
+          })
+        ]
       }
     }
     rules.js = js
@@ -344,7 +344,7 @@ export const createWebpackUtils = (
    */
   {
     const dependencies = ({
-      modulesThatUseGatsby = [],
+      modulesThatUseGatsby = []
     }: {
       modulesThatUseGatsby?: IModuleThatUseGatsby[]
     } = {}): RuleSetRule => {
@@ -356,9 +356,9 @@ export const createWebpackUtils = (
           [
             require.resolve(`babel-preset-gatsby/dependencies`),
             {
-              stage,
-            },
-          ],
+              stage
+            }
+          ]
         ],
         // If an error happens in a package, it's possible to be
         // because it was compiled. Thus, we don't want the browser
@@ -367,7 +367,7 @@ export const createWebpackUtils = (
         sourceMaps: false,
         cacheIdentifier: `${stage}---gatsby-dependencies@${
           require(`babel-preset-gatsby/package.json`).version
-        }`,
+        }`
       }
 
       return {
@@ -400,7 +400,7 @@ export const createWebpackUtils = (
           return true
         },
         type: `javascript/auto`,
-        use: [loaders.dependencies(jsOptions)],
+        use: [loaders.dependencies(jsOptions)]
       }
     }
     rules.dependencies = dependencies
@@ -411,14 +411,14 @@ export const createWebpackUtils = (
       enforce: `pre`,
       test: /\.jsx?$/,
       exclude: vendorRegex,
-      use: [loaders.eslint(schema)],
+      use: [loaders.eslint(schema)]
     }
   }
 
   rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml/,
-      use: [loaders.json(), loaders.yaml()],
+      use: [loaders.json(), loaders.yaml()]
     }
   }
 
@@ -428,7 +428,7 @@ export const createWebpackUtils = (
   rules.fonts = (): RuleSetRule => {
     return {
       use: [loaders.url()],
-      test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
+      test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/
     }
   }
 
@@ -439,7 +439,7 @@ export const createWebpackUtils = (
   rules.images = (): RuleSetRule => {
     return {
       use: [loaders.url()],
-      test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/,
+      test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/
     }
   }
 
@@ -450,7 +450,7 @@ export const createWebpackUtils = (
   rules.media = (): RuleSetRule => {
     return {
       use: [loaders.url()],
-      test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
+      test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/
     }
   }
 
@@ -460,7 +460,7 @@ export const createWebpackUtils = (
   rules.miscAssets = (): RuleSetRule => {
     return {
       use: [loaders.file()],
-      test: /\.pdf$/,
+      test: /\.pdf$/
     }
   }
 
@@ -472,7 +472,7 @@ export const createWebpackUtils = (
       const { browsers, ...restOptions } = options
       const use = [
         loaders.css({ ...restOptions, importLoaders: 1 }),
-        loaders.postcss({ browsers }),
+        loaders.postcss({ browsers })
       ]
       if (!isSSR)
         use.unshift(
@@ -481,7 +481,7 @@ export const createWebpackUtils = (
 
       return {
         use,
-        test: /\.css$/,
+        test: /\.css$/
       }
     }
 
@@ -509,7 +509,7 @@ export const createWebpackUtils = (
     const postcss: ContextualRuleFactory = (options): RuleSetRule => {
       return {
         test: /\.css$/,
-        use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
+        use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)]
       }
     }
 
@@ -542,20 +542,20 @@ export const createWebpackUtils = (
       terserOptions: {
         ie8: false,
         mangle: {
-          safari10: true,
+          safari10: true
         },
         parse: {
-          ecma: 8,
+          ecma: 8
         },
         compress: {
-          ecma: 5,
+          ecma: 5
         },
         output: {
-          ecma: 5,
+          ecma: 5
         },
-        ...terserOptions,
+        ...terserOptions
       },
-      ...options,
+      ...options
     })
 
   plugins.minifyCss = (
@@ -615,28 +615,28 @@ export const createWebpackUtils = (
                   removeXMLNS: true,
                   removeXMLProcInst: true,
                   reusePaths: true,
-                  sortAttrs: true,
-                },
-              ],
-            },
-          },
-        ],
-      },
+                  sortAttrs: true
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   ): OptimizeCssAssetsPlugin => new OptimizeCssAssetsPlugin(options)
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
       overlay: {
-        sockIntegration: `whm`,
-      },
+        sockIntegration: `whm`
+      }
     })
 
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
       filename: `[name].[contenthash].css`,
       chunkFilename: `[name].[contenthash].css`,
-      ...options,
+      ...options
     })
 
   plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
@@ -650,6 +650,6 @@ export const createWebpackUtils = (
   return {
     loaders,
     rules,
-    plugins,
+    plugins
   }
 }

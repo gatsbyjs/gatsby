@@ -29,7 +29,7 @@ const POPULAR_TAGS = [
   `wordpress`,
   `releases`,
   `community`,
-  `contentful`,
+  `contentful`
 ]
 
 // Responsive tag list using grid
@@ -59,17 +59,17 @@ class TagsPage extends React.Component {
         group: PropTypes.arrayOf(
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
-            totalCount: PropTypes.number.isRequired,
+            totalCount: PropTypes.number.isRequired
           }).isRequired
-        ),
-      }),
-    }),
+        )
+      })
+    })
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      filterQuery: ``,
+      filterQuery: ``
     }
   }
 
@@ -81,8 +81,8 @@ class TagsPage extends React.Component {
   render() {
     const {
       data: {
-        allMdx: { group },
-      },
+        allMdx: { group }
+      }
     } = this.props
     const { filterQuery } = this.state
     const uniqGroup = group
@@ -91,7 +91,7 @@ class TagsPage extends React.Component {
         const key = kebabCase(tag.fieldValue.toLowerCase())
         if (!lookup[key]) {
           lookup[key] = Object.assign(tag, {
-            slug: `/blog/tags/${key}`,
+            slug: `/blog/tags/${key}`
           })
         } else {
           lookup[key].totalCount += tag.totalCount
@@ -122,7 +122,7 @@ class TagsPage extends React.Component {
             css={{
               padding: `${space[6]} 0`,
               margin: 0,
-              borderBottom: `1px solid ${colors.ui.border}`,
+              borderBottom: `1px solid ${colors.ui.border}`
             }}
           >
             Tags ({Object.keys(uniqGroup).length || 0})
@@ -136,7 +136,7 @@ class TagsPage extends React.Component {
               flexFlow: `row nowrap`,
               justifyContent: `space-between`,
               pb: 4,
-              alignItems: `center`,
+              alignItems: `center`
             }}
           >
             <h2>All tags</h2>
@@ -161,7 +161,7 @@ class TagsPage extends React.Component {
               flexFlow: `row wrap`,
               justifyContent: `start`,
               p: 0,
-              m: 0,
+              m: 0
             }}
           >
             {results.length > 0 ? (
@@ -175,7 +175,7 @@ class TagsPage extends React.Component {
                       py: 3,
                       px: 1,
                       m: 4,
-                      listStyleType: `none`,
+                      listStyleType: `none`
                     }}
                   >
                     <Link to={tag.slug}>

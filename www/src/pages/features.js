@@ -92,7 +92,7 @@ const FeaturesHeader = () => (
       sx={{
         fontWeight: `body`,
         letterSpacing: `tracked`,
-        textTransform: `uppercase`,
+        textTransform: `uppercase`
       }}
     >
       Legend
@@ -119,9 +119,9 @@ class FeaturesPage extends Component {
                 { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
                 {
                   display: `JAMstack frameworks`,
-                  nodeFieldProperty: `Jamstack`,
+                  nodeFieldProperty: `Jamstack`
                 },
-                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+                { display: `Traditional CMS`, nodeFieldProperty: `Cms` }
               ]}
               data={this.props.data.allGatsbyFeaturesSpecsCsv.nodes}
             />

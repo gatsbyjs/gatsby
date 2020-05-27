@@ -40,7 +40,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
         }
 
         return `${pathPrefix}/static/${fileName}`
-      },
-    },
+      }
+    }
   }
 }

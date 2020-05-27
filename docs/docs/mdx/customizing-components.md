@@ -19,7 +19,7 @@ export default function Layout({ children }) {
         h2: DesignSystem.H2,
         h3: DesignSystem.H3,
         // Or define component inline
-        p: props => <p {...props} style={{ color: "rebeccapurple" }} />,
+        p: props => <p {...props} style={{ color: "rebeccapurple" }} />
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 jest.mock(`fs`, () => {
   return {
     existsSync: jest.fn(),
-    readFileSync: jest.fn(),
+    readFileSync: jest.fn()
   }
 })
 
@@ -118,7 +118,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 
@@ -132,7 +132,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 
@@ -146,7 +146,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 
@@ -160,7 +160,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 
@@ -174,7 +174,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 
@@ -188,7 +188,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 
@@ -200,7 +200,7 @@ window.addEventListener('resize', () => {
       const transformed = plugin(
         { markdownAST },
         {
-          directory: `examples`,
+          directory: `examples`
         }
       )
 

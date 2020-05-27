@@ -3,7 +3,7 @@ import path from "path"
 
 import {
   userPassesFeedbackRequestHeuristic,
-  showFeedbackRequest,
+  showFeedbackRequest
 } from "../utils/feedback"
 import { IProgram } from "./types"
 

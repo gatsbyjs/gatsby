@@ -16,7 +16,7 @@ interface NodeStore {
     queryArgs: Object,
     firstOnly: boolean,
     resolvedFields: Object,
-    nodeTypeNames: Array<string>,
+    nodeTypeNames: Array<string>
   }) => any | undefined;
 }
 

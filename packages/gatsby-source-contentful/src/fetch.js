@@ -16,7 +16,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     accessToken: pluginConfig.get(`accessToken`),
     host: pluginConfig.get(`host`),
     environment: pluginConfig.get(`environment`),
-    proxy: pluginConfig.get(`proxy`),
+    proxy: pluginConfig.get(`proxy`)
   }
 
   const client = contentful.createClient(contentfulClientOptions)
@@ -63,7 +63,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
         )} and ${chalk.yellow(`spaceId`)} settings are correct`
         errors = {
           host: `Check if setting is correct`,
-          spaceId: `Check if setting is correct`,
+          spaceId: `Check if setting is correct`
         }
       } else if (e.response.status === 401) {
         // authorization error
@@ -72,7 +72,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
         )} and ${chalk.yellow(`environment`)} are correct`
         errors = {
           accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
+          environment: `Check if setting is correct`
         }
       }
     }
@@ -118,7 +118,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     contentTypeItems,
     defaultLocale,
     locales,
-    space,
+    space
   }
 
   return result
@@ -141,7 +141,7 @@ function pagedGet(
     ...query,
     skip: skip,
     limit: pageLimit,
-    order: `sys.createdAt`,
+    order: `sys.createdAt`
   }).then(response => {
     if (!aggregatedResponse) {
       aggregatedResponse = response

@@ -48,7 +48,7 @@ export const queryRunner = async (
     // Check if query takes too long, print out warning
     const promise = graphqlRunner.query(query, context, {
       parentSpan,
-      queryName,
+      queryName
     })
     let isPending = true
 
@@ -56,7 +56,7 @@ export const queryRunner = async (
       if (isPending) {
         const messageParts = [
           `Query takes too long:`,
-          `File path: ${queryJob.componentPath}`,
+          `File path: ${queryJob.componentPath}`
         ]
 
         if (queryJob.isPage) {
@@ -106,7 +106,7 @@ export const queryRunner = async (
         const structuredError = errorParser({
           message: e.message,
           filePath: undefined,
-          location: undefined,
+          location: undefined
         })
 
         structuredError.context = {
@@ -119,7 +119,7 @@ export const queryRunner = async (
           filePath: queryJob.componentPath,
           ...(urlPath ? { urlPath } : {}),
           ...queryContext,
-          plugin,
+          plugin
         }
 
         return structuredError
@@ -178,7 +178,7 @@ export const queryRunner = async (
   boundActionCreators.pageQueryRun({
     path: queryJob.id,
     componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
+    isPage: queryJob.isPage
   })
 
   // Sets pageData to the store, here for easier access to the resultHash
@@ -188,7 +188,7 @@ export const queryRunner = async (
   ) {
     boundActionCreators.setPageData({
       id: queryJob.id,
-      resultHash,
+      resultHash
     })
   }
   return result

@@ -7,7 +7,7 @@ import Link from "../../components/localized-link"
 import {
   screenshot as screenshotStyles,
   screenshotHover,
-  withTitleHover,
+  withTitleHover
 } from "./styles"
 
 const ThumbnailLink = ({ slug, image, title, children, state }) => {
@@ -35,9 +35,9 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
           transition: `default`,
           "&:hover": screenshotHover,
           "&:hover ~ .meta > .featured-site": {
-            transform: t => `translateY(-${t.space[1]})`,
-          },
-        },
+            transform: t => `translateY(-${t.space[1]})`
+          }
+        }
       }}
     >
       {screenshot ? (

@@ -488,7 +488,7 @@ var TRANSLATIONS = {
   y: `y`,
   ychannelselector: `yChannelSelector`,
   z: `z`,
-  zoomandpan: `zoomAndPan`,
+  zoomandpan: `zoomAndPan`
 }
 
 const propsKeysVisitor = {
@@ -497,10 +497,10 @@ const propsKeysVisitor = {
       node.node.key.value =
         TRANSLATIONS[node.node.key.value] || node.node.key.value
     }
-  },
+  }
 }
 var jsxAttributeFromHTMLAttributeVisitor = {
-  JSXAttribute: function (node) {
+  JSXAttribute: function(node) {
     if (node.node.name.name in TRANSLATIONS) {
       node.node.name.name = TRANSLATIONS[node.node.name.name]
     } else if (node.node.name.name === `props`) {
@@ -518,7 +518,7 @@ var jsxAttributeFromHTMLAttributeVisitor = {
       //      node.node.value.type !== "JSXExpressionContainer"
     ) {
       let styleArray = []
-      styleToObject(node.node.value.extra.rawValue, function (
+      styleToObject(node.node.value.extra.rawValue, function(
         name,
         value,
         declaration
@@ -533,15 +533,15 @@ var jsxAttributeFromHTMLAttributeVisitor = {
         )
       )
     }
-  },
+  }
 }
 
 module.exports = function attrs() {
   return {
     visitor: {
-      JSXElement: function (path) {
+      JSXElement: function(path) {
         path.traverse(jsxAttributeFromHTMLAttributeVisitor)
-      },
-    },
+      }
+    }
   }
 }

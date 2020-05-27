@@ -35,7 +35,7 @@ export const buildProductionBundle = async (
           ...stats.compilation.errors,
           ...flatMap(stats.compilation.children, child =>
             flattenStatsErrors(child.getStats())
-          ),
+          )
         ]
         return reject(flattenStatsErrors(stats))
       }

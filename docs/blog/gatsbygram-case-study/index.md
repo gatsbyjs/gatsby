@@ -207,8 +207,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `/${slug(edge.node.id)}/`,
       component: slash(postTemplate),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }
@@ -386,7 +386,7 @@ config file looks like:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsbygram`,
+    title: `Gatsbygram`
   },
   plugins: [
     /*
@@ -406,8 +406,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `data`,
-        path: `${__dirname}/data`,
-      },
+        path: `${__dirname}/data`
+      }
     },
     // This plugin exposes helper functions for processing
     // images with the NPM package “sharp”. It's used by
@@ -436,8 +436,8 @@ module.exports = {
         start_url: `/`,
         background_color: `#f7f7f7`,
         theme_color: `#191919`,
-        display: `minimal-ui`,
-      },
+        display: `minimal-ui`
+      }
     },
     // This plugin generates a service worker and AppShell
     // html file so the site works offline and is otherwise
@@ -448,10 +448,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-91652198-1`,
-      },
-    },
-  ],
+        trackingId: `UA-91652198-1`
+      }
+    }
+  ]
 }
 ```
 

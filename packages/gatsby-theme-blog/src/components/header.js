@@ -15,7 +15,7 @@ const Title = ({ children, location }) => {
       <Styled.h1
         css={css({
           my: 0,
-          fontSize: 4,
+          fontSize: 4
         })}
       >
         <Styled.a
@@ -23,7 +23,7 @@ const Title = ({ children, location }) => {
           css={css({
             color: `inherit`,
             boxShadow: `none`,
-            textDecoration: `none`,
+            textDecoration: `none`
           })}
           to={`/`}
         >
@@ -36,7 +36,7 @@ const Title = ({ children, location }) => {
       <Styled.h3
         as="p"
         css={css({
-          my: 0,
+          my: 0
         })}
       >
         <Styled.a
@@ -44,7 +44,7 @@ const Title = ({ children, location }) => {
           css={css({
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `primary`,
+            color: `primary`
           })}
           to={`/`}
         >
@@ -110,7 +110,7 @@ export default ({ children, title, ...props }) => {
           maxWidth: `container`,
           mx: `auto`,
           px: 3,
-          pt: 4,
+          pt: 4
         })}
       >
         <div
@@ -118,7 +118,7 @@ export default ({ children, title, ...props }) => {
             display: `flex`,
             justifyContent: `space-between`,
             alignItems: `center`,
-            mb: 4,
+            mb: 4
           })}
         >
           <Title {...props}>{title}</Title>

@@ -38,10 +38,10 @@ module.exports = {
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
-        cookieDomain: "example.com",
-      },
-    },
-  ],
+        cookieDomain: "example.com"
+      }
+    }
+  ]
 }
 ```
 
@@ -231,11 +231,11 @@ module.exports = {
       options: {
         trackingId: "UA-111111111-1",
         // this option places the tracking script into the head of the DOM
-        head: true,
+        head: true
         // other options
-      },
-    },
-  ],
+      }
+    }
+  ]
   // other plugins
 }
 ```

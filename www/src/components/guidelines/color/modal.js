@@ -6,7 +6,7 @@ import { Box, Flex, Heading, Text } from "../system"
 import {
   getA11yLabel,
   getTextColor,
-  a11y,
+  a11y
 } from "../../../utils/guidelines/color"
 import { focusStyle } from "../../../utils/styles"
 import { colors as themeColors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
@@ -17,7 +17,7 @@ Column.defaultProps = {
   flexWrap: `wrap`,
   width: { lg: `50%` },
   p: { xxs: 6, md: 8 },
-  m: 0,
+  m: 0
 }
 
 const CloseButton = styled(Flex)(
@@ -25,7 +25,7 @@ const CloseButton = styled(Flex)(
     border: 0,
     cursor: `pointer`,
     outline: 0,
-    WebkitAppearance: `none`,
+    WebkitAppearance: `none`
   },
   props => {
     return {
@@ -34,8 +34,8 @@ const CloseButton = styled(Flex)(
       )}`,
       ":hover, :focus": {
         ...focusStyle,
-        color: themeGet(`colors.orange.50`)(props),
-      },
+        color: themeGet(`colors.orange.50`)(props)
+      }
     }
   }
 )
@@ -49,7 +49,7 @@ CloseButton.defaultProps = {
   height: 48,
   justifyContent: `center`,
   ml: `auto`,
-  width: 48,
+  width: 48
 }
 
 const AADescription = () => (
@@ -98,7 +98,7 @@ const TextSamples = ({ contrast, bg, colorName }) => {
                   mr={4}
                   css={{
                     ":before, :after": { display: `none` },
-                    background: `none`,
+                    background: `none`
                   }}
                 >
                   {inverted ? `white` : `black`}Fade[{color}]

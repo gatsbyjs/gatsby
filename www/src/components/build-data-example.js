@@ -17,7 +17,7 @@ const BuildDataExample = () => {
         border: theme => `1px solid ${theme.colors.pullquote.borderColor}`,
         borderRadius: `2`,
         padding: `3`,
-        marginBottom: `2`,
+        marginBottom: `2`
       }}
     >
       <span>

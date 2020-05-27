@@ -10,12 +10,12 @@ import FilteredShowcase from "./filtered-showcase"
 class ShowcaseView extends Component {
   showcase = React.createRef()
   state = {
-    filters: [],
+    filters: []
   }
 
   componentDidMount() {
     const {
-      location: { search = `` },
+      location: { search = `` }
     } = this.props
 
     const { filters } = qs.parse(search.replace(`?`, ``))
@@ -27,7 +27,7 @@ class ShowcaseView extends Component {
 
   componentDidUpdate() {
     const {
-      location: { pathname, search },
+      location: { pathname, search }
     } = this.props
     const queryString = qs.stringify(this.state)
 
@@ -38,7 +38,7 @@ class ShowcaseView extends Component {
 
   setFilters = filters => {
     this.setState({
-      filters: [].concat(filters),
+      filters: [].concat(filters)
     })
 
     scrollToAnchor(this.showcase.current, () => {})()

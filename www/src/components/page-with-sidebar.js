@@ -19,8 +19,8 @@ export default ({ children, enableScrollSync, location }) => {
             null,
             null,
             t => t.sizes.sidebarWidth.default,
-            t => t.sizes.sidebarWidth.large,
-          ],
+            t => t.sizes.sidebarWidth.large
+          ]
         }}
       >
         {children}

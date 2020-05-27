@@ -103,7 +103,7 @@ module.exports = {
           // plugin, you can specify user and password to obtain access token and use authenticated requests against WordPress REST API.
           jwt_user: process.env.JWT_USER,
           jwt_pass: process.env.JWT_PASSWORD,
-          jwt_base_path: "/jwt-auth/v1/token", // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
+          jwt_base_path: "/jwt-auth/v1/token" // Default - can skip if you are using https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
         },
         // Set cookies that should be send with requests to WordPress as key value pairs
         cookies: {},
@@ -115,7 +115,7 @@ module.exports = {
         // Search and Replace Urls across WordPress content.
         searchAndReplaceContentUrls: {
           sourceUrl: "https://source-url.com",
-          replacementUrl: "https://replacement-url.com",
+          replacementUrl: "https://replacement-url.com"
         },
         // Set how many simultaneous requests are sent at once.
         concurrentRequests: 10,
@@ -135,7 +135,7 @@ module.exports = {
           "**/media",
           "**/tags",
           "**/taxonomies",
-          "**/users",
+          "**/users"
         ],
         // Blacklisted routes using glob patterns
         excludedRoutes: ["**/posts/1456"],
@@ -145,7 +145,7 @@ module.exports = {
         // Defaults to false
         keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
-        normalizer: function ({ entities }) {
+        normalizer: function({ entities }) {
           return entities
         },
         // The normalizers option allows you to manipulate the array of internal
@@ -161,15 +161,15 @@ module.exports = {
           ...normalizers,
           {
             name: "nameOfTheFunction",
-            normalizer: function ({ entities }) {
+            normalizer: function({ entities }) {
               // manipulate entities here
               return entities
-            },
-          },
-        ],
-      },
-    },
-  ],
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 
@@ -815,10 +815,10 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers => [...normalizers, mapMoviesToGenres],
-      },
-    },
-  ],
+        normalizers: normalizers => [...normalizers, mapMoviesToGenres]
+      }
+    }
+  ]
 }
 ```
 
@@ -830,11 +830,11 @@ and also your `wordpress-source-plugin` options from `gatsby-config.js`. To lear
 ```javascript
 const dropUnusedMediaNormalizer = {
   name: "dropUnusedMediaNormalizer",
-  normalizer: function ({ entities }) {
+  normalizer: function({ entities }) {
     return entities.filter(
       e => !(e.__type === "wordpress__wp_media" && !e.post)
     )
-  },
+  }
 }
 ```
 
@@ -847,10 +847,10 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
-      },
-    },
-  ],
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers]
+      }
+    }
+  ]
 }
 ```
 
@@ -925,8 +925,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: edge.node.path,
       component: slash(pageTemplate),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 
@@ -940,8 +940,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: edge.node.path,
       component: slash(postTemplate),
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }

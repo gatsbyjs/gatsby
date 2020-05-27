@@ -17,15 +17,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 const report = require(`gatsby-cli/lib/reporter`)
@@ -41,9 +41,9 @@ describe(`Resolver context`, () => {
         id: `test1`,
         internal: {
           type: `Test`,
-          contentDigest: `test1`,
-        },
-      },
+          contentDigest: `test1`
+        }
+      }
     ]
     nodes.forEach(node => {
       dispatch({ type: `CREATE_NODE`, payload: { ...node } })
@@ -56,7 +56,7 @@ describe(`Resolver context`, () => {
         createResolverContext({
           hello(planet) {
             return `Hello ${planet}!`
-          },
+          }
         })
       )
       dispatch(
@@ -70,14 +70,14 @@ describe(`Resolver context`, () => {
                 args: {
                   planet: {
                     type: `String!`,
-                    defaultValue: `World`,
-                  },
+                    defaultValue: `World`
+                  }
                 },
                 resolve(source, args, context, info) {
                   return context.hello(args.planet)
-                },
-              },
-            },
+                }
+              }
+            }
           })
         )
       )
@@ -93,8 +93,8 @@ describe(`Resolver context`, () => {
       const expected = {
         test: {
           world: `Hello World!`,
-          mars: `Hello Mars!`,
-        },
+          mars: `Hello Mars!`
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -104,7 +104,7 @@ describe(`Resolver context`, () => {
         createResolverContext({
           hello(planet) {
             return `Hello ${planet}!`
-          },
+          }
         })
       )
       dispatch(
@@ -115,14 +115,14 @@ describe(`Resolver context`, () => {
               args: {
                 planet: {
                   type: `String!`,
-                  defaultValue: `World`,
-                },
+                  defaultValue: `World`
+                }
               },
               resolve(source, args, context, info) {
                 return context.hello(args.planet)
-              },
+              }
             }
-          },
+          }
         })
       )
       dispatch(
@@ -144,8 +144,8 @@ describe(`Resolver context`, () => {
       const expected = {
         test: {
           world: `Hello World!`,
-          mars: `Hello Mars!`,
-        },
+          mars: `Hello Mars!`
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -157,7 +157,7 @@ describe(`Resolver context`, () => {
           {
             hello(planet) {
               return `Hello ${planet}!`
-            },
+            }
           },
           plugin
         )
@@ -173,15 +173,15 @@ describe(`Resolver context`, () => {
                 args: {
                   planet: {
                     type: `String!`,
-                    defaultValue: `World`,
-                  },
+                    defaultValue: `World`
+                  }
                 },
                 resolve(source, args, context, info) {
                   // Custom context value under namespace
                   return context.transformerHello.hello(args.planet)
-                },
-              },
-            },
+                }
+              }
+            }
           }),
           plugin
         )
@@ -198,8 +198,8 @@ describe(`Resolver context`, () => {
       const expected = {
         test: {
           world: `Hello World!`,
-          mars: `Hello Mars!`,
-        },
+          mars: `Hello Mars!`
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -232,7 +232,7 @@ const runQuery = async query => {
     withResolverContext({
       schema,
       schemaComposer: schemaCustomization.composer,
-      customContext: schemaCustomization.context,
+      customContext: schemaCustomization.context
     })
   )
   expect(results.errors).toBeUndefined()

@@ -55,7 +55,7 @@ In this example project you're using [`redux`](https://github.com/gatsbyjs/gatsb
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-styled-components`],
+  plugins: [`gatsby-plugin-styled-components`]
 }
 ```
 
@@ -92,7 +92,7 @@ import createStore from "./src/state/createStore"
 exports.replaceRenderer = ({
   bodyComponent,
   replaceBodyHTMLString,
-  setHeadComponents,
+  setHeadComponents
 }) => {
   const sheet = new ServerStyleSheet()
   const store = createStore()

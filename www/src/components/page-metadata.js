@@ -55,7 +55,7 @@ export default function PageMetadata({
   image,
   twitterCard,
   timeToRead,
-  children,
+  children
 }) {
   const { siteUrl } = useSiteMetadata()
   // <Helmet> doesn't support JSX fragments so we can't bundle the tags based on

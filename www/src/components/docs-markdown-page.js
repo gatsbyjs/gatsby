@@ -22,7 +22,7 @@ const containerStyles = {
   // could be much cleaner/clearer, please feel free to improve 🙏
   maxWidth: t =>
     `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
-  px: 9,
+  px: 9
 }
 
 function DocsMarkdownPage({
@@ -32,7 +32,7 @@ function DocsMarkdownPage({
   next,
   tableOfContentsItems = page.tableOfContents.items,
   tableOfContentsDepth = page.frontmatter.tableOfContentsDepth,
-  children,
+  children
 }) {
   const { frontmatter, excerpt, timeToRead, fields, body } = page
   const [urlSegment] = fields.slug.split(`/`).slice(1)
@@ -56,11 +56,11 @@ function DocsMarkdownPage({
           overrideCSS={{
             pb: 0,
             [mediaQueries.lg]: {
-              pt: 9,
+              pt: 9
             },
             [isTOCVisible && mediaQueries.xl]: {
-              ...containerStyles,
-            },
+              ...containerStyles
+            }
           }}
         >
           <Breadcrumb location={location} />
@@ -73,13 +73,13 @@ function DocsMarkdownPage({
             pt: 0,
             position: `static`,
             [mediaQueries.lg]: {
-              pb: 9,
+              pb: 9
             },
             [isTOCVisible && mediaQueries.xl]: {
               ...containerStyles,
               display: `flex`,
-              alignItems: `flex-start`,
-            },
+              alignItems: `flex-start`
+            }
           }}
         >
           {isTOCVisible && (
@@ -94,8 +94,8 @@ function DocsMarkdownPage({
                     `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
                   maxHeight: t =>
                     `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
-                  overflow: `auto`,
-                },
+                  overflow: `auto`
+                }
               }}
             >
               <TableOfContents
@@ -109,8 +109,8 @@ function DocsMarkdownPage({
             sx={{
               [isTOCVisible && mediaQueries.xl]: {
                 maxWidth: `mainContentWidth.withSidebar`,
-                minWidth: 0,
-              },
+                minWidth: 0
+              }
             }}
           >
             <div>

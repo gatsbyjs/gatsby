@@ -33,9 +33,9 @@ plugins: [
     resolve: `gatsby-source-filesystem`,
     options: {
       name: `markdown-pages`,
-      path: `${__dirname}/src/markdown-pages`,
-    },
-  },
+      path: `${__dirname}/src/markdown-pages`
+    }
+  }
 ]
 ```
 
@@ -59,10 +59,10 @@ plugins: [
     resolve: `gatsby-source-filesystem`,
     options: {
       path: `${__dirname}/src/markdown-pages`,
-      name: `markdown-pages`,
-    },
+      name: `markdown-pages`
+    }
   },
-  `gatsby-transformer-remark`,
+  `gatsby-transformer-remark`
 ]
 ```
 
@@ -95,7 +95,7 @@ import React from "react"
 import { graphql } from "gatsby"
 
 export default function Template({
-  data, // this prop will be injected by the GraphQL query below.
+  data // this prop will be injected by the GraphQL query below.
 }) {
   const { markdownRemark } = data // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark
@@ -178,8 +178,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       component: blogPostTemplate,
       context: {
         // additional data can be passed via context
-        slug: node.frontmatter.slug,
-      },
+        slug: node.frontmatter.slug
+      }
     })
   })
 }

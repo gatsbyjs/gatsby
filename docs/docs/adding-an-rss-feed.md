@@ -23,9 +23,9 @@ Once installation is complete, you can now add this plugin to your site's config
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    siteUrl: `https://www.example.com`,
+    siteUrl: `https://www.example.com`
   },
-  plugins: [`gatsby-plugin-feed`],
+  plugins: [`gatsby-plugin-feed`]
 }
 ```
 
@@ -42,7 +42,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value
     })
   }
 }
@@ -92,7 +92,7 @@ module.exports = {
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ "content:encoded": edge.node.html }],
+                  custom_elements: [{ "content:encoded": edge.node.html }]
                 })
               })
             },
@@ -117,12 +117,12 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Your Site's RSS Feed",
-          },
-        ],
-      },
-    },
-  ],
+            title: "Your Site's RSS Feed"
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 

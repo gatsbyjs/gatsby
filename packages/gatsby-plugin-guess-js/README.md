@@ -39,17 +39,17 @@ module.exports = {
         // Add a JWT to get data from GA
         jwt: {
           client_email: `GOOGLE_SERVICE_ACCOUNT_EMAIL`,
-          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`,
+          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`
         },
         minimumThreshold: 0.03,
         // The "period" for fetching analytic data.
         period: {
           startDate: new Date("2018-1-1"),
-          endDate: new Date(),
-        },
-      },
-    },
-  ],
+          endDate: new Date()
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -70,16 +70,16 @@ module.exports = {
         // Set Google Analytics jwt with Google Service Account email and private key
         jwt: {
           client_email: `GOOGLE_SERVICE_ACCOUNT_EMAIL`,
-          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`,
+          private_key: `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`
         },
         // The "period" for fetching analytic data.
         period: {
           startDate: new Date("2018-1-1"),
-          endDate: new Date(),
-        },
-      },
-    },
-  ],
+          endDate: new Date()
+        }
+      }
+    }
+  ]
 }
 ```
 

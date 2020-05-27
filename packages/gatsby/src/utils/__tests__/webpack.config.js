@@ -1,12 +1,12 @@
 jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: () => [],
+    getBrowsersList: () => []
   }
 })
 jest.mock(`webpack`, () => {
   return {
     ...jest.requireActual(`webpack`),
-    DefinePlugin: jest.fn(),
+    DefinePlugin: jest.fn()
   }
 })
 jest.mock(`fs-extra`, () => {
@@ -15,7 +15,7 @@ jest.mock(`fs-extra`, () => {
     ...rest,
     readFileSync: jest
       .fn()
-      .mockImplementation((...args) => readFileSync(...args)),
+      .mockImplementation((...args) => readFileSync(...args))
   }
 })
 const { DefinePlugin } = require(`webpack`)
@@ -33,9 +33,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -47,15 +47,15 @@ beforeEach(() => {
     payload: {
       extensions: [],
       browserslist: [],
-      directory: process.cwd(),
-    },
+      directory: process.cwd()
+    }
   })
 })
 
 const getConfig = (args = {}) =>
   webpackConfig(
     {
-      extensions: [`.js`],
+      extensions: [`.js`]
     },
     process.cwd(),
     `build-html`
@@ -89,7 +89,7 @@ describe(`environment variables`, () => {
 
     expect(DefinePlugin).toHaveBeenCalledWith(
       expect.objectContaining({
-        "process.env": `{}`,
+        "process.env": `{}`
       })
     )
   })
@@ -104,7 +104,7 @@ describe(`environment variables`, () => {
           `process.env.BUILD_STAGE`,
           `process.env.GATSBY_BUILD_STAGE`,
           `process.env.NODE_ENV`,
-          `process.env.PUBLIC_DIR`,
+          `process.env.PUBLIC_DIR`
         ].reduce((merged, key) => {
           merged[key] = expect.anything()
           return merged
@@ -124,7 +124,7 @@ describe(`environment variables`, () => {
       )
       expect(DefinePlugin).toBeCalledTimes(1)
       expect(DefinePlugin.mock.calls[0][0]).toMatchObject({
-        [`process.env.NODE_ENV`]: JSON.stringify(process.env.NODE_ENV),
+        [`process.env.NODE_ENV`]: JSON.stringify(process.env.NODE_ENV)
       })
     })
 

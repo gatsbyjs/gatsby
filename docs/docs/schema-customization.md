@@ -279,11 +279,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         email: "String!",
         receivedSwag: {
           type: "Boolean",
-          resolve: source => source.receivedSwag || false,
-        },
+          resolve: source => source.receivedSwag || false
+        }
       },
-      interfaces: ["Node"],
-    }),
+      interfaces: ["Node"]
+    })
   ]
   createTypes(typeDefs)
 }
@@ -359,10 +359,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             return context.nodeModel
               .getAllNodes({ type: "AuthorJson" })
               .find(author => author.email === source.author)
-          },
-        },
-      },
-    }),
+          }
+        }
+      }
+    })
   ]
   createTypes(typeDefs)
 }
@@ -428,11 +428,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         joinedAt: {
           type: "Date",
           extensions: {
-            dateformat: {},
-          },
-        },
-      },
-    }),
+            dateformat: {}
+          }
+        }
+      }
+    })
   ]
   createTypes(typeDefs)
 }
@@ -478,10 +478,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
               return ["uncategorized"]
             }
             return tags
-          },
-        },
-      },
-    }),
+          }
+        }
+      }
+    })
   ]
   createTypes(typeDefs)
 }
@@ -507,9 +507,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       fields: {
         fullName: {
           type: "String",
-          resolve: fullNameResolver,
-        },
-      },
+          resolve: fullNameResolver
+        }
+      }
     },
     {
       name: "ContributorJson",
@@ -517,10 +517,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       fields: {
         fullName: {
           type: "String",
-          resolve: fullNameResolver,
-        },
-      },
-    },
+          resolve: fullNameResolver
+        }
+      }
+    }
   ])
 }
 ```
@@ -542,9 +542,9 @@ exports.createSchemaCustomization = ({ actions }) => {
       return {
         resolve(source) {
           return `${source.firstName} ${source.name}`
-        },
+        }
       }
-    },
+    }
   })
 
   createTypes(`
@@ -572,15 +572,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     args: {
       sanitize: {
         type: "Boolean!",
-        defaultValue: true,
-      },
+        defaultValue: true
+      }
     },
     // The extension `args` (above) are passed to `extend` as
     // the first argument (`options` below)
     extend(options, prevFieldConfig) {
       return {
         args: {
-          sanitize: "Boolean",
+          sanitize: "Boolean"
         },
         resolve(source, args, context, info) {
           const fieldValue = context.defaultFieldResolver(
@@ -593,9 +593,9 @@ exports.createSchemaCustomization = ({ actions }) => {
             args.sanitize != null ? args.sanitize : options.sanitize
           const processor = remark().use(html, { sanitize: shouldSanitize })
           return processor.processSync(fieldValue).contents
-        },
+        }
       }
-    },
+    }
   })
 }
 ```
@@ -665,11 +665,11 @@ exports.createResolvers = ({ createResolvers }) => {
         resolve(source, args, context, info) {
           return context.nodeModel.getNodeById({
             id: source.author,
-            type: "AuthorJson",
+            type: "AuthorJson"
           })
-        },
-      },
-    },
+        }
+      }
+    }
   }
   createResolvers(resolvers)
 }
@@ -709,16 +709,16 @@ exports.createResolvers = ({ createResolvers }) => {
               filter: {
                 frontmatter: {
                   author: { eq: source.email },
-                  date: { gt: "2019-01-01" },
-                },
-              },
+                  date: { gt: "2019-01-01" }
+                }
+              }
             },
             type: "MarkdownRemark",
-            firstOnly: false,
+            firstOnly: false
           })
-        },
-      },
-    },
+        }
+      }
+    }
   }
   createResolvers(resolvers)
 }
@@ -734,10 +734,10 @@ context.nodeModel.runQuery({
   query: {
     sort: {
       fields: ["frontmatter.publishedAt"],
-      order: ["DESC"],
-    },
+      order: ["DESC"]
+    }
   },
-  type: "MarkdownRemark",
+  type: "MarkdownRemark"
 })
 ```
 
@@ -760,15 +760,15 @@ exports.createResolvers = ({ createResolvers }) => {
           return context.nodeModel.runQuery({
             query: {
               filter: {
-                receivedSwag: { eq: true },
-              },
+                receivedSwag: { eq: true }
+              }
             },
             type: "ContributorJson",
-            firstOnly: false,
+            firstOnly: false
           })
-        },
-      },
-    },
+        }
+      }
+    }
   }
   createResolvers(resolvers)
 }
@@ -784,21 +784,21 @@ exports.createResolvers = ({ createResolvers }) => {
       contributors: {
         type: ["ContributorJson"],
         args: {
-          receivedSwag: "Boolean!",
+          receivedSwag: "Boolean!"
         },
         resolve(source, args, context, info) {
           return context.nodeModel.runQuery({
             query: {
               filter: {
-                receivedSwag: { eq: args.receivedSwag },
-              },
+                receivedSwag: { eq: args.receivedSwag }
+              }
             },
             type: "ContributorJson",
-            firstOnly: false,
+            firstOnly: false
           })
-        },
-      },
-    },
+        }
+      }
+    }
   }
   createResolvers(resolvers)
 }
@@ -817,7 +817,7 @@ exports.createResolvers = ({ createResolvers }) => {
       contributors: {
         type: ["ContributorJson"],
         args: {
-          postsCount: "input PostsCountInput { min: Int, max: Int }",
+          postsCount: "input PostsCountInput { min: Int, max: Int }"
         },
         resolve(source, args, context, info) {
           const { max, min = 0 } = args.postsCount || {}
@@ -825,14 +825,14 @@ exports.createResolvers = ({ createResolvers }) => {
           return context.nodeModel.runQuery({
             query: {
               filter: {
-                posts: operator,
-              },
+                posts: operator
+              }
             },
             type: "ContributorJson",
-            firstOnly: false,
+            firstOnly: false
           })
-        },
-      },
+        }
+      }
     },
     ContributorJson: {
       posts: {
@@ -841,9 +841,9 @@ exports.createResolvers = ({ createResolvers }) => {
           return context.nodeModel
             .getAllNodes({ type: "MarkdownRemark" })
             .filter(post => post.frontmatter.author === source.email).length
-        },
-      },
-    },
+        }
+      }
+    }
   }
   createResolvers(resolvers)
 }
@@ -912,7 +912,7 @@ exports.createResolvers = ({ createResolvers }) => {
     type: "String",
     resolve(source, args, context, info) {
       return source.firstName + " " + source.name
-    },
+    }
   }
   const resolvers = {
     Query: {
@@ -920,15 +920,15 @@ exports.createResolvers = ({ createResolvers }) => {
         type: ["TeamMember"],
         resolve(source, args, context, info) {
           return context.nodeModel.getAllNodes({ type: "TeamMember" })
-        },
-      },
+        }
+      }
     },
     AuthorJson: {
-      fullName,
+      fullName
     },
     ContributorJson: {
-      fullName,
-    },
+      fullName
+    }
   }
   createResolvers(resolvers)
 }
@@ -1055,7 +1055,7 @@ exports.createResolvers = ({
   createNodeId,
   createResolvers,
   store,
-  reporter,
+  reporter
 }) => {
   const { createNode } = actions
   createResolvers({
@@ -1069,11 +1069,11 @@ exports.createResolvers = ({
             cache,
             createNode,
             createNodeId,
-            reporter,
+            reporter
           })
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }
 ```

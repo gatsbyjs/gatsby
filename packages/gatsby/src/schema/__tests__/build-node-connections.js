@@ -19,15 +19,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -36,29 +36,29 @@ const makeNodes = () => [
     id: `p1`,
     internal: { type: `Parent`, contentDigest: `0` },
     hair: `red`,
-    children: [`c1`, `c2`, `r1`],
+    children: [`c1`, `c2`, `r1`]
   },
   {
     id: `r1`,
     internal: { type: `Relative`, contentDigest: `0` },
     hair: `black`,
     children: [],
-    parent: `p1`,
+    parent: `p1`
   },
   {
     id: `c1`,
     internal: { type: `Child`, contentDigest: `0` },
     hair: `brown`,
     children: [],
-    parent: `p1`,
+    parent: `p1`
   },
   {
     id: `c2`,
     internal: { type: `Child`, contentDigest: `0` },
     hair: `blonde`,
     children: [],
-    parent: `p1`,
-  },
+    parent: `p1`
+  }
 ]
 
 describe(`build-node-connections`, () => {
@@ -75,7 +75,7 @@ describe(`build-node-connections`, () => {
       nodeStore,
       types: [],
       thirdPartySchemas: [],
-      inferenceMetadata: store.getState().inferenceMetadata,
+      inferenceMetadata: store.getState().inferenceMetadata
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
@@ -86,8 +86,8 @@ describe(`build-node-connections`, () => {
         schemaComposer,
         schema,
         nodeStore,
-        createPageDependency,
-      }),
+        createPageDependency
+      })
     })
     expect(errors).not.toBeDefined()
     return data
@@ -150,7 +150,7 @@ describe(`build-node-connections`, () => {
     expect(allParent.edges[0].node.children.map(c => c.id)).toEqual([
       `c1`,
       `c2`,
-      `r1`,
+      `r1`
     ])
   })
 
@@ -173,7 +173,7 @@ describe(`build-node-connections`, () => {
     expect(allParent.edges[0].node.childrenChild).toBeDefined()
     expect(allParent.edges[0].node.childrenChild.map(c => c.id)).toEqual([
       `c1`,
-      `c2`,
+      `c2`
     ])
   })
 
@@ -217,7 +217,7 @@ describe(`build-node-connections`, () => {
 
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      connection: `Parent`,
+      connection: `Parent`
     })
   })
 })

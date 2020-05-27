@@ -16,7 +16,7 @@ const getAllDependencies = (pkg: PackageJson): Set<[string, string]> =>
   new Set([
     ...Object.entries(pkg.dependencies || {}),
     ...Object.entries(pkg.devDependencies || {}),
-    ...Object.entries(pkg.optionalDependencies || {}),
+    ...Object.entries(pkg.optionalDependencies || {})
   ])
 
 const readJSON = async (file: string): Promise<PackageJson> => {
@@ -42,7 +42,7 @@ const getTreeFromNodeModules = async (
         const currentDependency: IDependency = {
           name,
           version,
-          path: dirname(requireFromHere.resolve(`${name}/package.json`)),
+          path: dirname(requireFromHere.resolve(`${name}/package.json`))
         }
 
         // Include anything that has `gatsby` in its name but not `gatsby` itself

@@ -24,7 +24,7 @@ And then add the plugin to your site's `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-plugin-emotion`]
 }
 ```
 
@@ -130,7 +130,7 @@ Create `gatsby-config.js` and add the Emotion plugin:
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-plugin-emotion`]
 }
 ```
 

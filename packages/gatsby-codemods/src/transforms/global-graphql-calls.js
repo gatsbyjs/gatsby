@@ -4,12 +4,12 @@ const IMPORT_NAME = `graphql`
 function findGatsbyRequire(root, j) {
   const requires = root.find(j.VariableDeclarator, {
     init: {
-      callee: { name: `require` },
-    },
+      callee: { name: `require` }
+    }
   })
 
   let string = requires.find(j.VariableDeclarator, {
-    init: { arguments: [{ value: MODULE_NAME }] },
+    init: { arguments: [{ value: MODULE_NAME }] }
   })
 
   if (string.length) return string
@@ -22,7 +22,7 @@ function findGatsbyRequire(root, j) {
 
 function addEsmImport(j, root, tag) {
   let existingImport = root.find(j.ImportDeclaration, {
-    source: { value: `gatsby` },
+    source: { value: `gatsby` }
   })
 
   if (
@@ -39,7 +39,10 @@ function addEsmImport(j, root, tag) {
       j.literal(MODULE_NAME)
     )
     importStatement.comments = comments
-    root.find(j.Program).get(`body`, 0).insertBefore(importStatement)
+    root
+      .find(j.Program)
+      .get(`body`, 0)
+      .insertBefore(importStatement)
     return
   }
 
@@ -75,7 +78,7 @@ function addRequire(j, root, tag) {
       .get(`body`, 0)
       .insertBefore(
         j.template.statement([
-          `const { ${IMPORT_NAME} } = require('${MODULE_NAME}');\n`,
+          `const { ${IMPORT_NAME} } = require('${MODULE_NAME}');\n`
         ])
       )
     return
@@ -110,7 +113,7 @@ module.exports = (file, api, options) => {
   const root = j(file.source)
 
   const tags = root.find(j.TaggedTemplateExpression, {
-    tag: { name: `graphql` },
+    tag: { name: `graphql` }
   })
 
   if (!tags.length) return false
@@ -121,8 +124,8 @@ module.exports = (file, api, options) => {
     root.find(j.ImportDeclaration, { importKind: `value` }).length > 0 ||
     root.find(j.VariableDeclarator, {
       init: {
-        callee: { name: `require` },
-      },
+        callee: { name: `require` }
+      }
     }).length === 0
 
   if (useImportSyntax) {

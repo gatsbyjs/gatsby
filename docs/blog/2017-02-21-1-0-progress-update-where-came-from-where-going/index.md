@@ -291,7 +291,7 @@ class BlogPostTemplate extends React.Component {
         <small>{this.props.data.markdown.frontmatter.date}</small>
         <div
           dangerouslySetInnerHTML={{
-            __html: this.props.data.markdown.html,
+            __html: this.props.data.markdown.html
           }}
         />
       </div>

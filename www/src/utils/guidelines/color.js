@@ -9,7 +9,7 @@ const minimums = {
   aa: 4.5,
   aaLarge: 3,
   aaa: 7,
-  aaaLarge: 4.5,
+  aaaLarge: 4.5
 }
 
 const rgbArray = color => {
@@ -24,7 +24,7 @@ const rgbArray = color => {
     ),
     parseFloat(
       color.substr(color.indexOf(`,`, repars + 1) + 1, color.indexOf(`)`))
-    ),
+    )
   ]
 }
 
@@ -33,7 +33,7 @@ const colorToHex = color =>
     ? rgbArray(color)
     : hexRgb(color, { format: `array` })
 
-export const a11y = function (hex, bg) {
+export const a11y = function(hex, bg) {
   const text = colorToHex(hex)
   const background = colorToHex(bg)
 
@@ -45,7 +45,7 @@ export const a11y = function (hex, bg) {
       r: background[0],
       g: background[1],
       b: background[2],
-      a: background[3],
+      a: background[3]
     },
     { r: text[0], g: text[1], b: text[2], a: text[3] }
   )
@@ -60,11 +60,11 @@ export const a11y = function (hex, bg) {
     aa: contrast >= minimums.aa,
     aaLarge: contrast >= minimums.aaLarge,
     aaa: contrast >= minimums.aaa,
-    aaaLarge: contrast >= minimums.aaaLarge,
+    aaaLarge: contrast >= minimums.aaaLarge
   }
 }
 
-export const colorable = function (hex) {
+export const colorable = function(hex) {
   let result = {}
 
   result.hex = hex
@@ -74,11 +74,11 @@ export const colorable = function (hex) {
   result.contrast = {
     colorOnWhite: wcag(rgbArray, [255, 255, 255]),
     whiteOnColor: wcag([255, 255, 255], rgbArray),
-    blackOnColor: wcag([0, 0, 0], rgbArray),
+    blackOnColor: wcag([0, 0, 0], rgbArray)
   }
 
   result.a11y = {
-    ...a11y(hex, colors.white),
+    ...a11y(hex, colors.white)
   }
 
   return result

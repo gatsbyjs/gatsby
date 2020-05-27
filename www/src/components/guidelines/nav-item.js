@@ -14,8 +14,8 @@ const NavLink = styled(ActiveLink, { shouldForwardProp })(
   props => {
     return {
       "&&.active": {
-        color: themeGet(`colors.lilac`)(props),
-      },
+        color: themeGet(`colors.lilac`)(props)
+      }
     }
   },
   color,
@@ -26,7 +26,7 @@ const NavLink = styled(ActiveLink, { shouldForwardProp })(
 NavLink.propTypes = {
   ...propTypes.color,
   ...propTypes.space,
-  ...propTypes.typography,
+  ...propTypes.typography
 }
 
 const NavItem = props => (
@@ -39,8 +39,8 @@ const NavItem = props => (
         fontFamily: `heading`,
         fontSize: 3,
         fontWeight: `body`,
-        mr: 4,
-      },
+        mr: 4
+      }
     }}
     {...props}
   />

@@ -3,7 +3,7 @@ jest.mock(`../../hooks/use-site-metadata`, () => () => {
     title: `GatsbyJS`,
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing fast modern site generator for React`,
-    twitter: `@gatsbyjs`,
+    twitter: `@gatsbyjs`
   }
 })
 
@@ -17,11 +17,11 @@ it(`sets canonical url and og:url correctly`, () => {
   const content = Helmet.peek()
   expect(content.linkTags).toContainEqual({
     rel: `canonical`,
-    href: `https://www.gatsbyjs.org/docs/quick-start/`,
+    href: `https://www.gatsbyjs.org/docs/quick-start/`
   })
   expect(content.metaTags).toContainEqual({
     property: `og:url`,
-    content: `https://www.gatsbyjs.org/docs/quick-start/`,
+    content: `https://www.gatsbyjs.org/docs/quick-start/`
   })
 })
 
@@ -30,11 +30,11 @@ it(`sets twitter defaults`, () => {
   const content = Helmet.peek()
   expect(content.metaTags).toContainEqual({
     name: `twitter:card`,
-    content: `summary`,
+    content: `summary`
   })
   expect(content.metaTags).toContainEqual({
     name: `twitter:site`,
-    content: `@gatsbyjs`,
+    content: `@gatsbyjs`
   })
 })
 
@@ -44,18 +44,18 @@ it(`includes a default gatsby logo image`, () => {
   expect(content.metaTags).toContainEqual({
     property: `og:image`,
     // make sure the image url has the full site url
-    content: expect.stringContaining(`https://www.gatsbyjs.org`),
+    content: expect.stringContaining(`https://www.gatsbyjs.org`)
   })
   expect(content.metaTags).toContainEqual({
     property: `og:image:alt`,
-    content: `Gatsby Logo`,
+    content: `Gatsby Logo`
   })
   expect(content.metaTags).toContainEqual({
     property: `og:image:width`,
-    content: `512`,
+    content: `512`
   })
   expect(content.metaTags).toContainEqual({
     property: `og:image:height`,
-    content: `512`,
+    content: `512`
   })
 })

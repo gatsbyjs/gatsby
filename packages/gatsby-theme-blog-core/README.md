@@ -37,10 +37,10 @@ module.exports = {
       resolve: `gatsby-theme-blog-core`,
       options: {
         // basePath defaults to `/`
-        basePath: `/blog`,
-      },
-    },
-  ],
+        basePath: `/blog`
+      }
+    }
+  ]
 }
 ```
 
@@ -72,10 +72,10 @@ module.exports = {
       resolve: `gatsby-theme-blog-core`,
       options: {
         // basePath defaults to `/`
-        basePath: `/blog`,
-      },
-    },
-  ],
+        basePath: `/blog`
+      }
+    }
+  ]
 }
 ```
 
@@ -99,14 +99,14 @@ module.exports = {
     social: [
       {
         name: `Twitter`,
-        url: `https://twitter.com/gatsbyjs`,
+        url: `https://twitter.com/gatsbyjs`
       },
       {
         name: `GitHub`,
-        url: `https://github.com/gatsbyjs`,
-      },
-    ],
-  },
+        url: `https://github.com/gatsbyjs`
+      }
+    ]
+  }
 }
 ```
 

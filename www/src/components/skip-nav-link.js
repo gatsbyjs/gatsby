@@ -24,8 +24,8 @@ const Link = () => (
         padding: t => t.space[4],
         position: `fixed`,
         top: 6,
-        width: `auto`,
-      },
+        width: `auto`
+      }
     }}
   >
     <Trans>Skip to main content</Trans>

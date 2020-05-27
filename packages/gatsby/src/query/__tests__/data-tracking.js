@@ -29,7 +29,7 @@
 jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
-    ensureDir: jest.fn(),
+    ensureDir: jest.fn()
   }
 })
 
@@ -44,16 +44,16 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 
@@ -63,7 +63,7 @@ jest.mock(`../../redux/persist`, () => {
     readFromCache: () => mockPersistedState,
     writeToCache: state => {
       mockPersistedState = state
-    },
+    }
   }
 })
 
@@ -80,12 +80,12 @@ const setStaticQueries = queries => (staticQueries = queries)
 
 const getTypedNodeCreators = ({
   actions: { createNode },
-  createContentDigest,
+  createContentDigest
 }) => {
   const typedNodeCreator = type => node => {
     node.internal = {
       type,
-      contentDigest: createContentDigest(node),
+      contentDigest: createContentDigest(node)
     }
     return createNode(node)
   }
@@ -94,7 +94,7 @@ const getTypedNodeCreators = ({
     createSiteNode: typedNodeCreator(`Site`),
     createTestNode: typedNodeCreator(`Test`),
     createTestBNode: typedNodeCreator(`TestB`),
-    createNotUsedNode: typedNodeCreator(`NotUsed`),
+    createNotUsedNode: typedNodeCreator(`NotUsed`)
   }
 }
 
@@ -116,7 +116,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       `../query-runner`
     )
     return {
-      queryRunner: jest.fn(actualQueryRunner),
+      queryRunner: jest.fn(actualQueryRunner)
     }
   })
 
@@ -125,7 +125,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       return mockAPIs[apiName](
         {
           actions: doubleBoundActionCreators,
-          createContentDigest: require(`gatsby-core-utils`).createContentDigest,
+          createContentDigest: require(`gatsby-core-utils`).createContentDigest
         },
         pluginOptions
       )
@@ -144,7 +144,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       acc[actionName] = (...args) =>
         boundActionCreators[actionName](...args, {
           name: `gatsby-source-test`,
-          version: `1.0.0`,
+          version: `1.0.0`
         })
       return acc
     },
@@ -157,8 +157,8 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   store.dispatch({
     type: `SET_PROGRAM`,
     payload: {
-      directory: __dirname,
-    },
+      directory: __dirname
+    }
   })
 
   await require(`../../utils/source-nodes`).default({})
@@ -175,8 +175,8 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       type: `QUERY_EXTRACTED`,
       payload: {
         componentPath,
-        query,
-      },
+        query
+      }
     })
   })
 
@@ -186,8 +186,8 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       payload: {
         id: `sq--${id}`,
         hash: `sq--${id}`,
-        query,
-      },
+        query
+      }
     })
   })
 
@@ -197,7 +197,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   activity.start()
   await queryUtil.processStaticQueries(staticQueryIds, {
     activity,
-    state: store.getState(),
+    state: store.getState()
   })
   await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
@@ -222,7 +222,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   return {
     pathsOfPagesWithQueriesThatRan,
     staticQueriesThatRan,
-    pages: [...store.getState().pages.keys()].sort(),
+    pages: [...store.getState().pages.keys()].sort()
   }
 }
 
@@ -233,25 +233,25 @@ describe(`query caching between builds`, () => {
         createPage({
           component: `/src/templates/listing.js`,
           path: `/`,
-          context: {},
+          context: {}
         })
 
         createPage({
           component: `/src/templates/details.js`,
           path: `/foo`,
           context: {
-            slug: `foo`,
-          },
+            slug: `foo`
+          }
         })
 
         createPage({
           component: `/src/templates/details.js`,
           path: `/bar`,
           context: {
-            slug: `bar`,
-          },
+            slug: `bar`
+          }
         })
-      },
+      }
     })
     setPageQueries({
       "/src/templates/listing.js": `
@@ -271,7 +271,7 @@ describe(`query caching between builds`, () => {
               content
             }
           }
-        `,
+        `
     })
 
     setStaticQueries({
@@ -284,7 +284,7 @@ describe(`query caching between builds`, () => {
               }
             }
           }
-        `,
+        `
     })
   })
 
@@ -299,21 +299,21 @@ describe(`query caching between builds`, () => {
           createTestNode({
             id: `test-1`,
             slug: `foo`,
-            content: `Lorem ipsum.`,
+            content: `Lorem ipsum.`
           })
           createTestNode({
             id: `test-2`,
             slug: `bar`,
-            content: `Dolor sit amet.`,
+            content: `Dolor sit amet.`
           })
           createSiteNode({
             id: `Site`,
             siteMetadata: {
               title: `My Site`,
-              description: `Description of site`,
-            },
+              description: `Description of site`
+            }
           })
-        },
+        }
       })
     })
 
@@ -321,7 +321,7 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup()
 
       // sanity check, to make sure test setup is correct
@@ -336,7 +336,7 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup()
 
       // sanity check, to make sure test setup is correct
@@ -351,9 +351,9 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
-        restart: true,
+        restart: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -368,10 +368,10 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -395,12 +395,12 @@ describe(`query caching between builds`, () => {
           createTestNode({
             id: `test-1`,
             slug: `foo`,
-            content: `Lorem ipsum.`,
+            content: `Lorem ipsum.`
           })
           createTestNode({
             id: `test-2`,
             slug: `bar`,
-            content: `Dolor sit amet.`,
+            content: `Dolor sit amet.`
           })
           createSiteNode({
             id: `Site`,
@@ -410,10 +410,10 @@ describe(`query caching between builds`, () => {
 
               --edited
               edited content #${nodeChangeCounter++}
-              `,
-            },
+              `
+            }
           })
-        },
+        }
       })
     })
 
@@ -421,10 +421,10 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -439,7 +439,7 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup()
 
       // sanity check, to make sure test setup is correct
@@ -454,9 +454,9 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
-        restart: true,
+        restart: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -480,7 +480,7 @@ describe(`query caching between builds`, () => {
           createTestNode({
             id: `test-1`,
             slug: `foo`,
-            content: `Lorem ipsum.`,
+            content: `Lorem ipsum.`
           })
           createTestNode({
             id: `test-2`,
@@ -489,16 +489,16 @@ describe(`query caching between builds`, () => {
 
             --edited
             edited content #${nodeChangeCounter++}
-            `,
+            `
           })
           createSiteNode({
             id: `Site`,
             siteMetadata: {
               title: `My Site`,
-              description: `Description of site`,
-            },
+              description: `Description of site`
+            }
           })
-        },
+        }
       })
     })
 
@@ -506,10 +506,10 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -524,7 +524,7 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup()
 
       // sanity check, to make sure test setup is correct
@@ -539,9 +539,9 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
-        restart: true,
+        restart: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -561,34 +561,34 @@ describe(`query caching between builds`, () => {
           const {
             createSiteNode,
             createTestNode,
-            createNotUsedNode,
+            createNotUsedNode
           } = getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
             slug: `foo`,
-            content: `Lorem ipsum.`,
+            content: `Lorem ipsum.`
           })
           createTestNode({
             id: `test-2`,
             slug: `bar`,
-            content: `Dolor sit amet.`,
+            content: `Dolor sit amet.`
           })
           createSiteNode({
             id: `Site`,
             siteMetadata: {
               title: `My Site`,
-              description: `Description of site`,
-            },
+              description: `Description of site`
+            }
           })
           createNotUsedNode({
             id: `not-used`,
             content: `Content
 
             --edited
-            edited content #${nodeChangeCounter++}`,
+            edited content #${nodeChangeCounter++}`
           })
-        },
+        }
       })
     })
 
@@ -596,10 +596,10 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -614,7 +614,7 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup()
 
       // sanity check, to make sure test setup is correct
@@ -629,9 +629,9 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
-        restart: true,
+        restart: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -658,17 +658,17 @@ describe(`query caching between builds`, () => {
             content: `Lorem ipsum.
 
             --edited
-            edited content #${nodeChangeCounter++}`,
+            edited content #${nodeChangeCounter++}`
           })
 
           // this node will not change
           createTestBNode({
             id: `test-b`,
             slug: `foo`,
-            content: `Lorem ipsum.`,
+            content: `Lorem ipsum.`
           })
         },
-        createPages: () => {},
+        createPages: () => {}
       })
       setPageQueries({})
       setStaticQueries({
@@ -735,14 +735,14 @@ describe(`query caching between builds`, () => {
               content
             }
           }
-        `,
+        `
       })
     })
 
     it(`should run all queries after clearing cache`, async () => {
       const { staticQueriesThatRan } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // on initial we want all queries to run
@@ -754,7 +754,7 @@ describe(`query caching between builds`, () => {
         `single-test-1`,
         `single-test-2`,
         `single-test-b-1`,
-        `single-test-b-2`,
+        `single-test-b-2`
       ])
     }, 99999)
 
@@ -765,20 +765,20 @@ describe(`query caching between builds`, () => {
         `all-test-query-1`,
         `all-test-query-2`,
         `single-test-1`,
-        `single-test-2`,
+        `single-test-2`
       ])
     }, 99999)
 
     it(`should run only queries that use changed data (with restart)`, async () => {
       const { staticQueriesThatRan } = await setup({
-        restart: true,
+        restart: true
       })
 
       expect(staticQueriesThatRan).toEqual([
         `all-test-query-1`,
         `all-test-query-2`,
         `single-test-1`,
-        `single-test-2`,
+        `single-test-2`
       ])
     }, 99999)
   })
@@ -796,17 +796,17 @@ describe(`query caching between builds`, () => {
           createTestNode({
             id: `test-1`,
             slug: `foo1`,
-            content: `Lorem ipsum.`,
+            content: `Lorem ipsum.`
           })
           createTestNode({
             id: `test-2`,
             slug: `foo2`,
-            content: `Dolor sit amet.`,
+            content: `Dolor sit amet.`
           })
           createTestNode({
             id: `test-3`,
             slug: `foo3`,
-            content: `Consectetur adipiscing elit.`,
+            content: `Consectetur adipiscing elit.`
           })
 
           // this is just to trigger createPages without restarting
@@ -818,8 +818,8 @@ describe(`query caching between builds`, () => {
 
               --edited
               edited content #${nodeChangeCounter++}
-              `,
-            },
+              `
+            }
           })
         },
         createPages: ({ actions: { createPage } }, _pluginOptions) => {
@@ -827,12 +827,12 @@ describe(`query caching between builds`, () => {
             component: `/src/templates/details.js`,
             path: `/`,
             context: {
-              slug: `foo-${pageChangeCounter}`,
-            },
+              slug: `foo-${pageChangeCounter}`
+            }
           })
 
           pageChangeCounter++
-        },
+        }
       })
       setPageQueries({
         "/src/templates/details.js": `
@@ -842,7 +842,7 @@ describe(`query caching between builds`, () => {
               content
             }
           }
-        `,
+        `
       })
       setStaticQueries({})
     })
@@ -850,7 +850,7 @@ describe(`query caching between builds`, () => {
     it(`rerunning after cache clearing - should run all queries`, async () => {
       const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -872,7 +872,7 @@ describe(`query caching between builds`, () => {
 
     it(`changing page context should rerun query (with restart)`, async () => {
       const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
-        restart: true,
+        restart: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -891,9 +891,9 @@ describe(`query caching between builds`, () => {
           createPage({
             component: `/src/templates/no-dep-page.js`,
             path: `/no-dep-page`,
-            context: {},
+            context: {}
           })
-        },
+        }
       })
       setPageQueries({})
       setStaticQueries({})
@@ -903,10 +903,10 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
         restart: true,
-        clearCache: true,
+        clearCache: true
       })
 
       // sanity check, to make sure test setup is correct
@@ -921,7 +921,7 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup()
 
       // sanity check, to make sure test setup is correct
@@ -938,9 +938,9 @@ describe(`query caching between builds`, () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,
-        pages,
+        pages
       } = await setup({
-        restart: true,
+        restart: true
       })
 
       // sanity check, to make sure test setup is correct

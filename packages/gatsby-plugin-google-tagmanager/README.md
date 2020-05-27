@@ -36,9 +36,9 @@ plugins: [
       // on every Gatsby route change.
       //
       // Defaults to gatsby-route-change
-      routeChangeEventName: "YOUR_ROUTE_CHANGE_EVENT_NAME",
-    },
-  },
+      routeChangeEventName: "YOUR_ROUTE_CHANGE_EVENT_NAME"
+    }
+  }
 ]
 ```
 
@@ -54,13 +54,13 @@ plugins: [
       // should be a stringified object or object
       //
       // Defaults to null
-      defaultDataLayer: function () {
+      defaultDataLayer: function() {
         return {
-          pageType: window.pageType,
+          pageType: window.pageType
         }
-      },
-    },
-  },
+      }
+    }
+  }
 ]
 ```
 

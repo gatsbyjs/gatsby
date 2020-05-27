@@ -33,13 +33,13 @@ export default function Accordion({ itemRef, item }) {
             borderColor: `ui.border`,
             left: isExpanded && inActiveTree ? 0 : 6,
             right: 0,
-            top: 0,
+            top: 0
           },
           ":after": {
             top: `auto`,
-            bottom: -1,
-          },
-        }),
+            bottom: -1
+          }
+        })
       }}
     >
       <SectionTitle itemRef={itemRef} item={item} uid={uid} />
@@ -58,9 +58,9 @@ export default function Accordion({ itemRef, item }) {
                 left: 27,
                 position: `absolute`,
                 top: 0,
-                width: 1,
-              },
-            }),
+                width: 1
+              }
+            })
           }}
         >
           {item.items.map(subitem => (

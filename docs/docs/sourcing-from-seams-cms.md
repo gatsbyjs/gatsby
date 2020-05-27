@@ -176,8 +176,8 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     path: `/blogs`,
     component: require.resolve("./src/templates/blog-index.js"),
     context: {
-      blogPosts: query.data.allSeamsCmsBlogpost.edges,
-    },
+      blogPosts: query.data.allSeamsCmsBlogpost.edges
+    }
   })
 }
 ```

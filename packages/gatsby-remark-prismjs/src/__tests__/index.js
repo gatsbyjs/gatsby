@@ -168,9 +168,9 @@ describe(`remark prism plugin`, () => {
         languageExtensions: {
           extend: `c`,
           definition: {
-            extended_keywords: /(aRandomTypeKeyword)/,
-          },
-        },
+            extended_keywords: /(aRandomTypeKeyword)/
+          }
+        }
       }
 
       plugin({ markdownAST }, config)

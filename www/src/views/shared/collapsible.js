@@ -5,7 +5,7 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 
 class Collapsible extends Component {
   state = {
-    collapsed: false,
+    collapsed: false
   }
 
   handleClick = () => {
@@ -26,7 +26,7 @@ class Collapsible extends Component {
           minHeight: fixed ? `${fixed}px` : `initial`,
           maxHeight: fixed ? `${fixed}px` : `initial`,
           flexBasis: 0,
-          overflowY: collapsed ? false : `auto`,
+          overflowY: collapsed ? false : `auto`
         }}
       >
         <div
@@ -34,7 +34,7 @@ class Collapsible extends Component {
             display: `flex`,
             flexDirection: `column`,
             minHeight: `100%`,
-            width: `100%`,
+            width: `100%`
           }}
         >
           <button
@@ -54,8 +54,8 @@ class Collapsible extends Component {
               background: `none`,
               border: `none`,
               "&:hover": {
-                color: `gatsby`,
-              },
+                color: `gatsby`
+              }
             }}
             aria-expanded={!collapsed}
             onClick={this.handleClick}
@@ -69,7 +69,7 @@ class Collapsible extends Component {
           <div
             css={{
               display: collapsed ? `none` : `block`,
-              overflowY: `auto`,
+              overflowY: `auto`
             }}
           >
             {children}

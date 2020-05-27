@@ -19,11 +19,11 @@ describe(`nodes db tests`, () => {
           parent: null,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
+            type: `Test`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -35,11 +35,11 @@ describe(`nodes db tests`, () => {
           parent: `hi`,
           internal: {
             contentDigest: `hasdfljds-1`,
-            type: `Test-1`,
-          },
+            type: `Test-1`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -47,10 +47,10 @@ describe(`nodes db tests`, () => {
       actions.createParentChildLink(
         {
           parent: getNode(`hi`),
-          child: getNode(`hi-1`),
+          child: getNode(`hi-1`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -62,11 +62,11 @@ describe(`nodes db tests`, () => {
           parent: `hi-1`,
           internal: {
             contentDigest: `hasdfljds-1-1`,
-            type: `Test-1-1`,
-          },
+            type: `Test-1-1`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -74,10 +74,10 @@ describe(`nodes db tests`, () => {
       actions.createParentChildLink(
         {
           parent: getNode(`hi-1`),
-          child: getNode(`hi-1-1`),
+          child: getNode(`hi-1-1`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -89,11 +89,11 @@ describe(`nodes db tests`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds2`,
-            type: `Test`,
-          },
+            type: `Test`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -109,11 +109,11 @@ describe(`nodes db tests`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
+            type: `Test`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -125,11 +125,11 @@ describe(`nodes db tests`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
+            type: `Test`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -141,11 +141,11 @@ describe(`nodes db tests`, () => {
           parent: `hi`,
           internal: {
             contentDigest: `hasdfljds-1`,
-            type: `Test-1`,
-          },
+            type: `Test-1`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -153,10 +153,10 @@ describe(`nodes db tests`, () => {
       actions.createParentChildLink(
         {
           parent: getNode(`hi`),
-          child: getNode(`hi-1`),
+          child: getNode(`hi-1`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -168,11 +168,11 @@ describe(`nodes db tests`, () => {
           parent: `hi-1`,
           internal: {
             contentDigest: `hasdfljds-1-1`,
-            type: `Test-1-1`,
-          },
+            type: `Test-1-1`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -180,20 +180,20 @@ describe(`nodes db tests`, () => {
       actions.createParentChildLink(
         {
           parent: getNode(`hi-1`),
-          child: getNode(`hi-1-1`),
+          child: getNode(`hi-1-1`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
     store.dispatch(
       actions.deleteNode(
         {
-          node: getNode(`hi`),
+          node: getNode(`hi`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -209,11 +209,11 @@ describe(`nodes db tests`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
+            type: `Test`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -225,11 +225,11 @@ describe(`nodes db tests`, () => {
           parent: `hi`,
           internal: {
             contentDigest: `hasdfljds-1`,
-            type: `Test-1`,
-          },
+            type: `Test-1`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -237,10 +237,10 @@ describe(`nodes db tests`, () => {
       actions.createParentChildLink(
         {
           parent: getNode(`hi`),
-          child: getNode(`hi-1`),
+          child: getNode(`hi-1`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -252,11 +252,11 @@ describe(`nodes db tests`, () => {
           parent: `hi-1`,
           internal: {
             contentDigest: `hasdfljds-1-1`,
-            type: `Test-1-1`,
-          },
+            type: `Test-1-1`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -264,10 +264,10 @@ describe(`nodes db tests`, () => {
       actions.createParentChildLink(
         {
           parent: getNode(`hi-1`),
-          child: getNode(`hi-1-1`),
+          child: getNode(`hi-1-1`)
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -275,7 +275,7 @@ describe(`nodes db tests`, () => {
       actions.deleteNode(
         { node: getNode(`hi`) },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
@@ -291,7 +291,7 @@ describe(`nodes db tests`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `Test`,
+            type: `Test`
           },
           pickle: true,
           deep: {
@@ -299,19 +299,19 @@ describe(`nodes db tests`, () => {
               0,
               1,
               {
-                boom: true,
-              },
-            ],
-          },
+                boom: true
+              }
+            ]
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
     store.dispatch(
       actions.deleteNode({
-        node: getNode(`hi`),
+        node: getNode(`hi`)
       })
     )
     expect(getNode(`hi`)).toBeUndefined()
@@ -326,18 +326,18 @@ describe(`nodes db tests`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
+            type: `Test`
+          }
         },
         {
-          name: `tests`,
+          name: `tests`
         }
       )
     )
     expect(getNode(`hi`)).toMatchObject({ id: `hi` })
     store.dispatch(
       actions.deleteNode(`hi`, getNode(`hi`), {
-        name: `tests`,
+        name: `tests`
       })
     )
     expect(getNode(`hi`)).toBeUndefined()
@@ -358,17 +358,17 @@ describe(`nodes db tests`, () => {
             parent: `test`,
             internal: {
               contentDigest: `hasdfljds`,
-              type: `Other`,
-            },
+              type: `Other`
+            }
           },
           {
-            name: `other`,
+            name: `other`
           }
         )
       )
       store.dispatch(
         actions.deleteNode(`hi`, getNode(`hi`), {
-          name: `tests`,
+          name: `tests`
         })
       )
     }).toThrow(/deleted/)
@@ -376,7 +376,7 @@ describe(`nodes db tests`, () => {
 
   it(`does not crash when delete node is called on undefined`, () => {
     actions.deleteNode(undefined, {
-      name: `tests`,
+      name: `tests`
     })
     expect(getNodes()).toHaveLength(0)
   })

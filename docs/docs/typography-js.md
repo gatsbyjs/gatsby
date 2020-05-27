@@ -25,11 +25,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
+        pathToConfigModule: `src/utils/typography`
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 
@@ -56,9 +56,9 @@ const typography = new Typography({
     "Segoe UI",
     "Helvetica",
     "Arial",
-    "sans-serif",
+    "sans-serif"
   ],
-  bodyFontFamily: ["Georgia", "serif"],
+  bodyFontFamily: ["Georgia", "serif"]
 })
 
 export default typography

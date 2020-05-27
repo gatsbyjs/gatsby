@@ -10,7 +10,7 @@ import theme from "../../../src/gatsby-plugin-theme-ui"
 
 jest.mock(`gatsby-plugin-mdx`, () => {
   return {
-    MDXRenderer: () => <div />,
+    MDXRenderer: () => <div />
   }
 })
 
@@ -18,7 +18,7 @@ jest.mock(`../../utils/sidebar/item-list`, () => {
   return {
     itemListContributing: {},
     itemListDocs: {},
-    getItemList: jest.fn(),
+    getItemList: jest.fn()
   }
 })
 
@@ -31,9 +31,9 @@ Object.defineProperty(window, `IntersectionObserver`, {
   value: jest.fn().mockImplementation(() => {
     return {
       observe: jest.fn(),
-      unobserve: jest.fn(),
+      unobserve: jest.fn()
     }
-  }),
+  })
 })
 
 Object.defineProperty(window, `matchMedia`, {
@@ -42,43 +42,43 @@ Object.defineProperty(window, `matchMedia`, {
     return {
       matches: false,
       addListener: jest.fn(),
-      removeListener: jest.fn(),
+      removeListener: jest.fn()
     }
-  }),
+  })
 })
 
 const tableOfContentsItems = [
   {
     url: `#section`,
-    title: `section`,
-  },
+    title: `section`
+  }
 ]
 const page = {
   excerpt: `excerpt`,
   timeToRead: 1,
   fields: {
     slug: `/docs/apis/`,
-    anchor: `apis`,
+    anchor: `apis`
   },
   frontmatter: {
     title: `title`,
-    description: `description`,
+    description: `description`
   },
   tableOfContents: {
-    items: tableOfContentsItems,
+    items: tableOfContentsItems
   },
-  parent: {},
+  parent: {}
 }
 
 const location = {
-  pathname: `/docs/current`,
+  pathname: `/docs/current`
 }
 
 const setup = (setupProps = {}) => {
   const props = {
     page,
     location,
-    ...setupProps,
+    ...setupProps
   }
 
   return render(
@@ -109,8 +109,8 @@ it(`should not display table of content if disabled`, () => {
   const { queryByText } = setup({
     page: {
       ...page,
-      frontmatter: { ...page.frontmatter, disableTableOfContents: true },
-    },
+      frontmatter: { ...page.frontmatter, disableTableOfContents: true }
+    }
   })
 
   expect(queryByText(`Table of Contents`)).toBeNull()
@@ -119,11 +119,11 @@ it(`should not display table of content if disabled`, () => {
 it(`should display prev page and next page if available`, () => {
   const prev = {
     title: `prev`,
-    link: `/docs/prev`,
+    link: `/docs/prev`
   }
   const next = {
     title: `next`,
-    link: `/docs/next`,
+    link: `/docs/next`
   }
   const { getByText } = setup({ prev, next })
 
@@ -141,7 +141,7 @@ it(`should display frontmatter meta data if available`, () => {
   expect(contents.title).toEqual(page.frontmatter.title)
   expect(contents.metaTags).toContainEqual({
     name: `description`,
-    content: page.frontmatter.description,
+    content: page.frontmatter.description
   })
 })
 
@@ -152,7 +152,7 @@ it(`should display excerpt as meta description if no frontmatter description is 
 
   expect(contents.metaTags).toContainEqual({
     name: `description`,
-    content: page.excerpt,
+    content: page.excerpt
   })
 })
 

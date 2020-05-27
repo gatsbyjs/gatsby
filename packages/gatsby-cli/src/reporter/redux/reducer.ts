@@ -5,7 +5,7 @@ export const reducer = (
   state: IGatsbyCLIState = {
     messages: [],
     activities: {},
-    status: ``,
+    status: ``
   },
   action: ActionsUnion | ISetLogs
 ): IGatsbyCLIState => {
@@ -13,7 +13,7 @@ export const reducer = (
     case Actions.SetStatus: {
       return {
         ...state,
-        status: action.payload,
+        status: action.payload
       }
     }
 
@@ -25,7 +25,7 @@ export const reducer = (
 
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        messages: [...state.messages, action.payload]
       }
     }
 
@@ -35,8 +35,8 @@ export const reducer = (
         ...state,
         activities: {
           ...state.activities,
-          [id]: action.payload,
-        },
+          [id]: action.payload
+        }
       }
     }
 
@@ -51,9 +51,9 @@ export const reducer = (
           ...state.activities,
           [id]: {
             ...activity,
-            ...rest,
-          },
-        },
+            ...rest
+          }
+        }
       }
     }
     case Actions.ActivityErrored: {
@@ -66,9 +66,9 @@ export const reducer = (
           ...state.activities,
           [id]: {
             ...activity,
-            errored: true,
-          },
-        },
+            errored: true
+          }
+        }
       }
     }
 
@@ -84,12 +84,12 @@ export const reducer = (
       activities[id] = {
         ...activity,
         status,
-        duration,
+        duration
       }
 
       return {
         ...state,
-        activities,
+        activities
       }
     }
 

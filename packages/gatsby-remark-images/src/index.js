@@ -2,7 +2,7 @@ const {
   DEFAULT_OPTIONS,
   imageClass,
   imageBackgroundClass,
-  imageWrapperClass,
+  imageWrapperClass
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
@@ -31,7 +31,7 @@ module.exports = (
     getNode,
     reporter,
     cache,
-    compiler,
+    compiler
   },
   pluginOptions
 ) => {
@@ -72,9 +72,12 @@ module.exports = (
   const getImageInfo = uri => {
     const { url, query } = queryString.parseUrl(uri)
     return {
-      ext: path.extname(url).split(`.`).pop(),
+      ext: path
+        .extname(url)
+        .split(`.`)
+        .pop(),
       url,
-      query,
+      query
     }
   }
 
@@ -120,7 +123,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function (
+  const generateImagesAndUpdateNode = async function(
     node,
     resolve,
     inLink,
@@ -151,7 +154,7 @@ module.exports = (
       file: imageNode,
       args: options,
       reporter,
-      cache,
+      cache
     })
 
     if (!fluidResult) {
@@ -221,7 +224,7 @@ module.exports = (
           pluginOptions,
           DEFAULT_OPTIONS
         ),
-        reporter,
+        reporter
       })
 
       if (!webpFluidResult) {
@@ -272,7 +275,7 @@ module.exports = (
         args,
         fileArgs: args,
         cache,
-        reporter,
+        reporter
       })
 
       // Escape single quotes so the SVG data can be used in inline style attribute with single quotes
@@ -421,7 +424,7 @@ module.exports = (
             }
 
             let imageRefs = []
-            $(`img`).each(function () {
+            $(`img`).each(function() {
               imageRefs.push($(this))
             })
 

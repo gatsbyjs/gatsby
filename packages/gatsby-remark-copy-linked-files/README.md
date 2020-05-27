@@ -40,9 +40,9 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-      plugins: [`gatsby-remark-copy-linked-files`],
-    },
-  },
+      plugins: [`gatsby-remark-copy-linked-files`]
+    }
+  }
 ]
 ```
 
@@ -61,12 +61,12 @@ plugins: [
           resolve: `gatsby-remark-copy-linked-files`,
           options: {
             destinationDir: `path/to/dir`,
-            ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-          },
-        },
-      ],
-    },
-  },
+            ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
+          }
+        }
+      ]
+    }
+  }
 ]
 ```
 
@@ -92,12 +92,12 @@ plugins: [
         {
           resolve: "gatsby-remark-copy-linked-files",
           options: {
-            destinationDir: "path/to/dir",
-          },
-        },
-      ],
-    },
-  },
+            destinationDir: "path/to/dir"
+          }
+        }
+      ]
+    }
+  }
 ]
 ```
 
@@ -198,12 +198,12 @@ plugins: [
             // If you'd like to not use gatsby-remark-images and just copy your
             // original images to the public directory, set
             // `ignoreFileExtensions` to an empty array.
-            ignoreFileExtensions: [],
-          },
-        },
-      ],
-    },
-  },
+            ignoreFileExtensions: []
+          }
+        }
+      ]
+    }
+  }
 ]
 ```
 

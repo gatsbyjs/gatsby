@@ -65,7 +65,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               pathPrefix,
               reporter,
               cache,
-              ...helpers,
+              ...helpers
             },
             plugin.options || {}
           )

@@ -92,7 +92,7 @@ describe(`tracking`, () => {
       expect.objectContaining({
         eventCategory: `Outbound Link`,
         eventAction: `click`,
-        eventLabel: expect.stringContaining(to),
+        eventLabel: expect.stringContaining(to)
       })
     )
   })

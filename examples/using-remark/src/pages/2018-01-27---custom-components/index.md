@@ -28,17 +28,17 @@ const counterStyle = {
 
 export default class Counter extends React.Component {
   static defaultProps = {
-    initialvalue: 0,
+    initialvalue: 0
   }
 
   state = {
-    value: Number(this.props.initialvalue),
+    value: Number(this.props.initialvalue)
   }
 
   handleIncrement = () => {
     this.setState(state => {
       return {
-        value: state.value + 1,
+        value: state.value + 1
       }
     })
   }
@@ -46,7 +46,7 @@ export default class Counter extends React.Component {
   handleDecrement = () => {
     this.setState(state => {
       return {
-        value: state.value - 1,
+        value: state.value - 1
       }
     })
   }
@@ -89,7 +89,7 @@ In order to display this component within a Markdown file, you'll need to add a 
     ```js
     const renderAst = new rehypeReact({
       createElement: React.createElement,
-      components: { "interactive-counter": Counter },
+      components: { "interactive-counter": Counter }
     }).Compiler
     ```
 
@@ -163,8 +163,8 @@ const renderAst = new rehypeReact({
   components: {
     h1: PrimaryTitle,
     h2: SecondaryTitle,
-    h3: TertiaryTitle,
-  },
+    h3: TertiaryTitle
+  }
 }).Compiler
 ```
 

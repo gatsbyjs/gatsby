@@ -22,9 +22,9 @@ Once installation is complete, you can now add this plugin to your `gatsby-confi
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    siteUrl: `https://www.example.com`,
+    siteUrl: `https://www.example.com`
   },
-  plugins: [`gatsby-plugin-sitemap`],
+  plugins: [`gatsby-plugin-sitemap`]
 }
 ```
 

@@ -34,7 +34,7 @@ Add the `gatsby-source-wordpress` plugin to `gatsby-config.js` using the followi
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby WordPress Tutorial",
+    title: "Gatsby WordPress Tutorial"
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
@@ -60,11 +60,11 @@ module.exports = {
         hostingWPCOM: false,
         // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on WordPress.com
-        useACF: true,
-      },
-    },
+        useACF: true
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 
@@ -83,7 +83,7 @@ Place these plugins in your `gatsby-config.js` like this:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: "Gatsby WordPress Tutorial",
+    title: "Gatsby WordPress Tutorial"
   },
   plugins: [
     // https://public-api.wordpress.com/wp/v2/sites/gatsbyjsexamplewordpress.wordpress.com/pages/
@@ -108,14 +108,14 @@ module.exports = {
         hostingWPCOM: false,
         // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
         // This feature is untested for sites hosted on WordPress.com
-        useACF: true,
-      },
+        useACF: true
+      }
     },
     // highlight-start
     "gatsby-transformer-sharp",
-    "gatsby-plugin-sharp",
+    "gatsby-plugin-sharp"
     // highlight-end
-  ],
+  ]
 }
 ```
 

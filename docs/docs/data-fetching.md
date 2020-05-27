@@ -50,11 +50,11 @@ module.exports = {
         fieldName: `github`,
         url: `https://api.github.com/graphql`, //highlight-line
         headers: {
-          Authorization: `Bearer your-github-token`,
-        },
-      },
-    },
-  ],
+          Authorization: `Bearer your-github-token`
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -67,7 +67,7 @@ const fetch = require(`node-fetch`)
 
 exports.sourceNodes = async ({
   actions: { createNode },
-  createContentDigest,
+  createContentDigest
 }) => {
   // get data from GitHub API at build time
   const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
@@ -83,8 +83,8 @@ exports.sourceNodes = async ({
     children: [],
     internal: {
       type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
+      contentDigest: createContentDigest(resultData)
+    }
   })
 }
 ```

@@ -10,7 +10,7 @@ const formatDate = dateString =>
     timeZone: `UTC`,
     month: `long`,
     day: `numeric`,
-    year: `numeric`,
+    year: `numeric`
   })
 
 const BlogPostPreviewItem = ({ post, className }) => (
@@ -22,7 +22,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
     <div
       css={{
         display: `flex`,
-        alignItems: `center`,
+        alignItems: `center`
       }}
     >
       <Link
@@ -30,7 +30,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         css={{
           position: `relative`,
           zIndex: 1,
-          "&&": { borderBottom: `0` },
+          "&&": { borderBottom: `0` }
         }}
       >
         <Avatar
@@ -43,7 +43,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         sx={{
           display: `inline-block`,
           fontFamily: `heading`,
-          color: `card.color`,
+          color: `card.color`
         }}
       >
         <div>
@@ -51,7 +51,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
             to={post.frontmatter.author.fields.slug}
             css={{
               position: `relative`,
-              zIndex: 1,
+              zIndex: 1
             }}
           >
             {post.frontmatter.author.id}
@@ -75,7 +75,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
         textIndent: `-100%`,
         whiteSpace: `nowrap`,
         zIndex: 0,
-        "&&": { border: 0 },
+        "&&": { border: 0 }
       }}
     >
       Read more

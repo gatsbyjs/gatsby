@@ -9,14 +9,14 @@ const toEvent = (date, id) => {
     data: {
       date: date,
       type: `event`,
-      name: `something something`,
-    },
+      name: `something something`
+    }
   }
 }
 
 const mockEvents = events => {
   return {
-    nodes: events,
+    nodes: events
   }
 }
 

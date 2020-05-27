@@ -15,7 +15,7 @@ Add a plugin-entry to your `gatsby-config.js`
 
 ```js
 module.exports = {
-  plugins: [`gatsby-transformer-react-docgen`],
+  plugins: [`gatsby-transformer-react-docgen`]
 }
 ```
 
@@ -29,10 +29,10 @@ module.exports = {
     {
       resolve: "gatsby-transformer-react-docgen",
       options: {
-        resolver: require("./custom-resolver"),
-      },
-    },
-  ],
+        resolver: require("./custom-resolver")
+      }
+    }
+  ]
 }
 ```
 
@@ -51,10 +51,10 @@ module.exports = {
     {
       resolve: "gatsby-transformer-react-docgen",
       options: {
-        babelrcRoots: ["../packages/*"],
-      },
-    },
-  ],
+        babelrcRoots: ["../packages/*"]
+      }
+    }
+  ]
 }
 ```
 

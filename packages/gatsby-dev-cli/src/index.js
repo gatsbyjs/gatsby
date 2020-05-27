@@ -113,5 +113,5 @@ watch(gatsbyLocation, argv.packages, {
   quiet: argv.quiet,
   scanOnce: argv.scanOnce,
   forceInstall: argv.forceInstall,
-  monoRepoPackages,
+  monoRepoPackages
 })

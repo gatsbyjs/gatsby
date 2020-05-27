@@ -51,7 +51,7 @@ Then add it to your `gatsby-config.js`:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Pandas Eating Lots`,
+    title: `Pandas Eating Lots`
   },
   plugins: [
     // highlight-start
@@ -59,18 +59,18 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `src`,
-        path: `${__dirname}/src/`,
-      },
+        path: `${__dirname}/src/`
+      }
     },
     // highlight-end
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
-  ],
+        pathToConfigModule: `src/utils/typography`
+      }
+    }
+  ]
 }
 ```
 

@@ -35,10 +35,10 @@ module.exports = {
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
-        display: `standalone`,
-      },
-    },
-  ],
+        display: `standalone`
+      }
+    }
+  ]
 }
 ```
 
@@ -170,12 +170,12 @@ module.exports = {
             lang: `de`,
             name: `Die coole Anwendung`,
             short_name: `Coole Anwendung`,
-            description: `Die Anwendung macht coole Dinge und macht Ihr Leben besser.`,
-          },
-        ],
-      },
-    },
-  ],
+            description: `Die Anwendung macht coole Dinge und macht Ihr Leben besser.`
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 
@@ -203,11 +203,11 @@ module.exports = {
           // For all the options available, please see:
           // https://developer.mozilla.org/en-US/docs/Web/Manifest
           // https://w3c.github.io/manifest/#purpose-member
-          purpose: `maskable`,
-        },
-      },
-    },
-  ],
+          purpose: `maskable`
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -229,10 +229,10 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`,
-        legacy: false, // this will not add apple-touch-icon links to <head>
-      },
-    },
-  ],
+        legacy: false // this will not add apple-touch-icon links to <head>
+      }
+    }
+  ]
 }
 ```
 
@@ -256,10 +256,10 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
-        include_favicon: false, // This will exclude favicon link tag
-      },
-    },
-  ],
+        include_favicon: false // This will exclude favicon link tag
+      }
+    }
+  ]
 }
 ```
 
@@ -291,10 +291,10 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`,
-        cache_busting_mode: `none`, // `query`(default), `name`, or `none`
-      },
-    },
-  ],
+        cache_busting_mode: `none` // `query`(default), `name`, or `none`
+      }
+    }
+  ]
 }
 ```
 
@@ -343,10 +343,10 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`,
-        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
-      },
-    },
-  ],
+        theme_color_in_head: false // This will avoid adding theme-color meta tag.
+      }
+    }
+  ]
 }
 ```
 
@@ -372,10 +372,10 @@ module.exports = {
         theme_color: `#a2466c`,
         display: `standalone`,
         icon: `src/images/icon.png`,
-        crossOrigin: `use-credentials`, // `use-credentials` or `anonymous`
-      },
-    },
-  ],
+        crossOrigin: `use-credentials` // `use-credentials` or `anonymous`
+      }
+    }
+  ]
 }
 ```
 

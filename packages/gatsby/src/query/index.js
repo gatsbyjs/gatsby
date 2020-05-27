@@ -53,7 +53,7 @@ const findIdsWithoutDataDependencies = state => {
   const notTrackedIds = new Set(
     [
       ...Array.from(state.pages.values(), p => p.path),
-      ...[...state.staticQueryComponents.values()].map(c => c.id),
+      ...[...state.staticQueryComponents.values()].map(c => c.id)
     ].filter(
       x => !allTrackedIds.has(x) && !seenIdsWithoutDataDependencies.has(x)
     )
@@ -154,7 +154,7 @@ const groupQueryIds = queryIds => {
   )
   return {
     staticQueryIds: grouped.static || [],
-    pageQueryIds: grouped.page || [],
+    pageQueryIds: grouped.page || []
   }
 }
 
@@ -174,7 +174,7 @@ const createStaticQueryJob = (state, queryId) => {
     hash,
     query,
     componentPath,
-    context: { path: id },
+    context: { path: id }
   }
 }
 
@@ -187,7 +187,7 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   if (queryJobsCount) {
     const activity = report.createProgress(`run queries`, queryJobsCount, 0, {
       id: `query-running`,
-      parentSpan,
+      parentSpan
     })
     activity.start()
     return activity
@@ -196,7 +196,7 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
       done: () => {
         report.completeActivity(`query-running`)
       },
-      tick: () => {},
+      tick: () => {}
     }
   }
 }
@@ -211,7 +211,7 @@ const processStaticQueries = async (
     {
       activity,
       graphqlRunner,
-      graphqlTracing,
+      graphqlTracing
     }
   )
 }
@@ -231,7 +231,7 @@ const processPageQueries = async (
     {
       activity,
       graphqlRunner,
-      graphqlTracing,
+      graphqlTracing
     }
   )
 }
@@ -239,7 +239,7 @@ const processPageQueries = async (
 const getInitialQueryProcessors = ({
   parentSpan,
   graphqlRunner,
-  graphqlTracing,
+  graphqlTracing
 } = {}) => {
   const state = store.getState()
   const queryIds = calcInitialDirtyQueryIds(state)
@@ -268,7 +268,7 @@ const getInitialQueryProcessors = ({
   return {
     processStaticQueries: createProcessor(processStaticQueries, staticQueryIds),
     processPageQueries: createProcessor(processPageQueries, pageQueryIds),
-    pageQueryIds,
+    pageQueryIds
   }
 }
 
@@ -276,7 +276,7 @@ const initialProcessQueries = async ({ parentSpan, graphqlTracing } = {}) => {
   const {
     pageQueryIds,
     processPageQueries,
-    processStaticQueries,
+    processStaticQueries
   } = getInitialQueryProcessors({ parentSpan, graphqlTracing })
 
   await processStaticQueries()
@@ -296,8 +296,8 @@ const createPageQueryJob = (state, page) => {
     componentPath,
     context: {
       ...page,
-      ...context,
-    },
+      ...context
+    }
   }
 }
 
@@ -320,7 +320,7 @@ const runQueuedQueries = () => {
     const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
     const queryJobs = [
       ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
-      ...pages.map(page => createPageQueryJob(state, page)),
+      ...pages.map(page => createPageQueryJob(state, page))
     ]
     listenerQueue.push(queryJobs)
   }
@@ -375,7 +375,7 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
     `SET_SCHEMA_COMPOSER`,
     `SET_SCHEMA`,
     `ADD_FIELD_TO_NODE`,
-    `ADD_CHILD_NODE_TO_PARENT_NODE`,
+    `ADD_CHILD_NODE_TO_PARENT_NODE`
   ].forEach(eventType => {
     emitter.on(eventType, event => {
       graphqlRunner = null
@@ -416,5 +416,5 @@ module.exports = {
   startListeningToDevelopQueue,
   runQueuedQueries,
   enqueueExtractedQueryId,
-  enqueueExtractedPageComponent,
+  enqueueExtractedPageComponent
 }

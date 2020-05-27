@@ -230,8 +230,8 @@ exports.createPages = ({ actions }) => {
       component: require.resolve("./src/templates/basicTemplate.js"),
       context: {
         pageContent: element.content,
-        links: element.links,
-      },
+        links: element.links
+      }
     })
   })
 }

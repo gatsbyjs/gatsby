@@ -3,7 +3,7 @@ import reporter from "gatsby-cli/lib/reporter"
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
-    panic: jest.fn(),
+    panic: jest.fn()
   }
 })
 
@@ -15,8 +15,8 @@ describe(`setSiteConfig`, () => {
   it(`let's you add a config`, () => {
     const action = setSiteConfig({
       siteMetadata: {
-        hi: true,
-      },
+        hi: true
+      }
     })
     expect(action).toMatchInlineSnapshot(`
       Object {
@@ -48,20 +48,20 @@ describe(`setSiteConfig`, () => {
   it(`Validates configs with unsupported options`, () => {
     setSiteConfig({
       someRandomThing: `hi people`,
-      plugins: [],
+      plugins: []
     })
 
     expect(reporter.panic).toBeCalledWith({
       id: `10122`,
       context: {
-        sourceMessage: `"someRandomThing" is not allowed`,
-      },
+        sourceMessage: `"someRandomThing" is not allowed`
+      }
     })
   })
 
   it(`It corrects pathPrefixes without a forward slash at beginning`, () => {
     const action = setSiteConfig({
-      pathPrefix: `prefix`,
+      pathPrefix: `prefix`
     })
 
     expect(action.payload.pathPrefix).toBe(`/prefix`)
@@ -69,14 +69,14 @@ describe(`setSiteConfig`, () => {
 
   it(`It removes trailing forward slash`, () => {
     const action = setSiteConfig({
-      pathPrefix: `/prefix/`,
+      pathPrefix: `/prefix/`
     })
     expect(action.payload.pathPrefix).toBe(`/prefix`)
   })
 
   it(`It removes pathPrefixes that are a single forward slash`, () => {
     const action = setSiteConfig({
-      pathPrefix: `/`,
+      pathPrefix: `/`
     })
     expect(action.payload.pathPrefix).toBe(``)
   })
@@ -88,14 +88,14 @@ describe(`setSiteConfig`, () => {
 
   it(`It warns with a suggestion when an invalid key is passed`, () => {
     setSiteConfig({
-      plugin: [],
+      plugin: []
     })
 
     expect(reporter.panic).toBeCalledWith({
       id: `10122`,
       context: {
-        sourceMessage: `"plugin" is not allowed. Did you mean "plugins"?`,
-      },
+        sourceMessage: `"plugin" is not allowed. Did you mean "plugins"?`
+      }
     })
   })
 })

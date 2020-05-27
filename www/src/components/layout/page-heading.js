@@ -79,7 +79,7 @@ const PageHeading = ({ title, icon }) => (
 
 PageHeading.propTypes = {
   title: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.string
 }
 
 export default PageHeading

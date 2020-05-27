@@ -20,15 +20,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn(),
+        end: jest.fn()
       }
-    },
+    }
   }
 })
 const report = require(`gatsby-cli/lib/reporter`)
@@ -44,9 +44,9 @@ describe(`Print type definitions`, () => {
     const node = {
       id: `test1`,
       internal: {
-        type: `Test`,
+        type: `Test`
       },
-      foo: 26,
+      foo: 26
     }
     store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
     const typeDefs = []
@@ -80,33 +80,33 @@ describe(`Print type definitions`, () => {
           second: {
             type: `Date`,
             args: {
-              bar: `input Baz { qux: Boolean }`,
+              bar: `input Baz { qux: Boolean }`
             },
             extensions: {
               dateformat: {
-                formatString: `MM/DD/YYYY`,
-              },
-            },
-          },
+                formatString: `MM/DD/YYYY`
+              }
+            }
+          }
         },
         interfaces: [`Node`, `ITest`],
         extensions: {
           infer: true,
           childOf: {
-            types: [`OneMoreTest`],
-          },
-        },
+            types: [`OneMoreTest`]
+          }
+        }
       })
     )
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: typeDefs[0],
-      plugin: { name: `gatsby-plugin-test` },
+      plugin: { name: `gatsby-plugin-test` }
     })
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: typeDefs[1],
-      plugin: { name: `gatsby-plugin-another-test` },
+      plugin: { name: `gatsby-plugin-another-test` }
     })
   })
 
@@ -143,8 +143,8 @@ describe(`Print type definitions`, () => {
     store.dispatch(
       printTypeDefinitions({
         include: {
-          types: [`AnotherTest`],
-        },
+          types: [`AnotherTest`]
+        }
       })
     )
     await build({})
@@ -155,8 +155,8 @@ describe(`Print type definitions`, () => {
     store.dispatch(
       printTypeDefinitions({
         include: {
-          plugins: [`gatsby-plugin-another-test`],
-        },
+          plugins: [`gatsby-plugin-another-test`]
+        }
       })
     )
     await build({})
@@ -167,8 +167,8 @@ describe(`Print type definitions`, () => {
     store.dispatch(
       printTypeDefinitions({
         exclude: {
-          types: [`InlineTest`],
-        },
+          types: [`InlineTest`]
+        }
       })
     )
     await build({})
@@ -179,8 +179,8 @@ describe(`Print type definitions`, () => {
     store.dispatch(
       printTypeDefinitions({
         exclude: {
-          plugins: [`gatsby-plugin-test`],
-        },
+          plugins: [`gatsby-plugin-test`]
+        }
       })
     )
     await build({})
@@ -191,9 +191,9 @@ describe(`Print type definitions`, () => {
     store.dispatch(
       printTypeDefinitions({
         include: {
-          types: [`InlineTest`],
+          types: [`InlineTest`]
         },
-        withFieldTypes: false,
+        withFieldTypes: false
       })
     )
     await build({})

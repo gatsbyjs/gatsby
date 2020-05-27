@@ -5,7 +5,9 @@ const smartypants = require(`retext-smartypants`)
 module.exports = ({ markdownAST }, pluginOptions = {}) => {
   visit(markdownAST, `text`, node => {
     const processedText = String(
-      retext().use(smartypants, pluginOptions).processSync(node.value)
+      retext()
+        .use(smartypants, pluginOptions)
+        .processSync(node.value)
     )
     node.value = processedText
   })

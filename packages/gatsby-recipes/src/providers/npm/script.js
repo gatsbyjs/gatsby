@@ -34,7 +34,7 @@ const read = async ({ root }, id) => {
       id,
       name: id,
       command: pkg.scripts[id],
-      _message: `Wrote script ${id} to your package.json`,
+      _message: `Wrote script ${id} to your package.json`
     }
   }
 
@@ -51,7 +51,7 @@ const destroy = async ({ root }, { name }) => {
 const schema = {
   name: Joi.string(),
   command: Joi.string(),
-  ...resourceSchema,
+  ...resourceSchema
 }
 const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
@@ -89,7 +89,7 @@ module.exports.plan = async ({ root }, { name, command }) => {
     currentState,
     newState: scriptDescription(name, command),
     diff,
-    describe: `Add new command to your package.json`,
+    describe: `Add new command to your package.json`
   }
 }
 
@@ -98,5 +98,5 @@ module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
 module.exports.config = {
-  serial: true,
+  serial: true
 }

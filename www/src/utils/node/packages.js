@@ -35,8 +35,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: node.slug,
       component: slash(packageTemplate),
       context: {
-        slug: node.slug,
-      },
+        slug: node.slug
+      }
     })
   })
 }
@@ -47,13 +47,13 @@ exports.onCreateNode = ({ node, actions }) => {
     createNodeField({
       node,
       name: `featured`,
-      value: featuredPlugins.includes(node.name),
+      value: featuredPlugins.includes(node.name)
     })
 
     createNodeField({
       node,
       name: `official`,
-      value: isOfficialPackage(node),
+      value: isOfficialPackage(node)
     })
   }
 }

@@ -10,11 +10,14 @@ const path = require(`path`)
 const asRoot = nodes => {
   return {
     type: `root`,
-    children: nodes,
+    children: nodes
   }
 }
 
-const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
+const u = unified()
+  .use(remarkParse)
+  .use(remarkStringify)
+  .use(remarkMdx)
 
 const partitionSteps = ast => {
   const steps = []
@@ -46,7 +49,7 @@ const parse = async src => {
     return {
       ast,
       steps,
-      stepsAsMdx: steps.map(toMdx),
+      stepsAsMdx: steps.map(toMdx)
     }
   } catch (e) {
     throw e
@@ -77,7 +80,7 @@ const getSource = async (pathOrUrl, projectRoot) => {
     if (res.status !== 200) {
       throw new Error(
         JSON.stringify({
-          fetchError: `Could not fetch ${pathOrUrl} from official recipes`,
+          fetchError: `Could not fetch ${pathOrUrl} from official recipes`
         })
       )
     }

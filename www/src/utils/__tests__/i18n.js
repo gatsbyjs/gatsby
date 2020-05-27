@@ -48,30 +48,30 @@ describe(`getLocaleAndBasePath`, () => {
   it(`returns the locale and base path when passed a path with a locale`, () => {
     expect(getLocaleAndBasePath(`/es/`, codes)).toEqual({
       locale: `es`,
-      basePath: `/`,
+      basePath: `/`
     })
     expect(getLocaleAndBasePath(`/es/docs/`, codes)).toEqual({
       locale: `es`,
-      basePath: `/docs/`,
+      basePath: `/docs/`
     })
     expect(getLocaleAndBasePath(`/es/docs/quick-start/`, codes)).toEqual({
       locale: `es`,
-      basePath: `/docs/quick-start/`,
+      basePath: `/docs/quick-start/`
     })
   })
 
   it(`returns defaultLang when passed a path with no locale`, () => {
     expect(getLocaleAndBasePath(`/`, codes)).toEqual({
       locale: `en`,
-      basePath: `/`,
+      basePath: `/`
     })
     expect(getLocaleAndBasePath(`/docs/`, codes)).toEqual({
       locale: `en`,
-      basePath: `/docs/`,
+      basePath: `/docs/`
     })
     expect(getLocaleAndBasePath(`/docs/quick-start/`, codes)).toEqual({
       locale: `en`,
-      basePath: `/docs/quick-start/`,
+      basePath: `/docs/quick-start/`
     })
   })
 })

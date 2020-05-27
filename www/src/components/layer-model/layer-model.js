@@ -31,18 +31,18 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         p: 2,
         ":focus": {
           boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
-          outline: 0,
+          outline: 0
         },
         ":hover": {
-          borderColor: t => t.colors[baseColor][60],
-        },
+          borderColor: t => t.colors[baseColor][60]
+        }
       }}
     >
       <span
         sx={{
           display: `flex`,
           flexDirection: `column`,
-          p: 2,
+          p: 2
         }}
       >
         <span css={{ height: 40 }}>
@@ -60,7 +60,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
 const LayerModel = ({
   layers,
   displayCodeFullWidth = false,
-  initialLayer = `Content`,
+  initialLayer = `Content`
 }) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
@@ -90,13 +90,13 @@ const LayerModel = ({
         borderRadius: 3,
         border: t => `1px solid ${t.colors.ui.border}`,
         padding: 2,
-        marginBottom: 6,
+        marginBottom: 6
       }}
     >
       <div
         sx={{
           borderRadius: 3,
-          backgroundColor: `ui.background`,
+          backgroundColor: `ui.background`
         }}
       >
         <div
@@ -105,7 +105,7 @@ const LayerModel = ({
             display: `grid`,
             gridTemplateColumns: `repeat(${layers.length}, 1fr)`,
             gridGap: 1,
-            textAlign: `center`,
+            textAlign: `center`
           }}
         >
           {layers.map((layer, index) => (
@@ -129,7 +129,7 @@ const LayerModel = ({
             sourceIndex,
             setSourceIndex,
             index,
-            displayCodeFullWidth,
+            displayCodeFullWidth
           })
       )}
     </div>

@@ -14,7 +14,7 @@ import {
   isEnumType,
   SelectionSetNode,
   SelectionNode,
-  FieldNode,
+  FieldNode
 } from "graphql"
 import { Path } from "graphql/jsutils/Path"
 import reporter from "gatsby-cli/lib/reporter"
@@ -23,7 +23,7 @@ import { getValueAt } from "../utils/get-value-at"
 import {
   GatsbyResolver,
   IGatsbyConnection,
-  IGatsbyResolverContext,
+  IGatsbyResolverContext
 } from "./type-definitions"
 
 export function findMany<TSource, TArgs>(
@@ -41,7 +41,7 @@ export function findMany<TSource, TArgs>(
         firstOnly: false,
         type: info.schema.getType(typeName),
         stats: context.stats,
-        tracer: context.tracer,
+        tracer: context.tracer
       },
       { path: context.path, connectionType: typeName }
     )
@@ -61,7 +61,7 @@ export function findOne<TSource, TArgs>(
         firstOnly: true,
         type: info.schema.getType(typeName),
         stats: context.stats,
-        tracer: context.tracer,
+        tracer: context.tracer
       },
       { path: context.path }
     )
@@ -86,7 +86,7 @@ export function findManyPaginated<TSource, TArgs, TNodeType>(
     const extendedArgs = {
       ...args,
       group: group || [],
-      distinct: distinct || [],
+      distinct: distinct || []
     }
 
     const result = await findMany<TSource, PaginatedArgs<TArgs>>(typeName)(
@@ -158,7 +158,7 @@ export const group: GatsbyResolver<
       acc.push({
         ...paginate(groupedResults[fieldValue], args),
         field,
-        fieldValue,
+        fieldValue
       })
       return acc
     }, [])
@@ -190,7 +190,7 @@ export function paginate<NodeType>(
       return {
         node: item,
         next: arr[i + 1],
-        previous: arr[i - 1],
+        previous: arr[i - 1]
       }
     }),
     nodes: items,
@@ -201,8 +201,8 @@ export function paginate<NodeType>(
       itemCount: items.length,
       pageCount,
       perPage: limit,
-      totalCount: count,
-    },
+      totalCount: count
+    }
   }
 }
 
@@ -213,7 +213,7 @@ export function link<TSource, TArgs>(
     from?: string
     fromNode?: string
   } = {
-    by: `id`,
+    by: `id`
   },
   fieldConfig: GraphQLFieldConfig<
     TSource,
@@ -231,7 +231,7 @@ export function link<TSource, TArgs>(
     const fieldValue = await resolver(source, args, context, {
       ...info,
       from: options.from || info.from,
-      fromNode: options.from ? options.fromNode : info.fromNode,
+      fromNode: options.from ? options.fromNode : info.fromNode
     })
 
     if (fieldValue == null) return null
@@ -271,7 +271,7 @@ export function link<TSource, TArgs>(
       .split(`.`)
       .reduceRight((acc, key, i, { length }) => {
         return {
-          [key]: i === length - 1 ? operator(acc) : acc,
+          [key]: i === length - 1 ? operator(acc) : acc
         }
       }, fieldValue)
 
@@ -290,7 +290,7 @@ export function link<TSource, TArgs>(
         firstOnly,
         type,
         stats: context.stats,
-        tracer: context.tracer,
+        tracer: context.tracer
       },
       { path: context.path }
     )
@@ -325,7 +325,7 @@ export function fileByPath<TSource, TArgs>(
     const fieldValue = await resolver(source, args, context, {
       ...info,
       from: options.from || info.from,
-      fromNode: options.from ? options.fromNode : info.fromNode,
+      fromNode: options.from ? options.fromNode : info.fromNode
     })
 
     if (fieldValue == null) return null
@@ -426,7 +426,7 @@ function getFieldNodeByNameInSelectionSet(
               fragmentDef.selectionSet,
               fieldName,
               info
-            ),
+            )
           ]
         }
       } else if (selection.kind === Kind.INLINE_FRAGMENT) {
@@ -436,7 +436,7 @@ function getFieldNodeByNameInSelectionSet(
             selection.selectionSet,
             fieldName,
             info
-          ),
+          )
         ]
       } /* FIELD_NODE */ else {
         if (selection.name.value === fieldName) {

@@ -6,13 +6,13 @@ describe(`gatsby-plugin-preact`, () => {
   it(`sets the correct webpack config in development`, () => {
     const getConfig = jest.fn(() => {
       return {
-        plugins: [new ReactRefreshWebpackPlugin()],
+        plugins: [new ReactRefreshWebpackPlugin()]
       }
     })
     const actions = {
       setWebpackConfig: jest.fn(),
       setBabelPlugin: jest.fn(),
-      replaceWebpackConfig: jest.fn(),
+      replaceWebpackConfig: jest.fn()
     }
 
     onCreateWebpackConfig({ stage: `develop`, actions, getConfig })
@@ -23,15 +23,15 @@ describe(`gatsby-plugin-preact`, () => {
       resolve: {
         alias: {
           react: `preact/compat`,
-          "react-dom": `preact/compat`,
-        },
-      },
+          "react-dom": `preact/compat`
+        }
+      }
     })
 
     expect(getConfig).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledWith({
-      name: `react-refresh/babel`,
+      name: `react-refresh/babel`
     })
     expect(actions.replaceWebpackConfig).toMatchInlineSnapshot(`
       [MockFunction] {
@@ -57,7 +57,7 @@ describe(`gatsby-plugin-preact`, () => {
     const actions = {
       setWebpackConfig: jest.fn(),
       setBabelPlugin: jest.fn(),
-      replaceWebpackConfig: jest.fn(),
+      replaceWebpackConfig: jest.fn()
     }
 
     onCreateWebpackConfig({ stage: `build-javascript`, actions, getConfig })
@@ -68,9 +68,9 @@ describe(`gatsby-plugin-preact`, () => {
       resolve: {
         alias: {
           react: `preact/compat`,
-          "react-dom": `preact/compat`,
-        },
-      },
+          "react-dom": `preact/compat`
+        }
+      }
     })
 
     expect(getConfig).toHaveBeenCalledTimes(0)

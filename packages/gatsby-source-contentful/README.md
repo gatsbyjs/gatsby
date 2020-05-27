@@ -28,10 +28,10 @@ module.exports = {
       options: {
         spaceId: `your_space_id`,
         // Learn about environment variables: https://gatsby.dev/env-vars
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
-    },
-  ],
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      }
+    }
+  ]
 }
 ```
 
@@ -47,10 +47,10 @@ module.exports = {
         spaceId: `your_space_id`,
         // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        host: `preview.contentful.com`,
-      },
-    },
-  ],
+        host: `preview.contentful.com`
+      }
+    }
+  ]
 }
 ```
 
@@ -70,10 +70,10 @@ module.exports = {
         spaceId: `your_space_id`,
         // Learn about environment variables: https://gatsby.app/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        downloadLocal: true,
-      },
-    },
-  ],
+        downloadLocal: true
+      }
+    }
+  ]
 }
 ```
 
@@ -287,7 +287,7 @@ You can then insert the returned HTML inline in your JSX:
 <div
   className="body"
   dangerouslySetInnerHTML={{
-    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html,
+    __html: data.contentfulCaseStudy.body.childMarkdownRemark.html
   }}
 />
 ```
@@ -382,11 +382,11 @@ const Text = ({ children }) => <p className="align-center">{children}</p>
 
 const options = {
   renderMark: {
-    [MARKS.BOLD]: text => <Bold>{text}</Bold>,
+    [MARKS.BOLD]: text => <Bold>{text}</Bold>
   },
   renderNode: {
-    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
-  },
+    [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>
+  }
 }
 
 documentToReactComponents(node.bodyRichText.json, options)
@@ -406,17 +406,17 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `your_space_id`,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      }
     },
     {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `your_second_space_id`,
-        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN,
-      },
-    },
-  ],
+        accessToken: process.env.SECONDARY_CONTENTFUL_ACCESS_TOKEN
+      }
+    }
+  ]
 }
 ```
 

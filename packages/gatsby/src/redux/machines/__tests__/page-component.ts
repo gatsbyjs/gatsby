@@ -12,7 +12,7 @@ const getService = (args = {}): Interpreter<IContext, IState, IEvent> =>
       query: ``,
       pages: new Set([`/`]),
       isInBootstrap: true,
-      ...args,
+      ...args
     })
   ).start()
 

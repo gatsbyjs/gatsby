@@ -18,8 +18,8 @@ The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well pre
 ```jsx
 export const PureRandomQuote = ({
   data: {
-    contentfulSlideshow: { slides },
-  },
+    contentfulSlideshow: { slides }
+  }
 }) => (
   <Slideshow slides={slides}>
     {({ slideData: quote }) => (
@@ -81,7 +81,7 @@ function useSlideshow(slides, { timerLength = 5000 } = {}) {
     currIndex,
     isPlaying,
     setIsPlaying,
-    updateSlide,
+    updateSlide
   }
 }
 ```

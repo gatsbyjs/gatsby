@@ -7,7 +7,7 @@ class Dev404Page extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     custom404: PropTypes.element,
-    location: PropTypes.object,
+    location: PropTypes.object
   }
 
   constructor(props) {
@@ -25,7 +25,7 @@ class Dev404Page extends React.Component {
       pagePaths: this.getFilteredPagePaths(
         pagePaths,
         initialPagePathSearchTerms
-      ),
+      )
     }
     this.showCustom404 = this.showCustom404.bind(this)
     this.handlePagePathSearch = this.handlePagePathSearch.bind(this)
@@ -42,7 +42,7 @@ class Dev404Page extends React.Component {
     this.setSearchUrl(searchValue)
 
     this.setState({
-      pagePathSearchTerms: searchValue,
+      pagePathSearchTerms: searchValue
     })
   }
 
@@ -53,7 +53,7 @@ class Dev404Page extends React.Component {
       pagePaths: this.getFilteredPagePaths(
         allPagePaths,
         this.state.pagePathSearchTerms
-      ),
+      )
     })
   }
 
@@ -64,7 +64,7 @@ class Dev404Page extends React.Component {
 
   setSearchUrl(searchValue) {
     const {
-      location: { pathname, search },
+      location: { pathname, search }
     } = this.props
 
     const searchMap = queryString.parse(search)

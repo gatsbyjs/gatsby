@@ -3,7 +3,7 @@ import CodePlugin from "typography-plugin-code"
 import {
   colors,
   lineHeights,
-  fonts,
+  fonts
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const _options = {
@@ -14,7 +14,7 @@ const _options = {
   headerLineHeight: lineHeights.heading,
   headerColor: colors.heading,
   bodyColor: colors.text,
-  plugins: [new CodePlugin()],
+  plugins: [new CodePlugin()]
 }
 
 const typography = new Typography(_options)

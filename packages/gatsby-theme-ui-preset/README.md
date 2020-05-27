@@ -26,7 +26,7 @@ npm install gatsby-theme-ui-preset
 ```js
 // gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-ui-preset`],
+  plugins: [`gatsby-theme-ui-preset`]
 }
 ```
 

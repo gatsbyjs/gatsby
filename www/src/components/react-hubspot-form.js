@@ -22,7 +22,7 @@ class HubspotForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loaded: false,
+      loaded: false
     }
     this.id = globalId++
     this.createForm = this.createForm.bind(this)
@@ -35,7 +35,7 @@ class HubspotForm extends React.Component {
         return
       }
       let props = {
-        ...this.props,
+        ...this.props
       }
       delete props.loading
       delete props.onSubmit
@@ -49,7 +49,7 @@ class HubspotForm extends React.Component {
           // ref: https://developers.hubspot.com/docs/methods/forms/advanced_form_options
           var formData = $form.serializeArray()
           this.props.onSubmit(formData)
-        },
+        }
       }
       window.hbspt.forms.create(options)
       return

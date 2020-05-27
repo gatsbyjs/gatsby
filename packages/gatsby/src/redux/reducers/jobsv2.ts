@@ -2,13 +2,13 @@ import {
   ActionsUnion,
   IGatsbyState,
   IGatsbyIncompleteJobV2,
-  IGatsbyCompleteJobV2,
+  IGatsbyCompleteJobV2
 } from "../types"
 
 export const jobsV2Reducer = (
   state: IGatsbyState["jobsV2"] = {
     incomplete: new Map(),
-    complete: new Map(),
+    complete: new Map()
   },
   action: ActionsUnion
 ): IGatsbyState["jobsV2"] => {
@@ -18,7 +18,7 @@ export const jobsV2Reducer = (
 
       state.incomplete.set(job.contentDigest, {
         job,
-        plugin,
+        plugin
       } as IGatsbyIncompleteJobV2)
 
       return state
@@ -41,7 +41,7 @@ export const jobsV2Reducer = (
       // inputPaths is used to make sure the job is not stale
       state.complete.set(job.contentDigest, {
         result,
-        inputPaths: job.inputPaths,
+        inputPaths: job.inputPaths
       } as IGatsbyCompleteJobV2)
 
       return state

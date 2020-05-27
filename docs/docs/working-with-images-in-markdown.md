@@ -33,10 +33,10 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`, // highlight-line
-      },
-    },
-  ],
+        path: `${__dirname}/src/pages` // highlight-line
+      }
+    }
+  ]
 }
 ```
 
@@ -66,16 +66,16 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`, // highlight-line
-      },
+        path: `${__dirname}/src/pages` // highlight-line
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/images`, // highlight-line
-      },
-    },
-  ],
+        path: `${__dirname}/src/images` // highlight-line
+      }
+    }
+  ]
 }
 ```
 
@@ -205,19 +205,19 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 1200,
-            },
-          },
-        ],
-      },
+              maxWidth: 1200
+            }
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-      },
-    },
-  ],
+        path: `${__dirname}/src/pages`
+      }
+    }
+  ]
 }
 ```
 
@@ -236,19 +236,19 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 800,
-            },
-          },
-        ],
-      },
+              maxWidth: 800
+            }
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/posts`,
-      },
-    },
-  ],
+        path: `${__dirname}/src/posts`
+      }
+    }
+  ]
 }
 ```
 

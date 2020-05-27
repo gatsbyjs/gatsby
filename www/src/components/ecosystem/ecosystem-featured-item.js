@@ -5,7 +5,7 @@ import Link from "../localized-link"
 import Img from "gatsby-image"
 import {
   MdStar as StarIcon,
-  MdArrowDownward as ArrowDownwardIcon,
+  MdArrowDownward as ArrowDownwardIcon
 } from "react-icons/md"
 
 import { HorizontalScrollerItem } from "../shared/horizontal-scroller"
@@ -107,7 +107,7 @@ const EcosystemFeaturedItem = ({ item, className }) => {
     description,
     stars,
     humanDownloadsLast30Days,
-    thumbnail,
+    thumbnail
   } = item
 
   const cutTooLongDescription = str => {
@@ -150,7 +150,7 @@ const EcosystemFeaturedItem = ({ item, className }) => {
 
 EcosystemFeaturedItem.propTypes = {
   item: PropTypes.object.isRequired,
-  className: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default EcosystemFeaturedItem

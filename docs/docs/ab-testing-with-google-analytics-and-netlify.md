@@ -83,7 +83,7 @@ When you have pasted the GA Script into Post Processing, be sure to add your cus
 
 ```javascript
 ga("send", "pageview", {
-  dimension2: "{{ BRANCH }}",
+  dimension2: "{{ BRANCH }}"
 })
 ```
 

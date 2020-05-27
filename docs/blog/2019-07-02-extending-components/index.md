@@ -119,7 +119,7 @@ export default function Button(props) {
       css={{
         backgroundColor: "rebeccapurple",
         color: "white",
-        boxShadow: "none",
+        boxShadow: "none"
       }}
       {...props}
     />

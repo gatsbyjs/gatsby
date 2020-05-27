@@ -49,8 +49,8 @@ module.exports = {
   plugins: [
     // other gatsby plugins
     // ...
-    require.resolve(`../my-plugin`),
-  ],
+    require.resolve(`../my-plugin`)
+  ]
 }
 ```
 

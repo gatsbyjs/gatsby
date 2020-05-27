@@ -21,7 +21,7 @@ const getScreenshot = (data, fallback) => {
 
 class StarterTemplate extends React.Component {
   state = {
-    showAllDeps: false,
+    showAllDeps: false
   }
   render() {
     const { fallback, startersYaml } = this.props.data
@@ -29,7 +29,7 @@ class StarterTemplate extends React.Component {
       url: demoUrl,
       repo: repoUrl,
       fields: { starterShowcase },
-      childScreenshot,
+      childScreenshot
     } = startersYaml
 
     const screenshot = getScreenshot(childScreenshot, fallback)
@@ -38,7 +38,7 @@ class StarterTemplate extends React.Component {
     const { miscDependencies = [], gatsbyDependencies = [] } = starterShowcase
     const allDeps = [
       ...gatsbyDependencies.map(([name]) => name),
-      ...miscDependencies.map(([name]) => name),
+      ...miscDependencies.map(([name]) => name)
     ]
     const shownDeps = this.state.showAllDeps ? allDeps : allDeps.slice(0, 15)
     const showMore =
@@ -53,7 +53,7 @@ class StarterTemplate extends React.Component {
           display: `flex`,
           flexDirection: `column`,
           margin: `0 auto`,
-          maxWidth: 1080,
+          maxWidth: 1080
         }}
       >
         <PageMetadata
@@ -66,7 +66,7 @@ class StarterTemplate extends React.Component {
           <div
             sx={{
               display: `flex`,
-              flexDirection: [`column-reverse`, `column`],
+              flexDirection: [`column-reverse`, `column`]
             }}
           >
             <StarterMeta

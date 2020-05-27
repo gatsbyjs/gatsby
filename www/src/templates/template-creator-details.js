@@ -23,13 +23,13 @@ const MetaTitle = ({ children }) => (
       mb: 1,
       flexShrink: 0,
       [mediaQueries.xs]: {
-        width: 150,
+        width: 150
       },
       [breakpoint2Columns]: {
         fontWeight: `bold`,
         mb: 0,
-        textTransform: `none`,
-      },
+        textTransform: `none`
+      }
     }}
   >
     {children}
@@ -47,11 +47,11 @@ const MetaSection = ({ children, background, last, first }) => (
       [breakpoint2Columns]: {
         background: `transparent`,
         px: 0,
-        mx: 0,
+        mx: 0
       },
       [mediaQueries.sm]: {
-        display: `flex`,
-      },
+        display: `flex`
+      }
     }}
   >
     {children}
@@ -87,8 +87,8 @@ class CreatorTemplate extends Component {
             [breakpoint2Columns]: {
               pb: 6,
               flexDirection: `row`,
-              alignItems: `flex-start`,
-            },
+              alignItems: `flex-start`
+            }
           }}
         >
           <div
@@ -99,11 +99,11 @@ class CreatorTemplate extends Component {
               width: `100%`,
               [breakpoint2Columns]: {
                 width: `auto`,
-                maxWidth: 480,
+                maxWidth: 480
               },
               [mediaQueries.lg]: {
-                maxWidth: 560,
-              },
+                maxWidth: 560
+              }
             }}
           >
             <Img
@@ -119,8 +119,8 @@ class CreatorTemplate extends Component {
               width: `100%`,
               [mediaQueries.lg]: {
                 width: `auto`,
-                maxWidth: 640,
-              },
+                maxWidth: 640
+              }
             }}
           >
             <h1 sx={{ m: 0 }}>{creator.name}</h1>
@@ -128,14 +128,14 @@ class CreatorTemplate extends Component {
               css={{
                 alignItems: `center`,
                 display: `flex`,
-                mt: 3,
+                mt: 3
               }}
             >
               {isAgencyOrCompany && (
                 <span
                   sx={{
                     color: `textMuted`,
-                    mr: 2,
+                    mr: 2
                   }}
                 >
                   {creator.type.charAt(0).toUpperCase() + creator.type.slice(1)}
@@ -147,14 +147,14 @@ class CreatorTemplate extends Component {
                   sx={{
                     alignSelf: `flex-start`,
                     fontSize: 1,
-                    mr: 2,
+                    mr: 2
                   }}
                 >
                   <Badge
                     forHire={creator.for_hire}
                     overrideCSS={{
                       background: `green.50`,
-                      color: `white`,
+                      color: `white`
                     }}
                   >
                     {creator.for_hire ? `Open for work` : `Hiring`}
@@ -170,9 +170,9 @@ class CreatorTemplate extends Component {
                       border: 0,
                       lineHeight: `solid`,
                       "&:hover": {
-                        color: `gatsby`,
-                      },
-                    },
+                        color: `gatsby`
+                      }
+                    }
                   }}
                 >
                   <GithubIcon />
@@ -201,7 +201,7 @@ class CreatorTemplate extends Component {
                   css={{
                     display: `flex`,
                     alignItems: `flex-start`,
-                    flexWrap: `wrap`,
+                    flexWrap: `wrap`
                   }}
                 >
                   {sites.map(site => (
@@ -213,8 +213,8 @@ class CreatorTemplate extends Component {
                           mb: 6,
                           borderBottom: `none`,
                           lineHeight: 0,
-                          transition: `default`,
-                        },
+                          transition: `default`
+                        }
                       }}
                       to={site.fields.slug}
                     >

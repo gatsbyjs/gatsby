@@ -17,12 +17,12 @@ module.exports = {
       {
         href: to,
         onClick: onClickWithoutDefault,
-        id,
+        id
       },
       children
     )
   }),
 
   StaticQuery: jest.fn(),
-  useStaticQuery: jest.fn(),
+  useStaticQuery: jest.fn()
 }

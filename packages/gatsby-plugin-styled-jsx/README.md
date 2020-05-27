@@ -21,9 +21,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-styled-jsx`,
     options: {
-      jsxPlugins: ["styled-jsx-plugin-postcss"],
-    },
-  },
+      jsxPlugins: ["styled-jsx-plugin-postcss"]
+    }
+  }
 ]
 ```
 
@@ -36,8 +36,8 @@ plugins: [
     options: {
       optimizeForSpeed: true,
       sourceMaps: false,
-      vendorPrefixes: true,
-    },
-  },
+      vendorPrefixes: true
+    }
+  }
 ]
 ```

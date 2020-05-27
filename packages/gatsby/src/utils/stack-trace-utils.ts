@@ -32,7 +32,7 @@ interface ICodeFrame {
 }
 
 export const getNonGatsbyCodeFrame = ({
-  highlightCode = true,
+  highlightCode = true
 } = {}): null | ICodeFrame => {
   const callSite = getNonGatsbyCallSite()
   if (!callSite) {
@@ -53,13 +53,13 @@ export const getNonGatsbyCodeFrame = ({
       {
         start: {
           line,
-          column,
-        },
+          column
+        }
       },
       {
-        highlightCode,
+        highlightCode
       }
-    ),
+    )
   }
 }
 
@@ -67,7 +67,7 @@ export const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}):
   | null
   | string => {
   const possibleCodeFrame = getNonGatsbyCodeFrame({
-    highlightCode,
+    highlightCode
   })
 
   if (!possibleCodeFrame) {

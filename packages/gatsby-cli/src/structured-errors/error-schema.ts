@@ -3,7 +3,7 @@ import { ILocationPosition, IStructuredError } from "./types"
 
 export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({
   line: Joi.number(),
-  column: Joi.number(),
+  column: Joi.number()
 })
 
 export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys(
@@ -16,7 +16,7 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
           fileName: Joi.string(),
           functionName: Joi.string().allow(null),
           lineNumber: Joi.number().allow(null),
-          columnNumber: Joi.number().allow(null),
+          columnNumber: Joi.number().allow(null)
         })
       )
       .allow(null),
@@ -25,15 +25,15 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     filePath: Joi.string(),
     location: Joi.object({
       start: Position.required(),
-      end: Position,
+      end: Position
     }),
     docsUrl: Joi.string().uri({
       allowRelative: false,
-      relativeOnly: false,
+      relativeOnly: false
     }),
     error: Joi.object({}).unknown(),
     context: Joi.object({}).unknown(),
     group: Joi.string(),
-    panicOnBuild: Joi.boolean(),
+    panicOnBuild: Joi.boolean()
   }
 )

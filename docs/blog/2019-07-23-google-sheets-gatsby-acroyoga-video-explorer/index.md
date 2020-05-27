@@ -37,14 +37,14 @@ module.exports = {
           // material-ui theme
           palette: {
             primary: {
-              main: "#BA3D3B", // or whatever colors you need
-            },
-          },
-        },
-      },
-    },
+              main: "#BA3D3B" // or whatever colors you need
+            }
+          }
+        }
+      }
+    }
     /* highlight-end */
-  ],
+  ]
 }
 ```
 
@@ -144,7 +144,7 @@ Here's my new array of objects with the properties matching the first row.
 Next, I'd like for my comma-separated strings of tags (column I) to be arrays of tags (so I can `.map` over them in my React UI). This code allows me to do that:
 
 ```javascript
-let itemsArrayWithTagsArray = rows.map(function (item) {
+let itemsArrayWithTagsArray = rows.map(function(item) {
   item.tags = item.tags.split(",").map(item => item.trim())
   item = { ...item }
   return item
@@ -160,7 +160,7 @@ itemsArrayWithTagsArray.map((item, i) => {
     parent: `__SOURCE__`,
     internal: {
       type: `item`, // name of the graphQL query --> allItem {}
-      contentDigest: createContentDigest(item),
+      contentDigest: createContentDigest(item)
     },
     children: [],
     move: item.move,
@@ -170,7 +170,7 @@ itemsArrayWithTagsArray.map((item, i) => {
     tags: item.tags,
     level: item.level,
     instructor: item.instructor,
-    instructor_image: item.instructor_image,
+    instructor_image: item.instructor_image
   }
 
   createNode(itemNode)
@@ -203,8 +203,8 @@ tags.forEach(tag => {
     path: tagPath,
     component: path.resolve(`src/templates/single-tag.js`),
     context: {
-      tag,
-    },
+      tag
+    }
   })
 })
 ```
@@ -351,19 +351,19 @@ module.exports = {
       options: {
         nodeType: "item",
         imagePath: "thumbnail",
-        name: "optimized_thumbnail",
-      },
+        name: "optimized_thumbnail"
+      }
     },
     {
       resolve: "gatsby-plugin-remote-images",
       options: {
         nodeType: "item",
         imagePath: "instructor_image",
-        name: "optimized_instructor_image",
-      },
-    },
+        name: "optimized_instructor_image"
+      }
+    }
     /* highlight-end */
-  ],
+  ]
 }
 ```
 

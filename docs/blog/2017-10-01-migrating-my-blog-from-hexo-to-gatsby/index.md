@@ -512,8 +512,8 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
   return Promise.resolve({
     url: {
       type: GraphQLString,
-      resolve: node => getURL(node),
-    },
+      resolve: node => getURL(node)
+    }
   })
 }
 ```
@@ -574,7 +574,7 @@ exports.createPages = ({ boundActionCreators }) => {
   createPage({
     path: `/my-custom-page/`,
     component: postTemplate,
-    context: {}, // Context will be passed in to the page query as graphql variables
+    context: {} // Context will be passed in to the page query as graphql variables
   })
 }
 ```
@@ -601,8 +601,8 @@ markdownFiles.forEach(post => {
     path: post.url,
     component: "./src/templates/post.js",
     context: {
-      id: post.id,
-    },
+      id: post.id
+    }
   })
 })
 ```
@@ -650,8 +650,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: postTemplate,
       context: {
         // Context will be passed in to the page query as graphql vars
-        id: node.id,
-      },
+        id: node.id
+      }
     })
   })
 }

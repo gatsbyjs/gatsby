@@ -13,7 +13,7 @@ const {
   getPluginOptions,
   healOptions,
   createTransformObject,
-  removeDefaultValues,
+  removeDefaultValues
 } = require(`./plugin-options`)
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
@@ -110,7 +110,7 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
   return {
     width,
     height,
-    aspectRatio: width / height,
+    aspectRatio: width / height
   }
 }
 
@@ -151,7 +151,7 @@ function prepareQueue({ file, args }) {
     width,
     height,
     aspectRatio,
-    options: removeDefaultValues(args, getPluginOptions()),
+    options: removeDefaultValues(args, getPluginOptions())
   }
 }
 
@@ -192,7 +192,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     aspectRatio,
     relativePath,
     outputDir,
-    options,
+    options
   } = prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
@@ -205,11 +205,11 @@ function queueImageResizing({ file, args = {}, reporter }) {
         operations: [
           {
             outputPath: relativePath,
-            args: options,
-          },
+            args: options
+          }
         ],
-        pluginOptions: getPluginOptions(),
-      },
+        pluginOptions: getPluginOptions()
+      }
     },
     { reporter }
   )
@@ -221,7 +221,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
     height,
     aspectRatio,
     finishedPromise,
-    originalName: file.base,
+    originalName: file.base
   }
 }
 
@@ -238,12 +238,12 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       aspectRatio,
       relativePath,
       outputDir,
-      options,
+      options
     } = prepareQueue({ file, args: transform })
     // queue operations of an image
     operations.push({
       outputPath: relativePath,
-      args: options,
+      args: options
     })
 
     // create output results
@@ -254,7 +254,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       height,
       aspectRatio,
       originalName: file.base,
-      finishedPromise: null,
+      finishedPromise: null
     })
   })
 
@@ -270,8 +270,8 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
       ),
       args: {
         operations,
-        pluginOptions: getPluginOptions(),
-      },
+        pluginOptions: getPluginOptions()
+      }
     },
     { reporter }
   )
@@ -288,7 +288,7 @@ const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: defaultBase64Width(),
+    width: defaultBase64Width()
   })
   let pipeline
   try {
@@ -318,21 +318,21 @@ async function generateBase64({ file, args = {}, reporter }) {
       height: options.height,
       position: options.cropFocus,
       fit: options.fit,
-      background: options.background,
+      background: options.background
     })
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: args.toFormat === `png`
     })
     .jpeg({
       quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: args.toFormat === `jpg`
     })
     .webp({
       quality: options.webpQuality || options.quality,
-      force: args.toFormat === `webp`,
+      force: args.toFormat === `webp`
     })
 
   // grayscale
@@ -350,14 +350,14 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = await duotone(options.duotone, args.toFormat, pipeline)
   }
   const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
+    resolveWithObject: true
   })
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
-    originalName: file.base,
+    originalName: file.base
   }
   return base64output
 }
@@ -404,7 +404,7 @@ async function getTracedSVG({ file, options, cache, reporter }) {
       fileArgs: options,
       file,
       cache,
-      reporter,
+      reporter
     })
     return tracedSVG
   }
@@ -425,7 +425,7 @@ async function stats({ file, reporter }) {
   }
 
   return {
-    isTransparent: !imgStats.isOpaque,
+    isTransparent: !imgStats.isOpaque
   }
 }
 
@@ -489,7 +489,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
   const fluidSizes = [
-    options[fixedDimension], // ensure maxWidth (or maxHeight) is added
+    options[fixedDimension] // ensure maxWidth (or maxHeight) is added
   ]
   // use standard breakpoints if no custom breakpoints are specified
   if (!options.srcSetBreakpoints || !options.srcSetBreakpoints.length) {
@@ -552,7 +552,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const images = batchQueueImageResizing({
     file,
     transforms,
-    reporter,
+    reporter
   })
 
   let base64Image
@@ -572,7 +572,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
       cropFocus: options.cropFocus,
       fit: options.fit,
       width: base64Width,
-      height: base64Height,
+      height: base64Height
     }
     // Get base64 version
     base64Image = await base64({ file, args: base64Args, reporter, cache })
@@ -634,7 +634,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     density,
     presentationWidth,
     presentationHeight,
-    tracedSVG,
+    tracedSVG
   }
 }
 
@@ -687,7 +687,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   const images = batchQueueImageResizing({
     file,
     transforms,
-    reporter,
+    reporter
   })
 
   let base64Image
@@ -707,14 +707,14 @@ async function fixed({ file, args = {}, reporter, cache }) {
       cropFocus: options.cropFocus,
       fit: options.fit,
       width: base64Width,
-      height: base64Height,
+      height: base64Height
     }
     // Get base64 version
     base64Image = await base64({
       file,
       args: base64Args,
       reporter,
-      cache,
+      cache
     })
   }
 
@@ -750,7 +750,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
-    tracedSVG,
+    tracedSVG
   }
 }
 

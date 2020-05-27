@@ -16,7 +16,7 @@ report.activityTimer = jest.fn(() => {
   return {
     start: jest.fn(),
     setStatus: jest.fn(),
-    end: jest.fn(),
+    end: jest.fn()
   }
 })
 afterEach(() => {
@@ -38,8 +38,8 @@ describe(`GraphQL field extensions`, () => {
         otherdate: `2019-09-01`,
         nested: {
           onemoredate: `2019-07-30`,
-          title: `Hello World`,
-        },
+          title: `Hello World`
+        }
       },
       {
         id: `test2`,
@@ -48,34 +48,34 @@ describe(`GraphQL field extensions`, () => {
         somedate: `2019-09-13`,
         otherdate: `2019-09-13`,
         nested: {
-          onemoredate: `2019-09-26`,
-        },
+          onemoredate: `2019-09-26`
+        }
       },
       {
         id: `test3`,
         parent: null,
         internal: { type: `Test`, contentDigest: `0` },
         somedate: `2019-09-26`,
-        otherdate: `2019-09-26`,
+        otherdate: `2019-09-26`
       },
       {
         id: `test4`,
         internal: { type: `Test`, contentDigest: `0` },
-        olleh: `world`,
+        olleh: `world`
       },
       {
         id: `test5`,
         children: [`test1`],
 
         internal: { type: `AnotherTest`, contentDigest: `0` },
-        date: `2019-01-01`,
+        date: `2019-01-01`
       },
       {
         id: `test6`,
         children: [`test2`],
 
         internal: { type: `AnotherTest`, contentDigest: `0` },
-        date: 0,
+        date: 0
       },
       {
         id: `test7`,
@@ -88,29 +88,29 @@ describe(`GraphQL field extensions`, () => {
               third: {
                 fourth: [
                   {
-                    fifth: `lorem`,
+                    fifth: `lorem`
                   },
                   {
-                    fifth: `ipsum`,
-                  },
-                ],
-              },
+                    fifth: `ipsum`
+                  }
+                ]
+              }
             },
             {
               third: {
                 fourth: [
                   {
-                    fifth: `dolor`,
+                    fifth: `dolor`
                   },
                   {
-                    fifth: `sit`,
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
+                    fifth: `sit`
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
     ]
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
@@ -123,16 +123,16 @@ describe(`GraphQL field extensions`, () => {
         name: `birthday`,
         args: {
           greeting: {
-            type: GraphQLString,
-          },
+            type: GraphQLString
+          }
         },
         extend(options, prevFieldConfig) {
           return {
             type: `String`,
             args: {
               emoji: {
-                type: `Boolean`,
-              },
+                type: `Boolean`
+              }
             },
             resolve(source, args, context, info) {
               const fieldValue = source[info.fieldName]
@@ -143,9 +143,9 @@ describe(`GraphQL field extensions`, () => {
                   : options.greeting || `Happy birthday!`
               }
               return fieldValue
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -170,8 +170,8 @@ describe(`GraphQL field extensions`, () => {
       test: {
         withQueryArg: `:cake:`,
         withDefaultArgs: `Cheers!`,
-        withoutArgs: `Happy birthday!`,
-      },
+        withoutArgs: `Happy birthday!`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -182,16 +182,16 @@ describe(`GraphQL field extensions`, () => {
         name: `birthday`,
         args: {
           greeting: {
-            type: GraphQLString,
-          },
+            type: GraphQLString
+          }
         },
         extend(options, prevFieldConfig) {
           return {
             type: `String`,
             args: {
               emoji: {
-                type: `Boolean`,
-              },
+                type: `Boolean`
+              }
             },
             resolve(source, args, context, info) {
               const fieldValue = source[info.fieldName]
@@ -202,9 +202,9 @@ describe(`GraphQL field extensions`, () => {
                   : options.greeting || `Happy birthday!`
               }
               return fieldValue
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -216,19 +216,19 @@ describe(`GraphQL field extensions`, () => {
               type: `Date`,
               extensions: {
                 birthday: {
-                  greeting: `Cheers!`,
-                },
-              },
+                  greeting: `Cheers!`
+                }
+              }
             },
             otherdate: {
               type: `Date`,
               extensions: {
-                birthday: {},
-              },
-            },
+                birthday: {}
+              }
+            }
           },
           interfaces: [`Node`],
-          extensions: { infer: false },
+          extensions: { infer: false }
         })
       )
     )
@@ -246,8 +246,8 @@ describe(`GraphQL field extensions`, () => {
       test: {
         withQueryArg: `:cake:`,
         withDefaultArgs: `Cheers!`,
-        withoutArgs: `Happy birthday!`,
-      },
+        withoutArgs: `Happy birthday!`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -273,8 +273,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         proxy: `2019-09-26`,
-        somedate: `2019`,
-      },
+        somedate: `2019`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -286,16 +286,16 @@ describe(`GraphQL field extensions`, () => {
         args: {
           planet: {
             // type provided as string
-            type: `String`,
-          },
+            type: `String`
+          }
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -318,8 +318,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         hello: `world`,
-        hi: `mars`,
-      },
+        hi: `mars`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -330,15 +330,15 @@ describe(`GraphQL field extensions`, () => {
         name: `hello`,
         args: {
           // type provided as flat string
-          planet: `String`,
+          planet: `String`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -361,8 +361,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         hello: `world`,
-        hi: `mars`,
-      },
+        hi: `mars`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -374,16 +374,16 @@ describe(`GraphQL field extensions`, () => {
         args: {
           planet: {
             type: `String!`,
-            defaultValue: `world`,
-          },
+            defaultValue: `world`
+          }
         },
         extend(options) {
           return {
             resolve() {
               return options.planet
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -406,8 +406,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         hello: `world`,
-        hi: `mars`,
-      },
+        hi: `mars`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -419,16 +419,16 @@ describe(`GraphQL field extensions`, () => {
         args: {
           planet: {
             type: `String!`,
-            defaultValue: `world`,
-          },
+            defaultValue: `world`
+          }
         },
         extend(options) {
           return {
             resolve() {
               return options.planet
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -440,16 +440,16 @@ describe(`GraphQL field extensions`, () => {
             hello: {
               type: `String`,
               extensions: {
-                hello: {},
-              },
+                hello: {}
+              }
             },
             hi: {
               type: `String`,
               extensions: {
-                hello: { planet: `mars` },
-              },
-            },
-          },
+                hello: { planet: `mars` }
+              }
+            }
+          }
         })
       )
     )
@@ -465,8 +465,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         hello: `world`,
-        hi: `mars`,
-      },
+        hi: `mars`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -478,16 +478,16 @@ describe(`GraphQL field extensions`, () => {
         args: {
           planets: {
             type: `[String!]`,
-            defaultValue: [`world`],
-          },
+            defaultValue: [`world`]
+          }
         },
         extend(options) {
           return {
             resolve() {
               return options.planets
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -510,8 +510,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         hello: [`world`],
-        hi: [`mars`, `venus`],
-      },
+        hi: [`mars`, `venus`]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -521,7 +521,7 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `hello`,
         args: {
-          planet: `String`,
+          planet: `String`
         },
         extend(options, prevFieldConfig) {
           const { resolve } = prevFieldConfig
@@ -531,9 +531,9 @@ describe(`GraphQL field extensions`, () => {
               return options.planet
                 ? [planet, options.planet].join(`, `)
                 : planet
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -545,14 +545,14 @@ describe(`GraphQL field extensions`, () => {
             hello: {
               type: `String`,
               resolve: () => `world`,
-              extensions: { hello: {} },
+              extensions: { hello: {} }
             },
             hi: {
               type: `String`,
               resolve: () => `world`,
-              extensions: { hello: { planet: `mars` } },
-            },
-          },
+              extensions: { hello: { planet: `mars` } }
+            }
+          }
         })
       )
     )
@@ -568,8 +568,8 @@ describe(`GraphQL field extensions`, () => {
     const expected = {
       test: {
         hello: `world`,
-        hi: `world, mars`,
-      },
+        hi: `world, mars`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -582,9 +582,9 @@ describe(`GraphQL field extensions`, () => {
         extend(options) {
           return {
             type: `String`,
-            resolve: () => `world`,
+            resolve: () => `world`
           }
-        },
+        }
       })
     )
     dispatch(
@@ -604,8 +604,8 @@ describe(`GraphQL field extensions`, () => {
     const results = await runQuery(query)
     const expected = {
       test: {
-        hello: `world`,
-      },
+        hello: `world`
+      }
     }
     expect(results).toEqual(expected)
     const { hello } = store
@@ -627,9 +627,9 @@ describe(`GraphQL field extensions`, () => {
                 prevFieldConfig.resolve || context.defaultFieldResolver
               const resolved = await resolver(source, args, context, info)
               return String(resolved).toUpperCase()
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -643,9 +643,9 @@ describe(`GraphQL field extensions`, () => {
                 prevFieldConfig.resolve || context.defaultFieldResolver
               const resolved = await resolver(source, args, context, info)
               return [...String(resolved)].reverse().join(``)
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -665,8 +665,8 @@ describe(`GraphQL field extensions`, () => {
     const results = await runQuery(query)
     const expected = {
       test: {
-        olleh: `DLROW`,
-      },
+        olleh: `DLROW`
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -677,7 +677,7 @@ describe(`GraphQL field extensions`, () => {
         name: `dateformat`,
         extend: () => {
           return {}
-        },
+        }
       })
     )
     const schema = await buildSchema()
@@ -696,22 +696,22 @@ describe(`GraphQL field extensions`, () => {
         args: {},
         extend: () => {
           return {
-            resolve: () => `world`,
+            resolve: () => `world`
           }
-        },
+        }
       })
     )
     dispatch(
       createFieldExtension({
         name: `hello`,
         args: {
-          planet: `String`,
+          planet: `String`
         },
         extend: () => {
           return {
-            resolve: () => `again`,
+            resolve: () => `again`
           }
-        },
+        }
       })
     )
     const schema = await buildSchema()
@@ -729,9 +729,9 @@ describe(`GraphQL field extensions`, () => {
         args: {},
         extend: () => {
           return {
-            resolve: () => `world`,
+            resolve: () => `world`
           }
-        },
+        }
       })
     )
     expect(report.error).toBeCalledWith(
@@ -748,15 +748,15 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `hello`,
         args: {
-          planet: `String`,
+          planet: `String`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -781,15 +781,15 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `hello`,
         args: {
-          planet: `String`,
+          planet: `String`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -802,11 +802,11 @@ describe(`GraphQL field extensions`, () => {
               type: `String`,
               extensions: {
                 hello: {
-                  planet: 2,
-                },
-              },
-            },
-          },
+                  planet: 2
+                }
+              }
+            }
+          }
         })
       )
     )
@@ -826,15 +826,15 @@ describe(`GraphQL field extensions`, () => {
         args: {
           one: `Int!`,
           two: `[Int]`,
-          three: `[Int!]!`,
+          three: `[Int!]!`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -851,7 +851,7 @@ describe(`GraphQL field extensions`, () => {
           fifth: String @test(three: [1], one: 1, two: [1])
           sixth: String @test(three: [], one: 1, two: [1])
           seventh: String @test(three: [null], one: 1, two: [1])
-        }`,
+        }`
       ])
     )
     await buildSchema()
@@ -882,15 +882,15 @@ describe(`GraphQL field extensions`, () => {
         args: {
           one: `Int!`,
           two: `[Int]`,
-          three: `[Int!]!`,
+          three: `[Int!]!`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -905,9 +905,9 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   one: 1,
                   two: [1],
-                  three: [1],
-                },
-              },
+                  three: [1]
+                }
+              }
             },
             second: {
               type: `String`,
@@ -915,11 +915,11 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   one: `1`,
                   two: [1],
-                  three: [1],
-                },
-              },
-            },
-          },
+                  three: [1]
+                }
+              }
+            }
+          }
         }),
         buildObjectType({
           name: `Test`,
@@ -931,9 +931,9 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   two: [1],
                   one: 1,
-                  three: [1],
-                },
-              },
+                  three: [1]
+                }
+              }
             },
             fourth: {
               type: `String`,
@@ -941,11 +941,11 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   two: [`1`],
                   one: 1,
-                  three: [1],
-                },
-              },
-            },
-          },
+                  three: [1]
+                }
+              }
+            }
+          }
         }),
         buildObjectType({
           name: `Test`,
@@ -957,9 +957,9 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   three: [1],
                   one: 1,
-                  two: [1],
-                },
-              },
+                  two: [1]
+                }
+              }
             },
             sixth: {
               type: `String`,
@@ -967,9 +967,9 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   three: [],
                   one: 1,
-                  two: [1],
-                },
-              },
+                  two: [1]
+                }
+              }
             },
             seventh: {
               type: `String`,
@@ -977,12 +977,12 @@ describe(`GraphQL field extensions`, () => {
                 test: {
                   three: [null],
                   one: 1,
-                  two: [1],
-                },
-              },
-            },
-          },
-        }),
+                  two: [1]
+                }
+              }
+            }
+          }
+        })
       ])
     )
     await buildSchema()
@@ -1007,15 +1007,15 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `hello`,
         args: {
-          planet: `String`,
+          planet: `String`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -1035,15 +1035,15 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `hello`,
         args: {
-          planet: `String`,
+          planet: `String`
         },
         extend(options) {
           return {
             resolve() {
               return options.planet || `world`
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -1056,11 +1056,11 @@ describe(`GraphQL field extensions`, () => {
               type: `String`,
               extensions: {
                 hello: {
-                  what: 2,
-                },
-              },
-            },
-          },
+                  what: 2
+                }
+              }
+            }
+          }
         })
       )
     )
@@ -1097,11 +1097,11 @@ describe(`GraphQL field extensions`, () => {
               type: `String`,
               extensions: {
                 what: {
-                  what: 2,
-                },
-              },
-            },
-          },
+                  what: 2
+                }
+              }
+            }
+          }
         })
       )
     )
@@ -1125,9 +1125,9 @@ describe(`GraphQL field extensions`, () => {
                 return null
               }
               return fieldValue
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -1154,14 +1154,14 @@ describe(`GraphQL field extensions`, () => {
         nodes: [
           {
             date: `01/01/2019`,
-            reverse: `01/01/2019`,
+            reverse: `01/01/2019`
           },
           {
             date: null,
-            reverse: `Invalid date`,
-          },
-        ],
-      },
+            reverse: `Invalid date`
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -1175,7 +1175,7 @@ describe(`GraphQL field extensions`, () => {
             args: {
               ...prevFieldConfig.args,
               match: `String!`,
-              replaceWith: `String!`,
+              replaceWith: `String!`
             },
             async resolve(source, args, context, info) {
               const resolver =
@@ -1185,9 +1185,9 @@ describe(`GraphQL field extensions`, () => {
                 return args.replaceWith
               }
               return fieldValue
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -1214,14 +1214,14 @@ describe(`GraphQL field extensions`, () => {
         nodes: [
           {
             date: `01/01/2019`,
-            reverse: `01/01/2019`,
+            reverse: `01/01/2019`
           },
           {
             date: `09/26/1978`,
-            reverse: `WRONG!`,
-          },
-        ],
-      },
+            reverse: `WRONG!`
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -1236,10 +1236,10 @@ describe(`GraphQL field extensions`, () => {
             date: {
               type: `Date`,
               extensions: {
-                dateformat: true,
+                dateformat: true
               },
               args: {
-                replaceZeroWith: `String!`,
+                replaceZeroWith: `String!`
               },
               resolve(source, args, context, info) {
                 const fieldValue = source[info.fieldName]
@@ -1247,9 +1247,9 @@ describe(`GraphQL field extensions`, () => {
                   return args.alt
                 }
                 return fieldValue
-              },
-            },
-          },
+              }
+            }
+          }
         })
       )
     )
@@ -1267,13 +1267,13 @@ describe(`GraphQL field extensions`, () => {
       allAnotherTest: {
         nodes: [
           {
-            date: `01/01/2019`,
+            date: `01/01/2019`
           },
           {
-            date: null,
-          },
-        ],
-      },
+            date: null
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -1316,9 +1316,9 @@ describe(`GraphQL field extensions`, () => {
           fromNextLevel: 26,
           fromBottomLevel: [
             [`lorem`, `ipsum`],
-            [`dolor`, `sit`],
-          ],
-        },
+            [`dolor`, `sit`]
+          ]
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -1373,32 +1373,32 @@ describe(`GraphQL field extensions`, () => {
                   fourth: [
                     {
                       fromTopLevel: 78,
-                      fromNextLevel: 26,
+                      fromNextLevel: 26
                     },
                     {
                       fromTopLevel: 78,
-                      fromNextLevel: 26,
-                    },
-                  ],
-                },
+                      fromNextLevel: 26
+                    }
+                  ]
+                }
               },
               {
                 third: {
                   fourth: [
                     {
                       fromTopLevel: 78,
-                      fromNextLevel: 26,
+                      fromNextLevel: 26
                     },
                     {
                       fromTopLevel: 78,
-                      fromNextLevel: 26,
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
+                      fromNextLevel: 26
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -1425,8 +1425,8 @@ describe(`GraphQL field extensions`, () => {
       const results = await runQuery(query)
       const expected = {
         test: {
-          proxied: `2019`,
-        },
+          proxied: `2019`
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -1459,10 +1459,10 @@ describe(`GraphQL field extensions`, () => {
         test: {
           linked: {
             nested: {
-              onemoredate: `07/30/2019`,
-            },
-          },
-        },
+              onemoredate: `07/30/2019`
+            }
+          }
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -1472,7 +1472,7 @@ describe(`GraphQL field extensions`, () => {
         createFieldExtension({
           name: `slug`,
           args: {
-            from: `String!`,
+            from: `String!`
           },
           extend(options) {
             return {
@@ -1484,15 +1484,15 @@ describe(`GraphQL field extensions`, () => {
                   {
                     ...info,
                     from: options.from || info.from,
-                    fromNode: options.from ? options.fromNode : info.fromNode,
+                    fromNode: options.from ? options.fromNode : info.fromNode
                   }
                 )
                 return String(fieldValue)
                   .toLowerCase()
                   .replace(/[^\w]+/g, `-`)
-              },
+              }
             }
-          },
+          }
         })
       )
       dispatch(
@@ -1516,8 +1516,8 @@ describe(`GraphQL field extensions`, () => {
       const results = await runQuery(query)
       const expected = {
         test: {
-          slug: `hello-world`,
-        },
+          slug: `hello-world`
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -1537,9 +1537,9 @@ describe(`GraphQL field extensions`, () => {
                   context,
                   info
                 )
-              },
+              }
             }
-          },
+          }
         })
       )
       dispatch(
@@ -1562,11 +1562,11 @@ describe(`GraphQL field extensions`, () => {
       const results = await runQuery(query)
       const expected = {
         test: {
-          fromParentNode: `2019`,
+          fromParentNode: `2019`
         },
         filtered: {
-          fromParentNode: `2019`,
-        },
+          fromParentNode: `2019`
+        }
       }
       expect(results).toEqual(expected)
     })
@@ -1586,7 +1586,7 @@ describe(`GraphQL field extensions`, () => {
       createFieldExtension({
         name: `reduce`,
         args: {
-          to: `String!`,
+          to: `String!`
         },
         extend(options, fieldConfig) {
           return {
@@ -1597,9 +1597,9 @@ describe(`GraphQL field extensions`, () => {
               const fieldValue = await resolver(source, args, context, info)
               if (fieldValue == null) return null
               return getValueAt(fieldValue, options.to)
-            },
+            }
           }
-        },
+        }
       })
     )
     dispatch(
@@ -1636,36 +1636,36 @@ describe(`GraphQL field extensions`, () => {
         nodes: [
           {
             id: `test1`,
-            fieldFromParent: `01/01/2019`,
+            fieldFromParent: `01/01/2019`
           },
           {
             id: `test2`,
-            fieldFromParent: `Invalid date`,
+            fieldFromParent: `Invalid date`
           },
           {
             id: `test3`,
-            fieldFromParent: null,
+            fieldFromParent: null
           },
           {
             id: `test4`,
-            fieldFromParent: null,
-          },
-        ],
+            fieldFromParent: null
+          }
+        ]
       },
       allAnotherTest: {
         nodes: [
           {
             id: `test5`,
             fieldsFromChildren: [`01/09/2019`],
-            nestedFieldsFromChildren: [`30/07/2019`],
+            nestedFieldsFromChildren: [`30/07/2019`]
           },
           {
             id: `test6`,
             fieldsFromChildren: [`13/09/2019`],
-            nestedFieldsFromChildren: [`26/09/2019`],
-          },
-        ],
-      },
+            nestedFieldsFromChildren: [`26/09/2019`]
+          }
+        ]
+      }
     }
     expect(results).toEqual(expected)
   })
@@ -1680,7 +1680,7 @@ const runQuery = async query => {
   await build({})
   const {
     schema,
-    schemaCustomization: { composer: schemaComposer },
+    schemaCustomization: { composer: schemaComposer }
   } = store.getState()
   const results = await graphql(
     schema,
@@ -1688,7 +1688,7 @@ const runQuery = async query => {
     undefined,
     withResolverContext({
       schema,
-      schemaComposer,
+      schemaComposer
     })
   )
   expect(results.errors).toBeUndefined()

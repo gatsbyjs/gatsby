@@ -11,7 +11,7 @@ PageHeading.defaultProps = {
   fontSize: { xxs: 8, sm: 10 },
   letterSpacing: `tight`,
   pt: { xxs: 7 },
-  mb: { xxs: 4, lg: 7 },
+  mb: { xxs: 4, lg: 7 }
 }
 
 export const Intro = styled(Text)()
@@ -27,7 +27,7 @@ Intro.defaultProps = {
   mb: 3,
   pb: 6,
   position: `relative`,
-  zIndex: 1,
+  zIndex: 1
 }
 
 export const SectionHeading = styled(PageHeading)()
@@ -37,7 +37,7 @@ SectionHeading.defaultProps = {
   color: `heading`,
   mt: 0,
   mb: 4,
-  fontSize: { xs: 6 },
+  fontSize: { xs: 6 }
 }
 
 export const SectionSubheading = styled(PageHeading)()
@@ -45,11 +45,11 @@ export const SectionSubheading = styled(PageHeading)()
 SectionSubheading.defaultProps = {
   as: `h3`,
   color: `heading`,
-  fontSize: { xs: 5 },
+  fontSize: { xs: 5 }
 }
 
 export const SrOnly = styled(Text)(visuallyHidden)
 
 SrOnly.defaultProps = {
-  as: `span`,
+  as: `span`
 }

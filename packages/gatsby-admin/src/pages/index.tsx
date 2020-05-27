@@ -27,7 +27,7 @@ const InstallInput: React.FC<{}> = () => {
       onSubmit={(evt): void => {
         evt.preventDefault()
         installGatbyPlugin({
-          name: value,
+          name: value
         })
       }}
     >
@@ -94,7 +94,7 @@ const Index: React.FC<{}> = () => {
           value
         }
       }
-    `,
+    `
   })
 
   if (fetching) return <p>Loading...</p>

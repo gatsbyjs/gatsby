@@ -18,7 +18,7 @@ import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import {
   setupScrollersObserver,
-  unobserveScrollers,
+  unobserveScrollers
 } from "../utils/scrollers-observer"
 
 class IndexRoute extends React.Component {
@@ -43,20 +43,20 @@ class IndexRoute extends React.Component {
       data: {
         allMdx: { nodes: postsData },
         allStartersYaml: { nodes: startersData },
-        allNpmPackage: { nodes: pluginsData },
-      },
+        allNpmPackage: { nodes: pluginsData }
+      }
     } = this.props
 
     const starters = startersData.map(item => {
       const {
         fields: {
-          starterShowcase: { slug, name, description, stars },
+          starterShowcase: { slug, name, description, stars }
         },
         childScreenshot: {
           screenshotFile: {
-            childImageSharp: { fixed: thumbnail },
-          },
-        },
+            childImageSharp: { fixed: thumbnail }
+          }
+        }
       } = item
 
       return {
@@ -65,7 +65,7 @@ class IndexRoute extends React.Component {
         description,
         stars,
         thumbnail,
-        type: `Starter`,
+        type: `Starter`
       }
     })
 
@@ -77,7 +77,7 @@ class IndexRoute extends React.Component {
 
     const ecosystemFeaturedItems = this.combineEcosystemFeaturedItems({
       plugins,
-      starters,
+      starters
     })
 
     return (
@@ -89,7 +89,7 @@ class IndexRoute extends React.Component {
             display: `flex`,
             flexDirection: `row`,
             flexWrap: `wrap`,
-            justifyContent: `space-between`,
+            justifyContent: `space-between`
           }}
         >
           <MastheadContent />
@@ -97,7 +97,7 @@ class IndexRoute extends React.Component {
             sx={{
               width: `100%`,
               p: 8,
-              pt: 0,
+              pt: 0
             }}
           >
             <Diagram />

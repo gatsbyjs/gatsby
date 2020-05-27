@@ -5,7 +5,7 @@ import { IMatch } from "../types"
 const stageCodeToReadableLabel = {
   "build-javascript": `Generating JavaScript bundles`,
   "build-html": `Generating SSR bundle`,
-  develop: `Generating development JavaScript bundle`,
+  develop: `Generating development JavaScript bundle`
 } as const
 
 type Stage = keyof typeof stageCodeToReadableLabel
@@ -36,11 +36,11 @@ const transformWebpackError = (
           id: `98124`,
           context: {
             sourceMessage: match[0],
-            packageName: match[1],
-          },
+            packageName: match[1]
+          }
         }
-      },
-    },
+      }
+    }
   ]
 
   const webpackMessage = webpackError?.error?.message || webpackError?.message
@@ -50,14 +50,14 @@ const transformWebpackError = (
     location:
       webpackError?.module?.resource && webpackError?.error?.loc
         ? {
-            start: webpackError.error.loc,
+            start: webpackError.error.loc
           }
         : undefined,
     context: {
       stage,
       stageLabel: stageCodeToReadableLabel[stage],
-      sourceMessage: webpackMessage,
-    },
+      sourceMessage: webpackMessage
+    }
     // We use original error to display stack trace for the most part.
     // In case of webpack error stack will include internals of webpack
     // or one of loaders (for example babel-loader) and doesn't provide
@@ -79,8 +79,8 @@ const transformWebpackError = (
         context: {
           ...shared.context,
           packageName: match.context.packageName,
-          sourceMessage: match.context.sourceMessage,
-        },
+          sourceMessage: match.context.sourceMessage
+        }
       }
 
       break
@@ -91,7 +91,7 @@ const transformWebpackError = (
   if (!structured) {
     return {
       id: `98123`,
-      ...shared,
+      ...shared
     }
   }
 

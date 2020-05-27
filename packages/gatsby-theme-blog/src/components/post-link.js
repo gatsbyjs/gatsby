@@ -6,13 +6,13 @@ const PostLink = ({ title, slug, date, excerpt }) => (
   <div>
     <Styled.h2
       sx={{
-        mb: 1,
+        mb: 1
       }}
     >
       <Styled.a
         as={Link}
         sx={{
-          textDecoration: `none`,
+          textDecoration: `none`
         }}
         to={slug}
       >

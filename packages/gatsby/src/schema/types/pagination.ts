@@ -3,14 +3,14 @@ import {
   ObjectTypeComposer,
   InputTypeComposer,
   InterfaceTypeComposer,
-  ComposeFieldConfigMap,
+  ComposeFieldConfigMap
 } from "graphql-compose"
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
 import { distinct, group } from "../resolvers"
 
 export const getPageInfo = <TContext = any>({
-  schemaComposer,
+  schemaComposer
 }: {
   schemaComposer: SchemaComposer<TContext>
 }): ObjectTypeComposer =>
@@ -22,13 +22,13 @@ export const getPageInfo = <TContext = any>({
       itemCount: `Int!`,
       pageCount: `Int!`,
       perPage: `Int`,
-      totalCount: `Int!`,
+      totalCount: `Int!`
     })
   })
 
 export const getEdge = <TContext = any>({
   schemaComposer,
-  typeComposer,
+  typeComposer
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
@@ -39,7 +39,7 @@ export const getEdge = <TContext = any>({
     tc.addFields({
       next: typeComposer,
       node: typeComposer.getTypeNonNull(),
-      previous: typeComposer,
+      previous: typeComposer
     })
   })
 }
@@ -48,7 +48,7 @@ const createPagination = <TSource = any, TContext = any>({
   schemaComposer,
   typeComposer,
   fields,
-  typeName,
+  typeName
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
@@ -63,7 +63,7 @@ const createPagination = <TSource = any, TContext = any>({
         edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
         nodes: [typeComposer.getTypeNonNull()],
         pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
-        ...fields,
+        ...fields
       })
     }
   )
@@ -75,7 +75,7 @@ const createPagination = <TSource = any, TContext = any>({
 
 export const getGroup = <TContext = any>({
   schemaComposer,
-  typeComposer,
+  typeComposer
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
@@ -83,14 +83,14 @@ export const getGroup = <TContext = any>({
   const typeName = `${typeComposer.getTypeName()}GroupConnection`
   const fields = {
     field: `String!`,
-    fieldValue: `String`,
+    fieldValue: `String`
   }
   return createPagination({ schemaComposer, typeComposer, fields, typeName })
 }
 
 export const getPagination = <TContext = any>({
   schemaComposer,
-  typeComposer,
+  typeComposer
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
@@ -100,31 +100,31 @@ export const getPagination = <TContext = any>({
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
     typeComposer,
-    inputTypeComposer,
+    inputTypeComposer
   })
   const fields: { [key: string]: any } = {
     distinct: {
       type: [`String!`],
       args: {
-        field: fieldsEnumTC.getTypeNonNull(),
+        field: fieldsEnumTC.getTypeNonNull()
       },
-      resolve: distinct,
+      resolve: distinct
     },
     group: {
       type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],
       args: {
         skip: `Int`,
         limit: `Int`,
-        field: fieldsEnumTC.getTypeNonNull(),
+        field: fieldsEnumTC.getTypeNonNull()
       },
-      resolve: group,
-    },
+      resolve: group
+    }
   }
   const paginationTypeComposer: ObjectTypeComposer = createPagination({
     schemaComposer,
     typeComposer,
     fields,
-    typeName,
+    typeName
   })
   paginationTypeComposer.makeFieldNonNull(`distinct`)
   paginationTypeComposer.makeFieldNonNull(`group`)

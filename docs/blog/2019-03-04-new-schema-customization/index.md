@@ -153,7 +153,7 @@ exports.createResolvers = ({ createResolvers, schema }) => {
             return info.originalResolver(
               {
                 ...source,
-                birthday: "1970-01-01",
+                birthday: "1970-01-01"
               },
               args,
               context,
@@ -162,9 +162,9 @@ exports.createResolvers = ({ createResolvers, schema }) => {
           } else {
             return info.originalResolver(source, args, context, info)
           }
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }
 ```
@@ -178,12 +178,12 @@ createResolvers({
       type: `[String!]!`,
       resolve(source, args, context, info) {
         const authors = context.nodeModel.getAllNodes({
-          type: `AuthorJson`,
+          type: `AuthorJson`
         })
         return authors.map(author => author.name)
-      },
-    },
-  },
+      }
+    }
+  }
 })
 ```
 
@@ -243,13 +243,13 @@ const Foo = graphql.GraphQLObjectType({
   name: "Foo",
   fields: () => ({
     id: {
-      type: new graphql.GraphQLNonNull(graphql.GraphQLID),
+      type: new graphql.GraphQLNonNull(graphql.GraphQLID)
     },
     bar: {
       // Must be an actual reference to that type
-      type: Bar,
-    },
-  }),
+      type: Bar
+    }
+  })
 })
 ```
 
@@ -263,13 +263,13 @@ const Foo = graphql.GraphQLObjectType({
   name: "Foo",
   fields: () => ({
     id: {
-      type: new graphql.GraphQLNonNull(graphql.GraphQLID),
+      type: new graphql.GraphQLNonNull(graphql.GraphQLID)
     },
     bar: {
       // Allows referring to types by their string names
-      type: TypeRegistry.getType("Bar"),
-    },
-  }),
+      type: TypeRegistry.getType("Bar")
+    }
+  })
 })
 ```
 

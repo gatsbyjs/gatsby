@@ -16,16 +16,16 @@ const Layout = ({ children, background, pageTitle }) => (
         ".ReactModal__Overlay": {
           opacity: 0,
           transform: `translateY(100%)`,
-          transition: `all 300ms ease-in-out`,
+          transition: `all 300ms ease-in-out`
         },
         ".ReactModal__Overlay--after-open": {
           opacity: 1,
-          transform: `translateY(0%)`,
+          transform: `translateY(0%)`
         },
         ".ReactModal__Overlay--before-close": {
           opacity: 1,
-          transform: `translateY(100%)`,
-        },
+          transform: `translateY(100%)`
+        }
       }}
     />
     <Global styles={globalStyles} />
@@ -42,7 +42,7 @@ const Layout = ({ children, background, pageTitle }) => (
 )
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default Layout

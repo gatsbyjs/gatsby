@@ -20,7 +20,7 @@ export default ({ children, ...props }) => {
             maxWidth: `container`,
             mx: `auto`,
             px: 3,
-            py: 4,
+            py: 4
           })}
         >
           {children}

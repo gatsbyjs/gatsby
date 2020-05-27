@@ -11,7 +11,7 @@ const SectionTitle = props => (
 )
 
 SectionTitle.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.string
 }
 
 export default SectionTitle

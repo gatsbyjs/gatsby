@@ -93,7 +93,7 @@ class Reporter {
       error?: Error
       context: {}
     } = {
-      context: {},
+      context: {}
     }
 
     // Many paths to retain backcompat :scream:
@@ -108,14 +108,14 @@ class Reporter {
       }
       details.error = error
       details.context = {
-        sourceMessage: errorMeta + ` ` + error.message,
+        sourceMessage: errorMeta + ` ` + error.message
       }
       // 2.
       //    reporter.error(Error);
     } else if (errorMeta instanceof Error) {
       details.error = errorMeta
       details.context = {
-        sourceMessage: errorMeta.message,
+        sourceMessage: errorMeta.message
       }
       // 3.
       //    reporter.error([Error]);
@@ -132,7 +132,7 @@ class Reporter {
       //    reporter.error('foo');
     } else if (typeof errorMeta === `string`) {
       details.context = {
-        sourceMessage: errorMeta,
+        sourceMessage: errorMeta
       }
     }
 
@@ -160,7 +160,7 @@ class Reporter {
     if (isVerbose) {
       reporterActions.createLog({
         level: LogLevels.Debug,
-        text,
+        text
       })
     }
   }
@@ -248,7 +248,7 @@ class Reporter {
       total,
       start,
       span,
-      reporter: this,
+      reporter: this
     })
   }
 

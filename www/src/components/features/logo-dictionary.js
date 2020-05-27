@@ -13,7 +13,7 @@ const logoDictionary = {
   squarespace,
   nextjs,
   hugo,
-  nuxtjs,
+  nuxtjs
 }
 
 export default logoDictionary

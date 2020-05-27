@@ -31,7 +31,7 @@ const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
       <Resource>
         {JSON.stringify({
           ...readResource(Resource, { root: process.cwd() }, props),
-          _props: userProps,
+          _props: userProps
         })}
       </Resource>
     </Suspense>

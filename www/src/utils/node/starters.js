@@ -24,8 +24,8 @@ if (
 const githubApiClient = process.env.GITHUB_API_TOKEN
   ? new GraphQLClient(`https://api.github.com/graphql`, {
       headers: {
-        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
-      },
+        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`
+      }
     })
   : null
 
@@ -73,8 +73,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `/starters${node.fields.starterShowcase.slug}`,
       component: slash(starterTemplate),
       context: {
-        slug: node.fields.starterShowcase.slug,
-      },
+        slug: node.fields.starterShowcase.slug
+      }
     })
   })
 }
@@ -144,7 +144,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       gatsbyMajorVersion: [[`no data`, `0`]],
       allDependencies: [[`no data`, `0`]],
       gatsbyDependencies: [[`no data`, `0`]],
-      miscDependencies: [[`no data`, `0`]],
+      miscDependencies: [[`no data`, `0`]]
     }
 
     // determine if screenshot is available
@@ -159,13 +159,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         node,
         name: `starterShowcase`,
         value: {
-          ...defaultFields,
-        },
+          ...defaultFields
+        }
       })
     } else {
       Promise.all([
         getpkgjson(node.repo),
-        fetchGithubData({ owner, repo: repoStub, reporter }),
+        fetchGithubData({ owner, repo: repoStub, reporter })
       ])
         .then(results => {
           const [pkgjson, githubData] = results
@@ -174,7 +174,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
             pushedAt: lastUpdated,
             owner: { login: owner },
             name,
-            nameWithOwner: githubFullName,
+            nameWithOwner: githubFullName
           } = githubData.repository
 
           const { dependencies = [], devDependencies = [] } = pkgjson
@@ -212,12 +212,12 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
               .filter(([key]) => key.includes(`gatsby`)),
             miscDependencies: allDependencies.filter(
               ([key]) => !key.includes(`gatsby`)
-            ),
+            )
           }
           createNodeField({
             node,
             name: `starterShowcase`,
-            value: starterShowcaseFields,
+            value: starterShowcaseFields
           })
         })
         .catch(err => {

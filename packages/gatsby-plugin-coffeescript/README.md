@@ -20,8 +20,8 @@ plugins: [
   {
     resolve: `gatsby-plugin-coffeescript`,
     // options are passed directly to the compiler
-    options: {},
-  },
+    options: {}
+  }
 ]
 ```
 

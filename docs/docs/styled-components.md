@@ -32,7 +32,7 @@ And then add it to your site's `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-styled-components`],
+  plugins: [`gatsby-plugin-styled-components`]
 }
 ```
 

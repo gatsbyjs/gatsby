@@ -15,7 +15,7 @@ webpack determines dependencies from the contents of `webpack.config.js`. `webpa
 
 ```javascript
 module.exports = {
-  entry: "/scripts/index.js",
+  entry: "/scripts/index.js"
 }
 ```
 

@@ -6,7 +6,7 @@ import { t, Trans } from "@lingui/macro"
 const links = [
   { to: `/accessibility-statement/`, text: t`Accessibility Statement` },
   { to: `/contributing/code-of-conduct/`, text: t`Code of Conduct` },
-  { to: `/guidelines/logo/`, text: t`Logo & Assets` },
+  { to: `/guidelines/logo/`, text: t`Logo & Assets` }
 ]
 
 const FooterLinks = () => (
@@ -31,20 +31,20 @@ const FooterLinks = () => (
           "&:after": {
             color: `textMuted`,
             content: `"•"`,
-            padding: 3,
+            padding: 3
           },
           "&:last-of-type:after": {
-            content: `none`,
+            content: `none`
           },
           "& a": {
             color: `navigation.linkDefault`,
             borderColor: `transparent`,
             "&:hover": {
               color: `navigation.linkHover`,
-              borderColor: `link.hoverBorder`,
-            },
-          },
-        },
+              borderColor: `link.hoverBorder`
+            }
+          }
+        }
       }}
     >
       {links.map(({ to, text }) => (

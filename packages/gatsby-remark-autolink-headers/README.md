@@ -17,10 +17,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-autolink-headers`],
-      },
-    },
-  ],
+        plugins: [`gatsby-remark-autolink-headers`]
+      }
+    }
+  ]
 }
 ```
 
@@ -78,12 +78,12 @@ module.exports = {
               maintainCase: true,
               removeAccents: true,
               isIconAfterHeader: true,
-              elements: [`h1`, `h4`],
-            },
-          },
-        ],
-      },
-    },
-  ],
+              elements: [`h1`, `h4`]
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 ```

@@ -9,7 +9,7 @@ export const KNOWN_CONFIG_KEYS = [
   `mapping`,
   `plugins`,
   `proxy`,
-  `developMiddleware`,
+  `developMiddleware`
 ]
 
 export function didYouMean(

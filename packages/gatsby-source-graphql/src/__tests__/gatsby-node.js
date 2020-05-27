@@ -2,12 +2,12 @@ jest.mock(`graphql-tools`, () => {
   return {
     transformSchema: jest.fn(),
     introspectSchema: jest.fn(),
-    RenameTypes: jest.fn(),
+    RenameTypes: jest.fn()
   }
 })
 jest.mock(`apollo-link-http`, () => {
   return {
-    createHttpLink: jest.fn(),
+    createHttpLink: jest.fn()
   }
 })
 const { createHttpLink } = require(`apollo-link-http`)
@@ -16,7 +16,7 @@ jest.mock(`gatsby/graphql`, () => {
   return {
     ...graphql,
     buildSchema: jest.fn(),
-    printSchema: jest.fn(),
+    printSchema: jest.fn()
   }
 })
 const { sourceNodes } = require(`../gatsby-node`)
@@ -26,17 +26,17 @@ const getInternalGatsbyAPI = () => {
   const actions = {
     addThirdPartySchema: jest.fn(),
     createPageDependency: jest.fn(),
-    createNode: jest.fn(),
+    createNode: jest.fn()
   }
 
   return {
     actions,
     cache: {
       get: jest.fn(),
-      set: jest.fn(),
+      set: jest.fn()
     },
     createContentDigest: jest.fn(),
-    createNodeId: jest.fn(),
+    createNodeId: jest.fn()
   }
 }
 
@@ -44,13 +44,13 @@ describe(`validation`, () => {
   ;[
     [
       `throws on missing typename`,
-      { fieldName: `github`, url: `https://github.com` },
+      { fieldName: `github`, url: `https://github.com` }
     ],
     [
       `throws on missing fieldName`,
-      { typeName: `Github`, url: `https://github.com` },
+      { typeName: `Github`, url: `https://github.com` }
     ],
-    [`throws on missing url`, { typeName: `Github`, fieldName: `github` }],
+    [`throws on missing url`, { typeName: `Github`, fieldName: `github` }]
   ].forEach(([testName, pluginOptions]) => {
     it(testName, () => {
       expect(
@@ -66,7 +66,7 @@ describe(`createSchemaNode`, () => {
     await sourceNodes(api, {
       typeName: `Github`,
       fieldName: `github`,
-      url: `https://github.com`,
+      url: `https://github.com`
     })
 
     expect(api.createContentDigest).toHaveBeenCalledWith(expect.any(String))
@@ -82,7 +82,7 @@ describe(`createHttpLink`, () => {
       typeName: `Github foo`,
       fieldName: `github`,
       url: `https://github.com`,
-      fetch: mockFetch,
+      fetch: mockFetch
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(
@@ -94,7 +94,7 @@ describe(`createHttpLink`, () => {
     await sourceNodes(api, {
       typeName: `Github foo`,
       fieldName: `github`,
-      url: `https://github.com`,
+      url: `https://github.com`
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(

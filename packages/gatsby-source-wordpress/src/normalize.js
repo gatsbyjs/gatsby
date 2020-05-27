@@ -57,7 +57,7 @@ const normalizeACF = entities =>
 exports.normalizeACF = normalizeACF
 
 // Combine all ACF Option page data
-exports.combineACF = function (entities) {
+exports.combineACF = function(entities) {
   let acfOptionData = {}
   // Map each ACF Options object keys/data to single object
   _.forEach(
@@ -82,7 +82,7 @@ exports.combineACF = function (entities) {
   // Create single ACF Options object
   entities.push({
     acf: acfOptionData || false,
-    __type: `wordpress__acf_options`,
+    __type: `wordpress__acf_options`
   })
 
   return entities
@@ -107,7 +107,7 @@ const normalizeEntities = entities => {
         return {
           id: key,
           ...e[key],
-          __type: e.__type,
+          __type: e.__type
         }
       })
 
@@ -199,7 +199,7 @@ exports.mapTypes = entities => {
     groups[groupId] = groups[groupId].map(e => {
       return {
         wordpress_id: e.wordpress_id,
-        id: e.id,
+        id: e.id
       }
     })
   }
@@ -337,9 +337,9 @@ exports.mapPolylangTranslations = entities =>
     return entity
   })
 
-exports.searchReplaceContentUrls = function ({
+exports.searchReplaceContentUrls = function({
   entities,
-  searchAndReplaceContentUrls,
+  searchAndReplaceContentUrls
 }) {
   if (
     !_.isPlainObject(searchAndReplaceContentUrls) ||
@@ -355,7 +355,7 @@ exports.searchReplaceContentUrls = function ({
 
   const _blacklist = [`_links`, `__type`]
 
-  const blacklistProperties = function (obj = {}, blacklist = []) {
+  const blacklistProperties = function(obj = {}, blacklist = []) {
     for (var i = 0; i < blacklist.length; i++) {
       delete obj[blacklist[i]]
     }
@@ -363,7 +363,7 @@ exports.searchReplaceContentUrls = function ({
     return obj
   }
 
-  return entities.map(function (entity) {
+  return entities.map(function(entity) {
     const original = Object.assign({}, entity)
 
     try {
@@ -420,7 +420,7 @@ exports.mapEntitiesToMedia = entities => {
           mediaNodeID: _.isNumber(value)
             ? getMediaItemID(media.find(m => m.wordpress_id === value))
             : null,
-          deleteField: true,
+          deleteField: true
         }
       } else if (isURL(value) && !isMediaUrlAlreadyProcessed(key)) {
         const mediaNodeID = getMediaItemID(
@@ -428,7 +428,7 @@ exports.mapEntitiesToMedia = entities => {
         )
         return {
           mediaNodeID,
-          deleteField: !!mediaNodeID,
+          deleteField: !!mediaNodeID
         }
       } else if (isPhotoObject(value)) {
         const mediaNodeID = getMediaItemID(
@@ -436,19 +436,19 @@ exports.mapEntitiesToMedia = entities => {
         )
         return {
           mediaNodeID,
-          deleteField: !!mediaNodeID,
+          deleteField: !!mediaNodeID
         }
       } else if (isArrayOfPhotoObject(value)) {
         return {
           mediaNodeID: value
             .map(item => getMediaFromValue(item, key).mediaNodeID)
             .filter(id => id !== null),
-          deleteField: true,
+          deleteField: true
         }
       }
       return {
         mediaNodeID: null,
-        deleteField: false,
+        deleteField: false
       }
     }
 
@@ -502,7 +502,7 @@ exports.downloadMediaFiles = async ({
   getNode,
   _auth,
   reporter,
-  keepMediaSizes,
+  keepMediaSizes
 }) =>
   Promise.all(
     entities.map(async e => {
@@ -521,7 +521,7 @@ exports.downloadMediaFiles = async ({
           if (fileNode) {
             fileNodeID = cacheMediaData.fileNodeID
             touchNode({
-              nodeId: fileNodeID,
+              nodeId: fileNodeID
             })
           }
         }
@@ -541,7 +541,7 @@ exports.downloadMediaFiles = async ({
               getCache,
               parentNodeId: e.id,
               auth: _auth,
-              reporter,
+              reporter
             })
 
             if (fileNode) {
@@ -549,7 +549,7 @@ exports.downloadMediaFiles = async ({
 
               await cache.set(mediaDataCacheKey, {
                 fileNodeID,
-                modified: e.modified,
+                modified: e.modified
               })
             }
           } catch (e) {
@@ -602,7 +602,7 @@ const prepareACFChildNodes = (
     id: entityId + topLevelIndex + type,
     parent: entityId,
     children: [],
-    internal: { type, contentDigest: createContentDigest(obj) },
+    internal: { type, contentDigest: createContentDigest(obj) }
   }
 
   children.push(acfChildNode.id)
@@ -618,7 +618,7 @@ const prepareACFChildNodes = (
 exports.createNodesFromEntities = ({
   entities,
   createNode,
-  createContentDigest,
+  createContentDigest
 }) => {
   entities.forEach(e => {
     // Create subnodes for ACF Flexible layouts
@@ -658,8 +658,8 @@ exports.createNodesFromEntities = ({
       parent: null,
       internal: {
         type: e.__type,
-        contentDigest: createContentDigest(entity),
-      },
+        contentDigest: createContentDigest(entity)
+      }
     }
     createNode(node)
     childrenNodes.forEach(node => {

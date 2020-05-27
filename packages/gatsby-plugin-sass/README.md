@@ -54,10 +54,10 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       cssLoaderOptions: {
-        camelCase: false,
-      },
-    },
-  },
+        camelCase: false
+      }
+    }
+  }
 ]
 ```
 
@@ -74,9 +74,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      implementation: require("sass"),
-    },
-  },
+      implementation: require("sass")
+    }
+  }
 ]
 ```
 
@@ -94,9 +94,9 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [somePostCssPlugin()],
-      precision: 6,
-    },
-  },
+      precision: 6
+    }
+  }
 ]
 ```
 
@@ -110,9 +110,9 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [somePostCssPlugin()],
-      precision: 8,
-    },
-  },
+      precision: 8
+    }
+  }
 ]
 ```
 
@@ -133,9 +133,9 @@ plugins: [
       // Override the file regex for SASS
       sassRuleTest: /\.global\.s(a|c)ss$/,
       // Override the file regex for CSS modules
-      sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
-    },
-  },
+      sassRuleModulesTest: /\.mod\.s(a|c)ss$/
+    }
+  }
 ]
 ```
 
@@ -165,9 +165,9 @@ plugins: [
   {
     resolve: "gatsby-plugin-sass",
     options: {
-      useResolveUrlLoader: true,
-    },
-  },
+      useResolveUrlLoader: true
+    }
+  }
 ]
 ```
 
@@ -180,11 +180,11 @@ plugins: [
     options: {
       useResolveUrlLoader: {
         options: {
-          debug: true,
-        },
-      },
-    },
-  },
+          debug: true
+        }
+      }
+    }
+  }
 ]
 ```
 
@@ -197,11 +197,11 @@ plugins: [
     options: {
       useResolveUrlLoader: {
         options: {
-          sourceMap: true, //default is false
-        },
-      },
-    },
-  },
+          sourceMap: true //default is false
+        }
+      }
+    }
+  }
 ]
 ```
 

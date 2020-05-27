@@ -8,7 +8,7 @@ export const themesReducer = (
     case `SET_RESOLVED_THEMES`:
       return {
         ...state,
-        themes: action.payload,
+        themes: action.payload
       }
 
     default:

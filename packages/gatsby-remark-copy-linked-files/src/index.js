@@ -38,7 +38,7 @@ const getDestination = (linkNode, dir) => {
     return isValidFunction
       ? `${dir({
           name: linkNode.name,
-          hash: linkNode.internal.contentDigest,
+          hash: linkNode.internal.contentDigest
         })}.${linkNode.extension}`
       : `${dir()}/${defaultDestination(linkNode)}`
   } else if (_.isString(dir)) {
@@ -79,7 +79,7 @@ module.exports = (
   pluginOptions = {}
 ) => {
   const defaults = {
-    ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+    ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
   }
   const { destinationDir } = pluginOptions
   if (!validateDestinationDir(destinationDir))
@@ -120,7 +120,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function (image, node) {
+  const generateImagesAndUpdateNode = function(image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -243,7 +243,7 @@ module.exports = (
       return (
         selection
           // extract the elements that have the attribute
-          .map(function () {
+          .map(function() {
             const element = $(this)
             const url = $(this).attr(attribute)
             if (url && isRelativeUrl(url)) {

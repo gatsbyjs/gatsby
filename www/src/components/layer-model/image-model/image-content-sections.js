@@ -9,7 +9,7 @@ import DisplayLayer from "./text-content/DisplayLayer"
 import {
   LayerContentWrapper,
   ExampleWrapper,
-  CodeWrapper,
+  CodeWrapper
 } from "../model-wrapper"
 
 const InstallLayerContent = ({ index, displayCodeFullWidth }) => (
@@ -111,5 +111,5 @@ export {
   InstallLayerContent,
   ConfigLayerContent,
   QueryLayerContent,
-  DisplayLayerContent,
+  DisplayLayerContent
 }

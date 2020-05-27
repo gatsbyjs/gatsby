@@ -29,7 +29,7 @@ export default {
     boolean: `#ff5874`,
     property: `#80cbc4`,
     namespace: `#b2ccd6`,
-    highlight: `hsla(207, 95%, 15%, 1)`,
+    highlight: `hsla(207, 95%, 15%, 1)`
   },
   modes: {
     dark: {
@@ -39,7 +39,7 @@ export default {
       secondary: lightWhite,
       muted: opaqueLightWhite,
       highlight: purple60,
-      heading: white,
-    },
-  },
+      heading: white
+    }
+  }
 }

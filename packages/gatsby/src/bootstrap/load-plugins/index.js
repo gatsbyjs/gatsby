@@ -8,7 +8,7 @@ const { loadPlugins } = require(`./load`)
 const {
   collatePluginAPIs,
   handleBadExports,
-  handleMultipleReplaceRenderers,
+  handleMultipleReplaceRenderers
 } = require(`./validate`)
 
 const getAPI = api =>
@@ -41,7 +41,7 @@ module.exports = async (config = {}, rootDir = null) => {
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,
-    ssr: ssrAPIs,
+    ssr: ssrAPIs
   })
   // Collate internal plugins, site config plugins, site default plugins
   const plugins = loadPlugins(config, rootDir)
@@ -60,13 +60,13 @@ module.exports = async (config = {}, rootDir = null) => {
 
   // Show errors when ReplaceRenderer has been implemented multiple times
   flattenedPlugins = handleMultipleReplaceRenderers({
-    flattenedPlugins,
+    flattenedPlugins
   })
 
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
+    payload: flattenedPlugins
   })
 
   return flattenedPlugins

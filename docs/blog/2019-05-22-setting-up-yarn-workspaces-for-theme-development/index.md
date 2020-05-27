@@ -67,7 +67,7 @@ Add a `gatsby-config.js` file to the theme directory.
 
 ```js:title=gatsby-theme-example-workspaces/gatsby-config.js
 module.exports = {
-  plugins: [],
+  plugins: []
 }
 ```
 
@@ -101,7 +101,7 @@ In the example site, create a `gatsby-config.js` file and add the theme.
 
 ```js:title=example/gatsby-config.js
 module.exports = {
-  plugins: ["gatsby-theme-example-workspaces"],
+  plugins: ["gatsby-theme-example-workspaces"]
 }
 ```
 
@@ -165,11 +165,11 @@ module.exports = {
     {
       resolve: "gatsby-plugin-page-creator",
       options: {
-        path: path.join(__dirname, "src/pages"),
-      },
-    },
+        path: path.join(__dirname, "src/pages")
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 

@@ -9,7 +9,7 @@ const {
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
-  dbQueryToSiftQuery,
+  dbQueryToSiftQuery
 } = require(`../db/common/query`)
 const {
   ensureEmptyFilterCache,
@@ -17,7 +17,7 @@ const {
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
   addResolvedNodes,
-  getNode: siftGetNode,
+  getNode: siftGetNode
 } = require(`./nodes`)
 
 // More of a testing mechanic, to verify whether last runSift call used Sift
@@ -102,7 +102,7 @@ function handleFirst(siftArgs, nodes) {
     ? 0
     : nodes.findIndex(
         sift({
-          $and: siftArgs,
+          $and: siftArgs
         })
       )
 
@@ -118,7 +118,7 @@ function handleMany(siftArgs, nodes) {
     ? nodes
     : nodes.filter(
         sift({
-          $and: siftArgs,
+          $and: siftArgs
         })
       )
 
@@ -253,7 +253,7 @@ const getBucketsForQueryFilter = (
 ) => {
   let {
     path: filterPath,
-    query: { comparator /*: as FilterOp*/, value: filterValue },
+    query: { comparator /*: as FilterOp*/, value: filterValue }
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
@@ -369,7 +369,7 @@ const runFilterAndSort = (args: Object) => {
     firstOnly = false,
     nodeTypeNames,
     filtersCache,
-    stats,
+    stats
   } = args
 
   const result = applyFilters(
@@ -497,7 +497,7 @@ const filterToStats = (
   } else {
     return {
       filterPath: filterPath.concat(filter.path),
-      comparatorPath: comparatorPath.concat(filter.query.comparator),
+      comparatorPath: comparatorPath.concat(filter.query.comparator)
     }
   }
 }

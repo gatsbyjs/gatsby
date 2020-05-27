@@ -13,7 +13,7 @@ import FooterLinks from "../../components/shared/footer-links"
 import {
   ContentHeader,
   ContentTitle,
-  ContentContainer,
+  ContentContainer
 } from "../shared/sidebar"
 import { themedInput } from "../../utils/styles"
 
@@ -44,7 +44,7 @@ export const filterByCategories = (list, categories) => {
 class FilteredShowcase extends Component {
   state = {
     search: ``,
-    sitesToShow: 12,
+    sitesToShow: 12
   }
 
   constructor(props) {
@@ -57,7 +57,7 @@ class FilteredShowcase extends Component {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: [`title`, `categories`, `built_by`, `description`],
+      keys: [`title`, `categories`, `built_by`, `description`]
     }
 
     this.fuse = new Fuse(props.data.allSitesYaml.nodes, options)
@@ -155,7 +155,7 @@ class FilteredShowcase extends Component {
               overrideCSS={loadMoreButton}
               onClick={() => {
                 this.setState({
-                  sitesToShow: this.state.sitesToShow + 15,
+                  sitesToShow: this.state.sitesToShow + 15
                 })
               }}
               icon={<MdArrowDownward />}

@@ -107,8 +107,8 @@ exports.createPages = async ({ graphql, actions }) => {
       // In the ^template's GraphQL query, 'id' will be available
       // as a GraphQL variable to query for this posts's data.
       context: {
-        id: edge.node.id,
-      },
+        id: edge.node.id
+      }
     })
   })
 }

@@ -25,7 +25,7 @@ const {
   ScalarLeafsRule,
   ValuesOfCorrectTypeRule,
   VariablesAreInputTypesRule,
-  VariablesInAllowedPositionRule,
+  VariablesInAllowedPositionRule
 } = require(`graphql`)
 
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
@@ -36,12 +36,12 @@ const {
   graphqlError,
   multipleRootQueriesError,
   duplicateFragmentError,
-  unknownFragmentError,
+  unknownFragmentError
 } = require(`./graphql-errors`)
 const report = require(`gatsby-cli/lib/reporter`)
 const {
   default: errorParser,
-  locInGraphQlToLocInFile,
+  locInGraphQlToLocInFile
 } = require(`./error-parser`)
 const { websocketManager } = require(`../utils/websocket-manager`)
 
@@ -55,7 +55,7 @@ export default async function compile({ parentSpan } = {}): Promise<
 
   const activity = report.activityTimer(`extract queries from components`, {
     parentSpan,
-    id: `query-extraction`,
+    id: `query-extraction`
   })
   activity.start()
 
@@ -69,19 +69,19 @@ export default async function compile({ parentSpan } = {}): Promise<
         ? themes.themes
         : flattenedPlugins.map(plugin => {
             return {
-              themeDir: plugin.pluginFilepath,
+              themeDir: plugin.pluginFilepath
             }
           })
     ),
     addError,
-    parentSpan,
+    parentSpan
   })
 
   const queries = processQueries({
     schema,
     parsedQueries,
     addError,
-    parentSpan,
+    parentSpan
   })
 
   if (errors.length !== 0) {
@@ -110,7 +110,7 @@ export const parseQueries = async ({
   base,
   additional,
   addError,
-  parentSpan,
+  parentSpan
 }) => {
   const filesRegex = `*.+(t|j)s?(x)`
   // Pattern that will be appended to searched directories.
@@ -124,11 +124,11 @@ export const parseQueries = async ({
     path.join(base, `src`),
     path.join(base, `.cache`, `fragments`),
     ...additional.map(additional => path.join(additional, `src`)),
-    ...modulesThatUseGatsby.map(module => module.path),
+    ...modulesThatUseGatsby.map(module => module.path)
   ].reduce((merged, folderPath) => {
     merged.push(
       ...glob.sync(path.join(folderPath, pathRegex), {
-        nodir: true,
+        nodir: true
       })
     )
     return merged
@@ -164,7 +164,7 @@ export const processQueries = ({
   schema,
   parsedQueries,
   addError,
-  parentSpan,
+  parentSpan
 }) => {
   const { definitionsByName, operations } = extractOperations(
     schema,
@@ -178,7 +178,7 @@ export const processQueries = ({
     operations,
     definitionsByName,
     addError,
-    parentSpan,
+    parentSpan
   })
 }
 
@@ -189,7 +189,7 @@ const preValidationRules = [
   ScalarLeafsRule,
   PossibleFragmentSpreadsRule,
   ValuesOfCorrectTypeRule,
-  VariablesInAllowedPositionRule,
+  VariablesInAllowedPositionRule
 ]
 
 const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
@@ -203,7 +203,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
     hash,
     doc,
     isHook,
-    isStaticQuery,
+    isStaticQuery
   } of parsedQueries) {
     const errors = validate(schema, doc, preValidationRules)
 
@@ -211,7 +211,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
       addError(
         ...errors.map(error => {
           const location = {
-            start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
+            start: locInGraphQlToLocInFile(templateLoc, error.locations[0])
           }
           return errorParser({ message: error.message, filePath, location })
         })
@@ -219,7 +219,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
 
       store.dispatch(
         actions.queryExtractionGraphQLError({
-          componentPath: filePath,
+          componentPath: filePath
         })
       )
       // Something is super wrong with this document, so we report it and skip
@@ -246,9 +246,9 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
                   def,
                   filePath,
                   text,
-                  templateLoc,
+                  templateLoc
                 },
-                rightDefinition: otherDef,
+                rightDefinition: otherDef
               })
             )
             // We won't know which one to use, so it's better to fail both of
@@ -269,14 +269,14 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
         isHook,
         isStaticQuery,
         isFragment: def.kind === Kind.FRAGMENT_DEFINITION,
-        hash: hash,
+        hash: hash
       })
     })
   }
 
   return {
     definitionsByName,
-    operations,
+    operations
   }
 }
 
@@ -285,7 +285,7 @@ const processDefinitions = ({
   operations,
   definitionsByName,
   addError,
-  parentSpan,
+  parentSpan
 }) => {
   const processedQueries: Queries = new Map()
 
@@ -312,7 +312,7 @@ const processDefinitions = ({
 
       store.dispatch(
         actions.queryExtractionGraphQLError({
-          componentPath: filePath,
+          componentPath: filePath
         })
       )
       continue
@@ -320,7 +320,7 @@ const processDefinitions = ({
 
     const {
       usedFragments,
-      missingFragments,
+      missingFragments
     } = determineUsedFragmentsForDefinition(
       originalDefinition,
       definitionsByName,
@@ -331,7 +331,7 @@ const processDefinitions = ({
       for (const { filePath, definition, node } of missingFragments) {
         store.dispatch(
           actions.queryExtractionGraphQLError({
-            componentPath: filePath,
+            componentPath: filePath
           })
         )
         addError(
@@ -339,7 +339,7 @@ const processDefinitions = ({
             fragmentNames,
             filePath,
             definition,
-            node,
+            node
           })
         )
       }
@@ -350,7 +350,7 @@ const processDefinitions = ({
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
         .map(name => definitionsByName.get(name).def)
-        .concat([operation]),
+        .concat([operation])
     }
 
     const errors = validate(schema, document)
@@ -365,7 +365,7 @@ const processDefinitions = ({
         store.dispatch(
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
-            error: formattedMessage,
+            error: formattedMessage
           })
         )
         const location = locInGraphQlToLocInFile(
@@ -376,10 +376,10 @@ const processDefinitions = ({
           errorParser({
             location: {
               start: location,
-              end: location,
+              end: location
             },
             message,
-            filePath,
+            filePath
           })
         )
       }
@@ -395,7 +395,7 @@ const processDefinitions = ({
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
-      hash: originalDefinition.hash,
+      hash: originalDefinition.hash
     }
 
     if (query.isStaticQuery) {
@@ -450,7 +450,7 @@ const determineUsedFragmentsForDefinition = (
           usedFragments.add(name)
           const {
             usedFragments: usedFragmentsForFragment,
-            missingFragments: missingFragmentsForFragment,
+            missingFragments: missingFragmentsForFragment
           } = determineUsedFragmentsForDefinition(
             fragmentDefinition,
             definitionsByName,
@@ -466,10 +466,10 @@ const determineUsedFragmentsForDefinition = (
           missingFragments.push({
             filePath,
             definition,
-            node,
+            node
           })
         }
-      },
+      }
     })
     if (isFragment) {
       fragmentsUsedByFragment.set(name, usedFragments)
@@ -505,7 +505,7 @@ const addExtraFields = (document, schema) => {
         ) {
           context.hasTypename = true
         }
-      },
+      }
     },
     leave: {
       [Kind.SELECTION_SET]: node => {
@@ -518,14 +518,14 @@ const addExtraFields = (document, schema) => {
         if (!context.hasTypename && isAbstractType(parentType)) {
           extraFields.push({
             kind: Kind.FIELD,
-            name: { kind: Kind.NAME, value: `__typename` },
+            name: { kind: Kind.NAME, value: `__typename` }
           })
         }
         return extraFields.length > 0
           ? { ...node, selections: [...extraFields, ...node.selections] }
           : undefined
-      },
-    },
+      }
+    }
   })
 
   return visit(document, transformer)

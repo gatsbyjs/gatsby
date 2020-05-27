@@ -104,7 +104,7 @@ export default function Home() {
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-styled-components`],
+  plugins: [`gatsby-plugin-styled-components`]
 }
 ```
 
@@ -334,7 +334,7 @@ npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`],
+  plugins: [`gatsby-plugin-emotion`]
 }
 ```
 
@@ -352,7 +352,7 @@ export default function EmotionSample() {
       <p
         css={{
           background: "pink",
-          color: "blue",
+          color: "blue"
         }}
       >
         This page is using Emotion.

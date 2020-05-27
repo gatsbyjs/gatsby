@@ -3,7 +3,7 @@ const {
   VisitSchemaKind,
   cloneType,
   healSchema,
-  visitSchema,
+  visitSchema
 } = require(`graphql-tools`)
 
 class NamespaceUnderFieldTransform {
@@ -33,9 +33,9 @@ class NamespaceUnderFieldTransform {
             } else {
               return {}
             }
-          },
-        },
-      },
+          }
+        }
+      }
     })
     typeMap[query.name] = newQuery
 
@@ -51,12 +51,12 @@ class StripNonQueryTransform {
       },
       [VisitSchemaKind.SUBSCRIPTION]() {
         return null
-      },
+      }
     })
   }
 }
 
 module.exports = {
   NamespaceUnderFieldTransform,
-  StripNonQueryTransform,
+  StripNonQueryTransform
 }

@@ -43,11 +43,11 @@ module.exports = {
       options: {
         path: `schema.gql`,
         exclude: {
-          plugins: [`gatsby-source-npm-package-search`],
+          plugins: [`gatsby-source-npm-package-search`]
         },
-        update: process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT,
-      },
-    },
-  ],
+        update: process.env.GATSBY_UPDATE_SCHEMA_SNAPSHOT
+      }
+    }
+  ]
 }
 ```

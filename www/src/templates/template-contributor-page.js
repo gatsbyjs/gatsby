@@ -24,7 +24,7 @@ function ContributorPageTemplate({ data }) {
           sx={{
             textAlign: `center`,
             py: 7,
-            px: 6,
+            px: 6
           }}
         >
           <div>
@@ -35,7 +35,7 @@ function ContributorPageTemplate({ data }) {
                 fontFamily: `heading`,
                 fontSize: 3,
                 maxWidth: `28rem`,
-                mx: `auto`,
+                mx: `auto`
               }}
             >
               {contributor.bio}

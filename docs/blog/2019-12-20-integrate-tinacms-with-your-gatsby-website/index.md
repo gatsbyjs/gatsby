@@ -48,13 +48,13 @@ module.exports = {
       options: {
         sidebar: {
           hidden: process.env.NODE_ENV === "production",
-          position: "displace",
+          position: "displace"
         },
-        plugins: ["gatsby-tinacms-git", "gatsby-tinacms-remark"],
-      },
-    },
+        plugins: ["gatsby-tinacms-git", "gatsby-tinacms-remark"]
+      }
+    }
     // ...
-  ],
+  ]
 }
 ```
 
@@ -127,15 +127,15 @@ We can customize the form by defining a form options object. This provides contr
          label: "Title",
          name: "frontmatter.title",
          description: "Enter the title of the post here",
-         component: "text",
+         component: "text"
        },
        {
          label: "Description",
          name: "frontmatter.description",
          description: "Enter the post description",
-         component: "textarea",
-       },
-     ],
+         component: "textarea"
+       }
+     ]
    }
    ```
 
@@ -232,9 +232,9 @@ We will register the `content-creator` plugin in a component on the site. When t
          label: "Filename",
          placeholder: "content/blog/hello-world/index.md",
          description:
-           "The full path to the new markdown file, relative to the repository root.",
-       },
-     ],
+           "The full path to the new markdown file, relative to the repository root."
+       }
+     ]
    })
    ```
 

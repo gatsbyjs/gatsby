@@ -27,8 +27,8 @@ async function onCreateNode(
       parent: node.id,
       internal: {
         contentDigest: createContentDigest(obj),
-        type,
-      },
+        type
+      }
     }
     createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })

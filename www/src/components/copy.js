@@ -31,16 +31,16 @@ function Copy({ className, content, duration, fileName, trim = false }) {
         p: 2,
         transition: `default`,
         "&[disabled]": {
-          cursor: `not-allowed`,
+          cursor: `not-allowed`
         },
         ":not([disabled]):hover": {
           bg: `purple.60`,
           boxShadow: `raised`,
-          color: `white`,
+          color: `white`
         },
         ":active": {
-          boxShadow: `floating`,
-        },
+          boxShadow: `floating`
+        }
       }}
       onClick={async () => {
         await copyToClipboard(trim ? content.trim() : content)
@@ -61,12 +61,12 @@ function Copy({ className, content, duration, fileName, trim = false }) {
 Copy.propTypes = {
   content: PropTypes.string.isRequired,
   duration: PropTypes.number,
-  trim: PropTypes.bool,
+  trim: PropTypes.bool
 }
 
 Copy.defaultProps = {
   duration: 5000,
-  fileName: ``,
+  fileName: ``
 }
 
 export default Copy

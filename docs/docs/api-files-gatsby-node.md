@@ -33,8 +33,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `${edge.node.slug}`,
       component: blogPostTemplate,
       context: {
-        title: edge.node.title,
-      },
+        title: edge.node.title
+      }
     })
   })
 }

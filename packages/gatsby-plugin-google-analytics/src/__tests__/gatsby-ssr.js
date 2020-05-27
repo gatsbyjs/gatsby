@@ -35,13 +35,13 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
           return {
             setHeadComponents,
-            setPostBodyComponents,
+            setPostBodyComponents
           }
         }
 
         it(`does not set tracking script when trackingId not given`, () => {
           const { setHeadComponents, setPostBodyComponents } = setup({
-            trackingId: ``,
+            trackingId: ``
           })
 
           expect(setHeadComponents).not.toHaveBeenCalled()
@@ -57,7 +57,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets tracking script in head`, () => {
           const { setHeadComponents, setPostBodyComponents } = setup({
-            head: true,
+            head: true
           })
 
           expect(setHeadComponents).toHaveBeenCalledTimes(2)
@@ -74,7 +74,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets anonymize`, () => {
           const { setPostBodyComponents } = setup({
-            anonymize: true,
+            anonymize: true
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -84,7 +84,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets respectDNT`, () => {
           const { setPostBodyComponents } = setup({
-            respectDNT: true,
+            respectDNT: true
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -94,7 +94,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets excluded paths`, () => {
           const { setPostBodyComponents } = setup({
-            exclude: [`/some-path`],
+            exclude: [`/some-path`]
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -104,7 +104,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets optimizeId`, () => {
           const { setPostBodyComponents } = setup({
-            optimizeId: `TEST_OPTIMIZE_ID`,
+            optimizeId: `TEST_OPTIMIZE_ID`
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -114,7 +114,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets experimentId`, () => {
           const { setPostBodyComponents } = setup({
-            optimizeId: `TEST_EXPERIMENT_ID`,
+            optimizeId: `TEST_EXPERIMENT_ID`
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -124,7 +124,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`sets variationId`, () => {
           const { setPostBodyComponents } = setup({
-            optimizeId: `TEST_VARIATION_ID`,
+            optimizeId: `TEST_VARIATION_ID`
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -135,7 +135,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
         it(`sets additional create only fields`, () => {
           const { setPostBodyComponents } = setup({
             cookieName: `COOKIE_NAME`,
-            sampleRate: 5,
+            sampleRate: 5
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -148,7 +148,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
           const { setPostBodyComponents } = setup({
             transport: `beacon`,
             allowAdFeatures: true,
-            queueTime: 5,
+            queueTime: 5
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -159,7 +159,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`does not set fields that have an invalid value`, () => {
           const { setPostBodyComponents } = setup({
-            allowAdFeatures: `swag`,
+            allowAdFeatures: `swag`
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])
@@ -175,7 +175,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
 
         it(`should defer script after the site render when set`, () => {
           const { setPostBodyComponents } = setup({
-            defer: true,
+            defer: true
           })
 
           const result = JSON.stringify(setPostBodyComponents.mock.calls[0][0])

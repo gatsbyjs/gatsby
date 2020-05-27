@@ -26,7 +26,7 @@ gatsby build
 
 ```js:title=gatsby-config.js
 module.exports = {
-  pathPrefix: `/yourpathprefix`,
+  pathPrefix: `/yourpathprefix`
 }
 ```
 

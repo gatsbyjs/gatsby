@@ -5,7 +5,7 @@ import {
   InstallLayerContent,
   ConfigLayerContent,
   QueryLayerContent,
-  DisplayLayerContent,
+  DisplayLayerContent
 } from "./image-content-sections"
 
 const layers = [
@@ -13,26 +13,26 @@ const layers = [
     title: `Install`,
     icon: `AbstractSymbol`,
     baseColor: `orange`,
-    component: InstallLayerContent,
+    component: InstallLayerContent
   },
   {
     title: `Config`,
     icon: `AtomicSymbol`,
     baseColor: `green`,
-    component: ConfigLayerContent,
+    component: ConfigLayerContent
   },
   {
     title: `Query`,
     icon: `GraphqlLogo`,
     baseColor: `magenta`,
-    component: QueryLayerContent,
+    component: QueryLayerContent
   },
   {
     title: `Display`,
     icon: `ReactLogo`,
     baseColor: `blue`,
-    component: DisplayLayerContent,
-  },
+    component: DisplayLayerContent
+  }
 ]
 
 const ImageModel = ({ initialLayer, ...props }) => (

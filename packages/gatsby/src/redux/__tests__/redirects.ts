@@ -4,12 +4,12 @@ import { store } from "../index"
 jest.mock(`../index`, () => {
   return {
     store: {
-      getState: jest.fn(),
+      getState: jest.fn()
     },
     dispath: (): void => {},
     emitter: {
-      on: jest.fn(),
-    },
+      on: jest.fn()
+    }
   }
 })
 
@@ -18,20 +18,20 @@ const protocolArr = [
   [`http`, `http://example.com`],
   [`//`, `//example.com`],
   [`ftp`, `ftp://example.com`],
-  [`mailto`, `mailto:example@email.com`],
+  [`mailto`, `mailto:example@email.com`]
 ]
 
 describe(`Add redirects`, () => {
   beforeEach(() => {
     ;(store.getState as jest.Mock).mockReturnValue({
-      program: { pathPrefixs: false },
+      program: { pathPrefixs: false }
     })
   })
 
   it(`allows you to add redirects`, () => {
     const action = actions.createRedirect({
       fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
+      toPath: `/new/hello-world`
     })
 
     expect(action).toMatchSnapshot()
@@ -40,7 +40,7 @@ describe(`Add redirects`, () => {
     const action = actions.createRedirect({
       fromPath: `/old/hello-world`,
       toPath: `/new/hello-world`,
-      isPermanent: true,
+      isPermanent: true
     })
 
     expect(action).toMatchSnapshot()
@@ -50,7 +50,7 @@ describe(`Add redirects`, () => {
     const action = actions.createRedirect({
       fromPath: `/old/hello-world`,
       toPath: `/new/hello-world`,
-      redirectInBrowser: true,
+      redirectInBrowser: true
     })
 
     expect(action).toMatchSnapshot()
@@ -60,7 +60,7 @@ describe(`Add redirects`, () => {
     it(`creates redirects to the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath: `/old/hello-world-${index}`,
-        toPath,
+        toPath
       })
 
       expect(action).toMatchSnapshot()
@@ -71,7 +71,7 @@ describe(`Add redirects`, () => {
     it(`creates redirects from the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath,
-        toPath: `/new/hello-world-${index}`,
+        toPath: `/new/hello-world-${index}`
       })
 
       expect(action).toMatchSnapshot()
@@ -83,17 +83,17 @@ describe(`Add redirects with path prefixs`, () => {
   beforeEach(() => {
     ;(store.getState as jest.Mock).mockReturnValue({
       program: {
-        prefixPaths: true,
+        prefixPaths: true
       },
       config: {
-        pathPrefix: `/blog`,
-      },
+        pathPrefix: `/blog`
+      }
     })
   })
   it(`allows you to add redirects`, () => {
     const action = actions.createRedirect({
       fromPath: `/old/hello-world`,
-      toPath: `/new/hello-world`,
+      toPath: `/new/hello-world`
     })
 
     expect(action).toMatchSnapshot()
@@ -102,7 +102,7 @@ describe(`Add redirects with path prefixs`, () => {
     const action = actions.createRedirect({
       fromPath: `/old/hello-world`,
       toPath: `/new/hello-world`,
-      isPermanent: true,
+      isPermanent: true
     })
 
     expect(action).toMatchSnapshot()
@@ -112,7 +112,7 @@ describe(`Add redirects with path prefixs`, () => {
     const action = actions.createRedirect({
       fromPath: `/old/hello-world`,
       toPath: `/new/hello-world`,
-      redirectInBrowser: true,
+      redirectInBrowser: true
     })
 
     expect(action).toMatchSnapshot()
@@ -122,7 +122,7 @@ describe(`Add redirects with path prefixs`, () => {
     it(`creates redirects to the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath: `/old/hello-world-${index}`,
-        toPath,
+        toPath
       })
 
       expect(action).toMatchSnapshot()
@@ -133,7 +133,7 @@ describe(`Add redirects with path prefixs`, () => {
     it(`creates redirects from the URL starts with ${protocol}`, () => {
       const action = actions.createRedirect({
         fromPath,
-        toPath: `/new/hello-world-${index}`,
+        toPath: `/new/hello-world-${index}`
       })
 
       expect(action).toMatchSnapshot()

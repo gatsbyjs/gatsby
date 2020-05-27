@@ -5,10 +5,10 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
   it(`should load gtm`, () => {
     const mocks = {
       setHeadComponents: jest.fn(),
-      setPreBodyComponents: jest.fn(),
+      setPreBodyComponents: jest.fn()
     }
     const pluginOptions = {
-      includeInDevelopment: true,
+      includeInDevelopment: true
     }
 
     onRenderBody(mocks, pluginOptions)
@@ -27,11 +27,11 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     it(`should add no dataLayer by default`, () => {
       const mocks = {
         setHeadComponents: jest.fn(),
-        setPreBodyComponents: jest.fn(),
+        setPreBodyComponents: jest.fn()
       }
       const pluginOptions = {
         id: `123`,
-        includeInDevelopment: true,
+        includeInDevelopment: true
       }
 
       onRenderBody(mocks, pluginOptions)
@@ -48,14 +48,14 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     it(`should add a static object as defaultDatalayer`, () => {
       const mocks = {
         setHeadComponents: jest.fn(),
-        setPreBodyComponents: jest.fn(),
+        setPreBodyComponents: jest.fn()
       }
       const pluginOptions = {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
-          value: { pageCategory: `home` },
-        },
+          value: { pageCategory: `home` }
+        }
       }
 
       onRenderBody(mocks, pluginOptions)
@@ -69,16 +69,16 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     it(`should add a function as defaultDatalayer`, () => {
       const mocks = {
         setHeadComponents: jest.fn(),
-        setPreBodyComponents: jest.fn(),
+        setPreBodyComponents: jest.fn()
       }
       const pluginOptions = {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `function`,
-          value: function () {
+          value: function() {
             return { pageCategory: window.pageType }
-          }.toString(),
-        },
+          }.toString()
+        }
       }
 
       const datalayerFuncAsString = oneLine`${pluginOptions.defaultDataLayer.value}`
@@ -98,15 +98,15 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         reporter: {
           panic: msg => {
             throw new Error(msg)
-          },
-        },
+          }
+        }
       }
       let pluginOptions = {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `number`,
-          value: 5,
-        },
+          value: 5
+        }
       }
 
       expect(() => onRenderBody(mocks, pluginOptions)).toThrow()
@@ -116,8 +116,8 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
-          value: new Test(),
-        },
+          value: new Test()
+        }
       }
 
       expect(() => onRenderBody(mocks, pluginOptions)).toThrow()
@@ -127,15 +127,15 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const dataLayerName = `TEST_DATA_LAYER_NAME`
       const mocks = {
         setHeadComponents: jest.fn(),
-        setPreBodyComponents: jest.fn(),
+        setPreBodyComponents: jest.fn()
       }
       const pluginOptions = {
         includeInDevelopment: true,
         defaultDataLayer: {
           type: `object`,
-          value: { pageCategory: `home` },
+          value: { pageCategory: `home` }
         },
-        dataLayerName,
+        dataLayerName
       }
 
       onRenderBody(mocks, pluginOptions)

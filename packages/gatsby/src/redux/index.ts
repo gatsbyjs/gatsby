@@ -3,7 +3,7 @@ import {
   combineReducers,
   createStore,
   Store,
-  Middleware,
+  Middleware
 } from "redux"
 import _ from "lodash"
 
@@ -77,7 +77,7 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
-    pageData: state.pageData,
+    pageData: state.pageData
   })
 }
 

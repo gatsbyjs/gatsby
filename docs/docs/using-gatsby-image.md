@@ -57,7 +57,7 @@ With Gatsby, you can make the experience of working with images way, way better.
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`],
+  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`]
 }
 ```
 
@@ -72,11 +72,11 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/data/`,
-      },
-    },
+        path: `${__dirname}/src/data/`
+      }
+    }
     // highlight-end
-  ],
+  ]
 }
 ```
 

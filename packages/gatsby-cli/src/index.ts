@@ -31,7 +31,7 @@ const { version } = process
 
 if (
   !semver.satisfies(version, `>=${MIN_NODE_VERSION}`, {
-    includePrerelease: true,
+    includePrerelease: true
   })
 ) {
   report.panic(

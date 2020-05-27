@@ -6,14 +6,14 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLNonNull,
+  GraphQLNonNull
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
   base64,
   fluid,
   fixed,
-  traceSVG,
+  traceSVG
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
@@ -30,7 +30,7 @@ const {
   DuotoneGradientType,
   PotraceTurnPolicyType,
   PotraceType,
-  ImageFitType,
+  ImageFitType
 } = require(`./types`)
 
 function toArray(buf) {
@@ -49,7 +49,7 @@ const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
     args: { ...fieldArgs.traceSVG },
     fileArgs: fieldArgs,
     cache,
-    reporter,
+    reporter
   })
 
 const fixedNodeType = ({
@@ -57,7 +57,7 @@ const fixedNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
-  cache,
+  cache
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -70,8 +70,8 @@ const fixedNodeType = ({
             getTracedSVG({
               ...parent,
               cache,
-              reporter,
-            }),
+              reporter
+            })
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -92,10 +92,10 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
-                cache,
+                cache
               })
             ).then(({ src }) => src)
-          },
+          }
         },
         srcSetWebp: {
           type: GraphQLString,
@@ -109,84 +109,84 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
-                cache,
+                cache
               })
             ).then(({ srcSet }) => srcSet)
-          },
+          }
         },
-        originalName: { type: GraphQLString },
-      },
+        originalName: { type: GraphQLString }
+      }
     }),
     args: {
       width: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       height: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       base64Width: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       jpegProgressive: {
         type: GraphQLBoolean,
-        defaultValue: true,
+        defaultValue: true
       },
       pngCompressionSpeed: {
         type: GraphQLInt,
-        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED
       },
       grayscale: {
         type: GraphQLBoolean,
-        defaultValue: false,
+        defaultValue: false
       },
       duotone: {
         type: DuotoneGradientType,
-        defaultValue: false,
+        defaultValue: false
       },
       traceSVG: {
         type: PotraceType,
-        defaultValue: false,
+        defaultValue: false
       },
       quality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       jpegQuality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       pngQuality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       webpQuality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       toFormat: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: ``
       },
       toFormatBase64: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: ``
       },
       cropFocus: {
         type: ImageCropFocusType,
-        defaultValue: sharp.strategy.attention,
+        defaultValue: sharp.strategy.attention
       },
       fit: {
         type: ImageFitType,
-        defaultValue: sharp.fit.cover,
+        defaultValue: sharp.fit.cover
       },
       background: {
         type: GraphQLString,
-        defaultValue: `rgba(0,0,0,1)`,
+        defaultValue: `rgba(0,0,0,1)`
       },
       rotate: {
         type: GraphQLInt,
-        defaultValue: 0,
+        defaultValue: 0
       },
       trim: {
         type: GraphQLFloat,
-        defaultValue: false,
-      },
+        defaultValue: false
+      }
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
@@ -196,16 +196,16 @@ const fixedNodeType = ({
           file,
           args,
           reporter,
-          cache,
+          cache
         })
       ).then(o =>
         Object.assign({}, o, {
           fieldArgs: args,
           image,
-          file,
+          file
         })
       )
-    },
+    }
   }
 }
 
@@ -214,7 +214,7 @@ const fluidNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
-  cache,
+  cache
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -227,8 +227,8 @@ const fluidNodeType = ({
             getTracedSVG({
               ...parent,
               cache,
-              reporter,
-            }),
+              reporter
+            })
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
         src: { type: new GraphQLNonNull(GraphQLString) },
@@ -245,10 +245,10 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
-                cache,
+                cache
               })
             ).then(({ src }) => src)
-          },
+          }
         },
         srcSetWebp: {
           type: GraphQLString,
@@ -262,97 +262,97 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
-                cache,
+                cache
               })
             ).then(({ srcSet }) => srcSet)
-          },
+          }
         },
         sizes: { type: new GraphQLNonNull(GraphQLString) },
         originalImg: { type: GraphQLString },
         originalName: { type: GraphQLString },
         presentationWidth: { type: new GraphQLNonNull(GraphQLInt) },
-        presentationHeight: { type: new GraphQLNonNull(GraphQLInt) },
-      },
+        presentationHeight: { type: new GraphQLNonNull(GraphQLInt) }
+      }
     }),
     args: {
       maxWidth: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       maxHeight: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       base64Width: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       grayscale: {
         type: GraphQLBoolean,
-        defaultValue: false,
+        defaultValue: false
       },
       jpegProgressive: {
         type: GraphQLBoolean,
-        defaultValue: true,
+        defaultValue: true
       },
       pngCompressionSpeed: {
         type: GraphQLInt,
-        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED
       },
       duotone: {
         type: DuotoneGradientType,
-        defaultValue: false,
+        defaultValue: false
       },
       traceSVG: {
         type: PotraceType,
-        defaultValue: false,
+        defaultValue: false
       },
       quality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       jpegQuality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       pngQuality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       webpQuality: {
-        type: GraphQLInt,
+        type: GraphQLInt
       },
       toFormat: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: ``
       },
       toFormatBase64: {
         type: ImageFormatType,
-        defaultValue: ``,
+        defaultValue: ``
       },
       cropFocus: {
         type: ImageCropFocusType,
-        defaultValue: sharp.strategy.attention,
+        defaultValue: sharp.strategy.attention
       },
       fit: {
         type: ImageFitType,
-        defaultValue: sharp.fit.cover,
+        defaultValue: sharp.fit.cover
       },
       background: {
         type: GraphQLString,
-        defaultValue: `rgba(0,0,0,1)`,
+        defaultValue: `rgba(0,0,0,1)`
       },
       rotate: {
         type: GraphQLInt,
-        defaultValue: 0,
+        defaultValue: 0
       },
       trim: {
         type: GraphQLFloat,
-        defaultValue: false,
+        defaultValue: false
       },
       sizes: {
         type: GraphQLString,
-        defaultValue: ``,
+        defaultValue: ``
       },
       srcSetBreakpoints: {
         type: GraphQLList(GraphQLInt),
         defaultValue: [],
-        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
-      },
+        description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`
+      }
     },
     resolve: (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
@@ -362,16 +362,16 @@ const fluidNodeType = ({
           file,
           args,
           reporter,
-          cache,
+          cache
         })
       ).then(o =>
         Object.assign({}, o, {
           fieldArgs: args,
           image,
-          file,
+          file
         })
       )
-    },
+    }
   }
 }
 
@@ -385,20 +385,20 @@ const createFields = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
-  cache,
+  cache
 }) => {
   const nodeOptions = {
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
-    cache,
+    cache
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ImageSharpFixed`, ...nodeOptions })
   const resolutionsNode = fixedNodeType({
     name: `ImageSharpResolutions`,
-    ...nodeOptions,
+    ...nodeOptions
   })
   resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
@@ -417,8 +417,8 @@ const createFields = ({
         fields: {
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
-          src: { type: GraphQLString },
-        },
+          src: { type: GraphQLString }
+        }
       }),
       args: {},
       async resolve(image, fieldArgs, context) {
@@ -456,9 +456,9 @@ const createFields = ({
         return {
           width: dimensions.width,
           height: dimensions.height,
-          src: `${pathPrefix}/static/${imageName}`,
+          src: `${pathPrefix}/static/${imageName}`
         }
-      },
+      }
     },
     resize: {
       type: new GraphQLObjectType({
@@ -471,86 +471,86 @@ const createFields = ({
               getTracedSVG({
                 ...parent,
                 cache,
-                reporter,
-              }),
+                reporter
+              })
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
           aspectRatio: { type: GraphQLFloat },
-          originalName: { type: GraphQLString },
-        },
+          originalName: { type: GraphQLString }
+        }
       }),
       args: {
         width: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         height: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         quality: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         jpegQuality: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         pngQuality: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         webpQuality: {
-          type: GraphQLInt,
+          type: GraphQLInt
         },
         jpegProgressive: {
           type: GraphQLBoolean,
-          defaultValue: true,
+          defaultValue: true
         },
         pngCompressionLevel: {
           type: GraphQLInt,
-          defaultValue: 9,
+          defaultValue: 9
         },
         pngCompressionSpeed: {
           type: GraphQLInt,
-          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
+          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED
         },
         grayscale: {
           type: GraphQLBoolean,
-          defaultValue: false,
+          defaultValue: false
         },
         duotone: {
           type: DuotoneGradientType,
-          defaultValue: false,
+          defaultValue: false
         },
         base64: {
           type: GraphQLBoolean,
-          defaultValue: false,
+          defaultValue: false
         },
         traceSVG: {
           type: PotraceType,
-          defaultValue: false,
+          defaultValue: false
         },
         toFormat: {
           type: ImageFormatType,
-          defaultValue: ``,
+          defaultValue: ``
         },
         cropFocus: {
           type: ImageCropFocusType,
-          defaultValue: sharp.strategy.attention,
+          defaultValue: sharp.strategy.attention
         },
         fit: {
           type: ImageFitType,
-          defaultValue: sharp.fit.cover,
+          defaultValue: sharp.fit.cover
         },
         background: {
           type: GraphQLString,
-          defaultValue: `rgba(0,0,0,1)`,
+          defaultValue: `rgba(0,0,0,1)`
         },
         rotate: {
           type: GraphQLInt,
-          defaultValue: 0,
+          defaultValue: 0
         },
         trim: {
           type: GraphQLFloat,
-          defaultValue: 0,
-        },
+          defaultValue: 0
+        }
       },
       resolve: (image, fieldArgs, context) => {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
@@ -560,25 +560,25 @@ const createFields = ({
             resolve(
               base64({
                 file,
-                cache,
+                cache
               })
             )
           } else {
             const o = queueImageResizing({
               file,
-              args,
+              args
             })
             resolve(
               Object.assign({}, o, {
                 image,
                 file,
-                fieldArgs: args,
+                fieldArgs: args
               })
             )
           }
         })
-      },
-    },
+      }
+    }
   }
 }
 
@@ -588,7 +588,7 @@ module.exports = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
-  cache,
+  cache
 }) => {
   const { createTypes } = actions
 
@@ -598,15 +598,15 @@ module.exports = ({
       pathPrefix,
       getNodeAndSavePathDependency,
       reporter,
-      cache,
+      cache
     }),
     interfaces: [`Node`],
     extensions: {
       infer: true,
       childOf: {
-        types: [`File`],
-      },
-    },
+        types: [`File`]
+      }
+    }
   })
 
   if (createTypes) {
@@ -617,7 +617,7 @@ module.exports = ({
       DuotoneGradientType,
       PotraceTurnPolicyType,
       PotraceType,
-      imageSharpType,
+      imageSharpType
     ])
   }
 }

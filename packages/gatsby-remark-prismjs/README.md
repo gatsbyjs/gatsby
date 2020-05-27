@@ -59,31 +59,31 @@ plugins: [
                 language: "superscript",
                 extend: "javascript",
                 definition: {
-                  superscript_types: /(SuperType)/,
+                  superscript_types: /(SuperType)/
                 },
                 insertBefore: {
                   function: {
-                    superscript_keywords: /(superif|superelse)/,
-                  },
-                },
-              },
+                    superscript_keywords: /(superif|superelse)/
+                  }
+                }
+              }
             ],
             // Customize the prompt used in shell output
             // Values below are default
             prompt: {
               user: "root",
               host: "localhost",
-              global: false,
+              global: false
             },
             // By default the HTML entities <>&'" are escaped.
             // Add additional HTML escapes by providing a mapping
             // of HTML entities and their escape value IE: { '}': '&#123;' }
-            escapeEntities: {},
-          },
-        },
-      ],
-    },
-  },
+            escapeEntities: {}
+          }
+        }
+      ]
+    }
+  }
 ]
 ```
 
@@ -437,14 +437,14 @@ languageExtensions: [
     language: "superscript",
     extend: "javascript",
     definition: {
-      superscript_types: /(SuperType)/,
+      superscript_types: /(SuperType)/
     },
     insertBefore: {
       function: {
-        superscript_keywords: /(superif|superelse)/,
-      },
-    },
-  },
+        superscript_keywords: /(superif|superelse)/
+      }
+    }
+  }
 ]
 ```
 

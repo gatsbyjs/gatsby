@@ -54,12 +54,12 @@ module.exports = {
         projectId: `<YourProjectID>`, // Fill in your Project ID
         // Please note that with the Sample Project generated above, `en-US` is the default language for the project and this config. For a blank project, this needs to be `default`.
         languageCodenames: [
-          `en-US`, // Or the languages in your project (Project settings -> Localization)
-        ],
-      },
-    },
+          `en-US` // Or the languages in your project (Project settings -> Localization)
+        ]
+      }
+    }
     // ...
-  ],
+  ]
 }
 ```
 
@@ -112,7 +112,7 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
     createNodeField({
       node,
       name: `slug`,
-      value: node.elements.url_pattern.value,
+      value: node.elements.url_pattern.value
     })
   }
 }
@@ -128,7 +128,7 @@ exports.onCreateNode = ({ node, actions: { createNodeField } }) => {
     createNodeField({
       node,
       name: `slug`,
-      value: node.elements.url_pattern.value,
+      value: node.elements.url_pattern.value
     })
   }
 }
@@ -158,8 +158,8 @@ exports.createPages = async ({ graphql, actions }) => {
       path: node.fields.slug,
       component: path.resolve(`src/templates/article.js`),
       context: {
-        slug: node.fields.slug,
-      },
+        slug: node.fields.slug
+      }
     })
   })
 }

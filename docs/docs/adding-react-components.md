@@ -47,7 +47,7 @@ After installation, add any necessary plugins to the plugins array in `gatsby-co
 
 ```js:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-material-ui`],
+  plugins: [`gatsby-plugin-material-ui`]
 }
 ```
 

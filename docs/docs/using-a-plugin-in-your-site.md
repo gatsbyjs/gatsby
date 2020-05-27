@@ -16,7 +16,7 @@ Then in your site's `gatsby-config.js` you add `gatsby-transformer-json` to the 
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-json`],
+  plugins: [`gatsby-transformer-json`]
 }
 ```
 
@@ -32,24 +32,24 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/data/`,
-        name: "data",
-      },
+        name: "data"
+      }
     },
     {
       resolve: "gatsby-plugin-offline",
       // Blank options, equivalent to string-only plugin
       options: {
-        plugins: [],
-      },
+        plugins: []
+      }
     },
     {
       resolve: `gatsby-transformer-remark`,
       options: {
         // plugins inside plugins
-        plugins: [`gatsby-remark-smartypants`],
-      },
-    },
-  ],
+        plugins: [`gatsby-remark-smartypants`]
+      }
+    }
+  ]
 }
 ```
 

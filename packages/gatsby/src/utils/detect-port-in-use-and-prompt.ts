@@ -15,7 +15,7 @@ export const detectPortInUseAndPrompt = async (
       type: `confirm`,
       name: `newPort`,
       message: `Would you like to run the app at another port instead?`,
-      initial: true,
+      initial: true
     })
     if (response.newPort) {
       foundPort = detectedPort

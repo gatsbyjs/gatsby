@@ -88,7 +88,7 @@ import {
   // [ "0px", "4px", "8px", …, "72px"]
   spaceRaw,
   // [ 0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 56, 64, 72]
-  transition,
+  transition
   // transition = {
   //   default: `250ms cubic-bezier(0.4, 0, 0.2, 1)`,
   //   curve: { default: `cubic-bezier(0.4, 0, 0.2, 1)`, … },
@@ -165,7 +165,7 @@ import {
   sizes,
   space,
   transition,
-  zIndices,
+  zIndices
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 ```
 

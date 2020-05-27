@@ -16,8 +16,8 @@ const nodeFromData = (datum, createNodeId) => {
     drupal_relationships: datum.relationships,
     relationships: {},
     internal: {
-      type: datum.type.replace(/-|__|:|\.|\s/g, `_`),
-    },
+      type: datum.type.replace(/-|__|:|\.|\s/g, `_`)
+    }
   }
 }
 
@@ -54,7 +54,7 @@ exports.downloadFile = async (
         typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
           ? {
               htaccess_user: basicAuth.username,
-              htaccess_pass: basicAuth.password,
+              htaccess_pass: basicAuth.password
             }
           : {}
       fileNode = await createRemoteFileNode({
@@ -66,7 +66,7 @@ exports.downloadFile = async (
         getCache,
         parentNodeId: node.id,
         auth,
-        reporter,
+        reporter
       })
     } catch (e) {
       // Ignore

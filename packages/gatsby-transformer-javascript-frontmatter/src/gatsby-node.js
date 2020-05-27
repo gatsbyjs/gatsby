@@ -6,7 +6,7 @@ async function onCreateNode({
   node,
   actions,
   loadNodeContent,
-  createContentDigest,
+  createContentDigest
 }) {
   const { createNode, createParentChildLink } = actions
   const fileExtsToProcess = [`js`, `jsx`, `ts`, `tsx`]
@@ -27,8 +27,8 @@ async function onCreateNode({
       [
         `decorators`,
         {
-          decoratorsBeforeExport: true,
-        },
+          decoratorsBeforeExport: true
+        }
       ],
       `classProperties`,
       `exportExtensions`,
@@ -36,8 +36,8 @@ async function onCreateNode({
       `functionBind`,
       `functionSent`,
       `dynamicImport`,
-      _.includes([`ts`, `tsx`], node.extension) ? `typescript` : `flow`,
-    ],
+      _.includes([`ts`, `tsx`], node.extension) ? `typescript` : `flow`
+    ]
   }
 
   let exportsData, frontmatter, error
@@ -92,7 +92,7 @@ async function onCreateNode({
             })
           }
         }
-      },
+      }
     })
   } catch (e) {
     // stick the error on the query so the user can
@@ -101,14 +101,14 @@ async function onCreateNode({
       err: true,
       code: e.code,
       message: e.message,
-      stack: e.stack,
+      stack: e.stack
     }
   } finally {
     // only create node if frontmatter is not empty
     if (!_.isEmpty(frontmatter)) {
       exportsData = {
         ...frontmatter,
-        error: error,
+        error: error
       }
 
       const contentDigest = createContentDigest(node)
@@ -119,8 +119,8 @@ async function onCreateNode({
         node: { ...node },
         internal: {
           contentDigest,
-          type: `JavascriptFrontmatter`,
-        },
+          type: `JavascriptFrontmatter`
+        }
       }
 
       nodeData.frontmatter = { ...exportsData }

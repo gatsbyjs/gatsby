@@ -3,7 +3,7 @@
 const {
   GraphQLObjectType,
   GraphQLInputObjectType,
-  GraphQLList,
+  GraphQLList
 } = require(`graphql`)
 const { GraphQLJSONObject } = require(`graphql-type-json`)
 const Hoek = require(`@hapi/hoek`)
@@ -27,11 +27,11 @@ module.exports = constructor => {
     target = new GraphQLObjectType({
       name,
       description,
-      fields: function () {
+      fields: function() {
         return compiledFields(target)
       },
       args: internals.buildArgs(args),
-      resolve,
+      resolve
     })
   } else {
     target = new GraphQLObjectType({
@@ -39,7 +39,7 @@ module.exports = constructor => {
       description,
       fields: compiledFields(),
       args: internals.buildArgs(args),
-      resolve,
+      resolve
     })
   }
 
@@ -62,9 +62,7 @@ internals.setType = schema => {
   if (schema._tests.length) {
     if (schema._flags.presence) {
       return {
-        type: new TypeDictionary.required(
-          TypeDictionary[schema._tests[0].name]
-        ),
+        type: new TypeDictionary.required(TypeDictionary[schema._tests[0].name])
       }
     }
 
@@ -82,7 +80,7 @@ internals.setType = schema => {
 
     const config = {
       name,
-      values: internals.buildEnumFields(schema._valids._set),
+      values: internals.buildEnumFields(schema._valids._set)
     }
 
     return { type: new TypeDictionary.enum(config) }
@@ -97,7 +95,7 @@ internals.processLazyLoadQueue = (attrs, recursiveType) => {
       attrs[lazyLoadQueue[i].key] = { type: recursiveType }
     } else {
       attrs[lazyLoadQueue[i].key] = {
-        type: new TypeDictionary[lazyLoadQueue[i].type](recursiveType),
+        type: new TypeDictionary[lazyLoadQueue[i].type](recursiveType)
       }
     }
   }
@@ -122,12 +120,12 @@ internals.buildFields = fields => {
       } else {
         Type = new GraphQLObjectType({
           name: field.key.charAt(0).toUpperCase() + field.key.slice(1),
-          fields: internals.buildFields(field.schema._inner.children),
+          fields: internals.buildFields(field.schema._inner.children)
         })
       }
 
       attrs[key] = {
-        type: Type,
+        type: Type
       }
 
       cache[key] = Type
@@ -142,7 +140,7 @@ internals.buildFields = fields => {
 
         lazyLoadQueue.push({
           key,
-          type: field.schema._type,
+          type: field.schema._type
         })
       } else {
         Hoek.assert(
@@ -156,7 +154,7 @@ internals.buildFields = fields => {
             name,
             fields: internals.buildFields(
               field.schema._inner.items[0]._inner.children
-            ),
+            )
           })
           Type = new GraphQLList(Item)
         } else {
@@ -167,7 +165,7 @@ internals.buildFields = fields => {
       }
 
       attrs[key] = {
-        type: Type,
+        type: Type
       }
 
       cache[key] = Type
@@ -178,11 +176,11 @@ internals.buildFields = fields => {
 
       lazyLoadQueue.push({
         key,
-        type: `object`,
+        type: `object`
       })
 
       attrs[key] = {
-        type: Type,
+        type: Type
       }
 
       cache[key] = Type
@@ -197,7 +195,7 @@ internals.buildFields = fields => {
 
   cache = Object.create(null) //Empty cache
 
-  return function (recursiveType) {
+  return function(recursiveType) {
     if (recursiveType) {
       return internals.processLazyLoadQueue(attrs, recursiveType)
     }
@@ -214,8 +212,8 @@ internals.buildArgs = args => {
       argAttrs[key] = {
         type: new GraphQLInputObjectType({
           name: key.charAt(0).toUpperCase() + key.slice(1),
-          fields: internals.buildFields(args[key]._inner.children),
-        }),
+          fields: internals.buildFields(args[key]._inner.children)
+        })
       }
     } else {
       argAttrs[key] = { type: TypeDictionary[args[key]._type] }

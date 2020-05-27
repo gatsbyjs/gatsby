@@ -39,7 +39,7 @@ describe(`paths`, () => {
         [`foo\\中文`, `foo/中文`],
         [`foo/中文`, `foo/中文`],
         [`foo/жä`, `foo/жä`],
-        [`foo\\жä`, `foo/жä`],
+        [`foo\\жä`, `foo/жä`]
       ].forEach(([path, expectRes]) => {
         expect(slash(path)).toBe(expectRes)
       })

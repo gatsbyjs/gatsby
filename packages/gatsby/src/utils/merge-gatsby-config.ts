@@ -42,7 +42,7 @@ const normalizePluginEntry = (entry: PluginEntry): INormalizedPluginEntry =>
   _.isString(entry)
     ? {
         resolve: entry,
-        options: {},
+        options: {}
       }
     : _.isObject(entry)
     ? { options: {}, ...entry }
@@ -65,7 +65,7 @@ const howToMerge = {
         _.pick(normalizePluginEntry(b), [`resolve`, `options`])
       )
     ),
-  mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
+  mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB)
 } as const
 
 /**
@@ -88,7 +88,7 @@ export const mergeGatsbyConfig = (
       const mergeFn = howToMerge[gatsbyConfigKey] || howToMerge.byDefault
       return {
         ...config,
-        [gatsbyConfigKey]: mergeFn(a[gatsbyConfigKey], b[gatsbyConfigKey]),
+        [gatsbyConfigKey]: mergeFn(a[gatsbyConfigKey], b[gatsbyConfigKey])
       }
     },
     {} as IGatsbyConfigInput

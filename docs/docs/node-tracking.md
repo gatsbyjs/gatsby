@@ -10,15 +10,15 @@ You may see calls to `trackInlineObjectsInRootNode()` and `findRootNodeAncestor(
 let nodeA = {
   id: `id2`,
   internal: {
-    type: `footype`,
+    type: `footype`
   },
   foo: {
     myfile: "blog/my-blog.md",
-    b: 2,
+    b: 2
   },
   bar: 7,
   parent: `id1`,
-  baz: [{ x: 8 }, 9],
+  baz: [{ x: 8 }, 9]
 }
 ```
 

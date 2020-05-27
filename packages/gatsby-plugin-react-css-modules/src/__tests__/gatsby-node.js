@@ -4,7 +4,7 @@ describe(`gatsby-plugin-react-css-modules`, () => {
   let actions
   beforeEach(() => {
     actions = {
-      setBabelPlugin: jest.fn(),
+      setBabelPlugin: jest.fn()
     }
     onCreateBabelConfig({ actions }, { plugins: jest.fn() })
   })

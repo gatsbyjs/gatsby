@@ -45,7 +45,7 @@ exports.onCreateNode = ({ actions, reporter }) => {
   const { log } = actions
   log({
     message: `I am a log message, this is freeform text`,
-    type: `info`,
+    type: `info`
   })
 }
 ```

@@ -26,12 +26,12 @@ export interface IProgram {
 // @deprecated
 export enum BuildHTMLStage {
   DevelopHTML = `develop-html`,
-  BuildHTML = `build-html`,
+  BuildHTML = `build-html`
 }
 
 export enum Stage {
   Develop = `develop`,
   DevelopHTML = `develop-html`,
   BuildJavascript = `build-javascript`,
-  BuildHTML = `build-html`,
+  BuildHTML = `build-html`
 }

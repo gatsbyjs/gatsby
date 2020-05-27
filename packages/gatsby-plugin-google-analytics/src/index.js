@@ -43,11 +43,11 @@ function OutboundLink(props) {
             eventLabel: eventLabel || props.href,
             eventValue,
             transport: redirect ? `beacon` : ``,
-            hitCallback: function () {
+            hitCallback: function() {
               if (redirect) {
                 document.location = props.href
               }
-            },
+            }
           })
         } else {
           if (redirect) {
@@ -68,7 +68,7 @@ OutboundLink.propTypes = {
   eventAction: PropTypes.string,
   eventLabel: PropTypes.string,
   eventValue: PropTypes.number,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func
 }
 
 /**
@@ -85,7 +85,7 @@ function trackCustomEvent({
   nonInteraction = false,
   transport,
   hitCallback,
-  callbackTimeout = 1000,
+  callbackTimeout = 1000
 }) {
   if (typeof window !== `undefined` && window.ga) {
     const trackingEventOptions = {
@@ -94,7 +94,7 @@ function trackCustomEvent({
       eventLabel: label,
       eventValue: value,
       nonInteraction: nonInteraction,
-      transport,
+      transport
     }
 
     if (hitCallback && typeof hitCallback === `function`) {

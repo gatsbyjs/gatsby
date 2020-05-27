@@ -31,10 +31,10 @@ module.exports = {
         /*
         - basePath defaults to `/`
         */
-        basePath: `/blog`,
-      },
-    },
-  ],
+        basePath: `/blog`
+      }
+    }
+  ]
 }
 ```
 

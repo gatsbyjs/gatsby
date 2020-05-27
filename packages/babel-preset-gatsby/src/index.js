@@ -39,7 +39,7 @@ module.exports = function preset(_, options = {}) {
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
       targets = {
-        node: `current`,
+        node: `current`
       }
     } else {
       targets = pluginBabelConfig.browserslist
@@ -57,30 +57,30 @@ module.exports = function preset(_, options = {}) {
           useBuiltIns: `usage`,
           targets,
           // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
-          exclude: [`transform-typeof-symbol`],
-        },
+          exclude: [`transform-typeof-symbol`]
+        }
       ],
       [
         resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
           pragma: `React.createElement`,
-          development: stage === `develop`,
-        },
-      ],
+          development: stage === `develop`
+        }
+      ]
     ],
     plugins: [
       [
         resolve(`./optimize-hook-destructuring`),
         {
-          lib: true,
-        },
+          lib: true
+        }
       ],
       [
         resolve(`@babel/plugin-proposal-class-properties`),
         {
-          loose: true,
-        },
+          loose: true
+        }
       ],
       [resolve(`@babel/plugin-proposal-nullish-coalescing-operator`)],
       [resolve(`@babel/plugin-proposal-optional-chaining`)],
@@ -93,23 +93,23 @@ module.exports = function preset(_, options = {}) {
           helpers: stage === `develop` || stage === `test`,
           regenerator: true,
           useESModules: stage !== `test`,
-          absoluteRuntimePath,
-        },
+          absoluteRuntimePath
+        }
       ],
       [
         resolve(`@babel/plugin-transform-spread`),
         {
-          loose: false, // Fixes #14848
-        },
+          loose: false // Fixes #14848
+        }
       ],
       IS_TEST && resolve(`babel-plugin-dynamic-import-node`),
       stage === `build-javascript` && [
         // Remove PropTypes from production build
         resolve(`babel-plugin-transform-react-remove-prop-types`),
         {
-          removeImport: true,
-        },
-      ],
-    ].filter(Boolean),
+          removeImport: true
+        }
+      ]
+    ].filter(Boolean)
   }
 }

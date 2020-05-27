@@ -63,8 +63,8 @@ function replaceRule(value, stage) {
           ...rule,
           loader: MiniCssExtractPlugin.loader,
           options: {
-            hmr: true,
-          },
+            hmr: true
+          }
         }
       }
 
@@ -74,12 +74,12 @@ function replaceRule(value, stage) {
     if (value.use) {
       return {
         ...value,
-        use: value.use.map(replaceStyleLoader),
+        use: value.use.map(replaceStyleLoader)
       }
     } else if (value.loader) {
       return {
         ...value,
-        loader: replaceStyleLoader(value),
+        loader: replaceStyleLoader(value)
       }
     }
   }
@@ -101,7 +101,7 @@ exports.onPreInit = ({ reporter }) => {
 exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
-  app.get(`/${publicPathClean}`, function (req, res) {
+  app.get(`/${publicPathClean}`, function(req, res) {
     res.sendFile(
       path.join(program.directory, `public`, publicPathClean, `index.html`),
       err => {
@@ -123,7 +123,7 @@ exports.onCreateWebpackConfig = (
     htmlTitle = `Content Manager`,
     htmlFavicon = ``,
     manualInit = false,
-    includeRobots = false,
+    includeRobots = false
   }
 ) => {
   if (![`develop`, `build-javascript`].includes(stage)) {
@@ -139,7 +139,7 @@ exports.onCreateWebpackConfig = (
         /\.s(a|c)ss$/,
         /\.module\.s(a|c)ss$/,
         /\.less$/,
-        /\.module\.less$/,
+        /\.module\.less$/
       ].map(t => t.toString())
     )
   }
@@ -153,21 +153,21 @@ exports.onCreateWebpackConfig = (
       name: `react`,
       global: `React`,
       assetDir: `umd`,
-      assetName: `react.production.min.js`,
+      assetName: `react.production.min.js`
     },
     {
       name: `react-dom`,
       global: `ReactDOM`,
       assetDir: `umd`,
-      assetName: `react-dom.production.min.js`,
+      assetName: `react-dom.production.min.js`
     },
     {
       name: `netlify-cms-app`,
       global: `NetlifyCmsApp`,
       assetDir: `dist`,
       assetName: `netlify-cms-app.js`,
-      sourceMap: `netlify-cms-app.js.map`,
-    },
+      sourceMap: `netlify-cms-app.js.map`
+    }
   ]
 
   if (enableIdentityWidget) {
@@ -176,7 +176,7 @@ exports.onCreateWebpackConfig = (
       global: `netlifyIdentity`,
       assetDir: `build`,
       assetName: `netlify-identity.js`,
-      sourceMap: `netlify-identity.js.map`,
+      sourceMap: `netlify-identity.js.map`
     })
   }
 
@@ -185,18 +185,18 @@ exports.onCreateWebpackConfig = (
     entry: {
       cms: [
         path.join(__dirname, `cms.js`),
-        enableIdentityWidget && path.join(__dirname, `cms-identity.js`),
+        enableIdentityWidget && path.join(__dirname, `cms-identity.js`)
       ]
         .concat(modulePath)
-        .filter(p => p),
+        .filter(p => p)
     },
     output: {
-      path: path.join(program.directory, `public`, publicPathClean),
+      path: path.join(program.directory, `public`, publicPathClean)
     },
     module: {
       rules: deepMap(gatsbyConfig.module.rules, value =>
         replaceRule(value, stage)
-      ).filter(Boolean),
+      ).filter(Boolean)
     },
     plugins: [
       // Remove plugins that either attempt to process the core Netlify CMS
@@ -219,15 +219,15 @@ exports.onCreateWebpackConfig = (
             messages: [
               `Netlify CMS is running at ${program.ssl ? `https` : `http`}://${
                 program.host
-              }:${program.port}/${publicPathClean}/`,
-            ],
-          },
+              }:${program.port}/${publicPathClean}/`
+            ]
+          }
         }),
 
       // Use a simple filename with no hash so we can access from source by
       // path.
       new MiniCssExtractPlugin({
-        filename: `[name].css`,
+        filename: `[name].css`
       }),
 
       // Auto generate CMS index.html page.
@@ -237,8 +237,8 @@ exports.onCreateWebpackConfig = (
         chunks: [`cms`],
         excludeAssets: [/cms.css/],
         meta: {
-          robots: includeRobots ? `all` : `none`, // Control whether search engines index this page
-        },
+          robots: includeRobots ? `all` : `none` // Control whether search engines index this page
+        }
       }),
 
       // Exclude CSS from index.html, as any imported styles are assumed to be
@@ -249,7 +249,7 @@ exports.onCreateWebpackConfig = (
       // Pass in needed Gatsby config values.
       new webpack.DefinePlugin({
         __PATH__PREFIX__: pathPrefix,
-        CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        CMS_PUBLIC_PATH: JSON.stringify(publicPath)
       }),
 
       new CopyPlugin(
@@ -259,12 +259,12 @@ exports.onCreateWebpackConfig = (
             [
               {
                 from: require.resolve(path.join(name, assetDir, assetName)),
-                to: assetName,
+                to: assetName
               },
               sourceMap && {
                 from: require.resolve(path.join(name, assetDir, sourceMap)),
-                to: sourceMap,
-              },
+                to: sourceMap
+              }
             ].filter(item => item)
           )
         )
@@ -272,13 +272,13 @@ exports.onCreateWebpackConfig = (
 
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),
-        append: false,
+        append: false
       }),
 
       new webpack.DefinePlugin({
         CMS_MANUAL_INIT: JSON.stringify(manualInit),
-        PRODUCTION: JSON.stringify(stage !== `develop`),
-      }),
+        PRODUCTION: JSON.stringify(stage !== `develop`)
+      })
     ].filter(p => p),
 
     // Remove common chunks style optimizations from Gatsby's default
@@ -287,14 +287,14 @@ exports.onCreateWebpackConfig = (
     optimization: {
       // Without this, node can get out of memory errors when building for
       // production.
-      minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer,
+      minimizer: stage === `develop` ? [] : gatsbyConfig.optimization.minimizer
     },
     devtool: stage === `develop` ? `cheap-module-source-map` : `source-map`,
     externals: externals.map(({ name, global }) => {
       return {
-        [name]: global,
+        [name]: global
       }
-    }),
+    })
   }
 
   if (customizeWebpackConfig) {
@@ -305,7 +305,7 @@ exports.onCreateWebpackConfig = (
       getConfig,
       rules,
       loaders,
-      plugins,
+      plugins
     })
   }
 
@@ -321,19 +321,19 @@ exports.onCreateWebpackConfig = (
                   test: /[\\/]node_modules[\\/](netlify-identity-widget)[\\/]/,
                   name: `netlify-identity-widget`,
                   chunks: `all`,
-                  enforce: true,
-                },
-              },
-            },
+                  enforce: true
+                }
+              }
+            }
           },
     // ignore netlify-identity-widget when not enabled
     plugins: enableIdentityWidget
       ? []
       : [
           new webpack.IgnorePlugin({
-            resourceRegExp: /^netlify-identity-widget$/,
-          }),
-        ],
+            resourceRegExp: /^netlify-identity-widget$/
+          })
+        ]
   })
 
   return new Promise((resolve, reject) => {

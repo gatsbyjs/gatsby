@@ -6,7 +6,7 @@ import { Actions } from "../constants"
 
 let store = createStore(
   combineReducers({
-    logs: reducer,
+    logs: reducer
   }),
   {}
 )
@@ -41,7 +41,7 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
     // And i'm pretty sure this timestamp isn't used anywhere.
     // but for now, the structured logs integration tests expect it
     // so it's easier to leave it and then explore as a follow up
-    timestamp: new Date().toJSON(),
+    timestamp: new Date().toJSON()
   } as ActionsUnion
 
   store.dispatch(action)
@@ -71,7 +71,7 @@ export const onLogAction = (fn: ActionLogListener): (() => void) => {
 export const setStore = (s: GatsbyCLIStore): void => {
   s.dispatch({
     type: Actions.SetLogs,
-    payload: store.getState().logs,
+    payload: store.getState().logs
   } as ISetLogs)
   store = s
   storeSwapListeners.forEach(fn => fn(store))

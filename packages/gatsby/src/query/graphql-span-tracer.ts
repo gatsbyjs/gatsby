@@ -48,8 +48,8 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
       parentSpan,
       tags: {
         field: name,
-        path: pathToArray(path).join(`.`),
-      },
+        path: pathToArray(path).join(`.`)
+      }
     })
     this.setActivity(path, activity)
     return activity

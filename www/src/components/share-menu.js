@@ -26,8 +26,8 @@ const ShareMenuItem = ({ href, title, children }) => (
         color: `button.primaryText`,
         display: `flex`,
         alignItems: `center`,
-        justifyContent: `center`,
-      },
+        justifyContent: `center`
+      }
     }}
     href={href}
     title={title}
@@ -40,7 +40,7 @@ class ShareMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false,
+      open: false
     }
     this.shareMenu = this.shareMenu.bind(this)
     this.clickOutsideShareMenu = this.clickOutsideShareMenu.bind(this)
@@ -78,7 +78,7 @@ class ShareMenu extends React.Component {
   shareMenu() {
     const { open } = this.state
     this.setState({
-      open: !open,
+      open: !open
     })
   }
 
@@ -96,7 +96,7 @@ class ShareMenu extends React.Component {
             color: `button.primaryText`,
             cursor: `pointer`,
             height: 36,
-            width: 36,
+            width: 36
           }}
           className={className}
           ref={this.setShareBtnRef}
@@ -109,7 +109,7 @@ class ShareMenu extends React.Component {
               position: `absolute`,
               top: 44,
               left: `auto`,
-              right: 0,
+              right: 0
             }}
             ref={this.setShareMenuRef}
           >
@@ -117,7 +117,7 @@ class ShareMenu extends React.Component {
               href={`https://pinterest.com/pin/create/button/${objectToParams({
                 url: url,
                 media: image,
-                description: title,
+                description: title
               })}`}
               title="Share on Pinterest"
             >
@@ -127,7 +127,7 @@ class ShareMenu extends React.Component {
               href={`https://www.linkedin.com/shareArticle${objectToParams({
                 mini: `true`,
                 url: url,
-                title: title,
+                title: title
               })}`}
               title="Share on LinkedIn"
             >
@@ -136,7 +136,7 @@ class ShareMenu extends React.Component {
             <ShareMenuItem
               href={`https://www.facebook.com/sharer.php${objectToParams({
                 u: url,
-                t: title,
+                t: title
               })}`}
               title="Share on Facebook"
             >
@@ -145,7 +145,7 @@ class ShareMenu extends React.Component {
             <ShareMenuItem
               href={`https://twitter.com/share${objectToParams({
                 url: url,
-                text: title,
+                text: title
               })}`}
               title="Share on Twitter"
             >

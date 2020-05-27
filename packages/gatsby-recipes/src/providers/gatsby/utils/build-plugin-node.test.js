@@ -13,8 +13,8 @@ test(`build-plugin-node creates a proper AST from JSON object`, () => {
     name: `gatsby-plugin-foo`,
     key: `super-special`,
     options: {
-      foo: `bar`,
-    },
+      foo: `bar`
+    }
   })
 
   expect(result).toMatchInlineSnapshot(`
@@ -32,8 +32,8 @@ test(`build-plugin-node does not add a key when it doesn't exist`, () => {
   const result = testPluginNode({
     name: `gatsby-plugin-foo`,
     options: {
-      foo: `bar`,
-    },
+      foo: `bar`
+    }
   })
 
   expect(result).toMatchInlineSnapshot(`
@@ -48,7 +48,7 @@ test(`build-plugin-node does not add a key when it doesn't exist`, () => {
 
 test(`build-plugin-node returns a string literal when there are no options or key`, () => {
   const result = testPluginNode({
-    name: `gatsby-plugin-foo`,
+    name: `gatsby-plugin-foo`
   })
 
   expect(result).toMatchInlineSnapshot(`"\\"gatsby-plugin-foo\\""`)
