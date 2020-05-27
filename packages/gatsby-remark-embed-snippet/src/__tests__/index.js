@@ -145,9 +145,6 @@ ${codeBlockValue}
   })
 
   it(`should handle missing snippet name`, () => {
-    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
-  console.log('The user is searching')
-}`
     fs.readFileSync.mockReturnValue(`function test() {
   // start-snippet{goo}
   nothing_to_do();
@@ -164,9 +161,6 @@ ${codeBlockValue}
   })
 
   it(`should ignore improperly formatted embed options`, () => {
-    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
-  console.log('The user is searching')
-}`
     fs.readFileSync.mockReturnValue(`function test() {
   // start-snippet{goo}
   nothing_to_do();
