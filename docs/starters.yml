@@ -6404,14 +6404,17 @@
     - Customizable branding & navigation
     - Material-UI
 - url: https://gatsbyfire.netlify.app/
-  repo: https://github.com/GeorgeSteel/GatsbyFire
+  repo: https://github.com/GeorgeSteel/gatsby-fire-starter
   description: A Gatsby Starter to build a complete webapp with Gatsby & Firebase by using the library reactfire
   tags:
     - Firebase
     - Web Development
   features:
-    - Based on reactfire library
-    - Routing based on reach-router
-    - The default example also includes how to create private routes
-    - gatsby build without issues
+    - You can build a realtime app without any `window object` issue.
+    - Private/Dynamic routing made easy with reach/router.
+    - Fully integrated with reactfire.
+    - Easy to setup.
+    - Insane Lighthouse performance.
+    - FirebaseUI fully integrated & customizable for any language location 
+    
    
