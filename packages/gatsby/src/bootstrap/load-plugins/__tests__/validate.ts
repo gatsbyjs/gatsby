@@ -19,6 +19,7 @@ import {
   IEntry,
 } from "../validate"
 import { getLatestAPIs } from "../../../utils/get-latest-apis"
+import { resolveModuleExports } from "../../resolve-module-exports"
 
 beforeEach(() => {
   Object.keys(reporter).forEach(key => (reporter[key] as jest.Mock).mockReset())
@@ -48,8 +49,11 @@ describe(`collatePluginAPIs`, () => {
   }
 
   beforeEach(() => {
-    const { resolveModuleExports } = require(`../../resolve-module-exports`)
-    resolveModuleExports(MOCK_RESULTS)
+    // We call the manual /__mocks__/ implementation of resolveModuleExports,
+    // which in addition to the normal parameters, also takes a mock results.
+    // In the future, we might just use jest to mock the return value instead
+    // of relying on manual mocks.
+    resolveModuleExports(MOCK_RESULTS as any)
   })
 
   it(`Identifies APIs used by a site's plugins`, async () => {
