@@ -6501,6 +6501,7 @@
   tags:
     - Firebase
     - Authentication
+    - Client-side App
   features:
     - You can build a realtime app without any `window object` issue.
     - Private/Dynamic routing made easy with reach/router.
