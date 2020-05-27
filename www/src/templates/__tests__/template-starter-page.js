@@ -78,11 +78,9 @@ test(`it can be rendered`, () => {
 test(`it displays a screenshot`, () => {
   const props = getProps()
   const { getByAltText } = render(
-    <I18nProvider>
-      <ThemeProvider theme={theme}>
-        <StarterTemplate {...props} />
-      </ThemeProvider>
-    </I18nProvider>
+    <ThemeProvider theme={theme}>
+      <StarterTemplate {...props} />
+    </ThemeProvider>
   )
 
   expect(
@@ -111,11 +109,9 @@ test(`it falls back to fallback screenshot, if screenshot file not found`, () =>
 
   expect(() =>
     render(
-      <I18nProvider>
-        <ThemeProvider theme={theme}>
-          <StarterTemplate {...props} />
-        </ThemeProvider>
-      </I18nProvider>
+      <ThemeProvider theme={theme}>
+        <StarterTemplate {...props} />
+      </ThemeProvider>
     )
   ).not.toThrow()
 })

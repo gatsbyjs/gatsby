@@ -1,5 +1,5 @@
 import React from "react"
-import { i18nEnabled, defaultLang } from "../utils/i18n"
+import { defaultLang } from "../utils/i18n"
 
 const LocaleContext = React.createContext(defaultLang)
 
