@@ -6487,7 +6487,6 @@
     - Blog
     - Landing Page
     - Open Source
-
   features:
     - A Blog and Personal website with Netlify CMS.
     - Responsive Web Design
@@ -6499,6 +6498,6 @@
     - Twitter Cards meta
     - Beautiful XML Sitemaps
     - Netlify Contact Form, Works right out of the box after deployment.
-    - Invite collaberaters into Netlify CMS, without giving access to your Github account via Git Gateway
+    - Invite collaborators into Netlify CMS, without giving access to your Github account via Git Gateway
     - Gatsby Incremental Builds with Netlify.
     - For more info, Take a look at readme.md on the Github repo.
