@@ -20,7 +20,7 @@ const tick = (): void => {
 }
 
 export const trackCli = (
-  input?: string,
+  input?: string | string[],
   tags?: {},
   opts?: { debounce: boolean }
 ): void => instance.captureEvent(input, tags, opts)

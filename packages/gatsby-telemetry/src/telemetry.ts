@@ -141,7 +141,11 @@ export class Telemetry {
     }
     return undefined
   }
-  captureEvent(type = ``, tags = {}, opts = { debounce: false }): void {
+  captureEvent(
+    type: string | string[] = ``,
+    tags = {},
+    opts = { debounce: false }
+  ): void {
     if (!this.isTrackingEnabled()) {
       return
     }
