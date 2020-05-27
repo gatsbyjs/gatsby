@@ -25,7 +25,7 @@ const BlogCard = () => (
     <Box
       sx={{
         p: 4,
-        [mediaQueries.sm]: {
+        [mediaQueries.md]: {
           p: 5,
         },
       }}
@@ -33,10 +33,10 @@ const BlogCard = () => (
       <Heading
         sx={{
           fontSize: 4,
-          [mediaQueries.sm]: {
+          [mediaQueries.md]: {
             fontSize: 6,
           },
-          [mediaQueries.md]: {
+          [mediaQueries.lg]: {
             fontSize: 7,
           },
         }}

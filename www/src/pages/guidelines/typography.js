@@ -31,7 +31,6 @@ import {
 import { Box, Flex } from "theme-ui"
 import { Button, Link, Heading, Text } from "../../components/guidelines/system"
 
-
 const ExampleBox = ({ children, ...rest }) => (
   <Box
     sx={{
@@ -48,8 +47,10 @@ const MarketingColumn = ({ children, title }) => (
       px: 0,
       py: 4,
       width: `100%`,
-      [mediaQueries.sm]: {
+      [mediaQueries.md]: {
         px: 8,
+      },
+      [mediaQueries.lg]: {
         py: 0,
         width: `50%`,
       },
@@ -186,7 +187,11 @@ const Typography = ({ location }) => (
         </ContentColumn>
       </Columns>
     </Section>
-    <Section pr={0}>
+    <section
+      sx={{
+        pr: 0,
+      }}
+    >
       <SectionHeading>Scale</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -245,7 +250,7 @@ const Typography = ({ location }) => (
           ))}
         </ContentColumn>
       </Columns>
-    </Section>
+    </section>
     <Section>
       <h2>Weights, letter spacings and line heights</h2>
       <Columns>
@@ -269,7 +274,7 @@ const Typography = ({ location }) => (
               sx={{
                 width: `100%`,
                 mr: 0,
-                [mediaQueries.sm]: {
+                [mediaQueries.xl]: {
                   maxWidth: `40%`,
                   mr: 6,
                 },
@@ -293,7 +298,7 @@ const Typography = ({ location }) => (
             <Box
               sx={{
                 width: `100%`,
-                [mediaQueries.sm]: {
+                [mediaQueries.xl]: {
                   maxWidth: `40%`,
                 },
               }}
@@ -496,7 +501,7 @@ const Typography = ({ location }) => (
               sx={{
                 fontSize: 2,
                 mb: 7,
-                [mediaQueries.sm]: {
+                [mediaQueries.md]: {
                   fontSize: 3,
                 },
               }}
@@ -582,7 +587,7 @@ const Typography = ({ location }) => (
             mt: 6,
             pb: 0,
             textAlign: `left`,
-            [mediaQueries.sm]: {
+            [mediaQueries.md]: {
               display: `flex`,
               mt: 12,
               pb: 12,
@@ -605,7 +610,7 @@ const Typography = ({ location }) => (
             mt: 0,
             pb: 0,
             textAlign: `left`,
-            [mediaQueries.sm]: {
+            [mediaQueries.md]: {
               display: `flex`,
               pb: 12,
             },
@@ -629,7 +634,7 @@ const Typography = ({ location }) => (
             mt: 0,
             pb: 0,
             textAlign: `left`,
-            [mediaQueries.sm]: {
+            [mediaQueries.md]: {
               display: `flex`,
               pb: 12,
             },
@@ -689,7 +694,7 @@ const Typography = ({ location }) => (
         <Box
           sx={{
             display: `none`,
-            [mediaQueries.sm]: {
+            [mediaQueries.md]: {
               mt: 8,
               mr: `auto`,
               pr: 7,
@@ -813,7 +818,7 @@ const Typography = ({ location }) => (
                 p: 5,
                 color: `grey.80`,
                 bg: `grey.10`,
-                [mediaQueries.sm]: {
+                [mediaQueries.md]: {
                   fontSize: 2,
                 },
               }}
