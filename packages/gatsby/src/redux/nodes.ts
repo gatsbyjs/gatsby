@@ -49,8 +49,8 @@ export interface IFilterCache {
     // Ordered list of all values (by `>`) found by this filter. No null / undefs
     valuesDesc?: Array<FilterValue>
     // Flat list of nodes, ordered by valueDesc, but not ordered per value group
-    nodesByValueDesc?: Array<IGatsbyNode>
-    // Ranges of nodes per value, maps to the nodesByValueDesc array
+    nodesByValueDescReverse?: Array<IGatsbyNode>
+    // Ranges of nodes per value, maps to the nodesByValueDesc array, .reverse()
     valueRangesDesc?: Map<FilterValue, [number, number]>
   }
 }
@@ -300,7 +300,7 @@ function postIndexingMetaSetupLtLteGtGte(
     filterCache.meta.valueRangesAsc = offsets
   } else if (op === `$gt` || op === `$gte`) {
     filterCache.meta.valuesDesc = orderedValues
-    filterCache.meta.nodesByValueDesc = orderedNodes
+    filterCache.meta.nodesByValueDescReverse = orderedNodes.reverse()
     // The nodesByValueDesc is ordered by value, but multiple nodes per value are
     // not ordered. To make gt as fast as gte, we must know the start and stop
     // index for each value. Similarly useful for for `ne`.
@@ -665,10 +665,10 @@ export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
   filterValue: FilterValueNullable,
   filtersCache: FiltersCache
-): Array<IGatsbyNode> | undefined => {
+): { arr: Array<IGatsbyNode> | undefined; start: number; stop: number } => {
   const filterCache = filtersCache?.get(filterCacheKey)
   if (!filterCache) {
-    return undefined
+    return { arr: undefined, start: 0, stop: 0 }
   }
 
   const op = filterCache.op
@@ -682,12 +682,14 @@ export const getNodesFromCacheByValue = (
       const nullArr = filterCache.byValue.get(null) ?? []
       const undefArr = filterCache.byValue.get(undefined) ?? []
       // TODO: proper merge sort
-      return nullArr
+      const arr = nullArr
         .concat(undefArr)
         .sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+      return { arr, start: 0, stop: arr.length }
     }
     // Arrays in byValue are assumed to be ordered by id
-    return filterCache.byValue.get(filterValue)
+    const arr = filterCache.byValue.get(filterValue)
+    return { arr, start: 0, stop: arr?.length ?? 0 }
   }
 
   if (op === `$in`) {
@@ -723,7 +725,8 @@ export const getNodesFromCacheByValue = (
       )
 
     // TODO: proper merge sort
-    return arr.sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    arr.sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    return { arr, start: 0, stop: arr.length }
   }
 
   if (op === `$nin`) {
@@ -756,7 +759,10 @@ export const getNodesFromCacheByValue = (
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we dont have to resort here
-    return [...set].sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    const arr = [...set].sort((A, B) =>
+      A.id < B.id ? -1 : A.id === B.id ? 0 : 1
+    )
+    return { arr, start: 0, stop: arr.length }
   }
 
   if (op === `$ne`) {
@@ -778,7 +784,10 @@ export const getNodesFromCacheByValue = (
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we dont have to resort here
-    return [...set].sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    const arr = [...set].sort((A, B) =>
+      A.id < B.id ? -1 : A.id === B.id ? 0 : 1
+    )
+    return { arr, start: 0, stop: arr.length }
   }
 
   if (op === `$regex`) {
@@ -806,18 +815,22 @@ export const getNodesFromCacheByValue = (
 
     // TODO: we _can_ cache this list as well. Might make sense if it turns out that $regex is mostly used with literals
     // TODO: it may make sense to first collect all buckets and then to .concat them, or merge sort them
-    return result.sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
+    const arr = result.sort((A, B) =>
+      A.id < B.id ? -1 : A.id === B.id ? 0 : 1
+    )
+    return { arr, start: 0, stop: arr.length }
   }
 
   if (filterValue == null) {
     if (op === `$lt` || op === `$gt`) {
       // Nothing is lt/gt null
-      return undefined
+      return { arr: undefined, start: 0, stop: 0 }
     }
 
     // This is an edge case and this value should be directly indexed
     // For `lte`/`gte` this should only return nodes for `null`, not a "range"
-    return filterCache.byValue.get(filterValue)
+    const arr = filterCache.byValue.get(filterValue)
+    return { arr, start: 0, stop: arr?.length ?? 0 }
   }
 
   if (Array.isArray(filterValue)) {
@@ -843,7 +856,7 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[0])
+      return { arr: nodes, start: 0, stop: range[0] }
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -856,7 +869,7 @@ export const getNodesFromCacheByValue = (
     // the two value between which targetValue sits, or first/last element.
     const point = binarySearchAsc(values, filterValue)
     if (!point) {
-      return undefined
+      return { arr: undefined, start: 0, stop: 0 }
     }
     const [pivotMin, pivotMax] = point
 
@@ -877,7 +890,7 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue < filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until)
+    return { arr: nodes, start: 0, stop: until }
   }
 
   if (op === `$lte`) {
@@ -889,7 +902,7 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[1])
+      return { arr: nodes, start: 0, stop: range[1] }
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -902,7 +915,7 @@ export const getNodesFromCacheByValue = (
     // the two value between which targetValue sits, or first/last element.
     const point = binarySearchAsc(values, filterValue)
     if (!point) {
-      return undefined
+      return { arr: undefined, start: 0, stop: 0 }
     }
     const [pivotMin, pivotMax] = point
 
@@ -923,7 +936,7 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue <= filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until)
+    return { arr: nodes, start: 0, stop: until }
   }
 
   if (op === `$gt`) {
@@ -931,11 +944,18 @@ export const getNodesFromCacheByValue = (
     // we can prevent a binary search through the whole list, O(1) vs O(log n)
 
     const ranges = filterCache.meta.valueRangesDesc
-    const nodes = filterCache.meta.nodesByValueDesc
+    const nodesReverse = filterCache.meta.nodesByValueDescReverse
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[0]).reverse()
+      // TODO: we'll need to change our implementation of gt/gte to use asc arrays. Maybe we can just store them in reverse and invert the range as a workaround? Changing the implementation is probably better long term ;)
+      // const arr = nodes!.slice(0, range[0]).reverse()
+      // return { arr, start: 0, stop: arr.length }
+      return {
+        arr: nodesReverse,
+        start: nodesReverse!.length - range[0],
+        stop: nodesReverse!.length,
+      }
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -948,7 +968,7 @@ export const getNodesFromCacheByValue = (
     // the two value between which targetValue sits, or first/last element.
     const point = binarySearchDesc(values, filterValue)
     if (!point) {
-      return undefined
+      return { arr: undefined, start: 0, stop: 0 }
     }
     const [pivotMin, pivotMax] = point
 
@@ -969,7 +989,14 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue > filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until).reverse()
+    // TODO: we'll need to change our implementation of gt/gte to use asc arrays. Maybe we can just store them in reverse and invert the range as a workaround? Changing the implementation is probably better long term ;)
+    // const arr = nodes!.slice(0, until).reverse()
+    // return { arr, start: 0, stop: arr.length }
+    return {
+      arr: nodesReverse,
+      start: nodesReverse!.length - until,
+      stop: nodesReverse!.length,
+    }
   }
 
   if (op === `$gte`) {
@@ -977,11 +1004,18 @@ export const getNodesFromCacheByValue = (
     // we can prevent a binary search through the whole list, O(1) vs O(log n)
 
     const ranges = filterCache.meta.valueRangesDesc
-    const nodes = filterCache.meta.nodesByValueDesc
+    const nodesReverse = filterCache.meta.nodesByValueDescReverse
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!.slice(0, range[1]).reverse()
+      // TODO: we'll need to change our implementation of gt/gte to use asc arrays. Maybe we can just store them in reverse and invert the range as a workaround? Changing the implementation is probably better long term ;)
+      // const arr = nodes!.slice(0, range[1]).reverse()
+      // return { arr, start: 0, stop: arr.length }
+      return {
+        arr: nodesReverse,
+        start: nodesReverse!.length - range[1],
+        stop: nodesReverse!.length,
+      }
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -994,7 +1028,7 @@ export const getNodesFromCacheByValue = (
     // the two value between which targetValue sits, or first/last element.
     const point = binarySearchDesc(values, filterValue)
     if (!point) {
-      return undefined
+      return { arr: undefined, start: 0, stop: 0 }
     }
     const [pivotMin, pivotMax] = point
 
@@ -1015,9 +1049,16 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue >= filterValue ? inclPivot : exclPivot
-    return nodes!.slice(0, until).reverse()
+    // TODO: we'll need to change our implementation of gt/gte to use asc arrays. Maybe we can just store them in reverse and invert the range as a workaround? Changing the implementation is probably better long term ;)
+    // const arr = nodes!.slice(0, until).reverse()
+    // return { arr, start: 0, stop: arr.length }
+    return {
+      arr: nodesReverse,
+      start: nodesReverse!.length - until,
+      stop: nodesReverse!.length,
+    }
   }
 
   // Unreachable because we checked all values of FilterOp (which op is)
-  return undefined
+  return { arr: undefined, start: 0, stop: 0 }
 }

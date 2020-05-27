@@ -128,16 +128,19 @@ function handleMany(siftArgs, nodes) {
 /**
  * finds the intersection of two arrays in O(n) with n = min(a.length, b.length)
  *
- * @param {Array<IGatsbyNode>} a Ordered by id, ascending
- * @param {Array<IGatsbyNode>} b Ordered by id, ascending
- * @returns {Array<IGatsbyNode>} Ordered by id, ascending
+ * @param {{arr: Array<IGatsbyNode>, start: number, stop: number}} a Ordered by id, ascending
+ * @param {{arr: Array<IGatsbyNode>, start: number, stop: number}} b Ordered by id, ascending
+ * @returns {{arr: Array<IGatsbyNode>, start: number, stop: number}} Ordered by id, ascending
  */
-function intersectNodes(a, b) {
-  let pointerA = 0
-  let pointerB = 0
+function intersectNodes(
+  { arr: a, start: startA, stop: stopA },
+  { arr: b, start: startB, stop: stopB }
+) {
+  let pointerA = startA
+  let pointerB = startB
   let result = []
-  let maxA = a.length
-  let maxB = b.length
+  let maxA = stopA
+  let maxB = stopB
   let lastAdded = undefined // Used to dedupe the list
 
   while (pointerA < maxA && pointerB < maxB) {
@@ -187,7 +190,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
     return null
   }
 
-  const nodesPerValueArrs /*: Array<Array<IGatsbyNode>> */ = getBucketsForFilters(
+  const nodesPerValueArrs /*: Array<{arr: Array<IGatsbyNode>, start: number, stop: number}> | undefined */ = getBucketsForFilters(
     filters,
     nodeTypeNames,
     filtersCache
@@ -203,8 +206,10 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
 
   // Put smallest last (we'll pop it)
   nodesPerValueArrs.sort(
-    (a /*: Array<IGatsbyNode> */, b /*: Array<IGatsbyNode> */) =>
-      b.length - a.length
+    (
+      { arr: a /*: Array<IGatsbyNode> */ },
+      { arr: b /*: Array<IGatsbyNode> */ }
+    ) => b.length - a.length
   )
 
   if (nodesPerValueArrs.length === 1) {
@@ -215,12 +220,14 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   }
 
   while (nodesPerValueArrs.length > 1) {
-    nodesPerValueArrs.push(
-      intersectNodes(nodesPerValueArrs.pop(), nodesPerValueArrs.pop())
-    )
+    const arr = intersectNodes(nodesPerValueArrs.pop(), nodesPerValueArrs.pop())
+    nodesPerValueArrs.push({ arr, start: 0, stop: arr.length })
   }
 
-  const result = nodesPerValueArrs[0]
+  // Note: at this point the start and stop _must_ be that of the entire array
+  // because the intersect must run at least once (to dedupe) and its returned
+  // array is to be used in full.
+  const result = nodesPerValueArrs[0].arr
 
   if (result.length === 0) {
     // Intersection came up empty. Not one node appeared in every bucket.
@@ -237,11 +244,11 @@ exports.filterWithoutSift = filterWithoutSift
  * @param {Array<DbQuery>} filters
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @returns {Array<Array<IGatsbyNode>> | undefined} Undefined means at least one
+ * @returns {Array<{arr: Array<IGatsbyNode>, start: number, stop: number}> | undefined} Undefined means at least one
  *   cache was not found. Must fallback to sift.
  */
 const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
-  const nodesPerValueArrs /*: Array<Array<IGatsbyNode>>*/ = []
+  const nodesPerValueArrs /*: Array<{arr: Array<IGatsbyNode>, start: number, stop: number}>*/ = []
 
   // Fail fast while trying to create and get the value-cache for each path
   let every = filters.every((filter /*: DbQuery*/) => {
@@ -284,7 +291,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
  * @param {IDbQueryQuery} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs
+ * @param {Array<{arr: Array<IGatsbyNode>, start: number, stop: number}>} nodesPerValueArrs
  * @returns {boolean} false means soft fail, filter must go through Sift
  */
 const getBucketsForQueryFilter = (
@@ -309,7 +316,7 @@ const getBucketsForQueryFilter = (
     )
   }
 
-  const nodesPerValue /*: Array<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
+  const nodesPerValue /*: {arr: Array<IGatsbyNode> | undefined, start: number, stop: number} */ = getNodesFromCacheByValue(
     filterCacheKey,
     filterValue,
     filtersCache
@@ -318,7 +325,7 @@ const getBucketsForQueryFilter = (
   // If we couldn't find the needle then maybe sift can, for example if the
   // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
   // There are also cases (and tests) where id exists with a different type
-  if (!nodesPerValue) {
+  if (!nodesPerValue.arr) {
     return false
   }
 
@@ -334,7 +341,8 @@ const getBucketsForQueryFilter = (
  * @param {IDbQueryElemMatch} filter
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
- * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs Matching node arrs are put in this array
+ * @param {Array<{arr: Array<IGatsbyNode>, start: number, stop: number}>} nodesPerValueArrs Matching node arrs are put in this array
+ * @returns {boolean} Tells outer caller whether a bucket was found or not
  */
 const collectBucketForElemMatch = (
   filterCacheKey,
@@ -369,7 +377,7 @@ const collectBucketForElemMatch = (
     )
   }
 
-  const nodesByValue /*: Array<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
+  const nodesByValue /*: {arr: Array<IGatsbyNode> | undefined, start: number, stop: number}*/ = getNodesFromCacheByValue(
     filterCacheKey,
     targetValue,
     filtersCache
@@ -378,7 +386,7 @@ const collectBucketForElemMatch = (
   // If we couldn't find the needle then maybe sift can, for example if the
   // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
   // There are also cases (and tests) where id exists with a different type
-  if (!nodesByValue) {
+  if (!nodesByValue.arr) {
     return false
   }
 
@@ -509,6 +517,9 @@ const applyFilters = (
     return result
   }
   lastFilterUsedSift = true
+
+  if (firstOnly) return []
+  return null
 
   const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
     filters,
