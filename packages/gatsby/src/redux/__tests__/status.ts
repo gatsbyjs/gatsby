@@ -28,7 +28,7 @@ describe(`Status actions/reducer`, () => {
     function runReducer(): IGatsbyState["status"] {
       return statusReducer(
         undefined,
-        actions.setPluginStatus(`test job`, { name: `test-plugin` })
+        actions.setPluginStatus(`test job` as any, { name: `test-plugin` })
       )
     }
 

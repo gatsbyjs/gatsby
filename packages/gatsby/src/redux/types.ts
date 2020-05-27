@@ -8,6 +8,12 @@ import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
 type SystemPath = string
 type Identifier = string
 
+export type Optional<T extends object, K extends keyof T = keyof T> = Omit<
+  T,
+  K
+> &
+  Partial<Pick<T, K>>
+
 export interface IGatsbyPlugin {
   name: string
   version: string
@@ -24,7 +30,7 @@ export interface IRedirect {
 
 export enum ProgramStatus {
   BOOTSTRAP_FINISHED = `BOOTSTRAP_FINISHED`,
-  BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
+  BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`
 }
 
 export interface IGatsbyPage {
@@ -32,7 +38,7 @@ export interface IGatsbyPage {
   path: string
   matchPath?: string
   component: SystemPath
-  context: Record<string, any>
+  context?: Record<string, any>
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
   updatedAt: number
@@ -100,19 +106,19 @@ export interface IGatsbyNode {
   id: Identifier
   parent: Identifier | null
   children: Identifier[]
-  fields: any
+  fields?: any
   array?: any[]
   internal: {
-    fieldOwners: any // TODO
+    fieldOwners?: any // TODO
     type: string
-    counter: number
-    owner: string
+    counter?: number
+    owner?: string
     contentDigest: string
     mediaType?: string
     content?: string
     description?: string
   }
-  __gatsby_resolved: any // TODO
+  __gatsby_resolved?: any // TODO
   [key: string]: unknown
 }
 
@@ -155,7 +161,7 @@ export interface IGatsbyIncompleteJobV2 {
 
 export interface IGatsbyIncompleteJob {
   job: InternalJobInterface
-  plugin: IGatsbyPlugin
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
 }
 
 export interface IGatsbyCompleteJobV2 {
@@ -349,7 +355,7 @@ export type ActionsUnion =
 
 export interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
-  plugin: IGatsbyPlugin
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: {
     stage: BabelStageKeys
     name: IPlugin["name"]
@@ -359,7 +365,7 @@ export interface ISetBabelPluginAction {
 
 export interface ISetBabelPresetAction {
   type: `SET_BABEL_PRESET`
-  plugin: IGatsbyPlugin
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: {
     stage: BabelStageKeys
     name: IPlugin["name"]
@@ -369,10 +375,10 @@ export interface ISetBabelPresetAction {
 
 export interface ISetBabelOptionsAction {
   type: `SET_BABEL_OPTIONS`
-  plugin: IGatsbyPlugin
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: {
-    stage: BabelStageKeys
-    name: IPlugin["name"]
+    stage?: BabelStageKeys
+    name?: IPlugin["name"]
     options: IPlugin["options"]
   }
 }
@@ -406,7 +412,7 @@ export interface ICreateJobAction {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"]
+  plugin?: IGatsbyIncompleteJob["plugin"]
 }
 
 export interface ISetJobAction {
@@ -415,7 +421,7 @@ export interface ISetJobAction {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"]
+  plugin?: IGatsbyIncompleteJob["plugin"]
 }
 
 export interface IEndJobAction {
@@ -424,26 +430,26 @@ export interface IEndJobAction {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"]
+  plugin?: IGatsbyIncompleteJob["plugin"]
 }
 
 export interface ICreatePageAction extends IActionOptions {
   type: `CREATE_PAGE`
-  plugin?: IGatsbyPlugin
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
   contextModified: boolean
   payload: IGatsbyPage
 }
 
 export interface ICreateNodeAction extends IActionOptions {
   type: `CREATE_NODE`
-  plugin?: IGatsbyPlugin
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
   oldNode: IGatsbyNode
   payload: IGatsbyNode
 }
 
 export interface ICreateNodeFieldAction extends IActionOptions {
   type: `ADD_FIELD_TO_NODE`
-  plugin: IGatsbyPlugin
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: IGatsbyNode
   addedField: string
 }
@@ -467,13 +473,13 @@ export interface ICreateRedirectAction {
 
 export interface ISetPluginStatusAction {
   type: `SET_PLUGIN_STATUS`
-  plugin: IGatsbyPlugin
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
   payload: Record<string, any> // TODO
 }
 
 export interface ITouchNodeAction extends IActionOptions {
   type: `TOUCH_NODE`
-  plugin?: IGatsbyPlugin
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
   payload: IGatsbyNode["id"]
 }
 
@@ -484,12 +490,12 @@ export interface IValidationErrorAction {
 
 export interface IDeletePageAction {
   type: `DELETE_PAGE`
-  payload: IPageInput
+  payload: Omit<IPageInput, "component">
 }
 
 export interface IDeleteNodeAction extends IActionOptions {
   type: `DELETE_NODE`
-  plugin?: IGatsbyPlugin
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
   payload: IGatsbyNode // TODO
 }
 
@@ -667,15 +673,6 @@ export interface ISetWebpackCompilationHashAction {
 export interface IUpdatePluginsHashAction {
   type: `UPDATE_PLUGINS_HASH`
   payload: Identifier
-}
-
-export interface ISetPluginStatusAction {
-  type: `SET_PLUGIN_STATUS`
-  plugin: IGatsbyPlugin
-  payload: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any
-  }
 }
 
 export interface IReplaceWebpackConfigAction {
