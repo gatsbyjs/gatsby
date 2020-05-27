@@ -3,6 +3,7 @@ import { Provider, Client } from "urql"
 import { ThemeProvider, getTheme } from "gatsby-interface"
 import { ThemeProvider as StrictUIProvider } from "strict-ui"
 import { createUrqlClient } from "../urql-client"
+import { NotificationsProvider } from "./notifications"
 
 const baseTheme = getTheme()
 
@@ -55,7 +56,9 @@ const GraphQLProvider: React.FC<{}> = ({ children }) => {
 const Providers: React.FC<{}> = ({ children }) => (
   <StrictUIProvider theme={theme}>
     <ThemeProvider theme={theme}>
-      <GraphQLProvider>{children}</GraphQLProvider>
+      <NotificationsProvider>
+        <GraphQLProvider>{children}</GraphQLProvider>
+      </NotificationsProvider>
     </ThemeProvider>
   </StrictUIProvider>
 )
