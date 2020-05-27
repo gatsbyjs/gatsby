@@ -94,7 +94,7 @@ module.exports = {
           // Relative paths when importing components from MDX break translations of the docs,
           // so use an alias instead inside MDX:
           // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
-          "@components": `src/components`,
+          "@components": `${__dirname}/src/components`,
         },
       },
     },
@@ -135,7 +135,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        pathToConfigModule: `${__dirname}/src/utils/typography`,
       },
     },
     `gatsby-transformer-documentationjs`,
@@ -261,7 +261,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
     `gatsby-plugin-offline`,
