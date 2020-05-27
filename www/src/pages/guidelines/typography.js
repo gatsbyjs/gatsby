@@ -187,11 +187,7 @@ const Typography = ({ location }) => (
         </ContentColumn>
       </Columns>
     </Section>
-    <section
-      sx={{
-        pr: 0,
-      }}
-    >
+    <Section pr={0}>
       <SectionHeading>Scale</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -250,7 +246,7 @@ const Typography = ({ location }) => (
           ))}
         </ContentColumn>
       </Columns>
-    </section>
+    </Section>
     <Section>
       <h2>Weights, letter spacings and line heights</h2>
       <Columns>
