@@ -10772,6 +10772,19 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Mox Bank
+  main_url: https://mox.com/
+  url: https://mox.com/
+  description: >
+    Mox is the new virtual bank backed by Standard Chartered in partnership with HKT, PCCW and Trip.com; created to deliver a new banking experience in Hong Kong.
+  categories:
+    - Business
+    - Design
+    - Technology
+    - Finance
+    - User Experience
+  built_by: Mox Bank
+  built_by_url: https://mox.com/
 - title: Pittica
   url: https://pittica.com
   main_url: https://pittica.com
