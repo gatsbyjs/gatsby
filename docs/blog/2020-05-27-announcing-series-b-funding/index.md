@@ -11,7 +11,7 @@ tags:
   - announcements
 ---
 
-Today we're thrilled to announce we've secured \$28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby's next stage of innovation and evolution toward becoming how the web is built.
+Today we're thrilled to announce we've secured $28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby's next stage of innovation and evolution toward becoming how the web is built.
 
 Websites today are being made the same way they were 20 years ago, with a cumbersome monolithic approach to building sites, storing data, and delivering content. Since then we've seen massive shifts to technologies like cloud computing and modern JavaScript. So why are so many sites still being built like it's 1998, using an architecture that practically guarantees they'll be slow, insecure, and expensive to scale?
 
@@ -29,7 +29,7 @@ Our developer community is growing over 10 percent month-over-month, and over 20
 
 From the start, Gatsby was designed for building sites and apps that would be fast no matter where they run. After five years of refining Gatsby's open source framework, that goal has largely been satisfied...though we will of course continue working to capture every last possible microsecond of performance gain while helping teams make smart performance decisions.
 
-> Page speed performance is a key metric for us in delivering an unparalleled shopping experience. Using Gatsby has allowed us to increase our page performance by 5-10x -- an exponential improvement not only for our customers, but for our team too. -- **Jeff Gnatek, Head of engineering, Butcherbox**
+> Page speed performance is a key metric for us in delivering an unparalleled shopping experience. Using Gatsby has allowed us to increase our page performance by 5-10x -- an exponential improvement not only for our customers, but for our team too.      -- **Jeff Gnatek, Head of engineering, Butcherbox**
 
 To take these performance gains to the next level we launched [Gatsby Cloud](https://www.gatsbyjs.com/), specialized cloud infrastructure built for teams who want their Gatsby sites functioning at full potential. With features like real-time previews, seamless deployments, and parallelized builds, Gatsby Cloud grants serious velocity for both developers and content creators.
 
@@ -42,18 +42,21 @@ Speed achieved, we now turn our eyes to a new goal for the coming five years: Ha
 Gatsby's mission is simple: to create a better web for everyone -- developers, content creators, marketers, designers, and end users. There's a lot to consider in how we make Gatsby 1000x easier to use, but we believe collaborative workflows, easy administration, and extending Gatsby's comfort level for marketers, designers, and content creators are key in getting there.
 
 **Collaboration**
+
 One of Gatsby's best features for collaboration is Preview. Gatsby Preview lets teams view changes immediately and in context of the entire site, generating an instant preview environment shareable with clients and coworkers. While this powerful collaborative tool is available in Gatsby Open Source through setting up your own server, Gatsby Cloud provides a managed Preview server. This means teams can collaborate seamlessly, with content editors working in their preferred CMS while devs are down in the code, everyone making sure their changes work in real-time before deploying to production. At Gatsby, our marketing team regularly pushes content updates from Contentful while development teams are simultaneously deploying updates from GitHub. Everyone's preferred workflows are preserved, and it just works.
 
 And so it's particularly exciting that we have first-class integrations for both WordPress and Drupal currently under development. Our goal at Gatsby is to empower users of these popular content management solutions to do the same things they do now, only better (and way, way faster). We believe that combining Gatsby with WordPress lets users own and manage their data in a comfortable way while still taking advantage of modern JavaScript ecosystem and tooling, plus the performance superpowers of running a Gatsby site on Gatsby Cloud with Incremental Builds for content and data changes. First-class support for inclusive, collaborative workflows like these, and others, is something we'll be continually expanding in both Gatsby Open Source and Gatsby Cloud.
 
-We also just launched Willit.build, the first -- and only -- publicly available static site benchmarking service. A fully open source project, Will It Build demonstrates the progress of build times for a range of sample Gatsby benchmark sites on Gatsby Cloud. For example, we show an 8k page site running with our experimental WordPress plugin is building in 6 seconds!
+We also just launched [Willit.build](https://willit.build/), a website providing the first -- and only -- publicly available static site benchmarking service. A fully open source project, Will It Build demonstrates the progress of build times for a range of sample Gatsby benchmark sites on Gatsby Cloud. For example, we show an 8k page site running with our experimental WordPress plugin is building in 6 seconds!
 
 **Easy administration**
+
 Gatsby needs to be easy to use, no matter where you're starting from. Gatsby can do an incredible number of things thanks to an ecosystem of thousands of plugins and themes. With this incredible variety, though, comes the challenge of discovering how exactly to go about executing your choices. Gatsby's vast documentation can answer almost any question, and also we've already mapped out many of the workflows you can do with Gatsby. Now, what if you could just tell Gatsby what it is you want to do, and voila! A few clicks later, Gatsby gets it all set up and running for you. We've [released an experimental version of this as Gatsby Recipes](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/) -- a user-friendly infrastructure-as-code inspired approach we're developing with the community.
 
 No matter what that future looks like, though, we will also continue to double down on improving our developer experience for those already comfortable administering Gatsby from the command line.
 
 **Access for all**
+
 Ultimately, we want to make Gatsby usable for everyone -- we want all Gatsby users to feel like [you belong here](https://www.gatsbyjs.org/docs/gatsby-core-philosophy/#you-belong-here).
 
 This includes things like providing [built-in support](https://www.gatsbyjs.org/docs/making-your-site-accessible/) for features like [accessible routing](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/) and regularly sharing [best practices on accessibility](https://www.youtube.com/watch?v=qmcclQ7UPLk) with the community. It also means expanding our support for other languages through [localizing our documentation](https://www.gatsbyjs.org/contributing/translation/), an effort that now has over 340 contributors across 22 languages working together.
