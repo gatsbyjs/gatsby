@@ -52,7 +52,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
       // Embed specific lines numbers of a file
       let lines = []
-      var sname = "";
+      var sname = ``
       const rangePrefixIndex = snippetPath.indexOf(`#L`)
       if (rangePrefixIndex > -1) {
         const range = snippetPath.slice(rangePrefixIndex + 2)
@@ -64,13 +64,25 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
         // Remove everything after the range prefix from file path
         snippetPath = snippetPath.slice(0, rangePrefixIndex)
       } else {
-        var snamePrefixIndex = snippetPath.indexOf(`#SN`)
-        if (snamePrefixIndex > -1) {
-          sname = snippetPath.slice(snamePrefixIndex + 3)
-          snippetPath = snippetPath.slice(0, snamePrefixIndex)
+        // Check to see if there is a {snippet: "snippetName"} following the file path.
+        // This syntax could support additional options in the future - for now, only
+        // handle a string that contains a `snippet :` option.
+        var optionIndex = snippetPath.indexOf(`{`)
+        if (optionIndex > -1) {
+          var optionStr = snippetPath.slice(optionIndex)
+          snippetPath = snippetPath.slice(0, optionIndex)
+          try {
+            var optVal = JSON.parse(optionStr.replace(/snippet\s*:/, `"snippet":`))
+            if (typeof optVal != "undefined" && typeof optVal.snippet != "undefined") {
+              sname = optVal.snippet
+            } else {
+              throw Error(`Invalid snippet options specified: ${optionStr}`)
+            }
+          } catch(err) {
+            throw Error(`Invalid snippet options specified: ${optionStr}`)
+          }
         }
       }
-
 
       if (!fs.existsSync(snippetPath)) {
         throw Error(`Invalid snippet specified; no such file "${snippetPath}"`)
@@ -83,12 +95,12 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
           .filter((_, lineNumber) => lines.includes(lineNumber + 1))
           .join(`\n`)
       } else if (sname.length) {
-        let index1 = code.indexOf(`START SNIPPET ${sname}`)
+        let index1 = code.indexOf(`start-snippet\{${sname}\}`)
         if (index1 > -1) {
           let index2 = code.indexOf(`\n`, index1)
           if (index2 > -1) {
-            index2 = index2 + 1  // skip the newline
-            let index3 = code.indexOf(`END SNIPPET ${sname}`, index2)
+            index2 = index2 + 1 // skip the newline
+            let index3 = code.indexOf(`end-snippet\{${sname}\}`, index2)
             if (index3 > -1) {
               let index4 = code.lastIndexOf(`\n`, index3)
               code = code.slice(index2, index4)

@@ -86,18 +86,18 @@ window.addEventListener('resize', () => {
     expect(codeBlock.value).not.toContain(notInSnippet)
   })
 
-  it(`should display a code block between START SNIPPET and END SNIPPET`, () => {
+  it(`should display a code block between start-snippet and end-snippet`, () => {
     const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
   console.log('The user is searching')
 }`
     fs.readFileSync.mockReturnValue(`function test() {
-// START SNIPPET foo
+// start-snippet{foo}
 ${codeBlockValue}
-// END SNIPPET foo
+// end-snippet{foo}
 console.log('finish up')
 }`)
 
-    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
     const transformed = plugin({ markdownAST }, { directory: `examples` })
 
     const codeBlock = transformed.children[0].children[0]
@@ -105,16 +105,16 @@ console.log('finish up')
     expect(codeBlock.value).toEqual(codeBlockValue)
   })
 
-  it(`should display a code block from START SNIPPET to end of file`, () => {
+  it(`should display a code block from start-snippet to end of file`, () => {
     const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
   console.log('The user is searching')
 }`
     fs.readFileSync.mockReturnValue(`function test() {
-// START SNIPPET foo
+// start-snippet{foo}
 ${codeBlockValue}
 `)
 
-    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
     const transformed = plugin({ markdownAST }, { directory: `examples` })
 
     const codeBlock = transformed.children[0].children[0]
@@ -127,16 +127,16 @@ ${codeBlockValue}
   console.log('The user is searching')
 }`
     fs.readFileSync.mockReturnValue(`function test() {
-// START SNIPPET bar
+// start-snippet{bar}
 console.log('Do not stop here!')
-// END SNIPPET bar
+// end-snippet{bar}
 console.log('Or here')
-// START SNIPPET foo
+// start-snippet{foo}
 ${codeBlockValue}
-// END SNIPPET foo
+// end-snippet{foo}
 `)
 
-    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
     const transformed = plugin({ markdownAST }, { directory: `examples` })
 
     const codeBlock = transformed.children[0].children[0]
@@ -149,18 +149,37 @@ ${codeBlockValue}
   console.log('The user is searching')
 }`
     fs.readFileSync.mockReturnValue(`function test() {
-  // START SNIPPET goo
+  // start-snippet{goo}
   nothing_to_do();
-  // END SNIPPET goo
+  // end-snippet{goo}
   stuff();
 }`)
 
-    const markdownAST = remark.parse(`\`embed:hello-world.js#SNfoo\``)
+    const markdownAST = remark.parse(`\`embed:hello-world.js{snippet: "foo"}\``)
     const transformed = plugin({ markdownAST }, { directory: `examples` })
 
     const codeBlock = transformed.children[0].children[0]
 
     expect(codeBlock.value).toEqual(``)
+  })
+
+  it(`should ignore improperly formatted embed options`, () => {
+    const codeBlockValue = `  if (window.location.search.indexOf('query') > -1) {
+  console.log('The user is searching')
+}`
+    fs.readFileSync.mockReturnValue(`function test() {
+  // start-snippet{goo}
+  nothing_to_do();
+  // end-snippet{goo}
+  stuff();
+}`)
+
+    const optStr = `{snoopet: "foo"}`
+    const markdownAST = remark.parse(`\`embed:hello-world.js${optStr}\``)
+
+    expect(() => plugin({ markdownAST }, { directory: `examples` })).toThrow(
+      `Invalid snippet options specified: ${optStr}`
+    )
   })
 
   it(`should error if an invalid file path is specified`, () => {

@@ -273,49 +273,49 @@ function App() {
 
 ### Specifying snippets by name
 
-As an alternative to selecting a range of lines from a file, you can add `START SNIPPET <snippet-name>` and `END SNIPPET <snippet-name>` in comments in your files. The inclusion of a name for a snippet allows you to create an example file that contains multiple snippets that you reference from different places.
+As an alternative to selecting a range of lines from a file, you can add `start-snippet{snippet-name}` and `end-snippet{snippet-name}` in comments in your files. The inclusion of a name for a snippet allows you to create an example file that contains multiple snippets that you reference from different places.
 
-You specify that you want to only include a named snippet from the embed using the syntax `#SNsnippet-name`.
+You specify that you want to only include a named snippet from the embed using the syntax `{snippet: "snippet-name"}`.
 
 **Rust example**:
 
 ```markdown
 The function to use is:
 
-`embed:api.rs#SNfuncA`
+`embed:api.rs{snippet: "funcA"}`
 
 And it is invoked via
 
-`embed:api.rs#SNinvokeA`
+`embed:api.rs{snippet: "invokeA"}`
 ```
 
 With this example file `api.rs`:
 
 ```rust
-// BEGIN SNIPPET funcA
+// begin-snippet{funcA}
 fn factorial(x: u8) -> u32 {
     if x <= 1 { 1u32 }
     else { (x as u32) * factorial(x - 1) }
 }
-// END SNIPPET funcA
+// end-snippet{funcA}
 
 pub fn main() -> () {
     let x: u8 = 5;
-    // BEGIN SNIPPET invokeA
+    // begin snippet{invokeA}
     let xfact = factorial(x);
-    // END SNIPPET invokeA
+    // end-snippet{invokeA}
     println!("{} factorial is {}", &x, &xfact);
 }
 ```
 
 Will produce something like this:
 
-```markdown
+```
 The function to use is
 
 fn factorial(x: u8) -> u32 {
-if x <= 1 { 1u32 }
-else { (x as u32) \* factorial(x - 1) }
+    if x <= 1 { 1u32 }
+    else { (x as u32) \* factorial(x - 1) }
 }
 
 And it is invoked via
