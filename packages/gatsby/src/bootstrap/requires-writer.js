@@ -7,6 +7,7 @@ const { store, emitter } = require(`../redux/`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const { match } = require(`@reach/router/lib/utils`)
 import { joinPath } from "gatsby-core-utils"
+import * as webpackStatusUtil from "../utils/webpack-status"
 
 // path ranking algorithm copied (with small adjustments) from `@reach/router` (internal util, not exported from the package)
 // https://github.com/reach/router/blob/28a79e7fc3a3487cb3304210dc3501efb8a50eba/src/lib/utils.js#L216-L254
@@ -214,6 +215,7 @@ const debouncedWriteAll = _.debounce(
     const didRequiresChange = await writeAll(store.getState())
     if (didRequiresChange) {
       reporter.pendingActivity({ id: `webpack-develop` })
+      webpackStatusUtil.markAsPending()
     }
     activity.end()
   },

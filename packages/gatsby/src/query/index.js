@@ -9,6 +9,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
 const { GraphQLRunner } = require(`./graphql-runner`)
 const pageDataUtil = require(`../utils/page-data`)
+import * as webpackStatusUtil from "../utils/webpack-status"
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -353,7 +354,9 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
     const activity = createQueryRunningActivity(queryJobs.length)
 
     const onFinish = async (...arg) => {
-      await pageDataUtil.flush({})
+      if (!webpackStatusUtil.isPending()) {
+        await pageDataUtil.flush()
+      }
       activity.done()
       return callback(...arg)
     }

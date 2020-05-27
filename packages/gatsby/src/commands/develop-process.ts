@@ -65,10 +65,11 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 import {
-  mapPagesToStaticQueryHashes,
+  // mapPagesToStaticQueryHashes,
   mapTemplatesToStaticQueryHashes,
 } from "../utils/map-pages-to-static-query-hashes"
-import pageDataUtil from "../utils/page-data"
+import * as pageDataUtil from "../utils/page-data"
+import * as webpackStatusUtil from "../utils/webpack-status"
 
 import { Stage, IProgram } from "./types"
 
@@ -388,6 +389,7 @@ interface IDevelopArgs extends IProgram {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  program.command = `develop`
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -411,6 +413,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     )
   }
   initTracer(program.openTracingConfigFile)
+  webpackStatusUtil.markAsPending()
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
@@ -654,9 +657,10 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     })
   }
 
-  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
-  //   console.log(`set invalid`, args, this)
-  // })
+  compiler.hooks.invalid.tap(`log compiling`, function (...args) {
+    // console.log(`set invalid`, args, this)
+    webpackStatusUtil.markAsPending()
+  })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
@@ -754,6 +758,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
       )
 
       await pageDataUtil.flush()
+      webpackStatusUtil.markAsDone()
 
       console.log(store.getState().pendingPageDataWrites)
     }

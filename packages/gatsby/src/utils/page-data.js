@@ -1,3 +1,4 @@
+import { websocketManager } from "./websocket-manager"
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
@@ -79,13 +80,27 @@ const flush = async () => {
 
   for (const pagePath of pagesToWrite) {
     const page = pages.get(pagePath)
-    await writePageData(
+    const body = await writePageData(
       { publicDir: path.join(program.directory, `public`) },
       page,
       {
         staticQueryHashes: staticQueriesByTemplate.get(page.componentPath),
       }
     )
+
+    if (program.command === `develop`) {
+      websocketManager.emitPageData({
+        ...body.result,
+        id: pagePath,
+        result: {
+          data: body.result.data,
+          pageContext: body.result.pageContext,
+          moduleDependencies: body.moduleDependencies,
+          staticQueryHashes: body.staticQueryHashes,
+        },
+      })
+    }
+
     console.log({ pagePath })
   }
 

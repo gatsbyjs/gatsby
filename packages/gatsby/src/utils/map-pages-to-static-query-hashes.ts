@@ -66,6 +66,19 @@ export function mapTemplatesToStaticQueryHashes(
     (map, [path, component]) => {
       const { componentPath } = component
       const module = modules.find(module => module.resource === componentPath)
+      if (!module) {
+        // ConcatanatedModule :sob:
+        map.set(path, {
+          component,
+          dependencies: [],
+        })
+        return map
+        // debugger
+        // console.log({
+        //   component,
+        //   modules
+        // })
+      }
       const dependencies = uniq(
         module.dependencies.filter(m => m.module).map(m => m.module.resource)
       )

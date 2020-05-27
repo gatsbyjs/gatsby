@@ -2,6 +2,7 @@ import path from "path"
 import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
+import { isEqual } from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
@@ -27,7 +28,11 @@ import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
-import { mapPagesToStaticQueryHashes } from "../utils/map-pages-to-static-query-hashes"
+import {
+  // mapPagesToStaticQueryHashes,
+  mapTemplatesToStaticQueryHashes,
+} from "../utils/map-pages-to-static-query-hashes"
+import * as webpackStatusUtil from "../utils/webpack-status"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -54,6 +59,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
+
+  program.command = `build`
+  webpackStatusUtil.markAsPending()
 
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
@@ -113,13 +121,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const workerPool = WorkerPool.create()
 
-  const state = store.getState()
-
-  const mapOfPagesToStaticQueryHashes = mapPagesToStaticQueryHashes(
-    state,
-    stats
-  )
-
   const webpackCompilationHash = stats.hash
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
@@ -142,13 +143,43 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await processPageQueries()
 
-  mapOfPagesToStaticQueryHashes.forEach(async (staticQueryHashes, pagePath) => {
-    const page = state.pages.get(pagePath)
+  {
+    const state = store.getState()
+    const mapOfTemplatesToStaticQueryHashes = mapTemplatesToStaticQueryHashes(
+      state,
+      stats
+    )
 
-    await pageDataUtil.writePageData({ publicDir }, page, {
-      staticQueryHashes,
-    })
-  })
+    mapOfTemplatesToStaticQueryHashes.forEach(
+      (staticQueryHashes, componentPath) => {
+        if (
+          !isEqual(
+            state.staticQueriesByTemplate.get(componentPath)?.sort(),
+            staticQueryHashes.map(toString)?.sort()
+          )
+        ) {
+          store.dispatch({
+            type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+            payload: {
+              componentPath,
+            },
+          })
+          store.dispatch({
+            type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
+            payload: {
+              componentPath,
+              staticQueryHashes,
+            },
+          })
+        }
+      }
+    )
+
+    await pageDataUtil.flush()
+    webpackStatusUtil.markAsDone()
+
+    console.log(store.getState().pendingPageDataWrites)
+  }
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
