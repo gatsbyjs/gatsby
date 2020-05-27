@@ -83,7 +83,7 @@ Mapping from `component` (path on disk) to its [Page object](#page-object). It i
 }
 ```
 
-Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
+Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
 
 ### componentChunkName
 
