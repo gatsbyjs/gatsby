@@ -126,6 +126,48 @@ function handleMany(siftArgs, nodes) {
 }
 
 /**
+ * finds the intersection of two arrays in O(n) with n = min(a.length, b.length)
+ *
+ * @param {Array<IGatsbyNode>} a Ordered by id, ascending
+ * @param {Array<IGatsbyNode>} b Ordered by id, ascending
+ * @returns {Array<IGatsbyNode>} Ordered by id, ascending
+ */
+function intersectNodes(a, b) {
+  let pointerA = 0
+  let pointerB = 0
+  let result = []
+  let maxA = a.length
+  let maxB = b.length
+  let lastAdded = undefined // Used to dedupe the list
+
+  while (pointerA < maxA && pointerB < maxB) {
+    const nodeA = a[pointerA]
+    const nodeB = b[pointerB]
+    const idA = nodeA.id
+    const idB = nodeB.id
+
+    if (idA < idB) {
+      pointerA++
+    } else if (idA > idB) {
+      pointerB++
+    } else {
+      // nodeA===nodeB. Make sure we didn't just add this node already.
+      // Since input arrays are sorted by id, the same node should be grouped
+      // back to back, so even if both input arrays contained the same node
+      // twice, this check would prevent the result from getting duplicate nodes
+      if (lastAdded !== nodeA) {
+        result.push(nodeA)
+        lastAdded = nodeA
+      }
+      pointerA++
+      pointerB++
+    }
+  }
+
+  return result
+}
+
+/**
  * Given the path of a set of filters, return the sets of nodes that pass the
  * filter.
  * Only nodes of given node types will be considered
@@ -160,26 +202,21 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   nodesPerValueSets.sort(
     (a /*: Set<IGatsbyNode> */, b /*: Set<IGatsbyNode> */) => b.size - a.size
   )
-  // Iterate on the set with the fewest elements and create the intersection
-  const needles /*: Set<IGatsbyNode>*/ = nodesPerValueSets.pop()
-  // Take the intersection of the retrieved caches-by-value
-  const result /*: Array<IGatsbyNode> */ = []
 
-  // This _can_ still be expensive but the set of nodes should be limited ...
-  needles.forEach((node /*: IGatsbyNode */) => {
-    if (
-      nodesPerValueSets.every((cache /*: Set<IGatsbyNode> */) =>
-        cache.has(node)
-      )
-    ) {
-      // Every cache set contained this node so keep it
-      result.push(node)
-    }
-  })
+  if (nodesPerValueSets.length === 1) {
+    // If there's only one bucket then we have to run it against itself to
+    // make sure it doesn't contain dupes. Otherwise the deduping would
+    // already happen while merging.
+    nodesPerValueSets.push(nodesPerValueSets[nodesPerValueSets.length - 1])
+  }
 
-  // TODO: do we cache this result? I'm not sure how likely it is to be reused
-  // Consider the case of {a: {eq: 5}, b: {eq: 10}}, do we cache the [5,10]
-  // case for all value pairs? How likely is that to ever be reused?
+  while (nodesPerValueSets.length > 1) {
+    nodesPerValueSets.push(
+      intersectNodes(nodesPerValueSets.pop(), nodesPerValueSets.pop())
+    )
+  }
+
+  const result = nodesPerValueSets[0]
 
   if (result.length === 0) {
     return null
