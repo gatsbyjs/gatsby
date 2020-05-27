@@ -4,6 +4,7 @@ import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
 import {
   defaultIcons,
+  defaultIconOptions,
   doesIconExist,
   addDigestToPath,
   favicons,
@@ -147,13 +148,14 @@ const makeManifest = async ({
 
   const faviconIsEnabled = pluginOptions.include_favicon ?? true
 
+  const iconOptions = pluginOptions.icon_options ?? defaultIconOptions
+
   // Delete options we won't pass to the manifest.webmanifest.
   delete manifest.plugins
   delete manifest.legacy
   delete manifest.theme_color_in_head
   delete manifest.cache_busting_mode
   delete manifest.crossOrigin
-  delete manifest.icon_options
   delete manifest.include_favicon
 
   // If icons are not manually defined, use the default icon set.
@@ -161,15 +163,13 @@ const makeManifest = async ({
     manifest.icons = [...defaultIcons]
   }
 
-  // Specify extra options for each icon (if requested).
-  if (pluginOptions.icon_options) {
-    manifest.icons = manifest.icons.map(icon => {
-      return {
-        ...pluginOptions.icon_options,
-        ...icon,
-      }
-    })
-  }
+  // Specify extra options for each icon.
+  manifest.icons = manifest.icons.map(icon => {
+    return {
+      ...iconOptions,
+      ...icon,
+    }
+  })
 
   // Determine destination path for icons.
   let paths = {}

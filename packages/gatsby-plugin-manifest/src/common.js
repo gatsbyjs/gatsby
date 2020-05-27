@@ -53,6 +53,12 @@ exports.defaultIcons = [
   },
 ]
 
+exports.defaultIconOptions = [
+  {
+    purpose: `any maskable`,
+  },
+]
+
 /**
  * Check if the icon exists on the filesystem
  *
