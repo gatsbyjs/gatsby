@@ -85,10 +85,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   }
 
   let currentSyncData
+  const basicSyncConfig = {
+    limit: pageLimit,
+    resolveLinks: false,
+  }
   try {
     let query = syncToken
-      ? { nextSyncToken: syncToken }
-      : { initial: true, limit: pageLimit }
+      ? { nextSyncToken: syncToken, ...basicSyncConfig }
+      : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
     reporter.panic(`Fetching contentful data failed`, e)

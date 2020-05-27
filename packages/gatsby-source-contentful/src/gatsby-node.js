@@ -84,11 +84,6 @@ exports.sourceNodes = async (
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
-  const createSyncToken = () =>
-    `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-      `environment`
-    )}-${pluginConfig.get(`host`)}`
-
   // add preview/sync capabilitly to token
   let syncToken = await cache.get(CACHE_SYNC_TOKEN)
   let previousSyncData = {
@@ -114,12 +109,20 @@ exports.sourceNodes = async (
   })
 
   // compare data between currentSyncData and previousSyncData and update it
-  previousSyncData.entries.filter(entry =>
-    _.findIndex(currentSyncData.deletedEntries, o => o.sys.id === entry.sys.id)
+  previousSyncData.entries = previousSyncData.entries.filter(
+    entry =>
+      _.findIndex(
+        currentSyncData.deletedEntries,
+        o => o.sys.id === entry.sys.id
+      ) !== -1
   )
 
-  previousSyncData.assets.filter(asset =>
-    _.findIndex(currentSyncData.deletedAssets, o => o.sys.id === asset.sys.id)
+  previousSyncData.assets = previousSyncData.assets.filter(
+    asset =>
+      _.findIndex(
+        currentSyncData.deletedAssets,
+        o => o.sys.id === asset.sys.id
+      ) !== -1
   )
 
   // order is important here, fresh data first
