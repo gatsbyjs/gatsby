@@ -3,7 +3,7 @@ const semver = require(`semver`)
 const stringSimilarity = require(`string-similarity`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const resolveModuleExports = require(`../resolve-module-exports`)
+const { resolveModuleExports } = require(`../resolve-module-exports`)
 const { getLatestAPIs } = require(`../../utils/get-latest-apis`)
 
 const getGatsbyUpgradeVersion = entries =>

@@ -1,4 +1,3 @@
-const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -121,8 +120,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `packages`,
-        path: `${__dirname}/../packages/`,
+        name: `gatsby-core`,
+        path: `${__dirname}/../packages/gatsby/`,
         ignore: [`**/dist/**`],
       },
     },
@@ -161,7 +160,7 @@ module.exports = {
           return (
             [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
             (node.internal.type === `File` &&
-              path.parse(node.dir).dir.endsWith(`packages`))
+              node.sourceInstanceName === `gatsby-core`)
           )
         },
         gatsbyRemarkPlugins: [

@@ -13,31 +13,41 @@ const fixture = (
 test(`renders to a plan`, async () => {
   const result = await render(fixture, {})
 
-  expect(result).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "currentState": "",
-        "describe": "Write red.js",
-        "diff": "- Original  - 0
+  // Gatsby latest version is ever changing so we use regex matcher for currentState property.
+  // Unfortunately jest property matchers work weirdly on arrays so instead
+  // of snapshotting entitre result array it's split into few pieces.
+
+  expect(result.length).toEqual(2)
+  expect(result[0]).toMatchInlineSnapshot(`
+    Object {
+      "currentState": "",
+      "describe": "Write red.js",
+      "diff": "- Original  - 0
     + Modified  + 1
 
     + red!",
-        "newState": "red!",
-        "resourceDefinitions": Object {
-          "content": "red!",
-          "path": "red.js",
-        },
-        "resourceName": "File",
+      "newState": "red!",
+      "resourceDefinitions": Object {
+        "content": "red!",
+        "path": "red.js",
       },
-      Object {
-        "currentState": "gatsby@2.22.5",
-        "describe": "Install gatsby@latest",
-        "newState": "gatsby@latest",
-        "resourceDefinitions": Object {
-          "name": "gatsby",
-        },
-        "resourceName": "NPMPackage",
-      },
-    ]
+      "resourceName": "File",
+    }
   `)
+  expect(result[1]).toMatchInlineSnapshot(
+    {
+      currentState: expect.stringMatching(/gatsby@[0-9.]+/),
+    },
+    `
+    Object {
+      "currentState": StringMatching /gatsby@\\[0-9\\.\\]\\+/,
+      "describe": "Install gatsby@latest",
+      "newState": "gatsby@latest",
+      "resourceDefinitions": Object {
+        "name": "gatsby",
+      },
+      "resourceName": "NPMPackage",
+    }
+  `
+  )
 })
