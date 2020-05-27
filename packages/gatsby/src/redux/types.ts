@@ -90,7 +90,7 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
-    sireUrl?: string
+    siteUrl?: string
     // siteMetadata is free form
     [key: string]: unknown
   }
@@ -704,6 +704,16 @@ export interface IAddFieldToNodeAction {
 export interface IAddChildNodeToParentNodeAction {
   type: `ADD_CHILD_NODE_TO_PARENT_NODE`
   payload: IGatsbyNode
+}
+
+export interface IDeleteNodeAction {
+  type: `DELETE_NODE`
+  payload: IGatsbyNode
+}
+
+export interface IDeleteNodesAction {
+  type: `DELETE_NODES`
+  payload: Identifier[]
 }
 
 export interface IAddPageDataStatsAction {

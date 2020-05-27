@@ -149,15 +149,15 @@ plugins: [
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-### 4. Add custom css/scss files
+### 4. Add custom CSS/SCSS files
 
 **Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and @apply rules directly from your .js files.
 
-In case you need to create custom classes for elements for nested selectors, or for overriding external packages, you can create your own css/scss files.
+In case you need to create custom classes for elements for nested selectors, or for overriding external packages, you can create your own CSS/SCSS files.
 
 1. Create a new file and import your Tailwind directives.
 
-This will be your 'master' css file, which you will import all other css within.
+This will be your 'master' CSS file, which you will import all other css within.
 
 ```css:title=src/css/index.css
 @tailwind base;
@@ -165,9 +165,9 @@ This will be your 'master' css file, which you will import all other css within.
 @tailwind utilities;
 ```
 
-**Note**: if using scss (or another supported language, rename files/folders appropriately).
+**Note**: if using SCSS (or another supported language, rename files/folders appropriately).
 
-2. Import any custom css files or add any custom css you need (optional)
+2. Import any custom CSS files or add any custom CSS you need (optional)
 
 ```css:title=src/css/index.css
 @tailwind base;
@@ -181,7 +181,7 @@ This will be your 'master' css file, which you will import all other css within.
 
 3. Apply these additional styles to the browser
 
-In `gatsby-browser.js` add an import rule for your Tailwind directives and custom css so that they are accounted for in build.
+In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
 
 ```js:title=gatsby-browser.js
 import "./src/css/index.css"

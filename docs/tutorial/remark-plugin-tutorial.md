@@ -280,4 +280,4 @@ You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transforme
 
 ## What's next?
 
-If you wish to see other plugins that manipulate the Remark AST, search for `gatsby-remark-` in the [plugin library](/plugins).
+If you wish to see other plugins that manipulate the Remark AST, you can find them in the [plugin library](/plugins/?=gatsby-remark-).

@@ -22,7 +22,7 @@ let nodeA = {
 }
 ```
 
-Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and those in the `baz` array (`{ x: 8 }`). Node tracking will track those back to the top level node's ID (`id2` in this case). The [trackInlineObjectsinRootNode()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L352) function takes care of this and records those relationships in the [rootNodeMap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L69) WeakMap. E.g. after calling `trackInlineObjectsInRootNode(nodeA)`, `rootNodeMap` would contain the following records:
+Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and those in the `baz` array (`{ x: 8 }`). Node tracking will track those back to the top level node's ID (`id2` in this case). The [trackInlineObjectsinRootNode()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L385) function takes care of this and records those relationships in the [rootNodeMap](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L69) WeakMap. E.g. after calling `trackInlineObjectsInRootNode(nodeA)`, `rootNodeMap` would contain the following records:
 
 ```javascript
 // rootNodeMap:
@@ -47,7 +47,7 @@ Its sub objects are `foo` (value = `{ myfile: "blog/my-blog.md", b: 2}`), and th
 
 ## Find Root Nodes
 
-To access this information, `schema/node-model.js` provides the [findRootNodeAncestor()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L372) function. It takes an object, and looks up its parent's nodeID in `rootNodeMap`. It then finds the actual node in redux. It then gets that node's `parent` ID, and gets the parent node from redux. And continues in this way until the root node is found.
+To access this information, `schema/node-model.js` provides the [findRootNodeAncestor()](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/node-model.js#L403) function. It takes an object, and looks up its parent's nodeID in `rootNodeMap`. It then finds the actual node in redux. It then gets that node's `parent` ID, and gets the parent node from redux. And continues in this way until the root node is found.
 
 In the above example, `nodeA` has parent `id1`. So `findRootNodeAncestor({ blog: "blog/my-blog.md", b: 2 })` would return the node for `id1` (the parent).
 

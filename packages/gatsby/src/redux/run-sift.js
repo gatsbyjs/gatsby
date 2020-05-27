@@ -546,7 +546,7 @@ const runSiftOnNodes = (
   resolvedFields,
   getNode
 ) => {
-  // If the the query for single node only has a filter for an "id"
+  // If the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
   if (isEqId(filters)) {
     const node = getNode(filters[0].id.$eq)

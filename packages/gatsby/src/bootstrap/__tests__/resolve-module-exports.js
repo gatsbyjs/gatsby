@@ -123,7 +123,8 @@ describe(`Resolve module exports`, () => {
     "/export/named/as": `const foo = ''; export { foo as bar };`,
     "/export/named/multiple": `const foo = ''; const bar = ''; const baz = ''; export { foo, bar, baz };`,
     "/export/default": `export default () => {}`,
-    "/export/default/name": `const foo = () => {}; export default foo`
+    "/export/default/name": `const foo = () => {}; export default foo`,
+    "/export/function": `export function foo() {}`
   }
 
   beforeEach(() => {
@@ -219,6 +220,11 @@ describe(`Resolve module exports`, () => {
   it(`Resolves default export with name`, () => {
     const result = resolveModuleExports(`/export/default/name`, { resolver })
     expect(result).toEqual([`export default foo`])
+  })
+
+  it(`Resolves function declaration`, () => {
+    const result = resolveModuleExports(`/export/function`, { resolver })
+    expect(result).toEqual([`foo`])
   })
 
   it(`Resolves exports when using require mode - simple case`, () => {

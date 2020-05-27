@@ -401,6 +401,9 @@ module.exports = async (
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
         "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
           require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        ),
+        "socket.io-client": path.dirname(
+          require.resolve(`socket.io-client/package.json`)
         )
       },
       plugins: [

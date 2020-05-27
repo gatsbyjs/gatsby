@@ -24,6 +24,7 @@ interface ITransformedWebpackError {
     [key: string]: unknown
   }
 }
+
 const transformWebpackError = (
   stage: keyof typeof stageCodeToReadableLabel,
   webpackError: any

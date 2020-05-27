@@ -62,7 +62,7 @@ module.exports = async (
 
     const optionsHash = createContentDigest(options)
 
-    const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
+    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
     let cachedRawHTML = await cache.get(cacheKey)
 
     if (cachedRawHTML) {

@@ -54,14 +54,26 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       isES6 = true
     },
 
-    // get foo from `export const foo = bar`
     ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-      const exportName = get(
-        astPath,
-        `node.declaration.declarations[0].id.name`
-      )
-      isES6 = true
-      if (exportName) exportNames.push(exportName)
+      const declaration = astPath.node.declaration
+
+      // get foo from `export const foo = bar`
+      if (
+        get(astPath, `node.declaration.type`) === `VariableDeclaration` &&
+        get(astPath, `node.declaration.declarations[0].id.name`)
+      ) {
+        isES6 = true
+        exportNames.push(declaration.declarations[0].id.name)
+      }
+
+      // get foo from `export function foo()`
+      if (
+        get(astPath, `node.declaration.type`) === `FunctionDeclaration` &&
+        get(astPath, `node.declaration.id.name`)
+      ) {
+        isES6 = true
+        exportNames.push(declaration.id.name)
+      }
     },
 
     // get foo from `export { foo } from 'bar'`

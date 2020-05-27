@@ -8,7 +8,7 @@ But how do you figure out what modules/files to split? Thankfully, there is a na
 
 ## .cache/async-requires.js
 
-During the [Write Out Pages](/docs/write-pages/#async-requiresjs) bootstrap phase, you output `.cache/async-requires.js`. This file is key to code splitting. It exports a `components` object that maps [ComponentChunkNames](/docs/behind-the-scenes-terminology/#componentchunkname) to functions that import the component's file on disk. E.g
+During the [Write Out Pages](/docs/write-pages/#async-requiresjs) bootstrap phase, you output `.cache/async-requires.js`. This file is key to code splitting. It exports a `components` object that maps [ComponentChunkNames](/docs/gatsby-internals-terminology/#componentchunkname) to functions that import the component's file on disk. E.g
 
 ```javascript
 exports.components = {
@@ -91,7 +91,7 @@ To do this, you need to be able to create `<link>` and `<script>` tags in the HT
 
 ### webpack.stats.json
 
-It turns out that webpack provides a way to record the mapping. It provides a compilation hook called [done](https://webpack.js.org/api/compiler-hooks/#done) that you can register for. It provides a [stats](https://webpack.js.org/api/stats/) data structure that contains all the `chunkGroups` (remember that the chunk Group is the `componentChunkName`). Each chunk group contains a list of the chunks it depends on. Gatsby provides a custom webpack plugin called [GatsbyWebpackStatsExtractor](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/gatsby-webpack-stats-extractor.js) that implements this hook and writes the chunk information to `/public/webpack.stats.json` (under the `assetsByChunkName` key). E.g
+It turns out that webpack provides a way to record the mapping. It provides a compilation hook called [done](https://webpack.js.org/api/compiler-hooks/#done) that you can register for. It provides a [stats](https://webpack.js.org/api/stats/) data structure that contains all the `chunkGroups` (remember that the chunk Group is the `componentChunkName`). Each chunk group contains a list of the chunks it depends on. Gatsby provides a custom webpack plugin called [GatsbyWebpackStatsExtractor](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/gatsby-webpack-stats-extractor.ts) that implements this hook and writes the chunk information to `/public/webpack.stats.json` (under the `assetsByChunkName` key). E.g
 
 ```javascript
 {

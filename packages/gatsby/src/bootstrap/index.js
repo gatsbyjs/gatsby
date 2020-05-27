@@ -31,7 +31,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 
 import { createGraphQLRunner } from "./create-graphql-runner"
 const { extractQueries } = require(`../query/query-watcher`)
-const requiresWriter = require(`./requires-writer`)
+import * as requiresWriter from "./requires-writer"
 import { writeRedirects, startRedirectListener } from "./redirects-writer"
 
 // Override console.log to add the source file + line number.
