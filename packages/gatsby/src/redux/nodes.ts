@@ -753,19 +753,7 @@ export const getNodesFromCacheByValue = (
 
     // Do the action for "$ne" for each element in the set of values
     values.forEach(filterValue => {
-      if (filterValue === null) {
-        // Edge case: $nin with `null` returns only the nodes that contain the
-        // full path and that don't resolve to null, so drop `undefined` as well
-        let cache = filterCache.byValue.get(undefined)
-        if (cache) cache.forEach(node => set.delete(node))
-        cache = filterCache.byValue.get(null)
-        if (cache) cache.forEach(node => set.delete(node))
-      } else {
-        // Not excluding null so it should include undefined leafs or leafs
-        // where only the partial path exists for whatever reason.
-        const cache = filterCache.byValue.get(filterValue)
-        if (cache) cache.forEach(node => set.delete(node))
-      }
+      removeBucketFromSet(filterValue, filterCache, set)
     })
 
     // TODO: there's probably a more efficient algorithm to do set
@@ -776,19 +764,7 @@ export const getNodesFromCacheByValue = (
   if (op === `$ne`) {
     const set = new Set(filterCache.meta.nodesUnordered)
 
-    if (filterValue === null) {
-      // Edge case: $ne with `null` returns only the nodes that contain the full
-      // path and that don't resolve to null, so drop `undefined` as well.
-      let cache = filterCache.byValue.get(undefined)
-      if (cache) cache.forEach(node => set.delete(node))
-      cache = filterCache.byValue.get(null)
-      if (cache) cache.forEach(node => set.delete(node))
-    } else {
-      // Not excluding null so it should include undefined leafs or leafs where
-      // only the partial path exists for whatever reason.
-      const cache = filterCache.byValue.get(filterValue)
-      if (cache) cache.forEach(node => set.delete(node))
-    }
+    removeBucketFromSet(filterValue, filterCache, set)
 
     // TODO: there's probably a more efficient algorithm to do set
     //       subtraction in such a way that we dont have to resort here
@@ -1054,6 +1030,26 @@ export const getNodesFromCacheByValue = (
 
   // Unreachable because we checked all values of FilterOp (which op is)
   return undefined
+}
+
+function removeBucketFromSet(
+  filterValue: FilterValueNullable,
+  filterCache: IFilterCache,
+  set: Set<IGatsbyNode>
+) {
+  if (filterValue === null) {
+    // Edge case: $ne with `null` returns only the nodes that contain the full
+    // path and that don't resolve to null, so drop `undefined` as well.
+    let cache = filterCache.byValue.get(undefined)
+    if (cache) cache.forEach(node => set.delete(node))
+    cache = filterCache.byValue.get(null)
+    if (cache) cache.forEach(node => set.delete(node))
+  } else {
+    // Not excluding null so it should include undefined leafs or leafs where
+    // only the partial path exists for whatever reason.
+    const cache = filterCache.byValue.get(filterValue)
+    if (cache) cache.forEach(node => set.delete(node))
+  }
 }
 
 /**
