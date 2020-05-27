@@ -6486,6 +6486,25 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-donations.netlify.app
+  repo: https://github.com/moonclerk/gatsby-starter-donations
+  description: A simple starter to help get up and running accepting donations using Gatsby + MoonClerk
+  tags:
+    - Donations
+    - Landing Page
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - SEO optimized
+    - Fully responsive
+    - Gatsby images
+    - MoonClerk Payment Forms
+    - Open source illustrations from Icons8
+    - Google Analytics
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for easy, beautiful typography
+    - Styling with styled-components
+    - Organized using ABEM
 - url: https://jolly-tree-003047c03.azurestaticapps.net/
   repo: https://github.com/floAr/gatsby-starter-azure_swa
   description: A simple GatsbyJS starter making use of the new Azure Static Web App service.
