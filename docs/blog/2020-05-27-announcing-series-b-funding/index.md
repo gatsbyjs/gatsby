@@ -1,8 +1,8 @@
 ---
-title: “Gatsby Raises $28M Series B to Become How the Web is Built”
+title: "Gatsby Raises $28M Series B to Become How the Web is Built"
 date: 2020-05-27
 author: Kyle Mathews
-excerpt: “Today we’re thrilled to announce we’ve secured $28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby’s next stage of innovation and evolution toward becoming how the web is built.”
+excerpt: "Today we’re thrilled to announce we’ve secured $28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby’s next stage of innovation and evolution toward becoming how the web is built."
 tags:
   - willitbuild
   - gatsby-cloud
