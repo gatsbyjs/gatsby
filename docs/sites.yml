@@ -10772,19 +10772,6 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
-- title: Mox Bank
-  main_url: https://mox.com/
-  url: https://mox.com/
-  description: >
-    Mox is the new virtual bank backed by Standard Chartered in partnership with HKT, PCCW and Trip.com; created to deliver a new banking experience in Hong Kong.
-  categories:
-    - Business
-    - Design
-    - Technology
-    - Finance
-    - User Experience
-  built_by: Mox Bank
-  built_by_url: https://mox.com/
 - title: Pittica
   url: https://pittica.com
   main_url: https://pittica.com
@@ -10886,4 +10873,19 @@
     - Programming
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
+  featured: false
+- title: CodeWithLinda
+  url: https://www.codewithlinda.com/
+  main_url: https://www.codewithlinda.com/
+  source_url:https://github.com/Linda-Ikechukwu/Personal-Site
+  description: >
+    CodeWithLinda is the personal portfolio and blog site of Linda Ikechukwu, a Frontend developer based in Lagos, Nigeria.
+  categories:
+    - Portfolio
+    - Blog
+    - Technology
+    - Programming
+    - Web development
+  built_by: Linda Ikechukwu
+  built_by_url: https://twitter.com/_MsLinda
   featured: false
