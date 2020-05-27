@@ -33,20 +33,22 @@ type FilterValue =
 export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp
-  // In this set, `undefined` values represent nodes that did not have the path
+  // In this map `undefined` values represent nodes that did not have the path
+  // The individual arrays are ordered asc by id (relevant for merging/deduping)
+  // The arrays may contain duplicates (!), can happen for elemMatch
   byValue: Map<FilterValueNullable, Array<IGatsbyNode>>
   meta: {
-    // Unordered unfiltered flat set of _all_ nodes of requested type(s)
+    // Unordered unfiltered flat list of _all_ nodes of requested type(s)
     nodesUnordered?: Array<IGatsbyNode>
-    // Ordered set of all values (by `<`) found by this filter. No null / undefs
+    // Ordered list of all values (by `<`) found by this filter. No null / undefs
     valuesAsc?: Array<FilterValue>
-    // Flat set of nodes, ordered by valueAsc, but not ordered per value group
+    // Flat lits of nodes, ordered by valueAsc, but not ordered per value group
     nodesByValueAsc?: Array<IGatsbyNode>
     // Ranges of nodes per value, maps to the nodesByValueAsc array
     valueRangesAsc?: Map<FilterValue, [number, number]>
-    // Ordered set of all values (by `>`) found by this filter. No null / undefs
+    // Ordered list of all values (by `>`) found by this filter. No null / undefs
     valuesDesc?: Array<FilterValue>
-    // Flat set of nodes, ordered by valueDesc, but not ordered per value group
+    // Flat list of nodes, ordered by valueDesc, but not ordered per value group
     nodesByValueDesc?: Array<IGatsbyNode>
     // Ranges of nodes per value, maps to the nodesByValueDesc array
     valueRangesDesc?: Map<FilterValue, [number, number]>
@@ -222,8 +224,7 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // of just one.
 
   // For `$ne` we will take the list of all targeted nodes and eliminate the
-  // bucket of nodes with a particular value, if it exists at all. So for that
-  // reason we construct a flat list here to create new Set instances from.
+  // bucket of nodes with a particular value, if it exists at all..
 
   const arr: Array<IGatsbyNode> = []
   filterCache.meta.nodesUnordered = arr
@@ -239,7 +240,7 @@ function postIndexingMetaSetupLtLteGtGte(
   op: FilterOp
 ): void {
   // Create an ordered array of individual nodes, ordered (grouped) by the
-  // value to which the filter resolves. Nodes are not ordered per value.
+  // value to which the filter resolves. Nodes per value are ordered by id, asc.
   // This way non-eq ops can simply slice the array to get a range.
 
   const entriesNullable: Array<[FilterValueNullable, Array<IGatsbyNode>]> = [
@@ -255,7 +256,7 @@ function postIndexingMetaSetupLtLteGtGte(
     [FilterValue, Array<IGatsbyNode>]
   >
 
-  // Sort all sets by its value, asc. Ignore/allow potential type casting.
+  // Sort all arrays by its value, asc. Ignore/allow potential type casting.
   // Note: while `<` is the inverse of `>=`, the ordering might coerce values.
   // This coercion makes the op no longer idempotent (normally the result of
   // `a < b` is the opposite of `b >= a` for any a or b of the same type). The
@@ -267,7 +268,7 @@ function postIndexingMetaSetupLtLteGtGte(
   // So instead we potentially track two ordered lists; ascending and descending
   // and the only difference when comparing the inverse of one to the other
   // should be how these `NaN` cases end up getting ordered.
-  // It's fine for `lt` and `lte` to use the same ordered set. Same for gt/gte.
+  // It's fine for `lt` and `lte` to use the same ordered list. Same for gt/gte.
   if (op === `$lt` || op === `$lte`) {
     // Order ascending; first value is lowest
     entries.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
@@ -308,9 +309,9 @@ function postIndexingMetaSetupLtLteGtGte(
 }
 
 /**
- * Given a single non-elemMatch filter path, a set of node types, and a
+ * Given a single non-elemMatch filter path, a list of node types, and a
  * cache, create a cache that for each resulting value of the filter contains
- * all the Nodes in a Set.
+ * all the Nodes in a list.
  * This cache is used for applying the filter and is a massive improvement over
  * looping over all the nodes, when the number of pages (/nodes) scales up.
  */
@@ -360,7 +361,7 @@ export function ensureEmptyFilterCache(
   filtersCache: FiltersCache
 ): void {
   // This is called for queries without any filters
-  // We want to cache the result since it's basically a set of nodes by type(s)
+  // We want to cache the result since it's basically a list of nodes by type(s)
   // There are sites that have multiple queries which are empty
 
   const state = store.getState()
@@ -371,6 +372,7 @@ export function ensureEmptyFilterCache(
     op: `$eq`, // Ignore.
     byValue: new Map<FilterValueNullable, Array<IGatsbyNode>>(),
     meta: {
+      // TODO: I think this needs to be ordered by id now
       nodesUnordered, // This is what we want
     },
   })
@@ -461,12 +463,12 @@ function markNodeForValue(
   node: IGatsbyNode,
   value: FilterValueNullable
 ): void {
-  let set = filterCache.byValue.get(value)
-  if (!set) {
-    set = []
-    filterCache.byValue.set(value, set)
+  let arr = filterCache.byValue.get(value)
+  if (!arr) {
+    arr = []
+    filterCache.byValue.set(value, arr)
   }
-  set.push(node)
+  arr.push(node)
 }
 
 export const ensureIndexByElemMatch = (
@@ -651,8 +653,8 @@ const binarySearchDesc = (
 }
 
 /**
- * Given the cache key for a filter and a target value return the set of nodes
- * that resolve to this value.
+ * Given the cache key for a filter and a target value return the list of nodes
+ * that resolve to this value. The returned array should be ordered by id.
  * This returns `undefined` if there is no such node
  *
  * Basically if the filter was {a: {b: {slug: {eq: "foo/bar"}}}} then it will
@@ -684,6 +686,7 @@ export const getNodesFromCacheByValue = (
         .concat(undefArr)
         .sort((A, B) => (A.id < B.id ? -1 : A.id === B.id ? 0 : 1))
     }
+    // Arrays in byValue are assumed to be ordered by id
     return filterCache.byValue.get(filterValue)
   }
 
@@ -697,6 +700,7 @@ export const getNodesFromCacheByValue = (
 
     const arr: Array<IGatsbyNode> = []
 
+    // Note: it's very unlikely that the list of filter values is big so .includes should be fine here
     if (filterValueArr.includes(null)) {
       // Like all other ops, `in: [null]` behaves weirdly, allowing all nodes
       // that do not actually have a (complete) path (v=undefined)
@@ -707,7 +711,7 @@ export const getNodesFromCacheByValue = (
     }
 
     // For every value in the needle array, find the bucket of nodes for
-    // that value, add this bucket of nodes to one set, return the set.
+    // that value, add this bucket of nodes to one list, return the list.
     filterValueArr
       .slice(0) // Sort is inline so slice the original array
       .sort((a, b) => {
@@ -832,7 +836,7 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$lt`) {
     // First try a direct approach. If a value is queried that also exists then
-    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+    // we can prevent a binary search through the whole list, O(1) vs O(log n)
 
     const ranges = filterCache.meta.valueRangesAsc
     const nodes = filterCache.meta.nodesByValueAsc
@@ -842,11 +846,11 @@ export const getNodesFromCacheByValue = (
       return nodes!.slice(0, range[0])
     }
 
-    // Query may ask for a value that doesn't appear in the set, like if the
-    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // Query may ask for a value that doesn't appear in the list, like if the
+    // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
 
-    // Note: for lte, the valueAsc array must be set at this point
+    // Note: for lte, the valueAsc array must be list at this point
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
@@ -878,7 +882,7 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$lte`) {
     // First try a direct approach. If a value is queried that also exists then
-    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+    // we can prevent a binary search through the whole list, O(1) vs O(log n)
 
     const ranges = filterCache.meta.valueRangesAsc
     const nodes = filterCache.meta.nodesByValueAsc
@@ -888,11 +892,11 @@ export const getNodesFromCacheByValue = (
       return nodes!.slice(0, range[1])
     }
 
-    // Query may ask for a value that doesn't appear in the set, like if the
-    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // Query may ask for a value that doesn't appear in the list, like if the
+    // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
 
-    // Note: for lte, the valueAsc array must be set at this point
+    // Note: for lte, the valueAsc array must be list at this point
     const values = filterCache.meta.valuesAsc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
@@ -924,7 +928,7 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$gt`) {
     // First try a direct approach. If a value is queried that also exists then
-    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+    // we can prevent a binary search through the whole list, O(1) vs O(log n)
 
     const ranges = filterCache.meta.valueRangesDesc
     const nodes = filterCache.meta.nodesByValueDesc
@@ -934,11 +938,11 @@ export const getNodesFromCacheByValue = (
       return nodes!.slice(0, range[0]).reverse()
     }
 
-    // Query may ask for a value that doesn't appear in the set, like if the
-    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // Query may ask for a value that doesn't appear in the list, like if the
+    // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
 
-    // Note: for gte, the valueDesc array must be set at this point
+    // Note: for gte, the valueDesc array must be list at this point
     const values = filterCache.meta.valuesDesc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
@@ -970,7 +974,7 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$gte`) {
     // First try a direct approach. If a value is queried that also exists then
-    // we can prevent a binary search through the whole set, O(1) vs O(log n)
+    // we can prevent a binary search through the whole list, O(1) vs O(log n)
 
     const ranges = filterCache.meta.valueRangesDesc
     const nodes = filterCache.meta.nodesByValueDesc
@@ -980,11 +984,11 @@ export const getNodesFromCacheByValue = (
       return nodes!.slice(0, range[1]).reverse()
     }
 
-    // Query may ask for a value that doesn't appear in the set, like if the
-    // set is [1, 2, 5, 6] and the query is <= 3. In that case we have to
+    // Query may ask for a value that doesn't appear in the list, like if the
+    // list is [1, 2, 5, 6] and the query is <= 3. In that case we have to
     // apply a search (we'll do binary) to determine the offset to slice from.
 
-    // Note: for gte, the valueDesc array must be set at this point
+    // Note: for gte, the valueDesc array must be list at this point
     const values = filterCache.meta.valuesDesc as Array<FilterValue>
     // It shouldn't find the targetValue (but it might) and return the index of
     // the two value between which targetValue sits, or first/last element.
