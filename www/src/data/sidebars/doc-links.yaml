@@ -344,7 +344,7 @@
                   link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
-                - title: Using TailwindCSS
+                - title: Using Tailwind CSS
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
