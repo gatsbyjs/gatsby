@@ -1,7 +1,7 @@
 ---
 title: Gatsby Browser APIs
 description: Documentation about leveraging standard browser APIs within Gatsby
-jsdoc: ["gatsby/src/utils/api-browser-docs.ts"]
+jsdoc: ["src/utils/api-browser-docs.ts"]
 apiCalls: BrowserAPI
 showTopLevelSignatures: true
 ---

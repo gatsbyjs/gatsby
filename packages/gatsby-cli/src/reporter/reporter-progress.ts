@@ -23,6 +23,7 @@ export interface IProgressReporter {
     ...otherArgs: any[]
   ): IStructuredError | IStructuredError[]
   panic(arg: any, ...otherArgs: any[]): void
+  end(): void
   done(): void
   total: number
   span: Span
@@ -103,6 +104,16 @@ export const createProgressReporter = ({
       return reporter.panic(errorMeta, error)
     },
 
+    end(): void {
+      updateProgress(true)
+      span.finish()
+      reporterActions.endActivity({
+        id,
+        status: ActivityStatuses.Success,
+      })
+    },
+
+    // @deprecated - use end()
     done(): void {
       updateProgress(true)
       span.finish()

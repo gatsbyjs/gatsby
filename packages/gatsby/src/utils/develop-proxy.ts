@@ -24,6 +24,7 @@ export const startDevelopProxy = (input: {
     changeOrigin: true,
     preserveHeaderKeyCase: true,
     autoRewrite: true,
+    ws: true,
   })
 
   // Noop on proxy errors, as this throws a bunch of "Socket hang up"
@@ -56,6 +57,10 @@ export const startDevelopProxy = (input: {
     }
 
     proxy.web(req, res)
+  })
+
+  server.on(`upgrade`, function (req, socket, head) {
+    proxy.ws(req, socket, head)
   })
 
   server.listen(input.proxyPort)
