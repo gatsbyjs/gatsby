@@ -108,7 +108,7 @@ exports.sourceNodes = async (
     pluginConfig,
   })
 
-  // compare data between currentSyncData and previousSyncData and update it
+  // Remove deleted entries and assets from cached sync data set
   previousSyncData.entries = previousSyncData.entries.filter(
     entry =>
       _.findIndex(
@@ -125,6 +125,7 @@ exports.sourceNodes = async (
       ) !== -1
   )
 
+  // Merge cached data with new sync data
   // order is important here, fresh data first
   currentSyncData.entries = _.uniqBy(
     currentSyncData.entries.concat(previousSyncData.entries),
@@ -135,6 +136,10 @@ exports.sourceNodes = async (
     currentSyncData.assets.concat(previousSyncData.assets),
     `sys.id`
   )
+
+  // Store a raw and unresolved copy of the data for caching
+  const currentSyncDataRaw = { ...currentSyncData }
+
   // TODO run link resolution on the up to date data
 
   /*
@@ -210,7 +215,7 @@ exports.sourceNodes = async (
   const nextSyncToken = currentSyncData.nextSyncToken
 
   await Promise.all([
-    cache.set(CACHE_SYNC_KEY, currentSyncData),
+    cache.set(CACHE_SYNC_KEY, currentSyncDataRaw),
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
   // Create map of resolvable ids so we can check links against them while creating
