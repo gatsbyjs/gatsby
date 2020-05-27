@@ -153,7 +153,6 @@ const modalContent = (palette, color) => {
       colors.push(
         <Box
           sx={{
-            display: `block`,
             width: `100%`,
             [mediaQueries.lg]: {
               display: `flex`,
