@@ -53,7 +53,7 @@ const CloseButton = ({ children, ...rest }) => (
         `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
       ":hover, :focus": {
         ...focusStyle,
-        color: t => t.colors.orange[50],
+        color: `orange.50`,
       },
     }}
   >
