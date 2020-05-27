@@ -11,7 +11,7 @@ tags:
   - announcements
 ---
 
-Today we're thrilled to announce we've secured $28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby's next stage of innovation and evolution toward becoming how the web is built.
+Today we're thrilled to announce we've secured \$28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby's next stage of innovation and evolution toward becoming how the web is built.
 
 Websites today are being made the same way they were 20 years ago, with a cumbersome monolithic approach to building sites, storing data, and delivering content. Since then we've seen massive shifts to technologies like cloud computing and modern JavaScript. So why are so many sites still being built like it's 1998, using an architecture that practically guarantees they'll be slow, insecure, and expensive to scale?
 
@@ -29,7 +29,7 @@ Our developer community is growing over 10 percent month-over-month, and over 20
 
 From the start, Gatsby was designed for building sites and apps that would be fast no matter where they run. After five years of refining Gatsby's open source framework, that goal has largely been satisfied...though we will of course continue working to capture every last possible microsecond of performance gain while helping teams make smart performance decisions.
 
-> Page speed performance is a key metric for us in delivering an unparalleled shopping experience. Using Gatsby has allowed us to increase our page performance by 5-10x -- an exponential improvement not only for our customers, but for our team too.      -- **Jeff Gnatek, Head of engineering, Butcherbox**
+> Page speed performance is a key metric for us in delivering an unparalleled shopping experience. Using Gatsby has allowed us to increase our page performance by 5-10x -- an exponential improvement not only for our customers, but for our team too. -- **Jeff Gnatek, Head of engineering, Butcherbox**
 
 To take these performance gains to the next level we launched [Gatsby Cloud](https://www.gatsbyjs.com/), specialized cloud infrastructure built for teams who want their Gatsby sites functioning at full potential. With features like real-time previews, seamless deployments, and parallelized builds, Gatsby Cloud grants serious velocity for both developers and content creators.
 
