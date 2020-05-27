@@ -41,7 +41,7 @@ describe(`collatePluginAPIs`, () => {
   }
 
   beforeEach(() => {
-    const resolveModuleExports = require(`../../resolve-module-exports`)
+    const { resolveModuleExports } = require(`../../resolve-module-exports`)
     resolveModuleExports(MOCK_RESULTS)
   })
 
