@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import Img from "gatsby-image"
-import styled from "@emotion/styled"
 import { MdArrowDownward as ArrowDownwardIcon } from "react-icons/md"
-import themeGet from "@styled-system/theme-get"
 import { useColorMode } from "theme-ui"
 
 import Link from "../../components/localized-link"
@@ -33,37 +32,65 @@ import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-
 
 import ColorSwatch from "../../components/guidelines/color/card"
 
-import { Box, Button, Flex, Text } from "../../components/guidelines/system"
+import { Button, Text } from "../../components/guidelines/system"
+import { Box, Flex } from "theme-ui"
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import palette from "../../utils/guidelines/extend-palette-info"
 
-const List = styled(`ul`)`
-  margin-left: 0;
-  padding: 0;
-  list-style: none;
-`
+const List = ({ children }) => (
+  <ul
+    sx={{
+      marginLeft: 0,
+      padding: 0,
+      listStyle: `none`,
+    }}
+  >
+    {children}
+  </ul>
+)
 
-const ListItem = styled(`li`)`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${props =>
-    encodeURIComponent(
-      themeGet(`colors.green.50`)(props)
-    )}' d='M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z' /%3E%3C/svg%3E");
-  background-position: 0 0.25em;
-  background-repeat: no-repeat;
-  background-size: 1em;
-  padding-left: 1.5em;
-  margin-bottom: 1em;
-`
+const listItemStyle = {
+  backgroundPosition: `0 0.25em`,
+  backgroundRepeat: `no-repeat`,
+  backgroundSize: `1em`,
+  paddingLeft: `1.5em`,
+  marginBottom: `1em`,
+}
 
-const DontListItem = styled(ListItem)`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${props =>
-    encodeURIComponent(
-      themeGet(`colors.red.50`)(props)
-    )}' d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /%3E%3C/svg%3E");
-`
+const ListItem = ({ children }) => (
+  <li
+    sx={{
+      ...listItemStyle,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
+        theme.colors.green[`50`]
+      )}' d='M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z' /%3E%3C/svg%3E")`,
+    }}
+  >
+    {children}
+  </li>
+)
+
+const DontListItem = ({ children }) => (
+  <li
+    sx={{
+      ...listItemStyle,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
+        theme.colors.red[`50`]
+      )}' d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /%3E%3C/svg%3E")`,
+    }}
+  >
+    {children}
+  </li>
+)
 
 const Guidance = ({ children, image }) => (
-  <Box mb={5} mr="20px" width={`calc(50% - 20px)`}>
+  <div
+    sx={{
+      mb: 5,
+      mr: 5,
+      width: `calc(50% - 1.25rem)`,
+    }}
+  >
     {image && (
       <BoxWithBorder withBorder width="100%">
         <Img fluid={image.childImageSharp.fluid} />
@@ -72,19 +99,30 @@ const Guidance = ({ children, image }) => (
     <Text fontSize={1} color="grey.50" mt={2}>
       {children}
     </Text>
-  </Box>
+  </div>
 )
 
-const Monogram = ({ size, ...props }) => (
+const Monogram = ({ size, isLast }) => (
   <Box
-    mt={6}
-    display="flex"
-    css={{ flexShrink: 0, alignItems: `center`, flexDirection: `column` }}
-    {...props}
+    sx={{
+      display: isLast ? `none` : `flex`,
+      flexShrink: 0,
+      alignItems: `center`,
+      flexDirection: `column`,
+      mt: 0,
+      mr: 4,
+      [mediaQueries.md]: {
+        display: isLast ? `block` : `flex`,
+        mt: 6,
+        mr: 6,
+      },
+    }}
   >
     <Flex
-      width={size}
-      mb={4}
+      sx={{
+        width: size,
+        mb: 4,
+      }}
       css={{
         svg: {
           display: `block`,
@@ -110,10 +148,12 @@ const GatsbyLogoContainered = ({
 }) => (
   <Box
     {...rest}
-    height={height}
-    maxWidth="400px"
-    css={{
+    sx={{
+      height: height,
+      maxWidth: `400px`,
       opacity: opacity || 1,
+    }}
+    css={{
       svg: {
         display: `block`,
         width: height ? `auto` : `100%`,
@@ -136,9 +176,9 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
     {...rest}
   >
     <Flex
-      alignItems="center"
-      justifyContent="center"
-      css={{
+      sx={{
+        alignItems: `center`,
+        justifyContent: `center`,
         position: `absolute`,
         top: 0,
         left: 0,
@@ -149,7 +189,12 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
       }}
     >
       <Box
-        height={{ xxs: `40px`, xxl: `48px` }}
+        sx={{
+          height: `40px`,
+          [mediaQueries.lg]: {
+            height: `48px`,
+          },
+        }}
         css={{
           svg: {
             display: `block`,
@@ -194,14 +239,16 @@ const Logo = ({ data, location }) => {
               contains everything you need.
             </p>
             <Box
-              bg="highlightedBox.background"
-              py={3}
-              px={4}
-              my={4}
-              fontSize={1}
-              borderRadius={2}
-              maxWidth="30rem"
-              color="highlightedBox.color"
+              sx={{
+                py: 3,
+                px: 4,
+                my: 4,
+                fontSize: 1,
+                borderRadius: 2,
+                maxWidth: `30rem`,
+                bg: `highlightedBox.background`,
+                color: `highlightedBox.color`,
+              }}
             >
               Please{` `}
               <a href="https://github.com/gatsbyjs/gatsby/issues">
@@ -342,11 +389,16 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <Flex alignItems="flex-end" flexWrap="wrap">
-              <Monogram size={128} mr={{ xxs: 4, lg: 6 }} />
-              <Monogram size={64} mr={{ xxs: 4, lg: 6 }} />
-              <Monogram size={32} mr={{ xxs: 4, lg: 6 }} />
-              <Monogram size={16} display={{ xxs: `none`, lg: `block` }} />
+            <Flex
+              sx={{
+                alignItems: `flex-end`,
+                flexWrap: `wrap`,
+              }}
+            >
+              <Monogram size={128} />
+              <Monogram size={64} />
+              <Monogram size={32} />
+              <Monogram size={16} isLast />
             </Flex>
           </ContentColumn>
         </Columns>
@@ -364,15 +416,23 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <Flex alignItems="flex-end" flexWrap="wrap" />
-            <Box
-              maxWidth="542px"
-              mb={4}
-              dangerouslySetInnerHTML={{
-                __html: PartnershipLockups,
+            <Flex
+              sx={{
+                alignItems: `flex-end`,
+                flexWrap: `wrap`,
               }}
-              css={{ svg: { display: `block`, width: `100%` } }}
-            />
+            >
+              <Box
+                sx={{
+                  maxWidth: `542px`,
+                  mb: 4,
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: PartnershipLockups,
+                }}
+                css={{ svg: { display: `block`, width: `100%` } }}
+              />
+            </Flex>
           </ContentColumn>
         </Columns>
       </Section>
@@ -404,8 +464,10 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Box
-              maxWidth="257px"
-              mb={4}
+              sx={{
+                maxWidth: `257px`,
+                mb: 4,
+              }}
               dangerouslySetInnerHTML={{
                 __html: Wordmark,
               }}
@@ -415,8 +477,10 @@ const Logo = ({ data, location }) => {
               }}
             />
             <Box
-              maxWidth="257px"
-              mb={3}
+              sx={{
+                maxWidth: `257px`,
+                mb: 3,
+              }}
               dangerouslySetInnerHTML={{
                 __html: ManuallyTracked,
               }}
@@ -446,18 +510,50 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <LogoContainer bg="white" withBorder mb={4} />
-            <Box display={{ md: `flex` }}>
+            <Box
+              sx={{
+                display: `flex`,
+                flexDirection: `column`,
+                [mediaQueries.md]: {
+                  flexDirection: `row`,
+                },
+              }}
+            >
               <ColorSwatch
                 color={palette.purple.colors[`60`]}
-                mr={{ md: 4 }}
-                mb={{ xxs: 4, md: 0 }}
+                sx={{
+                  mr: 0,
+                  mb: 4,
+                  width: `100%`,
+                  [mediaQueries.md]: {
+                    mr: 4,
+                    mb: 0,
+                  },
+                }}
               />
               <ColorSwatch
                 color={palette.black.color}
-                mr={{ md: 4 }}
-                mb={{ xxs: 4, md: 0 }}
+                sx={{
+                  mr: 0,
+                  mb: 4,
+                  width: `100%`,
+                  [mediaQueries.md]: {
+                    mr: 4,
+                    mb: 0,
+                  },
+                }}
               />
-              <ColorSwatch color={palette.white.color} />
+              <ColorSwatch
+                color={palette.white.color}
+                sx={{
+                  mr: 0,
+                  mb: 4,
+                  width: `100%`,
+                  [mediaQueries.md]: {
+                    mb: 0,
+                  },
+                }}
+              />
             </Box>
           </ContentColumn>
         </Columns>
@@ -526,7 +622,9 @@ const Logo = ({ data, location }) => {
           </CopyColumn>
           <ContentColumn>
             <Box
-              mb={4}
+              sx={{
+                mb: 4,
+              }}
               dangerouslySetInnerHTML={{
                 __html: Clearspace,
               }}
@@ -567,13 +665,17 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <div css={{ position: `relative` }}>
+            <div
+              sx={{
+                position: `relative`,
+              }}
+            >
               <GatsbyLogoContainered opacity={0.025} />
               <div
-                css={{
+                sx={{
                   position: `absolute`,
                   zIndex: 1,
-                  height: 24,
+                  height: `24px`,
                   top: `auto`,
                   bottom: 0,
                 }}
@@ -607,7 +709,11 @@ const Logo = ({ data, location }) => {
             </p>
           </CopyColumn>
           <ContentColumn>
-            <Flex flexWrap="wrap">
+            <Flex
+              sx={{
+                flexWrap: `wrap`,
+              }}
+            >
               {data.allGuidanceYaml.nodes.map((node, index) => (
                 <Guidance
                   image={node.image && node.image}
@@ -637,7 +743,7 @@ const Logo = ({ data, location }) => {
                 <Text as="li" key={`logo-footnotes-${index}`} mb={3}>
                   {node.description}:<br />
                   <a
-                    css={{
+                    sx={{
                       color: theme.colors.purple[`50`],
                       textDecoration: `none`,
                     }}

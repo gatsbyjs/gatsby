@@ -1,10 +1,5 @@
 import { GatsbyCLI } from "../test-helpers"
 
-const timeout = seconds =>
-  new Promise(resolve => {
-    setTimeout(resolve, seconds * 1000)
-  })
-
 const MAX_TIMEOUT = 2147483647
 jest.setTimeout(MAX_TIMEOUT)
 
@@ -16,15 +11,15 @@ describe(`gatsby repl`, () => {
 
   it(`starts a gatsby site on port 8000`, async () => {
     // 1. Start the `gatsby develop` command
-    const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(`repl`)
+    const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
+      `repl`,
+      log => log.includes("gatsby >")
+    )
 
     // 2. Wait for the build process to finish
-    await timeout(5)
+    await childProcess
 
-    // 3. Kill the repl
-    childProcess.kill()
-
-    // 4. Make assertions
+    // 3. Make assertions
     const logs = getLogs()
     logs.should.contain(`success open and validate gatsby-configs`)
     logs.should.contain(`success load plugins`)
