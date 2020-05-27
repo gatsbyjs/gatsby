@@ -15,7 +15,7 @@ const {
   handleMultipleReplaceRenderers,
   warnOnIncompatiblePeerDependency,
 } = require(`../validate`)
-const getLatestAPIs = require(`../../../utils/get-latest-apis`)
+const { getLatestAPIs } = require(`../../../utils/get-latest-apis`)
 
 beforeEach(() => {
   Object.keys(reporter).forEach(key => reporter[key].mockReset())
@@ -41,7 +41,7 @@ describe(`collatePluginAPIs`, () => {
   }
 
   beforeEach(() => {
-    const resolveModuleExports = require(`../../resolve-module-exports`)
+    const { resolveModuleExports } = require(`../../resolve-module-exports`)
     resolveModuleExports(MOCK_RESULTS)
   })
 
@@ -68,7 +68,7 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    let result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
+    const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
     expect(result).toMatchSnapshot()
   })
 
@@ -95,7 +95,7 @@ describe(`collatePluginAPIs`, () => {
       },
     ]
 
-    let result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
+    const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
     expect(result).toMatchSnapshot()
   })
 })

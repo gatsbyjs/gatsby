@@ -41,6 +41,7 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
         //   },
         // ],
         "jsx-a11y/click-events-have-key-events": `warn`,
+        "jsx-a11y/control-has-associated-label": `warn`,
         "jsx-a11y/heading-has-content": `warn`,
         "jsx-a11y/html-has-lang": `warn`,
         "jsx-a11y/iframe-has-title": `warn`,

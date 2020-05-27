@@ -28,7 +28,7 @@ const sanitizeAction = (action: ActionsUnion): ActionsUnion => {
   return copiedAction
 }
 
-export const ipcLogger = (): void => {
+export const initializeIPCLogger = (): void => {
   onLogAction((action: ActionsUnion) => {
     if (!process.send) return
 

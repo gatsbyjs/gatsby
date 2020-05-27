@@ -84,6 +84,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-theme-blog-core`,
     },
     {
+      label: `Add Gatsby Theme Notes`,
+      value: `gatsby-theme-notes`,
+    },
+    {
       label: `Add persistent layout component with gatsby-plugin-layout`,
       value: `gatsby-plugin-layout`,
     },
@@ -134,6 +138,10 @@ const RecipesList = ({ setRecipe }) => {
     {
       label: `Add React Helmet`,
       value: `gatsby-plugin-react-helmet.mdx`,
+    },
+    {
+      label: `Add Headless WordPress integration`,
+      value: `wordpress.mdx`,
     },
     {
       label: `Add Storybook - JavaScript`,
@@ -269,6 +277,7 @@ const components = {
   NPMPackageJson: () => null,
   NPMPackage: () => null,
   File: () => null,
+  Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
 }
@@ -289,7 +298,7 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
-module.exports = ({ recipe, graphqlPort, projectRoot }) => {
+module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
   try {
     const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
@@ -362,7 +371,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
         }
       }
 
-      log(`state`, subscriptionResponse)
+      log(`subscriptionResponse`, subscriptionResponse)
       const state =
         subscriptionResponse.data &&
         JSON.parse(subscriptionResponse.data.operation.state)
@@ -434,8 +443,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
 
       const PresentStep = ({ state }) => {
         const isPlan = state.context.plan && state.context.plan.length > 0
-        const isPresetPlanState = state.value === `present plan`
+        const isPresetPlanState = state.value === `presentPlan`
         const isRunningStep = state.value === `applyingPlan`
+
         if (isRunningStep) {
           return null
         }
@@ -505,40 +515,9 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
       const Error = ({ state }) => {
         log(`errors`, state)
         if (state && state.context && state.context.error) {
-          // if (false) {
-          // return (
-          // <Div>
-          // <Color marginBottom={1} red>
-          // The following resources failed validation
-          // </Color>
-          // {state.context.error.map((err, i) => {
-          // log(`recipe er`, { err })
-          // return (
-          // <Div key={`error-box-${i}`}>
-          // <Text>Type: {err.resource}</Text>
-          // <Text>
-          // Resource:{` `}
-          // {JSON.stringify(err.resourceDeclaration, null, 4)}
-          // </Text>
-          // <Text>Recipe step: {err.step}</Text>
-          // <Text>
-          // Error{err.validationError.details.length > 1 && `s`}:
-          // </Text>
-          // {err.validationError.details.map((d, v) => (
-          // <Text key={`validation-error-${v}`}>
-          // {` `}‣ {d.message}
-          // </Text>
-          // ))}
-          // </Div>
-          // )
-          // })}
-          // </Div>
-          // )
-          // } else {
           return (
             <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
           )
-          // }
         }
 
         return null
@@ -554,7 +533,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
           {
             type: `mdx`,
             key: `mdx-${step}`,
-            value: state.context.stepsAsMdx[step],
+            value: state.context.steps[step],
           },
         ]
       }
@@ -616,7 +595,7 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
             </Div>
           )}
           <MDX components={components}>
-            {state.context.stepsAsMdx[state.context.currentStep]}
+            {state.context.steps[state.context.currentStep]}
           </MDX>
           {!isDone && <PresentStep state={state} />}
           {!isDone && <RunningStep state={state} />}
@@ -636,7 +615,8 @@ module.exports = ({ recipe, graphqlPort, projectRoot }) => {
     const Recipe = () => <Wrapper />
 
     // Enable experimental mode for more efficient reconciler and renderer
-    render(<Recipe />, { experimental: true })
+    const { waitUntilExit } = render(<Recipe />, { experimental: true })
+    await waitUntilExit()
   } catch (e) {
     log(e)
   }
