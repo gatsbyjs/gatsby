@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.52...gatsby-theme-notes@1.3.53) (2020-05-26)
+
+**Note:** Version bump only for package gatsby-theme-notes
+
 ## [1.3.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-notes@1.3.51...gatsby-theme-notes@1.3.52) (2020-05-25)
 
 **Note:** Version bump only for package gatsby-theme-notes
