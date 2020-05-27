@@ -241,6 +241,8 @@ describe(`gatsby-node`, () => {
   })
 
   it(`should create nodes from initial payload`, async () => {
+    cache.get.mockClear()
+    cache.set.mockClear()
     fetch.mockImplementationOnce(() => startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
@@ -265,6 +267,24 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.initialSync.currentSyncData.assets,
       locales
     )
+
+    // Tries to load data from cache
+    expect(cache.get).toHaveBeenCalledWith(`syncToken`)
+    expect(cache.get).toHaveBeenCalledWith(`previousSyncData`)
+    expect(cache.get.mock.calls.length).toBe(2)
+
+    // Stores sync token and raw/unparsed data to the cache
+    expect(cache.set).toHaveBeenCalledWith(
+      `syncToken`,
+      startersBlogFixture.initialSync.currentSyncData.nextSyncToken
+    )
+    expect(cache.set).toHaveBeenCalledWith(
+      `previousSyncData`,
+      startersBlogFixture.initialSync.currentSyncData
+    )
+    expect(cache.set.mock.calls.length).toBe(2)
+
+    // @todo check if references are set up correctly
   })
 
   it(`should add a new blogpost and update linkedNodes`, async () => {
