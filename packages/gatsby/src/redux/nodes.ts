@@ -727,15 +727,9 @@ export const getNodesFromCacheByValue = (
     // TODO: we can also mergeSort for every step. this may perform worse because of how memory in js works.
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
-    filterValueArr
-      // .slice(0) // Sort is inline so slice the original array
-      // .sort((a, b) => {
-      //   if (a == null || b == null) return 0
-      //   return a < b ? -1 : a > b ? 1 : 0
-      // }) // Just sort to preserve legacy order as much as possible.
-      .forEach((v: FilterValueNullable) =>
-        filterCache.byValue.get(v)?.forEach(v => arr.push(v))
-      )
+    filterValueArr.forEach((v: FilterValueNullable) =>
+      filterCache.byValue.get(v)?.forEach(v => arr.push(v))
+    )
 
     return arr.sort((A, B) => A.internal.counter - B.internal.counter)
   }
@@ -1036,7 +1030,7 @@ function removeBucketFromSet(
   filterValue: FilterValueNullable,
   filterCache: IFilterCache,
   set: Set<IGatsbyNode>
-) {
+): void {
   if (filterValue === null) {
     // Edge case: $ne with `null` returns only the nodes that contain the full
     // path and that don't resolve to null, so drop `undefined` as well.
