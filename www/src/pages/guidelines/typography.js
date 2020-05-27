@@ -483,6 +483,9 @@ const Typography = ({ location }) => (
                 lineHeight: `solid`,
                 mb: 5,
                 [mediaQueries.sm]: {
+                  fontSize: 12,
+                },
+                [mediaQueries.lg]: {
                   fontSize: 13,
                 },
               }}
