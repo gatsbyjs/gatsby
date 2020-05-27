@@ -61,12 +61,14 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 ### Deploying to a GitHub Pages subdomain at github.io
 
 For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `master` branch.
->:warning: Keep in mind that Github Pages forces deployment of user\organization pages to master branch. So if you use master branch for development you need to do one of this:
->- change the default branch from master to something else, and use master just as site deployment directory:
->   1) to create new branch called `source` run this command:
->`git checkout -b source master`
->   2) change default branch in repository settings ("Branches" menu item) from master to source
->- have separate repository for your source code (so <username>.github.io is used only for deployment and not really for tracking your source code)
+
+> :warning: Keep in mind that Github Pages forces deployment of user\organization pages to master branch. So if you use master branch for development you need to do one of this:
+>
+> - change the default branch from master to something else, and use master just as site deployment directory:
+>   1. to create new branch called `source` run this command:
+>      `git checkout -b source master`
+>   2. change default branch in repository settings ("Branches" menu item) from master to source
+> - have separate repository for your source code (so <username>.github.io is used only for deployment and not really for tracking your source code)
 
 ```json:title=package.json
 {
