@@ -48,7 +48,7 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
-    sireUrl?: string
+    siteUrl?: string
     // siteMetadata is free form
     [key: string]: unknown
   }
@@ -276,6 +276,7 @@ export type ActionsUnion =
   | ISetSchemaAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
@@ -616,9 +617,7 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: {
-    id: Identifier
-  }
+  payload: IGatsbyNode
 }
 
 export interface IDeleteNodesAction {
@@ -632,4 +631,9 @@ export interface IAddPageDataStatsAction {
     filePath: SystemPath
     size: number
   }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }

@@ -1,5 +1,5 @@
 import { nodeReducer } from "./nodes"
-const nodesByType = require(`./nodes-by-type`)
+import { nodesByTypeReducer } from "./nodes-by-type"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -15,6 +15,7 @@ import { jobsV2Reducer } from "./jobsv2"
 import { pageDataStatsReducer } from "./page-data-stats"
 import { componentsReducer } from "./components"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
+import { nodesTouchedReducer } from "./nodes-touched"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
 
@@ -24,9 +25,9 @@ import { jobsReducer } from "./jobs"
 module.exports = {
   program: require(`./program`),
   nodes: nodeReducer,
-  nodesByType: nodesByType,
+  nodesByType: nodesByTypeReducer,
   resolvedNodesCache: require(`./resolved-nodes`),
-  nodesTouched: require(`./nodes-touched`),
+  nodesTouched: nodesTouchedReducer,
   lastAction: lastAction,
   flattenedPlugins: require(`./flattened-plugins`),
   config: require(`./config`),

@@ -10,6 +10,7 @@ import clipboardy from "clipboardy"
 import { trackCli, setDefaultTags, setTelemetryEnabled } from "gatsby-telemetry"
 import { initStarter } from "./init-starter"
 import { recipesHandler } from "./recipes"
+import { startGraphQLServer } from "gatsby-recipes"
 
 const handlerP = (fn: Function) => (...args: unknown[]): void => {
   Promise.resolve(fn(...args)).then(
@@ -174,6 +175,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        startGraphQLServer(siteInfo.directory, true)
         cmd(args)
         // Return an empty promise to prevent handlerP from exiting early.
         // The development server shouldn't ever exit until the user directly
@@ -344,7 +346,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe: `[EXPERIMENTAL] Run a recipe`,
     handler: handlerP(
       async ({ recipe }: yargs.Arguments<{ recipe: string | undefined }>) => {
-        await recipesHandler(recipe)
+        await recipesHandler(siteInfo.directory, recipe)
       }
     ),
   })
