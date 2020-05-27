@@ -210,7 +210,6 @@ exports.sourceNodes = async (
   reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
   reporter.info(`Updated assets ${currentSyncData.assets.length}`)
   reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
-  console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
@@ -219,6 +218,10 @@ exports.sourceNodes = async (
     cache.set(CACHE_SYNC_KEY, currentSyncDataRaw),
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
   ])
+
+  console.timeEnd(`Fetch Contentful data`)
+  reporter.info(`Building Contentful reference map`)
+
   // Create map of resolvable ids so we can check links against them while creating
   // links.
   const resolvable = normalize.buildResolvableSet({
@@ -240,6 +243,8 @@ exports.sourceNodes = async (
     space,
     useNameForId: pluginConfig.get(`useNameForId`),
   })
+
+  reporter.info(`Resolving Contentful references`)
 
   const newOrUpdatedEntries = []
   entryList.forEach(entries => {
@@ -270,6 +275,8 @@ exports.sourceNodes = async (
         )
       }
     })
+
+  reporter.info(`Creating Contentful nodes`)
 
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
@@ -312,6 +319,8 @@ exports.sourceNodes = async (
   }
 
   if (pluginConfig.get(`downloadLocal`)) {
+    reporter.info(`Download Contentful asset files`)
+
     await downloadContentfulAssets({
       actions,
       createNodeId,

@@ -44,7 +44,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
         )}' were found but were filtered down to none.`
       )
     }
-    reporter.info(`default locale is: ${defaultLocale}`)
+    reporter.info(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
