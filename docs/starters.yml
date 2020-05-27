@@ -6301,6 +6301,18 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-basic-typescript-starter.netlify.app/
+  repo: https://github.com/noahub/gatsby-typescript-starter
+  description: This starter ships with the main Gatsby configuration files you need to build a basic site using React and Typescript.
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+  features:
+    - Typescript installed and configured
+    - Styled Components via Emotion
+    - Google Fonts enabled
+    - React Helmet for SEO
+    - Configured image filesystem, transformer-sharp, plugin-sharp
 - url: https://gatsby-landing-page-starter.netlify.app/
   repo: https://github.com/btahir/gatsby-landing-page-starter
   description: Simple Landing Page Starter Built With Gatsby.
