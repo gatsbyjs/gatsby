@@ -5,5 +5,22 @@ module.exports = {
     description: `Blazing fast modern site generator for React`,
     twitter: `@gatsbyjs`,
   },
-  plugins: ["gatsby-site-theme"],
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `docs`,
+        path: `${__dirname}/../docs/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `gatsby-core`,
+        path: `${__dirname}/../packages/gatsby/`,
+        ignore: [`**/dist/**`],
+      },
+    },
+    `gatsby-site-theme`,
+  ],
 }
