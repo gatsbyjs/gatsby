@@ -84,7 +84,16 @@ exports.sourceNodes = async (
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
-  // add preview/sync capabilitly to token
+  /*
+   * Subsequent calls of Contentfuls sync API return only changed data.
+   *
+   * In some cases, especially when using rich-text fields, there can be data
+   * missing from referenced entries. This breaks the reference matching.
+   *
+   * To workround this, we cache the initial sync data and merge it
+   * with all data from subsequent syncs. Afterwards the references get
+   * resolved via the Contentful JS SDK.
+   */
   let syncToken = await cache.get(CACHE_SYNC_TOKEN)
   let previousSyncData = {
     assets: [],
@@ -140,15 +149,7 @@ exports.sourceNodes = async (
   // Store a raw and unresolved copy of the data for caching
   const currentSyncDataRaw = { ...currentSyncData }
 
-  // TODO run link resolution on the up to date data
-
-  /*
-   * on sync, we only get the synced data because there isn't enough data
-   * we want to trick the SDK to merge the data
-   * on initial sync, we save all the data
-   * on subsequent syncs, we get the updated data; merge with the old data
-   * if there are duplicate entries we take newest
-   */
+  // Use the JS-SDK to resolve the entries and assets
   const res = client.parseEntries({
     items: currentSyncData.entries,
     includes: {
