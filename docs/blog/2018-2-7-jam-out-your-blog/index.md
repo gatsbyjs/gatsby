@@ -28,7 +28,7 @@ https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow
 ### Like Josh’s requirements, my list includes:
 
 - **Speed** - this includes development, website performance, and deployment
-- **Development Experience** - I want to use React and Webpack
+- **Development Experience** - I want to use React and webpack
 - **Maintainability** - ease with which anyone can create, update and delete posts
 - **Scalability** - need to make sure that performance is not hindered by a growing needs
 - **Lean** - simplify the tools and services use to a bare minimum
@@ -111,7 +111,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 
 [x] Speed - this includes development, website performance, and deployment
 
-[x] Development Experience - I want to use React and Webpack
+[x] Development Experience - I want to use React and webpack
 
 [x] Maintainability - ease with which anyone can create, update and delete posts
 
