@@ -78,7 +78,7 @@ You can make use of those [provided by Theme UI](https://theme-ui.com/packages/p
 
 All of these presets act as base styles and your local shadowed styles are automatically deep merged with them, with local styles taking precedent.
 
-If you'd rather not use any preset and set everything locally yourself, there is also an `ignorePreset` option.
+If you'd rather not use any preset and set everything locally yourself, you can set `preset` to `false`.
 
 ### Prism
 
@@ -103,7 +103,7 @@ All prism presets take precedence over styles in your `preset` theme, but are le
 
 ## The new `gatsby-theme-blog-core`
 
-In addition to all the changes about, we've also made some adjustments to the architecture in `gatsby-theme-blog-core`. It now comes with built-in components from displaying and individual blog post or a blog post listing. These components are completely unstyled but elements within them have classNames so you can change their look without any shadowing at all.
+In addition to all the changes about, we've also made some adjustments to the architecture in `gatsby-theme-blog-core`. It now comes with built-in components for displaying an individual blog post or a blog post listing. These components are completely unstyled but elements within them have classNames so you can change their look without any shadowing at all.
 
 This gives you more tools than ever before to use this theme as an add on for site functionality.
 
@@ -111,7 +111,7 @@ This gives you more tools than ever before to use this theme as an add on for si
 
 Another change is the darkmode toggle that's long been a staple of the blog theme. In order to make styling a bit more fun and remove the need for a darkmode out of the box, this is now a separate theme!
 
-It's built on top of `gatsby-theme-blog` and available for your use today.
+Use it in combination with `gatsby-theme-blog` and take advantage of the some functionality you've come to expect!
 
 ## Next Steps
 
