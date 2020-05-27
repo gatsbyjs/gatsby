@@ -11,7 +11,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "data-update": "NODE_ENV=development node update-post.js"
+    "data-update": "NODE_ENV=production node update-post.js"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
