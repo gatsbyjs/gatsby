@@ -1,14 +1,15 @@
-const React = require(`react`)
-const { Suspense } = require(`react`)
+import React, { Suspense } from "react"
+import Queue from "p-queue"
 
-const resources = require(`../resources`)
+import resources from "../resources"
 
-const RecipesReconciler = require(`./reconciler`)
-const ErrorBoundary = require(`./error-boundary`)
-const transformToPlan = require(`./transform-to-plan-structure`)
-const { ResourceProvider } = require(`./resource-provider`)
+import RecipesReconciler from "./reconciler"
+import ErrorBoundary from "./error-boundary"
+import transformToPlan from "./transform-to-plan-structure"
+import { ResourceProvider } from "./resource-provider"
 
-const promises = []
+const queue = new Queue({ concurrency: 1, autoStart: false })
+
 const errors = []
 const cache = new Map()
 
@@ -62,12 +63,15 @@ const readResource = (resourceName, context, props) => {
     promise = resources[resourceName]
       .plan(context, props)
       .then(result => cache.set(key, result))
-      .catch(e => console.log(e))
+      .catch(e => {
+        console.log(e)
+        throw e
+      })
   } catch (e) {
     throw e
   }
 
-  promises.push(promise)
+  queue.add(() => promise)
 
   throw promise
 }
@@ -78,17 +82,21 @@ const render = async recipe => {
   const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
 
   try {
-    // Run the first pass of the render to queue up all the promises and suspend
+    // Run the first pass of the render to queue up top-level resources
     RecipesReconciler.render(recipeWithWrapper, plan)
 
+    // If there are any errors, throw an error to pass to the client
     if (errors.length) {
       const error = new Error(`Unable to validate resources`)
       error.errors = errors
       throw error
     }
 
-    // Await all promises for resources and cache results
-    await Promise.all(promises)
+    queue.start()
+
+    // Work is done
+    await queue.onIdle()
+
     // Rerender with the resources and resolve the data
     const result = RecipesReconciler.render(recipeWithWrapper, plan)
     return transformToPlan(result)

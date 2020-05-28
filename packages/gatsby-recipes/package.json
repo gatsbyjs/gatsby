@@ -52,6 +52,7 @@
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.6.0",
+    "p-queue": "^6.4.0",
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.5",
     "react-reconciler": "^0.25.1",
