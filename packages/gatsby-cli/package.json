@@ -29,6 +29,8 @@
     "gatsby-recipes": "^0.1.30",
     "gatsby-telemetry": "^1.3.9",
     "hosted-git-info": "^3.0.4",
+    "ink": "^2.7.1",
+    "ink-spinner": "^3.0.1",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.15",
     "meant": "^1.0.1",
@@ -59,10 +61,6 @@
     "babel-preset-gatsby-package": "^0.4.2",
     "cross-env": "^5.2.1",
     "typescript": "^3.9.2"
-  },
-  "optionalDependencies": {
-    "ink": "^2.7.1",
-    "ink-spinner": "^3.0.1"
   },
   "files": [
     "lib",
