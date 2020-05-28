@@ -103,7 +103,7 @@ export default withI18n()(function Sidebar({
   const getItemState = React.useCallback(
     item => {
       return {
-        isExpanded: openSectionHash[item.title] || disableAccordions,
+        isExpanded: openSectionHash[item.title] || disableAccordions || false,
         isActive: item.title === activeItem.title,
         inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
       }

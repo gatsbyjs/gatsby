@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
-
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
 import ItemLink from "./item-link"
@@ -166,11 +164,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
       <button
         aria-controls={uid}
         aria-expanded={isExpanded}
-        aria-label={
-          isExpanded
-            ? i18n._(t`${item.title} collapse`)
-            : i18n._(t`${item.title} expand`)
-        }
+        aria-label={i18n._(item.title)}
         sx={{
           ...styles.resetButton,
           bottom: 0,
