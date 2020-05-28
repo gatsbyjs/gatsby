@@ -149,6 +149,12 @@ const components = {
   File: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
+  RecipeIntroduction: props => (
+    <div style={{ background: `tomato` }} {...props} />
+  ),
+  RecipeStep: props => (
+    <div style={{ border: `4px solid tomato` }} {...props} />
+  ),
 }
 
 const log = (label, textOrObj) => {
