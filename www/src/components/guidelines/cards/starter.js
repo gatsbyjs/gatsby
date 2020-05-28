@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { MdStar } from "react-icons/md"
 
 import { Box } from "theme-ui"
@@ -22,9 +21,7 @@ const Card = () => (
         fontFamily="heading"
         fontSize={1}
         letterSpacing="tracked"
-        css={{
-          textTransform: `uppercase`,
-        }}
+        textTransform="uppercase"
       >
         greglobinski/
       </Text>
