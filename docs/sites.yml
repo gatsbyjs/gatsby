@@ -10887,3 +10887,20 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+- title: Headless WordPress Blog and Portfolio by Simon Halimonov
+  url: https://simonhalimonov.com/
+  main_url: https://simonhalimonov.com/
+  description: >
+    An open source portfolio about UI/UX design and development. This is my personal website that I use to promote my work. It uses TypeScript and a headless WordPress CMS. Supports i18n and Gutenberg. I open source this site to help everyone make a nice WordPress site faster.
+  categories:
+    - Blog
+    - Portfolio
+    - Programming
+    - Open Source
+    - Design
+    - Freelance
+    - Web Development
+    - WordPress
+  built_by: Simon Halimonov
+  built_by_url: https://simonhalimonov.com/
+  featured: false
