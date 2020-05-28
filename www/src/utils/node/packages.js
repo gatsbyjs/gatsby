@@ -1,6 +1,7 @@
 const fs = require(`fs-extra`)
 const isOfficialPackage = require(`../is-official-package`)
 const yaml = require(`js-yaml`)
+const { getTemplate } = require(`../get-template`)
 const { plugins: featuredPlugins } = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )

@@ -1,5 +1,6 @@
 const slugify = require(`slugify`)
 const url = require(`url`)
+const { getTemplate } = require(`../get-template`)
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
