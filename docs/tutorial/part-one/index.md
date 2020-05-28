@@ -407,7 +407,7 @@ case) and you'll see your newly published site! Great work!
 
 ## Alternative: Deploying to Gatsby Cloud
 
-[Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools.
+[Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools. It’s the best place to build and deploy sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
 
 To deploy your site to Gatsby Cloud, create an account on [Github](https://github.com) if you don’t have one. Github allows you to host and collaborate on code projects using Git for version control.
 
