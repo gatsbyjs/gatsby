@@ -34,6 +34,38 @@ test(`handles nested rendering`, async () => {
 
     + red!",
         "newState": "red!",
+        "resourceChildren": Array [
+          Object {
+            "currentState": "",
+            "describe": "Write blue.js",
+            "diff": "- Original  - 0
+    + Modified  + 1
+
+    + blue!",
+            "newState": "blue!",
+            "resourceChildren": Array [
+              Object {
+                "currentState": "",
+                "describe": "Write yellow.js",
+                "diff": "- Original  - 0
+    + Modified  + 1
+
+    + yellow!",
+                "newState": "yellow!",
+                "resourceDefinitions": Object {
+                  "content": "yellow!",
+                  "path": "yellow.js",
+                },
+                "resourceName": "File",
+              },
+            ],
+            "resourceDefinitions": Object {
+              "content": "blue!",
+              "path": "blue.js",
+            },
+            "resourceName": "File",
+          },
+        ],
         "resourceDefinitions": Object {
           "content": "red!",
           "path": "red.js",

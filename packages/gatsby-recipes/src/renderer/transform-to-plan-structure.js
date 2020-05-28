@@ -12,12 +12,17 @@ const transform = (props = {}) => {
       return [...acc, ...childResourcePlans]
     }
 
-    const { _props, ...plan } = JSON.parse(curr.children[0].text)
+    const [rawResource, ...resourceChildren] = curr.children
+    const { _props, ...plan } = JSON.parse(rawResource.text)
 
     const resourcePlan = {
       resourceName: curr.type,
       resourceDefinitions: _props,
       ...plan,
+    }
+
+    if (resourceChildren.length) {
+      resourcePlan.resourceChildren = transform({ children: resourceChildren })
     }
 
     return [...acc, resourcePlan]
