@@ -48,6 +48,9 @@ export const SectionNoRightPadding = ({ children }) => (
       ...container,
       py: [4, null, 5, 8],
       pr: 0,
+      [mediaQueries.md]: {
+        pl: 10,
+      },
     }}
   >
     {children}

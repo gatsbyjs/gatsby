@@ -26,6 +26,16 @@ import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { Text } from "../../components/guidelines/system"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
+const TdAlignTop = ({ children }) => (
+  <td
+    sx={{
+      verticalAlign: `top`,
+    }}
+  >
+    {children}
+  </td>
+)
+
 const ColorExample = ({ hex, token }) => (
   <tr>
     <td
@@ -247,20 +257,10 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.zIndices).map((zIndex, i) => (
                   <tr key={`tokens-zIndices-${i}`}>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
+                    <TdAlignTop>
                       <code>zIndices.{zIndex}</code>
-                    </td>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
-                      {theme.zIndices[zIndex]}
-                    </td>
+                    </TdAlignTop>
+                    <TdAlignTop>{theme.zIndices[zIndex]}</TdAlignTop>
                   </tr>
                 ))}
               </tbody>
@@ -342,29 +342,15 @@ const DesignTokens = ({ location }) => (
             <tbody>
               {Object.keys(theme.fonts).map((font, i) => (
                 <tr key={`tokens-fonts-${i}`}>
-                  <td
-                    sx={{
-                      verticalAlign: `top`,
-                    }}
-                  >
+                  <TdAlignTop>
                     <code>fonts.{font}</code>
-                  </td>
-                  <td
-                    sx={{
-                      verticalAlign: `top`,
-                    }}
-                  >
-                    {theme.fonts[font]}
-                  </td>
-                  <td
-                    sx={{
-                      verticalAlign: `top`,
-                    }}
-                  >
+                  </TdAlignTop>
+                  <TdAlignTop>{theme.fonts[font]}</TdAlignTop>
+                  <TdAlignTop>
                     <Text fontFamily={font} fontSize={4}>
                       ABC
                     </Text>
-                  </td>
+                  </TdAlignTop>
                 </tr>
               ))}
             </tbody>
@@ -440,20 +426,10 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.fontWeights).map((fontWeight, i) => (
                   <tr key={`tokens-fontWeights-${i}`}>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
+                    <TdAlignTop>
                       <code>fontWeights[{fontWeight}]</code>
-                    </td>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
-                      {theme.fontWeights[fontWeight]}
-                    </td>
+                    </TdAlignTop>
+                    <TdAlignTop>{theme.fontWeights[fontWeight]}</TdAlignTop>
                     <td>
                       <Text
                         fontWeight={fontWeight}
@@ -493,20 +469,12 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.letterSpacings).map((letterSpacing, i) => (
                   <tr key={`tokens-letterSpacings-${i}`}>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
+                    <TdAlignTop>
                       <code>letterSpacings.{letterSpacing}</code>
-                    </td>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
+                    </TdAlignTop>
+                    <TdAlignTop>
                       {theme.letterSpacings[letterSpacing]}
-                    </td>
+                    </TdAlignTop>
                     <td>
                       <Text
                         letterSpacing={letterSpacing}
@@ -549,30 +517,18 @@ const DesignTokens = ({ location }) => (
             <tbody>
               {Object.keys(theme.lineHeights).map((lineHeight, i) => (
                 <tr key={`tokens-lineHeights-${i}`}>
-                  <td
-                    sx={{
-                      verticalAlign: `top`,
-                    }}
-                  >
+                  <TdAlignTop>
                     <code>lineHeights.{lineHeight}</code>
-                  </td>
-                  <td
-                    sx={{
-                      verticalAlign: `top`,
-                    }}
-                  >
-                    {theme.lineHeights[lineHeight]}
-                  </td>
-                  <td
-                    sx={{
-                      verticalAlign: `top`,
-                    }}
-                  >
+                  </TdAlignTop>
+
+                  <TdAlignTop>{theme.lineHeights[lineHeight]}</TdAlignTop>
+
+                  <TdAlignTop>
                     <Text lineHeight={lineHeight}>
                       Plugins are packages that extend Gatsby sites. They can
                       source content, transform data, and more!
                     </Text>
-                  </td>
+                  </TdAlignTop>
                 </tr>
               ))}
             </tbody>
@@ -616,20 +572,10 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.breakpoints).map((breakpoint, i) => (
                   <tr key={`tokens-breakpoints-${i}`}>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
+                    <TdAlignTop>
                       <code>breakpoints.{breakpoint}</code>
-                    </td>
-                    <td
-                      sx={{
-                        verticalAlign: `top`,
-                      }}
-                    >
-                      {theme.breakpoints[breakpoint]}
-                    </td>
+                    </TdAlignTop>
+                    <TdAlignTop>{theme.breakpoints[breakpoint]}</TdAlignTop>
                   </tr>
                 ))}
               </tbody>
@@ -652,20 +598,10 @@ const DesignTokens = ({ location }) => (
                   console.log(theme)
                   return (
                     <tr key={`tokens-mediaQuery-${i}`}>
-                      <td
-                        sx={{
-                          verticalAlign: `top`,
-                        }}
-                      >
+                      <TdAlignTop>
                         <code>mediaQueries.{mediaQuery}</code>
-                      </td>
-                      <td
-                        sx={{
-                          verticalAlign: `top`,
-                        }}
-                      >
-                        {mediaQueries[mediaQuery]}
-                      </td>
+                      </TdAlignTop>
+                      <TdAlignTop>{mediaQueries[mediaQuery]}</TdAlignTop>
                     </tr>
                   )
                 })}
