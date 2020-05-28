@@ -4,13 +4,13 @@ We hit a special milestone in May - there are over 2000 Gatsby plugins, and 500 
 
 We also announced our [series B round of funding round](/blog/2020-05-27-announcing-series-b-funding/). This investment will help us double down on changing the way the web is built. We’ve already started making Gatsby work better for large and media rich sites. You can keep tabs on Gatsby’s progress at [Will It Build](https://willit.build), a new benchmarking site that showcases sub-10 second builds for projects of different sizes and data sources.
 
-## New in Gatsby 🚀
+## 🚀 New in Gatsby 
 
 ### Strapi Instant Preview
 
 Your content editors can now enjoy “instant preview” with Strapi and Gatsby Cloud! If you’re new to Strapi, it’s a JavaScript-based, open source CMS. and a great pair for Gatsby projects. The Gatsby starter the Strapi team made for this project is gorgeous 😍 .
 
-Tktk - screenshot
+![Strapi blog screenshot](/strapi-blog.png) 
 
 Give Strapi a try with [this step-by-step tutorial](<(/blog/2020-05-12-strapi-instant-content-preview-plugin/)>).
 
@@ -56,7 +56,7 @@ This month we made the Gatsby Typescript plugin part of core Gatsby, so you no l
 
 In may we continued to improve our error messaging (see example [here](https://github.com/gatsbyjs/gatsby/pull/24186) and [here](https://github.com/gatsbyjs/gatsby/pull/23741)). But what about slow GraphQL queries? Well, Gatsby now supports performance tracing using the opentracing standard. You can to [enable tracing for GraphQL queries](/docs/performance-tracing/). This is useful because it allows you to debug why querying may be slow in your Gatsby project.
 
-## New in the Gatsby Community 👩‍🚀👨‍🚀
+## 👩‍🚀👨‍🚀 New in the Gatsby Community 
 
 ### Gatsby Days is June 2 - 3
 
@@ -82,7 +82,7 @@ https://www.youtube.com/watch?v=qmcclQ7UPLk
 
 For current web professionals, Marcy livestreamed a session on making websites that everyone can access and use. In her tutorial, you’ll learn the fundamentals of building a Gatsby site with web accessibility in mind, from the basics to more advanced techniques and requirements. You’ll get a tour of how to build and test inclusively with HTML, CSS, and JavaScript as applied in a Gatsby site.
 
-### 🌮 Community Kudos
+### Gatsby Community Kudos
 
 Thank you **Sethu Sathyan** for rapidly building [Startups vs Covid](https://www.startupsvscovid.com/) and for teaching others with your article, [“How to build a website using Gatsby & Airtable in 30 mins”](https://dev.to/sethu/how-to-build-a-website-using-gatsby-airtable-in-30-mins-42gm).
 
@@ -94,9 +94,9 @@ Thank you **Akuoko Daniel Jnr** for helpful your article, [“Increasing Website
 
 And special thanks to our long time community member, **Horacio Horacio** for making a site to [teach Gatsby to Web Developers in Spanish](https://aprendegatsby.com/). We appreciate you!
 
-## New in the Gatsby Ecosystem 🪐
+## 🪐 New in the Gatsby Ecosystem 
 
-## New Gatsby Themes & Plugins
+### Gatsby Themes & Plugins
 
 Many exciting Gatsby Themes and Plugins premiered in May. There was [Gatsby Theme Catalyst](https://www.gatsbyjs.org/blog/2020-05-14-introducing-gatsby-theme-catalyst/), Eric Howey exciting exploration in theme architecture. Aravind Balla [launched gatsby-theme-andy](https://twitter.com/aravindballa/status/1260878161920716804), an ambitious theme for power note-taking. And Trevor Harmon [dropped gatsby-theme-shopify-manager](https://thetrevorharmon.com/blog/introducing-gatsby-theme-shopify-manager), a living demonstration of the talk he delivered at Gatsby Days LA, [“Sell Things Fast With Gatsby and Shopify”](https://www.youtube.com/watch?v=tUtuGAFOjYI).
 
