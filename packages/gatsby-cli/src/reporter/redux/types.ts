@@ -6,7 +6,7 @@ export interface IGatsbyCLIState {
   activities: {
     [id: string]: IActivity
   }
-  status: ActivityStatuses | string
+  status: ActivityStatuses | ""
 }
 
 export type ActionsUnion =

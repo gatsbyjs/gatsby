@@ -46,7 +46,7 @@ const useTerminalResize = (): Array<number> => {
 interface IDevelopProps {
   pagesCount: number
   appName: string
-  status: ActivityStatuses | string
+  status: ActivityStatuses | ""
 }
 
 const Develop: React.FC<IDevelopProps> = ({ pagesCount, appName, status }) => {
