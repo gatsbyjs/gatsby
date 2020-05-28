@@ -1,8 +1,8 @@
-const requireYaml = require(`./require-yaml`)
-const docLinksData = requireYaml(`../data/sidebars/doc-links.yaml`)
-const tutorialLinksData = requireYaml(`../data/sidebars/tutorial-links.yaml`)
-const contributingLinksData = requireYaml(
-  `../data/sidebars/contributing-links.yaml`
+const { loadYaml } = require(`./load-yaml`)
+const docLinksData = loadYaml(`src/data/sidebars/doc-links.yaml`)
+const tutorialLinksData = loadYaml(`src/data/sidebars/tutorial-links.yaml`)
+const contributingLinksData = loadYaml(
+  `src/data/sidebars/contributing-links.yaml`
 )
 
 const docLinks = docLinksData[0].items

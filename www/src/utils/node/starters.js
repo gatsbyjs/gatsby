@@ -3,9 +3,9 @@ const Promise = require(`bluebird`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
-const requireYaml = require(`../require-yaml`)
-const { starters: featuredStarters } = requireYaml(
-  `../../data/ecosystem/featured-items.yaml`
+const { loadYaml } = require(`../load-yaml`)
+const { starters: featuredStarters } = loadYaml(
+  `src/data/ecosystem/featured-items.yaml`
 )
 const { getTemplate } = require(`../get-template`)
 

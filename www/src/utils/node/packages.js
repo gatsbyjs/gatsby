@@ -1,8 +1,8 @@
 const isOfficialPackage = require(`../is-official-package`)
 const { getTemplate } = require(`../get-template`)
-const requireYaml = require(`../require-yaml`)
-const { plugins: featuredPlugins } = requireYaml(
-  `../../data/ecosystem/featured-items.yaml`
+const { loadYaml } = require(`../load-yaml`)
+const { plugins: featuredPlugins } = loadYaml(
+  `src/data/ecosystem/featured-items.yaml`
 )
 
 exports.createPages = async ({ graphql, actions }) => {
