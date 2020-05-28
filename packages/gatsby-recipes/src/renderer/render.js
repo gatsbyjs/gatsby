@@ -25,7 +25,7 @@ const Wrapper = ({ children }) => (
   </ErrorBoundary>
 )
 
-const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
+const ResourceComponent = ({ _resourceName: Resource, children, ...props }) => {
   const userProps = getUserProps(props)
   const resourceData = readResource(Resource, { root: process.cwd() }, props)
 
@@ -33,6 +33,7 @@ const ResourceComponent = ({ _resourceName: Resource, ...props }) => {
     <ResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>
         {JSON.stringify({ ...resourceData, _props: userProps })}
+        {children}
       </Resource>
     </ResourceProvider>
   )
@@ -81,23 +82,32 @@ const render = async recipe => {
 
   const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
 
-  try {
-    // Run the first pass of the render to queue up top-level resources
+  const renderResources = async () => {
+    queue.pause()
+
     RecipesReconciler.render(recipeWithWrapper, plan)
 
-    // If there are any errors, throw an error to pass to the client
     if (errors.length) {
       const error = new Error(`Unable to validate resources`)
       error.errors = errors
       throw error
     }
 
+    // If there aren't any new resources that need to be fetched we're done!
+    if (!queue.size) {
+      return undefined
+    }
+
     queue.start()
-
-    // Work is done
     await queue.onIdle()
+    return await renderResources()
+  }
 
-    // Rerender with the resources and resolve the data
+  try {
+    // Begin the "render loop" until there are no more resources being queued.
+    await renderResources()
+
+    // Rerender with the resources and resolve the data from the cache
     const result = RecipesReconciler.render(recipeWithWrapper, plan)
     return transformToPlan(result)
   } catch (e) {

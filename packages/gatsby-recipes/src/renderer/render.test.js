@@ -12,6 +12,38 @@ const fixture = (
   </doc>
 )
 
+test(`handles nested rendering`, async () => {
+  const result = await render(
+    <doc>
+      <File path="red.js" content="red!">
+        <File path="blue.js" content="blue!">
+          <File path="yellow.js" content="yellow!" />
+        </File>
+      </File>
+    </doc>,
+    {}
+  )
+
+  expect(result).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "currentState": "",
+        "describe": "Write red.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + red!",
+        "newState": "red!",
+        "resourceDefinitions": Object {
+          "content": "red!",
+          "path": "red.js",
+        },
+        "resourceName": "File",
+      },
+    ]
+  `)
+})
+
 test(`renders to a plan`, async () => {
   const result = await render(fixture, {})
 
