@@ -2,23 +2,37 @@
 
 exports[`fetches a recipe from unpkg when official short form 1`] = `
 Array [
-  "# Setup Theme UI
+  "<RecipeIntroduction>
+
+# Setup Theme UI
 
 This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
 
 <Config name=\\"gatsbyjs/add-theme-ui\\" />
+
+</RecipeIntroduction>
 ",
-  "Install packages.
+  "<RecipeStep step={1} totalSteps={4}>
+
+Install packages.
 
 <NPMPackage name=\\"theme-ui\\" />
 <NPMPackage name=\\"gatsby-plugin-theme-ui\\" />
 <NPMPackage name=\\"@theme-ui/presets\\" />
+
+</RecipeStep>
 ",
-  "Add the plugin \`gatsby-plugin-theme-ui\` to your \`gatsby-config.js\`.
+  "<RecipeStep step={2} totalSteps={4}>
+
+Add the plugin \`gatsby-plugin-theme-ui\` to your \`gatsby-config.js\`.
 
 <GatsbyPlugin name=\\"gatsby-plugin-theme-ui\\" />
+
+</RecipeStep>
 ",
-  "Write out Theme UI configuration files.
+  "<RecipeStep step={3} totalSteps={4}>
+
+Write out Theme UI configuration files.
 
 <File
   path=\\"src/gatsby-plugin-theme-ui/index.js\\"
@@ -29,8 +43,12 @@ This recipe helps you start developing with the [Theme UI](https://theme-ui.com)
   content=\\"export default {}\\"
   path=\\"src/gatsby-plugin-theme-ui/components.js\\"
 />
+
+</RecipeStep>
 ",
-  "**Success**!
+  "<RecipeStep step={4} totalSteps={4}>
+
+**Success**!
 
 You're ready to get started!
 
@@ -40,25 +58,37 @@ You're ready to get started!
 _note:_ if you're running this recipe on the default starter (or any other starter with
 base css), you'll need to remove the require to \`layout.css\` in the \`components/layout.js\` file
 as otherwise they'll override some theme-ui styles.
+
+</RecipeStep>
 ",
 ]
 `;
 
 exports[`partitions the MDX into steps 1`] = `
 Array [
-  "# Automatically run Prettier on Git commits
+  "<RecipeIntroduction>
+
+# Automatically run Prettier on Git commits
 
 Make sure all of your code is run through Prettier when you commit it to git.
 We achieve this by configuring prettier to run on git hooks using husky and
 lint-staged.
+
+</RecipeIntroduction>
 ",
-  "Install packages.
+  "<RecipeStep step={1} totalSteps={4}>
+
+Install packages.
 
 <NPMPackage name=\\"husky\\" />
 <NPMPackage name=\\"prettier\\" />
 <NPMPackage name=\\"lint-staged\\" />
+
+</RecipeStep>
 ",
-  "Implement git hooks for prettier.
+  "<RecipeStep step={2} totalSteps={4}>
+
+Implement git hooks for prettier.
 
 <NPMPackageJson
   name=\\"husky\\"
@@ -76,8 +106,12 @@ lint-staged.
     ]
   }}
 />
+
+</RecipeStep>
 ",
-  "Write prettier config files.
+  "<RecipeStep step={3} totalSteps={4}>
+
+Write prettier config files.
 
 <File
   path=\\".prettierrc\\"
@@ -94,9 +128,15 @@ public
 node_modules
 \`}
 />
+
+</RecipeStep>
 ",
-  "Prettier, husky, and lint-staged are now installed! You can edit your \`.prettierrc\`
+  "<RecipeStep step={4} totalSteps={4}>
+
+Prettier, husky, and lint-staged are now installed! You can edit your \`.prettierrc\`
 if you'd like to change your prettier configuration.
+
+</RecipeStep>
 ",
 ]
 `;

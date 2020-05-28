@@ -2,6 +2,7 @@ const React = require(`react`)
 
 const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
+const { RecipeStep } = require(`./step-component`)
 
 const { File, NPMPackage } = resourceComponents
 
@@ -27,6 +28,7 @@ test(`handles nested rendering`, async () => {
   expect(result).toMatchInlineSnapshot(`
     Array [
       Object {
+        "_stepMetadata": Object {},
         "currentState": "",
         "describe": "Write red.js",
         "diff": "- Original  - 0
@@ -44,6 +46,60 @@ test(`handles nested rendering`, async () => {
   `)
 })
 
+test(`includes step metadata`, async () => {
+  const result = await render(
+    <doc>
+      <RecipeStep step={1} totalSteps={2}>
+        <File path="red.js" content="red!" />
+      </RecipeStep>
+      <RecipeStep step={2} totalSteps={2}>
+        <File path="blue.js" content="blue!" />
+      </RecipeStep>
+    </doc>
+  )
+
+  expect(result).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "_stepMetadata": Object {
+          "step": 1,
+          "totalSteps": 2,
+        },
+        "currentState": "",
+        "describe": "Write red.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + red!",
+        "newState": "red!",
+        "resourceDefinitions": Object {
+          "content": "red!",
+          "path": "red.js",
+        },
+        "resourceName": "File",
+      },
+      Object {
+        "_stepMetadata": Object {
+          "step": 2,
+          "totalSteps": 2,
+        },
+        "currentState": "",
+        "describe": "Write blue.js",
+        "diff": "- Original  - 0
+    + Modified  + 1
+
+    + blue!",
+        "newState": "blue!",
+        "resourceDefinitions": Object {
+          "content": "blue!",
+          "path": "blue.js",
+        },
+        "resourceName": "File",
+      },
+    ]
+  `)
+})
+
 test(`renders to a plan`, async () => {
   const result = await render(fixture, {})
 
@@ -54,6 +110,7 @@ test(`renders to a plan`, async () => {
   expect(result.length).toEqual(2)
   expect(result[0]).toMatchInlineSnapshot(`
     Object {
+      "_stepMetadata": Object {},
       "currentState": "",
       "describe": "Write red.js",
       "diff": "- Original  - 0
@@ -74,6 +131,7 @@ test(`renders to a plan`, async () => {
     },
     `
     Object {
+      "_stepMetadata": Object {},
       "currentState": StringMatching /gatsby@\\[0-9\\.\\]\\+/,
       "describe": "Install gatsby@latest",
       "newState": "gatsby@latest",

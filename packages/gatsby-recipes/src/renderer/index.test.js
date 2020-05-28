@@ -19,6 +19,7 @@ describe(`renderer`, () => {
     expect(result.length).toEqual(3)
     expect(result[0]).toMatchInlineSnapshot(`
       Object {
+        "_stepMetadata": Object {},
         "currentState": "",
         "describe": "Write foo.js",
         "diff": "- Original  - 0
@@ -35,6 +36,7 @@ describe(`renderer`, () => {
     `)
     expect(result[1]).toMatchInlineSnapshot(`
       Object {
+        "_stepMetadata": Object {},
         "currentState": "",
         "describe": "Write foo2.js",
         "diff": "- Original  - 0
@@ -55,6 +57,7 @@ describe(`renderer`, () => {
       },
       `
       Object {
+        "_stepMetadata": Object {},
         "currentState": StringMatching /gatsby@\\[0-9\\.\\]\\+/,
         "describe": "Install gatsby@latest",
         "newState": "gatsby@latest",
@@ -73,6 +76,7 @@ describe(`renderer`, () => {
     expect(result).toMatchInlineSnapshot(`
       Array [
         Object {
+          "_stepMetadata": Object {},
           "currentState": "",
           "describe": "Write hi.md",
           "diff": "- Original  - 0
@@ -99,6 +103,7 @@ describe(`renderer`, () => {
     expect(result).toMatchInlineSnapshot(`
       Array [
         Object {
+          "_stepMetadata": Object {},
           "currentState": "",
           "describe": "Write foo.js",
           "diff": "- Original  - 0

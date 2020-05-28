@@ -5,9 +5,12 @@ const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`
 
 const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
+const { RecipeStep, RecipeIntroduction } = require(`./step-component`)
 
 const scope = {
   React,
+  RecipeStep,
+  RecipeIntroduction,
   Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
 }
