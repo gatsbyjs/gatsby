@@ -1,56 +1,65 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
-import styled from "@emotion/styled"
-import themeGet from "@styled-system/theme-get"
-
-import { Box, Flex, Heading, Text } from "../system"
+import { Heading, Text } from "../system"
+import { Box, Flex } from "theme-ui"
 import {
   getA11yLabel,
   getTextColor,
   a11y,
 } from "../../../utils/guidelines/color"
 import { focusStyle } from "../../../utils/styles"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { colors as themeColors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const Column = styled(Flex)()
-
-Column.defaultProps = {
-  flexWrap: `wrap`,
-  width: { lg: `50%` },
-  p: { xxs: 6, md: 8 },
-  m: 0,
-}
-
-const CloseButton = styled(Flex)(
-  {
-    border: 0,
-    cursor: `pointer`,
-    outline: 0,
-    WebkitAppearance: `none`,
-  },
-  props => {
-    return {
-      transition: `all ${themeGet(`transition.speed.fast`)} ${themeGet(
-        `transition.curve.default`
-      )}`,
-      ":hover, :focus": {
-        ...focusStyle,
-        color: themeGet(`colors.orange.50`)(props),
+const Column = ({ children, ...rest }) => (
+  <Flex
+    sx={{
+      flexWrap: `wrap`,
+      width: `100%`,
+      p: 6,
+      m: 0,
+      ...rest,
+      [mediaQueries.md]: {
+        p: 8,
       },
-    }
-  }
+      [mediaQueries.lg]: {
+        width: `50%`,
+      },
+    }}
+  >
+    {children}
+  </Flex>
 )
 
-CloseButton.defaultProps = {
-  as: `button`,
-  alignItems: `center`,
-  bg: `transparent`,
-  borderRadius: 6,
-  fontSize: 6,
-  height: 48,
-  justifyContent: `center`,
-  ml: `auto`,
-  width: 48,
-}
+const CloseButton = ({ children, ...rest }) => (
+  <button
+    {...rest}
+    sx={{
+      alignItems: `center`,
+      bg: `transparent`,
+      borderRadius: 6,
+      fontSize: 6,
+      width: 48,
+      height: 48,
+      justifyContent: `center`,
+      ml: `auto`,
+      border: 0,
+      cursor: `pointer`,
+      outline: 0,
+      WebkitAppearance: `none`,
+      pb: 6,
+      transition: t =>
+        `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
+      ":hover, :focus": {
+        ...focusStyle,
+        color: `orange.50`,
+      },
+    }}
+  >
+    {children}
+  </button>
+)
 
 const AADescription = () => (
   <Text as="p" mb={0}>
@@ -91,7 +100,11 @@ const TextSamples = ({ contrast, bg, colorName }) => {
         if (a11yLabel !== `Fail`) {
           return (
             <Box key={`text-sample-${colorName}-${color}-${i}`}>
-              <Flex color={colors[color]}>
+              <Flex
+                sx={{
+                  color: colors[color],
+                }}
+              >
                 <Text
                   as="code"
                   color={colors[color]}
@@ -138,7 +151,15 @@ const modalContent = (palette, color) => {
       const textColor = getTextColor(c.contrast)
 
       colors.push(
-        <Box width="100%" display={{ lg: `flex` }} key={`palette-${index}`}>
+        <Box
+          sx={{
+            width: `100%`,
+            [mediaQueries.lg]: {
+              display: `flex`,
+            },
+          }}
+          key={`palette-${index}`}
+        >
           <Column bg={c.hex} color={textColor}>
             <Text
               as="span"
@@ -155,7 +176,12 @@ const modalContent = (palette, color) => {
             <Text as="span" color={textColor}>
               {c.rgb.red}, {c.rgb.green}, {c.rgb.blue}
             </Text>
-            <Box width="100%" flexShrink={0}>
+            <Box
+              sx={{
+                width: `100%`,
+                flexShrink: 0,
+              }}
+            >
               <TextSamples
                 contrast={c.contrast}
                 bg={c.hex}
@@ -178,7 +204,13 @@ const modalContent = (palette, color) => {
               {c.contrast.colorOnWhite.toFixed(2)} /{` `}
               {getA11yLabel(c.a11y)}
             </Text>
-            <Box width="100%" flexShrink={0} css={{ "& p": { color: c.hex } }}>
+            <Box
+              sx={{
+                width: `100%`,
+                flexShrink: 0,
+                "& p": { color: c.hex },
+              }}
+            >
               {getA11yLabel(c.a11y) === `AA` && <AADescription />}
               {getA11yLabel(c.a11y) === `AAA` && <AAADescription />}
               {getA11yLabel(c.a11y) === `AA Large` && <AALargeDescription />}
@@ -196,19 +228,34 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
 
   return (
     <>
-      <Flex alignItems="baseline" p={{ xxs: 6, md: 8 }}>
+      <Flex
+        sx={{
+          alignItems: `baseline`,
+          p: 6,
+          [mediaQueries.md]: {
+            p: 8,
+          },
+        }}
+      >
         <Heading color="black" mr={4} mt={0}>
           {palette[color].name}
         </Heading>
         <CloseButton
           onClick={handleModalClose}
           aria-label={`Close “${palette[color].name}” modal`}
-          paddingBottom="6"
         >
           &times;
         </CloseButton>
       </Flex>
-      <Box p={{ xxs: 6, md: 8 }} bg={base.hex}>
+      <Box
+        sx={{
+          p: 6,
+          bg: base.hex,
+          [mediaQueries.md]: {
+            p: 8,
+          },
+        }}
+      >
         <Heading
           as="h2"
           m={0}

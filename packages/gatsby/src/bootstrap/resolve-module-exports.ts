@@ -1,16 +1,18 @@
-// @flow
 import fs from "fs"
 import traverse from "@babel/traverse"
 import get from "lodash/get"
-import { codeFrameColumns } from "@babel/code-frame"
+import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import report from "gatsby-cli/lib/reporter"
 
 import { testRequireError } from "../utils/test-require-error"
 
-const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
-  let absPath
-  const exportNames = []
+const staticallyAnalyzeExports = (
+  modulePath: string,
+  resolver = require.resolve
+): string[] => {
+  let absPath: string | undefined
+  const exportNames: string[] = []
 
   try {
     absPath = resolver(modulePath)
@@ -28,7 +30,7 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       const codeFrame = codeFrameColumns(
         code,
         {
-          start: err.loc,
+          start: ((err as unknown) as { loc: SourceLocation["start"] }).loc,
         },
         {
           highlightCode: true,
@@ -50,18 +52,30 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
   // extract names of exports from file
   traverse(ast, {
     // Check if the file is using ES6 imports
-    ImportDeclaration: function ImportDeclaration(astPath) {
+    ImportDeclaration: function ImportDeclaration() {
       isES6 = true
     },
 
-    // get foo from `export const foo = bar`
     ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
-      const exportName = get(
-        astPath,
-        `node.declaration.declarations[0].id.name`
-      )
-      isES6 = true
-      if (exportName) exportNames.push(exportName)
+      const declaration = astPath.node.declaration
+
+      // get foo from `export const foo = bar`
+      if (
+        declaration?.type === `VariableDeclaration` &&
+        declaration.declarations[0]?.id.type === `Identifier`
+      ) {
+        isES6 = true
+        exportNames.push(declaration.declarations[0].id.name)
+      }
+
+      // get foo from `export function foo()`
+      if (
+        declaration?.type === `FunctionDeclaration` &&
+        declaration.id?.type === `Identifier`
+      ) {
+        isES6 = true
+        exportNames.push(declaration.id.name)
+      }
     },
 
     // get foo from `export { foo } from 'bar'`
@@ -127,16 +141,16 @@ https://gatsby.dev/no-mixed-modules
  *
  * Returns [] for invalid paths and modules without exports.
  *
- * @param {string} modulePath
- * @param {string} mode
- * @param {function} resolver
+ * @param modulePath
+ * @param mode
+ * @param resolver
  */
-module.exports = (
-  modulePath,
+export const resolveModuleExports = (
+  modulePath: string,
   { mode = `analysis`, resolver = require.resolve } = {}
-) => {
+): string[] => {
   if (mode === `require`) {
-    let absPath
+    let absPath: string | undefined
     try {
       absPath = resolver(modulePath)
       return Object.keys(require(modulePath)).filter(

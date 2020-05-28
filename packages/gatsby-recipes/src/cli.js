@@ -84,6 +84,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-theme-blog-core`,
     },
     {
+      label: `Add Gatsby Theme Notes`,
+      value: `gatsby-theme-notes`,
+    },
+    {
       label: `Add persistent layout component with gatsby-plugin-layout`,
       value: `gatsby-plugin-layout`,
     },
@@ -134,6 +138,10 @@ const RecipesList = ({ setRecipe }) => {
     {
       label: `Add React Helmet`,
       value: `gatsby-plugin-react-helmet.mdx`,
+    },
+    {
+      label: `Add Headless WordPress integration`,
+      value: `wordpress.mdx`,
     },
     {
       label: `Add Storybook - JavaScript`,
@@ -269,6 +277,7 @@ const components = {
   NPMPackageJson: () => null,
   NPMPackage: () => null,
   File: () => null,
+  Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
 }
