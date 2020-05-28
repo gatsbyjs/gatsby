@@ -120,7 +120,7 @@ const recipeMachine = Machine(
           INPUT: {
             target: `waitingForInput`,
             actions: assign({
-              inputs: (context, event) => {
+              input: (context, event) => {
                 const data = event.data[0] || {}
 
                 return {
@@ -136,23 +136,7 @@ const recipeMachine = Machine(
       },
       waitingForInput: {
         on: {
-          INPUT_CALLED: {
-            target: `creatingPlan`,
-            actions: assign({
-              /**
-               {
-                 inputs: {
-                   123abc: {
-                     path: 'new-path.js'
-                   }
-                 }
-               }
-               */
-              input: (context, event) => {
-                console.log(event)
-              },
-            }),
-          },
+          INPUT_CALLED: `creatingPlan`,
         },
       },
       presentPlan: {
