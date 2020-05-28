@@ -42,8 +42,8 @@ Object {
 exports[`gatsby-node should add a new blogpost and update linkedNodes 2`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0",
     "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR",
   ],
@@ -128,8 +128,8 @@ Object {
 exports[`gatsby-node should add a new blogpost and update linkedNodes 4`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___nl",
     "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nl",
   ],
@@ -175,8 +175,8 @@ Object {
 exports[`gatsby-node should remove a blogpost and update linkedNodes 1`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0",
   ],
   "children": Array [
@@ -221,8 +221,8 @@ Object {
 exports[`gatsby-node should remove a blogpost and update linkedNodes 2`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___nl",
   ],
   "children": Array [
@@ -309,8 +309,8 @@ Object {
 exports[`gatsby-node should update a blogpost 2`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
   ],
@@ -398,8 +398,8 @@ Object {
 exports[`gatsby-node should update a blogpost 4`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___nl",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
   ],

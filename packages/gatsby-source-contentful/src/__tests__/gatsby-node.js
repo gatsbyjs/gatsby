@@ -7,8 +7,9 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-const gatsbyNode = require(`../gatsby-node`)
 const fetch = require(`../fetch`)
+fetch.getSyncData = jest.fn() // generators aren't mocked by jest it seems
+const gatsbyNode = require(`../gatsby-node`)
 const normalize = require(`../normalize`)
 
 const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
@@ -26,8 +27,42 @@ describe(`gatsby-node`, () => {
   let getNodes = () => Array.from(currentNodeMap.values())
   let getNode = id => currentNodeMap.get(id)
 
+  const fetchAll = (value, field) => {
+    let result = {
+      entries: [],
+      assets: [],
+      deletedEntries: [],
+      deletedAssets: [],
+    }
+    value.forEach(v => {
+      result = {
+        entries: result.entries.concat(v.entries),
+        assets: result.assets.concat(v.assets),
+        deletedEntries: result.deletedEntries.concat(v.deletedEntries),
+        deletedAssets: result.deletedAssets.concat(v.deletedAssets),
+      }
+    })
+
+    return result
+  }
+
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
+
+  const createFetchMock = data => {
+    // deep clone
+    data = JSON.parse(JSON.stringify(data))
+    fetch.getContentTypes.mockImplementationOnce(() => data.contentTypeItems)
+    fetch.getLocales.mockImplementationOnce(() => {
+      return { defaultLocale: `en-US`, locales: data.locales }
+    })
+    fetch.getSyncData.mockImplementationOnce(async function* () {
+      while (data.currentSyncData.length) {
+        yield data.currentSyncData.shift()
+      }
+    })
+    fetch.getSpace.mockImplementationOnce(() => data.space)
+  }
 
   const testIfContentTypesExists = contentTypeItems => {
     contentTypeItems.forEach(contentType => {
@@ -94,6 +129,7 @@ describe(`gatsby-node`, () => {
                 const referenceKey = `${currentContentType.name.toLowerCase()}___NODE`
                 const reference = references.get(linkId)
                 const linkedNode = getNode(linkId)
+
                 reference[referenceKey] =
                   reference[referenceKey] || linkedNode[referenceKey] || []
                 reference[referenceKey].push(nodeId)
@@ -208,7 +244,6 @@ describe(`gatsby-node`, () => {
   }
 
   beforeEach(() => {
-    fetch.mockClear()
     currentNodeMap = new Map()
     actions.createNode = jest.fn(async node => {
       node.internal.owner = `gatsby-source-contentful`
@@ -228,8 +263,9 @@ describe(`gatsby-node`, () => {
   })
 
   it(`should create nodes from initial payload`, async () => {
-    fetch.mockImplementationOnce(() => startersBlogFixture.initialSync)
+    createFetchMock(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
+    const syncData = fetchAll(startersBlogFixture.initialSync.currentSyncData)
 
     await gatsbyNode.sourceNodes({
       actions,
@@ -244,25 +280,23 @@ describe(`gatsby-node`, () => {
 
     testIfContentTypesExists(startersBlogFixture.initialSync.contentTypeItems)
     testIfEntriesExists(
-      startersBlogFixture.initialSync.currentSyncData.entries,
+      syncData.entries,
       startersBlogFixture.initialSync.contentTypeItems,
       locales
     )
-    testIfAssetsExists(
-      startersBlogFixture.initialSync.currentSyncData.assets,
-      locales
-    )
+    testIfAssetsExists(syncData.assets, locales)
   })
 
   it(`should add a new blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
 
-    fetch
-      .mockReturnValueOnce(startersBlogFixture.initialSync)
-      .mockReturnValueOnce(startersBlogFixture.createBlogPost)
+    createFetchMock(startersBlogFixture.initialSync)
+    createFetchMock(startersBlogFixture.createBlogPost)
 
-    const createdBlogEntry =
-      startersBlogFixture.createBlogPost.currentSyncData.entries[0]
+    const syncData = fetchAll(
+      startersBlogFixture.createBlogPost.currentSyncData
+    )
+    const createdBlogEntry = syncData.entries[0]
     const createdBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: createdBlogEntry.sys.space.sys.id,
@@ -300,18 +334,16 @@ describe(`gatsby-node`, () => {
       cache,
       getCache,
     })
+
     testIfContentTypesExists(
       startersBlogFixture.createBlogPost.contentTypeItems
     )
     testIfEntriesExists(
-      startersBlogFixture.createBlogPost.currentSyncData.entries,
+      syncData.entries,
       startersBlogFixture.createBlogPost.contentTypeItems,
       locales
     )
-    testIfAssetsExists(
-      startersBlogFixture.createBlogPost.currentSyncData.assets,
-      locales
-    )
+    testIfAssetsExists(syncData.assets, locales)
 
     createdBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
@@ -322,13 +354,15 @@ describe(`gatsby-node`, () => {
 
   it(`should update a blogpost`, async () => {
     const locales = [`en-US`, `nl`]
-    fetch
-      .mockReturnValueOnce(startersBlogFixture.initialSync)
-      .mockReturnValueOnce(startersBlogFixture.createBlogPost)
-      .mockReturnValueOnce(startersBlogFixture.updateBlogPost)
 
-    const updatedBlogEntry =
-      startersBlogFixture.updateBlogPost.currentSyncData.entries[0]
+    createFetchMock(startersBlogFixture.initialSync)
+    createFetchMock(startersBlogFixture.createBlogPost)
+    createFetchMock(startersBlogFixture.updateBlogPost)
+
+    const syncData = fetchAll(
+      startersBlogFixture.updateBlogPost.currentSyncData
+    )
+    const updatedBlogEntry = syncData.entries[0]
     const updatedBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: updatedBlogEntry.sys.space.sys.id,
@@ -382,14 +416,11 @@ describe(`gatsby-node`, () => {
       startersBlogFixture.updateBlogPost.contentTypeItems
     )
     testIfEntriesExists(
-      startersBlogFixture.updateBlogPost.currentSyncData.entries,
+      syncData.entries,
       startersBlogFixture.updateBlogPost.contentTypeItems,
       locales
     )
-    testIfAssetsExists(
-      startersBlogFixture.updateBlogPost.currentSyncData.assets,
-      locales
-    )
+    testIfAssetsExists(syncData.assets, locales)
 
     updatedBlogEntryIds.forEach(blogEntryId => {
       const blogEntry = getNode(blogEntryId)
@@ -401,13 +432,14 @@ describe(`gatsby-node`, () => {
 
   it(`should remove a blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
-    fetch
-      .mockReturnValueOnce(startersBlogFixture.initialSync)
-      .mockReturnValueOnce(startersBlogFixture.createBlogPost)
-      .mockReturnValueOnce(startersBlogFixture.removeBlogPost)
+    createFetchMock(startersBlogFixture.initialSync)
+    createFetchMock(startersBlogFixture.createBlogPost)
+    createFetchMock(startersBlogFixture.removeBlogPost)
 
-    const removedBlogEntry =
-      startersBlogFixture.removeBlogPost.currentSyncData.deletedEntries[0]
+    const syncData = fetchAll(
+      startersBlogFixture.removeBlogPost.currentSyncData
+    )
+    const removedBlogEntry = syncData.deletedEntries[0]
     const removedBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: removedBlogEntry.sys.space.sys.id,
@@ -464,10 +496,7 @@ describe(`gatsby-node`, () => {
     testIfContentTypesExists(
       startersBlogFixture.removeBlogPost.contentTypeItems
     )
-    testIfEntriesDeleted(
-      startersBlogFixture.removeBlogPost.currentSyncData.assets,
-      locales
-    )
+    testIfEntriesDeleted(syncData.assets, locales)
 
     // check if references are gone
     authorIds.forEach(authorId => {
@@ -479,13 +508,14 @@ describe(`gatsby-node`, () => {
   it.skip(`should remove an asset`, async () => {
     const locales = [`en-US`, `nl`]
 
-    fetch
-      .mockReturnValueOnce(startersBlogFixture.initialSync)
-      .mockReturnValueOnce(startersBlogFixture.createBlogPost)
-      .mockReturnValueOnce(startersBlogFixture.removeAsset)
+    createFetchMock(startersBlogFixture.initialSync)
+    createFetchMock(startersBlogFixture.createBlogPost)
+    createFetchMock(startersBlogFixture.removeAsset)
 
-    const removedAssetEntry =
-      startersBlogFixture.removeAsset.currentSyncData.deletedEntries[0]
+    const syncData = fetchAll(
+      startersBlogFixture.removeBlogPost.currentSyncData
+    )
+    const removedAssetEntry = syncData.deletedEntries[0]
     const removedAssetEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: removedAssetEntry.sys.space.sys.id,
@@ -538,17 +568,11 @@ describe(`gatsby-node`, () => {
 
     testIfContentTypesExists(startersBlogFixture.removeAsset.contentTypeItems)
     testIfEntriesExists(
-      startersBlogFixture.removeAsset.currentSyncData.entries,
+      syncData.entries,
       startersBlogFixture.removeAsset.contentTypeItems,
       locales
     )
-    testIfEntriesDeleted(
-      startersBlogFixture.removeAsset.currentSyncData.assets,
-      locales
-    )
-    testIfAssetsDeleted(
-      startersBlogFixture.removeAsset.currentSyncData.assets,
-      locales
-    )
+    testIfEntriesDeleted(syncData.assets, locales)
+    testIfAssetsDeleted(syncData.assets, locales)
   })
 })

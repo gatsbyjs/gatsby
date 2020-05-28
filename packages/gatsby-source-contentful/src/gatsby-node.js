@@ -4,7 +4,13 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 
 const normalize = require(`./normalize`)
-const fetchData = require(`./fetch`)
+const {
+  checkAccessToContentfulSpace,
+  getLocales,
+  getContentTypes,
+  getSpace,
+  getSyncData,
+} = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
@@ -99,17 +105,37 @@ exports.sourceNodes = async (
     ]
   }
 
-  const {
-    currentSyncData,
-    contentTypeItems,
-    defaultLocale,
-    locales,
+  await checkAccessToContentfulSpace(reporter, pluginConfig)
+
+  const [
+    { defaultLocale, locales },
     space,
-  } = await fetchData({
-    syncToken,
-    reporter,
-    pluginConfig,
-  })
+    contentTypeItems,
+  ] = await Promise.all([
+    getLocales(pluginConfig),
+    getSpace(pluginConfig),
+    getContentTypes(pluginConfig),
+  ])
+
+  reporter.info(`default locale is : ${defaultLocale}`)
+
+  let currentSyncData = {
+    entries: [],
+    assets: [],
+    deletedEntries: [],
+    deletedAssets: [],
+    nextSyncToken: ``,
+  }
+
+  for await (const entries of getSyncData(syncToken, pluginConfig)) {
+    currentSyncData.entries.push(...entries.entries)
+    currentSyncData.assets.push(...entries.assets)
+    currentSyncData.deletedEntries.push(...entries.deletedEntries)
+    currentSyncData.deletedAssets.push(...entries.deletedAssets)
+    currentSyncData.nextSyncToken =
+      entries.nextSyncToken ?? currentSyncData.nextSyncToken
+  }
+  console.timeEnd(`Fetch Contentful data`)
 
   const entryList = normalize.buildEntryList({
     currentSyncData,
@@ -156,7 +182,6 @@ exports.sourceNodes = async (
   reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
   reporter.info(`Updated assets ${currentSyncData.assets.length}`)
   reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
-  console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken

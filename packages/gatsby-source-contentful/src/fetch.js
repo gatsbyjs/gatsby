@@ -1,16 +1,11 @@
 const contentful = require(`contentful`)
-const _ = require(`lodash`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
-const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
+const normalize = require(`./normalize`)
 
-module.exports = async ({ syncToken, reporter, pluginConfig }) => {
-  // Fetch articles.
-  console.time(`Fetch Contentful data`)
-
-  console.log(`Starting to fetch data from Contentful`)
-
-  const pageLimit = pluginConfig.get(`pageLimit`)
+let clients = new Map()
+const createOrGetClient = pluginConfig => {
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -19,42 +14,31 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     proxy: pluginConfig.get(`proxy`),
   }
 
-  const client = contentful.createClient(contentfulClientOptions)
+  const hash = createContentDigest(contentfulClientOptions)
+  if (clients.has(hash)) {
+    return clients.get(hash)
+  }
 
-  // The sync API puts the locale in all fields in this format { fieldName:
-  // {'locale': value} } so we need to get the space and its default local.
-  //
-  // We'll extend this soon to support multiple locales.
-  let space
-  let locales
-  let defaultLocale = `en-US`
+  clients.set(hash, contentful.createClient(contentfulClientOptions))
+  return clients.get(hash)
+}
+
+async function checkAccessToContentfulSpace(reporter, pluginConfig) {
   try {
-    reporter.info(`Fetching default locale`)
-    space = await client.getSpace()
-    let contentfulLocales = await client
-      .getLocales()
-      .then(response => response.items)
-    defaultLocale = _.find(contentfulLocales, { default: true }).code
-    locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
-    if (locales.length === 0) {
-      reporter.panic(
-        `Please check if your localeFilter is configured properly. Locales '${_.join(
-          contentfulLocales.map(item => item.code),
-          `,`
-        )}' were found but were filtered down to none.`
-      )
-    }
-    reporter.info(`default locale is: ${defaultLocale}`)
+    await getSpace(pluginConfig)
   } catch (e) {
     let details
     let errors
-    if (e.code === `ENOTFOUND`) {
-      details = `You seem to be offline`
-    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
+
+    if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
       reporter.panic(
         `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
         e
       )
+    }
+
+    if (e.code === `ENOTFOUND`) {
+      details = `You seem to be offline`
     } else if (e.response) {
       if (e.response.status === 404) {
         // host and space used to generate url
@@ -78,50 +62,74 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     }
 
     reporter.panic(`Accessing your Contentful space failed.
-Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
-${details ? `\n${details}\n` : ``}
-Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
+  Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
+  ${details ? `\n${details}\n` : ``}
+  Used options:
+  ${formatPluginOptionsForCLI(
+    pluginConfig.getOriginalPluginOptions(),
+    errors
+  )}`)
+  }
+}
+
+async function getContentTypes(pluginConfig) {
+  const client = createOrGetClient(pluginConfig)
+  const pageLimit = pluginConfig.get(`pageLimit`)
+
+  const { items } = await pagedGet(client, `getContentTypes`, pageLimit)
+  items.forEach(normalize.fixIds)
+
+  return items
+}
+
+async function getLocales(pluginConfig) {
+  const client = createOrGetClient(pluginConfig)
+
+  let { items: locales } = await client.getLocales()
+  const defaultLocale = locales.find(locale => locale.default).code
+  const activeLocales = locales.filter(pluginConfig.get(`localeFilter`))
+
+  if (activeLocales.length === 0) {
+    throw new Error(
+      `Please check if your localeFilter is configured properly. Locales '${locales
+        .map(item => item.code)
+        .join(`, `)} were found but were filtered down to none.`
+    )
   }
 
-  let currentSyncData
-  try {
-    let query = syncToken
-      ? { nextSyncToken: syncToken }
-      : { initial: true, limit: pageLimit }
-    currentSyncData = await client.sync(query)
-  } catch (e) {
-    reporter.panic(`Fetching contentful data failed`, e)
-  }
-
-  // We need to fetch content types with the non-sync API as the sync API
-  // doesn't support this.
-  let contentTypes
-  try {
-    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
-  } catch (e) {
-    reporter.panic(`error fetching content types`, e)
-  }
-  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
-
-  let contentTypeItems = contentTypes.items
-
-  // Fix IDs (inline) on entries and assets, created/updated and deleted.
-  contentTypeItems.forEach(normalize.fixIds)
-  currentSyncData.entries.forEach(normalize.fixIds)
-  currentSyncData.assets.forEach(normalize.fixIds)
-  currentSyncData.deletedEntries.forEach(normalize.fixIds)
-  currentSyncData.deletedAssets.forEach(normalize.fixIds)
-
-  const result = {
-    currentSyncData,
-    contentTypeItems,
+  return {
     defaultLocale,
-    locales,
-    space,
+    locales: activeLocales,
   }
+}
 
-  return result
+async function* getSyncData(syncToken, pluginConfig) {
+  const client = createOrGetClient(pluginConfig)
+  let currentSyncData
+  do {
+    const query = {
+      initial: !syncToken,
+      nextSyncToken:
+        syncToken && !currentSyncData?.nextPageToken ? syncToken : null,
+      nextPageToken: currentSyncData?.nextPageToken ?? null,
+      limit: pluginConfig.get(`pageLimit`),
+    }
+    currentSyncData = await client.sync(query, { paginate: false })
+
+    // Fix IDs (inline) on entries and assets, created/updated and deleted.
+    currentSyncData.entries.forEach(normalize.fixIds)
+    currentSyncData.assets.forEach(normalize.fixIds)
+    currentSyncData.deletedEntries.forEach(normalize.fixIds)
+    currentSyncData.deletedAssets.forEach(normalize.fixIds)
+
+    yield currentSyncData
+  } while (currentSyncData.nextPageToken)
+}
+
+function getSpace(pluginConfig) {
+  const client = createOrGetClient(pluginConfig)
+
+  return client.getSpace()
 }
 
 /**
@@ -161,3 +169,9 @@ function pagedGet(
     return aggregatedResponse
   })
 }
+
+exports.checkAccessToContentfulSpace = checkAccessToContentfulSpace
+exports.getContentTypes = getContentTypes
+exports.getLocales = getLocales
+exports.getSyncData = getSyncData
+exports.getSpace = getSpace
