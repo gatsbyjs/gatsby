@@ -205,21 +205,29 @@ export default function Header(props) {
 ## Using Theme UI in a Gatsby theme
 
 When using Theme UI in a Gatsby theme, it's important to understand how the `gatsby-plugin-theme-ui` package handles theme objects from multiple Gatsby themes and sites.
-If a Gatsby theme that uses `gatsby-plugin-theme-ui` is installed in a site,
-shadowing the `src/gatsby-plugin-theme-ui/index.js` file will completely override the default styles.
-This is intended to give full control to the person using the theme.
+
 If multiple themes are installed in the same site, the one defined last in your `gatsby-config.js` file's `plugins` array will take precedence.
 
-To extend an existing Theme UI configuration from a theme, it can be imported and merged with any other values you would like to customize.
-The following is an example of extending the configuration from `gatsby-theme-blog`.
+To extend an existing Theme UI configuration from a theme it's necessary to know how the base theme is passing styles. If it's using a `preset`, as the `gatsby-theme-blog`, any shadowed files are merged automatically.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
-import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui"
+export default {
+  colors: {
+    text: "#222",
+    primary: "tomato",
+  },
+}
+```
+
+If the theme is shadowing styles itself, you'll want to merge those styles with your local ones.
+
+```js:title=src/gatsby-plugin-theme-ui/index.js
+import baseTheme from "gatsby-theme-unknown/src/gatsby-plugin-theme-ui"
 import { merge } from "theme-ui"
 
 // merge will deeply merge custom values with the
-// blog theme's defaults
-export default merge({}, baseTheme, {
+// unknown theme's defaults
+export default merge(baseTheme, {
   colors: {
     text: "#222",
     primary: "tomato",
