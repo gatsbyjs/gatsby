@@ -88,12 +88,12 @@ function updateURL() {
 const DEFAULT_QUERY =
   parameters.query ||
   (window.localStorage && window.localStorage.getItem(`graphiql:query`)) ||
-  null
+  undefined
 
 const DEFAULT_VARIABLES =
   parameters.variables ||
   (window.localStorage && window.localStorage.getItem(`graphiql:variables`)) ||
-  null
+  undefined
 
 const QUERY_EXAMPLE_SITEMETADATA_TITLE = `#     {
 #       site {

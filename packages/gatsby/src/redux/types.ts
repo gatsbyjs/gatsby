@@ -48,7 +48,7 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
-    sireUrl?: string
+    siteUrl?: string
     // siteMetadata is free form
     [key: string]: unknown
   }
@@ -617,9 +617,7 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: {
-    id: Identifier
-  }
+  payload: IGatsbyNode
 }
 
 export interface IDeleteNodesAction {

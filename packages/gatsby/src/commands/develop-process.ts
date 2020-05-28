@@ -53,7 +53,7 @@ import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt
 import onExit from "signal-exit"
 import queryUtil from "../query"
 import queryWatcher from "../query/query-watcher"
-import requiresWriter from "../bootstrap/requires-writer"
+import * as requiresWriter from "../bootstrap/requires-writer"
 import {
   reportWebpackWarnings,
   structureWebpackErrors,
