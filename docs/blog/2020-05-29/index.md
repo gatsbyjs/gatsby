@@ -1,3 +1,12 @@
+---
+title: Gatsby Gazette for May 2020 - The Happy Birthday Edition
+date: 2020-05-29
+author: Hashim Warren
+excerpt: "Learn about May's product, community, and ecosystem updates"
+seoTitle: Gatsby Product Updates for May 2020
+tags: ["gatsby-gazette", "graphql", "blogs"]
+---
+
 This month [Gatsby turned 5](/blog/2020-05-22-happy-fifth-bday-gatsby/) 🎉
 
 We hit a special milestone in May - there are over 2000 Gatsby plugins, and 500 of them are source plugins ([thanks for noticing Chris Ellis](https://github.com/gatsbyjs/gatsby/pull/23558)). So for whatever your use case, for whatever data source, there's a Gatsby plugin that can get you up-and-running quickly. And if you need inspiration for your project, GitHub lists over 200 thousand sites that use Gatsby as a dependency.
