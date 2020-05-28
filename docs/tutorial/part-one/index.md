@@ -365,6 +365,8 @@ Gatsby.js is a _modern site generator_, which means there are no servers to set 
 
 Try using [Surge](http://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which makes it possible to deploy Gatsby sites.
 
+> Gatsby Cloud is another deployment option, built by the team behind Gatsby.js. You can find instructions for deploying to Gatsby Cloud [below](https://www.gatsbyjs.org/tutorial/part-one/#alternative-deploying-to-gatsby-cloud).
+
 If you haven't previously installed & set up Surge, open a new terminal window and install their command-line tool:
 
 ```shell
@@ -402,6 +404,28 @@ Once this finishes running, you should see in your terminal something like:
 
 Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this
 case) and you'll see your newly published site! Great work!
+
+## Alternative: Deploying to Gatsby Cloud
+
+[Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools.
+
+To deploy your site to Gatsby Cloud, create an account on [Github](https://github.com) if you don’t have one. Github allows you to host and collaborate on code projects using Git for version control.
+
+Create a new repository on Github. Since you’re importing your existing project, you’ll want a completely empty one, so don’t initialize it with `README` or `.gitignore` files.
+
+You can tell Git where the remote (i.e. not on your computer) repository is like this:
+
+```
+git remote add origin [GITHUB_REPOSITORY_URL]
+```
+
+When you created a new Gatsby project with a starter, it automatically made an initial `git commit`, or a set of changes. Now, you can push your changes to the new remote location:
+
+```
+git push -u origin master
+```
+
+Now you’re ready to link this Github repository right to Gatsby Cloud! Check out the reference guide on [Deploying to Gatsby Cloud](https://www.gatsbyjs.org/docs/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
 
 ## ➡️ What’s Next?
 
