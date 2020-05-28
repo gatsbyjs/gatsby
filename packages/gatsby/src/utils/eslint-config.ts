@@ -9,7 +9,7 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
-        __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
+        __BASE_PATH__: true // this will rarely, if ever, be used by consumers
       },
       extends: [require.resolve(`eslint-config-react-app`)],
       plugins: [`graphql`],
@@ -20,9 +20,10 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
           {
             env: `relay`,
             schemaString: printSchema(schema, { commentDescriptions: true }),
-            tagName: `graphql`,
-          },
+            tagName: `graphql`
+          }
         ],
+        "react/jsx-pascal-case": `off`, // Prevents errors with Theme-UI and Styled component
         // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
         "jsx-a11y/alt-text": `warn`,
@@ -64,8 +65,8 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
         "jsx-a11y/role-has-required-aria-props": `warn`,
         "jsx-a11y/role-supports-aria-props": `warn`,
         "jsx-a11y/scope": `warn`,
-        "jsx-a11y/tabindex-no-positive": `warn`,
-      },
-    },
+        "jsx-a11y/tabindex-no-positive": `warn`
+      }
+    }
   }
 }
