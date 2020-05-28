@@ -6496,6 +6496,9 @@
     - Styling:CSS-in-JS
     - Netlify
     - Onepage
+  features:
+    - Landing Page
+    - SEO optimized
 - url: https://schoolfront.netlify.app
   repo: https://github.com/orzechdev/schoolfront
   description: School website starter
