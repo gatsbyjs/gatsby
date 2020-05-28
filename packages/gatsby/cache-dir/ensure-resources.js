@@ -19,9 +19,6 @@ class EnsureResources extends React.Component {
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location.href !== location.href) {
       const pageResources = loader.loadPageSync(location.pathname)
-      console.log({
-        pageResources,
-      })
       return {
         pageResources,
         location: { ...location },
@@ -35,13 +32,7 @@ class EnsureResources extends React.Component {
 
   loadResources(rawPath) {
     loader.loadPage(rawPath).then(pageResources => {
-      console.log({
-        pageResources,
-      })
       if (pageResources && pageResources.status !== PageResourceStatus.Error) {
-        console.log({
-          pageResources,
-        })
         this.setState({
           location: { ...window.location },
           pageResources,

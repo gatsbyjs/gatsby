@@ -299,10 +299,6 @@ export class BaseLoader {
     if (this.pageDb.has(pagePath) && this.staticQueryDb.has(pagePath)) {
       const pageData = this.pageDb.get(pagePath).payload
       const staticQueryData = this.staticQueryDb.get(pagePath)
-      console.log({
-        pageData,
-        staticQueryData,
-      })
       return {
         ...pageData,
         staticQueryData,

@@ -70,8 +70,6 @@ useStaticQuery(graphql\`${query}\`);
 `)
   }
 
-  console.log({ context, query })
-
   if (context && context[query] && context[query].data) {
     return context[query].data
   } else {
