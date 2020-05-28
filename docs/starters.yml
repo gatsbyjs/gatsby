@@ -5739,11 +5739,12 @@
     - Styled 404 page
     - Lightweight
     - Styled Components
-- url: https://gatsby-minimalistic-dmin.netlify.com/
-  repo: https://github.com/EllisMin/gatsby-minimalistic-dmin
-  description: A ready-to-use, customizable personal blog with minimalistic design
+- url: https://gatsby-blog-mdx.now.sh/
+  repo: https://github.com/EllisMin/gatsby-blog-mdx
+  description: A ready-to-use, customizable personal blog with minimalist design
   tags:
     - Blog
+    - MDX
     - Markdown
     - Netlify
     - SEO
@@ -5752,13 +5753,13 @@
   features:
     - Simple blog with responsive design
     - Light / Dark Mode Switch
-    - Markdown / HTML to create post & About page
+    - MDX & Markdown to create post & About page
     - Code syntax highlighting (Light / Dark)
-    - Facebook Comments plugin
+    - Facebook | Disqus | Utterances comments
     - Social Media Links & Share buttons
+    - SEO + Sitemap + RSS
     - Googly Analytics Support
     - Easy & Highly Customizable
-    - Styled Components
 - url: https://gatsby-airtable-listing.netlify.com/
   repo: https://github.com/wkocjan/gatsby-airtable-listing
   description: Airtable theme for Gatsby
@@ -6486,3 +6487,66 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-moonclerk.netlify.app
+  repo: https://github.com/moonclerk/gatsby-starter-moonclerk
+  description: A Gatsby starter for creating SaaS landing pages using MoonClerk to accept payments.
+  tags:
+    - SEO
+    - Landing Page
+    - Styling:CSS-in-JS
+    - Netlify
+    - Onepage
+  features:
+    - Landing Page
+    - SEO optimized
+- url: https://schoolfront.netlify.app
+  repo: https://github.com/orzechdev/schoolfront
+  description: School website starter
+  tags:
+    - Language:TypeScript
+    - Styling:CSS-in-JS
+    - CMS:WordPress
+    - Blog
+    - Presentation
+  features:
+    - Main page
+    - Wordpress blog
+    - Contact page
+    - About page
+    - Open hours information
+    - Offered curriculum page
+    - Teachers list
+    - WCAG AA support
+    - SEO optimized
+    - Sitemap Generation
+    - GatsbyJS v2
+    - Styled Components
+    - Typescript
+- url: https://gatsby-starter-donations.netlify.app
+  repo: https://github.com/moonclerk/gatsby-starter-donations
+  description: A simple starter to help get up and running accepting donations using Gatsby + MoonClerk
+  tags:
+    - Donations
+    - Landing Page
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - SEO optimized
+    - Fully responsive
+    - Gatsby images
+    - MoonClerk Payment Forms
+    - Open source illustrations from Icons8
+    - Google Analytics
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for easy, beautiful typography
+    - Styling with styled-components
+    - Organized using ABEM
+- url: https://jolly-tree-003047c03.azurestaticapps.net/
+  repo: https://github.com/floAr/gatsby-starter-azure_swa
+  description: A simple GatsbyJS starter making use of the new Azure Static Web App service.
+  tags:
+    - Redux
+    - Styling:None
+    - Azure
+  features:
+    - CI/CD using github actions
