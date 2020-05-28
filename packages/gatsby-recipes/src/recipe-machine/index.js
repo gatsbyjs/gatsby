@@ -92,8 +92,7 @@ const recipeMachine = Machine(
           src: (context, event) => async (cb, _onReceive) => {
             try {
               const result = await createPlan(context, cb)
-
-              cb({ type: `presentPlan`, data: result })
+              return result
             } catch (e) {
               throw e
             }
@@ -112,6 +111,15 @@ const recipeMachine = Machine(
           },
         },
         on: {
+          INVALID_PROPS: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, event) => {
+                console.log(event)
+                return event.data
+              },
+            }),
+          },
           INPUT: {
             target: `waitingForInput`,
             actions: assign({

@@ -13,6 +13,13 @@ const queue = new Queue({ concurrency: 1, autoStart: false })
 const errors = []
 const cache = new Map()
 
+const getInvalidProps = errors => {
+  const invalidProps = errors.filter(e =>
+    e.find(e => e.type === `object.allowUnknown`)
+  )
+  return invalidProps
+}
+
 const getUserProps = props => {
   // eslint-disable-next-line
   const { mdxType, children, ...userProps } = props
@@ -88,6 +95,15 @@ const render = async (recipe, cb) => {
     RecipesReconciler.render(recipeWithWrapper, plan)
 
     if (errors.length) {
+      const invalidProps = getInvalidProps(errors)
+
+      if (invalidProps.length) {
+        return cb({ type: `INVALID_PROPS`, data: invalidProps })
+      }
+
+      console.log(invalidProps)
+      console.log(errors.map(e => e.details))
+
       return cb({ type: `INPUT`, data: errors })
     }
 
