@@ -30,4 +30,4 @@ $ gatsby-dev --packages gatsby gatsby-cli gatsby-recipes gatsby-core-utils gatsb
 $ GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
 ```
 
-Then visit `localhost:8000/\_\_\_admin and you should see Gatsby Admin for your site!
+Then visit `localhost:8000/\_\_\_admin` and you should see Gatsby Admin for your site!
