@@ -61,7 +61,7 @@ export interface ICreateLog {
 
 export interface ISetStatus {
   type: Actions.SetStatus
-  payload: string
+  payload: ActivityStatuses | ""
 }
 
 export interface IPendingActivity {
