@@ -1,14 +1,14 @@
 This month [Gatsby turned 5](/blog/2020-05-22-happy-fifth-bday-gatsby/) 🎉
 
-We hit a special milestone in May - there are over 2000 Gatsby plugins, and 500 of them are source plugins ([thanks for noticing Chris Ellis](https://github.com/gatsbyjs/gatsby/pull/23558)). So for whatever your use case, for whatever data source, there’s a Gatsby plugin that can get you up-and-running quickly. And if you need inspiration for your project, GitHub lists over 200 thousand sites that use Gatsby as a dependency.
+We hit a special milestone in May - there are over 2000 Gatsby plugins, and 500 of them are source plugins ([thanks for noticing Chris Ellis](https://github.com/gatsbyjs/gatsby/pull/23558)). So for whatever your use case, for whatever data source, there's a Gatsby plugin that can get you up-and-running quickly. And if you need inspiration for your project, GitHub lists over 200 thousand sites that use Gatsby as a dependency.
 
-We also announced our [series B round of funding round](/blog/2020-05-27-announcing-series-b-funding/). This investment will help us double down on changing the way the web is built. We’ve already started making Gatsby work better for large and media rich sites. You can keep tabs on Gatsby’s progress at [Will It Build](https://willit.build), a new benchmarking site that showcases sub-10 second builds for projects of different sizes and data sources.
+We also announced our [series B round of funding round](/blog/2020-05-27-announcing-series-b-funding/). This investment will help us double down on changing the way the web is built. We've already started making Gatsby work better for large and media rich sites. You can keep tabs on Gatsby's progress at [Will It Build](https://willit.build), a new benchmarking site that showcases sub-10 second builds for projects of different sizes and data sources.
 
 ## 🚀 New in Gatsby 
 
 ### Strapi Instant Preview
 
-Your content editors can now enjoy “instant preview” with Strapi and Gatsby Cloud! If you’re new to Strapi, it’s a JavaScript-based, open source CMS. and a great pair for Gatsby projects. The Gatsby starter the Strapi team made for this project is gorgeous 😍 .
+Your content editors can now enjoy “instant preview” with Strapi and Gatsby Cloud! If you're new to Strapi, it’s a JavaScript-based, open source CMS. and a great pair for Gatsby projects. The Gatsby starter the Strapi team made for this project is gorgeous 😍 .
 
 ![Strapi blog screenshot](/strapi-blog.png) 
 
@@ -16,17 +16,17 @@ Give Strapi a try with [this step-by-step tutorial](<(/blog/2020-05-12-strapi-in
 
 ### Faster, and Faster Builds
 
-The nice thing about running your project on Gatsby Cloud is that you can go to sleep, wake up, and your site builds have gotten faster without you having to do anything. We’re like a CI/CD tooth fairy.
+The nice thing about running your project on Gatsby Cloud is that you can go to sleep, wake up, and your site builds have gotten faster without you having to do anything. We're like a CI/CD tooth fairy.
 
-For example, AgilityCMS is [seeing 5 second builds](https://twitter.com/AgilityCMS/status/1257711270532452354) for their own 500-page website! How can this be? Some say it’s [unicorn magic](https://twitter.com/3cordguy/status/1257079916434251780).
+For example, AgilityCMS is [seeing 5 second builds](https://twitter.com/AgilityCMS/status/1257711270532452354) for their own 500-page website! How can this be? Some say it's [unicorn magic](https://twitter.com/3cordguy/status/1257079916434251780).
 
 Again, you can take a peek at our build time benchmarks at [Will It Build](https://willit.build).
 
 ### Faster, and Faster Websites
 
-Fast builds are a great experience for your website’s editor, but what about your end-users? The only speed they care about is loading times.
+Fast builds are a great experience for your website's editor, but what about your end-users? The only speed they care about is loading times.
 
-Thanks to a [collaboration with the Chrome team](https://web.dev/granular-chunking-nextjs/), we’ve made Gatsby sites more performant - again, without you having to make any changes.
+Thanks to a [collaboration with the Chrome team](https://web.dev/granular-chunking-nextjs/), we've made Gatsby sites more performant - again, without you having to make any changes.
 
 How? By bundling a dependency that is used in at least 2 pages, Gatsby can chunk them together so you don't have to download duplicate libraries over and over again.
 
@@ -36,7 +36,7 @@ This won't benefit first-page load, but it improves page navigation as your site
 
 When we launched the alpha of Gatsby Recipes in April, it caused a stir in the Web Development community. Immediately many of you understood the potential of Recipes and our vision to make configuring a website as fast and painless as possible.
 
-If you missed the initial launch, Paul Scanlon can bring you up-to-speed with [“Gatsby Recipes - What’s All the Fuss About?”](/blog/2020-05-21-gatsby-recipes/). Also, since the launch there’s been an avalanche of official and community made Recipes, including scripts for configuring:
+If you missed the initial launch, Paul Scanlon can bring you up-to-speed with ["Gatsby Recipes - What’s All the Fuss About?"](/blog/2020-05-21-gatsby-recipes/). Also, since the launch there’s been an avalanche of official and community made Recipes, including scripts for configuring:
 
 - React libraries like[React Helmet](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/packages/gatsby-recipes/recipes/gatsby-plugin-react-helmet.mdx) and [Preact](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/packages/gatsby-recipes/recipes/preact.mdx)
 
@@ -66,7 +66,7 @@ We have a superb [lineup of speakers](/blog/2020-05-13-virtual-gatsby-day-speake
 
 Speaking of Kyle…
 
-### Changelog Podcast: Gatsby’s Road to Incremental Builds
+### Changelog Podcast: Gatsby's Road to Incremental Builds
 
 Jerod Santo interviewed Kyle for [the Changelog podcast](https://changelog.com/podcast/393). Kyle took a deep dive on how Gatsby decides which features should be in open source, and which features can be enabled by [Gatsby Cloud](https://gatsbyjs.com).
 
@@ -80,7 +80,7 @@ If you know someone who is new to Web Development, point them to Gatsby Web Crea
 
 https://www.youtube.com/watch?v=qmcclQ7UPLk
 
-For current web professionals, Marcy livestreamed a session on making websites that everyone can access and use. In her tutorial, you’ll learn the fundamentals of building a Gatsby site with web accessibility in mind, from the basics to more advanced techniques and requirements. You’ll get a tour of how to build and test inclusively with HTML, CSS, and JavaScript as applied in a Gatsby site.
+For current web professionals, Marcy livestreamed a session on making websites that everyone can access and use. In her tutorial, you'll learn the fundamentals of building a Gatsby site with web accessibility in mind, from the basics to more advanced techniques and requirements. You’ll get a tour of how to build and test inclusively with HTML, CSS, and JavaScript as applied in a Gatsby site.
 
 ### Gatsby Community Kudos
 
@@ -90,7 +90,7 @@ Thank you **Andres Alvarez** for choosing Gatsby for [your first open source PR]
 
 Thank you **Brian Han** for noticing and using [our built-in a11y linting](https://twitter.com/_brianhan/status/1262416611316727813). Your shout out is appreciated by the Gatsby team, and increases awareness for a11y in Web Development.
 
-Thank you **Akuoko Daniel Jnr** for helpful your article, [“Increasing Website Performance With Gatsby Plugins”](https://bejamas.io/blog/gatsby-plugins/). The recommendations in your article would make a great Gatsby Recipe! 😉
+Thank you **Akuoko Daniel Jnr** for helpful your article, ["Increasing Website Performance With Gatsby Plugins"](https://bejamas.io/blog/gatsby-plugins/). The recommendations in your article would make a great Gatsby Recipe! 😉
 
 And special thanks to our long time community member, **Horacio Horacio** for making a site to [teach Gatsby to Web Developers in Spanish](https://aprendegatsby.com/). We appreciate you!
 
@@ -104,11 +104,11 @@ All of the Gatsby Themes above are worth using and studying to accelerate your o
 
 ### Azure Static Web Apps
 
-Microsoft debuted [Azure Static Web Apps](https://azure.microsoft.com/en-us/services/app-service/static/) at the Build Conference, and we’re excited to see provide first-class support for Gatsby projects. Follow along our new doc so you can [deploy your Gatsby site to Azure](https://www.gatsbyjs.org/docs/deploying-to-azure/).
+Microsoft debuted [Azure Static Web Apps](https://azure.microsoft.com/en-us/services/app-service/static/) at the Build Conference, and we're excited to see provide first-class support for Gatsby projects. Follow along our new doc so you can [deploy your Gatsby site to Azure](https://www.gatsbyjs.org/docs/deploying-to-azure/).
 
 ### GraphQL for WordPress is blowing up!
 
-WPGraphQL, a [WordPress plugin Gatsby proudly supports](/docs/glossary/wpgraphql/), recently passed 40,000 downloads, and the Slack community now tops 1,000. We love the enterprise use cases we’re seeing from developers who’ve adopted WPGraphQL for their projects!
+WPGraphQL, a [WordPress plugin Gatsby proudly supports](/docs/glossary/wpgraphql/), recently passed 40,000 downloads, and the Slack community now tops 1,000. We love the enterprise use cases we're seeing from developers who've adopted WPGraphQL for their projects!
 
 ### MDX v2 is coming
 
