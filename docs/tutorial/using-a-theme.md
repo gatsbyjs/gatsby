@@ -89,7 +89,7 @@ my-blog
 
 Inside that markdown file, add content. The top section is called frontmatter and `title` and `date` are required fields.
 
-`````markdown:title=/content/posts/my-post.md
+````markdown:title=/content/posts/my-post.md
 ---
 title: My Post
 date: 2020-04-15
@@ -100,7 +100,7 @@ Let's write a post!
 ```javascript
 const test = "this is a theme"
 ```
-`````
+````
 
 ````
 
@@ -192,9 +192,13 @@ module.exports = {
 }
 ```
 
-If you want to further customize this theme you can shadow it. Create a file at `/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js`.
+If you want to further customize this theme you can shadow it. Create a file at `/src/gatsby-plugin-theme-ui/index.js`.
 
-```javascript:title=/src/gatsby-theme-blog/gatsby-plugin-theme-ui/index.js
+```javascript:title=/src/gatsby-plugin-theme-ui/index.js
+const darkBlue = `#007acc`
+const lightBlue = `#66E0FF`
+const blueGray = `#282c35`
+
 export default {
   colors: {
     text: blueGray,
@@ -227,6 +231,10 @@ module.exports = {
 ```
 
 When you restart your development server you'll see new syntax highlighting in your code snippets.
+
+## Take a look
+
+Fire up your development server by running `gatsby develop` again in your terminal. Navigate to `localhost:8000` and take a look at your blog listing page.
 
 ## Wrapping up
 
