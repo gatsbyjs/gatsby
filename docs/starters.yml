@@ -6547,3 +6547,15 @@
     - Azure
   features:
     - CI/CD using github actions
+- url: https://minimal-blog-starter.netlify.app/
+  repo: https://github.com/imjamesku/gatsby-minimal-blog-starter
+  description: A minimal NetlifyCMS starter based on the default starter with no additional styling
+  tags:
+    - Netlify-CMS
+    - Styling:None
+    - Blog
+    - Minimalist
+  features:
+    - NetlifyCMS
+    - Blog post list
+    - SEO
