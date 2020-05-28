@@ -28,7 +28,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 const ColorExample = ({ hex, token }) => (
   <tr>
     <td
-      css={{
+      sx={{
         borderColor: hex,
         verticalAlign: `middle`,
       }}
@@ -36,7 +36,7 @@ const ColorExample = ({ hex, token }) => (
       <code>{token}</code>
     </td>
     <td
-      css={{
+      sx={{
         borderColor: hex,
         verticalAlign: `middle`,
         width: `100%`,
@@ -45,7 +45,7 @@ const ColorExample = ({ hex, token }) => (
       {hex}
     </td>
     <td
-      css={{
+      sx={{
         borderColor: hex,
         verticalAlign: `middle`,
       }}
@@ -59,11 +59,11 @@ const ColorExample = ({ hex, token }) => (
           Aa
         </Text>
         <div
-          css={{
+          sx={{
             backgroundColor: hex,
             height: 40,
-            margin: 0,
             width: 80,
+            m: 0,
           }}
         />
       </Flex>
@@ -78,7 +78,12 @@ const ColorExample = ({ hex, token }) => (
 const DesignTokens = ({ location }) => (
   <Layout location={location} pageTitle="Design Tokens">
     <Container>
-      <div css={{ position: `relative`, zIndex: 1 }}>
+      <div
+        sx={{
+          position: `relative`,
+          zIndex: 1,
+        }}
+      >
         <PageHeading>Design Tokens</PageHeading>
         <Intro>
           This page collects all design tokens currently available for
@@ -180,35 +185,37 @@ const DesignTokens = ({ location }) => (
             deliberately chose to omit adding more documentation at this point.
           </p>
         </CopyColumn>
-        <ContentColumn
-          css={{
-            alignSelf: `flex-end`,
-            display: `flex`,
-            flexWrap: `wrap`,
-            overflow: `visible`,
-          }}
-        >
-          {Object.keys(theme.shadows).map((shadow, i) => (
-            <Box
-              key={`tokens-shadow-${i}`}
-              sx={{
-                bg: `white`,
-                borderRadius: 2,
-                mb: 10,
-                mr: 10,
-                p: 4,
-                boxShadow: shadow,
-                width: `100%`,
-                height: 0,
-                pb: `${0.3 * 100}%`,
-                [mediaQueries.sm]: {
-                  width: `50%`,
-                },
-              }}
-            >
-              <code>shadows.{shadow}</code>
-            </Box>
-          ))}
+        <ContentColumn>
+          <Box
+            sx={{
+              alignSelf: `flex-end`,
+              display: `flex`,
+              flexWrap: `wrap`,
+              overflow: `visible`,
+            }}
+          >
+            {Object.keys(theme.shadows).map((shadow, i) => (
+              <Box
+                key={`tokens-shadow-${i}`}
+                sx={{
+                  bg: `white`,
+                  borderRadius: 2,
+                  mb: 10,
+                  mr: 10,
+                  p: 4,
+                  boxShadow: shadow,
+                  width: `100%`,
+                  height: 0,
+                  pb: `${0.3 * 100}%`,
+                  [mediaQueries.sm]: {
+                    width: `50%`,
+                  },
+                }}
+              >
+                <code>shadows.{shadow}</code>
+              </Box>
+            ))}
+          </Box>
         </ContentColumn>
       </Columns>
     </Section>
@@ -223,9 +230,13 @@ const DesignTokens = ({ location }) => (
             components along the z-axis.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth width="100%">
+        <ContentColumn fullWidth>
           <Flex>
-            <table css={{ width: `50%` }}>
+            <table
+              sx={{
+                width: `50%`,
+              }}
+            >
               <thead>
                 <tr>
                   <th scope="col">Token</th>
@@ -235,10 +246,18 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.zIndices).map((zIndex, i) => (
                   <tr key={`tokens-zIndices-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
                       <code>zIndices.{zIndex}</code>
                     </td>
-                    <td css={{ verticalAlign: `top` }}>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
                       {theme.zIndices[zIndex]}
                     </td>
                   </tr>
@@ -322,11 +341,25 @@ const DesignTokens = ({ location }) => (
             <tbody>
               {Object.keys(theme.fonts).map((font, i) => (
                 <tr key={`tokens-fonts-${i}`}>
-                  <td css={{ verticalAlign: `top` }}>
+                  <td
+                    sx={{
+                      verticalAlign: `top`,
+                    }}
+                  >
                     <code>fonts.{font}</code>
                   </td>
-                  <td css={{ verticalAlign: `top` }}>{theme.fonts[font]}</td>
-                  <td css={{ verticalAlign: `top` }}>
+                  <td
+                    sx={{
+                      verticalAlign: `top`,
+                    }}
+                  >
+                    {theme.fonts[font]}
+                  </td>
+                  <td
+                    sx={{
+                      verticalAlign: `top`,
+                    }}
+                  >
                     <Text fontFamily={font} fontSize={4}>
                       ABC
                     </Text>
@@ -406,10 +439,18 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.fontWeights).map((fontWeight, i) => (
                   <tr key={`tokens-fontWeights-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
                       <code>fontWeights[{fontWeight}]</code>
                     </td>
-                    <td css={{ verticalAlign: `top` }}>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
                       {theme.fontWeights[fontWeight]}
                     </td>
                     <td>
@@ -451,10 +492,18 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.letterSpacings).map((letterSpacing, i) => (
                   <tr key={`tokens-letterSpacings-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
                       <code>letterSpacings.{letterSpacing}</code>
                     </td>
-                    <td css={{ verticalAlign: `top` }}>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
                       {theme.letterSpacings[letterSpacing]}
                     </td>
                     <td>
@@ -499,13 +548,25 @@ const DesignTokens = ({ location }) => (
             <tbody>
               {Object.keys(theme.lineHeights).map((lineHeight, i) => (
                 <tr key={`tokens-lineHeights-${i}`}>
-                  <td css={{ verticalAlign: `top` }}>
+                  <td
+                    sx={{
+                      verticalAlign: `top`,
+                    }}
+                  >
                     <code>lineHeights.{lineHeight}</code>
                   </td>
-                  <td css={{ verticalAlign: `top` }}>
+                  <td
+                    sx={{
+                      verticalAlign: `top`,
+                    }}
+                  >
                     {theme.lineHeights[lineHeight]}
                   </td>
-                  <td css={{ verticalAlign: `top` }}>
+                  <td
+                    sx={{
+                      verticalAlign: `top`,
+                    }}
+                  >
                     <Text lineHeight={lineHeight}>
                       Plugins are packages that extend Gatsby sites. They can
                       source content, transform data, and more!
@@ -530,32 +591,19 @@ const DesignTokens = ({ location }) => (
           </p>
         </CopyColumn>
         <ContentColumn fullWidth>
-          <Flex>
-            <table css={{ width: `50%` }}>
-              <thead>
-                <tr>
-                  <th scope="col">Token</th>
-                  <th scope="col">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(theme.breakpoints).map((breakpoint, i) => (
-                  <tr key={`tokens-breakpoints-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
-                      <code>breakpoints.{breakpoint}</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {theme.breakpoints[breakpoint]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <Box
-              as="table"
+          <Flex
+            sx={{
+              flexDirection: `column`,
+              [mediaQueries.lg]: {
+                flexDirection: `row`,
+              },
+            }}
+          >
+            <table
               sx={{
-                ml: 10,
+                [mediaQueries.lg]: {
+                  width: `50%`,
+                },
               }}
             >
               <thead>
@@ -567,14 +615,62 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.breakpoints).map((breakpoint, i) => (
                   <tr key={`tokens-breakpoints-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
-                      <code>mediaQueries.{breakpoint}</code>
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
+                      <code>breakpoints.{breakpoint}</code>
                     </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {mediaQueries[breakpoint]}
+                    <td
+                      sx={{
+                        verticalAlign: `top`,
+                      }}
+                    >
+                      {theme.breakpoints[breakpoint]}
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+
+            <Box
+              as="table"
+              sx={{
+                ml: 0,
+                [mediaQueries.lg]: {
+                  ml: 10,
+                },
+              }}
+            >
+              <thead>
+                <tr>
+                  <th scope="col">Token</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(theme.mediaQueries).map((mediaQuery, i) => {
+                  console.log(theme)
+                  return (
+                    <tr key={`tokens-mediaQuery-${i}`}>
+                      <td
+                        sx={{
+                          verticalAlign: `top`,
+                        }}
+                      >
+                        <code>mediaQueries.{mediaQuery}</code>
+                      </td>
+                      <td
+                        sx={{
+                          verticalAlign: `top`,
+                        }}
+                      >
+                        {mediaQueries[mediaQuery]}
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </Box>
           </Flex>
