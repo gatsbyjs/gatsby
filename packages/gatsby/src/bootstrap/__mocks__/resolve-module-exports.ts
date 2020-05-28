@@ -2,7 +2,7 @@
 
 let mockResults = {}
 
-module.exports = input => {
+export const resolveModuleExports = (input: unknown): string[] | undefined => {
   // return a mocked result
   if (typeof input === `string`) {
     return mockResults[input]
