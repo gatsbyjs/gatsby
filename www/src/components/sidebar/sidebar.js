@@ -19,7 +19,7 @@ function isItemInActiveTree(item, activeItem, activeItemParents) {
 
 function getOpenItemHash(itemList, activeItem, activeItemParents) {
   let result = {}
-  for (let item of itemList) {
+  for (const item of itemList) {
     if (item.items) {
       result[item.title] = isItemInActiveTree(
         item,

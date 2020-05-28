@@ -39,7 +39,7 @@ const Chevron = ({ isExpanded }) => (
 // Common styled heading component used in different types of SectionTitles
 const SectionHeading = ({ children, disabled, item }) => {
   const { getItemState } = useSidebarContext()
-  const { isExpanded } = getItemState(item)
+  const { isExpanded = false } = getItemState(item)
   return (
     <h3
       sx={{
@@ -89,7 +89,7 @@ const Title = ({ item }) => (
 // but does not represent a page itself
 const TitleButton = ({ item, uid }) => {
   const { onSectionTitleClick, getItemState } = useSidebarContext()
-  const { isExpanded } = getItemState(item)
+  const { isExpanded = false } = getItemState(item)
   return (
     <button
       aria-expanded={isExpanded}
@@ -136,7 +136,7 @@ const TitleButton = ({ item, uid }) => {
 // that can expand it
 const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
   const { getItemState, onSectionTitleClick } = useSidebarContext()
-  const { isExpanded } = getItemState(item)
+  const { isExpanded = false } = getItemState(item)
   return (
     <span
       ref={itemRef}
