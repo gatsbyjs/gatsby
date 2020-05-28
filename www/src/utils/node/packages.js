@@ -9,7 +9,6 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const packageTemplate = getTemplate(`template-package-readme`)
-  )
 
   const { data, errors } = await graphql(`
     query {

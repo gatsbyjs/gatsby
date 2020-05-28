@@ -77,7 +77,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // API template
       createPage({
         path: `${node.fields.slug}`,
-        component: lash(apiTemplate,
+        component: apiTemplate,
         context: {
           slug: node.fields.slug,
           jsdoc: node.frontmatter.jsdoc,

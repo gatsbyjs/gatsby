@@ -8,6 +8,7 @@ const yaml = require(`js-yaml`)
 const ecosystemFeaturedItems = yaml.load(
   fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
 )
+const { getTemplate } = require(`../get-template`)
 
 if (
   process.env.gatsby_executing_command === `build` &&

@@ -5,7 +5,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const showcaseTemplate = getTemplate(`template-showcase-details`)
-  )
 
   const { data, errors } = await graphql(`
     query {
