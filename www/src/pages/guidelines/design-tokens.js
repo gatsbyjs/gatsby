@@ -5,6 +5,7 @@ import Link from "../../components/localized-link"
 import {
   Container,
   Section,
+  SectionNoRightPadding,
   Columns,
   ContentColumn,
   CopyColumn,

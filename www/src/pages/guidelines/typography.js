@@ -6,6 +6,7 @@ import { MdWarning } from "react-icons/md"
 import {
   Container,
   Section,
+  SectionNoRightPadding,
   Columns,
   ContentColumn,
   CopyColumn,
@@ -187,7 +188,7 @@ const Typography = ({ location }) => (
         </ContentColumn>
       </Columns>
     </Section>
-    <Section pr={0}>
+    <SectionNoRightPadding>
       <SectionHeading>Scale</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -246,7 +247,7 @@ const Typography = ({ location }) => (
           ))}
         </ContentColumn>
       </Columns>
-    </Section>
+    </SectionNoRightPadding>
     <Section>
       <h2>Weights, letter spacings and line heights</h2>
       <Columns>
