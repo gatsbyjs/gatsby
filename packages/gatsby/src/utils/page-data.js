@@ -22,7 +22,7 @@ const remove = async ({ publicDir }, pagePath) => {
   return Promise.resolve()
 }
 
-const writePageData = async ({ publicDir }, page, { staticQueryHashes }) => {
+const write = async ({ publicDir }, page, { staticQueryHashes }) => {
   const inputFilePath = path.join(
     publicDir,
     `..`,
@@ -76,7 +76,7 @@ const flush = async () => {
 
   for (const pagePath of pagesToWrite) {
     const page = pages.get(pagePath)
-    const body = await writePageData(
+    const body = await write(
       { publicDir: path.join(program.directory, `public`) },
       page,
       {
@@ -107,7 +107,7 @@ const flush = async () => {
 
 module.exports = {
   read,
-  writePageData,
+  write,
   remove,
   fixedPagePath,
   flush,
