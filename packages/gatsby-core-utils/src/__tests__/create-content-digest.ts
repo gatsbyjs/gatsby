@@ -29,16 +29,16 @@ describe(`Create content digest`, () => {
       args: {
         arg1: `test`,
         arg2: `test2`,
-        arg3: [1, 2]
-      }
+        arg3: [1, 2],
+      },
     }
     const input2 = {
       args: {
         arg2: `test2`,
         arg1: `test`,
-        arg3: [1, 2]
+        arg3: [1, 2],
       },
-      id: `12345`
+      id: `12345`,
     }
 
     expect(createContentDigest(input)).toEqual(createContentDigest(input2))
@@ -50,16 +50,16 @@ describe(`Create content digest`, () => {
       args: {
         arg1: `test`,
         arg2: `test2`,
-        arg3: [2, 1]
-      }
+        arg3: [2, 1],
+      },
     }
     const input2 = {
       args: {
         arg2: `test2`,
         arg1: `test`,
-        arg3: [1, 2]
+        arg3: [1, 2],
       },
-      id: `12345`
+      id: `12345`,
     }
 
     expect(createContentDigest(input)).not.toEqual(createContentDigest(input2))

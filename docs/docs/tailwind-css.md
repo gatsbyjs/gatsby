@@ -54,7 +54,7 @@ Create a `postcss.config.js` in your project's root folder with the following co
 
 ```javascript:title=postcss.config.js
 module.exports = () => ({
-  plugins: [require("tailwindcss")]
+  plugins: [require("tailwindcss")],
 })
 ```
 
@@ -90,7 +90,7 @@ import "tailwindcss/dist/base.css"
 
 ```javascript:title=gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-emotion`]
+  plugins: [`gatsby-plugin-emotion`],
 }
 ```
 
@@ -204,7 +204,7 @@ module.exports = {
   purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
   theme: {},
   variants: {},
-  plugins: []
+  plugins: [],
 }
 ```
 

@@ -4,7 +4,7 @@ import styled from "@emotion/styled"
 
 import {
   HorizontalScroller,
-  HorizontalScrollerContent
+  HorizontalScrollerContent,
 } from "../shared/horizontal-scroller"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
@@ -35,7 +35,7 @@ const List = styled(HorizontalScrollerContent)`
 const EcosystemFeaturedItems = ({
   items,
   itemComponent: Item,
-  className = ``
+  className = ``,
 }) => (
   <EcosystemFeaturedItemsRoot className={`${SCROLLER_CLASSNAME} ${className}`}>
     <List>
@@ -50,7 +50,7 @@ const EcosystemFeaturedItems = ({
 EcosystemFeaturedItems.propTypes = {
   items: PropTypes.array.isRequired,
   itemComponent: PropTypes.func.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
 }
 
 export default EcosystemFeaturedItems

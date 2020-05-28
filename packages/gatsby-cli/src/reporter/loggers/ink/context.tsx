@@ -11,7 +11,7 @@ const StoreStateContext = createContext<IGatsbyState>(
 )
 
 export const StoreStateProvider: React.FC = ({
-  children
+  children,
 }): React.ReactElement => {
   const [state, setState] = useState(
     (getStore().getState() as any) as IGatsbyState

@@ -52,5 +52,5 @@ export const builtinPlugins = {
   limitChunkCount: plugin(`LimitChunkCountPlugin`, true),
   minChunkSize: plugin(`MinChunkSizePlugin`, true),
   occurrenceOrder: plugin(`OccurrenceOrderPlugin`, true),
-  moduleConcatenation: plugin(`ModuleConcatenationPlugin`, true)
+  moduleConcatenation: plugin(`ModuleConcatenationPlugin`, true),
 }

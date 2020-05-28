@@ -101,7 +101,7 @@ import { ThemeProvider } from "emotion-theming"
 import renderer from "react-test-renderer"
 
 const theme = {
-  maxWidth: "1450px"
+  maxWidth: "1450px",
 }
 
 const Wrapper = styled.section`

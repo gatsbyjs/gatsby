@@ -9,7 +9,7 @@ import {
   position,
   space,
   typography,
-  compose
+  compose,
 } from "styled-system"
 import propTypes from "@styled-system/prop-types"
 
@@ -21,7 +21,7 @@ const boxPropTypes = {
   ...propTypes.layout,
   ...propTypes.position,
   ...propTypes.space,
-  ...propTypes.typography
+  ...propTypes.typography,
 }
 
 const styleProps = compose(

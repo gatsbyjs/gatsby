@@ -18,7 +18,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   psm1: `powershell`,
   bat: `batch`,
   h: `c`,
-  tex: `latex`
+  tex: `latex`,
 }
 
 const getLanguage = file => {

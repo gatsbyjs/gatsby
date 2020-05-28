@@ -19,7 +19,7 @@ export const jobsReducer = (
         const mergedJob = _.merge(state.active[index], {
           ...action.payload,
           createdAt: Date.now(),
-          plugin: action.plugin
+          plugin: action.plugin,
         })
 
         state.active[index] = mergedJob
@@ -28,7 +28,7 @@ export const jobsReducer = (
         state.active.push({
           ...action.payload,
           createdAt: Date.now(),
-          plugin: action.plugin
+          plugin: action.plugin,
         })
         return state
       }
@@ -49,7 +49,7 @@ export const jobsReducer = (
       state.done.push({
         ...job,
         completedAt,
-        runTime: moment(completedAt).diff(moment(job.createdAt))
+        runTime: moment(completedAt).diff(moment(job.createdAt)),
       })
 
       return state

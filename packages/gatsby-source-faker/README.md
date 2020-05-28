@@ -25,12 +25,12 @@ plugins: [
     // derive schema from faker's options
     options: {
       schema: {
-        name: ["firstName", "lastName"]
+        name: ["firstName", "lastName"],
       },
       count: 3, // how many fake objects you need
-      type: "NameData" // Name of the graphql query node
-    }
-  }
+      type: "NameData", // Name of the graphql query node
+    },
+  },
 ]
 ```
 

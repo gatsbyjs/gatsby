@@ -27,10 +27,10 @@ module.exports = {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
-        apiBase: `api` // optional, defaults to `jsonapi`
-      }
-    }
-  ]
+        apiBase: `api`, // optional, defaults to `jsonapi`
+      },
+    },
+  ],
 }
 ```
 
@@ -64,11 +64,11 @@ module.exports = {
         apiBase: `api`,
         filters: {
           // collection : filter
-          recipe: "filter[tags.name][value]=British"
-        }
-      }
-    }
-  ]
+          recipe: "filter[tags.name][value]=British",
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -90,11 +90,11 @@ module.exports = {
         apiBase: `api`, // optional, defaults to `jsonapi`
         basicAuth: {
           username: process.env.BASIC_AUTH_USERNAME,
-          password: process.env.BASIC_AUTH_PASSWORD
-        }
-      }
-    }
-  ]
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -112,11 +112,11 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
         headers: {
-          Host: "https://example.com" // any valid request header here
-        }
-      }
-    }
-  ]
+          Host: "https://example.com", // any valid request header here
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -134,11 +134,11 @@ module.exports = {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
         params: {
-          "api-key": "your-api-key-header-here" // any valid key value pair here
-        }
-      }
-    }
-  ]
+          "api-key": "your-api-key-header-here", // any valid key value pair here
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -155,10 +155,10 @@ module.exports = {
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         apiBase: `api`, // optional, defaults to `jsonapi`
-        concurrentFileRequests: 60 // optional, defaults to `20`
-      }
-    }
-  ]
+        concurrentFileRequests: 60, // optional, defaults to `20`
+      },
+    },
+  ],
 }
 ```
 
@@ -175,10 +175,10 @@ module.exports = {
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         // skip the action--action resource type.
-        disallowedLinkTypes: [`self`, `describedby`, `action--action`]
-      }
-    }
-  ]
+        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+      },
+    },
+  ],
 }
 ```
 
@@ -202,15 +202,15 @@ module.exports = {
           `describedby`,
           `node--page`,
           `paragraph--text`,
-          `paragraph--image`
+          `paragraph--image`,
         ],
         filters: {
           // Use includes so only the news content paragraph components are fetched.
-          "node--news": "include=field_content"
-        }
-      }
-    }
-  ]
+          "node--news": "include=field_content",
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -236,10 +236,10 @@ module.exports = {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
-        secret: process.env.PREVIEW_SECRET // optional, must match Drupal instance preview secret
-      }
-    }
-  ]
+        secret: process.env.PREVIEW_SECRET, // optional, must match Drupal instance preview secret
+      },
+    },
+  ],
 }
 ```
 

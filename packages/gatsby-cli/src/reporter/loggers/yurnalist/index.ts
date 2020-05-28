@@ -3,7 +3,7 @@ import {
   Actions,
   LogLevels,
   ActivityLogLevels,
-  ActivityTypes
+  ActivityTypes,
 } from "../../constants"
 
 import { createReporter } from "yurnalist"
@@ -36,7 +36,7 @@ export function initializeYurnalistLogger(): void {
     },
     [ActivityLogLevels.Interrupted]: (text: string): void => {
       yurnalist.log(`${chalk.gray(`not finished`)} ${text}`)
-    }
+    },
   }
 
   onLogAction(action => {
@@ -87,7 +87,7 @@ export function initializeYurnalistLogger(): void {
             },
             end(): void {
               spinner.end()
-            }
+            },
           }
           activities[action.payload.id] = activity
         } else if (action.payload.type === ActivityTypes.Progress) {
@@ -97,7 +97,7 @@ export function initializeYurnalistLogger(): void {
               total: action.payload.total,
               curr: action.payload.current,
               width: 30,
-              clear: true
+              clear: true,
             }
           )
 
@@ -114,7 +114,7 @@ export function initializeYurnalistLogger(): void {
 
               bar.tick(0)
             },
-            end(): void {}
+            end(): void {},
           }
         }
         break

@@ -7,7 +7,7 @@ const {
   GraphQLNonNull,
   GraphQLID,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
 } = require(`graphql`)
 
 const mockNodes = () => [
@@ -18,13 +18,13 @@ const mockNodes = () => [
     deep: { flat: { search: { chain: 123 } } },
     elemList: [
       {
-        foo: `bar`
-      }
+        foo: `bar`,
+      },
     ],
     internal: {
       type: `notTest`,
-      contentDigest: `0`
-    }
+      contentDigest: `0`,
+    },
   },
   {
     id: `id_2`,
@@ -32,14 +32,14 @@ const mockNodes = () => [
     slog: `def`,
     elemList: [
       {
-        foo: `baz`
-      }
+        foo: `baz`,
+      },
     ],
     deep: { flat: { search: { chain: 500 } } },
     internal: {
       type: `test`,
-      contentDigest: `0`
-    }
+      contentDigest: `0`,
+    },
   },
   {
     id: `id_3`,
@@ -47,17 +47,17 @@ const mockNodes = () => [
     string: `baz`,
     elemList: [
       {
-        foo: `bar`
+        foo: `bar`,
       },
       {
-        foo: `baz`
-      }
+        foo: `baz`,
+      },
     ],
     deep: { flat: { search: { chain: 300 } } },
     internal: {
       type: `test`,
-      contentDigest: `0`
-    }
+      contentDigest: `0`,
+    },
   },
   {
     id: `id_4`,
@@ -66,7 +66,7 @@ const mockNodes = () => [
     deep: { flat: { search: { chain: 300 } } },
     internal: {
       type: `test`,
-      contentDigest: `0`
+      contentDigest: `0`,
     },
     first: {
       willBeResolved: `willBeResolved`,
@@ -74,12 +74,12 @@ const mockNodes = () => [
         {
           willBeResolved: `willBeResolved`,
           third: {
-            foo: `foo`
-          }
-        }
-      ]
-    }
-  }
+            foo: `foo`,
+          },
+        },
+      ],
+    },
+  },
 ]
 
 const typeName = `test`
@@ -95,7 +95,7 @@ const gqlType = new GraphQLObjectType({
           fields: {
             willBeResolved: {
               type: GraphQLString,
-              resolve: () => `resolvedValue`
+              resolve: () => `resolvedValue`,
             },
             second: {
               type: new GraphQLList(
@@ -104,23 +104,23 @@ const gqlType = new GraphQLObjectType({
                   fields: {
                     willBeResolved: {
                       type: GraphQLString,
-                      resolve: () => `resolvedValue`
+                      resolve: () => `resolvedValue`,
                     },
                     third: new GraphQLObjectType({
                       name: `Third`,
                       fields: {
-                        foo: GraphQLString
-                      }
-                    })
-                  }
+                        foo: GraphQLString,
+                      },
+                    }),
+                  },
                 })
-              )
-            }
-          }
-        })
-      }
+              ),
+            },
+          },
+        }),
+      },
     }
-  }
+  },
 })
 
 describe(`run-sift tests`, () => {
@@ -132,15 +132,15 @@ describe(`run-sift tests`, () => {
   })
   ;[
     { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-    { desc: `no cache`, cb: () => null } // Always goes through sift
+    { desc: `no cache`, cb: () => null }, // Always goes through sift
   ].forEach(({ desc, cb: createFiltersCache }) => {
     describe(desc, () => {
       describe(`filters by just id correctly`, () => {
         it(`eq operator`, async () => {
           const queryArgs = {
             filter: {
-              id: { eq: `id_2` }
-            }
+              id: { eq: `id_2` },
+            },
           }
 
           const resultSingular = await runSift({
@@ -148,7 +148,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           const resultMany = await runSift({
@@ -156,7 +156,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
@@ -166,8 +166,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator honors type`, async () => {
           const queryArgs = {
             filter: {
-              id: { eq: `id_1` }
-            }
+              id: { eq: `id_1` },
+            },
           }
 
           const resultSingular = await runSift({
@@ -175,7 +175,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           const resultMany = await runSift({
@@ -183,7 +183,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           // `id-1` node is not of queried type, so results should be empty
@@ -194,8 +194,8 @@ describe(`run-sift tests`, () => {
         it(`non-eq operator`, async () => {
           const queryArgs = {
             filter: {
-              id: { ne: `id_2` }
-            }
+              id: { ne: `id_2` },
+            },
           }
 
           const resultSingular = await runSift({
@@ -203,7 +203,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           const resultMany = await runSift({
@@ -211,13 +211,13 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
           expect(resultMany.map(o => o.id)).toEqual([
             mockNodes()[2].id,
-            mockNodes()[3].id
+            mockNodes()[3].id,
           ])
         })
         it(`return empty array in case of empty nodes`, async () => {
@@ -227,7 +227,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [`NonExistentNodeType`],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
           expect(resultSingular).toEqual([])
         })
@@ -236,8 +236,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator flat single`, async () => {
           const queryArgs = {
             filter: {
-              slog: { eq: `def` }
-            }
+              slog: { eq: `def` },
+            },
           }
 
           const resultSingular = await runSift({
@@ -245,7 +245,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(Array.isArray(resultSingular)).toBe(true)
@@ -258,8 +258,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator flat many`, async () => {
           const queryArgs = {
             filter: {
-              slog: { eq: `def` }
-            }
+              slog: { eq: `def` },
+            },
           }
 
           const resultMany = await runSift({
@@ -267,7 +267,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(Array.isArray(resultMany)).toBe(true)
@@ -280,8 +280,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator deep single`, async () => {
           const queryArgs = {
             filter: {
-              deep: { flat: { search: { chain: { eq: 300 } } } }
-            }
+              deep: { flat: { search: { chain: { eq: 300 } } } },
+            },
           }
 
           const resultSingular = await runSift({
@@ -289,7 +289,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(Array.isArray(resultSingular)).toBe(true)
@@ -302,8 +302,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator deep many`, async () => {
           const queryArgs = {
             filter: {
-              deep: { flat: { search: { chain: { eq: 300 } } } }
-            }
+              deep: { flat: { search: { chain: { eq: 300 } } } },
+            },
           }
 
           const resultMany = await runSift({
@@ -311,7 +311,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(Array.isArray(resultMany)).toBe(true)
@@ -324,8 +324,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator deep miss single`, async () => {
           const queryArgs = {
             filter: {
-              deep: { flat: { search: { chain: { eq: 999 } } } }
-            }
+              deep: { flat: { search: { chain: { eq: 999 } } } },
+            },
           }
 
           const resultSingular = await runSift({
@@ -333,7 +333,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: true,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(Array.isArray(resultSingular)).toBe(true)
@@ -342,8 +342,8 @@ describe(`run-sift tests`, () => {
         it(`eq operator deep miss many`, async () => {
           const queryArgs = {
             filter: {
-              deep: { flat: { search: { chain: { eq: 999 } } } }
-            }
+              deep: { flat: { search: { chain: { eq: 999 } } } },
+            },
           }
 
           const resultMany = await runSift({
@@ -351,7 +351,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(resultMany).toBe(null)
@@ -361,9 +361,9 @@ describe(`run-sift tests`, () => {
           const queryArgs = {
             filter: {
               elemList: {
-                elemMatch: { foo: { eq: `baz` } }
-              }
-            }
+                elemMatch: { foo: { eq: `baz` } },
+              },
+            },
           }
 
           const resultMany = await runSift({
@@ -371,7 +371,7 @@ describe(`run-sift tests`, () => {
             queryArgs,
             firstOnly: false,
             nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache()
+            filtersCache: createFiltersCache(),
           })
 
           expect(Array.isArray(resultMany)).toBe(true)
@@ -392,7 +392,7 @@ describe(`filterWithoutSift`, () => {
 
   it(`gets stuff from cache for simple query`, () => {
     const filter = {
-      slog: { $eq: `def` }
+      slog: { $eq: `def` },
     }
 
     const result = filterWithoutSift(
@@ -410,7 +410,7 @@ describe(`filterWithoutSift`, () => {
 
   it(`gets stuff from cache for deep query`, () => {
     const filter = {
-      deep: { flat: { search: { chain: { $eq: 300 } } } }
+      deep: { flat: { search: { chain: { $eq: 300 } } } },
     }
 
     const result = filterWithoutSift(
@@ -429,7 +429,7 @@ describe(`filterWithoutSift`, () => {
   it(`supports multi-query`, () => {
     const filter = {
       slog: { $eq: `def` },
-      deep: { flat: { search: { chain: { $eq: 300 } } } }
+      deep: { flat: { search: { chain: { $eq: 300 } } } },
     }
 
     const results = filterWithoutSift(
@@ -448,8 +448,8 @@ describe(`filterWithoutSift`, () => {
   it(`supports elemMatch`, () => {
     const filter = {
       elemList: {
-        $elemMatch: { foo: { $eq: `baz` } }
-      }
+        $elemMatch: { foo: { $eq: `baz` } },
+      },
     }
 
     const result = filterWithoutSift(

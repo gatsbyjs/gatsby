@@ -20,12 +20,12 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
       [mediaQueries.sm]: {
         flexDirection: `row`,
         flexWrap: `nowrap`,
-        pb: 0
+        pb: 0,
       },
       [mediaQueries.lg]: {
         px: 8,
-        py: 0
-      }
+        py: 0,
+      },
     }}
   >
     <div
@@ -37,8 +37,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         mt: 6,
         [mediaQueries.sm]: {
           pr: 4,
-          justifyContent: `flex-start`
-        }
+          justifyContent: `flex-start`,
+        },
       }}
     >
       <div>
@@ -47,7 +47,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             alignItems: `center`,
             color: `textMuted`,
             display: `inline-flex`,
-            [mediaQueries.sm]: { pr: 5 }
+            [mediaQueries.sm]: { pr: 5 },
           }}
         >
           <MdStar />
@@ -68,8 +68,8 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
         mt: 6,
         pb: 3,
         [mediaQueries.sm]: {
-          borderBottom: 0
-        }
+          borderBottom: 0,
+        },
       }}
     >
       <div
@@ -78,7 +78,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           pb: 4,
           whiteSpace: `nowrap`,
           overflow: `hidden`,
-          textOverflow: `ellipsis`
+          textOverflow: `ellipsis`,
         }}
       >
         By{` `}
@@ -90,9 +90,9 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
               cursor: `pointer`,
               fontFamily: `heading`,
               "&:hover": {
-                color: `gatsby`
-              }
-            }
+                color: `gatsby`,
+              },
+            },
           }}
           href={`https://github.com/${starter.owner}`}
         >
@@ -104,7 +104,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
           flex: `2 0 auto`,
           textAlign: `right`,
           position: `relative`,
-          zIndex: 1
+          zIndex: 1,
         }}
       >
         <div
@@ -114,7 +114,7 @@ const Meta = ({ starter, repoName, imageSharp, demo }) => (
             top: 0,
             left: `auto`,
             zIndex: 1,
-            display: `flex`
+            display: `flex`,
           }}
         >
           <Button
@@ -141,7 +141,7 @@ function showDate(dt) {
   return date.toLocaleDateString(`en-US`, {
     month: `short`,
     day: `numeric`,
-    year: `numeric`
+    year: `numeric`,
   })
 }
 

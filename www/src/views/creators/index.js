@@ -18,7 +18,7 @@ class CreatorsView extends Component {
   state = {
     creators: this.props.data.allCreatorsYaml.nodes,
     for_hire: false,
-    hiring: false
+    hiring: false,
   }
 
   componentDidUpdate(prevProps) {
@@ -33,7 +33,7 @@ class CreatorsView extends Component {
       if (filterStateChanged && isNotFiltered) {
         this.setState({
           creators: this.props.data.allCreatorsYaml.nodes,
-          [prevProps.location.state.filter]: false
+          [prevProps.location.state.filter]: false,
         })
       }
       if (filterStateChanged && isFiltered) {
@@ -43,7 +43,7 @@ class CreatorsView extends Component {
         this.setState({
           creators: items,
           [this.props.location.state.filter]: true,
-          [prevProps.location.state.filter]: false
+          [prevProps.location.state.filter]: false,
         })
       }
     }
@@ -57,10 +57,10 @@ class CreatorsView extends Component {
       )
       this.setState({
         creators: items,
-        [query.filter]: true
+        [query.filter]: true,
       })
       navigate(`${location.pathname}?filter=${query.filter}`, {
-        state: { filter: query.filter }
+        state: { filter: query.filter },
       })
     } else {
       navigate(`${location.pathname}`, { state: { filter: `` } })
@@ -85,17 +85,17 @@ class CreatorsView extends Component {
       if (this.state[filter] === true) {
         this.setState({
           creators: data.allCreatorsYaml.nodes,
-          [filter]: false
+          [filter]: false,
         })
         navigate(`${location.pathname}`, { state: { filter: `` } })
       } else {
         let items = creators.filter(item => item[filter] === true)
         this.setState({
           creators: items,
-          [filter]: true
+          [filter]: true,
         })
         navigate(`${location.pathname}?filter=${filter}`, {
-          state: { filter: filter }
+          state: { filter: filter },
         })
       }
     }
@@ -118,8 +118,8 @@ class CreatorsView extends Component {
             p: 6,
             paddingBottom: `10vh`,
             [mediaQueries.md]: {
-              pb: 6
-            }
+              pb: 6,
+            },
           }}
         >
           <div
@@ -128,8 +128,8 @@ class CreatorsView extends Component {
               flexWrap: `wrap`,
               justifyContent: `center`,
               [mediaQueries.lg]: {
-                justifyContent: `flex-start`
-              }
+                justifyContent: `flex-start`,
+              },
             }}
           >
             {creators.length < 1 ? (
@@ -148,7 +148,7 @@ class CreatorsView extends Component {
                     <div
                       sx={{
                         mb: 1,
-                        color: `textMuted`
+                        color: `textMuted`,
                       }}
                     >
                       {node.location}
@@ -157,7 +157,7 @@ class CreatorsView extends Component {
                       <a
                         sx={{
                           ...shortcutIcon,
-                          ml: `auto`
+                          ml: `auto`,
                         }}
                         href={node.github}
                       >
@@ -169,7 +169,7 @@ class CreatorsView extends Component {
                     <div
                       sx={{
                         alignSelf: `flex-start`,
-                        fontSize: 0
+                        fontSize: 0,
                       }}
                     >
                       <Badge forHire={node.for_hire}>
@@ -199,6 +199,6 @@ const styles = {
     minWidth: 200,
     maxWidth: 240,
     flex: `1 0 0`,
-    position: `relative`
-  }
+    position: `relative`,
+  },
 }

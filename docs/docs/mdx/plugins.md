@@ -36,19 +36,19 @@ module.exports = {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 1035,
-              sizeByPixelDensity: true
-            }
-          }
-        ]
-      }
+              sizeByPixelDensity: true,
+            },
+          },
+        ],
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`
-      }
-    }
-  ]
+        path: `${__dirname}/src/pages`,
+      },
+    },
+  ],
 }
 ```
 
@@ -75,9 +75,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        remarkPlugins: [capitalize, emoji]
-      }
-    }
-  ]
+        remarkPlugins: [capitalize, emoji],
+      },
+    },
+  ],
 }
 ```

@@ -34,7 +34,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: ""
+    lastName: "",
   }
 
   render() {
@@ -51,7 +51,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: ""
+    lastName: "",
   }
 
   render() {
@@ -80,7 +80,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: ""
+    lastName: "",
   }
 
   handleInputChange = event => {
@@ -89,7 +89,7 @@ export default class IndexPage extends React.Component {
     const name = target.name
 
     this.setState({
-      [name]: value
+      [name]: value,
     })
   }
 
@@ -129,7 +129,7 @@ import React from "react"
 export default class IndexPage extends React.Component {
   state = {
     firstName: "",
-    lastName: ""
+    lastName: "",
   }
 
   handleInputChange = event => {
@@ -138,7 +138,7 @@ export default class IndexPage extends React.Component {
     const name = target.name
 
     this.setState({
-      [name]: value
+      [name]: value,
     })
   }
 

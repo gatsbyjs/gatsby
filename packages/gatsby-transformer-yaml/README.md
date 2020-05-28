@@ -24,10 +24,10 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/`
-      }
-    }
-  ]
+        path: `./src/data/`,
+      },
+    },
+  ],
 }
 ```
 
@@ -145,19 +145,19 @@ Which would return:
     edges: [
       {
         node: {
-          character: "a"
-        }
+          character: "a",
+        },
       },
       {
         node: {
-          character: "b"
-        }
+          character: "b",
+        },
       },
       {
         node: {
-          character: "c"
-        }
-      }
+          character: "c",
+        },
+      },
     ]
   }
 }
@@ -179,10 +179,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-yaml`,
       options: {
-        typeName: `Yaml` // a fixed string
-      }
-    }
-  ]
+        typeName: `Yaml`, // a fixed string
+      },
+    },
+  ],
 }
 ```
 
@@ -220,10 +220,10 @@ module.exports = {
     {
       resolve: `gatsby-transformer-yaml`,
       options: {
-        typeName: ({ node, object, isArray }) => object.level
-      }
-    }
-  ]
+        typeName: ({ node, object, isArray }) => object.level,
+      },
+    },
+  ],
 }
 ```
 

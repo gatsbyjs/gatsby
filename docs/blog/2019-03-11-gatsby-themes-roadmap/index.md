@@ -44,7 +44,7 @@ of `gatsby-config` to theming.
 
 ```js:title="a child theme's gatsby-config.js"
 module.exports = {
-  plugins: [`gatsby-theme-blog-core`]
+  plugins: [`gatsby-theme-blog-core`],
 }
 ```
 

@@ -56,7 +56,7 @@ const shouldUseYarn = async (): Promise<boolean> => {
 const isAlreadyGitRepository = async (): Promise<boolean> => {
   try {
     return await spawn(`git rev-parse --is-inside-work-tree`, {
-      stdio: `pipe`
+      stdio: `pipe`,
     }).then(output => output.stdout === `true`)
   } catch (err) {
     return false
@@ -97,7 +97,7 @@ const createInitialGitCommit = async (
   // pgp signatures (with password)
   try {
     execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
-      cwd: rootPath
+      cwd: rootPath,
     })
   } catch {
     // Remove git support if initial commit fails
@@ -188,7 +188,7 @@ const clone = async (
     url,
     rootPath,
     `--recursive`,
-    `--depth=1`
+    `--depth=1`,
   ].filter(arg => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
@@ -223,7 +223,7 @@ const getPaths = async (
         type: `text`,
         name: `path`,
         message: `What is your project called?`,
-        initial: `my-gatsby-project`
+        initial: `my-gatsby-project`,
       },
       {
         type: `select`,
@@ -233,13 +233,13 @@ const getPaths = async (
           { title: `gatsby-starter-default`, value: `gatsby-starter-default` },
           {
             title: `gatsby-starter-hello-world`,
-            value: `gatsby-starter-hello-world`
+            value: `gatsby-starter-hello-world`,
           },
           { title: `gatsby-starter-blog`, value: `gatsby-starter-blog` },
-          { title: `(Use a different starter)`, value: `different` }
+          { title: `(Use a different starter)`, value: `different` },
         ],
-        initial: 0
-      }
+        initial: 0,
+      },
     ])
     // exit gracefully if responses aren't provided
     if (!response.starter || !response.path.trim()) {
@@ -301,16 +301,16 @@ export async function initStarter(
         id: `11610`,
         context: {
           starter,
-          rootPath
-        }
+          rootPath,
+        },
       })
       return
     }
     report.panic({
       id: `11611`,
       context: {
-        rootPath
-      }
+        rootPath,
+      },
     })
     return
   }
@@ -319,8 +319,8 @@ export async function initStarter(
     report.panic({
       id: `11612`,
       context: {
-        path: sysPath.resolve(rootPath)
-      }
+        path: sysPath.resolve(rootPath),
+      },
     })
     return
   }
@@ -330,8 +330,8 @@ export async function initStarter(
     report.panic({
       id: `11613`,
       context: {
-        rootPath
-      }
+        rootPath,
+      },
     })
     return
   }
@@ -339,7 +339,7 @@ export async function initStarter(
   const hostedInfo = hostedGitInfo.fromUrl(starterPath)
 
   trackCli(`NEW_PROJECT`, {
-    starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`
+    starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
   })
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starterPath, rootPath)

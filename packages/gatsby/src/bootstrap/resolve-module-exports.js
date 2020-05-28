@@ -28,10 +28,10 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
       const codeFrame = codeFrameColumns(
         code,
         {
-          start: err.loc
+          start: err.loc,
         },
         {
-          highlightCode: true
+          highlightCode: true,
         }
       )
 
@@ -115,7 +115,7 @@ const staticallyAnalyzeExports = (modulePath, resolver = require.resolve) => {
         isCommonJS = true
         exportNames.push(nodeLeft.property.name)
       }
-    }
+    },
   })
 
   if (isES6 && isCommonJS && process.env.NODE_ENV !== `test`) {

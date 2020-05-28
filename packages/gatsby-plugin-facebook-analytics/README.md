@@ -41,9 +41,9 @@ plugins: [
       debug: false,
 
       // Select your language.
-      language: `en_US`
-    }
-  }
+      language: `en_US`,
+    },
+  },
 ]
 ```
 

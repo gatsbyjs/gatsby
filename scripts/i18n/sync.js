@@ -39,8 +39,8 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
 async function graphql(query, params) {
   const graphqlWithAuth = baseGraphql.defaults({
     headers: {
-      authorization: `token ${token}`
-    }
+      authorization: `token ${token}`,
+    },
   })
   try {
     return await graphqlWithAuth(query, params)
@@ -70,7 +70,7 @@ async function getRepository(owner, name) {
     {
       owner,
       name,
-      syncLabel: syncLabelName
+      syncLabel: syncLabelName,
     }
   )
   return repository
@@ -89,9 +89,9 @@ async function createLabel(input) {
     `,
     {
       headers: {
-        accept: `application/vnd.github.bane-preview+json`
+        accept: `application/vnd.github.bane-preview+json`,
       },
-      input
+      input,
     }
   )
   return createLabel.label
@@ -111,9 +111,9 @@ async function createPullRequest(input) {
     `,
     {
       headers: {
-        accept: `application/vnd.github.shadow-cat-preview+json`
+        accept: `application/vnd.github.shadow-cat-preview+json`,
       },
-      input
+      input,
     }
   )
   return createPullRequest.pullRequest
@@ -130,12 +130,12 @@ async function addLabelToPullRequest(pullRequest, label) {
     `,
     {
       headers: {
-        accept: `application/vnd.github.bane-preview+json`
+        accept: `application/vnd.github.bane-preview+json`,
       },
       input: {
         labelableId: pullRequest.id,
-        labelIds: [label.id]
-      }
+        labelIds: [label.id],
+      },
     }
   )
 }
@@ -211,7 +211,7 @@ async function syncTranslationRepo(code) {
       repositoryId: repository.id,
       name: syncLabelName,
       description: `Sync with translation source. Used by @gatsbybot to track open sync pull requests.`,
-      color: `fbca04`
+      color: `fbca04`,
     })
   } else {
     logger.info(`Repository has an existing ${syncLabelName} label.`)
@@ -236,7 +236,7 @@ async function syncTranslationRepo(code) {
     shell.exec(`git checkout -b ${syncBranch}`)
   }
   shell.exec(`git pull source master --no-edit --strategy-option ours`, {
-    silent: true
+    silent: true,
   })
 
   // Remove files that are deleted by upstream
@@ -254,7 +254,7 @@ async function syncTranslationRepo(code) {
     headRefName: syncBranch,
     title: `(sync) Sync with ${sourceRepo} @ ${shortHash}`,
     body: syncPRBody(),
-    maintainerCanModify: true
+    maintainerCanModify: true,
   })
   await addLabelToPullRequest(syncPR, syncLabel)
 
@@ -331,7 +331,7 @@ async function syncTranslationRepo(code) {
     title: `(sync) Resolve conflicts with ${sourceRepo} @ ${shortHash}`,
     body: conflictPRBody(conflictFiles, comparisonUrl, syncPR.number),
     maintainerCanModify: true,
-    draft: true
+    draft: true,
   })
   await addLabelToPullRequest(conflictsPR, syncLabel)
 }

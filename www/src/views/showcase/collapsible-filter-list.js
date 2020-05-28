@@ -10,7 +10,7 @@ const CollapsibleFilterList = ({
   categoryKeys,
   aggregatedCategories,
   setFilters,
-  heading
+  heading,
 }) => (
   <Collapsible heading={heading}>
     {categoryKeys.map(c => (
@@ -26,7 +26,7 @@ const CollapsibleFilterList = ({
         }}
         sx={{
           ...filterButton,
-          color: filters.includes(c) ? `link.color` : `textMuted`
+          color: filters.includes(c) ? `link.color` : `textMuted`,
         }}
       >
         <div sx={filterCheckbox}>

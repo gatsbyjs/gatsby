@@ -7,7 +7,7 @@ const reconciler = ReactReconciler({
   getChildHostContext(parentContext, fiberType, rootInstance) {},
   getRootHostContext(rootInstance) {
     return {
-      type: `recipes-root`
+      type: `recipes-root`,
     }
   },
   shouldSetTextContent(type, props) {},
@@ -21,7 +21,7 @@ const reconciler = ReactReconciler({
   ) {
     const instance = {
       type,
-      props
+      props,
     }
 
     debug(`creating instance`, instance)
@@ -85,7 +85,7 @@ const reconciler = ReactReconciler({
   prepareForCommit(...args) {},
   resetAfterCommit(...args) {},
   getPublicInstance(...args) {},
-  supportsMutation: true
+  supportsMutation: true,
 })
 
 const RecipesRenderer = {
@@ -97,7 +97,7 @@ const RecipesRenderer = {
     debug(`render result`, JSON.stringify(currState, null, 2))
 
     return currState
-  }
+  },
 }
 
 module.exports = RecipesRenderer

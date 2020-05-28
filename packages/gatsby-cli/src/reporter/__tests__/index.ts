@@ -38,7 +38,7 @@ describe(`report.error`, () => {
     )[0]
 
     expect(generatedError).toMatchSnapshot({
-      stack: expect.any(Array)
+      stack: expect.any(Array),
     })
   })
 
@@ -48,7 +48,7 @@ describe(`report.error`, () => {
       reporterActions.createLog as jest.Mock
     )[0]
     expect(generatedError).toMatchSnapshot({
-      stack: expect.any(Array)
+      stack: expect.any(Array),
     })
   })
 
@@ -56,7 +56,7 @@ describe(`report.error`, () => {
     reporter.error([
       new Error(`Message 1 from new Error`),
       new Error(`Message 2 from new Error`),
-      new Error(`Message 3 from new Error`)
+      new Error(`Message 3 from new Error`),
     ])
 
     const generatedErrors = getErrorMessages(
@@ -68,7 +68,7 @@ describe(`report.error`, () => {
     // get final generated object
     const generatedError = generatedErrors[2]
     expect(generatedError).toMatchSnapshot({
-      stack: expect.any(Array)
+      stack: expect.any(Array),
     })
   })
 
@@ -76,8 +76,8 @@ describe(`report.error`, () => {
     reporter.error({
       id: `95312`,
       context: {
-        ref: `navigator`
-      }
+        ref: `navigator`,
+      },
     })
     const generatedError = getErrorMessages(
       reporterActions.createLog as jest.Mock

@@ -27,7 +27,7 @@ const FeaturesHeader = () => (
 const CmsFeaturesPage = ({ data, location }) => {
   const [selected, setSelected, comparators, hasSelected] = useComparisonState({
     wordpress: false,
-    drupal: false
+    drupal: false,
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
@@ -53,7 +53,7 @@ const CmsFeaturesPage = ({ data, location }) => {
                 gridTemplateColumns: `repeat(auto-fit, minmax(75px, 1fr))`,
                 gridAutoRows: `1fr`,
                 gridGap: 2,
-                pb: 4
+                pb: 4,
               }}
             >
               {featureComparisonOptions.cms.map(

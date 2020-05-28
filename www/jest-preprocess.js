@@ -1,6 +1,6 @@
 const babelOptions = {
   presets: [`babel-preset-gatsby`],
-  plugins: [`emotion`]
+  plugins: [`emotion`],
 }
 
 module.exports = require(`babel-jest`).createTransformer(babelOptions)

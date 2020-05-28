@@ -34,19 +34,19 @@ tell Jest to use `babel-jest`. The easiest way to do this is to add a `jest.conf
 ```js:title=jest.config.js
 module.exports = {
   transform: {
-    "^.+\\.jsx?$": `<rootDir>/jest-preprocess.js`
+    "^.+\\.jsx?$": `<rootDir>/jest-preprocess.js`,
   },
   moduleNameMapper: {
     ".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
-    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`
+    ".+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": `<rootDir>/__mocks__/file-mock.js`,
   },
   testPathIgnorePatterns: [`node_modules`, `\\.cache`, `<rootDir>.*/public`],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   globals: {
-    __PATH_PREFIX__: ``
+    __PATH_PREFIX__: ``,
   },
   testURL: `http://localhost`,
-  setupFiles: [`<rootDir>/loadershim.js`]
+  setupFiles: [`<rootDir>/loadershim.js`],
 }
 ```
 
@@ -59,7 +59,7 @@ Go over the content of this configuration file:
 
 ```js:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["babel-preset-gatsby"]
+  presets: ["babel-preset-gatsby"],
 }
 
 module.exports = require("babel-jest").createTransformer(babelOptions)
@@ -113,7 +113,7 @@ exclude the `gatsby` module.
 
 ```js:title=loadershim.js
 global.___loader = {
-  enqueue: jest.fn()
+  enqueue: jest.fn(),
 }
 ```
 
@@ -147,11 +147,11 @@ module.exports = {
     }) =>
       React.createElement("a", {
         ...rest,
-        href: to
+        href: to,
       })
   ),
   StaticQuery: jest.fn(),
-  useStaticQuery: jest.fn()
+  useStaticQuery: jest.fn(),
 }
 ```
 
@@ -232,7 +232,7 @@ Also update `jest.preprocess.js` with the following Babel preset to look like th
 
 ```js:title=jest-preprocess.js
 const babelOptions = {
-  presets: ["babel-preset-gatsby", "@babel/preset-typescript"]
+  presets: ["babel-preset-gatsby", "@babel/preset-typescript"],
 }
 ```
 

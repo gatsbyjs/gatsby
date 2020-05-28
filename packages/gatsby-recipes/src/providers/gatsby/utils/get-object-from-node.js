@@ -4,10 +4,7 @@ const t = require(`@babel/types`)
 const getKeyNameFromAttribute = node => node.key.name || node.key.value
 
 const unwrapTemplateLiteral = str =>
-  str
-    .trim()
-    .replace(/^`/, ``)
-    .replace(/`$/, ``)
+  str.trim().replace(/^`/, ``).replace(/`$/, ``)
 
 const isLiteral = node =>
   t.isLiteral(node) || t.isStringLiteral(node) || t.isNumericLiteral(node)

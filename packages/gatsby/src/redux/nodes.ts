@@ -141,8 +141,8 @@ export const saveResolvedNodes = async (
       type: `SET_RESOLVED_NODES`,
       payload: {
         key: typeName,
-        nodes: resolvedNodes
-      }
+        nodes: resolvedNodes,
+      },
     })
   }
 }
@@ -243,7 +243,7 @@ function postIndexingMetaSetupLtLteGtGte(
   // This way non-eq ops can simply slice the array to get a range.
 
   const entriesNullable: Array<[FilterValueNullable, Set<IGatsbyNode>]> = [
-    ...filterCache.byValue.entries()
+    ...filterCache.byValue.entries(),
   ]
 
   // These range checks never return `null` or `undefined` so filter those out
@@ -327,7 +327,7 @@ export const ensureIndexByQuery = (
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Set<IGatsbyNode>>(),
-    meta: {}
+    meta: {},
   } as IFilterCache
   filtersCache.set(filterCacheKey, filterCache)
 
@@ -371,8 +371,8 @@ export function ensureEmptyFilterCache(
     op: `$eq`, // Ignore.
     byValue: new Map<FilterValueNullable, Set<IGatsbyNode>>(),
     meta: {
-      nodesUnordered // This is what we want
-    }
+      nodesUnordered, // This is what we want
+    },
   })
 
   if (nodeTypeNames.length === 1) {
@@ -481,7 +481,7 @@ export const ensureIndexByElemMatch = (
   const filterCache: IFilterCache = {
     op,
     byValue: new Map<FilterValueNullable, Set<IGatsbyNode>>(),
-    meta: {}
+    meta: {},
   } as IFilterCache
   filtersCache.set(filterCacheKey, filterCache)
 
@@ -674,7 +674,7 @@ export const getNodesFromCacheByValue = (
       // ops do so, so we map non-existing paths to `undefined`.
       return new Set([
         ...(filterCache.byValue.get(null) ?? []),
-        ...(filterCache.byValue.get(undefined) ?? [])
+        ...(filterCache.byValue.get(undefined) ?? []),
       ])
     }
     return filterCache.byValue.get(filterValue)

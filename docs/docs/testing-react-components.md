@@ -30,7 +30,7 @@ Lastly you need to tell Jest where to find this file. Open your `jest.config.js`
 
 ```js:title=jest.config.js
 module.exports = {
-  setupFilesAfterEnv: ["<rootDir>/setup-test-env.js"]
+  setupFilesAfterEnv: ["<rootDir>/setup-test-env.js"],
 }
 ```
 

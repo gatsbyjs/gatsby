@@ -15,20 +15,20 @@ class EcosystemPage extends Component {
       location,
       data: {
         allStartersYaml: { nodes: startersData },
-        allNpmPackage: { nodes: pluginsData }
-      }
+        allNpmPackage: { nodes: pluginsData },
+      },
     } = this.props
 
     const starters = startersData.map(item => {
       const {
         fields: {
-          starterShowcase: { slug, name, description, stars }
+          starterShowcase: { slug, name, description, stars },
         },
         childScreenshot: {
           screenshotFile: {
-            childImageSharp: { fixed: thumbnail }
-          }
-        }
+            childImageSharp: { fixed: thumbnail },
+          },
+        },
       } = item
 
       return {
@@ -36,7 +36,7 @@ class EcosystemPage extends Component {
         name,
         description,
         stars,
-        thumbnail
+        thumbnail,
       }
     })
 

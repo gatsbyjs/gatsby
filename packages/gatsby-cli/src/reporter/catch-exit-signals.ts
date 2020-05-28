@@ -27,7 +27,7 @@ export const prematureEnd = (): void => {
   // if none of activity did explicitly fail
   createPendingActivity({
     id: `panic`,
-    status: ActivityStatuses.Failed
+    status: ActivityStatuses.Failed,
   })
 
   interruptActivities()

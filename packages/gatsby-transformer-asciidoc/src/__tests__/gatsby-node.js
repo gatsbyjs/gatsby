@@ -17,11 +17,11 @@ jest.mock(`asciidoctor`, () => () => {
             getCombined: jest.fn(() => `title`),
             hasSubtitle: jest.fn(() => true),
             getSubtitle: jest.fn(() => `subtitle`),
-            getMain: jest.fn(() => `main`)
+            getMain: jest.fn(() => `main`),
           }
-        })
+        }),
       }
-    })
+    }),
   }
 })
 
@@ -36,11 +36,11 @@ describe(`gatsby-transformer-asciidoc`, () => {
     node = {
       id: `dummy`,
       extension: `asciidoc`,
-      dir: path.resolve(__dirname)
+      dir: path.resolve(__dirname),
     }
     actions = {
       createNode: jest.fn(),
-      createParentChildLink: jest.fn()
+      createParentChildLink: jest.fn(),
     }
     loadNodeContent = jest.fn(node => node)
     createNodeId = jest.fn(node => node)
@@ -72,7 +72,7 @@ describe(`gatsby-transformer-asciidoc`, () => {
         actions,
         loadNodeContent,
         createNodeId,
-        createContentDigest
+        createContentDigest,
       },
       {}
     )
@@ -85,11 +85,11 @@ describe(`gatsby-transformer-asciidoc`, () => {
       internal: {
         contentDigest: `digest`,
         mediaType: `text/html`,
-        type: `Asciidoc`
+        type: `Asciidoc`,
       },
       pageAttributes: {},
       parent: `dummy`,
-      revision: null
+      revision: null,
     })
   })
 })

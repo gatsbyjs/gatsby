@@ -7,7 +7,7 @@ describe(`Query merging`, () => {
       [`{ foo }`, {}],
       [`{ bar }`, {}],
       [`{ baz }`, {}],
-      [`{ foo, bar, baz }`, {}]
+      [`{ foo, bar, baz }`, {}],
     ])
     const { query, variables } = merge(queries)
     const expected = parse(`{
@@ -27,7 +27,7 @@ describe(`Query merging`, () => {
       [`{ foo, bar }`, {}],
       [`{ foo, bar: foo }`, {}],
       [`{ foo, bar: foo(id: 2) }`, {}],
-      [`{ foo: bar }`, {}]
+      [`{ foo: bar }`, {}],
     ])
     const { query, variables } = merge(queries)
     const expected = parse(`{
@@ -50,7 +50,7 @@ describe(`Query merging`, () => {
     const queries = fromFixtures([
       [templateQuery, { id: `1` }],
       [templateQuery, { id: `2` }],
-      [templateQuery, { id: `3` }]
+      [templateQuery, { id: `3` }],
     ])
     const { query, variables } = merge(queries)
 
@@ -67,7 +67,7 @@ describe(`Query merging`, () => {
       /* eslint-disable @typescript-eslint/camelcase */
       gatsby0_id: `1`,
       gatsby1_id: `2`,
-      gatsby2_id: `3`
+      gatsby2_id: `3`,
     })
   })
 
@@ -80,7 +80,7 @@ describe(`Query merging`, () => {
     const queries = fromFixtures([
       [templateQueryWithFragment, { id: `1` }],
       [templateQueryWithFragment, { id: `2` }],
-      [templateQueryWithFragment, { id: `3` }]
+      [templateQueryWithFragment, { id: `3` }],
     ])
     const { query, variables } = merge(queries)
     const expected = parse(`
@@ -106,7 +106,7 @@ describe(`Query merging`, () => {
       /* eslint-disable @typescript-eslint/camelcase */
       gatsby0_id: `1`,
       gatsby1_id: `2`,
-      gatsby2_id: `3`
+      gatsby2_id: `3`,
     })
   })
 
@@ -122,7 +122,7 @@ describe(`Query merging`, () => {
     `
     const queries = fromFixtures([
       [templateQueriesWithQueryFragment, { id: `1` }],
-      [templateQueriesWithQueryFragment, { id: `2` }]
+      [templateQueriesWithQueryFragment, { id: `2` }],
     ])
     const { query, variables } = merge(queries)
     const expected = parse(`
@@ -160,7 +160,7 @@ describe(`Query merging`, () => {
     expect(variables).toEqual({
       /* eslint-disable @typescript-eslint/camelcase */
       gatsby0_id: `1`,
-      gatsby1_id: `2`
+      gatsby1_id: `2`,
     })
   })
 })
@@ -169,16 +169,16 @@ describe(`Resolving merged query results`, () => {
   it(`resolves single result`, () => {
     const result = {
       data: {
-        gatsby0_foo: { foo: `foo` }
-      }
+        gatsby0_foo: { foo: `foo` },
+      },
     }
     const resolved = resolveResult(result)
     expect(resolved).toEqual([
       {
         data: {
-          foo: { foo: `foo` }
-        }
-      }
+          foo: { foo: `foo` },
+        },
+      },
     ])
   })
 
@@ -187,8 +187,8 @@ describe(`Resolving merged query results`, () => {
       data: {
         gatsby0_foo: { foo: `foo` },
         gatsby0_bar: { bar: `bar` },
-        gatsby1_bar: { bar: `bar` }
-      }
+        gatsby1_bar: { bar: `bar` },
+      },
     }
 
     const resolved = resolveResult(result)
@@ -196,14 +196,14 @@ describe(`Resolving merged query results`, () => {
       {
         data: {
           foo: { foo: `foo` },
-          bar: { bar: `bar` }
-        }
+          bar: { bar: `bar` },
+        },
       },
       {
         data: {
-          bar: { bar: `bar` }
-        }
-      }
+          bar: { bar: `bar` },
+        },
+      },
     ])
   })
 
@@ -217,8 +217,8 @@ describe(`Resolving merged query results`, () => {
       resolveResult({
         data: {
           gatsby0_foo: `foo`,
-          bar: `bar`
-        }
+          bar: `bar`,
+        },
       })
     }
     expect(shouldThrow).toThrow(`Unexpected data key: bar`)
@@ -229,7 +229,7 @@ function fromFixtures(fixtures) {
   return fixtures.map(([query, variables]) => {
     return {
       query: parse(query),
-      variables
+      variables,
     }
   })
 }

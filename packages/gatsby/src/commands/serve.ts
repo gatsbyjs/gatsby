@@ -115,7 +115,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     }
     return next()
   })
-  app.use(function(
+  app.use(function (
     _: express.Request,
     res: express.Response,
     next: express.NextFunction

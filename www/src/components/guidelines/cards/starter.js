@@ -14,7 +14,7 @@ const Card = () => (
         fontSize={1}
         letterSpacing="tracked"
         css={{
-          textTransform: `uppercase`
+          textTransform: `uppercase`,
         }}
       >
         greglobinski/

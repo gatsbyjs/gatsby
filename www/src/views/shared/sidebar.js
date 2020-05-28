@@ -9,8 +9,8 @@ const sticky = t => {
     position: `sticky`,
     top: `calc(${t.sizes.bannerHeight})`,
     [mediaQueries.lg]: {
-      top: `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`
-    }
+      top: `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+    },
   }
 }
 
@@ -28,8 +28,8 @@ export const SidebarContainer = ({ children, className }) => (
         height: t =>
           `calc(100vh - (${t.sizes.headerHeight} + ${t.sizes.bannerHeight}))`,
         minWidth: `showcaseSidebarMaxWidth`,
-        pt: 0
-      }
+        pt: 0,
+      },
     }}
     css={sticky}
   >
@@ -44,7 +44,7 @@ export const SidebarBody = ({ children }) => (
       flexDirection: `column`,
       height: t =>
         `calc(100vh - ((${t.sizes.headerHeight}) + ${t.sizes.bannerHeight}))`,
-      paddingLeft: 6
+      paddingLeft: 6,
     }}
   >
     {children}
@@ -70,8 +70,8 @@ export const SidebarHeader = () => (
         paddingBottom: 6,
         paddingLeft: 6,
         paddingRight: 6,
-        paddingTop: 6
-      }
+        paddingTop: 6,
+      },
     }}
   >
     Filter & Refine
@@ -102,7 +102,7 @@ export const ContentHeader = ({ children, cssOverrides = {} }) => (
       px: 6,
       zIndex: 1,
       ...sticky,
-      ...cssOverrides
+      ...cssOverrides,
     }}
   >
     {children}
@@ -114,7 +114,7 @@ const ResultCount = ({ children }) => (
     sx={{
       color: `textMuted`,
       fontSize: 2,
-      fontWeight: `body`
+      fontWeight: `body`,
     }}
   >
     {children}
@@ -128,14 +128,14 @@ export const ContentTitle = ({
   nodes,
   label,
   // TODO smooth that out ("Starters" uses "size")
-  what = `length`
+  what = `length`,
 }) => (
   <h1
     sx={{
       fontSize: 4,
       lineHeight: `solid`,
       margin: 0,
-      fontWeight: `bold`
+      fontWeight: `bold`,
     }}
   >
     {search.length === 0 ? (

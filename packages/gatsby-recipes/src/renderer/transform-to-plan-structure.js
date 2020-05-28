@@ -17,7 +17,7 @@ const transform = (props = {}) => {
     const resourcePlan = {
       resourceName: curr.type,
       resourceDefinitions: _props,
-      ...plan
+      ...plan,
     }
 
     return [...acc, resourcePlan]

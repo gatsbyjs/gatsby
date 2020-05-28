@@ -3,13 +3,13 @@ import { Stage, IProgram } from "../../commands/types"
 
 jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: (): string[] => []
+    getBrowsersList: (): string[] => [],
   }
 })
 
 jest.mock(`babel-preset-gatsby/package.json`, () => {
   return {
-    version: `1.0.0`
+    version: `1.0.0`,
   }
 })
 
@@ -31,9 +31,9 @@ describe(`webpack utils`, () => {
       expect(rule).toMatchSnapshot({
         use: [
           {
-            loader: expect.stringContaining(`babel-loader`)
-          }
-        ]
+            loader: expect.stringContaining(`babel-loader`),
+          },
+        ],
       })
     })
     describe(`include function`, () => {
@@ -43,9 +43,9 @@ describe(`webpack utils`, () => {
           modulesThatUseGatsby: [
             {
               name: `gatsby-seo`,
-              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`
-            }
-          ]
+              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
+            },
+          ],
         })
       })
 
@@ -96,9 +96,9 @@ describe(`webpack utils`, () => {
       expect(rule).toMatchSnapshot({
         use: [
           {
-            loader: expect.stringContaining(`babel-loader`)
-          }
-        ]
+            loader: expect.stringContaining(`babel-loader`),
+          },
+        ],
       })
     })
     describe(`exclude function`, () => {
@@ -108,9 +108,9 @@ describe(`webpack utils`, () => {
           modulesThatUseGatsby: [
             {
               name: `gatsby-seo`,
-              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`
-            }
-          ]
+              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
+            },
+          ],
         })
       })
       it(`excludes source files from user code`, () => {

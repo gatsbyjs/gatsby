@@ -103,7 +103,7 @@ const EcosystemSection = ({
   icon,
   links,
   featuredItems,
-  className
+  className,
 }) => (
   <EcosystemSectionRoot className={className}>
     <Header>
@@ -142,7 +142,7 @@ EcosystemSection.propTypes = {
   subTitle: PropTypes.string,
   icon: PropTypes.string,
   links: PropTypes.array,
-  featuredItems: PropTypes.array
+  featuredItems: PropTypes.array,
 }
 
 export default EcosystemSection

@@ -83,7 +83,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Node[]): void {
 
 export default async ({
   webhookBody,
-  parentSpan
+  parentSpan,
 }: {
   webhookBody?: unknown
   parentSpan?: Span
@@ -92,7 +92,7 @@ export default async ({
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
     parentSpan,
-    webhookBody: webhookBody || {}
+    webhookBody: webhookBody || {},
   })
 
   const state = store.getState()

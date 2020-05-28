@@ -126,7 +126,7 @@ module.exports.plan = async (context, args) => {
     currentState: contents,
     newState: alreadyIgnored ? contents : contents + name,
     describe: `Add ${name} to gitignore`,
-    diff: ``
+    diff: ``,
   }
 
   if (plan.currentState !== plan.newState) {
@@ -140,7 +140,7 @@ const message = resource => `Added ${resource.id || resource.name} to gitignore`
 
 const schema = {
   name: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 exports.schema = schema
 exports.validate = resource =>

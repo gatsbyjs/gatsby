@@ -8,11 +8,11 @@ import HomepageBlogPost from "./homepage-blog-post"
 import {
   HorizontalScroller,
   HorizontalScrollerContent,
-  HorizontalScrollerItem
+  HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
 import {
   breakpoints,
-  mediaQueries
+  mediaQueries,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
@@ -118,7 +118,7 @@ class HomepageBlogPosts extends Component {
   desktopMediaQuery
 
   state = {
-    desktopViewport: false
+    desktopViewport: false,
   }
 
   componentDidMount = () => {
@@ -162,7 +162,7 @@ class HomepageBlogPosts extends Component {
               <PostsColumn key={`col${colIdx}`}>
                 {column.map((post, postIdx) => {
                   const {
-                    fields: { slug }
+                    fields: { slug },
                   } = post
 
                   const firstPost = !colIdx && !postIdx
@@ -201,7 +201,7 @@ class HomepageBlogPosts extends Component {
             <HorizontalScrollerContentAsDiv>
               {posts.map((post, idx) => {
                 const {
-                  fields: { slug }
+                  fields: { slug },
                 } = post
                 return <HomepageBlogPost index={idx} key={slug} post={post} />
               })}
@@ -215,7 +215,7 @@ class HomepageBlogPosts extends Component {
 }
 
 HomepageBlogPosts.propTypes = {
-  posts: PropTypes.array.isRequired
+  posts: PropTypes.array.isRequired,
 }
 
 export default HomepageBlogPosts

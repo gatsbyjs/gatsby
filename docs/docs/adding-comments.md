@@ -69,7 +69,7 @@ Then define your Disqus configuration object
 ```js
 const disqusConfig = {
   shortname: process.env.GATSBY_DISQUS_NAME,
-  config: { identifier: slug, title }
+  config: { identifier: slug, title },
 }
 ```
 

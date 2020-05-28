@@ -6,7 +6,7 @@ const container = {
   boxSizing: `border-box`,
   position: `relative`,
   px: 6,
-  zIndex: 1
+  zIndex: 1,
 }
 
 export const Container = ({ children, ...rest }) => (
@@ -15,8 +15,8 @@ export const Container = ({ children, ...rest }) => (
       ...rest,
       ...container,
       [mediaQueries.md]: {
-        px: 10
-      }
+        px: 10,
+      },
     }}
   >
     {children}
@@ -30,12 +30,12 @@ export const Section = ({ children, ...rest }) => (
       ...container,
       py: 4,
       [mediaQueries.sm]: {
-        py: 5
+        py: 5,
       },
       [mediaQueries.md]: {
         py: 8,
-        px: 10
-      }
+        px: 10,
+      },
     }}
   >
     {children}
@@ -54,8 +54,8 @@ export const Columns = ({ children, ...rest }) => (
       mt: 4,
       mb: 8,
       [mediaQueries.lg]: {
-        flexDirection: `row`
-      }
+        flexDirection: `row`,
+      },
     }}
   >
     {children}
@@ -71,8 +71,8 @@ export const CopyColumn = ({
   <div
     css={{
       "p, ul, ol": {
-        maxWidth: `40rem`
-      }
+        maxWidth: `40rem`,
+      },
     }}
     sx={{
       ...rest,
@@ -83,13 +83,13 @@ export const CopyColumn = ({
       width: `100%`,
       flex: `0 0 auto`,
       [mediaQueries.md]: {
-        mr: copyColumnGutter
+        mr: copyColumnGutter,
       },
       [mediaQueries.lg]: {
         mb: 0,
         maxWidth: `none`,
-        width: narrow ? copyColumnWidth : `30rem`
-      }
+        width: narrow ? copyColumnWidth : `30rem`,
+      },
     }}
   >
     <div
@@ -100,8 +100,8 @@ export const CopyColumn = ({
           top: t =>
             sticky
               ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
-              : false
-        }
+              : false,
+        },
       }}
     >
       {children}
@@ -113,8 +113,8 @@ export const ContentColumn = ({ children, fullWidth, ...rest }) => (
   <div
     css={{
       "p, ul, ol": {
-        maxWidth: `40rem`
-      }
+        maxWidth: `40rem`,
+      },
     }}
     sx={{
       ...rest,
@@ -123,8 +123,8 @@ export const ContentColumn = ({ children, fullWidth, ...rest }) => (
       position: `relative`,
       [mediaQueries.lg]: {
         width: fullWidth ? `100%` : `50rem`,
-        maxWidth: fullWidth ? `none` : false
-      }
+        maxWidth: fullWidth ? `none` : false,
+      },
     }}
   >
     {children}

@@ -7,7 +7,7 @@ import { ScrollBehaviorContext } from "./ScrollBehaviorContext"
 const propTypes = {
   scrollKey: PropTypes.string.isRequired,
   shouldUpdateScroll: PropTypes.func,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 }
 
 class ScrollContainer extends React.Component {

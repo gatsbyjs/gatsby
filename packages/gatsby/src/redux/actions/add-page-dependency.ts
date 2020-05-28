@@ -5,7 +5,7 @@ import { createPageDependency as internalCreatePageDependency } from "./internal
 export const createPageDependency = ({
   path,
   nodeId,
-  connection
+  connection,
 }: {
   path: string
   nodeId: string

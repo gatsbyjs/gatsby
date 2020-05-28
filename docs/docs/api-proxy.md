@@ -16,8 +16,8 @@ To tell the development server to proxy any unknown requests to your API server 
 module.exports = {
   proxy: {
     prefix: "/api",
-    url: "http://dev-mysite.com"
-  }
+    url: "http://dev-mysite.com",
+  },
 }
 ```
 
@@ -28,13 +28,13 @@ module.exports = {
   proxy: [
     {
       prefix: "/api",
-      url: "http://dev-mysite.com"
+      url: "http://dev-mysite.com",
     },
     {
       prefix: "/api2",
-      url: "http://dev2-mysite.com"
-    }
-  ]
+      url: "http://dev2-mysite.com",
+    },
+  ],
 }
 ```
 
@@ -59,11 +59,11 @@ module.exports = {
       createProxyMiddleware({
         target: "http://localhost:9000",
         pathRewrite: {
-          "/.netlify/functions/": ""
-        }
+          "/.netlify/functions/": "",
+        },
       })
     )
-  }
+  },
 }
 ```
 
@@ -87,10 +87,10 @@ module.exports = {
         target: "http://localhost:9000",
         secure: false, // Do not reject self-signed certificates.
         pathRewrite: {
-          "/.netlify/functions/": ""
-        }
+          "/.netlify/functions/": "",
+        },
       })
     )
-  }
+  },
 }
 ```

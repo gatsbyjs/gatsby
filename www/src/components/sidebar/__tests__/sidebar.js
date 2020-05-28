@@ -26,8 +26,8 @@ const itemList = [
     ui: `steps`,
     items: [
       { title: `The American Dream`, link: `/themes/#the-american-dream` },
-      { title: `Class Inequality`, link: `/themes/#class-inequality` }
-    ]
+      { title: `Class Inequality`, link: `/themes/#class-inequality` },
+    ],
   },
   {
     title: `Characters`,
@@ -40,19 +40,19 @@ const itemList = [
         link: `/characters/buchanan/`,
         items: [
           { title: `Daisy Buchanan`, link: `/characters/daisy-buchanan/` },
-          { title: `Tom Buchanan`, link: `/characters/tom-buchanan/` }
-        ]
-      }
-    ]
+          { title: `Tom Buchanan`, link: `/characters/tom-buchanan/` },
+        ],
+      },
+    ],
   },
   {
     title: `Motifs`,
     link: `/motifs/`,
     items: [
       { title: `The Green Light`, link: `/motifs/green-light/` },
-      { title: `The Eyes of Dr. T.J. Eckleburg`, link: `/motifs/eyes/` }
-    ]
-  }
+      { title: `The Eyes of Dr. T.J. Eckleburg`, link: `/motifs/eyes/` },
+    ],
+  },
 ]
 
 function renderSidebar(pathname, { activeItemHash } = {}) {
@@ -129,7 +129,7 @@ describe(`sidebar`, () => {
 
     it(`does not scroll into view when loaded with a hash`, () => {
       renderSidebar(`/themes/`, {
-        activeItemHash: `the-american-dream`
+        activeItemHash: `the-american-dream`,
       })
       expect(scrollIntoViewMock).not.toHaveBeenCalled()
     })

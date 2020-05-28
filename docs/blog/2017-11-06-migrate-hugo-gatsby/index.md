@@ -140,8 +140,8 @@ module.exports = (createPage, nodes) => {
         path: node.frontmatter.slug,
         component: template,
         context: {
-          slug: node.frontmatter.slug
-        }
+          slug: node.frontmatter.slug,
+        },
       })
     }
   })
@@ -191,13 +191,13 @@ theme.overrideThemeStyles = () => {
   return {
     // Color contrast correction https://dequeuniversity.com/rules/axe/2.2/color-contrast
     a: {
-      color: `#185D8B`
+      color: `#185D8B`,
     },
     img: {
       position: `relative`,
       left: `50%`,
-      transform: `translateX(-50%)`
-    }
+      transform: `translateX(-50%)`,
+    },
   }
 }
 
@@ -299,8 +299,8 @@ module.exports = (createPage, nodes) => {
         group,
         first,
         last,
-        index: index + 1
-      }
+        index: index + 1,
+      },
     })
   })
 }
@@ -358,8 +358,8 @@ createPage({
   path: `/tags`,
   component: template,
   context: {
-    posts
-  }
+    posts,
+  },
 })
 ```
 
@@ -372,8 +372,8 @@ createPage({
   context: {
     posts,
     post,
-    tag: tagName
-  }
+    tag: tagName,
+  },
 })
 ```
 

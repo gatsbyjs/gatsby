@@ -11,7 +11,7 @@ export default function LHSFilter({
   data,
   filters,
   setFilters,
-  fixed
+  fixed,
 }) {
   return (
     <Collapsible heading={heading} fixed={fixed}>
@@ -39,7 +39,7 @@ export default function LHSFilter({
               }}
               sx={{
                 ...filterButton,
-                color: filters.has(c) ? `link.color` : `textMuted`
+                color: filters.has(c) ? `link.color` : `textMuted`,
               }}
             >
               <div sx={filterCheckbox}>
@@ -61,5 +61,5 @@ export default function LHSFilter({
 }
 
 LHSFilter.defaultProps = {
-  fixed: false
+  fixed: false,
 }

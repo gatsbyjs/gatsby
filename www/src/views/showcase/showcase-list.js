@@ -7,7 +7,7 @@ import {
   showcaseList,
   showcaseItem,
   shortcutIcon,
-  meta
+  meta,
 } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
@@ -42,7 +42,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                 sx={{
                   ...meta,
                   display: `flex`,
-                  justifyContent: `space-between`
+                  justifyContent: `space-between`,
                 }}
                 className="meta"
               >
@@ -102,16 +102,16 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                           right: 0,
                           width: 20,
                           "&:hover": {
-                            bg: `gatsby`
+                            bg: `gatsby`,
                           },
                           "& svg": {
-                            display: `block`
-                          }
-                        }
-                      }
+                            display: `block`,
+                          },
+                        },
+                      },
                     }}
                     to={`/showcase/?${qs.stringify({
-                      filters: `Featured`
+                      filters: `Featured`,
                     })}`}
                     className="featured-site"
                   >

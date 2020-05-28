@@ -6,7 +6,7 @@ import {
   defaultIcons,
   doesIconExist,
   addDigestToPath,
-  favicons
+  favicons,
 } from "./common"
 
 sharp.simd(true)
@@ -37,7 +37,7 @@ async function generateIcon(icon, srcIcon) {
       width: size,
       height: size,
       fit: `contain`,
-      background: { r: 255, g: 255, b: 255, alpha: 0 }
+      background: { r: 255, g: 255, b: 255, alpha: 0 },
     })
     .toFile(imgPath)
 }
@@ -80,7 +80,7 @@ exports.onPostBootstrap = async (
   { localize, ...manifest }
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
-    parentSpan
+    parentSpan,
   })
 
   activity.start()
@@ -109,10 +109,10 @@ exports.onPostBootstrap = async (
           pluginOptions: {
             ...manifest,
             ...locale,
-            ...cacheModeOverride
+            ...cacheModeOverride,
           },
           shouldLocalize: true,
-          basePath
+          basePath,
         })
       })
     )
@@ -139,7 +139,7 @@ const makeManifest = async ({
   reporter,
   pluginOptions,
   shouldLocalize = false,
-  basePath = ``
+  basePath = ``,
 }) => {
   const { icon, ...manifest } = pluginOptions
   const suffix =
@@ -166,7 +166,7 @@ const makeManifest = async ({
     manifest.icons = manifest.icons.map(icon => {
       return {
         ...pluginOptions.icon_options,
-        ...icon
+        ...icon,
       }
     })
   }
@@ -260,7 +260,7 @@ const makeManifest = async ({
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
-      src: slash(path.join(basePath, icon.src))
+      src: slash(path.join(basePath, icon.src)),
     }
   })
 
@@ -280,8 +280,8 @@ exports.onCreateWebpackConfig = ({ actions, plugins }, pluginOptions) => {
     plugins: [
       plugins.define({
         __MANIFEST_PLUGIN_HAS_LOCALISATION__:
-          pluginOptions.localize && pluginOptions.localize.length
-      })
-    ]
+          pluginOptions.localize && pluginOptions.localize.length,
+      }),
+    ],
   })
 }

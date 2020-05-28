@@ -7,8 +7,8 @@ export default ({ items, color }) => (
     css={{
       "& span": {
         animation: `${topToBottom} 5s linear infinite 0s`,
-        opacity: 0
-      }
+        opacity: 0,
+      },
     }}
   >
     {items.map(item => (
@@ -21,24 +21,24 @@ export default ({ items, color }) => (
 
 const topToBottom = keyframes({
   "0%": {
-    opacity: 0
+    opacity: 0,
   },
   "6%": {
-    opacity: 0
+    opacity: 0,
   },
   "21%": {
-    opacity: 1
+    opacity: 1,
   },
   "69%": {
-    opacity: 1
+    opacity: 1,
   },
   "84%": {
-    opacity: 0
+    opacity: 0,
   },
   "90%": {
-    opacity: 0
+    opacity: 0,
   },
   "100%": {
-    opacity: 0
-  }
+    opacity: 0,
+  },
 })

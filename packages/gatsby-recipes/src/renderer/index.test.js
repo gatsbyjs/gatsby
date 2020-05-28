@@ -51,7 +51,7 @@ describe(`renderer`, () => {
     `)
     expect(result[2]).toMatchInlineSnapshot(
       {
-        currentState: expect.stringMatching(/gatsby@[0-9.]+/)
+        currentState: expect.stringMatching(/gatsby@[0-9.]+/),
       },
       `
       Object {

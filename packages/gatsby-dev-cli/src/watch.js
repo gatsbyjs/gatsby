@@ -104,7 +104,7 @@ async function watch(
           await del([
             `node_modules/${packageToClear}/**/*.{js,js.map}`,
             `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
-            `!node_modules/${packageToClear}/src/**/*.{js,js.map}`
+            `!node_modules/${packageToClear}/src/**/*.{js,js.map}`,
           ])
       )
     )
@@ -114,7 +114,7 @@ async function watch(
   const { seenPackages, depTree } = traversePackagesDeps({
     root,
     packages: _.uniq(localPackages),
-    monoRepoPackages
+    monoRepoPackages,
   })
 
   const allPackagesToWatch = packages
@@ -137,7 +137,7 @@ async function watch(
         root,
         localPackages,
         ignorePackageJSONChanges,
-        yarnWorkspaceRoot
+        yarnWorkspaceRoot,
       })
     } catch (e) {
       console.log(e)
@@ -161,7 +161,7 @@ async function watch(
     /\.DS_Store/,
     /[/\\]__tests__[/\\]/i,
     /[/\\]__mocks__[/\\]/i,
-    /\.npmrc/i
+    /\.npmrc/i,
   ].concat(
     allPackagesIgnoringThemesToWatch.map(
       p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`)
@@ -185,7 +185,7 @@ async function watch(
 
   chokidar
     .watch(watchers, {
-      ignored: [filePath => _.some(ignored, reg => reg.test(filePath))]
+      ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
     })
     .on(`all`, async (event, filePath) => {
       if (!watchEvents.includes(event)) {
@@ -226,7 +226,7 @@ async function watch(
           monoRepoPackages,
           root,
           isInitialScan,
-          ignoredPackageJSON
+          ignoredPackageJSON,
         })
 
         if (isInitialScan) {
@@ -241,7 +241,7 @@ async function watch(
 
         const {
           didDepsChanged,
-          packageNotInstalled
+          packageNotInstalled,
         } = await didDepsChangedPromise
 
         if (packageNotInstalled) {
@@ -264,7 +264,7 @@ async function watch(
             getDependantPackages({
               packageName,
               depTree,
-              packages
+              packages,
             }).forEach(packageToPublish => {
               // scheduling publish - we will publish when `ready` is emitted
               // as we can do single publish then
@@ -304,7 +304,7 @@ async function watch(
             packagesToPublish: Array.from(packagesToPublish),
             root,
             localPackages,
-            ignorePackageJSONChanges
+            ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
           isPublishing = false

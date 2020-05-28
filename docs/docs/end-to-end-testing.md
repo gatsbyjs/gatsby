@@ -106,9 +106,7 @@ Finally, inside the first test, you'll use the `checkA11y` command from `cypress
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/")
-      .get("main")
-      .injectAxe()
+    cy.visit("/").get("main").injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -131,9 +129,7 @@ The following test is for the [gatsby-default-starter](https://github.com/gatsby
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/")
-      .get("main")
-      .injectAxe()
+    cy.visit("/").get("main").injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -157,9 +153,7 @@ You'll now write another test for the `gatsby-default-starter` homepage. In this
 
 describe("Accessibility tests", () => {
   beforeEach(() => {
-    cy.visit("/")
-      .get("main")
-      .injectAxe()
+    cy.visit("/").get("main").injectAxe()
   })
   it("Has no detectable accessibility violations on load", () => {
     cy.checkA11y()
@@ -191,8 +185,8 @@ You can disable a specific accessibility rule, or run only a subset of the rules
 ```js:title=cypress/e2e/accessibility.test.js
 const axeRunOptions = {
   rules: {
-    "rule-id": { enabled: false }
-  }
+    "rule-id": { enabled: false },
+  },
 }
 
 cy.checkA11y(null, axeRunOptions)
@@ -203,12 +197,12 @@ The `checkA11y` command runs the `axe.run` method under the hood. This method ca
 ```js:title=cypress/e2e/accessibility.test.js
 const axeRunOptions = {
   rules: {
-    "rule-id": { enabled: false }
-  }
+    "rule-id": { enabled: false },
+  },
 }
 // highlight-start
 const axeRunContext = {
-  exclude: [[".gatsby-highlight"], ["#an-id"]]
+  exclude: [[".gatsby-highlight"], ["#an-id"]],
 }
 // highlight-end
 

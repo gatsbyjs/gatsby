@@ -48,10 +48,10 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/`
-      }
-    }
-  ]
+        path: `./src/data/`,
+      },
+    },
+  ],
 }
 ```
 
@@ -163,8 +163,8 @@ function transformObject(obj, id, type) {
     parent: null,
     internal: {
       contentDigest: createContentDigest(obj),
-      type
-    }
+      type,
+    },
   }
   createNode(yamlNode)
 }
@@ -185,8 +185,8 @@ function transformObject(obj, id, type) {
     parent: node.id, // highlight-line
     internal: {
       contentDigest: createContentDigest(obj),
-      type
-    }
+      type,
+    },
   }
   createNode(yamlNode)
   createParentChildLink({ parent: node, child: yamlNode }) // highlight-line
@@ -212,7 +212,7 @@ async function onCreateNode({
   actions, // highlight-line
   loadNodeContent,
   createNodeId, // highlight-line
-  createContentDigest // highlight-line
+  createContentDigest, // highlight-line
 }) {
   // highlight-start
   function transformObject(obj, id, type) {
@@ -223,8 +223,8 @@ async function onCreateNode({
       parent: node.id,
       internal: {
         contentDigest: createContentDigest(obj),
-        type
-      }
+        type,
+      },
     }
 
     createNode(yamlNode)

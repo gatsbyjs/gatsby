@@ -7,7 +7,7 @@ const { registryUrl } = require(`./verdaccio-config`)
 const installPackages = async ({
   packagesToInstall,
   yarnWorkspaceRoot,
-  newlyPublishedPackageVersions
+  newlyPublishedPackageVersions,
 }) => {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
@@ -26,7 +26,7 @@ const installPackages = async ({
     const { stdout } = await promisifiedSpawn([
       `yarn`,
       [`workspaces`, `info`, `--json`],
-      { stdio: `pipe` }
+      { stdio: `pipe` },
     ])
 
     const workspacesLayout = JSON.parse(JSON.parse(stdout).data)
@@ -62,7 +62,7 @@ const installPackages = async ({
       if (changed) {
         console.log(`Changing deps in ${pkgJsonPath} to use @gatsby-dev`)
         fs.outputJSONSync(pkgJsonPath, pkg, {
-          spaces: 2
+          spaces: 2,
         })
       }
     })
@@ -80,8 +80,8 @@ const installPackages = async ({
           return `${packageName}@${packageVersion}`
         }),
         `--registry=${registryUrl}`,
-        `--exact`
-      ]
+        `--exact`,
+      ],
     ]
   }
 

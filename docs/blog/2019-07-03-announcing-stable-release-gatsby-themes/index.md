@@ -25,7 +25,7 @@ Stability for composition means that any plugin can now take advantage of adding
 ```js:title=my-plugin/gatsby-config.js
 module.exports = options => {
   return {
-    plugins: []
+    plugins: [],
   }
 }
 ```
@@ -55,9 +55,9 @@ module.exports = {
   plugins: [
     {
       resolve: "gatsby-theme-blog",
-      options: {}
-    }
-  ]
+      options: {},
+    },
+  ],
 }
 ```
 

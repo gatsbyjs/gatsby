@@ -33,7 +33,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   const siteInfo = {
     directory,
     browserslist: DEFAULT_BROWSERS,
-    sitePackageJson: undefined
+    sitePackageJson: undefined,
   }
 
   const useYarn = existsSync(path.join(directory, `yarn.lock`))
@@ -126,7 +126,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         alias: `host`,
         type: `string`,
         default: defaultHost,
-        describe: `Set host. Defaults to ${defaultHost}`
+        describe: `Set host. Defaults to ${defaultHost}`,
       })
         .option(`p`, {
           alias: `port`,
@@ -134,43 +134,43 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           default: process.env.PORT || defaultPort,
           describe: process.env.PORT
             ? `Set port. Defaults to ${process.env.PORT} (set by env.PORT) (otherwise defaults ${defaultPort})`
-            : `Set port. Defaults to ${defaultPort}`
+            : `Set port. Defaults to ${defaultPort}`,
         })
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your (default) browser for you.`
+          describe: `Open the site in your (default) browser for you.`,
         })
         .option(`S`, {
           alias: `https`,
           type: `boolean`,
-          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`
+          describe: `Use HTTPS. See https://www.gatsbyjs.org/docs/local-https/ as a guide`,
         })
         .option(`c`, {
           alias: `cert-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`
+          describe: `Custom HTTPS cert file (also required: --https, --key-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`k`, {
           alias: `key-file`,
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`
+          describe: `Custom HTTPS key file (also required: --https, --cert-file). See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`ca-file`, {
           type: `string`,
           default: ``,
-          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`
+          describe: `Custom HTTPS CA certificate file (also required: --https, --cert-file, --key-file).  See https://www.gatsbyjs.org/docs/local-https/`,
         })
         .option(`graphql-tracing`, {
           type: `boolean`,
           describe: `Trace every graphql resolver, may have performance implications`,
-          default: false
+          default: false,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
     handler: handlerP(
       getCommandHandler(`develop`, (args: yargs.Arguments, cmd: Function) => {
@@ -182,7 +182,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         // kills it so this is fine.
         return new Promise(() => {})
       })
-    )
+    ),
   })
 
   cli.command({
@@ -194,26 +194,26 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         default:
           process.env.PREFIX_PATHS === `true` ||
           process.env.PREFIX_PATHS === `1`,
-        describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`
+        describe: `Build site with link paths prefixed with the pathPrefix value in gatsby-config.js. Default is env.PREFIX_PATHS or false.`,
       })
         .option(`no-uglify`, {
           type: `boolean`,
           default: false,
-          describe: `Build site without uglifying JS bundles (for debugging).`
+          describe: `Build site without uglifying JS bundles (for debugging).`,
         })
         .option(`profile`, {
           type: `boolean`,
           default: false,
-          describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`
+          describe: `Build site with react profiling (this can add some additional overhead). See https://reactjs.org/docs/profiler`,
         })
         .option(`graphql-tracing`, {
           type: `boolean`,
           describe: `Trace every graphql resolver, may have performance implications`,
-          default: false
+          default: false,
         })
         .option(`open-tracing-config-file`, {
           type: `string`,
-          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         })
         // log-pages and write-to-file are specific to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
         // because of that they are hidden from `--help` but still defined so `yargs` know about them
@@ -221,20 +221,20 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           type: `boolean`,
           default: false,
           describe: `Log the pages that changes since last build (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
-          hidden: true
+          hidden: true,
         })
         .option(`write-to-file`, {
           type: `boolean`,
           default: false,
           describe: `Save the log of changed pages for future comparison (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
-          hidden: true
+          hidden: true,
         }),
     handler: handlerP(
       getCommandHandler(`build`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = `production`
         return cmd(args)
       })
-    )
+    ),
   })
 
   cli.command({
@@ -245,28 +245,28 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         alias: `host`,
         type: `string`,
         default: defaultHost,
-        describe: `Set host. Defaults to ${defaultHost}`
+        describe: `Set host. Defaults to ${defaultHost}`,
       })
         .option(`p`, {
           alias: `port`,
           type: `string`,
           default: `9000`,
-          describe: `Set port. Defaults to 9000`
+          describe: `Set port. Defaults to 9000`,
         })
         .option(`o`, {
           alias: `open`,
           type: `boolean`,
-          describe: `Open the site in your (default) browser for you.`
+          describe: `Open the site in your (default) browser for you.`,
         })
         .option(`prefix-paths`, {
           type: `boolean`,
           default:
             process.env.PREFIX_PATHS === `true` ||
             process.env.PREFIX_PATHS === `1`,
-          describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`
+          describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`,
         }),
 
-    handler: getCommandHandler(`serve`)
+    handler: getCommandHandler(`serve`),
   })
 
   cli.command({
@@ -277,7 +277,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         alias: `clipboard`,
         type: `boolean`,
         default: false,
-        describe: `Automagically copy environment information to clipboard`
+        describe: `Automagically copy environment information to clipboard`,
       }),
     handler: (args: yargs.Arguments) => {
       try {
@@ -294,7 +294,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
             Browsers: [`Chrome`, `Edge`, `Firefox`, `Safari`],
             Languages: [`Python`],
             npmPackages: `gatsby*`,
-            npmGlobalPackages: `gatsby*`
+            npmGlobalPackages: `gatsby*`,
           })
           .then(envinfoOutput => {
             console.log(envinfoOutput)
@@ -307,7 +307,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         console.log(`Error: Unable to print environment info`)
         console.log(err)
       }
-    }
+    },
   })
 
   cli.command({
@@ -315,18 +315,18 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     builder: _ =>
       _.option(`disable`, {
         type: `boolean`,
-        describe: `Opt out of future feedback requests`
+        describe: `Opt out of future feedback requests`,
       }).option(`enable`, {
         type: `boolean`,
-        describe: `Opt into future feedback requests`
+        describe: `Opt into future feedback requests`,
       }),
-    handler: getCommandHandler(`feedback`)
+    handler: getCommandHandler(`feedback`),
   })
 
   cli.command({
     command: `clean`,
     describe: `Wipe the local gatsby environment including built assets and cache`,
-    handler: getCommandHandler(`clean`)
+    handler: getCommandHandler(`clean`),
   })
 
   cli.command({
@@ -338,7 +338,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         return cmd(args)
       }
-    )
+    ),
   })
 
   cli.command({
@@ -348,7 +348,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       async ({ recipe }: yargs.Arguments<{ recipe: string | undefined }>) => {
         await recipesHandler(siteInfo.directory, recipe)
       }
-    )
+    ),
   })
 }
 
@@ -388,7 +388,7 @@ Gatsby version: ${gatsbyVersion}
 
 export const createCli = (argv: string[]): yargs.Arguments => {
   const cli = yargs(argv).parserConfiguration({
-    "boolean-negation": false
+    "boolean-negation": false,
   })
 
   const isLocalSite = isLocalGatsbySite()
@@ -402,20 +402,20 @@ export const createCli = (argv: string[]): yargs.Arguments => {
       default: false,
       type: `boolean`,
       describe: `Turn on verbose output`,
-      global: true
+      global: true,
     })
     .option(`no-color`, {
       alias: `no-colors`,
       default: false,
       type: `boolean`,
       describe: `Turn off the color in output`,
-      global: true
+      global: true,
     })
     .option(`json`, {
       describe: `Turn on the JSON logger`,
       default: false,
       type: `boolean`,
-      global: true
+      global: true,
     })
 
   buildLocalCommands(cli, isLocalSite)
@@ -443,7 +443,7 @@ export const createCli = (argv: string[]): yargs.Arguments => {
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
         await initStarter(starterStr, rootPathStr)
-      })
+      }),
     })
     .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
       yargs
@@ -471,7 +471,7 @@ Creating a plugin:
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
           `)
-          )
+          ),
         })
         .demandCommand(
           1,
@@ -485,18 +485,18 @@ Creating a plugin:
         yargs
           .option(`enable`, {
             type: `boolean`,
-            description: `Enable telemetry (default)`
+            description: `Enable telemetry (default)`,
           })
           .option(`disable`, {
             type: `boolean`,
-            description: `Disable telemetry`
+            description: `Disable telemetry`,
           }),
 
       handler: handlerP(({ enable, disable }: yargs.Arguments) => {
         const enabled = enable || !disable
         setTelemetryEnabled(enabled)
         report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
-      })
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)

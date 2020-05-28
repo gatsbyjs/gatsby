@@ -92,8 +92,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // In your blog post template's graphql query, you can use pagePath
       // as a GraphQL variable to query for data from the markdown file.
       context: {
-        pagePath: path
-      }
+        pagePath: path,
+      },
     })
   })
 }
@@ -241,8 +241,8 @@ exports.onCreatePage = ({ page, actions }) => {
     ...page,
     context: {
       ...page.context,
-      house: `Gryffindor`
-    }
+      house: `Gryffindor`,
+    },
   })
 }
 ```

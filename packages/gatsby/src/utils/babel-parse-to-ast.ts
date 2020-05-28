@@ -14,8 +14,8 @@ const PARSER_OPTIONS: ParserOptions = {
     [
       `decorators`,
       {
-        decoratorsBeforeExport: true
-      }
+        decoratorsBeforeExport: true,
+      },
     ],
     `classProperties`,
     `classPrivateProperties`,
@@ -35,11 +35,11 @@ const PARSER_OPTIONS: ParserOptions = {
     [
       `pipelineOperator`,
       {
-        proposal: `minimal`
-      }
+        proposal: `minimal`,
+      },
     ],
-    `nullishCoalescingOperator`
-  ]
+    `nullishCoalescingOperator`,
+  ],
 }
 
 export function getBabelParserOptions(filePath: string): ParserOptions {
@@ -50,7 +50,7 @@ export function getBabelParserOptions(filePath: string): ParserOptions {
       ...PARSER_OPTIONS,
       plugins: plugins!.map(plugin =>
         plugin === `flow` ? `typescript` : plugin
-      )
+      ),
     }
   }
   return PARSER_OPTIONS

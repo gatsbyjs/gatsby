@@ -9,7 +9,7 @@ import {
   GraphQLSchema,
   Source,
   GraphQLError,
-  ExecutionResult
+  ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
 import * as nodeStore from "../db/nodes"
@@ -42,7 +42,7 @@ export class GraphQLRunner {
     protected store: Store<IGatsbyState>,
     {
       collectStats,
-      graphqlTracing
+      graphqlTracing,
     }: {
       collectStats?: boolean
       graphqlTracing?: boolean
@@ -54,7 +54,7 @@ export class GraphQLRunner {
       nodeStore,
       schema,
       schemaComposer: schemaCustomization.composer,
-      createPageDependency
+      createPageDependency,
     })
     this.schema = schema
     this.parseCache = new Map()
@@ -75,7 +75,7 @@ export class GraphQLRunner {
         totalNonSingleFilters: 0,
         comparatorsUsed: new Map(),
         uniqueFilterPaths: new Set(),
-        uniqueSorts: new Set()
+        uniqueSorts: new Set(),
       }
     } else {
       this.stats = null
@@ -128,7 +128,7 @@ export class GraphQLRunner {
         totalNonSingleFilters: this.stats.totalNonSingleFilters,
         comparatorsUsed: comparatorsUsedObj,
         uniqueFilterPaths: this.stats.uniqueFilterPaths.size,
-        uniqueSorts: this.stats.uniqueSorts.size
+        uniqueSorts: this.stats.uniqueSorts.size,
       }
     } else {
       return null
@@ -140,7 +140,7 @@ export class GraphQLRunner {
     context: Record<string, unknown>,
     {
       parentSpan,
-      queryName
+      queryName,
     }: { parentSpan: Span | undefined; queryName: string }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
@@ -165,10 +165,7 @@ export class GraphQLRunner {
       )
 
       this.stats.uniqueQueries.add(
-        crypto
-          .createHash(`sha1`)
-          .update(statsQuery)
-          .digest(`hex`)
+        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)
       )
     }
 
@@ -180,8 +177,8 @@ export class GraphQLRunner {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
         tags: {
-          queryName: queryName
-        }
+          queryName: queryName,
+        },
       })
 
       tracer.start()
@@ -202,9 +199,9 @@ export class GraphQLRunner {
                 customContext: schemaCustomization.context,
                 nodeModel: this.nodeModel,
                 stats: this.stats,
-                tracer
+                tracer,
               }),
-              variableValues: context
+              variableValues: context,
             })
 
       // Queries are usually executed in batch. But after the batch is finished

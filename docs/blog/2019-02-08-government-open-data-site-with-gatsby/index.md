@@ -199,8 +199,8 @@ exports.onClientEntry = () => {
         layout: "layout---index",
         layoutComponentChunkName: "component---src-layouts-index-js",
         jsonName: "explore-" + statePathId.toLowerCase() + ".json",
-        path: path
-      }
+        path: path,
+      },
     ])
   }
 }
@@ -222,7 +222,7 @@ const BASEURL = process.env.BASEURL || ""
 module.exports = {
   // This is currently the relative path in our Jekyll deployment. This path points to our Gatsby pages.
   // This prefix is prepended to load all our related images, code, and pages.
-  pathPrefix: `${BASEURL}/gatsby-public`
+  pathPrefix: `${BASEURL}/gatsby-public`,
 }
 ```
 

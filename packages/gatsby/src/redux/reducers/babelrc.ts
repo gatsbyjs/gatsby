@@ -10,34 +10,34 @@ export const babelrcReducer = (
         presets: [],
         options: {
           cacheDirectory: true,
-          sourceType: `unambiguous`
-        }
+          sourceType: `unambiguous`,
+        },
       },
       "develop-html": {
         plugins: [],
         presets: [],
         options: {
           cacheDirectory: true,
-          sourceType: `unambiguous`
-        }
+          sourceType: `unambiguous`,
+        },
       },
       "build-html": {
         plugins: [],
         presets: [],
         options: {
           cacheDirectory: true,
-          sourceType: `unambiguous`
-        }
+          sourceType: `unambiguous`,
+        },
       },
       "build-javascript": {
         plugins: [],
         presets: [],
         options: {
           cacheDirectory: true,
-          sourceType: `unambiguous`
-        }
-      }
-    }
+          sourceType: `unambiguous`,
+        },
+      },
+    },
   },
   action: ActionsUnion
 ): IGatsbyState["babelrc"] => {
@@ -58,12 +58,12 @@ export const babelrcReducer = (
           const plugin = state.stages[stage].plugins[index]
           state.stages[stage].plugins[index] = {
             name: plugin.name,
-            options: _.merge(plugin.options, action.payload.options)
+            options: _.merge(plugin.options, action.payload.options),
           }
         } else {
           state.stages[stage].plugins = [
             ...state.stages[stage].plugins,
-            action.payload
+            action.payload,
           ]
         }
       })
@@ -86,12 +86,12 @@ export const babelrcReducer = (
           const plugin = state.stages[stage].presets[index]
           state.stages[stage].presets[index] = {
             name: plugin.name,
-            options: _.merge(plugin.options, action.payload.options)
+            options: _.merge(plugin.options, action.payload.options),
           }
         } else {
           state.stages[stage].presets = [
             ...state.stages[stage].presets,
-            action.payload
+            action.payload,
           ]
         }
       })
@@ -105,7 +105,7 @@ export const babelrcReducer = (
 
         state.stages[stage].options = {
           ...state.stages[stage].options,
-          ...action.payload.options
+          ...action.payload.options,
         }
       })
       return state

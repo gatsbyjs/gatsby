@@ -15,7 +15,7 @@ points to your files.
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-hjson`]
+  plugins: [`gatsby-transformer-hjson`],
 }
 ```
 
@@ -34,7 +34,7 @@ So if your project has a `letters.hjson` with `[{ value: a } { value: b } { valu
 ;[
   { value: "a", type: "Letters" },
   { value: "b", type: "Letters" },
-  { value: "c", type: "Letters" }
+  { value: "c", type: "Letters" },
 ]
 ```
 
@@ -74,16 +74,16 @@ Then the following three nodes would be created.
 ;[
   {
     value: "a",
-    type: "Letters"
+    type: "Letters",
   },
   {
     value: "b",
-    type: "Letters"
+    type: "Letters",
   },
   {
     value: "c",
-    type: "Letters"
-  }
+    type: "Letters",
+  },
 ]
 ```
 
@@ -112,19 +112,19 @@ Which would return:
     edges: [
       {
         node: {
-          value: "a"
-        }
+          value: "a",
+        },
       },
       {
         node: {
-          value: "b"
-        }
+          value: "b",
+        },
       },
       {
         node: {
-          value: "c"
-        }
-      }
+          value: "c",
+        },
+      },
     ]
   }
 }

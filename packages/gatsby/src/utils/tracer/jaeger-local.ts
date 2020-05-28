@@ -10,12 +10,12 @@ function create(): JaegerTracer {
     reporter: {
       // Provide the traces endpoint; this forces the client to
       // connect directly to the Collector and send spans over HTTP
-      collectorEndpoint: `http://localhost:14268/api/traces`
+      collectorEndpoint: `http://localhost:14268/api/traces`,
     },
     sampler: {
       type: `const`,
-      param: 1
-    }
+      param: 1,
+    },
   }
   const options = {}
   tracer = initTracer(config, options)

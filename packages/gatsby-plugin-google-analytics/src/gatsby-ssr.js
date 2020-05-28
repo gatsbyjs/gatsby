@@ -12,15 +12,15 @@ const knownOptions = {
     storeGac: `boolean`,
     legacyCookieDomain: `string`,
     legacyHistoryImport: `boolean`,
-    allowLinker: `boolean`
+    allowLinker: `boolean`,
   },
   general: {
     allowAdFeatures: `boolean`,
     dataSource: `string`,
     queueTime: `number`,
     forceSSL: `boolean`,
-    transport: `string`
-  }
+    transport: `string`,
+  },
 }
 
 export const onRenderBody = (
@@ -37,7 +37,7 @@ export const onRenderBody = (
       rel="preconnect dns-prefetch"
       key="preconnect-google-analytics"
       href="https://www.google-analytics.com"
-    />
+    />,
   ])
 
   const excludeGAPaths = []
@@ -125,8 +125,8 @@ export const onRenderBody = (
         }
         return gaSetCommands
       }, ``)}
-      }`
+      }`,
       }}
-    />
+    />,
   ])
 }

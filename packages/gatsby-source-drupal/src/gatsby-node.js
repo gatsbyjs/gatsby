@@ -18,7 +18,7 @@ exports.sourceNodes = async (
     getNode,
     parentSpan,
     reporter,
-    webhookBody
+    webhookBody,
   },
   pluginOptions
 ) => {
@@ -30,7 +30,7 @@ exports.sourceNodes = async (
     headers,
     params,
     concurrentFileRequests,
-    disallowedLinkTypes
+    disallowedLinkTypes,
   } = pluginOptions
   const { createNode } = actions
 
@@ -38,7 +38,7 @@ exports.sourceNodes = async (
     const changesActivity = reporter.activityTimer(
       `loading Drupal content changes`,
       {
-        parentSpan
+        parentSpan,
       }
     )
     changesActivity.start()
@@ -72,7 +72,7 @@ exports.sourceNodes = async (
           getCache,
           getNode,
           reporter,
-          store
+          store,
         },
         pluginOptions
       )
@@ -117,7 +117,7 @@ exports.sourceNodes = async (
   const data = await axios.get(`${baseUrl}/${apiBase}`, {
     auth: basicAuth,
     headers,
-    params
+    params,
   })
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
@@ -144,7 +144,7 @@ exports.sourceNodes = async (
           d = await axios.get(url, {
             auth: basicAuth,
             headers,
-            params
+            params,
           })
         } catch (error) {
           if (error.response && error.response.status == 405) {
@@ -175,7 +175,7 @@ exports.sourceNodes = async (
 
       const result = {
         type,
-        data
+        data,
       }
 
       // eslint-disable-next-line consistent-return
@@ -201,7 +201,7 @@ exports.sourceNodes = async (
   nodes.forEach(node => {
     handleReferences(node, {
       getNode: nodes.get.bind(nodes),
-      createNodeId
+      createNodeId,
     })
   })
 
@@ -243,14 +243,14 @@ exports.onCreateDevServer = (
     cache,
     createContentDigest,
     getCache,
-    reporter
+    reporter,
   },
   pluginOptions
 ) => {
   app.use(
     `/___updatePreview/`,
     bodyParser.text({
-      type: `application/json`
+      type: `application/json`,
     }),
     async (req, res) => {
       console.warn(
@@ -279,7 +279,7 @@ exports.onCreateDevServer = (
             getCache,
             getNode,
             reporter,
-            store
+            store,
           },
           pluginOptions
         )

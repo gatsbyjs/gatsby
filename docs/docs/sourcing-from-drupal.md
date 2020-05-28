@@ -27,21 +27,21 @@ An example of how to include the `gatsby-source-drupal` plugin in your `gatsby-c
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby with Drupal`
+    title: `Gatsby with Drupal`,
   },
   plugins: [
     {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
-        apiBase: `api`
-      }
+        apiBase: `api`,
+      },
     },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: `UA-93349937-2`
-      }
+        trackingId: `UA-93349937-2`,
+      },
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-glamor`,
@@ -50,10 +50,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography.js`
-      }
-    }
-  ]
+        pathToConfigModule: `src/utils/typography.js`,
+      },
+    },
+  ],
 }
 ```
 

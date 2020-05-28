@@ -2,7 +2,7 @@ import { actions } from "../actions"
 import { babelrcReducer } from "../reducers/babelrc"
 import {
   prepareOptions,
-  mergeConfigItemOptions
+  mergeConfigItemOptions,
 } from "../../utils/babel-loader-helpers"
 
 describe(`Babelrc actions/reducer`, () => {
@@ -117,7 +117,7 @@ describe(`Babelrc actions/reducer`, () => {
       items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
       itemToMerge: { options: { wat: 2 }, file: { resolved: `hi` } },
       type: `plugin`,
-      babel
+      babel,
     })
     expect(babel.createConfigItem.mock.calls).toMatchSnapshot()
 
@@ -126,7 +126,7 @@ describe(`Babelrc actions/reducer`, () => {
         items: [{ options: { wat: 1 }, file: { resolved: `hi` } }],
         itemToMerge: { options: { wat: 2 }, file: { resolved: `hi2` } },
         type: `plugin`,
-        babel
+        babel,
       })
     ).toMatchSnapshot()
   })

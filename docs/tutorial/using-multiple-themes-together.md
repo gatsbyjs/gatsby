@@ -47,28 +47,28 @@ module.exports = {
     social: [
       {
         name: `Twitter`,
-        url: `https://twitter.com/gatsbyjs`
+        url: `https://twitter.com/gatsbyjs`,
       },
       {
         name: `GitHub`,
-        url: `https://github.com/gatsbyjs`
-      }
-    ]
+        url: `https://github.com/gatsbyjs`,
+      },
+    ],
   },
   plugins: [
     {
       resolve: `gatsby-theme-blog`,
       options: {
-        basePath: `/blog`
-      }
+        basePath: `/blog`,
+      },
     },
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        basePath: `/notes`
-      }
-    }
-  ]
+        basePath: `/notes`,
+      },
+    },
+  ],
 }
 ```
 
@@ -197,10 +197,10 @@ export default merge(defaultTheme, {
       dark: {
         background: "indigo",
         text: "ghostwhite",
-        primary: "gold"
-      }
-    }
-  }
+        primary: "gold",
+      },
+    },
+  },
 })
 ```
 
@@ -228,16 +228,16 @@ module.exports = {
     {
       resolve: `gatsby-theme-blog`,
       options: {
-        basePath: `/`
-      }
+        basePath: `/`,
+      },
     },
     {
       resolve: `gatsby-theme-notes`,
       options: {
-        basePath: `/notes`
-      }
-    }
-  ]
+        basePath: `/notes`,
+      },
+    },
+  ],
 }
 ```
 
@@ -270,21 +270,21 @@ module.exports = {
     menuLinks: [
       {
         name: `Blog`,
-        url: `/`
+        url: `/`,
       },
       {
         name: `Notes`,
-        url: `/notes`
-      }
+        url: `/notes`,
+      },
     ],
     // highlight-end
     social: [
       // ...social array is unchanged.
-    ]
+    ],
   },
   plugins: [
     // ...plugins array is unchanged.
-  ]
+  ],
 }
 ```
 
@@ -314,7 +314,7 @@ export default function Navigation() {
   return (
     <nav
       css={css({
-        py: 2 // Short form for paddingTop and paddingBottom
+        py: 2, // Short form for paddingTop and paddingBottom
       })}
     >
       <ul
@@ -322,7 +322,7 @@ export default function Navigation() {
           display: `flex`,
           listStyle: `none`,
           margin: 0,
-          padding: 0
+          padding: 0,
         })}
       >
         {navLinks.map(link => (
@@ -330,8 +330,8 @@ export default function Navigation() {
             css={css({
               marginRight: 2,
               ":last-of-type": {
-                marginRight: 0
-              }
+                marginRight: 0,
+              },
             })}
           >
             <Styled.a
@@ -340,8 +340,8 @@ export default function Navigation() {
                 fontWeight: `bold`,
                 textDecoration: `none`,
                 ":hover": {
-                  textDecoration: `underline`
-                }
+                  textDecoration: `underline`,
+                },
               })}
               as={Link}
               to={link.url}
@@ -386,7 +386,7 @@ export default function Header() {
           maxWidth: `container`,
           mx: `auto`,
           px: 3,
-          pt: 4
+          pt: 4,
         })}
       >
         <Navigation /> // highlight-line

@@ -320,8 +320,8 @@ module.exports = {
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`, // highlight-line
-    siteUrl: `https://www.gatsbyjs.org`
-  }
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 
@@ -344,8 +344,8 @@ module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
     // highlight-next-line
-    siteUrl: `https://www.gatsbyjs.org`
-  }
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
 }
 ```
 
@@ -369,8 +369,8 @@ module.exports = {
   // highlight-start
   siteMetadata: {
     title: `GatsbyJS`,
-    siteUrl: `https://www.gatsbyjs.org`
-  }
+    siteUrl: `https://www.gatsbyjs.org`,
+  },
   // highlight-end
 }
 ```

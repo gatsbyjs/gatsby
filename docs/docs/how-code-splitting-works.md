@@ -15,7 +15,7 @@ exports.components = {
   "component--src-blog-js": () =>
     import(
       "/home/site/src/blog.js" /* webpackChunkName: "component---src-blog-js" */
-    )
+    ),
   // more components
 }
 ```

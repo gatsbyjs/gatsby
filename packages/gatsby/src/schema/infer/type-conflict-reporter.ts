@@ -22,7 +22,7 @@ const formatValue = (value: unknown): string => {
     return util.inspect(value, {
       colors: true,
       depth: 0,
-      breakLength: Infinity
+      breakLength: Infinity,
     })
   }
 
@@ -66,7 +66,7 @@ class TypeConflictEntry {
   addExample({ value, type, parent }: ITypeConflictExample): void {
     this.types.set(type, {
       value,
-      description: parent?.internal?.description ?? ``
+      description: parent?.internal?.description ?? ``,
     })
   }
 
@@ -80,9 +80,9 @@ class TypeConflictEntry {
       `${this.selector}:${sortedByTypeName
         .map(
           ([typeName, { value, description }]) =>
-            `\n - type: ${typeName}\n   value: ${formatValue(
-              value
-            )}${description && `\n   source: ${description}`}`
+            `\n - type: ${typeName}\n   value: ${formatValue(value)}${
+              description && `\n   source: ${description}`
+            }`
         )
         .join(``)}`
     )

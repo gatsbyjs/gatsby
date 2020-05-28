@@ -25,7 +25,7 @@ Then add it to your project's `gatsby-config.js` file:
 ```javascript:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Your Site Name`
+    title: `Your Site Name`,
   },
   plugins: [
     // highlight-start
@@ -33,11 +33,11 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `src`,
-        path: `${__dirname}/src/`
-      }
-    }
+        path: `${__dirname}/src/`,
+      },
+    },
     // highlight-end
-  ]
+  ],
 }
 ```
 

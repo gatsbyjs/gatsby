@@ -91,8 +91,8 @@ exports.onInstallPlugin = async ({ prompt }, existingConfig) => {
       // This would match the config option name.
       name: "apiKey",
       message: "API key for <source>",
-      type: "input"
-    }
+      type: "input",
+    },
   ]
 
   // Ask for the input.
@@ -105,7 +105,7 @@ exports.onInstallPlugin = async ({ prompt }, existingConfig) => {
   // NOTE: This would probably need some thought (e.g. how do we delete options?)
   return {
     ...existingConfig,
-    ...updatedConfig
+    ...updatedConfig,
   }
 }
 ```

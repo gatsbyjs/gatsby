@@ -11,11 +11,11 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
       node = {
         id: `foo`,
         extension: `js`,
-        internal: {}
+        internal: {},
       }
       actions = {
         createNode: jest.fn(),
-        createParentChildLink: jest.fn()
+        createParentChildLink: jest.fn(),
       }
       loadNodeContent = jest.fn().mockReturnValue(`
         import React from "react"
@@ -46,11 +46,11 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         await onCreateNode({
           node: {
             ...node,
-            extension
+            extension,
           },
           actions,
           loadNodeContent,
-          createContentDigest
+          createContentDigest,
         })
         expect(loadNodeContent).toBeCalled()
       }
@@ -60,11 +60,11 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
       await onCreateNode({
         node: {
           ...node,
-          extension: `csv`
+          extension: `csv`,
         },
         actions,
         loadNodeContent,
-        createContentDigest
+        createContentDigest,
       })
       expect(loadNodeContent).not.toBeCalled()
     })
@@ -74,7 +74,7 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         node,
         actions,
         loadNodeContent,
-        createContentDigest
+        createContentDigest,
       })
       expect(actions.createNode).toBeCalled()
       expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
@@ -95,7 +95,7 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         node,
         actions,
         loadNodeContent,
-        createContentDigest
+        createContentDigest,
       })
       expect(actions.createNode).toBeCalled()
       expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
@@ -108,7 +108,7 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         node,
         actions,
         loadNodeContent,
-        createContentDigest
+        createContentDigest,
       })
       expect(actions.createNode.mock.calls[0][0].fileAbsolutePath).toEqual(
         node.absolutePath

@@ -21,7 +21,7 @@ class FeatureComparison extends Component {
     const {
       pageContext: { options, featureType },
       location,
-      data
+      data,
     } = this.props
     const optionsDisplay = options.map(o => o.display)
     const titleString = `Comparison of Gatsby vs ${optionsDisplay.join(` vs `)}`

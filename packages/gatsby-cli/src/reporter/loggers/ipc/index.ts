@@ -54,7 +54,7 @@ export const initializeIPCLogger = (): void => {
 
     process.send({
       type: Actions.LogAction,
-      action: sanitizedAction
+      action: sanitizedAction,
     })
   })
 }

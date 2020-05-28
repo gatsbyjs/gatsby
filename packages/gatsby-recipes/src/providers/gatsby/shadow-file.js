@@ -40,7 +40,7 @@ const splitId = id => {
   }
   return {
     theme: slash(theme),
-    filePath: slash(filePath)
+    filePath: slash(filePath),
   }
 }
 exports.splitId = splitId
@@ -77,7 +77,7 @@ const read = async ({ root }, id) => {
     id,
     theme,
     path: id,
-    contents
+    contents,
   }
 
   resource._message = message(resource)
@@ -95,7 +95,7 @@ const schema = {
   theme: Joi.string(),
   path: Joi.string(),
   contents: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 module.exports.schema = schema
 module.exports.validate = resource =>
@@ -126,7 +126,7 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
     id,
     theme,
     path: filePath,
-    contents: newContents
+    contents: newContents,
   }
 
   const diff = await getDiff(currentResource.contents || ``, newContents)
@@ -138,6 +138,6 @@ module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {
     diff,
     currentState: currentResource,
     newState: newResource,
-    describe: `Shadow ${filePath} from the theme ${theme}`
+    describe: `Shadow ${filePath} from the theme ${theme}`,
   }
 }

@@ -17,7 +17,7 @@ including resizing, cropping, and creating responsive images.
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`]
+  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`],
 }
 ```
 
@@ -53,10 +53,10 @@ module.exports = {
       resolve: `gatsby-transformer-sharp`,
       options: {
         // The option defaults to true
-        checkSupportedExtensions: false
-      }
-    }
-  ]
+        checkSupportedExtensions: false,
+      },
+    },
+  ],
 }
 ```
 

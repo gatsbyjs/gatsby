@@ -49,8 +49,8 @@ const resolveTheme = async (
           themeName,
           configFilePath: configFileThatDeclaredTheme,
           pathToLocalTheme,
-          nodeResolutionPaths
-        }
+          nodeResolutionPaths,
+        },
       })
     }
   }
@@ -72,7 +72,7 @@ const resolveTheme = async (
     themeSpec,
     themeDir,
     parentDir: rootDir,
-    configFilePath
+    configFilePath,
   }
 }
 
@@ -101,7 +101,7 @@ const processTheme = (
       return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
     }).then(arr =>
       arr.concat([
-        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir }
+        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
       ])
     )
   } else {
@@ -144,12 +144,12 @@ module.exports = async (
               return {
                 resolve: typeof plugin === `string` ? plugin : plugin.resolve,
                 options: plugin.options || {},
-                parentDir: themeDir
+                parentDir: themeDir,
               }
             }),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-            { resolve: themeName, options: themeSpec.options || {}, parentDir }
-          ]
+            { resolve: themeName, options: themeSpec.options || {}, parentDir },
+          ],
         }
       }
     )
@@ -163,7 +163,7 @@ module.exports = async (
       .then(newConfig => {
         return {
           config: mergeGatsbyConfig(newConfig, config),
-          themes: themesA
+          themes: themesA,
         }
       })
   )

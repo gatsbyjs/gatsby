@@ -26,7 +26,7 @@ const getBadExports = (plugin, pluginAPIKeys, apis) => {
       return {
         exportName: e,
         pluginName: plugin.name,
-        pluginVersion: plugin.version
+        pluginVersion: plugin.version,
       }
     })
   )
@@ -37,7 +37,7 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
   const entries = badExports.map(ex => {
     return {
       ...ex,
-      api: latestAPIs[exportType][ex.exportName]
+      api: latestAPIs[exportType][ex.exportName],
     }
   })
 
@@ -84,18 +84,18 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
     fixes,
     // note: this is a fallback if gatsby-cli is not updated with structured error
     sourceMessage: [
-      `Your plugins must export known APIs from their gatsby-node.js.`
+      `Your plugins must export known APIs from their gatsby-node.js.`,
     ]
       .concat(errors)
       .concat(
         fixes.length > 0 && [
           `\n`,
           `Some of the following may help fix the error(s):`,
-          ...fixes
+          ...fixes,
         ]
       )
       .filter(Boolean)
-      .join(`\n`)
+      .join(`\n`),
   }
 }
 
@@ -117,7 +117,7 @@ const handleBadExports = async ({ currentAPIs, badExports }) => {
         )
         reporter.error({
           id: `11329`,
-          context
+          context,
         })
       }
     })
@@ -132,7 +132,7 @@ const collatePluginAPIs = ({ currentAPIs, flattenedPlugins }) => {
   const badExports = {
     node: [],
     browser: [],
-    ssr: []
+    ssr: [],
   }
 
   flattenedPlugins.forEach(plugin => {
@@ -146,7 +146,7 @@ const collatePluginAPIs = ({ currentAPIs, flattenedPlugins }) => {
     const pluginNodeExports = resolveModuleExports(
       `${plugin.resolve}/gatsby-node`,
       {
-        mode: `require`
+        mode: `require`,
       }
     )
     const pluginBrowserExports = resolveModuleExports(
@@ -239,7 +239,7 @@ function warnOnIncompatiblePeerDependency(name, packageJSON) {
   if (
     gatsbyPeerDependency &&
     !semver.satisfies(gatsbyVersion, gatsbyPeerDependency, {
-      includePrerelease: true
+      includePrerelease: true,
     })
   ) {
     reporter.warn(
@@ -252,5 +252,5 @@ module.exports = {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
-  warnOnIncompatiblePeerDependency
+  warnOnIncompatiblePeerDependency,
 }

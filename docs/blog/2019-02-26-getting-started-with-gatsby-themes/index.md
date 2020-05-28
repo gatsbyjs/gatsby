@@ -122,15 +122,15 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {}
+      options: {},
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: path.join(__dirname, `src/pages`)
-      }
-    }
-  ]
+        path: path.join(__dirname, `src/pages`),
+      },
+    },
+  ],
 }
 ```
 
@@ -138,7 +138,7 @@ Lastly, you're going to want to add a _gatsby-config.js_ file to your _site_ dir
 
 ```javascript:title=site/gatsby-config.js
 module.exports = {
-  plugins: [`theme`]
+  plugins: [`theme`],
 }
 ```
 
@@ -231,7 +231,7 @@ export default function Layout({ children }) {
       style={{
         // Layout styling
         margin: `10%`,
-        backgroundColor: `#fafafa`
+        backgroundColor: `#fafafa`,
       }}
     >
       {children}
@@ -252,18 +252,18 @@ module.exports = {
       options: {
         // highlight-start
         defaultLayouts: {
-          default: require.resolve(`./src/components/layout.js`)
-        }
+          default: require.resolve(`./src/components/layout.js`),
+        },
         // highlight-end
-      }
+      },
     },
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: path.join(__dirname, `src/pages`)
-      }
-    }
-  ]
+        path: path.join(__dirname, `src/pages`),
+      },
+    },
+  ],
 }
 ```
 
@@ -278,7 +278,7 @@ export default function Header({ children }) {
       style={{
         // Header Specific Styling //
         padding: "10px",
-        backgroundColor: "blue"
+        backgroundColor: "blue",
       }}
     >
       {children}

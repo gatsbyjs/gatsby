@@ -11,7 +11,7 @@ function exec(command: string): string {
  * Fallback if child process fails to receive CPU count
  */
 function fallbackToNodeJSCheck(): number {
-  const cores = os.cpus().filter(function(cpu, index) {
+  const cores = os.cpus().filter(function (cpu, index) {
     const hasHyperthreading = cpu.model.includes(`Intel`)
     const isOdd = index % 2 === 1
     return !hasHyperthreading || isOdd

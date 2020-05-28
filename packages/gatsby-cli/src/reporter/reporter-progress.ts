@@ -35,7 +35,7 @@ export const createProgressReporter = ({
   start,
   total,
   span,
-  reporter
+  reporter,
 }: ICreateProgressReporterArguments): IProgressReporter => {
   let lastUpdateTime = 0
   let unflushedProgress = 0
@@ -64,14 +64,14 @@ export const createProgressReporter = ({
         text,
         type: ActivityTypes.Progress,
         current: start,
-        total
+        total,
       })
     },
 
     setStatus(statusText: string): void {
       reporterActions.setActivityStatusText({
         id,
-        statusText
+        statusText,
       })
     },
 
@@ -87,7 +87,7 @@ export const createProgressReporter = ({
       span.finish()
 
       reporterActions.setActivityErrored({
-        id
+        id,
       })
 
       return reporter.panicOnBuild(errorMeta, error)
@@ -98,7 +98,7 @@ export const createProgressReporter = ({
 
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Failed
+        status: ActivityStatuses.Failed,
       })
 
       return reporter.panic(errorMeta, error)
@@ -109,7 +109,7 @@ export const createProgressReporter = ({
       span.finish()
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Success
+        status: ActivityStatuses.Success,
       })
     },
 
@@ -119,7 +119,7 @@ export const createProgressReporter = ({
       span.finish()
       reporterActions.endActivity({
         id,
-        status: ActivityStatuses.Success
+        status: ActivityStatuses.Success,
       })
     },
 
@@ -128,6 +128,6 @@ export const createProgressReporter = ({
       updateProgress()
     },
 
-    span
+    span,
   }
 }

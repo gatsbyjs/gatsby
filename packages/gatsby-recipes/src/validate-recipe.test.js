@@ -12,7 +12,7 @@ describe(`validate module validates recipes with resource declarations`, () => {
   it(`returns empty array if there's no errors`, () => {
     const recipe = [
       { File: [{ path: `yo.md`, content: `pizza` }] },
-      { NPMPackage: [{ name: `wee-package` }] }
+      { NPMPackage: [{ name: `wee-package` }] },
     ]
     const validationResponse = validateRecipe(recipe)
     expect(validationResponse).toHaveLength(0)

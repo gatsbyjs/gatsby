@@ -46,9 +46,9 @@ npm install --save gatsby-plugin-manifest
         // An optional attribute which provides support for CORS check.
         // If you do not provide a crossOrigin option, it will skip CORS for manifest.
         // Any invalid keyword or empty string defaults to `anonymous`
-        crossOrigin: `use-credentials`
-      }
-    }
+        crossOrigin: `use-credentials`,
+      },
+    },
   ]
 }
 ```

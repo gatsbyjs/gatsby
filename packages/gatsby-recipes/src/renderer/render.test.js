@@ -36,7 +36,7 @@ test(`renders to a plan`, async () => {
   `)
   expect(result[1]).toMatchInlineSnapshot(
     {
-      currentState: expect.stringMatching(/gatsby@[0-9.]+/)
+      currentState: expect.stringMatching(/gatsby@[0-9.]+/),
     },
     `
     Object {

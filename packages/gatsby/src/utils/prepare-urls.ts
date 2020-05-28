@@ -19,14 +19,14 @@ export function prepareUrls(
       protocol,
       hostname,
       port,
-      pathname: `/`
+      pathname: `/`,
     })
   const prettyPrintUrl = (hostname: string): string =>
     url.format({
       protocol,
       hostname,
       port: chalk.bold(String(port)),
-      pathname: `/`
+      pathname: `/`,
     })
 
   const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
@@ -67,6 +67,6 @@ export function prepareUrls(
     lanUrlForConfig,
     lanUrlForTerminal,
     localUrlForTerminal,
-    localUrlForBrowser
+    localUrlForBrowser,
   }
 }

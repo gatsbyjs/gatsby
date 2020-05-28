@@ -6,7 +6,7 @@ import report from "gatsby-cli/lib/reporter"
 import { parseTypeDef } from "../../schema/types/type-defs"
 import {
   GraphQLFieldExtensionDefinition,
-  reservedExtensionNames
+  reservedExtensionNames,
 } from "../../schema/extensions"
 import { GatsbyGraphQLType } from "../../schema/types/type-builders"
 import {
@@ -18,7 +18,7 @@ import {
   ICreateFieldExtension,
   IPrintTypeDefinitions,
   ICreateResolverContext,
-  IGatsbyPluginContext
+  IGatsbyPluginContext,
 } from "../types"
 
 type RestrictionActionNames =
@@ -55,7 +55,7 @@ export const actions = {
       type: `ADD_THIRD_PARTY_SCHEMA`,
       plugin,
       traceId,
-      payload: schema
+      payload: schema,
     }
   },
 
@@ -215,7 +215,7 @@ export const actions = {
       traceId,
       payload: Array.isArray(types)
         ? types.map(parseTypeDef)
-        : parseTypeDef(types)
+        : parseTypeDef(types),
     }
   },
 
@@ -288,7 +288,7 @@ export const actions = {
         type: `CREATE_FIELD_EXTENSION`,
         plugin,
         traceId,
-        payload: { name, extension }
+        payload: { name, extension },
       })
     }
   },
@@ -320,7 +320,7 @@ export const actions = {
       path = `schema.gql`,
       include,
       exclude,
-      withFieldTypes = true
+      withFieldTypes = true,
     }: {
       path?: string
       include?: { types?: Array<string>; plugins?: Array<string> }
@@ -338,8 +338,8 @@ export const actions = {
         path,
         include,
         exclude,
-        withFieldTypes
-      }
+        withFieldTypes,
+      },
     }
   },
 
@@ -394,10 +394,10 @@ export const actions = {
         type: `CREATE_RESOLVER_CONTEXT`,
         plugin,
         traceId,
-        payload
+        payload,
       })
     }
-  }
+  },
 }
 
 const withDeprecationWarning = (
@@ -498,20 +498,20 @@ const mapAvailableActionsToAPIs = (
 
 export const availableActionsByAPI = mapAvailableActionsToAPIs({
   createFieldExtension: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`]
+    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
   },
   createTypes: {
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`]
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
   createResolverContext: {
-    [ALLOWED_IN]: [`createSchemaCustomization`]
+    [ALLOWED_IN]: [`createSchemaCustomization`],
   },
   addThirdPartySchema: {
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`]
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
   },
   printTypeDefinitions: {
-    [ALLOWED_IN]: [`createSchemaCustomization`]
-  }
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+  },
 })

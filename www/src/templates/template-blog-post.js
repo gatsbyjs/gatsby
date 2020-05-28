@@ -19,7 +19,7 @@ class BlogPostTemplate extends React.Component {
   render() {
     const {
       pageContext: { prev, next },
-      data: { mdx: post }
+      data: { mdx: post },
     } = this.props
     const BioLine = ({ children }) => (
       <p
@@ -27,7 +27,7 @@ class BlogPostTemplate extends React.Component {
           color: `textMuted`,
           fontFamily: `heading`,
           lineHeight: `dense`,
-          m: 0
+          m: 0,
         }}
       >
         {children}
@@ -56,8 +56,8 @@ class BlogPostTemplate extends React.Component {
                   mb: 5,
                   [mediaQueries.md]: {
                     mt: 3,
-                    mb: 9
-                  }
+                    mb: 9,
+                  },
                 }}
               >
                 <div css={{ flex: `0 0 auto` }}>
@@ -79,7 +79,7 @@ class BlogPostTemplate extends React.Component {
                       sx={{
                         fontSize: 3,
                         mb: 1,
-                        color: `link.color`
+                        color: `link.color`,
                       }}
                     >
                       <span
@@ -88,7 +88,7 @@ class BlogPostTemplate extends React.Component {
                             `1px solid ${t.colors.link.border}`,
                           transition: t =>
                             `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
-                          "&:hover": { borderColor: `link.hoverBorder` }
+                          "&:hover": { borderColor: `link.hoverBorder` },
                         }}
                       >
                         {post.frontmatter.author.id}
@@ -120,8 +120,8 @@ class BlogPostTemplate extends React.Component {
                   lineHeight: `dense`,
                   fontSize: [6, 7, 8, 9, 11],
                   [mediaQueries.lg]: {
-                    mb: 8
-                  }
+                    mb: 8,
+                  },
                 }}
               >
                 {post.frontmatter.title}
@@ -133,8 +133,8 @@ class BlogPostTemplate extends React.Component {
                       mt: 8,
                       mb: 12,
                       [mediaQueries.lg]: {
-                        ml: `-8em`
-                      }
+                        ml: `-8em`,
+                      },
                     }}
                   >
                     <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
@@ -163,7 +163,7 @@ class BlogPostTemplate extends React.Component {
             borderTop: t => `1px solid ${t.colors.ui.border}`,
             mt: 9,
             [mediaQueries.md]: { pt: 5 },
-            [mediaQueries.lg]: { pt: 7 }
+            [mediaQueries.lg]: { pt: 7 },
           }}
         >
           <Container>

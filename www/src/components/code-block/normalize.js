@@ -10,7 +10,7 @@ const HIDE_DIRECTIVE = createDirectiveRegExp(`hide`)
 
 const END_DIRECTIVE = {
   highlight: /highlight-end/,
-  hide: /hide-end/
+  hide: /hide-end/,
 }
 
 const stripComment = line =>
@@ -49,7 +49,7 @@ const getInitialFilter = (className, split) => {
     return split.map((line, index) => {
       return {
         code: line,
-        highlighted: !!lookup[index]
+        highlighted: !!lookup[index],
       }
     })
   }
@@ -85,7 +85,7 @@ export default (content, className = ``) => {
                   if (code) {
                     merged.push({
                       code,
-                      highlighted: true
+                      highlighted: true,
                     })
                   }
                   return merged
@@ -101,7 +101,7 @@ export default (content, className = ``) => {
             if (keyword === `highlight` && code) {
               filtered.push({
                 code,
-                highlighted: true
+                highlighted: true,
               })
             }
             break
@@ -112,17 +112,17 @@ export default (content, className = ``) => {
               filtered = filtered.concat(
                 [
                   {
-                    code
+                    code,
                   },
                   {
                     code: stripComment(split[i + 1]),
-                    highlighted: true
-                  }
+                    highlighted: true,
+                  },
                 ].filter(line => line.code)
               )
             } else if (keyword === `hide` && code) {
               filtered.push({
-                code
+                code,
               })
             }
             i += 1
@@ -134,7 +134,7 @@ export default (content, className = ``) => {
         }
       } else {
         filtered.push({
-          code: line
+          code: line,
         })
       }
     }
@@ -150,6 +150,6 @@ export default (content, className = ``) => {
         lookup[index] = true
       }
       return lookup
-    }, {})
+    }, {}),
   ]
 }

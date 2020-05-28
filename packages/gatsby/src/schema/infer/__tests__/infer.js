@@ -23,15 +23,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
-    }
+    },
   }
 })
 const report = require(`gatsby-cli/lib/reporter`)
@@ -51,12 +51,12 @@ const makeNodes = () => [
     anArray: [1, 2, 3, 4],
     aNestedArray: [
       [1, 2, 3, 4],
-      [5, 6, 7, 8]
+      [5, 6, 7, 8],
     ],
     anObjectArray: [
       { aString: `some string`, aNumber: 2, aBoolean: true },
       { aString: `some string`, aNumber: 2, anArray: [1, 2] },
-      { anotherObjectArray: [{ bar: 10 }] }
+      { anotherObjectArray: [{ bar: 10 }] },
     ],
     anObjectArrayWithNull: [{ anotherObjectArray: [{ baz: `quz` }] }, null],
     deepObject: {
@@ -64,16 +64,16 @@ const makeNodes = () => [
       deepObject: {
         level: 2,
         deepObject: {
-          level: 3
-        }
-      }
+          level: 3,
+        },
+      },
     },
     "with space": 1,
     "with-hyphen": 2,
     "with resolver": `1012-11-01`,
     123: 42,
     456: {
-      testingTypeNameCreation: true
+      testingTypeNameCreation: true,
     },
     aBoolean: true,
     externalUrl: `https://example.com/awesome.jpg`,
@@ -81,8 +81,8 @@ const makeNodes = () => [
     frontmatter: {
       date: `1012-11-01`,
       title: `The world of dash and adventure`,
-      blue: 100
-    }
+      blue: 100,
+    },
   },
   {
     id: `2`,
@@ -101,9 +101,9 @@ const makeNodes = () => [
     frontmatter: {
       date: `1984-10-12`,
       title: `The world of slash and adventure`,
-      blue: 10010
-    }
-  }
+      blue: 10010,
+    },
+  },
 ]
 
 const addNodes = nodes => {
@@ -128,7 +128,7 @@ describe(`Inference states`, () => {
       parent: null,
       children: [],
       foo: `bar`,
-      internal: { type: `Test` }
+      internal: { type: `Test` },
     }
   }
 
@@ -142,7 +142,7 @@ describe(`Inference states`, () => {
       const { inferenceMetadata } = store.getState()
       expect(inferenceMetadata).toEqual({
         step: `initialBuild`,
-        typeMap: {}
+        typeMap: {},
       })
     })
 
@@ -192,8 +192,8 @@ describe(`Inference states`, () => {
           type: `BUILD_TYPE_METADATA`,
           payload: {
             typeName: `Test`,
-            nodes: [node()]
-          }
+            nodes: [node()],
+          },
         })
         const { inferenceMetadata } = store.getState()
         expect(inferenceMetadata.step).toEqual(state)
@@ -208,9 +208,9 @@ describe(`Inference states`, () => {
           payload: buildObjectType({
             name: `Test`,
             extensions: {
-              infer: false
-            }
-          })
+              infer: false,
+            },
+          }),
         })
         const { inferenceMetadata } = store.getState()
         expect(inferenceMetadata.step).toEqual(state)
@@ -236,12 +236,12 @@ describe(`GraphQL type inference`, () => {
       const extension = builtInFieldExtensions[name]
       store.dispatch({
         type: `CREATE_FIELD_EXTENSION`,
-        payload: { name, extension }
+        payload: { name, extension },
       })
     })
     const {
       schemaCustomization: { fieldExtensions },
-      inferenceMetadata
+      inferenceMetadata,
     } = store.getState()
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
@@ -253,7 +253,7 @@ describe(`GraphQL type inference`, () => {
       typeMapping: [],
       typeConflictReporter,
       inferenceMetadata,
-      ...(buildSchemaArgs || {})
+      ...(buildSchemaArgs || {}),
     })
     return { schema, schemaComposer }
   }
@@ -300,7 +300,7 @@ describe(`GraphQL type inference`, () => {
 
   it(`filters out null example values`, async () => {
     const nodes = [
-      { foo: null, bar: `baz`, internal: { type: `Test` }, id: `1` }
+      { foo: null, bar: `baz`, internal: { type: `Test` }, id: `1` },
     ]
     const result = await getQueryResult(
       nodes,
@@ -329,7 +329,7 @@ describe(`GraphQL type inference`, () => {
   it(`prefers float when multiple number types`, async () => {
     const nodes = [
       { number: 1.1, internal: { type: `Test` }, id: `1` },
-      { number: 1, internal: { type: `Test` }, id: `2` }
+      { number: 1, internal: { type: `Test` }, id: `2` },
     ]
     const result = await getQueryResult(
       nodes,
@@ -376,8 +376,8 @@ describe(`GraphQL type inference`, () => {
         foo: [undefined, null, null],
         bar: `baz`,
         internal: { type: `Test` },
-        id: `1`
-      }
+        id: `1`,
+      },
     ]
     const result = await getQueryResult(
       nodes,
@@ -396,7 +396,7 @@ describe(`GraphQL type inference`, () => {
     const nodes = [
       { sparse: [null, true], internal: { type: `Test` }, id: `1` },
       { sparse: [null], internal: { type: `Test` }, id: `2` },
-      { sparse: null, internal: { type: `Test` }, id: `3` }
+      { sparse: null, internal: { type: `Test` }, id: `3` },
     ]
     const result = await getQueryResult(
       nodes,
@@ -412,7 +412,7 @@ describe(`GraphQL type inference`, () => {
     const nodes = [
       { sparse: [null, { foo: true }], internal: { type: `Test` }, id: `1` },
       { sparse: [null], internal: { type: `Test` }, id: `2` },
-      { sparse: null, internal: { type: `Test` }, id: `3` }
+      { sparse: null, internal: { type: `Test` }, id: `3` },
     ]
     const result = await getQueryResult(
       nodes,
@@ -440,9 +440,9 @@ describe(`GraphQL type inference`, () => {
           type: `Test`,
           id: `foo`,
           parent: `parent`,
-          children: [`bar`]
-        }
-      }
+          children: [`bar`],
+        },
+      },
     ]
     const schemaComposer = createSchemaComposer()
     const typeComposer = schemaComposer.createObjectTC(`Test`)
@@ -451,8 +451,8 @@ describe(`GraphQL type inference`, () => {
       typeComposer,
       exampleValue: getExampleValue({
         nodes,
-        ignoreFields: getNodeInterface({ schemaComposer }).getFieldNames()
-      })
+        ignoreFields: getNodeInterface({ schemaComposer }).getFieldNames(),
+      }),
     })
     const fields = typeComposer.getType().getFields()
 
@@ -467,8 +467,8 @@ describe(`GraphQL type inference`, () => {
         float: 2.5,
         longint: 3000000000,
         internal: { type: `Test` },
-        id: `1`
-      }
+        id: `1`,
+      },
     ]
     const fields = await getInferredFields(nodes)
 
@@ -516,9 +516,9 @@ describe(`GraphQL type inference`, () => {
         [`!third_field_that_needs_to_be_sanitized`]: `baz`,
         internal: {
           type: `Repro`,
-          contentDigest: `foo`
-        }
-      }
+          contentDigest: `foo`,
+        },
+      },
     ]
     const typeDefs = [
       {
@@ -530,11 +530,11 @@ describe(`GraphQL type inference`, () => {
             _another__field_that_needs_to_be_sanitized: {
               type: `String`,
               resolve: source =>
-                source[`(another)_field_that_needs_to_be_sanitized`]
-            }
-          }
-        })
-      }
+                source[`(another)_field_that_needs_to_be_sanitized`],
+            },
+          },
+        }),
+      },
     ]
 
     const result = await getQueryResult(
@@ -568,7 +568,7 @@ describe(`GraphQL type inference`, () => {
         sibling: { id: `Test` },
         sibling___NODE: `2`,
         internal: { type: `Test` },
-        id: `1`
+        id: `1`,
       },
       {
         _2invalid: 1,
@@ -576,7 +576,7 @@ describe(`GraphQL type inference`, () => {
         sibling: { id: `Test` },
         sibling___NODE: `3`,
         internal: { type: `Test` },
-        id: `2`
+        id: `2`,
       },
       {
         _2invalid: 1,
@@ -584,8 +584,8 @@ describe(`GraphQL type inference`, () => {
         sibling: { id: `Test` },
         sibling___NODE: `1`,
         internal: { type: `Test` },
-        id: `3`
-      }
+        id: `3`,
+      },
     ]
 
     const result = await getQueryResult(
@@ -604,14 +604,14 @@ describe(`GraphQL type inference`, () => {
         "2invalid": { nested: { check: 1 } },
         _2invalid: { nested: { check: true } },
         internal: { type: `Test` },
-        id: `1`
+        id: `1`,
       },
       {
         "2invalid": { nested: { check: 0 } },
         _2invalid: { nested: { check: false } },
         internal: { type: `Test` },
-        id: `2`
-      }
+        id: `2`,
+      },
     ]
 
     const result = await getQueryResult(
@@ -632,9 +632,9 @@ describe(`GraphQL type inference`, () => {
         id: `1`,
         internal: { type: `wordpress__PAGE` },
         acfFields: {
-          fooz: `bar`
-        }
-      }
+          fooz: `bar`,
+        },
+      },
     ]
     const { schema, schemaComposer } = await buildTestSchema(nodes)
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
@@ -667,7 +667,7 @@ describe(`GraphQL type inference`, () => {
     it(`Handles integer with valid date format`, async () => {
       const nodes = [
         { number: 2018, internal: { type: `Test` }, id: `1` },
-        { number: 1987, internal: { type: `Test` }, id: `2` }
+        { number: 1987, internal: { type: `Test` }, id: `2` },
       ]
       const result = await getQueryResult(
         nodes,
@@ -683,13 +683,13 @@ describe(`GraphQL type inference`, () => {
         {
           dateObject: new Date(Date.UTC(2012, 10, 5)),
           internal: { type: `Test` },
-          id: `1`
+          id: `1`,
         },
         {
           dateObject: new Date(Date.UTC(2012, 10, 5)),
           internal: { type: `Test` },
-          id: `2`
-        }
+          id: `2`,
+        },
       ]
       const result = await getQueryResult(
         nodes,
@@ -705,16 +705,16 @@ describe(`GraphQL type inference`, () => {
         {
           dateObject: [
             new Date(Date.UTC(2012, 10, 5)),
-            new Date(Date.UTC(2012, 10, 6))
+            new Date(Date.UTC(2012, 10, 6)),
           ],
           internal: { type: `Test` },
-          id: `1`
+          id: `1`,
         },
         {
           dateObject: [new Date(Date.UTC(2012, 10, 5))],
           internal: { type: `Test` },
-          id: `2`
-        }
+          id: `2`,
+        },
       ]
       const result = await getQueryResult(
         nodes,
@@ -727,7 +727,7 @@ describe(`GraphQL type inference`, () => {
 
     it(`Infers from date strings`, async () => {
       const nodes = [
-        { date: `1012-11-01`, internal: { type: `Test` }, id: `1` }
+        { date: `1012-11-01`, internal: { type: `Test` }, id: `1` },
       ]
       const result = await getQueryResult(
         nodes,
@@ -744,8 +744,8 @@ describe(`GraphQL type inference`, () => {
         {
           date: [`1012-11-01`, `10390203`],
           internal: { type: `Test` },
-          id: `1`
-        }
+          id: `1`,
+        },
       ]
       const result = await getQueryResult(
         nodes,
@@ -764,13 +764,13 @@ describe(`GraphQL type inference`, () => {
         {
           date: `1012-11-01`,
           internal: { type: `Test` },
-          id: `1`
+          id: `1`,
         },
         {
           date: `totally-not-a-date`,
           internal: { type: `Test` },
-          id: `2`
-        }
+          id: `2`,
+        },
       ]
       const result = await getQueryResult(
         nodes,
@@ -794,25 +794,25 @@ describe(`GraphQL type inference`, () => {
         label: `First node`,
         internal: { type: `MappingTest` },
         nestedField: {
-          mapTarget: `test1`
-        }
+          mapTarget: `test1`,
+        },
       },
       {
         id: `node2`,
         label: `Second node`,
         internal: { type: `MappingTest` },
         nestedField: {
-          mapTarget: `test2`
-        }
+          mapTarget: `test2`,
+        },
       },
       {
         id: `node3`,
         label: `Third node`,
         internal: { type: `MappingTest` },
         nestedField: {
-          mapTarget: `test3`
-        }
-      }
+          mapTarget: `test3`,
+        },
+      },
     ]
 
     it(`Links to single node by id`, async () => {
@@ -820,13 +820,13 @@ describe(`GraphQL type inference`, () => {
         {
           id: `1`,
           linkedOnID: `node1`,
-          internal: { type: `Test` }
+          internal: { type: `Test` },
         },
         {
           id: `2`,
           linkedOnID: `not_existing`,
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
@@ -838,8 +838,8 @@ describe(`GraphQL type inference`, () => {
         {
           typeMapping: {
             "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`
-          }
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
         }
       )
 
@@ -857,8 +857,8 @@ describe(`GraphQL type inference`, () => {
         {
           id: `3`,
           linkedOnID: [`node1`, `node2`],
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
@@ -870,8 +870,8 @@ describe(`GraphQL type inference`, () => {
         {
           typeMapping: {
             "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`
-          }
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
         }
       )
 
@@ -892,13 +892,13 @@ describe(`GraphQL type inference`, () => {
         {
           id: `1`,
           linkedOnCustomField: `test2`,
-          internal: { type: `Test` }
+          internal: { type: `Test` },
         },
         {
           id: `2`,
           linkedOnCustomField: `not_existing`,
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
@@ -910,8 +910,8 @@ describe(`GraphQL type inference`, () => {
         {
           typeMapping: {
             "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`
-          }
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
         }
       )
 
@@ -933,8 +933,8 @@ describe(`GraphQL type inference`, () => {
         {
           id: `1`,
           linkedOnCustomField: [`test3`, `test1`],
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getMappingNodes())
       const result = await getQueryResult(
         nodes,
@@ -946,8 +946,8 @@ describe(`GraphQL type inference`, () => {
         {
           typeMapping: {
             "Test.linkedOnID": `MappingTest`,
-            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`
-          }
+            "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
+          },
         }
       )
 
@@ -983,20 +983,20 @@ Object {
         id: `parent`,
         internal: { type: `File` },
         absolutePath: slash(path.resolve(dir, `index.md`)),
-        dir
+        dir,
       },
       {
         id: `file_1`,
         internal: { type: `File` },
         absolutePath: slash(path.resolve(dir, `file_1.jpg`)),
-        dir
+        dir,
       },
       {
         id: `file_2`,
         internal: { type: `File` },
         absolutePath: slash(path.resolve(dir, `file_2.txt`)),
-        dir
-      }
+        dir,
+      },
     ]
 
     it(`Links to file node`, async () => {
@@ -1005,8 +1005,8 @@ Object {
           id: `1`,
           file: `./file_1.jpg`,
           parent: `parent`,
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getFileNodes())
 
       let result = await getQueryResult(
@@ -1030,8 +1030,8 @@ Object {
           id: `1`,
           files: [`./file_1.jpg`, `./file_2.txt`],
           parent: `parent`,
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getFileNodes())
 
       let result = await getQueryResult(
@@ -1061,8 +1061,8 @@ Object {
           "file-dashed": `./file_1.jpg`,
           [fieldWithSpecialChars]: `./file_1.jpg`,
           parent: `parent`,
-          internal: { type: `Test` }
-        }
+          internal: { type: `Test` },
+        },
       ].concat(getFileNodes())
 
       const result = await getQueryResult(
@@ -1091,12 +1091,12 @@ Object {
     const getLinkedNodes = () => [
       { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
       { id: `child_2`, internal: { type: `Child` }, hair: `blonde` },
-      { id: `pet_1`, internal: { type: `Pet` }, species: `dog` }
+      { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
     ]
 
     it(`Links nodes`, async () => {
       const nodes = [
-        { linked___NODE: `child_1`, internal: { type: `Test` }, id: `1` }
+        { linked___NODE: `child_1`, internal: { type: `Test` }, id: `1` },
       ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
@@ -1115,8 +1115,8 @@ Object {
         {
           linked___NODE: [`child_1`, `child_2`],
           internal: { type: `Test` },
-          id: `1`
-        }
+          id: `1`,
+        },
       ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
@@ -1133,7 +1133,7 @@ Object {
 
     it(`Links nodes by field`, async () => {
       const nodes = [
-        { linked___NODE___hair: `brown`, internal: { type: `Test` }, id: `1` }
+        { linked___NODE___hair: `brown`, internal: { type: `Test` }, id: `1` },
       ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
@@ -1152,8 +1152,8 @@ Object {
         {
           linked___NODE___hair: [`brown`, `blonde`],
           internal: { type: `Test` },
-          id: `1`
-        }
+          id: `1`,
+        },
       ].concat(getLinkedNodes())
       const result = await getQueryResult(
         nodes,
@@ -1172,7 +1172,7 @@ Object {
       expect.assertions(1)
       try {
         await getInferredFields([
-          { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` }
+          { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` },
         ])
       } catch (e) {
         expect(e.message).toEqual(
@@ -1188,7 +1188,7 @@ Object {
       expect(async () => {
         await getInferredFields([
           { id: `baz`, internal: { type: `Bar` } },
-          { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` }
+          { linked___NODE: `baz`, internal: { type: `Test` }, id: `1` },
         ])
       }).toThrow(
         `Encountered an error trying to infer a GraphQL type ` +
@@ -1203,8 +1203,8 @@ Object {
           {
             linked___NODE: [`child_1`, `pet_1`],
             internal: { type: `Test` },
-            id: `1`
-          }
+            id: `1`,
+          },
         ].concat(getLinkedNodes())
         const result = await getQueryResult(
           nodes,
@@ -1240,13 +1240,13 @@ Object {
           {
             test___NODE: [`pet_1`, `child_1`],
             internal: { type: `Test` },
-            id: `1`
+            id: `1`,
           },
           {
             test___NODE: [`pet_1`, `child_2`],
             internal: { type: `OtherType` },
-            id: `2`
-          }
+            id: `2`,
+          },
         ].concat(getLinkedNodes())
         const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
@@ -1271,13 +1271,13 @@ Object {
           {
             test___NODE: [`pet_1`, `child_1`],
             internal: { type: `Test` },
-            id: `1`
+            id: `1`,
           },
           {
             test___NODE: [`pet_1`, `child_2`, `toy_1`],
             internal: { type: `OtherType` },
-            id: `2`
-          }
+            id: `2`,
+          },
         ].concat(getLinkedNodes())
         const { schema } = await buildTestSchema(nodes)
         const fields = schema.getType(`Test`).getFields()
@@ -1348,7 +1348,7 @@ Object {
     it(`catches conflicts and removes field`, async () => {
       const nodes = [
         { foo: `foo`, number: 1.1, internal: { type: `Test` }, id: `1` },
-        { foo: `bar`, number: `1`, internal: { type: `Test` }, id: `2` }
+        { foo: `bar`, number: `1`, internal: { type: `Test` }, id: `2` },
       ]
       const result = await getQueryResult(
         nodes,
@@ -1369,7 +1369,7 @@ Object {
     it.skip(`does not warn about provided types`, async () => {
       const nodes = [
         { foo: `foo`, number: 1.1, internal: { type: `Test` }, id: `1` },
-        { foo: `bar`, number: `1`, internal: { type: `Test` }, id: `2` }
+        { foo: `bar`, number: `1`, internal: { type: `Test` }, id: `2` },
       ]
       const result = await getQueryResult(
         nodes,

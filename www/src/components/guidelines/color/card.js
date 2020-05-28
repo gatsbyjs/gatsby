@@ -32,8 +32,8 @@ const ColorValue = ({ label, inverted, value, href }) => (
               sx={{
                 "&&": {
                   border: 0,
-                  color: inverted ? `whiteFade.80` : `blackFade.80`
-                }
+                  color: inverted ? `whiteFade.80` : `blackFade.80`,
+                },
               }}
             >
               <MdLaunch style={{ marginLeft: `0.25rem` }} />

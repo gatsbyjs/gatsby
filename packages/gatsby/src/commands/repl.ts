@@ -18,7 +18,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     babelrc,
     pages,
     components,
-    staticQueryComponents
+    staticQueryComponents,
   } = store.getState()
 
   const nodes = getNodes()
@@ -30,7 +30,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // init new repl
   const _ = repl.start({
-    prompt: `gatsby > `
+    prompt: `gatsby > `,
   })
 
   // set some globals to make life easier

@@ -66,7 +66,7 @@ for the core theme.
 
 ```js:title=gatsby-theme-blog-core/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-plugin-mdx`]
+  plugins: [`gatsby-plugin-mdx`],
 }
 ```
 
@@ -80,7 +80,7 @@ applied to the parent and focus on one possible child theme `gatsby-config.js`.
 
 ```js:title=gatsby-theme-blog/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-blog-core`, `gatsby-plugin-emotion`]
+  plugins: [`gatsby-theme-blog-core`, `gatsby-plugin-emotion`],
 }
 ```
 
@@ -90,7 +90,7 @@ by specifying only the child in their `gatsby-config.js`.
 
 ```js:title=my-site/gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-theme-blog`]
+  plugins: [`gatsby-theme-blog`],
 }
 ```
 

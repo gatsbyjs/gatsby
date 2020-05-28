@@ -14,14 +14,14 @@ const BoxWithBorder = styled(Box)(
         left: 0,
         position: `absolute`,
         right: 0,
-        top: 0
-      }
+        top: 0,
+      },
     }
 )
 
 BoxWithBorder.defaultProps = {
   borderRadius: 1,
-  position: `relative`
+  position: `relative`,
 }
 
 export default BoxWithBorder

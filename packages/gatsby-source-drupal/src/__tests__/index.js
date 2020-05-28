@@ -8,13 +8,13 @@ jest.mock(`axios`, () => {
         console.log(`Error`, e)
         return null
       }
-    }
+    },
   }
 })
 
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
-    createRemoteFileNode: jest.fn()
+    createRemoteFileNode: jest.fn(),
   }
 })
 
@@ -30,17 +30,17 @@ describe(`gatsby-source-drupal`, () => {
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
   const { objectContaining } = expect
   const actions = {
-    createNode: jest.fn(node => (nodes[node.id] = node))
+    createNode: jest.fn(node => (nodes[node.id] = node)),
   }
 
   const activity = {
     start: jest.fn(),
-    end: jest.fn()
+    end: jest.fn(),
   }
   const reporter = {
     info: jest.fn(),
     activityTimer: jest.fn(() => activity),
-    log: jest.fn()
+    log: jest.fn(),
   }
 
   const args = {
@@ -48,7 +48,7 @@ describe(`gatsby-source-drupal`, () => {
     createContentDigest,
     actions,
     reporter,
-    getNode: id => nodes[id]
+    getNode: id => nodes[id],
   }
 
   beforeAll(async () => {
@@ -69,17 +69,17 @@ describe(`gatsby-source-drupal`, () => {
   it(`Nodes contain contentDigest`, () => {
     expect(nodes[createNodeId(`file-1`)]).toEqual(
       objectContaining({
-        internal: objectContaining({ contentDigest: `contentDigest` })
+        internal: objectContaining({ contentDigest: `contentDigest` }),
       })
     )
     expect(nodes[createNodeId(`article-2`)]).toEqual(
       objectContaining({
-        internal: objectContaining({ contentDigest: `contentDigest` })
+        internal: objectContaining({ contentDigest: `contentDigest` }),
       })
     )
     expect(nodes[createNodeId(`tag-1`)]).toEqual(
       objectContaining({
-        internal: objectContaining({ contentDigest: `contentDigest` })
+        internal: objectContaining({ contentDigest: `contentDigest` }),
       })
     )
   })
@@ -126,7 +126,7 @@ describe(`gatsby-source-drupal`, () => {
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-2`),
-        createNodeId(`article-3`)
+        createNodeId(`article-3`),
       ])
     )
     expect(
@@ -134,7 +134,7 @@ describe(`gatsby-source-drupal`, () => {
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-1`),
-        createNodeId(`article-3`)
+        createNodeId(`article-3`),
       ])
     )
     expect(
@@ -147,14 +147,14 @@ describe(`gatsby-source-drupal`, () => {
       `/sites/default/files/main-image.png`,
       `/sites/default/files/secondary-image.png`,
       `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
-      `/sites/default/files/forth-image.png`
+      `/sites/default/files/forth-image.png`,
     ].map(fileUrl => new URL(fileUrl, baseUrl).href)
 
     urls.forEach(url => {
       expect(createRemoteFileNode).toBeCalledWith(
         expect.objectContaining({
           url,
-          auth: {}
+          auth: {},
         })
       )
     })
@@ -163,14 +163,14 @@ describe(`gatsby-source-drupal`, () => {
   it(`Download files with Basic Auth`, async () => {
     const basicAuth = {
       username: `user`,
-      password: `password`
+      password: `password`,
     }
     await sourceNodes(args, { baseUrl, basicAuth })
     const urls = [
       `http://fixture/sites/default/files/main-image.png`,
       `http://fixture/sites/default/files/secondary-image.png`,
       `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
-      `/sites/default/files/forth-image.png`
+      `/sites/default/files/forth-image.png`,
     ].map(fileUrl => new URL(fileUrl, baseUrl).href)
     //first call without basicAuth (no fileSystem defined)
     //(the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
@@ -178,7 +178,7 @@ describe(`gatsby-source-drupal`, () => {
       5,
       expect.objectContaining({
         url: urls[0],
-        auth: {}
+        auth: {},
       })
     )
     //2nd call with basicAuth (public: fileSystem defined)
@@ -188,8 +188,8 @@ describe(`gatsby-source-drupal`, () => {
         url: urls[1],
         auth: {
           htaccess_pass: `password`,
-          htaccess_user: `user`
-        }
+          htaccess_user: `user`,
+        },
       })
     )
     //3rd call without basicAuth (s3: fileSystem defined)
@@ -197,7 +197,7 @@ describe(`gatsby-source-drupal`, () => {
       7,
       expect.objectContaining({
         url: urls[2],
-        auth: {}
+        auth: {},
       })
     )
     //4th call with basicAuth (private: fileSystem defined)
@@ -207,8 +207,8 @@ describe(`gatsby-source-drupal`, () => {
         url: urls[3],
         auth: {
           htaccess_pass: `password`,
-          htaccess_user: `user`
-        }
+          htaccess_user: `user`,
+        },
       })
     )
   })
@@ -222,7 +222,7 @@ describe(`gatsby-source-drupal`, () => {
         it(`Relationships`, () => {
           expect(nodes[createNodeId(`article-3`)].relationships).toEqual({
             field_main_image___NODE: createNodeId(`file-1`),
-            field_tags___NODE: [createNodeId(`tag-1`)]
+            field_tags___NODE: [createNodeId(`tag-1`)],
           })
         })
         it(`Back references`, () => {
@@ -244,7 +244,7 @@ describe(`gatsby-source-drupal`, () => {
 
           await handleWebhookUpdate({
             nodeToUpdate,
-            ...args
+            ...args,
           })
         })
         it(`Attributes`, () => {
@@ -255,7 +255,7 @@ describe(`gatsby-source-drupal`, () => {
         it(`Relationships`, () => {
           // removed `field_main_image`, changed `field_tags`
           expect(nodes[createNodeId(`article-3`)].relationships).toEqual({
-            field_tags___NODE: [createNodeId(`tag-2`)]
+            field_tags___NODE: [createNodeId(`tag-2`)],
           })
         })
         it(`Back references`, () => {
@@ -289,7 +289,7 @@ describe(`gatsby-source-drupal`, () => {
 
           await handleWebhookUpdate({
             nodeToUpdate,
-            ...args
+            ...args,
           })
         })
         it(`Creates node`, () => {
@@ -326,7 +326,7 @@ describe(`gatsby-source-drupal`, () => {
     Object.keys(nodes).forEach(key => delete nodes[key])
     const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
     const filters = {
-      "node--article": `include=field_tags`
+      "node--article": `include=field_tags`,
     }
     const apiBase = `jsonapi-includes`
     await sourceNodes(args, { baseUrl, apiBase, disallowedLinkTypes, filters })

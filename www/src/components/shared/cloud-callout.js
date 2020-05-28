@@ -53,7 +53,7 @@ const CloudCallout = ({ narrow = true, children }) => (
 
 CloudCallout.propTypes = {
   children: PropTypes.node.isRequired,
-  narrow: PropTypes.bool
+  narrow: PropTypes.bool,
 }
 
 export default CloudCallout

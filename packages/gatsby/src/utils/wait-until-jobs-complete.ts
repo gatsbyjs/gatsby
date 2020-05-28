@@ -17,6 +17,6 @@ export const waitUntilAllJobsComplete = (): Promise<void> => {
 
   return Promise.all([
     jobsV1Promise,
-    waitUntilAllJobsV2Complete()
+    waitUntilAllJobsV2Complete(),
   ]).then(() => {})
 }

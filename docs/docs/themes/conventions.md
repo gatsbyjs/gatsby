@@ -20,7 +20,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
   const dirs = [
     path.join(program.directory, "posts"),
     path.join(program.directory, "src/pages"),
-    path.join(program.directory, "src/data")
+    path.join(program.directory, "src/data"),
   ]
 
   dirs.forEach(dir => {
@@ -90,7 +90,7 @@ import Footer from "../footer.js"
 
 const Layout = ({ children }) => {
   const {
-    site: { siteMetadata }
+    site: { siteMetadata },
   } = useStaticQuery(
     graphql`
       query {

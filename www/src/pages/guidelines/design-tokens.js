@@ -7,13 +7,13 @@ import {
   Section,
   Columns,
   ContentColumn,
-  CopyColumn
+  CopyColumn,
 } from "../../components/guidelines/containers"
 import {
   Intro,
   PageHeading,
   SectionHeading,
-  SrOnly
+  SrOnly,
 } from "../../components/guidelines/typography"
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
@@ -27,7 +27,7 @@ const ColorExample = ({ hex, token }) => (
     <td
       css={{
         borderColor: hex,
-        verticalAlign: `middle`
+        verticalAlign: `middle`,
       }}
     >
       <code>{token}</code>
@@ -36,7 +36,7 @@ const ColorExample = ({ hex, token }) => (
       css={{
         borderColor: hex,
         verticalAlign: `middle`,
-        width: `100%`
+        width: `100%`,
       }}
     >
       {hex}
@@ -44,7 +44,7 @@ const ColorExample = ({ hex, token }) => (
     <td
       css={{
         borderColor: hex,
-        verticalAlign: `middle`
+        verticalAlign: `middle`,
       }}
     >
       <Flex alignItems="center">
@@ -56,7 +56,7 @@ const ColorExample = ({ hex, token }) => (
             backgroundColor: hex,
             height: 40,
             margin: 0,
-            width: 80
+            width: 80,
           }}
         />
       </Flex>
@@ -176,7 +176,7 @@ const DesignTokens = ({ location }) => (
             alignSelf: `flex-end`,
             display: `flex`,
             flexWrap: `wrap`,
-            overflow: `visible`
+            overflow: `visible`,
           }}
         >
           {Object.keys(theme.shadows).map((shadow, i) => (
@@ -354,7 +354,7 @@ const DesignTokens = ({ location }) => (
                       color="grey.90"
                       lineHeight="solid"
                       css={{
-                        whiteSpace: `nowrap`
+                        whiteSpace: `nowrap`,
                       }}
                     >
                       Gatsby believed in the green light, the orgastic future
@@ -447,7 +447,7 @@ const DesignTokens = ({ location }) => (
                         color="text"
                         lineHeight="solid"
                         css={{
-                          whiteSpace: `nowrap`
+                          whiteSpace: `nowrap`,
                         }}
                       >
                         Gatsby believed in the green light, the orgastic future

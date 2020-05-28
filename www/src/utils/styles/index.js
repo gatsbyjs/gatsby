@@ -7,17 +7,17 @@ import {
   radii,
   fontSizes,
   fontWeights,
-  fonts
+  fonts,
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const stripeAnimation = keyframes({
   "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `${space[7]} ${space[11]}` }
+  "100%": { backgroundPosition: `${space[7]} ${space[11]}` },
 })
 
 export const focusStyle = {
   outline: 0,
-  boxShadow: `0 0 0 2px ${colors.input.focusBoxShadow}`
+  boxShadow: `0 0 0 2px ${colors.input.focusBoxShadow}`,
 }
 
 export const buttonStyles = () => {
@@ -47,18 +47,18 @@ export const buttonStyles = () => {
         backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
         color: colors.white,
         animation: `${stripeAnimation} 2.8s linear infinite`,
-        borderColor: `gatsby`
+        borderColor: `gatsby`,
       },
       ":focus": { ...focusStyle },
       ":after": { content: `''`, display: `block` },
-      "& svg": { marginLeft: `.2em` }
+      "& svg": { marginLeft: `.2em` },
     },
     secondary: {
       borderColor: `button.secondaryBorder`,
       backgroundColor: `button.secondaryBg`,
       color: `button.secondaryText`,
-      fontWeight: `body`
-    }
+      fontWeight: `body`,
+    },
   }
 }
 
@@ -67,8 +67,8 @@ export const svgStyles = () => {
     stroke: {
       "& .svg-stroke": {
         strokeMiterlimit: 10,
-        strokeWidth: 1.5
-      }
+        strokeWidth: 1.5,
+      },
     },
     default: {
       "& .svg-stroke-dark": { stroke: `icon.neutral` },
@@ -80,7 +80,7 @@ export const svgStyles = () => {
       "& .svg-fill-background": { fill: `icon.background` },
       "& .svg-fill-light": { fill: `icon.light` },
       "& .svg-fill-accent.svg-fill-transparent": { fill: `transparent` },
-      "& .svg-fill-light.svg-fill-transparent": { fill: `transparent` }
+      "& .svg-fill-light.svg-fill-transparent": { fill: `transparent` },
     },
     active: {
       "& .svg-stroke-dark": { stroke: `icon.dark` },
@@ -92,15 +92,15 @@ export const svgStyles = () => {
       "& .svg-fill-background": { fill: `icon.background` },
       "& .svg-fill-light": { fill: `icon.lightActive` },
       "& .svg-fill-accent.svg-fill-transparent": { fill: `icon.accent` },
-      "& .svg-fill-light.svg-fill-transparent": { fill: `icon.lightActive` }
-    }
+      "& .svg-fill-light.svg-fill-transparent": { fill: `icon.lightActive` },
+    },
   }
 }
 
 // form elements
 export const formInputFocus = {
   borderColor: colors.input.focusBorder,
-  ...focusStyle
+  ...focusStyle,
 }
 
 export const formInput = {
@@ -119,22 +119,22 @@ export const formInput = {
   width: `100%`,
   "::placeholder": {
     color: colors.input.placeholder,
-    opacity: 1
+    opacity: 1,
   },
   "&:focus": {
-    ...formInputFocus
+    ...formInputFocus,
   },
   "&:disabled": {
     cursor: `not-allowed`,
-    opacity: `0.5`
-  }
+    opacity: `0.5`,
+  },
 }
 
 export const themedInputFocus = {
   bg: `themedInput.backgroundFocus`,
   boxShadow: t => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
   outline: 0,
-  width: `100%`
+  width: `100%`,
 }
 
 export const themedInput = {
@@ -146,11 +146,11 @@ export const themedInput = {
   overflow: `hidden`,
   px: 3,
   ":focus": {
-    ...themedInputFocus
+    ...themedInputFocus,
   },
   "::placeholder": {
-    color: `themedInput.placeholder`
-  }
+    color: `themedInput.placeholder`,
+  },
 }
 
 // Utilities
@@ -164,7 +164,7 @@ export const visuallyHidden = {
   padding: 0,
   position: `absolute`,
   whiteSpace: `nowrap`,
-  width: `1px`
+  width: `1px`,
 }
 
 // Layout
@@ -175,5 +175,5 @@ export const pullIntoGutter = {
   marginLeft: `-${space[6]}`,
   marginRight: `-${space[6]}`,
   paddingLeft: space[6],
-  paddingRight: space[6]
+  paddingRight: space[6],
 }

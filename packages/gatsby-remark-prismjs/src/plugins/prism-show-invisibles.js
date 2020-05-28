@@ -1,7 +1,7 @@
 const Prism = require(`prismjs`)
 
 const env = {
-  grammar: undefined
+  grammar: undefined,
 }
 
 function loadEnv(language) {
@@ -34,7 +34,7 @@ module.exports = (language = `javascript`) => {
     crlf: /\r\n/,
     lf: /\n/,
     cr: /\r/,
-    space: / /
+    space: / /,
   }
 
   /**
@@ -52,7 +52,7 @@ module.exports = (language = `javascript`) => {
         var inside = {}
         tokens[name] = {
           pattern: value,
-          inside: inside
+          inside: inside,
         }
         addInvisibles(inside)
         break
@@ -101,7 +101,7 @@ module.exports = (language = `javascript`) => {
     }
   }
 
-  Prism.hooks.add(`before-highlight`, function(env) {
+  Prism.hooks.add(`before-highlight`, function (env) {
     addInvisibles(env.grammar)
   })
   // prism-show-invisibles.js:end

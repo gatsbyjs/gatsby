@@ -93,7 +93,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
       ...page,
       matchPath,
       index,
-      score: rankRoute(matchPath)
+      score: rankRoute(matchPath),
     }
   }
 
@@ -124,7 +124,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
           createMatchPathEntry(
             {
               ...page,
-              matchPath: page.path
+              matchPath: page.path,
             },
             index
           )
@@ -233,7 +233,7 @@ const preferDefault = m => m && m.default || m
   await Promise.all([
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
-    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4))
+    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
   ])
 
   return true
@@ -242,7 +242,7 @@ const preferDefault = m => m && m.default || m
 const debouncedWriteAll = _.debounce(
   async (): Promise<void> => {
     const activity = reporter.activityTimer(`write out requires`, {
-      id: `requires-writer`
+      id: `requires-writer`,
     })
     activity.start()
     const didRequiresChange = await writeAll(store.getState())
@@ -255,7 +255,7 @@ const debouncedWriteAll = _.debounce(
   {
     // using "leading" can cause double `writeAll` call - particularly
     // when refreshing data using `/__refresh` hook.
-    leading: false
+    leading: false,
   }
 )
 

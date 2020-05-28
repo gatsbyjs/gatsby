@@ -17,7 +17,7 @@ export default function BlogPostMetadata({ post }) {
     image,
     author,
     rawDate,
-    twittercard
+    twittercard,
   } = post.frontmatter
   const { siteUrl } = useSiteMetadata()
 

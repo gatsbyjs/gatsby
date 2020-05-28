@@ -21,9 +21,7 @@ interface IRepositoryId {
 }
 
 const hash = (str: string): string =>
-  createHash(`sha256`)
-    .update(str)
-    .digest(`hex`)
+  createHash(`sha256`).update(str).digest(`hex`)
 
 export const getRepoMetadata = (url: string): IRepositoryData | null => {
   try {
@@ -58,7 +56,7 @@ const getGitRemoteWithGit = (): IRepositoryId | null => {
     if (repo) {
       return {
         repositoryId: `git:${hash(repo)}`,
-        repositoryData: getRepoMetadata(repo)
+        repositoryData: getRepoMetadata(repo),
       }
     }
   } catch (e) {
@@ -75,7 +73,7 @@ const getRepositoryFromNetlifyEnv = (): IRepositoryId | null => {
       if (repoPart) {
         return {
           repositoryId: `git:${hash(repoPart)}`,
-          repositoryData: getRepoMetadata(url)
+          repositoryData: getRepoMetadata(url),
         }
       }
     } catch (e) {

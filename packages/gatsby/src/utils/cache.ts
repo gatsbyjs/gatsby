@@ -2,7 +2,7 @@ import manager, {
   Store,
   StoreConfig,
   CachingConfig,
-  MultiCache
+  MultiCache,
 } from "cache-manager"
 import fs from "fs-extra"
 import fsStore from "cache-manager-fs-hash"
@@ -37,16 +37,16 @@ export default class Cache {
       {
         store: `memory`,
         max: MAX_CACHE_SIZE,
-        ttl: TTL
+        ttl: TTL,
       },
       {
         store: this.store,
         ttl: TTL,
         options: {
           path: this.directory,
-          ttl: TTL
-        }
-      }
+          ttl: TTL,
+        },
+      },
     ]
 
     const caches = configs.map(cache => manager.caching(cache))

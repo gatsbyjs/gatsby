@@ -12,7 +12,7 @@ exports.sourceNodes = async (
 
   const hits = await browse({
     filters: `(${buildFilter.join(` OR `)})`,
-    hitsPerPage: 1000
+    hitsPerPage: 1000,
   })
 
   await Promise.all(
@@ -39,8 +39,8 @@ exports.sourceNodes = async (
         internal: {
           type: `NPMPackageReadme`,
           mediaType: `text/markdown`,
-          content: hit.readme !== undefined ? hit.readme : ``
-        }
+          content: hit.readme !== undefined ? hit.readme : ``,
+        },
       }
       readmeNode.internal.contentDigest = createContentDigest(readmeNode)
       // Remove unneeded data
@@ -60,8 +60,8 @@ exports.sourceNodes = async (
         title: `${hit.objectID}`,
         internal: {
           type: `NPMPackage`,
-          content: hit.readme !== undefined ? hit.readme : ``
-        }
+          content: hit.readme !== undefined ? hit.readme : ``,
+        },
       }
       node.internal.contentDigest = createContentDigest(node)
       createNode(readmeNode)

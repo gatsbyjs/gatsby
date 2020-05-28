@@ -18,7 +18,7 @@ export function ProgressBar({
   message,
   current,
   total,
-  startTime
+  startTime,
 }: IProgressbarProps): JSX.Element {
   const percentage = total ? Math.round((current / total) * 100) : 0
   const terminalWidth = process.stdout.columns || 80

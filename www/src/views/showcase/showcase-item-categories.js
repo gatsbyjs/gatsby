@@ -18,12 +18,12 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
             fontWeight: `body`,
             borderBottom: `none`,
             "&:hover": {
-              color: `link.hoverColor`
-            }
-          }
+              color: `link.hoverColor`,
+            },
+          },
         }}
         to={`/showcase/?${qs.stringify({
-          filters: [c]
+          filters: [c],
         })}`}
         onClick={e => {
           e.preventDefault()

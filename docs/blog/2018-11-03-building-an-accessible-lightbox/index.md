@@ -102,7 +102,7 @@ import Img from "gatsby-image"
 
 export default class Lightbox extends Component {
   static propTypes = {
-    carImages: PropTypes.array.isRequired
+    carImages: PropTypes.array.isRequired,
   }
 
   render() {
@@ -137,9 +137,9 @@ And add the following to `gatsby-config.js`:
 module.exports = {
   /* existing config */
   plugins: [
-    `gatsby-plugin-styled-components`
+    `gatsby-plugin-styled-components`,
     /* existing plugins */
-  ]
+  ],
 }
 ```
 
@@ -159,11 +159,11 @@ const LightboxContainer = styled.div`
 
 export default class Lightbox extends Component {
   static propTypes = {
-    carImages: PropTypes.array.isRequired // eslint-disable-line
+    carImages: PropTypes.array.isRequired, // eslint-disable-line
   }
 
   static state = {
-    open: false
+    open: false,
   }
 
   render() {
@@ -214,14 +214,14 @@ const LightboxContainer = styled.div`
 
 export default class Lightbox extends Component {
   static propTypes = {
-    carImages: PropTypes.array.isRequired // eslint-disable-line
+    carImages: PropTypes.array.isRequired, // eslint-disable-line
   }
 
   constructor(props) {
     super(props)
 
     this.state = {
-      showLightbox: false
+      showLightbox: false,
     }
   }
 
@@ -292,7 +292,7 @@ const PreviewButton = styled.button`
 
 export default class Lightbox extends Component {
   static propTypes = {
-    carImages: PropTypes.array.isRequired // eslint-disable-line
+    carImages: PropTypes.array.isRequired, // eslint-disable-line
   }
 
   constructor(props) {
@@ -300,7 +300,7 @@ export default class Lightbox extends Component {
 
     this.state = {
       showLightbox: false,
-      selectedImage: null
+      selectedImage: null,
     }
   }
 

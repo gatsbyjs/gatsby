@@ -9,7 +9,7 @@ const matchers = [
   `Watch now`,
   `Register now`,
   `Gatsby Preview`,
-  `Gatsby Cloud!`
+  `Gatsby Cloud!`,
 ]
 
 const getElement = utils => utils.getByText(text => matchers.includes(text))

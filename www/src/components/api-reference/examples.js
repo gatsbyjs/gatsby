@@ -8,7 +8,7 @@ const Example = ({ example }) => (
       <code
         className="language-javascript"
         dangerouslySetInnerHTML={{
-          __html: example.highlighted
+          __html: example.highlighted,
         }}
       />
     </pre>

@@ -106,7 +106,7 @@ digraph {
    apiRunner(`sourceNodes`, {
      traceId: `initial-sourceNodes`,
      waitForCascadingActions: true,
-     parentSpan: parentSpan
+     parentSpan: parentSpan,
    })
    ```
 

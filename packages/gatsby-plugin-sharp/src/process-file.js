@@ -109,20 +109,20 @@ exports.processFile = (file, transforms, options = {}) => {
         .resize(roundedWidth, roundedHeight, {
           position: transformArgs.cropFocus,
           fit: transformArgs.fit,
-          background: transformArgs.background
+          background: transformArgs.background,
         })
         .png({
           compressionLevel: transformArgs.pngCompressionLevel,
           adaptiveFiltering: false,
-          force: transformArgs.toFormat === `png`
+          force: transformArgs.toFormat === `png`,
         })
         .webp({
           quality: transformArgs.webpQuality || transformArgs.quality,
-          force: transformArgs.toFormat === `webp`
+          force: transformArgs.toFormat === `webp`,
         })
         .tiff({
           quality: transformArgs.quality,
-          force: transformArgs.toFormat === `tiff`
+          force: transformArgs.toFormat === `tiff`,
         })
 
       // jpeg
@@ -130,7 +130,7 @@ exports.processFile = (file, transforms, options = {}) => {
         clonedPipeline = clonedPipeline.jpeg({
           quality: transformArgs.jpegQuality || transformArgs.quality,
           progressive: transformArgs.jpegProgressive,
-          force: transformArgs.toFormat === `jpg`
+          force: transformArgs.toFormat === `jpg`,
         })
       }
 
@@ -159,7 +159,7 @@ exports.processFile = (file, transforms, options = {}) => {
           pngQuality: transformArgs.pngQuality,
           quality: transformArgs.quality,
           pngCompressionSpeed: transformArgs.compressionSpeed,
-          stripMetadata: options.stripMetadata
+          stripMetadata: options.stripMetadata,
         })
         return transform
       }
@@ -207,9 +207,9 @@ const compressPng = (pipeline, outputPath, options) =>
             speed: options.pngCompressionSpeed
               ? options.pngCompressionSpeed
               : undefined,
-            strip: !!options.stripMetadata // Must be a bool
-          })
-        ]
+            strip: !!options.stripMetadata, // Must be a bool
+          }),
+        ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
@@ -221,9 +221,9 @@ const compressJpg = (pipeline, outputPath, options) =>
         plugins: [
           imageminMozjpeg({
             quality: options.jpegQuality || options.quality,
-            progressive: options.jpegProgressive
-          })
-        ]
+            progressive: options.jpegProgressive,
+          }),
+        ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )
@@ -235,9 +235,9 @@ const compressWebP = (pipeline, outputPath, options) =>
         plugins: [
           imageminWebp({
             quality: options.webpQuality || options.quality,
-            metadata: options.stripMetadata ? `none` : `all`
-          })
-        ]
+            metadata: options.stripMetadata ? `none` : `all`,
+          }),
+        ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
   )

@@ -3,16 +3,16 @@ const resolvableExtensions = () => [`.ts`, `.tsx`]
 function onCreateBabelConfig({ actions }, options) {
   actions.setBabelPreset({
     name: require.resolve(`@babel/preset-typescript`),
-    options
+    options,
   })
   actions.setBabelPlugin({
-    name: require.resolve(`@babel/plugin-proposal-optional-chaining`)
+    name: require.resolve(`@babel/plugin-proposal-optional-chaining`),
   })
   actions.setBabelPlugin({
-    name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`)
+    name: require.resolve(`@babel/plugin-proposal-nullish-coalescing-operator`),
   })
   actions.setBabelPlugin({
-    name: require.resolve(`@babel/plugin-proposal-numeric-separator`)
+    name: require.resolve(`@babel/plugin-proposal-numeric-separator`),
   })
 }
 
@@ -28,10 +28,10 @@ function onCreateWebpackConfig({ actions, loaders }) {
       rules: [
         {
           test: /\.tsx?$/,
-          use: jsLoader
-        }
-      ]
-    }
+          use: jsLoader,
+        },
+      ],
+    },
   })
 }
 

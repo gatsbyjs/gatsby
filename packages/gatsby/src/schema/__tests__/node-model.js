@@ -39,21 +39,21 @@ describe(`NodeModel`, () => {
     `
       store.dispatch({
         type: `CREATE_TYPES`,
-        payload: types
+        payload: types,
       })
 
       await build({})
       let schemaComposer
       ;({
         schemaCustomization: { composer: schemaComposer },
-        schema
+        schema,
       } = store.getState())
 
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
         nodeStore,
-        createPageDependency
+        createPageDependency,
       })
     })
 
@@ -82,7 +82,7 @@ describe(`NodeModel`, () => {
       it(`returns node by id and interface type`, () => {
         const result = nodeModel.getNodeById({
           id: `person1`,
-          type: `TeamMember`
+          type: `TeamMember`,
         })
         expect(result.name).toBe(`Person1`)
       })
@@ -92,7 +92,7 @@ describe(`NodeModel`, () => {
         expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `person3`
+          nodeId: `person3`,
         })
       })
 
@@ -101,7 +101,7 @@ describe(`NodeModel`, () => {
         expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `person2`
+          nodeId: `person2`,
         })
       })
 
@@ -138,7 +138,7 @@ describe(`NodeModel`, () => {
       it(`returns nodes by ids and type`, () => {
         const result = nodeModel.getNodesByIds({
           ids: [`person1`, `post2`],
-          type: `Author`
+          type: `Author`,
         })
         expect(result.length).toBe(1)
         expect(result[0].name).toBe(`Person1`)
@@ -147,7 +147,7 @@ describe(`NodeModel`, () => {
       it(`returns nodes by ids and union type`, () => {
         const result = nodeModel.getNodesByIds({
           ids: [`file1`, `file2`, `file3`, `post1`],
-          type: `AllFiles`
+          type: `AllFiles`,
         })
         expect(result.length).toBe(3)
         expect(
@@ -158,7 +158,7 @@ describe(`NodeModel`, () => {
       it(`returns nodes by ids and interface type`, () => {
         const result = nodeModel.getNodesByIds({
           ids: [`person1`, `person2`, `person3`, `post1`],
-          type: `TeamMember`
+          type: `TeamMember`,
         })
         expect(result.length).toBe(3)
         expect(
@@ -171,11 +171,11 @@ describe(`NodeModel`, () => {
         expect(createPageDependency).toHaveBeenCalledTimes(2)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `person1`
+          nodeId: `person1`,
         })
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post2`
+          nodeId: `post2`,
         })
       })
 
@@ -186,11 +186,11 @@ describe(`NodeModel`, () => {
         expect(createPageDependency).toHaveBeenCalledTimes(2)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `person3`
+          nodeId: `person3`,
         })
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post3`
+          nodeId: `post3`,
         })
       })
 
@@ -204,7 +204,7 @@ describe(`NodeModel`, () => {
       it(`returns empty array when matching ids don't match type`, () => {
         const result = nodeModel.getNodesByIds({
           ids: [`person1`, `post2`],
-          type: `File`
+          type: `File`,
         })
         expect(result).toEqual([])
       })
@@ -279,27 +279,27 @@ describe(`NodeModel`, () => {
             `Contributor`,
             `Post`,
             `File`,
-            `RemoteFile`
+            `RemoteFile`,
           ])
         )
       })
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null } // Always goes through sift
+      { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`runQuery [${desc}]`, () => {
         it(`returns first result only`, async () => {
           const type = `Post`
           const query = {
-            filter: { frontmatter: { published: { eq: false } } }
+            filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = true
           nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(result.id).toBe(`post1`)
         })
@@ -307,14 +307,14 @@ describe(`NodeModel`, () => {
         it(`returns all results`, async () => {
           const type = `Post`
           const query = {
-            filter: { frontmatter: { published: { eq: false } } }
+            filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
           nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(result.length).toBe(2)
           expect(result[0].id).toBe(`post1`)
@@ -324,7 +324,7 @@ describe(`NodeModel`, () => {
         it(`creates page dependencies`, async () => {
           const type = `Post`
           const query = {
-            filter: { frontmatter: { published: { eq: false } } }
+            filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
           nodeModel.replaceFiltersCache(createFiltersCache())
@@ -332,48 +332,48 @@ describe(`NodeModel`, () => {
             {
               query,
               firstOnly,
-              type
+              type,
             },
             { path: `/` }
           )
           expect(createPageDependency).toHaveBeenCalledTimes(2)
           expect(createPageDependency).toHaveBeenCalledWith({
             path: `/`,
-            nodeId: `post1`
+            nodeId: `post1`,
           })
           expect(createPageDependency).toHaveBeenCalledWith({
             path: `/`,
-            nodeId: `post3`
+            nodeId: `post3`,
           })
         })
 
         it(`creates page dependencies when called with context`, async () => {
           const type = `Post`
           const query = {
-            filter: { frontmatter: { published: { eq: false } } }
+            filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
           nodeModel.replaceFiltersCache(createFiltersCache())
           await nodeModel.withContext({ path: `/` }).runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(createPageDependency).toHaveBeenCalledTimes(2)
           expect(createPageDependency).toHaveBeenCalledWith({
             path: `/`,
-            nodeId: `post1`
+            nodeId: `post1`,
           })
           expect(createPageDependency).toHaveBeenCalledWith({
             path: `/`,
-            nodeId: `post3`
+            nodeId: `post3`,
           })
         })
 
         it(`creates page dependencies with connection type`, async () => {
           const type = `Post`
           const query = {
-            filter: { frontmatter: { published: { eq: false } } }
+            filter: { frontmatter: { published: { eq: false } } },
           }
           const firstOnly = false
           nodeModel.replaceFiltersCache(createFiltersCache())
@@ -381,14 +381,14 @@ describe(`NodeModel`, () => {
             {
               query,
               firstOnly,
-              type
+              type,
             },
             { path: `/`, connectionType: `Post` }
           )
           expect(createPageDependency).toHaveBeenCalledTimes(1)
           expect(createPageDependency).toHaveBeenCalledWith({
             path: `/`,
-            connection: `Post`
+            connection: `Post`,
           })
         })
 
@@ -400,7 +400,7 @@ describe(`NodeModel`, () => {
           const result = nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           return expect(result).rejects.toThrowError(
             `Querying GraphQLUnion types is not supported.`
@@ -415,7 +415,7 @@ describe(`NodeModel`, () => {
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(result.name).toBe(`Person1`)
         })
@@ -424,15 +424,15 @@ describe(`NodeModel`, () => {
           const type = schema.getType(`File`)
           const query = {
             filter: {
-              children: { elemMatch: { internal: { type: { eq: `Post` } } } }
-            }
+              children: { elemMatch: { internal: { type: { eq: `Post` } } } },
+            },
           }
           const firstOnly = false
           nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(result.length).toBe(2)
           expect(result[0].id).toBe(`file1`)
@@ -443,15 +443,15 @@ describe(`NodeModel`, () => {
           const type = `Post`
           const query = {
             filter: {
-              nestedObject: { elemMatch: { nestedValue: { eq: `2` } } }
-            }
+              nestedObject: { elemMatch: { nestedValue: { eq: `2` } } },
+            },
           }
           const firstOnly = true
           nodeModel.replaceFiltersCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(result).toBeDefined()
           expect(result.id).toEqual(`post2`)
@@ -467,16 +467,16 @@ describe(`NodeModel`, () => {
           const query = {
             filter: {
               frontmatter: {
-                date: { lte: `2018-01-01T00:00:00Z` }
-              }
-            }
+                date: { lte: `2018-01-01T00:00:00Z` },
+              },
+            },
           }
           const firstOnly = false
           nodeModel.replaceTypeKeyValueCache(createFiltersCache())
           const result = await nodeModel.runQuery({
             query,
             firstOnly,
-            type
+            type,
           })
           expect(result).toBeDefined()
           expect(result.length).toEqual(2)
@@ -514,8 +514,8 @@ describe(`NodeModel`, () => {
           title: `Foo`,
           internal: {
             type: `Test`,
-            contentDigest: `0`
-          }
+            contentDigest: `0`,
+          },
         },
         {
           id: `id2`,
@@ -523,9 +523,9 @@ describe(`NodeModel`, () => {
           hidden: false,
           internal: {
             type: `Test`,
-            contentDigest: `1`
-          }
-        }
+            contentDigest: `1`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -545,27 +545,27 @@ describe(`NodeModel`, () => {
                 resolve(parent) {
                   resolveBetterTitleMock()
                   return `I am amazing title: ${parent.title}`
-                }
+                },
               },
               otherTitle: {
                 type: `String`,
                 resolve(parent) {
                   resolveOtherTitleMock()
                   return `I am the other amazing title: ${parent.title}`
-                }
+                },
               },
               hidden: {
                 type: `Boolean!`,
-                resolve: parent => Boolean(parent.hidden)
-              }
-            }
-          })
-        ]
+                resolve: parent => Boolean(parent.hidden),
+              },
+            },
+          }),
+        ],
       })
 
       await build({})
       const {
-        schemaCustomization: { composer: schemaComposer }
+        schemaCustomization: { composer: schemaComposer },
       } = store.getState()
       schema = store.getState().schema
 
@@ -573,12 +573,12 @@ describe(`NodeModel`, () => {
         schema,
         schemaComposer,
         nodeStore,
-        createPageDependency
+        createPageDependency,
       })
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null } // Always goes through sift
+      { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       it(`[${desc}] should not resolve prepared nodes more than once`, async () => {
         nodeModel.replaceFiltersCache(createFiltersCache())
@@ -586,7 +586,7 @@ describe(`NodeModel`, () => {
           {
             query: { filter: { betterTitle: { eq: `foo` } } },
             firstOnly: false,
-            type: `Test`
+            type: `Test`,
           },
           { path: `/` }
         )
@@ -597,7 +597,7 @@ describe(`NodeModel`, () => {
           {
             query: { filter: { betterTitle: { eq: `foo` } } },
             firstOnly: false,
-            type: `Test`
+            type: `Test`,
           },
           { path: `/` }
         )
@@ -607,10 +607,10 @@ describe(`NodeModel`, () => {
         await nodeModel.runQuery(
           {
             query: {
-              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } }
+              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
             },
             firstOnly: false,
-            type: `Test`
+            type: `Test`,
           },
           { path: `/` }
         )
@@ -620,10 +620,10 @@ describe(`NodeModel`, () => {
         await nodeModel.runQuery(
           {
             query: {
-              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } }
+              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
             },
             firstOnly: false,
-            type: `Test`
+            type: `Test`,
           },
           { path: `/` }
         )
@@ -633,10 +633,10 @@ describe(`NodeModel`, () => {
         await nodeModel.runQuery(
           {
             query: {
-              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } }
+              filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
             },
             firstOnly: true,
-            type: `Test`
+            type: `Test`,
           },
           { path: `/` }
         )
@@ -649,10 +649,10 @@ describe(`NodeModel`, () => {
         const result = await nodeModel.runQuery(
           {
             query: {
-              filter: { hidden: { eq: false } }
+              filter: { hidden: { eq: false } },
             },
             firstOnly: false,
-            type: `Test`
+            type: `Test`,
           },
           { path: `/` }
         )
@@ -671,27 +671,27 @@ describe(`NodeModel`, () => {
           parent: null,
           children: [],
           inlineObject: {
-            field: `fieldOfFirstNode`
+            field: `fieldOfFirstNode`,
           },
           inlineArray: [1, 2, 3],
           internal: {
             type: `Test`,
-            contentDigest: `digest1`
-          }
+            contentDigest: `digest1`,
+          },
         },
         {
           id: `id2`,
           parent: null,
           children: [],
           inlineObject: {
-            field: `fieldOfSecondNode`
+            field: `fieldOfSecondNode`,
           },
           inlineArray: [1, 2, 3],
           internal: {
             type: `Test`,
-            contentDigest: `digest2`
-          }
-        }
+            contentDigest: `digest2`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -700,7 +700,7 @@ describe(`NodeModel`, () => {
 
       await build({})
       const {
-        schemaCustomization: { composer: schemaComposer }
+        schemaCustomization: { composer: schemaComposer },
       } = store.getState()
       schema = store.getState().schema
 
@@ -708,7 +708,7 @@ describe(`NodeModel`, () => {
         schema,
         schemaComposer,
         nodeStore,
-        createPageDependency
+        createPageDependency,
       })
     })
 
@@ -791,7 +791,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift
-      { desc: `no cache`, cb: () => null } // Requires sift
+      { desc: `no cache`, cb: () => null }, // Requires sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`[${desc}] Tracks nodes returned by queries`, () => {
         it(`Tracks objects when running query without filter`, async () => {
@@ -799,7 +799,7 @@ describe(`NodeModel`, () => {
           const result = await nodeModel.runQuery({
             query: {},
             type: schema.getType(`Test`),
-            firstOnly: false
+            firstOnly: false,
           })
 
           expect(result.length).toEqual(2)
@@ -818,13 +818,13 @@ describe(`NodeModel`, () => {
               filter: {
                 inlineObject: {
                   field: {
-                    eq: `fieldOfSecondNode`
-                  }
-                }
-              }
+                    eq: `fieldOfSecondNode`,
+                  },
+                },
+              },
             },
             type: schema.getType(`Test`),
-            firstOnly: false
+            firstOnly: false,
           })
 
           expect(result.length).toEqual(1)
@@ -844,8 +844,8 @@ describe(`NodeModel`, () => {
         circular.circled = circular
         const indirectCircular = {
           down1: {
-            down2: {}
-          }
+            down2: {},
+          },
         }
         indirectCircular.down1.down2.deepCircular = indirectCircular
 
@@ -854,23 +854,23 @@ describe(`NodeModel`, () => {
           parent: null,
           children: [],
           inlineObject: {
-            field: `fieldOfFirstNode`
+            field: `fieldOfFirstNode`,
           },
           inlineArray: [1, 2, 3],
           circular,
           indirect: {
-            indirectCircular
+            indirectCircular,
           },
           internal: {
             type: `Test`,
-            contentDigest: `digest1`
-          }
+            contentDigest: `digest1`,
+          },
         }
         actions.createNode(node, { name: `test` })(store.dispatch)
 
         await build({})
         const {
-          schemaCustomization: { composer: schemaComposer }
+          schemaCustomization: { composer: schemaComposer },
         } = store.getState()
         schema = store.getState().schema
 
@@ -878,7 +878,7 @@ describe(`NodeModel`, () => {
           schema,
           schemaComposer,
           nodeStore,
-          createPageDependency
+          createPageDependency,
         })
       })
 
@@ -902,20 +902,20 @@ describe(`NodeModel`, () => {
           parent: null,
           children: [],
           inlineObject: {
-            field: `fieldOfFirstNode`
+            field: `fieldOfFirstNode`,
           },
           inlineArray: [1, 2, 3],
           foo: { circular },
           internal: {
             type: `Test`,
-            contentDigest: `digest1`
-          }
+            contentDigest: `digest1`,
+          },
         }
         actions.createNode(node, { name: `test` })(store.dispatch)
 
         await build({})
         const {
-          schemaCustomization: { composer: schemaComposer }
+          schemaCustomization: { composer: schemaComposer },
         } = store.getState()
         schema = store.getState().schema
 
@@ -923,7 +923,7 @@ describe(`NodeModel`, () => {
           schema,
           schemaComposer,
           nodeStore,
-          createPageDependency
+          createPageDependency,
         })
       })
 

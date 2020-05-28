@@ -20,10 +20,10 @@ export const createGraphQLRunner = (
   reporter: Reporter,
   {
     parentSpan,
-    graphqlTracing
+    graphqlTracing,
   }: { parentSpan: Span | undefined; graphqlTracing?: boolean } = {
     parentSpan: undefined,
-    graphqlTracing: false
+    graphqlTracing: false,
   }
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
@@ -37,7 +37,7 @@ export const createGraphQLRunner = (
     `SET_SCHEMA_COMPOSER`,
     `SET_SCHEMA`,
     `ADD_FIELD_TO_NODE`,
-    `ADD_CHILD_NODE_TO_PARENT_NODE`
+    `ADD_CHILD_NODE_TO_PARENT_NODE`,
   ]
 
   eventTypes.forEach(type => {
@@ -50,7 +50,7 @@ export const createGraphQLRunner = (
     runner
       .query(query, context, {
         queryName: `gatsby-node query`,
-        parentSpan
+        parentSpan,
       })
       .then(result => {
         if (result.errors) {
@@ -67,14 +67,14 @@ export const createGraphQLRunner = (
                   location: {
                     start: {
                       line: file.getLineNumber(),
-                      column: file.getColumnNumber()
-                    }
+                      column: file.getColumnNumber(),
+                    },
                   },
-                  filePath: file.getFileName()
+                  filePath: file.getFileName(),
                 })
                 structuredError.context = {
                   ...structuredError.context,
-                  fromGraphQLFunction: true
+                  fromGraphQLFunction: true,
                 }
                 return structuredError
               }

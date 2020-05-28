@@ -20,25 +20,25 @@ function makeNodes() {
       date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 3, 4],
       key: {
-        withEmptyArray: []
+        withEmptyArray: [],
       },
       anotherKey: {
         withANested: {
           nestedKey: `foo`,
           emptyArray: [],
-          anotherEmptyArray: []
-        }
+          anotherEmptyArray: [],
+        },
       },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of dash and adventure`,
-        blue: 100
+        blue: 100,
       },
       anObjectArray: [
         { aString: `some string`, aNumber: 2, aBoolean: true },
-        { aString: `some string`, aNumber: 2, anArray: [1, 2] }
+        { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       ],
-      boolean: true
+      boolean: true,
     },
     {
       id: `1`,
@@ -52,14 +52,14 @@ function makeNodes() {
       anArray: [1, 2, 5, 4],
       anotherKey: {
         withANested: {
-          nestedKey: `foo`
-        }
+          nestedKey: `foo`,
+        },
       },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
         blue: 10010,
-        circle: `happy`
+        circle: `happy`,
       },
       boolean: false,
       data: {
@@ -69,15 +69,15 @@ function makeNodes() {
               document: [
                 {
                   data: {
-                    tag: `Design System`
+                    tag: `Design System`,
                   },
-                  number: 3
-                }
-              ]
-            }
-          }
-        ]
-      }
+                  number: 3,
+                },
+              ],
+            },
+          },
+        ],
+      },
     },
     {
       id: `2`,
@@ -91,14 +91,14 @@ function makeNodes() {
       date: `2006-07-29T22:39:53.000Z`,
       anotherKey: {
         withANested: {
-          nestedKey: `bar`
-        }
+          nestedKey: `bar`,
+        },
       },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of shave and adventure`,
         blue: 10010,
-        circle: `happy`
+        circle: `happy`,
       },
       data: {
         tags: [
@@ -107,27 +107,27 @@ function makeNodes() {
               document: [
                 {
                   data: {
-                    tag: `Gatsby`
-                  }
-                }
-              ]
-            }
+                    tag: `Gatsby`,
+                  },
+                },
+              ],
+            },
           },
           {
             tag: {
               document: [
                 {
                   data: {
-                    tag: `Design System`
+                    tag: `Design System`,
                   },
-                  number: 5
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
+                  number: 5,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
   ]
 }
 
@@ -144,7 +144,7 @@ async function queryResult(nodes, query) {
     nodeStore,
     types: [],
     thirdPartySchemas: [],
-    inferenceMetadata: store.getState().inferenceMetadata
+    inferenceMetadata: store.getState().inferenceMetadata,
   })
   store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
@@ -155,8 +155,8 @@ async function queryResult(nodes, query) {
       schemaComposer,
       schema,
       nodeStore,
-      createPageDependency: jest.fn()
-    })
+      createPageDependency: jest.fn(),
+    }),
   })
 }
 

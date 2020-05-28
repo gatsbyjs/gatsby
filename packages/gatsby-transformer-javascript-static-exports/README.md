@@ -44,7 +44,7 @@ export const data = {
   layoutType: "post",
   path: "choropleth-on-d3v4",
   category: "data science",
-  description: "Things about the choropleth."
+  description: "Things about the choropleth.",
 }
 ```
 

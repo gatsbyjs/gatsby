@@ -48,7 +48,7 @@ const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
 
 EggheadEmbed.propTypes = {
   lessonLink: PropTypes.string.isRequired,
-  lessonTitle: PropTypes.string.isRequired
+  lessonTitle: PropTypes.string.isRequired,
 }
 
 export default EggheadEmbed

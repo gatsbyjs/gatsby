@@ -28,7 +28,7 @@ export const getLatestAPIs = async (): Promise<IAPIResponse> => {
       return {
         browser: {},
         node: {},
-        ssr: {}
+        ssr: {},
       }
     })
   }

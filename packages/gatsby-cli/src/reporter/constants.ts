@@ -9,7 +9,7 @@ export enum Actions {
   UpdateActivity = `ACTIVITY_UPDATE`,
   PendingActivity = `ACTIVITY_PENDING`,
   CancelActivity = `ACTIVITY_CANCEL`,
-  ActivityErrored = `ACTIVITY_ERRORED`
+  ActivityErrored = `ACTIVITY_ERRORED`,
 }
 
 export enum LogLevels {
@@ -18,13 +18,13 @@ export enum LogLevels {
   Info = `INFO`,
   Warning = `WARNING`,
   Log = `LOG`,
-  Error = `ERROR`
+  Error = `ERROR`,
 }
 
 export enum ActivityLogLevels {
   Success = `ACTIVITY_SUCCESS`,
   Failed = `ACTIVITY_FAILED`,
-  Interrupted = `ACTIVITY_INTERRUPTED`
+  Interrupted = `ACTIVITY_INTERRUPTED`,
 }
 
 export enum ActivityStatuses {
@@ -33,12 +33,12 @@ export enum ActivityStatuses {
   Interrupted = `INTERRUPTED`,
   Failed = `FAILED`,
   Success = `SUCCESS`,
-  Cancelled = `CANCELLED`
+  Cancelled = `CANCELLED`,
 }
 
 export enum ActivityTypes {
   Spinner = `spinner`,
   Hidden = `hidden`,
   Progress = `progress`,
-  Pending = `pending`
+  Pending = `pending`,
 }

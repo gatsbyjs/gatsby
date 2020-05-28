@@ -10,7 +10,7 @@ describe(`recipe-machine`, () => {
       src: `
 # Hello, world!
     `,
-      currentStep: 0
+      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -34,7 +34,7 @@ describe(`recipe-machine`, () => {
 
 <File path="./hi.md" content="#yo" />
     `,
-      currentStep: 0
+      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -63,7 +63,7 @@ describe(`recipe-machine`, () => {
 
 <File path="${filePath}" content="#yo" />
     `,
-      currentStep: 0
+      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -102,7 +102,7 @@ describe(`recipe-machine`, () => {
 
 <File path="${filePath3}" content="#yo" />
     `,
-      currentStep: 0
+      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)

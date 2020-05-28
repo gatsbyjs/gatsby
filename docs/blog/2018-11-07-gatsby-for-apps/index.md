@@ -91,7 +91,7 @@ class Messages extends React.Component {
     super(props)
 
     this.state = {
-      messages: []
+      messages: [],
     }
   }
 
@@ -102,7 +102,7 @@ class Messages extends React.Component {
     ).then(response => response.json())
 
     this.setState({
-      messages
+      messages,
     })
   }
 

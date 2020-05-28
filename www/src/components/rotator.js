@@ -24,16 +24,16 @@ const controlButtonStyles = {
   "&:hover": {
     cursor: `pointer`,
     color: `gatsby`,
-    bg: `ui.hover`
+    bg: `ui.hover`,
   },
-  "&:active": { bg: `ui.hover` }
+  "&:active": { bg: `ui.hover` },
 }
 
 class Rotator extends Component {
   state = {
     shouldAnimate: false,
     item: 0,
-    size: {}
+    size: {},
   }
   sliderContainer = React.createRef()
   intervalId = null
@@ -50,7 +50,7 @@ class Rotator extends Component {
     this.setState({
       item:
         (this.state.item + this.props.items.length - 1) %
-        this.props.items.length
+        this.props.items.length,
     })
   }
 
@@ -62,7 +62,7 @@ class Rotator extends Component {
   incrementItem = () => {
     this.setState(state => {
       return {
-        item: (state.item + 1) % this.props.items.length
+        item: (state.item + 1) % this.props.items.length,
       }
     })
   }
@@ -93,7 +93,7 @@ class Rotator extends Component {
     if (this.sliderContainer.current === null) {
       return {
         width: `auto`,
-        height: `auto`
+        height: `auto`,
       }
     }
 
@@ -118,7 +118,7 @@ class Rotator extends Component {
           py: 4,
           px: 9,
           my: 6,
-          position: `relative`
+          position: `relative`,
         }}
       >
         <div
@@ -131,7 +131,7 @@ class Rotator extends Component {
               fontSize: 4,
               fontFamily: `heading`,
               textAlign: `center`,
-              mb: 0
+              mb: 0,
             }}
           >
             <span>Need&nbsp;</span>
@@ -139,14 +139,14 @@ class Rotator extends Component {
               style={{
                 display: `inline-block`,
                 transition: shouldAnimate ? `width 150ms linear` : `none`,
-                width: this.state.size.width || `auto`
+                width: this.state.size.width || `auto`,
               }}
             >
               <span
                 sx={{
                   fontWeight: `bold`,
                   whiteSpace: `nowrap`,
-                  display: `inline-block`
+                  display: `inline-block`,
                 }}
                 id="headline-slider"
                 ref={this.sliderContainer}
@@ -165,7 +165,7 @@ class Rotator extends Component {
               color: `textMuted`,
               margin: 0,
               fontSize: 3,
-              textAlign: `center`
+              textAlign: `center`,
             }}
           >
             There’s{` `}

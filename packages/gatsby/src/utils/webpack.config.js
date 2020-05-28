@@ -93,7 +93,7 @@ module.exports = async (
         return acc
       },
       {
-        "process.env": JSON.stringify({})
+        "process.env": JSON.stringify({}),
       }
     )
   }
@@ -130,7 +130,7 @@ module.exports = async (
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
           // See https://reactjs.org/docs/cross-origin-errors.html
-          crossOriginLoading: `anonymous`
+          crossOriginLoading: `anonymous`,
         }
       case `build-html`:
       case `develop-html`:
@@ -143,14 +143,14 @@ module.exports = async (
           library: `lib`,
           umdNamedDefine: true,
           globalObject: `this`,
-          publicPath: withTrailingSlash(publicPath)
+          publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
         return {
           filename: `[name]-[contenthash].js`,
           chunkFilename: `[name]-[contenthash].js`,
           path: directoryPath(`public`),
-          publicPath: withTrailingSlash(publicPath)
+          publicPath: withTrailingSlash(publicPath),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -166,20 +166,20 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
-            directoryPath(`.cache/app`)
-          ]
+            directoryPath(`.cache/app`),
+          ],
         }
       case `develop-html`:
         return {
-          main: directoryPath(`.cache/develop-static-entry`)
+          main: directoryPath(`.cache/develop-static-entry`),
         }
       case `build-html`:
         return {
-          main: directoryPath(`.cache/static-entry`)
+          main: directoryPath(`.cache/static-entry`),
         }
       case `build-javascript`:
         return {
-          app: directoryPath(`.cache/production-app`)
+          app: directoryPath(`.cache/production-app`),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -196,8 +196,10 @@ module.exports = async (
         ...processEnv(stage, `development`),
         __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
         __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
-        __ASSET_PREFIX__: JSON.stringify(program.prefixPaths ? assetPrefix : ``)
-      })
+        __ASSET_PREFIX__: JSON.stringify(
+          program.prefixPaths ? assetPrefix : ``
+        ),
+      }),
     ]
 
     switch (stage) {
@@ -208,7 +210,7 @@ module.exports = async (
               plugins.fastRefresh(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
-            plugins.eslintGraphqlSchemaReload()
+            plugins.eslintGraphqlSchemaReload(),
           ])
           .filter(Boolean)
         break
@@ -217,7 +219,7 @@ module.exports = async (
           plugins.extractText(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
-          plugins.extractStats()
+          plugins.extractStats(),
         ])
         break
       }
@@ -285,7 +287,7 @@ module.exports = async (
     if (stage === `build-javascript`) {
       configRules.push(
         rules.dependencies({
-          modulesThatUseGatsby
+          modulesThatUseGatsby,
         })
       )
     }
@@ -296,7 +298,7 @@ module.exports = async (
           return {
             test: /\.jsx?$/,
             include: theme.themeDir,
-            use: [loaders.js()]
+            use: [loaders.js()],
           }
         })
       )
@@ -314,8 +316,8 @@ module.exports = async (
 
         configRules = configRules.concat([
           {
-            oneOf: [rules.cssModules(), rules.css()]
-          }
+            oneOf: [rules.cssModules(), rules.css()],
+          },
         ])
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
@@ -326,8 +328,8 @@ module.exports = async (
             include: /node_modules\/react-dom/,
             test: /\.jsx?$/,
             use: {
-              loader: require.resolve(`./webpack-hmr-hooks-patch`)
-            }
+              loader: require.resolve(`./webpack-hmr-hooks-patch`),
+            },
           })
         }
 
@@ -362,8 +364,8 @@ module.exports = async (
         // classNames to use.
         configRules = configRules.concat([
           {
-            oneOf: [rules.cssModules(), rules.css()]
-          }
+            oneOf: [rules.cssModules(), rules.css()],
+          },
         ])
 
         break
@@ -392,7 +394,7 @@ module.exports = async (
           ? {
               "react-hot-loader": path.dirname(
                 require.resolve(`react-hot-loader/package.json`)
-              )
+              ),
             }
           : {}),
         "react-lifecycles-compat": directoryPath(
@@ -404,7 +406,7 @@ module.exports = async (
         ),
         "socket.io-client": path.dirname(
           require.resolve(`socket.io-client/package.json`)
-        )
+        ),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -412,8 +414,8 @@ module.exports = async (
         PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
         PnpWebpackPlugin.bind(directoryPath(`public`), module),
         // Transparently resolve packages via PnP when needed; noop otherwise
-        PnpWebpackPlugin
-      ]
+        PnpWebpackPlugin,
+      ],
     }
 
     const target =
@@ -451,7 +453,7 @@ module.exports = async (
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
       // Bare loaders should always be loaded via the user dependencies (loaders
       // configured via third-party like gatsby use require.resolve)
-      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)]
+      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 
@@ -474,7 +476,7 @@ module.exports = async (
     // Turn off performance hints as we (for now) don't want to show the normal
     // webpack output anywhere.
     performance: {
-      hints: false
+      hints: false,
     },
     mode: getMode(),
 
@@ -482,8 +484,8 @@ module.exports = async (
     resolve: getResolve(stage),
 
     node: {
-      __filename: true
-    }
+      __filename: true,
+    },
   }
 
   if (stage === `build-javascript`) {
@@ -506,7 +508,7 @@ module.exports = async (
           ),
           priority: 40,
           // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
-          enforce: true
+          enforce: true,
         },
         // if a module is bigger than 160kb from node_modules we make a separate chunk for it
         lib: {
@@ -531,13 +533,13 @@ module.exports = async (
           },
           priority: 30,
           minChunks: 1,
-          reuseExistingChunk: true
+          reuseExistingChunk: true,
         },
         commons: {
           name: `commons`,
           // if a chunk is used on all components we put it in commons (we need at least 2 components)
           minChunks: Math.max(componentsCount, 2),
-          priority: 20
+          priority: 20,
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
@@ -554,7 +556,7 @@ module.exports = async (
           },
           priority: 10,
           minChunks: 2,
-          reuseExistingChunk: true
+          reuseExistingChunk: true,
         },
 
         // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
@@ -566,8 +568,8 @@ module.exports = async (
 
           name: `styles`,
           priority: 40,
-          enforce: true
-        }
+          enforce: true,
+        },
       },
       // We load our pages async through async-requires, maxInitialRequests doesn't have an effect on chunks derived from page components.
       // By default webpack has set maxAsyncRequests to 6, in some cases this isn't enough an actually makes the bundle size blow up.
@@ -575,12 +577,12 @@ module.exports = async (
       // sadly I do not have a better solution.
       maxAsyncRequests: Infinity,
       maxInitialRequests: 25,
-      minSize: 20000
+      minSize: 20000,
     }
 
     config.optimization = {
       runtimeChunk: {
-        name: `webpack-runtime`
+        name: `webpack-runtime`,
       },
       // use hashes instead of ids for module identifiers
       // TODO update to deterministic in webpack 5 (hashed is deprecated)
@@ -595,13 +597,13 @@ module.exports = async (
               ? {
                   terserOptions: {
                     keep_classnames: true,
-                    keep_fnames: true
-                  }
+                    keep_fnames: true,
+                  },
                 }
               : {}
           ),
-        plugins.minifyCss()
-      ].filter(Boolean)
+        plugins.minifyCss(),
+      ].filter(Boolean),
     }
   }
 
@@ -622,7 +624,7 @@ module.exports = async (
       `path`,
       `semver`,
       /^lodash\//,
-      `zlib`
+      `zlib`,
     ]
 
     // Packages we want to externalize because meant to be user-provided
@@ -648,14 +650,14 @@ module.exports = async (
     }
 
     config.externals = [
-      function(context, request, callback) {
+      function (context, request, callback) {
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)
         } else {
           callback()
         }
-      }
+      },
     ]
   }
 
@@ -668,7 +670,7 @@ module.exports = async (
     rules,
     loaders,
     plugins,
-    parentSpan
+    parentSpan,
   })
 
   return getConfig()

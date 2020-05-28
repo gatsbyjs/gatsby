@@ -6,7 +6,7 @@ import getManifestForPathname from "./get-manifest-pathname"
 if (__MANIFEST_PLUGIN_HAS_LOCALISATION__) {
   const withPrefix = withAssetPrefix || fallbackWithPrefix
 
-  exports.onRouteUpdate = function({ location }, pluginOptions) {
+  exports.onRouteUpdate = function ({ location }, pluginOptions) {
     const { localize } = pluginOptions
     const manifestFilename = getManifestForPathname(location.pathname, localize)
 

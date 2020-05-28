@@ -129,7 +129,7 @@ You can now apply configuration to type builder types through an exposed `extens
 schema.buildObjectType({
   name: MyType,
   extensions: {
-    infer: true
+    infer: true,
   },
   fields: {
     date: {
@@ -137,11 +137,11 @@ schema.buildObjectType({
       extensions: {
         dateformat: {
           formatString: "DD MMM",
-          locale: "fi"
-        }
-      }
-    }
-  }
+          locale: "fi",
+        },
+      },
+    },
+  },
 })
 ```
 

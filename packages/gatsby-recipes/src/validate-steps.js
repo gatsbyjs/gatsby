@@ -16,7 +16,7 @@ module.exports = async steps => {
     if (firstStepPlan.length) {
       errors.push({
         step: 0,
-        validationError: `Resources should not be placed in the introduction step (0)`
+        validationError: `Resources should not be placed in the introduction step (0)`,
       })
     }
   } catch (e) {

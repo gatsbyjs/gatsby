@@ -91,7 +91,7 @@ import { graphql } from "gatsby"
 import Video from "../components/video"
 
 export default function VlogTemplate({
-  data // this prop will be injected by the GraphQL query below.
+  data, // this prop will be injected by the GraphQL query below.
 }) {
   const { markdownRemark } = data // data.markdownRemark holds your post data
   const { frontmatter, html } = markdownRemark

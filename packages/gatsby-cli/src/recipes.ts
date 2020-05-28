@@ -12,6 +12,6 @@ export async function recipesHandler(
   return runRecipe({
     recipe,
     graphqlPort: graphql.port,
-    projectRoot
+    projectRoot,
   })
 }

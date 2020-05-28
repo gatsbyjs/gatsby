@@ -15,16 +15,16 @@ const createStore = (schema = {}) => {
       return {
         schema,
         schemaCustomization: {
-          composer: {}
-        }
+          composer: {},
+        },
       }
-    }
+    },
   }
 }
 
 const tracingContext = {
   graphqlTracing: false,
-  parentSpan: globalTracer().startSpan(`test`)
+  parentSpan: globalTracer().startSpan(`test`),
 }
 
 describe(`grapqhl-runner`, () => {
@@ -32,7 +32,7 @@ describe(`grapqhl-runner`, () => {
 
   beforeEach(() => {
     reporter = {
-      panicOnBuild: jest.fn()
+      panicOnBuild: jest.fn(),
     }
   })
 
@@ -45,8 +45,8 @@ describe(`grapqhl-runner`, () => {
 
     const expectation = {
       data: {
-        gatsby: `is awesome`
-      }
+        gatsby: `is awesome`,
+      },
     }
     execute.mockImplementation(() => Promise.resolve(expectation))
 
@@ -66,9 +66,9 @@ describe(`grapqhl-runner`, () => {
       errors: [
         {
           message: `Cannot query field boyhowdy on RootQueryType`,
-          locations: [{ line: 1, column: 3 }]
-        }
-      ]
+          locations: [{ line: 1, column: 3 }],
+        },
+      ],
     }
     execute.mockImplementation(() => Promise.resolve(expectation))
 
@@ -88,12 +88,12 @@ describe(`grapqhl-runner`, () => {
       stack: `Error
       at createPages (my-gatsby-project/gatsby-node.js:32:17)
       `,
-      message: `Cannot query field boyhowdy on RootQueryType`
+      message: `Cannot query field boyhowdy on RootQueryType`,
     }
 
     execute.mockImplementation(() =>
       Promise.resolve({
-        errors: [errorObject]
+        errors: [errorObject],
       })
     )
 

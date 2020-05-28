@@ -112,7 +112,7 @@ const buttonStyles = {
   boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
   backgroundColor: "rgb(255, 178, 56)",
   borderRadius: "6px",
-  letterSpacing: "1.5px"
+  letterSpacing: "1.5px",
 }
 
 const stripePromise = loadStripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
@@ -123,7 +123,7 @@ const redirectToCheckout = async event => {
   const { error } = await stripe.redirectToCheckout({
     items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
     successUrl: `http://localhost:8000/page-2/`,
-    cancelUrl: `http://localhost:8000/`
+    cancelUrl: `http://localhost:8000/`,
   })
 
   if (error) {
@@ -159,7 +159,7 @@ const redirectToCheckout = async event => {
   const { error } = await stripe.redirectToCheckout({
     items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
     successUrl: `http://localhost:8000/page-2/`,
-    cancelUrl: `http://localhost:8000/`
+    cancelUrl: `http://localhost:8000/`,
   })
 
   if (error) {
@@ -228,7 +228,7 @@ Now you can add the plugin configuration in your `gatsby-config` file:
 ```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
-    title: `Gatsby E-commerce Starter`
+    title: `Gatsby E-commerce Starter`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -237,10 +237,10 @@ module.exports = {
       options: {
         objects: ["Sku"],
         secretKey: process.env.STRIPE_SECRET_KEY,
-        downloadFiles: false
-      }
-    }
-  ]
+        downloadFiles: false,
+      },
+    },
+  ],
 }
 ```
 
@@ -257,7 +257,7 @@ To use the defined env variable you need to require it in your `gatsby-config.js
 
 ```js:title=gatsby-config.js
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`
+  path: `.env.${process.env.NODE_ENV}`,
 })
 ```
 
@@ -351,7 +351,7 @@ const cardStyles = {
   boxShadow: "5px 5px 25px 0 rgba(46,61,73,.2)",
   backgroundColor: "#fff",
   borderRadius: "6px",
-  maxWidth: "300px"
+  maxWidth: "300px",
 }
 const buttonStyles = {
   fontSize: "13px",
@@ -362,7 +362,7 @@ const buttonStyles = {
   boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
   backgroundColor: "rgb(255, 178, 56)",
   borderRadius: "6px",
-  letterSpacing: "1.5px"
+  letterSpacing: "1.5px",
 }
 
 const formatPrice = (amount, currency) => {
@@ -370,7 +370,7 @@ const formatPrice = (amount, currency) => {
   let numberFormat = new Intl.NumberFormat(["en-US"], {
     style: "currency",
     currency: currency,
-    currencyDisplay: "symbol"
+    currencyDisplay: "symbol",
   })
   return numberFormat.format(price)
 }
@@ -382,7 +382,7 @@ const SkuCard = ({ sku, stripePromise }) => {
     const { error } = await stripe.redirectToCheckout({
       items: [{ sku, quantity }],
       successUrl: `${window.location.origin}/page-2/`,
-      cancelUrl: `${window.location.origin}/advanced`
+      cancelUrl: `${window.location.origin}/advanced`,
     })
 
     if (error) {
@@ -422,7 +422,7 @@ const containerStyles = {
   flexDirection: "row",
   flexWrap: "wrap",
   justifyContent: "space-between",
-  padding: "1rem 0 1rem 0"
+  padding: "1rem 0 1rem 0",
 }
 
 const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)

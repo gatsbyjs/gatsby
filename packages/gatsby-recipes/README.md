@@ -140,7 +140,7 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
   key="src/pages"
   options={{
     name: `src pages directory`,
-    path: `src/pages`
+    path: `src/pages`,
   }}
 />
 ```

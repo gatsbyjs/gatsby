@@ -28,7 +28,7 @@ describe(`Paginate query results`, () => {
       itemCount: 2,
       pageCount: 2,
       perPage: 2,
-      totalCount: 4
+      totalCount: 4,
     })
   })
 
@@ -43,7 +43,7 @@ describe(`Paginate query results`, () => {
       itemCount: 2,
       pageCount: 3,
       perPage: 2,
-      totalCount: 4
+      totalCount: 4,
     })
   })
 
@@ -58,7 +58,7 @@ describe(`Paginate query results`, () => {
       itemCount: 2,
       pageCount: 2,
       perPage: 2,
-      totalCount: 4
+      totalCount: 4,
     })
   })
 
@@ -73,7 +73,7 @@ describe(`Paginate query results`, () => {
       itemCount: 3,
       pageCount: 2,
       perPage: undefined,
-      totalCount: 4
+      totalCount: 4,
     })
   })
 
@@ -88,7 +88,7 @@ describe(`Paginate query results`, () => {
       itemCount: 0,
       pageCount: 2,
       perPage: undefined,
-      totalCount: 4
+      totalCount: 4,
     })
   })
 
@@ -103,7 +103,7 @@ describe(`Paginate query results`, () => {
       itemCount: 4,
       pageCount: 1,
       perPage: 10,
-      totalCount: 4
+      totalCount: 4,
     })
   })
 })

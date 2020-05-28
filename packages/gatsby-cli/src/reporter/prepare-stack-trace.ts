@@ -9,7 +9,7 @@ import {
   SourceMapConsumer,
   BasicSourceMapConsumer,
   IndexedSourceMapConsumer,
-  NullableMappedPosition
+  NullableMappedPosition,
 } from "source-map"
 
 export class ErrorWithCodeFrame extends Error {
@@ -58,11 +58,11 @@ function getErrorSource(
         {
           start: {
             line: topFrame.getLineNumber(),
-            column: topFrame.getColumnNumber()
-          }
+            column: topFrame.getColumnNumber(),
+          },
         },
         {
-          highlightCode: true
+          highlightCode: true,
         }
       )
     : ``
@@ -93,13 +93,13 @@ function wrapCallSite(
     getColumnNumber: (): number => (position.column || 0) + 1,
     getScriptNameOrSourceURL: (): string => position.source || ``,
     toString: CallSiteToString,
-    wasConverted: true
+    wasConverted: true,
   }
 }
 
 function getPosition({
   map,
-  frame
+  frame,
 }: {
   map: BasicSourceMapConsumer | IndexedSourceMapConsumer
   frame: stackTrace.StackFrame

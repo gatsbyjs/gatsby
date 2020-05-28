@@ -60,7 +60,7 @@ You can add custom JavaScript to your HTML document by using React's [dangerousl
     __html: `
             var name = 'world';
             console.log('Hello ' + name);
-        `
+        `,
   }}
 />
 ```

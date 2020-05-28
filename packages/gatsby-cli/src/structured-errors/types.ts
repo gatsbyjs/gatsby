@@ -48,12 +48,12 @@ export enum Level {
   ERROR = `ERROR`,
   WARNING = `WARNING`,
   INFO = `INFO`,
-  DEBUG = `DEBUG`
+  DEBUG = `DEBUG`,
 }
 
 export enum Type {
   GRAPHQL = `GRAPHQL`,
   CONFIG = `CONFIG`,
   WEBPACK = `WEBPACK`,
-  PLUGIN = `PLUGIN`
+  PLUGIN = `PLUGIN`,
 }

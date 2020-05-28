@@ -4,7 +4,7 @@ import { Span } from "opentracing"
 
 export const createSchemaCustomization = async ({
   refresh = false,
-  parentSpan
+  parentSpan,
 }: {
   refresh?: boolean
   parentSpan?: Span
@@ -16,6 +16,6 @@ export const createSchemaCustomization = async ({
     parentSpan,
     traceId: !refresh
       ? `initial-createSchemaCustomization`
-      : `refresh-createSchemaCustomization`
+      : `refresh-createSchemaCustomization`,
   })
 }

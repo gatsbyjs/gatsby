@@ -14,9 +14,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
-    }
+    },
   }
 })
 
@@ -31,29 +31,29 @@ async function queryResult(
       type: { name: `MarkdownRemark` },
       cache: {
         get: () => null,
-        set: () => null
+        set: () => null,
       },
       getNodesByType: type => [],
-      ...additionalParameters
+      ...additionalParameters,
     },
     {
       plugins: [],
-      ...pluginOptions
+      ...pluginOptions,
     }
   )
 
   const {
-    createSchemaComposer
+    createSchemaComposer,
   } = require(`../../../gatsby/src/schema/schema-composer`)
 
   const {
-    addInferredFields
+    addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
-    addNodes
+    addNodes,
   } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
   const {
-    getExampleObject
+    getExampleObject,
   } = require(`../../../gatsby/src/schema/infer/build-example-data`)
 
   const typeName = `MarkdownRemark`
@@ -64,11 +64,11 @@ async function queryResult(
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleObject(inferenceMetadata)
+    exampleValue: getExampleObject(inferenceMetadata),
   })
   tc.addFields(extendNodeTypeFields)
   sc.Query.addFields({
-    listNode: { type: [tc], resolve: () => nodes }
+    listNode: { type: [tc], resolve: () => nodes },
   })
   const schema = sc.buildSchema()
 
@@ -96,8 +96,8 @@ const bootstrapTest = (
     children: [],
     internal: {
       contentDigest: `whatever`,
-      mediaType: `text/markdown`
-    }
+      mediaType: `text/markdown`,
+    },
   }
   // Make some fake functions its expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
@@ -107,7 +107,7 @@ const bootstrapTest = (
     const createNode = markdownNode => {
       queryResult([markdownNode], query, {
         additionalParameters,
-        pluginOptions
+        pluginOptions,
       }).then(result => {
         if (result.errors) {
           done.fail(result.errors)
@@ -135,7 +135,7 @@ const bootstrapTest = (
         loadNodeContent,
         actions,
         createNodeId,
-        createContentDigest
+        createContentDigest,
       },
       { ...additionalParameters, ...pluginOptions }
     )
@@ -165,16 +165,16 @@ Where oh where is my little pony?`,
             children: [
               {
                 type: `text`,
-                value: `Where oh where is my little pony?`
-              }
+                value: `Where oh where is my little pony?`,
+              },
             ],
             properties: {},
             tagName: `p`,
-            type: `element`
-          }
+            type: `element`,
+          },
         ],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     }
   )
@@ -197,7 +197,7 @@ date: "2017-09-18T23:19:51.246Z"
       expect(node.excerptAst).toMatchObject({
         children: [],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     }
   )
@@ -229,20 +229,20 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
             children: [
               {
                 type: `text`,
-                value: `Where oh where is my little pony?`
-              }
+                value: `Where oh where is my little pony?`,
+              },
             ],
             properties: {},
             tagName: `p`,
-            type: `element`
+            type: `element`,
           },
           {
             type: `text`,
-            value: `\n`
-          }
+            value: `\n`,
+          },
         ],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -474,7 +474,7 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
             children: [
               {
                 type: `text`,
-                value: `Where oh `
+                value: `Where oh `,
               },
               {
                 children: [
@@ -482,23 +482,23 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
                     children: [
                       {
                         type: `text`,
-                        value: `where`
-                      }
+                        value: `where`,
+                      },
                     ],
                     properties: {},
                     tagName: `em`,
-                    type: `element`
-                  }
+                    type: `element`,
+                  },
                 ],
                 properties: {
-                  href: `nick.com`
+                  href: `nick.com`,
                 },
                 tagName: `a`,
-                type: `element`
+                type: `element`,
               },
               {
                 type: `text`,
-                value: ` `
+                value: ` `,
               },
               {
                 children: [
@@ -506,43 +506,43 @@ Where oh [*where*](nick.com) **_is_** ![that pony](pony.png)?`,
                     children: [
                       {
                         type: `text`,
-                        value: `is`
-                      }
+                        value: `is`,
+                      },
                     ],
                     properties: {},
                     tagName: `em`,
-                    type: `element`
-                  }
+                    type: `element`,
+                  },
                 ],
                 properties: {},
                 tagName: `strong`,
-                type: `element`
+                type: `element`,
               },
               {
                 type: `text`,
-                value: ` `
+                value: ` `,
               },
               {
                 children: [],
                 properties: {
                   alt: `that pony`,
-                  src: `pony.png`
+                  src: `pony.png`,
                 },
                 tagName: `img`,
-                type: `element`
+                type: `element`,
               },
               {
                 type: `text`,
-                value: `?`
-              }
+                value: `?`,
+              },
             ],
             properties: {},
             tagName: `p`,
-            type: `element`
-          }
+            type: `element`,
+          },
         ],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     }
   )
@@ -699,31 +699,31 @@ Where is my <code>pony</code> named leo?`,
             children: [
               {
                 type: `text`,
-                value: `Where is my `
+                value: `Where is my `,
               },
               {
                 children: [
                   {
                     type: `text`,
-                    value: `pony`
-                  }
+                    value: `pony`,
+                  },
                 ],
                 properties: {},
                 tagName: `code`,
-                type: `element`
+                type: `element`,
               },
               {
                 type: `text`,
-                value: ` named leo?`
-              }
+                value: ` named leo?`,
+              },
             ],
             properties: {},
             tagName: `p`,
-            type: `element`
-          }
+            type: `element`,
+          },
         ],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -754,16 +754,16 @@ Where oh where is that pony? Is he in the stable or down by the stream?`,
             children: [
               {
                 type: `text`,
-                value: `Where oh where is that pony? Is he in the stable…`
-              }
+                value: `Where oh where is that pony? Is he in the stable…`,
+              },
             ],
             properties: {},
             tagName: `p`,
-            type: `element`
-          }
+            type: `element`,
+          },
         ],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     }
   )
@@ -797,35 +797,35 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet v
             children: [
               {
                 type: `text`,
-                value: `Where oh where is that `
+                value: `Where oh where is that `,
               },
               {
                 children: [
                   {
                     type: `text`,
-                    value: `pony`
-                  }
+                    value: `pony`,
+                  },
                 ],
                 properties: {},
                 tagName: `em`,
-                type: `element`
+                type: `element`,
               },
               {
                 type: `text`,
-                value: `? Is he in the stable or by the stream?`
-              }
+                value: `? Is he in the stable or by the stream?`,
+              },
             ],
             properties: {},
             tagName: `p`,
-            type: `element`
+            type: `element`,
           },
           {
             type: `text`,
-            value: `\n`
-          }
+            value: `\n`,
+          },
         ],
         data: { quirksMode: false },
-        type: `root`
+        type: `root`,
       })
     },
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
@@ -856,7 +856,7 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
       expect(node.wordCount).toEqual({
         paragraphs: 2,
         sentences: 19,
-        words: 150
+        words: 150,
       })
     }
   )
@@ -899,7 +899,7 @@ date: "2017-09-18T23:19:51.246Z"
       expect(node.wordCount).toEqual({
         paragraphs: null,
         sentences: null,
-        words: null
+        words: null,
       })
     }
   )
@@ -1046,9 +1046,9 @@ some other text`,
     {
       pluginOptions: {
         tableOfContents: {
-          maxDepth: 1
-        }
-      }
+          maxDepth: 1,
+        },
+      },
     }
   )
 
@@ -1137,11 +1137,11 @@ It's easier than you may imagine`,
               classPrefix: `language-`,
               inlineCodeMarker: null,
               showLineNumbers: false,
-              noInlineHighlight: false
-            }
-          }
-        ]
-      }
+              noInlineHighlight: false,
+            },
+          },
+        ],
+      },
     }
   )
 })
@@ -1256,12 +1256,12 @@ describe(`Headings are generated correctly from schema`, () => {
       expect(node.headings).toEqual([
         {
           value: `first title`,
-          depth: 1
+          depth: 1,
         },
         {
           value: `second title`,
-          depth: 2
-        }
+          depth: 2,
+        },
       ])
     }
   )
@@ -1284,13 +1284,13 @@ describe(`Headings are generated correctly from schema`, () => {
         {
           id: null,
           value: `first title`,
-          depth: 1
+          depth: 1,
         },
         {
           id: null,
           value: `second title`,
-          depth: 2
-        }
+          depth: 2,
+        },
       ])
     }
   )
@@ -1313,13 +1313,13 @@ describe(`Headings are generated correctly from schema`, () => {
         {
           id: `first-title`,
           value: `first title`,
-          depth: 1
+          depth: 1,
         },
         {
           id: `second-title`,
           value: `second title`,
-          depth: 2
-        }
+          depth: 2,
+        },
       ])
     },
     {
@@ -1330,10 +1330,10 @@ describe(`Headings are generated correctly from schema`, () => {
           // if options were not provided and lot of plugins rely on this and are not checking for options existence)
           {
             resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
-            pluginOptions: {}
-          }
-        ]
-      }
+            pluginOptions: {},
+          },
+        ],
+      },
     }
   )
 
@@ -1353,12 +1353,12 @@ describe(`Headings are generated correctly from schema`, () => {
       expect(node.headings).toEqual([
         {
           value: `first title`,
-          depth: 1
+          depth: 1,
         },
         {
           value: `second title`,
-          depth: 2
-        }
+          depth: 2,
+        },
       ])
     }
   )
@@ -1377,8 +1377,8 @@ describe(`Headings are generated correctly from schema`, () => {
       expect(node.headings).toEqual([
         {
           value: `An important heading with inline code and text`,
-          depth: 1
-        }
+          depth: 1,
+        },
       ])
     }
   )

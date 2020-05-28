@@ -31,11 +31,11 @@ describe(`loadThemes`, () => {
 
     const {
       config: { plugins },
-      themes
+      themes,
     } = await loadThemes(config, {
       useLegacyThemes: false,
       configFilePath,
-      rootDir: path.dirname(configFilePath)
+      rootDir: path.dirname(configFilePath),
     })
 
     // implicit assertion - above doesn't throw `Couldn't find the "x" plugin`
@@ -46,14 +46,14 @@ describe(`loadThemes`, () => {
     expect(plugins).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          resolve: `gatsby-theme-child`
+          resolve: `gatsby-theme-child`,
         }),
         expect.objectContaining({
-          resolve: `gatsby-theme-parent`
+          resolve: `gatsby-theme-parent`,
         }),
         expect.objectContaining({
-          resolve: `gatsby-plugin-added-by-parent-theme`
-        })
+          resolve: `gatsby-plugin-added-by-parent-theme`,
+        }),
       ])
     )
 
@@ -68,7 +68,7 @@ describe(`loadThemes`, () => {
             require.resolve(
               `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child`
             )
-          )
+          ),
         }),
         expect.objectContaining({
           themeName: `gatsby-theme-parent`,
@@ -77,7 +77,7 @@ describe(`loadThemes`, () => {
             require.resolve(
               `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent`
             )
-          )
+          ),
         }),
 
         expect.objectContaining({
@@ -87,8 +87,8 @@ describe(`loadThemes`, () => {
             require.resolve(
               `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent/node_modules/gatsby-plugin-added-by-parent-theme`
             )
-          )
-        })
+          ),
+        }),
       ])
     )
   })

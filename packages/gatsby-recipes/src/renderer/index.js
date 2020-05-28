@@ -9,7 +9,7 @@ const resourceComponents = require(`./resource-components`)
 const scope = {
   React,
   Config: `div`, // Keep this as a noop for now
-  ...resourceComponents
+  ...resourceComponents,
 }
 
 // We want to call the function constructor with our resulting
@@ -31,7 +31,7 @@ const stripMdxLayout = str => {
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
-    plugins: [[babelPluginTransformReactJsx, { useBuiltIns: true }]]
+    plugins: [[babelPluginTransformReactJsx, { useBuiltIns: true }]],
   })
 
   return code

@@ -58,9 +58,9 @@ export default function PostTemplate({
   data: {
     markdownRemark: {
       frontmatter: { title, date },
-      html
-    }
-  }
+      html,
+    },
+  },
 }) {
   return (
     <div>

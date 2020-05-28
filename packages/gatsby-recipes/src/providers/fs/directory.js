@@ -52,7 +52,7 @@ const destroy = async (context, directoryResource) => {
 
 module.exports.plan = async (context, { id, path: directoryPath }) => {
   const plan = {
-    describe: `Create directory "${directoryPath}"`
+    describe: `Create directory "${directoryPath}"`,
   }
 
   return plan
@@ -62,7 +62,7 @@ const message = resource => `Created directory "${resource.path}"`
 
 const schema = {
   path: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 exports.schema = schema
 exports.validate = resource =>

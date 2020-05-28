@@ -8,7 +8,7 @@ describe(`basic functionality`, () => {
     expect(
       getPublicPath({
         assetPrefix,
-        prefixPaths: true
+        prefixPaths: true,
       })
     ).toBe(assetPrefix)
   })
@@ -17,7 +17,7 @@ describe(`basic functionality`, () => {
     expect(
       getPublicPath({
         pathPrefix,
-        prefixPaths: true
+        prefixPaths: true,
       })
     ).toBe(`/blog`)
   })
@@ -27,7 +27,7 @@ describe(`basic functionality`, () => {
       getPublicPath({
         pathPrefix,
         assetPrefix,
-        prefixPaths: true
+        prefixPaths: true,
       })
     ).toBe(`${assetPrefix}${pathPrefix}`)
   })
@@ -39,7 +39,7 @@ describe(`basic functionality`, () => {
         getPublicPath({
           pathPrefix,
           assetPrefix: localAssetPrefix,
-          prefixPaths: true
+          prefixPaths: true,
         })
       ).toBe(`${localAssetPrefix}${pathPrefix}`)
     })
@@ -50,7 +50,7 @@ describe(`basic functionality`, () => {
         getPublicPath({
           pathPrefix,
           assetPrefix: cdn,
-          prefixPaths: true
+          prefixPaths: true,
         })
       ).toBe(`${cdn}${pathPrefix}`)
     })
@@ -61,7 +61,7 @@ describe(`basic functionality`, () => {
         getPublicPath({
           pathPrefix,
           assetPrefix: cdn,
-          prefixPaths: true
+          prefixPaths: true,
         })
       ).toBe(`${cdn}${pathPrefix}`)
     })
@@ -72,7 +72,7 @@ describe(`basic functionality`, () => {
           getPublicPath({
             pathPrefix,
             assetPrefix: prefix,
-            prefixPaths: true
+            prefixPaths: true,
           })
         ).toBe(`${prefix.slice(0, -1)}${pathPrefix}`)
       })

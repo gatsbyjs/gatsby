@@ -8,14 +8,14 @@ const validateJsx = () => tree => {
   visit(tree, `jsx`, node => {
     try {
       transform(`<>${node.value}<>`, {
-        plugins: [babelPluginTransformReactJsx]
+        plugins: [babelPluginTransformReactJsx],
       })
     } catch (e) {
       e.syntaxError = {
         errorType: `parse`,
         errorDescription: `Unable to parse JSX`,
         line: node.position.start.line + e.loc.line - 1,
-        trace: e.toString()
+        trace: e.toString(),
       }
 
       throw e

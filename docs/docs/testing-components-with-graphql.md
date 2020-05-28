@@ -55,9 +55,9 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: `Default Starter`
-        }
-      }
+          title: `Default Starter`,
+        },
+      },
     })
   )
 })
@@ -149,9 +149,9 @@ beforeEach(() => {
     render({
       site: {
         siteMetadata: {
-          title: `Default Starter`
-        }
-      }
+          title: `Default Starter`,
+        },
+      },
     })
   )
 })
@@ -161,9 +161,9 @@ describe("Index", () => {
     const data = {
       site: {
         siteMetadata: {
-          author: "Your name"
-        }
-      }
+          author: "Your name",
+        },
+      },
     }
 
     const tree = renderer.create(<Index data={data} />).toJSON()
@@ -315,9 +315,9 @@ describe("Header", () => {
     const data = {
       site: {
         siteMetadata: {
-          title: "Gatsby Starter Blog"
-        }
-      }
+          title: "Gatsby Starter Blog",
+        },
+      },
     }
     const tree = renderer.create(<Header data={data} />).toJSON()
     expect(tree).toMatchSnapshot()

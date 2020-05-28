@@ -8,7 +8,7 @@ class ScrollSyncSection extends Component {
 
     this.state = {
       activeItemHash: `NONE`,
-      itemTopOffsets: []
+      itemTopOffsets: [],
     }
 
     this.calculateItemTopOffsets = this.calculateItemTopOffsets.bind(this)
@@ -33,7 +33,7 @@ class ScrollSyncSection extends Component {
 
     const itemIds = _getItemIds(itemList)
     this.setState({
-      itemTopOffsets: _getElementTopOffsetsById(itemIds)
+      itemTopOffsets: _getElementTopOffsetsById(itemIds),
     })
   }
 
@@ -54,7 +54,7 @@ class ScrollSyncSection extends Component {
     })
 
     this.setState({
-      activeItemHash: item ? item.hash : `NONE`
+      activeItemHash: item ? item.hash : `NONE`,
     })
   }
 
@@ -87,7 +87,7 @@ const _getElementTopOffsetsById = ids => {
       return element
         ? {
             hash,
-            offsetTop: element.offsetTop - bannerHeight - navigationHeight
+            offsetTop: element.offsetTop - bannerHeight - navigationHeight,
           }
         : null
     })

@@ -47,7 +47,7 @@ const ReactJoin = (arrayOfElements, joiner) =>
     if (index > 0) {
       acc.push(
         React.cloneElement(joiner, {
-          key: `joiner ${index}`
+          key: `joiner ${index}`,
         })
       )
     }
@@ -142,7 +142,7 @@ const SignatureElement = ({
   definition,
   ignoreParams,
   fallbackToName = false,
-  block = false
+  block = false,
 }) => {
   if (isFunctionDef(definition, false)) {
     return (
@@ -196,7 +196,7 @@ export {
   SignatureElement,
   SignatureBlock,
   TypeComponent,
-  Wrapper as SignatureWrapper
+  Wrapper as SignatureWrapper,
 }
 
 export const fragment = graphql`

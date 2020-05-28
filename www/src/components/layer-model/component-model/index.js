@@ -6,7 +6,7 @@ import {
   BuildLayerContent,
   DataLayerContent,
   ViewLayerContent,
-  AppLayerContent
+  AppLayerContent,
 } from "./component-content-sections"
 
 const layers = [
@@ -14,32 +14,32 @@ const layers = [
     title: `Content`,
     icon: `AbstractSymbol`,
     baseColor: `orange`,
-    component: ContentLayerContent
+    component: ContentLayerContent,
   },
   {
     title: `Build`,
     icon: `AtomicSymbol`,
     baseColor: `green`,
-    component: BuildLayerContent
+    component: BuildLayerContent,
   },
   {
     title: `Data`,
     icon: `GraphqlLogo`,
     baseColor: `magenta`,
-    component: DataLayerContent
+    component: DataLayerContent,
   },
   {
     title: `View`,
     icon: `ReactLogo`,
     baseColor: `blue`,
-    component: ViewLayerContent
+    component: ViewLayerContent,
   },
   {
     title: `App`,
     icon: `AppWindow`,
     baseColor: `yellow`,
-    component: AppLayerContent
-  }
+    component: AppLayerContent,
+  },
 ]
 
 const ComponentModel = ({ initialLayer, ...props }) => (

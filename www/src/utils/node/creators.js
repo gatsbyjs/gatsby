@@ -31,8 +31,8 @@ exports.createPages = async ({ graphql, actions }) => {
       component: slash(creatorPageTemplate),
       context: {
         slug: node.fields.slug,
-        name: node.name
-      }
+        name: node.name,
+      },
     })
   })
 }
@@ -45,7 +45,7 @@ exports.onCreateNode = ({ node, actions }) => {
     const validTypes = {
       individual: `people`,
       agency: `agencies`,
-      company: `companies`
+      company: `companies`,
     }
 
     if (!validTypes[node.type]) {
@@ -54,7 +54,7 @@ exports.onCreateNode = ({ node, actions }) => {
       )
     }
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {
-      lower: true
+      lower: true,
     })}`
     createNodeField({ node, name: `slug`, value: slug })
   }

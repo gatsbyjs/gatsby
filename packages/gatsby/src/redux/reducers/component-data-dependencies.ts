@@ -3,7 +3,7 @@ import { IGatsbyState, ActionsUnion } from "../types"
 export const componentDataDependenciesReducer = (
   state: IGatsbyState["componentDataDependencies"] = {
     nodes: new Map(),
-    connections: new Map()
+    connections: new Map(),
   },
   action: ActionsUnion
 ): IGatsbyState["componentDataDependencies"] => {

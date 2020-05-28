@@ -15,7 +15,7 @@ import {
   ISetProgramStatusAction,
   IPageQueryRunAction,
   IRemoveStaleJobAction,
-  ISetSiteConfig
+  ISetSiteConfig,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -30,7 +30,7 @@ export const createPageDependency = (
   {
     path,
     nodeId,
-    connection
+    connection,
   }: { path: string; nodeId?: string; connection?: string },
   plugin = ``
 ): ICreatePageDependencyAction => {
@@ -40,8 +40,8 @@ export const createPageDependency = (
     payload: {
       path,
       nodeId,
-      connection
-    }
+      connection,
+    },
   }
 }
 
@@ -56,8 +56,8 @@ export const deleteComponentsDependencies = (
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
-      paths
-    }
+      paths,
+    },
   }
 }
 
@@ -68,7 +68,7 @@ export const deleteComponentsDependencies = (
  */
 export const replaceComponentQuery = ({
   query,
-  componentPath
+  componentPath,
 }: {
   query: string
   componentPath: string
@@ -77,8 +77,8 @@ export const replaceComponentQuery = ({
     type: `REPLACE_COMPONENT_QUERY`,
     payload: {
       query,
-      componentPath
-    }
+      componentPath,
+    },
   }
 }
 
@@ -94,7 +94,7 @@ export const replaceStaticQuery = (
   return {
     type: `REPLACE_STATIC_QUERY`,
     plugin,
-    payload: args
+    payload: args,
   }
 }
 
@@ -113,7 +113,7 @@ export const queryExtracted = (
     type: `QUERY_EXTRACTED`,
     plugin,
     traceId,
-    payload: { componentPath, query }
+    payload: { componentPath, query },
   }
 }
 
@@ -131,7 +131,7 @@ export const queryExtractionGraphQLError = (
     type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
     plugin,
     traceId,
-    payload: { componentPath, error }
+    payload: { componentPath, error },
   }
 }
 
@@ -150,7 +150,7 @@ export const queryExtractedBabelSuccess = (
     type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
     plugin,
     traceId,
-    payload: { componentPath }
+    payload: { componentPath },
   }
 }
 
@@ -168,7 +168,7 @@ export const queryExtractionBabelError = (
     type: `QUERY_EXTRACTION_BABEL_ERROR`,
     plugin,
     traceId,
-    payload: { componentPath, error }
+    payload: { componentPath, error },
   }
 }
 
@@ -185,7 +185,7 @@ export const setProgramStatus = (
     type: `SET_PROGRAM_STATUS`,
     plugin,
     traceId,
-    payload: status
+    payload: status,
   }
 }
 
@@ -202,7 +202,7 @@ export const pageQueryRun = (
     type: `PAGE_QUERY_RUN`,
     plugin,
     traceId,
-    payload: { path, componentPath, isPage }
+    payload: { path, componentPath, isPage },
   }
 }
 
@@ -220,8 +220,8 @@ export const removeStaleJob = (
     plugin,
     traceId,
     payload: {
-      contentDigest
-    }
+      contentDigest,
+    },
   }
 }
 
@@ -254,21 +254,21 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
       reporter.panic({
         id: `10122`,
         context: {
-          sourceMessage: errorMessages.join(`\n`)
-        }
+          sourceMessage: errorMessages.join(`\n`),
+        },
       })
     }
 
     reporter.panic({
       id: `10122`,
       context: {
-        sourceMessage: result.error.message
-      }
+        sourceMessage: result.error.message,
+      },
     })
   }
 
   return {
     type: `SET_SITE_CONFIG`,
-    payload: normalizedPayload
+    payload: normalizedPayload,
   }
 }

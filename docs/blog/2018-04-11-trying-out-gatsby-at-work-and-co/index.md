@@ -218,7 +218,7 @@ Here’s why: Contentful’s Content Preview dashboard doesn’t give you that k
 createPage({
   component: contentPageTemplate,
   context,
-  path: `${language}/${slugs.join("/")}/`
+  path: `${language}/${slugs.join("/")}/`,
 })
 
 // On staging, recreate the page with a path corresponding to its ID
@@ -226,7 +226,7 @@ if (process.env.GATSBY_ENV === ENV.STAGING) {
   createPage({
     component: contentPageTemplate,
     context,
-    path: `${language}/${id}/`
+    path: `${language}/${id}/`,
   })
 }
 ```

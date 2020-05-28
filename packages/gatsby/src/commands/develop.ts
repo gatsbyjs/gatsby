@@ -64,13 +64,13 @@ class ControllableScript {
   }
   start(): void {
     const tmpFileName = tmp.tmpNameSync({
-      tmpdir: path.join(process.cwd(), `.cache`)
+      tmpdir: path.join(process.cwd(), `.cache`),
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
     this.process = spawn(`node`, [tmpFileName], {
       env: process.env,
-      stdio: [`inherit`, `inherit`, `inherit`, `ipc`]
+      stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
   async stop(signal: string | null = null, code?: number): Promise<void> {
@@ -82,8 +82,8 @@ class ControllableScript {
         type: `COMMAND`,
         action: {
           type: `EXIT`,
-          payload: code
-        }
+          payload: code,
+        },
       })
     }
 
@@ -113,7 +113,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     const args = ${JSON.stringify({
       ...program,
       port: developPort,
-      proxyPort
+      proxyPort,
     })};
     cmd(args);
   `)
@@ -121,7 +121,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxy = startDevelopProxy({
     proxyPort: proxyPort,
     targetPort: developPort,
-    programPath: program.directory
+    programPath: program.directory,
   })
 
   const statusServerPort = await getRandomPort()
@@ -129,7 +129,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let unlock
   if (!isCI()) {
     unlock = await createServiceLock(program.directory, `developstatusserver`, {
-      port: statusServerPort
+      port: statusServerPort,
     })
 
     if (!unlock) {
@@ -208,7 +208,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         `develop process needs to be restarted to apply the changes to ${file}`
       )
       io.emit(`develop:needs-restart`, {
-        dirtyFile: file
+        dirtyFile: file,
       })
     })
   }
@@ -222,7 +222,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       }),
       new Promise(resolve => {
         proxy.server.close(resolve)
-      })
+      }),
     ])
   })
 

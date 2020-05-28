@@ -2,7 +2,7 @@ import {
   IGatsbyState,
   IRemoveStaleJobAction,
   IGatsbyIncompleteJobV2,
-  IGatsbyCompleteJobV2
+  IGatsbyCompleteJobV2,
 } from "../redux/types"
 
 import { isJobStale } from "../utils/jobs-manager"

@@ -18,10 +18,10 @@ class BabelPluginExtractImportNames {
                 if (path.key === `local`) {
                   names[path.node.name] = source
                 }
-              }
+              },
             })
-          }
-        }
+          },
+        },
       }
     })
   }
@@ -32,7 +32,7 @@ module.exports = src => {
     const plugin = new BabelPluginExtractImportNames()
     babel.transform(src, {
       configFile: false,
-      plugins: [plugin.plugin]
+      plugins: [plugin.plugin],
     })
     return plugin.state
   } catch (e) {

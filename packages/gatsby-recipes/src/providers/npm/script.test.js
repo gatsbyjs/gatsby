@@ -12,7 +12,7 @@ describe(`npm script resource`, () => {
       resourceName: `NPMScript`,
       context: { root },
       initialObject: { name: `apple`, command: `foot` },
-      partialUpdate: { command: `foot2` }
+      partialUpdate: { command: `foot2` },
     })
   })
 })

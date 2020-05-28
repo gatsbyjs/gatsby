@@ -9,7 +9,7 @@ jest.mock(`../loader`, () => {
     },
     loadPage(path: string): Promise<{ loadPage: boolean; path: string }> {
       return Promise.resolve({ loadPage: true, path })
-    }
+    },
   }
 })
 
@@ -18,7 +18,7 @@ afterAll(cleanup)
 describe(`EnsureResources`, () => {
   it(`loads pages synchronously`, () => {
     const location = {
-      pathname: `/`
+      pathname: `/`,
     }
     const { container } = render(
       <EnsureResources location={location}>

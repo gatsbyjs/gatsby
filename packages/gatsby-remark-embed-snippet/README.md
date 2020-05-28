@@ -28,16 +28,16 @@ module.exports = {
         plugins: [
           {
             resolve: `gatsby-remark-embed-snippet`,
-            options: {}
+            options: {},
           },
           {
             resolve: `gatsby-remark-prismjs`,
-            options: {}
-          }
-        ]
-      }
-    }
-  ]
+            options: {},
+          },
+        ],
+      },
+    },
+  ],
 }
 ```
 

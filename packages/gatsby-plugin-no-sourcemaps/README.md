@@ -16,9 +16,9 @@ module.exports = {
   // ...
   plugins: [
     {
-      resolve: "gatsby-plugin-no-sourcemaps"
-    }
-  ]
+      resolve: "gatsby-plugin-no-sourcemaps",
+    },
+  ],
   // ...
 }
 ```

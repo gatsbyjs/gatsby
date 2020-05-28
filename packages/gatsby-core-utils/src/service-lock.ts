@@ -27,7 +27,7 @@ const getDataFilePath = (siteDir: string, serviceName: string): string =>
 
 const lockfileOptions = {
   // Use the minimum stale duration
-  stale: 5000
+  stale: 5000,
 }
 
 type UnlockFn = () => Promise<void>

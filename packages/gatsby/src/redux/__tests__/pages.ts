@@ -2,7 +2,7 @@ import { readFile } from "fs-extra"
 
 jest.mock(`fs-extra`, () => {
   return {
-    readFile: jest.fn(() => `contents`)
+    readFile: jest.fn(() => `contents`),
   }
 })
 import glob from "glob"
@@ -28,7 +28,7 @@ describe(`Add pages`, () => {
     const action = actions.createPage(
       {
         path: `/hi/`,
-        component: `/whatever/index.js`
+        component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )
@@ -40,7 +40,7 @@ describe(`Add pages`, () => {
   it(`Fails if path is missing`, () => {
     const action = actions.createPage(
       {
-        component: `/path/to/file1.js`
+        component: `/path/to/file1.js`,
       } as any,
       { id: `test`, name: `test` }
     )
@@ -50,7 +50,7 @@ describe(`Add pages`, () => {
   it(`Fails if component path is missing`, () => {
     const action = actions.createPage(
       {
-        path: `/whatever/`
+        path: `/whatever/`,
       } as any,
       { id: `test`, name: `test` }
     )
@@ -61,7 +61,7 @@ describe(`Add pages`, () => {
     const action = actions.createPage(
       {
         path: `/whatever/`,
-        component: `cheese.js`
+        component: `cheese.js`,
       },
       { id: `test`, name: `test` }
     )
@@ -75,8 +75,8 @@ describe(`Add pages`, () => {
         path: `/yo/`,
         context: {
           path: `/yo/`,
-          matchPath: `/pizz*`
-        }
+          matchPath: `/pizz*`,
+        },
       },
       { id: `test`, name: `test` }
     )
@@ -87,7 +87,7 @@ describe(`Add pages`, () => {
     const action = actions.createPage(
       {
         path: `hi/`,
-        component: `/whatever/index.js`
+        component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )
@@ -101,8 +101,8 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
         context: {
-          id: 123
-        }
+          id: 123,
+        },
       },
       { id: `test`, name: `test` }
     )
@@ -116,7 +116,7 @@ describe(`Add pages`, () => {
       {
         path: `/hi/`,
         component: `/whatever/index.js`,
-        matchPath: `/hi-from-somewhere-else/`
+        matchPath: `/hi-from-somewhere-else/`,
       },
       { id: `test`, name: `test` }
     )
@@ -129,14 +129,14 @@ describe(`Add pages`, () => {
     const action = actions.createPage(
       {
         path: `/hi/`,
-        component: `/whatever/index.js`
+        component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )
     const action2 = actions.createPage(
       {
         path: `/hi/pizza/`,
-        component: `/whatever/index.js`
+        component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )
@@ -150,7 +150,7 @@ describe(`Add pages`, () => {
     const action = actions.createPage(
       {
         path: `/hi/`,
-        component: `/whatever/index.js`
+        component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )
@@ -159,7 +159,7 @@ describe(`Add pages`, () => {
     const action2 = actions.createPage(
       {
         path: `/hi/`,
-        component: `/whatever2/index.js`
+        component: `/whatever2/index.js`,
       },
       { id: `test`, name: `test` }
     )
@@ -174,7 +174,7 @@ describe(`Add pages`, () => {
     const action = actions.createPage(
       {
         path: `/hi/`,
-        component: `/whatever/index.js`
+        component: `/whatever/index.js`,
       },
       { id: `test`, name: `test` }
     )

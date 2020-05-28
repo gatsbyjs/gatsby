@@ -36,7 +36,7 @@ module.exports = {
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ "content:encoded": edge.node.html }]
+                  custom_elements: [{ "content:encoded": edge.node.html }],
                 })
               })
             },
@@ -67,12 +67,12 @@ module.exports = {
             // if not provided or `undefined`, all pages will have feed reference inserted
             match: "^/blog/",
             // optional configuration to specify external rss feed, such as feedburner
-            link: "https://feeds.feedburner.com/gatsby/blog"
-          }
-        ]
-      }
-    }
-  ]
+            link: "https://feeds.feedburner.com/gatsby/blog",
+          },
+        ],
+      },
+    },
+  ],
 }
 ```
 

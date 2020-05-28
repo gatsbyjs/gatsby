@@ -25,9 +25,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      strictMath: true
-    }
-  }
+      strictMath: true,
+    },
+  },
 ]
 ```
 
@@ -40,10 +40,10 @@ plugins: [
     resolve: `gatsby-plugin-less`,
     options: {
       cssLoaderOptions: {
-        camelCase: false
-      }
-    }
-  }
+        camelCase: false,
+      },
+    },
+  },
 ]
 ```
 
@@ -55,9 +55,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      lessPlugins: [MyLessPlugin]
-    }
-  }
+      lessPlugins: [MyLessPlugin],
+    },
+  },
 ]
 ```
 
@@ -79,9 +79,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      postCssPlugins: [somePostCssPlugin()]
-    }
-  }
+      postCssPlugins: [somePostCssPlugin()],
+    },
+  },
 ]
 ```
 

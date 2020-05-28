@@ -99,7 +99,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
     currentState: (currentResource && currentResource.content) || ``,
     newState,
     describe: `Write ${filePath}`,
-    diff: ``
+    diff: ``,
   }
 
   if (plan.currentState !== plan.newState) {
@@ -114,7 +114,7 @@ const message = resource => `Wrote file ${resource.path}`
 const schema = {
   path: Joi.string(),
   content: Joi.string(),
-  ...resourceSchema
+  ...resourceSchema,
 }
 exports.schema = schema
 exports.validate = resource =>

@@ -9,7 +9,7 @@ const Prefix = {
       throw new Error(`Unexpected data key: ${prefixedKey}`)
     }
     return { index: Number(match[1]), originalKey: match[2] }
-  }
+  },
 }
 
 /**
@@ -79,16 +79,16 @@ export function merge(queries) {
     variableDefinitions: mergedVariableDefinitions,
     selectionSet: {
       kind: Kind.SELECTION_SET,
-      selections: mergedSelections
-    }
+      selections: mergedSelections,
+    },
   }
 
   return {
     query: {
       kind: Kind.DOCUMENT,
-      definitions: [mergedQueryDefinition, ...mergedFragmentMap.values()]
+      definitions: [mergedQueryDefinition, ...mergedFragmentMap.values()],
     },
-    variables: mergedVariables
+    variables: mergedVariables,
   }
 }
 
@@ -116,18 +116,18 @@ const Visitors = {
         },
         leave: () => {
           currentFragmentName = null
-        }
+        },
       },
       [Kind.VARIABLE]: () => {
         if (currentFragmentName) {
           fragmentsWithVariables.add(currentFragmentName)
         }
-      }
+      },
     }
   },
   prefixVariables: prefix => {
     return {
-      [Kind.VARIABLE]: variable => prefixNodeName(variable, prefix)
+      [Kind.VARIABLE]: variable => prefixNodeName(variable, prefix),
     }
   },
   prefixFragmentNames: (prefix, fragmentNames) => {
@@ -135,9 +135,9 @@ const Visitors = {
       [Kind.FRAGMENT_DEFINITION]: def =>
         fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def,
       [Kind.FRAGMENT_SPREAD]: def =>
-        fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def
+        fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def,
     }
-  }
+  },
 }
 
 function prefixQueryParts(prefix, query) {
@@ -155,7 +155,7 @@ function prefixQueryParts(prefix, query) {
     visitInParallel([
       // Note: the sequence is important due to how visitInParallel deals with node edits
       Visitors.detectFragmentsWithVariables(fragmentsWithVariables),
-      Visitors.prefixVariables(prefix)
+      Visitors.prefixVariables(prefix),
     ])
   )
 
@@ -172,7 +172,7 @@ function prefixQueryParts(prefix, query) {
         [Kind.FRAGMENT_DEFINITION]: [`selectionSet`],
         [Kind.INLINE_FRAGMENT]: [`selectionSet`],
         [Kind.FIELD]: [`selectionSet`],
-        [Kind.SELECTION_SET]: [`selections`]
+        [Kind.SELECTION_SET]: [`selections`],
       }
     )
   }
@@ -184,7 +184,7 @@ function prefixQueryParts(prefix, query) {
 
   return {
     query: document,
-    variables: prefixedVariables
+    variables: prefixedVariables,
   }
 }
 
@@ -201,10 +201,10 @@ function aliasTopLevelFields(prefix, doc) {
         ...def,
         selectionSet: {
           ...def.selectionSet,
-          selections: aliasFieldsInSelection(prefix, selections, doc)
-        }
+          selections: aliasFieldsInSelection(prefix, selections, doc),
+        },
       }
-    }
+    },
   }
   return visit(doc, transformer, { [Kind.DOCUMENT]: [`definitions`] })
 }
@@ -238,7 +238,7 @@ function aliasFieldsInSelection(prefix, selections, document) {
         const inlineFragment = inlineFragmentSpread(selection, document)
         return [
           addSkipDirective(selection),
-          aliasFieldsInInlineFragment(prefix, inlineFragment, document)
+          aliasFieldsInInlineFragment(prefix, inlineFragment, document),
         ]
       }
       case Kind.FIELD:
@@ -256,13 +256,13 @@ function addSkipDirective(node) {
       {
         kind: Kind.ARGUMENT,
         name: { kind: Kind.NAME, value: `if` },
-        value: { kind: Kind.BOOLEAN, value: true }
-      }
-    ]
+        value: { kind: Kind.BOOLEAN, value: true },
+      },
+    ],
   }
   return {
     ...node,
-    directives: [skipDirective]
+    directives: [skipDirective],
   }
 }
 
@@ -281,8 +281,8 @@ function aliasFieldsInInlineFragment(prefix, fragment, document) {
     ...fragment,
     selectionSet: {
       ...fragment.selectionSet,
-      selections: aliasFieldsInSelection(prefix, selections, document)
-    }
+      selections: aliasFieldsInSelection(prefix, selections, document),
+    },
   }
 }
 
@@ -310,7 +310,7 @@ function inlineFragmentSpread(spread, document) {
     kind: Kind.INLINE_FRAGMENT,
     typeCondition,
     selectionSet,
-    directives: spread.directives
+    directives: spread.directives,
   }
 }
 
@@ -319,8 +319,8 @@ function prefixNodeName(namedNode, prefix) {
     ...namedNode,
     name: {
       ...namedNode.name,
-      value: prefix + namedNode.name.value
-    }
+      value: prefix + namedNode.name.value,
+    },
   }
 }
 
@@ -337,8 +337,8 @@ function aliasField(field, aliasPrefix) {
     ...field,
     alias: {
       ...aliasNode,
-      value: aliasPrefix + aliasNode.value
-    }
+      value: aliasPrefix + aliasNode.value,
+    },
   }
 }
 

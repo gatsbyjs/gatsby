@@ -57,13 +57,13 @@ function findDoc(doc) {
 
 function getPrevAndNext(slug) {
   const docIndex = flattenedDocs.findIndex(findDoc, {
-    link: slug
+    link: slug,
   })
   const tutorialIndex = flattenedTutorials.findIndex(findDoc, {
-    link: slug
+    link: slug,
   })
   const contributingIndex = flattenedContributing.findIndex(findDoc, {
-    link: slug
+    link: slug,
   })
 
   // add values to page context for next and prev page

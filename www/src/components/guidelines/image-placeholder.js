@@ -13,7 +13,7 @@ ImagePlaceholder.defaultProps = {
   bg: `grey.10`,
   flex: `0 0 auto`,
   height: 0,
-  width: `100%`
+  width: `100%`,
 }
 
 export default ImagePlaceholder

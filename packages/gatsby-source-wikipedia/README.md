@@ -24,19 +24,19 @@ module.exports = {
         queries: [
           {
             query: `progressive web app`,
-            limit: 5
+            limit: 5,
           },
           {
             query: `cheese`,
-            limit: 10
+            limit: 10,
           },
           {
             query: `developers`,
-            limit: 10
-          }
-        ]
-      }
-    }
-  ]
+            limit: 10,
+          },
+        ],
+      },
+    },
+  ],
 }
 ```

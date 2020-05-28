@@ -27,15 +27,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
     },
     phantomActivity: () => {
       return {
         start: jest.fn(),
-        end: jest.fn()
+        end: jest.fn(),
       }
-    }
+    },
   }
 })
 
@@ -44,14 +44,14 @@ const makeNodes = () => [
     id: `p1`,
     internal: { type: `Parent`, contentDigest: `0` },
     hair: `red`,
-    children: [`c1`, `c2`, `r1`]
+    children: [`c1`, `c2`, `r1`],
   },
   {
     id: `r1`,
     internal: { type: `Relative`, contentDigest: `0` },
     hair: `black`,
     children: [],
-    parent: `p1`
+    parent: `p1`,
   },
   {
     id: `c1`,
@@ -59,7 +59,7 @@ const makeNodes = () => [
     hair: `brown`,
     children: [],
     parent: `p1`,
-    pluginField: `string`
+    pluginField: `string`,
   },
   {
     id: `c2`,
@@ -67,8 +67,8 @@ const makeNodes = () => [
     hair: `blonde`,
     children: [],
     parent: `p1`,
-    pluginField: 5
-  }
+    pluginField: 5,
+  },
 ]
 
 describe(`build-node-types`, () => {
@@ -86,7 +86,7 @@ describe(`build-node-types`, () => {
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
-      inferenceMetadata: store.getState().inferenceMetadata
+      inferenceMetadata: store.getState().inferenceMetadata,
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
@@ -97,8 +97,8 @@ describe(`build-node-types`, () => {
         schemaComposer,
         schema,
         nodeStore,
-        createPageDependency
-      })
+        createPageDependency,
+      }),
     })
     expect(errors).not.toBeDefined()
     return data
@@ -112,9 +112,9 @@ describe(`build-node-types`, () => {
         pluginField: {
           type: GraphQLString,
           description: `test description`,
-          resolve: () => `pluginFieldValue`
-        }
-      }
+          resolve: () => `pluginFieldValue`,
+        },
+      },
     ]
     apiRunnerNode.mockImplementation(() => apiRunnerResponse)
   })
@@ -220,7 +220,7 @@ describe(`build-node-types`, () => {
 
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `p1`
+      nodeId: `p1`,
     })
   })
 
@@ -236,15 +236,15 @@ describe(`build-node-types`, () => {
     )
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `c1`
+      nodeId: `c1`,
     })
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `c2`
+      nodeId: `c2`,
     })
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `r1`
+      nodeId: `r1`,
     })
   })
 
@@ -260,7 +260,7 @@ describe(`build-node-types`, () => {
     )
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `p1`
+      nodeId: `p1`,
     })
   })
 
@@ -279,7 +279,7 @@ describe(`build-node-types`, () => {
 
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `r1`
+      nodeId: `r1`,
     })
   })
 
@@ -298,11 +298,11 @@ describe(`build-node-types`, () => {
 
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `c1`
+      nodeId: `c1`,
     })
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
-      nodeId: `c2`
+      nodeId: `c2`,
     })
   })
 

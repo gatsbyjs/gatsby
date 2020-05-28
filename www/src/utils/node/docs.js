@@ -15,7 +15,7 @@ const ignorePatterns = [
   `**/__mocks__/**`,
   `babel.config.js`,
   `graphql.js`,
-  `**/flow-typed/**`
+  `**/flow-typed/**`,
 ]
 
 function isCodeFile(node) {
@@ -83,8 +83,8 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: node.fields.slug,
           jsdoc: node.frontmatter.jsdoc,
           apiCalls: node.frontmatter.apiCalls,
-          ...prevAndNext
-        }
+          ...prevAndNext,
+        },
       })
     } else {
       // Docs template
@@ -94,8 +94,8 @@ exports.createPages = async ({ graphql, actions }) => {
         context: {
           slug: node.fields.slug,
           locale,
-          ...prevAndNext
-        }
+          ...prevAndNext,
+        },
       })
     }
   })
@@ -107,7 +107,7 @@ exports.onCreateNode = async ({
   getNode,
   loadNodeContent,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 }) => {
   const { createNode, createParentChildLink, createNodeField } = actions
 
@@ -121,8 +121,8 @@ exports.onCreateNode = async ({
           children: [],
           ...call,
           internal: {
-            type: `GatsbyAPICall`
-          }
+            type: `GatsbyAPICall`,
+          },
         }
         apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
 

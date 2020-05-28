@@ -26,23 +26,23 @@ module.exports = () => {
 
       const joiSchema = Joi.object().keys({
         ...resource.schema,
-        _typeName: Joi.string()
+        _typeName: Joi.string(),
       })
 
       const type = Joi2GQL.transmuteType(joiSchema, {
-        name: resourceName
+        name: resourceName,
       })
 
       // Query
       const queryType = {
         type,
         args: {
-          id: { type: GraphQLString }
+          id: { type: GraphQLString },
         },
         resolve: async (_root, args, context) => {
           const value = await resource.read(context, args.id)
           return { ...value, _typeName: resourceName }
-        }
+        },
       }
 
       queryTypes.push(queryType)
@@ -54,8 +54,8 @@ module.exports = () => {
         const ConnectionType = new GraphQLObjectType({
           name: connectionTypeName,
           fields: {
-            nodes: { type: new GraphQLList(type) }
-          }
+            nodes: { type: new GraphQLList(type) },
+          },
         })
 
         const connectionType = {
@@ -63,7 +63,7 @@ module.exports = () => {
           resolve: async (_root, _args, context) => {
             const nodes = await resource.all(context)
             return { nodes }
-          }
+          },
         }
 
         queryTypes.push(connectionType)
@@ -79,7 +79,7 @@ module.exports = () => {
       const destroyMutation = {
         type,
         args: {
-          [camelCasedResourceName]: { type: inputType }
+          [camelCasedResourceName]: { type: inputType },
         },
         resolve: async (_root, args, context) => {
           const value = await resource.destroy(
@@ -87,7 +87,7 @@ module.exports = () => {
             args[camelCasedResourceName]
           )
           return { ...value, _typeName: resourceName }
-        }
+        },
       }
 
       mutationTypes[`destroy${resourceName}`] = destroyMutation
@@ -96,10 +96,10 @@ module.exports = () => {
       const createMutation = {
         type,
         args: {
-          [camelCasedResourceName]: { type: inputType }
+          [camelCasedResourceName]: { type: inputType },
         },
         resolve: (_root, args, context) =>
-          resource.create(context, args[camelCasedResourceName])
+          resource.create(context, args[camelCasedResourceName]),
       }
 
       mutationTypes[`create${resourceName}`] = createMutation
@@ -108,17 +108,17 @@ module.exports = () => {
       const updateMutation = {
         type,
         args: {
-          [camelCasedResourceName]: { type: inputType }
+          [camelCasedResourceName]: { type: inputType },
         },
         resolve: (_root, args, context) =>
-          resource.update(context, args[camelCasedResourceName])
+          resource.update(context, args[camelCasedResourceName]),
       }
 
       mutationTypes[`update${resourceName}`] = updateMutation
 
       return {
         query: queryTypes,
-        mutation: mutationTypes
+        mutation: mutationTypes,
       }
     }
   )
@@ -142,6 +142,6 @@ module.exports = () => {
 
   return {
     queryTypes,
-    mutationTypes
+    mutationTypes,
   }
 }

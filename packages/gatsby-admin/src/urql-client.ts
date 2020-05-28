@@ -4,7 +4,7 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const subscriptionClient = new SubscriptionClient(
   `ws://localhost:4000/graphql`,
   {
-    reconnect: true
+    reconnect: true,
   }
 )
 
@@ -16,9 +16,9 @@ const client = createClient({
     subscriptionExchange({
       forwardSubscription(operation) {
         return subscriptionClient.request(operation)
-      }
-    })
-  ]
+      },
+    }),
+  ],
 })
 
 export default client

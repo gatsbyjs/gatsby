@@ -26,8 +26,8 @@ module.exports = {
         // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
         fieldName: "swapi",
         // Url to query from
-        url: "https://swapi-graphql.netlify.com/.netlify/functions/index"
-      }
+        url: "https://swapi-graphql.netlify.com/.netlify/functions/index",
+      },
     },
 
     // Advanced config, passing parameters to apollo-link
@@ -40,17 +40,17 @@ module.exports = {
         // HTTP headers
         headers: {
           // Learn about environment variables: https://gatsby.dev/env-vars
-          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         },
         // HTTP headers alternatively accepts a function (allows async)
         headers: async () => {
           return {
-            Authorization: await getAuthorizationToken()
+            Authorization: await getAuthorizationToken(),
           }
         },
         // Additional options to pass to node-fetch
-        fetchOptions: {}
-      }
+        fetchOptions: {},
+      },
     },
 
     // Advanced config, using a custom fetch function
@@ -62,8 +62,8 @@ module.exports = {
         url: "https://api.github.com/graphql",
         // A `fetch`-compatible API to use when making requests.
         fetch: (uri, options = {}) =>
-          fetch(uri, { ...options, headers: sign(options.headers) })
-      }
+          fetch(uri, { ...options, headers: sign(options.headers) }),
+      },
     },
 
     // Complex situations: creating arbitrary Apollo Link
@@ -77,14 +77,14 @@ module.exports = {
           return createHttpLink({
             uri: "https://api.github.com/graphql",
             headers: {
-              Authorization: `Bearer ${process.env.GITHUB_TOKEN}`
+              Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
             },
-            fetch
+            fetch,
           })
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -130,8 +130,8 @@ module.exports = {
             fs.readFileSync(`${__dirname}/introspection.json`)
           )
           return buildClientSchema(json.data)
-        }
-      }
+        },
+      },
     },
     {
       resolve: "gatsby-source-graphql",
@@ -143,10 +143,10 @@ module.exports = {
         createSchema: async () => {
           const sdl = fs.readFileSync(`${__dirname}/schema.sdl`).toString()
           return buildSchema(sdl)
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 }
 ```
 
@@ -169,10 +169,10 @@ module.exports = {
         url: "https://api.graphcms.com/simple/v1/swapi",
 
         // refetch interval in seconds
-        refetchInterval: 60
-      }
-    }
-  ]
+        refetchInterval: 60,
+      },
+    },
+  ],
 }
 ```
 
@@ -208,10 +208,10 @@ module.exports = {
         typeName: "SWAPI",
         fieldName: "swapi",
         url: "https://api.graphcms.com/simple/v1/swapi",
-        batch: true
-      }
-    }
-  ]
+        batch: true,
+      },
+    },
+  ],
 }
 ```
 
@@ -234,11 +234,11 @@ module.exports = {
         // See https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options
         // for a full list of DataLoader options
         dataLoaderOptions: {
-          maxBatchSize: 10
-        }
-      }
-    }
-  ]
+          maxBatchSize: 10,
+        },
+      },
+    },
+  ],
 }
 ```
 

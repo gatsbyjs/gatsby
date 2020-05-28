@@ -14,8 +14,8 @@ describe(`remove-stale-jobs`, () => {
     state = {
       jobsV2: {
         complete: new Map(),
-        incomplete: new Map()
-      }
+        incomplete: new Map(),
+      },
     }
 
     publicActions.createJobV2 = jest.fn()
@@ -24,7 +24,7 @@ describe(`remove-stale-jobs`, () => {
 
   it(`should remove stale jobs from complete cache`, () => {
     const job = {
-      inputPaths: [`/src/myfile.js`]
+      inputPaths: [`/src/myfile.js`],
     }
 
     state.jobsV2.complete.set(`1234`, job)
@@ -41,12 +41,12 @@ describe(`remove-stale-jobs`, () => {
     const data = {
       job: {
         inputPaths: [`/src/myfile.js`],
-        contentDigest: `1234`
+        contentDigest: `1234`,
       },
       plugin: {
         name: `test`,
-        version: `1.0.0`
-      }
+        version: `1.0.0`,
+      },
     }
 
     state.jobsV2.incomplete.set(`1234`, data)
@@ -63,12 +63,12 @@ describe(`remove-stale-jobs`, () => {
     const data = {
       job: {
         inputPaths: [`/src/myfile.js`],
-        contentDigest: `1234`
+        contentDigest: `1234`,
       },
       plugin: {
         name: `test`,
-        version: `1.0.0`
-      }
+        version: `1.0.0`,
+      },
     }
 
     state.jobsV2.incomplete.set(`1234`, data)

@@ -86,5 +86,5 @@ module.exports = {
   defaultLang,
   getLanguages,
   localizedPath,
-  getLocaleAndBasePath
+  getLocaleAndBasePath,
 }

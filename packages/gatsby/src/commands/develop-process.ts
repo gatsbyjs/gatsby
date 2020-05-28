@@ -35,7 +35,7 @@ import https from "https"
 import {
   bootstrapSchemaHotReloader,
   startSchemaHotReloader,
-  stopSchemaHotReloader
+  stopSchemaHotReloader,
 } from "../bootstrap/schema-hot-reloader"
 import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { developStatic } from "./develop-static"
@@ -56,12 +56,12 @@ import queryWatcher from "../query/query-watcher"
 import * as requiresWriter from "../bootstrap/requires-writer"
 import {
   reportWebpackWarnings,
-  structureWebpackErrors
+  structureWebpackErrors,
 } from "../utils/webpack-error-utils"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
-  showFeedbackRequest
+  showFeedbackRequest,
 } from "../utils/feedback"
 
 import { Stage, IProgram } from "./types"
@@ -86,7 +86,7 @@ setTimeout(() => {
 if (process.send) {
   setInterval(() => {
     process.send!({
-      type: `HEARTBEAT`
+      type: `HEARTBEAT`,
     })
   }, 1000)
 }
@@ -122,7 +122,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
         stage: Stage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
-        activity
+        activity,
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
@@ -147,7 +147,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
   // report.stateUpdate(`webpack`, `IN_PROGRESS`)
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
-    id: `webpack-develop`
+    id: `webpack-develop`,
   })
   webpackActivity.start()
 
@@ -170,7 +170,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
     webpackHotMiddleware(compiler, {
       log: false,
       path: `/__webpack_hmr`,
-      heartbeat: 10 * 1000
+      heartbeat: 10 * 1000,
     })
   )
 
@@ -185,13 +185,13 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
     app.get(
       graphqlEndpoint,
       graphqlPlayground({
-        endpoint: `/___graphql`
+        endpoint: `/___graphql`,
       }),
       () => {}
     )
   } else {
     graphiqlExplorer(app, {
-      graphqlEndpoint
+      graphqlEndpoint,
     })
   }
 
@@ -201,7 +201,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
       (): graphqlHTTP.OptionsData => {
         const {
           schema,
-          schemaCustomization
+          schemaCustomization,
         }: {
           schema: GraphQLSchema
           schemaCustomization: {
@@ -217,14 +217,14 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
             schema,
             schemaComposer: schemaCustomization.composer,
             context: {},
-            customContext: schemaCustomization.context
+            customContext: schemaCustomization.context,
           }),
           customFormatErrorFn(err): unknown {
             return {
               ...formatError(err),
-              stack: err.stack ? err.stack.split(`\n`) : []
+              stack: err.stack ? err.stack.split(`\n`) : [],
             }
-          }
+          },
         }
       }
     )
@@ -241,13 +241,13 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
     await createSchemaCustomization({
-      refresh: true
+      refresh: true,
     })
     activity.end()
     activity = report.activityTimer(`Refreshing source data`, {})
     activity.start()
     await sourceNodes({
-      webhookBody: req.body
+      webhookBody: req.body,
     })
     activity.end()
     activity = report.activityTimer(`rebuild schema`)
@@ -287,7 +287,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
       watchOptions: devConfig.devServer
         ? devConfig.devServer.watchOptions
         : null,
-      stats: `errors-only`
+      stats: `errors-only`,
     })
   )
 
@@ -308,7 +308,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
           // remove `host` from copied headers
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           headers: { host, ...headers },
-          method
+          method,
         } = req
         req
           .pipe(
@@ -449,7 +449,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
       caFile: program[`ca-file`],
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
-      directory: program.directory
+      directory: program.directory,
     })
   }
 
@@ -463,7 +463,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   bootstrapSchemaHotReloader()
 
   await queryUtil.initialProcessQueries({
-    graphqlTracing: program.graphqlTracing
+    graphqlTracing: program.graphqlTracing,
   })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
@@ -475,7 +475,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   requiresWriter.startListener()
   db.startAutosave()
   queryUtil.startListeningToDevelopQueue({
-    graphqlTracing: program.graphqlTracing
+    graphqlTracing: program.graphqlTracing,
   })
   queryWatcher.startWatchDeletePage()
 
@@ -498,14 +498,14 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
         protocol,
         hostname,
         port,
-        pathname: `/`
+        pathname: `/`,
       })
     const prettyPrintUrl = (hostname: string): string =>
       url.format({
         protocol,
         hostname,
         port: chalk.bold(String(port)),
-        pathname: `/`
+        pathname: `/`,
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
@@ -546,7 +546,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
       lanUrlForConfig,
       lanUrlForTerminal,
       localUrlForTerminal,
-      localUrlForBrowser
+      localUrlForBrowser,
     }
   }
 
@@ -603,21 +603,21 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     type DeprecatedAPIList = ["boundActionCreators", "pathContext"] // eslint-disable-line
     const deprecatedApis: DeprecatedAPIList = [
       `boundActionCreators`,
-      `pathContext`
+      `pathContext`,
     ]
     const fixMap = {
       boundActionCreators: {
         newName: `actions`,
-        docsLink: `https://gatsby.dev/boundActionCreators`
+        docsLink: `https://gatsby.dev/boundActionCreators`,
       },
       pathContext: {
         newName: `pageContext`,
-        docsLink: `https://gatsby.dev/pathContext`
-      }
+        docsLink: `https://gatsby.dev/pathContext`,
+      },
     }
     const deprecatedLocations = {
       boundActionCreators: [] as string[],
-      pathContext: [] as string[]
+      pathContext: [] as string[],
     }
 
     glob
@@ -652,12 +652,12 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   //   console.log(`set invalid`, args, this)
   // })
 
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
+  compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
       webpackActivity.end()
     }
     webpackActivity = report.activityTimer(`Re-building development bundle`, {
-      id: `webpack-develop`
+      id: `webpack-develop`,
     })
     webpackActivity.start()
 
@@ -667,7 +667,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
     stats,
     done
   ) {

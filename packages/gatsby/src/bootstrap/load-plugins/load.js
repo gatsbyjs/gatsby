@@ -70,7 +70,7 @@ function resolvePlugin(pluginName, rootDir) {
           name,
           id: createPluginId(name),
           version:
-            packageJSON.version || createFileContentHash(resolvedPath, `**`)
+            packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
       } else {
         // Make package.json a requirement for local plugins too
@@ -110,7 +110,7 @@ function resolvePlugin(pluginName, rootDir) {
       resolve: resolvedPath,
       id: createPluginId(packageJSON.name),
       name: packageJSON.name,
-      version: packageJSON.version
+      version: packageJSON.version,
     }
   } catch (err) {
     throw new Error(
@@ -133,8 +133,8 @@ const loadPlugins = (config = {}, rootDir = null) => {
       return {
         ...info,
         pluginOptions: {
-          plugins: []
-        }
+          plugins: [],
+        },
       }
     } else {
       plugin.options = plugin.options || {}
@@ -165,9 +165,9 @@ const loadPlugins = (config = {}, rootDir = null) => {
           id: createPluginId(name, plugin),
           name,
           pluginOptions: {
-            plugins: []
+            plugins: [],
           },
-          resolve: `__TEST__`
+          resolve: `__TEST__`,
         }
       }
 
@@ -176,7 +176,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
       return {
         ...info,
         id: createPluginId(info.name, plugin),
-        pluginOptions: _.merge({ plugins: [] }, plugin.options)
+        pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
   }
@@ -187,7 +187,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
     `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
-    `../../internal-plugins/webpack-theme-component-shadowing`
+    `../../internal-plugins/webpack-theme-component-shadowing`,
   ]
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
@@ -212,8 +212,8 @@ const loadPlugins = (config = {}, rootDir = null) => {
         resolve: require.resolve(`gatsby-plugin-page-creator`),
         options: {
           path: slash(path.join(plugin.resolve, `src/pages`)),
-          pathCheck: false
-        }
+          pathCheck: false,
+        },
       })
     )
   })
@@ -225,8 +225,8 @@ const loadPlugins = (config = {}, rootDir = null) => {
     name: `default-site-plugin`,
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
-      plugins: []
-    }
+      plugins: [],
+    },
   })
 
   const program = store.getState().program
@@ -234,7 +234,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
   // default options for gatsby-plugin-page-creator
   let pageCreatorOptions = {
     path: slash(path.join(program.directory, `src/pages`)),
-    pathCheck: false
+    pathCheck: false,
   }
 
   if (config.plugins) {
@@ -260,7 +260,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
   if (typescriptPlugin === undefined) {
     plugins.push(
       processPlugin({
-        resolve: require.resolve(`gatsby-plugin-typescript`)
+        resolve: require.resolve(`gatsby-plugin-typescript`),
       })
     )
   }
@@ -268,7 +268,7 @@ const loadPlugins = (config = {}, rootDir = null) => {
   plugins.push(
     processPlugin({
       resolve: require.resolve(`gatsby-plugin-page-creator`),
-      options: pageCreatorOptions
+      options: pageCreatorOptions,
     })
   )
 
@@ -277,5 +277,5 @@ const loadPlugins = (config = {}, rootDir = null) => {
 
 module.exports = {
   loadPlugins,
-  resolvePlugin
+  resolvePlugin,
 }

@@ -12,7 +12,7 @@ module.exports = plan => {
                 step: i,
                 resource: key,
                 resourceDeclaration,
-                validationError: `Unknown resource ${key}`
+                validationError: `Unknown resource ${key}`,
               }
             }
 
@@ -28,7 +28,7 @@ module.exports = plan => {
                 step: i,
                 resource: key,
                 resourceDeclaration,
-                validationError: result.error
+                validationError: result.error,
               }
             }
             return undefined

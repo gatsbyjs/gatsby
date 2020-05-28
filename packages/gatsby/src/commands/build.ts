@@ -19,7 +19,7 @@ import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
   userPassesFeedbackRequestHeuristic,
-  showFeedbackRequest
+  showFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
 import { boundActionCreators } from "../redux/actions"
@@ -68,27 +68,27 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
     ...program,
-    parentSpan: buildSpan
+    parentSpan: buildSpan,
   })
 
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,
-    graphqlTracing: program.graphqlTracing
+    graphqlTracing: program.graphqlTracing,
   })
 
   const {
     processPageQueries,
-    processStaticQueries
+    processStaticQueries,
   } = queryUtil.getInitialQueryProcessors({
     parentSpan: buildSpan,
-    graphqlRunner
+    graphqlRunner,
   })
 
   await processStaticQueries()
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: bootstrapGraphQLRunner,
-    parentSpan: buildSpan
+    parentSpan: buildSpan,
   })
 
   // Copy files from the static directory to
@@ -118,13 +118,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   ) {
     store.dispatch({
       type: `SET_WEBPACK_COMPILATION_HASH`,
-      payload: webpackCompilationHash
+      payload: webpackCompilationHash,
     })
 
     const rewriteActivityTimer = report.activityTimer(
       `Rewriting compilation hashes`,
       {
-        parentSpan: buildSpan
+        parentSpan: buildSpan,
       }
     )
     rewriteActivityTimer.start()
@@ -142,7 +142,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       cachedPageData.forEach((_value, key) => {
         if (!pages.has(key)) {
           boundActionCreators.removePageData({
-            id: key
+            id: key,
           })
         }
       })
@@ -160,7 +160,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     telemetry.addSiteMeasurement(`BUILD_END`, {
       bundleStats: telemetry.aggregateStats(bundleSizes),
       pageDataStats: telemetry.aggregateStats(pageDataSizes),
-      queryStats: graphqlRunner.getStats()
+      queryStats: graphqlRunner.getStats(),
     })
   }
 
@@ -192,7 +192,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     pagePaths.length,
     0,
     {
-      parentSpan: buildSpan
+      parentSpan: buildSpan,
     }
   )
   buildHTMLActivityProgress.start()
@@ -202,13 +202,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       stage: Stage.BuildHTML,
       pagePaths,
       activity: buildHTMLActivityProgress,
-      workerPool
+      workerPool,
     })
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
     const context = {
       errorPath: err.context && err.context.path,
-      ref: ``
+      ref: ``,
     }
 
     const match = err.message.match(
@@ -222,7 +222,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildHTMLActivityProgress.panic({
       id,
       context,
-      error: err
+      error: err,
     })
   }
   buildHTMLActivityProgress.end()
@@ -243,12 +243,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
-    parentSpan: buildSpan
+    parentSpan: buildSpan,
   })
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: bootstrapGraphQLRunner,
-    parentSpan: buildSpan
+    parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()
 

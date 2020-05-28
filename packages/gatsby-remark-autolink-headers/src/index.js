@@ -22,7 +22,7 @@ module.exports = (
     removeAccents = false,
     enableCustomId = false,
     isIconAfterHeader = false,
-    elements = null
+    elements = null,
   }
 ) => {
   slugs.reset()
@@ -73,16 +73,16 @@ module.exports = (
         data: {
           hProperties: {
             "aria-label": `${label} permalink`,
-            class: `${className} ${isIconAfterHeader ? `after` : `before`}`
+            class: `${className} ${isIconAfterHeader ? `after` : `before`}`,
           },
           hChildren: [
             {
               type: `raw`,
               // The Octicon link icon is the default. But users can set their own icon via the "icon" option.
-              value: icon
-            }
-          ]
-        }
+              value: icon,
+            },
+          ],
+        },
       })
     }
   })

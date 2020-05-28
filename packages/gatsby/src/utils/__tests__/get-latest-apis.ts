@@ -3,12 +3,12 @@ jest.mock(`fs-extra`, () => {
   return {
     readJSON: jest.fn(),
     writeFile: jest.fn(),
-    pathExists: jest.fn()
+    pathExists: jest.fn(),
   }
 })
 jest.mock(`axios`, () => {
   return {
-    get: jest.fn()
+    get: jest.fn(),
   }
 })
 
@@ -27,7 +27,7 @@ const getMockAPIFile = (): IAPIResponse => {
   return {
     node: {},
     browser: {},
-    ssr: {}
+    ssr: {},
   }
 }
 

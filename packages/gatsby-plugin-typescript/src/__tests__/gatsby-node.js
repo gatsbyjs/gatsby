@@ -1,7 +1,7 @@
 const {
   resolvableExtensions,
   onCreateBabelConfig,
-  onCreateWebpackConfig
+  onCreateWebpackConfig,
 } = require(`../gatsby-node`)
 const path = require(`path`)
 
@@ -18,28 +18,28 @@ describe(`gatsby-plugin-typescript`, () => {
       const options = {
         isTSX: true,
         jsxPragma: `jsx`,
-        allExtensions: true
+        allExtensions: true,
       }
       onCreateBabelConfig({ actions }, options)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
         name: expect.stringContaining(path.join(`@babel`, `preset-typescript`)),
-        options
+        options,
       })
       expect(actions.setBabelPlugin).toHaveBeenCalledTimes(3)
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
           path.join(`@babel`, `plugin-proposal-optional-chaining`)
-        )
+        ),
       })
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
           path.join(`@babel`, `plugin-proposal-nullish-coalescing-operator`)
-        )
+        ),
       })
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
           path.join(`@babel`, `plugin-proposal-numeric-separator`)
-        )
+        ),
       })
     })
   })
@@ -55,10 +55,10 @@ describe(`gatsby-plugin-typescript`, () => {
           rules: [
             {
               test: /\.tsx?$/,
-              use: jsLoader
-            }
-          ]
-        }
+              use: jsLoader,
+            },
+          ],
+        },
       })
     })
 

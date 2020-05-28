@@ -15,14 +15,14 @@ jest.mock(`cache-manager`, () => {
         }),
         set: jest.fn((_key, _value, _args, callback) => {
           callback(mockErrorValue())
-        })
+        }),
       }
-    })
+    }),
   }
 })
 jest.mock(`fs-extra`, () => {
   return {
-    ensureDirSync: jest.fn()
+    ensureDirSync: jest.fn(),
   }
 })
 
@@ -43,16 +43,16 @@ describe(`cache`, () => {
     const store = {
       custom: true,
       get: jest.fn(),
-      set: jest.fn()
+      set: jest.fn(),
     }
 
     new Cache({
-      store
+      store,
     }).init()
 
     expect(manager.caching).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        store
+        store,
       })
     )
   })
@@ -67,8 +67,8 @@ describe(`cache`, () => {
     expect(manager.caching).toHaveBeenCalledWith(
       expect.objectContaining({
         options: expect.objectContaining({
-          ttl: Number.MAX_SAFE_INTEGER
-        })
+          ttl: Number.MAX_SAFE_INTEGER,
+        }),
       })
     )
   })

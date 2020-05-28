@@ -110,21 +110,21 @@ plugins: [
         {
           resolve: `gatsby-remark-images`,
           options: {
-            maxWidth: 756
-          }
+            maxWidth: 756,
+          },
         },
         {
           resolve: `gatsby-remark-responsive-iframe`,
           options: {
-            wrapperStyle: `margin-bottom: 1.0725rem`
-          }
+            wrapperStyle: `margin-bottom: 1.0725rem`,
+          },
         },
         `gatsby-remark-copy-linked-files`,
         `gatsby-remark-smartypants`,
-        `gatsby-remark-prismjs`
-      ]
-    }
-  }
+        `gatsby-remark-prismjs`,
+      ],
+    },
+  },
 ]
 ```
 

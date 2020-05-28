@@ -13,8 +13,8 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
           mx: 8,
           display: `grid`,
           gridTemplateRows: `auto auto`,
-          gridRowGap: 2
-        }
+          gridRowGap: 2,
+        },
       }}
     >
       <div sx={{ fontSize: 1, color: `textMuted` }}>
@@ -23,7 +23,7 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
       <pre
         sx={{
           background: `code.bg`,
-          p: 0
+          p: 0,
         }}
       >
         <code
@@ -34,14 +34,14 @@ const StarterInstallation = ({ repoName, repoUrl }) => {
             overflowWrap: `break-word`,
             p: 2,
             [mediaQueries.lg]: {
-              p: 3
+              p: 3,
             },
             "&:before": {
-              display: `none`
+              display: `none`,
             },
             "&:after": {
-              display: `none`
-            }
+              display: `none`,
+            },
           }}
         >
           {content}

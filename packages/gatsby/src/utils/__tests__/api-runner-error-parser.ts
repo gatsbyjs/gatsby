@@ -6,7 +6,7 @@ describe(`error matching`, () => {
 
     expect(match).toEqual({
       id: `11330`,
-      context: { sourceMessage: `foo is not defined`, arg: `foo` }
+      context: { sourceMessage: `foo is not defined`, arg: `foo` },
     })
   })
 
@@ -16,7 +16,7 @@ describe(`error matching`, () => {
     expect(match).toEqual({
       id: `11321`,
       context: { sourceMessage: `unknown error` },
-      error: new Error(`unknown error`)
+      error: new Error(`unknown error`),
     })
   })
 })
