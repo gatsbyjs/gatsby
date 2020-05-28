@@ -6550,3 +6550,17 @@
     - Azure
   features:
     - CI/CD using github actions
+- url: https://gatsbyfire.netlify.app/
+  repo: https://github.com/GeorgeSteel/gatsby-fire-starter
+  description: A Gatsby Starter to build a complete webapp with Gatsby & Firebase by using the library reactfire
+  tags:
+    - Firebase
+    - Authentication
+    - Client-side App
+  features:
+    - You can build a realtime app without any `window object` issue.
+    - Private/Dynamic routing made easy with reach/router.
+    - Fully integrated with reactfire.
+    - Easy to setup.
+    - Insane Lighthouse performance.
+    - FirebaseUI fully integrated & customizable for any language location.
