@@ -4,7 +4,7 @@ We hit a special milestone in May - there are over 2000 Gatsby plugins, and 500 
 
 We also announced our [series B round of funding round](/blog/2020-05-27-announcing-series-b-funding/). This investment will help us double down on changing the way the web is built. We've already started making Gatsby work better for large and media rich sites. You can keep tabs on Gatsby's progress at [Will It Build](https://willit.build), a new benchmarking site that showcases sub-10 second builds for projects of different sizes and data sources.
 
-## 🚀 New in Gatsby 
+## New in Gatsby 
 
 ### Strapi Instant Preview
 
@@ -56,7 +56,7 @@ This month we made the Gatsby Typescript plugin part of core Gatsby, so you no l
 
 In may we continued to improve our error messaging (see example [here](https://github.com/gatsbyjs/gatsby/pull/24186) and [here](https://github.com/gatsbyjs/gatsby/pull/23741)). But what about slow GraphQL queries? Well, Gatsby now supports performance tracing using the opentracing standard. You can to [enable tracing for GraphQL queries](/docs/performance-tracing/). This is useful because it allows you to debug why querying may be slow in your Gatsby project.
 
-## 👩‍🚀👨‍🚀 New in the Gatsby Community 
+## New in the Gatsby Community 
 
 ### Gatsby Days is June 2 - 3
 
@@ -94,7 +94,7 @@ Thank you **Akuoko Daniel Jnr** for helpful your article, ["Increasing Website P
 
 And special thanks to our long time community member, **Horacio Horacio** for making a site to [teach Gatsby to Web Developers in Spanish](https://aprendegatsby.com/). We appreciate you!
 
-## 🪐 New in the Gatsby Ecosystem 
+## New in the Gatsby Ecosystem 
 
 ### Gatsby Themes & Plugins
 
