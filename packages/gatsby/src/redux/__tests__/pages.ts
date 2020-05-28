@@ -9,7 +9,7 @@ import glob from "glob"
 
 import { pagesReducer as reducer } from "../reducers/pages"
 import { actions } from "../actions"
-import { IPageInput } from "../types"
+import { ICreatePageAction } from "../types"
 
 afterEach(() => {
   ;(readFile as jest.Mock).mockClear()
@@ -32,7 +32,7 @@ describe(`Add pages`, () => {
       },
       { id: `test`, name: `test` }
     )
-    const state = reducer(undefined, action as any)
+    const state = reducer(undefined, action as ICreatePageAction)
     expect(action).toMatchSnapshot()
     expect(state).toMatchSnapshot()
   })
@@ -91,7 +91,7 @@ describe(`Add pages`, () => {
       },
       { id: `test`, name: `test` }
     )
-    const state = reducer(undefined, action as any)
+    const state = reducer(undefined, action as ICreatePageAction)
     expect(Array.from(state.values())[0].path).toEqual(`/hi/`)
   })
 
@@ -106,7 +106,7 @@ describe(`Add pages`, () => {
       },
       { id: `test`, name: `test` }
     )
-    const state = reducer(undefined, action as any)
+    const state = reducer(undefined, action as ICreatePageAction)
     expect(action).toMatchSnapshot()
     expect(state).toMatchSnapshot()
   })
@@ -120,7 +120,7 @@ describe(`Add pages`, () => {
       },
       { id: `test`, name: `test` }
     )
-    const state = reducer(undefined, action as any)
+    const state = reducer(undefined, action as ICreatePageAction)
     expect(action).toMatchSnapshot()
     expect(state).toMatchSnapshot()
   })
@@ -140,8 +140,8 @@ describe(`Add pages`, () => {
       },
       { id: `test`, name: `test` }
     )
-    let state = reducer(undefined, action as any)
-    state = reducer(state, action2 as any)
+    let state = reducer(undefined, action as ICreatePageAction)
+    state = reducer(state, action2 as ICreatePageAction)
     expect(state).toMatchSnapshot()
     expect(state.size).toEqual(2)
   })
@@ -164,8 +164,8 @@ describe(`Add pages`, () => {
       { id: `test`, name: `test` }
     )
 
-    let state = reducer(undefined, action as any)
-    state = reducer(state, action2 as any)
+    let state = reducer(undefined, action as ICreatePageAction)
+    state = reducer(state, action2 as ICreatePageAction)
     expect(state).toMatchSnapshot()
     expect(state.size).toEqual(1)
   })
@@ -180,7 +180,7 @@ describe(`Add pages`, () => {
     )
     const action2 = actions.deletePage({ path: `/hi/` })
 
-    let state = reducer(undefined, action as any)
+    let state = reducer(undefined, action as ICreatePageAction)
     state = reducer(state, action2)
     expect(state).toMatchSnapshot()
     expect(state.size).toEqual(0)
