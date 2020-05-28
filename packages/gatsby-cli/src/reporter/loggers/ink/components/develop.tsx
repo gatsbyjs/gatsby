@@ -10,16 +10,12 @@ const getLabel = (
   switch (level) {
     case ActivityStatuses.InProgress:
       return createLabel(`In Progress`, `white`)
-    case ActivityStatuses.NotStarted:
-      return createLabel(`Not Started`, `white`)
     case ActivityStatuses.Interrupted:
       return createLabel(`Interrupted`, `gray`)
     case ActivityStatuses.Failed:
       return createLabel(`Failed`, `red`)
     case ActivityStatuses.Success:
       return createLabel(`Success`, `green`)
-    case ActivityStatuses.Cancelled:
-      return createLabel(`Cancelled`, `white`)
 
     default:
       return createLabel(level, `white`)
