@@ -6,6 +6,7 @@ import Link from "../../components/localized-link"
 import {
   Container,
   Section,
+  SectionNoRightPadding,
   Columns,
   ContentColumn,
   CopyColumn,
@@ -24,23 +25,6 @@ import { Box, Flex } from "theme-ui"
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { Text } from "../../components/guidelines/system"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-
-const SectionNoPaddingRight = ({ children }) => (
-  <section
-    sx={{
-      position: `relative`,
-      zIndex: 1,
-      py: [4, null, 5, 8],
-      pl: 6,
-      pr: 0,
-      [mediaQueries.md]: {
-        pl: 10,
-      },
-    }}
-  >
-    {children}
-  </section>
-)
 
 const ColorExample = ({ hex, token }) => (
   <tr>
@@ -203,10 +187,9 @@ const DesignTokens = ({ location }) => (
           </p>
         </CopyColumn>
         <ContentColumn>
-          <Box
+          <Flex
             sx={{
               alignSelf: `flex-end`,
-              display: `flex`,
               flexWrap: `wrap`,
               overflow: `visible`,
             }}
@@ -218,21 +201,22 @@ const DesignTokens = ({ location }) => (
                   bg: `white`,
                   borderRadius: 2,
                   mb: 10,
-                  mr: 10,
                   p: 4,
                   boxShadow: shadow,
                   width: `100%`,
-                  height: 0,
+                  height: `160px`,
                   pb: `${0.3 * 100}%`,
-                  [mediaQueries.sm]: {
+                  [mediaQueries.md]: {
                     width: `50%`,
+                    mr: 10,
+                    height: 0,
                   },
                 }}
               >
                 <code>shadows.{shadow}</code>
               </Box>
             ))}
-          </Box>
+          </Flex>
         </ContentColumn>
       </Columns>
     </Section>
@@ -389,7 +373,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <SectionNoPaddingRight>
+    <SectionNoRightPadding>
       <SectionHeading>Font Sizes</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -433,7 +417,7 @@ const DesignTokens = ({ location }) => (
           </table>
         </ContentColumn>
       </Columns>
-    </SectionNoPaddingRight>
+    </SectionNoRightPadding>
 
     <Section>
       <SectionHeading>Font Weights</SectionHeading>
@@ -488,7 +472,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <SectionNoPaddingRight>
+    <SectionNoRightPadding>
       <SectionHeading>Letter Spacing</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -543,7 +527,7 @@ const DesignTokens = ({ location }) => (
           </Flex>
         </ContentColumn>
       </Columns>
-    </SectionNoPaddingRight>
+    </SectionNoRightPadding>
 
     <Section>
       <SectionHeading>Line Heights</SectionHeading>
@@ -654,10 +638,7 @@ const DesignTokens = ({ location }) => (
             <Box
               as="table"
               sx={{
-                ml: 0,
-                [mediaQueries.lg]: {
-                  ml: 10,
-                },
+                ml: [0, null, null, null, 10],
               }}
             >
               <thead>
