@@ -25,6 +25,23 @@ import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { Text } from "../../components/guidelines/system"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
+const SectionNoPaddingRight = ({ children }) => (
+  <section
+    sx={{
+      position: `relative`,
+      zIndex: 1,
+      py: [4, null, 5, 8],
+      pl: 6,
+      pr: 0,
+      [mediaQueries.md]: {
+        pl: 10,
+      },
+    }}
+  >
+    {children}
+  </section>
+)
+
 const ColorExample = ({ hex, token }) => (
   <tr>
     <td
@@ -372,7 +389,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+    <SectionNoPaddingRight>
       <SectionHeading>Font Sizes</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -416,7 +433,7 @@ const DesignTokens = ({ location }) => (
           </table>
         </ContentColumn>
       </Columns>
-    </Section>
+    </SectionNoPaddingRight>
 
     <Section>
       <SectionHeading>Font Weights</SectionHeading>
@@ -471,7 +488,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+    <SectionNoPaddingRight>
       <SectionHeading>Letter Spacing</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -526,7 +543,7 @@ const DesignTokens = ({ location }) => (
           </Flex>
         </ContentColumn>
       </Columns>
-    </Section>
+    </SectionNoPaddingRight>
 
     <Section>
       <SectionHeading>Line Heights</SectionHeading>
