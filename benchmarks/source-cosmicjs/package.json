@@ -13,6 +13,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "cosmicjs": "^3.2.45",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.40",
