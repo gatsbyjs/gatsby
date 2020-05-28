@@ -1,6 +1,4 @@
-const path = require(`path`)
 const fs = require(`fs-extra`)
-const { slash } = require(`gatsby-core-utils`)
 const isOfficialPackage = require(`../is-official-package`)
 const yaml = require(`js-yaml`)
 const { plugins: featuredPlugins } = yaml.load(
@@ -10,8 +8,7 @@ const { plugins: featuredPlugins } = yaml.load(
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const packageTemplate = path.resolve(
-    `src/templates/template-package-readme.js`
+  const packageTemplate = getTemplate(`template-package-readme`)
   )
 
   const { data, errors } = await graphql(`
@@ -33,7 +30,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
     createPage({
       path: node.slug,
-      component: slash(packageTemplate),
+      component: packageTemplate,
       context: {
         slug: node.slug,
       },
