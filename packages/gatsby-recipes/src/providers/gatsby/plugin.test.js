@@ -3,7 +3,11 @@ const path = require(`path`)
 const tmp = require(`tmp-promise`)
 
 const plugin = require(`./plugin`)
-const { addPluginToConfig, getPluginsFromConfig } = require(`./plugin`)
+const {
+  addPluginToConfig,
+  getPluginsFromConfig,
+  removePluginFromConfig,
+} = require(`./plugin`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
 const STARTER_BLOG_FIXTURE = path.join(
@@ -89,6 +93,37 @@ describe(`gatsby-plugin resource`, () => {
     const plugins2 = getPluginsFromConfig(newConfigSrc)
 
     expect(plugins1).toEqual(plugins2)
+  })
+
+  test(`removes plugins by name and key`, async () => {
+    let configSrc = await fs.readFile(configPath, `utf8`)
+    configSrc = addPluginToConfig(configSrc, { name: `gatsby-plugin-foo` })
+    configSrc = addPluginToConfig(configSrc, {
+      name: `gatsby-plugin-bar`,
+      options: { hello: `world` },
+    })
+    configSrc = addPluginToConfig(configSrc, {
+      name: `gatsby-plugin-baz`,
+      key: `special-key`,
+    })
+
+    configSrc = removePluginFromConfig(configSrc, { key: `special-key` })
+
+    let plugins = await getPluginsFromConfig(configSrc)
+
+    let pluginNames = plugins.map(p => p.name)
+    expect(pluginNames).toContain(`gatsby-plugin-foo`)
+    expect(pluginNames).toContain(`gatsby-plugin-bar`)
+    expect(pluginNames).not.toContain(`gatsby-plugin-baz`)
+
+    configSrc = removePluginFromConfig(configSrc, { id: `gatsby-plugin-bar` })
+
+    plugins = await getPluginsFromConfig(configSrc)
+
+    pluginNames = plugins.map(p => p.name)
+    expect(pluginNames).not.toContain(`gatsby-plugin-baz`)
+    expect(pluginNames).not.toContain(`gatsby-plugin-bar`)
+    expect(pluginNames).toContain(`gatsby-plugin-foo`)
   })
 
   // A key isn't required for gatsby plugin, but when you want to distinguish

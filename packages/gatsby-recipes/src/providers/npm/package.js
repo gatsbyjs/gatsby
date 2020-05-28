@@ -127,6 +127,7 @@ const read = async ({ root }, id) => {
   } catch (e) {
     return undefined
   }
+
   return {
     id: packageJSON.name,
     name: packageJSON.name,
@@ -151,10 +152,17 @@ const validate = resource =>
 exports.validate = validate
 
 const destroy = async ({ root }, resource) => {
-  await execa(`yarn`, [`remove`, resource.name], {
+  const readResource = await read({ root }, resource.id)
+
+  if (!readResource) {
+    return undefined
+  }
+
+  await execa(`yarn`, [`remove`, resource.name, `-W`], {
     cwd: root,
   })
-  return resource
+
+  return readResource
 }
 
 module.exports.create = create
