@@ -41,7 +41,35 @@ const toMdx = nodes => {
 const parse = async src => {
   try {
     const ast = u.parse(src)
-    const steps = partitionSteps(ast)
+    const [intro, ...resourceSteps] = partitionSteps(ast)
+
+    const wrappedIntroStep = [
+      {
+        type: `jsx`,
+        value: `<RecipeIntroduction>`,
+      },
+      ...intro,
+      {
+        type: `jsx`,
+        value: `</RecipeIntroduction>`,
+      },
+    ]
+
+    const wrappedResourceSteps = resourceSteps.map((step, i) => [
+      {
+        type: `jsx`,
+        value: `<RecipeStep step={${i + 1}} totalSteps={${
+          resourceSteps.length
+        }}>`,
+      },
+      ...step,
+      {
+        type: `jsx`,
+        value: `</RecipeStep>`,
+      },
+    ])
+
+    const steps = [wrappedIntroStep, ...wrappedResourceSteps]
 
     return {
       ast,

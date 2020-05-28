@@ -280,6 +280,8 @@ const components = {
   Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
+  RecipeIntroduction: () => null,
+  RecipeStep: () => null,
 }
 
 let logStream

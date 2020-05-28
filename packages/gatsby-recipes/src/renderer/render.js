@@ -7,6 +7,7 @@ import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"
 import transformToPlan from "./transform-to-plan-structure"
 import { ResourceProvider } from "./resource-provider"
+import { useRecipeStep } from "./step-component"
 
 const queue = new Queue({ concurrency: 1, autoStart: false })
 
@@ -14,9 +15,11 @@ const errors = []
 const cache = new Map()
 
 const getInvalidProps = errors => {
-  const invalidProps = errors.filter(e =>
-    e.find(e => e.type === `object.allowUnknown`)
-  )
+  const invalidProps = errors.filter(e => {
+    const details = e.details
+    const unknownProp = details.find(e => e.type === `object.allowUnknown`)
+    return unknownProp
+  })
   return invalidProps
 }
 
@@ -32,14 +35,26 @@ const Wrapper = ({ children }) => (
   </ErrorBoundary>
 )
 
-const ResourceComponent = ({ _resourceName: Resource, children, ...props }) => {
+const ResourceComponent = ({
+  _resourceName: Resource,
+  __uuid,
+  children,
+  ...props
+}) => {
+  const step = useRecipeStep()
+  //const inputProps = useResourceInput(__uuid)
   const userProps = getUserProps(props)
+  //const allProps = { ...props, ...inputProps }
   const resourceData = readResource(Resource, { root: process.cwd() }, props)
 
   return (
     <ResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>
-        {JSON.stringify({ ...resourceData, _props: userProps })}
+        {JSON.stringify({
+          ...resourceData,
+          _props: userProps,
+          _stepMetadata: step,
+        })}
         {children}
       </Resource>
     </ResourceProvider>
@@ -100,9 +115,6 @@ const render = async (recipe, cb) => {
       if (invalidProps.length) {
         return cb({ type: `INVALID_PROPS`, data: invalidProps })
       }
-
-      console.log(invalidProps)
-      console.log(errors.map(e => e.details))
 
       return cb({ type: `INPUT`, data: errors })
     }

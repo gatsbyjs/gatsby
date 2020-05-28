@@ -114,16 +114,13 @@ const recipeMachine = Machine(
           INVALID_PROPS: {
             target: `doneError`,
             actions: assign({
-              error: (context, event) => {
-                console.log(event)
-                return event.data
-              },
+              error: (context, event) => event.data,
             }),
           },
           INPUT: {
             target: `waitingForInput`,
             actions: assign({
-              input: (context, event) => {
+              inputs: (context, event) => {
                 const data = event.data[0] || {}
 
                 return {
@@ -139,7 +136,23 @@ const recipeMachine = Machine(
       },
       waitingForInput: {
         on: {
-          INPUT_CALLED: `creatingPlan`,
+          INPUT_CALLED: {
+            target: `creatingPlan`,
+            actions: assign({
+              /**
+               {
+                 inputs: {
+                   123abc: {
+                     path: 'new-path.js'
+                   }
+                 }
+               }
+               */
+              input: (context, event) => {
+                console.log(event)
+              },
+            }),
+          },
         },
       },
       presentPlan: {
