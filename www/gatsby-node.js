@@ -2,8 +2,9 @@ const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
 const startersRedirects = require(`./starter-redirects.json`)
-const yaml = require(`js-yaml`)
-const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
+
+const { requireYaml } = require(`./src/utils/require-yaml`)
+const redirects = requireYaml(`./redirects.yaml`)
 
 const docs = require(`./src/utils/node/docs.js`)
 const blog = require(`./src/utils/node/blog.js`)

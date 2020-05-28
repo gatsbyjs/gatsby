@@ -1,13 +1,8 @@
-const fs = require(`fs-extra`)
-const yaml = require(`js-yaml`)
-const docLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
-)
-const tutorialLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
-)
-const contributingLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+const requireYaml = require(`./require-yaml`)
+const docLinksData = requireYaml(`../data/sidebars/doc-links.yaml`)
+const tutorialLinksData = requireYaml(`../data/sidebars/tutorial-links.yaml`)
+const contributingLinksData = requireYaml(
+  `../data/sidebars/contributing-links.yaml`
 )
 
 const docLinks = docLinksData[0].items
