@@ -1,32 +1,39 @@
-const _ = require(`lodash`)
+import _ from "lodash"
 
-const { store } = require(`../../redux`)
+import { store } from "../../redux"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
-const ssrAPIs = require(`../../../cache-dir/api-ssr-docs`)
-const { loadPlugins } = require(`./load`)
-const {
+import ssrAPIs from "../../../cache-dir/api-ssr-docs"
+import { loadPlugins as loadPluginsInternal } from "./load"
+import {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
-} = require(`./validate`)
+  ExportType,
+  ICurrentAPIs,
+} from "./validate"
+import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
 
-const getAPI = api =>
-  _.keys(api).reduce((merged, key) => {
+const getAPI = (
+  api: { [exportType in ExportType]: { [api: string]: boolean } }
+): ICurrentAPIs =>
+  _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
     merged[key] = _.keys(api[key])
     return merged
-  }, {})
+  }, {}) as ICurrentAPIs
 
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
 // for subplugins.
-const flattenPlugins = plugins => {
-  const flattened = []
-  const extractPlugins = plugin => {
-    plugin.pluginOptions.plugins.forEach(subPlugin => {
-      flattened.push(subPlugin)
-      extractPlugins(subPlugin)
-    })
+const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
+  const flattened: IPluginInfo[] = []
+  const extractPlugins = (plugin: IPluginInfo): void => {
+    if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
+      plugin.pluginOptions.plugins.forEach(subPlugin => {
+        flattened.push(subPlugin)
+        extractPlugins(subPlugin)
+      })
+    }
   }
 
   plugins.forEach(plugin => {
@@ -37,22 +44,28 @@ const flattenPlugins = plugins => {
   return flattened
 }
 
-module.exports = async (config = {}, rootDir = null) => {
+export async function loadPlugins(
+  config: ISiteConfig = {},
+  rootDir: string | null = null
+): Promise<IFlattenedPlugin[]> {
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,
     ssr: ssrAPIs,
   })
+
   // Collate internal plugins, site config plugins, site default plugins
-  const plugins = loadPlugins(config, rootDir)
+  const pluginInfos = loadPluginsInternal(config, rootDir)
 
   // Create a flattened array of the plugins
-  let flattenedPlugins = flattenPlugins(plugins)
+  const pluginArray = flattenPlugins(pluginInfos)
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
-  const x = collatePluginAPIs({ currentAPIs, flattenedPlugins })
-  flattenedPlugins = x.flattenedPlugins
+  const x = collatePluginAPIs({ currentAPIs, flattenedPlugins: pluginArray })
+
+  // From this point on, these are fully-resolved plugins.
+  let flattenedPlugins = x.flattenedPlugins
   const badExports = x.badExports
 
   // Show errors for any non-Gatsby APIs exported from plugins

@@ -1,5 +1,6 @@
-const loadPlugins = require(`../index`)
-const { slash } = require(`gatsby-core-utils`)
+import { loadPlugins } from "../index"
+import { slash } from "gatsby-core-utils"
+import { IFlattenedPlugin } from "../types"
 
 describe(`Load plugins`, () => {
   /**
@@ -8,7 +9,9 @@ describe(`Load plugins`, () => {
    * Version can be updated (we use external plugin in default config).
    * Both will cause snapshots to differ.
    */
-  const replaceFieldsThatCanVary = plugins =>
+  const replaceFieldsThatCanVary = (
+    plugins: IFlattenedPlugin[]
+  ): IFlattenedPlugin[] =>
     plugins.map(plugin => {
       if (plugin.pluginOptions && plugin.pluginOptions.path) {
         plugin.pluginOptions = {
@@ -176,7 +179,7 @@ describe(`Load plugins`, () => {
       plugins = replaceFieldsThatCanVary(plugins)
 
       const tsplugins = plugins.filter(
-        plugin => plugin.name === `gatsby-plugin-typescript`
+        (plugin: { name: string }) => plugin.name === `gatsby-plugin-typescript`
       )
 
       // TODO: I think we should probably be de-duping, so this should be 1.

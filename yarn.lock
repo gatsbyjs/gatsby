@@ -4545,6 +4545,11 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
 
+"@types/string-similarity@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/string-similarity/-/string-similarity-3.0.0.tgz#12b655f1aab0156049657a4e9287caf3e6718d93"
+  integrity sha512-vhHkPKxl0cudrbxr5Dog1HVgUGXtmyYP95qy1da/h5gFEzIqDMN/+SjJAS7/6DEAdeI+AJQX8zrdWXL3wP4FRA==
+
 "@types/tapable@*":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.4.tgz#b4ffc7dc97b498c969b360a41eee247f82616370"
