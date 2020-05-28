@@ -6,6 +6,10 @@ const { useState } = require(`react`)
 const MDX = require(`@mdx-js/runtime`).default
 const ansi2HTML = require(`ansi-html`)
 const {
+  CircularProgressbarWithChildren,
+} = require(`react-circular-progressbar`)
+require(`react-circular-progressbar/dist/styles.css`)
+const {
   createClient,
   useMutation,
   useSubscription,
@@ -16,7 +20,7 @@ const {
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const semver = require(`semver`)
 
-const SelectInput = "select"
+const SelectInput = `select`
 
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
@@ -25,12 +29,12 @@ if (semver.lt(React.version, `16.8.0`)) {
   )
 }
 
-const PROJECT_ROOT = "/Users/kylemathews/projects/gatsby/starters/blog"
+const PROJECT_ROOT = `/Users/kylemathews/projects/gatsby/starters/blog`
 
-const Boxen = "div"
-const Text = "p"
-const Static = "div"
-const Color = "span"
+const Boxen = `div`
+const Text = `p`
+const Static = `div`
+const Color = `span`
 const Spinner = () => <span>Loading...</span>
 
 const WelcomeMessage = () => (
@@ -266,7 +270,7 @@ const RecipeGui = ({
       }
 
       if (!state) {
-        console.log("Loading recipe!")
+        console.log(`Loading recipe!`)
         return (
           <Wrapper>
             <Spinner /> Loading recipe
@@ -275,7 +279,7 @@ const RecipeGui = ({
       }
 
       console.log(state)
-      console.log("!!!!!!")
+      console.log(`!!!!!!`)
 
       const isDone = state.value === `done`
 
@@ -289,18 +293,121 @@ const RecipeGui = ({
         log(`stepResources`, state.context.stepResources)
       }
 
+      const Step = ({ state, step, i }) => {
+        const [output, setOutput] = useState({
+          title: ``,
+          body: ``,
+          date: new Date(),
+        })
+
+        const [complete, setComplete] = useState(false)
+        if (output.title !== `` && output.body !== ``) {
+          setTimeout(() => {
+            setComplete(true)
+          }, 0)
+        } else {
+          setTimeout(() => {
+            setComplete(false)
+          }, 0)
+        }
+
+        return (
+          <div
+            key={`step-${i}`}
+            sx={{
+              border: `1px solid tomato`,
+              marginBottom: 4,
+              borderRadius: 20,
+            }}
+          >
+            <div
+              sx={{
+                display: `flex`,
+                // justifyContent: `space-between`,
+                "& > *": {
+                  marginY: 0,
+                },
+                background: `PaleGoldenRod`,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                padding: 2,
+              }}
+            >
+              <div
+                sx={{
+                  "& > *": {
+                    marginY: 0,
+                  },
+                  display: `flex`,
+                  alignItems: `flex-start`,
+                }}
+              >
+                <div>
+                  <CircularProgressbarWithChildren
+                    value={66}
+                    sx={{ height: `34px`, width: `34px` }}
+                  >
+                    {/* Put any JSX content in here that you'd like. It'll be vertically and horizonally centered. */}
+
+                    <div style={{ fontSize: `18px` }}>
+                      <strong>5/7</strong>
+                    </div>
+                  </CircularProgressbarWithChildren>
+                </div>
+              </div>
+              <div
+                sx={{
+                  // marginTop: 2,
+                  "& > *": {
+                    marginTop: 0,
+                  },
+                }}
+              >
+                <MDX components={components}>{step}</MDX>
+              </div>
+            </div>
+            <div sx={{ padding: 3 }}>
+              <Div>
+                <div>
+                  <label>title</label>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    onChange={e => {
+                      const newOutput = { ...output, title: e.target.value }
+                      setOutput(newOutput)
+                    }}
+                  />
+                </div>
+                <div>
+                  <label>body</label>
+                </div>
+                <div>
+                  <textarea
+                    onChange={e => {
+                      const newOutput = { ...output, body: e.target.value }
+                      setOutput(newOutput)
+                    }}
+                  />
+                </div>
+                <h4>Proposed changes</h4>
+                <pre>{JSON.stringify(output, null, 2)}</pre>
+              </Div>
+            </div>
+          </div>
+        )
+      }
+
       const PresentStep = ({ step }) => {
         // const isPlan = state.context.plan && state.context.plan.length > 0
         // const isPresetPlanState = state.value === `presentPlan`
         // const isRunningStep = state.value === `applyingPlan`
-
         // console.log(`PresentStep`, { isRunningStep, isPlan, isPresetPlanState })
-
         // if (isRunningStep) {
         // console.log("running step")
         // return null
         // }
-
         // if (!isPlan || !isPresetPlanState) {
         // return (
         // <Div margin-top={1}>
@@ -339,12 +446,6 @@ const RecipeGui = ({
         // Go!
         // </button>
         // </Div>
-
-        return (
-          <Div>
-            <Text margin-bottom={2}>Proposed changes</Text>
-          </Div>
-        )
       }
 
       const RunningStep = ({ state }) => {
@@ -412,7 +513,7 @@ const RecipeGui = ({
       if (isDone) {
         process.nextTick(() => {
           subscriptionClient.close()
-          log("The recipe finished successfully")
+          log(`The recipe finished successfully`)
           lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
             log(`✅ ${res._message}\n`)
           })
@@ -421,9 +522,14 @@ const RecipeGui = ({
 
       return (
         <Wrapper>
-          <Div></Div>
           {state.context.currentStep === 0 && <WelcomeMessage />}
           <br />
+          <div sx={{ width: `100%`, padding: 3, background: `PaleGoldenRod` }}>
+            recipe status
+          </div>
+          <div>
+            <MDX components={components}>{state.context.steps[0]}</MDX>
+          </div>
           <h2>Proposed changes</h2>
           <button>Apply changes</button>
           <div>count {state.context.plan?.length}</div>
@@ -435,30 +541,9 @@ const RecipeGui = ({
             ))}
           </div>
 
-          {state.context.steps.map((step, i) => {
-            return (
-              <div>
-                <h4 sx={{ marginBottom: 3, marginTop: 0 }}>
-                  {i + 1}/{state.context.steps.length}
-                </h4>
-                <div
-                  key={`step-${i}`}
-                  sx={{
-                    border: `1px solid`,
-                    marginBottom: 4,
-                    padding: 3,
-                    borderRadius: 20,
-                    "& > h1": {
-                      marginTop: 0,
-                    },
-                  }}
-                >
-                  <MDX components={components}>{step}</MDX>
-                  <PresentStep step={step} />
-                </div>
-              </div>
-            )
-          })}
+          {state.context.steps.slice(1).map((step, i) => (
+            <Step state={state} step={step} i={i} />
+          ))}
         </Wrapper>
       )
     }
