@@ -443,7 +443,7 @@ Internet Explorer is the only other major browser that doesn't support the web a
 This article from the Chrome DevRel team is a good intro to the web app
 manifest — https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/)
+For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/).
 
 ## Troubleshooting
 
