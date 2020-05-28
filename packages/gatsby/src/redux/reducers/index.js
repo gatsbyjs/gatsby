@@ -1,5 +1,5 @@
 import { nodeReducer } from "./nodes"
-const nodesByType = require(`./nodes-by-type`)
+import { nodesByTypeReducer } from "./nodes-by-type"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -27,7 +27,7 @@ import { jobsReducer } from "./jobs"
 module.exports = {
   program: require(`./program`),
   nodes: nodeReducer,
-  nodesByType: nodesByType,
+  nodesByType: nodesByTypeReducer,
   resolvedNodesCache: resolvedNodesCacheReducer,
   nodesTouched: nodesTouchedReducer,
   lastAction: lastAction,

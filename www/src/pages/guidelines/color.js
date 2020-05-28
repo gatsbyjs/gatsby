@@ -1,8 +1,11 @@
+/** @jsx jsx */
 import React from "react"
+import { jsx } from "theme-ui"
 import { MdWarning } from "react-icons/md"
 
 import Layout from "../../components/guidelines/layout"
-import { Box, Flex, Text } from "../../components/guidelines/system"
+import { Text } from "../../components/guidelines/system"
+import { Box, Flex } from "theme-ui"
 
 import {
   Container,
@@ -25,15 +28,17 @@ import ColorModal from "../../components/guidelines/color/modal"
 
 import palette from "../../utils/guidelines/extend-palette-info"
 
-const LegacyColorIcon = ({ textColor }) => (
+const LegacyColorIcon = () => (
   <Box
-    borderRadius={7}
-    fontSize={0}
-    lineHeight="solid"
-    height="8px"
-    width="8px"
-    display="inline-block"
-    bg={textColor}
+    sx={{
+      borderRadius: 7,
+      fontSize: 0,
+      lineHeight: `solid`,
+      height: `8px`,
+      width: `8px`,
+      display: `inline-block`,
+      bg: `grey.50`,
+    }}
   />
 )
 class Color extends React.Component {
@@ -85,9 +90,18 @@ class Color extends React.Component {
               </Text>
             </CopyColumn>
             <ContentColumn alignSelf="flex-end">
-              <Flex alignItems="flex-end">
-                <Flex alignItems="center" mr={8}>
-                  <LegacyColorIcon textColor="grey.50" />
+              <Flex
+                sx={{
+                  alignItems: `flex-end`,
+                }}
+              >
+                <Flex
+                  sx={{
+                    alignItems: `center`,
+                    mr: 8,
+                  }}
+                >
+                  <LegacyColorIcon />
                   {` `}
                   <Text as="span" ml={2} c>
                     Aliased color

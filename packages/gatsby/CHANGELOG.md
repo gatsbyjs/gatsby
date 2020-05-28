@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.22.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.11...gatsby@2.22.12) (2020-05-28)
+
+### Bug Fixes
+
+- **code:** redux types - sireUrl -> siteUrl ([#24488](https://github.com/gatsbyjs/gatsby/issues/24488)) ([2beab4b](https://github.com/gatsbyjs/gatsby/commit/2beab4b))
+
+### Performance Improvements
+
+- **gatsby:** stop using sets and use ordered arrays instead ([#24486](https://github.com/gatsbyjs/gatsby/issues/24486)) ([928fd05](https://github.com/gatsbyjs/gatsby/commit/928fd05))
+
+## [2.22.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.10...gatsby@2.22.11) (2020-05-26)
+
+### Bug Fixes
+
+- **gatsby:** add explicit dependency on `socket.io-client` and explicitly set `url-loader` fallback ([#24465](https://github.com/gatsbyjs/gatsby/issues/24465)) ([36357ab](https://github.com/gatsbyjs/gatsby/commit/36357ab))
+- **gatsby:** Also traverse `FunctionDeclaration` ([#24472](https://github.com/gatsbyjs/gatsby/issues/24472)) ([6eb7290](https://github.com/gatsbyjs/gatsby/commit/6eb7290))
+
+## [2.22.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.9...gatsby@2.22.10) (2020-05-25)
+
+### Bug Fixes
+
+- **docs:** brand name Webpack to webpack ([#22906](https://github.com/gatsbyjs/gatsby/issues/22906)) ([44cbb14](https://github.com/gatsbyjs/gatsby/commit/44cbb14))
+- **gatsby:** Pass through ws in proxy ([#24352](https://github.com/gatsbyjs/gatsby/issues/24352)) ([5389bfd](https://github.com/gatsbyjs/gatsby/commit/5389bfd))
+
 ## [2.22.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.8...gatsby@2.22.9) (2020-05-22)
 
 ### Performance Improvements
