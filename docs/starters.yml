@@ -2,7 +2,6 @@
   repo: https://github.com/zag/gatsby-starter-pod6
   description: A minimal, lightweight and mobile-first starter for creating blogs with pod6 markup language.
   tags:
-    - pod6
     - Blog
     - CMS:Netlify
     - Pagination
