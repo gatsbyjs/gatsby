@@ -77,7 +77,7 @@ const readResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = async recipe => {
+const render = async (recipe, cb) => {
   const plan = {}
 
   const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
@@ -88,13 +88,11 @@ const render = async recipe => {
     RecipesReconciler.render(recipeWithWrapper, plan)
 
     if (errors.length) {
-      const error = new Error(`Unable to validate resources`)
-      error.errors = errors
-      throw error
+      return cb({ type: `INPUT`, data: errors })
     }
 
-    // If there aren't any new resources that need to be fetched we're done!
-    if (!queue.size) {
+    // If there aren't any new resources that need to be fetched, or errors, we're done!
+    if (!queue.size && !errors.length) {
       return undefined
     }
 
@@ -106,6 +104,12 @@ const render = async recipe => {
   try {
     // Begin the "render loop" until there are no more resources being queued.
     await renderResources()
+
+    if (errors.length) {
+      // We found errors that were emitted back to the state machine, so
+      // we don't need to re-render
+      return null
+    }
 
     // Rerender with the resources and resolve the data from the cache
     const result = RecipesReconciler.render(recipeWithWrapper, plan)
