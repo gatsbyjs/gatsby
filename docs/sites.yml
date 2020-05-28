@@ -10887,3 +10887,24 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+ 
+- title: Narration Box
+  main_url: https://narrationbox.com
+  url: https://narrationbox.com
+  description: >
+    Narration Box provides cost effective voiceovers and narrations at scale using an intuitive editor and state of the art speech synthesis.
+  categories:
+    - Styling:Tailwind
+    - Productivity
+    - Technology
+    - Podcast
+    - Landing Page
+    - Media
+    - Entertainment
+    - Featured
+    - Business
+    - API
+    - Video
+  built_by: Chetan Malhotra
+  built_by_url: https://narrationbox.com
+  featured: false
