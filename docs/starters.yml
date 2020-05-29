@@ -123,7 +123,7 @@
     - Password Reset
     - Multi-Factor Authentication
     - Styling with Bootstrap and Sass
-- url: https://gatsby-starter-blog-demo.netlify.com/
+- url: https://gatsby-starter-blog-demo.netlify.app/
   repo: https://github.com/gatsbyjs/gatsby-starter-blog
   description: official blog
   tags:
@@ -138,7 +138,7 @@
     - Includes plugins for easy, beautiful typography
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for offline support out of the box
-- url: https://gatsby-starter-default-demo.netlify.com/
+- url: https://gatsby-starter-default-demo.netlify.app/
   repo: https://github.com/gatsbyjs/gatsby-starter-default
   description: official default
   tags:
@@ -583,7 +583,7 @@
   features:
     - Barebones configuration for using the Grommet design system
     - Uses Sass (with CSS modules support)
-- url: https://gatsby-starter-hello-world-demo.netlify.com/
+- url: https://gatsby-starter-hello-world-demo.netlify.app/
   repo: https://github.com/gatsbyjs/gatsby-starter-hello-world
   description: official hello world
   tags:
@@ -679,7 +679,7 @@
     - Write your blog posts in MDX
     - Offline Support, WebApp Manifest, SEO
     - Code highlighting (with prism-react-renderer) and live preview (with react-live)
-- url: https://gatsby-starter-modern-demo.netlify.com/
+- url: https://gatsby-starter-modern-demo.netlify.app/
   repo: https://github.com/kripod/gatsby-starter-modern
   description: no description yet
   tags:
@@ -1703,7 +1703,7 @@
     - Portfolio Page
     - Timline (Journey) page
     - Minimal
-- url: https://gatsby-starter-blog-mdx-demo.netlify.com
+- url: https://gatsby-starter-blog-mdx-demo.netlify.app
   repo: https://github.com/hagnerd/gatsby-starter-blog-mdx
   description: A fork of the Official Gatsby Starter Blog with support for MDX out of the box.
   tags:
@@ -1713,7 +1713,7 @@
     - MDX
     - Blog
     - RSS Feed
-- url: https://gatsby-tailwindcss-sass-starter-demo.netlify.com/
+- url: https://gatsby-tailwindcss-sass-starter-demo.netlify.app/
   repo: https://github.com/durianstack/gatsby-tailwindcss-sass-starter
   description: Just another Gatsby Tailwind with SASS starter
   tags:
@@ -4290,7 +4290,7 @@
     - Mobile friendly responsive design made to be customized or leave as is
     - Separate components for everything
     - ...and more
-- url: https://gatsby-tailwind-emotion-starter-demo.netlify.com/
+- url: https://gatsby-tailwind-emotion-starter-demo.netlify.app/
   repo: https://github.com/pauloelias/gatsby-tailwind-emotion-starter
   description: Gatsby starter using the latest Tailwind CSS and Emotion.
   tags:
@@ -4585,7 +4585,7 @@
     - TSLint
     - Tailwind CSS v1
     - PostCSS + PurgeCSS
-- url: https://gatsby-starter-blog-tailwindcss-demo.netlify.com/
+- url: https://gatsby-starter-blog-tailwindcss-demo.netlify.app/
   repo: https://github.com/andrezzoid/gatsby-starter-blog-tailwindcss
   description: Gatsby blog starter with TailwindCSS
   tags:
@@ -4621,7 +4621,7 @@
     - Extendable
     - Feature filters
     - Performant
-- url: https://gatsby-theme-phoenix-demo.netlify.com
+- url: https://gatsby-theme-phoenix-demo.netlify.app
   repo: https://github.com/arshad/gatsby-theme-phoenix
   description: A personal blogging and portfolio theme for Gatsby with great typography and dark mode.
   tags:
@@ -4823,7 +4823,7 @@
     - ESLint(Airbnb) for linting
     - Prettier code formatting
     - gh-pages for deploying to GitHub Pages
-- url: https://gatsby-starter-boilerplatev-kontent-demo.netlify.com/
+- url: https://gatsby-starter-boilerplatev-kontent-demo.netlify.app/
   repo: https://github.com/viperfx07/gatsby-starter-boilerplatev-kontent
   description: A Gatsby starter using BoilerplateV for Kentico Kontent.
   tags:
@@ -5551,7 +5551,7 @@
     - Light and Dark themes based on CSS variables (persisted state)
     - Font Awesome
     - Normalize.css
-- url: https://gatsby-notion-demo.netlify.com/
+- url: https://gatsby-notion-demo.netlify.app/
   repo: https://github.com/conradlin/gatsby-starter-strata-notion
   description: Gatsby starter utilizing Notion as a CMS based on strata site template
   tags:
@@ -5598,7 +5598,7 @@
     - Tailwind CSS and SCSS for styling
     - Typescript for easier debugging and development, strict types, etc
     - Netlify for hosting
-- url: https://gatsby-simple-blog-with-asciidoctor-demo.netlify.com
+- url: https://gatsby-simple-blog-with-asciidoctor-demo.netlify.app
   repo: https://github.com/hitsuji-no-shippo/gatsby-simple-blog-with-asciidoctor
   description: A Gatsby blog with Asciidoctor. Forked from thundermiracle/gatsby-simple-blog.
   tags:
