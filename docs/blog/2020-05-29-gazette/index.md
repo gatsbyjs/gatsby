@@ -127,6 +127,6 @@ Another open source project Gatsby supports, MDX has announced the changes you c
 
 Our friends at Contentful developed an [official Gatsby starter](https://github.com/contentful/starter-gatsby-blog) that you can use for blogging. The team over there also produce a new podcast on Web Development, and they recently had [an episode about Gatsby](https://anchor.fm/contentful-creators/episodes/E4--A-Conversation-about-Gatsby-and-Static-Site-Generators--Nikan-Shahidi-ed9mnc).
 
-## What a month!
+## 🙂 What a month!
 
-May was an incredible month for Gatsby, our community, and the entire ecosystem! Keep up to date on new products and features from Gatsby by subscribing to our newsletter!
+May was an incredible month for Gatsby, our community, and the entire ecosystem! But June will be even more exciting! [Register for Gatsby Days](https://www.gatsbyjs.com/resources/gatsby-days/) and you'll hear about all of the new products and features we have coming this year.
