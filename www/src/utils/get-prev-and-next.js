@@ -1,13 +1,8 @@
-const fs = require(`fs-extra`)
-const yaml = require(`js-yaml`)
-const docLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/doc-links.yaml`)
-)
-const tutorialLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/tutorial-links.yaml`)
-)
-const contributingLinksData = yaml.load(
-  fs.readFileSync(`./src/data/sidebars/contributing-links.yaml`)
+const { loadYaml } = require(`./load-yaml`)
+const docLinksData = loadYaml(`src/data/sidebars/doc-links.yaml`)
+const tutorialLinksData = loadYaml(`src/data/sidebars/tutorial-links.yaml`)
+const contributingLinksData = loadYaml(
+  `src/data/sidebars/contributing-links.yaml`
 )
 
 const docLinks = docLinksData[0].items
@@ -43,9 +38,6 @@ function getSibling(index, list, direction) {
     }
     return prev
   } else {
-    reporter.warn(
-      `Did not provide direction to sibling function for building next and prev links`
-    )
     return null
   }
 }

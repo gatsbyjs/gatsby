@@ -60,6 +60,12 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Gatsby Cloud
+              link: /docs/deploying-to-gatsby-cloud/
+              breadcrumbTitle: Gatsby Cloud
+            - title: Deploying to Azure
+              link: /docs/deploying-to-azure/
+              breadcrumbTitle: Azure
             - title: Deploying to Netlify
               link: /docs/deploying-to-netlify/
               breadcrumbTitle: Netlify
@@ -75,9 +81,9 @@
             - title: Deploying to Heroku
               link: /docs/deploying-to-heroku/
               breadcrumbTitle: Heroku
-            - title: Deploying to ZEIT Now
-              link: /docs/deploying-to-zeit-now/
-              breadcrumbTitle: ZEIT Now
+            - title: Deploying to Vercel
+              link: /docs/deploying-to-vercel/
+              breadcrumbTitle: Vercel
             - title: Deploying to Cloudflare Workers
               link: /docs/deploying-to-cloudflare-workers/
               breadcrumbTitle: Cloudflare Workers
@@ -102,9 +108,6 @@
             - title: Deploying to KintoHub
               link: /docs/deploying-to-kintohub/
               breadcrumbTitle: KintoHub Hosting
-            - title: Deploying to Gatsby Cloud
-              link: /docs/deploying-to-gatsby-cloud/
-              breadcrumbTitle: Gatsby Cloud
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
@@ -126,9 +129,9 @@
             - title: Using Babel Plugin Macros
               link: /docs/babel-plugin-macros/
               breadcrumbTitle: Babel Plugin Macros
-            - title: Adding a Custom Webpack Config
+            - title: Adding a Custom webpack Config
               link: /docs/add-custom-webpack-config/
-              breadcrumbTitle: Webpack Config
+              breadcrumbTitle: webpack Config
             - title: Customizing html.js
               link: /docs/custom-html/
               breadcrumbTitle: html.js
@@ -341,7 +344,7 @@
                   link: /docs/sass/
                 - title: Using PostCSS
                   link: /docs/post-css/
-                - title: Using TailwindCSS
+                - title: Using Tailwind CSS
                   link: /docs/tailwind-css/
                 - title: Using Bulma
                   link: /docs/bulma/
@@ -525,8 +528,8 @@
               breadcrumbTitle: React Profiler
             - title: Scaling Issues
               link: /docs/scaling-issues/
-            - title: Experimental Page Build Optimizations for Incremental Data Changes
-              link: /docs/page-build-optimizations-for-incremental-data-changes/
+            - title: Conditional Page Builds
+              link: /docs/conditional-page-builds/
         - title: Localization & Internationalization with Gatsby
           link: /docs/localization-i18n/
           breadcrumbTitle: Localization
@@ -663,7 +666,7 @@
               link: /docs/static-vs-normal-queries/
         - title: Write out Pages
           link: /docs/write-pages/
-        - title: Webpack & SSR
+        - title: webpack & SSR
           link: /docs/webpack-and-ssr/
           items:
             - title: Building the JavaScript App
@@ -781,10 +784,12 @@
           link: /docs/glossary/headless-wordpress/
         - title: Hydration
           link: /docs/glossary/hydration/
-        - title: JAMStack
-          link: /docs/glossary/jamstack/
         - title: Infrastructure as Code
           link: /docs/glossary/infrastructure-as-code/
+        - title: JAMStack
+          link: /docs/glossary/jamstack/
+        - title: JSX
+          link: /docs/glossary/jsx/
         - title: Markdown
           link: /docs/glossary/markdown/
         - title: MDX
@@ -793,6 +798,8 @@
           link: /docs/glossary/node/
         - title: npm
           link: /docs/glossary/npm/
+        - title: Progressive Enhancement
+          link: /docs/glossary/progressive-enhancement/
         - title: React
           link: /docs/glossary/react/
         - title: Server Side Rendering

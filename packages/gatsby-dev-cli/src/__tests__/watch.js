@@ -284,7 +284,6 @@ const monoRepoPackages = [
   `gatsby-transformer-toml`,
   `gatsby-transformer-xml`,
   `gatsby-transformer-yaml`,
-  `graphql-skip-limit`,
 ]
 
 const mockDepsChanges = packagesWithChangedDeps => ({ packageName }) =>
@@ -313,6 +312,7 @@ jest.mock(`../local-npm-registry/install-packages`, () => {
 jest.mock(`../utils/promisified-spawn`, () => {
   return {
     promisifiedSpawn: jest.fn(() => Promise.resolve()),
+    setDefaultSpawnStdio: jest.fn(),
   }
 })
 

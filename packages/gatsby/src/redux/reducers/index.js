@@ -1,5 +1,5 @@
 import { nodeReducer } from "./nodes"
-const nodesByType = require(`./nodes-by-type`)
+import { nodesByTypeReducer } from "./nodes-by-type"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -12,6 +12,14 @@ import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
+import { flattenedPluginsReducer } from "./flattened-plugins"
+import { resolvedNodesCacheReducer } from "./resolved-nodes"
+import { pageDataStatsReducer } from "./page-data-stats"
+import { componentsReducer } from "./components"
+import { componentDataDependenciesReducer } from "./component-data-dependencies"
+import { nodesTouchedReducer } from "./nodes-touched"
+import { babelrcReducer } from "./babelrc"
+import { jobsReducer } from "./jobs"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -19,28 +27,28 @@ import { jobsV2Reducer } from "./jobsv2"
 module.exports = {
   program: require(`./program`),
   nodes: nodeReducer,
-  nodesByType: nodesByType,
-  resolvedNodesCache: require(`./resolved-nodes`),
-  nodesTouched: require(`./nodes-touched`),
+  nodesByType: nodesByTypeReducer,
+  resolvedNodesCache: resolvedNodesCacheReducer,
+  nodesTouched: nodesTouchedReducer,
   lastAction: lastAction,
-  flattenedPlugins: require(`./flattened-plugins`),
+  flattenedPlugins: flattenedPluginsReducer,
   config: require(`./config`),
   schema: schemaReducer,
   pages: pagesReducer,
   status: statusReducer,
-  componentDataDependencies: require(`./component-data-dependencies`),
-  components: require(`./components`),
+  componentDataDependencies: componentDataDependenciesReducer,
+  components: componentsReducer,
   staticQueryComponents: staticQueryComponentsReducer,
-  jobs: require(`./jobs`),
+  jobs: jobsReducer,
   jobsV2: jobsV2Reducer,
   webpack: webpackReducer,
   webpackCompilationHash: webpackCompilationHashReducer,
   redirects: redirectsReducer,
-  babelrc: require(`./babelrc`),
+  babelrc: babelrcReducer,
   schemaCustomization: require(`./schema-customization`),
   themes: themesReducer,
   logs: logReducer,
   inferenceMetadata: require(`./inference-metadata`),
-  pageDataStats: require(`./page-data-stats`),
+  pageDataStats: pageDataStatsReducer,
   pageData: pageDataReducer,
 }
