@@ -5,12 +5,12 @@ require("dotenv").config({
 const Cosmic = require('cosmicjs')
 
 const bucket = Cosmic().bucket({
-  slug: process.env.COSMIC_BUCKET,
-  read_key: process.env.COSMIC_READ_KEY,
-  write_key: process.env.COSMIC_WRITE_KEY
+  slug: process.env.BENCHMARK_COSMIC_BUCKET,
+  read_key: process.env.BENCHMARK_COSMIC_READ_KEY,
+  write_key: process.env.BENCHMARK_COSMIC_WRITE_KEY
 })
 
-const DATASET = (Number(process.env.GATSBY_COSMIC_DATASET) || 512)
+const DATASET = (Number(process.env.BENCHMARK_COSMIC_DATASET) || 512)
 
 const randomDoc = Math.floor(Math.random() * DATASET)
 
