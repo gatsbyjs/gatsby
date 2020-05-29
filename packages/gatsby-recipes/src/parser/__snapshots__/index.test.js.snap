@@ -6,17 +6,19 @@ Array [
 
 This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
 
-<Config name=\\"gatsbyjs/add-theme-ui\\" />
+<Config name=\\"gatsbyjs/add-theme-ui\\"/>
 ",
   "Install packages.
 
-<NPMPackage name=\\"theme-ui\\" />
-<NPMPackage name=\\"gatsby-plugin-theme-ui\\" />
-<NPMPackage name=\\"@theme-ui/presets\\" />
+<NPMPackage name=\\"theme-ui\\"/>
+
+<NPMPackage name=\\"gatsby-plugin-theme-ui\\"/>
+
+<NPMPackage name=\\"@theme-ui/presets\\"/>
 ",
   "Add the plugin \`gatsby-plugin-theme-ui\` to your \`gatsby-config.js\`.
 
-<GatsbyPlugin name=\\"gatsby-plugin-theme-ui\\" />
+<GatsbyPlugin name=\\"gatsby-plugin-theme-ui\\"/>
 ",
   "Write out Theme UI configuration files.
 
@@ -54,9 +56,11 @@ lint-staged.
 ",
   "Install packages.
 
-<NPMPackage name=\\"husky\\" />
-<NPMPackage name=\\"prettier\\" />
-<NPMPackage name=\\"lint-staged\\" />
+<NPMPackage name=\\"husky\\"/>
+
+<NPMPackage name=\\"prettier\\"/>
+
+<NPMPackage name=\\"lint-staged\\"/>
 ",
   "Implement git hooks for prettier.
 
@@ -68,6 +72,7 @@ lint-staged.
     }
   }}
 />
+
 <NPMPackageJson
   name=\\"lint-staged\\"
   value={{
@@ -82,17 +87,18 @@ lint-staged.
 <File
   path=\\".prettierrc\\"
   content={\`{
-  \\"semi\\": false,
-  \\"singleQuote\\": true,
-  \\"trailingComma\\": \\"none\\"
-}\`}
+    \\"semi\\": false,
+    \\"singleQuote\\": true,
+    \\"trailingComma\\": \\"none\\"
+  }\`}
 />
+
 <File
   path=\\".prettierignore\\"
   content={\`.cache
-public
-node_modules
-\`}
+  public
+  node_modules
+  \`}
 />
 ",
   "Prettier, husky, and lint-staged are now installed! You can edit your \`.prettierrc\`
