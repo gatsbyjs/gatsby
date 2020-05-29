@@ -1,0 +1,10 @@
+{
+  "Video hosted on <0>egghead.io</0>": {
+    "origin": [
+      [
+        "src/components/shared/egghead-embed.js",
+        39
+      ]
+    ]
+  }
+}

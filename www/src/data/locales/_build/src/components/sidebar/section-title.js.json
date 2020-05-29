@@ -1,0 +1,18 @@
+{
+  "{0} collapse": {
+    "origin": [
+      [
+        "src/components/sidebar/section-title.js",
+        142
+      ]
+    ]
+  },
+  "{0} expand": {
+    "origin": [
+      [
+        "src/components/sidebar/section-title.js",
+        142
+      ]
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "Activate light mode": {
+    "origin": [
+      [
+        "src/components/dark-mode-toggle.js",
+        136
+      ]
+    ]
+  },
+  "Activate dark mode": {
+    "origin": [
+      [
+        "src/components/dark-mode-toggle.js",
+        136
+      ]
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "Docs": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        88
+      ]
+    ]
+  },
+  "Tutorial": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        89
+      ]
+    ]
+  },
+  "Plugins": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        90
+      ]
+    ]
+  },
+  "Features": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        91
+      ]
+    ]
+  },
+  "Blog": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        92
+      ]
+    ]
+  },
+  "Showcase": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        93
+      ]
+    ]
+  },
+  "Contributing": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        94
+      ]
+    ]
+  },
+  "Gatsby, Back to homepage": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        166
+      ]
+    ]
+  },
+  "Gatsby Logo": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        176
+      ]
+    ]
+  },
+  "Primary Navigation": {
+    "origin": [
+      [
+        "src/components/navigation.js",
+        182
+      ]
+    ]
+  }
+}

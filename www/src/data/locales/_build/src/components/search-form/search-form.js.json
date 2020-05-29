@@ -1,0 +1,22 @@
+{
+  "Search gatsbyjs.org": {
+    "origin": [
+      [
+        "src/components/search-form/search-form.js",
+        149
+      ],
+      [
+        "src/components/search-form/search-form.js",
+        150
+      ]
+    ]
+  },
+  "Hit 's' to search docs": {
+    "origin": [
+      [
+        "src/components/search-form/search-form.js",
+        151
+      ]
+    ]
+  }
+}
