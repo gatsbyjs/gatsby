@@ -1,12 +1,34 @@
-const _ = require(`lodash`)
-const semver = require(`semver`)
-const stringSimilarity = require(`string-similarity`)
-const { version: gatsbyVersion } = require(`gatsby/package.json`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const { resolveModuleExports } = require(`../resolve-module-exports`)
-const { getLatestAPIs } = require(`../../utils/get-latest-apis`)
+import _ from "lodash"
+import * as semver from "semver"
+import * as stringSimilarity from "string-similarity"
+import { version as gatsbyVersion } from "gatsby/package.json"
+import reporter from "gatsby-cli/lib/reporter"
+import { resolveModuleExports } from "../resolve-module-exports"
+import { getLatestAPIs } from "../../utils/get-latest-apis"
+import { IPluginInfo, IFlattenedPlugin } from "./types"
 
-const getGatsbyUpgradeVersion = entries =>
+interface IApi {
+  version?: string
+}
+
+export interface IEntry {
+  exportName: string
+  pluginName: string
+  pluginVersion: string
+  api?: IApi
+}
+
+export type ExportType = "node" | "browser" | "ssr"
+
+type IEntryMap = {
+  [exportType in ExportType]: IEntry[]
+}
+
+export type ICurrentAPIs = {
+  [exportType in ExportType]: string[]
+}
+
+const getGatsbyUpgradeVersion = (entries: readonly IEntry[]): string =>
   entries.reduce((version, entry) => {
     if (entry.api && entry.api.version) {
       return semver.gt(entry.api.version, version || `0.0.0`)
@@ -18,8 +40,12 @@ const getGatsbyUpgradeVersion = entries =>
 
 // Given a plugin object, an array of the API names it exports and an
 // array of valid API names, return an array of invalid API exports.
-const getBadExports = (plugin, pluginAPIKeys, apis) => {
-  let badExports = []
+function getBadExports(
+  plugin: IPluginInfo,
+  pluginAPIKeys: readonly string[],
+  apis: readonly string[]
+): IEntry[] {
+  let badExports: IEntry[] = []
   // Discover any exports from plugins which are not "known"
   badExports = badExports.concat(
     _.difference(pluginAPIKeys, apis).map(e => {
@@ -33,7 +59,18 @@ const getBadExports = (plugin, pluginAPIKeys, apis) => {
   return badExports
 }
 
-const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
+function getErrorContext(
+  badExports: IEntry[],
+  exportType: ExportType,
+  currentAPIs: ICurrentAPIs,
+  latestAPIs: { [exportType in ExportType]: { [exportName: string]: IApi } }
+): {
+  errors: string[]
+  entries: IEntry[]
+  exportType: ExportType
+  fixes: string[]
+  sourceMessage: string
+} {
   const entries = badExports.map(ex => {
     return {
       ...ex,
@@ -42,10 +79,10 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
   })
 
   const gatsbyUpgradeVersion = getGatsbyUpgradeVersion(entries)
-  const errors = []
-  const fixes = [].concat(
-    gatsbyUpgradeVersion ? [`npm install gatsby@^${gatsbyUpgradeVersion}`] : []
-  )
+  const errors: string[] = []
+  const fixes = gatsbyUpgradeVersion
+    ? [`npm install gatsby@^${gatsbyUpgradeVersion}`]
+    : []
 
   entries.forEach(entry => {
     const similarities = stringSimilarity.findBestMatch(
@@ -88,18 +125,22 @@ const getErrorContext = (badExports, exportType, currentAPIs, latestAPIs) => {
     ]
       .concat(errors)
       .concat(
-        fixes.length > 0 && [
-          `\n`,
-          `Some of the following may help fix the error(s):`,
-          ...fixes,
-        ]
+        fixes.length > 0
+          ? [`\n`, `Some of the following may help fix the error(s):`, ...fixes]
+          : []
       )
       .filter(Boolean)
       .join(`\n`),
   }
 }
 
-const handleBadExports = async ({ currentAPIs, badExports }) => {
+export async function handleBadExports({
+  currentAPIs,
+  badExports,
+}: {
+  currentAPIs: ICurrentAPIs
+  badExports: { [api in ExportType]: IEntry[] }
+}): Promise<void> {
   const hasBadExports = Object.keys(badExports).find(
     api => badExports[api].length > 0
   )
@@ -111,7 +152,7 @@ const handleBadExports = async ({ currentAPIs, badExports }) => {
       if (entries.length > 0) {
         const context = getErrorContext(
           entries,
-          exportType,
+          exportType as keyof typeof badExports,
           currentAPIs,
           latestAPIs
         )
@@ -127,9 +168,15 @@ const handleBadExports = async ({ currentAPIs, badExports }) => {
 /**
  * Identify which APIs each plugin exports
  */
-const collatePluginAPIs = ({ currentAPIs, flattenedPlugins }) => {
+export function collatePluginAPIs({
+  currentAPIs,
+  flattenedPlugins,
+}: {
+  currentAPIs: ICurrentAPIs
+  flattenedPlugins: (IPluginInfo & Partial<IFlattenedPlugin>)[]
+}): { flattenedPlugins: IFlattenedPlugin[]; badExports: IEntryMap } {
   // Get a list of bad exports
-  const badExports = {
+  const badExports: IEntryMap = {
     node: [],
     browser: [],
     ssr: [],
@@ -181,10 +228,17 @@ const collatePluginAPIs = ({ currentAPIs, flattenedPlugins }) => {
     }
   })
 
-  return { flattenedPlugins, badExports }
+  return {
+    flattenedPlugins: flattenedPlugins as IFlattenedPlugin[],
+    badExports,
+  }
 }
 
-const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
+export const handleMultipleReplaceRenderers = ({
+  flattenedPlugins,
+}: {
+  flattenedPlugins: IFlattenedPlugin[]
+}): IFlattenedPlugin[] => {
   // multiple replaceRenderers may cause problems at build time
   const rendererPlugins = flattenedPlugins
     .filter(plugin => plugin.ssrAPIs.includes(`replaceRenderer`))
@@ -214,7 +268,7 @@ const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
 
     // For each plugin in ignorable, set a skipSSR flag to true
     // This prevents apiRunnerSSR() from attempting to run it later
-    const messages = []
+    const messages: string[] = []
     flattenedPlugins.forEach((fp, i) => {
       if (ignorable.includes(fp.name)) {
         messages.push(
@@ -233,7 +287,10 @@ const handleMultipleReplaceRenderers = ({ flattenedPlugins }) => {
   return flattenedPlugins
 }
 
-function warnOnIncompatiblePeerDependency(name, packageJSON) {
+export function warnOnIncompatiblePeerDependency(
+  name: string,
+  packageJSON: object
+): void {
   // Note: In the future the peer dependency should be enforced for all plugins.
   const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
   if (
@@ -246,11 +303,4 @@ function warnOnIncompatiblePeerDependency(name, packageJSON) {
       `Plugin ${name} is not compatible with your gatsby version ${gatsbyVersion} - It requires gatsby@${gatsbyPeerDependency}`
     )
   }
-}
-
-module.exports = {
-  collatePluginAPIs,
-  handleBadExports,
-  handleMultipleReplaceRenderers,
-  warnOnIncompatiblePeerDependency,
 }

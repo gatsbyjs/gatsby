@@ -8,19 +8,27 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 jest.mock(`../../resolve-module-exports`)
 jest.mock(`../../../utils/get-latest-apis`)
 
-const reporter = require(`gatsby-cli/lib/reporter`)
-const {
+import reporter from "gatsby-cli/lib/reporter"
+import {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
   warnOnIncompatiblePeerDependency,
-} = require(`../validate`)
-const { getLatestAPIs } = require(`../../../utils/get-latest-apis`)
+  ICurrentAPIs,
+  ExportType,
+  IEntry,
+} from "../validate"
+import { getLatestAPIs } from "../../../utils/get-latest-apis"
+import { resolveModuleExports } from "../../resolve-module-exports"
 
 beforeEach(() => {
-  Object.keys(reporter).forEach(key => reporter[key].mockReset())
-  getLatestAPIs.mockClear()
-  getLatestAPIs.mockResolvedValue({
+  Object.keys(reporter).forEach(key => (reporter[key] as jest.Mock).mockReset())
+
+  const mocked = (getLatestAPIs as unknown) as jest.MockedFunction<
+    typeof getLatestAPIs
+  >
+  mocked.mockClear()
+  mocked.mockResolvedValue({
     browser: {},
     node: {},
     ssr: {},
@@ -41,8 +49,11 @@ describe(`collatePluginAPIs`, () => {
   }
 
   beforeEach(() => {
-    const { resolveModuleExports } = require(`../../resolve-module-exports`)
-    resolveModuleExports(MOCK_RESULTS)
+    // We call the manual /__mocks__/ implementation of resolveModuleExports,
+    // which in addition to the normal parameters, also takes a mock results.
+    // In the future, we might just use jest to mock the return value instead
+    // of relying on manual mocks.
+    resolveModuleExports(MOCK_RESULTS as any)
   })
 
   it(`Identifies APIs used by a site's plugins`, async () => {
@@ -101,8 +112,16 @@ describe(`collatePluginAPIs`, () => {
 })
 
 describe(`handleBadExports`, () => {
-  const getValidExports = () => {
+  const getValidExports = (): {
+    currentAPIs: ICurrentAPIs
+    badExports: { [api in ExportType]: IEntry[] }
+  } => {
     return {
+      currentAPIs: {
+        node: [],
+        browser: [],
+        ssr: [],
+      },
       badExports: {
         node: [],
         browser: [],
@@ -137,6 +156,7 @@ describe(`handleBadExports`, () => {
         ssr: [
           {
             exportName,
+            pluginVersion: `1.0.0`,
             pluginName: `default-site-plugin`,
           },
         ],
@@ -196,7 +216,8 @@ describe(`handleBadExports`, () => {
   it(`Adds fixes to context if newer API introduced in Gatsby`, async () => {
     const version = `2.2.0`
 
-    getLatestAPIs.mockResolvedValueOnce({
+    const mocked = getLatestAPIs as jest.MockedFunction<typeof getLatestAPIs>
+    mocked.mockResolvedValueOnce({
       browser: {},
       ssr: {},
       node: {
@@ -220,6 +241,7 @@ describe(`handleBadExports`, () => {
           {
             exportName: `validatePluginOptions`,
             pluginName: `gatsby-source-contentful`,
+            pluginVersion: version,
           },
         ],
       },
@@ -249,11 +271,6 @@ describe(`handleBadExports`, () => {
             browser: [``],
             ssr: [``],
           },
-          latestAPIs: {
-            browser: {},
-            ssr: {},
-            node: {},
-          },
           badExports: {
             browser: [],
             ssr: [],
@@ -261,6 +278,7 @@ describe(`handleBadExports`, () => {
               {
                 exportName: typoOrOldAPI,
                 pluginName: `default-site-plugin`,
+                pluginVersion: `2.1.0`,
               },
             ],
           },
@@ -269,7 +287,10 @@ describe(`handleBadExports`, () => {
     )
 
     expect(reporter.error).toHaveBeenCalledTimes(typoAPIs.length)
-    const calls = reporter.error.mock.calls
+    const calls = ((reporter.error as unknown) as jest.MockedFunction<
+      typeof reporter.error
+    >).mock.calls
+
     calls.forEach(([call]) => {
       expect(call).toEqual(
         expect.objectContaining({
@@ -346,7 +367,9 @@ describe(`handleMultipleReplaceRenderers`, () => {
 
 describe(`warnOnIncompatiblePeerDependency`, () => {
   beforeEach(() => {
-    reporter.warn.mockClear()
+    ;((reporter.warn as unknown) as jest.MockedFunction<
+      typeof reporter.warn
+    >).mockClear()
   })
 
   it(`Does not warn when no peer dependency`, () => {

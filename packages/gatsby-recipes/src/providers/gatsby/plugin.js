@@ -108,6 +108,21 @@ const addPluginToConfig = (src, { name, options, key }) => {
   return code
 }
 
+const removePluginFromConfig = (src, { id, name, key }) => {
+  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
+    pluginOrThemeName: name || id,
+    key,
+    shouldAdd: false,
+  })
+
+  const { code } = babel.transform(src, {
+    plugins: [addPlugins.plugin],
+    configFile: false,
+  })
+
+  return code
+}
+
 const getPluginsFromConfig = src => {
   const getPlugins = new BabelPluginGetPluginsFromGatsbyConfig()
 
@@ -175,21 +190,12 @@ const read = async ({ root }, id) => {
   }
 }
 
-const destroy = async ({ root }, { id, name }) => {
+const destroy = async ({ root }, resource) => {
   const configSrc = await readConfigFile(root)
 
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name,
-    key: id,
-    shouldAdd: false,
-  })
+  const newSrc = removePluginFromConfig(configSrc, resource)
 
-  const { code } = babel.transform(configSrc, {
-    plugins: [addPlugins.plugin],
-    configFile: false,
-  })
-
-  await fs.writeFile(getConfigPath(root), code)
+  await fs.writeFile(getConfigPath(root), newSrc)
 }
 
 class BabelPluginAddPluginsToGatsbyConfig {
@@ -254,11 +260,12 @@ class BabelPluginAddPluginsToGatsbyConfig {
               pluginNodes.value.elements = pluginNodes.value.elements.filter(
                 node => {
                   const plugin = getPlugin(node)
+
                   if (key) {
-                    return plugin.key === key
+                    return plugin.key !== key
                   }
 
-                  return plugin.name === pluginOrThemeName
+                  return plugin.name !== pluginOrThemeName
                 }
               )
             }
@@ -302,6 +309,7 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
 module.exports.addPluginToConfig = addPluginToConfig
 module.exports.getPluginsFromConfig = getPluginsFromConfig
+module.exports.removePluginFromConfig = removePluginFromConfig
 
 module.exports.create = create
 module.exports.update = create
