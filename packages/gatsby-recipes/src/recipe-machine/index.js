@@ -1,5 +1,7 @@
 const { Machine, assign } = require(`xstate`)
 
+const debug = require(`debug`)(`recipes-machine`)
+
 const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
@@ -26,6 +28,8 @@ const recipeMachine = Machine(
           src: async (context, _event) => {
             let parsed
 
+            debug(`parsingRecipe`)
+
             if (context.src) {
               parsed = await parser.parse(context.src)
             } else if (context.recipePath && context.projectRoot) {
@@ -38,12 +42,16 @@ const recipeMachine = Machine(
               )
             }
 
+            debug(`parsedRecipe`)
+
             return parsed
           },
           onError: {
             target: `doneError`,
             actions: assign({
               error: (context, event) => {
+                debug(`error parsing recipes`)
+
                 let msg
                 try {
                   msg = JSON.parse(event.data.message)
@@ -69,8 +77,10 @@ const recipeMachine = Machine(
         invoke: {
           id: `validateSteps`,
           src: async (context, event) => {
+            debug(`validatingSteps`)
             const result = await validateSteps(context.steps)
             if (result.length > 0) {
+              debug(`errors found in validation`)
               throw new Error(JSON.stringify(result))
             }
 
@@ -149,6 +159,7 @@ const recipeMachine = Machine(
         invoke: {
           id: `applyPlan`,
           src: (context, event) => cb => {
+            debug(`applying plan`)
             cb(`RESET`)
             if (context.plan.length === 0) {
               return cb(`onDone`)
@@ -160,9 +171,14 @@ const recipeMachine = Machine(
 
             applyPlan(context.plan)
               .then(result => {
+                debug(`applied plan`)
                 cb({ type: `onDone`, data: result })
               })
-              .catch(error => cb({ type: `onError`, data: error }))
+              .catch(error => {
+                debug(`error applying plan`)
+                debug(error)
+                cb({ type: `onError`, data: error })
+              })
 
             return () => clearInterval(interval)
           },
