@@ -405,7 +405,7 @@ Once this finishes running, you should see in your terminal something like:
 Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this
 case) and you'll see your newly published site! Great work!
 
-## Alternative: Deploying to Gatsby Cloud
+### Alternative: Deploying to Gatsby Cloud
 
 [Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools. It's the best place to build and deploy sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
 
