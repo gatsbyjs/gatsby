@@ -65,14 +65,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     }
 
     try {
-      const useStateMachine =
-        command === `develop` && process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE
       const cmdPath =
-        resolveCwd.silent(
-          `gatsby/dist/commands/${
-            useStateMachine ? `develop-state-machine` : command
-          }`
-        ) ||
+        resolveCwd.silent(`gatsby/dist/commands/${command}`) ||
         // Old location of commands
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)

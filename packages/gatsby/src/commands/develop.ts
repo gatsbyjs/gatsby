@@ -102,7 +102,12 @@ class ControllableScript {
 let isRestarting
 
 module.exports = async (program: IProgram): Promise<void> => {
-  const developProcessPath = slash(require.resolve(`./develop-process`))
+  const useStateMachine = !!process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE
+  const developProcessPath = slash(
+    useStateMachine
+      ? require.resolve(`./develop-state-machine`)
+      : require.resolve(`./develop-process`)
+  )
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
