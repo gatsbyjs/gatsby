@@ -9,6 +9,7 @@ import { emitter } from "../redux"
 import { Reporter } from "../.."
 import { ExecutionResult, Source } from "../../graphql"
 import { IGatsbyState } from "../redux/types"
+import { IMatch } from "../types"
 
 export type Runner = (
   query: string | Source,
@@ -81,7 +82,7 @@ export const createGraphQLRunner = (
 
               return null
             })
-            .filter(Boolean)
+            .filter((Boolean as unknown) as (match) => match is IMatch)
 
           if (structuredErrors.length) {
             // panic on build exits the process

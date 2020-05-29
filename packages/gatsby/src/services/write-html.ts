@@ -1,7 +1,7 @@
 import { IBuildContext } from "../state-machines/develop"
 import reporter from "gatsby-cli/lib/reporter"
 import { buildHTML } from "../commands/build-html"
-import { BuildHTMLStage } from "../commands/types"
+import { Stage } from "../commands/types"
 
 export async function writeHTML({
   program,
@@ -25,7 +25,7 @@ export async function writeHTML({
   try {
     await buildHTML({
       program: program,
-      stage: BuildHTMLStage.BuildHTML,
+      stage: Stage.BuildHTML,
       pagePaths: pagesToBuild,
       activity,
       workerPool: workerPool,

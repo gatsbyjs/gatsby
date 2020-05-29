@@ -12,7 +12,7 @@ import { WebsocketManager } from "../utils/websocket-manager"
 import { Store } from "redux"
 import { Compiler } from "webpack"
 import { Span } from "opentracing"
-import GraphQLRunner from "../query/graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 import { idleStates } from "./waiting"
 import {
   ADD_NODE_MUTATION,

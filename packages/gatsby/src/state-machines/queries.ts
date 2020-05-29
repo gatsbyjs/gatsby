@@ -78,7 +78,7 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
           {
             target: `runningStaticQueries`,
             actions: assign<IBuildContext, DoneInvokeEvent<any>>(
-              (context, { data }) => {
+              (_context, { data }) => {
                 const { queryIds } = data
                 return {
                   filesDirty: false,

@@ -1,7 +1,6 @@
-import requiresWriter from "../bootstrap/requires-writer"
 import { IBuildContext } from "../state-machines/develop"
-
 import reporter from "gatsby-cli/lib/reporter"
+import { writeAll } from "../bootstrap/requires-writer"
 
 export async function writeOutRequires({
   store,
@@ -16,7 +15,7 @@ export async function writeOutRequires({
   })
   activity.start()
   try {
-    await requiresWriter.writeAll(store.getState())
+    await writeAll(store.getState())
   } catch (err) {
     reporter.panic(`Failed to write out requires`, err)
   }

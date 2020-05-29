@@ -1,12 +1,11 @@
-const _ = require(`lodash`)
-const { slash } = require(`gatsby-core-utils`)
-const fs = require(`fs-extra`)
-const md5File = require(`md5-file/promise`)
-const crypto = require(`crypto`)
-const del = require(`del`)
-const path = require(`path`)
-const Promise = require(`bluebird`)
-const telemetry = require(`gatsby-telemetry`)
+import _ from "lodash"
+import { slash } from "gatsby-core-utils"
+import fs from "fs-extra"
+import md5File from "md5-file/promise"
+import crypto from "crypto"
+import del from "del"
+import path from "path"
+import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
@@ -16,18 +15,21 @@ import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
 import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
+import { loadPlugins } from "../bootstrap/load-plugins"
+import { store, emitter } from "../redux"
+import loadThemes from "../bootstrap/load-themes"
+import reporter from "gatsby-cli/lib/reporter"
+import { getConfigFile } from "../bootstrap/get-config-file"
+import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
+import { ErrorMeta } from "gatsby-cli/lib/reporter/types"
+import { globalTracer } from "opentracing"
+import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 
-const { store, emitter } = require(`../redux`)
-const loadPlugins = require(`../bootstrap/load-plugins`)
-const loadThemes = require(`../bootstrap/load-themes`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { getConfigFile } = require(`../bootstrap/get-config-file`)
-const tracer = require(`opentracing`).globalTracer()
-const { removeStaleJobs } = require(`../bootstrap/remove-stale-jobs`)
+const tracer = globalTracer()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, reason => {
-  report.panic(reason)
+  reporter.panic({ id: ``, context: reason } as ErrorMeta)
 })
 
 // Override console.log to add the source file + line number.
@@ -81,7 +83,7 @@ export async function initialize(
 
   emitter.on(`CREATE_JOB`, () => {
     if (!activityForJobs) {
-      activityForJobs = report.phantomActivity(`Running jobs`)
+      activityForJobs = reporter.phantomActivity(`Running jobs`)
       activityForJobs.start()
     }
   })
@@ -96,7 +98,7 @@ export async function initialize(
   emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-configs`, {
+  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -108,7 +110,7 @@ export async function initialize(
 
   // The root config cannot be exported as a function, only theme configs
   if (typeof config === `function`) {
-    report.panic({
+    reporter.panic({
       id: `10126`,
       context: {
         configName: `gatsby-config`,
@@ -119,7 +121,7 @@ export async function initialize(
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
-    report.warn(
+    reporter.warn(
       `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
     )
     const themes = await loadThemes(config, {
@@ -143,7 +145,7 @@ export async function initialize(
   }
 
   if (config && config.polyfill) {
-    report.warn(
+    reporter.warn(
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }
@@ -158,7 +160,9 @@ export async function initialize(
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = report.activityTimer(`load plugins`, { parentSpan: bootstrapSpan })
+  activity = reporter.activityTimer(`load plugins`, {
+    parentSpan: bootstrapSpan,
+  })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
   activity.end()
@@ -175,7 +179,7 @@ export async function initialize(
   })
 
   // onPreInit
-  activity = report.activityTimer(`onPreInit`, {
+  activity = reporter.activityTimer(`onPreInit`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -188,7 +192,7 @@ export async function initialize(
     !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     process.env.NODE_ENV === `production`
   ) {
-    activity = report.activityTimer(
+    activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
       {
         parentSpan: bootstrapSpan,
@@ -204,7 +208,7 @@ export async function initialize(
     activity.end()
   }
 
-  activity = report.activityTimer(`initialize cache`, {
+  activity = reporter.activityTimer(`initialize cache`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -240,7 +244,7 @@ export async function initialize(
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
-    report.info(report.stripIndent`
+    reporter.info(reporter.stripIndent`
       One or more of your plugins have changed since the last time you ran Gatsby. As
       a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
@@ -252,7 +256,7 @@ export async function initialize(
       // like when directory is mount point
       await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
     } catch (e) {
-      report.error(`Failed to remove .cache files.`, e)
+      reporter.error(`Failed to remove .cache files.`, e)
     }
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
@@ -281,7 +285,7 @@ export async function initialize(
     // Start the nodes database (in memory loki js with interval disk
     // saves). If data was saved from a previous build, it will be
     // loaded here
-    activity = report.activityTimer(`start nodes db`, {
+    activity = reporter.activityTimer(`start nodes db`, {
       parentSpan: bootstrapSpan,
     })
     activity.start()
@@ -291,14 +295,14 @@ export async function initialize(
         saveFile: dbSaveFile,
       })
     } catch (e) {
-      report.error(
+      reporter.error(
         `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
       )
     }
     activity.end()
   }
 
-  activity = report.activityTimer(`copy gatsby files`, {
+  activity = reporter.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -306,12 +310,8 @@ export async function initialize(
   const siteDir = cacheDirectory
   const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
-    await fs.copy(srcDir, siteDir, {
-      clobber: true,
-    })
-    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
-      clobber: true,
-    })
+    await fs.copy(srcDir, siteDir)
+    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
     await fs.ensureDirSync(`${cacheDirectory}/json`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
@@ -319,7 +319,7 @@ export async function initialize(
     // the data used to create the schema they're dependent on is available.
     await fs.emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
-    report.panic(`Unable to copy site files to .cache`, err)
+    reporter.panic(`Unable to copy site files to .cache`, err)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
@@ -349,25 +349,30 @@ export async function initialize(
     return undefined
   }
 
-  const ssrPlugins = _.filter(
-    flattenedPlugins.map(plugin => {
+  interface IPluginResolution {
+    resolve: string
+    options: IPluginInfoOptions
+  }
+
+  const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
+
+  const ssrPlugins: IPluginResolution[] = flattenedPlugins
+    .map(plugin => {
       return {
         resolve: hasAPIFile(`ssr`, plugin),
         options: plugin.pluginOptions,
       }
-    }),
-    plugin => plugin.resolve
-  )
+    })
+    .filter(isResolved)
 
-  const browserPlugins = _.filter(
-    flattenedPlugins.map(plugin => {
+  const browserPlugins: IPluginResolution[] = flattenedPlugins
+    .map(plugin => {
       return {
         resolve: hasAPIFile(`browser`, plugin),
         options: plugin.pluginOptions,
       }
-    }),
-    plugin => plugin.resolve
-  )
+    })
+    .filter(isResolved)
 
   const browserPluginsRequires = browserPlugins
     .map(plugin => {
@@ -387,7 +392,7 @@ export async function initialize(
   try {
     sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   } catch (err) {
-    report.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
+    reporter.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
   }
 
   const ssrPluginsRequires = ssrPlugins
@@ -414,7 +419,7 @@ export async function initialize(
    */
 
   // onPreBootstrap
-  activity = report.activityTimer(`onPreBootstrap`, {
+  activity = reporter.activityTimer(`onPreBootstrap`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()

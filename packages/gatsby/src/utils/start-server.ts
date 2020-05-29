@@ -28,7 +28,7 @@ import { slash } from "gatsby-core-utils"
 import apiRunnerNode from "../utils/api-runner-node"
 import { Express } from "express"
 
-import { BuildHTMLStage, IProgram } from "../commands/types"
+import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
@@ -54,7 +54,7 @@ export async function startServer(
     try {
       await buildHTML({
         program,
-        stage: BuildHTMLStage.DevelopHTML,
+        stage: Stage.DevelopHTML,
         pagePaths: [`/`],
         workerPool,
         activity,

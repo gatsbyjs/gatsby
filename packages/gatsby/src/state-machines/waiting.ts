@@ -35,7 +35,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
         ],
         WEBHOOK_RECEIVED: {
           target: `refreshing`,
-          actions: assign((ctx, event) => {
+          actions: assign((_ctx, event) => {
             return { webhookBody: event.body }
           }),
         },

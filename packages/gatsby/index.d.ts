@@ -24,6 +24,10 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
+import type reporter from "gatsby-cli/lib/reporter"
+
+export type Reporter = typeof reporter
+
 export const useStaticQuery: <TData = any>(query: any) => TData
 
 export const parsePath: (path: string) => WindowLocation
@@ -1282,29 +1286,6 @@ export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
 export type ActivityArgs = {
   parentSpan?: Object
   id?: string
-}
-
-export interface Reporter {
-  stripIndent: (input: string) => string
-  format: object
-  setVerbose(isVerbose?: boolean): void
-  setNoColor(isNoColor?: boolean): void
-  panic: LogErrorType
-  panicOnBuild: LogErrorType
-  error: LogErrorType
-  uptime(prefix: string): void
-  success: LogMessageType
-  verbose: LogMessageType
-  info: LogMessageType
-  warn: LogMessageType
-  log: LogMessageType
-  activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
-  createProgress(
-    text: string,
-    total?: number,
-    start?: number,
-    activityArgs?: ActivityArgs
-  ): ProgressActivityTracker
 }
 
 /**

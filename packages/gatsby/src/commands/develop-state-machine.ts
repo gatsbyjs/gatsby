@@ -17,7 +17,6 @@ import { IProgram } from "./types"
 
 import { developMachine, INITIAL_CONTEXT } from "../state-machines/develop"
 import { interpret } from "xstate"
-import { emitter } from "../redux"
 import { saveState, startAutosave } from "../db"
 import { startStateMachineServer } from "../utils/state-machine-server"
 

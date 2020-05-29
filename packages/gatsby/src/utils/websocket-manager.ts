@@ -17,7 +17,7 @@ export interface IPageQueryResult {
 }
 
 export interface IStaticQueryResult {
-  id: number
+  id: string
   result: unknown // TODO: Improve this once we understand what the type is
 }
 
