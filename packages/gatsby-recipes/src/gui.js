@@ -310,7 +310,9 @@ const RecipeGui = ({
         <div id={makeResourceId(resourcePlan)} sx={{}}>
           <div>
             <Styled.p sx={{ mb: resourcePlan.diff ? 6 : 0 }}>
-              {resourcePlan.resourceName} — {resourcePlan.describe}
+              <Styled.em>{resourcePlan.resourceName}</Styled.em>
+              {` `}—{` `}
+              {resourcePlan.describe}
             </Styled.p>
           </div>
           {resourcePlan.diff && (
@@ -318,7 +320,7 @@ const RecipeGui = ({
               sx={{
                 background: theme => theme.tones.BRAND.superLight,
                 border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
-                padding: 3,
+                padding: 4,
                 mb: isLastPlan ? 0 : 6,
               }}
               dangerouslySetInnerHTML={{
@@ -548,7 +550,7 @@ const RecipeGui = ({
             <div sx={{ "*:last-child": { mb: 0 } }}>
               <MDX components={components}>{state.context.steps[0]}</MDX>
             </div>
-            <Button sx={{ width: `185px`, ml: 6 }}>Install Recipe</Button>
+            <Button sx={{ width: `140px`, ml: 6 }}>Install Recipe</Button>
           </div>
           <div sx={{ marginBottom: 8 }}>
             <Heading sx={{ marginBottom: 6 }}>
@@ -557,7 +559,10 @@ const RecipeGui = ({
             </Heading>
             {Object.entries(groupedPlans).map(([resourceName, plans]) => (
               <div>
-                <Heading as="h4" sx={{ mb: 3 }}>
+                <Heading
+                  as="h4"
+                  sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
+                >
                   {resourceName}
                 </Heading>
                 <Styled.ul sx={{ marginTop: 0, mb: 5 }}>
