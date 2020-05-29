@@ -1,15 +1,13 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "./localized-link"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import {
   BlogIcon,
   DocsIcon,
   TutorialIcon,
   PluginsIcon,
-  ShowcaseIcon,
+  ShowcaseIcon
 } from "../assets/icons"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../utils/styles"
@@ -18,9 +16,9 @@ const getProps = ({ isPartiallyCurrent }) => {
   return {
     ...(isPartiallyCurrent
       ? {
-          "data-active": true,
+          "data-active": true
         }
-      : {}),
+      : {})
   }
 }
 
@@ -31,8 +29,8 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
       ...styles.svg.default,
       "&[data-active]": {
         ...styles.link.active,
-        ...styles.svg.active,
-      },
+        ...styles.svg.active
+      }
     }}
     getProps={getProps}
     to={linkTo}
@@ -42,14 +40,14 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
   </Link>
 )
 const navItems = [
-  { id: `docs`, text: t`Docs`, icon: DocsIcon },
-  { id: `tutorial`, text: t`Tutorials`, icon: TutorialIcon },
-  { id: `plugins`, text: t`Plugins`, icon: PluginsIcon },
-  { id: `blog`, text: t`Blog`, icon: BlogIcon },
-  { id: `showcase`, text: t`Showcase`, icon: ShowcaseIcon },
+  { id: `docs`, text: `Docs`, icon: DocsIcon },
+  { id: `tutorial`, text: `Tutorials`, icon: TutorialIcon },
+  { id: `plugins`, text: `Plugins`, icon: PluginsIcon },
+  { id: `blog`, text: `Blog`, icon: BlogIcon },
+  { id: `showcase`, text: `Showcase`, icon: ShowcaseIcon }
 ]
 
-const MobileNavigation = ({ i18n }) => (
+const MobileNavigation = () => (
   <div
     sx={{
       alignItems: `center`,
@@ -67,31 +65,26 @@ const MobileNavigation = ({ i18n }) => (
       right: 0,
       zIndex: `navigation`,
       [mediaQueries.md]: {
-        display: `none`,
-      },
+        display: `none`
+      }
     }}
   >
     {navItems.map(({ id, text, icon }) => (
-      <MobileNavItem
-        linkTo={`/${id}/`}
-        key={id}
-        label={i18n._(text)}
-        icon={icon}
-      />
+      <MobileNavItem linkTo={`/${id}/`} key={id} label={text} icon={icon} />
     ))}
   </div>
 )
 
-export default withI18n()(MobileNavigation)
+export default MobileNavigation
 
 const styles = {
   svg: {
     default: {
       ...svgStyles().stroke,
       ...svgStyles().default,
-      "&:hover": { ...svgStyles().active },
+      "&:hover": { ...svgStyles().active }
     },
-    active: svgStyles().active,
+    active: svgStyles().active
   },
   link: {
     default: {
@@ -116,12 +109,12 @@ const styles = {
         mt: 0,
         mx: `auto`,
         "& path, & line, & polygon": {
-          transition: `default`,
-        },
+          transition: `default`
+        }
       },
       ":hover": {
-        color: `navigation.linkHover`,
-      },
+        color: `navigation.linkHover`
+      }
     },
     active: {
       color: `navigation.linkActive`,
@@ -136,8 +129,8 @@ const styles = {
         borderBottomRightRadius: 1,
         left: `50%`,
         top: `-1px`,
-        transform: `translateX(-50%)`,
-      },
-    },
-  },
+        transform: `translateX(-50%)`
+      }
+    }
+  }
 }

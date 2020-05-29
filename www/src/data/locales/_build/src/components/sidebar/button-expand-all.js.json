@@ -1,0 +1,18 @@
+{
+  "Collapse All": {
+    "origin": [
+      [
+        "src/components/sidebar/button-expand-all.js",
+        41
+      ]
+    ]
+  },
+  "Expand All": {
+    "origin": [
+      [
+        "src/components/sidebar/button-expand-all.js",
+        50
+      ]
+    ]
+  }
+}

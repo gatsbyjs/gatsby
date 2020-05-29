@@ -21,7 +21,7 @@ const fileExists = filePath => fs.existsSync(filePath)
 const listShadowableFilesForTheme = (directory, theme) => {
   const fullThemePath = path.join(directory, `node_modules`, theme, `src`)
   const shadowableThemeFiles = glob.sync(fullThemePath + `/**/*.*`, {
-    follow: true,
+    follow: true
   })
 
   const toShadowPath = filePath => {
@@ -56,7 +56,7 @@ const getOptionsForPlugin = node => {
 const getPlugin = node => {
   const plugin = {
     name: getNameForPlugin(node),
-    options: getOptionsForPlugin(node),
+    options: getOptionsForPlugin(node)
   }
 
   const key = getKeyForPlugin(node)
@@ -97,12 +97,27 @@ const addPluginToConfig = (src, { name, options, key }) => {
     pluginOrThemeName: name,
     options,
     shouldAdd: true,
-    key,
+    key
   })
 
   const { code } = babel.transform(src, {
     plugins: [addPlugins.plugin],
-    configFile: false,
+    configFile: false
+  })
+
+  return code
+}
+
+const removePluginFromConfig = (src, { id, name, key }) => {
+  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
+    pluginOrThemeName: name || id,
+    key,
+    shouldAdd: false
+  })
+
+  const { code } = babel.transform(src, {
+    plugins: [addPlugins.plugin],
+    configFile: false
   })
 
   return code
@@ -113,7 +128,7 @@ const getPluginsFromConfig = src => {
 
   babel.transform(src, {
     plugins: [getPlugins.plugin],
-    configFile: false,
+    configFile: false
   })
 
   return getPlugins.state
@@ -175,21 +190,12 @@ const read = async ({ root }, id) => {
   }
 }
 
-const destroy = async ({ root }, { id, name }) => {
+const destroy = async ({ root }, resource) => {
   const configSrc = await readConfigFile(root)
 
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name,
-    key: id,
-    shouldAdd: false,
-  })
+  const newSrc = removePluginFromConfig(configSrc, resource)
 
-  const { code } = babel.transform(configSrc, {
-    plugins: [addPlugins.plugin],
-    configFile: false,
-  })
-
-  await fs.writeFile(getConfigPath(root), code)
+  await fs.writeFile(getConfigPath(root), newSrc)
 }
 
 class BabelPluginAddPluginsToGatsbyConfig {
@@ -225,7 +231,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                 const pluginNode = buildPluginNode({
                   name: pluginOrThemeName,
                   options,
-                  key,
+                  key
                 })
 
                 pluginNodes.value.elements.push(pluginNode)
@@ -245,7 +251,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                     return buildPluginNode({
                       name: pluginOrThemeName,
                       options,
-                      key,
+                      key
                     })
                   }
                 )
@@ -254,18 +260,19 @@ class BabelPluginAddPluginsToGatsbyConfig {
               pluginNodes.value.elements = pluginNodes.value.elements.filter(
                 node => {
                   const plugin = getPlugin(node)
+
                   if (key) {
-                    return plugin.key === key
+                    return plugin.key !== key
                   }
 
-                  return plugin.name === pluginOrThemeName
+                  return plugin.name !== pluginOrThemeName
                 }
               )
             }
 
             path.stop()
-          },
-        },
+          }
+        }
       }
     })
   }
@@ -293,8 +300,8 @@ class BabelPluginGetPluginsFromGatsbyConfig {
             plugins.value.elements.map(node => {
               this.state.push(getPlugin(node))
             })
-          },
-        },
+          }
+        }
       }
     })
   }
@@ -302,6 +309,7 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
 module.exports.addPluginToConfig = addPluginToConfig
 module.exports.getPluginsFromConfig = getPluginsFromConfig
+module.exports.removePluginFromConfig = removePluginFromConfig
 
 module.exports.create = create
 module.exports.update = create
@@ -324,7 +332,7 @@ module.exports.all = async ({ root }) => {
       id: plugin.name,
       ...plugin,
       shadowedFiles,
-      shadowableFiles,
+      shadowableFiles
     }
   })
 }
@@ -334,19 +342,19 @@ const schema = {
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
-  ...resourceSchema,
+  ...resourceSchema
 }
 
 const validate = resource => {
   if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
     return {
-      error: `${resource.name} requires a key to be set`,
+      error: `${resource.name} requires a key to be set`
     }
   }
 
   if (resource.key && resource.key === resource.name) {
     return {
-      error: `${resource.name} requires a key to be different than the plugin name`,
+      error: `${resource.name} requires a key to be different than the plugin name`
     }
   }
 
@@ -362,18 +370,18 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
   let configSrc = await readConfigFile(root)
   configSrc = prettier.format(configSrc, {
     ...prettierConfig,
-    parser: `babel`,
+    parser: `babel`
   })
 
   let newContents = addPluginToConfig(configSrc, {
     id,
     key: id || key,
     name: fullName,
-    options,
+    options
   })
   newContents = prettier.format(newContents, {
     ...prettierConfig,
-    parser: `babel`,
+    parser: `babel`
   })
   const diff = await getDiff(configSrc, newContents)
 
@@ -383,6 +391,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     diff,
     currentState: configSrc,
     newState: newContents,
-    describe: `Install ${fullName} in gatsby-config.js`,
+    describe: `Install ${fullName} in gatsby-config.js`
   }
 }

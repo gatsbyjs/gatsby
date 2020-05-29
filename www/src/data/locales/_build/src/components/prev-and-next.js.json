@@ -1,0 +1,26 @@
+{
+  "pagination": {
+    "origin": [
+      [
+        "src/components/prev-and-next.js",
+        39
+      ]
+    ]
+  },
+  "Previous": {
+    "origin": [
+      [
+        "src/components/prev-and-next.js",
+        53
+      ]
+    ]
+  },
+  "Next": {
+    "origin": [
+      [
+        "src/components/prev-and-next.js",
+        86
+      ]
+    ]
+  }
+}

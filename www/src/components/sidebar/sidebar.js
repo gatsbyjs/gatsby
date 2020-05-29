@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
@@ -28,7 +26,7 @@ function getOpenItemHash(itemList, activeItem, activeItemParents) {
       )
       result = {
         ...result,
-        ...getOpenItemHash(item.items, activeItem, activeItemParents),
+        ...getOpenItemHash(item.items, activeItem, activeItemParents)
       }
     }
   }
@@ -41,8 +39,7 @@ export function useSidebarContext() {
   return React.useContext(SidebarContext)
 }
 
-export default withI18n()(function Sidebar({
-  i18n,
+export default function Sidebar({
   title,
   closeSidebar,
   itemList,
@@ -50,7 +47,7 @@ export default withI18n()(function Sidebar({
   position,
   activeItemHash,
   disableExpandAll,
-  disableAccordions,
+  disableAccordions
 }) {
   const scrollRef = React.useRef(null)
 
@@ -82,7 +79,7 @@ export default withI18n()(function Sidebar({
     setOpenSectionHash(openSectionHash => {
       return {
         ...openSectionHash,
-        [item.title]: !openSectionHash[item.title],
+        [item.title]: !openSectionHash[item.title]
       }
     })
   }, [])
@@ -105,7 +102,7 @@ export default withI18n()(function Sidebar({
       return {
         isExpanded: openSectionHash[item.title] || disableAccordions,
         isActive: item.title === activeItem.title,
-        inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
+        inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents)
       }
     },
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
@@ -116,14 +113,14 @@ export default withI18n()(function Sidebar({
       getItemState,
       disableAccordions,
       onLinkClick: closeSidebar,
-      onSectionTitleClick: toggleSection,
+      onSectionTitleClick: toggleSection
     }
   }, [getItemState, disableAccordions, closeSidebar, toggleSection])
 
   return (
     <SidebarContext.Provider value={context}>
       <section
-        aria-label={i18n._(t`Secondary Navigation`)}
+        aria-label="Secondary Navigation"
         id="SecondaryNavigation"
         className="docSearch-sidebar"
         sx={{ height: `100%` }}
@@ -139,7 +136,7 @@ export default withI18n()(function Sidebar({
               display: `flex`,
               height: `sidebarUtilityHeight`,
               pl: 4,
-              pr: 6,
+              pr: 6
             }}
           >
             <ExpandAllButton onClick={toggleExpandAll} expandAll={expandAll} />
@@ -165,8 +162,8 @@ export default withI18n()(function Sidebar({
                 : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
             [mediaQueries.md]: {
               top: t =>
-                `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
-            },
+                `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`
+            }
           }}
         >
           <h3
@@ -178,7 +175,7 @@ export default withI18n()(function Sidebar({
               margin: 0,
               fontWeight: `body`,
               textTransform: `uppercase`,
-              letterSpacing: `tracked`,
+              letterSpacing: `tracked`
             }}
           >
             {title}
@@ -191,11 +188,11 @@ export default withI18n()(function Sidebar({
               bg: `background`,
               "& li": {
                 m: 0,
-                listStyle: `none`,
+                listStyle: `none`
               },
               "& > li:last-child > span:before": {
-                display: `none`,
-              },
+                display: `none`
+              }
             }}
           >
             {itemList.map(item => (
@@ -206,4 +203,4 @@ export default withI18n()(function Sidebar({
       </section>
     </SidebarContext.Provider>
   )
-})
+}

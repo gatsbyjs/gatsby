@@ -1,12 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Trans } from "@lingui/macro"
 import React from "react"
 import { GoFold, GoUnfold } from "react-icons/go"
 
 const iconStyles = {
   display: `inline-block`,
-  mr: 2,
+  mr: 2
 }
 
 const ExpandAllButton = ({ onClick, expandAll }) => (
@@ -28,8 +27,8 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
         bg: `sidebar.itemHoverBackground`,
-        color: `navigation.linkHover`,
-      },
+        color: `navigation.linkHover`
+      }
     }}
   >
     {expandAll ? (
@@ -37,18 +36,14 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
         <span sx={iconStyles}>
           <GoFold />
         </span>
-        <span>
-          <Trans>Collapse All</Trans>
-        </span>
+        <span>Collapse All</span>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <span sx={iconStyles}>
           <GoUnfold />
         </span>
-        <span>
-          <Trans>Expand All</Trans>
-        </span>
+        <span>Expand All</span>
       </React.Fragment>
     )}
   </button>

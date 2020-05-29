@@ -1,15 +1,13 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const path = require(`path`)
-const fs = require(`fs-extra`)
-const { slash } = require(`gatsby-core-utils`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
-const yaml = require(`js-yaml`)
-const ecosystemFeaturedItems = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+const { loadYaml } = require(`../load-yaml`)
+const { starters: featuredStarters } = loadYaml(
+  `src/data/ecosystem/featured-items.yaml`
 )
+const { getTemplate } = require(`../get-template`)
 
 if (
   process.env.gatsby_executing_command === `build` &&
@@ -24,15 +22,15 @@ if (
 const githubApiClient = process.env.GITHUB_API_TOKEN
   ? new GraphQLClient(`https://api.github.com/graphql`, {
       headers: {
-        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
-      },
+        authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`
+      }
     })
   : null
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  const starterTemplate = path.resolve(`src/templates/template-starter-page.js`)
+  const starterTemplate = getTemplate(`template-starter-page`)
 
   const { data, errors } = await graphql(`
     query {
@@ -71,10 +69,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   starters.forEach(node => {
     createPage({
       path: `/starters${node.fields.starterShowcase.slug}`,
-      component: slash(starterTemplate),
+      component: starterTemplate,
       context: {
-        slug: node.fields.starterShowcase.slug,
-      },
+        slug: node.fields.starterShowcase.slug
+      }
     })
   })
 }
@@ -128,7 +126,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const { owner, name: repoStub } = parseGHUrl(node.repo)
 
     // mark if it's a featured starter
-    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
+    if (featuredStarters.includes(`/${owner}/${repoStub}/`)) {
       createNodeField({ node, name: `featured`, value: true })
     }
 
@@ -144,7 +142,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
       gatsbyMajorVersion: [[`no data`, `0`]],
       allDependencies: [[`no data`, `0`]],
       gatsbyDependencies: [[`no data`, `0`]],
-      miscDependencies: [[`no data`, `0`]],
+      miscDependencies: [[`no data`, `0`]]
     }
 
     // determine if screenshot is available
@@ -159,13 +157,13 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         node,
         name: `starterShowcase`,
         value: {
-          ...defaultFields,
-        },
+          ...defaultFields
+        }
       })
     } else {
       Promise.all([
         getpkgjson(node.repo),
-        fetchGithubData({ owner, repo: repoStub, reporter }),
+        fetchGithubData({ owner, repo: repoStub, reporter })
       ])
         .then(results => {
           const [pkgjson, githubData] = results
@@ -174,7 +172,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
             pushedAt: lastUpdated,
             owner: { login: owner },
             name,
-            nameWithOwner: githubFullName,
+            nameWithOwner: githubFullName
           } = githubData.repository
 
           const { dependencies = [], devDependencies = [] } = pkgjson
@@ -212,12 +210,12 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
               .filter(([key]) => key.includes(`gatsby`)),
             miscDependencies: allDependencies.filter(
               ([key]) => !key.includes(`gatsby`)
-            ),
+            )
           }
           createNodeField({
             node,
             name: `starterShowcase`,
-            value: starterShowcaseFields,
+            value: starterShowcaseFields
           })
         })
         .catch(err => {

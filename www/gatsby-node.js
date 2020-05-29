@@ -1,11 +1,10 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
-const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
-const yaml = require(`js-yaml`)
-const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-const { i18nEnabled } = require(`./src/utils/i18n`)
+
+const { loadYaml } = require(`./src/utils/load-yaml`)
+const redirects = loadYaml(`./redirects.yaml`)
 
 const docs = require(`./src/utils/node/docs.js`)
 const blog = require(`./src/utils/node/blog.js`)
@@ -29,7 +28,7 @@ exports.createPages = async helpers => {
       fromPath: `/starters${fromSlug}`,
       toPath: `/starters${toSlug}`,
       isPermanent: true,
-      force: true,
+      force: true
     })
   })
 
@@ -39,13 +38,6 @@ exports.createPages = async helpers => {
 // Create slugs for files, set released status for blog posts.
 exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
-}
-
-exports.onPostBootstrap = () => {
-  // Compile language strings if locales are enabled
-  if (i18nEnabled) {
-    child_process.execSync(`yarn lingui:build`)
-  }
 }
 
 exports.onPostBuild = () => {
@@ -58,7 +50,7 @@ exports.onPostBuild = () => {
 // XXX this should probably be a plugin or something.
 exports.sourceNodes = async ({
   actions: { createTypes, createNode },
-  createContentDigest,
+  createContentDigest
 }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
@@ -126,24 +118,24 @@ exports.sourceNodes = async ({
     children: [],
     internal: {
       type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
+      contentDigest: createContentDigest(resultData)
+    }
   })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
   const currentCommitSHA = require(`child_process`)
     .execSync(`git rev-parse HEAD`, {
-      encoding: `utf-8`,
+      encoding: `utf-8`
     })
     .trim()
 
   actions.setWebpackConfig({
     plugins: [
       plugins.define({
-        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
-      }),
-    ],
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA)
+      })
+    ]
   })
 }
 
@@ -169,8 +161,8 @@ exports.createResolvers = ({ createResolvers }) => {
           }
 
           return []
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }

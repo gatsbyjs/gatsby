@@ -1,7 +1,6 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "@lingui/react"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
 import StarterTemplate from "../template-starter-page"
@@ -14,7 +13,7 @@ const getMockImage = () => {
     sizes: `1234`,
     src: `1234`,
     srcSet: `1234 1234 1324`,
-    aspectRatio: 3 / 4,
+    aspectRatio: 3 / 4
   }
 }
 
@@ -36,8 +35,8 @@ const getProps = (starter = {}, fallback = {}) => {
             githubFullName: `dustin`,
             allDependencies: [],
             gatsbyDependencies: [],
-            miscDependencies: [],
-          },
+            miscDependencies: []
+          }
         },
         url: `www.google.com`,
         repo: `asdf`,
@@ -45,35 +44,33 @@ const getProps = (starter = {}, fallback = {}) => {
         tags: [],
         features: [],
         internal: {
-          type: `StarterYaml`,
+          type: `StarterYaml`
         },
         childScreenshot: {
           screenshotFile: {
             childImageSharp: {
               fluid: getMockImage(),
               resize: {
-                src: `1234`,
-              },
-            },
-          },
+                src: `1234`
+              }
+            }
+          }
         },
-        ...starter,
-      },
+        ...starter
+      }
     },
     location: {
-      pathname: `/starters/1234`,
-    },
+      pathname: `/starters/1234`
+    }
   }
 }
 
 test(`it can be rendered`, () => {
   expect(() =>
     render(
-      <I18nProvider>
-        <ThemeProvider theme={theme}>
-          <StarterTemplate {...getProps()} />
-        </ThemeProvider>
-      </I18nProvider>
+      <ThemeProvider theme={theme}>
+        <StarterTemplate {...getProps()} />
+      </ThemeProvider>
     )
   ).not.toThrow()
 })
@@ -81,11 +78,9 @@ test(`it can be rendered`, () => {
 test(`it displays a screenshot`, () => {
   const props = getProps()
   const { getByAltText } = render(
-    <I18nProvider>
-      <ThemeProvider theme={theme}>
-        <StarterTemplate {...props} />
-      </ThemeProvider>
-    </I18nProvider>
+    <ThemeProvider theme={theme}>
+      <StarterTemplate {...props} />
+    </ThemeProvider>
   )
 
   expect(
@@ -99,26 +94,24 @@ test(`it falls back to fallback screenshot, if screenshot file not found`, () =>
   const props = getProps(
     {
       childScreenshot: {
-        screenshotFile: null,
-      },
+        screenshotFile: null
+      }
     },
     {
       childImageSharp: {
         fluid: getMockImage(),
         resize: {
-          src: `1234`,
-        },
-      },
+          src: `1234`
+        }
+      }
     }
   )
 
   expect(() =>
     render(
-      <I18nProvider>
-        <ThemeProvider theme={theme}>
-          <StarterTemplate {...props} />
-        </ThemeProvider>
-      </I18nProvider>
+      <ThemeProvider theme={theme}>
+        <StarterTemplate {...props} />
+      </ThemeProvider>
     )
   ).not.toThrow()
 })

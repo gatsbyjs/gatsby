@@ -6487,6 +6487,32 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://foundation.stackrole.com/
+  repo: https://github.com/stackrole/gatsby-starter-foundation
+  description: A starter to launch your blazing fast personal website and a blog, Built with Gatsby and Netlify CMS. Made with ❤ by Stackrole
+  tags:
+    - CMS:Netlify
+    - Markdown
+    - Netlify
+    - Pagination
+    - SEO
+    - Styling:SCSS
+    - Blog
+    - Landing Page
+  features:
+    - A Blog and Personal website with Netlify CMS.
+    - Responsive Web Design
+    - Customize content of Homepage, About and Contact page.
+    - Add / Modify / Delete blog posts.
+    - Edit website settings, Add Google Analytics and make it your own all with in the CMS.
+    - SEO Optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Beautiful XML Sitemaps
+    - Netlify Contact Form, Works right out of the box after deployment.
+    - Invite collaborators into Netlify CMS, without giving access to your Github account via Git Gateway
+    - Gatsby Incremental Builds with Netlify.
+    - For more info, Take a look at readme.md on the Github repo.
 - url: https://gatsby-starter-moonclerk.netlify.app
   repo: https://github.com/moonclerk/gatsby-starter-moonclerk
   description: A Gatsby starter for creating SaaS landing pages using MoonClerk to accept payments.
@@ -6496,6 +6522,9 @@
     - Styling:CSS-in-JS
     - Netlify
     - Onepage
+  features:
+    - Landing Page
+    - SEO optimized
 - url: https://schoolfront.netlify.app
   repo: https://github.com/orzechdev/schoolfront
   description: School website starter
@@ -6565,3 +6594,17 @@
     - SEO optimized to include social media images and Twitter handles.
     - Code highlighting via Prism.
     - Full set of documentation is available.
+- url: https://gatsbyfire.netlify.app/
+  repo: https://github.com/GeorgeSteel/gatsby-fire-starter
+  description: A Gatsby Starter to build a complete webapp with Gatsby & Firebase by using the library reactfire
+  tags:
+    - Firebase
+    - Authentication
+    - Client-side App
+  features:
+    - You can build a realtime app without any `window object` issue.
+    - Private/Dynamic routing made easy with reach/router.
+    - Fully integrated with reactfire.
+    - Easy to setup.
+    - Insane Lighthouse performance.
+    - FirebaseUI fully integrated & customizable for any language location.

@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
@@ -20,8 +18,8 @@ const Chevron = ({ isExpanded }) => (
       minHeight: `sidebarItemMinHeight`,
       minWidth: `sidebarItemMinHeight`,
       "&:hover": {
-        backgroundColor: `sidebar.activeSectionBackground`,
-      },
+        backgroundColor: `sidebar.activeSectionBackground`
+      }
     }}
   >
     <ChevronSvg
@@ -30,7 +28,7 @@ const Chevron = ({ isExpanded }) => (
         mx: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
         transition: t =>
-          `transform ${t.transition.speed.fast} ${t.transition.curve.default}`,
+          `transform ${t.transition.speed.fast} ${t.transition.curve.default}`
       }}
     />
   </span>
@@ -60,8 +58,8 @@ const SectionHeading = ({ children, disabled, item }) => {
             ? `navigation.linkDefault`
             : false,
         "&:hover": {
-          color: !disabled && `gatsby`,
-        },
+          color: !disabled && `gatsby`
+        }
       }}
     >
       {children}
@@ -76,7 +74,7 @@ const Title = ({ item }) => (
       alignItems: `center`,
       display: `flex`,
       paddingLeft: indention(item.level),
-      minHeight: 40,
+      minHeight: 40
     }}
   >
     <SectionHeading disabled item={item}>
@@ -108,8 +106,8 @@ const TitleButton = ({ item, uid }) => {
           right: 0,
           bottom: 0,
           left: t => (item.level === 0 ? t.space[6] : 0),
-          top: `auto`,
-        },
+          top: `auto`
+        }
       }}
       onClick={() => onSectionTitleClick(item)}
     >
@@ -122,7 +120,7 @@ const TitleButton = ({ item, uid }) => {
             bottom: 0,
             right: 0,
             minHeight: `sidebarItemMinHeight`,
-            width: `sidebarItemMinHeight`,
+            width: `sidebarItemMinHeight`
           }}
         >
           <Chevron isExpanded={isExpanded} />
@@ -134,7 +132,7 @@ const TitleButton = ({ item, uid }) => {
 
 // A split title with a link that can be navigated to, and a button
 // that can expand it
-const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
+const SplitButton = ({ itemRef, item, uid }) => {
   const { getItemState, onSectionTitleClick } = useSidebarContext()
   const { isExpanded } = getItemState(item)
   return (
@@ -144,7 +142,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
         alignItems: `flex-end`,
         display: `flex`,
         position: `relative`,
-        width: `100%`,
+        width: `100%`
       }}
     >
       <span
@@ -152,14 +150,14 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
           // borderRightWidth: "1px",
           // borderRightStyle: "solid",
           // borderRightColor: "sidebar.itemBorderColor"
-          flexGrow: 1,
+          flexGrow: 1
         }}
       >
         <ItemLink
           item={item}
           overrideCSS={{
             "&&": item.level === 0 && item.ui !== `steps` && styles.level0,
-            pr: t => t.sizes.sidebarItemMinHeight,
+            pr: t => t.sizes.sidebarItemMinHeight
           }}
         />
       </span>
@@ -167,9 +165,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
         aria-controls={uid}
         aria-expanded={isExpanded}
         aria-label={
-          isExpanded
-            ? i18n._(t`${item.title} collapse`)
-            : i18n._(t`${item.title} expand`)
+          isExpanded ? `${item.title} collapse` : `${item.title} expand`
         }
         sx={{
           ...styles.resetButton,
@@ -180,7 +176,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
           right: 0,
           top: 0,
           width: `sidebarItemMinHeight`,
-          zIndex: 1,
+          zIndex: 1
         }}
         onClick={() => onSectionTitleClick(item)}
       >
@@ -188,7 +184,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
       </button>
     </span>
   )
-})
+}
 
 export default function SectionTitle({ itemRef, item, uid }) {
   const { disableAccordions } = useSidebarContext()
@@ -206,17 +202,17 @@ const styles = {
     backgroundColor: `transparent`,
     border: 0,
     cursor: `pointer`,
-    padding: 0,
+    padding: 0
   },
   button: {
     position: `relative`,
     textAlign: `left`,
-    width: `100%`,
+    width: `100%`
   },
   level0: {
     fontFamily: `heading`,
     letterSpacing: `tracked`,
     textTransform: `uppercase`,
-    fontSize: 1,
-  },
+    fontSize: 1
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "Show Secondary Navigation": {
+    "origin": [
+      [
+        "src/components/sidebar/sticky-responsive-sidebar.js",
+        106
+      ]
+    ]
+  }
+}

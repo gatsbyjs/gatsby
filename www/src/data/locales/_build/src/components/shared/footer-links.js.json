@@ -1,0 +1,26 @@
+{
+  "Accessibility Statement": {
+    "origin": [
+      [
+        "src/components/shared/footer-links.js",
+        7
+      ]
+    ]
+  },
+  "Code of Conduct": {
+    "origin": [
+      [
+        "src/components/shared/footer-links.js",
+        8
+      ]
+    ]
+  },
+  "Logo & Assets": {
+    "origin": [
+      [
+        "src/components/shared/footer-links.js",
+        9
+      ]
+    ]
+  }
+}

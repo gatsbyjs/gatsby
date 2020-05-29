@@ -2,28 +2,36 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     panicOnBuild: jest.fn(),
     error: jest.fn(),
-    warn: jest.fn(),
+    warn: jest.fn()
   }
 })
 jest.mock(`../../resolve-module-exports`)
 jest.mock(`../../../utils/get-latest-apis`)
 
-const reporter = require(`gatsby-cli/lib/reporter`)
-const {
+import reporter from "gatsby-cli/lib/reporter"
+import {
   collatePluginAPIs,
   handleBadExports,
   handleMultipleReplaceRenderers,
   warnOnIncompatiblePeerDependency,
-} = require(`../validate`)
-const { getLatestAPIs } = require(`../../../utils/get-latest-apis`)
+  ICurrentAPIs,
+  ExportType,
+  IEntry
+} from "../validate"
+import { getLatestAPIs } from "../../../utils/get-latest-apis"
+import { resolveModuleExports } from "../../resolve-module-exports"
 
 beforeEach(() => {
-  Object.keys(reporter).forEach(key => reporter[key].mockReset())
-  getLatestAPIs.mockClear()
-  getLatestAPIs.mockResolvedValue({
+  Object.keys(reporter).forEach(key => (reporter[key] as jest.Mock).mockReset())
+
+  const mocked = (getLatestAPIs as unknown) as jest.MockedFunction<
+    typeof getLatestAPIs
+  >
+  mocked.mockClear()
+  mocked.mockResolvedValue({
     browser: {},
     node: {},
-    ssr: {},
+    ssr: {}
   })
 })
 
@@ -37,19 +45,22 @@ describe(`collatePluginAPIs`, () => {
     "/bar/gatsby-ssr": [`ssr-2`, `ssr-3`],
     "/bad-apis/gatsby-node": [`bad-node-2`, `bad-node-3`],
     "/bad-apis/gatsby-browser": [`bad-browser-2`, `bad-browser-3`],
-    "/bad-apis/gatsby-ssr": [`bad-ssr-2`, `bad-ssr-3`],
+    "/bad-apis/gatsby-ssr": [`bad-ssr-2`, `bad-ssr-3`]
   }
 
   beforeEach(() => {
-    const { resolveModuleExports } = require(`../../resolve-module-exports`)
-    resolveModuleExports(MOCK_RESULTS)
+    // We call the manual /__mocks__/ implementation of resolveModuleExports,
+    // which in addition to the normal parameters, also takes a mock results.
+    // In the future, we might just use jest to mock the return value instead
+    // of relying on manual mocks.
+    resolveModuleExports(MOCK_RESULTS as any)
   })
 
   it(`Identifies APIs used by a site's plugins`, async () => {
     const apis = {
       node: [`node-1`, `node-2`, `node-3`, `node-4`],
       browser: [`browser-1`, `browser-2`, `browser-3`, `browser-4`],
-      ssr: [`ssr-1`, `ssr-2`, `ssr-3`, `ssr-4`],
+      ssr: [`ssr-1`, `ssr-2`, `ssr-3`, `ssr-4`]
     }
     const flattenedPlugins = [
       {
@@ -57,15 +68,15 @@ describe(`collatePluginAPIs`, () => {
         id: `Plugin foo`,
         name: `foo-plugin`,
         version: `1.0.0`,
-        pluginOptions: { plugins: [] },
+        pluginOptions: { plugins: [] }
       },
       {
         resolve: `/bar`,
         id: `Plugin default-site-plugin`,
         name: `default-site-plugin`,
         version: `ec21d02c31ab044d027a1d2fcaeb4a79`,
-        pluginOptions: { plugins: [] },
-      },
+        pluginOptions: { plugins: [] }
+      }
     ]
 
     const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
@@ -76,7 +87,7 @@ describe(`collatePluginAPIs`, () => {
     const apis = {
       node: [`node-1`, `node-2`, `node-3`, `node-4`],
       browser: [`browser-1`, `browser-2`, `browser-3`, `browser-4`],
-      ssr: [`ssr-1`, `ssr-2`, `ssr-3`, `ssr-4`],
+      ssr: [`ssr-1`, `ssr-2`, `ssr-3`, `ssr-4`]
     }
     const flattenedPlugins = [
       {
@@ -84,15 +95,15 @@ describe(`collatePluginAPIs`, () => {
         id: `Plugin foo`,
         name: `foo-plugin`,
         version: `1.0.0`,
-        pluginOptions: { plugins: [] },
+        pluginOptions: { plugins: [] }
       },
       {
         resolve: `/bad-apis`,
         id: `Plugin default-site-plugin`,
         name: `default-site-plugin`,
         version: `ec21d02c31ab044d027a1d2fcaeb4a79`,
-        pluginOptions: { plugins: [] },
-      },
+        pluginOptions: { plugins: [] }
+      }
     ]
 
     const result = collatePluginAPIs({ currentAPIs: apis, flattenedPlugins })
@@ -101,13 +112,21 @@ describe(`collatePluginAPIs`, () => {
 })
 
 describe(`handleBadExports`, () => {
-  const getValidExports = () => {
+  const getValidExports = (): {
+    currentAPIs: ICurrentAPIs
+    badExports: { [api in ExportType]: IEntry[] }
+  } => {
     return {
+      currentAPIs: {
+        node: [],
+        browser: [],
+        ssr: []
+      },
       badExports: {
         node: [],
         browser: [],
-        ssr: [],
-      },
+        ssr: []
+      }
     }
   }
 
@@ -129,7 +148,7 @@ describe(`handleBadExports`, () => {
       currentAPIs: {
         node: [``],
         browser: [``],
-        ssr: [``],
+        ssr: [``]
       },
       badExports: {
         node: [],
@@ -137,10 +156,11 @@ describe(`handleBadExports`, () => {
         ssr: [
           {
             exportName,
-            pluginName: `default-site-plugin`,
-          },
-        ],
-      },
+            pluginVersion: `1.0.0`,
+            pluginName: `default-site-plugin`
+          }
+        ]
+      }
     })
 
     expect(reporter.error).toHaveBeenCalledTimes(1)
@@ -150,9 +170,9 @@ describe(`handleBadExports`, () => {
         context: expect.objectContaining({
           exportType: `ssr`,
           errors: [
-            expect.stringContaining(`"${exportName}" which is not a known API`),
-          ],
-        }),
+            expect.stringContaining(`"${exportName}" which is not a known API`)
+          ]
+        })
       })
     )
   })
@@ -165,7 +185,7 @@ describe(`handleBadExports`, () => {
       currentAPIs: {
         node: [``],
         browser: [``],
-        ssr: [``],
+        ssr: [``]
       },
       badExports: {
         node: [],
@@ -174,10 +194,10 @@ describe(`handleBadExports`, () => {
           {
             exportName,
             pluginName,
-            pluginVersion,
-          },
-        ],
-      },
+            pluginVersion
+          }
+        ]
+      }
     })
 
     expect(reporter.error).toHaveBeenCalledWith(
@@ -186,9 +206,9 @@ describe(`handleBadExports`, () => {
           errors: [
             expect.stringContaining(
               `${pluginName}@${pluginVersion} is using the API "${exportName}"`
-            ),
-          ],
-        }),
+            )
+          ]
+        })
       })
     )
   })
@@ -196,21 +216,22 @@ describe(`handleBadExports`, () => {
   it(`Adds fixes to context if newer API introduced in Gatsby`, async () => {
     const version = `2.2.0`
 
-    getLatestAPIs.mockResolvedValueOnce({
+    const mocked = getLatestAPIs as jest.MockedFunction<typeof getLatestAPIs>
+    mocked.mockResolvedValueOnce({
       browser: {},
       ssr: {},
       node: {
         validatePluginOptions: {
-          version,
-        },
-      },
+          version
+        }
+      }
     })
 
     await handleBadExports({
       currentAPIs: {
         node: [``],
         browser: [``],
-        ssr: [``],
+        ssr: [``]
       },
 
       badExports: {
@@ -220,17 +241,18 @@ describe(`handleBadExports`, () => {
           {
             exportName: `validatePluginOptions`,
             pluginName: `gatsby-source-contentful`,
-          },
-        ],
-      },
+            pluginVersion: version
+          }
+        ]
+      }
     })
 
     expect(reporter.error).toHaveBeenCalledTimes(1)
     expect(reporter.error).toHaveBeenCalledWith(
       expect.objectContaining({
         context: expect.objectContaining({
-          fixes: [`npm install gatsby@^${version}`],
-        }),
+          fixes: [`npm install gatsby@^${version}`]
+        })
       })
     )
   })
@@ -238,7 +260,7 @@ describe(`handleBadExports`, () => {
   it(`adds fixes if close match/typo`, async () => {
     const typoAPIs = [
       [`modifyWebpackConfig`, `onCreateWebpackConfig`],
-      [`createPagesss`, `createPages`],
+      [`createPagesss`, `createPages`]
     ]
 
     await Promise.all(
@@ -247,12 +269,7 @@ describe(`handleBadExports`, () => {
           currentAPIs: {
             node: [newAPI],
             browser: [``],
-            ssr: [``],
-          },
-          latestAPIs: {
-            browser: {},
-            ssr: {},
-            node: {},
+            ssr: [``]
           },
           badExports: {
             browser: [],
@@ -261,19 +278,23 @@ describe(`handleBadExports`, () => {
               {
                 exportName: typoOrOldAPI,
                 pluginName: `default-site-plugin`,
-              },
-            ],
-          },
+                pluginVersion: `2.1.0`
+              }
+            ]
+          }
         })
       )
     )
 
     expect(reporter.error).toHaveBeenCalledTimes(typoAPIs.length)
-    const calls = reporter.error.mock.calls
+    const calls = ((reporter.error as unknown) as jest.MockedFunction<
+      typeof reporter.error
+    >).mock.calls
+
     calls.forEach(([call]) => {
       expect(call).toEqual(
         expect.objectContaining({
-          id: `11329`,
+          id: `11329`
         })
       )
     })
@@ -291,7 +312,7 @@ describe(`handleMultipleReplaceRenderers`, () => {
         pluginOptions: { plugins: [] },
         nodeAPIs: [],
         browserAPIs: [],
-        ssrAPIs: [`replaceRenderer`],
+        ssrAPIs: [`replaceRenderer`]
       },
       {
         resolve: `___TEST___`,
@@ -301,12 +322,12 @@ describe(`handleMultipleReplaceRenderers`, () => {
         pluginOptions: { plugins: [] },
         nodeAPIs: [],
         browserAPIs: [],
-        ssrAPIs: [],
-      },
+        ssrAPIs: []
+      }
     ]
 
     const result = handleMultipleReplaceRenderers({
-      flattenedPlugins,
+      flattenedPlugins
     })
 
     expect(result).toMatchSnapshot()
@@ -322,7 +343,7 @@ describe(`handleMultipleReplaceRenderers`, () => {
         pluginOptions: { plugins: [] },
         nodeAPIs: [],
         browserAPIs: [],
-        ssrAPIs: [`replaceRenderer`],
+        ssrAPIs: [`replaceRenderer`]
       },
       {
         resolve: `___TEST___`,
@@ -332,12 +353,12 @@ describe(`handleMultipleReplaceRenderers`, () => {
         pluginOptions: { plugins: [] },
         nodeAPIs: [],
         browserAPIs: [],
-        ssrAPIs: [`replaceRenderer`],
-      },
+        ssrAPIs: [`replaceRenderer`]
+      }
     ]
 
     const result = handleMultipleReplaceRenderers({
-      flattenedPlugins,
+      flattenedPlugins
     })
 
     expect(result).toMatchSnapshot()
@@ -346,7 +367,9 @@ describe(`handleMultipleReplaceRenderers`, () => {
 
 describe(`warnOnIncompatiblePeerDependency`, () => {
   beforeEach(() => {
-    reporter.warn.mockClear()
+    ;((reporter.warn as unknown) as jest.MockedFunction<
+      typeof reporter.warn
+    >).mockClear()
   })
 
   it(`Does not warn when no peer dependency`, () => {
@@ -358,8 +381,8 @@ describe(`warnOnIncompatiblePeerDependency`, () => {
   it(`Warns on incompatible gatsby peer dependency`, async () => {
     warnOnIncompatiblePeerDependency(`dummy-package`, {
       peerDependencies: {
-        gatsby: `<2.0.0`,
-      },
+        gatsby: `<2.0.0`
+      }
     })
 
     expect(reporter.warn).toHaveBeenCalledWith(

@@ -1,10 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import Link from "./localized-link"
-import { Trans } from "@lingui/macro"
 import {
   mediaQueries,
-  breakpoints,
+  breakpoints
 } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { useEffect, useState } from "react"
 import { useActiveHash } from "../hooks/use-active-hash"
@@ -75,9 +74,9 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
                     `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
                   ":hover": {
                     color: `link.color`,
-                    borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
-                  },
-                },
+                    borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`
+                  }
+                }
               }}
               to={location.pathname + item.url}
             >
@@ -126,8 +125,8 @@ function TableOfContents({ items, depth, location }) {
           null,
           null,
           null,
-          0,
-        ],
+          0
+        ]
       }}
     >
       <h2
@@ -136,15 +135,15 @@ function TableOfContents({ items, depth, location }) {
           fontSize: 1,
           letterSpacing: `tracked`,
           mt: 0,
-          textTransform: `uppercase`,
+          textTransform: `uppercase`
         }}
       >
-        <Trans>Table of Contents</Trans>
+        Table of Contents
       </h2>
       <ul
         sx={{
           listStyle: `none`,
-          m: 0,
+          m: 0
         }}
       >
         {createItems(items, location, 1, depth, activeHash, isDesktop)}

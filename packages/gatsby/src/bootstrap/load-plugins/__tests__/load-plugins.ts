@@ -1,5 +1,6 @@
-const loadPlugins = require(`../index`)
-const { slash } = require(`gatsby-core-utils`)
+import { loadPlugins } from "../index"
+import { slash } from "gatsby-core-utils"
+import { IFlattenedPlugin } from "../types"
 
 describe(`Load plugins`, () => {
   /**
@@ -8,7 +9,9 @@ describe(`Load plugins`, () => {
    * Version can be updated (we use external plugin in default config).
    * Both will cause snapshots to differ.
    */
-  const replaceFieldsThatCanVary = plugins =>
+  const replaceFieldsThatCanVary = (
+    plugins: IFlattenedPlugin[]
+  ): IFlattenedPlugin[] =>
     plugins.map(plugin => {
       if (plugin.pluginOptions && plugin.pluginOptions.path) {
         plugin.pluginOptions = {
@@ -16,7 +19,7 @@ describe(`Load plugins`, () => {
           path: plugin.pluginOptions.path.replace(
             slash(process.cwd()),
             `<PROJECT_ROOT>`
-          ),
+          )
         }
       }
 
@@ -24,7 +27,7 @@ describe(`Load plugins`, () => {
         ...plugin,
         id: ``,
         resolve: ``,
-        version: `1.0.0`,
+        version: `1.0.0`
       }
     })
 
@@ -40,9 +43,9 @@ describe(`Load plugins`, () => {
     const config = {
       plugins: [
         {
-          resolve: `___TEST___`,
-        },
-      ],
+          resolve: `___TEST___`
+        }
+      ]
     }
 
     let plugins = await loadPlugins(config)
@@ -59,10 +62,10 @@ describe(`Load plugins`, () => {
         {
           resolve: `___TEST___`,
           option: {
-            test: true,
-          },
-        },
-      ],
+            test: true
+          }
+        }
+      ]
     }
 
     try {
@@ -79,10 +82,10 @@ describe(`Load plugins`, () => {
           resolve: `gatsby-plugin-page-creator`,
           options: {
             path: `${__dirname}/src/pages`,
-            ignore: [`___Test___.(js|ts)?(x)`],
-          },
-        },
-      ],
+            ignore: [`___Test___.(js|ts)?(x)`]
+          }
+        }
+      ]
     }
 
     let plugins = await loadPlugins(config)
@@ -95,7 +98,7 @@ describe(`Load plugins`, () => {
   describe(`TypeScript support`, () => {
     it(`loads gatsby-plugin-typescript if not provided`, async () => {
       const config = {
-        plugins: [],
+        plugins: []
       }
 
       let plugins = await loadPlugins(config)
@@ -111,15 +114,15 @@ describe(`Load plugins`, () => {
             nodeAPIs: [
               `resolvableExtensions`,
               `onCreateBabelConfig`,
-              `onCreateWebpackConfig`,
+              `onCreateWebpackConfig`
             ],
             pluginOptions: {
-              plugins: [],
+              plugins: []
             },
             resolve: ``,
             ssrAPIs: [],
-            version: `1.0.0`,
-          }),
+            version: `1.0.0`
+          })
         ])
       )
     })
@@ -130,10 +133,10 @@ describe(`Load plugins`, () => {
           {
             resolve: `gatsby-plugin-typescript`,
             options: {
-              jsxPragma: `h`,
-            },
-          },
-        ],
+              jsxPragma: `h`
+            }
+          }
+        ]
       }
 
       let plugins = await loadPlugins(config)
@@ -149,16 +152,16 @@ describe(`Load plugins`, () => {
             nodeAPIs: [
               `resolvableExtensions`,
               `onCreateBabelConfig`,
-              `onCreateWebpackConfig`,
+              `onCreateWebpackConfig`
             ],
             pluginOptions: {
               plugins: [],
-              jsxPragma: `h`,
+              jsxPragma: `h`
             },
             resolve: ``,
             ssrAPIs: [],
-            version: `1.0.0`,
-          }),
+            version: `1.0.0`
+          })
         ])
       )
     })
@@ -167,8 +170,8 @@ describe(`Load plugins`, () => {
       const config = {
         plugins: [
           `gatsby-plugin-typescript`,
-          { resolve: `gatsby-plugin-typescript` },
-        ],
+          { resolve: `gatsby-plugin-typescript` }
+        ]
       }
 
       let plugins = await loadPlugins(config)
@@ -176,7 +179,7 @@ describe(`Load plugins`, () => {
       plugins = replaceFieldsThatCanVary(plugins)
 
       const tsplugins = plugins.filter(
-        plugin => plugin.name === `gatsby-plugin-typescript`
+        (plugin: { name: string }) => plugin.name === `gatsby-plugin-typescript`
       )
 
       // TODO: I think we should probably be de-duping, so this should be 1.

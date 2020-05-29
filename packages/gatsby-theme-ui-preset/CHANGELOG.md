@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.42...gatsby-theme-ui-preset@0.0.43) (2020-05-28)
+
+### Bug Fixes
+
+- **docs:** theme ui preset: fix brand name Theme UI ([#24492](https://github.com/gatsbyjs/gatsby/issues/24492)) ([9611452](https://github.com/gatsbyjs/gatsby/commit/9611452))
+
 ## [0.0.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-ui-preset@0.0.41...gatsby-theme-ui-preset@0.0.42) (2020-05-26)
 
 **Note:** Version bump only for package gatsby-theme-ui-preset

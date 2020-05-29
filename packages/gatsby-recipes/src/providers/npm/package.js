@@ -56,12 +56,12 @@ const executeInstalls = async root => {
   const commands = generateClientComands({
     packageNames,
     depType,
-    packageManager: PACKAGE_MANGER,
+    packageManager: PACKAGE_MANGER
   })
 
   try {
     await execa(PACKAGE_MANGER, commands, {
-      cwd: root,
+      cwd: root
     })
   } catch (e) {
     // A package failed so call the rejects
@@ -69,7 +69,7 @@ const executeInstalls = async root => {
       p.outsideReject(
         JSON.stringify({
           message: e.shortMessage,
-          installationError: `Could not install package`,
+          installationError: `Could not install package`
         })
       )
     })
@@ -98,7 +98,7 @@ const createInstall = async ({ root }, resource) => {
   installs.push({
     outsideResolve,
     outsideReject,
-    resource,
+    resource
   })
 
   debouncedExecute(root)
@@ -127,11 +127,12 @@ const read = async ({ root }, id) => {
   } catch (e) {
     return undefined
   }
+
   return {
     id: packageJSON.name,
     name: packageJSON.name,
     version: packageJSON.version,
-    _message: `Installed NPM package ${packageJSON.name}@${packageJSON.version}`,
+    _message: `Installed NPM package ${packageJSON.name}@${packageJSON.version}`
   }
 }
 
@@ -142,7 +143,7 @@ const schema = {
     `dependency`,
     `defaults to regular dependency`
   ),
-  ...resourceSchema,
+  ...resourceSchema
 }
 
 const validate = resource =>
@@ -151,10 +152,17 @@ const validate = resource =>
 exports.validate = validate
 
 const destroy = async ({ root }, resource) => {
-  await execa(`yarn`, [`remove`, resource.name], {
-    cwd: root,
+  const readResource = await read({ root }, resource.id)
+
+  if (!readResource) {
+    return undefined
+  }
+
+  await execa(`yarn`, [`remove`, resource.name, `-W`], {
+    cwd: root
   })
-  return resource
+
+  return readResource
 }
 
 module.exports.create = create
@@ -166,7 +174,7 @@ module.exports.config = {}
 
 module.exports.plan = async (context, resource) => {
   const {
-    value: { name, version },
+    value: { name, version }
   } = validate(resource)
 
   const currentState = await read(context, resource.name)
@@ -175,6 +183,6 @@ module.exports.plan = async (context, resource) => {
     currentState:
       currentState && `${currentState.name}@${currentState.version}`,
     newState: `${name}@${version}`,
-    describe: `Install ${name}@${version}`,
+    describe: `Install ${name}@${version}`
   }
 }

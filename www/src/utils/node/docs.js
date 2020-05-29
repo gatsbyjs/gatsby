@@ -1,10 +1,9 @@
 const _ = require(`lodash`)
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
 const minimatch = require(`minimatch`)
 
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
+const { getTemplate } = require(`../get-template`)
 const findApiCalls = require(`../find-api-calls`)
 
 const ignorePatterns = [
@@ -15,7 +14,7 @@ const ignorePatterns = [
   `**/__mocks__/**`,
   `babel.config.js`,
   `graphql.js`,
-  `**/flow-typed/**`,
+  `**/flow-typed/**`
 ]
 
 function isCodeFile(node) {
@@ -39,8 +38,8 @@ const slugToAnchor = slug =>
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
-  const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
+  const docsTemplate = getTemplate(`template-docs-markdown`)
+  const apiTemplate = getTemplate(`template-api-markdown`)
 
   const { data, errors } = await graphql(`
     query {
@@ -78,24 +77,24 @@ exports.createPages = async ({ graphql, actions }) => {
       // API template
       createPage({
         path: `${node.fields.slug}`,
-        component: slash(apiTemplate),
+        component: apiTemplate,
         context: {
           slug: node.fields.slug,
           jsdoc: node.frontmatter.jsdoc,
           apiCalls: node.frontmatter.apiCalls,
-          ...prevAndNext,
-        },
+          ...prevAndNext
+        }
       })
     } else {
       // Docs template
       createPage({
         path: `${node.fields.slug}`,
-        component: slash(docsTemplate),
+        component: docsTemplate,
         context: {
           slug: node.fields.slug,
           locale,
-          ...prevAndNext,
-        },
+          ...prevAndNext
+        }
       })
     }
   })
@@ -107,7 +106,7 @@ exports.onCreateNode = async ({
   getNode,
   loadNodeContent,
   createNodeId,
-  createContentDigest,
+  createContentDigest
 }) => {
   const { createNode, createParentChildLink, createNodeField } = actions
 
@@ -121,8 +120,8 @@ exports.onCreateNode = async ({
           children: [],
           ...call,
           internal: {
-            type: `GatsbyAPICall`,
-          },
+            type: `GatsbyAPICall`
+          }
         }
         apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
 

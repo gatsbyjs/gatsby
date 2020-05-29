@@ -19,7 +19,7 @@ const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
   getCommonDir,
   truncatePath,
-  tooLongSegmentsInPath,
+  tooLongSegmentsInPath
 } = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
@@ -38,7 +38,7 @@ const {
   enqueueJob,
   createInternalJob,
   removeInProgressJob,
-  getInProcessJobPromise,
+  getInProcessJobPromise
 } = require(`../../utils/jobs-manager`)
 
 const actions = {}
@@ -74,20 +74,20 @@ const findChildren = initialChildren => {
 import type { Plugin } from "./types"
 
 type Job = {
-  id: string,
+  id: string
 }
 
 type JobV2 = {
   name: string,
   inputPaths: string[],
   outputDir: string,
-  args: Object,
+  args: Object
 }
 
 type PageInput = {
   path: string,
   component: string,
-  context?: Object,
+  context?: Object
 }
 
 type Page = {
@@ -97,22 +97,22 @@ type Page = {
   context: Object,
   internalComponentName: string,
   componentChunkName: string,
-  updatedAt: number,
+  updatedAt: number
 }
 
 type ActionOptions = {
   traceId: ?string,
   parentSpan: ?Object,
-  followsSpan: ?Object,
+  followsSpan: ?Object
 }
 
 type PageData = {
   id: string,
-  resultHash: string,
+  resultHash: string
 }
 
 type PageDataRemove = {
-  id: string,
+  id: string
 }
 
 /**
@@ -126,7 +126,7 @@ type PageDataRemove = {
 actions.deletePage = (page: PageInput) => {
   return {
     type: `DELETE_PAGE`,
-    payload: page,
+    payload: page
   }
 }
 
@@ -177,8 +177,8 @@ actions.createPage = (
         context: {
           pluginName: name,
           pageObject: page,
-          message,
-        },
+          message
+        }
       })
     } else {
       return message
@@ -194,7 +194,7 @@ actions.createPage = (
       `component`,
       `componentChunkName`,
       `pluginCreator___NODE`,
-      `pluginCreatorId`,
+      `pluginCreatorId`
     ]
     const invalidFields = Object.keys(_.pick(page.context, reservedFields))
 
@@ -235,8 +235,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panic({
           id: `11324`,
           context: {
-            message: error,
-          },
+            message: error
+          }
         })
       } else {
         if (!hasWarnedForPageComponentInvalidContext.has(page.component)) {
@@ -254,8 +254,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         id: `11322`,
         context: {
           pluginName: name,
-          pageObject: page,
-        },
+          pageObject: page
+        }
       })
     } else {
       // For test
@@ -277,8 +277,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         context: {
           pluginName: name,
           pageObject: page,
-          component: page.component,
-        },
+          component: page.component
+        }
       })
     }
   }
@@ -290,8 +290,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         context: {
           pluginName: name,
           pageObject: page,
-          component: page.component,
-        },
+          component: page.component
+        }
       })
     } else {
       const message = `${name} must set the absolute path to the page component when create creating a page`
@@ -389,8 +389,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
         // we will only show truncatedPath in non-production scenario
         isProduction: process.env.NODE_ENV === `production`,
-        truncatedPath,
-      },
+        truncatedPath
+      }
     })
     page.path = truncatedPath
   }
@@ -406,7 +406,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       actionOptions.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
-    updatedAt: Date.now(),
+    updatedAt: Date.now()
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -453,8 +453,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panicOnBuild({
           id: `11327`,
           context: {
-            relativePath,
-          },
+            relativePath
+          }
         })
       }
 
@@ -462,8 +462,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         report.panicOnBuild({
           id: `11328`,
           context: {
-            fileName,
-          },
+            fileName
+          }
         })
       }
     }
@@ -494,7 +494,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     type: `CREATE_PAGE`,
     contextModified,
     plugin,
-    payload: internalPage,
+    payload: internalPage
   }
 }
 
@@ -554,7 +554,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     return {
       type: `DELETE_NODE`,
       plugin,
-      payload: node,
+      payload: node
     }
   }
 
@@ -563,7 +563,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node && findChildren(node.children).map(getNode).map(createDeleteAction)
+    node &&
+    findChildren(node.children)
+      .map(getNode)
+      .map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
@@ -601,7 +604,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
     plugin,
     // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
+    fullNodes: nodeIds.map(getNode)
   }
   return deleteNodesAction
 }
@@ -747,8 +750,8 @@ const createNode = (
         id: `11467`,
         context: {
           validationErrorMessage: result.error.message,
-          node,
-        },
+          node
+        }
       }
 
       const possiblyCodeFrame = getNonGatsbyCodeFrame()
@@ -758,8 +761,8 @@ const createNode = (
         errorObj.location = {
           start: {
             line: possiblyCodeFrame.line,
-            column: possiblyCodeFrame.column,
-          },
+            column: possiblyCodeFrame.column
+          }
         }
       }
 
@@ -849,7 +852,7 @@ const createNode = (
       ...actionOptions,
       plugin,
       type: `TOUCH_NODE`,
-      payload: node.id,
+      payload: node.id
     }
   } else {
     // Remove any previously created descendant nodes as they're all due
@@ -860,7 +863,7 @@ const createNode = (
           ...actionOptions,
           type: `DELETE_NODE`,
           plugin,
-          payload: node,
+          payload: node
         }
       }
       deleteActions = findChildren(oldNode.children)
@@ -873,7 +876,7 @@ const createNode = (
       type: `CREATE_NODE`,
       plugin,
       oldNode,
-      payload: node,
+      payload: node
     }
   }
 
@@ -901,7 +904,7 @@ actions.createNode = (...args) => dispatch => {
     node,
     traceId,
     parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    traceTags: { nodeId: node.id, nodeType: node.internal.type }
   })
 }
 
@@ -940,7 +943,7 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: nodeId,
+    payload: nodeId
   }
 }
 
@@ -949,7 +952,7 @@ type CreateNodeInput = {
   fieldName?: string,
   fieldValue?: string,
   name?: string,
-  value: any,
+  value: any
 }
 /**
  * Extend another node. The new node field is placed under the `fields`
@@ -1032,7 +1035,7 @@ actions.createNodeField = (
     type: `ADD_FIELD_TO_NODE`,
     plugin,
     payload: node,
-    addedField: name,
+    addedField: name
   }
 }
 
@@ -1059,7 +1062,7 @@ actions.createParentChildLink = (
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
     plugin,
-    payload: parent,
+    payload: parent
   }
 }
 
@@ -1076,7 +1079,7 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1093,7 +1096,7 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1133,7 +1136,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_OPTIONS`,
     plugin,
-    payload: options,
+    payload: options
   }
 }
 
@@ -1169,7 +1172,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_PLUGIN`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
@@ -1205,13 +1208,13 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_PRESET`,
     plugin,
-    payload: config,
+    payload: config
   }
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
@@ -1225,13 +1228,13 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `CREATE_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
@@ -1272,8 +1275,8 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
     plugin,
     payload: {
       job: internalJob,
-      plugin,
-    },
+      plugin
+    }
   })
 
   const enqueuedJobPromise = enqueueJob(internalJob)
@@ -1284,8 +1287,8 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
       plugin,
       payload: {
         jobContentDigest,
-        result,
-      },
+        result
+      }
     })
 
     // remove the job from our inProgressJobQueue as it's available in our done state.
@@ -1309,7 +1312,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `SET_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1326,7 +1329,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `END_JOB`,
     plugin,
-    payload: job,
+    payload: job
   }
 }
 
@@ -1345,7 +1348,7 @@ actions.setPluginStatus = (
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
-    payload: status,
+    payload: status
   }
 }
 
@@ -1403,8 +1406,8 @@ actions.createRedirect = ({
       isPermanent,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
-      ...rest,
-    },
+      ...rest
+    }
   }
 }
 
@@ -1421,7 +1424,7 @@ actions.createPageDependency = (
   {
     path,
     nodeId,
-    connection,
+    connection
   }: { path: string, nodeId: string, connection: string },
   plugin: string = ``
 ) => {
@@ -1434,8 +1437,8 @@ actions.createPageDependency = (
     payload: {
       path,
       nodeId,
-      connection,
-    },
+      connection
+    }
   }
 }
 
@@ -1449,7 +1452,7 @@ actions.createPageDependency = (
 actions.setPageData = (pageData: PageData) => {
   return {
     type: `SET_PAGE_DATA`,
-    payload: pageData,
+    payload: pageData
   }
 }
 
@@ -1462,7 +1465,7 @@ actions.setPageData = (pageData: PageData) => {
 actions.removePageData = (id: PageDataRemove) => {
   return {
     type: `REMOVE_PAGE_DATA`,
-    payload: id,
+    payload: id
   }
 }
 

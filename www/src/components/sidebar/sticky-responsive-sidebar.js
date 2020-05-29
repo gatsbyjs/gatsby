@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component, Fragment } from "react"
-import { withI18n } from "@lingui/react"
-import { t } from "@lingui/macro"
 
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
@@ -26,7 +24,7 @@ class StickyResponsiveSidebar extends Component {
 
   render() {
     const { open } = this.state
-    const { i18n, enableScrollSync } = this.props
+    const { enableScrollSync } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
     const iconOffset = open ? 5 : -5
@@ -54,13 +52,13 @@ class StickyResponsiveSidebar extends Component {
               pointerEvents: `auto`,
               top: t =>
                 `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
-              width: `sidebarWidth.default`,
+              width: `sidebarWidth.default`
             },
             [mediaQueries.lg]: {
-              width: `sidebarWidth.large`,
+              width: `sidebarWidth.large`
             },
             opacity: menuOpacity,
-            pointerEvents: open ? `auto` : `none`,
+            pointerEvents: open ? `auto` : `none`
           }}
         >
           <div
@@ -74,8 +72,8 @@ class StickyResponsiveSidebar extends Component {
                 `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               [mediaQueries.md]: {
                 boxShadow: `none`,
-                transform: `none !important`,
-              },
+                transform: `none !important`
+              }
             }}
           >
             <SidebarComponent
@@ -99,11 +97,11 @@ class StickyResponsiveSidebar extends Component {
             visibility: `visible`,
             width: t => t.space[10],
             zIndex: `floatingActionButton`,
-            [mediaQueries.md]: { display: `none` },
+            [mediaQueries.md]: { display: `none` }
           }}
           onClick={this._openSidebar}
           role="button"
-          aria-label={i18n._(t`Show Secondary Navigation`)}
+          aria-label="Show Secondary Navigation"
           aria-controls="SecondaryNavigation"
           aria-expanded={open ? `true` : `false`}
           tabIndex={0}
@@ -116,7 +114,7 @@ class StickyResponsiveSidebar extends Component {
               flexDirection: `column`,
               height: t => t.space[5],
               visibility: `visible`,
-              width: t => t.space[5],
+              width: t => t.space[5]
             }}
           >
             <ChevronSvg
@@ -124,17 +122,16 @@ class StickyResponsiveSidebar extends Component {
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
                 transition: t =>
-                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
+                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`
               }}
             />
             <ChevronSvg
               size={16}
               cssProps={{
-                transform: `translate(${
-                  5 - iconOffset
-                }px, -5px) rotate(270deg)`,
+                transform: `translate(${5 -
+                  iconOffset}px, -5px) rotate(270deg)`,
                 transition: t =>
-                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
+                  `transform ${t.transition.speed.default} ${t.transition.curve.default}`
               }}
             />
           </div>
@@ -144,4 +141,4 @@ class StickyResponsiveSidebar extends Component {
   }
 }
 
-export default withI18n()(StickyResponsiveSidebar)
+export default StickyResponsiveSidebar
