@@ -6,6 +6,7 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
+const resolveCwd = require(`resolve-cwd`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -21,7 +22,7 @@ const { read: readPackageJSON } = require(`../npm/package`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const themePath = path.join(directory, `node_modules`, theme, `src`)
+  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
   const themeSrcPath = path.join(themePath, `src`)
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,

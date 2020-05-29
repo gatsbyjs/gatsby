@@ -4,6 +4,7 @@ const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const { getConfigStore } = require(`gatsby-core-utils`)
+const resolveCwd = require(`resolve-cwd`)
 
 const packageMangerConfigKey = `cli.packageManager`
 const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
@@ -119,10 +120,8 @@ const create = async ({ root }, resource) => {
 const read = async ({ root }, id) => {
   let packageJSON
   try {
-    // TODO is there a better way to grab this? Can the position of `node_modules`
-    // NOTE(@mxstbr): I tried require.resolve, which breaks with yarn linking because it tries to require from __dirname instead of cwd, and I also tried the resolve-pkg package, which seems like it should work but unfortunately breaks on Windows
     packageJSON = JSON.parse(
-      await fs.readFile(path.join(root, `node_modules`, id, `package.json`))
+      await fs.readFile(resolveCwd(path.join(id, `package.json`)))
     )
   } catch (e) {
     return undefined
