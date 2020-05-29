@@ -184,7 +184,8 @@ log(
 
 const RecipeGui = ({
   // recipe = `./test.mdx`,
-  recipe = `jest.mdx`,
+  // recipe = `jest.mdx`,
+  recipe,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
 }) => {
