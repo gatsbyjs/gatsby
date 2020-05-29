@@ -22,7 +22,6 @@
     "color-blend": "^2.0.9",
     "email-validator": "^1.2.3",
     "fuse.js": "^3.6.1",
-    "gatsby": "^2.21.37",
     "gatsby-alias-imports": "^1.0.4",
     "gatsby-core-utils": "^1.2.3",
     "gatsby-design-tokens": "^2.0.5",
@@ -87,9 +86,7 @@
     "qs": "^6.9.4",
     "query-string": "^6.12.1",
     "range": "^0.0.3",
-    "react": "^16.13.0",
     "react-copy-to-clipboard": "^5.0.2",
-    "react-dom": "^16.13.0",
     "react-helmet": "^6.0.0",
     "react-highcharts": "^16.1.0",
     "react-icons": "^3.10.0",
@@ -109,6 +106,11 @@
     "zipkin": "^0.19.2",
     "zipkin-javascript-opentracing": "^2.1.0",
     "zipkin-transport-http": "^0.19.2"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.21.37",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.7.0",
