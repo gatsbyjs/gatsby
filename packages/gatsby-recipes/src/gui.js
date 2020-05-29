@@ -645,7 +645,7 @@ const WithProviders = ({ children }) => {
         fontFamily: `body`,
         fontWeight: `body`,
         mt: 0,
-        mb: 6,
+        mb: 4,
         lineHeight: 1.45,
       },
       pre: {
