@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const Joi = require(`@hapi/joi`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const resolvePkg = require(`resolve-pkg`)
 const { getConfigStore } = require(`gatsby-core-utils`)
 
 const packageMangerConfigKey = `cli.packageManager`
@@ -120,7 +121,7 @@ const read = async ({ root }, id) => {
   let packageJSON
   try {
     packageJSON = JSON.parse(
-      await fs.readFile(require.resolve(path.join(id, `package.json`)))
+      await fs.readFile(path.join(resolvePkg(id), `package.json`))
     )
   } catch (e) {
     return undefined
