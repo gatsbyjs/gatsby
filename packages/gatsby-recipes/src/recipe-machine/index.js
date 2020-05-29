@@ -89,9 +89,9 @@ const recipeMachine = Machine(
         entry: [`deleteOldPlan`],
         invoke: {
           id: `createPlan`,
-          src: async (context, event) => {
+          src: (context, event) => async (cb, _onReceive) => {
             try {
-              const result = await createPlan(context)
+              const result = await createPlan(context, cb)
               return result
             } catch (e) {
               throw e
@@ -106,9 +106,36 @@ const recipeMachine = Machine(
           onError: {
             target: `doneError`,
             actions: assign({
-              error: (context, event) => event.data.errors || event.data,
+              error: (context, event) => event.data?.errors || event.data,
             }),
           },
+        },
+        on: {
+          INVALID_PROPS: {
+            target: `doneError`,
+            actions: assign({
+              error: (context, event) => event.data,
+            }),
+          },
+          INPUT: {
+            target: `waitingForInput`,
+            actions: assign({
+              input: (context, event) => {
+                const data = event.data[0] || {}
+
+                return {
+                  resourceUuid: data.resourceUuid,
+                  props: data._object,
+                  details: data.details,
+                }
+              },
+            }),
+          },
+        },
+      },
+      waitingForInput: {
+        on: {
+          INPUT_CALLED: `validateSteps`,
         },
       },
       presentPlan: {

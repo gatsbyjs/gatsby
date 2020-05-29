@@ -37,19 +37,17 @@ const transformJsx = jsx => {
   return code
 }
 
-// This is overloaded to handle MDX input, JSX input
-// or MDX's JSX output as input.
-module.exports = jsx => {
+module.exports = (mdxSrc, cb) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
-  const jsxFromMdx = mdx.sync(jsx, { skipExport: true })
+  const jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
   const srcCode = transformJsx(stripMdxLayout(jsxFromMdx))
 
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
   try {
-    const result = render(component(...scopeValues))
+    const result = render(component(...scopeValues), cb)
     return result
   } catch (e) {
     throw e

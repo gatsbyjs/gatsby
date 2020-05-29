@@ -6,12 +6,27 @@ const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
 const isUrl = require(`is-url`)
 const path = require(`path`)
+const visit = require(`unist-util-visit`)
+
+const { uuid } = require(`./util`)
 
 const asRoot = nodes => {
   return {
     type: `root`,
     children: nodes,
   }
+}
+
+const applyUuid = tree => {
+  visit(tree, `mdxBlockElement`, node => {
+    node.attributes.push({
+      type: `mdxAttribute`,
+      name: `_uuid`,
+      value: uuid(),
+    })
+  })
+
+  return tree
 }
 
 const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
@@ -34,7 +49,7 @@ const partitionSteps = ast => {
 }
 
 const toMdx = nodes => {
-  const stepAst = asRoot(nodes)
+  const stepAst = applyUuid(asRoot(nodes))
   return u.stringify(stepAst)
 }
 

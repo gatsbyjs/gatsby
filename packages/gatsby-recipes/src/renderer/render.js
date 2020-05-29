@@ -13,6 +13,16 @@ const queue = new Queue({ concurrency: 1, autoStart: false })
 const errors = []
 const cache = new Map()
 
+const getInvalidProps = errors => {
+  const invalidProps = errors.filter(e => {
+    const details = e.details
+    const unknownProp = details.find(e => e.type === `object.allowUnknown`)
+    return unknownProp
+  })
+
+  return invalidProps
+}
+
 const getUserProps = props => {
   // eslint-disable-next-line
   const { mdxType, children, ...userProps } = props
@@ -25,9 +35,18 @@ const Wrapper = ({ children }) => (
   </ErrorBoundary>
 )
 
-const ResourceComponent = ({ _resourceName: Resource, children, ...props }) => {
+const ResourceComponent = ({
+  _resourceName: Resource,
+  children,
+  _uuid,
+  ...props
+}) => {
   const userProps = getUserProps(props)
-  const resourceData = readResource(Resource, { root: process.cwd() }, props)
+  const resourceData = readResource(
+    Resource,
+    { root: process.cwd(), _uuid },
+    props
+  )
 
   return (
     <ResourceProvider data={{ [Resource]: resourceData }}>
@@ -39,9 +58,12 @@ const ResourceComponent = ({ _resourceName: Resource, children, ...props }) => {
   )
 }
 
-const validateResource = (resourceName, _context, props) => {
+const validateResource = (resourceName, context, props) => {
   const userProps = getUserProps(props)
   const { error } = resources[resourceName].validate(userProps)
+  if (error) {
+    error.resourceUuid = context._uuid
+  }
   return error
 }
 
@@ -77,7 +99,7 @@ const readResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = async recipe => {
+const render = async (recipe, cb) => {
   const plan = {}
 
   const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
@@ -88,13 +110,17 @@ const render = async recipe => {
     RecipesReconciler.render(recipeWithWrapper, plan)
 
     if (errors.length) {
-      const error = new Error(`Unable to validate resources`)
-      error.errors = errors
-      throw error
+      const invalidProps = getInvalidProps(errors)
+
+      if (invalidProps.length) {
+        return cb({ type: `INVALID_PROPS`, data: invalidProps })
+      }
+
+      return cb({ type: `INPUT`, data: errors })
     }
 
-    // If there aren't any new resources that need to be fetched we're done!
-    if (!queue.size) {
+    // If there aren't any new resources that need to be fetched, or errors, we're done!
+    if (!queue.size && !errors.length) {
       return undefined
     }
 
@@ -106,6 +132,12 @@ const render = async recipe => {
   try {
     // Begin the "render loop" until there are no more resources being queued.
     await renderResources()
+
+    if (errors.length) {
+      // We found errors that were emitted back to the state machine, so
+      // we don't need to re-render
+      return null
+    }
 
     // Rerender with the resources and resolve the data from the cache
     const result = RecipesReconciler.render(recipeWithWrapper, plan)
