@@ -89,7 +89,7 @@ module.exports.plan = async ({ root }, { name, command }) => {
     currentState,
     newState: scriptDescription(name, command),
     diff,
-    describe: `Add new command to your package.json`,
+    describe: `Add new command "${name}" to your package.json`,
   }
 }
 

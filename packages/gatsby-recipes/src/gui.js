@@ -1,14 +1,18 @@
 /** @jsx jsx */
-import { jsx } from "theme-ui"
+import { jsx, ThemeProvider as ThemeUIProvider } from "theme-ui"
 const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
 const MDX = require(`@mdx-js/runtime`).default
 const ansi2HTML = require(`ansi-html`)
 const {
-  CircularProgressbarWithChildren,
-} = require(`react-circular-progressbar`)
-require(`react-circular-progressbar/dist/styles.css`)
+  Button,
+  ThemeProvider,
+  getTheme,
+  BaseAnchor,
+  Text,
+  Heading,
+} = require(`gatsby-interface`)
 const {
   createClient,
   useMutation,
@@ -19,34 +23,37 @@ const {
 } = require(`urql`)
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const semver = require(`semver`)
+const slugify = require(`slugify`)
+
+console.log(Heading)
 
 const SelectInput = `select`
 
-// Check for what version of React is loaded & warn if it's too low.
-if (semver.lt(React.version, `16.8.0`)) {
-  console.log(
-    `Recipes works best with newer versions of React. Please file a bug report if you see this warning.`
-  )
+const makeResourceId = res => {
+  const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
+  return id
 }
 
 const PROJECT_ROOT = `/Users/kylemathews/projects/gatsby/starters/blog`
 
 const Boxen = `div`
-const Text = `p`
 const Static = `div`
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
 
+const theme = getTheme()
+console.log({ theme })
+
 const WelcomeMessage = () => (
   <>
-    <Boxen float="left" padding={1} margin={{ bottom: 1, left: 2 }}>
+    <Text>
       Thank you for trying the experimental version of Gatsby Recipes!
-    </Boxen>
-    <Div margin-bottom={2}>
+    </Text>
+    <Text>
       Please ask questions, share your recipes, report bugs, and subscribe for
       updates in our umbrella issue at
       https://github.com/gatsbyjs/gatsby/issues/22991
-    </Div>
+    </Text>
   </>
 )
 
@@ -149,12 +156,8 @@ const components = {
   File: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
-  RecipeIntroduction: props => (
-    <div style={{ background: `tomato` }} {...props} />
-  ),
-  RecipeStep: props => (
-    <div style={{ border: `4px solid tomato` }} {...props} />
-  ),
+  RecipeIntroduction: props => <div {...props} />,
+  RecipeStep: props => <div {...props} />,
 }
 
 const log = (label, textOrObj) => {
@@ -299,12 +302,44 @@ const RecipeGui = ({
         log(`stepResources`, state.context.stepResources)
       }
 
+      const ResourcePlan = ({ resourcePlan }) => (
+        <div
+          id={makeResourceId(resourcePlan)}
+          sx={{
+            margin: 2,
+            padding: 2,
+          }}
+        >
+          <div>
+            <Text>
+              {resourcePlan.resourceName} — {resourcePlan.describe}
+            </Text>
+          </div>
+          {resourcePlan.diff && (
+            <pre
+              sx={{
+                background: theme => theme.tones.BRAND.lighter,
+                padding: 3,
+              }}
+              dangerouslySetInnerHTML={{
+                __html: ansi2HTML(resourcePlan.diff),
+              }}
+            />
+          )}
+        </div>
+      )
+
       const Step = ({ state, step, i }) => {
         const [output, setOutput] = useState({
           title: ``,
           body: ``,
           date: new Date(),
         })
+
+        const stepResources = state.context?.plan?.filter(
+          p => p._stepMetadata.step === i + 1
+        )
+        console.log({ stepResources })
 
         const [complete, setComplete] = useState(false)
         if (output.title !== `` && output.body !== ``) {
@@ -321,7 +356,7 @@ const RecipeGui = ({
           <div
             key={`step-${i}`}
             sx={{
-              border: `1px solid tomato`,
+              border: theme => `1px solid ${theme.tones.BRAND.medium}`,
               marginBottom: 4,
               borderRadius: 20,
             }}
@@ -333,39 +368,17 @@ const RecipeGui = ({
                 "& > *": {
                   marginY: 0,
                 },
-                background: `PaleGoldenRod`,
+                background: theme => theme.tones.BRAND.light,
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20,
-                padding: 2,
+                padding: 3,
               }}
             >
               <div
                 sx={{
-                  "& > *": {
-                    marginY: 0,
-                  },
-                  display: `flex`,
-                  alignItems: `flex-start`,
-                }}
-              >
-                <div>
-                  <CircularProgressbarWithChildren
-                    value={66}
-                    sx={{ height: `34px`, width: `34px` }}
-                  >
-                    {/* Put any JSX content in here that you'd like. It'll be vertically and horizonally centered. */}
-
-                    <div style={{ fontSize: `18px` }}>
-                      <strong>5/7</strong>
-                    </div>
-                  </CircularProgressbarWithChildren>
-                </div>
-              </div>
-              <div
-                sx={{
                   // marginTop: 2,
-                  "& > *": {
-                    marginTop: 0,
+                  "& > p": {
+                    margin: 0,
                   },
                 }}
               >
@@ -373,33 +386,10 @@ const RecipeGui = ({
               </div>
             </div>
             <div sx={{ padding: 3 }}>
-              <Div>
-                <div>
-                  <label>title</label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    onChange={e => {
-                      const newOutput = { ...output, title: e.target.value }
-                      setOutput(newOutput)
-                    }}
-                  />
-                </div>
-                <div>
-                  <label>body</label>
-                </div>
-                <div>
-                  <textarea
-                    onChange={e => {
-                      const newOutput = { ...output, body: e.target.value }
-                      setOutput(newOutput)
-                    }}
-                  />
-                </div>
-                <h4>Proposed changes</h4>
-                <pre>{JSON.stringify(output, null, 2)}</pre>
-              </Div>
+              <Heading as={`h5`}>Proposed changes</Heading>
+              {stepResources?.map((res, i) => (
+                <ResourcePlan key={`res-plan-${i}`} resourcePlan={res} />
+              ))}
             </div>
           </div>
         )
@@ -526,23 +516,49 @@ const RecipeGui = ({
         })
       }
 
+      const groupedPlans = lodash.groupBy(
+        state.context.plan,
+        p => p.resourceName
+      )
+      console.log({ groupedPlans })
+
       return (
         <Wrapper>
           {state.context.currentStep === 0 && <WelcomeMessage />}
           <br />
-          <div sx={{ width: `100%`, padding: 3, background: `PaleGoldenRod` }}>
-            recipe status
-          </div>
           <div>
             <MDX components={components}>{state.context.steps[0]}</MDX>
           </div>
-          <h2>Proposed changes</h2>
-          <button>Apply changes</button>
-          <div>count {state.context.plan?.length}</div>
-          <div sx={{ marginBottom: 4 }}>
-            {state.context.plan?.map(p => (
+          <Button sx={{ marginBottom: 4 }}>Install Recipe</Button>
+          <div sx={{ marginBottom: 7 }}>
+            <Heading sx={{ marginBottom: 3 }}>Proposed changes</Heading>
+            {Object.entries(groupedPlans).map(([resourceName, plans]) => (
               <div>
-                {p.resourceName} — {p.describe}
+                <Heading as="h4" sx={{ margin: 0 }}>
+                  {resourceName}
+                </Heading>
+                <ul sx={{ marginBottom: 3, marginTop: 0 }}>
+                  {plans.map((p, i) => (
+                    <li key={`${resourceName}-plan-${i}`}>
+                      <BaseAnchor
+                        href={`#${makeResourceId(p)}`}
+                        onClick={e => {
+                          const target = document.getElementById(
+                            e.target.hash.slice(1)
+                          )
+                          console.log(target)
+                          e.preventDefault()
+                          target.scrollIntoView({
+                            behavior: `smooth`, // smooth scroll
+                            block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
+                          })
+                        }}
+                      >
+                        <Text>{p.describe}</Text>
+                      </BaseAnchor>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -571,4 +587,44 @@ const RecipeGui = ({
   }
 }
 
-export default () => <RecipeGui />
+const WithProviders = ({ children }) => {
+  const baseTheme = getTheme()
+
+  const theme = {
+    ...baseTheme,
+    colors: {
+      ...baseTheme.colors,
+      background: `white`,
+    },
+    fontWeights: {
+      ...baseTheme.fontWeights,
+    },
+    styles: {
+      h1: {
+        fontSize: 6,
+        fontFamily: `heading`,
+        fontWeight: `heading`,
+        mt: 0,
+        mb: 4,
+      },
+      p: {
+        fontSize: 1,
+        fontFamily: `body`,
+        fontWeight: `body`,
+        mt: 0,
+        mb: 4,
+      },
+    },
+  }
+  return (
+    <ThemeUIProvider theme={theme}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </ThemeUIProvider>
+  )
+}
+
+export default () => (
+  <WithProviders>
+    <RecipeGui />
+  </WithProviders>
+)

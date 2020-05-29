@@ -5,7 +5,7 @@ const render = require(`./renderer`)
 // const ctx = { root: SITE_ROOT }
 
 module.exports = async (context, cb) => {
-  const stepAsMdx = context.steps[context.currentStep]
+  const stepAsMdx = context.steps.join(`\n`)
 
   try {
     const result = await render(stepAsMdx, cb)
