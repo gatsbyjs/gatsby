@@ -6618,3 +6618,18 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
+- url: https://headless.us
+  repo: https://github.com/ecomloop/headless
+  description: headless: the shopify + gatsby starter theme for digital commerce
+  tags:
+    - E-commerce
+    - Shopify
+    - CMS:Netlify
+    - Blog
+  features:
+    - Integrated with Shopify for pulling products
+    - Checkout handled via Shopify 
+    - XML sitemap
+    - Blog with Netlify CMS 
+    - RSS feed
+    - Designed to bring headless commerce to Shopify merchants 
