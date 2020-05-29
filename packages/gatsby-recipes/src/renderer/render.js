@@ -8,6 +8,7 @@ import ErrorBoundary from "./error-boundary"
 import transformToPlan from "./transform-to-plan-structure"
 import { ResourceProvider } from "./resource-provider"
 import { useRecipeStep } from "./step-component"
+import { InputProvider, useInputByUuid } from "./input-provider"
 
 const queue = new Queue({ concurrency: 1, autoStart: false })
 
@@ -29,9 +30,11 @@ const getUserProps = props => {
   return userProps
 }
 
-const Wrapper = ({ children }) => (
+const Wrapper = ({ children, inputs }) => (
   <ErrorBoundary>
-    <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+    <InputProvider value={inputs}>
+      <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+    </InputProvider>
   </ErrorBoundary>
 )
 
@@ -42,13 +45,14 @@ const ResourceComponent = ({
   ...props
 }) => {
   const step = useRecipeStep()
-  //const inputProps = useResourceInput(__uuid)
+  const inputProps = useInputByUuid(_uuid)
   const userProps = getUserProps(props)
-  //const allProps = { ...props, ...inputProps }
+  const allProps = { ...props, ...inputProps }
+
   const resourceData = readResource(
     Resource,
     { root: process.cwd(), _uuid },
-    props
+    allProps
   )
 
   return (
@@ -107,10 +111,10 @@ const readResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = async (recipe, cb) => {
+const render = async (recipe, cb, inputs = {}) => {
   const plan = {}
 
-  const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>
+  const recipeWithWrapper = <Wrapper inputs={inputs}>{recipe}</Wrapper>
 
   const renderResources = async () => {
     queue.pause()

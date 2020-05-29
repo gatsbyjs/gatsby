@@ -1,8 +1,9 @@
-const React = require(`react`)
+import React from "react"
 
-const { render } = require(`./render`)
-const { resourceComponents } = require(`./resource-components`)
-const { RecipeStep } = require(`./step-component`)
+import { render } from "./render"
+import { resourceComponents } from "./resource-components"
+import { RecipeStep } from "./step-component"
+import { InputProvider } from "./input-provider"
 
 const { File, NPMPackage } = resourceComponents
 
@@ -44,6 +45,24 @@ test(`handles nested rendering`, async () => {
       },
     ]
   `)
+})
+
+test(`overrides inputs when passed`, async () => {
+  const result = await render(
+    <InputProvider value={{ abc123: { path: `yellow.js` } }}>
+      <doc>
+        <RecipeStep step={1} totalSteps={2}>
+          <File path="red.js" content="red!" _uuid="abc123" />
+        </RecipeStep>
+        <RecipeStep step={2} totalSteps={2}>
+          <File path="blue.js" content="blue!" />
+        </RecipeStep>
+      </doc>
+    </InputProvider>
+  )
+
+  expect(result[0].describe).toEqual(`Write yellow.js`)
+  expect(result[1].describe).toEqual(`Write blue.js`)
 })
 
 test(`includes step metadata`, async () => {
