@@ -22,14 +22,16 @@ const { read: readPackageJSON } = require(`../npm/package`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const fullThemePath = path.join(resolvePkg(theme), `src`)
-  const shadowableThemeFiles = glob.sync(fullThemePath + `/**/*.*`, {
+  const themePath = resolvePkg(theme)
+  if (!themePath) throw new Error(`Please install the "${theme}" npm package.`)
+  const themeSrcPath = path.join(themePath, `src`)
+  const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
 
   const toShadowPath = filePath => {
-    const themePath = filePath.replace(fullThemePath, ``)
-    return path.join(`src`, theme, themePath)
+    const relativeFilePath = filePath.replace(themeSrcPath, ``)
+    return path.join(`src`, theme, relativeFilePath)
   }
 
   const shadowPaths = shadowableThemeFiles.map(toShadowPath)
