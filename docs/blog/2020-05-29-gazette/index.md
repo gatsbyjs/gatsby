@@ -2,16 +2,16 @@
 title: Gatsby Gazette for May 2020 - The Happy Birthday Edition
 date: 2020-05-29
 author: Hashim Warren
-excerpt: "Learn about May's product, community, and ecosystem updates"
+excerpt: "Learn about May's product, community, and ecosystem updates. This includes improvements to Incremental Builds and TypeScript support"
 seoTitle: Gatsby Product Updates for May 2020
 tags: ["gatsby-gazette", "graphql", "blogs"]
 ---
 
-This month [Gatsby turned 5](/blog/2020-05-22-happy-fifth-bday-gatsby/) 🎉
+This month [Gatsby turned 5-years-old](/blog/2020-05-22-happy-fifth-bday-gatsby/). 🎉
 
-We hit a special milestone in May - there are over 2000 Gatsby plugins, and 500 of them are source plugins ([thanks for noticing Chris Ellis](https://github.com/gatsbyjs/gatsby/pull/23558)). So for whatever your use case, for whatever data source, there's a Gatsby plugin that can get you up-and-running quickly. And if you need inspiration for your project, GitHub lists [over 200 thousand sites that use Gatsby](https://github.com/gatsbyjs/gatsby/network/dependents?package_id=UGFja2FnZS0xNDM0MDY2Nw%3D%3D) as a dependency.
+And what a way to mark a birthday - during the same period Gatsby hit the special milestone of having over 2000 plugins. And 500 of them are source plugins ([thanks for noticing Chris Ellis](https://github.com/gatsbyjs/gatsby/pull/23558)). So for whatever your use case, for whatever your data source, there's a Gatsby plugin that can get you up-and-running quickly. And if you need inspiration for your project, GitHub lists [over 200 thousand sites that use Gatsby](https://github.com/gatsbyjs/gatsby/network/dependents?package_id=UGFja2FnZS0xNDM0MDY2Nw%3D%3D) as a dependency!
 
-We also announced our [series B round of funding round](/blog/2020-05-27-announcing-series-b-funding/). This investment will help us double down on changing the way the web is built. We've already started making Gatsby work better for large and media rich sites. You can keep tabs on Gatsby's progress at [Will It Build](https://willit.build), a new benchmarking site that showcases sub-10 second builds for projects of different sizes and data sources.
+In May we also announced our [series B round of funding round](/blog/2020-05-27-announcing-series-b-funding/). This investment will help us double down on changing the way the web is built. We've already made Gatsby work better for large and media rich sites. You can keep tabs on Gatsby's progress at [Will It Build](https://willit.build), a new benchmarking site that showcases sub-10-second builds for projects of different sizes and data sources.
 
 ## 🚀 New in Gatsby & Gatsby Cloud
 
@@ -115,15 +115,15 @@ All of the Gatsby Themes above are worth using and studying to accelerate your o
 
 Microsoft debuted [Azure Static Web Apps](https://azure.microsoft.com/en-us/services/app-service/static/) at the Build Conference, and we're excited to see provide first-class support for Gatsby projects. Follow along our new doc so you can [deploy your Gatsby site to Azure](https://www.gatsbyjs.org/docs/deploying-to-azure/).
 
-### GraphQL for WordPress is blowing up!
+### GraphQL for WordPress is growing!
 
-WPGraphQL, a [WordPress plugin Gatsby proudly supports](/docs/glossary/wpgraphql/), recently passed 40,000 downloads, and the Slack community now tops 1,000. We love the enterprise use cases we're seeing from developers who've adopted WPGraphQL for their projects!
+WPGraphQL, a [WordPress plugin Gatsby proudly supports](/docs/glossary/wpgraphql/), recently [passed 40,000 downloads](https://packagist.org/packages/wp-graphql/wp-graphql/stats), and the Slack community now tops 1,000. We love the enterprise use cases we're seeing from developers who've adopted WPGraphQL for their projects!
 
 ### MDX v2 is coming
 
 Another open source project Gatsby supports, MDX has announced the changes you can look forward to in version 2. You can follow the progress of v2 with [this umbrella issue at the MDX repo](https://github.com/mdx-js/mdx/issues/1041).
 
-### NewGatsby Starter and Podcast from Contentful
+### New Gatsby Starter and Podcast from Contentful
 
 Our friends at Contentful developed an [official Gatsby starter](https://github.com/contentful/starter-gatsby-blog) that you can use for blogging. The team over there also produce a new podcast on Web Development, and they recently had [an episode about Gatsby](https://anchor.fm/contentful-creators/episodes/E4--A-Conversation-about-Gatsby-and-Static-Site-Generators--Nikan-Shahidi-ed9mnc).
 
