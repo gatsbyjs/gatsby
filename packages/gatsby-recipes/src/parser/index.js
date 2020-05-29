@@ -10,20 +10,24 @@ const visit = require(`unist-util-visit`)
 
 const { uuid } = require(`./util`)
 
-const asRoot = nodes => {
+const IGNORED_COMPONENTS = [`RecipeIntroduction`, `RecipeStep`]
+
+const asRoot = node => {
   return {
     type: `root`,
-    children: nodes,
+    children: [node],
   }
 }
 
 const applyUuid = tree => {
   visit(tree, `mdxBlockElement`, node => {
-    node.attributes.push({
-      type: `mdxAttribute`,
-      name: `_uuid`,
-      value: uuid(),
-    })
+    if (!IGNORED_COMPONENTS.includes(node.name)) {
+      node.attributes.push({
+        type: `mdxAttribute`,
+        name: `_uuid`,
+        value: uuid(),
+      })
+    }
   })
 
   return tree
@@ -58,31 +62,32 @@ const parse = async src => {
     const ast = u.parse(src)
     const [intro, ...resourceSteps] = partitionSteps(ast)
 
-    const wrappedIntroStep = [
-      {
-        type: `jsx`,
-        value: `<RecipeIntroduction>`,
-      },
-      ...intro,
-      {
-        type: `jsx`,
-        value: `</RecipeIntroduction>`,
-      },
-    ]
+    const wrappedIntroStep = {
+      type: `mdxBlockElement`,
+      name: `RecipeIntroduction`,
+      attributes: [],
+      children: intro,
+    }
 
-    const wrappedResourceSteps = resourceSteps.map((step, i) => [
-      {
-        type: `jsx`,
-        value: `<RecipeStep step={${i + 1}} totalSteps={${
-          resourceSteps.length
-        }}>`,
-      },
-      ...step,
-      {
-        type: `jsx`,
-        value: `</RecipeStep>`,
-      },
-    ])
+    const wrappedResourceSteps = resourceSteps.map((step, i) => {
+      return {
+        type: `mdxBlockElement`,
+        name: `RecipeStep`,
+        attributes: [
+          {
+            type: `mdxAttribute`,
+            name: `step`,
+            value: String(i + 1),
+          },
+          {
+            type: `mdxAttribute`,
+            name: `totalSteps`,
+            value: String(resourceSteps.length),
+          },
+        ],
+        children: step,
+      }
+    })
 
     const steps = [wrappedIntroStep, ...wrappedResourceSteps]
 

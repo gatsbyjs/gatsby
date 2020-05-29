@@ -12,7 +12,7 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Add new command to your package.json",
+  "describe": "Add new command \\"apple\\" to your package.json",
   "diff": "- Original  - 1
 + Modified  + 3
 
@@ -41,7 +41,7 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript update plan 1`] = `
 Object {
   "currentState": "\\"apple\\": \\"foot\\"",
-  "describe": "Add new command to your package.json",
+  "describe": "Add new command \\"apple\\" to your package.json",
   "diff": "- Original  - 1
 + Modified  + 1
 
