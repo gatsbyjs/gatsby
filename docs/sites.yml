@@ -10772,6 +10772,93 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Mox Bank
+  main_url: https://mox.com/
+  url: https://mox.com/
+  description: >
+    Mox is the new virtual bank backed by Standard Chartered in partnership with HKT, PCCW and Trip.com; created to deliver a new banking experience in Hong Kong.
+  categories:
+    - Business
+    - Design
+    - Technology
+    - Finance
+    - User Experience
+  built_by: Mox Bank
+  built_by_url: https://mox.com/
+- title: Pittica
+  url: https://pittica.com
+  main_url: https://pittica.com
+  source_url: https://github.com/pittica/site
+  description: >
+    Digital agency site.
+  categories:
+    - Design
+    - Web Development
+    - Agency
+  built_by: Lucio Benini
+  built_by_url: https://pittica.com
+  featured: false
+- title: MyHumus
+  url: https://myhumus.com
+  main_url: https://myhumus.com
+  source_url: https://github.com/my-humus/site
+  description: >
+    Digital agency site.
+  categories:
+    - Blog
+    - Food
+  built_by: Lucio Benini
+  built_by_url: https://pittica.com
+- title: Wanaboat.fr
+  main_url: https://www.wanaboat.fr
+  url: https://www.wanaboat.fr
+  description: >
+    This a boating classifieds website. It presents dinghys, catamarans and anything that floats or goes on the water and is for sale in France and Europe.
+  categories:
+    - Directory
+  built_by: Olivier L. Developer
+  built_by_url: https://www.olivierlivet.net/
+- title: maxemitchell.com
+  url: https://www.maxemitchell.com/
+  main_url: https://www.maxemitchell.com/
+  source_url: https://github.com/maxemitchell/portfolio
+  description: >
+    This is a personal portfolio website to highlight my photography, videography, coding projects, and work/education experience.
+  categories:
+    - Portfolio
+    - Gallery
+    - Portfolio
+    - Open Source
+    - Design
+  built_by: Max Mitchell
+  built_by_url: https://github.com/maxemitchell
+- title: Nick Offerman
+  url: https://nickofferman.co/
+  main_url: https://nickofferman.co/
+  description: >
+    The official website of Nick Offerman: Actor, Author, Humorist, & Woodworker.
+  categories:
+    - E-commerce
+    - Entertainment
+    - Video
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+- title: Rudra Narayan
+  url: https://rudra.dev
+  main_url: https://rudra.dev
+  source_url: https://github.com/mrprofessor/rudra.dev
+  description: >
+    Rudra Narayan | Thoughts, obsessions and rants
+  categories:
+    - Blog
+    - Portfolio
+    - SEO
+    - Programming
+    - Landing Page
+    - Technology
+  built_by: Rudra Narayan
+  built_by_url: https://github.com/mrprofessor
+  featured: false
 - title: Stackrole
   main_url: https://stackrole.com
   url: https://stackrole.com
@@ -10786,4 +10873,34 @@
     - JavaScript
   built_by: Stackrole
   built_by_url: https://stackrole.com
+  featured: false
+- title: Aparna Joshi
+  url: https://aparnajoshi.netlify.app/
+  main_url: https://aparnajoshi.netlify.app/
+  description: >
+    Hi, I`m a Software Engineer working in Citrix, Bangalore. I spend my free time learning stuff that interests me. I write articles that educates me.
+  categories:
+    - Blog
+    - Science
+    - Technology
+    - Programming
+  built_by: Aparna Joshi
+  built_by_url: https://github.com/AparnaJoshi007/explained/
+  featured: false
+- title: Headless WordPress Blog and Portfolio by Simon Halimonov
+  url: https://simonhalimonov.com/
+  main_url: https://simonhalimonov.com/
+  description: >
+    An open source portfolio about UI/UX design and development. This is my personal website that I use to promote my work. It uses TypeScript and a headless WordPress CMS. Supports i18n and Gutenberg. I open source this site to help everyone make a nice WordPress site faster.
+  categories:
+    - Blog
+    - Portfolio
+    - Programming
+    - Open Source
+    - Design
+    - Freelance
+    - Web Development
+    - WordPress
+  built_by: Simon Halimonov
+  built_by_url: https://simonhalimonov.com/
   featured: false

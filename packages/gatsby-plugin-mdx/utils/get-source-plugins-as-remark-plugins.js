@@ -61,6 +61,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               markdownAST,
               markdownNode: mdxNode,
               getNode,
+              getNodesByType,
               files: fileNodes,
               pathPrefix,
               reporter,
