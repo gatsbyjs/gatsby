@@ -1031,7 +1031,7 @@ export interface NodePluginArgs {
    * Key-value store used to persist results of time/memory/cpu intensive
    * tasks. All functions are async and return promises.
    */
-  cache: Cache
+  cache: GatsbyCache
 
   /**
    * Utility function useful to generate globally unique and stable node IDs.
@@ -1312,7 +1312,27 @@ export interface Reporter {
   ): ProgressActivityTracker
 }
 
+/**
+ * @deprecated Use `GatsbyCache` instead
+ */
 export interface Cache {
+  name: string
+  store: {
+    create: Function
+  }
+  cache: {
+    getAndPassUp: Function
+    wrap: Function
+    set: Function
+    mset: Function
+    get: Function
+    mget: Function
+    del: Function
+    reset: Function
+  }
+}
+
+export interface GatsbyCache {
   /**
    * Retrieve cached value
    * @param key Cache key
