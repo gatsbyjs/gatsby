@@ -365,7 +365,7 @@ Gatsby is a _modern site generator_, which means there are no servers to set up 
 
 Try using [Surge](http://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which makes it possible to deploy Gatsby sites.
 
-> Gatsby Cloud is another deployment option, built by the team behind Gatsby. You can find instructions for deploying to Gatsby Cloud [below](https://www.gatsbyjs.org/tutorial/part-one/#alternative-deploying-to-gatsby-cloud).
+> Gatsby Cloud is another deployment option, built by the team behind Gatsby. In the next section, you'll find instructions for [deploying to Gatsby Cloud](/tutorial/part-one/#alternative-deploying-to-gatsby-cloud).
 
 If you haven't previously installed & set up Surge, open a new terminal window and install their command-line tool:
 
@@ -409,23 +409,23 @@ case) and you'll see your newly published site! Great work!
 
 [Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools. It's the best place to build and deploy sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
 
-To deploy your site to Gatsby Cloud, create an account on [Github](https://github.com) if you don't have one. Github allows you to host and collaborate on code projects using Git for version control.
+To deploy your site to Gatsby Cloud, create an account on [GitHub](https://github.com) if you don't have one. GitHub allows you to host and collaborate on code projects using Git for version control.
 
-Create a new repository on Github. Since you're importing your existing project, you'll want a completely empty one, so don't initialize it with `README` or `.gitignore` files.
+Create a new repository on GitHub. Since you're importing your existing project, you'll want a completely empty one, so don't initialize it with `README` or `.gitignore` files.
 
 You can tell Git where the remote (i.e. not on your computer) repository is like this:
 
-```
+```shell
 git remote add origin [GITHUB_REPOSITORY_URL]
 ```
 
 When you created a new Gatsby project with a starter, it automatically made an initial `git commit`, or a set of changes. Now, you can push your changes to the new remote location:
 
-```
+```shell
 git push -u origin master
 ```
 
-Now you're ready to link this Github repository right to Gatsby Cloud! Check out the reference guide on [Deploying to Gatsby Cloud](https://www.gatsbyjs.org/docs/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
+Now you're ready to link this GitHub repository right to Gatsby Cloud! Check out the reference guide on [Deploying to Gatsby Cloud](/docs/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
 
 ## ➡️ What's Next?
 
