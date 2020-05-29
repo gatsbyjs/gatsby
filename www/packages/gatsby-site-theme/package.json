@@ -20,7 +20,6 @@
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "color-blend": "^2.0.9",
-    "dotenv": "^8.2.0",
     "email-validator": "^1.2.3",
     "fuse.js": "^3.6.1",
     "gatsby": "^2.21.37",
