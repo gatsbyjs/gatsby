@@ -12,6 +12,8 @@ import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { lastAction } from "./last-action"
 import { jobsV2Reducer } from "./jobsv2"
+import { flattenedPluginsReducer } from "./flattened-plugins"
+import { resolvedNodesCacheReducer } from "./resolved-nodes"
 import { pageDataStatsReducer } from "./page-data-stats"
 import { componentsReducer } from "./components"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
@@ -26,10 +28,10 @@ module.exports = {
   program: require(`./program`),
   nodes: nodeReducer,
   nodesByType: nodesByTypeReducer,
-  resolvedNodesCache: require(`./resolved-nodes`),
+  resolvedNodesCache: resolvedNodesCacheReducer,
   nodesTouched: nodesTouchedReducer,
   lastAction: lastAction,
-  flattenedPlugins: require(`./flattened-plugins`),
+  flattenedPlugins: flattenedPluginsReducer,
   config: require(`./config`),
   schema: schemaReducer,
   pages: pagesReducer,

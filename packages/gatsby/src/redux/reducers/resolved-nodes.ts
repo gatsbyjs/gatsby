@@ -1,5 +1,9 @@
-// resolvedNodesCache
-module.exports = (state = new Map(), action) => {
+import { IGatsbyState, ActionsUnion } from "../types"
+
+export const resolvedNodesCacheReducer = (
+  state: IGatsbyState["resolvedNodesCache"] = new Map(),
+  action: ActionsUnion
+): IGatsbyState["resolvedNodesCache"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
     case `CREATE_NODE`:
