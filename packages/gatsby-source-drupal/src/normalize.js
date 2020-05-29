@@ -24,7 +24,9 @@ const nodeFromData = (datum, createNodeId) => {
 exports.nodeFromData = nodeFromData
 
 const isFileNode = node =>
-  node.internal.type === `files` || node.internal.type === `file__file`
+  node.internal.type === `files` ||
+  /^file__/.test(node.internal.type) ||
+  /^media__/.test(node.internal.type);
 
 exports.isFileNode = isFileNode
 
