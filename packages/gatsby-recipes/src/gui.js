@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, ThemeProvider as ThemeUIProvider } from "theme-ui"
+import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
@@ -10,7 +10,6 @@ const {
   ThemeProvider,
   getTheme,
   BaseAnchor,
-  Text,
   Heading,
 } = require(`gatsby-interface`)
 const {
@@ -24,8 +23,7 @@ const {
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const semver = require(`semver`)
 const slugify = require(`slugify`)
-
-console.log(Heading)
+require(`normalize.css`)
 
 const SelectInput = `select`
 
@@ -42,19 +40,27 @@ const Color = `span`
 const Spinner = () => <span>Loading...</span>
 
 const theme = getTheme()
-console.log({ theme })
 
 const WelcomeMessage = () => (
-  <>
-    <Text>
+  <div
+    sx={{
+      marginBottom: 8,
+      background: theme => theme.tones.BRAND.superLight,
+      border: theme => `1px solid ${theme.tones.BRAND.light}`,
+      padding: 4,
+    }}
+  >
+    <Styled.p>
       Thank you for trying the experimental version of Gatsby Recipes!
-    </Text>
-    <Text>
+    </Styled.p>
+    <Styled.p sx={{ margin: 0 }}>
       Please ask questions, share your recipes, report bugs, and subscribe for
-      updates in our umbrella issue at
-      https://github.com/gatsbyjs/gatsby/issues/22991
-    </Text>
-  </>
+      updates in our umbrella issue at{` `}
+      <BaseAnchor href="https://github.com/gatsbyjs/gatsby/issues/22991">
+        https://github.com/gatsbyjs/gatsby/issues/22991
+      </BaseAnchor>
+    </Styled.p>
+  </div>
 )
 
 const RecipesList = ({ setRecipe }) => {
@@ -158,6 +164,7 @@ const components = {
   NPMScript: () => null,
   RecipeIntroduction: props => <div {...props} />,
   RecipeStep: props => <div {...props} />,
+  h2: props => <Styled.h2 {...props} />,
 }
 
 const log = (label, textOrObj) => {
@@ -170,7 +177,7 @@ log(
 )
 
 const RecipeGui = ({
-  recipe = `jest.mdx`,
+  recipe, // = `jest.mdx`,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
 }) => {
@@ -259,10 +266,9 @@ const RecipeGui = ({
         return (
           <Wrapper>
             <WelcomeMessage />
-            <Text>Select a recipe to run</Text>
+            <Styled.p>Select a recipe to run</Styled.p>
             <RecipesList
               setRecipe={async recipeItem => {
-                console.log(recipeItem)
                 showRecipesList = false
                 try {
                   await createOperation({
@@ -279,7 +285,6 @@ const RecipeGui = ({
       }
 
       if (!state) {
-        console.log(`Loading recipe!`)
         return (
           <Wrapper>
             <Spinner /> Loading recipe
@@ -288,7 +293,6 @@ const RecipeGui = ({
       }
 
       console.log(state)
-      console.log(`!!!!!!`)
 
       const isDone = state.value === `done`
 
@@ -302,24 +306,20 @@ const RecipeGui = ({
         log(`stepResources`, state.context.stepResources)
       }
 
-      const ResourcePlan = ({ resourcePlan }) => (
-        <div
-          id={makeResourceId(resourcePlan)}
-          sx={{
-            margin: 2,
-            padding: 2,
-          }}
-        >
+      const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
+        <div id={makeResourceId(resourcePlan)} sx={{}}>
           <div>
-            <Text>
+            <Styled.p sx={{ mb: resourcePlan.diff ? 6 : 0 }}>
               {resourcePlan.resourceName} — {resourcePlan.describe}
-            </Text>
+            </Styled.p>
           </div>
           {resourcePlan.diff && (
-            <pre
+            <Styled.pre
               sx={{
-                background: theme => theme.tones.BRAND.lighter,
+                background: theme => theme.tones.BRAND.superLight,
+                border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
                 padding: 3,
+                mb: isLastPlan ? 0 : 6,
               }}
               dangerouslySetInnerHTML={{
                 __html: ansi2HTML(resourcePlan.diff),
@@ -339,7 +339,6 @@ const RecipeGui = ({
         const stepResources = state.context?.plan?.filter(
           p => p._stepMetadata.step === i + 1
         )
-        console.log({ stepResources })
 
         const [complete, setComplete] = useState(false)
         if (output.title !== `` && output.body !== ``) {
@@ -357,8 +356,7 @@ const RecipeGui = ({
             key={`step-${i}`}
             sx={{
               border: theme => `1px solid ${theme.tones.BRAND.medium}`,
-              marginBottom: 4,
-              borderRadius: 20,
+              marginBottom: 7,
             }}
           >
             <div
@@ -368,16 +366,14 @@ const RecipeGui = ({
                 "& > *": {
                   marginY: 0,
                 },
-                background: theme => theme.tones.BRAND.light,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                padding: 3,
+                background: theme => theme.tones.BRAND.lighter,
+                padding: 4,
               }}
             >
               <div
                 sx={{
                   // marginTop: 2,
-                  "& > p": {
+                  "p:last-child": {
                     margin: 0,
                   },
                 }}
@@ -385,12 +381,27 @@ const RecipeGui = ({
                 <MDX components={components}>{step}</MDX>
               </div>
             </div>
-            <div sx={{ padding: 3 }}>
-              <Heading as={`h5`}>Proposed changes</Heading>
-              {stepResources?.map((res, i) => (
-                <ResourcePlan key={`res-plan-${i}`} resourcePlan={res} />
-              ))}
-            </div>
+            {stepResources?.length > 0 && (
+              <div sx={{ padding: 6 }}>
+                <Heading
+                  sx={{
+                    marginBottom: 4,
+                    color: theme => theme.tones.NEUTRAL.darker,
+                    fontWeight: 500,
+                  }}
+                  as={`h3`}
+                >
+                  Proposed changes
+                </Heading>
+                {stepResources?.map((res, i) => (
+                  <ResourcePlan
+                    key={`res-plan-${i}`}
+                    resourcePlan={res}
+                    isLastPlan={i === stepResources.length - 1}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )
       }
@@ -416,11 +427,11 @@ const RecipeGui = ({
         //
         // {plan.map((p, i) => (
         // <Div margin-top={1} key={`${p.resourceName} plan ${i}`}>
-        // <Text>{p.resourceName}:</Text>
-        // <Text> * {p.describe}</Text>
+        // <Styled.p>{p.resourceName}:</Styled.p>
+        // <Styled.p> * {p.describe}</Styled.p>
         // {p.diff && p.diff !== `` && (
         // <>
-        // <Text>---</Text>
+        // <Styled.p>---</Styled.p>
         // <pre
         // sx={{
         // lineHeight: 0.7,
@@ -432,7 +443,7 @@ const RecipeGui = ({
         // }}
         // dangerouslySetInnerHTML={{ __html: ansi2HTML(p.diff) }}
         // />
-        // <Text>---</Text>
+        // <Styled.p>---</Styled.p>
         // </>
         // )}
         // </Div>
@@ -456,15 +467,17 @@ const RecipeGui = ({
           <Div>
             {state.context.plan.map((p, i) => (
               <Div key={`${p.resourceName}-${i}`}>
-                <Text>{p.resourceName}:</Text>
-                <Text>
+                <Styled.p>{p.resourceName}:</Styled.p>
+                <Styled.p>
                   {` `}
                   <Spinner /> {p.describe}
                   {` `}
                   {state.context.elapsed > 0 && (
-                    <Text>({state.context.elapsed / 1000}s elapsed)</Text>
+                    <Styled.p>
+                      ({state.context.elapsed / 1000}s elapsed)
+                    </Styled.p>
                   )}
-                </Text>
+                </Styled.p>
               </Div>
             ))}
           </Div>
@@ -520,49 +533,61 @@ const RecipeGui = ({
         state.context.plan,
         p => p.resourceName
       )
-      console.log({ groupedPlans })
 
       return (
         <Wrapper>
           {state.context.currentStep === 0 && <WelcomeMessage />}
-          <br />
-          <div>
-            <MDX components={components}>{state.context.steps[0]}</MDX>
+          <div
+            sx={{
+              mb: 8,
+              display: `flex`,
+              alignItems: `flex-start`,
+              justifyContent: `space-between`,
+            }}
+          >
+            <div sx={{ "*:last-child": { mb: 0 } }}>
+              <MDX components={components}>{state.context.steps[0]}</MDX>
+            </div>
+            <Button sx={{ width: `185px`, ml: 6 }}>Install Recipe</Button>
           </div>
-          <Button sx={{ marginBottom: 4 }}>Install Recipe</Button>
-          <div sx={{ marginBottom: 7 }}>
-            <Heading sx={{ marginBottom: 3 }}>Proposed changes</Heading>
+          <div sx={{ marginBottom: 8 }}>
+            <Heading sx={{ marginBottom: 6 }}>
+              Proposed changes{` `}
+              {state.context.plan && `(${state.context.plan?.length})`}
+            </Heading>
             {Object.entries(groupedPlans).map(([resourceName, plans]) => (
               <div>
-                <Heading as="h4" sx={{ margin: 0 }}>
+                <Heading as="h4" sx={{ mb: 3 }}>
                   {resourceName}
                 </Heading>
-                <ul sx={{ marginBottom: 3, marginTop: 0 }}>
+                <Styled.ul sx={{ marginTop: 0, mb: 5 }}>
                   {plans.map((p, i) => (
-                    <li key={`${resourceName}-plan-${i}`}>
+                    <Styled.li key={`${resourceName}-plan-${i}`}>
                       <BaseAnchor
                         href={`#${makeResourceId(p)}`}
                         onClick={e => {
-                          const target = document.getElementById(
-                            e.target.hash.slice(1)
-                          )
-                          console.log(target)
                           e.preventDefault()
+                          const target = document.getElementById(
+                            e.currentTarget.hash.slice(1)
+                          )
                           target.scrollIntoView({
                             behavior: `smooth`, // smooth scroll
                             block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
                           })
                         }}
                       >
-                        <Text>{p.describe}</Text>
+                        <Styled.p sx={{ margin: 0 }}>{p.describe}</Styled.p>
                       </BaseAnchor>
-                    </li>
+                    </Styled.li>
                   ))}
-                </ul>
+                </Styled.ul>
               </div>
             ))}
           </div>
 
+          <Heading sx={{ mb: 6 }}>
+            Steps ({state.context.steps.length - 1})
+          </Heading>
           {state.context.steps.slice(1).map((step, i) => (
             <Step state={state} step={step} i={i} />
           ))}
@@ -573,7 +598,7 @@ const RecipeGui = ({
     const Wrapper = () => (
       <>
         <Provider value={client}>
-          <Text>{` `}</Text>
+          <Styled.p>{` `}</Styled.p>
           <RecipeInterpreter />
         </Provider>
       </>
@@ -607,12 +632,48 @@ const WithProviders = ({ children }) => {
         mt: 0,
         mb: 4,
       },
+      h2: {
+        fontSize: 5,
+        fontFamily: `heading`,
+        fontWeight: `heading`,
+        mt: 0,
+        mb: 4,
+      },
       p: {
-        fontSize: 1,
+        color: baseTheme.tones.NEUTRAL.dark,
+        fontSize: 2,
         fontFamily: `body`,
         fontWeight: `body`,
         mt: 0,
-        mb: 4,
+        mb: 6,
+        lineHeight: 1.45,
+      },
+      pre: {
+        mt: 0,
+        mb: 6,
+        whiteSpace: `pre-wrap`,
+      },
+      ol: {
+        color: baseTheme.tones.NEUTRAL.dark,
+        paddingLeft: 8,
+        mt: 0,
+        mb: 6,
+        fontFamily: `body`,
+        fontWeight: `body`,
+      },
+      ul: {
+        color: baseTheme.tones.NEUTRAL.dark,
+        paddingLeft: 8,
+        mt: 0,
+        mb: 6,
+        fontFamily: `body`,
+        fontWeight: `body`,
+      },
+      li: {
+        color: baseTheme.tones.NEUTRAL.dark,
+        mb: 2,
+        fontFamily: `body`,
+        fontWeight: `body`,
       },
     },
   }

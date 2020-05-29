@@ -15,6 +15,7 @@ const errors = []
 const cache = new Map()
 
 const getInvalidProps = errors => {
+  console.log(errors)
   const invalidProps = errors.filter(e => {
     const details = e.details
     const unknownProp = details.find(e => e.type === `object.allowUnknown`)
