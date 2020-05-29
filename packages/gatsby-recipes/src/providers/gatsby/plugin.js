@@ -7,6 +7,7 @@ const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
 const resolveCwd = require(`resolve-cwd`)
+const { slash } = require(`gatsby-core-utils`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -27,12 +28,9 @@ const listShadowableFilesForTheme = (directory, theme) => {
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
-  console.log(`THEME SRC PATH:`, themeSrcPath)
 
   const toShadowPath = filePath => {
-    console.log(`ABSOLUTE:`, filePath)
-    const relativeFilePath = filePath.replace(themeSrcPath, ``)
-    console.log(`RELATIVE:`, relativeFilePath)
+    const relativeFilePath = slash(filePath).replace(slash(themeSrcPath), ``)
     return path.join(`src`, theme, relativeFilePath)
   }
 
