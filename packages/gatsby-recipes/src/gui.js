@@ -171,7 +171,6 @@ const components = {
   NPMScript: () => null,
   RecipeIntroduction: props => <div>{props.children}</div>,
   RecipeStep: props => <div>{props.children}</div>,
-  h2: props => <Styled.h2 {...props} />,
 }
 
 const log = (label, textOrObj) => {
@@ -184,7 +183,8 @@ log(
 )
 
 const RecipeGui = ({
-  recipe = `./test.mdx`,
+  // recipe = `./test.mdx`,
+  recipe = `jest.mdx`,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
 }) => {
@@ -344,9 +344,9 @@ const RecipeGui = ({
         })
 
         console.log(state.context.plan, i)
-        const stepResources = state.context?.plan?.filter(p => {
-          return parseInt(p._stepMetadata.step, 10) === i + 1
-        })
+        const stepResources = state.context?.plan?.filter(
+          p => parseInt(p._stepMetadata.step, 10) === i + 1
+        )
 
         console.log({ stepResources })
 
