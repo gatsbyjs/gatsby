@@ -4,15 +4,15 @@ First, we'll want to install Cypress and additional dependencies.
 
 ---
 
+Add dependencies to your package.json and we also installed a useful package `gatsby-cypress`. `gatsby-cypress` exposes additional Cypress functionality which makes Gatsby and Cypress work together just a bit more nicely. We'll show that later with our first test, but hold tight for just a bit because first we need to scaffold out some boilerplate files for Cypress.
+
 <NPMPackage name="cypress" dependencyType="development" />
 <NPMPackage name="gatsby-cypress" dependencyType="development" />
 <NPMPackage name="start-server-and-test" dependencyType="development" />
 
 ---
 
-Well look at that — we've added dependencies to your package.json and we also installed a useful package `gatsby-cypress`. `gatsby-cypress` exposes additional Cypress functionality which makes Gatsby and Cypress work together just a bit more nicely. We'll show that later with our first test, but hold tight for just a bit because first we need to scaffold out some boilerplate files for Cypress.
-
----
+Cool cool! So we created a local `cypress` folder with two sub-folders, `support` and `plugins`. We've also automatically included all the nice `gatsby-cypress` utilities, which we can now use in our first test.
 
 <File
  path="cypress/plugins/index.js"
@@ -26,9 +26,7 @@ Well look at that — we've added dependencies to your package.json and we also 
 
 ---
 
-Cool cool! So we created a local `cypress` folder with two sub-folders, `support` and `plugins`. We've also automatically included all the nice `gatsby-cypress` utilities, which we can now use in our first test.
-
----
+Our first test! You'll notice it's failing. This is intentional -- we'd like you to run the test and fix it. 
 
 <File
  path="cypress/integration/home-page/home-page.js"
@@ -37,9 +35,7 @@ Cool cool! So we created a local `cypress` folder with two sub-folders, `support
 
 ---
 
-Our first test! You'll notice it's failing. This is intentional -- we'd like you to run the test and fix it. This raises a question -- how do you run a Cypress test? Easy peasy.
-
----
+This raises a question -- how do you run a Cypress test? Easy peasy.
 
 <NPMScript
   name="develop"
