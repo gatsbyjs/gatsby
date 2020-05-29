@@ -89,9 +89,14 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
       variant="SECONDARY"
       size="S"
       sx={{
-        paddingX: 5,
+        paddingX: 6,
         paddingY: 4,
-        color: `white`,
+        color: `whiteFade.80`,
+        border: `sixtywhite`,
+        "&:hover": {
+          color: `white`,
+          border: `white`,
+        },
       }}
       onClick={(evt): void => {
         evt.preventDefault()
@@ -104,22 +109,27 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
 }
 
 const SectionHeading: React.FC<HeadingProps> = props => (
-  <Heading sx={{ color: `white`, fontWeight: `500` }} {...props} />
+  <Heading
+    as="h1"
+    sx={{ color: `white`, fontWeight: `500`, fontSize: 5 }}
+    {...props}
+  />
 )
 
-const PluginCard: React.FC<{ name: string }> = ({ name }) => (
+const PluginCard: React.FC<{ name: string; description?: string }> = ({
+  name,
+  description,
+}) => (
   <Flex
     flexDirection="column"
-    gap={7}
+    gap={6}
     sx={{ backgroundColor: `grey.80`, padding: 5, borderRadius: 2 }}
   >
-    <Text size="L" sx={{ color: `white`, fontWeight: `500` }}>
+    <Heading as="h2" sx={{ color: `white`, fontWeight: `500`, fontSize: 3 }}>
       {name}
-    </Text>
+    </Heading>
     <Text sx={{ color: `grey.40` }}>
-      Start setting up your sites styles with one of our curated recipes to
-      write styling the way you love. Choose from libraries like theme-UI,
-      emotion, and styled-components.
+      {description || <em>No description.</em>}
     </Text>
     <Flex justifyContent="flex-end" sx={{ width: `100%` }}>
       <DestroyButton name={name} />

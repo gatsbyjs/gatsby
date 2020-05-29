@@ -18,6 +18,8 @@ const theme = {
   },
   borders: {
     default: `1px solid ${baseTheme.colors.whiteFade[20]}`,
+    sixtywhite: `1px solid ${baseTheme.colors.whiteFade[40]}`,
+    white: `1px solid ${baseTheme.colors.white}`,
   },
   sizes: {
     // NOTE(@mxstbr): Hacks around issues with strict-ui that I have to fix upstream eventually
@@ -27,6 +29,7 @@ const theme = {
     initial: `initial`,
   },
 }
+console.log(theme.colors)
 
 const GraphQLProvider: React.FC<{}> = ({ children }) => {
   const [status, setStatus] = React.useState(`loading`)
