@@ -7,6 +7,7 @@ const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
 const resolvePkg = require(`resolve-pkg`)
+const { slash } = require(`gatsby-core-utils`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -30,7 +31,10 @@ const listShadowableFilesForTheme = (directory, theme) => {
   })
 
   const toShadowPath = filePath => {
-    const relativeFilePath = filePath.replace(themeSrcPath, ``)
+    const relativeFilePath = filePath
+      // Fix Jest on Windows replacing the CWD with <PROJECT_ROOT>
+      .replace(/<PROJECT_ROOT>/g, slash(process.cwd()))
+      .replace(themeSrcPath, ``)
     return path.join(`src`, theme, relativeFilePath)
   }
 
