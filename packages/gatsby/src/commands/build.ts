@@ -95,18 +95,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  let activity = report.activityTimer(
+  const buildActivityTimer = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
-  activity.start()
+  buildActivityTimer.start()
   let stats
   try {
-    stats = await buildProductionBundle(program, activity.span)
+    stats = await buildProductionBundle(program, buildActivityTimer.span)
   } catch (err) {
-    activity.panic(structureWebpackErrors(Stage.BuildJavascript, err))
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
-    activity.end()
+    buildActivityTimer.end()
   }
 
   const workerPool = WorkerPool.create()
@@ -121,14 +121,17 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       payload: webpackCompilationHash,
     })
 
-    activity = report.activityTimer(`Rewriting compilation hashes`, {
-      parentSpan: buildSpan,
-    })
-    activity.start()
+    const rewriteActivityTimer = report.activityTimer(
+      `Rewriting compilation hashes`,
+      {
+        parentSpan: buildSpan,
+      }
+    )
+    rewriteActivityTimer.start()
 
     await appDataUtil.write(publicDir, webpackCompilationHash)
 
-    activity.end()
+    rewriteActivityTimer.end()
   }
 
   await processPageQueries()
@@ -184,7 +187,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  activity = report.createProgress(
+  const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
     0,
@@ -192,13 +195,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       parentSpan: buildSpan,
     }
   )
-  activity.start()
+  buildHTMLActivityProgress.start()
   try {
     await buildHTML({
       program,
       stage: Stage.BuildHTML,
       pagePaths,
-      activity,
+      activity: buildHTMLActivityProgress,
       workerPool,
     })
   } catch (err) {
@@ -216,34 +219,38 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       context.ref = match[1]
     }
 
-    activity.panic({
+    buildHTMLActivityProgress.panic({
       id,
       context,
       error: err,
     })
   }
-  activity.done()
+  buildHTMLActivityProgress.end()
 
   let deletedPageKeys: string[] = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    activity = report.activityTimer(`Delete previous page data`)
-    activity.start()
+    const deletePageDataActivityTimer = report.activityTimer(
+      `Delete previous page data`
+    )
+    deletePageDataActivityTimer.start()
     deletedPageKeys = buildUtils.collectRemovedPageData(
       store.getState(),
       cachedPageData
     )
     await buildUtils.removePageFiles(publicDir, deletedPageKeys)
 
-    activity.end()
+    deletePageDataActivityTimer.end()
   }
 
-  activity = report.activityTimer(`onPostBuild`, { parentSpan: buildSpan })
-  activity.start()
+  const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
+    parentSpan: buildSpan,
+  })
+  postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: bootstrapGraphQLRunner,
     parentSpan: buildSpan,
   })
-  activity.end()
+  postBuildActivityTimer.end()
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()

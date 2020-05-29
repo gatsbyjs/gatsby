@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.12...gatsby-plugin-mdx@1.2.13) (2020-05-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Pass getNodesByType ([#24516](https://github.com/gatsbyjs/gatsby/issues/24516)) ([c62d2fd](https://github.com/gatsbyjs/gatsby/commit/c62d2fd)), closes [#24400](https://github.com/gatsbyjs/gatsby/issues/24400)
+
+## [1.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.11...gatsby-plugin-mdx@1.2.12) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ## [1.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.10...gatsby-plugin-mdx@1.2.11) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
