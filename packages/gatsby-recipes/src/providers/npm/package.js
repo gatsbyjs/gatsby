@@ -119,10 +119,8 @@ const create = async ({ root }, resource) => {
 const read = async ({ root }, id) => {
   let packageJSON
   try {
-    // TODO is there a better way to grab this? Can the position of `node_modules`
-    // change?
     packageJSON = JSON.parse(
-      await fs.readFile(path.join(root, `node_modules`, id, `package.json`))
+      await fs.readFile(require.resolve(path.join(id, `package.json`)))
     )
   } catch (e) {
     return undefined
