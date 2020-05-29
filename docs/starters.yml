@@ -6618,3 +6618,14 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
+- url: http://gatsby-tailwind-starter.kosvrouvas.com/
+  repo: https://github.com/kosvrouvas/gatsby-tailwindcss-starter
+  description: The default Gatsby starter bundled with the latest TailwindCSS for DRY situations
+  tags:
+    - MDX
+    - Styling:TailwindCSS
+    - Offline
+  features:
+    - Based on Gatsby Starter Theme
+    - Google Analytics
+    - Sentry
