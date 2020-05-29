@@ -1,9 +1,8 @@
-const fs = require(`fs-extra`)
 const isOfficialPackage = require(`../is-official-package`)
-const yaml = require(`js-yaml`)
 const { getTemplate } = require(`../get-template`)
-const { plugins: featuredPlugins } = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+const { loadYaml } = require(`../load-yaml`)
+const { plugins: featuredPlugins } = loadYaml(
+  `src/data/ecosystem/featured-items.yaml`
 )
 
 exports.createPages = async ({ graphql, actions }) => {

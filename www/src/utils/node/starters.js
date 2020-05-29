@@ -1,12 +1,11 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const fs = require(`fs-extra`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
-const yaml = require(`js-yaml`)
-const ecosystemFeaturedItems = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+const { loadYaml } = require(`../load-yaml`)
+const { starters: featuredStarters } = loadYaml(
+  `src/data/ecosystem/featured-items.yaml`
 )
 const { getTemplate } = require(`../get-template`)
 
@@ -127,7 +126,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const { owner, name: repoStub } = parseGHUrl(node.repo)
 
     // mark if it's a featured starter
-    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
+    if (featuredStarters.includes(`/${owner}/${repoStub}/`)) {
       createNodeField({ node, name: `featured`, value: true })
     }
 
