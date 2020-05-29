@@ -65,9 +65,12 @@ const ResourceComponent = ({
   )
 }
 
-const validateResource = (resourceName, _context, props) => {
+const validateResource = (resourceName, context, props) => {
   const userProps = getUserProps(props)
   const { error } = resources[resourceName].validate(userProps)
+  if (error) {
+    error.resourceUuid = context._uuid
+  }
   return error
 }
 

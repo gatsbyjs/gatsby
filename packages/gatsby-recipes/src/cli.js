@@ -356,11 +356,24 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
         }
       `)
       // eslint-disable-next-line
-      const [__, sendEvent] = useMutation(`
-        mutation($event: String!) {
-          sendEvent(event: $event)
+      const [__, _sendEvent] = useMutation(`
+        mutation($event: String!, $input: String) {
+          sendEvent(event: $event, input: $input)
         }
       `)
+
+      const sendEvent = ({ event, input }) => {
+        log(`sending event`, { event, input })
+        if (input) {
+          log(`sending event`, input)
+          _sendEvent({
+            event,
+            input: JSON.stringify(input),
+          })
+        } else {
+          _sendEvent({ event })
+        }
+      }
 
       subscriptionClient.connectionCallback = async () => {
         if (!showRecipesList) {
@@ -421,6 +434,11 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
           </Text>
         )
       }
+
+      if (state.value === `waitingForInput`) {
+        return <Text>Input some stuff!</Text>
+      }
+
       /*
        * TODOs
        * Listen to "y" to continue (in addition to enter)

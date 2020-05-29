@@ -124,8 +124,7 @@ const recipeMachine = Machine(
                 const data = event.data[0] || {}
 
                 return {
-                  type: `string`,
-                  uuid: `123abc`,
+                  resourceUuid: data.resourceUuid,
                   props: data._object,
                   details: data.details,
                 }
@@ -136,7 +135,7 @@ const recipeMachine = Machine(
       },
       waitingForInput: {
         on: {
-          INPUT_CALLED: `creatingPlan`,
+          INPUT_CALLED: `validateSteps`,
         },
       },
       presentPlan: {

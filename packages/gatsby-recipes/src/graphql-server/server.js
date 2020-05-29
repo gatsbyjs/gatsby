@@ -23,6 +23,7 @@ const pubsub = new PubSub()
 const PORT = process.argv[2] || 4000
 
 const emitOperation = state => {
+  console.log(`!!! emitting operation`)
   console.log(state)
   pubsub.publish(`operation`, {
     state: JSON.stringify(state),
@@ -107,10 +108,14 @@ const rootMutationType = new GraphQLObjectType({
         type: GraphQLString,
         args: {
           event: { type: GraphQLString },
+          input: { type: GraphQLString },
         },
         resolve: (_, args) => {
-          console.log(`event received`, args)
-          service.send(args.event)
+          console.log(`!!! event received`, args)
+          service.send({
+            type: args.event,
+            data: args.input && JSON.parse(args.input),
+          })
         },
       },
     }

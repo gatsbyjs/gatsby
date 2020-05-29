@@ -3,7 +3,7 @@ const { interpret } = require(`xstate`)
 const recipeMachine = require(`.`)
 
 describe(`recipe-machine`, () => {
-  it(`requests input when a resource is missing data`, done => {
+  it(`enters waitingForInput state when a resource is missing data`, done => {
     const initialContext = {
       src: `
 # File!
@@ -31,14 +31,15 @@ describe(`recipe-machine`, () => {
           )
         }
 
+        if (state.value === `waitingForInput`) {
+          expect(state.context.input.resourceUuid).toBeTruthy()
+          expect(state.context.input.props).toEqual({ path: `` })
+          service.stop()
+          return done()
+        }
+
         if (state.value === `presentPlan`) {
-          if (state.context.currentStep === 0) {
-            service.send(`CONTINUE`)
-          } else {
-            expect(state.context.plan).toBeTruthy()
-            service.stop()
-            done()
-          }
+          service.send(`CONTINUE`)
         }
       })
 
