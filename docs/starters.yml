@@ -6620,7 +6620,7 @@
     - Code highlighting via Prism.
 - url: https://headless.us
   repo: https://github.com/ecomloop/headless
-  description: headless: the shopify + gatsby starter theme for digital commerce
+  description: the shopify + gatsby starter theme for digital commerce
   tags:
     - E-commerce
     - Shopify
