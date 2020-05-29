@@ -5217,11 +5217,11 @@
     - Minimal responsive design
     - Styled components
     - SEO Friendly Meta
-- url: https://gatsby-starter-catalyst-writer.netlify.com/
-  repo: https://github.com/ehowey/gatsby-starter-catalyst-writer
+- url: https://gatsby-starter-catalyst-hydrogen.netlify.app/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst-hydrogen
   description: A full featured starter for a freelance writer or journalist to display a portfolio of their work. SANITY.io is used as the CMS. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI.
   tags:
-    - Styling:CSS-in-JS
+    - Styling:Theme-UI
     - CMS:sanity.io
     - SEO
     - PWA
@@ -5231,8 +5231,8 @@
     - MDX
     - Theme-UI integration for easy to change design tokens
     - SEO optimized to include social media images and Twitter handles
-    - Tight integration with SANITY.io including a predefined content studio.
-    - A full tutorial is available in the docs.
+    - Tight integration with SANITY.io including a predefined content studio
+    - A full tutorial is available in the docs
 - url: https://rocketdocs.netlify.com/
   repo: https://github.com/Rocketseat/gatsby-starter-rocket-docs
   description: Out of the box Gatsby Starter for creating documentation websites easily and quickly.
@@ -5261,7 +5261,7 @@
   features:
     - All features same as gatsby-starter-default
     - Only support TypeScript using gatsby-typescript-plugin
-- url: https://gatsby-starter-catalyst.netlify.com/
+- url: https://gatsby-starter-catalyst.netlify.app/
   repo: https://github.com/ehowey/gatsby-starter-catalyst
   description: A boilerplate starter to accelerate your Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, and a footer theme.
   tags:
@@ -6547,3 +6547,21 @@
     - Azure
   features:
     - CI/CD using github actions
+- url: https://gatsby-starter-catalyst-helium.netlify.app/
+  repo: https://github.com/ehowey/gatsby-starter-catalyst-helium
+  description: A personal blog starter including large featured images, support for reading time, social media links and sub titles. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, a footer theme, and a blog theme.
+  tags:
+    - MDX
+    - Styling:Theme-UI
+    - SEO
+    - PWA
+    - Blog
+  features:
+    - Based on Gatsby Theme Catalyst series of themes and starters.
+    - Theme options are used to enable some simple layout changes.
+    - Designed with component shadowing in mind to allow for easier customization.
+    - Theme-UI is deeply integrated with design tokens and variants throughout.
+    - Color mode switching available by default.
+    - SEO optimized to include social media images and Twitter handles.
+    - Code highlighting via Prism.
+    - Full set of documentation is available.
