@@ -5,7 +5,7 @@
 import util from "util"
 import { reporter as gatsbyReporter } from "./reporter"
 
-export const patchConsole = (reporter: typeof gatsbyReporter): void => {
+export function patchConsole(reporter: typeof gatsbyReporter): void {
   console.log = (...args: any[]): void => {
     const [format, ...rest] = args
     reporter.log(util.format(format === undefined ? `` : format, ...rest))
