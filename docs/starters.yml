@@ -5272,7 +5272,7 @@
   features:
     - Based on Gatsby Theme Catalyst series of themes and starters.
     - Theme options are used to enable some simple layout changes.
-    - Latent component shadowing allows for easy shadowing and swapping of layout components such as the header and footer.
+    - Designed with component shadowing in mind to allow for easier customization.
     - Theme-UI is deeply integrated with design tokens and variants throughout.
     - Uses a Tailwind preset to enable you to focus on design elements.
     - Color mode switching available by default.
@@ -6578,7 +6578,7 @@
     - CI/CD using github actions
 - url: https://gatsby-starter-catalyst-helium.netlify.app/
   repo: https://github.com/ehowey/gatsby-starter-catalyst-helium
-  description: A personal blog starter including large featured images, support for reading time, social media links and sub titles. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, a footer theme, and a blog theme.
+  description: A personal blog starter including large featured images, support for reading time, social media links and SEO optimization. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, a footer theme, and a blog theme.
   tags:
     - MDX
     - Styling:Theme-UI
