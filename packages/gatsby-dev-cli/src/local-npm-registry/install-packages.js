@@ -61,12 +61,19 @@ const installPackages = async ({
       if (sanitizedStdOut?.length >= 2) {
         // pick content of first (and only) capturing group
         const jsonString = sanitizedStdOut[1]
-        workspacesLayout = JSON.parse(jsonString)
+        try {
+          workspacesLayout = JSON.parse(jsonString)
+        } catch (e) {
+          console.error(
+            `Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`
+          )
+          // not exitting here, because we have general check for `workspacesLayout` being set below
+        }
       }
     }
 
     if (!workspacesLayout) {
-      console.log(
+      console.error(
         `Couldn't parse output of "yarn workspaces info" command`,
         stdout
       )
