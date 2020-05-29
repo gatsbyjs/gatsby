@@ -95,6 +95,12 @@ const getNameForPlugin = node => {
   return null
 }
 
+const getDescriptionForPlugin = async name => {
+  const pkg = await readPackageJSON({}, name)
+
+  return pkg ? pkg.description : null
+}
+
 const addPluginToConfig = (src, { name, options, key }) => {
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: name,
@@ -183,7 +189,20 @@ const read = async ({ root }, id) => {
     )
 
     if (plugin) {
-      return { id, ...plugin, _message: `Installed ${id} in gatsby-config.js` }
+      const description = await getDescriptionForPlugin(id)
+      const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
+        root,
+        plugin.name
+      )
+
+      return {
+        id,
+        description: description || null,
+        ...plugin,
+        shadowedFiles,
+        shadowableFiles,
+        _message: `Installed ${id} in gatsby-config.js`,
+      }
     } else {
       return undefined
     }
@@ -324,24 +343,12 @@ module.exports.all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  // TODO: Consider mapping to read function
-  return plugins.map(plugin => {
-    const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
-      root,
-      plugin.name
-    )
-
-    return {
-      id: plugin.name,
-      ...plugin,
-      shadowedFiles,
-      shadowableFiles,
-    }
-  })
+  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
 }
 
 const schema = {
   name: Joi.string(),
+  description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
