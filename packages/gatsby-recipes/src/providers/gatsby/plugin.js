@@ -27,6 +27,7 @@ const listShadowableFilesForTheme = (directory, theme) => {
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
+  console.log(shadowableThemeFiles)
 
   const toShadowPath = filePath => {
     const relativeFilePath = filePath.replace(themeSrcPath, ``)
