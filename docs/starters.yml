@@ -6631,6 +6631,6 @@
   features:
     - TypeScript is used for a better developer experience.
     - ESLint and the AirBnB TypeScript style guide help you avoid, and fix, simple issues in your code.
-    - The default Gatsby formating tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
+    - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
