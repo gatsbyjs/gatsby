@@ -28,7 +28,6 @@ node_modules
 .gatsby-context.js
 .sass-cache/
 /public
-/yarn.lock
 src/cache
 /package-lock.json
 
