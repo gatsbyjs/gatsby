@@ -6,8 +6,6 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
-const resolvePkg = require(`resolve-pkg`)
-const { slash } = require(`gatsby-core-utils`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -23,18 +21,14 @@ const { read: readPackageJSON } = require(`../npm/package`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const themePath = resolvePkg(theme)
-  if (!themePath) throw new Error(`Please install the "${theme}" npm package.`)
+  const themePath = path.join(directory, `node_modules`, theme, `src`)
   const themeSrcPath = path.join(themePath, `src`)
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
 
   const toShadowPath = filePath => {
-    const relativeFilePath = filePath
-      // Fix Jest on Windows replacing the CWD with <PROJECT_ROOT>
-      .replace(/<PROJECT_ROOT>/g, slash(process.cwd()))
-      .replace(themeSrcPath, ``)
+    const relativeFilePath = filePath.replace(themeSrcPath, ``)
     return path.join(`src`, theme, relativeFilePath)
   }
 
