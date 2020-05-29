@@ -18,16 +18,19 @@ describe(`recipe-machine`, () => {
       const service = interpret(
         recipeMachine.withContext(initialContext)
       ).onTransition(state => {
-        console.log(
-          JSON.stringify(
-            {
-              value: state.value,
-              context: state.context,
-            },
-            null,
-            2
+        if (process.env.DEBUG) {
+          console.log(
+            JSON.stringify(
+              {
+                value: state.value,
+                context: state.context,
+              },
+              null,
+              2
+            )
           )
-        )
+        }
+
         if (state.value === `presentPlan`) {
           if (state.context.currentStep === 0) {
             service.send(`CONTINUE`)

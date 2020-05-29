@@ -37,7 +37,7 @@ const Wrapper = ({ children }) => (
 
 const ResourceComponent = ({
   _resourceName: Resource,
-  __uuid,
+  _uuid,
   children,
   ...props
 }) => {
@@ -45,7 +45,11 @@ const ResourceComponent = ({
   //const inputProps = useResourceInput(__uuid)
   const userProps = getUserProps(props)
   //const allProps = { ...props, ...inputProps }
-  const resourceData = readResource(Resource, { root: process.cwd() }, props)
+  const resourceData = readResource(
+    Resource,
+    { root: process.cwd(), _uuid },
+    props
+  )
 
   return (
     <ResourceProvider data={{ [Resource]: resourceData }}>
