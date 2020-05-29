@@ -98,6 +98,7 @@ Implement git hooks for prettier.
     }
   }}
 />
+
 <NPMPackageJson
   name=\\"lint-staged\\"
   value={{
@@ -116,17 +117,18 @@ Write prettier config files.
 <File
   path=\\".prettierrc\\"
   content={\`{
-  \\"semi\\": false,
-  \\"singleQuote\\": true,
-  \\"trailingComma\\": \\"none\\"
-}\`}
+    \\"semi\\": false,
+    \\"singleQuote\\": true,
+    \\"trailingComma\\": \\"none\\"
+  }\`}
 />
+
 <File
   path=\\".prettierignore\\"
   content={\`.cache
-public
-node_modules
-\`}
+  public
+  node_modules
+  \`}
 />
 
 </RecipeStep>

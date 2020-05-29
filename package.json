@@ -90,6 +90,9 @@
     "yarn": "^1.17.3",
     "node": ">=10.13.0"
   },
+  "resolutions": {
+    "property-information": "5.5.0"
+  },
   "eslintIgnore": [
     "interfaces",
     "**/__tests__/fixtures/"
