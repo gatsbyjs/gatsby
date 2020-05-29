@@ -169,6 +169,8 @@ const recipeMachine = Machine(
               cb(`TICK`)
             }, 10000)
 
+            // TODO pass in cb & applyPlan can update on each resource
+            // update so UI can get streaming updates.
             applyPlan(context.plan)
               .then(result => {
                 debug(`applied plan`)
@@ -246,24 +248,34 @@ const recipeMachine = Machine(
       addResourcesToContext: assign((context, event) => {
         if (event.data) {
           const stepResources = context.stepResources || []
-          const messages = event.data.map(e => {
-            return {
-              _message: e._message,
-              _currentStep: context.currentStep,
-            }
+          let plan = context.plan || []
+          console.log(`------------------`, event.data)
+          plan = plan.map(p => {
+            let changedResource = event.data.find(c => c._uuid === p._uuid)
+            if (!changedResource) return p
+            p._message = changedResource._message
+            p.isDone = true
+            return p
           })
+          console.log({ plan })
+          // const messages = event.data.map(e => {
+          // return {
+          // _message: e._message,
+          // _currentStep: context.currentStep,
+          // }
+          // })
           return {
-            stepResources: stepResources.concat(messages),
+            plan,
           }
         }
         return undefined
       }),
     },
     guards: {
-      hasNextStep: (context, event) =>
-        context.currentStep < context.steps.length,
-      atLastStep: (context, event) =>
-        context.currentStep === context.steps.length,
+      hasNextStep: (context, event) => false,
+      // false || context.currentStep < context.steps.length,
+      atLastStep: (context, event) => true,
+      // true || context.currentStep === context.steps.length,
     },
   }
 )

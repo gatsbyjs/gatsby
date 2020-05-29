@@ -16,12 +16,14 @@ const applyPlan = async stepPlan => {
     const resource = resources[resourcePlan.resourceName]
 
     try {
-      const changedResources = await resource.create(
+      const changedResource = await resource.create(
         ctx,
         resourcePlan.resourceDefinitions
       )
 
-      appliedResources = appliedResources.concat(changedResources)
+      changedResource._uuid = resourcePlan._uuid
+
+      appliedResources = appliedResources.concat(changedResource)
 
       return
     } catch (e) {

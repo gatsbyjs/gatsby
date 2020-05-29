@@ -1,16 +1,21 @@
 /** @jsx jsx */
+import * as GatsbyComponents from "gatsby-interface"
 import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
 const MDX = require(`@mdx-js/runtime`).default
 const ansi2HTML = require(`ansi-html`)
+import { MdRefresh, MdBrightness1 } from "react-icons/md"
+import { keyframes } from "@emotion/core"
 const {
   Button,
   ThemeProvider,
   getTheme,
   BaseAnchor,
   Heading,
+  InProgressIcon,
+  SuccessIcon,
 } = require(`gatsby-interface`)
 const {
   createClient,
@@ -21,29 +26,32 @@ const {
   subscriptionExchange,
 } = require(`urql`)
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
-const semver = require(`semver`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
-const SelectInput = `select`
+console.log({ GatsbyComponents })
+
+const theme = getTheme()
+
+ansi2HTML.setColors({
+  red: theme.tones.DANGER.medium.slice(1),
+  green: theme.tones.SUCCESS.medium.slice(1),
+})
 
 const makeResourceId = res => {
   const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
   return id
 }
 
-const PROJECT_ROOT = `/Users/kylemathews/projects/gatsby/starters/blog`
+const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test`
 
-const Boxen = `div`
-const Static = `div`
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
-
-const theme = getTheme()
 
 const WelcomeMessage = () => (
   <div
     sx={{
+      marginTop: 8,
       marginBottom: 8,
       background: theme => theme.tones.BRAND.superLight,
       border: theme => `1px solid ${theme.tones.BRAND.light}`,
@@ -51,7 +59,7 @@ const WelcomeMessage = () => (
     }}
   >
     <Styled.p>
-      Thank you for trying the experimental version of Gatsby Recipes!
+      Thank you for trying the experimental version of Gatsby Recipes! 🤗
     </Styled.p>
     <Styled.p sx={{ margin: 0 }}>
       Please ask questions, share your recipes, report bugs, and subscribe for
@@ -141,17 +149,15 @@ const RecipesList = ({ setRecipe }) => {
   ]
 
   return (
-    <SelectInput onChange={e => setRecipe(e.target.value)}>
+    <select onChange={e => setRecipe(e.target.value)}>
       {items.map(item => (
         <option key={item.value} value={item.value}>
           {item.label}
         </option>
       ))}
-    </SelectInput>
+    </select>
   )
 }
-
-const Div = props => <div {...props} />
 
 const components = {
   inlineCode: props => <code {...props} />,
@@ -160,10 +166,11 @@ const components = {
   NPMPackageJson: () => null,
   NPMPackage: () => null,
   File: () => null,
+  Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
-  RecipeIntroduction: props => <div {...props} />,
-  RecipeStep: props => <div {...props} />,
+  RecipeIntroduction: props => <div>{props.children}</div>,
+  RecipeStep: props => <div>{props.children}</div>,
   h2: props => <Styled.h2 {...props} />,
 }
 
@@ -177,7 +184,7 @@ log(
 )
 
 const RecipeGui = ({
-  recipe, // = `jest.mdx`,
+  recipe = `./test.mdx`,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
 }) => {
@@ -300,11 +307,9 @@ const RecipeGui = ({
         console.error(state)
       }
 
-      if (true) {
-        log(`state`, state)
-        log(`plan`, state.context.plan)
-        log(`stepResources`, state.context.stepResources)
-      }
+      log(`state`, state)
+      log(`plan`, state.context.plan)
+      log(`stepResources`, state.context.stepResources)
 
       const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
         <div id={makeResourceId(resourcePlan)} sx={{}}>
@@ -338,9 +343,12 @@ const RecipeGui = ({
           date: new Date(),
         })
 
-        const stepResources = state.context?.plan?.filter(
-          p => p._stepMetadata.step === i + 1
-        )
+        console.log(state.context.plan, i)
+        const stepResources = state.context?.plan?.filter(p => {
+          return parseInt(p._stepMetadata.step, 10) === i + 1
+        })
+
+        console.log({ stepResources })
 
         const [complete, setComplete] = useState(false)
         if (output.title !== `` && output.body !== ``) {
@@ -357,7 +365,7 @@ const RecipeGui = ({
           <div
             key={`step-${i}`}
             sx={{
-              border: theme => `1px solid ${theme.tones.BRAND.medium}`,
+              border: theme => `1px solid ${theme.tones.BRAND.light}`,
               marginBottom: 7,
             }}
           >
@@ -419,16 +427,16 @@ const RecipeGui = ({
         // }
         // if (!isPlan || !isPresetPlanState) {
         // return (
-        // <Div margin-top={1}>
+        // <div margin-top={1}>
         // <button onClick={() => sendEvent({ event: `CONTINUE` })}>
         // Go!
         // </button>
-        // </Div>
+        // </div>
         // )
         // }
         //
         // {plan.map((p, i) => (
-        // <Div margin-top={1} key={`${p.resourceName} plan ${i}`}>
+        // <div margin-top={1} key={`${p.resourceName} plan ${i}`}>
         // <Styled.p>{p.resourceName}:</Styled.p>
         // <Styled.p> * {p.describe}</Styled.p>
         // {p.diff && p.diff !== `` && (
@@ -448,13 +456,13 @@ const RecipeGui = ({
         // <Styled.p>---</Styled.p>
         // </>
         // )}
-        // </Div>
+        // </div>
         // ))}
-        // <Div margin-top={1}>
+        // <div margin-top={1}>
         // <button onClick={() => sendEvent({ event: "CONTINUE" })}>
         // Go!
         // </button>
-        // </Div>
+        // </div>
       }
 
       const RunningStep = ({ state }) => {
@@ -466,9 +474,9 @@ const RecipeGui = ({
         }
 
         return (
-          <Div>
+          <div>
             {state.context.plan.map((p, i) => (
-              <Div key={`${p.resourceName}-${i}`}>
+              <div key={`${p.resourceName}-${i}`}>
                 <Styled.p>{p.resourceName}:</Styled.p>
                 <Styled.p>
                   {` `}
@@ -480,9 +488,9 @@ const RecipeGui = ({
                     </Styled.p>
                   )}
                 </Styled.p>
-              </Div>
+              </div>
             ))}
-          </Div>
+          </div>
         )
       }
 
@@ -536,9 +544,71 @@ const RecipeGui = ({
         p => p.resourceName
       )
 
+      const ResourceMessage = ({ resource }) => {
+        let icon = <MdBrightness1 sx={{ height: `10px`, width: `15px` }} />
+        let message = resource.describe
+
+        if (state.value === `applyingPlan` && resource.isDone) {
+          icon = <SuccessIcon />
+        } else if (state.value === `applyingPlan`) {
+          const keyframe = keyframes`
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+          icon = (
+            <MdRefresh
+              sx={{
+                animation: `${keyframe} 1s linear infinite`,
+                height: `15px`,
+                width: `15px`,
+                top: `3px`,
+                position: `relative`,
+              }}
+            />
+          )
+          message = resource.describe
+        } else if (state.value === `done`) {
+          icon = <SuccessIcon height="15px" width="15px" />
+          message = resource._message
+        }
+
+        return (
+          <div>
+            {icon} {` `}
+            <BaseAnchor
+              href={`#${makeResourceId(resource)}`}
+              onClick={e => {
+                e.preventDefault()
+                const target = document.getElementById(
+                  e.currentTarget.hash.slice(1)
+                )
+                target.scrollIntoView({
+                  behavior: `smooth`, // smooth scroll
+                  block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
+                })
+              }}
+            >
+              {message}
+            </BaseAnchor>
+          </div>
+        )
+      }
+
+      const ButtonText = () => {
+        if (state.value === `done`) {
+          return `Refresh State`
+        }
+
+        return `Install Recipe`
+      }
+
       return (
         <Wrapper>
-          {state.context.currentStep === 0 && <WelcomeMessage />}
+          <WelcomeMessage />
           <div
             sx={{
               mb: 8,
@@ -550,39 +620,41 @@ const RecipeGui = ({
             <div sx={{ "*:last-child": { mb: 0 } }}>
               <MDX components={components}>{state.context.steps[0]}</MDX>
             </div>
-            <Button sx={{ width: `140px`, ml: 6 }}>Install Recipe</Button>
+            <Button
+              onClick={() => sendEvent({ event: `CONTINUE` })}
+              loading={state.value === `applyingPlan` ? true : false}
+              loadingLabel={`Installing`}
+              sx={{ width: `140px`, ml: 6 }}
+            >
+              <ButtonText />
+            </Button>
           </div>
           <div sx={{ marginBottom: 8 }}>
             <Heading sx={{ marginBottom: 6 }}>
-              Proposed changes{` `}
-              {state.context.plan && `(${state.context.plan?.length})`}
+              Changes
+              {` `}
+              {state.context.plan &&
+                `(${state.context.plan.filter(p => p.isDone).length}/${
+                  state.context.plan?.length
+                })`}
             </Heading>
             {Object.entries(groupedPlans).map(([resourceName, plans]) => (
-              <div>
+              <div key={`key-${resourceName}`}>
                 <Heading
                   as="h4"
                   sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
                 >
                   {resourceName}
                 </Heading>
-                <Styled.ul sx={{ marginTop: 0, mb: 5 }}>
+                <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
                   {plans.map((p, i) => (
-                    <Styled.li key={`${resourceName}-plan-${i}`}>
-                      <BaseAnchor
-                        href={`#${makeResourceId(p)}`}
-                        onClick={e => {
-                          e.preventDefault()
-                          const target = document.getElementById(
-                            e.currentTarget.hash.slice(1)
-                          )
-                          target.scrollIntoView({
-                            behavior: `smooth`, // smooth scroll
-                            block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
-                          })
-                        }}
-                      >
-                        <Styled.p sx={{ margin: 0 }}>{p.describe}</Styled.p>
-                      </BaseAnchor>
+                    <Styled.li
+                      sx={{
+                        listStyleType: `none`,
+                      }}
+                      key={`${resourceName}-plan-${i}`}
+                    >
+                      <ResourceMessage resource={p} />
                     </Styled.li>
                   ))}
                 </Styled.ul>
@@ -594,7 +666,7 @@ const RecipeGui = ({
             Steps ({state.context.steps.length - 1})
           </Heading>
           {state.context.steps.slice(1).map((step, i) => (
-            <Step state={state} step={step} i={i} />
+            <Step state={state} step={step} key={`step-${i}`} i={i} />
           ))}
         </Wrapper>
       )

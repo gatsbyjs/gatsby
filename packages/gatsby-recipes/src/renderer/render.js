@@ -58,6 +58,7 @@ const ResourceComponent = ({
           ...resourceData,
           _props: userProps,
           _stepMetadata: step,
+          _uuid,
         })}
         {children}
       </Resource>

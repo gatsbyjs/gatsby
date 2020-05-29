@@ -18,6 +18,7 @@ const directoryExists = fullPath => {
 const create = async ({ root }, { id, path: directoryPath }) => {
   const fullPath = makePath(root, directoryPath)
   await fs.ensureDir(fullPath)
+  await new Promise(resolve => setTimeout(resolve, 2000))
   return await read({ root }, directoryPath)
 }
 
