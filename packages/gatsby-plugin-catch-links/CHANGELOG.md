@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.3.2...gatsby-plugin-catch-links@2.3.3) (2020-05-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-catch-links:** fix href attribute ([#24436](https://github.com/gatsbyjs/gatsby/issues/24436)) ([8f73861](https://github.com/gatsbyjs/gatsby/commit/8f73861))
+
 ## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.3.1...gatsby-plugin-catch-links@2.3.2) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-plugin-catch-links

@@ -13,7 +13,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 const fs = require(`fs`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-const resolveModuleExports = require(`../resolve-module-exports`)
+const { resolveModuleExports } = require(`../resolve-module-exports`)
 let resolver
 
 describe(`Resolve module exports`, () => {
