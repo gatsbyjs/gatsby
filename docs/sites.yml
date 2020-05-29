@@ -10763,7 +10763,7 @@
   featured: false
 - title: Que Jamear
   description: >-
-    A directory with a map of food delivery services 
+    A directory with a map of food delivery services
     to be used during the health emergency caused by covid 19.
   main_url: https://quejamear.com/encebollados
   url: https://quejamear.com/encebollados
@@ -10903,4 +10903,17 @@
     - WordPress
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
+  featured: false
+- title: SANDALBOYZ
+  main_url: https://sandalboyz.com
+  url: https://sandalboyz.com
+  description: >
+    The official website of SANDALBOYZ – home to coziness and comfort. Built in conjunction with https://planetary.co/.
+  categories:
+    - Retail
+    - E-commerce
+    - Blog
+    - Shopify
+  built_by: SANDALBOYZ
+  built_by_url: https://sandalboyz.com
   featured: false
