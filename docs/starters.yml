@@ -6618,7 +6618,7 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
-- url: https://gatsby-starter-simple.web.app
+- url: https://simple.rickkln.com
   repo: https://github.com/rickkln/gatsby-starter-simple
   description: Simple Gatsby starter for a small static site. Replaces Prettier with ESLint (AirBnB style), and adds TypeScript and Firebase hosting.
   tags:
