@@ -35,9 +35,18 @@ const Wrapper = ({ children }) => (
   </ErrorBoundary>
 )
 
-const ResourceComponent = ({ _resourceName: Resource, children, ...props }) => {
+const ResourceComponent = ({
+  _resourceName: Resource,
+  children,
+  _uuid,
+  ...props
+}) => {
   const userProps = getUserProps(props)
-  const resourceData = readResource(Resource, { root: process.cwd() }, props)
+  const resourceData = readResource(
+    Resource,
+    { root: process.cwd(), _uuid },
+    props
+  )
 
   return (
     <ResourceProvider data={{ [Resource]: resourceData }}>

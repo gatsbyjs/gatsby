@@ -114,10 +114,7 @@ const recipeMachine = Machine(
           INVALID_PROPS: {
             target: `doneError`,
             actions: assign({
-              error: (context, event) => {
-                console.log(event)
-                return event.data
-              },
+              error: (context, event) => event.data,
             }),
           },
           INPUT: {
