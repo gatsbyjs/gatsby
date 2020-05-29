@@ -131,6 +131,7 @@ const read = async ({ root }, id) => {
   return {
     id: packageJSON.name,
     name: packageJSON.name,
+    description: packageJSON.description,
     version: packageJSON.version,
     _message: `Installed NPM package ${packageJSON.name}@${packageJSON.version}`,
   }
@@ -143,6 +144,7 @@ const schema = {
     `dependency`,
     `defaults to regular dependency`
   ),
+  description: Joi.string(),
   ...resourceSchema,
 }
 
