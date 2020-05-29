@@ -33,7 +33,7 @@ describe(`Create content digest`, () => {
 
     expect(typeof contentDigest).toEqual(`string`)
     expect(contentDigest).toMatchInlineSnapshot(
-      `"99d81e0b08af04b87f7e4ab0e6d13f12"`
+      `"81dc9bdb52d04dc20036dbd8313ed055"`
     )
     expect(contentDigest2).toMatchInlineSnapshot(
       `"674f3c2c1a8a6f90461e8a66fb5550ba"`
