@@ -101,7 +101,7 @@ Thank you **Brian Han** for noticing and using [our built-in a11y linting](https
 
 Thank you **Akuoko Daniel Jnr** for helpful your article, ["Increasing Website Performance With Gatsby Plugins"](https://bejamas.io/blog/gatsby-plugins/). The recommendations in your article would make a great Gatsby Recipe! 😉
 
-And special thanks to our long time community member, **Horacio Horacio** for making a site to [teach Gatsby to Web Developers in Spanish](https://aprendegatsby.com/). We appreciate you!
+And special thanks to our long time community member, **Horacio Herrera** for making a site to [teach Gatsby to Web Developers in Spanish](https://aprendegatsby.com/). We appreciate you!
 
 ## New in the Gatsby Ecosystem 
 
