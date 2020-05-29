@@ -45,7 +45,7 @@ const ResourceComponent = ({
   ...props
 }) => {
   const step = useRecipeStep()
-  const inputProps = useInputByUuid(_uuid)
+  const { data: inputProps } = useInputByUuid(_uuid)
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 

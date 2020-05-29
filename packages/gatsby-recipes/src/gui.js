@@ -29,8 +29,6 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
-console.log({ GatsbyComponents })
-
 const theme = getTheme()
 
 ansi2HTML.setColors({
@@ -44,7 +42,9 @@ const makeResourceId = res => {
   return id
 }
 
-const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test`
+const PROJECT_ROOT =
+  `/Users/kylemathews/programs/recipes-test` ||
+  `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
@@ -160,13 +160,36 @@ const RecipesList = ({ setRecipe }) => {
   )
 }
 
+const File = ({ _uuid, ...props }) => {
+  const [inputState, setInputState] = useState({})
+
+  const setProp = key => e => {
+    setInputState({
+      ...inputState,
+      [key]: e.target.value,
+    })
+  }
+
+  return (
+    <>
+      {Object.entries(props).map(([key, value]) => (
+        <label key={key}>
+          {key} <br />
+          <input value={inputState[key] || value} onChange={setProp(key)} />
+          <br />
+        </label>
+      ))}
+    </>
+  )
+}
+
 const components = {
   inlineCode: props => <code {...props} />,
   Config: () => null,
   GatsbyPlugin: () => null,
   NPMPackageJson: () => null,
   NPMPackage: () => null,
-  File: () => null,
+  File,
   Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,

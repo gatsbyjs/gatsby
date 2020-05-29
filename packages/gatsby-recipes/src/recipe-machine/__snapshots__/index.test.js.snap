@@ -6,3 +6,5 @@ Object {
   "path": "./hi.md",
 }
 `;
+
+exports[`recipe-machine stores created/changed/deleted resources on the context after applying plan 1`] = `undefined`;
