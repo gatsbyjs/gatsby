@@ -27,10 +27,12 @@ const listShadowableFilesForTheme = (directory, theme) => {
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
-  console.log(shadowableThemeFiles)
+  console.log(`THEME SRC PATH:`, themeSrcPath)
 
   const toShadowPath = filePath => {
+    console.log(`ABSOLUTE:`, filePath)
     const relativeFilePath = filePath.replace(themeSrcPath, ``)
+    console.log(`RELATIVE:`, relativeFilePath)
     return path.join(`src`, theme, relativeFilePath)
   }
 
