@@ -10904,3 +10904,19 @@
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
   featured: false
+- title: Thanawat Gulati
+  url: https://thanawatgulati.com/
+  main_url: https://thanawatgulati.com/
+  source_url: https://github.com/thanawatgulati/thanawatgulati-web-2020
+  description: >
+    Thanawat Gulati , My personal website brings my work, work experience, news and work schedule here.
+  categories:
+    - Portfolio
+    - Programming
+    - Design
+    - Web Development
+    - Technology
+    - Profile
+  built_by: Thanawat Gulati
+  built_by_url: https://twitter.com/mjamesvevo
+  featured: false
