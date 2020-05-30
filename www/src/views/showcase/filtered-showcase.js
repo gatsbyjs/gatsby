@@ -15,6 +15,7 @@ import {
   ContentTitle,
   ContentContainer,
 } from "../shared/sidebar"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { themedInput } from "../../utils/styles"
 
 const OPEN_SOURCE_CATEGORY = `Open Source`
@@ -118,7 +119,22 @@ class FilteredShowcase extends Component {
           aggregatedCategories={aggregatedCategories}
         />
         <ContentContainer>
-          <ContentHeader>
+          <ContentHeader
+            cssOverrides={{
+              height: `6.9rem`,
+              flexDirection: `column-reverse`,
+              alignItems: `flex-start`,
+              pt: 5,
+              pb: 4,
+              [mediaQueries.sm]: {
+                height: `4rem`,
+                flexDirection: `row`,
+                alignItems: `center`,
+                pt: 0,
+                pb: 0,
+              },
+            }}
+          >
             <ContentTitle
               search={this.state.search}
               filters={filters}
@@ -126,7 +142,16 @@ class FilteredShowcase extends Component {
               items={items}
               nodes={data.allSitesYaml.nodes}
             />
-            <div sx={{ ml: `auto` }}>
+            <div
+              sx={{
+                ml: 0,
+                width: `100%`,
+                [mediaQueries.sm]: {
+                  ml: `auto`,
+                  width: `auto`,
+                },
+              }}
+            >
               <label css={{ display: `block`, position: `relative` }}>
                 <input
                   sx={{ ...themedInput, pl: 7 }}
