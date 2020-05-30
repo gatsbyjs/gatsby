@@ -3,8 +3,8 @@ import { jsx } from "theme-ui"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { MdArrowForward } from "react-icons/md"
 
-import { Box } from "theme-ui"
-import { Flex, Heading, Link, Text } from "../system"
+import { Box, Flex } from "theme-ui"
+import { Heading, Link, Text } from "../system"
 import ImagePlaceholder from "../image-placeholder"
 import Avatar from "../avatar"
 
@@ -15,19 +15,13 @@ const BlogCard = () => (
       maxWidth: `30rem`,
       borderRadius: 1,
       boxShadow: `raised`,
-      mx: 0,
-      [mediaQueries.sm]: {
-        mx: 6,
-      },
+      mx: [0, null, 6],
     }}
   >
     <ImagePlaceholder aspectRatio={1 / 2} mb={2} />
     <Box
       sx={{
-        p: 4,
-        [mediaQueries.md]: {
-          p: 5,
-        },
+        p: [4, null, null, 5],
       }}
     >
       <Heading
@@ -45,7 +39,12 @@ const BlogCard = () => (
         Using decoupled Drupal with Gatsby with Kyle Mathews
       </Heading>
 
-      <Flex alignItems="center" my={3}>
+      <Flex
+        sx={{
+          alignItems: `center`,
+          my: 3,
+        }}
+      >
         <Avatar mr={2} />
         <Text color="grey.50" fontSize={1}>
           <Link href="#" css={{ textDecoration: `none` }}>
@@ -63,7 +62,12 @@ const BlogCard = () => (
         give you a sneak peek of what it will be about.
       </Text>
 
-      <Flex mt={4} alignItems="center">
+      <Flex
+        sx={{
+          alignItems: `center`,
+          mt: 4,
+        }}
+      >
         <Link href="#" css={{ textDecoration: `none` }}>
           Read more <MdArrowForward />
         </Link>
