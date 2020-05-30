@@ -17,12 +17,9 @@ const Column = ({ children, ...rest }) => (
     sx={{
       flexWrap: `wrap`,
       width: `100%`,
-      p: 6,
+      p: [6, null, null, 8],
       m: 0,
       ...rest,
-      [mediaQueries.md]: {
-        p: 8,
-      },
       [mediaQueries.lg]: {
         width: `50%`,
       },
@@ -231,10 +228,7 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
       <Flex
         sx={{
           alignItems: `baseline`,
-          p: 6,
-          [mediaQueries.md]: {
-            p: 8,
-          },
+          p: [6, null, null, 8],
         }}
       >
         <Heading color="black" mr={4} mt={0}>
@@ -249,11 +243,8 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
       </Flex>
       <Box
         sx={{
-          p: 6,
+          p: [6, null, null, 8],
           bg: base.hex,
-          [mediaQueries.md]: {
-            p: 8,
-          },
         }}
       >
         <Heading
