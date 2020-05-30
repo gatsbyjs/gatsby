@@ -47,7 +47,7 @@ const makeResourceId = res => {
 let sendEvent
 
 const PROJECT_ROOT =
-  `/Users/kylemathews/programs/recipes-test` &&
+  `/Users/kylemathews/programs/recipes-test` ||
   `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
