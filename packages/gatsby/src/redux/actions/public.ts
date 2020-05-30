@@ -1202,7 +1202,7 @@ export const setJob = (
  */
 export const endJob = (
   job: IGatsbyIncompleteJob["job"],
-  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+  plugin: Optional<IGatsbyPlugin, "id" | "version"> | null = null
 ): IEndJobAction => {
   return {
     type: `END_JOB`,

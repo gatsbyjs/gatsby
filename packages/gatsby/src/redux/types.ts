@@ -430,7 +430,7 @@ export interface IEndJobAction {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin?: IGatsbyIncompleteJob["plugin"]
+  plugin: IGatsbyIncompleteJob["plugin"] | null
 }
 
 export interface ICreatePageAction extends IActionOptions {
