@@ -15,6 +15,7 @@
     "@emotion/styled": "^10.0.27",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
+    "cross-env": "^5.2.1",
     "csstype": "^2.6.10",
     "formik": "^2.1.4",
     "gatsby": "^2.22.13",
@@ -33,6 +34,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
+    "prepare": "cross-env NODE_ENV=production yarn run build",
     "build": "gatsby build --prefix-paths",
     "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   }
