@@ -31,6 +31,7 @@ const SecondaryButton: React.FC<ButtonProps> = props => (
 )
 
 const InstallInput: React.FC<{ for: string }> = props => {
+  const inputId = `install-${props.for}`
   const [value, setValue] = React.useState(``)
 
   const [{ fetching }, installGatbyPlugin] = useMutation(`
@@ -55,15 +56,17 @@ const InstallInput: React.FC<{ for: string }> = props => {
     <form
       onSubmit={(evt): void => {
         evt.preventDefault()
+        if (value.indexOf(`gatsby-`) !== 0) return
+
         installGatbyPlugin({
           name: value,
         })
       }}
     >
-      <InputField id={`install-${props.for}`}>
+      <InputField id={inputId}>
         <Flex gap={2} flexDirection="column">
           <Text size="S" sx={{ color: `grey.40` }}>
-            <label>Install {props.for}:</label>
+            <label htmlFor={inputId}>Install {props.for}:</label>
           </Text>
           <Flex gap={4} alignItems="center">
             <InputFieldControl
@@ -184,7 +187,7 @@ const Index: React.FC<{}> = () => {
   return (
     <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
       <SectionHeading>Plugins</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 2, 3]}>
+      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
           .map(plugin => (
@@ -194,7 +197,7 @@ const Index: React.FC<{}> = () => {
       <InstallInput for="plugin" />
 
       <SectionHeading>Themes</SectionHeading>
-      <Grid gap={6} columns={[1, 1, 2, 3]}>
+      <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
           .map(plugin => (
