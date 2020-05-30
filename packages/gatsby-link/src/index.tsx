@@ -1,12 +1,40 @@
 import PropTypes from "prop-types"
-import React from "react"
-import { Link } from "@reach/router"
+import React, { Ref, ReactElement } from "react"
+import { Link, NavigateOptions, LinkGetProps } from "@reach/router"
+import {
+  IGatsbyLinkProps,
+  IGetProps,
+  IGatsbyLinkState,
+  IIntersectionObserver,
+} from "./types"
 
 import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-export function withPrefix(path) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-var */
+// TODO babel is fighting with eslint on `declare let`
+declare var __BASE_PATH__: string
+declare var __PATH_PREFIX__: string
+declare var ___loader: any
+/* eslint-enable no-var */
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+/**
+ * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
+ * cases, `Link` won’t work.
+ */
+export const navigate = (to: string, options?: NavigateOptions<{}>): void => {
+  window.___navigate(withPrefix(to), options)
+}
+
+/**
+ * It is common to host sites in a sub-directory of a site. Gatsby lets you set the path prefix for your site.
+ * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
+ * development and production
+ */
+export function withPrefix(path: string): string {
   return normalizePath(
     [
       typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__,
@@ -15,22 +43,19 @@ export function withPrefix(path) {
   )
 }
 
-export function withAssetPrefix(path) {
+export function withAssetPrefix(path: string): string {
   return [__PATH_PREFIX__].concat([path.replace(/^\//, ``)]).join(`/`)
 }
 
-function normalizePath(path) {
+function normalizePath(path: string): string {
   return path.replace(/\/+/g, `/`)
 }
 
-const NavLinkPropTypes = {
-  activeClassName: PropTypes.string,
-  activeStyle: PropTypes.object,
-  partiallyActive: PropTypes.bool,
-}
-
 // Set up IntersectionObserver
-const createIntersectionObserver = (el, cb) => {
+const createIntersectionObserver = (
+  el: Element,
+  cb: () => void
+): IIntersectionObserver => {
   const io = new window.IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (el === entry.target) {
@@ -49,8 +74,23 @@ const createIntersectionObserver = (el, cb) => {
   return { instance: io, el }
 }
 
-class GatsbyLink extends React.Component {
-  constructor(props) {
+class GatsbyLink<TState> extends React.Component<
+  IGatsbyLinkProps<TState>,
+  IGatsbyLinkState
+> {
+  static propTypes = {
+    activeClassName: PropTypes.string,
+    activeStyle: PropTypes.object,
+    partiallyActive: PropTypes.bool,
+    onClick: PropTypes.func,
+    to: PropTypes.string.isRequired,
+    replace: PropTypes.bool,
+    state: PropTypes.object,
+  }
+
+  io: IIntersectionObserver | undefined
+
+  constructor(props: IGatsbyLinkProps<TState>) {
     super(props)
     // Default to no support for IntersectionObserver
     let IOSupported = false
@@ -61,24 +101,23 @@ class GatsbyLink extends React.Component {
     this.state = {
       IOSupported,
     }
-    this.handleRef = this.handleRef.bind(this)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: IGatsbyLinkProps<TState>): void {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
       ___loader.enqueue(parsePath(this.props.to).pathname)
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (!this.io) {
       return
     }
@@ -88,8 +127,11 @@ class GatsbyLink extends React.Component {
     instance.disconnect()
   }
 
-  handleRef(ref) {
-    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
+  handleRef = (ref: HTMLAnchorElement | null): void => {
+    if (
+      this.props.innerRef &&
+      Object.prototype.hasOwnProperty.call(this.props.innerRef, `current`)
+    ) {
       this.props.innerRef.current = ref
     } else if (this.props.innerRef) {
       this.props.innerRef(ref)
@@ -103,7 +145,10 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+  defaultGetProps = ({
+    isPartiallyCurrent,
+    isCurrent,
+  }: LinkGetProps): IGetProps => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -112,23 +157,23 @@ class GatsbyLink extends React.Component {
         style: { ...this.props.style, ...this.props.activeStyle },
       }
     }
-    return null
+    return {}
   }
 
-  render() {
+  render(): ReactElement {
     const {
       to,
       getProps = this.defaultGetProps,
       onClick,
       onMouseEnter,
-      /* eslint-disable no-unused-vars */
+      /* eslint-disable @typescript-eslint/no-unused-vars */
       activeClassName: $activeClassName,
       activeStyle: $activeStyle,
       innerRef: $innerRef,
       partiallyActive,
       state,
       replace,
-      /* eslint-enable no-unused-vars */
+      /* eslint-enable @typescript-eslint/no-unused-vars */
       ...rest
     } = this.props
 
@@ -146,14 +191,16 @@ class GatsbyLink extends React.Component {
         to={prefixedTo}
         state={state}
         getProps={getProps}
-        innerRef={this.handleRef}
-        onMouseEnter={e => {
+        ref={this.handleRef}
+        onMouseEnter={(
+          e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+        ): void => {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
           ___loader.hovering(parsePath(to).pathname)
         }}
-        onClick={e => {
+        onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
           if (onClick) {
             onClick(e)
           }
@@ -179,8 +226,6 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             navigate(to, { state, replace: shouldReplace })
           }
-
-          return true
         }}
         {...rest}
       />
@@ -188,39 +233,46 @@ class GatsbyLink extends React.Component {
   }
 }
 
-GatsbyLink.propTypes = {
-  ...NavLinkPropTypes,
-  onClick: PropTypes.func,
-  to: PropTypes.string.isRequired,
-  replace: PropTypes.bool,
-  state: PropTypes.object,
-}
-
-const showDeprecationWarning = (functionName, altFunctionName, version) =>
+const showDeprecationWarning = (
+  functionName: string,
+  altFunctionName: string,
+  version: number
+): void =>
   console.warn(
     `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
   )
 
+/**
+ * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
+ * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
+ */
 export default React.forwardRef((props, ref) => (
   <GatsbyLink innerRef={ref} {...props} />
 ))
 
-export const navigate = (to, options) => {
-  window.___navigate(withPrefix(to), options)
-}
-
-export const push = to => {
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const push = (to: string): void => {
   showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(withPrefix(to))
 }
 
-export const replace = to => {
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const replace = (to: string): void => {
   showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(withPrefix(to))
 }
 
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
+/**
+ * @deprecated
+ * TODO: Remove for Gatsby v3
+ */
+export const navigateTo = (to: string): void => {
   showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
 }

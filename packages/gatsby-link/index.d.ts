@@ -1,6 +1,7 @@
 import * as React from "react"
 import { NavigateFn, LinkProps } from "@reach/router"
 
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   /** A class to apply when this Link is active */
   activeClassName?: string
@@ -18,7 +19,9 @@ export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   /** The URL you want to link to */
   to: string
 }
+/* eslint-enable @typescript-eslint/interface-name-prefix */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * This component is intended _only_ for links to pages handled by Gatsby. For links to pages on other
  * domains or pages on the same domain not handled by the current Gatsby site, use the normal `<a>` element.
@@ -27,6 +30,7 @@ export default class GatsbyLink<TState> extends React.Component<
   GatsbyLinkProps<TState>,
   any
 > {}
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
  * Sometimes you need to navigate to pages programmatically, such as during form submissions. In these
