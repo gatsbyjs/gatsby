@@ -36,6 +36,7 @@ const theme = getTheme()
 ansi2HTML.setColors({
   red: theme.tones.DANGER.medium.slice(1),
   green: theme.tones.SUCCESS.medium.slice(1),
+  yellow: theme.tones.WARNING.medium.slice(1),
 })
 
 const makeResourceId = res => {
@@ -184,8 +185,8 @@ log(
 
 const RecipeGui = ({
   // recipe = `./test.mdx`,
-  // recipe = `jest.mdx`,
-  recipe,
+  recipe = `jest.mdx`,
+  // recipe,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
 }) => {
@@ -546,7 +547,11 @@ const RecipeGui = ({
       )
 
       const ResourceMessage = ({ resource }) => {
-        let icon = <MdBrightness1 sx={{ height: `10px`, width: `15px` }} />
+        let icon = (
+          <MdBrightness1
+            sx={{ height: `10px`, width: `15px`, display: `inline-block` }}
+          />
+        )
         let message = resource.describe
 
         if (state.value === `applyingPlan` && resource.isDone) {
@@ -563,6 +568,7 @@ const RecipeGui = ({
           icon = (
             <MdRefresh
               sx={{
+                display: `inline-block`,
                 animation: `${keyframe} 1s linear infinite`,
                 height: `15px`,
                 width: `15px`,
@@ -578,8 +584,9 @@ const RecipeGui = ({
         }
 
         return (
-          <div>
-            {icon} {` `}
+          <>
+            {icon}
+            {` `}
             <BaseAnchor
               href={`#${makeResourceId(resource)}`}
               onClick={e => {
@@ -595,7 +602,7 @@ const RecipeGui = ({
             >
               {message}
             </BaseAnchor>
-          </div>
+          </>
         )
       }
 
@@ -727,6 +734,8 @@ const WithProviders = ({ children }) => {
         lineHeight: 1.45,
       },
       pre: {
+        fontSize: 0,
+        lineHeight: 1.45,
         mt: 0,
         mb: 6,
         whiteSpace: `pre-wrap`,
