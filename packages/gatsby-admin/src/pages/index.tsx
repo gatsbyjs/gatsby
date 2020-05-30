@@ -11,10 +11,28 @@ import {
   InputFieldControl,
 } from "gatsby-interface"
 
-const InstallInput: React.FC<{}> = () => {
+const SecondaryButton = props => (
+  <Button
+    variant="SECONDARY"
+    size="S"
+    sx={{
+      paddingX: 6,
+      paddingY: 4,
+      color: `whiteFade.80`,
+      border: `sixtywhite`,
+      "&:hover": {
+        color: `white`,
+        border: `white`,
+      },
+    }}
+    {...props}
+  ></Button>
+)
+
+const InstallInput: React.FC<{ for: string }> = props => {
   const [value, setValue] = React.useState(``)
 
-  const [, installGatbyPlugin] = useMutation(`
+  const [{ fetching }, installGatbyPlugin] = useMutation(`
     mutation installGatsbyPlugin($name: String!) {
       createNpmPackage(npmPackage: {
         name: $name,
@@ -41,23 +59,38 @@ const InstallInput: React.FC<{}> = () => {
         })
       }}
     >
-      <InputField id="install-plugin">
-        <InputFieldControl
-          placeholder="gatsby-plugin-feed"
-          value={value}
-          onChange={(e): void => setValue(e.target.value)}
-          sx={{
-            backgroundColor: `background`,
-            borderColor: `grey.60`,
-            color: `white`,
-            width: `initial`,
-            "&:focus": {
-              borderColor: `grey.40`,
-              // TODO(@mxstbr): Fix this focus outline
-              boxShadow: `none`,
-            },
-          }}
-        />
+      <InputField id={`install-${props.for}`}>
+        <Flex gap={2} flexDirection="column">
+          <Text size="S" sx={{ color: `grey.40` }}>
+            <label>Install {props.for}:</label>
+          </Text>
+          <Flex gap={4} alignItems="center">
+            <InputFieldControl
+              placeholder={`gatsby-${props.for}-`}
+              disabled={fetching}
+              value={value}
+              onChange={(e): void => setValue(e.target.value)}
+              sx={{
+                backgroundColor: `background`,
+                borderColor: `grey.60`,
+                color: `white`,
+                width: `initial`,
+                "&:focus": {
+                  borderColor: `grey.40`,
+                  // TODO(@mxstbr): Fix this focus outline
+                  boxShadow: `none`,
+                },
+              }}
+            />
+            <SecondaryButton
+              disabled={!value.trim()}
+              loading={fetching}
+              loadingLabel="Installing"
+            >
+              Install
+            </SecondaryButton>
+          </Flex>
+        </Flex>
       </InputField>
     </form>
   )
@@ -85,26 +118,14 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   `)
 
   return (
-    <Button
-      variant="SECONDARY"
-      size="S"
-      sx={{
-        paddingX: 6,
-        paddingY: 4,
-        color: `whiteFade.80`,
-        border: `sixtywhite`,
-        "&:hover": {
-          color: `white`,
-          border: `white`,
-        },
-      }}
+    <SecondaryButton
       onClick={(evt): void => {
         evt.preventDefault()
         deleteGatsbyPlugin({ name })
       }}
     >
       Uninstall
-    </Button>
+    </SecondaryButton>
   )
 }
 
@@ -167,7 +188,7 @@ const Index: React.FC<{}> = () => {
             <PluginCard key={plugin.id} plugin={plugin} />
           ))}
       </Grid>
-      <InstallInput />
+      <InstallInput for="plugin" />
 
       <SectionHeading>Themes</SectionHeading>
       <Grid gap={6} columns={[1, 1, 2, 3]}>
@@ -178,7 +199,7 @@ const Index: React.FC<{}> = () => {
           ))}
       </Grid>
 
-      <InstallInput />
+      <InstallInput for="theme" />
     </Flex>
   )
 }
