@@ -6,7 +6,7 @@ import resources from "../resources"
 import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"
 import transformToPlan from "./transform-to-plan-structure"
-import { ResourceProvider } from "./resource-provider"
+import { ResourceProvider, useResourceContext } from "./resource-provider"
 import { useRecipeStep } from "./step-component"
 import { InputProvider, useInputByUuid } from "./input-provider"
 
@@ -53,12 +53,13 @@ const ResourceComponent = ({
   const { mode } = useMode()
   const step = useRecipeStep()
   const inputProps = useInputByUuid(_uuid)
+  const resourceContext = useResourceContext()
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 
   const resourceData = handleResource(
     Resource,
-    { root: process.cwd(), _uuid, mode },
+    { ...resourceContext, root: process.cwd(), _uuid, mode },
     allProps
   )
 
@@ -96,6 +97,7 @@ const handleResource = (resourceName, context, props) => {
   const { mode } = context
 
   const key = JSON.stringify({ resourceName, ...props, mode })
+
   const cachedResult = cache.get(key)
 
   if (cachedResult) {
@@ -106,12 +108,23 @@ const handleResource = (resourceName, context, props) => {
 
   let promise
   try {
-    promise = resources[resourceName][fn](context, props)
-      .then(result => cache.set(key, result))
-      .catch(e => {
-        console.log(e)
-        throw e
-      })
+    promise = new Promise((resolve, reject) => {
+      // Multiple of the same promises can be queued due to re-rendering
+      // so this first checks for the cached result again before executing
+      // the request.
+      const cachedValue = cache.get(key)
+      if (cachedValue) {
+        resolve(cachedValue)
+      }
+
+      resources[resourceName][fn](context, props)
+        .then(result => cache.set(key, result))
+        .then(resolve)
+        .catch(e => {
+          console.log(e)
+          reject(e)
+        })
+    })
   } catch (e) {
     throw e
   }

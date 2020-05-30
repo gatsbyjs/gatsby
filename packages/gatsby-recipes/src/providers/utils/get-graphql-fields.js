@@ -3,14 +3,18 @@ const {
   SchemaDirectiveVisitor,
 } = require(`graphql-tools`)
 
-const gqlFieldsToObject = fields =>
+const gqlFieldsToArray = fields =>
   Object.entries(fields).reduce((acc, [key, value]) => {
-    acc[key] = {
+    const metadata = value.metadata || {}
+    const field = {
+      id: key,
       type: value.type,
-      metadata: value.metadata,
+      name: key,
+      ...metadata,
     }
-    return acc
-  }, {})
+
+    return [...acc, field]
+  }, [])
 
 class MetadataDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
@@ -55,7 +59,7 @@ module.exports = (typeDefs, { metadata } = {}) => {
     .map(([key, value]) => {
       return {
         name: key,
-        fields: gqlFieldsToObject(value._fields),
+        fields: gqlFieldsToArray(value._fields),
       }
     })
 }
