@@ -45,14 +45,10 @@ const ExampleBox = ({ children, ...rest }) => (
 const MarketingColumn = ({ children, title }) => (
   <Box
     sx={{
-      px: 0,
-      py: 4,
       width: `100%`,
-      [mediaQueries.md]: {
-        px: 8,
-      },
+      px: [0, null, null, 8],
+      py: [4, null, null, null, 0],
       [mediaQueries.lg]: {
-        py: 0,
         width: `50%`,
       },
     }}
@@ -235,7 +231,7 @@ const Typography = ({ location }) => (
                 <strong>{parseFloat(size) * 16}</strong>&nbsp;&nbsp;&nbsp;{size}
                 &nbsp;&nbsp;&nbsp;
                 <code
-                  css={{
+                  sx={{
                     background: `transparent`,
                     ":before, :after": { display: `none` },
                   }}
@@ -584,13 +580,11 @@ const Typography = ({ location }) => (
 
         <Box
           sx={{
-            mt: 6,
-            pb: 0,
+            mt: [6, null, null, 12],
+            pb: [0, null, null, 12],
             textAlign: `left`,
             [mediaQueries.md]: {
               display: `flex`,
-              mt: 12,
-              pb: 12,
             },
           }}
         >
@@ -608,11 +602,10 @@ const Typography = ({ location }) => (
         <Box
           sx={{
             mt: 0,
-            pb: 0,
+            pb: [0, null, null, 12],
             textAlign: `left`,
             [mediaQueries.md]: {
               display: `flex`,
-              pb: 12,
             },
           }}
         >
@@ -632,11 +625,10 @@ const Typography = ({ location }) => (
         <Box
           sx={{
             mt: 0,
-            pb: 0,
+            pb: [0, null, null, 12],
             textAlign: `left`,
             [mediaQueries.md]: {
               display: `flex`,
-              pb: 12,
             },
           }}
         >
