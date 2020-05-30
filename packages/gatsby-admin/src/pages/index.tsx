@@ -9,9 +9,10 @@ import {
   Button,
   InputField,
   InputFieldControl,
+  ButtonProps,
 } from "gatsby-interface"
 
-const SecondaryButton = props => (
+const SecondaryButton: React.FC<ButtonProps> = props => (
   <Button
     variant="SECONDARY"
     size="S"
