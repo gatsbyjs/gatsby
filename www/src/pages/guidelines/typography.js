@@ -32,10 +32,10 @@ import {
 import { Box, Flex } from "theme-ui"
 import { Button, Link, Heading, Text } from "../../components/guidelines/system"
 
-const ExampleBox = ({ children, ...rest }) => (
+const ExampleBox = ({ children }) => (
   <Box
     sx={{
-      ...rest,
+      pt: 4,
     }}
   >
     {children}
@@ -325,14 +325,18 @@ const Typography = ({ location }) => (
 
           <SectionSubheading pt={6}>Letter Spacing</SectionSubheading>
 
-          <p>
+          <p
+            sx={{
+              pb: 6,
+            }}
+          >
             Letterspacing (also known as character spacing or tracking) is the
             adjustment of the horizontal white space between the letters in a
             block of text. Tokens are intended for use with the{` `}
             <code>letter-spacing</code> CSS property.
           </p>
 
-          <ExampleBox pt={8}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Normal</strong> — <code>letterSpacings.normal</code> —
               {` `}
@@ -343,7 +347,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Tight</strong> — <code>letterSpacings.tight</code> —{` `}
               <code>{letterSpacings.tight}</code>
@@ -356,7 +360,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Tracked</strong> — <code>letterSpacings.tracked</code> —
               {` `}
@@ -382,7 +386,7 @@ const Typography = ({ location }) => (
 
           <SectionSubheading pt={6}>Line Heights</SectionSubheading>
 
-          <ExampleBox pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Default</strong> — <code>lineHeights.default</code> —{` `}
               <code>{lineHeights.default}</code>
@@ -397,7 +401,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Solid</strong> — <code>lineHeights.solid</code> —{` `}
               <code>{lineHeights.solid}</code>
@@ -409,7 +413,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Dense</strong> — <code>lineHeights.dense</code> —{` `}
               <code>{lineHeights.dense}</code>
@@ -423,7 +427,7 @@ const Typography = ({ location }) => (
 
           <hr />
 
-          <ExampleBox pt={4}>
+          <ExampleBox>
             <Text as="p" mb={0}>
               <strong>Loose</strong> — <code>lineHeights.loose</code> —{` `}
               <code>{lineHeights.loose}</code>
