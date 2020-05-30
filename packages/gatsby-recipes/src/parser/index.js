@@ -1,5 +1,6 @@
 const unified = require(`unified`)
 const remarkMdx = require(`remark-mdx`)
+const remarkMdxjs = require(`remark-mdxjs`)
 const remarkParse = require(`remark-parse`)
 const remarkStringify = require(`remark-stringify`)
 const fetch = require(`node-fetch`)
@@ -33,7 +34,11 @@ const applyUuid = tree => {
   return tree
 }
 
-const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
+const u = unified()
+  .use(remarkParse)
+  .use(remarkStringify)
+  .use(remarkMdx)
+  .use(remarkMdxjs)
 
 const partitionSteps = ast => {
   const steps = []
@@ -54,7 +59,11 @@ const partitionSteps = ast => {
 
 const toMdx = nodes => {
   const stepAst = applyUuid(asRoot(nodes))
-  return u.stringify(stepAst)
+  const mdxSrc = u.stringify(stepAst)
+  // const regex = new RegExp(`^[ \\t]`, "gm")
+  const regex = /^(\s*)export/gm
+
+  return mdxSrc.replace(regex, `\nexport`)
 }
 
 const parse = async src => {
@@ -70,6 +79,7 @@ const parse = async src => {
     }
 
     const wrappedResourceSteps = resourceSteps.map((step, i) => {
+      console.log(step)
       return {
         type: `mdxBlockElement`,
         name: `RecipeStep`,

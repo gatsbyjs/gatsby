@@ -1,4 +1,4 @@
-const { Machine, assign } = require(`xstate`)
+const { Machine, assign, send } = require(`xstate`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -6,6 +6,8 @@ const createPlan = require(`../create-plan`)
 const applyPlan = require(`../apply-plan`)
 const validateSteps = require(`../validate-steps`)
 const parser = require(`../parser`)
+const { setInput } = require(`../renderer`)
+const renderer = require(`../renderer/index`)
 
 const recipeMachine = Machine(
   {
@@ -131,18 +133,31 @@ const recipeMachine = Machine(
         },
       },
       presentPlan: {
+        invoke: {
+          id: `presentingPlan`,
+          src: (context, event) => (cb, onReceive) => {
+            console.log(`yo in the invoked presentingPlan`)
+            onReceive(async e => {
+              console.log(`onReceive`, e, setInput)
+              // const result = await setInput(e.data)
+              context.inputs = { ...context.inputs, ...e.data }
+              const result = await createPlan(context, cb)
+              console.log({ result })
+            })
+
+            cb(`yo`)
+
+            return () => console.log(`done I guess`)
+          },
+        },
+        // entry: send(`YO`, { to: `presentingPlan` }),
         on: {
           CONTINUE: `applyingPlan`,
+          // INPUT_ADDED: (context, event) => {
+          // console.log(`in the callback`, { context, event })
+          // },
           INPUT_ADDED: {
-            target: `creatingPlan`,
-            actions: assign({
-              inputs: (context, event) => {
-                const inputs = context.inputs || {}
-                inputs[event.data.resourceUuid] = event.data.props
-
-                return inputs
-              },
-            }),
+            actions: send((context, event) => event, { to: `presentingPlan` }),
           },
         },
       },

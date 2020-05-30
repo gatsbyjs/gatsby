@@ -258,7 +258,8 @@ const components = {
   GatsbyPlugin: () => null,
   NPMPackageJson: () => null,
   NPMPackage: () => null,
-  File,
+  File: () => null,
+  Input: () => null,
   Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
@@ -280,7 +281,7 @@ log(
 
 const RecipeGui = ({
   recipe = `./test.mdx`,
-  //recipe = `jest.mdx`,
+  // recipe = `jest.mdx`,
   // recipe,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
@@ -409,7 +410,7 @@ const RecipeGui = ({
       const isDone = state.value === `done`
 
       if (state.value === `doneError`) {
-        console.error(state)
+        console.log(`doneError state`, state)
       }
 
       log(`state`, state)
@@ -512,17 +513,60 @@ const RecipeGui = ({
                 >
                   Proposed changes
                 </Heading>
-                {stepResources?.map((res, i) => (
-                  <ResourcePlan
-                    key={`res-plan-${i}`}
-                    resourcePlan={res}
-                    isLastPlan={i === stepResources.length - 1}
-                  />
-                ))}
+                {stepResources?.map((res, i) => {
+                  if (res.resourceName === `Input`) {
+                    if (res.type === `textarea`) {
+                      return (
+                        <div>
+                          <div>
+                            <label>{res.label}</label>
+                          </div>
+                          <textarea sx={{ border: `1px solid` }} />
+                        </div>
+                      )
+                    }
+                    return (
+                      <div>
+                        <div>
+                          <label>{res.label}</label>
+                        </div>
+                        <input
+                          sx={{ border: `1px solid` }}
+                          type={res.type}
+                          onChange={e => {
+                            console.log(e.target.value)
+                            console.log({ res })
+                            if (e.target.value !== ``) {
+                              sendInputEvent({
+                                uuid: res._uuid,
+                                value: e.target.value,
+                              })
+                            }
+                          }}
+                        />
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <ResourcePlan
+                      key={`res-plan-${i}`}
+                      resourcePlan={res}
+                      isLastPlan={i === stepResources.length - 1}
+                    />
+                  )
+                })}
               </div>
             )}
           </div>
         )
+      }
+
+      const sendInputEvent = event => {
+        sendEvent({
+          event: `INPUT_ADDED`,
+          input: event,
+        })
       }
 
       const PresentStep = ({ step }) => {
@@ -612,10 +656,6 @@ const RecipeGui = ({
         }
 
         return null
-      }
-
-      if (state.value === `doneError`) {
-        return <Error width="100%" state={state} />
       }
 
       const staticMessages = {}
@@ -789,19 +829,21 @@ const RecipeGui = ({
                     {resourceName}
                   </Heading>
                   <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
-                    {plans.map((p, i) => (
-                      <Styled.li
-                        sx={{
-                          listStyleType: `none`,
-                        }}
-                        key={`${resourceName}-plan-${i}`}
-                      >
-                        <ResourceMessage resource={p} />
-                        <ResourceChildren
-                          resourceChildren={p.resourceChildren}
-                        />
-                      </Styled.li>
-                    ))}
+                    {plans
+                      .filter(p => p.resourceName !== `Input`)
+                      .map((p, i) => (
+                        <Styled.li
+                          sx={{
+                            listStyleType: `none`,
+                          }}
+                          key={`${resourceName}-plan-${i}`}
+                        >
+                          <ResourceMessage resource={p} />
+                          <ResourceChildren
+                            resourceChildren={p.resourceChildren}
+                          />
+                        </Styled.li>
+                      ))}
                   </Styled.ul>
                 </div>
               ))}

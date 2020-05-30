@@ -66,6 +66,7 @@
     "react-icons": "^3.0.1",
     "react-reconciler": "^0.25.1",
     "remark-mdx": "^2.0.0-next.1",
+    "remark-mdxjs": "next",
     "remark-parse": "^6.0.3",
     "remark-stringify": "^8.0.0",
     "semver": "^7.3.2",
@@ -89,17 +90,10 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
-    "testPathIgnorePatterns": [
-      "/.cache/",
-      "dist"
-    ],
+    "testPathIgnorePatterns": ["/.cache/", "dist"],
     "testEnvironment": "node"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-recipes",
-    "mdx"
-  ],
+  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {

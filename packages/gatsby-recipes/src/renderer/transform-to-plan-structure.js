@@ -8,12 +8,26 @@ const transform = (props = {}) => {
   const plan = props.children.reduce((acc, curr) => {
     const childResourcePlans = transform(curr)
 
+    let currText = {}
+    if (curr.text) {
+      try {
+        currText = JSON.parse(curr.text)
+      } catch {}
+    }
+
+    console.log({ curr, currText, childResourcePlans })
+    if (currText.mdxType === `Input`) {
+      currText.resourceName = `Input`
+      return [...acc, currText]
+    }
     if (!providedResources[curr.type]) {
       return [...acc, ...childResourcePlans]
     }
 
     const [rawResource, ...resourceChildren] = curr.children
     const { _props, ...plan } = JSON.parse(rawResource.text)
+
+    console.log({ _props, plan })
 
     const resourcePlan = {
       resourceName: curr.type,
