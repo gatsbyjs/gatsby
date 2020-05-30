@@ -4,28 +4,7 @@ const InputContext = React.createContext({})
 
 export const useInputByUuid = uuid => {
   const context = useContext(InputContext)
-  const data = context[uuid] || {}
-  return { update: context.update, data }
+  return context[uuid] || {}
 }
 
-export const useUuidUpdate = uuid => {
-  const { update } = useContext(InputContext)
-  return update(uuid)
-}
-
-export const InputProvider = ({ children, value: initialValue }) => {
-  const [value, setValue] = useState(initialValue)
-
-  const update = uuid => data => {
-    setValue({
-      ...value,
-      [uuid]: data,
-    })
-  }
-
-  return (
-    <InputContext.Provider value={{ ...value, update }}>
-      {children}
-    </InputContext.Provider>
-  )
-}
+export const InputProvider = InputContext.Provider

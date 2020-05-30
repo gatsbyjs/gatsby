@@ -12,7 +12,7 @@ import { InputProvider, useInputByUuid } from "./input-provider"
 
 const queue = new Queue({ concurrency: 1, autoStart: false })
 
-const errors = []
+let errors = []
 const cache = new Map()
 
 const getInvalidProps = errors => {
@@ -45,7 +45,7 @@ const ResourceComponent = ({
   ...props
 }) => {
   const step = useRecipeStep()
-  const { data: inputProps } = useInputByUuid(_uuid)
+  const inputProps = useInputByUuid(_uuid)
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 
@@ -60,7 +60,7 @@ const ResourceComponent = ({
       <Resource>
         {JSON.stringify({
           ...resourceData,
-          _props: userProps,
+          _props: { ...userProps, ...inputProps },
           _stepMetadata: step,
           _uuid,
         })}
@@ -126,9 +126,9 @@ const render = async (recipe, cb, inputs = {}) => {
 
       if (invalidProps.length) {
         return cb({ type: `INVALID_PROPS`, data: invalidProps })
+      } else {
+        errors = []
       }
-
-      return cb({ type: `INPUT`, data: errors })
     }
 
     // If there aren't any new resources that need to be fetched, or errors, we're done!

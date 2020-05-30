@@ -31,7 +31,7 @@ describe(`recipe-machine`, () => {
           )
         }
 
-        if (state.value === `waitingForInput`) {
+        if (state.value === `creatingPlan`) {
           expect(state.context.input.resourceUuid).toBeTruthy()
           expect(state.context.input.props).toEqual({ path: `` })
           service.stop()

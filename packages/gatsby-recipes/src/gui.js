@@ -29,6 +29,8 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
+import { useInputByUuid, InputProvider } from "./renderer/input-provider"
+
 const theme = getTheme()
 
 ansi2HTML.setColors({
@@ -41,6 +43,8 @@ const makeResourceId = res => {
   const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
   return id
 }
+
+let sendEvent
 
 const PROJECT_ROOT =
   `/Users/kylemathews/programs/recipes-test` ||
@@ -160,28 +164,48 @@ const RecipesList = ({ setRecipe }) => {
   )
 }
 
-const File = ({ _uuid, ...props }) => {
-  const [inputState, setInputState] = useState({})
+const File = React.memo(({ _uuid, ...props }) => {
+  const inputProps = useInputByUuid(_uuid)
+  const [inputState, setInputState] = useState({
+    resourceUuid: _uuid,
+    props: {
+      ...props,
+      ...inputProps,
+    },
+  })
 
   const setProp = key => e => {
-    setInputState({
+    const newState = {
       ...inputState,
-      [key]: e.target.value,
+      props: {
+        ...inputState.props,
+        [key]: e.target.value,
+      },
+    }
+
+    setInputState(newState)
+
+    sendEvent({
+      event: `INPUT_ADDED`,
+      input: newState,
     })
   }
 
   return (
-    <>
+    <form key={_uuid}>
       {Object.entries(props).map(([key, value]) => (
         <label key={key}>
           {key} <br />
-          <input value={inputState[key] || value} onChange={setProp(key)} />
+          <input
+            value={inputState.props[key] || value}
+            onChange={setProp(key)}
+          />
           <br />
         </label>
       ))}
-    </>
+    </form>
   )
-}
+})
 
 const components = {
   inlineCode: props => <code {...props} />,
@@ -266,11 +290,19 @@ const RecipeGui = ({
         }
       `)
       // eslint-disable-next-line
-      const [__, sendEvent] = useMutation(`
-        mutation($event: String!) {
-          sendEvent(event: $event)
+      const [__, _sendEvent] = useMutation(`
+        mutation($event: String!, $input: String) {
+          sendEvent(event: $event, input: $input)
         }
       `)
+
+      sendEvent = ({ event, input }) => {
+        if (input) {
+          _sendEvent({ event, input: JSON.stringify(input) })
+        } else {
+          _sendEvent({ event })
+        }
+      }
 
       subscriptionClient.connectionCallback = async () => {
         if (!showRecipesList) {
@@ -413,7 +445,9 @@ const RecipeGui = ({
                   },
                 }}
               >
-                <MDX components={components}>{step}</MDX>
+                <MDX key="DOC" components={components} scope={{ sendEvent }}>
+                  {step}
+                </MDX>
               </div>
             </div>
             {stepResources?.length > 0 && (
@@ -638,78 +672,80 @@ const RecipeGui = ({
       }
 
       return (
-        <Wrapper>
-          <WelcomeMessage />
-          <div
-            sx={{
-              mb: 8,
-              display: `flex`,
-              alignItems: `flex-start`,
-              justifyContent: `space-between`,
-            }}
-          >
-            <div sx={{ "*:last-child": { mb: 0 } }}>
-              <MDX components={components}>{state.context.steps[0]}</MDX>
-            </div>
-            <Button
-              onClick={() => sendEvent({ event: `CONTINUE` })}
-              loading={state.value === `applyingPlan` ? true : false}
-              loadingLabel={`Installing`}
-              sx={{ width: `140px`, ml: 6 }}
+        <InputProvider value={state.context.inputs || {}}>
+          <Wrapper>
+            <WelcomeMessage />
+            <div
+              sx={{
+                mb: 8,
+                display: `flex`,
+                alignItems: `flex-start`,
+                justifyContent: `space-between`,
+              }}
             >
-              <ButtonText />
-            </Button>
-          </div>
-          <div sx={{ marginBottom: 8 }}>
-            <Heading sx={{ marginBottom: 6 }}>
-              Changes
-              {` `}
-              {state.context.plan &&
-                `(${state.context.plan.filter(p => p.isDone).length}/${
-                  state.context.plan?.length
-                })`}
-            </Heading>
-            {Object.entries(groupedPlans).map(([resourceName, plans]) => (
-              <div key={`key-${resourceName}`}>
-                <Heading
-                  as="h4"
-                  sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
-                >
-                  {resourceName}
-                </Heading>
-                <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
-                  {plans.map((p, i) => (
-                    <Styled.li
-                      sx={{
-                        listStyleType: `none`,
-                      }}
-                      key={`${resourceName}-plan-${i}`}
-                    >
-                      <ResourceMessage resource={p} />
-                    </Styled.li>
-                  ))}
-                </Styled.ul>
+              <div sx={{ "*:last-child": { mb: 0 } }}>
+                <MDX components={components} scope={{ sendEvent }}>
+                  {state.context.steps[0]}
+                </MDX>
               </div>
-            ))}
-          </div>
+              <Button
+                onClick={() => sendEvent({ event: `CONTINUE` })}
+                loading={state.value === `applyingPlan` ? true : false}
+                loadingLabel={`Installing`}
+                sx={{ width: `140px`, ml: 6 }}
+              >
+                <ButtonText />
+              </Button>
+            </div>
+            <div sx={{ marginBottom: 8 }}>
+              <Heading sx={{ marginBottom: 6 }}>
+                Changes
+                {` `}
+                {state.context.plan &&
+                  `(${state.context.plan.filter(p => p.isDone).length}/${
+                    state.context.plan?.length
+                  })`}
+              </Heading>
+              {Object.entries(groupedPlans).map(([resourceName, plans]) => (
+                <div key={`key-${resourceName}`}>
+                  <Heading
+                    as="h4"
+                    sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
+                  >
+                    {resourceName}
+                  </Heading>
+                  <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+                    {plans.map((p, i) => (
+                      <Styled.li
+                        sx={{
+                          listStyleType: `none`,
+                        }}
+                        key={`${resourceName}-plan-${i}`}
+                      >
+                        <ResourceMessage resource={p} />
+                      </Styled.li>
+                    ))}
+                  </Styled.ul>
+                </div>
+              ))}
+            </div>
 
-          <Heading sx={{ mb: 6 }}>
-            Steps ({state.context.steps.length - 1})
-          </Heading>
-          {state.context.steps.slice(1).map((step, i) => (
-            <Step state={state} step={step} key={`step-${i}`} i={i} />
-          ))}
-        </Wrapper>
+            <Heading sx={{ mb: 6 }}>
+              Steps ({state.context.steps.length - 1})
+            </Heading>
+            {state.context.steps.slice(1).map((step, i) => (
+              <Step state={state} step={step} key={`step-${i}`} i={i} />
+            ))}
+          </Wrapper>
+        </InputProvider>
       )
     }
 
     const Wrapper = () => (
-      <>
-        <Provider value={client}>
-          <Styled.p>{` `}</Styled.p>
-          <RecipeInterpreter />
-        </Provider>
-      </>
+      <Provider value={client}>
+        <Styled.p>{` `}</Styled.p>
+        <RecipeInterpreter />
+      </Provider>
     )
 
     const Recipe = () => <Wrapper />

@@ -20,6 +20,7 @@ const recipeMachine = Machine(
       commands: [],
       stepResources: [],
       stepsAsMdx: [],
+      inputs: {},
     },
     states: {
       parsingRecipe: {
@@ -99,7 +100,7 @@ const recipeMachine = Machine(
         entry: [`deleteOldPlan`],
         invoke: {
           id: `createPlan`,
-          src: (context, event) => async (cb, _onReceive) => {
+          src: (context, event) => async (cb, onReceive) => {
             try {
               const result = await createPlan(context, cb)
               return result
@@ -127,30 +128,22 @@ const recipeMachine = Machine(
               error: (context, event) => event.data,
             }),
           },
-          INPUT: {
-            target: `waitingForInput`,
-            actions: assign({
-              input: (context, event) => {
-                const data = event.data[0] || {}
-
-                return {
-                  resourceUuid: data.resourceUuid,
-                  props: data._object,
-                  details: data.details,
-                }
-              },
-            }),
-          },
-        },
-      },
-      waitingForInput: {
-        on: {
-          INPUT_CALLED: `validateSteps`,
         },
       },
       presentPlan: {
         on: {
           CONTINUE: `applyingPlan`,
+          INPUT_ADDED: {
+            target: `creatingPlan`,
+            actions: assign({
+              inputs: (context, event) => {
+                const inputs = context.inputs || {}
+                inputs[event.data.resourceUuid] = event.data.props
+
+                return inputs
+              },
+            }),
+          },
         },
       },
       applyingPlan: {
@@ -169,8 +162,6 @@ const recipeMachine = Machine(
               cb(`TICK`)
             }, 10000)
 
-            // TODO pass in cb & applyPlan can update on each resource
-            // update so UI can get streaming updates.
             applyPlan(context.plan)
               .then(result => {
                 debug(`applied plan`)
@@ -249,7 +240,6 @@ const recipeMachine = Machine(
         if (event.data) {
           const stepResources = context.stepResources || []
           let plan = context.plan || []
-          console.log(`------------------`, event.data)
           plan = plan.map(p => {
             let changedResource = event.data.find(c => c._uuid === p._uuid)
             if (!changedResource) return p
@@ -257,13 +247,6 @@ const recipeMachine = Machine(
             p.isDone = true
             return p
           })
-          console.log({ plan })
-          // const messages = event.data.map(e => {
-          // return {
-          // _message: e._message,
-          // _currentStep: context.currentStep,
-          // }
-          // })
           return {
             plan,
           }

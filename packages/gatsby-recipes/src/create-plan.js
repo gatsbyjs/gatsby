@@ -8,7 +8,7 @@ module.exports = async (context, cb) => {
   const stepAsMdx = context.steps.join(`\n`)
 
   try {
-    const result = await render(stepAsMdx, cb)
+    const result = await render(stepAsMdx, cb, context.inputs)
     return result
   } catch (e) {
     throw e

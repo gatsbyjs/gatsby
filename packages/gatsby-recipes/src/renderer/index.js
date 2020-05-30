@@ -40,7 +40,7 @@ const transformJsx = jsx => {
   return code
 }
 
-module.exports = (mdxSrc, cb) => {
+module.exports = (mdxSrc, cb, context) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
@@ -50,7 +50,7 @@ module.exports = (mdxSrc, cb) => {
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
   try {
-    const result = render(component(...scopeValues), cb)
+    const result = render(component(...scopeValues), cb, context)
     return result
   } catch (e) {
     throw e
