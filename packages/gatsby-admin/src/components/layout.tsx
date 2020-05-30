@@ -2,7 +2,7 @@
 import { jsx, Flex } from "strict-ui"
 import Providers from "./providers"
 import Navbar from "./navbar"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 
 const Layout: React.FC<{}> = ({ children }) => (
   <Providers>
