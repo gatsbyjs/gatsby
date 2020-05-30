@@ -121,7 +121,9 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
     <SecondaryButton
       onClick={(evt): void => {
         evt.preventDefault()
-        deleteGatsbyPlugin({ name })
+        if (window.confirm(`Are you sure you want to uninstall ${name}?`)) {
+          deleteGatsbyPlugin({ name })
+        }
       }}
     >
       Uninstall
