@@ -189,7 +189,7 @@ However, it's advised to use a premium SSL certificate from any SSL Certificate 
 
    Run the following command,
 
-   ```
+   ```bash
    sudo certbot --nginx
    ```
 
