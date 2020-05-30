@@ -119,7 +119,14 @@ class Color extends React.Component {
                   >
                     WCAG Contrast Score
                   </Text>
-                  <Flex as="ul" m={0} p={0} css={{ listStyle: `none` }}>
+                  <Flex
+                    as="ul"
+                    sx={{
+                      m: 0,
+                      p: 0,
+                      listStyle: `none`,
+                    }}
+                  >
                     <Text as="li" mr={4} mb={0}>
                       <strong>3</strong> AAA
                     </Text>
