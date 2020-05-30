@@ -116,23 +116,22 @@ const SectionHeading: React.FC<HeadingProps> = props => (
   />
 )
 
-const PluginCard: React.FC<{ name: string; description?: string }> = ({
-  name,
-  description,
-}) => (
+const PluginCard: React.FC<{
+  plugin: { name: string; description?: string }
+}> = ({ plugin }) => (
   <Flex
     flexDirection="column"
     gap={6}
     sx={{ backgroundColor: `grey.80`, padding: 5, borderRadius: 2 }}
   >
     <Heading as="h2" sx={{ color: `white`, fontWeight: `500`, fontSize: 3 }}>
-      {name}
+      {plugin.name}
     </Heading>
     <Text sx={{ color: `grey.40` }}>
-      {description || <em>No description.</em>}
+      {plugin.description || <em>No description.</em>}
     </Text>
     <Flex justifyContent="flex-end" sx={{ width: `100%` }}>
-      <DestroyButton name={name} />
+      <DestroyButton name={plugin.name} />
     </Flex>
   </Flex>
 )
@@ -144,6 +143,7 @@ const Index: React.FC<{}> = () => {
         allGatsbyPlugin {
           nodes {
             name
+            description
             id
             shadowedFiles
             shadowableFiles
@@ -164,7 +164,7 @@ const Index: React.FC<{}> = () => {
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
           .map(plugin => (
-            <PluginCard key={plugin.id} name={plugin.name} />
+            <PluginCard key={plugin.id} plugin={plugin} />
           ))}
       </Grid>
       <InstallInput />
@@ -174,7 +174,7 @@ const Index: React.FC<{}> = () => {
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
           .map(plugin => (
-            <PluginCard key={plugin.id} name={plugin.name} />
+            <PluginCard key={plugin.id} plugin={plugin} />
           ))}
       </Grid>
 
