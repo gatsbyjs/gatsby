@@ -2,9 +2,13 @@
 
 A visual interface to configure your Gatsby site.
 
-We have not packaged this nicely yet, so it is not installable.
+## Development
 
-## Local development
+The Admin app itself is a standard Gatsby site. It fetches its data from the Recipes GraphQL server, which exposes all the information we need about the Gatsby site.
+
+It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experiment) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) to style the app and [urql](https://github.com/FormidableLabs/urql) to fetch the data from the GraphQL server.
+
+### Running it locally
 
 The easiest way to work on Admin locally is to develop Admin itself.
 
@@ -13,7 +17,7 @@ The easiest way to work on Admin locally is to develop Admin itself.
 
 > If you see eslint errors you'll need to temporarily replace all references to `___loader` with `window.___loader` in `packages/gatsby-link/index.js`.
 
-### Using it with a local site
+### Running it on a local site
 
 To try Admin with one of your sites locally, use the `gatsby-dev-cli` to copy the local versions of `gatsby`, `gatsby-cli`, `gatsby-recipes`, `gatsby-core-utils` and `gatsby-admin` into your project:
 
