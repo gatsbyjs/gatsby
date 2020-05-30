@@ -174,6 +174,8 @@ const ContentfulSpace = ({ _uuid, ...props }) => {
     },
   })
 
+  const { children, ...editableProps } = props
+
   const setProp = key => e => {
     const newState = {
       ...inputState,
@@ -193,7 +195,7 @@ const ContentfulSpace = ({ _uuid, ...props }) => {
 
   return (
     <form key={_uuid}>
-      {Object.entries(props).map(([key, value]) => (
+      {Object.entries(editableProps).map(([key, value]) => (
         <label key={key}>
           {key} <br />
           <input
@@ -263,6 +265,8 @@ const components = {
   RecipeIntroduction: props => <div>{props.children}</div>,
   RecipeStep: props => <div>{props.children}</div>,
   ContentfulSpace,
+  ContentfulEnvironment: () => null,
+  ContentfulType: () => null,
 }
 
 const log = (label, textOrObj) => {
@@ -434,6 +438,11 @@ const RecipeGui = ({
               }}
             />
           )}
+          {resourcePlan.resourceChildren
+            ? resourcePlan.resourceChildren.map(resource => (
+                <ResourcePlan key={resource._uuid} resourcePlan={resource} />
+              ))
+            : null}
         </div>
       )
 
@@ -444,12 +453,9 @@ const RecipeGui = ({
           date: new Date(),
         })
 
-        console.log(state.context.plan, i)
         const stepResources = state.context?.plan?.filter(
           p => parseInt(p._stepMetadata.step, 10) === i + 1
         )
-
-        console.log({ stepResources })
 
         const [complete, setComplete] = useState(false)
         if (output.title !== `` && output.body !== ``) {
@@ -715,6 +721,30 @@ const RecipeGui = ({
         return `Install Recipe`
       }
 
+      const ResourceChildren = ({ resourceChildren }) => {
+        if (!resourceChildren || !resourceChildren.length) {
+          return null
+        }
+
+        return (
+          <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+            {resourceChildren.map(resource => (
+              <Styled.li
+                sx={{
+                  listStyleType: `none`,
+                }}
+                key={resource._uuid}
+              >
+                <ResourceMessage resource={resource} />
+                <ResourceChildren
+                  resourceChildren={resource.resourceChildren}
+                />
+              </Styled.li>
+            ))}
+          </Styled.ul>
+        )
+      }
+
       return (
         <InputProvider value={state.context.inputs || {}}>
           <Wrapper>
@@ -767,6 +797,9 @@ const RecipeGui = ({
                         key={`${resourceName}-plan-${i}`}
                       >
                         <ResourceMessage resource={p} />
+                        <ResourceChildren
+                          resourceChildren={p.resourceChildren}
+                        />
                       </Styled.li>
                     ))}
                   </Styled.ul>

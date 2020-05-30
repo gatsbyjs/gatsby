@@ -2,9 +2,9 @@ import React, { useContext } from "react"
 
 const ResourceContext = React.createContext({})
 
-export const useResourceContext = resourceName => {
+export const useResourceContext = () => {
   const context = useContext(ResourceContext)
-  return context[resourceName]
+  return context
 }
 
 export const ResourceProvider = ({ data: providedData, children }) => {
