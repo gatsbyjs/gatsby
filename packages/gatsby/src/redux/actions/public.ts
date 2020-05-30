@@ -1108,7 +1108,7 @@ export const setBabelPreset = (
  */
 export const createJob = (
   job: IGatsbyIncompleteJob["job"],
-  plugin?: IGatsbyPlugin
+  plugin: IGatsbyPlugin = null
 ): ICreateJobAction => {
   return {
     type: `CREATE_JOB`,
