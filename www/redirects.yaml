@@ -154,3 +154,5 @@
   toPath: /docs/source-plugin-tutorial
 - fromPath: /docs/page-build-optimizations-for-incremental-data-changes
   toPath: /docs/conditional-page-builds
+- fromPath: /docs/contributing/translation/ui-messages/
+  toPath: /docs/contributing/translation/
