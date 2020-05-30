@@ -43,4 +43,4 @@ The impressive success of the Serverless site convinced Narayan to look first to
 
 > “Gatsby will work really well — and it will increase your conversion rates.”
 
-_Learn about the power of the Gatsby plug-in ecosystem through [this webinar](https://www.gatsbyjs.com/gatsby-plugins) - and check out our newly launched [Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) feature in Gatsby Cloud for up to **1000x** faster builds for sites built on Gatsby!_
+_Learn about the power of the Gatsby plug-in ecosystem through [this webinar](https://www.gatsbyjs.com/gatsby-plugins) - and check out our newly launched [Incremental Builds](/blog/2020-04-22-announcing-incremental-builds/) feature in Gatsby Cloud for up to **1000x** faster builds for sites built on Gatsby!_

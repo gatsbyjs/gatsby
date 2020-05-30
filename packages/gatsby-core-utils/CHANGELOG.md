@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.2...gatsby-core-utils@1.3.3) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.1...gatsby-core-utils@1.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [1.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.0...gatsby-core-utils@1.3.1) (2020-05-20)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** create lock per service, rather than per site ([#24252](https://github.com/gatsbyjs/gatsby/issues/24252)) ([718deb3](https://github.com/gatsbyjs/gatsby/commit/718deb3))
+
+# [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.2.3...gatsby-core-utils@1.3.0) (2020-05-19)
+
+### Features
+
+- **gatsby:** Prompt users to restart process on gatsby-config & gatsby-node changes ([#22759](https://github.com/gatsbyjs/gatsby/issues/22759)) ([d4ec5e5](https://github.com/gatsbyjs/gatsby/commit/d4ec5e5))
+
 ## [1.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.2.2...gatsby-core-utils@1.2.3) (2020-05-18)
 
 ### Bug Fixes
