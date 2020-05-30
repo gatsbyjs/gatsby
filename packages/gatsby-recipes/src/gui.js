@@ -164,7 +164,7 @@ const RecipesList = ({ setRecipe }) => {
   )
 }
 
-const File = React.memo(({ _uuid, ...props }) => {
+const ContentfulSpace = ({ _uuid, ...props }) => {
   const inputProps = useInputByUuid(_uuid)
   const [inputState, setInputState] = useState({
     resourceUuid: _uuid,
@@ -205,7 +205,50 @@ const File = React.memo(({ _uuid, ...props }) => {
       ))}
     </form>
   )
-})
+}
+
+const File = ({ _uuid, ...props }) => {
+  const inputProps = useInputByUuid(_uuid)
+  const [inputState, setInputState] = useState({
+    resourceUuid: _uuid,
+    props: {
+      ...props,
+      ...inputProps,
+    },
+  })
+
+  const setProp = key => e => {
+    const newState = {
+      ...inputState,
+      props: {
+        ...inputState.props,
+        [key]: e.target.value,
+      },
+    }
+
+    setInputState(newState)
+
+    sendEvent({
+      event: `INPUT_ADDED`,
+      input: newState,
+    })
+  }
+
+  return (
+    <form key={_uuid}>
+      {Object.entries(props).map(([key, value]) => (
+        <label key={key}>
+          {key} <br />
+          <input
+            value={inputState.props[key] || value}
+            onChange={setProp(key)}
+          />
+          <br />
+        </label>
+      ))}
+    </form>
+  )
+}
 
 const components = {
   inlineCode: props => <code {...props} />,
@@ -219,6 +262,7 @@ const components = {
   NPMScript: () => null,
   RecipeIntroduction: props => <div>{props.children}</div>,
   RecipeStep: props => <div>{props.children}</div>,
+  ContentfulSpace,
 }
 
 const log = (label, textOrObj) => {
@@ -231,8 +275,8 @@ log(
 )
 
 const RecipeGui = ({
-  // recipe = `./test.mdx`,
-  recipe = `jest.mdx`,
+  recipe = `./test.mdx`,
+  //recipe = `jest.mdx`,
   // recipe,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,

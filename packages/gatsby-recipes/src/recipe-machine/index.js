@@ -162,7 +162,7 @@ const recipeMachine = Machine(
               cb(`TICK`)
             }, 10000)
 
-            applyPlan(context.plan)
+            applyPlan(context, cb)
               .then(result => {
                 debug(`applied plan`)
                 cb({ type: `onDone`, data: result })

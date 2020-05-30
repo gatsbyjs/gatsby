@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense, useContext } from "react"
 import Queue from "p-queue"
 
 import resources from "../resources"
@@ -15,6 +15,10 @@ const queue = new Queue({ concurrency: 1, autoStart: false })
 let errors = []
 const cache = new Map()
 
+const ModeContext = React.createContext({})
+const useMode = () => useContext(ModeContext)
+const ModeProvider = ModeContext.Provider
+
 const getInvalidProps = errors => {
   const invalidProps = errors.filter(e => {
     const details = e.details
@@ -30,11 +34,13 @@ const getUserProps = props => {
   return userProps
 }
 
-const Wrapper = ({ children, inputs }) => (
+const Wrapper = ({ children, inputs, isApply }) => (
   <ErrorBoundary>
-    <InputProvider value={inputs}>
-      <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
-    </InputProvider>
+    <ModeProvider value={{ mode: isApply ? `apply` : `plan` }}>
+      <InputProvider value={inputs}>
+        <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+      </InputProvider>
+    </ModeProvider>
   </ErrorBoundary>
 )
 
@@ -44,14 +50,15 @@ const ResourceComponent = ({
   children,
   ...props
 }) => {
+  const { mode } = useMode()
   const step = useRecipeStep()
   const inputProps = useInputByUuid(_uuid)
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 
-  const resourceData = readResource(
+  const resourceData = handleResource(
     Resource,
-    { root: process.cwd(), _uuid },
+    { root: process.cwd(), _uuid, mode },
     allProps
   )
 
@@ -79,24 +86,27 @@ const validateResource = (resourceName, context, props) => {
   return error
 }
 
-const readResource = (resourceName, context, props) => {
+const handleResource = (resourceName, context, props) => {
   const error = validateResource(resourceName, context, props)
   if (error) {
     errors.push(error)
     return null
   }
 
-  const key = JSON.stringify({ resourceName, ...props })
+  const { mode } = context
+
+  const key = JSON.stringify({ resourceName, ...props, mode })
   const cachedResult = cache.get(key)
 
   if (cachedResult) {
     return cachedResult
   }
 
+  const fn = mode === `apply` ? `create` : `plan`
+
   let promise
   try {
-    promise = resources[resourceName]
-      .plan(context, props)
+    promise = resources[resourceName][fn](context, props)
       .then(result => cache.set(key, result))
       .catch(e => {
         console.log(e)
@@ -111,10 +121,14 @@ const readResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = async (recipe, cb, inputs = {}) => {
+const render = async (recipe, cb, inputs = {}, isApply) => {
   const plan = {}
 
-  const recipeWithWrapper = <Wrapper inputs={inputs}>{recipe}</Wrapper>
+  const recipeWithWrapper = (
+    <Wrapper inputs={inputs} isApply={isApply}>
+      {recipe}
+    </Wrapper>
+  )
 
   const renderResources = async () => {
     queue.pause()

@@ -6,6 +6,7 @@ const npmPackageResource = require(`./providers/npm/package`)
 const npmPackageScriptResource = require(`./providers/npm/script`)
 const npmPackageJsonResource = require(`./providers/npm/package-json`)
 const gitIgnoreResource = require(`./providers/git/ignore`)
+const contentfulSpace = require(`./providers/contentful/space`)
 
 const componentResourceMapping = {
   File: fileResource,
@@ -16,6 +17,7 @@ const componentResourceMapping = {
   NPMScript: npmPackageScriptResource,
   NPMPackageJson: npmPackageJsonResource,
   GitIgnore: gitIgnoreResource,
+  ContentfulSpace: contentfulSpace,
 }
 
 module.exports = componentResourceMapping
