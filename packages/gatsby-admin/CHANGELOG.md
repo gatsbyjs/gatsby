@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.53...gatsby-admin@0.1.54) (2020-05-30)
+
+### Features
+
+- **gatsby:** serve Admin from develop parent process ([#23734](https://github.com/gatsbyjs/gatsby/issues/23734)) ([a6eb21b](https://github.com/gatsbyjs/gatsby/commit/a6eb21b))
+
 ## [0.1.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.52...gatsby-admin@0.1.53) (2020-05-28)
 
 **Note:** Version bump only for package gatsby-admin

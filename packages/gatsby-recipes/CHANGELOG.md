@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.31...gatsby-recipes@0.1.32) (2020-05-30)
+
+### Features
+
+- **gatsby-recipes:** Add description to Gatsby Plugin resource ([#24602](https://github.com/gatsbyjs/gatsby/issues/24602)) ([3429474](https://github.com/gatsbyjs/gatsby/commit/3429474))
+
 ## [0.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.30...gatsby-recipes@0.1.31) (2020-05-28)
 
 ### Bug Fixes
