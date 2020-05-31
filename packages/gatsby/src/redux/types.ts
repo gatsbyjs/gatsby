@@ -111,7 +111,7 @@ export interface IGatsbyNode {
   internal: {
     fieldOwners?: any // TODO
     type: string
-    counter?: number
+    counter: number
     owner?: string
     contentDigest: string
     mediaType?: string
@@ -492,7 +492,7 @@ export interface IValidationErrorAction {
 
 export interface IDeletePageAction {
   type: `DELETE_PAGE`
-  payload: Omit<IPageInput, "component">
+  payload: IPageInput
 }
 
 export interface IDeleteNodeAction extends IActionOptions {

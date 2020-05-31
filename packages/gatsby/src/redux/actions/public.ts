@@ -112,9 +112,7 @@ const findChildren = (
 /**
  * Delete a page
  */
-export const deletePage = (
-  page: Omit<IPageInput, "component">
-): IDeletePageAction => {
+export const deletePage = (page: IPageInput): IDeletePageAction => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
