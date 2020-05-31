@@ -18,7 +18,7 @@
     "csstype": "^2.6.10",
     "formik": "^2.1.4",
     "gatsby": "^2.22.15",
-    "gatsby-interface": "0.0.163",
+    "gatsby-interface": "^0.0.163",
     "gatsby-plugin-typescript": "^2.4.3",
     "gatsby-source-graphql": "^2.5.2",
     "react": "^16.12.0",
