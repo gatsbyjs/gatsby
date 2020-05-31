@@ -412,7 +412,7 @@ export interface ICreateJobAction {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"] = null
+  plugin: IGatsbyIncompleteJob["plugin"] | null
 }
 
 export interface ISetJobAction {
