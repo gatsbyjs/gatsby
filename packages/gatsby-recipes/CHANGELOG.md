@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.33...gatsby-recipes@0.1.34) (2020-05-31)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Don't use 4000 as default recipes port as commonly used by people in apps ([#24665](https://github.com/gatsbyjs/gatsby/issues/24665)) ([fb89946](https://github.com/gatsbyjs/gatsby/commit/fb89946))
+
+## [0.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.32...gatsby-recipes@0.1.33) (2020-05-31)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Clean up dist folder before build ([#24663](https://github.com/gatsbyjs/gatsby/issues/24663)) ([bd0b558](https://github.com/gatsbyjs/gatsby/commit/bd0b558))
+
+## [0.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.31...gatsby-recipes@0.1.32) (2020-05-30)
+
+### Features
+
+- **gatsby-recipes:** Add description to Gatsby Plugin resource ([#24602](https://github.com/gatsbyjs/gatsby/issues/24602)) ([3429474](https://github.com/gatsbyjs/gatsby/commit/3429474))
+
+## [0.1.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.30...gatsby-recipes@0.1.31) (2020-05-28)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Don't attempt to remove a package that doesn't exist ([#24552](https://github.com/gatsbyjs/gatsby/issues/24552)) ([794812a](https://github.com/gatsbyjs/gatsby/commit/794812a))
+- **gatsby-recipes:** Properly remove plugins from gatsby config ([#24554](https://github.com/gatsbyjs/gatsby/issues/24554)) ([746c823](https://github.com/gatsbyjs/gatsby/commit/746c823))
+
+### Features
+
+- **gatsby-recipes:** Add FS/Directory resource ([#24077](https://github.com/gatsbyjs/gatsby/issues/24077)) ([5d7b879](https://github.com/gatsbyjs/gatsby/commit/5d7b879))
+- **gatsby-recipes:** Implement utility for turning graphql sdl to fields ([#24506](https://github.com/gatsbyjs/gatsby/issues/24506)) ([1cc804d](https://github.com/gatsbyjs/gatsby/commit/1cc804d))
+
 ## [0.1.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.29...gatsby-recipes@0.1.30) (2020-05-26)
 
 ### Bug Fixes

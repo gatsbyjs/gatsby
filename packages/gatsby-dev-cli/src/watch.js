@@ -8,7 +8,10 @@ const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
-const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
+const {
+  setDefaultSpawnStdio,
+  promisifiedSpawn,
+} = require(`./utils/promisified-spawn`)
 const { traversePackagesDeps } = require(`./utils/traverse-package-deps`)
 
 let numCopied = 0
@@ -29,6 +32,7 @@ async function watch(
   packages,
   { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
+  setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
   // as current logic of copying files will not work correctly.
   const yarnWorkspaceRoot = findWorkspaceRoot()

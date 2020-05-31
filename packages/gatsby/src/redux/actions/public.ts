@@ -1099,8 +1099,8 @@ export const setBabelPreset = (
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
@@ -1118,8 +1118,8 @@ export const createJob = (
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
