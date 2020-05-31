@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.32...gatsby-recipes@0.1.33) (2020-05-31)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Clean up dist folder before build ([#24663](https://github.com/gatsbyjs/gatsby/issues/24663)) ([bd0b558](https://github.com/gatsbyjs/gatsby/commit/bd0b558))
+
 ## [0.1.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.31...gatsby-recipes@0.1.32) (2020-05-30)
 
 ### Features
