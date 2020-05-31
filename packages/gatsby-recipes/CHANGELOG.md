@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.33...gatsby-recipes@0.1.34) (2020-05-31)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Don't use 4000 as default recipes port as commonly used by people in apps ([#24665](https://github.com/gatsbyjs/gatsby/issues/24665)) ([fb89946](https://github.com/gatsbyjs/gatsby/commit/fb89946))
+
 ## [0.1.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.32...gatsby-recipes@0.1.33) (2020-05-31)
 
 ### Bug Fixes
