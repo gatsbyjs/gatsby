@@ -102,7 +102,9 @@
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "build:watch": "npm run build -- --watch",
+    "prebuild": "rimraf dist",
     "prepare": "npm run build",
+    "prewatch": "rimraf dist",
     "watch": "npm run build:watch",
     "test": "jest",
     "test:watch": "jest --watch"
