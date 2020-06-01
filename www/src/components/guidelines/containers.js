@@ -28,7 +28,9 @@ export const Section = ({ children, ...rest }) => (
       ...rest,
       ...container,
       py: [4, null, 5, 8],
-      px: [null, null, null, 10],
+      [mediaQueries.md]: {
+        px: 10,
+      },
     }}
   >
     {children}
