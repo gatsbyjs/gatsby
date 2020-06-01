@@ -112,7 +112,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
-
   const [statusServerPort, developPort, debugPort] = await Promise.all([
     getRandomPort(),
     getRandomPort(),
