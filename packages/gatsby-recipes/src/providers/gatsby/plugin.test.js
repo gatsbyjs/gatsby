@@ -18,7 +18,7 @@ const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-hello-world`
 )
-const name = `gatsby-plugin-foo`
+const name = `gatsby-source-filesystem`
 
 describe(`gatsby-plugin resource`, () => {
   let tmpDir
@@ -192,7 +192,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`handles config options as an object`, async () => {
     const configSrc = await fs.readFile(configPath, `utf8`)
     const newConfigSrc = addPluginToConfig(configSrc, {
-      name: `gatsby-plugin-foo`,
+      name: `gatsby-source-filesystem`,
       options: {
         foo: 1,
         bar: `baz`,
@@ -214,7 +214,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`creates default gatsby-config.js if there isn't one already`, async () => {
     const result = await plugin.create(
       { root: emptyRoot },
-      { name: `gatsby-plugin-foo` }
+      { name: `gatsby-source-filesystem` }
     )
     expect(result).toMatchSnapshot()
   })

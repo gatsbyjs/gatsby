@@ -1,3 +1,19 @@
+- title: MobileUI
+  main_url: https://mobileui.dev
+  url: https://mobileui.dev
+  description: >
+    A java-based framework for cross-platform app development with Java and Kotlin.
+  categories:
+    - Mobile Development
+    - Technology
+    - Programming
+    - Landing Page
+    - Blog
+    - WordPress
+    - E-commerce
+  built_by: NeverNull GmbH
+  built_by_url: https://nevernull.io
+  featured: false
 - title: ReactJS
   main_url: https://reactjs.org/
   url: https://reactjs.org/

@@ -1,3 +1,4 @@
 module.exports = {
-  plugins: [`gatsby-plugin-typescript`]
+  plugins: [],
+  pathPrefix: `/___admin`
 }
