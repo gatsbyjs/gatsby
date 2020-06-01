@@ -33,7 +33,7 @@ The above code will add a link to the contact page, automatically rendered in HT
 
 ## Using relative links in the `<Link />` component
 
-Relative links are ones where the `to` property doesn't start with a `/`. These behave slightly different from regular browser links, and instead follow [the behavior of @reach/router](https://reach.tech/router/nesting). This avoids confusion with trailing slashes by ignoring them entirely and treating every page as if it were a directory. For example, if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`. Similarly, if you are on `/blog` or `/blog/` a link to `hello-world` will take you to `/blog/hello-world`.
+Relative links are ones where the `to` property doesn't start with a `/`. These behave slightly differently from relative links in `<a>` tags, and instead follow [the behavior of @reach/router](https://reach.tech/router/nesting). This avoids confusion with trailing slashes by ignoring them entirely and treating every page as if it were a directory. For example, if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`. Similarly, if you are on `/blog` or `/blog/` a link to `hello-world` will take you to `/blog/hello-world`.
 
 ## Using `<a>` for external links
 
