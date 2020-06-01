@@ -1,7 +1,7 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.1.31",
+  "version": "0.1.34",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "main": "dist/index.js",
   "bugs": {
@@ -102,7 +102,9 @@
   "scripts": {
     "build": "babel src --out-dir dist --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "build:watch": "npm run build -- --watch",
+    "prebuild": "rimraf dist",
     "prepare": "npm run build",
+    "prewatch": "rimraf dist",
     "watch": "npm run build:watch",
     "test": "jest",
     "test:watch": "jest --watch"

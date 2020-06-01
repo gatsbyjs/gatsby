@@ -19,7 +19,7 @@ In May we also announced our [series B round of funding round](/blog/2020-05-27-
 
 Your content editors can now enjoy “instant preview” with Strapi and Gatsby Cloud! If you're new to Strapi, it’s a JavaScript-based, open source CMS. and a great pair for Gatsby projects. The Gatsby starter the Strapi team made for this project is gorgeous 😍 .
 
-![Strapi blog screenshot](/strapi-blog.png) 
+![Strapi blog screenshot](/strapi-blog.png)
 
 Give Strapi a try with [this step-by-step tutorial](<(/blog/2020-05-12-strapi-instant-content-preview-plugin/)>).
 
@@ -65,7 +65,7 @@ This month we made the Gatsby Typescript plugin part of core Gatsby, so you no l
 
 In may we continued to improve our error messaging (see example [here](https://github.com/gatsbyjs/gatsby/pull/24186) and [here](https://github.com/gatsbyjs/gatsby/pull/23741)). But what about slow GraphQL queries? Well, Gatsby now supports performance tracing using the opentracing standard. You can to [enable tracing for GraphQL queries](/docs/performance-tracing/). This is useful because it allows you to debug why querying may be slow in your Gatsby project.
 
-## 👩‍🚀 New in the Gatsby Community 
+## 👩‍🚀 New in the Gatsby Community
 
 ### Gatsby Days is June 2 - 3
 
@@ -103,7 +103,7 @@ Thank you **Akuoko Daniel Jnr** for helpful your article, ["Increasing Website P
 
 And special thanks to our long time community member, **Horacio Herrera** for making a site to [teach Gatsby to Web Developers in Spanish](https://aprendegatsby.com/). We appreciate you!
 
-## 🪐 New in the Gatsby Ecosystem 
+## 🪐 New in the Gatsby Ecosystem
 
 ### Gatsby Themes & Plugins
 
