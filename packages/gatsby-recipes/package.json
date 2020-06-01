@@ -61,6 +61,7 @@
     "resolve-cwd": "^3.0.0",
     "semver": "^7.3.2",
     "single-trailing-newline": "^1.0.0",
+    "strip-ansi": "^6.0.0",
     "style-to-object": "^0.3.0",
     "subscriptions-transport-ws": "^0.9.16",
     "svg-tag-names": "^2.0.1",
@@ -74,7 +75,6 @@
     "@babel/cli": "^7.8.4",
     "react": "^16.12.0",
     "rimraf": "^3.0.2",
-    "strip-ansi": "^6.0.0",
     "tmp-promise": "^2.1.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
