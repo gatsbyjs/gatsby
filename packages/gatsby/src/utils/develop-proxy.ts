@@ -1,7 +1,9 @@
 import { createServer } from "http"
 import httpProxy from "http-proxy"
+import path from "path"
 import fs from "fs-extra"
 import { getServices } from "gatsby-core-utils/dist/service-lock"
+import st from "st"
 import restartingScreen from "./restarting-screen"
 
 interface IProxyControls {
@@ -11,6 +13,17 @@ interface IProxyControls {
 }
 
 const noop = (): void => {}
+
+const adminFolder = path.join(
+  path.dirname(require.resolve(`gatsby-admin`)),
+  `public`
+)
+
+const serveAdmin = st({
+  path: adminFolder,
+  url: `/___admin`,
+  index: `index.html`,
+})
 
 export const startDevelopProxy = (input: {
   proxyPort: number
@@ -24,6 +37,7 @@ export const startDevelopProxy = (input: {
     changeOrigin: true,
     preserveHeaderKeyCase: true,
     autoRewrite: true,
+    ws: true,
   })
 
   // Noop on proxy errors, as this throws a bunch of "Socket hang up"
@@ -31,6 +45,13 @@ export const startDevelopProxy = (input: {
   proxy.on(`error`, noop)
 
   const server = createServer((req, res) => {
+    if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
+      const wasAdminRequest = serveAdmin(req, res)
+      if (wasAdminRequest) {
+        return
+      }
+    }
+
     // Add a route at localhost:8000/___services for service discovery
     if (req.url === `/___services`) {
       getServices(input.programPath).then(services => {
@@ -56,6 +77,10 @@ export const startDevelopProxy = (input: {
     }
 
     proxy.web(req, res)
+  })
+
+  server.on(`upgrade`, function (req, socket, head) {
+    proxy.ws(req, socket, head)
   })
 
   server.listen(input.proxyPort)

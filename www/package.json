@@ -8,7 +8,6 @@
     "@babel/traverse": "^7.9.6",
     "@emotion/styled": "^10.0.27",
     "@jamo/graphql-request": "2.0.3",
-    "@lingui/react": "^2.9.1",
     "@loadable/component": "^5.12.0",
     "@mdx-js/mdx": "^1.6.1",
     "@reach/skip-nav": "^0.6.2",
@@ -116,26 +115,6 @@
   "license": "MIT",
   "main": "n/a",
   "private": true,
-  "lingui": {
-    "sourceLocale": "en",
-    "extractBabelOptions": {
-      "presets": [
-        "babel-preset-gatsby"
-      ]
-    },
-    "localeDir": "src/data/locales",
-    "srcPathDirs": [
-      "src/components",
-      "src/pages",
-      "src/templates",
-      "src/views"
-    ],
-    "srcPathIgnorePatterns": [
-      "__tests__"
-    ],
-    "format": "po",
-    "sorting": "origin"
-  },
   "scripts": {
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
@@ -146,15 +125,9 @@
     "test": "jest",
     "scrapeStarters": "cd src/data/StarterShowcase && node scraper.js",
     "stylelint": "stylelint './src/**/*.js'",
-    "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0",
-    "lingui:add-locale": "lingui add-locale",
-    "lingui:extract": "lingui extract",
-    "lingui:compile": "lingui compile",
-    "lingui:build": "yarn lingui:extract && yarn lingui:compile"
+    "forestry:preview": "gatsby develop -p 8080 -H 0.0.0.0"
   },
   "devDependencies": {
-    "@lingui/cli": "^2.9.1",
-    "@lingui/macro": "^2.9.1",
     "@testing-library/jest-dom": "^5.7.0",
     "@testing-library/react": "^10.0.4",
     "babel-core": "^7.0.0-bridge.0",
