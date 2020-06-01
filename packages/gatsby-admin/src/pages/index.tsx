@@ -1,5 +1,15 @@
+/** @jsx jsx */
 import React from "react"
+import { jsx, Flex, Grid } from "strict-ui"
 import { useQuery, useMutation } from "urql"
+import {
+  Heading,
+  HeadingProps,
+  Text,
+  Button,
+  InputField,
+  InputFieldControl,
+} from "gatsby-interface"
 
 const InstallInput: React.FC<{}> = () => {
   const [value, setValue] = React.useState(``)
@@ -31,15 +41,24 @@ const InstallInput: React.FC<{}> = () => {
         })
       }}
     >
-      <label>
-        Install:
-        <input
+      <InputField id="install-plugin">
+        <InputFieldControl
+          placeholder="gatsby-plugin-feed"
           value={value}
-          onChange={(evt): void => setValue(evt.target.value)}
-          type="text"
-          placeholder="gatsby-plugin-cool"
+          onChange={(e): void => setValue(e.target.value)}
+          sx={{
+            backgroundColor: `background`,
+            borderColor: `grey.60`,
+            color: `white`,
+            width: `initial`,
+            "&:focus": {
+              borderColor: `grey.40`,
+              // TODO(@mxstbr): Fix this focus outline
+              boxShadow: `none`,
+            },
+          }}
         />
-      </label>
+      </InputField>
     </form>
   )
 }
@@ -66,16 +85,47 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   `)
 
   return (
-    <button
-      aria-label={`Delete ${name}`}
-      onClick={(): void => {
+    <Button
+      variant="SECONDARY"
+      size="S"
+      sx={{
+        paddingX: 5,
+        paddingY: 4,
+        color: `white`,
+      }}
+      onClick={(evt): void => {
+        evt.preventDefault()
         deleteGatsbyPlugin({ name })
       }}
     >
-      X
-    </button>
+      Uninstall
+    </Button>
   )
 }
+
+const SectionHeading: React.FC<HeadingProps> = props => (
+  <Heading sx={{ color: `white`, fontWeight: `500` }} {...props} />
+)
+
+const PluginCard: React.FC<{ name: string }> = ({ name }) => (
+  <Flex
+    flexDirection="column"
+    gap={7}
+    sx={{ backgroundColor: `grey.80`, padding: 5, borderRadius: 2 }}
+  >
+    <Text size="L" sx={{ color: `white`, fontWeight: `500` }}>
+      {name}
+    </Text>
+    <Text sx={{ color: `grey.40` }}>
+      Start setting up your sites styles with one of our curated recipes to
+      write styling the way you love. Choose from libraries like theme-UI,
+      emotion, and styled-components.
+    </Text>
+    <Flex justifyContent="flex-end" sx={{ width: `100%` }}>
+      <DestroyButton name={name} />
+    </Flex>
+  </Flex>
+)
 
 const Index: React.FC<{}> = () => {
   const [{ data, fetching, error }] = useQuery({
@@ -89,10 +139,6 @@ const Index: React.FC<{}> = () => {
             shadowableFiles
           }
         }
-        npmPackageJson(id: "name") {
-          name
-          value
-        }
       }
     `,
   })
@@ -102,46 +148,28 @@ const Index: React.FC<{}> = () => {
   if (error) return <p>Oops something went wrong.</p>
 
   return (
-    <>
-      <h1>{data.npmPackageJson.value.replace(/^"|"$/g, ``)}</h1>
-      <h2>Plugins</h2>
-      <ul>
+    <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
+      <SectionHeading>Plugins</SectionHeading>
+      <Grid gap={6} columns={[1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
           .map(plugin => (
-            <li key={plugin.id}>
-              {plugin.name} <DestroyButton name={plugin.name} />
-            </li>
+            <PluginCard key={plugin.id} name={plugin.name} />
           ))}
-      </ul>
+      </Grid>
       <InstallInput />
-      <h2>Themes</h2>
-      <ul>
+
+      <SectionHeading>Themes</SectionHeading>
+      <Grid gap={6} columns={[1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
           .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
           .map(plugin => (
-            <li key={plugin.id}>
-              <details>
-                <summary>
-                  {plugin.name} <DestroyButton name={plugin.name} />
-                </summary>
-                <ul>
-                  {plugin.shadowedFiles.map(file => (
-                    <li key={file} style={{ opacity: 0.6 }}>
-                      {file} (shadowed)
-                    </li>
-                  ))}
-                  {plugin.shadowableFiles.map(file => (
-                    <li key={file}>{file}</li>
-                  ))}
-                </ul>
-              </details>
-            </li>
+            <PluginCard key={plugin.id} name={plugin.name} />
           ))}
-      </ul>
+      </Grid>
 
       <InstallInput />
-    </>
+    </Flex>
   )
 }
 

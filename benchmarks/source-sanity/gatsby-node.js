@@ -20,8 +20,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       path: article._id,
       component: require.resolve(`./src/templates/article.js`),
       context: {
-        id: article._id
-      }
+        id: article._id,
+      },
     })
   })
 }
