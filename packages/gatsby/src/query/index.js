@@ -163,7 +163,7 @@ const processQueries = async (
   { activity, graphqlRunner, graphqlTracing }
 ) => {
   const queue = queryQueue.createBuildQueue(graphqlRunner, { graphqlTracing })
-  await queryQueue.processBatch(queue, queryJobs, activity)
+  return queryQueue.processBatch(queue, queryJobs, activity)
 }
 
 const createStaticQueryJob = (state, queryId) => {

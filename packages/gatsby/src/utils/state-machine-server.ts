@@ -38,7 +38,13 @@ export const startStateMachineServer = (
         if (ws.readyState === WebSocket.OPEN) {
           last = context
           console.log(`sending message`, context.value)
-          ws.send(JSON.stringify({ event: `SET_STATE`, state: context.value }))
+          ws.send(
+            JSON.stringify({
+              event: `SET_STATE`,
+              state: context.value,
+              timestamp: Date.now(),
+            })
+          )
         }
       }
     })

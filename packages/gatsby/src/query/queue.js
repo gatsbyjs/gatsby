@@ -19,7 +19,7 @@ const createBuildQueue = (graphqlRunner, runnerOptions = {}) => {
   }
   const handler = ({ job, activity }, callback) =>
     queryRunner(graphqlRunner, job, activity?.span)
-      .then(result => callback(null, result))
+      .then(result => callback(null, { result, job }))
       .catch(callback)
   const queue = new Queue(handler, createBaseOptions())
   return queue
@@ -74,11 +74,15 @@ const processBatch = async (queue, jobs, activity) => {
   if (jobs.length === 0) {
     return Promise.resolve()
   }
+  const results = new Map()
 
   return new Promise((resolve, reject) => {
     let taskFinishCallback
     if (activity.tick) {
-      taskFinishCallback = () => activity.tick()
+      taskFinishCallback = (id, { job, result }) => {
+        activity.tick()
+        results.set(job.id, result)
+      }
       queue.on(`task_finish`, taskFinishCallback)
     }
 
@@ -100,8 +104,6 @@ const processBatch = async (queue, jobs, activity) => {
       }
       queue = null
     }
-
-    const results = new Map()
 
     queue
       // Note: the first arg is the path, the second the error
