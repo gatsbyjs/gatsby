@@ -100,20 +100,21 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
           .filter((_, lineNumber) => lines.includes(lineNumber + 1))
           .join(`\n`)
       } else if (sname.length) {
-        let index1 = code.indexOf(`start-snippet{${sname}}`)
-        if (index1 > -1) {
-          let index2 = code.indexOf(`\n`, index1)
-          if (index2 > -1) {
-            index2 = index2 + 1 // skip the newline
-            let index3 = code.indexOf(`end-snippet{${sname}}`, index2)
-            if (index3 > -1) {
-              let index4 = code.lastIndexOf(`\n`, index3)
-              code = code.slice(index2, index4)
-            } else {
-              code = code.slice(index2)
-            }
-          } else {
-            code = ``
+        const startSnippetMatcher = new RegExp(
+          `start-snippet{${sname}}[^\r\n]*[\r\n](.*)`,
+          `gs`
+        )
+        const startSnippetMatch = startSnippetMatcher.exec(code)
+        if (startSnippetMatch?.length >= 2) {
+          code = startSnippetMatch[1]
+
+          const endSnippetMatcher = new RegExp(
+            `(.*)[\r\n][^\r\n]*end-snippet{${sname}}`,
+            `gs`
+          )
+          const endSnippetMatch = endSnippetMatcher.exec(code)
+          if (endSnippetMatch?.length >= 2) {
+            code = endSnippetMatch[1]
           }
         } else {
           code = ``
