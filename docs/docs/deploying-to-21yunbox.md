@@ -26,11 +26,11 @@ You can set up a Gatsby site on 21YunBox in two quick steps:
 1. Create a new **Web Service** on 21YunBox, and give 21YunBox permission to access your GitHub or Gitee repo.
 2. Use the following values during creation:
 
-   |                       |                                            |
-   | --------------------- | ------------------------------------------ |
-   | **Environment**       | `Static Site`                              |
+   |                       |                                                  |
+   | --------------------- | ------------------------------------------------ |
+   | **Environment**       | `Static Site`                                    |
    | **Build Command**     | `yarn && yarn build` (or your own build command) |
-   | **Publish Directory** | `./public` (or your own output directory)    |
+   | **Publish Directory** | `./public` (or your own output directory)        |
 
 That's it! Your site will be live on your 21YunBox URL (which looks like `yoursite.21yunbox.com`) as soon as the build is done.
 
