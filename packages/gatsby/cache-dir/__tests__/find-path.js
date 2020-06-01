@@ -81,6 +81,13 @@ describe(`find-path`, () => {
       )
     })
 
+    it(`should return the decoded path when encoded once or twice`, () => {
+      expect(findPath(`/notanapp%2Fmy-page`)).toBe(`/notanapp/my-page`)
+
+      // encoded twice
+      expect(findPath(`/notanapp%252Fmy-page`)).toBe(`/notanapp/my-page`)
+    })
+
     it(`should only process a request once`, () => {
       jest.resetModules()
       jest.mock(`@reach/router/lib/utils`)

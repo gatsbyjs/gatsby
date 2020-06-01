@@ -6,7 +6,9 @@ const pathCache = new Map()
 let matchPaths = []
 
 const trimPathname = rawPathname => {
-  const pathname = decodeURIComponent(rawPathname)
+  // Decode twice because encoded URIs might be encoded a second time when
+  // coming from the router.
+  const pathname = decodeURIComponent(decodeURIComponent(rawPathname))
   // Remove the pathPrefix from the pathname.
   const trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
     // Remove any hashfragment
