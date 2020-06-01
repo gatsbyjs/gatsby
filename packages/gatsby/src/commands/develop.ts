@@ -70,10 +70,14 @@ class ControllableScript {
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    this.process = spawn(`node`, [tmpFileName, this.debugPort && `--inspect-brk=${this.debugPort}`], {
-      env: process.env,
-      stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-    })
+    this.process = spawn(
+      `node`,
+      [tmpFileName, this.debugPort && `--inspect-brk=${this.debugPort}`],
+      {
+        env: process.env,
+        stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+      }
+    )
   }
   async stop(signal: string | null = null, code?: number): Promise<void> {
     this.isRunning = false
@@ -112,7 +116,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   const [statusServerPort, developPort, debugPort] = await Promise.all([
     getRandomPort(),
     getRandomPort(),
-    program.inspectBrk ? getRandomPort() : Promise.resolve(null)
+    program.inspectBrk ? getRandomPort() : Promise.resolve(null),
   ])
 
   const developProcess = new ControllableScript(
