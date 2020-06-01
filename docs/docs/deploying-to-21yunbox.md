@@ -4,7 +4,7 @@ title: Deploying to 21YunBox
 
 [21YunBox](https://www.21yunbox.com) provides blazing fast Chinese CDN, Continuous Deployment, one click HTTPS and [much more](https://www.21yunbox.com/docs/v2/index.html), providing developers a hassle-free solution to launch their web projects in China.
 
-Static sites are **insanely easy** on 21YunBox and include the following features:
+Static sites are **quick to deploy** on 21YunBox and include the following features:
 
 - Continuous, automatic builds & deploys from GitHub and Gitee.
 - Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org).
