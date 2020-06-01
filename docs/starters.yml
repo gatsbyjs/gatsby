@@ -6629,6 +6629,7 @@
   features:
     - Integrated with Shopify for pulling products
     - Checkout handled via Shopify 
+    - Includes variants for products
     - XML sitemap
     - Blog with Netlify CMS 
     - RSS feed
