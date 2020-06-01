@@ -301,7 +301,7 @@ fn factorial(x: u8) -> u32 {
 
 pub fn main() -> () {
     let x: u8 = 5;
-    // begin snippet{invokeA}
+    // start-snippet{invokeA}
     let xfact = factorial(x);
     // end-snippet{invokeA}
     println!("{} factorial is {}", &x, &xfact);
