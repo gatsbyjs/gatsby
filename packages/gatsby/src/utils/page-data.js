@@ -63,6 +63,10 @@ const flush = async () => {
     program,
   } = store.getState()
 
+  console.log({
+    staticQueriesByTemplate,
+  })
+
   const { pagePaths, templatePaths } = pendingPageDataWrites
 
   const pagesToWrite = Array.from(templatePaths).reduce(
@@ -76,11 +80,14 @@ const flush = async () => {
 
   for (const pagePath of pagesToWrite) {
     const page = pages.get(pagePath)
+    const staticQueryHashes = staticQueriesByTemplate
+      .get(page.componentPath)
+      .map(String)
     const body = await write(
       { publicDir: path.join(program.directory, `public`) },
       page,
       {
-        staticQueryHashes: staticQueriesByTemplate.get(page.componentPath),
+        staticQueryHashes,
       }
     )
 
@@ -111,4 +118,5 @@ module.exports = {
   remove,
   fixedPagePath,
   flush,
+  getFilePath,
 }

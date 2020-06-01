@@ -2,7 +2,6 @@ import path from "path"
 import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
-import { isEqual } from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
@@ -28,7 +27,6 @@ import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
-import { mapTemplatesToStaticQueryHashes } from "../utils/map-pages-to-static-query-hashes"
 import * as webpackStatusUtil from "../utils/webpack-status"
 
 let cachedPageData
@@ -140,41 +138,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await processPageQueries()
 
-  {
-    const state = store.getState()
-    const mapOfTemplatesToStaticQueryHashes = mapTemplatesToStaticQueryHashes(
-      state,
-      stats
-    )
-
-    mapOfTemplatesToStaticQueryHashes.forEach(
-      (staticQueryHashes, componentPath) => {
-        if (
-          !isEqual(
-            state.staticQueriesByTemplate.get(componentPath)?.sort(),
-            staticQueryHashes.map(toString)?.sort()
-          )
-        ) {
-          store.dispatch({
-            type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-            payload: {
-              componentPath,
-            },
-          })
-          store.dispatch({
-            type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
-            payload: {
-              componentPath,
-              staticQueryHashes,
-            },
-          })
-        }
-      }
-    )
-
-    await pageDataUtil.flush()
-    webpackStatusUtil.markAsDone()
-  }
+  await pageDataUtil.flush()
+  webpackStatusUtil.markAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()

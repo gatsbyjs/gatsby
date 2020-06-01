@@ -1,81 +1,65 @@
-import { Stats, Module } from "webpack"
+import { uniq } from "lodash"
 
 import { IGatsbyState } from "../redux/types"
 
-type MapOfTemplatesToStaticQueryHashes = Map<string, Array<number>>
-
-const findModule = (path, modules): Module | null => {
-  for (const m of modules) {
-    if (m.constructor.name === `ConcatenatedModule`) {
-      const possibleMod = findModule(path, m.modules)
-      if (possibleMod) {
-        return possibleMod
-      }
-    } else if (m.constructor.name === `NormalModule` && m.resource === path) {
-      return m
-    }
-  }
-  return null
-}
+const mapComponentsToStaticQueryHashes = (
+  staticQueryComponents: IGatsbyState["staticQueryComponents"]
+): Map<string, string> =>
+  Array.from(staticQueryComponents).reduce(
+    (map, [, { componentPath, hash }]) => {
+      map.set(componentPath, hash)
+      return map
+    },
+    new Map()
+  )
 
 export function mapTemplatesToStaticQueryHashes(
   reduxState: IGatsbyState,
-  webpackStats: Stats
-): MapOfTemplatesToStaticQueryHashes {
-  const { staticQueryComponents, components } = reduxState
+  compilation
+): Map<string, Array<number>> {
+  const { components, staticQueryComponents } = reduxState
+  const { modules } = compilation
 
-  const modules = webpackStats.compilation.modules
+  const mapTemplatesToDependencies = Array.from(components).reduce(
+    (map, [path, component]) => {
+      const { componentPath } = component
+      const module = modules.find(module => module.resource === componentPath)
 
-  const getEntrypoints = (
-    mod,
-    entrypoints: Set<string> = new Set(),
-    visitedModules = new Set()
-  ): Set<string> => {
-    if (visitedModules.has(mod.resource)) {
-      return entrypoints
-    }
-    visitedModules.add(mod.resource)
+      if (!module) {
+        return map
+      }
 
-    if (mod.constructor.name === `ConcatenatedModule`) {
-      mod.modules.forEach(m2 => {
-        getEntrypoints(m2, entrypoints, visitedModules)
+      const dependencies = uniq(
+        module.dependencies.filter(m => m.module).map(m => m.module.resource)
+      )
+
+      map.set(path, {
+        component,
+        dependencies,
       })
-      return entrypoints
-    }
-    if (components.has(mod.resource)) {
-      entrypoints.add(mod.resource)
-      return entrypoints
-    }
+      return map
+    },
+    new Map()
+  )
 
-    if (mod && mod.reasons) {
-      mod.reasons.forEach(reason => {
-        if (reason.dependency.type === `single entry`) {
-          entrypoints.add(reason.dependency.request)
-        } else if (
-          reason.dependency.type !== `harmony side effect evaluation` &&
-          reason.dependency.type !== `harmony export imported specifier`
-        ) {
-          getEntrypoints(reason.module, entrypoints, visitedModules)
-        }
-      })
-    }
+  const mapOfComponentsToStaticQueryHashes = mapComponentsToStaticQueryHashes(
+    staticQueryComponents
+  )
 
-    return entrypoints
-  }
+  const mapOfTemplatesToStaticQueryHashes = Array.from(
+    mapTemplatesToDependencies
+  ).reduce((map, [page, { dependencies }]) => {
+    map.set(
+      page,
+      dependencies
+        .map(dependency =>
+          // console.log(dependency)
+          mapOfComponentsToStaticQueryHashes.get(dependency)
+        )
+        .filter(Boolean)
+    )
+    return map
+  }, new Map())
 
-  const map = new Map()
-
-  staticQueryComponents.forEach(({ componentPath, hash }) => {
-    const staticQueryComponentModule = findModule(componentPath, modules)
-    if (staticQueryComponentModule) {
-      const entrypoints = getEntrypoints(staticQueryComponentModule)
-      entrypoints.forEach(entrypoint => {
-        const hashes = map.get(entrypoint) || []
-        hashes.push(hash)
-        map.set(entrypoint, hashes)
-      })
-    }
-  })
-
-  return map
+  return mapOfTemplatesToStaticQueryHashes
 }
