@@ -1,15 +1,7 @@
 import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { useTitle } from "../hooks/use-title"
 
 export default function Title() {
-  const { site } = useStaticQuery(graphql`
-    {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-  return <div>{site.siteMetadata.title}</div>
+  const title = useTitle()
+  return <div>{title}</div>
 }

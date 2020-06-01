@@ -1,12 +1,12 @@
 import React from "react"
-import Import from "./import"
 import Author from "../components/author"
+import Dynamic from "../pages/dynamic"
 
 export default function ImportImport() {
   return (
     <>
       <Author />
-      <Import />
+      <Dynamic />
     </>
   )
 }

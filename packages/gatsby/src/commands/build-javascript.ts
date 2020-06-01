@@ -36,7 +36,7 @@ export const buildProductionBundle = async (
           compilation
         )
 
-        console.log({ mapOfTemplatesToStaticQueryHashes })
+        console.log(mapOfTemplatesToStaticQueryHashes)
 
         mapOfTemplatesToStaticQueryHashes.forEach(
           (staticQueryHashes, componentPath) => {

@@ -1,5 +1,3 @@
-import { uniq } from "lodash"
-
 import { IGatsbyState } from "../redux/types"
 
 const mapComponentsToStaticQueryHashes = (
@@ -20,18 +18,45 @@ export function mapTemplatesToStaticQueryHashes(
   const { components, staticQueryComponents } = reduxState
   const { modules } = compilation
 
+  const getDeps = (mod): any => {
+    const result = new Set()
+
+    const getDepsFn = (mod): any => {
+      for (const b of mod.blocks) {
+        for (const x of b.dependencies) {
+          if (x.module) {
+            result.add(x.module.resource)
+            if (x.module.dependencies) {
+              getDepsFn(x.module)
+            }
+          }
+        }
+      }
+
+      for (const d of mod.dependencies) {
+        if (d.module) {
+          result.add(d.module.resource)
+          if (d.module.dependencies) {
+            getDepsFn(d.module)
+          }
+        }
+      }
+      return result
+    }
+
+    return getDepsFn(mod)
+  }
+
   const mapTemplatesToDependencies = Array.from(components).reduce(
     (map, [path, component]) => {
       const { componentPath } = component
-      const module = modules.find(module => module.resource === componentPath)
+      const mod = modules.find(module => module.resource === componentPath)
 
-      if (!module) {
+      if (!mod) {
         return map
       }
 
-      const dependencies = uniq(
-        module.dependencies.filter(m => m.module).map(m => m.module.resource)
-      )
+      const dependencies = getDeps(mod)
 
       map.set(path, {
         component,
@@ -49,15 +74,23 @@ export function mapTemplatesToStaticQueryHashes(
   const mapOfTemplatesToStaticQueryHashes = Array.from(
     mapTemplatesToDependencies
   ).reduce((map, [page, { dependencies }]) => {
-    map.set(
-      page,
-      dependencies
-        .map(dependency =>
-          // console.log(dependency)
-          mapOfComponentsToStaticQueryHashes.get(dependency)
-        )
-        .filter(Boolean)
-    )
+    const staticQueryHashes = new Set()
+
+    {
+      const staticQueryHash = mapOfComponentsToStaticQueryHashes.get(page)
+      if (staticQueryHash) {
+        staticQueryHashes.add(staticQueryHash)
+      }
+    }
+
+    for (const d of dependencies) {
+      const staticQueryHash = mapOfComponentsToStaticQueryHashes.get(d)
+      if (staticQueryHash) {
+        staticQueryHashes.add(staticQueryHash)
+      }
+    }
+
+    map.set(page, Array.from(staticQueryHashes))
     return map
   }, new Map())
 

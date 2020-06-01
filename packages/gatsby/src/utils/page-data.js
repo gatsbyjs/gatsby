@@ -63,10 +63,6 @@ const flush = async () => {
     program,
   } = store.getState()
 
-  console.log({
-    staticQueriesByTemplate,
-  })
-
   const { pagePaths, templatePaths } = pendingPageDataWrites
 
   const pagesToWrite = Array.from(templatePaths).reduce(
