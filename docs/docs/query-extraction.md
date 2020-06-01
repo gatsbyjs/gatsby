@@ -91,7 +91,7 @@ digraph {
 
 ## Queue for execution
 
-Now that Gatsby has saved your query, it's ready to queue for execution. Query execution is mainly handled by [page-query-runner.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.js), so it accomplishes this by passing the component's path to `queueQueryForPathname` function.
+Now that Gatsby has saved your query, it's ready to queue for execution. Query execution is mainly handled by [page-query-runner.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts), so it accomplishes this by passing the component's path to `queueQueryForPathname` function.
 
 ```dot
 digraph {

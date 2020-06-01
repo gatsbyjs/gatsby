@@ -23,6 +23,7 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
             tagName: `graphql`,
           },
         ],
+        "react/jsx-pascal-case": `off`, // Prevents errors with Theme-UI and Styled component
         // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
         "jsx-a11y/alt-text": `warn`,
@@ -41,6 +42,7 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
         //   },
         // ],
         "jsx-a11y/click-events-have-key-events": `warn`,
+        "jsx-a11y/control-has-associated-label": `warn`,
         "jsx-a11y/heading-has-content": `warn`,
         "jsx-a11y/html-has-lang": `warn`,
         "jsx-a11y/iframe-has-title": `warn`,

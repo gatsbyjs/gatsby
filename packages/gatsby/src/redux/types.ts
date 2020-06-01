@@ -48,7 +48,7 @@ export interface IGatsbyConfig {
     title?: string
     author?: string
     description?: string
-    sireUrl?: string
+    siteUrl?: string
     // siteMetadata is free form
     [key: string]: unknown
   }
@@ -81,6 +81,7 @@ export interface IGatsbyPlugin {
   id: Identifier
   name: string
   version: string
+  [key: string]: any
 }
 
 export interface IGatsbyPluginContext {
@@ -277,9 +278,12 @@ export type ActionsUnion =
   | IReplaceWebpackConfigAction
   | ISetPluginStatusAction
   | ISetProgramStatusAction
+  | ISetResolvedNodesAction
   | ISetSchemaAction
+  | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
+  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
   | ISetPageDataAction
@@ -632,14 +636,25 @@ export interface IAddChildNodeToParentNodeAction {
 
 export interface IDeleteNodeAction {
   type: `DELETE_NODE`
-  payload: {
-    id: Identifier
-  }
+  payload: IGatsbyNode
 }
 
 export interface IDeleteNodesAction {
   type: `DELETE_NODES`
   payload: Identifier[]
+}
+
+export interface ISetSiteFlattenedPluginsAction {
+  type: `SET_SITE_FLATTENED_PLUGINS`
+  payload: IGatsbyState["flattenedPlugins"]
+}
+
+export interface ISetResolvedNodesAction {
+  type: `SET_RESOLVED_NODES`
+  payload: {
+    key: string
+    nodes: IGatsbyState["resolvedNodesCache"]
+  }
 }
 
 export interface IAddPageDataStatsAction {
@@ -648,4 +663,9 @@ export interface IAddPageDataStatsAction {
     filePath: SystemPath
     size: number
   }
+}
+
+export interface ITouchNodeAction {
+  type: `TOUCH_NODE`
+  payload: Identifier
 }

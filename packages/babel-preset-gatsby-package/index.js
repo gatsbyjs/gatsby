@@ -46,6 +46,12 @@ function preset(context, options = {}) {
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`)
     ].filter(Boolean),
+    overrides: [
+      {
+        test: [`**/*.ts`, `**/*.tsx`],
+        plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
+      },
+    ],
   }
 }
 
