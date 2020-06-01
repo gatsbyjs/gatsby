@@ -727,7 +727,7 @@ const Logo = ({ data, location }) => {
                   {node.description}:<br />
                   <a
                     sx={{
-                      color: theme.colors.purple[`50`],
+                      color: `purple.50`,
                       textDecoration: `none`,
                     }}
                     href={node.href}
