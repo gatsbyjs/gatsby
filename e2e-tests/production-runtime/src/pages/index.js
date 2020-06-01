@@ -61,6 +61,11 @@ const IndexPage = ({ pageContext }) => (
           Go to page with unicode path
         </Link>
       </li>
+      <li>
+        <Link to="/cssmodules/" data-testid="cssmodules">
+          Go to page with cssmodules
+        </Link>
+      </li>
     </ul>
   </Layout>
 )
