@@ -31,6 +31,7 @@ import telemetry from "gatsby-telemetry"
 import * as WorkerPool from "../utils/worker/pool"
 import http from "http"
 import https from "https"
+import inspector from "inspector"
 
 import {
   bootstrapSchemaHotReloader,
@@ -378,10 +379,20 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
 }
 
 interface IDevelopArgs extends IProgram {
+  debugPort: number | null
   graphqlTracing: boolean
 }
 
+const waitForDebugger = (port: number) => {
+  inspector.open(port, undefined, true)
+  debugger
+}
+
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  if (program.debugPort) {
+    waitForDebugger(program.debugPort)
+  }
+
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.

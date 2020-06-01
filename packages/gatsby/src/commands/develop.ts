@@ -58,9 +58,11 @@ const doesConfigChangeRequireRestart = (
 class ControllableScript {
   private process
   private script
+  private debugPort
   public isRunning
-  constructor(script) {
+  constructor(script, debugPort) {
     this.script = script
+    this.debugPort = debugPort
   }
   start(): void {
     const tmpFileName = tmp.tmpNameSync({
@@ -68,7 +70,7 @@ class ControllableScript {
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    this.process = spawn(`node`, [tmpFileName], {
+    this.process = spawn(`node`, [tmpFileName, this.debugPort && `--inspect-brk=${this.debugPort}`], {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -106,20 +108,26 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
-  const [statusServerPort, developPort] = await Promise.all([
+
+  const [statusServerPort, developPort, debugPort] = await Promise.all([
     getRandomPort(),
     getRandomPort(),
+    program.inspectBrk ? getRandomPort() : Promise.resolve(null)
   ])
 
-  const developProcess = new ControllableScript(`
+  const developProcess = new ControllableScript(
+    `
     const cmd = require(${JSON.stringify(developProcessPath)});
     const args = ${JSON.stringify({
       ...program,
       port: developPort,
       proxyPort,
+      debugPort,
     })};
     cmd(args);
-  `)
+  `,
+    debugPort
+  )
 
   const proxy = startDevelopProxy({
     proxyPort: proxyPort,
