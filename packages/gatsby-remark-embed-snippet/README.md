@@ -292,7 +292,7 @@ And it is invoked via
 With this example file `api.rs`:
 
 ```rust
-// begin-snippet{funcA}
+// start-snippet{funcA}
 fn factorial(x: u8) -> u32 {
     if x <= 1 { 1u32 }
     else { (x as u32) * factorial(x - 1) }
