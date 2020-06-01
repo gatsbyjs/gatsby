@@ -345,7 +345,10 @@ module.exports = async (
         configRules = configRules.concat([
           {
             oneOf: [
-              rules.cssModules(),
+              rules.cssModules({
+                // enable smaller css classnames
+                localIdentName: `[hash:base64:5]`,
+              }),
               {
                 ...rules.css(),
                 use: [loaders.null()],
@@ -364,7 +367,13 @@ module.exports = async (
         // classNames to use.
         configRules = configRules.concat([
           {
-            oneOf: [rules.cssModules(), rules.css()],
+            oneOf: [
+              rules.cssModules({
+                // enable smaller css classnames
+                localIdentName: `[hash:base64:5]`,
+              }),
+              rules.css(),
+            ],
           },
         ])
 
@@ -490,7 +499,8 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module => module.type === `css/mini-extract`
+    const isCssModule = module =>
+      module.type === `css/mini-extract` && !module.issuer.usedExports
 
     const splitChunks = {
       chunks: `all`,
