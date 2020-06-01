@@ -119,7 +119,14 @@ class Color extends React.Component {
                   >
                     WCAG Contrast Score
                   </Text>
-                  <Flex as="ul" m={0} p={0} css={{ listStyle: `none` }}>
+                  <Flex
+                    as="ul"
+                    sx={{
+                      m: 0,
+                      p: 0,
+                      listStyle: `none`,
+                    }}
+                  >
                     <Text as="li" mr={4} mb={0}>
                       <strong>3</strong> AAA
                     </Text>
@@ -164,7 +171,11 @@ class Color extends React.Component {
                 being no contrast—white on white. That ratio is where the scores
                 are derived from. There are technically 5 scores:
               </p>
-              <ul css={{ padding: 0 }}>
+              <ul
+                sx={{
+                  p: 0,
+                }}
+              >
                 <li>
                   <strong>&times; — Fail</strong> – <code>&lt; 3.0</code>
                   <br />
