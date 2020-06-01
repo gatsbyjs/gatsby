@@ -88,7 +88,7 @@ const Guidance = ({ children, image }) => (
     sx={{
       mb: 5,
       mr: 5,
-      width: `calc(50% - ${theme.space[5]})`,
+      width: theme => `calc(50% - ${theme.space[5]})`,
     }}
   >
     {image && (
