@@ -17,7 +17,7 @@ Static sites are **quick to deploy** on 21YunBox and include the following featu
 
 ## Prerequisites
 
-This guide assumes you already have a Gatsby project to deploy. If you need a project, use the [quick Start](/docs/quick-start) or fork 21YunBox's [Gatsby Example](https://github.com/tobyglei/gatsby) before continuing.
+This guide assumes you already have a Gatsby project to deploy. If you need a project, use the [quick Start](/docs/quick-start) to get started or fork 21YunBox's [Gatsby Example](https://github.com/tobyglei/gatsby) before continuing.
 
 ## Setup
 
