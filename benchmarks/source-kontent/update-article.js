@@ -8,11 +8,11 @@ require("dotenv").config({
 
 (async () => {
 
-  const dClient = new DeliveryClient({ projectId: process.env.KONTENT_PROJECT_ID })
+  const dClient = new DeliveryClient({ projectId: process.env.BENCHMARK_KONTENT_PROJECT_ID })
 
   const mClient = new ManagementClient({
-    projectId: process.env.KONTENT_PROJECT_ID, // ID of your Kentico Kontent project
-    apiKey: process.env.KONTENT_MANAGEMENT_KEY // Management API token
+    projectId: process.env.BENCHMARK_KONTENT_PROJECT_ID, // ID of your Kentico Kontent project
+    apiKey: process.env.BENCHMARK_KONTENT_MANAGEMENT_KEY // Management API token
   });
 
   try {
