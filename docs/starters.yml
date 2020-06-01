@@ -3798,7 +3798,7 @@
     - Onepage
   features:
     - React Bootstrap styles
-    - Theme-UI and EmotionJS CSS-in-JS
+    - Theme UI and EmotionJS CSS-in-JS
     - A landing page with all your organization projects, configurable through a YML file.
     - Configurable logo, favicon, organization name and title
 - url: https://gatsby-starter-interviews.netlify.com/
@@ -4534,7 +4534,7 @@
     - Documentation
 - url: https://gatsby-tfs-starter.netlify.com/
   repo: https://github.com/tiagofsanchez/gatsby-tfs-starter
-  description: a gatsby-advanced-starter with theme-ui styling
+  description: a gatsby-advanced-starter with Theme UI styling
   tags:
     - RSS
     - SEO
@@ -5229,7 +5229,7 @@
     - SEO Friendly Meta
 - url: https://gatsby-starter-catalyst-hydrogen.netlify.app/
   repo: https://github.com/ehowey/gatsby-starter-catalyst-hydrogen
-  description: A full featured starter for a freelance writer or journalist to display a portfolio of their work. SANITY.io is used as the CMS. Based on Gatsby Theme Catalyst. Uses MDX and Theme-UI.
+  description: A full featured starter for a freelance writer or journalist to display a portfolio of their work. SANITY.io is used as the CMS. Based on Gatsby Theme Catalyst. Uses MDX and Theme UI.
   tags:
     - Styling:Theme-UI
     - CMS:sanity.io
@@ -5239,7 +5239,7 @@
   features:
     - Based on Gatsby Theme Catalyst series of themes
     - MDX
-    - Theme-UI integration for easy to change design tokens
+    - Theme UI integration for easy to change design tokens
     - SEO optimized to include social media images and Twitter handles
     - Tight integration with SANITY.io including a predefined content studio.
     - A full tutorial is available in the docs.
@@ -5273,7 +5273,7 @@
     - Only support TypeScript using gatsby-typescript-plugin
 - url: https://gatsby-starter-catalyst.netlify.app/
   repo: https://github.com/ehowey/gatsby-starter-catalyst
-  description: A boilerplate starter to accelerate your Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, and a footer theme.
+  description: A boilerplate starter to accelerate your Gatsby development process. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme UI for styling. Includes a core theme, a header theme, and a footer theme.
   tags:
     - MDX
     - Styling:Theme-UI
@@ -5283,7 +5283,7 @@
     - Based on Gatsby Theme Catalyst series of themes and starters.
     - Theme options are used to enable some simple layout changes.
     - Latent component shadowing allows for easy shadowing and swapping of layout components such as the header and footer.
-    - Theme-UI is deeply integrated with design tokens and variants throughout.
+    - Theme UI is deeply integrated with design tokens and variants throughout.
     - Uses a Tailwind preset to enable you to focus on design elements.
     - Color mode switching available by default.
     - SEO optimized to include social media images and Twitter handles.
@@ -6602,7 +6602,7 @@
     - FirebaseUI fully integrated & customizable for any language location.
 - url: https://gatsby-starter-catalyst-helium.netlify.app/
   repo: https://github.com/ehowey/gatsby-starter-catalyst-helium
-  description: A personal blog starter with large featured images, SEO optimization, dark mode, and support for many different frontmatter fields. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme-UI for styling. Includes a core theme, a header theme, a footer theme and a blog theme.
+  description: A personal blog starter with large featured images, SEO optimization, dark mode, and support for many different frontmatter fields. Based on Gatsby Theme Catalyst. Uses MDX for content and Theme UI for styling. Includes a core theme, a header theme, a footer theme and a blog theme.
   tags:
     - MDX
     - Styling:Theme-UI
@@ -6613,7 +6613,7 @@
     - Based on Gatsby Theme Catalyst series of themes and starters.
     - Theme options are used to enable some simple layout changes.
     - Designed with component shadowing in mind to allow easier customization.
-    - Theme-UI is deeply integrated with design tokens and variants throughout.
+    - Theme UI is deeply integrated with design tokens and variants throughout.
     - Color mode switching available by default.
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
