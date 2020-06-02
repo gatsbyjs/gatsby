@@ -5,7 +5,7 @@ import Switch from "gatsby-theme-blog/src/components/switch"
 import Bio from "gatsby-theme-blog/src/components/bio"
 import sun from "gatsby-theme-blog/assets/sun.png"
 import moon from "gatsby-theme-blog/assets/moon.png"
-import Navigation from "../../components/navigation"
+import Navigation from "../../components/layout/navigation"
 
 const rootPath = `${__PATH_PREFIX__}/`
 

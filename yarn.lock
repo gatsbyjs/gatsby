@@ -2347,16 +2347,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@jimp/bmp@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@jimp/bmp/-/bmp-0.10.2.tgz#80c76ba434da95ab63d4c33ea026e5cf5db16f2a"
-  integrity sha512-vsLwkfj6rcxtSxEdpQaxDagrgpOB0ErHTS/vVRQKDIhrzZkW1ddQa9W1hV8qssSY3K7lz1QNYFQdeRw/qoCiBA==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    "@jimp/utils" "^0.10.2"
-    bmp-js "^0.1.0"
-    core-js "^3.4.1"
-
 "@jimp/bmp@^0.10.3":
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/@jimp/bmp/-/bmp-0.10.3.tgz#79a23678e8389865c62e77b0dccc3e069dfc27f0"
@@ -2394,16 +2384,6 @@
     "@jimp/core" "^0.10.3"
     core-js "^3.4.1"
 
-"@jimp/gif@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@jimp/gif/-/gif-0.10.2.tgz#e87f65a0277de518bb9b0f7bac1217958d6181c8"
-  integrity sha512-Evkwr7Vlt5zMqNccsUDetHpKtvhFz07yg8BRZl3kXzkeKeaK/PbuAV7yjXn1DxVVU+1uSS765MdbsMVe7J404A==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    "@jimp/utils" "^0.10.2"
-    core-js "^3.4.1"
-    omggif "^1.0.9"
-
 "@jimp/gif@^0.10.3":
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/@jimp/gif/-/gif-0.10.3.tgz#7661280fd2b9cb70175b20e80f4e2b3e3ecf614e"
@@ -2413,16 +2393,6 @@
     "@jimp/utils" "^0.10.3"
     core-js "^3.4.1"
     omggif "^1.0.9"
-
-"@jimp/jpeg@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@jimp/jpeg/-/jpeg-0.10.2.tgz#6bfb4ed2dcfbb956b380c1634d85184d3a0b20ff"
-  integrity sha512-+aQUGBZI6OueB0K6gqLCwehV5skZceVyZjjmPmuXaE7ZvdhFMP2QDh45vcT8LzlPGUcOwpIWxsGHrB6Q6RcFXQ==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    "@jimp/utils" "^0.10.2"
-    core-js "^3.4.1"
-    jpeg-js "^0.3.4"
 
 "@jimp/jpeg@^0.10.3":
   version "0.10.3"
@@ -2655,16 +2625,6 @@
     core-js "^3.4.1"
     timm "^1.6.1"
 
-"@jimp/png@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@jimp/png/-/png-0.10.2.tgz#4a37acfd444136040bb2dbab6f0375bda90285a6"
-  integrity sha512-3r5q9Ns3Gz8pcI8oBdGTY7d0TkkW4atZ12bknB1sABc3UYX69arqmTvrULMYhWf0M6n3tKHdnmdW2cTlFWIAbw==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    "@jimp/utils" "^0.10.2"
-    core-js "^3.4.1"
-    pngjs "^3.3.3"
-
 "@jimp/png@^0.10.3":
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/@jimp/png/-/png-0.10.3.tgz#5282cad239d02743137d88239e4cb1804ed877dd"
@@ -2674,15 +2634,6 @@
     "@jimp/utils" "^0.10.3"
     core-js "^3.4.1"
     pngjs "^3.3.3"
-
-"@jimp/tiff@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@jimp/tiff/-/tiff-0.10.2.tgz#7ad1f4aac4cd73d1dcf41c1897683e3e40d1a96e"
-  integrity sha512-uuJF6ZMXo0EDyooho9RhwAY9YGcgUju1mw53N9BtU7E9Y+AxKn7miaK2niROmN2/ufmLJO8vS9zjpgAxv+zgKQ==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    core-js "^3.4.1"
-    utif "^2.0.1"
 
 "@jimp/tiff@^0.10.3":
   version "0.10.3"
@@ -2706,15 +2657,6 @@
     "@jimp/tiff" "^0.10.3"
     core-js "^3.4.1"
     timm "^1.6.1"
-
-"@jimp/utils@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@jimp/utils/-/utils-0.10.2.tgz#573fb05eb22715045effbb4642988231657fb4bb"
-  integrity sha512-B3fBgkE7t7S4X1RXKY5vfx+8QdUvN0AIbG2rM7csYTsudOczTtzimlP7XxunYtOwCYBLVswRWpqn8PZcRLWu2w==
-  dependencies:
-    "@babel/runtime" "^7.7.2"
-    core-js "^3.4.1"
-    regenerator-runtime "^0.13.3"
 
 "@jimp/utils@^0.10.3":
   version "0.10.3"

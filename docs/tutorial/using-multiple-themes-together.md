@@ -374,7 +374,7 @@ Your file structure should look like this:
 ```jsx:title=src/gatsby-theme-blog/components/header.js
 import React from "react"
 import { css } from "theme-ui"
-import Navigation from "../../components/navigation" // highlight-line
+import Navigation from "../../components/layout/navigation" // highlight-line
 
 export default () => {
   return (
