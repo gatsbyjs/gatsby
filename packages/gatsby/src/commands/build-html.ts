@@ -92,6 +92,21 @@ const renderHTMLQueue = async (
   })
 }
 
+class BuildHTMLError extends Error {
+  codeFrame = ``
+  context?: {
+    path: string
+  }
+
+  constructor(error: Error) {
+    super(error.message)
+
+    Object.keys(error).forEach(key => {
+      this[key] = error[key]
+    })
+  }
+}
+
 const doBuildPages = async (
   rendererPath: string,
   pagePaths: string[],
@@ -109,8 +124,9 @@ const doBuildPages = async (
       error.stack,
       `${rendererPath}.map`
     )
-    prettyError.context = error.context
-    throw prettyError
+    const buildError = new BuildHTMLError(prettyError)
+    buildError.context = error.context
+    throw buildError
   }
 }
 

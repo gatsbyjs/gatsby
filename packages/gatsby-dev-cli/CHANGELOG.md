@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.5...gatsby-dev-cli@2.7.6) (2020-05-30)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** show spawned processes output unless `--quiet` is used ([#24607](https://github.com/gatsbyjs/gatsby/issues/24607)) ([69383a8](https://github.com/gatsbyjs/gatsby/commit/69383a8))
+
 ## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.4...gatsby-dev-cli@2.7.5) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-dev-cli

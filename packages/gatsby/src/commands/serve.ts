@@ -151,7 +151,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       const urls = prepareUrls(
         program.ssl ? `https` : `http`,
         program.host,
-        program.port
+        port
       )
       printInstructions(
         program.sitePackageJson.name || `(Unnamed package)`,

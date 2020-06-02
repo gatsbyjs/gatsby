@@ -106,7 +106,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
-  const developPort = await getRandomPort()
+  const [statusServerPort, developPort] = await Promise.all([
+    getRandomPort(),
+    getRandomPort(),
+  ])
 
   const developProcess = new ControllableScript(`
     const cmd = require(${JSON.stringify(developProcessPath)});
@@ -123,8 +126,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     targetPort: developPort,
     programPath: program.directory,
   })
-
-  const statusServerPort = await getRandomPort()
 
   let unlock
   if (!isCI()) {
