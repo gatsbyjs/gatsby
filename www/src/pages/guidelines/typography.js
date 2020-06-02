@@ -319,16 +319,12 @@ const Typography = ({ location }) => (
 
           <SectionSubheading pt={6}>Letter Spacing</SectionSubheading>
 
-          <p
-            sx={{
-              pb: 6,
-            }}
-          >
+          <Text as="p" pb={6}>
             Letterspacing (also known as character spacing or tracking) is the
             adjustment of the horizontal white space between the letters in a
             block of text. Tokens are intended for use with the{` `}
             <code>letter-spacing</code> CSS property.
-          </p>
+          </Text>
 
           <ExampleBox>
             <Text as="p" mb={0}>
