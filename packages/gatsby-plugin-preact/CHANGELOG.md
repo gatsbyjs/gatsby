@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.0.0...gatsby-plugin-preact@4.0.1) (2020-06-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-preact:** add preact to framework bundle ([#24154](https://github.com/gatsbyjs/gatsby/issues/24154)) ([0772801](https://github.com/gatsbyjs/gatsby/commit/0772801))
+
 # [4.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@3.3.2...gatsby-plugin-preact@4.0.0) (2020-05-20)
 
 ### Features
