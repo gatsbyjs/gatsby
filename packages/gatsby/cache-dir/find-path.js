@@ -17,6 +17,23 @@ const trimPathname = rawPathname => {
   return trimmedPathname
 }
 
+function absolutify(path) {
+  // If it's already absolute, return as-is
+  if (
+    path.startsWith(`/`) ||
+    path.startsWith(`https://`) ||
+    path.startsWith(`http://`)
+  ) {
+    return path
+  }
+  // Calculate path relative to current location, adding a trailing slash to
+  // match behavior of @reach/router
+  return new URL(
+    path,
+    window.location.href + (window.location.href.endsWith(`/`) ? `` : `/`)
+  ).pathname
+}
+
 /**
  * Set list of matchPaths
  *
@@ -55,8 +72,7 @@ export const findMatchPath = rawPathname => {
 // Or if `match-paths.json` contains `{ "/foo*": "/page1", ...}`, then
 // `/foo?bar=far` => `/page1`
 export const findPath = rawPathname => {
-  const trimmedPathname = trimPathname(rawPathname)
-
+  const trimmedPathname = trimPathname(absolutify(rawPathname))
   if (pathCache.has(trimmedPathname)) {
     return pathCache.get(trimmedPathname)
   }
@@ -80,7 +96,7 @@ export const findPath = rawPathname => {
  * @return {string}
  */
 export const cleanPath = rawPathname => {
-  const trimmedPathname = trimPathname(rawPathname)
+  const trimmedPathname = trimPathname(absolutify(rawPathname))
 
   let foundPath = trimmedPathname
   if (foundPath === `/index.html`) {
