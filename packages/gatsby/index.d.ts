@@ -12,6 +12,8 @@ import {
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
 import { PluginRef } from "./src/bootstrap/load-plugins/types"
+import { IGatsbyState } from "./src/redux/types"
+import { Store as ReduxStore } from "redux"
 
 export {
   default as Link,
@@ -1254,12 +1256,7 @@ export interface Actions {
   ): void
 }
 
-export interface Store {
-  dispatch: Function
-  subscribe: Function
-  getState: Function
-  replaceReducer: Function
-}
+export type Store = ReduxStore<IGatsbyState>
 
 type LogMessageType = (format: string) => void
 type LogErrorType = (errorMeta: string | Object, error?: Object) => void
