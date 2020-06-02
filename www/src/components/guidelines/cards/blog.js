@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { MdArrowForward } from "react-icons/md"
 
 import { Box, Flex } from "theme-ui"
