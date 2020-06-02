@@ -152,7 +152,7 @@ const RecipesList = ({ setRecipe }) => {
       value: `storybook-ts.mdx`,
     },
     {
-      label: `Add Ava`,
+      label: `Add AVA`,
       value: `ava.mdx`,
     },
     {

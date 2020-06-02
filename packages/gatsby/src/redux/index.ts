@@ -9,7 +9,7 @@ import _ from "lodash"
 
 import { mett } from "../utils/mett"
 import thunk from "redux-thunk"
-import reducers from "./reducers"
+import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion } from "./types"
 
