@@ -16,54 +16,52 @@ Using a static website generator, like Gatsby, to consume content stored in Flot
 > - [Gatsby and Snipcart boilerplate, sourcing products from Flotiq](https://github.com/flotiq/gatsby-starter-products)
 > - [Gatsby and Snipcart, e-commerce with products and categories from Flotiq](https://github.com/flotiq/gatsby-starter-products-with-categories)
  
-
 ## Setup
 
 ### Quickstart
 
-
 1. **Start project from template using Gatsby CLI**
     
-    ```bash
-    gatsby new my-blog-starter https://github.com/flotiq/gatsby-starter-blog
-    ```
+   ```bash
+   gatsby new my-blog-starter https://github.com/flotiq/gatsby-starter-blog
+   ```
    
-1. **Setup "Blog Post" Content Type in Flotiq**
+2. **Setup "Blog Post" Content Type in Flotiq**
 
    Create your [Flotiq.com](https://flotiq.com) account. Next, create the `Blog Post` Content Type straight from the `Type definitions` page.
     
    _Note: You can also create `Blog Post` using [Flotiq REST API](https://flotiq.com/docs/API/)._ 
 
-1. **Configure application**
+3. **Configure application**
 
-    The next step is to configure your application to know from where it has to fetch the data.
+   The next step is to configure your application to know from where it has to fetch the data.
        
-    You need to create a file called `.env` inside the root project directory, with the following structure:
+   You need to create a file called `.env` inside the root project directory, with the following structure:
 
-    ```shell:title=.env
-    GATSBY_FLOTIQ_BASE_URL=https://api.flotiq.com
-    GATSBY_FLOTIQ_API_KEY=YOUR FLOTIQ API KEY
-    ```
+   ```shell:title=.env
+   GATSBY_FLOTIQ_BASE_URL=https://api.flotiq.com
+   GATSBY_FLOTIQ_API_KEY=YOUR FLOTIQ API KEY
+   ```
 
-1.  **Start developing**
+4. **Start developing**
 
-    Navigate into your new site’s directory and start it up.
+   Navigate into your new site’s directory and start it up.
 
-    ```shell
-    cd my-blog-starter/
-    npm install
-    gatsby develop
-    ```
+   ```shell
+   cd my-blog-starter/
+   npm install
+   gatsby develop
+   ```
     
-    If you wish to import example blog posts to your account, before running `gatsby develop` run:
+   If you wish to import example blog posts to your account, before running `gatsby develop` run:
         
-    ```shell
-    node ./.flotiq/importExample.js
-    ```
+   ```shell
+   node ./.flotiq/importExample.js
+   ```
     
-    It will add 1 image and 2 blog posts to your Flotiq account.
-    
-    _Note: You need to put your Read and write API key in `.env` for import to work. You don't need Blog Post content type in your account. If you already have posts with ids `blogpost-1` and `blogpost-2` they will be overwritten._
+   It will add 1 image and 2 blog posts to your Flotiq account.
+
+   _Note: You need to put your Read and write API key in `.env` for import to work. You don't need Blog Post content type in your account. If you already have posts with ids `blogpost-1` and `blogpost-2` they will be overwritten._
 
 ### Source plugin
 
@@ -73,15 +71,15 @@ Here are the steps to use this source plugin in other Gatsby projects:
 > If you're using the provided starter - all the following steps have been already taken care of, you can dive into the relevant project files to verify how it's been done.
 
 1. Install the plugin:
-    ```shell
-    npm install --save gatsby-source-flotiq
-    ```
+   ```shell
+   npm install --save gatsby-source-flotiq
+   ```
 2. Provide API credentials in `.env`:
 3. Register the source plugin in `gatsby-config.js`:
-    Make sure your `gatsby-config.js` has the following configuration:
-    ```javascript:title=gatsby-config.js
-    module.exports = {
-      // ...
+   Make sure your `gatsby-config.js` has the following configuration:
+   ```javascript:title=gatsby-config.js
+   module.exports = {
+   // ...
       plugins: [
         {
           resolve: "gatsby-source-flotiq",		  
@@ -93,7 +91,7 @@ Here are the steps to use this source plugin in other Gatsby projects:
       ],
       // ...
     }
-    ```
+   ```
 
 By default the source plugin will pull all the data you've stored in Flotiq. In some cases, e.g. when building sites that have thousands of pages - you'll likely want to limit the number of pulled data during development. You can do that either by narrowing down the scope to specific content types or by limiting the number of pulled objects (see the `includeTypes` and `objectLimit` options). The source plugin will do its best to resolve any dependencies for you.
 
