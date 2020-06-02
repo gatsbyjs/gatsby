@@ -1,5 +1,7 @@
 import reporter from "gatsby-cli/lib/reporter"
 
+import { store } from "../"
+
 import {
   IGatsbyConfig,
   IGatsbyPlugin,
@@ -53,10 +55,24 @@ export const createPageDependency = (
 export const deleteComponentsDependencies = (
   paths: string[]
 ): IDeleteComponentDependenciesAction => {
+  // get list of modules used by pages or static queries
+  const { queryModuleDependencies } = store.getState()
+
+  const modules = new Set<string>()
+
+  const addModule = modules.add.bind(modules)
+  paths.forEach(path => {
+    const deps = queryModuleDependencies.get(path)
+    if (deps) {
+      deps.forEach(addModule)
+    }
+  })
+
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
       paths,
+      modules,
     },
   }
 }
@@ -272,3 +288,6 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
     payload: normalizedPayload,
   }
 }
+
+export { addModuleDependencyToQueryResult } from "./modules/add-module-dependency-to-query-result"
+export { registerModuleInternal } from "./modules/register-module"

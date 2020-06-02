@@ -20,6 +20,7 @@ Object {
     "complete": Map {},
     "incomplete": Map {},
   },
+  "modules": Map {},
   "nodes": Map {
     "pageA" => Object {
       "id": "pageA",
@@ -58,6 +59,7 @@ Object {
     "pagePaths": Set {},
     "templatePaths": Set {},
   },
+  "queryModuleDependencies": Map {},
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
