@@ -11,7 +11,6 @@ const Card = () => (
     sx={{
       width: `20rem`,
       mb: 8,
-      mx: 0,
     }}
   >
     <ImagePlaceholder borderRadius={1} boxShadow="raised" mb={2} />
