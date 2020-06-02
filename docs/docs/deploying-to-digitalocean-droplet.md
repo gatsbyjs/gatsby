@@ -81,8 +81,16 @@ git clone <your-github-repo-site>
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
 
+1. Install dependencies.
+
 ```bash
 cd my-gatsby-app
+sudo npm install
+```
+
+2. Run build to generate static files.
+
+```bash
 sudo gatsby build
 ```
 
@@ -92,7 +100,7 @@ To host a website or static files onto a Linux-based server/VPS, a web-server li
 
 Nginx is web-server. It provides the infrastructure code for handling client requests from the World Wide Web, along with features like a load balancer, mail proxy, and HTTP Cache.
 
-1. Install Nginx
+1. Install Nginx.
 
    ```bash
    sudo apt-get install nginx
