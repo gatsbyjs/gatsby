@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "clean": "gatsby clean",
     "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
@@ -15,7 +16,9 @@
   },
   "dependencies": {
     "cross-env": "^7.0.0",
+    "datocms-client": "^3.0.15",
     "dotenv": "^8.2.0",
+    "faker": "^4.1.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.40",
     "gatsby-plugin-benchmark-reporting": "*",

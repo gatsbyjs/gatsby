@@ -12,7 +12,6 @@ const { buildObjectType } = require(`../../types/type-builders`)
 const { hasNodes } = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 const withResolverContext = require(`../../context`)
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {

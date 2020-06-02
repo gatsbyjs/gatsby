@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.4...gatsby-image@2.4.5) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.3...gatsby-image@2.4.4) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.2...gatsby-image@2.4.3) (2020-05-07)
+
+### Bug Fixes
+
+- **gatsby-image:** Fix fluid not respecting maxWidth/maxHeight ([#17006](https://github.com/gatsbyjs/gatsby/issues/17006)) ([ad7cd6b](https://github.com/gatsbyjs/gatsby/commit/ad7cd6b))
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.1...gatsby-image@2.4.2) (2020-05-06)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.0...gatsby-image@2.4.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-image
+
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.3.5...gatsby-image@2.4.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-image

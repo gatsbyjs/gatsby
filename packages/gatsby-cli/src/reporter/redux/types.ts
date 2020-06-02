@@ -6,7 +6,7 @@ export interface IGatsbyCLIState {
   activities: {
     [id: string]: IActivity
   }
-  status: string
+  status: ActivityStatuses | ""
 }
 
 export type ActionsUnion =
@@ -61,7 +61,7 @@ export interface ICreateLog {
 
 export interface ISetStatus {
   type: Actions.SetStatus
-  payload: string
+  payload: ActivityStatuses | ""
 }
 
 export interface IPendingActivity {

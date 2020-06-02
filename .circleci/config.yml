@@ -66,8 +66,14 @@ aliases:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run: yarn list react
-      - run: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
-  #      - run: GATSBY_DB_NODES=loki node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+      - run:
+          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+          environment:
+            GENERATE_JEST_REPORT: true
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+      - store_test_results:
+          path: ./test-results/jest-node/
 
   e2e-test-workflow: &e2e-test-workflow
     filters:
@@ -153,9 +159,6 @@ commands:
       test_command:
         type: string
         default: "yarn test"
-      run_loki:
-        type: boolean
-        default: false
     steps:
       - checkout
       # In case of failure, add these steps again. Cache probably got deleted
@@ -171,14 +174,6 @@ commands:
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
-
-      - when:
-          condition: << parameters.run_loki >>
-          steps:
-            - run:
-                command: GATSBY_DB_NODES=loki << parameters.test_command >>
-                name: Run tests (using Loki)
-                working_directory: << parameters.test_path >>
 
 version: 2.1
 
@@ -249,12 +244,11 @@ jobs:
       - e2e-test:
           test_path: integration-tests/long-term-caching
 
-  #  integration_tests_cache_resilience:
-  #    executor: node
-  #    steps:
-  #      - e2e-test:
-  #          test_path: integration-tests/cache-resilience
-  #          run_loki: true
+  integration_tests_cache_resilience:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/cache-resilience
 
   integration_tests_gatsby_pipeline:
     executor: node
@@ -263,17 +257,11 @@ jobs:
           test_path: integration-tests/gatsby-pipeline
 
   integration_tests_gatsby_cli:
-    <<: *e2e-executor
     executor: node
     steps:
-      - checkout
-      - run:
-          name: Assert Changed Files
-          command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
-      - <<: *attach_to_bootstrap
-      - run:
-          name: Run tests (using defaults)
-          command: cd integration-tests/gatsby-cli && yarn && yarn test
+      - e2e-test:
+          test_path: integration-tests/gatsby-pipeline
+          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
 
   integration_tests_structured_logging:
     executor: node
@@ -321,7 +309,7 @@ jobs:
           command: yarn build
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
-          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep ''ERROR #''"'
+          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: ~/project/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
@@ -553,8 +541,8 @@ workflows:
             - bootstrap
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
-      #      - integration_tests_cache_resilience:
-      #          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
+          <<: *e2e-test-workflow
       - integration_tests_gatsby_pipeline:
           <<: *e2e-test-workflow
       - integration_tests_structured_logging:

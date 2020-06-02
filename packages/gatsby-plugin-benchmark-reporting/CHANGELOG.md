@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.4...gatsby-plugin-benchmark-reporting@0.2.5) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.3...gatsby-plugin-benchmark-reporting@0.2.4) (2020-05-13)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporter:** change type of incremental benchmark after first run ([#24052](https://github.com/gatsbyjs/gatsby/issues/24052)) ([8213570](https://github.com/gatsbyjs/gatsby/commit/8213570))
+
+## [0.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.2...gatsby-plugin-benchmark-reporting@0.2.3) (2020-05-12)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [0.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.1...gatsby-plugin-benchmark-reporting@0.2.2) (2020-05-12)
+
+### Features
+
+- **gatsby-plugin-benchmark-reporting:** allow arbitrary restart ([#23898](https://github.com/gatsbyjs/gatsby/issues/23898)) ([df4cadc](https://github.com/gatsbyjs/gatsby/commit/df4cadc))
+
+## [0.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.2.0...gatsby-plugin-benchmark-reporting@0.2.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
 # [0.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.1.5...gatsby-plugin-benchmark-reporting@0.2.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting

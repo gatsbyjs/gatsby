@@ -1,7 +1,6 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const nodeStore = require(`../../db/nodes`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)

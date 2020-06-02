@@ -6,12 +6,12 @@ tableOfContentsDepth: 1
 Continuous Integration works by pushing small code chunks to your application’s code base hosted in a Git repository, and, to every push, run a pipeline of scripts to build, test, and validate the code changes before merging them into the main branch.
 This recipe helps you set up CI/CD on Gitlab and automate your production build!.
 
-### Prerequisites
+## Prerequisites
 
 - Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
 - A [Gitlab](https://gitlab.com/) account
 
-### Directions
+## Directions
 
 1. Create a gatsby site
 
@@ -52,7 +52,7 @@ install_dependencies:
 3. `git push <you-remote-gitlab-repo>`
 4. Check out your pipeline under the CI/CD option.
 
-### Additional resources
+## Additional resources
 
 - See how you can develop this simple file into something more real world [Gitlab CI/CD Docs](https://docs.gitlab.com/ee/ci/README.html)
 - Check this especially to learn how to make your newly build available for a next job - [Gitlab Job Artifacts Docs](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html)

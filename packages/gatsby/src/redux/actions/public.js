@@ -599,8 +599,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   const deleteNodesAction = {
     type: `DELETE_NODES`,
     plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
+    // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
     fullNodes: nodeIds.map(getNode),
   }
@@ -1211,8 +1210,8 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
@@ -1231,8 +1230,8 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
