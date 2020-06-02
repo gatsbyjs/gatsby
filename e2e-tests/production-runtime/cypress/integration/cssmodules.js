@@ -9,7 +9,6 @@ describe(`Cssmodule integration`, () => {
     })
 
     cssModuleEl.invoke("attr", "class").then(className => {
-      console.log(className)
       cy.get("style").contains(className).should("exist")
     })
     cy.get("style").should("have.length", 3)
