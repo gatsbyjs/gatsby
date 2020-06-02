@@ -26,13 +26,7 @@ const BlogCard = () => (
     >
       <Heading
         sx={{
-          fontSize: 4,
-          [mediaQueries.md]: {
-            fontSize: 6,
-          },
-          [mediaQueries.lg]: {
-            fontSize: 7,
-          },
+          fontSize: [4, 5, 6, null, 7],
         }}
         fontWeight="heading"
       >
