@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **recipes:** add recipe for Gitlab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
+- **recipes:** add recipe for GitLab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
 
 ## [0.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.27...gatsby-recipes@0.1.28) (2020-05-22)
 
