@@ -17,11 +17,11 @@ import { componentsReducer } from "./components"
 import { componentDataDependenciesReducer } from "./component-data-dependencies"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
-import nodesByTypeReducer from "./nodes-by-type"
+import { nodesByTypeReducer } from "./nodes-by-type"
 import programReducer from "./program"
-import resolvedNodesReducer from "./resolved-nodes"
+import { resolvedNodesCacheReducer } from "./resolved-nodes"
 import { nodesTouchedReducer } from "./nodes-touched"
-import flattenedPluginsReducer from "./flattened-plugins"
+import { flattenedPluginsReducer } from "./flattened-plugins"
 import schemaCustomizationReducer from "./schema-customization"
 import inferenceMetadataReducer from "./inference-metadata"
 
@@ -32,7 +32,7 @@ export {
   programReducer as program,
   nodesReducer as nodes,
   nodesByTypeReducer as nodesByType,
-  resolvedNodesReducer as resolvedNodesCache,
+  resolvedNodesCacheReducer as resolvedNodesCache,
   nodesTouchedReducer as nodesTouched,
   lastActionReducer as lastAction,
   flattenedPluginsReducer as flattenedPlugins,
