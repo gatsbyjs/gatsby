@@ -96,6 +96,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
   })
 
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
@@ -143,13 +150,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
     rewriteActivityTimer.end()
   }
-
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
 
   await flushPendingPageDataWrites()
   markWebpackStatusAsDone()
