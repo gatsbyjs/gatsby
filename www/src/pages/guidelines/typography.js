@@ -137,15 +137,14 @@ const Typography = ({ location }) => (
           </p>
         </CopyColumn>
         <ContentColumn>
-          <div
+          <Flex
             sx={{
-              display: `flex`,
               alignItems: `flex-end`,
               height: `100%`,
             }}
           >
             <Typeface fontFamily="heading">Futura PT</Typeface>
-          </div>
+          </Flex>
         </ContentColumn>
       </Columns>
       <Columns>
