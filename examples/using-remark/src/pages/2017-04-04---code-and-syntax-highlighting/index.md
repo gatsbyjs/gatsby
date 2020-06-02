@@ -41,7 +41,7 @@ names, see the [PrismJS homepage][3].
 
     ```python
     s = "Python syntax highlighting"
-    print s
+    print(s)
     ```
 
     ```
@@ -56,7 +56,7 @@ alert(s)
 
 ```python
 s = "Python syntax highlighting"
-print s
+print(s)
 ```
 
 ```
