@@ -30,6 +30,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  writeOutRequires,
 } from "../services"
 import {
   markWebpackStatusAsPending,
@@ -101,6 +102,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
     parentSpan: buildSpan,
     store,
+  })
+
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
   })
 
   await apiRunnerNode(`onPreBuild`, {
