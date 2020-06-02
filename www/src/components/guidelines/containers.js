@@ -37,6 +37,21 @@ export const Section = ({ children, ...rest }) => (
   </section>
 )
 
+export const SectionNoRightPadding = ({ children }) => (
+  <section
+    sx={{
+      ...container,
+      py: [4, null, 5, 8],
+      pr: 0,
+      [mediaQueries.md]: {
+        pl: 10,
+      },
+    }}
+  >
+    {children}
+  </section>
+)
+
 export const copyColumnWidth = `20rem`
 export const copyColumnGutter = 10
 
