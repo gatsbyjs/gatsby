@@ -7,15 +7,18 @@ export async function runPageQueries({
   queryIds,
   store,
   program,
-}: Partial<IBuildContext>): Promise<object> {
-  let results = new Map()
+}: Partial<IBuildContext>): Promise<void> {
   if (!queryIds || !store) {
-    return { results: [] }
+    return
   }
   const { pageQueryIds } = queryIds
   const state = store.getState()
   const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
     .length
+
+  if (!pageQueryIdsCount) {
+    return
+  }
 
   const activity = reporter.createProgress(
     `run page queries`,
@@ -27,15 +30,12 @@ export async function runPageQueries({
     }
   )
 
-  if (pageQueryIdsCount) {
-    activity.start()
-    results = await processPageQueries(pageQueryIds, {
-      state,
-      activity,
-      graphqlTracing: program?.graphqlTracing,
-    })
-  }
+  activity.start()
+  await processPageQueries(pageQueryIds, {
+    state,
+    activity,
+    graphqlTracing: program?.graphqlTracing,
+  })
 
   activity.done()
-  return { results }
 }

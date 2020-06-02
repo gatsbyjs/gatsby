@@ -7,12 +7,15 @@ export async function runStaticQueries({
   queryIds,
   store,
   program,
-}: Partial<IBuildContext>): Promise<object> {
-  let results = new Map()
+}: Partial<IBuildContext>): Promise<void> {
   if (!queryIds || !store) {
-    return { results: [] }
+    return
   }
   const { staticQueryIds } = queryIds
+  if (!staticQueryIds.length) {
+    return
+  }
+
   const state = store.getState()
   const activity = reporter.createProgress(
     `run static queries`,
@@ -24,15 +27,12 @@ export async function runStaticQueries({
     }
   )
 
-  if (staticQueryIds.length) {
-    activity.start()
-    results = await processStaticQueries(staticQueryIds, {
-      state,
-      activity,
-      graphqlTracing: program?.graphqlTracing,
-    })
-  }
+  activity.start()
+  await processStaticQueries(staticQueryIds, {
+    state,
+    activity,
+    graphqlTracing: program?.graphqlTracing,
+  })
 
   activity.done()
-  return { results }
 }
