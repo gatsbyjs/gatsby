@@ -71,9 +71,9 @@ Follow these instructions for installs on an Ubuntu droplet.
 
 The next step is to clone the repository containing your Gatsby app (Replace `<your-github-repo-site>` with your Github repository link)
 
-   ```bash
-   git clone <your-github-repo-site>
-   ```
+```bash
+git clone <your-github-repo-site>
+```
 
 > Note: this guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity.
 
@@ -81,10 +81,10 @@ The next step is to clone the repository containing your Gatsby app (Replace `<y
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
 
-   ```bash
-   cd my-gatsby-app
-   sudo gatsby build
-   ```
+```bash
+cd my-gatsby-app
+sudo gatsby build
+```
 
 ### Install Nginx Web Server to host the static site and open firewall to accept HTTP and HTTPS requests
 
