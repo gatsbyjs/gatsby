@@ -12,7 +12,7 @@ jest.mock("../../hooks/use-site-metadata", () => {
 import React from "react"
 import { render } from "@testing-library/react"
 import { Helmet } from "react-helmet"
-import SiteMetadata from "../site-metadata"
+import SiteMetadata from "../layout/site-metadata"
 
 it("sets canonical url and og:url correctly", () => {
   render(<SiteMetadata pathname="/docs/quick-start/" />)

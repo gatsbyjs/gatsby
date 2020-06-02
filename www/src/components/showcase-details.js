@@ -12,7 +12,7 @@ import Modal from "./modal"
 import ShareMenu from "./share-menu"
 import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
-import PageMetadata from "../components/site-metadata"
+import PageMetadata from "../components/layout/site-metadata"
 
 import FeaturedIcon from "../assets/icons/featured-sites-icons"
 import { MdArrowUpward, MdLink } from "react-icons/md"

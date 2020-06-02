@@ -5,8 +5,8 @@ import { navigate } from "gatsby"
 import { withI18n } from "@lingui/react"
 import { t } from "@lingui/macro"
 
-import SearchIcon from "../search-icon"
-import { themedInput } from "../../utils/styles"
+import SearchIcon from "../../search-icon"
+import { themedInput } from "../../../utils/styles"
 
 const loadJS = () => import(`./docsearch.min.js`)
 let loadedJs = false

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
-import Banner from "../banner"
+import Banner from "../layout/banner"
 
 const matchers = [
   `Watch now`,

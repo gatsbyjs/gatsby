@@ -4,14 +4,14 @@ import React from "react"
 
 import { Global } from "@emotion/core"
 
-import { globalStyles } from "../utils/styles/global"
-import { breakpointGutter } from "../utils/styles"
+import { globalStyles } from "../../utils/styles/global"
+import { breakpointGutter } from "../../utils/styles"
 import Banner from "./banner"
 import Navigation from "./navigation"
 import MobileNavigation from "./navigation-mobile"
 import SiteMetadata from "./site-metadata"
 import SkipNavLink from "./skip-nav-link"
-import "../assets/fonts/futura"
+import "../../assets/fonts/futura"
 
 export default function DefaultLayout({ location, children }) {
   if (location.state?.isModal) {

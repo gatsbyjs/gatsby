@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import { SkipNavLink } from "@reach/skip-nav"
 import { Trans } from "@lingui/macro"
 
-import { visuallyHidden } from "../utils/styles"
+import { visuallyHidden } from "../../utils/styles"
 
 const Link = () => (
   <SkipNavLink

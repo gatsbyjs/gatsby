@@ -1,9 +1,9 @@
 import React from "react"
 import { render, waitFor, fireEvent } from "@testing-library/react"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "../../I18nContext"
+import { I18nProvider } from "../../../I18nContext"
 
-import theme from "../../../gatsby-plugin-theme-ui"
+import theme from "../../../../gatsby-plugin-theme-ui"
 import SearchForm from "../search-form"
 
 test(`it initializes algola docsearch on form click, and keeps focus`, async () => {

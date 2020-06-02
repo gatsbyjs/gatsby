@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import Link from "./localized-link"
+import Link from "../localized-link"
 import { t } from "@lingui/macro"
 import { withI18n } from "@lingui/react"
 
@@ -10,9 +10,9 @@ import {
   TutorialIcon,
   PluginsIcon,
   ShowcaseIcon,
-} from "../assets/icons"
+} from "../../assets/icons"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import { svgStyles } from "../utils/styles"
+import { svgStyles } from "../../utils/styles"
 
 const getProps = ({ isPartiallyCurrent }) => {
   return {

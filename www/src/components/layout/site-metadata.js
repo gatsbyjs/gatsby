@@ -1,9 +1,9 @@
 import React from "react"
 import { Helmet } from "react-helmet"
-import useSiteMetadata from "../hooks/use-site-metadata"
+import useSiteMetadata from "../../hooks/use-site-metadata"
 
-import { useLocale } from "./I18nContext"
-import gatsbyIcon from "../assets/gatsby-icon.png"
+import { useLocale } from "../I18nContext"
+import gatsbyIcon from "../../assets/gatsby-icon.png"
 
 const SiteMetadata = ({ pathname }) => {
   const { siteUrl, title, twitter } = useSiteMetadata()

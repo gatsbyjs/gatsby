@@ -24,7 +24,7 @@ import {
 import { visuallyHidden } from "../utils/styles"
 import { Global, css } from "@emotion/core"
 import removeMD from "remove-markdown"
-import SkipNavLink from "./skip-nav-link"
+import SkipNavLink from "./layout/skip-nav-link"
 import { FaUsers as CommunityIcon } from "react-icons/fa"
 
 // This is for the urlSync
