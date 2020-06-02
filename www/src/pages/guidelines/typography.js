@@ -467,16 +467,11 @@ const Typography = ({ location }) => (
             </Text>
             <Heading
               sx={{
-                fontSize: 9,
+                fontSize: [9, null, 12, null, 13],
+                bg: `#f09`,
                 letterSpacing: `tight`,
                 lineHeight: `solid`,
                 mb: 5,
-                [mediaQueries.sm]: {
-                  fontSize: 12,
-                },
-                [mediaQueries.lg]: {
-                  fontSize: 13,
-                },
               }}
             >
               Create digital experiences on the edge—faster
