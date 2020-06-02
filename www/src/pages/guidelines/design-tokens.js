@@ -594,16 +594,14 @@ const DesignTokens = ({ location }) => (
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(theme.mediaQueries).map((mediaQuery, i) => {
-                  return (
-                    <tr key={`tokens-mediaQuery-${i}`}>
-                      <TdAlignTop>
-                        <code>mediaQueries.{mediaQuery}</code>
-                      </TdAlignTop>
-                      <TdAlignTop>{mediaQueries[mediaQuery]}</TdAlignTop>
-                    </tr>
-                  )
-                })}
+                {Object.keys(theme.mediaQueries).map((mediaQuery, i) => (
+                  <tr key={`tokens-mediaQuery-${i}`}>
+                    <TdAlignTop>
+                      <code>mediaQueries.{mediaQuery}</code>
+                    </TdAlignTop>
+                    <TdAlignTop>{mediaQueries[mediaQuery]}</TdAlignTop>
+                  </tr>
+                ))}
               </tbody>
             </Box>
           </Flex>
