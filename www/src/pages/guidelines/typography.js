@@ -165,19 +165,16 @@ const Typography = ({ location }) => (
           </Text>
         </CopyColumn>
         <ContentColumn>
-          <div
+          <Flex
             sx={{
-              display: `flex`,
-              flexDiretion: `column`,
-              alignItems: `flex-end`,
+              flexDirection: `column`,
+              justifyContent: `flex-end`,
               height: `100%`,
             }}
           >
-            <div>
-              <Typeface fontFamily="system">Sans-serif</Typeface>
-              <Typeface fontFamily="monospace">Monospace</Typeface>
-            </div>
-          </div>
+            <Typeface fontFamily="system">Sans-serif</Typeface>
+            <Typeface fontFamily="monospace">Monospace</Typeface>
+          </Flex>
         </ContentColumn>
       </Columns>
     </Section>
