@@ -8,7 +8,7 @@ DigitalOcean provides a cloud platform to deploy, manage, and scale applications
 
 DigitalOcean's product droplets are scalable compute IaaS (Infrastructure as a Service) or a VPS (Virtual Private Server) on the cloud which has great reliability and scalability. They come with varied price ranges ideal for small apps to giant enterprise-level apps.
 
-They provide service to select from the 6 Unix based distributions and select your technology-based platform with preinstalled pre-requisites from the marketplace.
+They provide service to select from various Unix-based distributions and select your technology-based platform with preinstalled pre-requisites from the marketplace. This guide will walk through the specific options that work best for deploying a Gatsby site with DigitalOcean.
 
 A Droplet can be spun up in less than a minute for as little as \$5/month.
 
