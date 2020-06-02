@@ -6523,18 +6523,28 @@
     - Invite collaborators into Netlify CMS, without giving access to your Github account via Git Gateway
     - Gatsby Incremental Builds with Netlify.
     - For more info, Take a look at readme.md on the Github repo.
-- url: https://gatsby-starter-moonclerk.netlify.app
-  repo: https://github.com/moonclerk/gatsby-starter-moonclerk
+- url: https://gatsby-starter-payments.netlify.app
+  repo: https://github.com/moonclerk/gatsby-starter-payments
   description: A Gatsby starter for creating SaaS landing pages using MoonClerk to accept payments.
   tags:
-    - SEO
     - Landing Page
-    - Styling:CSS-in-JS
     - Netlify
     - Onepage
+    - SEO
+    - Stripe
+    - Styling:CSS-in-JS
   features:
-    - Landing Page
     - SEO optimized
+    - Landing Page
+    - Fully responsive
+    - Gatsby images
+    - MoonClerk Payment Forms
+    - Open source illustrations from Icons8
+    - Google Analytics
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for easy, beautiful typography
+    - Styling with styled-components
+    - Organized using ABEM
 - url: https://schoolfront.netlify.app
   repo: https://github.com/orzechdev/schoolfront
   description: School website starter
@@ -6564,7 +6574,10 @@
   tags:
     - Donations
     - Landing Page
+    - Netlify
+    - Onepage
     - SEO
+    - Stripe
     - Styling:CSS-in-JS
   features:
     - SEO optimized
@@ -6572,6 +6585,7 @@
     - Gatsby images
     - MoonClerk Payment Forms
     - Open source illustrations from Icons8
+    - Open source image from Unsplash
     - Google Analytics
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for easy, beautiful typography
