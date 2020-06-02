@@ -119,7 +119,12 @@ export const CopyColumn = ({
   </div>
 )
 
-export const ContentColumn = ({ children, fullWidth, ...rest }) => (
+export const ContentColumn = ({
+  children,
+  fullWidth,
+  overflowXMobile,
+  ...rest
+}) => (
   <div
     css={{
       "p, ul, ol": {
@@ -130,10 +135,12 @@ export const ContentColumn = ({ children, fullWidth, ...rest }) => (
       ...rest,
       width: `100%`,
       overflow: `hidden`,
+      overflowX: overflowXMobile ? `auto` : `hidden`,
       position: `relative`,
       [mediaQueries.lg]: {
         width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
+        overflowX: `hidden`,
       },
     }}
   >

@@ -241,7 +241,7 @@ const DesignTokens = ({ location }) => (
             components along the z-axis.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <Flex>
             <table
               sx={{
@@ -330,7 +330,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>font-family</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn>
+        <ContentColumn overflowXMobile>
           <table>
             <thead>
               <tr>
@@ -367,7 +367,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>font-size</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <table>
             <thead>
               <tr>
@@ -413,7 +413,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>font-weight</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn>
+        <ContentColumn overflowXMobile>
           <Flex>
             <table>
               <thead>
@@ -456,7 +456,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>letter-spacing</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <Flex>
             <table>
               <thead>
@@ -505,7 +505,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>line-height</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <table>
             <thead>
               <tr>
@@ -595,7 +595,6 @@ const DesignTokens = ({ location }) => (
               </thead>
               <tbody>
                 {Object.keys(theme.mediaQueries).map((mediaQuery, i) => {
-                  console.log(theme)
                   return (
                     <tr key={`tokens-mediaQuery-${i}`}>
                       <TdAlignTop>
@@ -622,7 +621,7 @@ const DesignTokens = ({ location }) => (
             section for detailed information and accessibility notes.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth width="100%">
+        <ContentColumn overflowXMobile fullWidth width="100%">
           <Flex>
             <table>
               <thead>
@@ -671,7 +670,7 @@ const DesignTokens = ({ location }) => (
             Intended to be used with the <code>transition</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn>
+        <ContentColumn overflowXMobile>
           <Flex>
             <table>
               <thead>
