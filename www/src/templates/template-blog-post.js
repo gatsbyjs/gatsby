@@ -190,6 +190,7 @@ export const pageQuery = graphql`
       }
       frontmatter {
         title
+        seoTitle
         date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink

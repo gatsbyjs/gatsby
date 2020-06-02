@@ -1,0 +1,37 @@
+{
+  "name": "gatsby-example-using-reach-skip-nav",
+  "private": true,
+  "description": "Gatsby example site demoing @reach/skip-nav",
+  "version": "1.0.0",
+  "author": "Madalyn Parker <hello@madalyn.dev>",
+  "dependencies": {
+    "@reach/skip-nav": "^0.8.0",
+    "gatsby": "^2.0.0",
+    "gatsby-plugin-manifest": "^2.2.41",
+    "gatsby-plugin-react-helmet": "^3.1.22",
+    "gatsby-source-filesystem": "^2.1.48",
+    "lodash": "^4.17.14",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-helmet": "^5.2.1"
+  },
+  "keywords": [
+    "gatsby",
+    "reach",
+    "skip-nav"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test develop http://localhost:8001 cy:open"
+  },
+  "devDependencies": {
+    "cypress": "^4.2.0",
+    "start-server-and-test": "^1.10.11"
+  }
+}

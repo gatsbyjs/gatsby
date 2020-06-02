@@ -14,7 +14,7 @@ We're also launching **Reports**: a 24/7 website health and performance service 
 
 Eager for the details? **[Jump to the FAQ](#faqs)**.
 
-### Try out Gatsby Builds & Reports today
+## Try out Gatsby Builds & Reports today
 
 If you’re an existing Gatsby Cloud user you’ll find Builds and Reports already enabled in your account. New users can [sign up for a Gatsby Cloud account](https://www.gatsbyjs.com/get-started) to access these features alongside our [previously launched real-time content Preview feature](/blog/2019-11-14-announcing-gatsby-cloud/).
 

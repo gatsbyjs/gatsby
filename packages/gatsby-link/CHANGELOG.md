@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.2...gatsby-link@2.4.3) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.1...gatsby-link@2.4.2) (2020-05-08)
+
+### Bug Fixes
+
+- **gatsby-link:** replace current path in history rather than pushing it ([#23414](https://github.com/gatsbyjs/gatsby/issues/23414)) ([5fcd6dc](https://github.com/gatsbyjs/gatsby/commit/5fcd6dc)), closes [#22124](https://github.com/gatsbyjs/gatsby/issues/22124)
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.0...gatsby-link@2.4.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-link
+
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.3.5...gatsby-link@2.4.0) (2020-04-27)
 
 **Note:** Version bump only for package gatsby-link

@@ -916,20 +916,6 @@ date: "2017-09-18T23:19:51.246Z"
       expect(node.timeToRead).toBe(1)
     }
   )
-
-  bootstrapTest(
-    `correctly uses a custom value for timeToRead`,
-    `${content}\nWhere oh where is my little pony?\n`,
-    `timeToRead
-    frontmatter {
-        title
-    }`,
-    node => {
-      expect(node).toMatchSnapshot()
-      expect(node.timeToRead).toBe(9)
-    },
-    { pluginOptions: { timeToRead: wordCount => wordCount / 1 } }
-  )
 })
 
 describe(`Table of contents is generated correctly from schema`, () => {
@@ -1277,6 +1263,77 @@ describe(`Headings are generated correctly from schema`, () => {
           depth: 2,
         },
       ])
+    }
+  )
+
+  bootstrapTest(
+    `returns null id if heading has no id`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: null,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: null,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns id if heading has one`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: `first-title`,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: `second-title`,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    },
+    {
+      pluginOptions: {
+        plugins: [
+          // to pass subplugin we need to use object with `resolve` and `pluginOptions`
+          // (this is what gatsby core internally turns plugin entries to + gatsby core always set empty object {}
+          // if options were not provided and lot of plugins rely on this and are not checking for options existence)
+          {
+            resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
+            pluginOptions: {},
+          },
+        ],
+      },
     }
   )
 

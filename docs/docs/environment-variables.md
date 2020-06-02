@@ -24,7 +24,7 @@ If you want to define other environments then you'll need to do a little more wo
 All of the Project and OS Env Vars are only directly available at build time, or
 when Node.js is running. They aren't immediately available at run time of the client code; they
 need to be actively captured and embedded into client-side JavaScript.
-This is achieved during the build using Webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
+This is achieved during the build using webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
 
 Once the environment variables have been embedded into the client-side code, they are accessible from the
 global variable `process.env`.
@@ -91,7 +91,7 @@ GATSBY_API_URL=https://example.com/api
 API_KEY=927349872349798
 ```
 
-Note: since Gatsby uses the [Webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
+Note: since Gatsby uses the [webpack DefinePlugin](https://webpack.js.org/plugins/define-plugin/) to make the environment variables available at runtime, they cannot be destructured from `process.env`; instead, they have to be fully referenced.
 
 `GATSBY_API_URL` will be available to your site (Client-side and server-side) as `process.env.GATSBY_API_URL`.:
 

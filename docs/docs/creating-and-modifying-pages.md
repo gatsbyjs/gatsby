@@ -159,11 +159,12 @@ Your template file would look like this:
 
 ```javascript:title=src/templates/product.js
 function Product({ pageContext }) {
+  const { product } = pageContext
   return (
     <div>
-      Name: {pageContext.name}
-      Price: {pageContext.price}
-      Description: {pageContext.description}
+      Name: {product.name}
+      Price: {product.price}
+      Description: {product.description}
     </div>
   )
 }
@@ -219,7 +220,7 @@ exports.onCreatePage = ({ page, actions }) => {
   // Remove trailing slash unless page is /
   page.path = replacePath(page.path)
   if (page.path !== oldPage.path) {
-    // Replace new page with old page
+    // Replace old page with new page
     deletePage(oldPage)
     createPage(page)
   }

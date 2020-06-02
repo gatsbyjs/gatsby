@@ -1,16 +1,16 @@
 ---
-title: Build a Gatsby Blog using the Cosmic JS source plugin
+title: Build a Gatsby Blog using the Cosmic source plugin
 date: 2018-06-07
 author: "Tony Spiro"
 canonicalLink: https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45
-publishedAt: "Cosmic JS"
+publishedAt: "Cosmic"
 ---
 
-![Cosmic JS Gatsby](./gatsby-cosmic.jpg)
+![Cosmic Gatsby](./gatsby-cosmic.jpg)
 
-> _This article originally appears on [the Cosmic JS website](https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45)_.
+> _This article originally appears on [the Cosmic website](https://cosmicjs.com/articles/build-a-gatsby-blog-using-the-cosmic-js-source-plugin-jhzwvr45)_.
 
-In this tutorial, I'm going to show you how to create a simple but blazing fast blog using React, Gatsby, and [Cosmic JS](https://cosmicjs.com).
+In this tutorial, I'm going to show you how to create a simple but blazing fast blog using React, Gatsby, and [Cosmic](https://cosmicjs.com).
 
 ## TL;DR
 
@@ -18,7 +18,7 @@ In this tutorial, I'm going to show you how to create a simple but blazing fast 
 
 [Check out the demo.](https://cosmicjs.com/apps/gatsby-blog)
 
-[Check out the Cosmic JS Source Plugin for Gatsby.](https://github.com/cosmicjs/gatsby-source-cosmicjs)
+[Check out the Cosmic Source Plugin for Gatsby.](https://github.com/cosmicjs/gatsby-source-cosmicjs)
 
 ## Prerequisites
 
@@ -36,7 +36,7 @@ First, install the Gatsby CLI:
 npm install --global gatsby-cli
 ```
 
-Create a new site based on the Gatsby Cosmic JS starter:
+Create a new site based on the Gatsby Cosmic starter:
 
 ```bash
 gatsby new gatsby-blog-cosmicjs
@@ -56,15 +56,15 @@ npm run develop
 
 At this point, you can access your Gatsby website by visiting `http://localhost:8000`.
 
-## Install the Cosmic JS Source Plugin
+## Install the Cosmic Source Plugin
 
-In a static website, data can be consumed from multiple different sources, for example Markdown files, HTML files, and/or an eternal API (WordPress, Cosmic JS, etc).
+In a static website, data can be consumed from multiple different sources, for example Markdown files, HTML files, and/or an eternal API (WordPress, Cosmic, etc).
 
 To make consuming data simpler, Gatsby implements a data layer powered by GraphQL. Very exciting stuff!
 
 To connect this data layer with different data providers, you need to integrate a source plugin. Fortunately, there are many source plugins available for common data sources, and [an API available to create your own](/docs/creating-a-source-plugin/) if necessary.
 
-In our case, we are using [Cosmic JS](https://cosmicjs.com). We need a source plugin to connect data from Cosmic JS to our Gatsby site. Good news: there's already a [source plugin for Cosmic JS](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
+In our case, we are using [Cosmic](https://cosmicjs.com). We need a source plugin to connect data from Cosmic to our Gatsby site. Good news: there's already a [source plugin for Cosmic](https://github.com/cosmicjs/gatsby-source-cosmicjs)!
 
 Install the source plugin with the following command:
 
@@ -95,7 +95,7 @@ module.exports = {
     {
       resolve: "gatsby-source-cosmicjs",
       options: {
-        bucketSlug: "gatsby-blog-cosmic-js", // Your CosmicJS bucket slug
+        bucketSlug: "gatsby-blog-cosmic-js", // Your Cosmic bucket slug
         objectTypes: ["posts", "settings"], // List of the object types you want to be able to request from Gatsby.
         apiAccess: {
           read_key: "",
@@ -108,9 +108,9 @@ module.exports = {
 
 ### A couple of notes on this config:
 
-1. Notice `bucketSlug` is set to `gatsby-blog-cosmic-js`. This is a demo Bucket that includes pre-populated content, so when you [download the GitHub repo](https://github.com/cosmicjs/gatsby-blog-cosmicjs) and start the app, it will display demo content right out of the box. You can also import this demo content into your own Cosmic JS Bucket by going to `Your Cosmic JS Bucket Dashboard > Settings > Apps`, then find and install the Gatsby Blog.
-2. The API read key is optional and can be set after you login to Cosmic JS at:
-   `Your Cosmic JS Bucket Dashboard > Settings > Basic Settings`
+1. Notice `bucketSlug` is set to `gatsby-blog-cosmic-js`. This is a demo Bucket that includes pre-populated content, so when you [download the GitHub repo](https://github.com/cosmicjs/gatsby-blog-cosmicjs) and start the app, it will display demo content right out of the box. You can also import this demo content into your own Cosmic Bucket by going to `Your Cosmic Bucket Dashboard > Settings > Apps`, then find and install the Gatsby Blog.
+2. The API read key is optional and can be set after you login to Cosmic at:
+   `Your Cosmic Bucket Dashboard > Settings > Basic Settings`
 
 Now restart the server to apply the updates.
 
@@ -205,7 +205,7 @@ Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and
 
 ## Single Post Layout
 
-Till now we have integrated Cosmic JS source plugin with Gatsby and it's looking like a blog. Now we will work on adding a details page for individual blog posts.
+Till now we have integrated Cosmic source plugin with Gatsby and it's looking like a blog. Now we will work on adding a details page for individual blog posts.
 
 Create the template at `src/templates/blog-post.js`:
 
@@ -432,4 +432,4 @@ The static website generated by Gatsby can easily be published on services like 
 
 ### Conclusion
 
-Congrats! You’ve successfully built a super fast and easy-to-maintain blog! Feel free to continue this project to discover both Gatsby and Cosmic JS advantages.
+Congrats! You’ve successfully built a super fast and easy-to-maintain blog! Feel free to continue this project to discover both Gatsby and Cosmic advantages.

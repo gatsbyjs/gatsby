@@ -46,11 +46,11 @@
     "bench": "rm -r markdown-pages; NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js; gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "benchnb": "gatsby clean; node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "build": "gatsby build",
+    "clean": "gatsby clean",
     "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "postinstall": "del-cli markdown-pages && gatsby clean && NUM_PAGES=${NUM_PAGES:-2000} node md.generate.js"
   }
