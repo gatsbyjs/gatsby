@@ -18,8 +18,8 @@
     "webpack": "^4.43.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
     "babel-preset-gatsby-package": "^0.4.2",
     "cross-env": "^5.2.1",
     "react": "^16.12.0",

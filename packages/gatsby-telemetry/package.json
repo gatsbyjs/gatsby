@@ -7,8 +7,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.8.3",
-    "@babel/runtime": "^7.9.6",
+    "@babel/code-frame": "^7.10.1",
+    "@babel/runtime": "^7.10.2",
     "bluebird": "^3.7.2",
     "boxen": "^4.2.0",
     "configstore": "^5.0.1",
@@ -26,8 +26,8 @@
     "uuid": "3.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby-package": "^0.4.2",
     "cross-env": "^5.2.1",
