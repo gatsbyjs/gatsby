@@ -1,6 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 
 export async function customizeSchema({
   parentSpan,

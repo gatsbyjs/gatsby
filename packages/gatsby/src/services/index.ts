@@ -12,7 +12,8 @@ import { initialize } from "./initialize"
 import { writeHTML } from "./write-html"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { ServiceConfig } from "xstate"
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
+export * from "./types"
 
 export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
   customizeSchema,

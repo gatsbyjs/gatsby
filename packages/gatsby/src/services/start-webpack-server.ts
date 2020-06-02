@@ -14,7 +14,7 @@ import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
 import { startServer } from "../utils/start-server"
 import { WebsocketManager } from "../utils/websocket-manager"
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 
 export async function startWebpackServer({
   program,

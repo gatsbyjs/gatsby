@@ -1,4 +1,4 @@
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunnerNode from "../utils/api-runner-node"

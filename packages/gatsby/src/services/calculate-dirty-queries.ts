@@ -1,5 +1,5 @@
 import { calcInitialDirtyQueryIds, groupQueryIds } from "../query"
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 
 export interface IGroupedQueryIds {
   pageQueryIds: string[]

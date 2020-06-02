@@ -2,58 +2,22 @@ import {
   Machine,
   assign,
   DoneInvokeEvent,
-  Actor,
   AnyEventObject,
   MachineConfig,
 } from "xstate"
-import { Express } from "express"
+import { IBuildContext } from "../services"
 import { startWebpackServer } from "../services/start-webpack-server"
 import { WebsocketManager } from "../utils/websocket-manager"
-import { Store } from "redux"
 import { Compiler } from "webpack"
-import { Span } from "opentracing"
-import { GraphQLRunner } from "../query/graphql-runner"
 import { idleStates } from "./waiting"
 import {
   ADD_NODE_MUTATION,
   SOURCE_FILE_CHANGED,
 } from "./shared-transition-configs"
-import { IProgram } from "../commands/types"
-import { IGroupedQueryIds } from "../services/calculate-dirty-queries"
 import { buildActions } from "./actions"
-import { IGatsbyState } from "../redux/types"
 import { runningStates } from "./running"
 import JestWorker from "jest-worker"
 import { buildServices } from "../services"
-
-export interface IMutationAction {
-  type: string
-  // These are the arguments passed to apiRunnerNode
-  payload: unknown[]
-}
-
-export interface IBuildContext {
-  program?: IProgram
-  app?: Express
-  recursionCount: number
-  nodesMutatedDuringQueryRun: boolean
-  firstRun: boolean
-  nodeMutationBatch: IMutationAction[]
-  filesDirty?: boolean
-  runningBatch: IMutationAction[]
-  compiler?: Compiler
-  websocketManager?: WebsocketManager
-  store?: Store<IGatsbyState>
-  parentSpan?: Span
-  graphqlRunner?: GraphQLRunner
-  refresh?: boolean
-  webhookBody?: Record<string, unknown>
-  queryIds?: IGroupedQueryIds
-  workerPool?: JestWorker
-  pagesToBuild?: string[]
-  pagesToDelete?: string[]
-  mutationListener?: Actor<any, AnyEventObject>
-}
 
 export const INITIAL_CONTEXT: IBuildContext = {
   recursionCount: 0,

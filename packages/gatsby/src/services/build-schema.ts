@@ -1,4 +1,4 @@
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 
 import { build } from "../schema"
 import report from "gatsby-cli/lib/reporter"

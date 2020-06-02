@@ -1,4 +1,4 @@
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 import sourceNodesAndGc from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
 import { findChangedPages } from "../utils/check-for-changed-pages"

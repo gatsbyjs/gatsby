@@ -1,5 +1,5 @@
 import { processPageQueries } from "../query"
-import { IBuildContext } from "../state-machines/develop"
+import { IBuildContext } from "./"
 import reporter from "gatsby-cli/lib/reporter"
 
 export async function runPageQueries({
