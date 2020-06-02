@@ -3,7 +3,7 @@ import { jsx } from "theme-ui"
 import React, { useState } from "react"
 import CopyToClipboard from "react-copy-to-clipboard"
 
-import { Box } from "../system"
+import { Box } from "theme-ui"
 
 export default function Swatch(props) {
   const { a11yLabel, color, swatchStyle, textColor } = props
@@ -24,8 +24,8 @@ export default function Swatch(props) {
 
   return (
     <Box
-      bg={color.hex}
       sx={{
+        bg: color.hex,
         ...swatchStyle,
         ":hover > .btn-copy": {
           display: `block`,
@@ -34,15 +34,15 @@ export default function Swatch(props) {
     >
       {a11yLabel !== `×` && (
         <Box
-          color={textColor}
-          fontSize={0}
-          position="absolute"
-          fontWeight="body"
           sx={{
-            bottom: `2px`,
-            left: `3px`,
+            color: textColor,
+            fontSize: 0,
+            position: `absolute`,
+            fontWeight: `body`,
             lineHeight: `dense`,
             top: `auto`,
+            bottom: `2px`,
+            left: `3px`,
           }}
         >
           {a11yLabel}
@@ -55,15 +55,15 @@ export default function Swatch(props) {
           sx={{
             background: `none`,
             border: 0,
-            bottom: 0,
             color: `black`,
             cursor: `pointer`,
-            height: `100%`,
-            left: 0,
-            position: `absolute`,
-            right: 0,
-            top: 0,
             width: `100%`,
+            height: `100%`,
+            position: `absolute`,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
             zIndex: 1,
             ":focus .tooltip, :hover .tooltip": {
               display: `block`,
@@ -73,19 +73,19 @@ export default function Swatch(props) {
           onClick={handleClick}
         >
           <Box
-            bg="white"
-            boxShadow="raised"
-            borderRadius={1}
-            fontSize={1}
             className="tooltip"
             sx={{
-              top: `-40px`,
-              height: `32px`,
-              left: 0,
+              bg: `white`,
+              boxShadow: `raised`,
+              borderRadius: 1,
+              fontSize: 1,
               lineHeight: `32px`,
-              display: `none`,
-              position: `absolute`,
               width: `160px`,
+              height: `32px`,
+              position: `absolute`,
+              top: `-40px`,
+              left: 0,
+              display: `none`,
             }}
           >
             {displayCopied ? (
@@ -101,19 +101,17 @@ export default function Swatch(props) {
 
       {(color.name || color.base) && (
         <Box
-          bg={textColor}
-          borderRadius={7}
-          bottom={4}
-          fontSize={0}
-          lineHeight="solid"
-          height={8}
-          width={8}
-          position="absolute"
-          top="auto"
-          right={4}
-          css={{
-            bottom: 4,
-            right: 4,
+          sx={{
+            bg: textColor,
+            fontSize: 0,
+            lineHeight: `solid`,
+            height: 8,
+            width: 8,
+            position: `absolute`,
+            top: `auto`,
+            right: `4px`,
+            bottom: `4px`,
+            borderRadius: 7,
           }}
         />
       )}
