@@ -26,12 +26,12 @@ export function validatePageComponent(
       error: {
         id: `11326`,
         context: {
-          pluginName: name,
+          pluginName,
           pageObject: page,
           component: component,
         },
       },
-      message: `${name} must set the absolute path to the page component when create creating a page`,
+      message: `${pluginName} must set the absolute path to the page component when create creating a page`,
     }
   }
 
@@ -41,7 +41,7 @@ export function validatePageComponent(
         error: {
           id: `11325`,
           context: {
-            pluginName: pluginName,
+            pluginName,
             pageObject: page,
             component: component,
           },
