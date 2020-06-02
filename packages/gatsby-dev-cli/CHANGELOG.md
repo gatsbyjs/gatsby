@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.7...gatsby-dev-cli@2.7.8) (2020-06-02)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** support workspaces in yarn@1.22 ([#24608](https://github.com/gatsbyjs/gatsby/issues/24608)) ([40d241b](https://github.com/gatsbyjs/gatsby/commit/40d241b))
+
 ## [2.7.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.6...gatsby-dev-cli@2.7.7) (2020-06-02)
 
 **Note:** Version bump only for package gatsby-dev-cli
