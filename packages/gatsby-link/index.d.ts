@@ -39,23 +39,23 @@ export const navigate: NavigateFn
  * After doing so, Gatsby's `<Link>` component will automatically handle constructing the correct URL in
  * development and production
  */
-export const withPrefix: (path: string) => string
+export const withPrefix: <T = string | number>(path: T) => T
 export const withAssetPrefix: (path: string) => string
 
 /**
  * @deprecated
  * TODO: Remove for Gatsby v3
  */
-export const push: (to: string) => void
+export const push: (to: string | number) => void
 
 /**
  * @deprecated
  * TODO: Remove for Gatsby v3
  */
-export const replace: (to: string) => void
+export const replace: (to: string | number) => void
 
 /**
  * @deprecated
  * TODO: Remove for Gatsby v3
  */
-export const navigateTo: (to: string) => void
+export const navigateTo: (to: string | number) => void
