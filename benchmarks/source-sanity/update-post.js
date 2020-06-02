@@ -18,7 +18,7 @@ console.log(`Getting article number ${randomDoc}`)
 client
   .fetch(`*[$randomDoc]`, { randomDoc })
   .then(({ _id, title }) => {
-    return client.patch(_id).set({ title: title + "!" })
+    return client.patch(_id).set({ title: title + "!" }).commit()
   })
   .then(result => {
     console.log(`The "${result.operations.set.title}" was updated!`)
