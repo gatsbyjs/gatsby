@@ -172,8 +172,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         })
+        .option(`inspect`, {
+          type: `number`,
+          describe: `Opens a random port for debugging. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
+        })
         .option(`inspect-brk`, {
-          type: `boolean`,
+          type: `number`,
           describe: `Opens a random port for debugging. Will block until debugger is attached. See https://www.gatsbyjs.org/docs/debugging-the-build-process/`,
         }),
     handler: handlerP(

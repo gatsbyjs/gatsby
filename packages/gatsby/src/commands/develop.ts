@@ -10,7 +10,7 @@ import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
 import { startDevelopProxy } from "../utils/develop-proxy"
-import { IProgram } from "./types"
+import { IProgram, IDebugInfo } from "./types"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -55,14 +55,33 @@ const doesConfigChangeRequireRestart = (
   return true
 }
 
+// Return a user-supplied port otherwise the default Node.js debugging port
+const getDebugPort = (port?: number): number => port ?? 9229
+
+export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
+  if (program.hasOwnProperty(`inspect`)) {
+    return {
+      port: getDebugPort(program.inspect),
+      break: false,
+    }
+  } else if (program.hasOwnProperty(`inspectBrk`)) {
+    return {
+      port: getDebugPort(program.inspectBrk),
+      break: true,
+    }
+  } else {
+    return null
+  }
+}
+
 class ControllableScript {
   private process
   private script
-  private debugPort
+  private debugInfo: IDebugInfo | null
   public isRunning
-  constructor(script, debugPort) {
+  constructor(script, debugInfo: IDebugInfo | null) {
     this.script = script
-    this.debugPort = debugPort
+    this.debugInfo = debugInfo
   }
   start(): void {
     const tmpFileName = tmp.tmpNameSync({
@@ -70,14 +89,20 @@ class ControllableScript {
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    this.process = spawn(
-      `node`,
-      [tmpFileName, this.debugPort && `--inspect-brk=${this.debugPort}`],
-      {
-        env: process.env,
-        stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
-      }
-    )
+    const args = [tmpFileName]
+    // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
+    if (this.debugInfo) {
+      args.push(
+        this.debugInfo.break
+          ? `--inspect-brk=${this.debugInfo.port}`
+          : `--inspect=${this.debugInfo.port}`
+      )
+    }
+
+    this.process = spawn(`node`, args, {
+      env: process.env,
+      stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+    })
   }
   async stop(signal: string | null = null, code?: number): Promise<void> {
     this.isRunning = false
@@ -112,10 +137,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
-  const [statusServerPort, developPort, debugPort] = await Promise.all([
+  const debugInfo = getDebugInfo(program)
+  const [statusServerPort, developPort] = await Promise.all([
     getRandomPort(),
     getRandomPort(),
-    program.inspectBrk ? getRandomPort() : Promise.resolve(null),
   ])
 
   const developProcess = new ControllableScript(
@@ -125,11 +150,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       ...program,
       port: developPort,
       proxyPort,
-      debugPort,
+      debugInfo,
     })};
     cmd(args);
   `,
-    debugPort
+    debugInfo
   )
 
   const proxy = startDevelopProxy({

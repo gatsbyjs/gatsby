@@ -65,7 +65,7 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
-import { Stage, IProgram } from "./types"
+import { Stage, IProgram, IDebugInfo } from "./types"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -379,18 +379,23 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
 }
 
 interface IDevelopArgs extends IProgram {
-  debugPort: number | null
   graphqlTracing: boolean
+  debugInfo: IDebugInfo | null
 }
 
-const waitForDebugger = (port: number) => {
-  inspector.open(port, undefined, true)
-  debugger
+const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (debugInfo.break) {
+    inspector.open(debugInfo.port, undefined, true)
+    // eslint-disable-next-line no-debugger
+    debugger
+  } else {
+    inspector.open(debugInfo.port)
+  }
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
-  if (program.debugPort) {
-    waitForDebugger(program.debugPort)
+  if (program.debugInfo) {
+    openDebuggerPort(program.debugInfo)
   }
 
   // We want to prompt the feedback request when users quit develop
