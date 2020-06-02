@@ -399,18 +399,18 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 - A [Gatsby site](/docs/quick-start)
 - The [Gatsby CLI](/docs/gatsby-cli/) installed
-- Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
+- Choosing a font package from the [fontsource project](https://github.com/DecliningLotus/fontsource)
 
 ### Directions
 
-1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+1. Run `npm install fontsource-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from the [fontsource project](https://github.com/DecliningLotus/fontsource).
 
-An example to load the popular 'Source Sans Pro' font would be: `npm install --save typeface-source-sans-pro`.
+An example to load the popular 'Source Sans Pro' font would be: `npm install fontsource-source-sans-pro`.
 
-2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
+2. Add `import "fontsource-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
 
 ```jsx:title=src/components/layout.js
-import "typeface-your-chosen-font"
+import "fontsource-your-chosen-font"
 ```
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
@@ -426,7 +426,7 @@ _NOTE: So for the above example, the relevant CSS declaration would be `font-fam
 ### Additional resources
 
 - [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
-- [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
+- [Fontsource](https://github.com/DecliningLotus/fontsource/blob/master/packages/roboto/README.md)
 - [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
 
 ## Using Font Awesome
