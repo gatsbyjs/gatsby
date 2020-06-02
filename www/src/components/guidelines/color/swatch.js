@@ -39,10 +39,10 @@ export default function Swatch(props) {
             fontSize: 0,
             position: `absolute`,
             fontWeight: `body`,
-            bottom: `2px`,
-            left: `3px`,
             lineHeight: `dense`,
             top: `auto`,
+            bottom: `2px`,
+            left: `3px`,
           }}
         >
           {a11yLabel}
