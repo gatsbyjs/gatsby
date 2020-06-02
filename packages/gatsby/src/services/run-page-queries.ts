@@ -7,6 +7,7 @@ export async function runPageQueries({
   queryIds,
   store,
   program,
+  graphqlRunner,
 }: Partial<IBuildContext>): Promise<void> {
   if (!queryIds || !store) {
     return
@@ -34,6 +35,7 @@ export async function runPageQueries({
   await processPageQueries(pageQueryIds, {
     state,
     activity,
+    graphqlRunner,
     graphqlTracing: program?.graphqlTracing,
   })
 

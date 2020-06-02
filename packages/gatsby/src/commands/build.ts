@@ -82,7 +82,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
-  await runStaticQueries({ queryIds, parentSpan: buildSpan, store })
+  await runStaticQueries({
+    queryIds,
+    parentSpan: buildSpan,
+    store,
+    graphqlRunner,
+  })
 
   await apiRunnerNode(`onPreBuild`, {
     graphql: bootstrapGraphQLRunner,
