@@ -6619,7 +6619,7 @@
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
 - url: https://headless.us
-  repo: https://github.com/ecomloop/headless
+  repo: https://github.com/ecomloop/headless-starter
   description: the shopify + gatsby starter theme for digital commerce
   tags:
     - E-commerce
