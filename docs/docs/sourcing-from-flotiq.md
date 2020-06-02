@@ -36,7 +36,7 @@ Using a static website generator, like Gatsby, to consume content stored in Flot
 3. **Configure application**
 
    The next step is to configure your application to know from where it has to fetch the data.
-     
+
    You need to create a file called `.env` inside the root project directory, with the following structure:
 
    ```shell:title=.env
