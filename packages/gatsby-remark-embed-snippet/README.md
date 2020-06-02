@@ -275,36 +275,36 @@ function App() {
 
 As an alternative to selecting a range of lines from a file, you can add `start-snippet{snippet-name}` and `end-snippet{snippet-name}` in comments in your files. The inclusion of a name for a snippet allows you to create an example file that contains multiple snippets that you reference from different places.
 
-You specify that you want to only include a named snippet from the embed using the syntax `{snippet: "snippet-name"}`.
+You can specify that you want to only include a named snippet from the embed by using the syntax `{snippet: "snippet-name"}`.
 
-**Rust example**:
+**Javascript example**:
 
 ```markdown
 The function to use is:
 
-`embed:api.rs{snippet: "funcA"}`
+`embed:api.js{snippet: "funcA"}`
 
 And it is invoked via
 
-`embed:api.rs{snippet: "invokeA"}`
+`embed:api.js{snippet: "invokeA"}`
 ```
 
-With this example file `api.rs`:
+With this example file `api.js`:
 
-```rust
+```javascript
 // start-snippet{funcA}
-fn factorial(x: u8) -> u32 {
-    if x <= 1 { 1u32 }
-    else { (x as u32) * factorial(x - 1) }
+function factorial(x) {
+    if (x <= 1) return 1
+    else return x * factorial(x - 1)
 }
 // end-snippet{funcA}
 
-pub fn main() -> () {
-    let x: u8 = 5;
+function display() {
+    let x = 5
     // start-snippet{invokeA}
-    let xfact = factorial(x);
+    let xfact = factorial(x)
     // end-snippet{invokeA}
-    println!("{} factorial is {}", &x, &xfact);
+    println!(`{} factorial is {}`, x, xfact)
 }
 ```
 
@@ -313,14 +313,14 @@ Will produce something like this:
 ```
 The function to use is
 
-fn factorial(x: u8) -> u32 {
-    if x <= 1 { 1u32 }
-    else { (x as u32) \* factorial(x - 1) }
+function factorial(x) {
+    if (x <= 1) return 1
+    else return x * factorial(x - 1)
 }
 
 And it is invoked via
 
-let xfact = factorial(x);
+let xfact = factorial(x)
 ```
 
 ## Code snippet syntax highlighting

@@ -52,7 +52,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
       // Embed specific lines numbers of a file
       let lines = []
-      var sname = ``
+      let sname = ``
       const rangePrefixIndex = snippetPath.indexOf(`#L`)
       if (rangePrefixIndex > -1) {
         const range = snippetPath.slice(rangePrefixIndex + 2)
@@ -67,12 +67,12 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
         // Check to see if there is a {snippet: "snippetName"} following the file path.
         // This syntax could support additional options in the future - for now, only
         // handle a string that contains a `snippet :` option.
-        var optionIndex = snippetPath.indexOf(`{`)
+        const optionIndex = snippetPath.indexOf(`{`)
         if (optionIndex > -1) {
-          var optionStr = snippetPath.slice(optionIndex)
+          const optionStr = snippetPath.slice(optionIndex)
           snippetPath = snippetPath.slice(0, optionIndex)
           try {
-            var optVal = JSON.parse(
+            const optVal = JSON.parse(
               optionStr.replace(/snippet\s*:/, `"snippet":`)
             )
             if (
