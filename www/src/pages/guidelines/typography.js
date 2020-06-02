@@ -468,7 +468,6 @@ const Typography = ({ location }) => (
             <Heading
               sx={{
                 fontSize: [9, null, 12, null, 13],
-                bg: `#f09`,
                 letterSpacing: `tight`,
                 lineHeight: `solid`,
                 mb: 5,
