@@ -72,7 +72,7 @@
             - title: Deploying to AWS Amplify
               link: /docs/deploying-to-aws-amplify/
               breadcrumbTitle: AWS Amplify
-            - title: Deploying to DigitalOcean Droplet
+            - title: Deploying to a DigitalOcean Droplet
               link: /docs/deploying-to-digitalocean-droplet/
               breadcrumbTitle: DigitalOcean
             - title: Deploying to S3 & CloudFront
