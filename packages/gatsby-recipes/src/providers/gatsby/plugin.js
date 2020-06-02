@@ -6,6 +6,8 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
+const resolveCwd = require(`resolve-cwd`)
+const { slash } = require(`gatsby-core-utils`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -16,17 +18,20 @@ const getObjectFromNode = require(`./utils/get-object-from-node`)
 const { getValueFromNode } = require(`./utils/get-object-from-node`)
 const { REQUIRES_KEYS } = require(`./utils/constants`)
 
+const { read: readPackageJSON } = require(`../npm/package`)
+
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const fullThemePath = path.join(directory, `node_modules`, theme, `src`)
-  const shadowableThemeFiles = glob.sync(fullThemePath + `/**/*.*`, {
+  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
+  const themeSrcPath = path.join(themePath, `src`)
+  const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
 
   const toShadowPath = filePath => {
-    const themePath = filePath.replace(fullThemePath, ``)
-    return path.join(`src`, theme, themePath)
+    const relativeFilePath = slash(filePath).replace(slash(themeSrcPath), ``)
+    return path.join(`src`, theme, relativeFilePath)
   }
 
   const shadowPaths = shadowableThemeFiles.map(toShadowPath)
@@ -90,6 +95,12 @@ const getNameForPlugin = node => {
   }
 
   return null
+}
+
+const getDescriptionForPlugin = async name => {
+  const pkg = await readPackageJSON({}, name)
+
+  return pkg ? pkg.description : null
 }
 
 const addPluginToConfig = (src, { name, options, key }) => {
@@ -180,7 +191,20 @@ const read = async ({ root }, id) => {
     )
 
     if (plugin) {
-      return { id, ...plugin, _message: `Installed ${id} in gatsby-config.js` }
+      const description = await getDescriptionForPlugin(id)
+      const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
+        root,
+        plugin.name
+      )
+
+      return {
+        id,
+        description: description || null,
+        ...plugin,
+        shadowedFiles,
+        shadowableFiles,
+        _message: `Installed ${id} in gatsby-config.js`,
+      }
     } else {
       return undefined
     }
@@ -321,24 +345,12 @@ module.exports.all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  // TODO: Consider mapping to read function
-  return plugins.map(plugin => {
-    const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
-      root,
-      plugin.name
-    )
-
-    return {
-      id: plugin.name,
-      ...plugin,
-      shadowedFiles,
-      shadowableFiles,
-    }
-  })
+  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
 }
 
 const schema = {
   name: Joi.string(),
+  description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),

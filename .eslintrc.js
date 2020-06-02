@@ -142,7 +142,7 @@ module.exports = {
         // This ensures that we always type the return type of functions
         // a high level focus of our TS setup is typing fn inputs and outputs.
         "@typescript-eslint/explicit-function-return-type": "error",
-        // This forces us to use interfaces over types aliases for object defintions.
+        // This forces us to use interfaces over types aliases for object definitions.
         // Type is still useful for opaque types
         // e.g.,
         // type UUID = string

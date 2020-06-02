@@ -14,7 +14,9 @@ exports.startGraphQLServer = async (programPath, forceStart) => {
   let { port } = (await getService(programPath, `recipesgraphqlserver`)) || {}
 
   if (!port || forceStart) {
-    port = await detectPort(4000)
+    // Use 50400 as our port as it's a highly composite number! Meaning it has
+    // more divisors than any smaller positive integer.
+    port = await detectPort(50400)
     await createServiceLock(programPath, `recipesgraphqlserver`, { port })
 
     const subprocess = execa(`node`, [require.resolve(`./server.js`), port], {
