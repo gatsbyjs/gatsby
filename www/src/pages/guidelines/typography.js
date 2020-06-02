@@ -481,11 +481,8 @@ const Typography = ({ location }) => (
             </Heading>
             <Text
               sx={{
-                fontSize: 2,
+                fontSize: [2, null, null, 3],
                 mb: 7,
-                [mediaQueries.md]: {
-                  fontSize: 3,
-                },
               }}
             >
               <p>
