@@ -114,7 +114,7 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-async function startServer(program: IDevelopArgs): Promise<IServer> {
+async function startServer(program: IProgram): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
