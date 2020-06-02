@@ -6520,7 +6520,7 @@
     - Twitter Cards meta
     - Beautiful XML Sitemaps
     - Netlify Contact Form, Works right out of the box after deployment.
-    - Invite collaborators into Netlify CMS, without giving access to your Github account via Git Gateway
+    - Invite collaborators into Netlify CMS, without giving access to your GitHub account via Git Gateway
     - Gatsby Incremental Builds with Netlify.
     - For more info, Take a look at readme.md on the Github repo.
 - url: https://gatsby-starter-payments.netlify.app
