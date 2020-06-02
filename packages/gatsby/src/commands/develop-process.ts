@@ -465,8 +465,8 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
-  await runStaticQueries({ queryIds, store })
-  await runPageQueries({ queryIds, store })
+  await runStaticQueries({ queryIds, store, program })
+  await runPageQueries({ queryIds, store, program })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
