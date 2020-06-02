@@ -3,10 +3,10 @@ import { jsx } from "theme-ui"
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import Link from "../components/localized-link"
-import { Helmet } from "react-helmet"
 import Img from "gatsby-image"
 import CreatorsHeader from "../views/creators/creators-header"
 import Badge from "../views/creators/badge"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
@@ -69,9 +69,10 @@ class CreatorTemplate extends Component {
 
     return (
       <React.Fragment>
-        <Helmet>
-          <title>{`${creator.name} - Creator`}</title>
-        </Helmet>
+        <PageMetadata
+          title={`${creator.name} - Creator`}
+          description={creator.description}
+        />
         <CreatorsHeader submissionText="Add Yourself" />
         <main
           role="main"

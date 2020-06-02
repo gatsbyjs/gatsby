@@ -278,6 +278,8 @@ import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { Link } from "gatsby"
 
+const shortcodes = { Link } // Provide common components here
+
 export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>

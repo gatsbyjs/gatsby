@@ -1,4 +1,3 @@
-import "@babel/polyfill"
 const {
   reportError,
   clearError,

@@ -3,7 +3,7 @@ import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
   const icons = {
-    Content: (
+    AbstractSymbol: (
       <svg
         width="32"
         height="32"
@@ -60,7 +60,7 @@ const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
         />
       </svg>
     ),
-    Build: (
+    AtomicSymbol: (
       <svg
         width="37"
         height="37"
@@ -107,7 +107,7 @@ const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
         />
       </svg>
     ),
-    Data: (
+    GraphqlLogo: (
       <svg
         width="33"
         height="38"
@@ -215,7 +215,7 @@ const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
         />
       </svg>
     ),
-    View: (
+    ReactLogo: (
       <svg
         width="38"
         height="34"
@@ -245,7 +245,7 @@ const LayerIcon = ({ name, fillColor = colors.grey[50] }) => {
         />
       </svg>
     ),
-    App: (
+    AppWindow: (
       <svg
         width="37"
         height="32"

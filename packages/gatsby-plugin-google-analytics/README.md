@@ -33,6 +33,8 @@ module.exports = {
         experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
         // Set Variation ID. 0 for original 1,2,3....
         variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
+        // Defers execution of google analytics script after page load
+        defer: false,
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,

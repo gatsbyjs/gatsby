@@ -1,6 +1,14 @@
 import fs from "fs"
 import sysPath from "path"
 
+exports.favicons = [
+  {
+    src: `favicon-32x32.png`,
+    sizes: `32x32`,
+    type: `image/png`,
+  },
+]
+
 // default icons for generating icons
 exports.defaultIcons = [
   {

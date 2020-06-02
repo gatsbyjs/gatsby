@@ -13,7 +13,7 @@ With more traditional websites, such as those built using WordPress or Drupal, c
 
 A software layer then pulls it all together: it retrieves content from the database, replaces template tags with the appropriate chunks of content, and returns it all to the browser. A single page gets regenerated each time the server receives a request for that URL.
 
-In this type of architecture, the [frontend](/docs/glossary#frontend) (what you see in the browser) and [backend](/docs/glossary#backend) (the database and software layer) are _tightly coupled_. Both the content and how it's presented are part of the same code base &mdash; sometimes called a _monolithic architecture_. Content is only available as HTML and can only be consumed by clients (e.g. web browsers) that can parse HTML.
+In this type of architecture, the [frontend](/docs/glossary#frontend) (what you see in the browser) and [backend](/docs/glossary#backend) (the database and software layer) are _tightly coupled_. Both the content and how it's presented are part of the same code base — sometimes called a _monolithic architecture_. Content is only available as HTML and can only be consumed by clients (e.g. web browsers) that can parse HTML.
 
 In a JAMStack architecture, however, the frontend and backend are [decoupled](/docs/glossary#decoupled). A JAMStack frontend consists of JavaScript, HTML, and CSS. Gatsby generates these files during the [build](/docs/glossary#build) process.
 

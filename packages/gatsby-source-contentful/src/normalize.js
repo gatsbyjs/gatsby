@@ -468,15 +468,6 @@ exports.createNodesForContentType = ({
         entryNode.sys.contentType = entryItem.sys.contentType
       }
 
-      // Use default locale field.
-      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        // Ignore fields with "___node" as they're already handled
-        // and won't be a text field.
-        if (entryItemFieldKey.split(`___`).length > 1) {
-          return
-        }
-      })
-
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {

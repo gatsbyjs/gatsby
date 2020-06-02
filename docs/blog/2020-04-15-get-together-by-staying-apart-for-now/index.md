@@ -18,10 +18,10 @@ We love that you love getting together as much as we do. But in light of the cur
 The good news is it’s easier than ever to interact with people online and host remote events. Here are some ideas for engaging with the community and sharing your Gatsby expertise while still safely physically, if not socially, distancing:
 
 1. **Host your own Gatsby webinar.** Invite the folks who usually attend your in-person events to a live stream or online call, and give a Gatsby presentation.
-2. **Do some live pair programming.** Get together with one of your Gatsby buddies on your preferred remote interaction tools and stream on Twitch or YouTube. You can also [sign up to pair with someone from the Gatsby team](https://www.gatsbyjs.org/contributing/pair-programming/). You might even make it onto our [Twitch channel](https://www.twitch.tv/gatsbyjs)!
+2. **Do some live pair programming.** Get together with one of your Gatsby buddies on your preferred remote interaction tools and stream on Twitch or YouTube. You can also [sign up to pair with someone from the Gatsby team](/contributing/pair-programming/). You might even make it onto our [Twitch channel](https://www.twitch.tv/gatsbyjs)!
 3. **Chat with other community members on the [Gatsby Discord server](https://gatsby.dev/discord).**
 4. **Hang out on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).** Check out our channel for info on our upcoming streams.
-5. **Plan to attend [Virtual Gatsby Days](https://www.gatsbyjs.org/blog/2020-04-14-virtual-gatsby-days-registration/)**, June 2nd & 3rd!
+5. **Plan to attend [Virtual Gatsby Days](/blog/2020-04-14-virtual-gatsby-days-registration/)**, June 2nd & 3rd!
 
 ## Some great tools for remote events
 

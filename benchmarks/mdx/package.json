@@ -7,36 +7,41 @@
   "scripts": {
     "build": "gatsby build",
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "clean": "gatsby clean",
+    "data-update": "ts-node scripts/data-update.ts",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "postinstall": "del-cli src/articles && gatsby clean && willit --type=mdx --num-pages=${NUM_PAGES:-512}",
+    "postinstall": "del-cli src/articles && gatsby clean && willit --use-pregenerated-data --type=mdx --num-pages=${NUM_PAGES:-512}",
     "start": "npm run develop",
     "serve": "gatsby serve"
   },
-  "resolutions": {
-    "sharp": "0.25.1"
-  },
   "dependencies": {
+    "@mdx-js/mdx": "^1.6.1",
+    "@mdx-js/react": "^1.6.1",
+    "cross-env": "^7.0.0",
     "del-cli": "^3.0.0",
-    "@mdx-js/mdx": "^1.5.7",
-    "@mdx-js/react": "^1.5.7",
     "dotenv": "^8.2.0",
-    "gatsby": "^2.19.35",
-    "gatsby-image": "^2.2.40",
-    "gatsby-plugin-mdx": "^1.0.82",
-    "gatsby-plugin-page-creator": "^2.1.45",
+    "faker": "^4.1.0",
+    "front-matter": "^3.1.0",
+    "gatsby": "^2.20.23",
+    "gatsby-image": "^2.3.3",
+    "gatsby-plugin-benchmark-reporting": "*",
+    "gatsby-plugin-mdx": "^1.1.8",
+    "gatsby-plugin-page-creator": "^2.2.2",
     "gatsby-plugin-sharp": "^2.4.12",
-    "gatsby-remark-images": "^3.1.49",
-    "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-transformer-sharp": "^2.3.14",
+    "gatsby-remark-images": "^3.2.3",
+    "gatsby-source-filesystem": "^2.2.3",
+    "gatsby-transformer-sharp": "^2.4.5",
+    "glob": "^7.1.6",
+    "node-fetch": "^2.6.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3",
+    "willit": "^1.0.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.0",
-    "gatsby-plugin-benchmark-reporting": "*",
-    "prettier": "2.0.4",
-    "willit": "*"
+    "prettier": "2.0.4"
   },
   "repository": {
     "type": "git",

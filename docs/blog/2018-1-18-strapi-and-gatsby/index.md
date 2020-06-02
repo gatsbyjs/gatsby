@@ -76,7 +76,7 @@ _Important links from Video:_
 - [Strapi Official Website](https://strapi.io/)
 - [Gatsby JS Official Website](/)
 - [Gatsby JS Starters](/starters/?v=2)
-- [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.com/)
+- [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.app/)
 
 ### 2. Installation
 
@@ -179,10 +179,10 @@ After creating your fields, as above, save your new content type and wait for St
 
 Add some articles in the database. To do so, follow these instructions:
 
-1.  Visit the articles list page: `http://localhost:1337/admin/plugins/content-manager/article`.
-2.  Click on `Add New Article`.
-3.  Insert values, link to an author and submit the form.
-4.  Create two other articles.
+1. Visit the articles list page: `http://localhost:1337/admin/plugins/content-manager/article`.
+2. Click on `Add New Article`.
+3. Insert values, link to an author and submit the form.
+4. Create two other articles.
 
 Note: You can download the sample content from the video [here](https://github.com/strapi/strapi-examples/tree/master/gatsby-strapi-tutorial/content-for-tutorial).
 

@@ -26,7 +26,6 @@ module.exports = options => {
         },
       },
       `gatsby-plugin-redirects`,
-      `gatsby-plugin-og-image`,
       `gatsby-plugin-emotion`,
       {
         resolve: `gatsby-plugin-compile-es6-packages`,

@@ -67,7 +67,9 @@ This means that `user-site/src/gatsby-theme-blog/components/bio.js` will be rend
 ```jsx:title=src/gatsby-theme-blog/components/bio.js
 import React from "react"
 
-export default () => <h1>My new bio component!</h1>
+export default function Bio() {
+  return <h1>My new bio component!</h1>
+}
 ```
 
 With a successful shadow of the `Bio` component you'll result in the following directory
