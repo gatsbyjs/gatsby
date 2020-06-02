@@ -449,9 +449,7 @@ const Typography = ({ location }) => (
         <ContentColumn>
           <Box
             sx={{
-              [mediaQueries.sm]: {
-                maxWidth: `35rem`,
-              },
+              maxWidth: `35rem`,
             }}
           >
             <Text
