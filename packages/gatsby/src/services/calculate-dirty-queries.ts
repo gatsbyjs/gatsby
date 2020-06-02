@@ -9,7 +9,7 @@ export interface IGroupedQueryIds {
 export async function calculateDirtyQueries({
   store,
   filesDirty,
-}: IBuildContext): Promise<{
+}: Partial<IBuildContext>): Promise<{
   queryIds: IGroupedQueryIds
 }> {
   const state = store?.getState()

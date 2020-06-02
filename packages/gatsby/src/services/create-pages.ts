@@ -12,7 +12,10 @@ export async function createPages({
   parentSpan,
   graphqlRunner,
   store,
-}: IBuildContext): Promise<{ changedPages: string[]; deletedPages: string[] }> {
+}: Partial<IBuildContext>): Promise<{
+  changedPages: string[]
+  deletedPages: string[]
+}> {
   if (!store) {
     reporter.panic(`store not initialized`)
     return {

@@ -6,7 +6,7 @@ export async function runStaticQueries({
   parentSpan,
   queryIds,
   store,
-}: IBuildContext): Promise<object> {
+}: Partial<IBuildContext>): Promise<object> {
   let results = new Map()
   if (!queryIds || !store) {
     return { results: [] }

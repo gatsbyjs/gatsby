@@ -6,7 +6,7 @@ export async function customizeSchema({
   parentSpan,
   refresh,
   webhookBody,
-}: IBuildContext): Promise<void> {
+}: Partial<IBuildContext>): Promise<void> {
   const activity = reporter.activityTimer(`createSchemaCustomization`, {
     parentSpan,
   })

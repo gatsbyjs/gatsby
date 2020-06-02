@@ -7,7 +7,9 @@ import { createGraphQLRunner, Runner } from "../bootstrap/create-graphql-runner"
 export async function buildSchema({
   store,
   parentSpan,
-}: IBuildContext): Promise<{ graphqlRunner: Runner } | void> {
+}: Partial<IBuildContext>): Promise<{
+  graphqlRunner: Runner
+} | void> {
   if (!store) {
     report.panic(`Cannot build schema before store initialization`)
     return undefined

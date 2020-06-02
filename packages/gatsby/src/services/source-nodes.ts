@@ -7,7 +7,7 @@ export async function sourceNodes({
   parentSpan,
   webhookBody,
   store,
-}: IBuildContext): Promise<{
+}: Partial<IBuildContext>): Promise<{
   changedPages: string[]
   deletedPages: string[]
 } | void> {

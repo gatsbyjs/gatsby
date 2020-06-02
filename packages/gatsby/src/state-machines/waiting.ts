@@ -115,7 +115,10 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
         }),
       ],
       invoke: {
-        src: async ({ runningBatch, store }: IBuildContext): Promise<any> =>
+        src: async ({
+          runningBatch,
+          store,
+        }: Partial<IBuildContext>): Promise<any> =>
           // Consume the entire batch and run actions
           Promise.all(runningBatch.map(payload => callRealApi(payload, store))),
         onDone: {

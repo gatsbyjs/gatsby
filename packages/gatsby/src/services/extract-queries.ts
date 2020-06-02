@@ -6,7 +6,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 
 export async function extractQueries({
   parentSpan,
-}: IBuildContext): Promise<void> {
+}: Partial<IBuildContext>): Promise<void> {
   const activity = reporter.activityTimer(`onPreExtractQueries`, {
     parentSpan,
   })

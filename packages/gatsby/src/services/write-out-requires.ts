@@ -5,7 +5,7 @@ import { writeAll } from "../bootstrap/requires-writer"
 export async function writeOutRequires({
   store,
   parentSpan,
-}: IBuildContext): Promise<void> {
+}: Partial<IBuildContext>): Promise<void> {
   if (!store) {
     throw new Error(`Missing store`)
   }

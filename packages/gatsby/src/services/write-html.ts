@@ -8,7 +8,7 @@ export async function writeHTML({
   parentSpan,
   workerPool,
   pagesToBuild = [],
-}: IBuildContext): Promise<void> {
+}: Partial<IBuildContext>): Promise<void> {
   console.log(`writing html`)
   if (!program) {
     return

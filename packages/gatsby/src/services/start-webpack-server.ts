@@ -20,7 +20,7 @@ export async function startWebpackServer({
   program,
   app,
   workerPool,
-}: IBuildContext): Promise<{
+}: Partial<IBuildContext>): Promise<{
   compiler: Compiler
   websocketManager: WebsocketManager
 }> {
