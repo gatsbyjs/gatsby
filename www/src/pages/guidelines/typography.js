@@ -60,7 +60,7 @@ const MarketingColumn = ({ children, title }) => (
   </Box>
 )
 
-const Typeface = ({ children, fontFamily }) => (
+const Typeface = ({ children, fontFamily, ...rest }) => (
   <Text
     color="text"
     fontFamily={fontFamily}
@@ -68,6 +68,7 @@ const Typeface = ({ children, fontFamily }) => (
     lineHeight="solid"
     mt={5}
     width="100%"
+    {...rest}
   >
     {children}
   </Text>
@@ -137,13 +138,10 @@ const Typography = ({ location }) => (
           </p>
         </CopyColumn>
         <ContentColumn>
-          <Flex
-            sx={{
-              alignItems: `flex-end`,
-              height: `100%`,
-            }}
-          >
-            <Typeface fontFamily="heading">Futura PT</Typeface>
+          <Flex>
+            <Typeface fontFamily="heading" mt={0}>
+              Futura PT
+            </Typeface>
           </Flex>
         </ContentColumn>
       </Columns>
