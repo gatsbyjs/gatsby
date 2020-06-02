@@ -1,10 +1,9 @@
-const path = require(`path`)
 const _ = require(`lodash`)
 const slugify = require(`slugify`)
 const moment = require(`moment`)
 const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
+const { getTemplate } = require(`../get-template`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
@@ -17,7 +16,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   } else {
     const slug = getMdxContentSlug(node, getNode(node.parent))
     if (!slug) return
-    const section = slug.split("/")[1]
+    const section = slug.split(`/`)[1]
     if (section !== `blog`) return
 
     createNodeField({ node, name: `slug`, value: slug })
@@ -52,17 +51,16 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-  const blogListTemplate = path.resolve(`src/templates/template-blog-list.js`)
-  const tagTemplate = path.resolve(`src/templates/tags.js`)
-  const contributorPageTemplate = path.resolve(
-    `src/templates/template-contributor-page.js`
-  )
+  const blogPostTemplate = getTemplate(`template-blog-post`)
+  const blogListTemplate = getTemplate(`template-blog-list`)
+  const tagTemplate = getTemplate(`tags`)
+  const contributorPageTemplate = getTemplate(`template-contributor-page`)
 
   const { data, errors } = await graphql(`
     query {
       allAuthorYaml {
         nodes {
+          id
           fields {
             slug
           }
@@ -98,9 +96,9 @@ exports.createPages = async ({ graphql, actions }) => {
   data.allAuthorYaml.nodes.forEach(node => {
     createPage({
       path: `${node.fields.slug}`,
-      component: slash(contributorPageTemplate),
+      component: contributorPageTemplate,
       context: {
-        slug: node.fields.slug,
+        authorId: node.id,
       },
     })
   })
@@ -120,7 +118,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }).forEach((_, i) => {
     createPage({
       path: i === 0 ? `/blog` : `/blog/page/${i + 1}`,
-      component: slash(blogListTemplate),
+      component: blogListTemplate,
       context: {
         limit: postsPerPage,
         skip: i * postsPerPage,
@@ -139,7 +137,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: `${node.fields.slug}`, // required
-      component: slash(blogPostTemplate),
+      component: blogPostTemplate,
       context: {
         slug: node.fields.slug,
         prev: prev && {

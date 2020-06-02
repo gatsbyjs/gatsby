@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.12.21",
+  "version": "2.12.42",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "lib/index.js"
@@ -10,8 +10,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.8.3",
-    "@babel/runtime": "^7.9.6",
+    "@babel/code-frame": "^7.10.1",
+    "@babel/runtime": "^7.10.2",
     "@hapi/joi": "^15.1.1",
     "better-opn": "^1.0.0",
     "bluebird": "^3.7.2",
@@ -25,15 +25,17 @@
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.2.2",
-    "gatsby-recipes": "^0.1.19",
-    "gatsby-telemetry": "^1.3.4",
+    "gatsby-core-utils": "^1.3.4",
+    "gatsby-recipes": "^0.1.36",
+    "gatsby-telemetry": "^1.3.10",
     "hosted-git-info": "^3.0.4",
+    "ink": "^2.7.1",
+    "ink-spinner": "^3.0.1",
     "is-valid-path": "^0.1.1",
     "lodash": "^4.17.15",
     "meant": "^1.0.1",
     "node-fetch": "^2.6.0",
-    "object.entries": "^1.1.1",
+    "object.entries": "^1.1.2",
     "opentracing": "^0.14.4",
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
@@ -52,16 +54,13 @@
     "yurnalist": "^1.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
     "@types/hosted-git-info": "^3.0.0",
     "@types/yargs": "^15.0.4",
-    "babel-preset-gatsby-package": "^0.4.1",
-    "cross-env": "^5.2.1"
-  },
-  "optionalDependencies": {
-    "ink": "^2.7.1",
-    "ink-spinner": "^3.0.1"
+    "babel-preset-gatsby-package": "^0.4.3",
+    "cross-env": "^5.2.1",
+    "typescript": "^3.9.3"
   },
   "files": [
     "lib",
@@ -80,7 +79,8 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "postinstall": "node scripts/postinstall.js"
   },
