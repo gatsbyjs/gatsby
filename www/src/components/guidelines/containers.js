@@ -3,7 +3,6 @@ import { jsx } from "theme-ui"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const container = {
-  boxSizing: `border-box`,
   position: `relative`,
   px: 6,
   zIndex: 1,
@@ -28,12 +27,8 @@ export const Section = ({ children, ...rest }) => (
     sx={{
       ...rest,
       ...container,
-      py: 4,
-      [mediaQueries.sm]: {
-        py: 5,
-      },
+      py: [4, null, 5, 8],
       [mediaQueries.md]: {
-        py: 8,
         px: 10,
       },
     }}

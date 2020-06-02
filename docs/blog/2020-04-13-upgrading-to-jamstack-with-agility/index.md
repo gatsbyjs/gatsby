@@ -29,12 +29,12 @@ For those of you who just want to see the code for the new site (it only has cod
 
 Here's what I did to get everything up and running, right from coding the new site, to deploying, testing and flipping over the DNS.
 
-Get it running locally with Gatsby
-Implement the Header and Footer
-Create a new Home Page
-Run it in Gatsby Cloud
-Deploy to Netlify
-Setup the CDN to do the Edge Routing
+- [Get it running locally with Gatsby](#step-1-get-it-running-locally-with-gatsby)
+- [Implement the Header and Footer](#step-2-implement-the-header-and-footer)
+- [Create a new Home Page](#step-3-create-a-new-home-page)
+- [Run it in Gatsby Cloud](#step-4-run-it-in-gatsby-cloud)
+- [Deploy to Netlify](#step-5-deploy-to-netlify)
+- [Setup the CDN to do the Edge Routing](#step-6-setup-the-cdn-to-do-the-edge-routing)
 
 What's really cool is that this workflow isn't just for upgrading Agility websites to JAMstack - you can use it for any website! Now let’s break each step into specific details.
 
@@ -48,7 +48,7 @@ git clone https://github.com/agility/agility-gatsby-starter.git
 
 Now, find your API Keys on the Getting Started page of the [Agility CMS Content Manager](https://manager.agilitycms.com/)
 
-![Agility CMS Getting Started landing page](post-image-1.png "Agility CMS Screenshot")
+![Agility CMS Getting Started landing page](./post-image-1.png "Agility CMS Screenshot")
 
 Put your API Keys into the **.env.development** and **.env.production** files. They look something like this and have instructions about which values go where.
 
@@ -66,13 +66,13 @@ AGILITY_API_ISPREVIEW=true
 ENABLE_GATSBY_REFRESH_ENDPOINT=true
 ```
 
-Now, check out the **gatsby.config** file - it has a section for plugins, and the Agility CMS source plugin is called **@agility/gatsby-source-agilitycms**. Check that the language code and channel name matches what you have in your Agility CMS instance.
+Now, check out the **gatsby-config.js** file - it has a section for plugins, and the Agility CMS source plugin is called **@agility/gatsby-source-agilitycms**. Check that the language code and channel name matches what you have in your Agility CMS instance.
 
 ### Modules and Page Templates
 
 Since this was an existing website, we already had a few Page Templates and Module Definitions set up in the instance. We need to make sure we at least have placeholders in our new Gatsby project for those, and we'll just implement whatever is needed for our new home page.
 
-![Project Folder Structure](post-image-2.png "Project Folder Structure")
+![Project Folder Structure](./post-image-2.png "Project Folder Structure")
 
 There are folders for Page Templates and Modules, and you can just put in placeholder React code for these right now.
 
@@ -111,7 +111,7 @@ gatsby develop
 ```
 
 Gatsby will pull down all the content for our website and put it into GraphQL. This is a _content sync_, so from now on it will only pull down a delta (what's changed) from Agility CMS.
-![Alt Text](post-image-3.png "Agility CMS - Gatsby - Terminal Output")
+![Alt Text](./post-image-3.png "Agility CMS - Gatsby - Terminal Output")
 
 ## Step 2: Implement the Header and Footer
 
@@ -158,7 +158,7 @@ Now, you can create a component that uses a `<StaticQuery>` to pull in the data 
 
 In Agility CMS, the first page in your sitemap is considered your Home Page. So, I created a new home page and temporarily called it home-2. I didn't publish it, but this meant that I could use this to build out the modules on the new home page.
 
-![Agility CMS Screenshot - temporary home page](post-image-4.png "Agility CMS Screenshot - Home Page")
+![Agility CMS Screenshot - temporary home page](./post-image-4.png "Agility CMS Screenshot - Home Page")
 
 I created a couple of new Module Definitions that I needed for the new page design, so I created new react components in the **modules** folder for those. The amazing thing about the Agility CMS Gatsby implementation is that nearly all the data that you need to render a module on a page is given to you in a property called **item**.
 
@@ -176,7 +176,7 @@ curl -X POST http://localhost:8000/__refresh
 
 Here's a side-by-side screenshot of my 2 monitor setup. You can see that I have 2 terminal windows opened in VS Code.
 
-![two screens side by side showing hot reloading website and the Gatsby code for it](post-image-5.png "Side-by-side Hot Module Reload")
+![two screens side by side showing hot reloading website and the Gatsby code for it](./post-image-5.png "Side-by-side Hot Module Reload")
 
 I really love this workflow! It makes it really easy to tweak things and see the changes instantly.
 
@@ -186,11 +186,11 @@ To get going, [Gatsby Cloud](https://www.gatsbyjs.com/) is the easiest way to Pr
 
 Push your code to a GitHub repo, sign up for Gatsby Cloud, and create a new site. When asked, simply choose "I already have a Gatsby site" and don't add any integrations just now.
 
-![landing page for Gatsby Cloud Create New Site](post-image-6.png "Gatsby Cloud - Create New Site")
+![landing page for Gatsby Cloud Create New Site](./post-image-6.png "Gatsby Cloud - Create New Site")
 
 You can securely add your API Keys in the Environment Variable section of Settings.
 
-![Gatsby webpage for setting environment variables](post-image-7.png "Gatsby Cloud - Environment Variables")
+![Gatsby webpage for setting environment variables](./post-image-7.png "Gatsby Cloud - Environment Variables")
 
 Now you can take the Preview link from Gatsby and plug that into Agility CMS in the Domain Configuration area of the Settings section.
 
