@@ -169,8 +169,6 @@ Change the root directory configuration of Nginx in the default server block fil
 
 Follow the below steps to configure your site with a free SSL/TLS certificate from Lets Encrypt using their Certbot CLI tool.
 
-However, it's advised to use a premium SSL certificate from any SSL Certificate provider.
-
 1. Install Certbot onto your droplet.
 
    You'll need to add the Certbot PPA (Personal Package Archives) to your list of repositories. To do so, run the following commands:
