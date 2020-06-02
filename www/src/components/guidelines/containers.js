@@ -79,11 +79,6 @@ export const CopyColumn = ({
   ...rest
 }) => (
   <div
-    css={{
-      "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
-    }}
     sx={{
       ...rest,
       fontSize: 2,
@@ -99,6 +94,9 @@ export const CopyColumn = ({
         mb: 0,
         maxWidth: `none`,
         width: narrow ? copyColumnWidth : `30rem`,
+      },
+      "p, ul, ol": {
+        maxWidth: `40rem`,
       },
     }}
   >
@@ -126,11 +124,6 @@ export const ContentColumn = ({
   ...rest
 }) => (
   <div
-    css={{
-      "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
-    }}
     sx={{
       ...rest,
       width: `100%`,
@@ -141,6 +134,9 @@ export const ContentColumn = ({
         width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
         overflowX: `hidden`,
+      },
+      "p, ul, ol": {
+        maxWidth: `40rem`,
       },
     }}
   >
