@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.22.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.17...gatsby@2.22.18) (2020-06-03)
+
+### Performance Improvements
+
+- **gatsby:** be more conservative in when to sort ([#24609](https://github.com/gatsbyjs/gatsby/issues/24609)) ([2b578e8](https://github.com/gatsbyjs/gatsby/commit/2b578e8))
+- **gatsby:** drop severe scaling regression caused by analytics ([#24709](https://github.com/gatsbyjs/gatsby/issues/24709)) ([2528a85](https://github.com/gatsbyjs/gatsby/commit/2528a85))
+
 ## [2.22.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.16...gatsby@2.22.17) (2020-06-02)
 
 ### Bug Fixes
