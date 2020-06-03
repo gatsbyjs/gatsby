@@ -1,10 +1,12 @@
-import { createServer } from "http"
+import http from "http"
+import https from "https"
 import httpProxy from "http-proxy"
 import path from "path"
 import fs from "fs-extra"
 import { getServices } from "gatsby-core-utils/dist/service-lock"
 import st from "st"
 import restartingScreen from "./restarting-screen"
+import { IProgram } from "../commands/types"
 
 interface IProxyControls {
   serveRestartingScreen: () => void
@@ -28,7 +30,7 @@ const serveAdmin = st({
 export const startDevelopProxy = (input: {
   proxyPort: number
   targetPort: number
-  programPath: string
+  program: IProgram
 }): IProxyControls => {
   let shouldServeRestartingScreen = false
 
@@ -44,7 +46,7 @@ export const startDevelopProxy = (input: {
   // ones whenever the page is refreshed
   proxy.on(`error`, noop)
 
-  const server = createServer((req, res) => {
+  const app: http.RequestListener = (req, res): void => {
     if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
       const wasAdminRequest = serveAdmin(req, res)
       if (wasAdminRequest) {
@@ -54,7 +56,7 @@ export const startDevelopProxy = (input: {
 
     // Add a route at localhost:8000/___services for service discovery
     if (req.url === `/___services`) {
-      getServices(input.programPath).then(services => {
+      getServices(input.program.directory).then(services => {
         res.setHeader(`Content-Type`, `application/json`)
         res.end(JSON.stringify(services))
       })
@@ -77,7 +79,11 @@ export const startDevelopProxy = (input: {
     }
 
     proxy.web(req, res)
-  })
+  }
+
+  const server = input.program.ssl
+    ? https.createServer(input.program.ssl, app)
+    : http.createServer(app)
 
   server.on(`upgrade`, function (req, socket, head) {
     proxy.ws(req, socket, head)
