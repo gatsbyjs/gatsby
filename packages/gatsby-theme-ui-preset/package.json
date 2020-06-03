@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-ui-preset",
-  "version": "0.0.50",
+  "version": "0.0.51",
   "description": "A Gatsby theme for theme-ui styles",
   "main": "index.js",
   "keywords": [
@@ -30,7 +30,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.22.19",
+    "gatsby": "^2.22.20",
     "prettier": "2.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
