@@ -8,22 +8,25 @@ require("dotenv").config({
 
 (async () => {
 
-  const dClient = new DeliveryClient({ projectId: process.env.BENCHMARK_KONTENT_PROJECT_ID })
+  const dClient = new DeliveryClient({
+    projectId: process.env.BENCHMARK_KONTENT_PROJECT_ID,
+  })
 
   const mClient = new ManagementClient({
     projectId: process.env.BENCHMARK_KONTENT_PROJECT_ID, // ID of your Kentico Kontent project
-    apiKey: process.env.BENCHMARK_KONTENT_MANAGEMENT_KEY // Management API token
+    apiKey: process.env.BENCHMARK_KONTENT_MANAGEMENT_KEY, // Management API token
   });
 
   try {
 
+    const randomDoc = Math.floor(Math.random() * (Number(process.env.BENCHMARK_KONTENT_DATASET_SIZE) || 512))
 
     const article = await dClient
       .items()
       .type('article')
       .limitParameter(1)
       .elementsParameter(['title'])
-      .orderParameter('elements.article_number')
+      .equalsFilter('elements.article_number', randomDoc)
       .toPromise()
       .then(response => response.getFirstItem());
 
