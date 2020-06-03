@@ -40,7 +40,7 @@ Every writer or marketer who works on the Internet is familiar with WordPress, s
 
 ### How “free” is it?
 
-Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about \$4 dollars a month. Other popular hosts like GoDaddy can get you going for less than \$10 dollars a month.
+Cheap hosting is easy to find - providers like Bluehost and Amazon Lightsail offer WordPress hosting for about $4 dollars a month. Other popular hosts like GoDaddy can get you going for less than $10 dollars a month.
 
 If your website needed all-in-one WordPress, then these cheap, shared hosting packages wouldn’t be enough to handle a website that expects any sort of traffic. However, you’re just using headless WordPress, and all that you ask from the software is to organize your content, and send it to a frontend framework like Gatsby.
 
@@ -60,7 +60,7 @@ Ghost is a Node-based, robust CMS that recently [added features](https://ghost.o
 
 ### How “free” is it?
 
-Though Ghost is open source, it still requires hosting. The official Ghost recommendation is to use their own Ghost-optimized hosting at about \$30 dollars a month, or generic DigitalOcean hosting which can start at less than \$10 dollars.
+Though Ghost is open source, it still requires hosting. The official Ghost recommendation is to use their own Ghost-optimized hosting at about $30 dollars a month, or generic DigitalOcean hosting which can start at less than $10 dollars.
 
 ## The Hidden Cost of Any Free Headless CMS
 

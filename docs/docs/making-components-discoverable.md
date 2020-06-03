@@ -11,7 +11,7 @@ Shared components can be organized and made discoverable in a [shared component 
 
 If using additional repositories and libraries to share components, tools like [StoryBook](/docs/visual-testing-with-storybook/) and [StyleGuidist](https://github.com/styleguidist/react-styleguidist) can help develop and visualize components in isolation, creating a visual documentation portal for shared components.
 
---
+---
 
 This is a stub. Help our community expand it.
 

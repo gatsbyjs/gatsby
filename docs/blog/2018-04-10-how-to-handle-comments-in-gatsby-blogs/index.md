@@ -30,13 +30,13 @@ Putting the comments inside Git is awesome. Your content, your site, no external
 
 ### Staticman
 
-But how do you get them there? Enter [staticman](https://staticman.net/). You give staticman access to your GitHub repo. You create a form. Staticman creates a pull request. It also supports akismet spam filtering. Genius. Oh, and it's free. Yes, doubly fantastic.
+But how do you get them there? Enter [Staticman](https://staticman.net/). You give Staticman access to your GitHub repo. You create a form. Staticman creates a pull request. It also supports akismet spam filtering. Genius. Oh, and it's free. Yes, doubly fantastic.
 
 Staticman is open source. You can run your own instance. If you really want to. It's probably not worth it. Their service is free. They don't "own" your data. If they disappear, your comments live on.
 
 ### Roll your own
 
-You could create your own staticman alternative. You could use a framework like [serverless](https://serverless.com/). You can find free hosts for serverless. You can write your own custom anti spam logic. This will be hard. It will probably be fun. It's not a very good idea!
+You could create your own Staticman alternative. You could use a framework like [serverless](https://serverless.com/). You can find free hosts for serverless. You can write your own custom anti spam logic. This will be hard. It will probably be fun. It's not a very good idea!
 
 ### Netlify
 
@@ -56,6 +56,6 @@ The possibilities are limitless.
 
 ## Conclusion
 
-Use [staticman](https://staticman.net/). It's the best all round option. Keep control of your content. If their service goes down, you keep your comments. You can run your own instance later if necessary. It includes support for akismet spam filtering.
+Use [Staticman](https://staticman.net/). It's the best all round option. Keep control of your content. If their service goes down, you keep your comments. You can run your own instance later if necessary. It includes support for akismet spam filtering.
 
-**To see staticman in action, leave a comment at [Gatsby Central](https://www.gatsbycentral.com)!**
+**To see Staticman in action, leave a comment at [Gatsby Central](https://www.gatsbycentral.com)!**

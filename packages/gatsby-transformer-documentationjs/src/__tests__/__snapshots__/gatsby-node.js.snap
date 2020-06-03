@@ -21,11 +21,11 @@ Object {
 exports[`transformer-react-doc-gen: onCreateNode Complex example should handle typedefs should handle type applications 1`] = `
 Object {
   "children": Array [
-    "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
+    "documentationJS documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}] line 12 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
   ],
   "commentNumber": null,
-  "description___NODE": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
-  "id": "documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3",
+  "description___NODE": "documentationJS documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}] line 12 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
+  "id": "documentationJS documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}] line 12 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3",
   "internal": Object {
     "contentDigest": "content-digest",
     "type": "DocumentationJs",

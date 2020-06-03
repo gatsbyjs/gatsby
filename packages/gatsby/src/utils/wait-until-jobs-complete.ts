@@ -2,7 +2,7 @@ import { emitter, store } from "../redux"
 
 import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "./jobs-manager"
 
-export const waitUntilAllJobsComplete = (): Promise<void> => {
+export const waitUntilAllJobsComplete = (): Promise<any> => {
   const jobsV1Promise = new Promise(resolve => {
     const onEndJob = (): void => {
       if (store.getState().jobs.active.length === 0) {
@@ -15,8 +15,5 @@ export const waitUntilAllJobsComplete = (): Promise<void> => {
     onEndJob()
   })
 
-  return Promise.all([
-    jobsV1Promise,
-    waitUntilAllJobsV2Complete(),
-  ]).then(() => {})
+  return Promise.all([jobsV1Promise, waitUntilAllJobsV2Complete()])
 }

@@ -10,7 +10,7 @@ Cross-Site Scripting is a type of attack that injects a script or an unexpected 
 
 JSX elements automatically escape HTML tags by design. See the following example:
 
-```js
+```jsx
 // highlight-next-line
 const username = `<script src='https://path/to/badness.js'></script>`
 
@@ -23,7 +23,7 @@ On the other hand, fields in your application may need to render inner HTML tags
 
 In order to render those HTML tags you need to use an HTML parser (e.g. [html-react-parser](https://github.com/remarkablemark/html-react-parser)) or the `dangerouslySetInnerHTML` prop, like so:
 
-```js
+```jsx
 const CommentRenderer = comment => (
   // highlight-next-line
   <p dangerouslySetInnerHTML={{ __html: comment }} />
@@ -51,15 +51,20 @@ For example, assume that the comments in your blog are sent in a form similar to
 
 A malicious website could inspect your site and copy this snippet to theirs. If the user is logged in, the associated cookies are sent with the form and the server cannot distinguish the origin of it. Even worse, the form could be sent when the page loads with information you don't control:
 
-```js
+```html
 // highlight-next-line
 <body onload="document.csrf.submit()">
-<!-- ... -->
-<form action="http://mywebsite.com/blog/addcomment" method="POST" name="csrf">
-  // highlight-next-line
-  <input type="hidden" name="comment" value="Hey visit http://maliciouswebsite.com, it's pretty nice" />
-  <input type="submit" />
-</form>
+  <!-- ... -->
+  <form action="http://mywebsite.com/blog/addcomment" method="POST" name="csrf">
+    // highlight-next-line
+    <input
+      type="hidden"
+      name="comment"
+      value="Hey visit http://maliciouswebsite.com, it's pretty nice"
+    />
+    <input type="submit" />
+  </form>
+</body>
 ```
 
 ### How can you prevent cross-site request forgery?
@@ -76,7 +81,7 @@ Actions that do not simply read data should be handled in a POST request. In the
 
 If you want to protect a page your server will provide an encrypted, hard to guess **token**. That token is tied to a user's session and must be included in every POST request. See the following example:
 
-```js
+```html
 <form action="http://mywebsite.com/blog/addcoment" method="POST">
   <input type="text" name="comment" />
   // highlight-next-line
@@ -121,18 +126,18 @@ Similar to npm, you can use the `yarn audit` command. It is available starting w
 Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/environment-variables/). See the following example for fetching data from GitHub with an Authorization Header:
 
 ```js
-    {
-      resolve: "gatsby-source-graphql",
-      options: {
-        typeName: "GitHub",
-        fieldName: "github",
-        url: "https://api.github.com/graphql",
-        headers: {
-          // highlight-next-line
-          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        },
-      }
-    }
+{
+  resolve: "gatsby-source-graphql",
+  options: {
+    typeName: "GitHub",
+    fieldName: "github",
+    url: "https://api.github.com/graphql",
+    headers: {
+      // highlight-next-line
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+  }
+}
 ```
 
 ### Storing keys in client-side
@@ -150,11 +155,11 @@ currently there is a [compatibility issue](https://github.com/gatsbyjs/gatsby/is
 
 ## Other Resources
 
-- [Security for Modern Web Frameworks](https://www.gatsbyjs.org/blog/2019-04-06-security-for-modern-web-frameworks/)
-- [Docs ReactJS: DOM Elements](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
+- [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/)
+- [Docs React: DOM Elements](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)
 - [OWASP XSS filter evasion cheatsheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)
 - [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute)
-- [Warn for javascript: URLs in DOM sinks #15047](https://github.com/facebook/react/pull/15047)
+- [Warn for JavaScript: URLs in DOM sinks #15047](https://github.com/facebook/react/pull/15047)
 - [How to prevent XSS attacks when using dangerouslySetInnerHTML in React](https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb)
 - [Exploiting XSS via Markdown](https://medium.com/taptuit/exploiting-xss-via-markdown-72a61e774bf8)
 - [Auditing package dependencies for security vulnerabilities](https://docs.npmjs.com/auditing-package-dependencies-for-security-vulnerabilities)

@@ -19,7 +19,7 @@ import { themedInput } from "../../utils/styles"
 
 const OPEN_SOURCE_CATEGORY = `Open Source`
 
-const filterByCategories = (list, categories) => {
+export const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, node) => {
     if (node.categories) {
       const filteredCategories = node.categories.filter(c =>
@@ -57,12 +57,7 @@ class FilteredShowcase extends Component {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: [
-        `title`,
-        `categories`,
-        `built_by`,
-        `description`,
-      ],
+      keys: [`title`, `categories`, `built_by`, `description`],
     }
 
     this.fuse = new Fuse(props.data.allSitesYaml.nodes, options)

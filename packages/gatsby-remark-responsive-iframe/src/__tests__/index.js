@@ -27,7 +27,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
       const transformed = await plugin({ markdownAST })
-      const node = find(transformed, function(node) {
+      const node = find(transformed, function (node) {
         return node.type === `html`
       })
       expect(node).toBeDefined()
@@ -41,7 +41,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
       const transformed = await plugin({ markdownAST })
-      const node = find(transformed, function(node) {
+      const node = find(transformed, function (node) {
         return node.type === `html`
       })
       expect(node).toBeDefined()
@@ -53,7 +53,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
       const transformed = await plugin({ markdownAST })
-      const node = find(transformed, function(node) {
+      const node = find(transformed, function (node) {
         return node.type === `html`
       })
       expect(node).toBeDefined()
@@ -65,7 +65,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
       const transformed = await plugin({ markdownAST })
-      const node = find(transformed, function(node) {
+      const node = find(transformed, function (node) {
         return node.type === `html`
       })
       expect(node).toBeDefined()
@@ -81,7 +81,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     `)
 
     const transformed = await plugin({ markdownAST })
-    const node = find(transformed, function(node) {
+    const node = find(transformed, function (node) {
       return node.type === `html`
     })
 

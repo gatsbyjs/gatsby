@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 import path from "path"
 import { store } from "../redux"
 import { Server as HTTPSServer } from "https"
@@ -10,18 +11,18 @@ import { createHash } from "crypto"
 import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
 import socketIO from "socket.io"
 
-interface IPageQueryResult {
+export interface IPageQueryResult {
   id: string
-  result: any // TODO: Improve this once we understand what the type is
+  result: unknown // TODO: Improve this once we understand what the type is
 }
 
-interface IStaticQueryResult {
-  id: number
-  result: any // TODO: Improve this once we understand what the type is
+export interface IStaticQueryResult {
+  id: string
+  result: unknown // TODO: Improve this once we understand what the type is
 }
 
 type PageResultsMap = Map<string, IPageQueryResult>
-type QueryResultsMap = Map<number, IStaticQueryResult>
+type QueryResultsMap = Map<string, IStaticQueryResult>
 
 /**
  * Get cached page query result for given page path.
@@ -61,9 +62,7 @@ const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
     if (!path) {
       return undefined
     }
-    return createHash(`sha256`)
-      .update(path)
-      .digest(`hex`)
+    return createHash(`sha256`).update(path).digest(`hex`)
   })
 }
 
@@ -105,7 +104,7 @@ const getCachedStaticQueryResults = (
 
 const getRoomNameFromPath = (path: string): string => `path-${path}`
 
-class WebsocketManager {
+export class WebsocketManager {
   activePaths: Set<string> = new Set()
   connectedClients = 0
   errors: Map<string, string> = new Map()

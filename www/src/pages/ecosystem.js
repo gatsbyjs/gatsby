@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 
 import Layout from "../components/layout/layout-with-heading"
 import EcosystemBoard from "../components/ecosystem/ecosystem-board"
+import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 
 import { EcosystemIcon } from "../assets/icons"
@@ -51,9 +51,7 @@ class EcosystemPage extends Component {
         pageTitle={pageTitle}
         pageIcon={EcosystemIcon}
       >
-        <Helmet>
-          <title>Ecosystem</title>
-        </Helmet>
+        <PageMetadata title="Ecosystem" />
         <EcosystemBoard
           icons={boardIcons}
           starters={starters}

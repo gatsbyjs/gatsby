@@ -63,6 +63,10 @@ Now that your site is connected to your repository, Netlify will deploy the site
 
 From the site `Overview`, you can go to `Domain Settings`. By adding a custom domain and setting the `CNAME` record as the Netlify project URL in your DNS provider settings, you should be able to see the Netlify project at your domain URL.
 
+<CloudCallout>
+  For automatic setup of builds that are deployed straight to Netlify:
+</CloudCallout>
+
 ## Other resources
 
 - [A Step-by-Step Guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify/)

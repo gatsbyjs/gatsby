@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Component, Fragment } from "react"
-import { withI18n } from "@lingui/react"
-import { t } from "@lingui/macro"
 
 import Sidebar from "./sidebar"
 import ScrollSyncSidebar from "./scroll-sync-sidebar"
@@ -26,7 +24,7 @@ class StickyResponsiveSidebar extends Component {
 
   render() {
     const { open } = this.state
-    const { i18n, enableScrollSync } = this.props
+    const { enableScrollSync } = this.props
     const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
 
     const iconOffset = open ? 5 : -5
@@ -103,7 +101,7 @@ class StickyResponsiveSidebar extends Component {
           }}
           onClick={this._openSidebar}
           role="button"
-          aria-label={i18n._(t`Show Secondary Navigation`)}
+          aria-label="Show Secondary Navigation"
           aria-controls="SecondaryNavigation"
           aria-expanded={open ? `true` : `false`}
           tabIndex={0}
@@ -130,8 +128,9 @@ class StickyResponsiveSidebar extends Component {
             <ChevronSvg
               size={16}
               cssProps={{
-                transform: `translate(${5 -
-                  iconOffset}px, -5px) rotate(270deg)`,
+                transform: `translate(${
+                  5 - iconOffset
+                }px, -5px) rotate(270deg)`,
                 transition: t =>
                   `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
@@ -143,4 +142,4 @@ class StickyResponsiveSidebar extends Component {
   }
 }
 
-export default withI18n()(StickyResponsiveSidebar)
+export default StickyResponsiveSidebar

@@ -58,7 +58,6 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 let mockPersistedState = {}
-let lokiStorage = {}
 jest.mock(`../../redux/persist`, () => {
   return {
     readFromCache: () => mockPersistedState,
@@ -68,18 +67,7 @@ jest.mock(`../../redux/persist`, () => {
   }
 })
 
-let mockedLokiFsAdapter = {
-  loadDatabase: (dbname, callback) => {
-    callback(lokiStorage[dbname])
-  },
-
-  saveDatabase: (dbname, dbstring, callback) => {
-    lokiStorage[dbname] = dbstring
-    callback(null)
-  },
-}
-
-let pluginOptions = {}
+const pluginOptions = {}
 
 let mockAPIs = {}
 const setAPIhooks = hooks => (mockAPIs = { ...mockAPIs, ...hooks })
@@ -90,23 +78,38 @@ const setPageQueries = queries => (pageQueries = queries)
 let staticQueries = {}
 const setStaticQueries = queries => (staticQueries = queries)
 
+const typedNodeCreator = (
+  type,
+  { createNode, createContentDigest }
+) => node => {
+  node.internal = {
+    type,
+    contentDigest: createContentDigest(node),
+  }
+  return createNode(node)
+}
+
 const getTypedNodeCreators = ({
   actions: { createNode },
   createContentDigest,
 }) => {
-  const typedNodeCreator = type => node => {
-    node.internal = {
-      type,
-      contentDigest: createContentDigest(node),
-    }
-    return createNode(node)
-  }
-
   return {
-    createSiteNode: typedNodeCreator(`Site`),
-    createTestNode: typedNodeCreator(`Test`),
-    createTestBNode: typedNodeCreator(`TestB`),
-    createNotUsedNode: typedNodeCreator(`NotUsed`),
+    createSiteNode: typedNodeCreator(`Site`, {
+      createNode,
+      createContentDigest,
+    }),
+    createTestNode: typedNodeCreator(`Test`, {
+      createNode,
+      createContentDigest,
+    }),
+    createTestBNode: typedNodeCreator(`TestB`, {
+      createNode,
+      createContentDigest,
+    }),
+    createNotUsedNode: typedNodeCreator(`NotUsed`, {
+      createNode,
+      createContentDigest,
+    }),
   }
 }
 
@@ -117,7 +120,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     jest.resetModules()
     if (clearCache) {
       mockPersistedState = {}
-      lokiStorage = {}
     }
   } else if (clearCache) {
     console.error(`Can't clear cache without restarting`)
@@ -125,8 +127,12 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   }
 
   jest.doMock(`../query-runner`, () => {
-    const actualQueryRunner = jest.requireActual(`../query-runner`)
-    return jest.fn(actualQueryRunner)
+    const { queryRunner: actualQueryRunner } = jest.requireActual(
+      `../query-runner`
+    )
+    return {
+      queryRunner: jest.fn(actualQueryRunner),
+    }
   })
 
   jest.doMock(`../../utils/api-runner-node`, () => apiName => {
@@ -146,7 +152,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
-  const queryRunner = require(`../query-runner`)
+  const { queryRunner } = require(`../query-runner`)
   const { boundActionCreators } = require(`../../redux/actions`)
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
     (acc, actionName) => {
@@ -161,20 +167,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   )
   const apiRunner = require(`../../utils/api-runner-node`)
 
-  if (restart) {
-    const { backend } = require(`../../db/nodes`)
-    if (backend === `loki`) {
-      const loki = require(`../../db/loki`)
-      const dbSaveFile = `${__dirname}/fixtures/loki.db`
-      await loki.start({
-        saveFile: dbSaveFile,
-        lokiDBOptions: {
-          adapter: mockedLokiFsAdapter,
-        },
-      })
-    }
-  }
-
   queryRunner.mockClear()
 
   store.dispatch({
@@ -184,7 +176,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     },
   })
 
-  await require(`../../utils/source-nodes`)({})
+  await require(`../../utils/source-nodes`).default({})
   // trigger page-hot-reloader (if it was setup in previous test)
   emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
 
@@ -904,6 +896,138 @@ describe(`query caching between builds`, () => {
       // it should rerun query for page with changed context
       expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
     }, 999999)
+  })
+
+  /*
+    We need to make sure we clear data dependency when we (re)run queries to make
+    sure we don't accumulate stale dependencies over time. Having stale dependencies
+    wouldn't cause build artificats problems, but it would cause unneeded query running
+    in some scenarios
+   */
+  describe(`Clears data dependencies when query result is dirty`, () => {
+    let stage
+    beforeAll(() => {
+      setAPIhooks({
+        sourceNodes: ({ actions: { createNode }, createContentDigest }) => {
+          const dirtyNodeCreator = typedNodeCreator(`DirtyTest`, {
+            createNode,
+            createContentDigest,
+          })
+
+          dirtyNodeCreator({
+            id: `dirty`,
+            link___NODE: stage === `initial` ? `linked-dirty` : undefined,
+          })
+
+          dirtyNodeCreator({
+            id: `linked-dirty`,
+            stage,
+          })
+
+          // this node is not queried - just to ensure schema contains `link` field
+          dirtyNodeCreator({
+            id: `mock`,
+            link___NODE: `mock`,
+          })
+        },
+        createPages: ({ actions: { createPage } }, _pluginOptions) => {
+          createPage({
+            component: `/src/templates/details.js`,
+            path: `/`,
+          })
+        },
+      })
+      setPageQueries({
+        "/src/templates/details.js": `
+          {
+            dirtyTest(id: {eq: "dirty"}) {
+              id
+              stage
+              link {
+                id
+                stage
+              }
+            }
+          }
+        `,
+      })
+      setStaticQueries({
+        "dirty-test": `
+          {
+            dirtyTest(id: {eq: "dirty"}) {
+              id
+              stage
+              link {
+                id
+                stage
+              }
+            }
+          }
+        `,
+      })
+    })
+
+    const runDataDependencyClearingOnDirtyTest = ({ withRestarts }) => {
+      it(`Initial - adds linked node dependency`, async () => {
+        stage = `initial`
+        const {
+          staticQueriesThatRan,
+          pathsOfPagesWithQueriesThatRan,
+          pages,
+        } = await setup({
+          restart: true,
+          clearCache: true,
+        })
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // on initial we want all queries to run
+        expect(staticQueriesThatRan).toEqual([`dirty-test`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Removes linked data - query should be dirty`, async () => {
+        stage = `remove-link`
+        const {
+          staticQueriesThatRan,
+          pathsOfPagesWithQueriesThatRan,
+          pages,
+        } = await setup({ restart: withRestarts })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we changed node that we query directly (by removing link field)
+        // we should rerun all queries
+        expect(staticQueriesThatRan).toEqual([`dirty-test`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`No change since last run, should not rerun any queries`, async () => {
+        stage = `unchanged`
+        const {
+          staticQueriesThatRan,
+          pathsOfPagesWithQueriesThatRan,
+          pages,
+        } = await setup({ restart: withRestarts })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we changed linked node, but last query run didn't use it
+        // so we shouldn't rerun any queries
+        expect(staticQueriesThatRan).toEqual([])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([])
+      }, 999999)
+    }
+
+    describe(`No restarts`, () => {
+      runDataDependencyClearingOnDirtyTest({ withRestarts: false })
+    })
+
+    describe(`With restarts`, () => {
+      runDataDependencyClearingOnDirtyTest({ withRestarts: true })
+    })
   })
 
   // this should be last test, it adds page that doesn't have queries (so it won't create any dependencies)

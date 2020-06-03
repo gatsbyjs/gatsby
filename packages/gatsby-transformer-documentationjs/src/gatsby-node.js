@@ -274,7 +274,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const docSkeletonNode = {
         commentNumber,
         level,
-        id: createNodeId(docId(node.id, docsJson)),
+        id: createNodeId(docId(parent, docsJson)),
         parent,
         children: [],
         internal: {
@@ -366,10 +366,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               // When documenting destructured parameters, the name
               // is parent.child where we just want the child.
               if (docObj.name && docObj.name.split(`.`).length > 1) {
-                docObj.name = docObj.name
-                  .split(`.`)
-                  .slice(-1)
-                  .join(`.`)
+                docObj.name = docObj.name.split(`.`).slice(-1).join(`.`)
               }
 
               const adjustedObj = {

@@ -159,7 +159,7 @@ module.exports = {
 ];
 ```
 
-As always, check out [the installation docs](https://transitionlink.tylerbarnes.ca/docs/transitionportal/) for more information.
+As always, check out [the installation docs](https://transitionlink.tylerbarnes.ca/docs/installation/) for more information.
 
 ## Further reading
 
