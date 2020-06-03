@@ -8,7 +8,7 @@ import {
   ActionFunctionMap,
 } from "xstate"
 import { Store } from "redux"
-import { IBuildContext, IMutationAction } from "./develop"
+import { IBuildContext, IMutationAction } from "../services"
 import { actions } from "../redux/actions"
 import path from "path"
 import { write as writeAppData } from "../utils/app-data"
