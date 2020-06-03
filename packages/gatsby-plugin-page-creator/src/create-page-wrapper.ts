@@ -46,7 +46,7 @@ export function createPage(
 
   if (pathIsClientOnlyRoute(absolutePath)) {
     console.log(4, absolutePath)
-    createClientOnlyPage(absolutePath, actions)
+    createClientOnlyPage(filePath, absolutePath, actions)
     return
   }
 

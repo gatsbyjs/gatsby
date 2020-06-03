@@ -6,8 +6,7 @@ import { createPath } from "gatsby-page-utils"
 // to
 //   `/foo/:id`
 function translateInterpolationToMatchPath(createdPath: string): string {
-  const [, path] = createdPath.split(`src/pages`)
-  return path
+  return createdPath
     .replace(`[...`, `*`)
     .replace(`[`, `:`)
     .replace(`]`, ``)
@@ -15,11 +14,12 @@ function translateInterpolationToMatchPath(createdPath: string): string {
 }
 
 export function createClientOnlyPage(
+  filePath: string,
   absolutePath: string,
   actions: Actions
 ): void {
   // Create page object
-  const createdPath = createPath(absolutePath)
+  const createdPath = createPath(filePath)
   const matchPath = translateInterpolationToMatchPath(createdPath)
 
   const page = {
