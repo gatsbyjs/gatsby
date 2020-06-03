@@ -427,7 +427,7 @@ const DesignTokens = ({ location }) => (
                 {Object.keys(theme.fontWeights).map((fontWeight, i) => (
                   <tr key={`tokens-fontWeights-${i}`}>
                     <TdAlignTop>
-                      <code>fontWeights[{fontWeight}]</code>
+                      <code>fontWeights.{fontWeight}</code>
                     </TdAlignTop>
                     <TdAlignTop>{theme.fontWeights[fontWeight]}</TdAlignTop>
                     <td>
