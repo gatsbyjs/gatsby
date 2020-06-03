@@ -360,7 +360,9 @@ async function startServer(program: IProgram): Promise<IServer> {
 
   const socket = websocketManager.init({ server, directory: program.directory })
 
-  const listener = server.listen(program.port, program.host)
+  // hardcoded `localhost`, because host should match `target` we set
+  // in http proxy in `develop-proxy`
+  const listener = server.listen(program.port, `localhost`)
 
   // Register watcher that rebuilds index.html every time html.js changes.
   const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>

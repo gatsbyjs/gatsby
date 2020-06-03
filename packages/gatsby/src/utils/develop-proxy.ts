@@ -89,7 +89,7 @@ export const startDevelopProxy = (input: {
     proxy.ws(req, socket, head)
   })
 
-  server.listen(input.proxyPort)
+  server.listen(input.proxyPort, input.program.host)
 
   return {
     server,
