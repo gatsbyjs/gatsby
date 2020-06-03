@@ -6,7 +6,7 @@ In this guide you'll learn how to deploy your Gatsby site onto a [DigitalOcean](
 
 ## What is DigitalOcean?
 
-DigitalOcean is an Infrastructure as a service (IaaS) provider who provide several easy to deploy services, such as virtual private servers (VPS) which are also known as Droplets, Kubernetes clusters and managed databases.
+DigitalOcean is an Infrastructure as a service (IaaS) provider who provide several easy to deploy services, such as virtual private servers which are also known as Droplets, Kubernetes clusters and managed databases.
 
 DigitalOcean Droplets are Linux-based VPS' which can be used as standalone servers, or used as part of a wider cloud based infrastructure. Droplets start at \$5 USD per month and you can create and deploy these in less than a minute.
 
@@ -18,7 +18,7 @@ This tutorial assumes that you have the following:
 
 - A DigitalOcean Droplet running Ubuntu Linux 20.04 LTS. You will also need a non-root user account created which has sudo privileges. DigitalOcean provides excellent tutorials on [Droplet creation](https://www.digitalocean.com/docs/droplets/how-to/create/) and also on [setting up Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04).
 
-- A custom domain to utilise LetsEncrypt and provide SSL encryption for your Gatsby website.
+- A custom domain to utilise LetsEncrypt and provide HTTPS encryption for your Gatsby website.
 
 ## Deployment
 
@@ -26,14 +26,16 @@ This tutorial assumes that you have the following:
 
 #### Installing NodeJS
 
-Before starting you should ensure that you have the latest versions of your installed system packages, run the following:
+Before starting, you should ensure that you have the latest versions of your installed system packages. Run the following:
 
 ```shell
 sudo apt update
 sudo apt upgrade
 ```
 
-To have a more up to date version of NodeJS than what is generally available in the official Ubuntu repositories, you can add a Personal Package Archive (PPA) which the NodeJS team maintain. In this tutorial you will be installing Long Term Support (LTS) which is currently v12.x.x. Do the following to add the NodeJS PPA:
+To have a more up to date version of NodeJS than what is generally available in the official Ubuntu repositories, you can add a Personal Package Archive (PPA) which the NodeJS team maintain.
+
+In this tutorial you will be installing the Long Term Support (LTS) version which is currently v12.x.x. Do the following to add the NodeJS PPA:
 
 ```shell
 cd ~
@@ -58,7 +60,7 @@ v12.17.0
 To upgrade npm (NodeJS's package manager) to the latest version run the following:
 
 ```shell
-npm install -g npm@latest
+sudo npm install -g npm@latest
 ```
 
 Sometimes some npm packages need compiling from source, so you will need to install the build-essential package:
@@ -72,10 +74,10 @@ sudo apt install build-essential
 The next step is to now install the Gatsby CLI package:
 
 ```shell
-npm install -g gatsby-cli
+sudo npm install -g gatsby-cli
 ```
 
-And now you can check that the Gatsby CLI packaged installed correctly:
+And now you can check that the Gatsby CLI package was installed correctly:
 
 ```shell
 gatsby -v
@@ -94,10 +96,10 @@ Gatsby CLI version: 2.12.40
 
 #### Cloning and Building Your Gatsby Site
 
-To build your Gatsby site and make it ready for deploying you need to clone your Gatsby site repository to your Droplet. Run the following, where `<your-github-url>` is your Gatsby site's Git repository:
+To build your Gatsby site and make it ready for deploying you need to clone your Gatsby site repository to your Droplet. Run the following, where `<your-git-url>` is your Gatsby site's Git repository:
 
 ```shell
-git clone <your-github-url>
+git clone <your-git-url>
 ```
 
 > The directory where you cloned your Gatsby site will be referred to as `<your-gatsby-site>`.
@@ -119,12 +121,12 @@ gatsby build
 
 #### Installing Nginx
 
-In order to serve your Gatsby website you need a webserver. One of the most widely used web servers for serving static content is [Nginx](https://www.nginx.com/).
+In order to serve your Gatsby website you need a webserver. One of the most widely used web servers for serving static content is [Nginx](https://www.nginx.com/). Nginx is a lightweight high performance web server, perfectly suited for serving static sites such as Gatsby.
 
 Install Nginx:
 
 ```shell
-apt install nginx
+sudo apt install nginx
 ```
 
 If you have set up [UFW](https://help.ubuntu.com/community/UFW) then you will need to allow access to both HTTP and HTTPS from the outside world. Do the following:
@@ -199,7 +201,7 @@ Now you can reload the Nginx configuration files:
 sudo systemctl reload nginx
 ```
 
-Now visit `http://<your-custom-domain>` and your Gatsby site will be live!
+Now visit `http://<your-custom-domain>` and your Gatsby site should be live!
 
 #### Configuring LetsEncrypt
 
@@ -220,10 +222,21 @@ Once installed, run Certbot:
 sudo cerbot --nginx
 ```
 
-When prompted for which names you would like to enable HTTPS for, you can leave the prompt blank to select all domains and continue by pressing enter.
+When prompted for what domains you would like to enable HTTPS for, you can leave the prompt blank to select all domains and continue by pressing enter.
 
 When prompted for whether you want to redirect all HTTP traffic to HTTPS, you should select redirect all HTTP traffic to HTTPS.
 
 Certbot will then automatically update your Nginx server blocks, request a certificate from LetsEncrypt and place this in the correct location and finally it will setup automatically renewing your certificate every 60 days.
 
 Your site will now be available to access on `https://<your-custom-domain>`.
+
+### Keeping Your Site Up To Date
+
+You can manually keep your site afterup to date, after changes are made to the site's Git repo, by SSH'ing into your DigitalOcean Droplet, entering the directory of your Gatsby site and then running:
+
+```shell
+git pull
+gatsby build
+```
+
+This pulls your updated Gatsby site from your Git repository, and then builds the latest version of your Gatsby site.
