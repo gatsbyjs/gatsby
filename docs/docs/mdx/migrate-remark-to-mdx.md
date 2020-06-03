@@ -2,15 +2,15 @@
 title: Migrating Remark to MDX
 ---
 
-For people who already have an existing blog using gatsby-transformer-remark, but want to use MDX, you can swap out the remark transformer plugin with gatsby-plugin-mdx and touch little code otherwise.
+For people who already have an existing blog using `gatsby-transformer-remark` but want to use MDX, you can swap out the Remark transformer plugin with `gatsby-plugin-mdx` and touch little code otherwise.
 
 ## Prerequisites
 
-- An existing site that builds pages using `gatsby-transformer-remark` ([gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) will be used as a reference in this guide).
+- An existing Gatsby site that builds pages using `gatsby-transformer-remark` ([gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) will be used as a reference in this guide)
 
 ## Adding in gatsby-plugin-mdx
 
-Add gatsby-plugin-mdx (and its peer dependencies) to your package.json and remove gatsby-transformer-remark.
+Add the `gatsby-plugin-mdx` plugin (and its peer dependencies) to your `package.json` file and remove the `gatsby-transformer-remark` plugin.
 
 ```shell
 npm install @mdx-js/mdx @mdx-js/react gatsby-plugin-mdx
@@ -19,7 +19,7 @@ npm remove gatsby-transformer-remark
 
 ## Replacing gatsby-transformer-remark with gatsby-plugin-mdx
 
-In your gatsby-config.js file, replace gatsby-transformer-remark with gatsby-plugin-mdx. All sub-plugins of gatsby-transformer-remark can still work with gatsby-plugin-mdx by updating the plugins option to gatsbyRemarkPlugins.
+In your `gatsby-config.js` file, replace `gatsby-transformer-remark` with `gatsby-plugin-mdx`. Most sub-plugins of `gatsby-transformer-remark` can still work with `gatsby-plugin-mdx` by updating the plugins option to `gatsbyRemarkPlugins`.
 
 ```diff:title=gatsby-config.js
 {
@@ -55,9 +55,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 +  if (node.internal.type === `Mdx`) {
 ```
 
-## Update File Extension
+## Update file extensions
 
-Where your markdown files live, change the file extension to `.mdx`.
+Where your Markdown files live, changing their individual file extensions from `.md` to `.mdx` will  pick them up with the new configuration. Or:
+
+Alternatively, you can tell `gatsby-plugin-mdx`...
 
 Also, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by adding the `extensions` option in your gatsby-config entry.
 
@@ -70,19 +72,19 @@ Also, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by ad
   },
 ```
 
-Now with this addition, gatsby-plugin-mdx will see files that end with both `.mdx` or `.md`.
+Now with this addition, `gatsby-plugin-mdx` will see files that end with both `.mdx` or `.md`.
 
 ## Update usage in pages
 
-Similar to gatsby-node, whenever you use `allMarkdownRemark` in a GraphQL query, change it to `allMdx`.
+Similar to `gatsby-node.js`, wherever you use `allMarkdownRemark` in a GraphQL query, change it to `allMdx`.
 
-Then in your blogpost template, to render the MDX, pull in the `MDXRenderer` react component from `gatsby-plugin-mdx`.
+Then in your blogpost template, to render the MDX, pull in the `MDXRenderer` React component from `gatsby-plugin-mdx`.
 
 ```js:title=src/templates/blog-post.js
 import { MDXRenderer } from "gatsby-plugin-mdx"
 ```
 
-And in the graphql query, change the `html` field in `mdx` to `body`.
+And in the GraphQL query, change the `html` field in `mdx` to `body`.
 
 ```graphql:title=src/templates/blog-post.js
 mdx(fields: { slug: { eq: $slug } }) {
@@ -106,9 +108,9 @@ const post = data.mdx
 +<MDXRenderer>{post.body}</MDXRenderer>
 ```
 
-## Update markdown files that includes HTML
+## Update Markdown files that include HTML code
 
-As MDX uses [JSX](/docs/glossary/jsx/) instead of HTML, examine anywhere you put in HTML and make sure that it is valid JSX.
+As MDX uses [JSX](/docs/glossary/jsx/) instead of HTML, examine anywhere you put in HTML and make sure that it is valid JSX. There might be some reserved words that need to be modified, or attributes to convert to camelCase.
 
 For instance, any HTML component with the `class` attribute needs to be changed to `className`.
 
@@ -117,7 +119,7 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 +<span className="highlight">Hello World</span>
 ```
 
-## Additional Resources:
+## Additional resources
 
 - Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components) to find out how you can insert React components in your MDX files.
 - Follow [Using MDX Plugins](/docs/mdx/plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
