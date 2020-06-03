@@ -22,50 +22,50 @@ import {
   Expression,
 } from "@babel/types"
 
-interface SourcePosition {
+interface ISourcePosition {
   line: number
   column: number
 }
 
-interface GraphQLTag {
+interface IGraphQLTag {
   ast: any
   text: string
   hash: number
   isGlobal: boolean
 }
 
-interface NestedJSXVisitor {
+interface INestedJSXVisitor {
   JSXIdentifier: (path: NodePath<JSXIdentifier>) => void
   queryHash: string
   query: string
 }
 
-interface NestedHookVisitor {
+interface INestedHookVisitor {
   CallExpression: (path: NodePath<CallExpression>) => void
   queryHash: string
   query: string
   templatePaath: NodePath<TaggedTemplateExpression>
 }
 
-interface Opts {
+interface IOpts {
   filename: string
 }
 
-interface File {
-  opts: Opts
+interface IFile {
+  opts: IOpts
 }
 
-interface State {
-  file: File
+interface IState {
+  file: IFile
 }
 
 class StringInterpolationNotAllowedError extends Error {
-  interpolationStart: SourcePosition
-  interpolationEnd: SourcePosition
+  interpolationStart: ISourcePosition
+  interpolationEnd: ISourcePosition
 
   constructor(
-    interpolationStart: SourcePosition | undefined,
-    interpolationEnd: SourcePosition | undefined
+    interpolationStart: ISourcePosition | undefined,
+    interpolationEnd: ISourcePosition | undefined
   ) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
@@ -219,11 +219,11 @@ function removeImport(tag: NodePath<Expression>): void {
   }
 }
 
-function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): GraphQLTag {
+function getGraphQLTag(path: NodePath<TaggedTemplateExpression>): IGraphQLTag {
   const tag: NodePath = path.get(`tag`) as NodePath
   const isGlobal: boolean = isGlobalIdentifier(tag)
 
-  if (!isGlobal && !isGraphqlTag(tag)) return {} as GraphQLTag
+  if (!isGlobal && !isGraphqlTag(tag)) return {} as IGraphQLTag
 
   const quasis: TemplateElement[] = path.node.quasi.quasis
 
@@ -265,7 +265,7 @@ function isUseStaticQuery(path: NodePath<CallExpression>): boolean {
 export default function ({ types: t }): PluginObj {
   return {
     visitor: {
-      Program(path: NodePath<Program>, state: State): void {
+      Program(path: NodePath<Program>, state: {}): void {
         const nestedJSXVistor = {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
@@ -304,7 +304,7 @@ export default function ({ types: t }): PluginObj {
               path.unshiftContainer(`body`, importDeclaration)
             }
           },
-        } as NestedJSXVisitor
+        } as INestedJSXVisitor
 
         const nestedHookVisitor = {
           CallExpression(path2: NodePath<CallExpression>): void {
@@ -362,7 +362,7 @@ export default function ({ types: t }): PluginObj {
               path.unshiftContainer(`body`, importDeclaration)
             }
           },
-        } as NestedHookVisitor
+        } as INestedHookVisitor
 
         const tagsToRemoveImportsFrom = new Set<NodePath<Expression>>()
 
