@@ -148,7 +148,7 @@ image: ./some-image.jpg
 ---
 ```
 
-`image` refers to the featured image at the top of a post and is not required. It will also appear as the preview image inside a social card. Note that this requires you to set `siteURL` in your `gatsby-config.js` file metadata to your site's domain.
+`image` refers to the featured image at the top of a post and is not required. It will also appear as the preview image inside a social card. Note that this requires you to set `siteUrl` in your `gatsby-config.js` file metadata to your site's domain.
 
 When adding an `image`, `imageAlt` is available to provide alt text for the featured image within the post. If this is not included, it defaults to the post excerpt.
 

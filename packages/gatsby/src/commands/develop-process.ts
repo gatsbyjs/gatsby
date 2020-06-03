@@ -52,7 +52,7 @@ import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt
 import onExit from "signal-exit"
 import queryUtil from "../query"
 import queryWatcher from "../query/query-watcher"
-import requiresWriter from "../bootstrap/requires-writer"
+import * as requiresWriter from "../bootstrap/requires-writer"
 import {
   reportWebpackWarnings,
   structureWebpackErrors,
@@ -64,6 +64,11 @@ import {
 } from "../utils/feedback"
 
 import { Stage, IProgram } from "./types"
+import {
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+} from "../services"
 
 // const isInteractive = process.stdout.isTTY
 
@@ -105,7 +110,7 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-async function startServer(program: IDevelopArgs): Promise<IServer> {
+async function startServer(program: IProgram): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
@@ -370,11 +375,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-interface IDevelopArgs extends IProgram {
-  graphqlTracing: boolean
-}
-
-module.exports = async (program: IDevelopArgs): Promise<void> => {
+module.exports = async (program: IProgram): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -424,9 +425,10 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
 
-  await queryUtil.initialProcessQueries({
-    graphqlTracing: program.graphqlTracing,
-  })
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  await runStaticQueries({ queryIds, store, program })
+  await runPageQueries({ queryIds, store, program })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
