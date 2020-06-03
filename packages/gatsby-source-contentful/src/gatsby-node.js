@@ -163,6 +163,31 @@ exports.sourceNodes = async (
 
   currentSyncData.entries = res.items
 
+  // Inject raw API output to rich text fields
+  const richTextFields = contentTypeItems.reduce((fields, contentType) => {
+    return {
+      ...fields,
+      [contentType.sys.id]: contentType.fields
+        .filter(field => field.type === `RichText`)
+        .map(field => field.id),
+    }
+  }, {})
+
+  currentSyncData.entries.forEach(entry => {
+    richTextFields[entry.sys.contentType.sys.id].forEach(richTextFieldId => {
+      if (entry.fields[richTextFieldId]) {
+        Object.keys(entry.fields[richTextFieldId]).map(locale => {
+          const rawEntry = currentSyncDataRaw.entries.find(
+            rawEntry => entry.sys.id === rawEntry.sys.id
+          )
+          const rawValue = rawEntry.fields[richTextFieldId][locale]
+
+          entry.fields[richTextFieldId][locale].raw = rawValue
+        })
+      }
+    })
+  })
+
   const entryList = normalize.buildEntryList({
     currentSyncData,
     contentTypeItems,

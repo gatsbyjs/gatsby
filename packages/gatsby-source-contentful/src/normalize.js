@@ -266,18 +266,17 @@ function prepareTextNode(node, key, text, createNodeId) {
 }
 
 function prepareRichTextNode(node, key, content, createNodeId) {
-  const str = stringify(content)
+  const raw = stringify(content.raw)
   const richTextNode = {
-    ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,
     children: [],
-    [key]: str,
+    raw,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
       mediaType: `text/richtext`,
-      content: str,
-      contentDigest: digest(str),
+      content: raw,
+      contentDigest: digest(raw),
     },
     sys: {
       type: node.sys.type,
