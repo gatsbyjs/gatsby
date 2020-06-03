@@ -1,132 +1,120 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
+import React, { useState } from "react"
 import CopyToClipboard from "react-copy-to-clipboard"
 
-import { Box } from "../system"
+import { Box } from "theme-ui"
 
-export default class Swatch extends React.Component {
-  state = {
-    value: this.props.color.hex,
-    displayCopied: false,
-  }
+export default function Swatch(props) {
+  const { a11yLabel, color, swatchStyle, textColor } = props
+  const [displayCopied, setDisplayCopied] = useState(false)
 
-  toggleCopied = () => {
-    this.setState({
-      displayCopied: true,
-    })
+  const toggleCopied = () => {
+    setDisplayCopied(true)
 
     setTimeout(() => {
-      this.setState({
-        displayCopied: false,
-      })
+      setDisplayCopied(false)
     }, 2500)
   }
 
-  handleClick = event => {
+  const handleClick = event => {
     event.preventDefault()
     event.stopPropagation()
   }
 
-  render() {
-    const { a11yLabel, color, swatchStyle, textColor } = this.props
+  return (
+    <Box
+      sx={{
+        bg: color.hex,
+        ...swatchStyle,
+        ":hover > .btn-copy": {
+          display: `block`,
+        },
+      }}
+    >
+      {a11yLabel !== `×` && (
+        <Box
+          sx={{
+            color: textColor,
+            fontSize: 0,
+            position: `absolute`,
+            fontWeight: `body`,
+            lineHeight: `dense`,
+            top: `auto`,
+            bottom: `2px`,
+            left: `3px`,
+          }}
+        >
+          {a11yLabel}
+        </Box>
+      )}
 
-    return (
-      <Box
-        bg={color.hex}
-        sx={{
-          ...swatchStyle,
-          ":hover > .btn-copy": {
-            display: `block`,
-          },
-        }}
-      >
-        {a11yLabel !== `×` && (
+      <CopyToClipboard text={color.hex} onCopy={toggleCopied}>
+        <button
+          className="btn-copy"
+          sx={{
+            background: `none`,
+            border: 0,
+            color: `black`,
+            cursor: `pointer`,
+            width: `100%`,
+            height: `100%`,
+            position: `absolute`,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 1,
+            ":focus .tooltip, :hover .tooltip": {
+              display: `block`,
+            },
+          }}
+          aria-label={color.hex}
+          onClick={handleClick}
+        >
           <Box
-            color={textColor}
-            fontSize={0}
-            position="absolute"
-            fontWeight="body"
+            className="tooltip"
             sx={{
-              bottom: `2px`,
-              left: `3px`,
-              lineHeight: `dense`,
-              top: `auto`,
-            }}
-          >
-            {a11yLabel}
-          </Box>
-        )}
-
-        <CopyToClipboard text={this.state.value} onCopy={this.toggleCopied}>
-          <button
-            className="btn-copy"
-            sx={{
-              background: `none`,
-              border: 0,
-              bottom: 0,
-              color: `black`,
-              cursor: `pointer`,
-              height: `100%`,
-              left: 0,
+              bg: `white`,
+              boxShadow: `raised`,
+              borderRadius: 1,
+              fontSize: 1,
+              lineHeight: `32px`,
+              width: `160px`,
+              height: `32px`,
               position: `absolute`,
-              right: 0,
-              top: 0,
-              width: `100%`,
-              zIndex: 1,
-              ":focus .tooltip, :hover .tooltip": {
-                display: `block`,
-              },
+              top: `-40px`,
+              left: 0,
+              display: `none`,
             }}
-            aria-label={color.hex}
-            onClick={this.handleClick}
           >
-            <Box
-              bg="white"
-              boxShadow="raised"
-              borderRadius={1}
-              fontSize={1}
-              className="tooltip"
-              sx={{
-                top: `-40px`,
-                height: `32px`,
-                left: 0,
-                lineHeight: `32px`,
-                display: `none`,
-                position: `absolute`,
-                width: `160px`,
-              }}
-            >
-              {this.state.displayCopied ? (
-                <>Copied to clipboard!</>
-              ) : (
-                <React.Fragment>
-                  Copy HEX <code sx={{ bg: `yellow.10` }}>{color.hex}</code>
-                </React.Fragment>
-              )}
-            </Box>
-          </button>
-        </CopyToClipboard>
+            {displayCopied ? (
+              <>Copied to clipboard!</>
+            ) : (
+              <React.Fragment>
+                Copy HEX <code sx={{ bg: `yellow.10` }}>{color.hex}</code>
+              </React.Fragment>
+            )}
+          </Box>
+        </button>
+      </CopyToClipboard>
 
-        {(color.name || color.base) && (
-          <Box
-            bg={textColor}
-            borderRadius={7}
-            bottom={4}
-            fontSize={0}
-            lineHeight="solid"
-            height={8}
-            width={8}
-            position="absolute"
-            top="auto"
-            right={4}
-            css={{
-              bottom: 4,
-              right: 4,
-            }}
-          />
-        )}
-      </Box>
-    )
-  }
+      {(color.name || color.base) && (
+        <Box
+          sx={{
+            bg: textColor,
+            fontSize: 0,
+            lineHeight: `solid`,
+            height: 8,
+            width: 8,
+            position: `absolute`,
+            top: `auto`,
+            right: `4px`,
+            bottom: `4px`,
+            borderRadius: 7,
+          }}
+        />
+      )}
+    </Box>
+  )
 }

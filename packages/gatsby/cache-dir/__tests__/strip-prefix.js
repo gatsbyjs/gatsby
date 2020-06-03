@@ -24,4 +24,8 @@ describe(`strip-prefix`, () => {
   it(`returns input str if no prefix is provided`, () => {
     expect(stripPrefix(`/bar`)).toBe(`/bar`)
   })
+
+  it(`returns "/" if str equals prefix`, () => {
+    expect(stripPrefix(`/bar`, `/bar`)).toBe(`/`)
+  })
 })
