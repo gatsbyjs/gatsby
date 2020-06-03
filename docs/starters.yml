@@ -5912,3 +5912,11 @@
     - Stylesheet built using Sass and BEM-Style naming.
     - Syntax highlighting in code blocks.
     - Google Analytics support.
+- url: https://gatsby-starter-capacitor.netlify.app/
+  repo: https://github.com/flogy/gatsby-starter-capacitor
+  description: Build blazing fast mobile apps with Gatsby and Capacitor.
+  tags:
+    - Styling:None
+  features:
+    - Basic setup for hybrid mobile apps for Android and iOS
+    - Demonstration on how to access Native APIs of mobile devices
