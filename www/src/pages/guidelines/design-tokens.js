@@ -373,6 +373,7 @@ const DesignTokens = ({ location }) => (
               <tr>
                 <th scope="col">Token</th>
                 <th scope="col">Value</th>
+                <th scope="col">px</th>
                 <th scope="col">Example</th>
               </tr>
             </thead>
@@ -383,6 +384,7 @@ const DesignTokens = ({ location }) => (
                     <code>fontSizes[{index}]</code>
                   </td>
                   <td>{size}</td>
+                  <td>{parseFloat(size) * 16}</td>
                   <td>
                     <Text
                       // don't scale based on root font size here
