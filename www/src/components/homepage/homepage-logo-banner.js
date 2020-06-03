@@ -11,7 +11,6 @@ import {
 
 import { Name } from "./homepage-section"
 import {
-  HorizontalScroller,
   HorizontalScrollerContent,
   HorizontalScrollerItem,
 } from "../shared/horizontal-scroller"
@@ -97,7 +96,7 @@ const HomepageLogoBanner = () => {
   let desktopMediaQuery = false
   let desktopViewport = false
 
-  const updateViewPortState = e => {
+  const updateViewPortState = () => {
     desktopViewport = desktopMediaQuery.matches
   }
 
@@ -137,9 +136,9 @@ const HomepageLogoBanner = () => {
       </Title>
       {desktopViewport ? (
         <LogoGroup className={SCROLLER_CLASSNAME}>
-          <div>
+          <div tabIndex={0}>
             {data.allFile.nodes.map(image => (
-              <Logo key={image.base} tabIndex={0}>
+              <Logo key={image.base}>
                 <Img
                   alt={`${image.base.split(`.`)[0]}`}
                   fixed={image.childImageSharp.fixed}
@@ -150,9 +149,9 @@ const HomepageLogoBanner = () => {
         </LogoGroup>
       ) : (
         <LogoGroup className={SCROLLER_CLASSNAME}>
-          <HorizontalScrollerContentAsDiv>
+          <HorizontalScrollerContentAsDiv tabIndex={0}>
             {data.allFile.nodes.map(image => (
-              <LogoScrollable key={image.base} tabIndex={0}>
+              <LogoScrollable key={image.base}>
                 <Img
                   alt={`${image.base.split(`.`)[0]}`}
                   fixed={image.childImageSharp.fixed}
