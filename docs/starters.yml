@@ -6000,14 +6000,6 @@
     - Stylesheet built using Sass and BEM-Style naming.
     - Syntax highlighting in code blocks.
     - Google Analytics support.
-- url: https://gatsby-starter-capacitor.netlify.app/
-  repo: https://github.com/flogy/gatsby-starter-capacitor
-  description: Build blazing fast mobile apps with Gatsby and Capacitor.
-  tags:
-    - Styling:None
-  features:
-    - Basic setup for hybrid mobile apps for Android and iOS
-    - Demonstration on how to access Native APIs of mobile devices
 - url: https://dindim-production.netlify.com/
   repo: https://github.com/lorenzogm/gatsby-ecommerce-starter
   description: Gatsby starter to create an ecommerce website with netlify and stripe. Setup and release your shop in a few minutes.
@@ -6656,3 +6648,11 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-capacitor.netlify.app/
+  repo: https://github.com/flogy/gatsby-starter-capacitor
+  description: Build blazing fast mobile apps with Gatsby and Capacitor.
+  tags:
+    - Styling:None
+  features:
+    - Basic setup for hybrid mobile apps for Android and iOS
+    - Demonstration on how to access Native APIs of mobile devices
