@@ -22,7 +22,7 @@ import {
   Expression,
 } from "@babel/types"
 
-type SourcePosition = {
+interface SourcePosition {
   line: number
   column: number
 }
@@ -45,6 +45,18 @@ interface NestedHookVisitor {
   queryHash: string
   query: string
   templatePaath: NodePath<TaggedTemplateExpression>
+}
+
+interface Opts {
+  filename: string
+}
+
+interface File {
+  opts: Opts
+}
+
+interface State {
+  file: File
 }
 
 class StringInterpolationNotAllowedError extends Error {
@@ -253,7 +265,7 @@ function isUseStaticQuery(path: NodePath<CallExpression>): boolean {
 export default function ({ types: t }): PluginObj {
   return {
     visitor: {
-      Program(path: NodePath<Program>, state: any): void {
+      Program(path: NodePath<Program>, state: State): void {
         const nestedJSXVistor = {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
