@@ -195,7 +195,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode } = actions
+  const { createNode, deleteNode, touchNode, createTypes } = actions
 
   let currentSyncData, contentTypeItems, defaultLocale, locales, space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
@@ -287,46 +287,84 @@ exports.sourceNodes = async (
         `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
       )
     }
-
-    const fetchActivity = reporter.activityTimer(
-      `Contentful: Fetch data (${sourceId})`,
-      {
-        parentSpan,
-      }
-    )
-
-    fetchActivity.start()
-    ;({
-      currentSyncData,
-      contentTypeItems,
-      defaultLocale,
-      locales,
-      space,
-    } = await fetchData({
-      syncToken,
-      reporter,
-      pluginConfig,
-      parentSpan,
-    }))
-
-    if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
-      reporter.info(
-        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
-          process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
-      )
-      fs.writeFileSync(
-        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
-        v8.serialize({
-          currentSyncData,
-          contentTypeItems,
-          defaultLocale,
-          locales,
-          space,
-        })
-      )
-    }
-    fetchActivity.end()
   }
+
+  const fetchActivity = reporter.activityTimer(
+    `Contentful: Fetch data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+
+  fetchActivity.start()
+  ;({
+    currentSyncData,
+    contentTypeItems,
+    defaultLocale,
+    locales,
+    space,
+  } = await fetchData({
+    syncToken,
+    reporter,
+    pluginConfig,
+    parentSpan,
+  }))
+
+  createTypes(`
+  interface ContentfulEntry @nodeInterface {
+    contentful_id: String!
+    id: ID!
+  }
+`)
+
+  createTypes(`
+  interface ContentfulReference {
+    contentful_id: String!
+    id: ID!
+  }
+`)
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulAsset`,
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      interfaces: [`ContentfulReference`, `Node`],
+    })
+  )
+
+  const gqlTypes = contentTypeItems.map(contentTypeItem =>
+    schema.buildObjectType({
+      name: _.upperFirst(_.camelCase(`Contentful ${contentTypeItem.name}`)),
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+    })
+  )
+
+  createTypes(gqlTypes)
+
+  if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
+    reporter.info(
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+    )
+    fs.writeFileSync(
+      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
+      v8.serialize({
+        currentSyncData,
+        contentTypeItems,
+        defaultLocale,
+        locales,
+        space,
+      })
+    )
+  }
+  fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
     `Contentful: Proccess data (${sourceId})`,
@@ -375,6 +413,31 @@ exports.sourceNodes = async (
   })
 
   mergedSyncData.entries = res.items
+
+  // Inject raw API output to rich text fields
+  const richTextFields = contentTypeItems.reduce((fields, contentType) => {
+    return {
+      ...fields,
+      [contentType.sys.id]: contentType.fields
+        .filter(field => field.type === `RichText`)
+        .map(field => field.id),
+    }
+  }, {})
+
+  mergedSyncDataRaw.entries.forEach(entry => {
+    richTextFields[entry.sys.contentType.sys.id].forEach(richTextFieldId => {
+      if (entry.fields[richTextFieldId]) {
+        Object.keys(entry.fields[richTextFieldId]).map(locale => {
+          const rawEntry = mergedSyncDataRaw.entries.find(
+            rawEntry => entry.sys.id === rawEntry.sys.id
+          )
+          const rawValue = rawEntry.fields[richTextFieldId][locale]
+
+          entry.fields[richTextFieldId][locale].raw = rawValue
+        })
+      }
+    })
+  })
 
   const entryList = normalize.buildEntryList({
     mergedSyncData,
@@ -532,7 +595,6 @@ exports.sourceNodes = async (
         locales,
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
-        richTextOptions: pluginConfig.get(`richText`),
       })
     )
   }

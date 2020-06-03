@@ -3,7 +3,6 @@ const stringify = require(`json-stringify-safe`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const digest = str => createContentDigest(str)
-const { getNormalizedRichTextField } = require(`./rich-text`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -207,18 +206,17 @@ function prepareTextNode(node, key, text, createNodeId) {
 }
 
 function prepareRichTextNode(node, key, content, createNodeId) {
-  const str = stringify(content)
+  const raw = stringify(content.raw)
   const richTextNode = {
-    ...content,
     id: createNodeId(`${node.id}${key}RichTextNode`),
     parent: node.id,
     children: [],
-    [key]: str,
+    raw,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} RichTextNode`),
       mediaType: `text/richtext`,
-      content: str,
-      contentDigest: digest(str),
+      content: raw,
+      contentDigest: digest(raw),
     },
     sys: {
       type: node.sys.type,
@@ -266,7 +264,6 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
-  richTextOptions,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -314,25 +311,6 @@ exports.createNodesForContentType = ({
         const localizedField = fieldProps.localized
           ? getField(v)
           : v[defaultLocale]
-
-        if (
-          fieldProps.type === `RichText` &&
-          richTextOptions &&
-          richTextOptions.resolveFieldLocales
-        ) {
-          const contentTypesById = new Map()
-          contentTypeItems.forEach(contentTypeItem =>
-            contentTypesById.set(contentTypeItem.sys.id, contentTypeItem)
-          )
-
-          return getNormalizedRichTextField({
-            field: localizedField,
-            fieldProps,
-            contentTypesById,
-            getField,
-            defaultLocale,
-          })
-        }
 
         return localizedField
       })
