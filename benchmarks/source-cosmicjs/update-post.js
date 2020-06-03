@@ -26,7 +26,8 @@ const run = async () => {
     const { slug, title } = objects[0];
     await bucket.editObject({
       slug,
-      title: `${title}!`
+      title: `${title}!`,
+      trigger_webhook: true
     })
     console.log(`Updated article number ${randomDoc}`)
   }
