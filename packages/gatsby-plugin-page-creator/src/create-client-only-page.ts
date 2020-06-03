@@ -2,7 +2,7 @@ import { Actions } from "gatsby"
 import { createPath } from "gatsby-page-utils"
 
 // Changes something like
-//   `/Users/site/src/pages/foo/[id]/`
+//   `/foo/[id]/`
 // to
 //   `/foo/:id`
 function translateInterpolationToMatchPath(createdPath: string): string {
