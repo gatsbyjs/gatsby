@@ -6632,3 +6632,19 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
+- url: https://simple.rickkln.com
+  repo: https://github.com/rickkln/gatsby-starter-simple
+  description: Simple Gatsby starter for a small static site. Replaces Prettier with ESLint (AirBnB style), and adds TypeScript and Firebase hosting.
+  tags:
+    - Linting
+    - Language:TypeScript
+    - Firebase
+    - SEO
+    - Markdown
+    - Portfolio
+  features:
+    - TypeScript is used for a better developer experience.
+    - ESLint and the AirBnB TypeScript style guide help you avoid, and fix, simple issues in your code.
+    - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
+    - Firebase Hosting is supported and configured for Gatsby from the start.
+    - Dynamic pages for blog posts in markdown is implemented.
