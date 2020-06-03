@@ -2,7 +2,7 @@
 
 exports[`directory resource e2e directory resource test: Directory create 1`] = `
 Object {
-  "_message": "Creating directory directory",
+  "_message": "Created directory \\"directory\\"",
   "id": "directory",
   "path": "directory",
 }
@@ -10,14 +10,13 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
 Object {
-  "describe": "Create directory",
-  "newState": "directory",
+  "describe": "Create directory \\"directory\\"",
 }
 `;
 
 exports[`directory resource e2e directory resource test: Directory destroy 1`] = `
 Object {
-  "_message": "Creating directory directory",
+  "_message": "Created directory \\"directory\\"",
   "id": "directory",
   "path": "directory",
 }
@@ -25,7 +24,7 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory update 1`] = `
 Object {
-  "_message": "Creating directory directory",
+  "_message": "Created directory \\"directory\\"",
   "id": "directory",
   "path": "directory",
 }
@@ -33,7 +32,6 @@ Object {
 
 exports[`directory resource e2e directory resource test: Directory update plan 1`] = `
 Object {
-  "describe": "Create directory1",
-  "newState": "directory1",
+  "describe": "Create directory \\"directory1\\"",
 }
 `;

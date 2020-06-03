@@ -11,7 +11,7 @@ A _headless content management system_ or _headless CMS_, is a CMS in which the 
 
 Headless content management systems, on the other hand, return structured data from an [API](/docs/glossary/#api). Rather than merging templates and content to create HTML, a headless CMS returns JSON or unstyled XML. Content creators still use an editing interface to add content to a headless CMS, but the [backend](/docs/glossary#backend) management of the site's content is [_decoupled_](/docs/glossary#decoupled) from the [frontend](/docs/glossary#frontend) that displays it.
 
-When your content is available as structured data, it's available to any client or application that can consume that data whether a [JAMStack](/docs/glossary/jamstack) application, or a mobile device. You can use a headless CMS to provide [JSON content source](/docs/sourcing-content-from-json-or-yaml/) for your Gatsby site and your other content channels.
+When your content is available as structured data, it's available to any client or application that can consume that data whether a [JAMStack](/docs/glossary/jamstack/) application, or a mobile device. You can use a headless CMS to provide [JSON content source](/docs/sourcing-content-from-json-or-yaml/) for your Gatsby site and your other content channels.
 
 With plugins, Gatsby supports several [headless CMS](/docs/headless-cms/) services, including [Contentful](https://www.contentful.com/), [Ghost](https://ghost.org/pricing/) and [Prismic](https://prismic.io/). If you use WordPress, there's no need to switch. You can use WordPress' [REST API](/docs/sourcing-from-wordpress/) as a headless CMS, so that your content team can continue to use the editing tools with which they're familiar.
 

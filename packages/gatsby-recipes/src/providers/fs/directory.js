@@ -22,6 +22,11 @@ const create = async ({ root }, { id, path: directoryPath }) => {
 }
 
 const update = async (context, resource) => {
+  // TODO figure out how to move directories when it shifts
+  // probably update needs to be called with the previous version
+  // of the resource.
+  //
+  // Also Directory needs a key.
   const fullPath = makePath(context.root, resource.id)
   await fs.ensureDir(fullPath)
   return await read(context, resource.id)
@@ -41,26 +46,22 @@ const read = async (context, id) => {
 
 const destroy = async (context, directoryResource) => {
   const fullPath = makePath(context.root, directoryResource.id)
-  await fs.rmdirSync(fullPath)
+  await fs.rmdir(fullPath)
   return directoryResource
 }
 
 module.exports.plan = async (context, { id, path: directoryPath }) => {
-  let newState = directoryPath
-
   const plan = {
-    newState,
-    describe: `Create ${directoryPath}`,
+    describe: `Create directory "${directoryPath}"`,
   }
 
   return plan
 }
 
-const message = resource => `Creating directory ${resource.path}`
+const message = resource => `Created directory "${resource.path}"`
 
 const schema = {
   path: Joi.string(),
-  content: Joi.string(),
   ...resourceSchema,
 }
 exports.schema = schema

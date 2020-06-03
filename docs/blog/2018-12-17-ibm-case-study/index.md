@@ -45,7 +45,7 @@ With non-technical content writers and designers needing the ability to add cont
 
 ## A New Era
 
-The new Carbon Design System website launched October 3, 2018, and is referenced by designers and developers as an open source project as well as internally at IBM. With a seamless design feel, most users didn’t “see” any changes, but they sure felt them with the lightning fast page load times. Alison pointed out their new Lighthouse performance score went from 7 to 96 (that’s a 89 point jump!) with PWA, Accessibility, Best Practices, and SEO scores in the high 90s - 100.
+The new Carbon Design System website launched October 3, 2018, and is referenced by designers and developers as an open source project as well as internally at IBM. With a seamless design feel, most users didn’t “see” any changes, but they sure felt them with the lightning fast page load times. Alison pointed out their new Lighthouse performance score went from 7 to 96 (that’s an 89 point jump!) with PWA, Accessibility, Best Practices, and SEO scores in the high 90s - 100.
 
 <figure>
   <img alt="Gatsby swag posts on Twitter." src="./images/lighthouse.png" />

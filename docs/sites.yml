@@ -1,3 +1,19 @@
+- title: MobileUI
+  main_url: https://mobileui.dev
+  url: https://mobileui.dev
+  description: >
+    A java-based framework for cross-platform app development with Java and Kotlin.
+  categories:
+    - Mobile Development
+    - Technology
+    - Programming
+    - Landing Page
+    - Blog
+    - WordPress
+    - E-commerce
+  built_by: NeverNull GmbH
+  built_by_url: https://nevernull.io
+  featured: false
 - title: ReactJS
   main_url: https://reactjs.org/
   url: https://reactjs.org/
@@ -7,6 +23,16 @@
     - Web Development
     - Featured
     - Documentation
+- title: Spotify.Design
+  main_url: https://spotify.design/
+  url: https://spotify.design/
+  description: >
+    Spotify Design's team site! Read their blog and meet Spotify designers.
+  featured: true
+  categories:
+    - Featured
+    - Music
+    - Blog
 - title: Flamingo
   main_url: https://www.shopflamingo.com/
   url: https://www.shopflamingo.com/
@@ -214,12 +240,6 @@
     - Sports
   built_by: Escalade Sports
   built_by_url: https://www.escaladesports.com/
-- title: NEON
-  main_url: http://neonrated.com/
-  url: http://neonrated.com/
-  featured: false
-  categories:
-    - Gallery
 - title: GraphCMS
   main_url: https://graphcms.com/
   url: https://graphcms.com/
@@ -5241,6 +5261,19 @@
   source_url: https://github.com/ERS-HCL/gatsby-ershcl-app
   built_by: Tarun Kumar Sukhu
   built_by_url: https://github.com/tsukhu
+- title: Ben Shi
+  url: https://hbish.com/
+  main_url: https://hbish.com/
+  source_url: https://github.com/hbish/hbish.com
+  description: >
+    A personal website of Ben Shi, a technologist from Sydney, Australia.
+  categories:
+    - Blog
+    - Programming
+    - Technology
+  built_by: Ben Shi
+  built_by_url: https://hbish.com/
+  featured: false
 - title: Sandbox
   url: https://www.sandboxneu.com/
   main_url: https://www.sandboxneu.com/
@@ -6796,8 +6829,8 @@
   description: >-
     Recipes and videos with the best of Ecuadorian cuisine.
     Collectable recipes from Diario El Universo.
-  main_url: https://recetas-eu.netlify.com/
-  url: https://recetas-eu.netlify.com/
+  main_url: https://recetas-eu.now.sh/
+  url: https://recetas-eu.now.sh/
   featured: false
   categories:
     - Blog
@@ -9173,8 +9206,8 @@
   built_by_url: https://pagepro.co
   featured: false
 - title: Tools of Golf
-  main_url: https://toolsof.golf
-  url: https://toolsof.golf/titleist-915-d2-driver
+  main_url: https://thetoolsofgolf.com/
+  url: https://thetoolsofgolf.com//titleist-915-d2-driver
   description: >
     Tools of Golf is a community dedicated to golf nerds and gear heads.
   categories:
@@ -10333,16 +10366,6 @@
     - Science
   built_by: Jellypepper
   built_by_url: https://jellypepper.com/
-- title: Futrli
-  main_url: https://www.futrli.com/
-  url: https://www.futrli.com/
-  description: >
-    Keep and find more cash. Grow your business. Futrli is your artificial intelligence small business accountant.
-  categories:
-    - Business
-    - Finance
-  built_by: Jellypepper
-  built_by_url: https://jellypepper.com/
 - title: Hasura
   url: https://hasura.io
   main_url: https://hasura.io
@@ -10422,6 +10445,15 @@
     - Healthcare
   built_by: Albert Chen
   built_by_url: https://github.com/mralbertchen
+- title: Most Recommended Books
+  url: http://mostrecommendedbooks.com/
+  main_url: http://mostrecommendedbooks.com/
+  description: >
+    Discover credibly powerful books recommendations by billionaires, icons, and world-class performers.
+  categories:
+    - Blog
+    - Entrepreneurship
+    - Books
 - title: theAnubhav.com
   main_url: https://theanubhav.com/
   url: https://theanubhav.com/
@@ -10457,6 +10489,19 @@
   featured: false
   main_url: https://sztuka-programowania.pl/
   url: https://sztuka-programowania.pl/
+- title: Rivers Casino
+  built_by: WILDLIFE.LA
+  built_by_url: https://www.wildlife.la
+  categories:
+    - Entertainment
+    - Food
+    - Blog
+    - Travel
+  description: >
+    Rivers Casino offers the very best in casinos, hotels, restaurants, concerts, and entertainment. Visit us in Des Plaines, IL, Philadelphia, PA, Pittsburgh, PA and Schenectady, NY.
+  featured: false
+  main_url: https://www.riverscasino.com/desplaines/
+  url: https://www.riverscasino.com/desplaines/
 - title: Mishal Shah
   built_by: Mishal Shah
   built_by_url: https://mishal23.github.io
@@ -10466,14 +10511,25 @@
     - Open Source
     - Web Development
   description: >
-    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, 
-    Databases and Web Security. This website is my personal portfolio and blog 
-    with the Fresh theme. I love reading engineering articles, contributing to 
-    open-source and interacting with communities. Feel free to get in touch if 
-    you have an interesting project that you want to collaborate on.
+    Hey, I'm Mishal Shah, a passionate developer with interests in Networks, Databases and Web Security. This website is my personal portfolio and blog with the Fresh theme. I love reading engineering articles, contributing to open-source and interacting with communities. Feel free to get in touch if you have an interesting project that you want to collaborate on.
   featured: false
   main_url: https://mishal23.github.io/
   url: https://mishal23.github.io/
+- title: Chris Nager
+  main_url: https://chrisnager.com
+  url: https://chrisnager.com
+  source_url: https://github.com/chrisnager/chrisnager-dot-com
+  description: >
+    Developer and designer in Brooklyn, NY passionate about performance, accessibility, and systematic design.
+  categories:
+    - Accessibility
+    - Blog
+    - Design
+    - Portfolio
+    - User Experience
+    - Web Development
+  built_by: Chris Nager
+  built_by_url: https://twitter.com/chrisnager
 - title: Resistbot
   url: https://resist.bot
   main_url: https://resist.bot
@@ -10517,6 +10573,19 @@
     - Technology
     - Blog
   featured: false
+- title: Vinicius Dias
+  built_by: Vinicius Dias
+  built_by_url: https://viniciusdias.works/
+  categories:
+    - Blog
+    - Portfolio
+    - Open Source
+    - Web Development
+  description: >
+    Hi, I'm Vinicius Dias, a Front-End developer with focus on performance and UX. This is my personal portfolio developed with Gatsby. I'm always learning different things and I consider myself a very curious guy. I feel that it keeps me motivated and creative to solve problems.
+  featured: false
+  main_url: https://viniciusdias.works/
+  url: https://viniciusdias.works/
 - title: Cognifide Tech
   url: https://tech.cognifide.com/
   main_url: https://tech.cognifide.com/
@@ -10543,4 +10612,322 @@
     - Blog
   built_by: Sadharani Music Works
   built_by_url: https://www.sadharani.com
+  featured: false
+- title: Anong Network
+  main_url: https://anong.network
+  url: https://anong.network
+  description: >
+    An app used to quickly identify a network provider in Philippines
+  categories:
+    - App
+    - Directory
+  built_by: Jan Harold Diaz
+  built_by_url: https://janharold.com
+  featured: false
+- title: PayMongo
+  main_url: https://paymongo.com
+  url: https://paymongo.com
+  description: >
+    The official website of PayMongo Philippines
+  categories:
+    - Marketing
+    - Finance
+  built_by: PayMongo
+  built_by_url: https://paymongo.com
+- title: Zona Digital
+  url: https://zonadigital.pt
+  main_url: https://zonadigital.pt
+  description: >
+    We work with startups and small businesses building effective strategies through digital platforms. Based in Porto, Portugal.
+  categories:
+    - Web Development
+    - Programming
+    - Technology
+    - Design
+    - Business
+  built_by: Zona Digital
+  built_by_url: https://zonadigital.pt
+  featured: false
+- title: Ofri Lifshitz Design
+  url: https://www.ofrilifshitz.com
+  main_url: https://www.ofrilifshitz.com
+  categories:
+    - Portfolio
+    - Design
+  built_by: Raz Lifshitz
+  built_by_url: https://www.linkedin.com/in/raz-lifshitz
+- title: Runly
+  url: https://www.runly.io/
+  main_url: https://www.runly.io/
+  description: >
+    The easiest way to run background jobs with .NET Core. It's more than background jobs —
+    it's an all-in-one platform to create great user experiences.
+  categories:
+    - API
+    - App
+    - Landing Page
+    - Technology
+    - Programming
+  built_by: Chad Lee
+  built_by_url: https://github.com/chadly
+  featured: false
+- title: Ajith's blog
+  url: https://ajith.blog
+  main_url: https://ajith.blog
+  source_url: https://github.com/ajithrnayak/ajith_blog
+  description: >
+    I build apps and sometimes write about the observations and frustrations at work here.
+  categories:
+    - Blog
+    - Mobile Development
+    - Open Source
+    - Programming
+    - Technology
+  built_by: Ajith R Nayak
+  built_by_url: https://ajith.xyz
+- title: I Love You Infinity
+  url: https://iloveyouinfinity.com
+  main_url: https://iloveyouinfinity.com
+  description: >
+    An infinite sound experiment to help raise awareness about autism and love.
+  categories:
+    - Nonprofit
+    - Healthcare
+  built_by: Good Praxis
+  built_by_url: https://goodpraxis.coop
+  featured: false
+- title: KAIGO in JAPAN
+  main_url: https://kaigo-in-japan.jp
+  url: https://kaigo-in-japan.jp
+  description: >
+    KAIGO in JAPAN is a website for those who are planning to work in the care work field in Japan. We built a multilingual site on Gatsby. One of them is a special language called Easy-Japanese with various ruby tags.
+  categories:
+    - Healthcare
+    - Nonprofit
+    - Web Development
+    - Programming
+  built_by: hgw
+  built_by_url: https://shunyahagiwara.com/
+- title: Dondoko Susumu Website
+  url: https://xn--28jma5da5l6e.com/en/
+  main_url: https://xn--28jma5da5l6e.com/en/
+  source_url: https://github.com/dondoko-susumu/website-v2
+  description: >
+    The Web site of Dondoko Susumu, a Japanese cartoonist. His cartoons have been posted. It is internationalized into 12 languages.
+  categories:
+    - Blog
+    - Entertainment
+    - Gallery
+    - Landing Page
+  built_by: Dondoko Susumu
+  built_by_url: https://xn--28jma5da5l6e.com/en/
+- title: Raymond Ware
+  url: https://www.raymondware.com
+  main_url: https://www.raymondware.com
+  description: >
+    Seattle web developer portfolio site.
+  categories:
+    - Portfolio
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Raymond Ware
+  built_by_url: https://github.com/raymondware
+  featured: false
+- title: Formula One Gym
+  url: https://www.formulaonegym.co.uk/
+  main_url: https://www.formulaonegym.co.uk/
+  source_url: https://github.com/Zellement/formula1gym
+  description: A UK based fitness gym in the heart of Nottingham, built with Gatsby v2
+  categories:
+    - Sports
+  built_by: Dan Farrow
+  built_by_url: https://github.com/Zellement
+  featured: false
+- title: Blog - Thanawat Gulati
+  main_url: https://testing.thanawatgulati.com
+  url: https://testing.thanawatgulati.com
+  source_url: https://github.com/thanawatgulati/thanawatgulati-blog
+  description: >
+    Thanawat Gulati - Blog , Work experience portfolio and more.
+  categories:
+    - Blog
+  built_by: Thanawat Gulati
+  built_by_url: https://twitter.com/mjamesvevo
+  featured: false
+- title: Effico Ltd
+  main_url: https://www.effico.ltd
+  url: https://www.effico.ltd
+  source_url: https://github.com/Zellement/effico
+  description: >
+    Commercial and domestic electrical contractors.
+  categories:
+    - Business
+  built_by: Dan Farrow
+  built_by_url: https://www.zellement.com
+  featured: false
+- title: Sheringham Flooring
+  main_url: https://www.sheringhamflooring.com
+  url: https://www.sheringhamflooring.com
+  source_url: https://github.com/Zellement/sheringham-flooring-2019
+  description: >
+    Sheringham Flooring - commercial and domestic flooring solutions
+  categories:
+    - Business
+  built_by: Dan Farrow
+  built_by_url: https://www.zellement.com
+  featured: false
+- title: Que Jamear
+  description: >-
+    A directory with a map of food delivery services 
+    to be used during the health emergency caused by covid 19.
+  main_url: https://quejamear.com/encebollados
+  url: https://quejamear.com/encebollados
+  featured: false
+  categories:
+    - Food
+  built_by: Ramón Chancay
+  built_by_url: https://ramonchancay.me/
+- title: Mox Bank
+  main_url: https://mox.com/
+  url: https://mox.com/
+  description: >
+    Mox is the new virtual bank backed by Standard Chartered in partnership with HKT, PCCW and Trip.com; created to deliver a new banking experience in Hong Kong.
+  categories:
+    - Business
+    - Design
+    - Technology
+    - Finance
+    - User Experience
+  built_by: Mox Bank
+  built_by_url: https://mox.com/
+- title: Pittica
+  url: https://pittica.com
+  main_url: https://pittica.com
+  source_url: https://github.com/pittica/site
+  description: >
+    Digital agency site.
+  categories:
+    - Design
+    - Web Development
+    - Agency
+  built_by: Lucio Benini
+  built_by_url: https://pittica.com
+  featured: false
+- title: MyHumus
+  url: https://myhumus.com
+  main_url: https://myhumus.com
+  source_url: https://github.com/my-humus/site
+  description: >
+    Digital agency site.
+  categories:
+    - Blog
+    - Food
+  built_by: Lucio Benini
+  built_by_url: https://pittica.com
+- title: Wanaboat.fr
+  main_url: https://www.wanaboat.fr
+  url: https://www.wanaboat.fr
+  description: >
+    This a boating classifieds website. It presents dinghys, catamarans and anything that floats or goes on the water and is for sale in France and Europe.
+  categories:
+    - Directory
+  built_by: Olivier L. Developer
+  built_by_url: https://www.olivierlivet.net/
+- title: maxemitchell.com
+  url: https://www.maxemitchell.com/
+  main_url: https://www.maxemitchell.com/
+  source_url: https://github.com/maxemitchell/portfolio
+  description: >
+    This is a personal portfolio website to highlight my photography, videography, coding projects, and work/education experience.
+  categories:
+    - Portfolio
+    - Gallery
+    - Portfolio
+    - Open Source
+    - Design
+  built_by: Max Mitchell
+  built_by_url: https://github.com/maxemitchell
+- title: Nick Offerman
+  url: https://nickofferman.co/
+  main_url: https://nickofferman.co/
+  description: >
+    The official website of Nick Offerman: Actor, Author, Humorist, & Woodworker.
+  categories:
+    - E-commerce
+    - Entertainment
+    - Video
+  built_by: Aveling Ray
+  built_by_url: https://avelingray.com/
+- title: Rudra Narayan
+  url: https://rudra.dev
+  main_url: https://rudra.dev
+  source_url: https://github.com/mrprofessor/rudra.dev
+  description: >
+    Rudra Narayan | Thoughts, obsessions and rants
+  categories:
+    - Blog
+    - Portfolio
+    - SEO
+    - Programming
+    - Landing Page
+    - Technology
+  built_by: Rudra Narayan
+  built_by_url: https://github.com/mrprofessor
+  featured: false
+- title: Stackrole
+  main_url: https://stackrole.com
+  url: https://stackrole.com
+  description: >
+    We help Startups and Individuals launch their blazing fast JAMstack website with GatsbyJS and Netlify CMS, Deployed on Netlify
+  categories:
+    - Agency
+    - Blog
+    - User Experience
+    - Web Development
+    - Portfolio
+    - JavaScript
+  built_by: Stackrole
+  built_by_url: https://stackrole.com
+  featured: false
+- title: Aparna Joshi
+  url: https://aparnajoshi.netlify.app/
+  main_url: https://aparnajoshi.netlify.app/
+  description: >
+    Hi, I`m a Software Engineer working in Citrix, Bangalore. I spend my free time learning stuff that interests me. I write articles that educates me.
+  categories:
+    - Blog
+    - Science
+    - Technology
+    - Programming
+  built_by: Aparna Joshi
+  built_by_url: https://github.com/AparnaJoshi007/explained/
+  featured: false
+- title: Headless WordPress Blog and Portfolio by Simon Halimonov
+  url: https://simonhalimonov.com/
+  main_url: https://simonhalimonov.com/
+  description: >
+    An open source portfolio about UI/UX design and development. This is my personal website that I use to promote my work. It uses TypeScript and a headless WordPress CMS. Supports i18n and Gutenberg. I open source this site to help everyone make a nice WordPress site faster.
+  categories:
+    - Blog
+    - Portfolio
+    - Programming
+    - Open Source
+    - Design
+    - Freelance
+    - Web Development
+    - WordPress
+  built_by: Simon Halimonov
+  built_by_url: https://simonhalimonov.com/
+  featured: false
+- title: Nagarjun Palavalli
+  main_url: https://nagarjun.co/
+  url: https://nagarjun.co/
+  description: >
+    My personal website built with Gatsby. I am a full-stack web developer and designer based in Bangalore, India.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Nagarjun Palavalli
+  built_by_url: https://twitter.com/palavalli
   featured: false

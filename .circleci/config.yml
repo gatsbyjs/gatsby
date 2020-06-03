@@ -67,8 +67,9 @@ aliases:
       - <<: *attach_to_bootstrap
       - run: yarn list react
       - run:
-          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci --reporters=jest-junit
+          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
           environment:
+            GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -256,17 +257,11 @@ jobs:
           test_path: integration-tests/gatsby-pipeline
 
   integration_tests_gatsby_cli:
-    <<: *e2e-executor
     executor: node
     steps:
-      - checkout
-      - run:
-          name: Assert Changed Files
-          command: ./scripts/assert-changed-files.sh "packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*"
-      - <<: *attach_to_bootstrap
-      - run:
-          name: Run tests (using defaults)
-          command: cd integration-tests/gatsby-cli && yarn && yarn test
+      - e2e-test:
+          test_path: integration-tests/gatsby-pipeline
+          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
 
   integration_tests_structured_logging:
     executor: node
@@ -314,7 +309,7 @@ jobs:
           command: yarn build
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
-          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep ''ERROR #''"'
+          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: ~/project/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:

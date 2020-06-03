@@ -7,20 +7,11 @@ const npmPackageScriptResource = require(`./providers/npm/script`)
 const npmPackageJsonResource = require(`./providers/npm/package-json`)
 const gitIgnoreResource = require(`./providers/git/ignore`)
 
-const configResource = {
-  create: () => {},
-  read: () => {},
-  update: () => {},
-  destroy: () => {},
-  plan: () => {},
-}
-
 const componentResourceMapping = {
   File: fileResource,
   Directory: directoryResource,
   GatsbyPlugin: gatsbyPluginResource,
   GatsbyShadowFile: gatsbyShadowFileResource,
-  Config: configResource,
   NPMPackage: npmPackageResource,
   NPMScript: npmPackageScriptResource,
   NPMPackageJson: npmPackageJsonResource,
