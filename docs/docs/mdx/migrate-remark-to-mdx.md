@@ -30,6 +30,23 @@ In your `gatsby-config.js` file, replace `gatsby-transformer-remark` with `gatsb
 +   gatsbyRemarkPlugins: [
 ```
 
+### Update file extensions
+
+Where your Markdown files live, changing their individual file extensions from `.md` to `.mdx` will pick them up with the new configuration.
+
+Alternatively, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by adding the `extensions` option in your gatsby-config entry.
+
+```js:title=gatsby-config.js
+  {
+    resolve: `gatsby-plugin-mdx`,
+    options: {
+      extensions: [`.md`, `.mdx`], // highlight-line
+    },
+  },
+```
+
+Now with this addition, `gatsby-plugin-mdx` will see files that end with both `.mdx` or `.md`.
+
 ## Update gatsby-node.js
 
 In the `createPages` API call, when you query for `allMarkdownRemark`, replace it with `allMdx`.
@@ -54,25 +71,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 -  if (node.internal.type === `MarkdownRemark`) {
 +  if (node.internal.type === `Mdx`) {
 ```
-
-## Update file extensions
-
-Where your Markdown files live, changing their individual file extensions from `.md` to `.mdx` will  pick them up with the new configuration. Or:
-
-Alternatively, you can tell `gatsby-plugin-mdx`...
-
-Also, you can tell `gatsby-plugin-mdx` to accept both `md` and `mdx` files by adding the `extensions` option in your gatsby-config entry.
-
-```js:title=gatsby-config.js
-  {
-    resolve: `gatsby-plugin-mdx`,
-    options: {
-      extensions: [`.md`, `.mdx`], // highlight-line
-    },
-  },
-```
-
-Now with this addition, `gatsby-plugin-mdx` will see files that end with both `.mdx` or `.md`.
 
 ## Update usage in pages
 
