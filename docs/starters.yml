@@ -6648,3 +6648,15 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-woo.surge.sh/
+  repo: https://github.com/desmukh/gatsby-starter-woo
+  description: Simple, clean and responsive landing page for your product or service. This is a GatsbyJS port of StyleShout's Woo template.
+  tags:
+    - Landing Page
+    - Onepage
+    - Portfolio
+  features:
+    - Ported from StyleShout Woo theme
+    - Fully responsive
+    - Includes React Helmet to allow editing site meta tags
+    - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
