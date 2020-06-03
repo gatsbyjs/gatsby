@@ -467,20 +467,28 @@ const applyFilters = (
   }
   lastFilterUsedSift = true
 
-  const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
-    filters,
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields
-  )
+  // const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
+  //   filters,
+  //   firstOnly,
+  //   nodeTypeNames,
+  //   resolvedFields
+  // )
+
+  // if (stats) {
+  //   if (!siftResult || siftResult.length === 0) {
+  //     stats.totalSiftHits++
+  //   }
+  // }
 
   if (stats) {
-    if (!siftResult || siftResult.length === 0) {
-      stats.totalSiftHits++
-    }
+    // to mean, "empty results"
+    stats.totalSiftHits++
   }
 
-  return siftResult
+  if (firstOnly) {
+    return []
+  }
+  return null
 }
 
 const filterToStats = (
@@ -512,6 +520,8 @@ const filterToStats = (
  * @returns {Array<IGatsbyNode> | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
+// TODO: we will drop this entirely when removing all Sift code
+// eslint-disable-next-line no-unused-vars
 const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
   let nodes /*: IGatsbyNode[]*/ = []
   nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
