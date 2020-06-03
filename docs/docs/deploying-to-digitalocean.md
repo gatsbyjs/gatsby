@@ -219,7 +219,7 @@ sudo apt install certbot python3-certbot-nginx
 Once installed, run Certbot:
 
 ```shell
-sudo cerbot --nginx
+sudo certbot --nginx
 ```
 
 When prompted for what domains you would like to enable HTTPS for, you can leave the prompt blank to select all domains and continue by pressing enter.
