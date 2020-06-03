@@ -1,12 +1,11 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const fs = require(`fs-extra`)
 const getpkgjson = require(`get-package-json-from-github`)
 const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
-const yaml = require(`js-yaml`)
-const ecosystemFeaturedItems = yaml.load(
-  fs.readFileSync(`./src/data/ecosystem/featured-items.yaml`)
+const { loadYaml } = require(`../load-yaml`)
+const { starters: featuredStarters } = loadYaml(
+  `src/data/ecosystem/featured-items.yaml`
 )
 const { getTemplate } = require(`../get-template`)
 
@@ -119,7 +118,7 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
     })
 
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
-  const { createNodeField } = actions
+  const { createNodeField, deleteNode } = actions
   if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
@@ -127,7 +126,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
     const { owner, name: repoStub } = parseGHUrl(node.repo)
 
     // mark if it's a featured starter
-    if (ecosystemFeaturedItems.starters.includes(`/${owner}/${repoStub}/`)) {
+    if (featuredStarters.includes(`/${owner}/${repoStub}/`)) {
       createNodeField({ node, name: `featured`, value: true })
     }
 
@@ -184,7 +183,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           const gatsbyMajorVersion = allDependencies
             .filter(([key]) => key === `gatsby`)
             .map(version => {
-              let [gatsby, versionNum] = version
+              const [gatsby, versionNum] = version
               if (versionNum === `latest` || versionNum === `next`) {
                 return [gatsby, `2`]
               }
@@ -220,10 +219,11 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           })
         })
         .catch(err => {
-          reporter.panicOnBuild(
+          reporter.warn(
             `Error getting repo data for starter "${repoStub}":\n
             ${err.message}`
           )
+          deleteNode(node)
         })
     }
   }

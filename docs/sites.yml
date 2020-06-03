@@ -1,3 +1,19 @@
+- title: MobileUI
+  main_url: https://mobileui.dev
+  url: https://mobileui.dev
+  description: >
+    A java-based framework for cross-platform app development with Java and Kotlin.
+  categories:
+    - Mobile Development
+    - Technology
+    - Programming
+    - Landing Page
+    - Blog
+    - WordPress
+    - E-commerce
+  built_by: NeverNull GmbH
+  built_by_url: https://nevernull.io
+  featured: false
 - title: ReactJS
   main_url: https://reactjs.org/
   url: https://reactjs.org/
@@ -10914,4 +10930,14 @@
     - Healthcare
   built_by: Joseph Race
   built_by_url: https://josephrace.co.uk
+- title: Nagarjun Palavalli
+  main_url: https://nagarjun.co/
+  url: https://nagarjun.co/
+  description: >
+    My personal website built with Gatsby. I am a full-stack web developer and designer based in Bangalore, India.
+  categories:
+    - Portfolio
+    - Blog
+  built_by: Nagarjun Palavalli
+  built_by_url: https://twitter.com/palavalli
   featured: false

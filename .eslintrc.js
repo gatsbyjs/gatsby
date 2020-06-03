@@ -113,7 +113,7 @@ module.exports = {
         // This rule tries to prevent using `require()`. However in node code,
         // there are times where this makes sense. And it specifically is causing
         // problems in our tests where we often want this functionality for module
-        // mocking. At this point it's easier to have it off and just encouarge
+        // mocking. At this point it's easier to have it off and just encourage
         // using top-level imports via code reviews.
         "@typescript-eslint/no-var-requires": "off",
         // This rule ensures that typescript types do not have semicolons
@@ -142,7 +142,7 @@ module.exports = {
         // This ensures that we always type the return type of functions
         // a high level focus of our TS setup is typing fn inputs and outputs.
         "@typescript-eslint/explicit-function-return-type": "error",
-        // This forces us to use interfaces over types aliases for object defintions.
+        // This forces us to use interfaces over types aliases for object definitions.
         // Type is still useful for opaque types
         // e.g.,
         // type UUID = string

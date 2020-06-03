@@ -2,7 +2,6 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
-import { createContentDigest } from "gatsby-core-utils"
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -53,7 +52,11 @@ export const prefetchPathname: (path: string) => void
  * export default (props: IndexProps) => {
  *   ..
  */
-export type PageProps<DataType = object, PageContextType = object, LocationState = WindowLocation["state"]> = {
+export type PageProps<
+  DataType = object,
+  PageContextType = object,
+  LocationState = WindowLocation["state"]
+> = {
   /** The path for this current page */
   path: string
   /** The URI for the current page */
@@ -912,21 +915,157 @@ export interface ParentSpanPluginArgs extends NodePluginArgs {
 }
 
 export interface NodePluginArgs {
+  /**
+   * Use to prefix resources URLs. `pathPrefix` will be either empty string or
+   * path that starts with slash and doesn't end with slash. Check
+   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/)
+   * page for details about path prefixing.
+   */
   pathPrefix: string
+
+  /**
+   * Collection of functions used to programmatically modify Gatsby’s internal state.
+   * @deprecated Will be removed in gatsby 3.0. Use `actions` instead
+   */
   boundActionCreators: Actions
+
+  /**
+   * Collection of functions used to programmatically modify Gatsby’s internal state.
+   */
   actions: Actions
-  loadNodeContent: Function
+
+  /**
+   * Get content for a node from the plugin that created it.
+   *
+   * @example
+   * module.exports = async function onCreateNode(
+   *   { node, loadNodeContent, actions, createNodeId }
+   * ) {
+   *   if (node.internal.mediaType === 'text/markdown') {
+   *     const { createNode, createParentChildLink } = actions
+   *     const textContent = await loadNodeContent(node)
+   *     // process textContent and create child nodes
+   *   }
+   * }
+   */
+  loadNodeContent(node: Node): Promise<string>
+
+  /**
+   * Internal redux state used for application state. Do not use, unless you
+   * absolutely must. Store is considered a private API and can change with
+   * any version.
+   */
   store: Store
+
+  /**
+   * Internal event emitter / listener.  Do not use, unless you absolutely
+   * must. Emitter is considered a private API and can change with any version.
+   */
   emitter: EventEmitter
-  getNodes: Function
-  getNode: Function
-  getNodesByType: Function
-  hasNodeChanged: Function
+
+  /**
+   * Get array of all nodes.
+   *
+   * @returns Array of nodes.
+   * @example
+   * const allNodes = getNodes()
+   */
+  getNodes(): Node[]
+
+  /**
+   * Get single node by given ID.
+   * Don't use this in graphql resolvers - see
+   * `getNodeAndSavePathDependency`
+   *
+   * @param id id of the node.
+   * @returns Single node instance.
+   * @example
+   * const node = getNode(id)
+   */
+  getNode(id: string): Node
+
+  /**
+   * Get array of nodes of given type.
+   * @param type Type of nodes
+   * @returns Array of nodes.
+   *
+   * @example
+   * const markdownNodes = getNodesByType(`MarkdownRemark`)
+   */
+  getNodesByType(type: string): Node[]
+
+  /**
+   * Compares `contentDigest` of cached node with passed value
+   * to determine if node has changed.
+   *
+   * @param id of node
+   * @param contentDigest of node
+   * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
+   */
+  hasNodeChanged(id: string, contentDigest: string): boolean
+
+  /**
+   * Set of utilities to output information to user
+   */
   reporter: Reporter
-  getNodeAndSavePathDependency: Function
-  cache: Cache["cache"]
-  createNodeId: Function
-  createContentDigest: typeof createContentDigest
+
+  /**
+   * Get single node by given ID and create dependency for given path.
+   * This should be used instead of `getNode` in graphql resolvers to enable
+   * tracking dependencies for query results. If it's not used Gatsby will
+   * not rerun query if node changes leading to stale query results. See
+   * [Page -> Node Dependency Tracking](/docs/page-node-dependencies/)
+   * for more details.
+   * @param id id of the node.
+   * @param path of the node.
+   * @returns Single node instance.
+   */
+  getNodeAndSavePathDependency(id: string, path: string): Node
+
+  /**
+   * Key-value store used to persist results of time/memory/cpu intensive
+   * tasks. All functions are async and return promises.
+   */
+  cache: GatsbyCache
+
+  /**
+   * Utility function useful to generate globally unique and stable node IDs.
+   * It will generate different IDs for different plugins if they use same
+   * input.
+   *
+   * @returns UUIDv5 ID string
+   * @example
+   * const node = {
+   *   id: createNodeId(`${backendData.type}${backendData.id}`),
+   *   ...restOfNodeData
+   * }
+   */
+  createNodeId(input: string): string
+
+  /**
+   * Create a stable content digest from a string or object, you can use the
+   * result of this function to set the `internal.contentDigest` field
+   * on nodes. Gatsby uses the value of this field to invalidate stale data
+   * when your content changes.
+   * @param input
+   * @returns Hash string
+   * @example
+   * const node = {
+   *   ...nodeData,
+   *   internal: {
+   *     type: `TypeOfNode`,
+   *     contentDigest: createContentDigest(nodeData)
+   *   }
+   * }
+   */
+  createContentDigest(input: string | object): string
+
+  /**
+   * Set of utilities that allow adding more detailed tracing for plugins.
+   * Check
+   * [Performance tracing](https://www.gatsbyjs.org/docs/performance-tracing)
+   * page for more details.
+   */
   tracing: Tracing
   schema: NodePluginSchema
   [key: string]: unknown
@@ -1168,6 +1307,9 @@ export interface Reporter {
   ): ProgressActivityTracker
 }
 
+/**
+ * @deprecated Use `GatsbyCache` instead
+ */
 export interface Cache {
   name: string
   store: {
@@ -1183,6 +1325,27 @@ export interface Cache {
     del: Function
     reset: Function
   }
+}
+
+export interface GatsbyCache {
+  /**
+   * Retrieve cached value
+   * @param key Cache key
+   * @returns Promise resolving to cached value
+   * @example
+   * const value = await cache.get(`unique-key`)
+   */
+  get(key: string): Promise<any>
+
+  /**
+   * Cache value
+   * @param key Cache key
+   * @param value Value to be cached
+   * @returns Promise resolving to cached value
+   * @example
+   * await cache.set(`unique-key`, value)
+   */
+  set(key: string, value: any): Promise<any>
 }
 
 export interface Tracing {

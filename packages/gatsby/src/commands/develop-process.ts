@@ -65,6 +65,11 @@ import {
 } from "../utils/feedback"
 
 import { Stage, IProgram } from "./types"
+import {
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+} from "../services"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -109,7 +114,7 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-async function startServer(program: IDevelopArgs): Promise<IServer> {
+async function startServer(program: IProgram): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
@@ -377,11 +382,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-interface IDevelopArgs extends IProgram {
-  graphqlTracing: boolean
-}
-
-module.exports = async (program: IDevelopArgs): Promise<void> => {
+module.exports = async (program: IProgram): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -462,9 +463,10 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
 
-  await queryUtil.initialProcessQueries({
-    graphqlTracing: program.graphqlTracing,
-  })
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  await runStaticQueries({ queryIds, store, program })
+  await runPageQueries({ queryIds, store, program })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
