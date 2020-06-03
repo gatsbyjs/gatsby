@@ -149,7 +149,7 @@ exports.sourceNodes = async (
   )
 
   // Store a raw and unresolved copy of the data for caching
-  const currentSyncDataRaw = { ...currentSyncData }
+  const currentSyncDataRaw = _.cloneDeep(currentSyncData)
 
   // Use the JS-SDK to resolve the entries and assets
   const res = client.parseEntries({
@@ -172,17 +172,13 @@ exports.sourceNodes = async (
   // are "updated" so will get the now deleted reference removed.
 
   function deleteContentfulNode(node) {
-    const normalizedType = node.sys.type.startsWith(`Deleted`)
-      ? node.sys.type.substring(`Deleted`.length)
-      : node.sys.type
-
     const localizedNodes = locales
       .map(locale => {
         const nodeId = createNodeId(
           normalize.makeId({
             spaceId: space.sys.id,
             id: node.sys.id,
-            type: normalizedType,
+            type: node.sys.type,
             currentLocale: locale.code,
             defaultLocale,
           })
