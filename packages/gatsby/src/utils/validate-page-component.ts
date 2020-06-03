@@ -2,7 +2,7 @@ import path from "path"
 import fs from "fs-extra"
 import { IGatsbyPage } from "../redux/types"
 
-const validationCache = new Map<string, boolean>()
+const validationCache = new Set<string>()
 
 interface IErrorMeta {
   id: string
@@ -96,7 +96,7 @@ export function validatePageComponent(
     }
   }
 
-  validationCache.set(component, true)
+  validationCache.add(component)
   return {}
 }
 
