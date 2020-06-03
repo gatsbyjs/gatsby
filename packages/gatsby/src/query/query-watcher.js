@@ -164,7 +164,7 @@ const clearInactiveComponents = () => {
 
   const activeTemplates = new Set()
   pages.forEach(page => {
-    // Set will guarantee uniqeness of entires
+    // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.component))
   })
 

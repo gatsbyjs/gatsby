@@ -6,15 +6,23 @@ export async function runPageQueries({
   parentSpan,
   queryIds,
   store,
-}: Partial<IBuildContext>): Promise<object> {
-  let results = new Map()
-  if (!queryIds || !store) {
-    return { results: [] }
+  program,
+  graphqlRunner,
+}: Partial<IBuildContext>): Promise<{ results?: Map<string, unknown> }> {
+  if (!store) {
+    reporter.panic(`Cannot run service without a redux store`)
+  }
+  if (!queryIds) {
+    return {}
   }
   const { pageQueryIds } = queryIds
   const state = store.getState()
   const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
     .length
+
+  if (!pageQueryIdsCount) {
+    return {}
+  }
 
   const activity = reporter.createProgress(
     `run page queries`,
@@ -26,10 +34,13 @@ export async function runPageQueries({
     }
   )
 
-  if (pageQueryIdsCount) {
-    activity.start()
-    results = await processPageQueries(pageQueryIds, { state, activity })
-  }
+  activity.start()
+  const results = await processPageQueries(pageQueryIds, {
+    state,
+    activity,
+    graphqlRunner,
+    graphqlTracing: program?.graphqlTracing,
+  })
 
   activity.done()
   return { results }

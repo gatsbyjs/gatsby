@@ -97,6 +97,9 @@ const popNodeQueries = state => {
 
     return dirtyIds
   }, new Set())
+
+  boundActionCreators.deleteComponentsDependencies([...uniqDirties])
+
   queuedDirtyActions = []
   return uniqDirties
 }
@@ -236,58 +239,6 @@ const processPageQueries = async (
   )
 }
 
-const getInitialQueryProcessors = ({
-  parentSpan,
-  graphqlRunner,
-  graphqlTracing,
-} = {}) => {
-  const state = store.getState()
-  const queryIds = calcInitialDirtyQueryIds(state)
-  const { staticQueryIds, pageQueryIds } = groupQueryIds(queryIds)
-
-  const queryjobsCount =
-    pageQueryIds.filter(id => state.pages.has(id)).length +
-    staticQueryIds.length
-
-  let activity
-
-  const actuallyProcessStaticQueries = async () => {
-    activity = createQueryRunningActivity(queryjobsCount, parentSpan)
-
-    await processStaticQueries(staticQueryIds, {
-      state,
-      activity,
-      graphqlTracing,
-    })
-  }
-
-  const actuallyProcessPageQueries = async () => {
-    await processPageQueries(pageQueryIds, { state, activity, graphqlTracing })
-
-    activity.done()
-  }
-
-  return {
-    processStaticQueries: actuallyProcessStaticQueries,
-    processPageQueries: actuallyProcessPageQueries,
-    pageQueryIds,
-    activity,
-  }
-}
-
-const initialProcessQueries = async ({ parentSpan, graphqlTracing } = {}) => {
-  const {
-    pageQueryIds,
-    processPageQueries,
-    processStaticQueries,
-  } = getInitialQueryProcessors({ parentSpan, graphqlTracing })
-
-  await processStaticQueries()
-  await processPageQueries()
-
-  return { pageQueryIds }
-}
-
 const createPageQueryJob = (state, page) => {
   const component = state.components.get(page.componentPath)
   const { path, componentPath, context } = page
@@ -414,8 +365,6 @@ module.exports = {
   processPageQueries,
   processStaticQueries,
   groupQueryIds,
-  initialProcessQueries,
-  getInitialQueryProcessors,
   startListeningToDevelopQueue,
   runQueuedQueries,
   enqueueExtractedQueryId,

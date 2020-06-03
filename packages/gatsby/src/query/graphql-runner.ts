@@ -1,5 +1,4 @@
 import crypto from "crypto"
-import v8 from "v8"
 import { Span } from "opentracing"
 import {
   parse,
@@ -156,13 +155,6 @@ export class GraphQLRunner {
       if (typeof statsQuery !== `string`) {
         statsQuery = statsQuery.body
       }
-      this.stats.uniqueOperations.add(
-        crypto
-          .createHash(`sha1`)
-          .update(statsQuery)
-          .update(v8.serialize(context))
-          .digest(`hex`)
-      )
 
       this.stats.uniqueQueries.add(
         crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)

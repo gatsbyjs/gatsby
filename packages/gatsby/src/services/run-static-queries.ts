@@ -6,12 +6,20 @@ export async function runStaticQueries({
   parentSpan,
   queryIds,
   store,
-}: Partial<IBuildContext>): Promise<object> {
-  let results = new Map()
-  if (!queryIds || !store) {
-    return { results: [] }
+  program,
+  graphqlRunner,
+}: Partial<IBuildContext>): Promise<{ results?: Map<string, unknown> }> {
+  if (!store) {
+    reporter.panic(`Cannot run service without a redux store`)
+  }
+  if (!queryIds) {
+    return {}
   }
   const { staticQueryIds } = queryIds
+  if (!staticQueryIds.length) {
+    return {}
+  }
+
   const state = store.getState()
   const activity = reporter.createProgress(
     `run static queries`,
@@ -23,14 +31,15 @@ export async function runStaticQueries({
     }
   )
 
-  if (staticQueryIds.length) {
-    activity.start()
-    results = await processStaticQueries(staticQueryIds, {
-      state,
-      activity,
-    })
-  }
+  activity.start()
+  const results = await processStaticQueries(staticQueryIds, {
+    state,
+    activity,
+    graphqlRunner,
+    graphqlTracing: program?.graphqlTracing,
+  })
 
   activity.done()
+
   return { results }
 }
