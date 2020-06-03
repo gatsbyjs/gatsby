@@ -9,7 +9,6 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-  GraphQLJSON,
   GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
@@ -547,14 +546,11 @@ exports.extendNodeType = ({ type, store }) => {
     return {
       nodeType: {
         type: GraphQLString,
-        deprecationReason: `This field is deprecated, please use 'json' instead.`,
+        deprecationReason: `This field is deprecated, please use 'raw' instead. @todo add link to migration steps.`,
       },
       json: {
-        type: GraphQLJSON,
-        resolve: (source, fieldArgs) => {
-          const contentJSON = JSON.parse(source.internal.content)
-          return contentJSON
-        },
+        type: GraphQLString,
+        deprecationReason: `This field is deprecated, please use 'raw' instead. @todo add link to migration steps.`,
       },
     }
   }
