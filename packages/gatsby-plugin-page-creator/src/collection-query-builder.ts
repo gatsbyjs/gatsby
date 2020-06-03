@@ -2,13 +2,13 @@
 //   `/Users/site/src/pages/foo/{id}/{baz__bar}`
 // to
 //   `id,baz{bar}`
-export function queryPartsFromPath(absolutePath) {
+export function queryPartsFromPath(absolutePath: string): string {
   const parts = absolutePath.split(`/`)
 
   return parts
-    .reduce((queryParts, filePathPart) => {
+    .reduce<string[]>((queryParts, filePathPart) => {
       if (filePathPart.startsWith(`{`) && filePathPart.includes(`}`)) {
-        let strippedPart = filePathPart
+        const strippedPart = filePathPart
           .replace(`{`, ``)
           .replace(`}`, ``)
           .replace(/\..+/, ``)
@@ -32,7 +32,7 @@ export function queryPartsFromPath(absolutePath) {
 //   allProduct
 //   allProduct(filter: thing)
 // End result should be something like { allProducts { nodes { id }}}
-export function generateQueryFromString(str, fields) {
+export function generateQueryFromString(str: string, fields: string): string {
   const needsAllPrefix = str.startsWith(`all`) === false
 
   return `{${needsAllPrefix ? `all` : ``}${str}{nodes{${fields}}}}`
