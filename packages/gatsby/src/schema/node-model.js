@@ -64,7 +64,25 @@ class LocalNodeModel {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.nodeStore = nodeStore
-    this.createPageDependency = createPageDependency
+    this.createPageDependency = createPageDependencyArgs => {
+      if (createPageDependencyArgs.connection) {
+        const nodeTypeNames = toNodeTypeNames(
+          this.schema,
+          createPageDependencyArgs.connection
+        )
+        if (nodeTypeNames) {
+          nodeTypeNames.forEach(typeName => {
+            createPageDependency({
+              ...createPageDependencyArgs,
+              connection: typeName,
+            })
+          })
+          return
+        }
+      }
+
+      createPageDependency(createPageDependencyArgs)
+    }
 
     this._rootNodeMap = new WeakMap()
     this._trackedRootNodes = new Set()
