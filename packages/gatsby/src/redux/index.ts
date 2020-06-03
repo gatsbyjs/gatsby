@@ -27,8 +27,9 @@ export const readState = (): IGatsbyState => {
         if (!state.nodesByType.has(type)) {
           state.nodesByType.set(type, new Map())
         }
-        // eslint-disable-next-line no-unused-expressions
-        state.nodesByType.get(type)?.set(node.id, node)
+        // The `.has` and `.set` calls above make this safe
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        state.nodesByType.get(type)!.set(node.id, node)
       })
     }
 
