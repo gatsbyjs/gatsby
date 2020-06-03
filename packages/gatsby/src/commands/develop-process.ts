@@ -350,11 +350,8 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
 
   /**
    * Set up the HTTP server and socket.io.
-   * If a SSL cert exists in program, use it with `createServer`.
    **/
-  const server = program.ssl
-    ? https.createServer(program.ssl, app)
-    : new http.Server(app)
+  const server = new http.Server(app)
 
   const socket = websocketManager.init({ server, directory: program.directory })
 
@@ -407,14 +404,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
-  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
-  // used together
-  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
-    report.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
-    )
-  }
 
   try {
     program.port = await detectPortInUseAndPrompt(port)
@@ -649,7 +638,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
     const urls = prepareUrls(
-      program.ssl ? `https` : `http`,
+      program.https ? `https` : `http`,
       program.host,
       program.proxyPort
     )
