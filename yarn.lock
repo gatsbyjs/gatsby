@@ -13074,6 +13074,15 @@ gatsby-interface@0.0.167:
     lodash.sample "^4.2.1"
     theme-ui "^0.2.49"
 
+gatsby-link@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-2.4.4.tgz#5887e45f839bba82dfa138b18ed2ce2ec0bcaf9f"
+  integrity sha512-saWuA7jmN+p0qrZ9kyWVdvWBBM0Dd1X5PvnEUgZ1pa2jpymbJaDnxYOzTBJr9PCmV9IeMA1z5sqxKkMcPp4LGw==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@types/reach__router" "^1.3.3"
+    prop-types "^15.7.2"
+
 gatsby-node-helpers@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/gatsby-node-helpers/-/gatsby-node-helpers-0.3.0.tgz#3bdca3b7902a702a5834fef280ad66d51099d57c"

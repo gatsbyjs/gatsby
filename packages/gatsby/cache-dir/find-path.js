@@ -1,4 +1,4 @@
-import { match } from "@reach/router/lib/utils"
+import { pick } from "@reach/router/lib/utils"
 import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
 
@@ -54,10 +54,17 @@ export const setMatchPaths = value => {
 export const findMatchPath = rawPathname => {
   const trimmedPathname = cleanPath(rawPathname)
 
-  for (const { matchPath, path } of matchPaths) {
-    if (match(matchPath, trimmedPathname)) {
-      return normalizePagePath(path)
+  const pickPaths = matchPaths.map(({ path, matchPath }) => {
+    return {
+      path: matchPath,
+      originalPath: path,
     }
+  })
+
+  const path = pick(pickPaths, trimmedPathname)
+
+  if (path) {
+    return normalizePagePath(path.route.originalPath)
   }
 
   return null

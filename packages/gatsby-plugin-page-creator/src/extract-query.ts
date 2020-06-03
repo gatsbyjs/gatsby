@@ -11,6 +11,7 @@ export function generateQueryFromString(
 ): string {
   const needsAllPrefix = queryStringParent.startsWith(`all`) === false
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
+  console.log(fields)
 
   return `{${
     needsAllPrefix ? `all` : ``
@@ -27,7 +28,7 @@ export function reverseLookupParams(
   const reversedParams = {}
 
   absolutePath.split(`/`).forEach(part => {
-    const regex = /^\[([a-zA-Z_]+)\]/.exec(part)
+    const regex = /^\{([a-zA-Z_]+)\}/.exec(part)
 
     if (regex === null) return
     const extracted = regex[1]
@@ -40,17 +41,17 @@ export function reverseLookupParams(
 }
 
 // Changes something like
-//   `/Users/site/src/pages/foo/[id]/[baz]`
+//   `/Users/site/src/pages/foo/{id}/{baz}`
 // to
 //   `id,baz`
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(`/`)
   return parts
     .reduce((queryParts, part) => {
-      if (part.startsWith(`[`)) {
+      if (part.startsWith(`{`)) {
         return queryParts.concat(
           deriveNesting(
-            part.replace(`[`, ``).replace(`]`, ``).replace(`.js`, ``)
+            part.replace(`{`, ``).replace(`}`, ``).replace(`.js`, ``)
           )
         )
       }

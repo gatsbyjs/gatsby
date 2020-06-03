@@ -10,12 +10,12 @@ const traverse = require(`@babel/traverse`).default
 const t = require(`@babel/types`)
 
 // Changes something like
-//   `/Users/site/src/pages/foo/[id]/`
+//   `/Users/site/src/pages/foo/{id}/`
 // to
 //   `/foo/:id`
 function translateInterpolationToMatchPath(createdPath) {
   const [, path] = createdPath.split(`src/pages`)
-  return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
+  return path.replace(`{`, `:`).replace(`}`, ``).replace(/\/$/, ``)
 }
 
 function isCreatePagesFromData(path) {
@@ -58,7 +58,7 @@ exports.createPagesFromCollectionBuilder = async function createPagesFromCollect
     },
   })
 
-  console.debug({ queryString })
+  console.log({ queryString })
   const { data, error } = await graphql(queryString)
 
   if (!data || error) {

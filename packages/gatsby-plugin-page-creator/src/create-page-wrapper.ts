@@ -1,4 +1,5 @@
 import { Actions } from "gatsby"
+import { graphql as originalGraphql } from "graphql"
 import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
 import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
@@ -12,7 +13,7 @@ function pathIsCCollectionBuilder(path: string): boolean {
 }
 
 function pathIsClientOnlyRoute(path: string): boolean {
-  return /\[.*\]/.test(path)
+  return path.includes(`[`)
 }
 
 export function createPage(
@@ -20,7 +21,7 @@ export function createPage(
   pagesDirectory: string,
   actions: Actions,
   ignore: string[],
-  graphql: any
+  graphql: typeof originalGraphql
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.

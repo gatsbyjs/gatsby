@@ -1,5 +1,5 @@
 // Changes something like
-//   `/Users/site/src/pages/foo/[id]/[baz__bar]`
+//   `/Users/site/src/pages/foo/{id}/{baz__bar}`
 // to
 //   `id,baz{bar}`
 export function queryPartsFromPath(absolutePath) {
@@ -7,10 +7,10 @@ export function queryPartsFromPath(absolutePath) {
 
   return parts
     .reduce((queryParts, filePathPart) => {
-      if (filePathPart.startsWith(`[`) && filePathPart.includes(`]`)) {
+      if (filePathPart.startsWith(`{`) && filePathPart.includes(`}`)) {
         let strippedPart = filePathPart
-          .replace(`[`, ``)
-          .replace(`]`, ``)
+          .replace(`{`, ``)
+          .replace(`}`, ``)
           .replace(/\..+/, ``)
 
         queryParts.push(

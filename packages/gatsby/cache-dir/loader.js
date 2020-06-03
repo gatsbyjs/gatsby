@@ -223,6 +223,7 @@ export class BaseLoader {
             })
           }
           this.pageDb.set(pagePath, finalResult)
+          console.log(pageResources)
           // undefined if final result is an error
           return pageResources
         })

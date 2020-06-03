@@ -7,10 +7,17 @@ import { createPath } from "gatsby-page-utils"
 //   `/foo/:id`
 function translateInterpolationToMatchPath(createdPath: string): string {
   const [, path] = createdPath.split(`src/pages`)
-  return path.replace(`[`, `:`).replace(`]`, ``).replace(/\/$/, ``)
+  return path
+    .replace(`[...`, `*`)
+    .replace(`[`, `:`)
+    .replace(`]`, ``)
+    .replace(/\/$/, ``)
 }
 
-export function createClientOnlyPage(absolutePath: string, actions: Actions) {
+export function createClientOnlyPage(
+  absolutePath: string,
+  actions: Actions
+): void {
   // Create page object
   const createdPath = createPath(absolutePath)
   const matchPath = translateInterpolationToMatchPath(createdPath)

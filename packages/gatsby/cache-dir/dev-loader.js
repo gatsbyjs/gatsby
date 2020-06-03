@@ -19,6 +19,7 @@ class DevLoader extends BaseLoader {
 
   loadPageDataJson(rawPath) {
     return super.loadPageDataJson(rawPath).then(data => {
+      console.log({ data })
       // when we can't find a proper 404.html we fallback to dev-404-page
       // we need to make sure to mark it as not found.
       if (
