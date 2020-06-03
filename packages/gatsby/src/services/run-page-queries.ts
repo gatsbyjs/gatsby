@@ -9,7 +9,10 @@ export async function runPageQueries({
   program,
   graphqlRunner,
 }: Partial<IBuildContext>): Promise<void> {
-  if (!queryIds || !store) {
+  if (!store) {
+    reporter.panic(`Cannot run service without a redux store`)
+  }
+  if (!queryIds) {
     return
   }
   const { pageQueryIds } = queryIds
