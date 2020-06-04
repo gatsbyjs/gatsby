@@ -162,8 +162,8 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            require.resolve(`event-source-polyfill`),
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=${getHmrPath()}`,
@@ -180,6 +180,7 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           app: directoryPath(`.cache/production-app`),
         }
       default:
