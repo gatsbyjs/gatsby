@@ -10949,7 +10949,7 @@
  - title: Earner
  url: https://www.earner.ai/
  main_url: https://www.earner.ai/
- source_url: (optional - https://github.com/Earner-ai/earner-website
+ source_url: https://github.com/Earner-ai/earner-website
  description: >
    Earner is here to keep you informed of services you are entitled to from the Finnish government to entrepreneurship. We are here to help you succeed.
  categories:
