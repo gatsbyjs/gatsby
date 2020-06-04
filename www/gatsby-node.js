@@ -1,11 +1,10 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
-const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
-const yaml = require(`js-yaml`)
-const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-const { i18nEnabled } = require(`./src/utils/i18n`)
+
+const { loadYaml } = require(`./src/utils/load-yaml`)
+const redirects = loadYaml(`./redirects.yaml`)
 
 const docs = require(`./src/utils/node/docs.js`)
 const blog = require(`./src/utils/node/blog.js`)
@@ -41,13 +40,6 @@ exports.onCreateNode = helpers => {
   sections.forEach(section => section.onCreateNode(helpers))
 }
 
-exports.onPostBootstrap = () => {
-  // Compile language strings if locales are enabled
-  if (i18nEnabled) {
-    child_process.execSync(`yarn lingui:build`)
-  }
-}
-
 exports.onPostBuild = () => {
   fs.copySync(
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
@@ -59,7 +51,6 @@ exports.onPostBuild = () => {
 exports.sourceNodes = async ({
   actions: { createTypes, createNode },
   createContentDigest,
-  schema,
 }) => {
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in

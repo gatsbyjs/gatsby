@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
@@ -41,8 +39,7 @@ export function useSidebarContext() {
   return React.useContext(SidebarContext)
 }
 
-export default withI18n()(function Sidebar({
-  i18n,
+export default function Sidebar({
   title,
   closeSidebar,
   itemList,
@@ -101,28 +98,29 @@ export default withI18n()(function Sidebar({
   }
 
   const getItemState = React.useCallback(
-    item => ({
-      isExpanded: openSectionHash[item.title] || disableAccordions,
-      isActive: item.title === activeItem.title,
-      inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
-    }),
+    item => {
+      return {
+        isExpanded: openSectionHash[item.title] || disableAccordions,
+        isActive: item.title === activeItem.title,
+        inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
+      }
+    },
     [openSectionHash, disableAccordions, activeItem, activeItemParents]
   )
 
-  const context = React.useMemo(
-    () => ({
+  const context = React.useMemo(() => {
+    return {
       getItemState,
       disableAccordions,
       onLinkClick: closeSidebar,
       onSectionTitleClick: toggleSection,
-    }),
-    [getItemState, disableAccordions, closeSidebar, toggleSection]
-  )
+    }
+  }, [getItemState, disableAccordions, closeSidebar, toggleSection])
 
   return (
     <SidebarContext.Provider value={context}>
       <section
-        aria-label={i18n._(t`Secondary Navigation`)}
+        aria-label="Secondary Navigation"
         id="SecondaryNavigation"
         className="docSearch-sidebar"
         sx={{ height: `100%` }}
@@ -205,4 +203,4 @@ export default withI18n()(function Sidebar({
       </section>
     </SidebarContext.Provider>
   )
-})
+}

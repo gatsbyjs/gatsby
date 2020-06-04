@@ -17,11 +17,11 @@ const docSlugFromPath = parsedFilePath => {
  */
 function getMdxContentSlug(node, parent) {
   // Only work on markdown nodes
-  if (![`MarkdownRemark`, `Mdx`].includes(node.internal.type)) return
+  if (![`MarkdownRemark`, `Mdx`].includes(node.internal.type)) return null
   // Make sure the parent is a file node
-  if (parent.internal.type !== "File") return
+  if (parent.internal.type !== `File`) return null
   // Make sure that we're sourcing from the content directory
-  if (parent.sourceInstanceName !== `docs`) return
+  if (parent.sourceInstanceName !== `docs`) return null
 
   const parsedFilePath = path.parse(parent.relativePath)
   return docSlugFromPath(parsedFilePath)

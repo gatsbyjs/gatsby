@@ -12,6 +12,7 @@ export interface IProgram {
   open: boolean
   openTracingConfigFile: string
   port: number
+  proxyPort: number
   host: string
   report: Reporter
   [`cert-file`]?: string
@@ -20,6 +21,7 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+  graphqlTracing?: boolean
 }
 
 // @deprecated

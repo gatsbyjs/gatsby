@@ -279,7 +279,7 @@ const ShowcaseDetails = ({ location, site, isModal, categories }) => {
               },
             }}
           >
-            <h1 sx={{ m: 0 }}>{site.title}</h1>
+            <h1 sx={{ m: 0, color: `inherit` }}>{site.title}</h1>
             <a href={site.main_url} sx={styles.link}>
               {cleanUrl(site.main_url)}
             </a>

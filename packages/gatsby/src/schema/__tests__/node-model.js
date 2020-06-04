@@ -286,7 +286,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
+      // { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`runQuery [${desc}]`, () => {
         it(`returns first result only`, async () => {
@@ -502,6 +502,50 @@ describe(`NodeModel`, () => {
         expect(result.id).toBe(`file1`)
       })
     })
+
+    describe(`createPageDependency`, () => {
+      it(`it calls upstream createPageDependency for single nodes`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          nodeId: `person2`,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person2`,
+        })
+      })
+
+      it(`it calls upstream createPageDependency for connections of concrete types`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          connection: `Author`,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Author`,
+        })
+      })
+
+      it(`it calls upstream createPageDependency with concrete types for node interface connections`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          connection: `TeamMember`,
+        })
+
+        // TeamMember is interface with Author and Contributor types implementing it
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Author`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Contributor`,
+        })
+      })
+    })
   })
 
   describe(`prepare nodes caching`, () => {
@@ -578,7 +622,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
+      // { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       it(`[${desc}] should not resolve prepared nodes more than once`, async () => {
         nodeModel.replaceFiltersCache(createFiltersCache())
@@ -791,7 +835,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift
-      { desc: `no cache`, cb: () => null }, // Requires sift
+      // { desc: `no cache`, cb: () => null }, // Requires sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`[${desc}] Tracks nodes returned by queries`, () => {
         it(`Tracks objects when running query without filter`, async () => {
