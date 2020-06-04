@@ -378,6 +378,35 @@ export const createWebpackUtils = (
         }`,
       }
 
+      // TODO REMOVE IN V3
+      // a list of vendors we know we shouldn't polyfill (we should have set core-js to entry but we didn't so we have to do this)
+      const VENDORS_TO_NOT_POLYFILL = [
+        `@babel[\\\\/]runtime`,
+        `@mikaelkristiansson[\\\\/]domready`,
+        `@reach[\\\\/]router`,
+        `babel-preset-gatsby`,
+        `core-js`,
+        `dom-helpers`,
+        `gatsby-legacy-polyfills`,
+        `gatsby-link`,
+        `gatsby-react-router-scroll`,
+        `invariant`,
+        `lodash`,
+        `mitt`,
+        `prop-types`,
+        `react-dom`,
+        `react`,
+        `scheduler`,
+        `scroll-behavior`,
+        `shallow-compare`,
+        `warning`,
+        `webpack`,
+      ]
+      const doNotPolyfillRegex = new RegExp(
+        `[\\\\/]node_modules[\\\\/](${VENDORS_TO_NOT_POLYFILL.join(
+          `|`
+        )})[\\\\/]`
+      )
       return {
         test: /\.(js|mjs)$/,
         exclude: (modulePath: string): boolean => {
