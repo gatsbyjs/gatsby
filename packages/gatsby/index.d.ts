@@ -11,9 +11,6 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
-import { PluginRef } from "./src/bootstrap/load-plugins/types"
-import { IGatsbyState } from "./src/redux/types"
-import { Store as ReduxStore } from "redux"
 
 export {
   default as Link,
@@ -1516,4 +1513,18 @@ export interface Page<TContext = Record<string, unknown>> {
   matchPath?: string
   component: string
   context: TContext
+}
+
+export interface IPluginRefObject {
+  resolve: string
+  options?: IPluginRefOptions
+  parentDir?: string
+}
+
+export type PluginRef = string | IPluginRefObject
+
+export interface IPluginRefOptions {
+  plugins?: PluginRef[]
+  path?: string
+  [option: string]: unknown
 }
