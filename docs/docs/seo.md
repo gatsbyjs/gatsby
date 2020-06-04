@@ -52,19 +52,21 @@ For example, here is a structured data snippet (added with `react-helmet`) in th
 
 ```html
 <Helmet>
-  <script type="application/ld+json">{`
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "url": "https://www.spookytech.com",
-      "name": "Spooky technologies",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+5-601-785-8543",
-        "contactType": "Customer Support"
-      }
-    }
-  `}</script>
+  <script type="application/ld+json">
+    {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://www.spookytech.com",
+          "name": "Spooky technologies",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+5-601-785-8543",
+            "contactType": "Customer Support"
+          }
+        }
+      `}
+  </script>
 </Helmet>
 ```
 
