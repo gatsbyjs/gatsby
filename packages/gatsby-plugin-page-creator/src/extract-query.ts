@@ -11,7 +11,6 @@ export function generateQueryFromString(
 ): string {
   const needsAllPrefix = queryStringParent.startsWith(`all`) === false
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
-  console.log(fields)
 
   return `{${
     needsAllPrefix ? `all` : ``
@@ -22,7 +21,7 @@ export function generateQueryFromString(
 // translates the object into `{ fields__value: 'foo' }`. This is necassary to pass the value
 // into a query function for each individual page.
 export function reverseLookupParams(
-  queryResults: string,
+  queryResults: Record<string, unknown>,
   absolutePath: string
 ): Record<string, string> {
   const reversedParams = {}
@@ -47,7 +46,7 @@ export function reverseLookupParams(
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(`/`)
   return parts
-    .reduce((queryParts, part) => {
+    .reduce<string[]>((queryParts: string[], part: string): string[] => {
       if (part.startsWith(`{`)) {
         return queryParts.concat(
           deriveNesting(
@@ -61,12 +60,14 @@ function extractUrlParamsForQuery(createdPath: string): string {
     .join(`,`)
 }
 
+// pulls out nesting from file names with the special __ syntax
+// src/pages/{fields__baz}.js => `fields{baz}`
 function deriveNesting(part: string): string {
   if (part.includes(`__`)) {
     return part
       .split(`__`)
       .reverse()
-      .reduce((path, part) => {
+      .reduce((path: string, part: string): string => {
         if (path) {
           return `${part}{${path}}`
         }
