@@ -286,7 +286,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
+      // { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`runQuery [${desc}]`, () => {
         it(`returns first result only`, async () => {
@@ -622,7 +622,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-      { desc: `no cache`, cb: () => null }, // Always goes through sift
+      // { desc: `no cache`, cb: () => null }, // Always goes through sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       it(`[${desc}] should not resolve prepared nodes more than once`, async () => {
         nodeModel.replaceFiltersCache(createFiltersCache())
@@ -835,7 +835,7 @@ describe(`NodeModel`, () => {
     })
     ;[
       { desc: `with cache`, cb: () => new Map() }, // Avoids sift
-      { desc: `no cache`, cb: () => null }, // Requires sift
+      // { desc: `no cache`, cb: () => null }, // Requires sift
     ].forEach(({ desc, cb: createFiltersCache }) => {
       describe(`[${desc}] Tracks nodes returned by queries`, () => {
         it(`Tracks objects when running query without filter`, async () => {
