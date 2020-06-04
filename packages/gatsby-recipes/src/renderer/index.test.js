@@ -1,4 +1,5 @@
 const render = require(`.`)
+const { parse } = require(`../parser`)
 
 const mdxFixture = `
 # Hello, world!
@@ -10,7 +11,9 @@ const mdxFixture = `
 
 describe(`renderer`, () => {
   test(`handles MDX as input`, async () => {
-    const result = await render(mdxFixture)
+    const fullMdx = await parse(mdxFixture)
+    console.log({ fullMdx })
+    const result = await render(fullMdx)
 
     // Gatsby latest version is ever changing so we use regex matcher for currentState property.
     // Unfortunately jest property matchers work weirdly on arrays so instead
@@ -87,6 +90,45 @@ describe(`renderer`, () => {
           "resourceDefinitions": Object {
             "content": "hi",
             "path": "hi.md",
+          },
+          "resourceName": "File",
+        },
+      ]
+    `)
+  })
+
+  test(`handles exports and allows them to be used as local variables`, async () => {
+    const { stepsAsMdx } = await parse(`
+# Hello, world!
+
+---
+
+export const myVar = 'hi.mdx'
+
+<File path={myVar} content="hello" />
+    `)
+
+    const parsedMdx = stepsAsMdx.join(`\n`)
+    const result = await render(parsedMdx)
+
+    expect(result).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "_stepMetadata": Object {
+            "step": "1",
+            "totalSteps": "1",
+          },
+          "_uuid": "27c4642c-7d64-44c1-98f0-f5853a45ec79",
+          "currentState": "",
+          "describe": "Write hi.mdx",
+          "diff": "- Original  - 0
+      + Modified  + 1
+
+      + hello",
+          "newState": "hello",
+          "resourceDefinitions": Object {
+            "content": "hello",
+            "path": "hi.mdx",
           },
           "resourceName": "File",
         },

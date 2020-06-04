@@ -38,9 +38,22 @@ const reconciler = ReactReconciler({
     return { text }
   },
   appendChildToContainer(container, child) {
-    debug(`appending child to container`, { container, child })
     container.children = container.children || []
-    const index = container.children.findIndex(c => c.key === child.key)
+    const propName = child.key ? `key` : `_uuid`
+    const index = container.children.findIndex(
+      c => c[propName] === child[propName]
+    )
+
+    console.log(container._context)
+    console.log(child._context)
+    console.log(
+      require(`util`).inspect({ child: child.children[0].props, container })
+    )
+
+    debug(
+      `appending child to container at index ${index}`,
+      JSON.stringify({ container, child }, null, 2)
+    )
 
     if (index === -1) {
       container.children.push(child)

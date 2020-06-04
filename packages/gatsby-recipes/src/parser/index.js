@@ -8,6 +8,7 @@ const fs = require(`fs-extra`)
 const isUrl = require(`is-url`)
 const path = require(`path`)
 const visit = require(`unist-util-visit`)
+const remove = require(`unist-util-remove`)
 
 const { uuid } = require(`./util`)
 
@@ -20,6 +21,17 @@ const asRoot = node => {
   }
 }
 
+const pluckExports = tree => {
+  let exports = []
+  visit(tree, `export`, node => {
+    exports.push(node)
+  })
+
+  remove(tree, `export`)
+
+  return exports
+}
+
 const applyUuid = tree => {
   visit(tree, `mdxBlockElement`, node => {
     if (!IGNORED_COMPONENTS.includes(node.name)) {
@@ -27,6 +39,11 @@ const applyUuid = tree => {
         type: `mdxAttribute`,
         name: `_uuid`,
         value: uuid(),
+      })
+      node.attributes.push({
+        type: `mdxAttribute`,
+        name: `_type`,
+        value: node.name,
       })
     }
   })
@@ -69,6 +86,7 @@ const toMdx = nodes => {
 const parse = async src => {
   try {
     const ast = u.parse(src)
+    const exportNodes = pluckExports(ast)
     const [intro, ...resourceSteps] = partitionSteps(ast)
 
     const wrappedIntroStep = {
@@ -79,7 +97,6 @@ const parse = async src => {
     }
 
     const wrappedResourceSteps = resourceSteps.map((step, i) => {
-      console.log(step)
       return {
         type: `mdxBlockElement`,
         name: `RecipeStep`,
@@ -99,7 +116,8 @@ const parse = async src => {
       }
     })
 
-    const steps = [wrappedIntroStep, ...wrappedResourceSteps]
+    const steps = [...exportNodes, wrappedIntroStep, ...wrappedResourceSteps]
+    ast.children = [...exportNodes, ...ast.children]
 
     return {
       ast,
