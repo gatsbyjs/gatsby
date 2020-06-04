@@ -17,29 +17,29 @@ Gatsby sites are known for their [blazing fast speed](/blog/2019-01-30-flamingo-
 
 This week’s challenge invites you to add images to your blog and learn about a popular and powerful Gatsby feature, `gatsby-image`.
 
-#### Part 1
+### Part 1
 
 Add images to your markdown-based blog posts. If you are doing each challenge sequentially, then you have a [Gatsby blog that uses markdown](/blog/100days/start-blog/) for blog posts, and is [deployed live to a CDN](/blog/100days/free-hosting/).
 
 But what good is a blog without beautiful images? We want you to use the resources section below to add auto-optimized images to your markdown blog posts!
 
-#### Part 2
+### Part 2
 
 Now it’s time to get direct experience using the `Img`React component provided by [`gatsby-image`](/packages/gatsby-image/)! Create an about page using JSX, then use the gatsby-image API to transform a normal selfie into a square, black-and-white image.
 
 Bonus: Take note of the build times for your site before and after you add images to your project. Also, record the performance of specific pages with images, using [a tool like Lighthouse](/docs/audit-with-lighthouse/). As a Gatsby Developer you should be aware of how images affect your site’s production and user experience.
 
-### Challenge Resources
+## Challenge Resources
 
-#### Part 1 Resource
+### Part 1 Resource
 
 Follow this tutorial that explains how to [add images to your markdown-based pages](/docs/working-with-images-in-markdown/). After you configure your site as outlined, Gatsby will auto-optimize your images for you.
 
-#### Part 2 Resource
+### Part 2 Resource
 
 [Create an About page](/docs/recipes/pages-layouts/#creating-pages-automatically) using JSX, the preferred templating language for [React](/docs/glossary/react/). After that, you can [learn about gatsby-image](/docs/working-with-images), then [use its API](/docs/gatsby-image/) to transform your selfie into a black-and-white square.
 
-### How to Get Help
+## How to Get Help
 
 Depending on your experience with Gatsby and React, this may be the hardest challenge we've given you. So, if you get stuck, please ask for help from the [Gatsby community](/contributing/community/) and the [ASKGatsbyJS](https://twitter.com/AskGatsbyJS) Twitter account. You can find fellow Gatsby Developers on [Discord](https://discordapp.com/invite/gatsby), [Reddit](https://www.reddit.com/r/gatsbyjs/), [Spectrum](https://spectrum.chat/gatsby-js), and [Dev](https://dev.to/t/gatsby).
 

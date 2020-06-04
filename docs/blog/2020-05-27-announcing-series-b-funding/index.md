@@ -11,7 +11,7 @@ tags:
   - announcements
 ---
 
-Today we're thrilled to announce we've secured $28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby's next stage of innovation and evolution toward becoming how the web is built.
+Today we're thrilled to announce we've secured \$28 million in Series B funding led by Index Ventures and joined by earlier investors, CRV and Trinity Ventures. This investment will propel Gatsby's next stage of innovation and evolution toward becoming how the web is built.
 
 Websites today are being made the same way they were 20 years ago, with a cumbersome monolithic approach to building sites, storing data, and delivering content. Since then we've seen massive shifts to technologies like cloud computing and modern JavaScript. So why are so many sites still being built like it's 1998, using an architecture that practically guarantees they'll be slow, insecure, and expensive to scale?
 
@@ -29,7 +29,7 @@ Our developer community is growing over 10 percent month-over-month, and over 20
 
 From the start, Gatsby was designed for building sites and apps that would be fast no matter where they run. After five years of refining Gatsby's open source framework, that goal has largely been satisfied...though we will of course continue working to capture every last possible microsecond of performance gain while helping teams make smart performance decisions.
 
-> Page speed performance is a key metric for us in delivering an unparalleled shopping experience. Using Gatsby has allowed us to increase our page performance by 5-10x -- an exponential improvement not only for our customers, but for our team too.      -- **Jeff Gnatek, Head of engineering, Butcherbox**
+> Page speed performance is a key metric for us in delivering an unparalleled shopping experience. Using Gatsby has allowed us to increase our page performance by 5-10x -- an exponential improvement not only for our customers, but for our team too. -- **Jeff Gnatek, Head of engineering, Butcherbox**
 
 To take these performance gains to the next level we launched [Gatsby Cloud](https://www.gatsbyjs.com/), specialized cloud infrastructure built for teams who want their Gatsby sites functioning at full potential. With features like real-time previews, seamless deployments, and parallelized builds, Gatsby Cloud grants serious velocity for both developers and content creators.
 
@@ -51,7 +51,7 @@ We also just launched [Willit.build](https://willit.build/), a website providing
 
 **Easy administration**
 
-Gatsby needs to be easy to use, no matter where you're starting from. Gatsby can do an incredible number of things thanks to an ecosystem of thousands of plugins and themes. With this incredible variety, though, comes the challenge of discovering how exactly to go about executing your choices. Gatsby's vast documentation can answer almost any question, and also we've already mapped out many of the workflows you can do with Gatsby. Now, what if you could just tell Gatsby what it is you want to do, and voila! A few clicks later, Gatsby gets it all set up and running for you. We've [released an experimental version of this as Gatsby Recipes](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/) -- a user-friendly infrastructure-as-code inspired approach we're developing with the community.
+Gatsby needs to be easy to use, no matter where you're starting from. Gatsby can do an incredible number of things thanks to an ecosystem of thousands of plugins and themes. With this incredible variety, though, comes the challenge of discovering how exactly to go about executing your choices. Gatsby's vast documentation can answer almost any question, and also we've already mapped out many of the workflows you can do with Gatsby. Now, what if you could just tell Gatsby what it is you want to do, and voilà! A few clicks later, Gatsby gets it all set up and running for you. We've [released an experimental version of this as Gatsby Recipes](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/) -- a user-friendly infrastructure-as-code inspired approach we're developing with the community.
 
 No matter what that future looks like, though, we will also continue to double down on improving our developer experience for those already comfortable administering Gatsby from the command line.
 
@@ -69,11 +69,11 @@ One thing that remains unchanged since Day Zero is our commitment to open source
 
 - **Open-source staffing level.** We now have 22 full-time employees working on open-source code and documentation -- roughly ⅓ of our full-time staff and ½ of our engineering staff.
 
-- **Continued development.** Since our Series A announcement, we've shipped [many ](https://github.com/gatsbyjs/gatsby/pull/20729)[improvements](https://github.com/gatsbyjs/gatsby/pull/20102) to Gatsby, including [support for Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) in Gatsby Cloud, [better offline support](https://twitter.com/gatsbyjs/status/1175063002015514626), [UI improvements to documentation](https://www.gatsbyjs.org/blog/2019-08-07-gazette-august/#learning), [structured logging](https://github.com/gatsbyjs/gatsby/pull/14973), [asset prefixing](https://www.gatsbyjs.org/docs/asset-prefix/), [schema rebuilding](https://github.com/gatsbyjs/gatsby/issues/18939), [accessibility improvements to routing](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/), [improved screenreader support](https://github.com/gatsbyjs/gatsby/issues/5581#issuecomment-575752718), and more.
+- **Continued development.** Since our Series A announcement, we've shipped [many](https://github.com/gatsbyjs/gatsby/pull/20729) [improvements](https://github.com/gatsbyjs/gatsby/pull/20102) to Gatsby, including [support for Incremental Builds](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) in Gatsby Cloud, [better offline support](https://twitter.com/gatsbyjs/status/1175063002015514626), [UI improvements to documentation](https://www.gatsbyjs.org/blog/2019-08-07-gazette-august/#learning), [structured logging](https://github.com/gatsbyjs/gatsby/pull/14973), [asset prefixing](https://www.gatsbyjs.org/docs/asset-prefix/), [schema rebuilding](https://github.com/gatsbyjs/gatsby/issues/18939), [accessibility improvements to routing](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/), [improved screenreader support](https://github.com/gatsbyjs/gatsby/issues/5581#issuecomment-575752718), and more.
 
 - **Support the ecosystem.** We employ the lead maintainers of [MDX](https://mdxjs.com/), [WPGraphQL](https://www.wpgraphql.com/), and [GraphiQL](https://github.com/graphql/graphiql), so they can continue to work on key projects that benefit more than just Gatsby. In addition, we have an active [OpenCollective](https://opencollective.com/gatsbyjs) where we contribute to key open source projects we rely on.
 
-- **Commercialization.** We're building a sustainable revenue base to [support our thriving open source community](https://www.gatsbyjs.org/blog/2020-02-11-founding-organizations/) by providing teams and enterprises purpose-built infrastructure for running their Gatsby sites with [Gatsby Cloud](http://gatsbyjs.com).
+- **Commercialization.** We're building a sustainable revenue base to [support our thriving open source community](https://www.gatsbyjs.org/blog/2020-02-11-founding-organizations/) by providing teams and enterprises purpose-built infrastructure for running their Gatsby sites with [Gatsby Cloud](https://gatsbyjs.com).
 
 - **Access.** Gatsby's open source framework will always be free. We also offer a permanent free tier on Gatsby Cloud for individuals. This guarantees community access to the best platform for building and deploying Gatsby sites.
 
