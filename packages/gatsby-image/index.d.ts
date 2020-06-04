@@ -25,7 +25,13 @@ export interface FluidObject {
 }
 
 interface GatsbyImageOptionalProps {
+  /**
+   * @deprecated Use `fixed`
+   */
   resolutions?: FixedObject
+  /**
+   * @deprecated Use `fluid`
+   */
   sizes?: FluidObject
   fadeIn?: boolean
   durationFadeIn?: number
