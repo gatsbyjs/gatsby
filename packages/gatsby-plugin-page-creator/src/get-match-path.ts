@@ -3,7 +3,7 @@ interface IOptionalMatchPath {
 }
 
 export function getMatchPath(srcPagesPath: string): IOptionalMatchPath {
-  if (srcPagesPath.includes("[") === false) return {}
+  if (srcPagesPath.includes(`[`) === false) return {}
 
   // Does the following transformations:
   //   `/foo/[id]/` => `/foo/:id`
