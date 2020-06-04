@@ -75,7 +75,7 @@ module.exports = {
         repositoryName: `your-repository-name`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
-        page: require('./src/schemas/page.json'),
+        page: require("./src/schemas/page.json"),
       },
     },
   ],
