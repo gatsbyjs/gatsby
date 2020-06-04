@@ -60,6 +60,9 @@
             - title: Preparing a Site for Deployment
               link: /docs/preparing-for-deployment/
               breadcrumbTitle: Preparing for Deployment
+            - title: Deploying to Gatsby Cloud
+              link: /docs/deploying-to-gatsby-cloud/
+              breadcrumbTitle: Gatsby Cloud
             - title: Deploying to Azure
               link: /docs/deploying-to-azure/
               breadcrumbTitle: Azure
@@ -105,9 +108,6 @@
             - title: Deploying to KintoHub
               link: /docs/deploying-to-kintohub/
               breadcrumbTitle: KintoHub Hosting
-            - title: Deploying to Gatsby Cloud
-              link: /docs/deploying-to-gatsby-cloud/
-              breadcrumbTitle: Gatsby Cloud
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
