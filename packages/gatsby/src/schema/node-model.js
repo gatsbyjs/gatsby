@@ -64,7 +64,7 @@ class LocalNodeModel {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.nodeStore = nodeStore
-    this.createPageDependency = createPageDependency
+    this.createPageDependencyActionCreator = createPageDependency
 
     this._rootNodeMap = new WeakMap()
     this._trackedRootNodes = new Set()
@@ -72,6 +72,26 @@ class LocalNodeModel {
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
     this.replaceFiltersCache()
+  }
+
+  createPageDependency(createPageDependencyArgs) {
+    if (createPageDependencyArgs.connection) {
+      const nodeTypeNames = toNodeTypeNames(
+        this.schema,
+        createPageDependencyArgs.connection
+      )
+      if (nodeTypeNames) {
+        nodeTypeNames.forEach(typeName => {
+          this.createPageDependencyActionCreator({
+            ...createPageDependencyArgs,
+            connection: typeName,
+          })
+        })
+        return
+      }
+    }
+
+    this.createPageDependencyActionCreator(createPageDependencyArgs)
   }
 
   /**

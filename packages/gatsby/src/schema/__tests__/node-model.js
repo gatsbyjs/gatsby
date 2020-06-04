@@ -502,6 +502,50 @@ describe(`NodeModel`, () => {
         expect(result.id).toBe(`file1`)
       })
     })
+
+    describe(`createPageDependency`, () => {
+      it(`it calls upstream createPageDependency for single nodes`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          nodeId: `person2`,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `person2`,
+        })
+      })
+
+      it(`it calls upstream createPageDependency for connections of concrete types`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          connection: `Author`,
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Author`,
+        })
+      })
+
+      it(`it calls upstream createPageDependency with concrete types for node interface connections`, () => {
+        nodeModel.createPageDependency({
+          path: `/`,
+          connection: `TeamMember`,
+        })
+
+        // TeamMember is interface with Author and Contributor types implementing it
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Author`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Contributor`,
+        })
+      })
+    })
   })
 
   describe(`prepare nodes caching`, () => {
