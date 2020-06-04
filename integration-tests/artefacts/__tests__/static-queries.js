@@ -29,6 +29,16 @@ const authorQuery = `
   }
 `
 
+const githubQuery = `
+  {
+    site {
+      siteMetadata {
+        github
+      }
+    }
+  }
+`
+
 async function readPageData(pagePath) {
   const pathToFile = getFilePath(
     { publicDir: path.join(process.cwd(), `public`) },
@@ -42,6 +52,8 @@ function hashQuery(query) {
   const hash = murmurhash(text, `abc`)
   return String(hash)
 }
+
+const globalQueries = [githubQuery]
 
 describe(`Static Queries`, () => {
   beforeAll(async done => {
@@ -59,7 +71,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when inline`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/inline/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -68,7 +80,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when imported`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/import/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -77,7 +89,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when dynamically imported`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/dynamic/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -86,7 +98,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly in jsx`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/jsx/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -95,7 +107,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly in tsx`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/tsx/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -104,7 +116,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly in typescript`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/typescript/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -113,7 +125,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when nesting imports`, async () => {
-    const queries = [titleQuery, authorQuery]
+    const queries = [titleQuery, authorQuery, ...globalQueries]
     const pagePath = `/import-import/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -122,7 +134,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when nesting dynamic imports`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/dynamic-dynamic/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -131,7 +143,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when nesting a dynamic import in a regular import`, async () => {
-    const queries = [titleQuery, authorQuery]
+    const queries = [titleQuery, authorQuery, ...globalQueries]
     const pagePath = `/import-dynamic/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -140,7 +152,7 @@ describe(`Static Queries`, () => {
   })
 
   test(`are written correctly when nesting a regular import in a dynamic import`, async () => {
-    const queries = [titleQuery]
+    const queries = [titleQuery, ...globalQueries]
     const pagePath = `/dynamic-import/`
 
     const { staticQueryHashes } = await readPageData(pagePath)
@@ -148,21 +160,21 @@ describe(`Static Queries`, () => {
     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
   })
 
-  test(`are written correctly when using wrapRootElement`, async () => {
-    // const queries = [titleQuery]
-    // const pagePath = `/dynamic-import/`
+  // test(`are written correctly when using wrapRootElement`, async () => {
+  //   const queries = [titleQuery]
+  //   const pagePath = `/dynamic-import/`
 
-    // const { staticQueryHashes } = await readPageData(pagePath)
+  //   const { staticQueryHashes } = await readPageData(pagePath)
 
-    expect(true).toEqual(false)
-  })
+  //   expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+  // })
 
-  test(`are written correctly when using wrapPageElement`, async () => {
-    // const queries = [titleQuery]
-    // const pagePath = `/dynamic-import/`
+  // test(`are written correctly when using wrapPageElement`, async () => {
+  //   const queries = [titleQuery]
+  //   const pagePath = `/dynamic-import/`
 
-    // const { staticQueryHashes } = await readPageData(pagePath)
+  //   const { staticQueryHashes } = await readPageData(pagePath)
 
-    expect(true).toEqual(false)
-  })
+  //   expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
+  // })
 })

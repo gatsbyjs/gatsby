@@ -1,3 +1,4 @@
+import { uniqBy } from "lodash"
 import { IGatsbyState } from "../redux/types"
 
 const mapComponentsToStaticQueryHashes = (
@@ -18,109 +19,106 @@ export function mapTemplatesToStaticQueryHashes(
   const { components, staticQueryComponents } = reduxState
   const { modules } = compilation
 
-  // const visitedModules = new Map()
+  const terminalNodes = [
+    `.cache/api-runner-browser-plugins.js`,
+    `.cache/async-requires.js`,
+  ]
+
+  const globalStaticQueries = new Set()
 
   const getDeps = (mod): any => {
+    const staticQueryModuleComponentPath = mod.resource
     const result = new Set()
-    // let hits = 0
 
-    const getDepsFn = (mod, depth, path: any[] = []): any => {
-      // depth++
+    const getDepsFn = (m): any => {
+      const hasReasons = m.hasReasons()
+      const isTerminalNode = terminalNodes.reduce(
+        (result, terminalNode) => result || m.resource.includes(terminalNode),
+        false
+      )
 
-      // if (depth > 100) {
-      //   debugger
-      // }
-      // if (visitedModules.has(mod.resource)) {
-      //   console.log(`We have a cache hit`)
-      //   hits++
-      //   return visitedModules.get(mod.resource)
-      // }
-      for (const b of mod.blocks) {
-        for (const x of b.dependencies) {
-          if (x.module) {
-            if (
-              x.type === `harmony side effect evaluation` ||
-              x.type === `harmony export imported specifier`
-            ) {
-              continue
-            }
-            result.add(x.module.resource)
-            if (x.module.dependencies) {
-              getDepsFn(x.module, depth, [...path, x])
-            }
-          }
-        }
+      // Exit if we don't have any reasons or we have reached a possible terminal node
+      if (!hasReasons || isTerminalNode) {
+        return result
       }
 
-      for (const d of mod.dependencies) {
-        if (d.module) {
-          if (
-            d.type === `harmony side effect evaluation` ||
-            d.type === `harmony export imported specifier`
-          ) {
-            continue
-          }
-          result.add(d.module.resource)
-          if (d.module.dependencies) {
-            getDepsFn(d.module, depth, [...path, d])
-          }
+      const nonTerminalDependents = m.reasons
+        .filter(r => {
+          const dependentModule = r.module
+          const isTerminal = terminalNodes.reduce(
+            (result, terminalNode) =>
+              result || dependentModule.resource.includes(terminalNode),
+            false
+          )
+          return !isTerminal
+        })
+        .map(r => r.module)
+
+      const uniqDependents = uniqBy(nonTerminalDependents, d => d.identifier())
+
+      for (const x of uniqDependents) {
+        result.add(x.resource)
+
+        if (x.resource.includes(`gatsby-browser.js`)) {
+          globalStaticQueries.add(staticQueryModuleComponentPath)
         }
+        getDepsFn(x)
       }
-      // visitedModules.set(mod.resource, result)
+
       return result
     }
 
-    const depTree = getDepsFn(mod, 0)
-    // console.log(hits)
-    return depTree
+    return getDepsFn(mod)
   }
 
-  const mapTemplatesToDependencies = Array.from(components).reduce(
-    (map, [path, component]) => {
-      const { componentPath } = component
-      const mod = modules.find(module => module.resource === componentPath)
+  const mapOfStaticQueryComponentsToDependants = new Map()
 
-      if (!mod) {
-        return map
-      }
+  staticQueryComponents.forEach(({ componentPath }) => {
+    const staticQueryComponentModule = modules.find(
+      m => m.resource === componentPath
+    )
 
-      const dependencies = getDeps(mod)
+    const dependants = staticQueryComponentModule
+      ? getDeps(staticQueryComponentModule)
+      : new Set()
 
-      map.set(path, {
-        component,
-        dependencies,
-      })
-      return map
-    },
-    new Map()
-  )
+    mapOfStaticQueryComponentsToDependants.set(componentPath, dependants)
+  })
 
   const mapOfComponentsToStaticQueryHashes = mapComponentsToStaticQueryHashes(
     staticQueryComponents
   )
 
-  const mapOfTemplatesToStaticQueryHashes = Array.from(
-    mapTemplatesToDependencies
-  ).reduce((map, [page, { dependencies }]) => {
-    const staticQueryHashes = new Set()
+  const globalStaticQueryHashes = []
 
-    {
-      const staticQueryHash = mapOfComponentsToStaticQueryHashes.get(page)
-      if (staticQueryHash) {
-        staticQueryHashes.add(staticQueryHash)
+  globalStaticQueries.forEach(q =>
+    globalStaticQueryHashes.push(mapOfComponentsToStaticQueryHashes.get(q))
+  )
+
+  const mapOfTemplatesToStaticQueryHashes = Array.from(components).reduce(
+    (map, [page]) => {
+      const staticQueryHashes = [...globalStaticQueryHashes]
+
+      // Does this page contain an inline static query?
+      if (mapOfComponentsToStaticQueryHashes.has(page)) {
+        staticQueryHashes.push(mapOfComponentsToStaticQueryHashes.get(page))
       }
-    }
 
-    for (const d of dependencies) {
-      const staticQueryHash = mapOfComponentsToStaticQueryHashes.get(d)
-      if (staticQueryHash) {
-        staticQueryHashes.add(staticQueryHash)
-      }
-    }
-
-    map.set(page, Array.from(staticQueryHashes))
-    return map
-  }, new Map())
+      // Check dependencies
+      mapOfStaticQueryComponentsToDependants.forEach(
+        (setOfDependants, staticQueryComponentPath) => {
+          if (setOfDependants.has(page)) {
+            staticQueryHashes.push(
+              mapOfComponentsToStaticQueryHashes.get(staticQueryComponentPath)
+            )
+          }
+        }
+      )
+      map.set(page, staticQueryHashes)
+      return map
+    },
+    new Map()
+  )
 
   return mapOfTemplatesToStaticQueryHashes
 }
