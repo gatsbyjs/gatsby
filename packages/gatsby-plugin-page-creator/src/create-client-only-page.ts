@@ -1,17 +1,6 @@
 import { Actions } from "gatsby"
 import { createPath } from "gatsby-page-utils"
-
-// Changes something like
-//   `/foo/[id]/`
-// to
-//   `/foo/:id`
-function translateInterpolationToMatchPath(createdPath: string): string {
-  return createdPath
-    .replace(`[...`, `*`)
-    .replace(`[`, `:`)
-    .replace(`]`, ``)
-    .replace(/\/$/, ``)
-}
+import { getMatchPath } from "./get-match-path"
 
 export function createClientOnlyPage(
   filePath: string,
@@ -20,11 +9,10 @@ export function createClientOnlyPage(
 ): void {
   // Create page object
   const createdPath = createPath(filePath)
-  const matchPath = translateInterpolationToMatchPath(createdPath)
 
   const page = {
     path: createdPath,
-    matchPath: matchPath,
+    ...getMatchPath(createdPath),
     component: absolutePath,
     context: {},
   }
