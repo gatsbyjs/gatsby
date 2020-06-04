@@ -64,13 +64,6 @@ They will be added to the following default list:
 
 To prevent concurrent requests overload of `processRemoteNode`, you can adjust the `200` default concurrent downloads, with `GATSBY_CONCURRENT_DOWNLOAD` environment variable.
 
-In case that due to spotty network, or slow connection, some remote files fail to download consistently, you can adjust timeout and retry settings with additional environment variables:
-
-- `STALL_RETRY_LIMIT`, default: `3`
-- `STALL_TIMEOUT`, default: `30000`
-- `CONNECTION_RETRY_LIMIT`, default: `5`
-- `CONNECTION_TIMEOUT`, default: `30000`
-
 ## How to query
 
 You can query file nodes like the following:
@@ -342,3 +335,12 @@ function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
 
 module.exports = createMySqlNodes
 ```
+
+## Troubleshooting
+
+In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
+
+- `STALL_RETRY_LIMIT`, default: `3`
+- `STALL_TIMEOUT`, default: `30000`
+- `CONNECTION_RETRY_LIMIT`, default: `5`
+- `CONNECTION_TIMEOUT`, default: `30000`
