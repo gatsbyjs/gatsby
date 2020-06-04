@@ -118,7 +118,7 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
     })
 
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
-  const { createNodeField } = actions
+  const { createNodeField, deleteNode } = actions
   if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
@@ -183,7 +183,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           const gatsbyMajorVersion = allDependencies
             .filter(([key]) => key === `gatsby`)
             .map(version => {
-              let [gatsby, versionNum] = version
+              const [gatsby, versionNum] = version
               if (versionNum === `latest` || versionNum === `next`) {
                 return [gatsby, `2`]
               }
@@ -219,10 +219,11 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           })
         })
         .catch(err => {
-          reporter.panicOnBuild(
+          reporter.warn(
             `Error getting repo data for starter "${repoStub}":\n
             ${err.message}`
           )
+          deleteNode(node)
         })
     }
   }

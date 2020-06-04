@@ -1,10 +1,12 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import { MdWarning } from "react-icons/md"
 import Link from "../../components/localized-link"
 
 import {
   Container,
   Section,
+  SectionNoRightPadding,
   Columns,
   ContentColumn,
   CopyColumn,
@@ -18,14 +20,26 @@ import {
 import Layout from "../../components/guidelines/layout"
 import Badge from "../../components/guidelines/badge"
 
+import { Box, Flex } from "theme-ui"
+
 import theme from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import { Box, Flex, Text } from "../../components/guidelines/system"
+import { Text } from "../../components/guidelines/system"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+
+const TdAlignTop = ({ children }) => (
+  <td
+    sx={{
+      verticalAlign: `top`,
+    }}
+  >
+    {children}
+  </td>
+)
 
 const ColorExample = ({ hex, token }) => (
   <tr>
     <td
-      css={{
+      sx={{
         borderColor: hex,
         verticalAlign: `middle`,
       }}
@@ -33,7 +47,7 @@ const ColorExample = ({ hex, token }) => (
       <code>{token}</code>
     </td>
     <td
-      css={{
+      sx={{
         borderColor: hex,
         verticalAlign: `middle`,
         width: `100%`,
@@ -42,21 +56,25 @@ const ColorExample = ({ hex, token }) => (
       {hex}
     </td>
     <td
-      css={{
+      sx={{
         borderColor: hex,
         verticalAlign: `middle`,
       }}
     >
-      <Flex alignItems="center">
+      <Flex
+        sx={{
+          alignItems: `center`,
+        }}
+      >
         <Text color={hex} fontWeight="bold" fontSize={6} mr={8}>
           Aa
         </Text>
         <div
-          css={{
+          sx={{
             backgroundColor: hex,
             height: 40,
-            margin: 0,
             width: 80,
+            m: 0,
           }}
         />
       </Flex>
@@ -71,7 +89,12 @@ const ColorExample = ({ hex, token }) => (
 const DesignTokens = ({ location }) => (
   <Layout location={location} pageTitle="Design Tokens">
     <Container>
-      <div css={{ position: `relative`, zIndex: 1 }}>
+      <div
+        sx={{
+          position: `relative`,
+          zIndex: 1,
+        }}
+      >
         <PageHeading>Design Tokens</PageHeading>
         <Intro>
           This page collects all design tokens currently available for
@@ -137,9 +160,11 @@ const DesignTokens = ({ location }) => (
                     {` `}
                     <Box
                       key={`${index}-${space}`}
-                      height={space}
-                      width={space}
-                      bg="grey.30"
+                      sx={{
+                        height: space,
+                        width: space,
+                        bg: `grey.30`,
+                      }}
                     />
                     <SrOnly>
                       A box with <code>space[{index}]</code> set as value for
@@ -171,30 +196,37 @@ const DesignTokens = ({ location }) => (
             deliberately chose to omit adding more documentation at this point.
           </p>
         </CopyColumn>
-        <ContentColumn
-          css={{
-            alignSelf: `flex-end`,
-            display: `flex`,
-            flexWrap: `wrap`,
-            overflow: `visible`,
-          }}
-        >
-          {Object.keys(theme.shadows).map((shadow, i) => (
-            <Box
-              bg="white"
-              borderRadius="2"
-              key={`tokens-shadow-${i}`}
-              mb={10}
-              mr={4}
-              p={4}
-              width="50%"
-              boxShadow={shadow}
-              height={0}
-              pb={`${0.3 * 100}%`}
-            >
-              <code>shadows.{shadow}</code>
-            </Box>
-          ))}
+        <ContentColumn>
+          <Flex
+            sx={{
+              alignSelf: `flex-end`,
+              flexWrap: `wrap`,
+              overflow: `visible`,
+            }}
+          >
+            {Object.keys(theme.shadows).map((shadow, i) => (
+              <Box
+                key={`tokens-shadow-${i}`}
+                sx={{
+                  bg: `white`,
+                  borderRadius: 2,
+                  mb: 10,
+                  p: 4,
+                  boxShadow: shadow,
+                  width: `100%`,
+                  height: `160px`,
+                  pb: `${0.3 * 100}%`,
+                  [mediaQueries.md]: {
+                    width: `50%`,
+                    mr: 10,
+                    height: 0,
+                  },
+                }}
+              >
+                <code>shadows.{shadow}</code>
+              </Box>
+            ))}
+          </Flex>
         </ContentColumn>
       </Columns>
     </Section>
@@ -209,9 +241,13 @@ const DesignTokens = ({ location }) => (
             components along the z-axis.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth width="100%">
+        <ContentColumn overflowXMobile fullWidth>
           <Flex>
-            <table css={{ width: `50%` }}>
+            <table
+              sx={{
+                width: `50%`,
+              }}
+            >
               <thead>
                 <tr>
                   <th scope="col">Token</th>
@@ -221,12 +257,10 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.zIndices).map((zIndex, i) => (
                   <tr key={`tokens-zIndices-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
+                    <TdAlignTop>
                       <code>zIndices.{zIndex}</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {theme.zIndices[zIndex]}
-                    </td>
+                    </TdAlignTop>
+                    <TdAlignTop>{theme.zIndices[zIndex]}</TdAlignTop>
                   </tr>
                 ))}
               </tbody>
@@ -266,10 +300,12 @@ const DesignTokens = ({ location }) => (
                     {` `}
                     <Box
                       key={`${index}-radius`}
-                      height={40}
-                      width={80}
-                      bg="grey.30"
-                      borderRadius={index}
+                      sx={{
+                        height: 40,
+                        width: 80,
+                        bg: `grey.30`,
+                        borderRadius: index,
+                      }}
                     />
                     <SrOnly>
                       A 80&times;40px box with <code>radii[{index}]</code>
@@ -294,7 +330,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>font-family</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn>
+        <ContentColumn overflowXMobile>
           <table>
             <thead>
               <tr>
@@ -306,15 +342,15 @@ const DesignTokens = ({ location }) => (
             <tbody>
               {Object.keys(theme.fonts).map((font, i) => (
                 <tr key={`tokens-fonts-${i}`}>
-                  <td css={{ verticalAlign: `top` }}>
+                  <TdAlignTop>
                     <code>fonts.{font}</code>
-                  </td>
-                  <td css={{ verticalAlign: `top` }}>{theme.fonts[font]}</td>
-                  <td css={{ verticalAlign: `top` }}>
+                  </TdAlignTop>
+                  <TdAlignTop>{theme.fonts[font]}</TdAlignTop>
+                  <TdAlignTop>
                     <Text fontFamily={font} fontSize={4}>
                       ABC
                     </Text>
-                  </td>
+                  </TdAlignTop>
                 </tr>
               ))}
             </tbody>
@@ -323,7 +359,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+    <SectionNoRightPadding>
       <SectionHeading>Font Sizes</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -331,12 +367,13 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>font-size</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <table>
             <thead>
               <tr>
                 <th scope="col">Token</th>
                 <th scope="col">Value</th>
+                <th scope="col">px</th>
                 <th scope="col">Example</th>
               </tr>
             </thead>
@@ -347,6 +384,7 @@ const DesignTokens = ({ location }) => (
                     <code>fontSizes[{index}]</code>
                   </td>
                   <td>{size}</td>
+                  <td>{parseFloat(size) * 16}</td>
                   <td>
                     <Text
                       // don't scale based on root font size here
@@ -367,7 +405,7 @@ const DesignTokens = ({ location }) => (
           </table>
         </ContentColumn>
       </Columns>
-    </Section>
+    </SectionNoRightPadding>
 
     <Section>
       <SectionHeading>Font Weights</SectionHeading>
@@ -377,7 +415,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>font-weight</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn>
+        <ContentColumn overflowXMobile>
           <Flex>
             <table>
               <thead>
@@ -390,12 +428,10 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.fontWeights).map((fontWeight, i) => (
                   <tr key={`tokens-fontWeights-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
-                      <code>fontWeights[{fontWeight}]</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {theme.fontWeights[fontWeight]}
-                    </td>
+                    <TdAlignTop>
+                      <code>fontWeights.{fontWeight}</code>
+                    </TdAlignTop>
+                    <TdAlignTop>{theme.fontWeights[fontWeight]}</TdAlignTop>
                     <td>
                       <Text
                         fontWeight={fontWeight}
@@ -414,7 +450,7 @@ const DesignTokens = ({ location }) => (
       </Columns>
     </Section>
 
-    <Section pr={{ xxs: 0, xs: 0, sm: 0, md: 0, lg: 0 }}>
+    <SectionNoRightPadding>
       <SectionHeading>Letter Spacing</SectionHeading>
       <Columns>
         <CopyColumn>
@@ -422,7 +458,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>letter-spacing</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <Flex>
             <table>
               <thead>
@@ -435,12 +471,12 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.letterSpacings).map((letterSpacing, i) => (
                   <tr key={`tokens-letterSpacings-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
+                    <TdAlignTop>
                       <code>letterSpacings.{letterSpacing}</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
+                    </TdAlignTop>
+                    <TdAlignTop>
                       {theme.letterSpacings[letterSpacing]}
-                    </td>
+                    </TdAlignTop>
                     <td>
                       <Text
                         letterSpacing={letterSpacing}
@@ -461,7 +497,7 @@ const DesignTokens = ({ location }) => (
           </Flex>
         </ContentColumn>
       </Columns>
-    </Section>
+    </SectionNoRightPadding>
 
     <Section>
       <SectionHeading>Line Heights</SectionHeading>
@@ -471,7 +507,7 @@ const DesignTokens = ({ location }) => (
             Intended for use with the <code>line-height</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth>
+        <ContentColumn overflowXMobile fullWidth>
           <table>
             <thead>
               <tr>
@@ -483,18 +519,18 @@ const DesignTokens = ({ location }) => (
             <tbody>
               {Object.keys(theme.lineHeights).map((lineHeight, i) => (
                 <tr key={`tokens-lineHeights-${i}`}>
-                  <td css={{ verticalAlign: `top` }}>
+                  <TdAlignTop>
                     <code>lineHeights.{lineHeight}</code>
-                  </td>
-                  <td css={{ verticalAlign: `top` }}>
-                    {theme.lineHeights[lineHeight]}
-                  </td>
-                  <td css={{ verticalAlign: `top` }}>
+                  </TdAlignTop>
+
+                  <TdAlignTop>{theme.lineHeights[lineHeight]}</TdAlignTop>
+
+                  <TdAlignTop>
                     <Text lineHeight={lineHeight}>
                       Plugins are packages that extend Gatsby sites. They can
                       source content, transform data, and more!
                     </Text>
-                  </td>
+                  </TdAlignTop>
                 </tr>
               ))}
             </tbody>
@@ -513,9 +549,22 @@ const DesignTokens = ({ location }) => (
             <code>breakpoints</code> scale is available.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth width="100%">
-          <Flex>
-            <table css={{ width: `50%` }}>
+        <ContentColumn fullWidth>
+          <Flex
+            sx={{
+              flexDirection: `column`,
+              [mediaQueries.lg]: {
+                flexDirection: `row`,
+              },
+            }}
+          >
+            <table
+              sx={{
+                [mediaQueries.lg]: {
+                  width: `50%`,
+                },
+              }}
+            >
               <thead>
                 <tr>
                   <th scope="col">Token</th>
@@ -525,18 +574,21 @@ const DesignTokens = ({ location }) => (
               <tbody>
                 {Object.keys(theme.breakpoints).map((breakpoint, i) => (
                   <tr key={`tokens-breakpoints-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
+                    <TdAlignTop>
                       <code>breakpoints.{breakpoint}</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {theme.breakpoints[breakpoint]}
-                    </td>
+                    </TdAlignTop>
+                    <TdAlignTop>{theme.breakpoints[breakpoint]}</TdAlignTop>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <Box as="table" ml={10}>
+            <Box
+              as="table"
+              sx={{
+                ml: [0, null, null, null, 10],
+              }}
+            >
               <thead>
                 <tr>
                   <th scope="col">Token</th>
@@ -544,14 +596,12 @@ const DesignTokens = ({ location }) => (
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(theme.breakpoints).map((breakpoint, i) => (
-                  <tr key={`tokens-breakpoints-${i}`}>
-                    <td css={{ verticalAlign: `top` }}>
-                      <code>mediaQueries.{breakpoint}</code>
-                    </td>
-                    <td css={{ verticalAlign: `top` }}>
-                      {mediaQueries[breakpoint]}
-                    </td>
+                {Object.keys(theme.mediaQueries).map((mediaQuery, i) => (
+                  <tr key={`tokens-mediaQuery-${i}`}>
+                    <TdAlignTop>
+                      <code>mediaQueries.{mediaQuery}</code>
+                    </TdAlignTop>
+                    <TdAlignTop>{mediaQueries[mediaQuery]}</TdAlignTop>
                   </tr>
                 ))}
               </tbody>
@@ -571,7 +621,7 @@ const DesignTokens = ({ location }) => (
             section for detailed information and accessibility notes.
           </p>
         </CopyColumn>
-        <ContentColumn fullWidth width="100%">
+        <ContentColumn overflowXMobile fullWidth width="100%">
           <Flex>
             <table>
               <thead>
@@ -620,7 +670,7 @@ const DesignTokens = ({ location }) => (
             Intended to be used with the <code>transition</code> CSS property.
           </p>
         </CopyColumn>
-        <ContentColumn>
+        <ContentColumn overflowXMobile>
           <Flex>
             <table>
               <thead>

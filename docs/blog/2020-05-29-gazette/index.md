@@ -21,7 +21,7 @@ Your content editors can now enjoy “instant preview” with Strapi and Gatsby 
 
 ![Strapi blog screenshot](/strapi-blog.png)
 
-Give Strapi a try with [this step-by-step tutorial](<(/blog/2020-05-12-strapi-instant-content-preview-plugin/)>).
+Give Strapi a try with [this step-by-step tutorial](/blog/2020-05-12-strapi-instant-content-preview-plugin/).
 
 ### Faster, and Faster Builds
 
