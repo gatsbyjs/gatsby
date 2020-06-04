@@ -9,7 +9,11 @@ export { parsePath }
 
 const isAbsolutePath = path => path?.startsWith(`/`)
 
-export function withPrefix(path, prefix = __BASE_PATH__) {
+function calcPrefixDefault() {
+  return typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : __PATH_PREFIX__
+}
+
+export function withPrefix(path, prefix = calcPrefixDefault()) {
   if (!isLocalLink(path)) {
     return path
   }
