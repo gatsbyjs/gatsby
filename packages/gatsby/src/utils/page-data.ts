@@ -12,6 +12,7 @@ import { IExecutionResult } from "../query/types"
 interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath?: IGatsbyPage["matchPath"]
+  moduleDependencies: Array<string>
   path: IGatsbyPage["path"]
   staticQueryHashes: Array<string>
 }
@@ -67,6 +68,7 @@ export async function writePageData(
     matchPath,
     path: pagePath,
     staticQueryHashes,
+    moduleDependencies,
   }: IPageData
 ): Promise<IPageDataWithQueryResult> {
   const inputFilePath = path.join(
@@ -84,6 +86,7 @@ export async function writePageData(
     matchPath,
     result,
     staticQueryHashes,
+    moduleDependencies,
   }
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -121,6 +124,7 @@ export async function flush(): Promise<void> {
     pages,
     program,
     staticQueriesByTemplate,
+    queryModuleDependencies,
   } = store.getState()
 
   const { pagePaths, templatePaths } = pendingPageDataWrites
@@ -148,12 +152,16 @@ export async function flush(): Promise<void> {
     if (page) {
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
+      const moduleDependencies = Array.from(
+        queryModuleDependencies.get(pagePath) || []
+      ).sort()
 
       const result = await writePageData(
         path.join(program.directory, `public`),
         {
           ...page,
           staticQueryHashes,
+          moduleDependencies,
         }
       )
 
