@@ -9,6 +9,8 @@ import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import reporter from "gatsby-cli/lib/reporter"
+import getSslCert from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -101,6 +103,9 @@ class ControllableScript {
 
 let isRestarting
 
+// checks if a string is a valid ip
+const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+
 module.exports = async (program: IProgram): Promise<void> => {
   const developProcessPath = slash(require.resolve(`./develop-process`))
   // Run the actual develop server on a random port, and the proxy on the program port
@@ -121,10 +126,44 @@ module.exports = async (program: IProgram): Promise<void> => {
     cmd(args);
   `)
 
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    reporter.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
+
+  // Check if https is enabled, then create or get SSL cert.
+  // Certs are named 'devcert' and issued to the host.
+  // NOTE(@mxstbr): We mutate program.ssl _after_ passing it
+  // to the develop process controllable script above because
+  // that would mean we double SSL browser => proxy => server
+  if (program.https) {
+    const sslHost =
+      program.host === `0.0.0.0` || program.host === `::`
+        ? `localhost`
+        : program.host
+
+    if (REGEX_IP.test(sslHost)) {
+      reporter.panic(
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+      )
+    }
+
+    program.ssl = await getSslCert({
+      name: sslHost,
+      caFile: program[`ca-file`],
+      certFile: program[`cert-file`],
+      keyFile: program[`key-file`],
+      directory: program.directory,
+    })
+  }
+
   const proxy = startDevelopProxy({
     proxyPort: proxyPort,
     targetPort: developPort,
-    programPath: program.directory,
+    program,
   })
 
   let unlock
