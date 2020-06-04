@@ -34,7 +34,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "prepare": "cross-env NODE_ENV=production yarn run build",
+    "prepublishOnly": "cross-env NODE_ENV=production yarn run build",
     "build": "gatsby build --prefix-paths",
     "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   }
