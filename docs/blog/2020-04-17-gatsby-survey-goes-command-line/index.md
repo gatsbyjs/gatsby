@@ -63,7 +63,7 @@ There was one central takeaway: Those who responded they would be “very disapp
 
 > Simplification of complex HTML5 features (lazy-loading images at multiple resolutions, i18n, head metadata fields, pwa...), obtaining always optimized code.
 
-> Superior workflow compared to traditional CMS (Wordpress/GRAV etc.). Freedom of choice for system design regarding tools in the React ecosystem.
+> Superior workflow compared to traditional CMS (WordPress/GRAV etc.). Freedom of choice for system design regarding tools in the React ecosystem.
 
 > It does the job for me. The page load is amazingly fast. I have to write less code.
 

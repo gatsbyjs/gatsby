@@ -241,7 +241,7 @@ When you add a new recipe, please also add it to the recipes list at [https://gi
 
 ## FAQ / common issues
 
-### Q) My recipe is combining steps instead of running them seperately!
+### Q) My recipe is combining steps instead of running them separately!
 
 We use the `---` break syntax from Markdown to separate steps.
 

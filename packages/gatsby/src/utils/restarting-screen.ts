@@ -91,8 +91,7 @@ export default html`
             .then(res => res.json())
             .then(services => {
               const socket = io(
-                window.location.protocol +
-                  "//" +
+                "http://" +
                   window.location.hostname +
                   ":" +
                   services.developstatusserver.port
