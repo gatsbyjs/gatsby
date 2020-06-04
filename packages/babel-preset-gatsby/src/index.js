@@ -1,10 +1,13 @@
 const path = require(`path`)
+const {
+  EXCLUDED_POLYFILLS: polyfillsToExclude,
+} = require(`gatsby-legacy-polyfills/dist/exclude`)
 
 const resolve = m => require.resolve(m)
 
 const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
-const loadCachedConfig = () => {
+export function loadCachedConfig() {
   let pluginBabelConfig = {}
   if (!IS_TEST) {
     try {
@@ -26,7 +29,7 @@ const loadCachedConfig = () => {
   return pluginBabelConfig
 }
 
-module.exports = function preset(_, options = {}) {
+export default function preset(_, options = {}) {
   let { targets = null } = options
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
@@ -56,8 +59,18 @@ module.exports = function preset(_, options = {}) {
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
+          debug: false,
           // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
-          exclude: [`transform-typeof-symbol`],
+          exclude: [
+            `transform-typeof-symbol`,
+            `transform-regenerator`,
+            // we already have transforms for this
+            `transform-spread`,
+            `proposal-nullish-coalescing-operator`,
+            `proposal-optional-chaining`,
+
+            ...polyfillsToExclude,
+          ],
         },
       ],
       [
@@ -90,10 +103,10 @@ module.exports = function preset(_, options = {}) {
         resolve(`@babel/plugin-transform-runtime`),
         {
           corejs: false,
-          helpers: stage === `develop` || stage === `test`,
+          helpers: true,
           regenerator: true,
           useESModules: stage !== `test`,
-          absoluteRuntimePath,
+          absoluteRuntime: absoluteRuntimePath,
         },
       ],
       [
