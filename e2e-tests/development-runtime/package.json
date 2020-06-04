@@ -27,7 +27,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
@@ -46,6 +46,7 @@
     "@testing-library/cypress": "^4.0.4",
     "cross-env": "^5.2.0",
     "cypress": "3.4.1",
+    "cypress-axe": "^0.8.1",
     "fs-extra": "^7.0.1",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
