@@ -48,11 +48,11 @@ interface GatsbyImageOptionalProps {
   draggable?: boolean
 }
   
-interface GatsbyImageFluidProps extends GatsbyImage {
+interface GatsbyImageFluidProps extends GatsbyImageOptionalProps {
   fluid: FluidObject | FluidObject[]
 }
 
-interface GatsbyImageFixedProps extends GatsbyImage {
+interface GatsbyImageFixedProps extends GatsbyImageOptionalProps {
   fixed: FixedObject | FixedObject[]
 }
 
