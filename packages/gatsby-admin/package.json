@@ -24,6 +24,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.10.0",
+    "react-helmet": "^6.0.0",
     "strict-ui": "^0.1.3",
     "subscriptions-transport-ws": "^0.9.16",
     "theme-ui": "^0.4.0-alpha.3",
