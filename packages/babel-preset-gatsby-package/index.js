@@ -39,12 +39,6 @@ function preset(context, options = {}) {
       r(`@babel/preset-flow`),
     ],
     plugins: [
-      [
-        r(`@babel/plugin-proposal-class-properties`),
-        {
-          loose: true,
-        },
-      ],
       r(`@babel/plugin-proposal-nullish-coalescing-operator`),
       r(`@babel/plugin-proposal-optional-chaining`),
       r(`@babel/plugin-transform-runtime`),
