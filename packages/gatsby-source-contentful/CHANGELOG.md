@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.13...gatsby-source-contentful@2.3.14) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.12...gatsby-source-contentful@2.3.13) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.11...gatsby-source-contentful@2.3.12) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.10...gatsby-source-contentful@2.3.11) (2020-05-20)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Use https instead of http when downloading assets ([#24227](https://github.com/gatsbyjs/gatsby/issues/24227)) ([b49f74b](https://github.com/gatsbyjs/gatsby/commit/b49f74b))
+
 ## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.9...gatsby-source-contentful@2.3.10) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-source-contentful

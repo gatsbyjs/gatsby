@@ -1,3 +1,4 @@
 module.exports = {
-  plugins: [`gatsby-plugin-typescript`]
-}
+  plugins: [`gatsby-plugin-react-helmet`],
+  pathPrefix: `/___admin`
+};
