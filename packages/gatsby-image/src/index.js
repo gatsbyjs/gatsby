@@ -480,7 +480,9 @@ class Image extends React.Component {
       const image = getCurrentSrcData(fluid)
 
       let aspectRatio = image.aspectRatio
-      if (isBrowser && !this.state.isHydrated) { aspectRatio+=0.0001 }
+      if (isBrowser && !this.state.isHydrated) {
+        aspectRatio += 0.0001
+      }
 
       return (
         <Tag
