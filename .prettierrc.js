@@ -1,6 +1,7 @@
 module.exports = {
-  arrowParens: "avoid",
+  arrowParens: "always",
   semi: false,
+  trailingComma: "all",
   overrides: [
     {
       // This file uses semicolons. It's needed here because `documentation`
