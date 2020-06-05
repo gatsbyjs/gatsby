@@ -1,5 +1,5 @@
 const { runQuery: nodesQuery } = require(`../../db/nodes`)
-const { didLastFilterUseSift } = require(`../../redux/run-sift`)
+// const { didLastFilterUseSift } = require(`../../redux/run-sift`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -325,9 +325,9 @@ function resetDb(nodes) {
 
 async function runQuery(
   queryArgs,
-  filtersCache,
-  nodes = makeNodesUneven(),
-  alwaysSift = !filtersCache
+  filtersCache = new Map(),
+  nodes = makeNodesUneven()
+  // alwaysSift = !filtersCache
 ) {
   resetDb(nodes)
   const { sc, type: gqlType } = makeGqlType(nodes)
@@ -342,18 +342,18 @@ async function runQuery(
 
   let result = await nodesQuery(args)
 
-  // If the filters cache was set, then the test expects fast filters to handle
-  // the query and to skip Sift. If it's not set, then it can't use fast filters
-  // Might revise this when adding tests where we don't expect fast filters to
-  // support it yet..?
-  if (result && result.length) {
-    // Currently, empty results must go through Sift, so ignore those cases here
-    if (alwaysSift) {
-      expect(didLastFilterUseSift()).toBe(true)
-    } else {
-      expect(didLastFilterUseSift()).toBe(!filtersCache)
-    }
-  }
+  // // If the filters cache was set, then the test expects fast filters to handle
+  // // the query and to skip Sift. If it's not set, then it can't use fast filters
+  // // Might revise this when adding tests where we don't expect fast filters to
+  // // support it yet..?
+  // if (result && result.length) {
+  //   // Currently, empty results must go through Sift, so ignore those cases here
+  //   if (alwaysSift) {
+  //     expect(didLastFilterUseSift()).toBe(true)
+  //   } else {
+  //     expect(didLastFilterUseSift()).toBe(!filtersCache)
+  //   }
+  // }
 
   return result
 }
@@ -399,7 +399,7 @@ it(`should use the cache argument`, async () => {
 
 // Make sure to test fast filters (with cache) and Sift (without cache)
 ;[
-  { desc: `without cache`, cb: () => null }, // Forces no cache, must use Sift
+  // { desc: `no cache`, cb: () => null }, // Forces no cache, must use Sift
   { desc: `with cache`, cb: () => new Map() },
 ].forEach(({ desc, cb: createFiltersCache }) => {
   async function runFastFilter(filter) {

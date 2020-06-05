@@ -134,9 +134,62 @@ describe(`<Link />`, () => {
       expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
     })
 
+    it(`correctly handles pathPrefix with trailing slash`, () => {
+      const pathPrefix = `/prefixed/`
+      const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      expect(link.getAttribute(`href`)).toEqual(`/prefixed${location}`)
+    })
+
+    it(`ignores pathPrefix for external links`, () => {
+      const pathPrefix = `/prefixed/`
+      const location = `https://example.com`
+      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      expect(link.getAttribute(`href`)).toEqual(location)
+    })
+
+    it(`handles relative link with "./"`, () => {
+      const location = `./courses?sort=name`
+      const { link } = setup({ linkProps: { to: location } })
+      expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
+    })
+
+    it(`handles relative link with "../"`, () => {
+      const location = `../courses?sort=name`
+      const { link } = setup({ linkProps: { to: location } })
+      expect(link.getAttribute(`href`)).toEqual(`/courses?sort=name`)
+    })
+
+    it(`handles bare relative link`, () => {
+      const location = `courses?sort=name`
+      const { link } = setup({ linkProps: { to: location } })
+      expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
+    })
+
+    it(`handles relative link with pathPrefix`, () => {
+      const pathPrefix = `/prefixed`
+      const sourcePath = `/prefixed/active/`
+      const location = `./courses?sort=name`
+      const { link } = setup({
+        linkProps: { to: location },
+        pathPrefix,
+        sourcePath,
+      })
+      expect(link.getAttribute(`href`)).toEqual(
+        `${pathPrefix}/active/courses?sort=name`
+      )
+    })
+
     it(`does not warn when internal`, () => {
       jest.spyOn(global.console, `warn`)
       const to = `/courses?sort=name`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`does not warn when relative`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `./courses?sort=name`
       setup({ linkProps: { to } })
       expect(console.warn).not.toBeCalled()
     })

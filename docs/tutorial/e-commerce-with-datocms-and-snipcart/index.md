@@ -57,7 +57,7 @@ Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site
 
 ## Exploring the DatoCMS Project
 
-After sucessfully linking the DatoCMS you can click on "Start my site" and
+After successfully linking the DatoCMS you can click on "Start my site" and
 follow the link in Gatsby Cloud to go straight to your project in DatoCMS.
 
 Click on "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
