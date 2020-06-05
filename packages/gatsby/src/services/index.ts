@@ -15,6 +15,22 @@ import { ServiceConfig } from "xstate"
 import { IBuildContext } from "./"
 export * from "./types"
 
+export {
+  customizeSchema,
+  sourceNodes,
+  createPages,
+  buildSchema,
+  createPagesStatefully,
+  extractQueries,
+  writeOutRequires,
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+  initialize,
+  writeHTML,
+  waitUntilAllJobsComplete,
+}
+
 export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
   customizeSchema,
   sourceNodes,
