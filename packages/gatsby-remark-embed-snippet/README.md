@@ -292,7 +292,7 @@ This is the JSX of my app:
 
 You can also add `// hide-range` comments to your files.
 
-```jsx
+```text
 // hide-range{1-2}
 import React from "react"
 import ReactDOM from "react-dom"
