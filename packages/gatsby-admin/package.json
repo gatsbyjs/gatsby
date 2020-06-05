@@ -33,7 +33,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build --prefix-paths",
+    "build": "echo \"hi\"",
     "watch": "echo \"hi\""
   }
 }
