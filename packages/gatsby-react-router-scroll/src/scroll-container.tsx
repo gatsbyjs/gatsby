@@ -38,7 +38,8 @@ class ScrollContainerImplementation extends React.Component<
     })
 
     const position = this.props.context.read(location, scrollKey)
-    node.scrollTo(0, position)
+
+    ;(node.scrollTo || node.scroll).call(node, 0, position || 0)
   }
 
   render(): React.ReactNode {

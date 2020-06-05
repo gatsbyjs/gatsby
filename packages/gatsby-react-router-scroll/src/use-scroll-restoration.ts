@@ -17,7 +17,7 @@ export function useScrollRestoration(
   useLayoutEffect((): void => {
     if (ref.current) {
       const position = state.read(location, identifier)
-      ref.current.scrollTo(0, position)
+      ref.current.scrollTo(0, position || 0)
     }
   }, [])
 

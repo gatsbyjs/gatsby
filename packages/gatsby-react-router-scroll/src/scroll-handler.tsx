@@ -61,7 +61,7 @@ export class ScrollHandler extends React.Component<
       scrollPosition = this._stateStorage.read(this.props.location, key)
     }
 
-    if (scrollPosition) {
+    if (scrollPosition !== null) {
       this.windowScroll(scrollPosition, prevProps)
     } else if (hash) {
       this.scrollToHash(decodeURI(hash), prevProps)
@@ -73,7 +73,7 @@ export class ScrollHandler extends React.Component<
     prevProps: LocationContext | undefined
   ): void => {
     if (this.shouldUpdateScroll(prevProps, this.props)) {
-      window.scroll(0, position)
+      ;(window.scrollTo || window.scroll)(0, position)
     }
   }
 

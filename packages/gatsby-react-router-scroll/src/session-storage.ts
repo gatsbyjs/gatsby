@@ -3,7 +3,7 @@ const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
 export class SessionStorage {
-  read(location: Location, key: string): number {
+  read(location: Location, key: string): number | null {
     const stateKey = this.getStateKey(location, key)
 
     try {
