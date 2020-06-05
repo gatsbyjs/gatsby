@@ -30,7 +30,6 @@ const theme = {
     initial: `initial`,
   },
 }
-console.log(theme.colors)
 
 const GraphQLProvider: React.FC<{}> = ({ children }) => {
   const [status, setStatus] = React.useState(`loading`)
