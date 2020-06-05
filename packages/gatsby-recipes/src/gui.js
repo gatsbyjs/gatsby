@@ -64,7 +64,11 @@ const InputFieldBlock = React.forwardRef((props, ref) => {
   const hasError = false
 
   return (
-    <FormFieldContainer layout={layout} className={className}>
+    <FormFieldContainer
+      layout={layout}
+      className={className}
+      sx={{ fontFamily: theme.fonts.body }}
+    >
       <InputField id={id} hasError={!!error} hasHint={!!hint}>
         <InputFieldLabel size={labelSize} isRequired={!!rest.required}>
           {label}
@@ -337,7 +341,6 @@ const File = ({ _uuid, ...props }) => {
 }
 
 const components = {
-  inlineCode: props => <code {...props} />,
   Config: () => null,
   GatsbyPlugin: () => null,
   NPMPackageJson: () => null,
@@ -977,11 +980,20 @@ const WithProviders = ({ children }) => {
         lineHeight: 1.45,
       },
       pre: {
+        fontFamily: baseTheme.fonts.monospace,
         fontSize: 0,
         lineHeight: 1.45,
         mt: 0,
         mb: 6,
         whiteSpace: `pre-wrap`,
+      },
+      inlineCode: {
+        backgroundColor: `hsla(0,0%,0%,0.06)`,
+        color: baseTheme.tones.NEUTRAL.darker,
+        borderRadius: `3px`,
+        py: `0.2em`,
+        px: `0.2em`,
+        fontSize: `90%`,
       },
       ol: {
         color: baseTheme.tones.NEUTRAL.dark,
