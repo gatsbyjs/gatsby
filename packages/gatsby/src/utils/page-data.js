@@ -51,6 +51,7 @@ const write = async ({ publicDir }, page) => {
   })
 
   await fs.outputFile(outputFilePath, bodyStr)
+  return body
 }
 
 const flush = async () => {
@@ -69,20 +70,29 @@ const flush = async () => {
 
   for (const pagePath of pagesToWrite) {
     const page = pages.get(pagePath)
-    const body = await write(
-      { publicDir: path.join(program.directory, `public`) },
-      page
-    )
 
-    if (program.command === `develop`) {
-      websocketManager.emitPageData({
-        ...body.result,
-        id: pagePath,
-        result: {
-          data: body.result.data,
-          pageContext: body.result.pageContext,
-        },
-      })
+    // It's a gloomy day in Bombay, let me tell you a short story...
+    // Once upon a time, writing page-data.json files were atomic
+    // After this change (#24808), they are not and this means that
+    // between adding a pending write for a page and actually flushing
+    // them, a page might not exist anymore щ（ﾟДﾟщ）
+    // This is why we need this check
+    if (page) {
+      const body = await write(
+        { publicDir: path.join(program.directory, `public`) },
+        page
+      )
+
+      if (program.command === `develop`) {
+        websocketManager.emitPageData({
+          ...body.result,
+          id: pagePath,
+          result: {
+            data: body.result.data,
+            pageContext: body.result.pageContext,
+          },
+        })
+      }
     }
   }
 
