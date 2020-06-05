@@ -7,6 +7,7 @@ import {
   deleteUntouchedPages,
   findChangedPages,
 } from "../utils/check-for-changed-pages"
+import { IGatsbyPage } from "../redux/types"
 
 export async function createPages({
   parentSpan,
@@ -18,17 +19,13 @@ export async function createPages({
 }> {
   if (!store) {
     reporter.panic(`store not initialized`)
-    return {
-      changedPages: [],
-      deletedPages: [],
-    }
   }
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })
   activity.start()
   const timestamp = Date.now()
-  const currentPages = new Map(store.getState().pages)
+  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
 
   await apiRunnerNode(
     `createPages`,
@@ -40,7 +37,13 @@ export async function createPages({
     },
     { activity }
   )
-
+  reporter.verbose(
+    `Now have ${store.getState().nodes.size} nodes with ${
+      store.getState().nodesByType.size
+    } types, and ${
+      store.getState().nodesByType?.get(`SitePage`).size
+    } SitePage nodes`
+  )
   activity.end()
 
   reporter.info(`Checking for deleted pages`)
