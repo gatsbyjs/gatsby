@@ -11,7 +11,7 @@ import { Runner } from "./create-graphql-runner"
 import { writeOutRedirects } from "../services/write-out-redirects"
 import { postBootstrap } from "../services/post-bootstrap"
 
-export default async function bootstrap(
+export async function bootstrap(
   context: IBuildContext
 ): Promise<{ bootstrapGraphQLFunction: Runner }> {
   const currentContext: IBuildContext = {
