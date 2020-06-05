@@ -1,3 +1,5 @@
+// TODO: In Gatsby v3, this file should be removed.
+// We are deprecating this in V2 in favor of useScrollRestoration
 import * as React from "react"
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
@@ -23,9 +25,25 @@ interface IPropsWithContextAndLocation extends IProps {
   location: HLocation
 }
 
+let hasNotWarnedDeprecation = true
+
 class ScrollContainerImplementation extends React.Component<
   IPropsWithContextAndLocation
 > {
+  constructor(props) {
+    super(props)
+
+    if (hasNotWarnedDeprecation) {
+      hasNotWarnedDeprecation = false
+      console.warn(
+        `Deprecation Warning: Gatsby <ScrollContainer> is deprecated in Gatsby v2 and will be removed in Gatsby v3.`
+      )
+      console.warn(
+        `Deprecation Warning: Update to the React hook alternative useScrollRestoration`
+      )
+    }
+  }
+
   componentDidMount(): void {
     // eslint-disable-next-line react/no-find-dom-node
     const node = ReactDOM.findDOMNode(this) as Element
