@@ -352,6 +352,7 @@ class Image extends React.Component {
       imgLoaded: false,
       imgCached: false,
       fadeIn: !this.seenBefore && props.fadeIn,
+      isHydrated: false,
     }
 
     this.imageRef = React.createRef()
@@ -361,6 +362,10 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      isHydrated: isBrowser,
+    })
+
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
@@ -474,6 +479,9 @@ class Image extends React.Component {
       const imageVariants = fluid
       const image = getCurrentSrcData(fluid)
 
+      let aspectRatio = image.aspectRatio
+      if (isBrowser && !this.state.isHydrated) { aspectRatio+=0.0001 }
+
       return (
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
@@ -492,7 +500,7 @@ class Image extends React.Component {
             aria-hidden
             style={{
               width: `100%`,
-              paddingBottom: `${100 / image.aspectRatio}%`,
+              paddingBottom: `${100 / aspectRatio}%`,
             }}
           />
 
