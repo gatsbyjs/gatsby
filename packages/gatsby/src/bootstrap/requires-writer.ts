@@ -7,7 +7,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
-import { IGatsbyState, IGatsbyPage } from "../redux/types"
+import { IGatsbyState, IGatsbyPage, IDependencyModule } from "../redux/types"
 import {
   writeModule,
   getAbsolutePathForVirtualModule,
@@ -71,6 +71,15 @@ export const getComponents = (
     .uniqBy(c => c.componentChunkName)
     .orderBy(c => c.componentChunkName)
     .value()
+
+const getModuleIds = (modules: IGatsbyState["modules"]): Array<string> => {
+  const ret: Array<string> = []
+  modules.forEach(({ moduleID }) => {
+    ret.push(moduleID)
+  })
+
+  return ret.sort()
+}
 
 /**
  * Get all dynamic routes and sort them by most specific at the top
@@ -162,12 +171,33 @@ const getMatchPaths = (
 
 const createHash = (
   matchPaths: Array<IGatsbyPageMatchPath>,
-  components: Array<IGatsbyPageComponent>
+  components: Array<IGatsbyPageComponent>,
+  modules: Array<string>
 ): string =>
   crypto
     .createHash(`md5`)
-    .update(JSON.stringify({ matchPaths, components }))
+    .update(JSON.stringify({ matchPaths, components, modules }))
     .digest(`hex`)
+
+function generateModuleGlueBody({
+  type,
+  source,
+  importName,
+}: IDependencyModule): string {
+  if (type === `default`) {
+    return `export { default } from "${slash(source)}"`
+  }
+
+  if (type === `named`) {
+    return `export { ${importName} as default } from "${slash(source)}"`
+  }
+
+  if (type === `namespace`) {
+    return `export * from "${slash(source)}"`
+  }
+
+  throw new Error(`requires-writer: Unsupported module export type: \${type}`)
+}
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
@@ -176,8 +206,9 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
+  const moduleIds = getModuleIds(state.modules)
 
-  const newHash = createHash(matchPaths, components)
+  const newHash = createHash(matchPaths, components, moduleIds)
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
@@ -209,6 +240,10 @@ const preferDefault = m => (m && m.default) || m
         }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
     )
     .join(`,\n`)}
+}\n\nexports.modules = {\n${moduleIds.map(
+    moduleId =>
+      `  "${moduleId}": preferDefault(require("$virtual/modules/${moduleId}"))`
+  )}  
 }\n\n`
 
   // Create file with async requires of components/json files.
@@ -228,7 +263,20 @@ const preferDefault = m => (m && m.default) || m
       )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     })
     .join(`,\n`)}
-}\n\n`
+}\n\nexports.modules = {\n${moduleIds
+    .map(
+      moduleId =>
+        `  "${moduleId}": () => import("$virtual/modules/${moduleId}.js" /* webpackChunkName: "${moduleId}" */)`
+    )
+    .join(`,\n`)}}\n\n`
+
+  // Create virtual modules for each dependency module
+  state.modules.forEach(module => {
+    writeModule(
+      `$virtual/modules/${module.moduleID}.js`,
+      generateModuleGlueBody(module)
+    )
+  })
 
   const writeAndMove = (
     virtualFilePath: string,
@@ -302,6 +350,16 @@ export const startListener = (): void => {
   })
 
   emitter.on(`DELETE_PAGE_BY_PATH`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+
+  emitter.on(`REGISTER_MODULE`, (): void => {
+    reporter.pendingActivity({ id: `requires-writer` })
+    debouncedWriteAll()
+  })
+
+  emitter.on(`UNREGISTER_MODULE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
   })
