@@ -110,7 +110,8 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
     // Run action for each component
     const { components } = snapshot
     components.forEach(c => {
-      const { isStaticQuery = false, text = `` } = queries.get(c.componentPath)
+      const { isStaticQuery = false, text = `` } =
+        queries.get(c.componentPath) || {}
 
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
