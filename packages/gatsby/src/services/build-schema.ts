@@ -9,10 +9,9 @@ export async function buildSchema({
   parentSpan,
 }: Partial<IBuildContext>): Promise<{
   graphqlRunner: Runner
-} | void> {
+}> {
   if (!store) {
     reporter.panic(`Cannot build schema before store initialization`)
-    return undefined
   }
   const activity = reporter.activityTimer(`building schema`, {
     parentSpan,
