@@ -619,8 +619,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
-  compiler.hooks.invalid.tap(`log compiling`, function (...args) {
-    // console.log(`set invalid`, args, this)
+  compiler.hooks.invalid.tap(`log compiling`, function () {
     webpackStatusUtil.markAsPending()
   })
 
