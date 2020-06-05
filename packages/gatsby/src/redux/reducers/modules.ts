@@ -38,6 +38,16 @@ export const modulesReducer = (
           // which should stay in the list even if they are not used
           if (dependencyModule.queryIDs.size === 0) {
             state.delete(moduleID)
+
+            // this is not great place to emit anything (reducer)
+            // but this is not redux action - this is just letting
+            // requires-writer know that it might need to rerun
+            emitter.emit(`UNREGISTER_MODULE`, {
+              type: `UNREGISTER_MODULE`,
+              payload: {
+                moduleID,
+              },
+            })
           }
         }
       })
