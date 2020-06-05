@@ -73,7 +73,7 @@ export class ScrollHandler extends React.Component<
     prevProps: LocationContext | undefined
   ): void => {
     if (this.shouldUpdateScroll(prevProps, this.props)) {
-      ;(window.scrollTo || window.scroll)(0, position)
+      window.scrollTo(0, position)
     }
   }
 
