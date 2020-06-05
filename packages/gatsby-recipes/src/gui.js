@@ -14,8 +14,15 @@ const {
   getTheme,
   BaseAnchor,
   Heading,
-  InProgressIcon,
   SuccessIcon,
+  InputField,
+  InputFieldControlProps,
+  InputFieldLabel,
+  InputFieldControl,
+  InputFieldHint,
+  InputFieldError,
+  WithFormFieldBlock,
+  FormFieldContainer,
 } = require(`gatsby-interface`)
 const {
   createClient,
@@ -32,11 +39,88 @@ require(`normalize.css`)
 import { useInputByUuid, InputProvider } from "./renderer/input-provider"
 
 const theme = getTheme()
+console.log({ GatsbyComponents, theme })
 
 ansi2HTML.setColors({
   red: theme.tones.DANGER.medium.slice(1),
   green: theme.tones.SUCCESS.medium.slice(1),
   yellow: theme.tones.WARNING.medium.slice(1),
+})
+
+const InputFieldBlock = React.forwardRef((props, ref) => {
+  const {
+    id,
+    key,
+    label,
+    labelSize,
+    error,
+    hint,
+    className,
+    validationMode,
+    layout,
+    ...rest
+  } = props
+
+  const hasError = false
+
+  return (
+    <FormFieldContainer layout={layout} className={className}>
+      <InputField id={id} hasError={!!error} hasHint={!!hint}>
+        <InputFieldLabel size={labelSize} isRequired={!!rest.required}>
+          {label}
+        </InputFieldLabel>
+        <input
+          type="text"
+          ref={ref}
+          {...rest}
+          sx={{
+            border: hasError
+              ? `1px solid ${theme.colors.red[60]}`
+              : `2px solid ${theme.tones.BRAND.dark}`,
+            background: theme.colors.white,
+            borderRadius: theme.radii[2],
+            color: theme.colors.grey[90],
+            fontFamily: theme.fonts.system,
+            fontSize: theme.fontSizes[2],
+            height: `2.25rem`,
+            padding: `0 ${theme.space[3]}`,
+            position: `relative`,
+            width: `66%`,
+            zIndex: 1,
+            WebkitAppearance: `none`,
+
+            ":focus": {
+              outline: `0`,
+              transition: `box-shadow 0.15s ease-in-out`,
+              boxShadow: `0 0 0 3px ${
+                hasError ? theme.colors.red[10] : theme.colors.purple[20]
+              }`,
+              borderColor: hasError
+                ? theme.colors.red[30]
+                : theme.colors.purple[60],
+            },
+
+            ":disabled": {
+              background: theme.colors.grey[10],
+              cursor: `not-allowed`,
+            },
+
+            "&:disabled::placeholder": {
+              color: theme.colors.grey[40],
+            },
+
+            "&::placeholder": {
+              color: theme.colors.grey[50],
+            },
+          }}
+        />
+        <InputFieldHint>{hint}</InputFieldHint>
+        <InputFieldError validationMode={validationMode}>
+          {error}
+        </InputFieldError>
+      </InputField>
+    </FormFieldContainer>
+  )
 })
 
 const makeResourceId = res => {
@@ -258,7 +342,7 @@ const components = {
   GatsbyPlugin: () => null,
   NPMPackageJson: () => null,
   NPMPackage: () => null,
-  File,
+  File: () => null,
   Directory: () => null,
   GatsbyShadowFile: () => null,
   NPMScript: () => null,
@@ -279,8 +363,8 @@ log(
 )
 
 const RecipeGui = ({
-  recipe = `./test.mdx`,
-  //recipe = `jest.mdx`,
+  // recipe = `./test.mdx`,
+  recipe = `jest.mdx`,
   // recipe,
   graphqlPort = 4000,
   projectRoot = PROJECT_ROOT,
@@ -419,7 +503,7 @@ const RecipeGui = ({
       const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
         <div id={makeResourceId(resourcePlan)} sx={{}}>
           <div>
-            <Styled.p sx={{ mb: resourcePlan.diff ? 6 : 0 }}>
+            <Styled.p sx={{ fontSize: 1, mb: resourcePlan.diff ? 6 : 0 }}>
               <Styled.em>{resourcePlan.resourceName}</Styled.em>
               {` `}—{` `}
               {resourcePlan.describe}
@@ -428,8 +512,8 @@ const RecipeGui = ({
           {resourcePlan.diff && (
             <Styled.pre
               sx={{
-                background: theme => theme.tones.BRAND.superLight,
-                border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
+                // background: `white`,
+                // border: theme => `1px solid ${theme.tones.NEUTRAL.lighter}`,
                 padding: 4,
                 mb: isLastPlan ? 0 : 6,
               }}
@@ -500,8 +584,36 @@ const RecipeGui = ({
                 </MDX>
               </div>
             </div>
+            <div
+              sx={{
+                // background: theme => theme.tones.BRAND.lighter,
+                padding: 6,
+              }}
+            >
+              <Heading
+                sx={{
+                  marginBottom: 4,
+                  color: theme => theme.tones.NEUTRAL.darker,
+                  fontWeight: 500,
+                }}
+                as={`h3`}
+              >
+                Inputs
+              </Heading>
+              <InputFieldBlock
+                id={`wooo-${i}`}
+                label="Wooo"
+                hint="Do the right thing and follow your heart"
+                sx={{ borderColor: `purple` }}
+              />
+            </div>
             {stepResources?.length > 0 && (
-              <div sx={{ padding: 6 }}>
+              <div
+                sx={{
+                  padding: 6,
+                  background: theme => theme.tones.BRAND.superLight,
+                }}
+              >
                 <Heading
                   sx={{
                     marginBottom: 4,
@@ -771,14 +883,9 @@ const RecipeGui = ({
                 <ButtonText />
               </Button>
             </div>
-            <div sx={{ marginBottom: 8 }}>
+            <div sx={{ marginBottom: 14 }}>
               <Heading sx={{ marginBottom: 6 }}>
-                Changes
-                {` `}
-                {state.context.plan &&
-                  `(${state.context.plan.filter(p => p.isDone).length}/${
-                    state.context.plan?.length
-                  })`}
+                {state.context.plan && state.context.plan?.length} Changes
               </Heading>
               {Object.entries(groupedPlans).map(([resourceName, plans]) => (
                 <div key={`key-${resourceName}`}>
@@ -808,7 +915,7 @@ const RecipeGui = ({
             </div>
 
             <Heading sx={{ mb: 6 }}>
-              Steps ({state.context.steps.length - 1})
+              {state.context.steps.length - 1} Steps
             </Heading>
             {state.context.steps.slice(1).map((step, i) => (
               <Step state={state} step={step} key={`step-${i}`} i={i} />
