@@ -49,6 +49,7 @@ export const queryStates: MachineConfig<IBuildContext, any, any> = {
         src: `extractQueries`,
         onDone: [
           {
+            actions: `resetGraphQlRunner`,
             target: `writingRequires`,
           },
         ],

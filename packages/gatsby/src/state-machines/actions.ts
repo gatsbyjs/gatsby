@@ -15,6 +15,7 @@ import { write as writeAppData } from "../utils/app-data"
 import { listenForMutations } from "../services/listen-for-mutations"
 import { Span } from "opentracing"
 import JestWorker from "jest-worker"
+import { GraphQLRunner } from "../query/graphql-runner"
 
 const concatUnique = <T>(array1?: T[], array2?: T[]): T[] =>
   Array.from(new Set((array1 || []).concat(array2 || [])))
@@ -35,8 +36,8 @@ export const callRealApi = async (
 }
 
 type BuildMachineAction =
-  | ActionFunction<IBuildContext, AnyEventObject>
-  | AssignAction<IBuildContext, AnyEventObject>
+  | ActionFunction<IBuildContext, any>
+  | AssignAction<IBuildContext, any>
 
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
@@ -127,6 +128,14 @@ export const assignBootstrap: BuildMachineAction = assign<
   }
 })
 
+export const resetGraphQlRunner = assign<IBuildContext>({
+  graphqlRunner: ({ store, program }) =>
+    new GraphQLRunner(store, {
+      collectStats: true,
+      graphqlTracing: program?.graphqlTracing,
+    }),
+})
+
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   callApi,
   addNodeMutation,
@@ -136,6 +145,7 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   spawnMutationListener,
   assignChangedPages,
   assignBootstrap,
+  resetGraphQlRunner,
 }
 
 // export const dummyActions = {

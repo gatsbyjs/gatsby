@@ -7,6 +7,7 @@ import JestWorker from "jest-worker"
 import { IProgram } from "../commands/types"
 import { Store } from "../.."
 import { Runner } from "../bootstrap/create-graphql-runner"
+import { GraphQLRunner } from "../query/graphql-runner"
 
 export interface IGroupedQueryIds {
   pageQueryIds: string[]
@@ -30,7 +31,8 @@ export interface IBuildContext {
   websocketManager?: WebsocketManager
   store?: Store
   parentSpan?: Span
-  graphqlRunner?: Runner
+  bootstrapGraphQLFunction?: Runner
+  graphqlRunner?: GraphQLRunner
   refresh?: boolean
   webhookBody?: Record<string, unknown>
   queryIds?: IGroupedQueryIds
