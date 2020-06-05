@@ -3,8 +3,8 @@ import { findPath } from "./find-path"
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      Promise.resolve(syncRequires.components[chunkName])
+    const loadComponent = (chunkName, key = `components`) =>
+      Promise.resolve(syncRequires[key][chunkName])
     super(loadComponent, matchPaths)
   }
 
