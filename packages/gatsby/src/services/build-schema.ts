@@ -8,7 +8,7 @@ export async function buildSchema({
   store,
   parentSpan,
 }: Partial<IBuildContext>): Promise<{
-  graphqlRunner: Runner
+  bootstrapGraphQLFunction: Runner
 }> {
   if (!store) {
     reporter.panic(`Cannot build schema before store initialization`)
@@ -19,8 +19,8 @@ export async function buildSchema({
   activity.start()
   await build({ parentSpan: activity.span })
   activity.end()
-  const graphqlRunner = createGraphQLRunner(store, reporter)
+  const bootstrapGraphQLFunction = createGraphQLRunner(store, reporter)
   return {
-    graphqlRunner,
+    bootstrapGraphQLFunction,
   }
 }

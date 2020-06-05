@@ -13,15 +13,18 @@ import { postBootstrap } from "../services/post-bootstrap"
 
 export default async function bootstrap(
   context: IBuildContext
-): Promise<{ graphqlRunner: Runner }> {
-  const currentContext = { ...context, ...(await initialize(context)) }
+): Promise<{ bootstrapGraphQLFunction: Runner }> {
+  const currentContext: IBuildContext = {
+    ...context,
+    ...(await initialize(context)),
+  }
 
   await customizeSchema(currentContext)
   await sourceNodes(currentContext)
 
-  const { graphqlRunner } = await buildSchema(currentContext)
+  const { bootstrapGraphQLFunction } = await buildSchema(currentContext)
 
-  currentContext.graphqlRunner = graphqlRunner
+  currentContext.bootstrapGraphQLFunction = bootstrapGraphQLFunction
 
   await writeOutRequires(currentContext)
 
@@ -31,5 +34,5 @@ export default async function bootstrap(
 
   await postBootstrap(currentContext)
 
-  return { graphqlRunner }
+  return { bootstrapGraphQLFunction }
 }

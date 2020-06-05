@@ -11,7 +11,7 @@ import { IGatsbyPage } from "../redux/types"
 
 export async function createPages({
   parentSpan,
-  graphqlRunner,
+  bootstrapGraphQLFunction,
   store,
 }: Partial<IBuildContext>): Promise<{
   changedPages: string[]
@@ -30,7 +30,7 @@ export async function createPages({
   await apiRunnerNode(
     `createPages`,
     {
-      graphql: graphqlRunner,
+      graphql: bootstrapGraphQLFunction,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,

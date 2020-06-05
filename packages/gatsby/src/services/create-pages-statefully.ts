@@ -5,7 +5,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 
 export async function createPagesStatefully({
   parentSpan,
-  graphqlRunner,
+  bootstrapGraphQLFunction,
 }: Partial<IBuildContext>): Promise<void> {
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
@@ -18,7 +18,7 @@ export async function createPagesStatefully({
   await apiRunnerNode(
     `createPagesStatefully`,
     {
-      graphql: graphqlRunner,
+      graphql: bootstrapGraphQLFunction,
       traceId: `initial-createPagesStatefully`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
