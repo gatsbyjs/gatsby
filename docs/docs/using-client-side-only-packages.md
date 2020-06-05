@@ -70,7 +70,7 @@ import Loadable from "@loadable/component"
 import Client from "shopify-buy"
 import ShopifyBuy from "@shopify/buy-button-js"
 
-const ShopifyBuyButton = props => {
+const ShopifyBuyButton = (props) => {
   // custom component using shopify client-side libraries
   return <div>etc</div>
 }
@@ -90,7 +90,7 @@ Remember that the following code could break if executed without the `isSSR` gua
 import React from "react"
 
 const ClientSideOnlyLazy = React.lazy(() =>
-  import("../components/ClientSideOnly")
+  import("../components/ClientSideOnly"),
 )
 const MyPage = () => {
   const isSSR = typeof window === "undefined"

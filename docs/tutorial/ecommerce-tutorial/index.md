@@ -117,7 +117,7 @@ const buttonStyles = {
 
 const stripePromise = loadStripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
 
-const redirectToCheckout = async event => {
+const redirectToCheckout = async (event) => {
   event.preventDefault()
   const stripe = await stripePromise
   const { error } = await stripe.redirectToCheckout({
@@ -153,7 +153,7 @@ const stripePromise = loadStripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
 This identifies you with the Stripe platform, validates the checkout request against your products and security settings, and processes the payment on your Stripe account.
 
 ```jsx:title=src/components/checkout.js
-const redirectToCheckout = async event => {
+const redirectToCheckout = async (event) => {
   event.preventDefault()
   const stripe = await stripePromise
   const { error } = await stripe.redirectToCheckout({
@@ -396,7 +396,7 @@ const SkuCard = ({ sku, stripePromise }) => {
       <p>Price: {formatPrice(sku.price, sku.currency)}</p>
       <button
         style={buttonStyles}
-        onClick={event => redirectToCheckout(event, sku.id)}
+        onClick={(event) => redirectToCheckout(event, sku.id)}
       >
         BUY ME
       </button>

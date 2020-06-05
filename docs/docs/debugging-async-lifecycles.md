@@ -21,8 +21,8 @@ exports.createPages = async function ({ actions, graphql }) {
         }
       }
     }
-  `).then(res => {
-    res.data.allMarkdownRemark.edges.forEach(edge => {
+  `).then((res) => {
+    res.data.allMarkdownRemark.edges.forEach((edge) => {
       const slug = edge.node.fields.slug
       actions.createPage({
         path: slug,
@@ -54,8 +54,8 @@ exports.createPages = async function ({ actions, graphql }) {
         }
       }
     }
-  `).then(res => {
-    res.data.allMarkdownRemark.edges.forEach(edge => {
+  `).then((res) => {
+    res.data.allMarkdownRemark.edges.forEach((edge) => {
       const slug = edge.node.fields.slug
       actions.createPage({
         path: slug,
@@ -80,7 +80,7 @@ With Node 8, Node is able to natively interpret `async` functions. This lets you
 ```js:title=gatsby-node.js
 const fetch = require("node-fetch")
 
-const getJSON = uri => fetch(uri).then(response => response.json())
+const getJSON = (uri) => fetch(uri).then((response) => response.json())
 
 exports.createPages = async function ({ actions, graphql }) {
   // highlight-start

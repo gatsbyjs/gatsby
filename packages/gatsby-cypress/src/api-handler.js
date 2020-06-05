@@ -2,7 +2,7 @@ let resolve = null
 let awaitingAPI = null
 
 export function waitForAPI(api) {
-  const promise = new Promise(r => {
+  const promise = new Promise((r) => {
     resolve = r
   })
   awaitingAPI = api

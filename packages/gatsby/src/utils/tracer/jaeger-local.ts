@@ -23,7 +23,7 @@ function create(): JaegerTracer {
 }
 
 function stop(): Promise<void> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     tracer.close(resolve)
   })
 }

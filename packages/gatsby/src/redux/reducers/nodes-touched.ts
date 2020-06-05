@@ -3,7 +3,7 @@ import { IGatsbyState } from "gatsby/src/redux/types"
 
 export const nodesTouchedReducer = (
   state: IGatsbyState["nodesTouched"] = new Set(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["nodesTouched"] => {
   switch (action.type) {
     case `CREATE_NODE`:

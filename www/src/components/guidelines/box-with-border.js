@@ -4,7 +4,7 @@ import themeGet from "@styled-system/theme-get"
 import { Box } from "./system"
 
 const BoxWithBorder = styled(Box)(
-  props =>
+  (props) =>
     props.withBorder && {
       ":after": {
         border: `1px solid ${themeGet(`colors.blackFade.10`)(props)}`,
@@ -16,7 +16,7 @@ const BoxWithBorder = styled(Box)(
         right: 0,
         top: 0,
       },
-    }
+    },
 )
 
 BoxWithBorder.defaultProps = {

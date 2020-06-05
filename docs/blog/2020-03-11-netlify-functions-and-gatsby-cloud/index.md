@@ -41,14 +41,14 @@ exports.handler = async (event, context, callback) => {
   // the corresponding document.
   const { slug } = JSON.parse(event.body)
   const document = await client.query(
-    q.Get(q.Match(q.Index("hits_by_slug"), slug))
+    q.Get(q.Match(q.Index("hits_by_slug"), slug)),
   )
 
   // Increment the number of hits by 1
   await client.query(
     q.Update(document.ref, {
       data: { hits: document.data.hits + 1 },
-    })
+    }),
   )
 
   return {

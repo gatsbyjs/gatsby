@@ -26,7 +26,7 @@ const transform = (props = {}) => {
   return plan
 }
 
-module.exports = renderTree => {
+module.exports = (renderTree) => {
   const [doc] = renderTree.children
 
   return transform(doc)

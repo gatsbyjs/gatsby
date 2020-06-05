@@ -18,7 +18,7 @@ queue.on(`active`, () => {
   debug(
     `Working on item #${++count}.  Size: ${queue.size}  Pending: ${
       queue.pending
-    }`
+    }`,
   )
 })
 
@@ -82,7 +82,7 @@ class MdxHtmlBuilderWebpackPlugin {
           source,
           /* filename: */ self.entry,
           /* scope: */ self.globals,
-          /* includeGlobals: */ true
+          /* includeGlobals: */ true,
         )
 
         if (render.hasOwnProperty(`default`)) {
@@ -91,7 +91,7 @@ class MdxHtmlBuilderWebpackPlugin {
 
         if (typeof render !== `function`) {
           throw new Error(
-            `Export from '${self.entry}'  must be a function that returns a htmlString value.`
+            `Export from '${self.entry}'  must be a function that returns a htmlString value.`,
           )
         }
         // use function here
@@ -114,7 +114,7 @@ class MdxHtmlBuilderWebpackPlugin {
 
 exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
   new DataLoader(
-    async keys => {
+    async (keys) => {
       const webpackConfig = cloneDeep(store.getState().webpack)
       // something sets externals, which will cause React to be undefined
       webpackConfig.externals = undefined
@@ -130,7 +130,7 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
 
       return queue.add(
         () =>
-          new Promise(resolve => {
+          new Promise((resolve) => {
             compiler.run((err, stats) => {
               // error handling bonanza
               if (err) {
@@ -156,13 +156,13 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
                   renderMdxBody
                     ? renderMdxBody(body)
                     : new Error(
-                        `renderMdxBody was unavailable when rendering html.`
-                      )
-                )
+                        `renderMdxBody was unavailable when rendering html.`,
+                      ),
+                ),
               )
             })
-          })
+          }),
       )
     },
-    { cacheKeyFn: ({ id }) => id }
+    { cacheKeyFn: ({ id }) => id },
   )

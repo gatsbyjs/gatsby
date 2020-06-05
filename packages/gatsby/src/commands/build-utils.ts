@@ -13,7 +13,7 @@ const checkFolderIsEmpty = (path: string): boolean =>
 
 export const getChangedPageDataKeys = (
   state: IGatsbyState,
-  cachedPageData: Map<string, string>
+  cachedPageData: Map<string, string>,
 ): string[] => {
   if (cachedPageData && state.pageData) {
     const pageKeys: string[] = []
@@ -35,7 +35,7 @@ export const getChangedPageDataKeys = (
 
 export const collectRemovedPageData = (
   state: IGatsbyState,
-  cachedPageData: Map<string, string>
+  cachedPageData: Map<string, string>,
 ): string[] => {
   if (cachedPageData && state.pageData) {
     const deletedPageKeys: string[] = []
@@ -51,12 +51,12 @@ export const collectRemovedPageData = (
 
 const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
   const pageHtmlDirectory = path.dirname(
-    getPageHtmlFilePath(publicDir, pagePath)
+    getPageHtmlFilePath(publicDir, pagePath),
   )
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
-    fixedPagePath(pagePath)
+    fixedPagePath(pagePath),
   )
   // if page's folder is empty also remove matching page-data folder
   if (checkFolderIsEmpty(pageHtmlDirectory)) {
@@ -76,19 +76,19 @@ const sortedPageKeysByNestedLevel = (pageKeys: string[]): string[] =>
 
 export const removePageFiles = async (
   publicDir: string,
-  pageKeys: string[]
+  pageKeys: string[],
 ): Promise<void> => {
-  const removePages = pageKeys.map(pagePath =>
-    removePageHtmlFile({ publicDir }, pagePath)
+  const removePages = pageKeys.map((pagePath) =>
+    removePageHtmlFile({ publicDir }, pagePath),
   )
 
-  const removePageData = pageKeys.map(pagePath =>
-    removePageDataFile({ publicDir }, pagePath)
+  const removePageData = pageKeys.map((pagePath) =>
+    removePageDataFile({ publicDir }, pagePath),
   )
 
   return Promise.all([...removePages, ...removePageData]).then(() => {
     // Sort removed pageKeys by nested directories and remove if empty.
-    sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
+    sortedPageKeysByNestedLevel(pageKeys).forEach((pagePath) => {
       checkAndRemoveEmptyDir(publicDir, pagePath)
     })
   })

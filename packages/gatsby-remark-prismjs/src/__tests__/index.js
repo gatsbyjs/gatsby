@@ -72,7 +72,7 @@ describe(`remark prism plugin`, () => {
       const markdownAST = remark.parse(code)
       plugin(
         { markdownAST },
-        { inlineCodeMarker: ` : `, aliases: { foobar: `javascript` } }
+        { inlineCodeMarker: ` : `, aliases: { foobar: `javascript` } },
       )
       expect(markdownAST).toMatchSnapshot()
     })
@@ -192,7 +192,7 @@ describe(`remark prism plugin`, () => {
       plugin({ markdownAST }, { noInlineHighlight: true })
       expect(console.warn).toHaveBeenCalledWith(
         `code block language not specified in markdown.`,
-        `applying generic code block`
+        `applying generic code block`,
       )
     })
 
@@ -203,7 +203,7 @@ describe(`remark prism plugin`, () => {
       plugin({ markdownAST })
       expect(console.warn).toHaveBeenCalledWith(
         `code block or inline code language not specified in markdown.`,
-        `applying generic code block`
+        `applying generic code block`,
       )
     })
   })

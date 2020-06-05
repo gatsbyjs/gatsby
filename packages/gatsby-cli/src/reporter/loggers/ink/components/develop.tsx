@@ -5,7 +5,7 @@ import { ActivityStatuses } from "../../../constants"
 import { createLabel } from "./utils"
 
 const getLabel = (
-  level: ActivityStatuses | string
+  level: ActivityStatuses | string,
 ): ReturnType<typeof createLabel> => {
   switch (level) {
     case ActivityStatuses.InProgress:

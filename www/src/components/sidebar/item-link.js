@@ -6,7 +6,7 @@ import { useSidebarContext } from "./sidebar"
 import indention from "../../utils/sidebar/indention"
 
 const _getTitle = (title, isDraft) => (isDraft ? title.slice(0, -1) : title)
-const _isDraft = title => title.slice(-1) === `*`
+const _isDraft = (title) => title.slice(-1) === `*`
 
 const bulletSize = 8
 const bulletSizeActive = 100
@@ -73,7 +73,7 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
           },
           "&:before, &:after": {
             content: `''`,
-            left: t =>
+            left: (t) =>
               level === 0 || (level === 1 && !isSteps)
                 ? `calc(${indent} - ${t.space[4]})`
                 : `calc(${indent} - ${t.space[6]})`,

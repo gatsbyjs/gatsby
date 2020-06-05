@@ -12,7 +12,7 @@ interface IErrorMeta {
 export function validatePageComponent(
   page: IGatsbyPage,
   directory: string,
-  pluginName: string
+  pluginName: string,
 ): { message?: string; error?: IErrorMeta; panicOnBuild?: boolean } {
   const { component } = page
   if (!component) {

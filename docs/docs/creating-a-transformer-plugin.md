@@ -246,7 +246,7 @@ async function onCreateNode({
     transformObject(
       obj,
       obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
-      _.upperFirst(_.camelCase(`${node.name} Yaml`))
+      _.upperFirst(_.camelCase(`${node.name} Yaml`)),
     )
   })
   // highlight-end
@@ -307,7 +307,7 @@ Sometimes transforming properties costs time and resources. In order to avoid re
 Cache keys should at least contain the contentDigest of the concerned node. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
 
 ```javascript:title=extend-node-type.js
-const htmlCacheKey = node =>
+const htmlCacheKey = (node) =>
   `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 ```
 

@@ -6,7 +6,7 @@ describe(`test-require-error`, () => {
       require(`./fixtures/module-does-not-exist`)
     } catch (err) {
       expect(testRequireError(`./fixtures/module-does-not-exist`, err)).toEqual(
-        true
+        true,
       )
     }
   })
@@ -15,7 +15,7 @@ describe(`test-require-error`, () => {
       require(`.\\fixtures\\module-does-not-exist`)
     } catch (err) {
       expect(
-        testRequireError(`.\\fixtures\\module-does-not-exist`, err)
+        testRequireError(`.\\fixtures\\module-does-not-exist`, err),
       ).toEqual(true)
     }
   })
@@ -24,7 +24,7 @@ describe(`test-require-error`, () => {
       require(`./fixtures/bad-module-require`)
     } catch (err) {
       expect(testRequireError(`./fixtures/bad-module-require`, err)).toEqual(
-        false
+        false,
       )
     }
   })
@@ -33,7 +33,7 @@ describe(`test-require-error`, () => {
       require(`./fixtures/bad-module-syntax`)
     } catch (err) {
       expect(testRequireError(`./fixtures/bad-module-syntax`, err)).toEqual(
-        false
+        false,
       )
     }
   })
@@ -49,8 +49,8 @@ describe(`test-require-error`, () => {
       expect(
         testRequireError(
           `./fixtures/module-does-not-exist`,
-          bazelModuleNotFoundError
-        )
+          bazelModuleNotFoundError,
+        ),
       ).toEqual(true)
     })
 
@@ -64,8 +64,8 @@ describe(`test-require-error`, () => {
       expect(
         testRequireError(
           `./fixtures/bad-module-require`,
-          bazelModuleNotFoundError
-        )
+          bazelModuleNotFoundError,
+        ),
       ).toEqual(false)
     })
   })

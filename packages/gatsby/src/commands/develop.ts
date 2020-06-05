@@ -32,7 +32,7 @@ const requireUncached = (file: string): any => {
 // Heuristics for gatsby-config.js, as not all changes to it require a full restart to take effect
 const doesConfigChangeRequireRestart = (
   lastConfig: Record<string, any>,
-  newConfig: Record<string, any>
+  newConfig: Record<string, any>,
 ): boolean => {
   // Ignore changes to siteMetadata
   const replacer = (_, v): string | void => {
@@ -45,11 +45,11 @@ const doesConfigChangeRequireRestart = (
 
   const oldConfigString = JSON.stringify(
     { ...lastConfig, siteMetadata: null },
-    replacer
+    replacer,
   )
   const newConfigString = JSON.stringify(
     { ...newConfig, siteMetadata: null },
-    replacer
+    replacer,
   )
 
   if (oldConfigString === newConfigString) return false
@@ -89,7 +89,7 @@ class ControllableScript {
       })
     }
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.process.on(`exit`, () => {
         this.process.removeAllListeners()
         resolve()
@@ -130,7 +130,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   // used together
   if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
     reporter.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
+      `for custom ssl --https, --cert-file, and --key-file must be used together`,
     )
   }
 
@@ -147,7 +147,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     if (REGEX_IP.test(sslHost)) {
       reporter.panic(
-        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`,
       )
     }
 
@@ -174,7 +174,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     if (!unlock) {
       console.error(
-        `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
+        `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`,
       )
       process.exit(1)
     }
@@ -200,7 +200,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   }
 
-  io.on(`connection`, socket => {
+  io.on(`connection`, (socket) => {
     socket.on(`develop:restart`, async () => {
       isRestarting = true
       proxy.serveRestartingScreen()
@@ -217,7 +217,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
-  developProcess.on(`exit`, code => {
+  developProcess.on(`exit`, (code) => {
     if (isRestarting) return
     process.exit(code)
   })
@@ -230,7 +230,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let watcher
 
   if (!isCI()) {
-    chokidar.watch(files).on(`change`, filePath => {
+    chokidar.watch(files).on(`change`, (filePath) => {
       const file = path.basename(filePath)
 
       if (file === `gatsby-config.js`) {
@@ -245,7 +245,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       }
 
       console.warn(
-        `develop process needs to be restarted to apply the changes to ${file}`
+        `develop process needs to be restarted to apply the changes to ${file}`,
       )
       io.emit(`develop:needs-restart`, {
         dirtyFile: file,
@@ -257,10 +257,10 @@ module.exports = async (program: IProgram): Promise<void> => {
     await Promise.all([
       watcher?.close(),
       unlock?.(),
-      new Promise(resolve => {
+      new Promise((resolve) => {
         statusServer.close(resolve)
       }),
-      new Promise(resolve => {
+      new Promise((resolve) => {
         proxy.server.close(resolve)
       }),
     ])

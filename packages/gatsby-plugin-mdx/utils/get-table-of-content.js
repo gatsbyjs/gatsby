@@ -26,7 +26,7 @@ function getItems(node, current) {
   if (!node) {
     return {}
   } else if (node.type === `paragraph`) {
-    visit(node, item => {
+    visit(node, (item) => {
       if (item.type === `link`) {
         current.url = item.url
       }
@@ -37,7 +37,7 @@ function getItems(node, current) {
     return current
   } else {
     if (node.type === `list`) {
-      current.items = node.children.map(i => getItems(i, {}))
+      current.items = node.children.map((i) => getItems(i, {}))
       return current
     } else if (node.type === `listItem`) {
       const heading = getItems(node.children[0], {})

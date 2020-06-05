@@ -25,7 +25,7 @@ You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/)
 MDX takes this one step further, and makes it possible to use JSX in your Markdown documents. Try making the `figure` element into a `Figure` component.
 
 ```jsx
-export const Figure = props => {
+export const Figure = (props) => {
   return (
     <figure class="chart">
       <object data={props.data} type="image/svg+xml"></object>

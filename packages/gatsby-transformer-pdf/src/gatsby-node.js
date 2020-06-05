@@ -1,15 +1,15 @@
 const Promise = require(`bluebird`)
 const PDFParser = require(`pdf2json`)
 
-const convertToJson = path =>
+const convertToJson = (path) =>
   new Promise((res, rej) => {
     const pdfParser = new PDFParser(this, 1)
     pdfParser.loadPDF(path)
     pdfParser
-      .on(`pdfParser_dataReady`, pdfData => {
+      .on(`pdfParser_dataReady`, (pdfData) => {
         res(pdfParser.getRawTextContent())
       })
-      .on(`pdfParser_dataError`, errData => {
+      .on(`pdfParser_dataError`, (errData) => {
         rej(`PDF to JSON conversion failed!`)
       })
   })

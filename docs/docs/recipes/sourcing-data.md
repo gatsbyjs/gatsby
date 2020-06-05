@@ -22,7 +22,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     { name: "Squirtle", type: "water" },
   ]
 
-  pokemons.forEach(pokemon => {
+  pokemons.forEach((pokemon) => {
     const node = {
       name: pokemon.name,
       type: pokemon.type,
@@ -308,7 +308,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   const postTemplate = path.resolve(`./src/templates/post.js`)
-  result.data.allWordpressPost.edges.forEach(edge => {
+  result.data.allWordpressPost.edges.forEach((edge) => {
     createPage({
       // `path` will be the url for the page
       path: edge.node.slug,
@@ -485,14 +485,14 @@ In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI
 ```js:title=gatsby-node.js
 const axios = require("axios")
 
-const get = endpoint => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
+const get = (endpoint) => axios.get(`https://pokeapi.co/api/v2${endpoint}`)
 
-const getPokemonData = names =>
+const getPokemonData = (names) =>
   Promise.all(
-    names.map(async name => {
+    names.map(async (name) => {
       const { data: pokemon } = await get(`/pokemon/${name}`)
       return { ...pokemon }
-    })
+    }),
   )
 exports.createPages = async ({ actions: { createPage } }) => {
   const allPokemon = await getPokemonData(["pikachu", "charizard", "squirtle"])
@@ -516,7 +516,7 @@ export default function AllPokemon({ pageContext: { allPokemon } }) {
     <div>
       <h1>Behold, the Pokémon!</h1>
       <ul>
-        {allPokemon.map(pokemon => (
+        {allPokemon.map((pokemon) => (
           <li key={pokemon.id}>
             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             <p>{pokemon.name}</p>

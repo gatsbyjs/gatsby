@@ -6,7 +6,7 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
   const pathIsExcluded =
     location &&
     typeof window.excludeGAPaths !== `undefined` &&
-    window.excludeGAPaths.some(rx => rx.test(location.pathname))
+    window.excludeGAPaths.some((rx) => rx.test(location.pathname))
 
   if (pathIsExcluded) return null
 

@@ -18,7 +18,7 @@ function findFileNode({ node, getNode }) {
     if (whileCount > 100) {
       console.log(
         `It looks like you have a node that's set its parent as itself`,
-        fileNode
+        fileNode,
       )
     }
   }
@@ -38,7 +38,7 @@ module.exports = ({
 
   const relativePath = path.posix.relative(
     slash(basePath),
-    slash(fileNode.relativePath)
+    slash(fileNode.relativePath),
   )
   const { dir = ``, name } = path.parse(relativePath)
   const parsedName = name === `index` ? `` : name

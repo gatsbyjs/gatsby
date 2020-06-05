@@ -14,7 +14,7 @@ const getAllTypeDefinitions = () => {
     schemaCustomization: { types },
   } = store.getState()
 
-  const builtInTypes = builtInTypeDefinitions().map(typeDef => {
+  const builtInTypes = builtInTypeDefinitions().map((typeDef) => {
     return {
       typeOrTypeDef: typeDef,
       plugin: undefined,
@@ -25,10 +25,10 @@ const getAllTypeDefinitions = () => {
   return [
     ...builtInTypes,
     ...types.filter(
-      type => type.plugin && type.plugin.name !== `default-site-plugin`
+      (type) => type.plugin && type.plugin.name !== `default-site-plugin`,
     ),
     ...types.filter(
-      type => !type.plugin || type.plugin.name === `default-site-plugin`
+      (type) => !type.plugin || type.plugin.name === `default-site-plugin`,
     ),
   ]
 }
@@ -50,7 +50,7 @@ const getAllFieldExtensions = () => {
 // Actual logic for inference located in inferenceMetadata reducer and ./infer
 // Here we just orchestrate the process via redux actions
 const buildInferenceMetadata = ({ types }) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     if (!types || !types.length) {
       resolve()
       return
@@ -136,7 +136,7 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
     `rebuild schema with SitePage context`,
-    spanArgs
+    spanArgs,
   )
   await buildInferenceMetadata({ types: [`SitePage`] })
 

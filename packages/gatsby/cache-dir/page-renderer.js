@@ -29,7 +29,7 @@ class PageRenderer extends React.Component {
       pageElement,
       ({ result }) => {
         return { element: result, props }
-      }
+      },
     ).pop()
 
     return wrappedPage

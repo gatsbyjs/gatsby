@@ -35,7 +35,7 @@ describe(`gatsby-plugin-react-helmet`, () => {
 
       expect(actions.setHeadComponents).toHaveBeenCalledTimes(1)
       expect(actions.setHtmlAttributes).toHaveBeenCalledWith(
-        `html-attributes-component`
+        `html-attributes-component`,
       )
     })
 
@@ -46,7 +46,7 @@ describe(`gatsby-plugin-react-helmet`, () => {
 
       expect(actions.setBodyAttributes).toHaveBeenCalledTimes(1)
       expect(actions.setBodyAttributes).toHaveBeenCalledWith(
-        `body-attributes-component`
+        `body-attributes-component`,
       )
     })
   })

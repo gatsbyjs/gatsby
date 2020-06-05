@@ -49,7 +49,7 @@ function ContributorPageTemplate({ data }) {
           </div>
         </div>
         <div sx={{ py: 7, px: 6 }}>
-          {posts.map(node => (
+          {posts.map((node) => (
             <BlogPostPreviewItem
               post={node}
               key={node.fields.slug}

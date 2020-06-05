@@ -9,12 +9,12 @@ describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
     it(`allows you to create URls`, () => {
       expect(
-        createUrl(`//images.contentful.com/dsf/bl.jpg`, { width: 100 })
+        createUrl(`//images.contentful.com/dsf/bl.jpg`, { width: 100 }),
       ).toMatchSnapshot()
     })
     it(`ignores options it doesn't understand`, () => {
       expect(
-        createUrl(`//images.contentful.com/dsf/bl.jpg`, { happiness: 100 })
+        createUrl(`//images.contentful.com/dsf/bl.jpg`, { happiness: 100 }),
       ).toMatchSnapshot()
     })
   })

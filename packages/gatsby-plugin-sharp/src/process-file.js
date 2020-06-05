@@ -72,7 +72,7 @@ exports.processFile = (file, transforms, options = {}) => {
     throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
 
-  return transforms.map(async transform => {
+  return transforms.map(async (transform) => {
     try {
       const { outputPath, args } = transform
       debug(`Start processing ${outputPath}`)
@@ -80,7 +80,7 @@ exports.processFile = (file, transforms, options = {}) => {
 
       const transformArgs = healOptions(
         { defaultQuality: options.defaultQuality },
-        args
+        args,
       )
 
       let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
@@ -149,7 +149,7 @@ exports.processFile = (file, transforms, options = {}) => {
         clonedPipeline = await duotone(
           transformArgs.duotone,
           transformArgs.toFormat,
-          clonedPipeline
+          clonedPipeline,
         )
       }
 
@@ -178,7 +178,7 @@ exports.processFile = (file, transforms, options = {}) => {
         await clonedPipeline.toFile(outputPath)
       } catch (err) {
         throw new Error(
-          `Failed to write ${file} into ${outputPath}. (${err.message})`
+          `Failed to write ${file} into ${outputPath}. (${err.message})`,
         )
       }
     } catch (err) {
@@ -195,14 +195,14 @@ exports.processFile = (file, transforms, options = {}) => {
 }
 
 const compressPng = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
+  pipeline.toBuffer().then((sharpBuffer) =>
     imagemin
       .buffer(sharpBuffer, {
         plugins: [
           imageminPngquant({
             quality: `${options.pngQuality || options.quality}-${Math.min(
               (options.pngQuality || options.quality) + 25,
-              100
+              100,
             )}`, // e.g. 40-65
             speed: options.pngCompressionSpeed
               ? options.pngCompressionSpeed
@@ -211,11 +211,11 @@ const compressPng = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
+      .then((imageminBuffer) => fs.writeFile(outputPath, imageminBuffer)),
   )
 
 const compressJpg = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
+  pipeline.toBuffer().then((sharpBuffer) =>
     imagemin
       .buffer(sharpBuffer, {
         plugins: [
@@ -225,11 +225,11 @@ const compressJpg = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
+      .then((imageminBuffer) => fs.writeFile(outputPath, imageminBuffer)),
   )
 
 const compressWebP = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
+  pipeline.toBuffer().then((sharpBuffer) =>
     imagemin
       .buffer(sharpBuffer, {
         plugins: [
@@ -239,10 +239,10 @@ const compressWebP = (pipeline, outputPath, options) =>
           }),
         ],
       })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
+      .then((imageminBuffer) => fs.writeFile(outputPath, imageminBuffer)),
   )
 
-exports.createArgsDigest = args => {
+exports.createArgsDigest = (args) => {
   const argsDigest = createContentDigest(args)
 
   return argsDigest.substr(argsDigest.length - 5)

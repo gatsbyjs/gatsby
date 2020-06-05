@@ -22,13 +22,13 @@ const getWindowsEncryptionPassword = async () => {
       `for future use.  If any new certificates are signed later, you will need`,
       `to use this same password.`,
       ``,
-    ].join(`\n`)
+    ].join(`\n`),
   )
   const results = await prompts({
     type: `password`,
     name: `value`,
     message: `Please enter the CA password`,
-    validate: input => input.length > 0 || `You must enter a password.`,
+    validate: (input) => input.length > 0 || `You must enter a password.`,
   })
   return results.value
 }
@@ -57,7 +57,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
   }
 
   report.info(
-    `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`
+    `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`,
   )
   try {
     if ([`linux`, `darwin`].includes(os.platform()) && !process.env.HOME) {

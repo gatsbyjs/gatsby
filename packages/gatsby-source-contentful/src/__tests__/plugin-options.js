@@ -7,8 +7,8 @@ const {
   formatPluginOptionsForCLI,
 } = require(`../plugin-options`)
 
-const maskedCharacterCount = input =>
-  input.split(``).filter(char => char === `*`).length
+const maskedCharacterCount = (input) =>
+  input.split(``).filter((char) => char === `*`).length
 
 describe(`Mask text`, () => {
   it.each([
@@ -29,7 +29,7 @@ describe(`Mask text`, () => {
     expect(result.length).toEqual(input.length)
     // hides 75% or more of input
     expect(maskedCharacterCount(result)).toBeGreaterThanOrEqual(
-      input.length * 0.75
+      input.length * 0.75,
     )
     // show at max 4 characters
     expect(result.length - maskedCharacterCount(result)).toBeLessThanOrEqual(4)
@@ -42,7 +42,7 @@ describe(`Formatting plugin options for CLI`, () => {
       accessToken: `abcdefghijklmnopqrstuvwxyz`,
       spaceId: `abcdefgh`,
       host: `wat`,
-      localeFilter: locale => locale.code === `de`,
+      localeFilter: (locale) => locale.code === `de`,
     }
     const annotations = {
       spaceId: `foo`,
@@ -59,22 +59,22 @@ describe(`Formatting plugin options for CLI`, () => {
     expect(result).not.toContain(options.spaceId)
 
     // mark if default value is used
-    expect(lines.find(line => line.includes(`downloadLocal`))).toContain(
-      `default value`
+    expect(lines.find((line) => line.includes(`downloadLocal`))).toContain(
+      `default value`,
     )
-    expect(lines.find(line => line.includes(`useNameForId`))).toContain(
-      `default value`
+    expect(lines.find((line) => line.includes(`useNameForId`))).toContain(
+      `default value`,
     )
-    expect(lines.find(line => line.includes(`environment`))).toContain(
-      `default value`
+    expect(lines.find((line) => line.includes(`environment`))).toContain(
+      `default value`,
     )
 
     // annotations are added
-    expect(lines.find(line => line.includes(`spaceId`))).toContain(
-      annotations.spaceId
+    expect(lines.find((line) => line.includes(`spaceId`))).toContain(
+      annotations.spaceId,
     )
-    expect(lines.find(line => line.includes(`environment`))).toContain(
-      annotations.environment
+    expect(lines.find((line) => line.includes(`environment`))).toContain(
+      annotations.environment,
     )
   })
 })
@@ -96,9 +96,9 @@ describe(`Options validation`, () => {
       {
         spaceId: `spaceId`,
         accessToken: `accessToken`,
-        localeFilter: locale => locale.code === `de`,
+        localeFilter: (locale) => locale.code === `de`,
         downloadLocal: false,
-      }
+      },
     )
 
     expect(reporter.panic).not.toBeCalled()
@@ -109,19 +109,19 @@ describe(`Options validation`, () => {
       {
         reporter,
       },
-      {}
+      {},
     )
 
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
-      )
+        `Problems with gatsby-source-contentful plugin options`,
+      ),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" is required`)
+      expect.stringContaining(`"accessToken" is required`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" is required`)
+      expect.stringContaining(`"accessToken" is required`),
     )
   })
 
@@ -135,25 +135,25 @@ describe(`Options validation`, () => {
         host: ``,
         accessToken: ``,
         spaceId: ``,
-      }
+      },
     )
 
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
-      )
+        `Problems with gatsby-source-contentful plugin options`,
+      ),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"environment" is not allowed to be empty`)
+      expect.stringContaining(`"environment" is not allowed to be empty`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"host" is not allowed to be empty`)
+      expect.stringContaining(`"host" is not allowed to be empty`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" is not allowed to be empty`)
+      expect.stringContaining(`"accessToken" is not allowed to be empty`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"spaceId" is not allowed to be empty`)
+      expect.stringContaining(`"spaceId" is not allowed to be empty`),
     )
   })
 
@@ -172,40 +172,40 @@ describe(`Options validation`, () => {
         useNameForId: 5,
         pageLimit: `fifty`,
         richText: true,
-      }
+      },
     )
 
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
-      )
+        `Problems with gatsby-source-contentful plugin options`,
+      ),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"environment" must be a string`)
+      expect.stringContaining(`"environment" must be a string`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"host" must be a string`)
+      expect.stringContaining(`"host" must be a string`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"accessToken" must be a string`)
+      expect.stringContaining(`"accessToken" must be a string`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"spaceId" must be a string`)
+      expect.stringContaining(`"spaceId" must be a string`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"localeFilter" must be a Function`)
+      expect.stringContaining(`"localeFilter" must be a Function`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"downloadLocal" must be a boolean`)
+      expect.stringContaining(`"downloadLocal" must be a boolean`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"useNameForId" must be a boolean`)
+      expect.stringContaining(`"useNameForId" must be a boolean`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"pageLimit" must be a number`)
+      expect.stringContaining(`"pageLimit" must be a number`),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"richText" must be an object`)
+      expect.stringContaining(`"richText" must be an object`),
     )
   })
 
@@ -218,16 +218,16 @@ describe(`Options validation`, () => {
         spaceId: `spaceId`,
         accessToken: `accessToken`,
         wat: true,
-      }
+      },
     )
 
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
-        `Problems with gatsby-source-contentful plugin options`
-      )
+        `Problems with gatsby-source-contentful plugin options`,
+      ),
     )
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"wat" is not allowed`)
+      expect.stringContaining(`"wat" is not allowed`),
     )
   })
 })

@@ -72,7 +72,7 @@ module.exports = {
       options: {
         repositoryName: `your-repository-name`,
         accessToken: `${process.env.API_KEY}`,
-        linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
+        linkResolver: ({ node, key, value }) => (post) => `/${post.uid}`,
       },
     },
   ],
@@ -108,7 +108,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const template = path.resolve("src/templates/post.jsx")
 
-  pages.data.allPrismicPost.edges.forEach(edge => {
+  pages.data.allPrismicPost.edges.forEach((edge) => {
     createPage({
       path: `/${edge.node.uid}`,
       component: template,

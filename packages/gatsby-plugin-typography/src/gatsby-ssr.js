@@ -9,7 +9,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         []
       ) : (
         <GoogleFont key={`GoogleFont`} typography={typography} />
-      )
+      ),
     )
     setHeadComponents([
       <TypographyStyle key={`TypographyStyle`} typography={typography} />,

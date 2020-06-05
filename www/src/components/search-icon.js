@@ -8,14 +8,14 @@ const SearchIcon = ({ focused }) => (
     focusable="false"
     aria-hidden="true"
     sx={{
-      width: t => t.space[5],
-      height: t => t.space[5],
+      width: (t) => t.space[5],
+      height: (t) => t.space[5],
       position: `absolute`,
       left: `0.5rem`,
       top: `50%`,
       pointerEvents: `none`,
       transform: `translateY(-50%)`,
-      fill: t =>
+      fill: (t) =>
         focused ? t.colors.themedInput.iconFocus : t.colors.themedInput.icon,
     }}
   />

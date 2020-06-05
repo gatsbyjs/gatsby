@@ -144,7 +144,7 @@ Once the JSON and the images are added, you can create product pages by importin
 ```js:title=gatsby-node.js
 exports.createPages = ({ actions: { createPage } }) => {
   const products = require("./data/products.json")
-  products.forEach(product => {
+  products.forEach((product) => {
     createPage({
       path: `/product/${product.slug}/`,
       component: require.resolve("./src/templates/product.js"),
@@ -303,7 +303,7 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
     }
   `)
 
-  results.data.allProductsJson.edges.forEach(edge => {
+  results.data.allProductsJson.edges.forEach((edge) => {
     const product = edge.node
 
     createPage({

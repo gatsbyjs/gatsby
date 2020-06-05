@@ -32,7 +32,7 @@ export function ProgressBar({
 
   const progressBarWidth = Math.max(
     minWidth,
-    Math.min(maxWidth, availableWidth)
+    Math.min(maxWidth, availableWidth),
   )
 
   return (

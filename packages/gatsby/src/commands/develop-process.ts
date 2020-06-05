@@ -96,7 +96,7 @@ onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`)
 })
 
-process.on(`message`, msg => {
+process.on(`message`, (msg) => {
   if (msg.type === `COMMAND` && msg.action.type === `EXIT`) {
     process.exit(msg.action.payload)
   }
@@ -136,7 +136,7 @@ async function startServer(program: IProgram): Promise<IServer> {
 
           See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
         `,
-        err
+        err,
       )
     }
   }
@@ -157,7 +157,7 @@ async function startServer(program: IProgram): Promise<IServer> {
     directory,
     `develop`,
     program.port,
-    { parentSpan: webpackActivity.span }
+    { parentSpan: webpackActivity.span },
   )
 
   const compiler = webpack(devConfig)
@@ -172,7 +172,7 @@ async function startServer(program: IProgram): Promise<IServer> {
       log: false,
       path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
-    })
+    }),
   )
 
   app.use(cors())
@@ -188,7 +188,7 @@ async function startServer(program: IProgram): Promise<IServer> {
       graphqlPlayground({
         endpoint: `/___graphql`,
       }),
-      () => {}
+      () => {},
     )
   } else {
     graphiqlExplorer(app, {
@@ -227,8 +227,8 @@ async function startServer(program: IProgram): Promise<IServer> {
             }
           },
         }
-      }
-    )
+      },
+    ),
   )
 
   /**
@@ -289,7 +289,7 @@ async function startServer(program: IProgram): Promise<IServer> {
         ? devConfig.devServer.watchOptions
         : null,
       stats: `errors-only`,
-    })
+    }),
   )
 
   // Expose access to app for advanced use cases
@@ -315,8 +315,8 @@ async function startServer(program: IProgram): Promise<IServer> {
           .pipe(
             got
               .stream(proxiedUrl, { headers, method, decompress: false })
-              .on(`response`, response =>
-                res.writeHead(response.statusCode || 200, response.headers)
+              .on(`response`, (response) =>
+                res.writeHead(response.statusCode || 200, response.headers),
               )
               .on(`error`, (err, _, response) => {
                 if (response) {
@@ -327,7 +327,7 @@ async function startServer(program: IProgram): Promise<IServer> {
                   report.error(message, err)
                   res.sendStatus(500)
                 }
-              })
+              }),
           )
           .pipe(res)
       })
@@ -346,7 +346,7 @@ async function startServer(program: IProgram): Promise<IServer> {
 
   // Render an HTML page and serve it.
   app.use((_, res) => {
-    res.sendFile(directoryPath(`public/index.html`), err => {
+    res.sendFile(directoryPath(`public/index.html`), (err) => {
       if (err) {
         res.status(500).end()
       }
@@ -365,8 +365,8 @@ async function startServer(program: IProgram): Promise<IServer> {
   const listener = server.listen(program.port, `localhost`)
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-    slash(directoryPath(path))
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map((path) =>
+    slash(directoryPath(path)),
   )
 
   chokidar.watch(watchGlobs).on(`change`, async () => {
@@ -388,16 +388,16 @@ module.exports = async (program: IProgram): Promise<void> => {
         showFeedbackRequest()
       }
       process.exit(0)
-    }
+    },
   )
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     report.panic(
       `The flag ${chalk.yellow(
-        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
+        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`,
       )} is not available with ${chalk.cyan(
-        `gatsby develop`
-      )}, please retry using ${chalk.cyan(`gatsby build`)}`
+        `gatsby develop`,
+      )}, please retry using ${chalk.cyan(`gatsby build`)}`,
     )
   }
   initTracer(program.openTracingConfigFile)
@@ -433,7 +433,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   await runPageQueries({ queryIds, store, program })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+    `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
   )
   await db.saveState()
 
@@ -457,7 +457,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   function prepareUrls(
     protocol: `http` | `https`,
     host: string,
-    port: number
+    port: number,
   ): IPreparedUrls {
     const formatUrl = (hostname: string): string =>
       url.format({
@@ -489,7 +489,7 @@ module.exports = async (program: IProgram): Promise<void> => {
           // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
           if (
             /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-              lanUrlForConfig
+              lanUrlForConfig,
             )
           ) {
             // Address is private, format it for later use
@@ -523,10 +523,10 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     if (urls.lanUrlForTerminal) {
       console.log(
-        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`,
       )
       console.log(
-        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`,
       )
     } else {
       console.log(`  ${urls.localUrlForTerminal}`)
@@ -538,7 +538,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         process.env.GATSBY_GRAPHQL_IDE === `playground`
           ? `the GraphQL Playground`
           : `GraphiQL`
-      }, an in-browser IDE, to explore your site's data and schema`
+      }, an in-browser IDE, to explore your site's data and schema`,
     )
     console.log()
 
@@ -546,12 +546,12 @@ module.exports = async (program: IProgram): Promise<void> => {
       console.log(
         `  ${chalk.bold(`Local:`)}            ${
           urls.localUrlForTerminal
-        }___graphql`
+        }___graphql`,
       )
       console.log(
         `  ${chalk.bold(`On Your Network:`)}  ${
           urls.lanUrlForTerminal
-        }___graphql`
+        }___graphql`,
       )
     } else {
       console.log(`  ${urls.localUrlForTerminal}___graphql`)
@@ -560,7 +560,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
-      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`,
     )
     console.log()
   }
@@ -588,15 +588,15 @@ module.exports = async (program: IProgram): Promise<void> => {
 
     glob
       .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
-      .forEach(file => {
+      .forEach((file) => {
         const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(api =>
-          fileText.includes(api)
+        const matchingApis = deprecatedApis.filter((api) =>
+          fileText.includes(api),
         )
-        matchingApis.forEach(api => deprecatedLocations[api].push(file))
+        matchingApis.forEach((api) => deprecatedLocations[api].push(file))
       })
 
-    deprecatedApis.forEach(api => {
+    deprecatedApis.forEach((api) => {
       if (deprecatedLocations[api].length) {
         console.log(
           `%s %s %s %s`,
@@ -604,11 +604,11 @@ module.exports = async (program: IProgram): Promise<void> => {
           chalk.yellow(`is deprecated. Please use`),
           chalk.cyan(fixMap[api].newName),
           chalk.yellow(
-            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`
-          )
+            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`,
+          ),
         )
         console.log()
-        deprecatedLocations[api].forEach(file => console.log(file))
+        deprecatedLocations[api].forEach((file) => console.log(file))
         console.log()
       }
     })
@@ -635,7 +635,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   // Whether or not you have warnings or errors, you will get this event.
   compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
     stats,
-    done
+    done,
   ) {
     // We have switched off the default Webpack output in WebpackDevServer
     // options so we are going to "massage" the warnings and errors and present
@@ -644,23 +644,23 @@ module.exports = async (program: IProgram): Promise<void> => {
     const urls = prepareUrls(
       program.https ? `https` : `http`,
       program.host,
-      program.proxyPort
+      program.proxyPort,
     )
     const isSuccessful = !messages.errors.length
 
     if (isSuccessful && isFirstCompile) {
       printInstructions(
         program.sitePackageJson.name || `(Unnamed package)`,
-        urls
+        urls,
       )
       printDeprecationWarnings()
       if (program.open) {
         Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
           console.log(
             `${chalk.yellow(
-              `warn`
-            )} Browser not opened because no browser was found`
-          )
+              `warn`,
+            )} Browser not opened because no browser was found`,
+          ),
         )
       }
     }
@@ -673,7 +673,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       if (!isSuccessful) {
         const errors = structureWebpackErrors(
           `develop`,
-          stats.compilation.errors
+          stats.compilation.errors,
         )
         webpackActivity.panicOnBuild(errors)
       }

@@ -5,7 +5,7 @@ import { css } from "@emotion/core"
 // Override default search result styles (docsearch.css)
 const searchDropdownOffsetTop = space[9]
 
-const algoliaStyles = t => css`
+const algoliaStyles = (t) => css`
   .algolia-autocomplete .algolia-docsearch-suggestion--title {
     color: ${t.colors.text} !important;
   }

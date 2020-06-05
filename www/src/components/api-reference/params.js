@@ -14,8 +14,8 @@ const List = ({ elements, level, ignoreParams }) => (
     }}
   >
     {elements
-      .filter(param => !ignoreParams.includes(param.name))
-      .map(param => (
+      .filter((param) => !ignoreParams.includes(param.name))
+      .map((param) => (
         <li key={param.name}>
           <DocBlock definition={param} level={level + 1} />
         </li>

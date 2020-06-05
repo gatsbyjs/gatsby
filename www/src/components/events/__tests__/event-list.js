@@ -14,7 +14,7 @@ const toEvent = (date, id) => {
   }
 }
 
-const mockEvents = events => {
+const mockEvents = (events) => {
   return {
     nodes: events,
   }
@@ -31,13 +31,13 @@ describe(`<Events />`, () => {
     const { getByText } = render(
       <Events
         events={mockEvents(
-          [`1990-10-08`, `2100-10-08`, `2200-10-08`].map(toEvent)
+          [`1990-10-08`, `2100-10-08`, `2200-10-08`].map(toEvent),
         )}
-      />
+      />,
     )
     const upcoming = getByText(`Upcoming Events`)
     const past = getByText(`Past Events`)
-    ;[upcoming, past].forEach(el => {
+    ;[upcoming, past].forEach((el) => {
       expect(el.nextSibling.querySelectorAll(`li`).length).toBeGreaterThan(0)
     })
   })
@@ -49,7 +49,7 @@ describe(`<Events />`, () => {
       dateNowSpy = jest
         .spyOn(global.Date, `now`)
         .mockImplementation(() =>
-          new Date(`1990-10-18T13:00:00.000Z`).valueOf()
+          new Date(`1990-10-18T13:00:00.000Z`).valueOf(),
         )
     })
 
@@ -59,7 +59,7 @@ describe(`<Events />`, () => {
 
     it.skip(`display's today's events as upcoming`, () => {
       const { getByText } = render(
-        <Events events={mockEvents([`2100-10-08`].map(toEvent))} />
+        <Events events={mockEvents([`2100-10-08`].map(toEvent))} />,
       )
 
       const upcoming = getByText(`Upcoming Events`)

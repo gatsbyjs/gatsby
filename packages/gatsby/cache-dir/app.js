@@ -31,23 +31,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   fetch(`/___services`)
-    .then(res => res.json())
-    .then(services => {
+    .then((res) => res.json())
+    .then((services) => {
       if (services.developstatusserver) {
         const parentSocket = io(
-          `http://${window.location.hostname}:${services.developstatusserver.port}`
+          `http://${window.location.hostname}:${services.developstatusserver.port}`,
         )
 
-        parentSocket.on(`develop:needs-restart`, msg => {
+        parentSocket.on(`develop:needs-restart`, (msg) => {
           if (
             window.confirm(
-              `The develop process needs to be restarted for the changes to ${msg.dirtyFile} to be applied.\nDo you want to restart the develop process now?`
+              `The develop process needs to be restarted for the changes to ${msg.dirtyFile} to be applied.\nDo you want to restart the develop process now?`,
             )
           ) {
-            parentSocket.once(`develop:is-starting`, msg => {
+            parentSocket.once(`develop:is-starting`, (msg) => {
               window.location.reload()
             })
-            parentSocket.once(`develop:started`, msg => {
+            parentSocket.once(`develop:started`, (msg) => {
               window.location.reload()
             })
             parentSocket.emit(`develop:restart`)
@@ -65,12 +65,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
    * Let's warn if we find service workers in development.
    */
   if (`serviceWorker` in navigator) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
       if (registrations.length > 0)
         console.warn(
           `Warning: found one or more service workers present.`,
           `If your site isn't behaving as expected, you might want to remove these.`,
-          registrations
+          registrations,
         )
     })
   }
@@ -80,7 +80,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    ReactDOM.render
+    ReactDOM.render,
   )[0]
 
   Promise.all([
@@ -88,7 +88,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
-    const preferDefault = m => (m && m.default) || m
+    const preferDefault = (m) => (m && m.default) || m
     let Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {

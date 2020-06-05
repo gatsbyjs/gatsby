@@ -12,14 +12,14 @@ const FooterLinks = () => (
   <footer>
     <ul
       sx={{
-        background: props => (props.bg ? props.bg : `0`),
+        background: (props) => (props.bg ? props.bg : `0`),
         borderColor: `ui.border`,
         borderTopStyle: `solid`,
         borderTopWidth: `1px`,
         fontSize: 1,
         listStyle: `none`,
         m: 0,
-        mb: props => (props.bottomMargin ? props.bottomMargin : 0),
+        mb: (props) => (props.bottomMargin ? props.bottomMargin : 0),
         mt: 9,
         px: 6,
         py: 9,

@@ -4,7 +4,7 @@ import { MdFilterList } from "react-icons/md"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const sticky = t => {
+const sticky = (t) => {
   return {
     position: `sticky`,
     top: `calc(${t.sizes.bannerHeight})`,
@@ -24,8 +24,8 @@ export const SidebarContainer = ({ children, className }) => (
         borderRightStyle: `solid`,
         borderRightWidth: `1px`,
         display: `block`,
-        flexBasis: t => t.sizes.showcaseSidebarMaxWidth,
-        height: t =>
+        flexBasis: (t) => t.sizes.showcaseSidebarMaxWidth,
+        height: (t) =>
           `calc(100vh - (${t.sizes.headerHeight} + ${t.sizes.bannerHeight}))`,
         minWidth: `showcaseSidebarMaxWidth`,
         pt: 0,
@@ -42,7 +42,7 @@ export const SidebarBody = ({ children }) => (
     sx={{
       display: `flex`,
       flexDirection: `column`,
-      height: t =>
+      height: (t) =>
         `calc(100vh - ((${t.sizes.headerHeight}) + ${t.sizes.bannerHeight}))`,
       paddingLeft: 6,
     }}

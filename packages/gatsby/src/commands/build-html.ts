@@ -27,12 +27,12 @@ const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
 
 const doBuildRenderer = async (
   { directory }: IProgram,
-  webpackConfig: webpack.Configuration
+  webpackConfig: webpack.Configuration,
 ): Promise<string> => {
   const stats = await runWebpack(webpackConfig)
   if (stats.hasErrors()) {
     reporter.panic(
-      structureWebpackErrors(`build-html`, stats.compilation.errors)
+      structureWebpackErrors(`build-html`, stats.compilation.errors),
     )
   }
 
@@ -43,7 +43,7 @@ const doBuildRenderer = async (
 const buildRenderer = async (
   program: IProgram,
   stage: Stage,
-  parentSpan: IActivity
+  parentSpan: IActivity,
 ): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
@@ -66,7 +66,7 @@ const renderHTMLQueue = async (
   workerPool: IWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
-  pages: string[]
+  pages: string[],
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -79,7 +79,7 @@ const renderHTMLQueue = async (
   // const start = process.hrtime()
   const segments = chunk(pages, 50)
 
-  await Bluebird.map(segments, async pageSegment => {
+  await Bluebird.map(segments, async (pageSegment) => {
     await workerPool.renderHTML({
       envVars,
       htmlComponentRendererPath,
@@ -101,7 +101,7 @@ class BuildHTMLError extends Error {
   constructor(error: Error) {
     super(error.message)
 
-    Object.keys(error).forEach(key => {
+    Object.keys(error).forEach((key) => {
       this[key] = error[key]
     })
   }
@@ -111,7 +111,7 @@ const doBuildPages = async (
   rendererPath: string,
   pagePaths: string[],
   activity: IActivity,
-  workerPool: IWorkerPool
+  workerPool: IWorkerPool,
 ): Promise<void> => {
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: pagePaths.length,
@@ -122,7 +122,7 @@ const doBuildPages = async (
   } catch (error) {
     const prettyError = await createErrorFromString(
       error.stack,
-      `${rendererPath}.map`
+      `${rendererPath}.map`,
     )
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context

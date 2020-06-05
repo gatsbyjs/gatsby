@@ -13,7 +13,7 @@ const MessageAPI = {
     event.waitUntil(idbKeyval.set(`resources:${path}`, resources))
   },
 
-  clearPathResources: event => {
+  clearPathResources: (event) => {
     event.waitUntil(idbKeyval.clear())
   },
 
@@ -26,7 +26,7 @@ const MessageAPI = {
   },
 }
 
-self.addEventListener(`message`, event => {
+self.addEventListener(`message`, (event) => {
   const { gatsbyApi: api } = event.data
   if (api) MessageAPI[api](event, event.data)
 })
@@ -38,7 +38,7 @@ function handleAPIRequest({ event }) {
   const data = {}
 
   if (params.includes(`=`)) {
-    params.split(`&`).forEach(param => {
+    params.split(`&`).forEach((param) => {
       const [key, val] = param.split(`=`)
       data[key] = val
     })

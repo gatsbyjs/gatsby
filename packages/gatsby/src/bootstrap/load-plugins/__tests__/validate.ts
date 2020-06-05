@@ -22,7 +22,9 @@ import { getLatestAPIs } from "../../../utils/get-latest-apis"
 import { resolveModuleExports } from "../../resolve-module-exports"
 
 beforeEach(() => {
-  Object.keys(reporter).forEach(key => (reporter[key] as jest.Mock).mockReset())
+  Object.keys(reporter).forEach((key) =>
+    (reporter[key] as jest.Mock).mockReset(),
+  )
 
   const mocked = (getLatestAPIs as unknown) as jest.MockedFunction<
     typeof getLatestAPIs
@@ -173,7 +175,7 @@ describe(`handleBadExports`, () => {
             expect.stringContaining(`"${exportName}" which is not a known API`),
           ],
         }),
-      })
+      }),
     )
   })
 
@@ -205,11 +207,11 @@ describe(`handleBadExports`, () => {
         context: expect.objectContaining({
           errors: [
             expect.stringContaining(
-              `${pluginName}@${pluginVersion} is using the API "${exportName}"`
+              `${pluginName}@${pluginVersion} is using the API "${exportName}"`,
             ),
           ],
         }),
-      })
+      }),
     )
   })
 
@@ -253,7 +255,7 @@ describe(`handleBadExports`, () => {
         context: expect.objectContaining({
           fixes: [`npm install gatsby@^${version}`],
         }),
-      })
+      }),
     )
   })
 
@@ -282,8 +284,8 @@ describe(`handleBadExports`, () => {
               },
             ],
           },
-        })
-      )
+        }),
+      ),
     )
 
     expect(reporter.error).toHaveBeenCalledTimes(typoAPIs.length)
@@ -295,7 +297,7 @@ describe(`handleBadExports`, () => {
       expect(call).toEqual(
         expect.objectContaining({
           id: `11329`,
-        })
+        }),
       )
     })
   })
@@ -386,7 +388,7 @@ describe(`warnOnIncompatiblePeerDependency`, () => {
     })
 
     expect(reporter.warn).toHaveBeenCalledWith(
-      expect.stringContaining(`Plugin dummy-package is not compatible`)
+      expect.stringContaining(`Plugin dummy-package is not compatible`),
     )
   })
 })

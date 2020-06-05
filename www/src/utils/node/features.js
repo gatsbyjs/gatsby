@@ -5,7 +5,7 @@ exports.createPages = async ({ actions }) => {
   const { createPage } = actions
 
   const featureComparisonPageTemplate = getTemplate(
-    `template-feature-comparison`
+    `template-feature-comparison`,
   )
 
   // Create feature comparison pages

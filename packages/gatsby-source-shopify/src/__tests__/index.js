@@ -9,16 +9,16 @@ jest.mock(`../create-client`, () => {
   return {
     createClient: jest.fn(() => {
       return {
-        request: async query => {
+        request: async (query) => {
           // Hack alert. match query text, from that get query name (like SHOP_POLICIES_QUERY) and convert to filename like policies.json
           const fixturePathFromQuery = (query, mockQueries) => {
             const [queryName] = Object.entries(mockQueries).find(
-              ([queryName, queryString]) => queryString === query
+              ([queryName, queryString]) => queryString === query,
             )
             const jsonFile = queryName
               .split(`_`)
-              .map(el => el.toLowerCase())
-              .filter(el => el !== `query`)
+              .map((el) => el.toLowerCase())
+              .filter((el) => el !== `query`)
               .join(`-`)
             return jsonFile + `.json`
           }
@@ -47,7 +47,7 @@ describe(`gatsby-source-shopify`, () => {
    */
   const nodes = {}
   const actions = {
-    createNode: jest.fn(node => (nodes[node.id] = node)),
+    createNode: jest.fn((node) => (nodes[node.id] = node)),
   }
 
   const activity = {

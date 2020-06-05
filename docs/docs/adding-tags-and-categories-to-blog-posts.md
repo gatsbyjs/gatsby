@@ -119,7 +119,7 @@ Tags.propTypes = {
               slug: PropTypes.string.isRequired,
             }),
           }),
-        }).isRequired
+        }).isRequired,
       ),
     }),
   }),
@@ -211,7 +211,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const tags = result.data.tagsGroup.group
 
   // Make tag pages
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     createPage({
       path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
       component: tagTemplate,
@@ -257,7 +257,7 @@ const TagsPage = ({
     <div>
       <h1>Tags</h1>
       <ul>
-        {group.map(tag => (
+        {group.map((tag) => (
           <li key={tag.fieldValue}>
             <Link to={`/tags/${kebabCase(tag.fieldValue)}/`}>
               {tag.fieldValue} ({tag.totalCount})
@@ -276,7 +276,7 @@ TagsPage.propTypes = {
         PropTypes.shape({
           fieldValue: PropTypes.string.isRequired,
           totalCount: PropTypes.number.isRequired,
-        }).isRequired
+        }).isRequired,
       ),
     }),
     site: PropTypes.shape({

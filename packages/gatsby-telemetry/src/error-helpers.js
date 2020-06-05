@@ -1,7 +1,7 @@
 const { sep } = require(`path`)
 
 // Removes all user paths
-const regexpEscape = str => str.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
+const regexpEscape = (str) => str.replace(/[-[/{}()*+?.\\^$|]/g, `\\$&`)
 const cleanPaths = (str, separator = sep) => {
   const stack = process.cwd().split(separator)
 
@@ -27,7 +27,7 @@ const sanitizeError = (error, pathSeparator = sep) => {
     error.stdout = String(error.stdout)
 
     // Remove sensitive and useless keys
-  ;[`envPairs`, `options`, `output`].forEach(key => delete error[key])
+  ;[`envPairs`, `options`, `output`].forEach((key) => delete error[key])
 
   // Hack because Node
   error = JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error)))

@@ -75,8 +75,8 @@ describe(`build-node-types`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
     store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
 
     const schemaComposer = createSchemaComposer()
@@ -133,7 +133,7 @@ describe(`build-node-types`, () => {
           hair
         }
       }
-    `
+    `,
     )
     expect(parent.hair).toEqual(`red`)
     expect(child.hair).toEqual(`brown`)
@@ -150,10 +150,10 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
+    `,
     )
     expect(parent.children).toBeDefined()
-    expect(parent.children.map(c => c.id)).toEqual([`c1`, `c2`, `r1`])
+    expect(parent.children.map((c) => c.id)).toEqual([`c1`, `c2`, `r1`])
   })
 
   it(`should create typed children fields`, async () => {
@@ -166,10 +166,10 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
+    `,
     )
     expect(parent.childrenChild).toBeDefined()
-    expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
+    expect(parent.childrenChild.map((c) => c.id)).toEqual([`c1`, `c2`])
   })
 
   it(`should create typed child field for singular children`, async () => {
@@ -182,7 +182,7 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
+    `,
     )
 
     expect(parent.childRelative).toBeDefined()
@@ -197,7 +197,7 @@ describe(`build-node-types`, () => {
           pluginField
         }
       }
-    `
+    `,
     )
     expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
   })
@@ -210,7 +210,7 @@ describe(`build-node-types`, () => {
           pluginField
         }
       }
-    `
+    `,
     )
     expect(result.parent.pluginField).toEqual(`pluginFieldValue`)
   })
@@ -232,7 +232,7 @@ describe(`build-node-types`, () => {
             children { id }
           }
         }
-      `
+      `,
     )
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
@@ -256,7 +256,7 @@ describe(`build-node-types`, () => {
             parent { id }
           }
         }
-      `
+      `,
     )
     expect(createPageDependency).toHaveBeenCalledWith({
       path: `foo`,
@@ -274,7 +274,7 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
+    `,
     )
 
     expect(createPageDependency).toHaveBeenCalledWith({
@@ -293,7 +293,7 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `
+    `,
     )
 
     expect(createPageDependency).toHaveBeenCalledWith({

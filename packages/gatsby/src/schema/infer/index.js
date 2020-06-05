@@ -16,15 +16,15 @@ const addInferredTypes = ({
   // XXX(freiksenet): Won't be needed after plugins set typedefs
   // Infer File first so all the links to it would work
   const { typeMap } = inferenceMetadata
-  const typesWithNodes = Object.keys(typeMap).filter(typeName =>
-    hasNodes(typeMap[typeName])
+  const typesWithNodes = Object.keys(typeMap).filter((typeName) =>
+    hasNodes(typeMap[typeName]),
   )
   const typeNames = putFileFirst(typesWithNodes)
   const noNodeInterfaceTypes = []
 
   const typesToInfer = []
 
-  typeNames.forEach(typeName => {
+  typeNames.forEach((typeName) => {
     let typeComposer
     if (schemaComposer.has(typeName)) {
       typeComposer = schemaComposer.getOTC(typeName)
@@ -49,7 +49,7 @@ const addInferredTypes = ({
   })
 
   if (noNodeInterfaceTypes.length > 0) {
-    noNodeInterfaceTypes.forEach(typeName => {
+    noNodeInterfaceTypes.forEach((typeName) => {
       report.warn(
         `Type \`${typeName}\` declared in \`createTypes\` looks like a node, ` +
           `but doesn't implement a \`Node\` interface. It's likely that you should ` +
@@ -58,13 +58,13 @@ const addInferredTypes = ({
           `If you know that you don't want it to be a node (which would mean no ` +
           `root queries to retrieve it), you can explicitly disable inference ` +
           `for it:\n\n` +
-          `\`type ${typeName} @dontInfer { ... }\``
+          `\`type ${typeName} @dontInfer { ... }\``,
       )
     })
     report.panic(`Building schema failed`)
   }
 
-  return typesToInfer.map(typeComposer =>
+  return typesToInfer.map((typeComposer) =>
     addInferredType({
       schemaComposer,
       typeComposer,
@@ -73,7 +73,7 @@ const addInferredTypes = ({
       typeMapping,
       parentSpan,
       inferenceMetadata,
-    })
+    }),
   )
 }
 
@@ -114,7 +114,7 @@ const addInferredType = ({
   return typeComposer
 }
 
-const putFileFirst = typeNames => {
+const putFileFirst = (typeNames) => {
   const index = typeNames.indexOf(`File`)
   if (index !== -1) {
     return [`File`, ...typeNames.slice(0, index), ...typeNames.slice(index + 1)]

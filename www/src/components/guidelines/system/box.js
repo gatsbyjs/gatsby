@@ -32,12 +32,12 @@ const styleProps = compose(
   layout,
   position,
   space,
-  typography
+  typography,
 )
 
 const Box = styled(`div`, { shouldForwardProp })(
   { boxSizing: `border-box` },
-  styleProps
+  styleProps,
 )
 
 Box.propTypes = boxPropTypes

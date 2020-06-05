@@ -16,9 +16,9 @@ describe(`Test plugin feed`, () => {
   })
 
   describe(`options validation`, () => {
-    const setup = async options => {
+    const setup = async (options) => {
       const reporter = {
-        stripIndent: jest.fn(value => value.trim()),
+        stripIndent: jest.fn((value) => value.trim()),
         warn: jest.fn(),
       }
       await onPreBootstrap({ reporter }, options)
@@ -43,7 +43,7 @@ describe(`Test plugin feed`, () => {
 
       expect(reporter.warn).toHaveBeenCalledTimes(1)
       expect(reporter.warn).toHaveBeenCalledWith(
-        expect.stringContaining(deprecationNotice)
+        expect.stringContaining(deprecationNotice),
       )
     })
 
@@ -62,7 +62,7 @@ describe(`Test plugin feed`, () => {
 
       expect(reporter.warn).toHaveBeenCalledTimes(1)
       expect(reporter.warn).toHaveBeenCalledWith(
-        expect.stringContaining(`title`)
+        expect.stringContaining(`title`),
       )
     })
 
@@ -81,7 +81,7 @@ describe(`Test plugin feed`, () => {
 
       expect(reporter.warn).toHaveBeenCalledTimes(1)
       expect(reporter.warn).toHaveBeenCalledWith(
-        expect.stringContaining(deprecationNotice)
+        expect.stringContaining(deprecationNotice),
       )
     })
 
@@ -210,7 +210,7 @@ describe(`Test plugin feed`, () => {
           generator: `custom generator`,
           query: customQuery,
           serialize: ({ query: { site, allMarkdownRemark } }) =>
-            allMarkdownRemark.edges.map(edge => {
+            allMarkdownRemark.edges.map((edge) => {
               return {
                 ...edge.node.frontmatter,
                 description: edge.node.excerpt,
@@ -282,7 +282,7 @@ describe(`Test plugin feed`, () => {
         {
           output: `rss_new.xml`,
           serialize: ({ query: { site, allMarkdownRemark } }) =>
-            allMarkdownRemark.edges.map(edge => {
+            allMarkdownRemark.edges.map((edge) => {
               return {
                 ...edge.node.frontmatter,
                 description: edge.node.excerpt,

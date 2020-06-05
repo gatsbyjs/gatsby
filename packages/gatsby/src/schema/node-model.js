@@ -36,24 +36,24 @@ interface QueryArguments {
 export interface NodeModel {
   getNodeById(
     { id: string, type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
+    pageDependencies?: PageDependencies,
   ): any | null;
   getNodesByIds(
     { ids: Array<string>, type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
+    pageDependencies?: PageDependencies,
   ): Array<any>;
   getAllNodes(
     { type?: TypeOrTypeName },
-    pageDependencies?: PageDependencies
+    pageDependencies?: PageDependencies,
   ): Array<any>;
   runQuery(
     args: QueryArguments,
-    pageDependencies?: PageDependencies
+    pageDependencies?: PageDependencies,
   ): Promise<any>;
   getTypes(): Array<string>;
   trackPageDependencies<nodeOrNodes: Node | Node[]>(
     result: nodeOrNodes,
-    pageDependencies?: PageDependencies
+    pageDependencies?: PageDependencies,
   ): nodesOrNodes;
   findRootNodeAncestor(obj: any, predicate: () => boolean): Node | null;
   trackInlineObjectsInRootNode(node: Node, sanitize: boolean): Node;
@@ -78,10 +78,10 @@ class LocalNodeModel {
     if (createPageDependencyArgs.connection) {
       const nodeTypeNames = toNodeTypeNames(
         this.schema,
-        createPageDependencyArgs.connection
+        createPageDependencyArgs.connection,
       )
       if (nodeTypeNames) {
-        nodeTypeNames.forEach(typeName => {
+        nodeTypeNames.forEach((typeName) => {
           this.createPageDependencyActionCreator({
             ...createPageDependencyArgs,
             connection: typeName,
@@ -156,7 +156,7 @@ class LocalNodeModel {
     const { ids, type } = args || {}
 
     const nodes = Array.isArray(ids)
-      ? ids.map(id => getNodeById(this.nodeStore, id)).filter(Boolean)
+      ? ids.map((id) => getNodeById(this.nodeStore, id)).filter(Boolean)
       : []
 
     let result
@@ -164,11 +164,13 @@ class LocalNodeModel {
       result = nodes
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      result = nodes.filter(node => nodeTypeNames.includes(node.internal.type))
+      result = nodes.filter((node) =>
+        nodeTypeNames.includes(node.internal.type),
+      )
     }
 
     if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
+      result.forEach((node) => this.trackInlineObjectsInRootNode(node))
     }
 
     return this.trackPageDependencies(result, pageDependencies)
@@ -200,7 +202,7 @@ class LocalNodeModel {
     }
 
     if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
+      result.forEach((node) => this.trackInlineObjectsInRootNode(node))
     }
 
     if (pageDependencies) {
@@ -228,7 +230,7 @@ class LocalNodeModel {
     const gqlType = typeof type === `string` ? this.schema.getType(type) : type
     invariant(
       !(gqlType instanceof GraphQLUnionType),
-      `Querying GraphQLUnion types is not supported.`
+      `Querying GraphQLUnion types is not supported.`,
     )
 
     const nodeTypeNames = toNodeTypeNames(this.schema, gqlType)
@@ -251,7 +253,7 @@ class LocalNodeModel {
       this.schema,
       gqlType,
       fields,
-      nodeTypeNames
+      nodeTypeNames,
     )
 
     await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
@@ -290,7 +292,7 @@ class LocalNodeModel {
         `trackInlineObjects`,
         {
           parentSpan: tracer.getParentActivity().span,
-        }
+        },
       )
       trackInlineObjectsActivity.start()
     }
@@ -304,7 +306,7 @@ class LocalNodeModel {
         result = null
       }
     } else if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
+      result.forEach((node) => this.trackInlineObjectsInRootNode(node))
     }
 
     if (trackInlineObjectsActivity) {
@@ -326,7 +328,7 @@ class LocalNodeModel {
     })
 
     if (!this._prepareNodesPromises[typeName]) {
-      this._prepareNodesPromises[typeName] = new Promise(resolve => {
+      this._prepareNodesPromises[typeName] = new Promise((resolve) => {
         process.nextTick(async () => {
           await this._doResolvePrepareNodesQueue(type, nodeTypeNames)
           resolve()
@@ -346,7 +348,7 @@ class LocalNodeModel {
     const { queryFields, fieldsToResolve } = queue.reduce(
       (
         { queryFields, fieldsToResolve },
-        { queryFields: nextQueryFields, fieldsToResolve: nextFieldsToResolve }
+        { queryFields: nextQueryFields, fieldsToResolve: nextFieldsToResolve },
       ) => {
         return {
           queryFields: _.merge(queryFields, nextQueryFields),
@@ -356,16 +358,16 @@ class LocalNodeModel {
       {
         queryFields: {},
         fieldsToResolve: {},
-      }
+      },
     )
 
     const actualFieldsToResolve = deepObjectDifference(
       fieldsToResolve,
-      this._preparedNodesCache.get(typeName) || {}
+      this._preparedNodesCache.get(typeName) || {},
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await this.nodeStore.saveResolvedNodes(nodeTypeNames, async node => {
+      await this.nodeStore.saveResolvedNodes(nodeTypeNames, async (node) => {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
           this,
@@ -374,11 +376,11 @@ class LocalNodeModel {
           node,
           type,
           queryFields,
-          actualFieldsToResolve
+          actualFieldsToResolve,
         )
         const mergedResolved = _.merge(
           node.__gatsby_resolved || {},
-          resolvedFields
+          resolvedFields,
         )
         return mergedResolved
       })
@@ -387,8 +389,8 @@ class LocalNodeModel {
         _.merge(
           {},
           this._preparedNodesCache.get(typeName) || {},
-          actualFieldsToResolve
-        )
+          actualFieldsToResolve,
+        ),
       )
     }
   }
@@ -414,7 +416,7 @@ class LocalNodeModel {
         node,
         node.id,
         true,
-        new Set()
+        new Set(),
       )
       this._trackedRootNodes.add(node.id)
     }
@@ -445,7 +447,7 @@ class LocalNodeModel {
 
     reporter.error(
       `It looks like you have a node that's set its parent as itself:\n\n` +
-        node
+        node,
     )
     return null
   }
@@ -501,14 +503,14 @@ class ContextualNodeModel {
   getNodeById(args, pageDependencies) {
     return this.nodeModel.getNodeById(
       args,
-      this._getFullDependencies(pageDependencies)
+      this._getFullDependencies(pageDependencies),
     )
   }
 
   getNodesByIds(args, pageDependencies) {
     return this.nodeModel.getNodesByIds(
       args,
-      this._getFullDependencies(pageDependencies)
+      this._getFullDependencies(pageDependencies),
     )
   }
 
@@ -522,7 +524,7 @@ class ContextualNodeModel {
   runQuery(args, pageDependencies) {
     return this.nodeModel.runQuery(
       args,
-      this._getFullDependencies(pageDependencies)
+      this._getFullDependencies(pageDependencies),
     )
   }
 
@@ -549,7 +551,7 @@ class ContextualNodeModel {
   trackPageDependencies(result, pageDependencies) {
     return this.nodeModel.trackPageDependencies(
       result,
-      this._getFullDependencies(pageDependencies)
+      this._getFullDependencies(pageDependencies),
     )
   }
 }
@@ -568,8 +570,10 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
     : [gqlType]
 
   return possibleTypes
-    .filter(type => type.getInterfaces().some(iface => iface.name === `Node`))
-    .map(type => type.name)
+    .filter((type) =>
+      type.getInterfaces().some((iface) => iface.name === `Node`),
+    )
+    .map((type) => type.name)
 }
 
 const getQueryFields = ({ filter, sort, group, distinct }) => {
@@ -592,11 +596,11 @@ const getQueryFields = ({ filter, sort, group, distinct }) => {
     filterFields,
     ...sortFields.map(pathToObject),
     ...group.map(pathToObject),
-    ...distinct.map(pathToObject)
+    ...distinct.map(pathToObject),
   )
 }
 
-const pathToObject = path => {
+const pathToObject = (path) => {
   if (path && typeof path === `string`) {
     return path.split(`.`).reduceRight((acc, key) => {
       return { [key]: acc }
@@ -605,7 +609,7 @@ const pathToObject = path => {
   return {}
 }
 
-const dropQueryOperators = filter =>
+const dropQueryOperators = (filter) =>
   Object.keys(filter).reduce((acc, key) => {
     const value = filter[key]
     const k = Object.keys(value)[0]
@@ -635,7 +639,7 @@ async function resolveRecursive(
   node,
   type,
   queryFields,
-  fieldsToResolve
+  fieldsToResolve,
 ) {
   const gqlFields = getFields(schema, type, node)
   const resolvedFields = {}
@@ -653,7 +657,7 @@ async function resolveRecursive(
         schema,
         node,
         gqlField,
-        fieldName
+        fieldName,
       )
     } else {
       innerValue = node[fieldName]
@@ -670,7 +674,7 @@ async function resolveRecursive(
           innerValue,
           gqlFieldType,
           queryField,
-          _.isObject(fieldToResolve) ? fieldToResolve : queryField
+          _.isObject(fieldToResolve) ? fieldToResolve : queryField,
         )
       } else if (
         isCompositeType(gqlFieldType) &&
@@ -678,7 +682,7 @@ async function resolveRecursive(
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(
-          innerValue.map(item =>
+          innerValue.map((item) =>
             resolveRecursive(
               nodeModel,
               schemaComposer,
@@ -686,9 +690,9 @@ async function resolveRecursive(
               item,
               gqlFieldType,
               queryField,
-              _.isObject(fieldToResolve) ? fieldToResolve : queryField
-            )
-          )
+              _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+            ),
+          ),
         )
       }
     }
@@ -697,7 +701,7 @@ async function resolveRecursive(
     }
   }
 
-  Object.keys(queryFields).forEach(key => {
+  Object.keys(queryFields).forEach((key) => {
     if (!fieldsToResolve[key] && node[key]) {
       resolvedFields[key] = node[key]
     }
@@ -712,7 +716,7 @@ function resolveField(
   schema,
   node,
   gqlField,
-  fieldName
+  fieldName,
 ) {
   const withResolverContext = require(`./context`)
   return gqlField.resolve(
@@ -730,7 +734,7 @@ function resolveField(
       fieldName,
       schema,
       returnType: gqlField.type,
-    }
+    },
   )
 }
 
@@ -739,18 +743,18 @@ const determineResolvableFields = (
   schema,
   type,
   fields,
-  nodeTypeNames
+  nodeTypeNames,
 ) => {
   const fieldsToResolve = {}
   const gqlFields = type.getFields()
-  Object.keys(fields).forEach(fieldName => {
+  Object.keys(fields).forEach((fieldName) => {
     const field = fields[fieldName]
     const gqlField = gqlFields[fieldName]
     const gqlFieldType = getNamedType(gqlField.type)
     const typeComposer = schemaComposer.getAnyTC(type.name)
     const possibleTCs = [
       typeComposer,
-      ...nodeTypeNames.map(name => schemaComposer.getAnyTC(name)),
+      ...nodeTypeNames.map((name) => schemaComposer.getAnyTC(name)),
     ]
     let needsResolve = false
     for (const tc of possibleTCs) {
@@ -766,7 +770,7 @@ const determineResolvableFields = (
         schema,
         gqlFieldType,
         field,
-        toNodeTypeNames(schema, gqlFieldType)
+        toNodeTypeNames(schema, gqlFieldType),
       )
       if (!_.isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
@@ -785,7 +789,7 @@ const addRootNodeToInlineObject = (
   data,
   nodeId,
   isNode /* : boolean */,
-  path /* : Set<mixed> */
+  path /* : Set<mixed> */,
 ) /* : void */ => {
   const isPlainObject = _.isPlainObject(data)
 
@@ -808,7 +812,7 @@ const addRootNodeToInlineObject = (
 
 const deepObjectDifference = (from, to) => {
   const result = {}
-  Object.keys(from).forEach(key => {
+  Object.keys(from).forEach((key) => {
     const toValue = to[key]
     if (toValue) {
       if (_.isPlainObject(toValue)) {

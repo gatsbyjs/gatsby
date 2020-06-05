@@ -11,7 +11,7 @@ export default class SessionStorage {
     } catch (e) {
       if (process.env.NODE_ENV !== `production`) {
         console.warn(
-          `[gatsby-react-router-scroll] Unable to access sessionStorage; sessionStorage is not available.`
+          `[gatsby-react-router-scroll] Unable to access sessionStorage; sessionStorage is not available.`,
         )
       }
 
@@ -43,7 +43,7 @@ export default class SessionStorage {
 
       if (process.env.NODE_ENV !== `production`) {
         console.warn(
-          `[gatsby-react-router-scroll] Unable to save state in sessionStorage; sessionStorage is not available.`
+          `[gatsby-react-router-scroll] Unable to save state in sessionStorage; sessionStorage is not available.`,
         )
       }
     }

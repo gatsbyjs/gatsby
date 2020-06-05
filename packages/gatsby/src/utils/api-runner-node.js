@@ -58,7 +58,7 @@ const doubleBind = (boundActionCreators, api, plugin, actionOptions) => {
   }
 }
 
-const initAPICallTracing = parentSpan => {
+const initAPICallTracing = (parentSpan) => {
   const startSpan = (spanName, spanArgs = {}) => {
     const defaultSpanArgs = { childOf: parentSpan }
 
@@ -105,13 +105,13 @@ const runAPI = (plugin, api, args, activity) => {
     }
     const boundActionCreators = bindActionCreators(
       availableActions,
-      store.dispatch
+      store.dispatch,
     )
     const doubleBoundActionCreators = doubleBind(
       boundActionCreators,
       api,
       plugin,
-      { ...args, parentSpan: pluginSpan, activity }
+      { ...args, parentSpan: pluginSpan, activity },
     )
 
     const { config, program } = store.getState()
@@ -119,7 +119,7 @@ const runAPI = (plugin, api, args, activity) => {
     const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
     const publicPath = getPublicPath({ ...config, ...program }, ``)
 
-    const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
+    const namespacedCreateNodeId = (id) => createNodeId(id, plugin.name)
 
     const tracing = initAPICallTracing(pluginSpan)
 
@@ -144,17 +144,17 @@ const runAPI = (plugin, api, args, activity) => {
             const warning = [
               reporter.stripIndent(`
               Action ${chalk.bold(
-                `createPage`
+                `createPage`,
               )} was called outside of its expected asynchronous lifecycle ${chalk.bold(
-                `createPages`
+                `createPages`,
               )} in ${chalk.bold(plugin.name)}.
               Ensure that you return a Promise from ${chalk.bold(
-                `createPages`
+                `createPages`,
               )} and are awaiting any asynchronous method invocations (like ${chalk.bold(
-                `graphql`
+                `graphql`,
               )} or http requests).
               For more info and debugging tips: see ${chalk.bold(
-                `https://gatsby.dev/sync-actions`
+                `https://gatsby.dev/sync-actions`,
               )}
             `),
             ]
@@ -208,7 +208,7 @@ const runAPI = (plugin, api, args, activity) => {
     // If the plugin is using a callback use that otherwise
     // expect a Promise to be returned.
     if (gatsbyNode[api].length === 3) {
-      return Promise.fromCallback(callback => {
+      return Promise.fromCallback((callback) => {
         const cb = (err, val) => {
           pluginSpan.finish()
           callback(err, val)
@@ -228,7 +228,7 @@ const runAPI = (plugin, api, args, activity) => {
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
       pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
+      return Promise.resolve(result).then((res) => {
         apiFinished = true
         return res
       })
@@ -243,7 +243,7 @@ const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -261,7 +261,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // `onCreatePage` is the only example right now. In these cases, we should
     // avoid calling the originating plugin again.
     const implementingPlugins = plugins.filter(
-      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
+      (plugin) => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource,
     )
 
     const apiRunInstance = {
@@ -316,7 +316,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     let onAPIRunComplete = null
     if (api === `onCreatePage`) {
       const path = args.page.path
-      const actionHandler = action => {
+      const actionHandler = (action) => {
         if (action.payload.path === path) {
           stopQueuedApiRuns = true
         }
@@ -327,7 +327,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    Promise.mapSeries(implementingPlugins, plugin => {
+    Promise.mapSeries(implementingPlugins, (plugin) => {
       if (stopQueuedApiRuns) {
         return null
       }
@@ -335,9 +335,9 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       const pluginName =
         plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
-      }).catch(err => {
+      }).catch((err) => {
         decorateEvent(`BUILD_PANIC`, {
           pluginName: `${plugin.name}@${plugin.version}`,
         })
@@ -346,7 +346,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
         const file = stackTrace
           .parse(err)
-          .find(file => /gatsby-node/.test(file.fileName))
+          .find((file) => /gatsby-node/.test(file.fileName))
 
         let codeFrame = ``
         const structuredError = errorParser({ err })
@@ -365,7 +365,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
             },
             {
               highlightCode: true,
-            }
+            },
           )
 
           structuredError.location = {
@@ -385,7 +385,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
         return null
       })
-    }).then(results => {
+    }).then((results) => {
       if (onAPIRunComplete) {
         onAPIRunComplete()
       }
@@ -399,7 +399,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
 
       // Filter empty results
-      apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+      apiRunInstance.results = results.filter((result) => !_.isEmpty(result))
 
       // Filter out empty responses and return if the
       // api caller isn't waiting for cascading actions to finish.
@@ -410,7 +410,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
       // Check if any of our waiters are done.
       waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
-        instance => {
+        (instance) => {
           // If none of its trace IDs are running, it's done.
           const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
           if (apisByTraceIdCount === 0) {
@@ -420,7 +420,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           } else {
             return true
           }
-        }
+        },
       )
       return
     })

@@ -7,9 +7,9 @@ const singleTrailingNewline = require(`single-trailing-newline`)
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
 
-const makePath = root => path.join(root, `.gitignore`)
+const makePath = (root) => path.join(root, `.gitignore`)
 
-const gitignoresAsArray = async root => {
+const gitignoresAsArray = async (root) => {
   const fullPath = makePath(root)
 
   if (!fileExists(fullPath)) {
@@ -27,10 +27,10 @@ const gitignoresAsArray = async root => {
   }
 }
 
-const ignoresToString = ignores =>
-  singleTrailingNewline(ignores.map(n => n.name).join(`\n`))
+const ignoresToString = (ignores) =>
+  singleTrailingNewline(ignores.map((n) => n.name).join(`\n`))
 
-const fileExists = fullPath => {
+const fileExists = (fullPath) => {
   try {
     fs.accessSync(fullPath, fs.constants.F_OK)
     return true
@@ -44,7 +44,7 @@ const create = async ({ root }, { name }) => {
 
   let ignores = await all({ root })
 
-  const exists = ignores.find(n => n.id === name)
+  const exists = ignores.find((n) => n.id === name)
   if (!exists) {
     ignores.push({ id: name, name })
   }
@@ -60,12 +60,12 @@ const update = async ({ root }, { id, name }) => {
 
   let ignores = await all({ root })
 
-  const exists = ignores.find(n => n.id === id)
+  const exists = ignores.find((n) => n.id === id)
 
   if (!exists) {
     ignores.push({ id, name })
   } else {
-    ignores = ignores.map(n => {
+    ignores = ignores.map((n) => {
       if (n.id === id) {
         return { ...n, name }
       }
@@ -82,7 +82,7 @@ const update = async ({ root }, { id, name }) => {
 const read = async (context, id) => {
   const ignores = await gitignoresAsArray(context.root)
 
-  const name = ignores.find(n => n === id)
+  const name = ignores.find((n) => n === id)
 
   if (!name) {
     return undefined
@@ -93,7 +93,7 @@ const read = async (context, id) => {
   return resource
 }
 
-const all = async context => {
+const all = async (context) => {
   const ignores = await gitignoresAsArray(context.root)
 
   return ignores.map((name, i) => {
@@ -106,7 +106,7 @@ const destroy = async (context, { id, name }) => {
   const fullPath = makePath(context.root)
 
   const ignores = await all(context)
-  const newIgnores = ignores.filter(n => n.id !== id)
+  const newIgnores = ignores.filter((n) => n.id !== id)
 
   await fs.writeFile(fullPath, ignoresToString(newIgnores))
 
@@ -118,7 +118,7 @@ module.exports.plan = async (context, args) => {
   const name = args.id || args.name
 
   const currentResource = (await all(context, args)) || []
-  const alreadyIgnored = currentResource.find(n => n.id === name)
+  const alreadyIgnored = currentResource.find((n) => n.id === name)
 
   const contents = ignoresToString(currentResource)
 
@@ -136,14 +136,15 @@ module.exports.plan = async (context, args) => {
   return plan
 }
 
-const message = resource => `Added ${resource.id || resource.name} to gitignore`
+const message = (resource) =>
+  `Added ${resource.id || resource.name} to gitignore`
 
 const schema = {
   name: Joi.string(),
   ...resourceSchema,
 }
 exports.schema = schema
-exports.validate = resource =>
+exports.validate = (resource) =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 module.exports.create = create

@@ -8,7 +8,7 @@ describe(`isOfficialPackage`, () => {
         repository: {
           url: `https://github.com/gatsbyjs/gatsby`,
         },
-      })
+      }),
     ).toBeTruthy()
   })
 
@@ -19,7 +19,7 @@ describe(`isOfficialPackage`, () => {
         repository: {
           url: `https://github.com/gatsbyjs/gatsby`,
         },
-      })
+      }),
     ).toBeFalsy()
   })
 
@@ -27,7 +27,7 @@ describe(`isOfficialPackage`, () => {
     expect(
       isOfficialPackage({
         name: `gatsby-theme-fake`,
-      })
+      }),
     ).toBeFalsy()
   })
 
@@ -38,7 +38,7 @@ describe(`isOfficialPackage`, () => {
         repository: {
           url: `https://github.com/kyelamathews/gatsby-theme-my-blog`,
         },
-      })
+      }),
     ).toBeFalsy()
   })
 })

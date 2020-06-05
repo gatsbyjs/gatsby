@@ -25,7 +25,7 @@ const ShowcaseItemCategories = ({ categories, onCategoryClick }) => {
         to={`/showcase/?${qs.stringify({
           filters: [c],
         })}`}
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault()
           if (onCategoryClick) {
             onCategoryClick(c)

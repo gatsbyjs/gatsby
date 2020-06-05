@@ -27,7 +27,7 @@ import {
 } from "./type-definitions"
 
 export function findMany<TSource, TArgs>(
-  typeName: string
+  typeName: string,
 ): GatsbyResolver<TSource, TArgs> {
   return function findManyResolver(_source, args, context, info): any {
     if (context.stats) {
@@ -43,13 +43,13 @@ export function findMany<TSource, TArgs>(
         stats: context.stats,
         tracer: context.tracer,
       },
-      { path: context.path, connectionType: typeName }
+      { path: context.path, connectionType: typeName },
     )
   }
 }
 
 export function findOne<TSource, TArgs>(
-  typeName: string
+  typeName: string,
 ): GatsbyResolver<TSource, TArgs> {
   return function findOneResolver(_source, args, context, info): any {
     if (context.stats) {
@@ -63,7 +63,7 @@ export function findOne<TSource, TArgs>(
         stats: context.stats,
         tracer: context.tracer,
       },
-      { path: context.path }
+      { path: context.path },
     )
   }
 }
@@ -71,13 +71,13 @@ export function findOne<TSource, TArgs>(
 type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number }
 
 export function findManyPaginated<TSource, TArgs, TNodeType>(
-  typeName: string
+  typeName: string,
 ): GatsbyResolver<TSource, PaginatedArgs<TArgs>> {
   return async function findManyPaginatedResolver(
     source,
     args,
     context,
-    info
+    info,
   ): Promise<IGatsbyConnection<TNodeType>> {
     // Peek into selection set and pass on the `field` arg of `group` and
     // `distinct` which might need to be resolved.
@@ -93,7 +93,7 @@ export function findManyPaginated<TSource, TArgs, TNodeType>(
       source,
       extendedArgs,
       context,
-      info
+      info,
     )
     return paginate(result, { skip: args.skip, limit: args.limit })
   }
@@ -139,8 +139,8 @@ export const group: GatsbyResolver<
         getValueAt(node, field)
       const values = Array.isArray(value) ? value : [value]
       values
-        .filter(value => value != null)
-        .forEach(value => {
+        .filter((value) => value != null)
+        .forEach((value) => {
           const key = value instanceof Date ? value.toISOString() : value
           acc[key] = (acc[key] || []).concat(node)
         })
@@ -149,7 +149,7 @@ export const group: GatsbyResolver<
       //   object key may be arbitrary string including reserved words (i.e. `constructor`)
       //   see: https://github.com/gatsbyjs/gatsby/issues/22508
     },
-    Object.create(null)
+    Object.create(null),
   )
 
   return Object.keys(groupedResults)
@@ -166,7 +166,7 @@ export const group: GatsbyResolver<
 
 export function paginate<NodeType>(
   results: Array<NodeType> = [],
-  { skip = 0, limit }: { skip?: number; limit?: number }
+  { skip = 0, limit }: { skip?: number; limit?: number },
 ): IGatsbyConnection<NodeType> {
   if (results === null) {
     results = []
@@ -219,13 +219,13 @@ export function link<TSource, TArgs>(
     TSource,
     IGatsbyResolverContext<TSource, TArgs>,
     TArgs
-  >
+  >,
 ): GatsbyResolver<TSource, TArgs> {
   return async function linkResolver(
     source,
     args,
     context,
-    info
+    info,
   ): Promise<any> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
     const fieldValue = await resolver(source, args, context, {
@@ -243,12 +243,12 @@ export function link<TSource, TArgs>(
       if (Array.isArray(fieldValue)) {
         return context.nodeModel.getNodesByIds(
           { ids: fieldValue, type: type },
-          { path: context.path }
+          { path: context.path },
         )
       } else {
         return context.nodeModel.getNodeById(
           { id: fieldValue, type: type },
-          { path: context.path }
+          { path: context.path },
         )
       }
     }
@@ -292,15 +292,15 @@ export function link<TSource, TArgs>(
         stats: context.stats,
         tracer: context.tracer,
       },
-      { path: context.path }
+      { path: context.path },
     )
     if (
       returnType instanceof GraphQLList &&
       Array.isArray(fieldValue) &&
       Array.isArray(result)
     ) {
-      return fieldValue.map(value =>
-        result.find(obj => getValueAt(obj, options.by) === value)
+      return fieldValue.map((value) =>
+        result.find((obj) => getValueAt(obj, options.by) === value),
       )
     } else {
       return result
@@ -313,13 +313,13 @@ export function fileByPath<TSource, TArgs>(
     from?: string
     fromNode?: string
   } = {},
-  fieldConfig
+  fieldConfig,
 ): GatsbyResolver<TSource, TArgs> {
   return async function fileByPathResolver(
     source,
     args,
     context,
-    info
+    info,
   ): Promise<any> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
     const fieldValue = await resolver(source, args, context, {
@@ -334,20 +334,20 @@ export function fileByPath<TSource, TArgs>(
     // like markdown which would be a child node of a File node).
     const parentFileNode = context.nodeModel.findRootNodeAncestor(
       source,
-      node => node.internal && node.internal.type === `File`
+      (node) => node.internal && node.internal.type === `File`,
     )
 
     const findLinkedFileNode = (relativePath: string): any => {
       // Use the parent File node to create the absolute path to
       // the linked file.
       const fileLinkPath = normalize(
-        systemPath.resolve(parentFileNode.dir, relativePath)
+        systemPath.resolve(parentFileNode.dir, relativePath),
       )
 
       // Use that path to find the linked File node.
       const linkedFileNode = _.find(
         context.nodeModel.getAllNodes({ type: `File` }),
-        n => n.absolutePath === fileLinkPath
+        (n) => n.absolutePath === fileLinkPath,
       )
       return linkedFileNode
     }
@@ -358,30 +358,30 @@ export function fileByPath<TSource, TArgs>(
 
 function resolveValue(
   resolve: (a: any) => any,
-  value: any | Array<any>
+  value: any | Array<any>,
 ): any | Array<any> {
   return Array.isArray(value)
-    ? value.map(v => resolveValue(resolve, v))
+    ? value.map((v) => resolveValue(resolve, v))
     : resolve(value)
 }
 
 function getProjectedField(
   info: GraphQLResolveInfo,
-  fieldName: string
+  fieldName: string,
 ): Array<string> {
   const selectionSet = info.fieldNodes[0].selectionSet
   if (selectionSet) {
     const fieldNodes = getFieldNodeByNameInSelectionSet(
       selectionSet,
       fieldName,
-      info
+      info,
     )
 
     const returnType = getNullableType(info.returnType)
 
     if (isObjectType(returnType) || isInterfaceType(returnType)) {
       const field = returnType.getFields()[fieldName]
-      const fieldArg = field?.args?.find(arg => arg.name === `field`)
+      const fieldArg = field?.args?.find((arg) => arg.name === `field`)
       if (fieldArg) {
         const fieldEnum = getNullableType(fieldArg.type)
 
@@ -389,7 +389,7 @@ function getProjectedField(
           return fieldNodes.reduce(
             (acc: Array<string>, fieldNode: FieldNode) => {
               const fieldArg = fieldNode.arguments?.find(
-                arg => arg.name.value === `field`
+                (arg) => arg.name.value === `field`,
               )
               if (fieldArg?.value.kind === Kind.ENUM) {
                 const enumKey = fieldArg.value.value
@@ -400,7 +400,7 @@ function getProjectedField(
               }
               return acc
             },
-            []
+            [],
           )
         }
       }
@@ -413,7 +413,7 @@ function getProjectedField(
 function getFieldNodeByNameInSelectionSet(
   selectionSet: SelectionSetNode,
   fieldName: string,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ): Array<FieldNode> {
   return selectionSet.selections.reduce(
     (acc: Array<FieldNode>, selection: SelectionNode) => {
@@ -425,7 +425,7 @@ function getFieldNodeByNameInSelectionSet(
             ...getFieldNodeByNameInSelectionSet(
               fragmentDef.selectionSet,
               fieldName,
-              info
+              info,
             ),
           ]
         }
@@ -435,7 +435,7 @@ function getFieldNodeByNameInSelectionSet(
           ...getFieldNodeByNameInSelectionSet(
             selection.selectionSet,
             fieldName,
-            info
+            info,
           ),
         ]
       } /* FIELD_NODE */ else {
@@ -445,7 +445,7 @@ function getFieldNodeByNameInSelectionSet(
       }
       return acc
     },
-    []
+    [],
   )
 }
 
@@ -488,13 +488,13 @@ It's likely that this has happened in a schemaCustomization with manually invoke
 }
 
 export function wrappingResolver<TSource, TArgs>(
-  resolver: GatsbyResolver<TSource, TArgs>
+  resolver: GatsbyResolver<TSource, TArgs>,
 ): GatsbyResolver<TSource, TArgs> {
   return async function wrappedTracingResolver(
     parent,
     args,
     context,
-    info
+    info,
   ): Promise<any> {
     if (!WARNED_ABOUT_RESOLVERS) {
       if (!info) {
@@ -510,7 +510,7 @@ export function wrappingResolver<TSource, TArgs>(
     if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
-        `${info.parentType.name}.${info.fieldName}`
+        `${info.parentType.name}.${info.fieldName}`,
       )
       activity.start()
     }

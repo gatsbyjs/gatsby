@@ -29,7 +29,7 @@ jest.mock(`sharp`, () => {
             height: 128,
           }
         }
-      })()
+      })(),
   )
 
   sharp.simd = jest.fn()
@@ -118,7 +118,7 @@ describe(`Test plugin manifest options`, () => {
     const contents = fs.writeFileSync.mock.calls[0][1]
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       path.join(`public`, `manifest.webmanifest`),
-      expect.anything()
+      expect.anything(),
     )
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
@@ -151,11 +151,11 @@ describe(`Test plugin manifest options`, () => {
 
     const firstIconPath = path.join(
       `public`,
-      path.dirname(`icons/icon-48x48.png`)
+      path.dirname(`icons/icon-48x48.png`),
     )
     const secondIconPath = path.join(
       `public`,
-      path.dirname(`other-icons/icon-48x48.png`)
+      path.dirname(`other-icons/icon-48x48.png`),
     )
 
     // No sharp calls because this is manual mode: user provides all icon sizes
@@ -238,9 +238,9 @@ describe(`Test plugin manifest options`, () => {
       onPostBootstrap(apiArgs, {
         ...manifestOptions,
         ...pluginSpecificOptions,
-      })
+      }),
     ).rejects.toThrow(
-      `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+      `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`,
     )
 
     expect(sharp).toHaveBeenCalledTimes(0)
@@ -265,7 +265,7 @@ describe(`Test plugin manifest options`, () => {
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(manifestOptions)
+      JSON.stringify(manifestOptions),
     )
   })
 
@@ -308,7 +308,7 @@ describe(`Test plugin manifest options`, () => {
     expect(sharp).toHaveBeenCalledTimes(4)
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(manifestOptions)
+      JSON.stringify(manifestOptions),
     )
   })
 
@@ -344,12 +344,12 @@ describe(`Test plugin manifest options`, () => {
         background_color: `#f7f0eb`,
         theme_color: `#a2466c`,
         display: `standalone`,
-      }
+      },
     )
     const contents = fs.writeFileSync.mock.calls[0][1]
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       path.join(`public`, `manifest.webmanifest`),
-      expect.anything()
+      expect.anything(),
     )
     expect(sharp).toHaveBeenCalledTimes(0)
     expect(contents).toMatchSnapshot()
@@ -373,7 +373,7 @@ describe(`Test plugin manifest options`, () => {
       ],
     }
     const { localize, ...manifest } = pluginSpecificOptions
-    const expectedResults = localize.concat(manifest).map(x => {
+    const expectedResults = localize.concat(manifest).map((x) => {
       return { ...manifest, ...x }
     })
 
@@ -381,15 +381,15 @@ describe(`Test plugin manifest options`, () => {
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[0])
+      JSON.stringify(expectedResults[0]),
     )
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[1])
+      JSON.stringify(expectedResults[1]),
     )
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[2])
+      JSON.stringify(expectedResults[2]),
     )
   })
 
@@ -412,12 +412,12 @@ describe(`Test plugin manifest options`, () => {
     }
 
     const { localize, ...manifest } = pluginSpecificOptions
-    const expectedResults = [manifest].concat(localize).map(x => {
+    const expectedResults = [manifest].concat(localize).map((x) => {
       return {
         ...manifest,
         ...x,
         start_url: path.posix.join(`/blog`, x.start_url),
-        icons: manifest.icons.map(icon => {
+        icons: manifest.icons.map((icon) => {
           return {
             ...icon,
             src: path.posix.join(`/blog`, icon.src),
@@ -428,20 +428,20 @@ describe(`Test plugin manifest options`, () => {
 
     await onPostBootstrap(
       { ...apiArgs, basePath: `/blog` },
-      pluginSpecificOptions
+      pluginSpecificOptions,
     )
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[0])
+      JSON.stringify(expectedResults[0]),
     )
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[1])
+      JSON.stringify(expectedResults[1]),
     )
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[2])
+      JSON.stringify(expectedResults[2]),
     )
   })
 
@@ -474,15 +474,15 @@ describe(`Test plugin manifest options`, () => {
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[0])
+      JSON.stringify(expectedResults[0]),
     )
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[1])
+      JSON.stringify(expectedResults[1]),
     )
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
-      JSON.stringify(expectedResults[2])
+      JSON.stringify(expectedResults[2]),
     )
   })
 })

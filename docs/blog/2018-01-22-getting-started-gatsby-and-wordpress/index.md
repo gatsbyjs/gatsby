@@ -98,7 +98,7 @@ For example, below is the part of the demo `gatsby-node.js` file that iterates o
 ```javascript
 const postTemplate = path.resolve(`./src/templates/post.js`)
 
-_.each(result.data.allWordpressPost.edges, edge => {
+_.each(result.data.allWordpressPost.edges, (edge) => {
   createPage({
     // will be the url for the page
     path: edge.node.slug,

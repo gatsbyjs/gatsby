@@ -68,8 +68,8 @@ module.exports = async function findApiCalls({ node, loadNodeContent }) {
 
     // Shared code for both commonjs and ESM imports
     const handleReferences = (bucket, references) => {
-      references.forEach(ref => {
-        const call = ref.findParent(path => path.type === `CallExpression`)
+      references.forEach((ref) => {
+        const call = ref.findParent((path) => path.type === `CallExpression`)
         if (call && call.node.arguments && call.node.arguments[0].quasis) {
           const apiHookName = call.node.arguments[0].quasis[0].value.raw
 
@@ -89,8 +89,8 @@ module.exports = async function findApiCalls({ node, loadNodeContent }) {
       ImportDeclaration(path) {
         const importPath = path.node.source.value
         let bucket
-        if ((bucket = buckets.find(a => a.test.test(importPath)))) {
-          path.node.specifiers.forEach(specifier => {
+        if ((bucket = buckets.find((a) => a.test.test(importPath)))) {
+          path.node.specifiers.forEach((specifier) => {
             // we are special casing named imports for browser APIs
 
             if (
@@ -112,10 +112,10 @@ module.exports = async function findApiCalls({ node, loadNodeContent }) {
           let bucket
           if (
             arg.quasis &&
-            (bucket = buckets.find(a => a.test.test(arg.quasis[0].value.raw)))
+            (bucket = buckets.find((a) => a.test.test(arg.quasis[0].value.raw)))
           ) {
             const test = path.findParent(
-              path => path.type === `VariableDeclarator`
+              (path) => path.type === `VariableDeclarator`,
             )
             if (test) {
               const apiRunnerName = test.node.id.name

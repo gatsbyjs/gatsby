@@ -12,12 +12,12 @@ jest.doMock(
       },
     }
   },
-  { virtual: true }
+  { virtual: true },
 )
 
 jest.doMock(
   path.join(
-    ...`<monorepo-path>/packages/package-a-dep1/package.json`.split(`/`)
+    ...`<monorepo-path>/packages/package-a-dep1/package.json`.split(`/`),
   ),
   () => {
     return {
@@ -26,19 +26,19 @@ jest.doMock(
       },
     }
   },
-  { virtual: true }
+  { virtual: true },
 )
 
 jest.doMock(
   path.join(
-    ...`<monorepo-path>/packages/package-a-dep1-dep1/package.json`.split(`/`)
+    ...`<monorepo-path>/packages/package-a-dep1-dep1/package.json`.split(`/`),
   ),
   () => {
     return {
       dependencies: {},
     }
   },
-  { virtual: true }
+  { virtual: true },
 )
 
 describe(`traversePackageDeps`, () => {

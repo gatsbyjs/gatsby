@@ -14,7 +14,7 @@ function isTestFile(filePath) {
   return mm.isMatch(filePath, testPatterns)
 }
 
-module.exports = path => {
+module.exports = (path) => {
   // Disallow paths starting with an underscore (_) or dot (.)
   // and template-.
   // and .d.ts

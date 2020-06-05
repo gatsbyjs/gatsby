@@ -13,7 +13,7 @@ int sum(a, b) {
 }
 `
     expect(
-      highlightCode(language, code, {}, lineNumbersHighlight)
+      highlightCode(language, code, {}, lineNumbersHighlight),
     ).toMatchSnapshot()
   })
 
@@ -63,11 +63,11 @@ export default Counter
       const language = `text`
       const code = `<button />`
       expect(highlightCode(language, code, {}, [], true)).toMatch(
-        `&lt;button /&gt;`
+        `&lt;button /&gt;`,
       )
       expect(console.warn).toHaveBeenCalledWith(
         `code block language not specified in markdown.`,
-        `applying generic code block`
+        `applying generic code block`,
       )
     })
 
@@ -80,7 +80,7 @@ export default Counter
       expect(highlightCode(language, code)).toMatch(`&lt;button /&gt;`)
       expect(console.warn).toHaveBeenCalledWith(
         `code block or inline code language not specified in markdown.`,
-        `applying generic code block`
+        `applying generic code block`,
       )
     })
 
@@ -100,12 +100,12 @@ export default Counter
       expect(console.warn).toHaveBeenNthCalledWith(
         1,
         `code block or inline code language not specified in markdown.`,
-        `applying generic code block`
+        `applying generic code block`,
       )
       expect(console.warn).toHaveBeenNthCalledWith(
         2,
         `unable to find prism language 'raw' for highlighting.`,
-        `applying generic code block`
+        `applying generic code block`,
       )
     })
   })
@@ -142,7 +142,7 @@ export default Counter
       const linesToHighlight = [1]
       const code = `const a = 1\nconst b = 2`
       expect(highlightCode(language, code, {}, linesToHighlight)).not.toMatch(
-        /\n$/
+        /\n$/,
       )
     })
 
@@ -152,7 +152,7 @@ export default Counter
       const linesToHighlight = [1]
       const code = `const a = 1\nconst b = 2\n`
       expect(highlightCode(language, code, {}, linesToHighlight)).toMatch(
-        /[^\n]\n$/
+        /[^\n]\n$/,
       )
     })
   })

@@ -3,7 +3,7 @@ const { interpret } = require(`xstate`)
 const recipeMachine = require(`.`)
 
 describe(`recipe-machine errors`, () => {
-  it(`errors if part of the recipe fails schema validation`, done => {
+  it(`errors if part of the recipe fails schema validation`, (done) => {
     const initialContext = {
       src: `
 # Hello, world
@@ -15,8 +15,8 @@ describe(`recipe-machine errors`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       if (state.value === `doneError`) {
         expect(state.context.error).toBeTruthy()
         service.stop()
@@ -31,7 +31,7 @@ describe(`recipe-machine errors`, () => {
     service.start()
   })
 
-  it(`errors if the introduction step has a command`, done => {
+  it(`errors if the introduction step has a command`, (done) => {
     const initialContext = {
       src: `
 # Hello, world
@@ -41,8 +41,8 @@ describe(`recipe-machine errors`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       if (state.value === `doneError`) {
         expect(state.context.error).toBeTruthy()
         service.stop()
@@ -53,13 +53,13 @@ describe(`recipe-machine errors`, () => {
     service.start()
   })
 
-  it(`errors if no src or recipePath has been given`, done => {
+  it(`errors if no src or recipePath has been given`, (done) => {
     const initialContext = {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       if (state.value === `doneError`) {
         expect(state.context.error).toBeTruthy()
         //expect(state.context.error).toMatchSnapshot()
@@ -71,7 +71,7 @@ describe(`recipe-machine errors`, () => {
     service.start()
   })
 
-  it(`errors if invalid jsx is passed`, done => {
+  it(`errors if invalid jsx is passed`, (done) => {
     const initialContext = {
       src: `
 # Hello, world
@@ -81,8 +81,8 @@ describe(`recipe-machine errors`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       if (state.value === `doneError`) {
         expect(state.context.error).toBeTruthy()
         //expect(state.context.error).toMatchSnapshot()

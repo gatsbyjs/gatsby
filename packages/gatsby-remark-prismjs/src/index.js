@@ -22,9 +22,9 @@ module.exports = (
       global: false,
     },
     escapeEntities = {},
-  } = {}
+  } = {},
 ) => {
-  const normalizeLanguage = lang => {
+  const normalizeLanguage = (lang) => {
     const lower = lang.toLowerCase()
     return aliases[lower] || lower
   }
@@ -32,7 +32,7 @@ module.exports = (
   //Load language extension if defined
   loadLanguageExtension(languageExtensions)
 
-  visit(markdownAST, `code`, node => {
+  visit(markdownAST, `code`, (node) => {
     let language = node.meta ? node.lang + node.meta : node.lang
     let {
       splitLanguage,
@@ -80,7 +80,7 @@ module.exports = (
       node.value,
       escapeEntities,
       highlightLines,
-      noInlineHighlight
+      noInlineHighlight,
     )
 
     let numLinesStyle, numLinesClass, numLinesNumber
@@ -118,7 +118,7 @@ module.exports = (
   })
 
   if (!noInlineHighlight) {
-    visit(markdownAST, `inlineCode`, node => {
+    visit(markdownAST, `inlineCode`, (node) => {
       let languageName = `text`
 
       if (inlineCodeMarker) {
@@ -135,7 +135,7 @@ module.exports = (
       node.value = `<code class="${className}">${highlightCode(
         languageName,
         node.value,
-        escapeEntities
+        escapeEntities,
       )}</code>`
     })
   }

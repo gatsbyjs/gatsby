@@ -10,17 +10,17 @@ const remark = new Remark().data(`settings`, {
   pedantic: true,
 })
 
-const extractObjectTag = mdast =>
+const extractObjectTag = (mdast) =>
   _.reduce(
     mdast.children[0].children,
     (result, child) => result + child.value,
-    ``
+    ``,
   )
 
-const extractIframeTag = mdast => mdast.children[0].value
+const extractIframeTag = (mdast) => mdast.children[0].value
 
 describe(`gatsby-remark-responsive-iframe`, () => {
-  ;[`iframe`, `object`].forEach(tag => {
+  ;[`iframe`, `object`].forEach((tag) => {
     it(`transforms an ${tag} with unitless width and height`, async () => {
       const markdownAST = remark.parse(`
 <${tag} url="http://www.example.com/" width="600" height="400"></${tag}>
@@ -34,7 +34,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
       expect(node.value).toMatchSnapshot()
     })
   })
-  ;[`iframe`, `object`].forEach(tag => {
+  ;[`iframe`, `object`].forEach((tag) => {
     it(`transforms an ${tag} with pixel width and height`, async () => {
       const markdownAST = remark.parse(`
 <${tag} url="http://www.example.com/" width="600px" height="400px"></${tag}>
@@ -97,7 +97,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
   ]
 
   _.map(shouldntTransform, ([width, height]) => {
-    ;[`iframe`, `object`].forEach(tag => {
+    ;[`iframe`, `object`].forEach((tag) => {
       it(`doesn't transform an ${tag} with dimensions: '${width}' '${height}'`, async () => {
         const markdownAST = remark.parse(`
   <${tag} url="http://www.example.com/" width="${width}" height="${height}"></${tag}>

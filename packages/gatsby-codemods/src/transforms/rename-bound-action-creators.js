@@ -5,7 +5,7 @@ module.exports = (file, api, options) => {
   const j = api.jscodeshift
   const root = j(file.source)
 
-  root.find(j.Identifier).forEach(path => {
+  root.find(j.Identifier).forEach((path) => {
     if (path.value.name === OLD_NAME) {
       path.value.name = NEW_NAME
     }

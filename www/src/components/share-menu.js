@@ -4,11 +4,11 @@ import React, { Fragment } from "react"
 import { MdShare } from "react-icons/md"
 import { FaPinterestP, FaLinkedin, FaFacebook, FaTwitter } from "react-icons/fa"
 
-const objectToParams = object =>
+const objectToParams = (object) =>
   `?` +
   Object.keys(object)
-    .filter(key => !!object[key])
-    .map(key => `${key}=${encodeURIComponent(object[key])}`)
+    .filter((key) => !!object[key])
+    .map((key) => `${key}=${encodeURIComponent(object[key])}`)
     .join(`&`)
 
 const ShareMenuItem = ({ href, title, children }) => (

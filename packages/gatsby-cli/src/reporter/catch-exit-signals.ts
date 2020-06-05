@@ -10,7 +10,7 @@ import { reporter } from "./reporter"
 
 const interruptActivities = (): void => {
   const { activities } = getStore().getState().logs
-  Object.keys(activities).forEach(activityId => {
+  Object.keys(activities).forEach((activityId) => {
     const activity = activities[activityId]
     if (
       activity.status === ActivityStatuses.InProgress ||

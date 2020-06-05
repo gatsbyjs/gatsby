@@ -74,7 +74,7 @@ class Reporter {
 
   panicOnBuild = (
     errorMeta: ErrorMeta,
-    error?: Error | Error[]
+    error?: Error | Error[],
   ): IStructuredError | IStructuredError[] => {
     const reporterError = this.error(errorMeta, error)
     trackError(`BUILD_PANIC`, { error: reporterError })
@@ -87,7 +87,7 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | ErrorMeta[],
-    error?: Error | Error[]
+    error?: Error | Error[],
   ): IStructuredError | IStructuredError[] => {
     let details: {
       error?: Error
@@ -102,8 +102,8 @@ class Reporter {
     //   reporter.error(any, [Error]);
     if (error) {
       if (Array.isArray(error)) {
-        return error.map(errorItem =>
-          this.error(errorMeta, errorItem)
+        return error.map((errorItem) =>
+          this.error(errorMeta, errorItem),
         ) as IStructuredError[]
       }
       details.error = error
@@ -121,8 +121,8 @@ class Reporter {
       //    reporter.error([Error]);
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      return errorMeta.map(errorItem =>
-        this.error(errorItem)
+      return errorMeta.map((errorItem) =>
+        this.error(errorItem),
       ) as IStructuredError[]
       // 4.
       //    reporter.error(errorMeta);
@@ -178,7 +178,7 @@ class Reporter {
 
   completeActivity = (
     id: string,
-    status: ActivityStatuses = ActivityStatuses.Success
+    status: ActivityStatuses = ActivityStatuses.Success,
   ): void => {
     reporterActions.endActivity({ id, status })
   }
@@ -188,7 +188,7 @@ class Reporter {
    */
   activityTimer = (
     text: string,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
   ): ITimerReporter => {
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
@@ -213,7 +213,7 @@ class Reporter {
    */
   phantomActivity = (
     text: string,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
   ): IPhantomReporter => {
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
@@ -233,7 +233,7 @@ class Reporter {
     text: string,
     total = 0,
     start = 0,
-    activityArgs: IActivityArgs = {}
+    activityArgs: IActivityArgs = {},
   ): IProgressReporter => {
     let { parentSpan, id, tags } = activityArgs
     const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }

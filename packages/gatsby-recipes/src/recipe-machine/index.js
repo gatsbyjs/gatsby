@@ -34,7 +34,7 @@ const recipeMachine = Machine(
               throw new Error(
                 JSON.stringify({
                   validationError: `A recipe must be specified`,
-                })
+                }),
               )
             }
 
@@ -121,7 +121,7 @@ const recipeMachine = Machine(
         // https://xstate.js.org/docs/guides/communication.html#invoking-callbacks
         invoke: {
           id: `applyPlan`,
-          src: (context, event) => cb => {
+          src: (context, event) => (cb) => {
             cb(`RESET`)
             if (context.plan.length === 0) {
               return cb(`onDone`)
@@ -132,10 +132,10 @@ const recipeMachine = Machine(
             }, 10000)
 
             applyPlan(context.plan)
-              .then(result => {
+              .then((result) => {
                 cb({ type: `onDone`, data: result })
               })
-              .catch(error => cb({ type: `onError`, data: error }))
+              .catch((error) => cb({ type: `onError`, data: error }))
 
             return () => clearInterval(interval)
           },
@@ -148,7 +148,7 @@ const recipeMachine = Machine(
           },
           TICK: {
             actions: assign({
-              elapsed: context => (context.elapsed += 10000),
+              elapsed: (context) => (context.elapsed += 10000),
             }),
           },
           onDone: {
@@ -203,7 +203,7 @@ const recipeMachine = Machine(
       addResourcesToContext: assign((context, event) => {
         if (event.data) {
           const stepResources = context.stepResources || []
-          const messages = event.data.map(e => {
+          const messages = event.data.map((e) => {
             return {
               _message: e._message,
               _currentStep: context.currentStep,
@@ -222,7 +222,7 @@ const recipeMachine = Machine(
       atLastStep: (context, event) =>
         context.currentStep === context.steps.length,
     },
-  }
+  },
 )
 
 module.exports = recipeMachine

@@ -28,7 +28,7 @@ if (process.env.BUILD_STAGE === `develop`) {
       if (typeof document !== `undefined`) {
         // Construct the <link /> tag
         const googleFonts = ReactDOMServer.renderToStaticMarkup(
-          <GoogleFont key={`GoogleFont`} typography={typography} />
+          <GoogleFont key={`GoogleFont`} typography={typography} />,
         )
         // Parse the tag
         let doc = new DOMParser().parseFromString(googleFonts, `text/html`)

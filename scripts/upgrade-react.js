@@ -16,7 +16,7 @@ function replace(deps, library) {
   }
 }
 
-packages.forEach(packageName => {
+packages.forEach((packageName) => {
   const path = `${process.cwd()}/packages/${packageName}/package.json`
   fs.readFile(path, (err, json) => {
     if (err) return

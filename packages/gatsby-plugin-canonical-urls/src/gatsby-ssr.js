@@ -3,7 +3,7 @@ import url from "url"
 
 exports.onRenderBody = (
   { setHeadComponents, pathname = `/` },
-  pluginOptions
+  pluginOptions,
 ) => {
   if (pluginOptions && pluginOptions.siteUrl) {
     const siteUrl = pluginOptions.siteUrl.replace(/\/$/, ``)

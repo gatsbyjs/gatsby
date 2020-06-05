@@ -141,7 +141,7 @@ To give you an idea how I then added this functionality to the listing here's an
     return (
       <Box>
         <div>
-          {theme.shapes.map(shape => {
+          {theme.shapes.map((shape) => {
             switch (shape.type) {
               case `circle`:
                 return (

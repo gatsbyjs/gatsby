@@ -12,7 +12,7 @@ const publicPath = `./public`
 
 exports.onPostBuild = async (
   { graphql, pathPrefix, basePath = pathPrefix },
-  pluginOptions
+  pluginOptions,
 ) => {
   const options = { ...pluginOptions }
   delete options.plugins
@@ -42,13 +42,13 @@ exports.onPostBuild = async (
     queryRecords,
     excludeOptions,
     basePath,
-    resolveSiteUrl
+    resolveSiteUrl,
   )
   const urls = serialize(filteredRecords)
 
   if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
     const map = sitemap.createSitemap(rest)
-    urls.forEach(u => map.add(u))
+    urls.forEach((u) => map.add(u))
     return writeFile(saved, map.toString())
   }
 
@@ -57,11 +57,11 @@ exports.onPostBuild = async (
       siteMetadata: { siteUrl },
     },
   } = filteredRecords
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     // sitemap-index.xml is default file name. (https://git.io/fhNgG)
     const indexFilePath = path.join(
       publicPath,
-      `${rest.sitemapName || `sitemap`}-index.xml`
+      `${rest.sitemapName || `sitemap`}-index.xml`,
     )
     const sitemapIndexOptions = {
       ...rest,
@@ -70,7 +70,7 @@ exports.onPostBuild = async (
         withoutTrailingSlash(pathPrefix || ``),
       targetFolder: publicPath,
       urls,
-      callback: error => {
+      callback: (error) => {
         if (error) throw new Error(error)
         renameFile(indexFilePath, saved).then(resolve)
       },

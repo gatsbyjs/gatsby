@@ -33,15 +33,15 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     space = await client.getSpace()
     let contentfulLocales = await client
       .getLocales()
-      .then(response => response.items)
+      .then((response) => response.items)
     defaultLocale = _.find(contentfulLocales, { default: true }).code
     locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
     if (locales.length === 0) {
       reporter.panic(
         `Please check if your localeFilter is configured properly. Locales '${_.join(
-          contentfulLocales.map(item => item.code),
-          `,`
-        )}' were found but were filtered down to none.`
+          contentfulLocales.map((item) => item.code),
+          `,`,
+        )}' were found but were filtered down to none.`,
       )
     }
     reporter.info(`default locale is: ${defaultLocale}`)
@@ -53,13 +53,13 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
       reporter.panic(
         `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-        e
+        e,
       )
     } else if (e.response) {
       if (e.response.status === 404) {
         // host and space used to generate url
         details = `Endpoint not found. Check if ${chalk.yellow(
-          `host`
+          `host`,
         )} and ${chalk.yellow(`spaceId`)} settings are correct`
         errors = {
           host: `Check if setting is correct`,
@@ -68,7 +68,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
       } else if (e.response.status === 401) {
         // authorization error
         details = `Authorization error. Check if ${chalk.yellow(
-          `accessToken`
+          `accessToken`,
         )} and ${chalk.yellow(`environment`)} are correct`
         errors = {
           accessToken: `Check if setting is correct`,
@@ -135,14 +135,14 @@ function pagedGet(
   pageLimit,
   query = {},
   skip = 0,
-  aggregatedResponse = null
+  aggregatedResponse = null,
 ) {
   return client[method]({
     ...query,
     skip: skip,
     limit: pageLimit,
     order: `sys.createdAt`,
-  }).then(response => {
+  }).then((response) => {
     if (!aggregatedResponse) {
       aggregatedResponse = response
     } else {
@@ -155,7 +155,7 @@ function pagedGet(
         pageLimit,
         query,
         skip + pageLimit,
-        aggregatedResponse
+        aggregatedResponse,
       )
     }
     return aggregatedResponse

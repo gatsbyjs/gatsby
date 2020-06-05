@@ -188,7 +188,7 @@ import ThemeContext from "../context/ThemeContext"
 
 const Header = ({ siteTitle }) => (
   <ThemeContext.Consumer>
-    {theme => (
+    {(theme) => (
       <div
         style={{
           background: `rebeccapurple`,

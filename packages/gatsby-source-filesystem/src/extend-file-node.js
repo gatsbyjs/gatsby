@@ -20,7 +20,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
           process.cwd(),
           `public`,
           `static`,
-          fileName
+          fileName,
         )
 
         if (!fs.existsSync(publicPath)) {
@@ -28,14 +28,14 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
             details.absolutePath,
             publicPath,
             { dereference: true },
-            err => {
+            (err) => {
               if (err) {
                 console.error(
                   `error copying file from ${details.absolutePath} to ${publicPath}`,
-                  err
+                  err,
                 )
               }
-            }
+            },
           )
         }
 

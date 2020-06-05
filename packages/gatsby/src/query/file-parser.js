@@ -49,7 +49,7 @@ function followVariableDeclarations(binding) {
     node?.init?.type === `Identifier`
   ) {
     return followVariableDeclarations(
-      binding.path.scope.getBinding(node.init.name)
+      binding.path.scope.getBinding(node.init.name),
     )
   }
   return binding
@@ -71,7 +71,7 @@ const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
 
 Perhaps the variable name has a typo?
 
-Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`
+Also note that we are currently unable to use queries defined in files other than the file where the ${usageFunction} is defined. If you're attempting to import the query, please move it into "${file}". If being able to import queries from another file is an important capability for you, we invite your help fixing it.\n`,
   )
 
 async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
@@ -135,11 +135,11 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   return ast
 }
 
-const warnForGlobalTag = file =>
+const warnForGlobalTag = (file) =>
   report.warn(
     `Using the global \`graphql\` tag is deprecated, and will not be supported in v3.\n` +
       `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
-      file
+      file,
   )
 
 type GraphQLDocumentInFile = {
@@ -155,11 +155,11 @@ type GraphQLDocumentInFile = {
 async function findGraphQLTags(
   file,
   text,
-  { parentSpan, addError } = {}
+  { parentSpan, addError } = {},
 ): Promise<Array<GraphQLDocumentInFile>> {
   return new Promise((resolve, reject) => {
     parseToAst(file, text, { parentSpan, addError })
-      .then(ast => {
+      .then((ast) => {
         const documents = []
         if (!ast) {
           resolve(documents)
@@ -180,16 +180,16 @@ async function findGraphQLTags(
 
         const extractStaticQuery = (
           taggedTemplateExpressPath,
-          isHook = false
+          isHook = false,
         ) => {
           const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(
-            taggedTemplateExpressPath
+            taggedTemplateExpressPath,
           )
           if (!gqlAst) return
 
           if (isGlobal) warnForGlobalTag(file)
 
-          gqlAst.definitions.forEach(def => {
+          gqlAst.definitions.forEach((def) => {
             generateQueryName({
               def,
               hash,
@@ -217,7 +217,7 @@ async function findGraphQLTags(
 
           documentLocations.set(
             docInFile,
-            `${taggedTemplateExpressPath.node.start}-${gqlAst.loc.start}`
+            `${taggedTemplateExpressPath.node.start}-${gqlAst.loc.start}`,
           )
 
           documents.push(docInFile)
@@ -268,7 +268,7 @@ async function findGraphQLTags(
                         warnForUnknownQueryVariable(
                           varName,
                           file,
-                          `<StaticQuery>`
+                          `<StaticQuery>`,
                         )
                       }
                     }
@@ -328,7 +328,7 @@ async function findGraphQLTags(
 
           if (isGlobal) warnForGlobalTag(file)
 
-          gqlAst.definitions.forEach(def => {
+          gqlAst.definitions.forEach((def) => {
             generateQueryName({
               def,
               hash,
@@ -355,7 +355,7 @@ async function findGraphQLTags(
 
           documentLocations.set(
             docInFile,
-            `${innerPath.node.start}-${gqlAst.loc.start}`
+            `${innerPath.node.start}-${gqlAst.loc.start}`,
           )
 
           documents.push(docInFile)
@@ -374,7 +374,7 @@ async function findGraphQLTags(
               TaggedTemplateExpression,
               ExportSpecifier(path) {
                 const binding = followVariableDeclarations(
-                  path.scope.getBinding(path.node.local.name)
+                  path.scope.getBinding(path.node.local.name),
                 )
                 binding.path.traverse({ TaggedTemplateExpression })
               },
@@ -383,7 +383,9 @@ async function findGraphQLTags(
         })
 
         // Remove duplicate queries
-        const uniqueQueries = _.uniqBy(documents, q => documentLocations.get(q))
+        const uniqueQueries = _.uniqBy(documents, (q) =>
+          documentLocations.get(q),
+        )
 
         resolve(uniqueQueries)
       })
@@ -489,7 +491,7 @@ export default class FileParser {
         const location = {
           start: locInGraphQlToLocInFile(
             err.templateLoc,
-            err.originalError.locations[0]
+            err.originalError.locations[0],
           ),
         }
 
@@ -522,16 +524,16 @@ export default class FileParser {
 
   async parseFiles(
     files: Array<string>,
-    addError
+    addError,
   ): Promise<Array<DocumentNode>> {
     const documents = []
 
     return Promise.all(
-      files.map(file =>
-        this.parseFile(file, addError).then(docs => {
+      files.map((file) =>
+        this.parseFile(file, addError).then((docs) => {
           documents.push(...(docs || []))
-        })
-      )
+        }),
+      ),
     ).then(() => documents)
   }
 }

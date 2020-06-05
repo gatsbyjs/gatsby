@@ -37,7 +37,7 @@ const searchMetaHeight = `3rem`
 const searchInputWrapperMargin = space[6]
 
 /* stylelint-disable */
-const searchBoxStyles = t => css`
+const searchBoxStyles = (t) => css`
   .ais-SearchBox-input:valid ~ .ais-SearchBox-reset {
     display: block;
   }
@@ -217,7 +217,7 @@ class Search extends Component {
             <Configure analyticsTags={[`gatsby-plugins`]} />
             <RefinementList
               attribute="keywords"
-              transformItems={items =>
+              transformItems={(items) =>
                 items.map(({ count, ...item }) => {
                   return {
                     ...item,
@@ -260,14 +260,14 @@ class Search extends Component {
           <div
             sx={{
               [mediaQueries.md]: {
-                height: t =>
+                height: (t) =>
                   `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
                 overflowY: `scroll`,
               },
             }}
           >
             <InfiniteHits
-              hitComponent={result => (
+              hitComponent={(result) => (
                 <Result
                   hit={result.hit}
                   pathname={this.props.pathname}
@@ -463,11 +463,11 @@ class PluginSearchBar extends Component {
       `${this.props.location.pathname}?=${encodeURIComponent(value.query)}`,
       {
         replace: true,
-      }
+      },
     )
   }
 
-  onSearchStateChange = searchState => {
+  onSearchStateChange = (searchState) => {
     this.updateHistory(searchState)
     this.setState({ searchState })
   }

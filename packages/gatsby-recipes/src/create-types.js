@@ -6,7 +6,7 @@ const { ObjectTypeComposer, schemaComposer } = require(`graphql-compose`)
 
 const resources = require(`./resources`)
 
-const typeNameToHumanName = name => {
+const typeNameToHumanName = (name) => {
   if (name.endsWith(`Connection`)) {
     return `all` + name.replace(/Connection$/, ``)
   } else {
@@ -73,7 +73,7 @@ module.exports = () => {
       const camelCasedResourceName = _.camelCase(resourceName)
       const inputType = ObjectTypeComposer.create(
         type,
-        schemaComposer
+        schemaComposer,
       ).getInputType()
 
       const destroyMutation = {
@@ -84,7 +84,7 @@ module.exports = () => {
         resolve: async (_root, args, context) => {
           const value = await resource.destroy(
             context,
-            args[camelCasedResourceName]
+            args[camelCasedResourceName],
           )
           return { ...value, _typeName: resourceName }
         },
@@ -120,11 +120,11 @@ module.exports = () => {
         query: queryTypes,
         mutation: mutationTypes,
       }
-    }
+    },
   )
 
   const queryTypes = _.flatten(
-    resourceTypes.filter(Boolean).map(r => r.query)
+    resourceTypes.filter(Boolean).map((r) => r.query),
   ).reduce((acc, curr) => {
     const typeName = typeNameToHumanName(curr.type.toString())
     acc[typeName] = curr
@@ -132,9 +132,9 @@ module.exports = () => {
   }, {})
 
   const mutationTypes = _.flatten(
-    resourceTypes.filter(Boolean).map(r => r.mutation)
+    resourceTypes.filter(Boolean).map((r) => r.mutation),
   ).reduce((acc, curr) => {
-    Object.keys(curr).forEach(key => {
+    Object.keys(curr).forEach((key) => {
       acc[typeNameToHumanName(key)] = curr[key]
     })
     return acc

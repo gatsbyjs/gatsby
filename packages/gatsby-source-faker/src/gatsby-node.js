@@ -2,17 +2,17 @@ const faker = require(`faker`)
 
 exports.sourceNodes = (
   { actions, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode } = actions
   const { schema, count, type } = pluginOptions
   for (let i = 0; i < count; i++) {
     let item = {}
-    Object.keys(schema).map(schemaKey => {
+    Object.keys(schema).map((schemaKey) => {
       const schemaItemList = schema[schemaKey]
       item[schemaKey] = {}
       // ['firstName', 'lastName']
-      schemaItemList.forEach(schemaItem => {
+      schemaItemList.forEach((schemaItem) => {
         item[schemaKey][schemaItem] = faker[schemaKey][schemaItem]()
       })
     })

@@ -10,7 +10,7 @@ function matchesSnapshot(query) {
 }
 
 it.todo(
-  `Works correctly with the kitchen sink`
+  `Works correctly with the kitchen sink`,
   // , () => {
   //   matchesSnapshot(`
   //   import * as React from 'react'
@@ -255,7 +255,7 @@ it(`allows the global tag`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 
@@ -292,7 +292,7 @@ it(`distinguishes between the right tags`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 
@@ -306,7 +306,7 @@ it(`handles import aliasing`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 
@@ -320,7 +320,7 @@ it(`handles require`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 
@@ -334,7 +334,7 @@ it(`handles require namespace`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 it(`handles require alias`, () => {
@@ -347,7 +347,7 @@ it(`handles require alias`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 
@@ -366,7 +366,7 @@ it(`Leaves other graphql tags alone`, () => {
        site { siteMetadata { title }}
      }
   \`
-  `
+  `,
   )
 })
 
@@ -394,7 +394,7 @@ it(`Removes all gatsby queries`, () => {
        ...siteMetaQuery
      }
   \`
-  `
+  `,
   )
 })
 

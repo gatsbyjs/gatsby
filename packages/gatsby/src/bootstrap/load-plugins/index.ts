@@ -15,7 +15,7 @@ import {
 import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
 
 const getAPI = (
-  api: { [exportType in ExportType]: { [api: string]: boolean } }
+  api: { [exportType in ExportType]: { [api: string]: boolean } },
 ): ICurrentAPIs =>
   _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
     merged[key] = _.keys(api[key])
@@ -29,14 +29,14 @@ const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
   const flattened: IPluginInfo[] = []
   const extractPlugins = (plugin: IPluginInfo): void => {
     if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
-      plugin.pluginOptions.plugins.forEach(subPlugin => {
+      plugin.pluginOptions.plugins.forEach((subPlugin) => {
         flattened.push(subPlugin)
         extractPlugins(subPlugin)
       })
     }
   }
 
-  plugins.forEach(plugin => {
+  plugins.forEach((plugin) => {
     flattened.push(plugin)
     extractPlugins(plugin)
   })
@@ -46,7 +46,7 @@ const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
 
 export async function loadPlugins(
   config: ISiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string | null = null,
 ): Promise<IFlattenedPlugin[]> {
   const currentAPIs = getAPI({
     browser: browserAPIs,

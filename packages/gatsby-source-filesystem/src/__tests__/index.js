@@ -13,7 +13,7 @@ describe(`gatsby-source-filesystem`, () => {
   it(`rejects if file not found`, async () => {
     await loadNodeContent({
       absolutePath: path.join(__dirname, `haha-not-a-real-file.js`),
-    }).catch(err => {
+    }).catch((err) => {
       expect(err).toBeDefined()
     })
   })

@@ -45,10 +45,10 @@ describe(`Errors Helpers`, () => {
       const sanitizedErrorString = sanitizeError(e)
 
       expect(sanitizedErrorString).toEqual(
-        expect.stringContaining(errormessage)
+        expect.stringContaining(errormessage),
       )
       expect(sanitizedErrorString).toEqual(
-        expect.not.stringContaining(process.cwd().replace(`\\`, `\\\\`))
+        expect.not.stringContaining(process.cwd().replace(`\\`, `\\\\`)),
       )
     })
 
@@ -88,7 +88,7 @@ describe(`Errors Helpers`, () => {
 
       expect(sanitizedErrorString.includes(errormessage)).toBe(true)
       expect(sanitizedErrorString).toEqual(
-        expect.not.stringContaining(`sidharthachatterjee`)
+        expect.not.stringContaining(`sidharthachatterjee`),
       )
       expect(sanitizedErrorString.match(/\$SNIP/g).length).toBe(4)
 
@@ -98,7 +98,7 @@ describe(`Errors Helpers`, () => {
   describe(`cleanPaths`, () => {
     it.each([`gatsby-config.js`, `src/pages/index.js`])(
       `should clean path on unix: %s`,
-      filePath => {
+      (filePath) => {
         const cwdMockPath = `/Users/username/gatsby-site`
         const fullPath = `${cwdMockPath}/${filePath}`
 
@@ -109,15 +109,15 @@ describe(`Errors Helpers`, () => {
         const errormessage = `This path ${fullPath} is a test ${fullPath}`
 
         expect(cleanPaths(errormessage, `/`)).toBe(
-          `This path $SNIP/${filePath} is a test $SNIP/${filePath}`
+          `This path $SNIP/${filePath} is a test $SNIP/${filePath}`,
         )
         mockCwd.mockRestore()
-      }
+      },
     )
 
     it.each([`gatsby-config.js`, `src\\pages\\index.js`])(
       `should clean path on windows: %s`,
-      filePath => {
+      (filePath) => {
         const cwdMockPath = `C:\\Users\\username\\gatsby-site`
         const fullPath = `${cwdMockPath}\\${filePath}`
 
@@ -128,10 +128,10 @@ describe(`Errors Helpers`, () => {
         const errormessage = `This path ${fullPath} is a test ${fullPath}`
 
         expect(cleanPaths(errormessage, `\\`)).toBe(
-          `This path $SNIP\\${filePath} is a test $SNIP\\${filePath}`
+          `This path $SNIP\\${filePath} is a test $SNIP\\${filePath}`,
         )
         mockCwd.mockRestore()
-      }
+      },
     )
   })
 })

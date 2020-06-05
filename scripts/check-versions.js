@@ -15,26 +15,26 @@ let argv = yargs
     describe: `Allow using "next" versions. Use this only for alpha/beta releases`,
   }).argv
 
-getPackages(process.cwd()).then(packages => {
+getPackages(process.cwd()).then((packages) => {
   const graph = new PackageGraph(packages, `allDependencies`, true)
 
   graph.forEach((pkgNode, name) => {
     let outdated = Array.from(pkgNode.localDependencies.values()).filter(
-      localDep =>
-        !semver.satisfies(graph.get(localDep.name).version, localDep.fetchSpec)
+      (localDep) =>
+        !semver.satisfies(graph.get(localDep.name).version, localDep.fetchSpec),
     )
 
     if (argv[`allow-next`]) {
-      outdated = outdated.filter(localDep => localDep.fetchSpec !== `next`)
+      outdated = outdated.filter((localDep) => localDep.fetchSpec !== `next`)
     }
 
     if (!outdated.length) return
 
     const msg = outdated
       .map(
-        p =>
+        (p) =>
           `  Depends on "${p.name}@${p.fetchSpec}" \n` +
-          `  instead of "${p.name}@${graph.get(p.name).version}". \n`
+          `  instead of "${p.name}@${graph.get(p.name).version}". \n`,
       )
       .join(`\n`)
 
@@ -45,8 +45,8 @@ getPackages(process.cwd()).then(packages => {
       const pkg = pkgNode.pkg
       const next = pkg.toJSON()
       const depTypes = [`dependencies`, `devDependencies`, `peerDependencies`]
-      outdated.forEach(p => {
-        depTypes.forEach(depKey => {
+      outdated.forEach((p) => {
+        depTypes.forEach((depKey) => {
           if (pkg[depKey] && pkg[depKey][p.name]) {
             next[depKey][p.name] = `^${graph.get(p.name).version}`
           }
@@ -55,7 +55,7 @@ getPackages(process.cwd()).then(packages => {
 
       writeFileSync(
         `${pkg.location}/package.json`,
-        JSON.stringify(next, null, 2)
+        JSON.stringify(next, null, 2),
       )
     }
   })

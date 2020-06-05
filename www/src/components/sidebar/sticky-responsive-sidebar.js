@@ -40,17 +40,17 @@ class StickyResponsiveSidebar extends Component {
             height: `100vh`,
             position: `fixed`,
             top: 0,
-            transition: t =>
+            transition: (t) =>
               `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             width: `sidebarWidth.mobile`,
             zIndex: `sidebar`,
             [mediaQueries.md]: {
-              height: t =>
+              height: (t) =>
                 `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight})`,
               maxWidth: `none`,
               opacity: `1 !important`,
               pointerEvents: `auto`,
-              top: t =>
+              top: (t) =>
                 `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
               width: `sidebarWidth.default`,
             },
@@ -67,8 +67,8 @@ class StickyResponsiveSidebar extends Component {
               height: `100%`,
               transform: open
                 ? `translateX(0)`
-                : t => `translateX(-${t.sizes.sidebarWidth.mobile})`,
-              transition: t =>
+                : (t) => `translateX(-${t.sizes.sidebarWidth.mobile})`,
+              transition: (t) =>
                 `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               [mediaQueries.md]: {
                 boxShadow: `none`,
@@ -86,16 +86,16 @@ class StickyResponsiveSidebar extends Component {
           sx={{
             backgroundColor: `gatsby`,
             borderRadius: `50%`,
-            bottom: t => t.space[11],
+            bottom: (t) => t.space[11],
             boxShadow: `dialog`,
             cursor: `pointer`,
             display: `flex`,
-            height: t => t.space[10],
+            height: (t) => t.space[10],
             justifyContent: `space-around`,
             position: `fixed`,
-            right: t => t.space[6],
+            right: (t) => t.space[6],
             visibility: `visible`,
-            width: t => t.space[10],
+            width: (t) => t.space[10],
             zIndex: `floatingActionButton`,
             [mediaQueries.md]: { display: `none` },
           }}
@@ -112,16 +112,16 @@ class StickyResponsiveSidebar extends Component {
               color: `white`,
               display: `flex`,
               flexDirection: `column`,
-              height: t => t.space[5],
+              height: (t) => t.space[5],
               visibility: `visible`,
-              width: t => t.space[5],
+              width: (t) => t.space[5],
             }}
           >
             <ChevronSvg
               size={16}
               cssProps={{
                 transform: `translate(${iconOffset}px, 5px) rotate(90deg)`,
-                transition: t =>
+                transition: (t) =>
                   `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
             />
@@ -131,7 +131,7 @@ class StickyResponsiveSidebar extends Component {
                 transform: `translate(${
                   5 - iconOffset
                 }px, -5px) rotate(270deg)`,
-                transition: t =>
+                transition: (t) =>
                   `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
               }}
             />

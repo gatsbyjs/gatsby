@@ -235,7 +235,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     console.log(JSON.stringify(result, null, 4))
   })
 }
@@ -304,7 +304,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     //highlight-start
     result.data.allWordpressPost.edges.forEach(({ node }) => {
       createPage({

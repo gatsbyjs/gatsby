@@ -14,21 +14,21 @@ import { Node } from "../../index"
  */
 function discoverPluginsWithoutNodes(
   storeState: IGatsbyState,
-  nodes: Node[]
+  nodes: Node[],
 ): string[] {
   // Find out which plugins own already created nodes
   const nodeOwnerSet = new Set([`default-site-plugin`])
-  nodes.forEach(node => nodeOwnerSet.add(node.internal.owner))
+  nodes.forEach((node) => nodeOwnerSet.add(node.internal.owner))
 
   return storeState.flattenedPlugins
     .filter(
-      plugin =>
+      (plugin) =>
         // "Can generate nodes"
         plugin.nodeAPIs.includes(`sourceNodes`) &&
         // "Has not generated nodes"
-        !nodeOwnerSet.has(plugin.name)
+        !nodeOwnerSet.has(plugin.name),
     )
-    .map(plugin => plugin.name)
+    .map((plugin) => plugin.name)
 }
 
 /**
@@ -37,10 +37,10 @@ function discoverPluginsWithoutNodes(
 function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
 
-  pluginsWithNoNodes.map(name =>
+  pluginsWithNoNodes.map((name) =>
     report.warn(
-      `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
-    )
+      `The ${name} plugin has generated no Gatsby nodes. Do you need it?`,
+    ),
   )
 }
 
@@ -48,7 +48,7 @@ function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
  * Return the set of nodes for which its root node has not been touched
  */
 function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
-  return nodes.filter(node => {
+  return nodes.filter((node) => {
     let rootNode = node
     let whileCount = 0
     while (
@@ -61,7 +61,7 @@ function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
       if (whileCount > 100) {
         console.log(
           `It looks like you have a node that's set its parent as itself`,
-          rootNode
+          rootNode,
         )
       }
     }
@@ -77,7 +77,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Node[]): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach((node) => deleteNode({ node }))
   }
 }
 

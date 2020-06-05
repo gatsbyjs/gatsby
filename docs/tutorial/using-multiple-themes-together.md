@@ -308,7 +308,7 @@ export default function Navigation() {
           }
         }
       }
-    `
+    `,
   )
   const navLinks = data.site.siteMetadata.menuLinks
   return (
@@ -325,7 +325,7 @@ export default function Navigation() {
           padding: 0,
         })}
       >
-        {navLinks.map(link => (
+        {navLinks.map((link) => (
           <li
             css={css({
               marginRight: 2,

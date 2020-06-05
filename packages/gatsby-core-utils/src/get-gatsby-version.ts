@@ -6,7 +6,7 @@ export const getGatsbyVersion = (): string => {
       process.cwd(),
       `node_modules`,
       `gatsby`,
-      `package.json`
+      `package.json`,
     )).version
   } catch (e) {
     return ``

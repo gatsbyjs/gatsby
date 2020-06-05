@@ -14,10 +14,10 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 const MAX_DESCRIPTION_LENGTH = 100
 
 const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
-  margin-right: ${p => p.theme.space[6]};
+  margin-right: ${(p) => p.theme.space[6]};
 
   ${mediaQueries.md} {
-    border-bottom: 1px solid ${p => p.theme.colors.ui.border};
+    border-bottom: 1px solid ${(p) => p.theme.colors.ui.border};
     box-shadow: none;
     margin: 0;
     padding: 0;
@@ -26,24 +26,24 @@ const EcosystemFeaturedItemRoot = styled(HorizontalScrollerItem)`
 `
 
 export const BlockLink = styled(Link)`
-  background: ${p => p.theme.colors.card.background};
-  border-radius: ${p => p.theme.radii[2]};
-  box-shadow: ${p => p.theme.shadows.raised};
+  background: ${(p) => p.theme.colors.card.background};
+  border-radius: ${(p) => p.theme.radii[2]};
+  box-shadow: ${(p) => p.theme.shadows.raised};
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: ${p => p.theme.space[6]};
+  padding: ${(p) => p.theme.space[6]};
 
   ${mediaQueries.md} {
     border-radius: 0;
     box-shadow: none;
-    transition: all ${p => p.theme.transition.speed.default}
-      ${p => p.theme.transition.curve.default};
+    transition: all ${(p) => p.theme.transition.speed.default}
+      ${(p) => p.theme.transition.curve.default};
   }
 
   ${mediaQueries.lg} {
     :hover {
-      background: ${p => p.theme.colors.ui.hover};
+      background: ${(p) => p.theme.colors.ui.hover};
     }
   }
 `
@@ -54,23 +54,23 @@ const Header = styled(`header`)`
   justify-content: space-between;
 
   h3 {
-    color: ${p => p.theme.colors.heading};
-    font-size: ${p => p.theme.fontSizes[2]};
+    color: ${(p) => p.theme.colors.heading};
+    font-size: ${(p) => p.theme.fontSizes[2]};
     margin: 0;
   }
 
   span {
     align-items: center;
-    color: ${p => p.theme.colors.textMuted};
+    color: ${(p) => p.theme.colors.textMuted};
     display: flex;
-    font-size: ${p => p.theme.fontSizes[1]};
-    padding-left: ${p => p.theme.space[3]};
+    font-size: ${(p) => p.theme.fontSizes[1]};
+    padding-left: ${(p) => p.theme.space[3]};
 
     svg {
-      fill: ${p => p.theme.colors.textMuted};
+      fill: ${(p) => p.theme.colors.textMuted};
       height: auto;
-      margin-left: ${p => p.theme.space[1]};
-      width: ${p => p.theme.space[4]};
+      margin-left: ${(p) => p.theme.space[1]};
+      width: ${(p) => p.theme.space[4]};
     }
   }
 `
@@ -78,25 +78,25 @@ const Header = styled(`header`)`
 const Digest = styled(`div`)`
   display: flex;
   flex-grow: 1;
-  font-family: ${p => p.theme.fonts.system};
+  font-family: ${(p) => p.theme.fonts.system};
   justify-content: space-between;
-  padding: ${p => p.theme.space[3]} 0 0;
+  padding: ${(p) => p.theme.space[3]} 0 0;
 `
 
 const Thumbnail = styled(`div`)`
-  height: ${p => p.theme.space[11]};
-  padding-right: ${p => p.theme.space[4]};
-  margin-top: ${p => p.theme.space[1]};
+  height: ${(p) => p.theme.space[11]};
+  padding-right: ${(p) => p.theme.space[4]};
+  margin-top: ${(p) => p.theme.space[1]};
 
   img {
-    border: 1px solid ${p => p.theme.colors.ui.border};
+    border: 1px solid ${(p) => p.theme.colors.ui.border};
   }
 `
 
 const Description = styled(`p`)`
-  color: ${p => p.theme.colors.textMuted};
+  color: ${(p) => p.theme.colors.textMuted};
   flex-grow: 1;
-  font-size: ${p => p.theme.fontSizes[1]};
+  font-size: ${(p) => p.theme.fontSizes[1]};
   margin: 0;
 `
 
@@ -110,7 +110,7 @@ const EcosystemFeaturedItem = ({ item, className }) => {
     thumbnail,
   } = item
 
-  const cutTooLongDescription = str => {
+  const cutTooLongDescription = (str) => {
     if (str.length > MAX_DESCRIPTION_LENGTH) {
       return `${str.substring(0, MAX_DESCRIPTION_LENGTH)}...`
     }

@@ -22,7 +22,7 @@ beforeEach(() => {
   createNodeId = jest.fn().mockReturnValue(`uuid-from-gatsby`)
 })
 
-const loadNodeContent = mdNode => Promise.resolve(mdNode.content)
+const loadNodeContent = (mdNode) => Promise.resolve(mdNode.content)
 
 describe(`Process markdown content correctly`, () => {
   describe(`Process generated markdown node correctly`, () => {
@@ -44,7 +44,7 @@ Where oh where is my little pony?
       }).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
-          _.isString(actions.createNode.mock.calls[0][0].frontmatter.date)
+          _.isString(actions.createNode.mock.calls[0][0].frontmatter.date),
         ).toBeTruthy()
         expect(actions.createParentChildLink.mock.calls).toMatchSnapshot()
         expect(actions.createNode).toHaveBeenCalledTimes(1)
@@ -80,11 +80,11 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
           createNodeId,
           createContentDigest,
         },
-        { excerpt_separator: `<!-- end -->` }
+        { excerpt_separator: `<!-- end -->` },
       ).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
-          _.isString(actions.createNode.mock.calls[0][0].excerpt)
+          _.isString(actions.createNode.mock.calls[0][0].excerpt),
         ).toBeTruthy()
         expect(actions.createNode.mock.calls[0][0].excerpt).not.toEqual(0)
         expect(actions.createParentChildLink.mock.calls).toMatchSnapshot()
@@ -95,7 +95,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
   })
 
   describe(`date formatting`, () => {
-    const getContent = date => `---
+    const getContent = (date) => `---
 date: ${date}
 ---
 
@@ -154,12 +154,12 @@ yadda yadda
                         ${fragment}
                     }
                 }
-                `
+                `,
       )
       return result
     }
 
-    it(`Correctly queries an excerpt for a node with an excerpt separator`, done => {
+    it(`Correctly queries an excerpt for a node with an excerpt separator`, (done) => {
       const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -180,7 +180,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       node.content = content
 
       let createdNode
-      const createNode = markdownNode =>
+      const createNode = (markdownNode) =>
         queryResult(
           [markdownNode],
           `
@@ -188,8 +188,8 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                     frontmatter {
                         title
                     }
-                `
-        ).then(result => {
+                `,
+        ).then((result) => {
           try {
             createdNode = result.data.listNode[0]
             expect(createdNode).toMatchSnapshot()
@@ -218,11 +218,11 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
           createNodeId,
           createContentDigest,
         },
-        { excerpt_separator: `<!-- end -->` }
+        { excerpt_separator: `<!-- end -->` },
       )
     })
 
-    it(`Correctly queries an excerpt for a node without an excerpt separator`, done => {
+    it(`Correctly queries an excerpt for a node without an excerpt separator`, (done) => {
       const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -241,7 +241,7 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       node.content = content
 
       let createdNode
-      const createNode = markdownNode =>
+      const createNode = (markdownNode) =>
         queryResult(
           [markdownNode],
           `
@@ -249,8 +249,8 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                     frontmatter {
                         title
                     }
-                `
-        ).then(result => {
+                `,
+        ).then((result) => {
           try {
             createdNode = result.data.listNode[0]
             expect(createdNode).toMatchSnapshot()

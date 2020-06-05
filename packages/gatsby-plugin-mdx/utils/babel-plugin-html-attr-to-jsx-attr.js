@@ -521,16 +521,16 @@ var jsxAttributeFromHTMLAttributeVisitor = {
       styleToObject(node.node.value.extra.rawValue, function (
         name,
         value,
-        declaration
+        declaration,
       ) {
         styleArray.push([camelCaseCSS(name), value])
       })
       node.node.value = t.jSXExpressionContainer(
         t.objectExpression(
           styleArray.map(([key, value]) =>
-            t.objectProperty(t.StringLiteral(key), t.stringLiteral(value))
-          )
-        )
+            t.objectProperty(t.StringLiteral(key), t.stringLiteral(value)),
+          ),
+        ),
       )
     }
   },

@@ -42,7 +42,7 @@ async function main() {
   let warned = false
 
   await Promise.all(
-    packages.map(async pkg => {
+    packages.map(async (pkg) => {
       // If this is the main gatsby package we don't want to override
       if (pkg.name === MAIN_PKG_NAME || pkg.private) {
         // eslint complains if we don't consistently return the same type
@@ -61,7 +61,7 @@ async function main() {
       pkgJson = insertKeyAvoidMergeConflict(
         pkgJson,
         `homepage`,
-        `${GIT_REPO_URL}/tree/master/${relativeLocation}#readme`
+        `${GIT_REPO_URL}/tree/master/${relativeLocation}#readme`,
       )
 
       if (argv.fix) {
@@ -70,10 +70,10 @@ async function main() {
             path.join(relativeLocation, `package.json`),
             JSON.stringify(pkgJson, null, 2) + `\n`,
             `utf8`,
-            err => {
+            (err) => {
               if (err) reject(err)
               else resolve()
-            }
+            },
           )
         })
       } else {
@@ -82,13 +82,13 @@ async function main() {
           console.error(
             `[${pkg.name}]` +
               ` repository and/or homepage field in package.json are out of date.` +
-              `Run "yarn run check-repo-fields -- --fix" to update.`
+              `Run "yarn run check-repo-fields -- --fix" to update.`,
           )
         }
         // eslint complains if we don't consistently return the same type
         return Promise.resolve()
       }
-    })
+    }),
   )
   if (warned) {
     process.exit(1)

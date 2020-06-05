@@ -1,6 +1,6 @@
 const COMMENT_START = new RegExp(`(#|\\/\\/|\\{\\/\\*|\\/\\*+|<!--)`)
 
-const createDirectiveRegExp = featureSelector =>
+const createDirectiveRegExp = (featureSelector) =>
   new RegExp(`${featureSelector}-(next-line|line|start|end|range)({([^}]+)})?`)
 
 const COMMENT_END = new RegExp(`(-->|\\*\\/\\}|\\*\\/)?`)
@@ -13,7 +13,7 @@ const END_DIRECTIVE = {
   hide: /hide-end/,
 }
 
-const stripComment = line =>
+const stripComment = (line) =>
   /**
    * This regexp does the following:
    * 1. Match a comment start, along with the accompanying PrismJS opening comment span tag;
@@ -22,13 +22,13 @@ const stripComment = line =>
    */
   line.replace(
     new RegExp(
-      `\\s*(${COMMENT_START.source})\\s*${DIRECTIVE.source}\\s*(${COMMENT_END.source})`
+      `\\s*(${COMMENT_START.source})\\s*${DIRECTIVE.source}\\s*(${COMMENT_END.source})`,
     ),
-    ``
+    ``,
   )
 
-const containsDirective = line =>
-  [HIDE_DIRECTIVE, HIGHLIGHT_DIRECTIVE].some(expr => expr.test(line))
+const containsDirective = (line) =>
+  [HIDE_DIRECTIVE, HIGHLIGHT_DIRECTIVE].some((expr) => expr.test(line))
 
 /*
  * This parses the {1-3} syntax range that is sometimes used
@@ -40,7 +40,7 @@ const getInitialFilter = (className, split) => {
     const lookup = match.split(/,\s*/).reduce((merged, range) => {
       const [start, end = start] = range
         .split(`-`)
-        .map(num => parseInt(num, 10))
+        .map((num) => parseInt(num, 10))
       for (let i = start; i <= end; i++) {
         merged[i - 1] = true
       }
@@ -74,7 +74,7 @@ export default (content, className = ``) => {
           case `start`: {
             const endIndex = split
               .slice(i + 1)
-              .findIndex(line => END_DIRECTIVE[keyword].test(line))
+              .findIndex((line) => END_DIRECTIVE[keyword].test(line))
 
             const end = endIndex === -1 ? split.length : endIndex + i
 
@@ -89,7 +89,7 @@ export default (content, className = ``) => {
                     })
                   }
                   return merged
-                }, [])
+                }, []),
               )
             }
 
@@ -118,7 +118,7 @@ export default (content, className = ``) => {
                     code: stripComment(split[i + 1]),
                     highlighted: true,
                   },
-                ].filter(line => line.code)
+                ].filter((line) => line.code),
               )
             } else if (keyword === `hide` && code) {
               filtered.push({

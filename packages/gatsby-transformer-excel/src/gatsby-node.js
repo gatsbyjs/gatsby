@@ -11,11 +11,11 @@ function _loadNodeContent(fileNode, fallback) {
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  options = {}
+  options = {},
 ) {
   const { createNode, createParentChildLink } = actions
   const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
-    `|`
+    `|`,
   )
   if (extensions.indexOf((node.extension || ``).toLowerCase()) == -1) {
     return
@@ -62,7 +62,7 @@ async function onCreateNode(
         }
       })
 
-      _.each(csvArray, y => {
+      _.each(csvArray, (y) => {
         createNode(y)
         createParentChildLink({ parent: node, child: y })
       })

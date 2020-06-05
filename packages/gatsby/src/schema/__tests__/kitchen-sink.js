@@ -47,7 +47,7 @@ describe(`Kitchen sink schema test`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
+  const runQuery = (query) =>
     graphql(
       schema,
       query,
@@ -57,7 +57,7 @@ describe(`Kitchen sink schema test`, () => {
         schemaComposer,
         context: {},
         customContext: {},
-      })
+      }),
     )
 
   beforeAll(async () => {
@@ -75,14 +75,14 @@ describe(`Kitchen sink schema test`, () => {
       fs
         .readFileSync(
           path.join(__dirname, `./fixtures/kitchen-sink.json`),
-          `utf-8`
+          `utf-8`,
         )
-        .replace(/<PROJECT_ROOT>/g, slash(process.cwd()))
+        .replace(/<PROJECT_ROOT>/g, slash(process.cwd())),
     )
 
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
 
     store.dispatch({
@@ -101,11 +101,11 @@ describe(`Kitchen sink schema test`, () => {
 
       `,
     })
-    buildThirdPartySchemas().forEach(schema =>
+    buildThirdPartySchemas().forEach((schema) =>
       store.dispatch({
         type: `ADD_THIRD_PARTY_SCHEMA`,
         payload: schema,
-      })
+      }),
     )
     await build({})
     schema = store.getState().schema
@@ -196,19 +196,19 @@ describe(`Kitchen sink schema test`, () => {
             }
           }
         }
-      `)
+      `),
     ).toMatchSnapshot()
   })
 
   it(`correctly resolves nested Query types from third-party types`, () => {
     const queryFields = schema.getQueryType().getFields()
-    ;[`relay`, `relay2`, `query`, `manyQueries`].forEach(fieldName =>
+    ;[`relay`, `relay2`, `query`, `manyQueries`].forEach((fieldName) =>
       expect(getNamedType(queryFields[fieldName].type)).toBe(
-        schema.getQueryType()
-      )
+        schema.getQueryType(),
+      ),
     )
     expect(schema.getType(`Nested`).getFields().query.type).toBe(
-      schema.getQueryType()
+      schema.getQueryType(),
     )
   })
 })
@@ -284,7 +284,7 @@ const buildThirdPartySchemas = () => {
     },
   })
   schemaComposer.addSchemaMustHaveType(
-    schemaComposer.getOTC(`ThirdPartyStuff3`)
+    schemaComposer.getOTC(`ThirdPartyStuff3`),
   )
 
   // Query type with non-default name

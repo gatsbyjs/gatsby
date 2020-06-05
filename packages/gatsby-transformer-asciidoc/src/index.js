@@ -1,3 +1,3 @@
-const loadNodeContent = async node => node.html
+const loadNodeContent = async (node) => node.html
 
 exports.loadNodeContent = loadNodeContent

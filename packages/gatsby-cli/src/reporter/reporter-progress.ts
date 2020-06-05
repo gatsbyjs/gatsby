@@ -82,7 +82,7 @@ export const createProgressReporter = ({
 
     panicOnBuild(
       errorMeta: ErrorMeta,
-      error?: Error | Error[]
+      error?: Error | Error[],
     ): IStructuredError | IStructuredError[] {
       span.finish()
 

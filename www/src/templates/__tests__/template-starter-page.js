@@ -70,8 +70,8 @@ test(`it can be rendered`, () => {
     render(
       <ThemeProvider theme={theme}>
         <StarterTemplate {...getProps()} />
-      </ThemeProvider>
-    )
+      </ThemeProvider>,
+    ),
   ).not.toThrow()
 })
 
@@ -80,13 +80,13 @@ test(`it displays a screenshot`, () => {
   const { getByAltText } = render(
     <ThemeProvider theme={theme}>
       <StarterTemplate {...props} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   expect(
     getByAltText(
-      `Screenshot of ${props.data.startersYaml.fields.starterShowcase.name}`
-    )
+      `Screenshot of ${props.data.startersYaml.fields.starterShowcase.name}`,
+    ),
   ).toBeInTheDocument()
 })
 
@@ -104,14 +104,14 @@ test(`it falls back to fallback screenshot, if screenshot file not found`, () =>
           src: `1234`,
         },
       },
-    }
+    },
   )
 
   expect(() =>
     render(
       <ThemeProvider theme={theme}>
         <StarterTemplate {...props} />
-      </ThemeProvider>
-    )
+      </ThemeProvider>,
+    ),
   ).not.toThrow()
 })

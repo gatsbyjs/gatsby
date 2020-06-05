@@ -31,7 +31,7 @@ const CmsFeaturesPage = ({ data, location }) => {
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
-    data.allGatsbyCmsSpecsCsv.nodes
+    data.allGatsbyCmsSpecsCsv.nodes,
   )
 
   return (
@@ -66,7 +66,7 @@ const CmsFeaturesPage = ({ data, location }) => {
                   >
                     {display}
                   </CompareButton>
-                )
+                ),
               )}
             </div>
             <Button

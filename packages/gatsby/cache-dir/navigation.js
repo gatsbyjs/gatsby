@@ -22,7 +22,7 @@ function maybeRedirect(pathname) {
     if (process.env.NODE_ENV !== `production`) {
       if (!loader.isPageNotFound(pathname)) {
         console.error(
-          `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+          `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`,
         )
       }
     }
@@ -73,7 +73,7 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.loadPage(pathname).then(pageResources => {
+  loader.loadPage(pathname).then((pageResources) => {
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing
@@ -121,7 +121,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    getSavedScrollPosition: args => this._stateStorage.read(args),
+    getSavedScrollPosition: (args) => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
@@ -145,12 +145,12 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
 function init() {
   // The "scroll-behavior" package expects the "action" to be on the location
   // object so let's copy it over.
-  globalHistory.listen(args => {
+  globalHistory.listen((args) => {
     args.location.action = args.action
   })
 
-  window.___push = to => navigate(to, { replace: false })
-  window.___replace = to => navigate(to, { replace: true })
+  window.___push = (to) => navigate(to, { replace: false })
+  window.___replace = (to) => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
 
   // Check for initial page-load redirect

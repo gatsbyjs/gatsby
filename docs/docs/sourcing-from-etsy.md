@@ -87,7 +87,7 @@ Using this query on a page or in a component will allow you to display your list
 
 ```jsx
 {
-  data.allFeaturedEtsyListing.nodes.map(item => (
+  data.allFeaturedEtsyListing.nodes.map((item) => (
     <section key={item.id}>
       <a href={item.url}>
         <h2>{item.title}</h2>

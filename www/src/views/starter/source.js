@@ -10,7 +10,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
   <div
     sx={{
       display: `flex`,
-      borderTop: t => `1px solid ${t.colors.ui.border}`,
+      borderTop: (t) => `1px solid ${t.colors.ui.border}`,
       fontFamily: `heading`,
       mx: 6,
       [mediaQueries.sm]: { borderTop: 0 },
@@ -72,7 +72,7 @@ const Source = ({ startersYaml, repoUrl, starter }) => (
         sx={{
           "&&": {
             borderBottom: 0,
-            marginRight: t => t.space[4],
+            marginRight: (t) => t.space[4],
           },
         }}
       >

@@ -1,5 +1,5 @@
 jest.mock(`sharp`, () => {
-  const sharp = path => {
+  const sharp = (path) => {
     const pipeline = {
       rotate: () => pipeline,
       resize: () => pipeline,
@@ -33,7 +33,7 @@ const traceSVGHelpers = require(`../trace-svg`)
 const notMemoizedtraceSVG = jest.spyOn(traceSVGHelpers, `notMemoizedtraceSVG`)
 const notMemoizedPrepareTraceSVGInputFile = jest.spyOn(
   traceSVGHelpers,
-  `notMemoizedPrepareTraceSVGInputFile`
+  `notMemoizedPrepareTraceSVGInputFile`,
 )
 // note that we started spying on not memoized functions first
 // now we recreate memoized functions that will use function we just started
@@ -42,7 +42,7 @@ traceSVGHelpers.createMemoizedFunctions()
 const memoizedTraceSVG = jest.spyOn(traceSVGHelpers, `memoizedTraceSVG`)
 const memoizedPrepareTraceSVGInputFile = jest.spyOn(
   traceSVGHelpers,
-  `memoizedPrepareTraceSVGInputFile`
+  `memoizedPrepareTraceSVGInputFile`,
 )
 
 const { traceSVG } = require(`../`)
@@ -63,7 +63,7 @@ describe(`traceSVG memoization`, () => {
   const file = getFileObject(path.join(__dirname, `images/test.png`))
   const copyOfFile = getFileObject(path.join(__dirname, `images/test-copy.png`))
   const differentFile = getFileObject(
-    path.join(__dirname, `images/different.png`)
+    path.join(__dirname, `images/different.png`),
   )
   differentFile.internal.contentDigest = `4321`
 
@@ -162,7 +162,7 @@ describe(`traceSVG memoization`, () => {
         options: expect.objectContaining({
           width: 400,
         }),
-      })
+      }),
     )
     expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
       2,
@@ -171,7 +171,7 @@ describe(`traceSVG memoization`, () => {
         options: expect.objectContaining({
           width: 200,
         }),
-      })
+      }),
     )
     expect(notMemoizedPrepareTraceSVGInputFile).toHaveBeenNthCalledWith(
       3,
@@ -180,11 +180,11 @@ describe(`traceSVG memoization`, () => {
         options: expect.objectContaining({
           width: 400,
         }),
-      })
+      }),
     )
 
     const usedTmpFilePaths = notMemoizedPrepareTraceSVGInputFile.mock.calls.map(
-      args => args[0].tmpFilePath
+      (args) => args[0].tmpFilePath,
     )
 
     // tmpFilePath was always unique

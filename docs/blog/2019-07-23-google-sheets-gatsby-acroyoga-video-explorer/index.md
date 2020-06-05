@@ -145,7 +145,7 @@ Next, I'd like for my comma-separated strings of tags (column I) to be arrays of
 
 ```javascript
 let itemsArrayWithTagsArray = rows.map(function (item) {
-  item.tags = item.tags.split(",").map(item => item.trim())
+  item.tags = item.tags.split(",").map((item) => item.trim())
   item = { ...item }
   return item
 })
@@ -187,7 +187,7 @@ If you went through the Gatsby tutorial at some point, you're probably familiar 
 
 ```javascript
 let tags = []
-items.forEach(item => {
+items.forEach((item) => {
   // items is the array of row objects
   if (item.node.tags.length > -1) {
     tags = tags.concat(item.node.tags)
@@ -196,7 +196,7 @@ items.forEach(item => {
 
 tags = _.uniq(tags) // lodash method to get only unique tags
 
-tags.forEach(tag => {
+tags.forEach((tag) => {
   const tagPath = `/tag/${_.kebabCase(tag)}/`
   // kebab-case-looks-like-this-thankyou-lo-dash
   createPage({
@@ -290,7 +290,7 @@ Linking to the instructor and tags is done with this code:
     />
   </Link>
   <div className={classes.tagArea}>
-    {item.node.tags.map(tag => (
+    {item.node.tags.map((tag) => (
       <Link to={`/tag/${kebabCase(tag)}/`} style={{ textDecoration: "none" }}>
         <Chip
           icon={<Label className={classes.chipLabel} />}

@@ -10,13 +10,13 @@ const loadCachedConfig = () => {
   if (process.env.NODE_ENV !== `test`) {
     pluginBabelConfig = require(path.join(
       process.cwd(),
-      `./.cache/babelState.json`
+      `./.cache/babelState.json`,
     ))
   }
   return pluginBabelConfig
 }
 
-const getCustomOptions = stage => {
+const getCustomOptions = (stage) => {
   const pluginBabelConfig = loadCachedConfig()
   return pluginBabelConfig.stages[stage].options
 }
@@ -39,7 +39,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`babel-plugin-dynamic-import-node`)], {
         type: `plugin`,
-      })
+      }),
     )
   }
 
@@ -48,7 +48,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
         type: `plugin`,
-      })
+      }),
     )
   }
 
@@ -65,27 +65,27 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
       ],
       {
         type: `preset`,
-      }
-    )
+      },
+    ),
   )
 
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins = []
   const reduxPresets = []
-  pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
+  pluginBabelConfig.stages[stage].plugins.forEach((plugin) => {
     reduxPlugins.push(
       babel.createConfigItem([resolve(plugin.name), plugin.options], {
         name: plugin.name,
         type: `plugin`,
-      })
+      }),
     )
   })
-  pluginBabelConfig.stages[stage].presets.forEach(preset => {
+  pluginBabelConfig.stages[stage].presets.forEach((preset) => {
     reduxPresets.push(
       babel.createConfigItem([resolve(preset.name), preset.options], {
         name: preset.name,
         type: `preset`,
-      })
+      }),
     )
   })
 
@@ -101,7 +101,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
 const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
   const index = _.findIndex(
     items,
-    i => i.file.resolved === itemToMerge.file.resolved
+    (i) => i.file.resolved === itemToMerge.file.resolved,
   )
 
   // If this exist, merge the options, otherwise, add it to the array
@@ -113,7 +113,7 @@ const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
       ],
       {
         type,
-      }
+      },
     )
   } else {
     items.push(itemToMerge)

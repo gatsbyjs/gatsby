@@ -153,7 +153,7 @@ exports.sourceNodes = async ({
   }
 
   // loop through data and create Gatsby nodes
-  data.posts.forEach(post =>
+  data.posts.forEach((post) =>
     createNode({
       ...post,
       id: createNodeId(`${POST_NODE_TYPE}-${post.id}`),
@@ -164,7 +164,7 @@ exports.sourceNodes = async ({
         content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
-    })
+    }),
   )
 
   return
@@ -371,7 +371,7 @@ exports.sourceNodes = async ({
   })
 
   // loop through data returned from the api and create Gatsby nodes for them
-  data.posts.forEach(post =>
+  data.posts.forEach((post) =>
     createNode({
       ...post,
       id: createNodeId(`${POST_NODE_TYPE}-${post.id}`), // hashes the inputs into an ID
@@ -382,10 +382,10 @@ exports.sourceNodes = async ({
         content: JSON.stringify(post),
         contentDigest: createContentDigest(post),
       },
-    })
+    }),
   )
   // highlight-start
-  data.authors.forEach(author =>
+  data.authors.forEach((author) =>
     createNode({
       ...author,
       id: createNodeId(`${AUTHOR_NODE_TYPE}-${author.id}`), // hashes the inputs into an ID
@@ -396,7 +396,7 @@ exports.sourceNodes = async ({
         content: JSON.stringify(author),
         contentDigest: createContentDigest(author),
       },
-    })
+    }),
   )
   // highlight-end
 
@@ -657,7 +657,7 @@ export default ({ data }) => (
         gridGap: 16,
       }}
     >
-      {data.allPost.nodes.map(post => (
+      {data.allPost.nodes.map((post) => (
         <div
           style={{
             display: `flex`,
@@ -734,7 +734,7 @@ Now the options you designated (like `previewMode: true`) will be passed into ea
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions // highlight-line
+  pluginOptions, // highlight-line
 ) => {
   const { createNode, touchNode, deleteNode } = actions
   // highlight-start
@@ -758,15 +758,17 @@ You already set up your client to handle subscriptions by providing a websocket 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, touchNode, deleteNode } = actions
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+  getNodesByType(POST_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
+  )
+  getNodesByType(AUTHOR_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
   )
   // highlight-end
 
@@ -781,14 +783,16 @@ Then, you can use the plugin option provided in the previous section for `previe
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+  getNodesByType(POST_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
+  )
+  getNodesByType(AUTHOR_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
   )
 
   // highlight-start
@@ -806,14 +810,16 @@ Using Apollo Client, you can create a subscription with almost all of the same f
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+  getNodesByType(POST_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
+  )
+  getNodesByType(AUTHOR_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
   )
 
   if (pluginOptions.previewMode) {
@@ -849,14 +855,16 @@ Now you can write a function to subscribe to the data updates (like when a post 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+  getNodesByType(POST_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
+  )
+  getNodesByType(AUTHOR_NODE_TYPE).forEach((node) =>
+    touchNode({ nodeId: node.id }),
   )
 
   if (pluginOptions.previewMode) {
@@ -883,7 +891,7 @@ exports.sourceNodes = async (
     subscription.subscribe(({ data }) => {
       console.log(`Subscription received:`)
       console.log(data.posts)
-      data.posts.forEach(post => {
+      data.posts.forEach((post) => {
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":

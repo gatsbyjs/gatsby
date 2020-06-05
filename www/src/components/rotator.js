@@ -19,7 +19,7 @@ const controlButtonStyles = {
   left: 0,
   padding: 0,
   fontSize: 5,
-  width: t => t.space[8],
+  width: (t) => t.space[8],
   textAlign: `center`,
   "&:hover": {
     cursor: `pointer`,
@@ -60,7 +60,7 @@ class Rotator extends Component {
   }
 
   incrementItem = () => {
-    this.setState(state => {
+    this.setState((state) => {
       return {
         item: (state.item + 1) % this.props.items.length,
       }
@@ -113,8 +113,8 @@ class Rotator extends Component {
     return (
       <div
         sx={{
-          borderTop: t => `1px solid ${t.colors.ui.border}`,
-          borderBottom: t => `1px solid ${t.colors.ui.border}`,
+          borderTop: (t) => `1px solid ${t.colors.ui.border}`,
+          borderBottom: (t) => `1px solid ${t.colors.ui.border}`,
           py: 4,
           px: 9,
           my: 6,

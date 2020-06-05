@@ -23,7 +23,7 @@ const { createNodeFactory, generateNodeId } = createNodeHelpers({
 
 const downloadImageAndCreateFileNode = async (
   { url, nodeId },
-  { createNode, createNodeId, touchNode, store, cache, getCache, reporter }
+  { createNode, createNodeId, touchNode, store, cache, getCache, reporter },
 ) => {
   let fileNodeID
 
@@ -56,31 +56,31 @@ const downloadImageAndCreateFileNode = async (
   return undefined
 }
 
-export const ArticleNode = imageArgs =>
-  createNodeFactory(ARTICLE, async node => {
+export const ArticleNode = (imageArgs) =>
+  createNodeFactory(ARTICLE, async (node) => {
     if (node.blog) node.blog___NODE = generateNodeId(BLOG, node.blog.id)
 
     if (node.comments)
-      node.comments___NODE = node.comments.edges.map(edge =>
-        generateNodeId(COMMENT, edge.node.id)
+      node.comments___NODE = node.comments.edges.map((edge) =>
+        generateNodeId(COMMENT, edge.node.id),
       )
 
     if (node.image)
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         { id: node.image.id, url: node.image.src, nodeId: node.id },
-        imageArgs
+        imageArgs,
       )
 
     return node
   })
 
-export const BlogNode = _imageArgs => createNodeFactory(BLOG)
+export const BlogNode = (_imageArgs) => createNodeFactory(BLOG)
 
-export const CollectionNode = imageArgs =>
-  createNodeFactory(COLLECTION, async node => {
+export const CollectionNode = (imageArgs) =>
+  createNodeFactory(COLLECTION, async (node) => {
     if (node.products) {
-      node.products___NODE = node.products.edges.map(edge =>
-        generateNodeId(PRODUCT, edge.node.id)
+      node.products___NODE = node.products.edges.map((edge) =>
+        generateNodeId(PRODUCT, edge.node.id),
       )
       delete node.products
     }
@@ -91,49 +91,49 @@ export const CollectionNode = imageArgs =>
           url: node.image.src && node.image.src.split(`?`)[0],
           nodeId: node.id,
         },
-        imageArgs
+        imageArgs,
       )
     return node
   })
 
-export const CommentNode = _imageArgs => createNodeFactory(COMMENT)
+export const CommentNode = (_imageArgs) => createNodeFactory(COMMENT)
 
-export const ProductNode = imageArgs =>
-  createNodeFactory(PRODUCT, async node => {
+export const ProductNode = (imageArgs) =>
+  createNodeFactory(PRODUCT, async (node) => {
     if (node.variants) {
-      const variants = node.variants.edges.map(edge => edge.node)
+      const variants = node.variants.edges.map((edge) => edge.node)
 
-      node.variants___NODE = variants.map(variant =>
-        generateNodeId(PRODUCT_VARIANT, variant.id)
+      node.variants___NODE = variants.map((variant) =>
+        generateNodeId(PRODUCT_VARIANT, variant.id),
       )
 
       delete node.variants
     }
 
     if (node.metafields) {
-      const metafields = node.metafields.edges.map(edge => edge.node)
+      const metafields = node.metafields.edges.map((edge) => edge.node)
 
-      node.metafields___NODE = metafields.map(metafield =>
-        generateNodeId(PRODUCT_METAFIELD, metafield.id)
+      node.metafields___NODE = metafields.map((metafield) =>
+        generateNodeId(PRODUCT_METAFIELD, metafield.id),
       )
       delete node.metafields
     }
 
     if (node.options) {
-      node.options___NODE = node.options.map(option =>
-        generateNodeId(PRODUCT_OPTION, option.id)
+      node.options___NODE = node.options.map((option) =>
+        generateNodeId(PRODUCT_OPTION, option.id),
       )
       delete node.options
     }
 
     if (node.images && node.images.edges)
-      node.images = await map(node.images.edges, async edge => {
+      node.images = await map(node.images.edges, async (edge) => {
         edge.node.localFile___NODE = await downloadImageAndCreateFileNode(
           {
             id: edge.node.id,
             url: edge.node.originalSrc && edge.node.originalSrc.split(`?`)[0],
           },
-          imageArgs
+          imageArgs,
         )
         return edge.node
       })
@@ -141,18 +141,19 @@ export const ProductNode = imageArgs =>
     return node
   })
 
-export const ProductMetafieldNode = _imageArgs =>
+export const ProductMetafieldNode = (_imageArgs) =>
   createNodeFactory(PRODUCT_METAFIELD)
 
-export const ProductOptionNode = _imageArgs => createNodeFactory(PRODUCT_OPTION)
+export const ProductOptionNode = (_imageArgs) =>
+  createNodeFactory(PRODUCT_OPTION)
 
-export const ProductVariantNode = imageArgs =>
-  createNodeFactory(PRODUCT_VARIANT, async node => {
+export const ProductVariantNode = (imageArgs) =>
+  createNodeFactory(PRODUCT_VARIANT, async (node) => {
     if (node.metafields) {
-      const metafields = node.metafields.edges.map(edge => edge.node)
+      const metafields = node.metafields.edges.map((edge) => edge.node)
 
-      node.metafields___NODE = metafields.map(metafield =>
-        generateNodeId(PRODUCT_VARIANT_METAFIELD, metafield.id)
+      node.metafields___NODE = metafields.map((metafield) =>
+        generateNodeId(PRODUCT_VARIANT_METAFIELD, metafield.id),
       )
       delete node.metafields
     }
@@ -163,13 +164,13 @@ export const ProductVariantNode = imageArgs =>
           id: node.image.id,
           url: node.image.originalSrc && node.image.originalSrc.split(`?`)[0],
         },
-        imageArgs
+        imageArgs,
       )
 
     return node
   })
 
-export const ProductVariantMetafieldNode = _imageArgs =>
+export const ProductVariantMetafieldNode = (_imageArgs) =>
   createNodeFactory(PRODUCT_VARIANT_METAFIELD)
 
 export const ShopPolicyNode = createNodeFactory(SHOP_POLICY)

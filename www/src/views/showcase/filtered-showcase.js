@@ -22,8 +22,8 @@ const OPEN_SOURCE_CATEGORY = `Open Source`
 export const filterByCategories = (list, categories) => {
   const items = list.reduce((aggregated, node) => {
     if (node.categories) {
-      const filteredCategories = node.categories.filter(c =>
-        categories.includes(c)
+      const filteredCategories = node.categories.filter((c) =>
+        categories.includes(c),
       )
       if (
         categories.length === 0 ||
@@ -88,7 +88,7 @@ class FilteredShowcase extends Component {
       if (node.source_url) {
         node.categories.push(OPEN_SOURCE_CATEGORY)
       }
-      node.categories.forEach(category => {
+      node.categories.forEach((category) => {
         // if we already have the category recorded, increase count
         if (categories[category]) {
           categories[category] = categories[category] + 1
@@ -98,7 +98,7 @@ class FilteredShowcase extends Component {
         }
       })
       node.categories.sort((str1, str2) =>
-        str1.toLowerCase().localeCompare(str2.toLowerCase())
+        str1.toLowerCase().localeCompare(str2.toLowerCase()),
       )
 
       return { ...categories }
@@ -106,7 +106,7 @@ class FilteredShowcase extends Component {
 
     // get sorted set of categories to generate list with
     const categoryKeys = Object.keys(aggregatedCategories).sort((str1, str2) =>
-      str1.toLowerCase().localeCompare(str2.toLowerCase())
+      str1.toLowerCase().localeCompare(str2.toLowerCase()),
     )
 
     return (
@@ -132,7 +132,7 @@ class FilteredShowcase extends Component {
                   sx={{ ...themedInput, pl: 7 }}
                   type="search"
                   value={this.state.search}
-                  onChange={e => this.setState({ search: e.target.value })}
+                  onChange={(e) => this.setState({ search: e.target.value })}
                   placeholder="Search sites"
                   aria-label="Search sites"
                 />
@@ -145,7 +145,7 @@ class FilteredShowcase extends Component {
             items={items}
             count={this.state.sitesToShow}
             filters={filters}
-            onCategoryClick={c => setFilters(c)}
+            onCategoryClick={(c) => setFilters(c)}
           />
 
           {this.state.sitesToShow < items.length && (

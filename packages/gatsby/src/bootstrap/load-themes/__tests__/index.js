@@ -25,7 +25,7 @@ describe(`loadThemes`, () => {
     */
 
     const configFilePath = require.resolve(
-      `./fixtures/resolve-from-config-location/gatsby-config`
+      `./fixtures/resolve-from-config-location/gatsby-config`,
     )
     const config = require(configFilePath)
 
@@ -54,7 +54,7 @@ describe(`loadThemes`, () => {
         expect.objectContaining({
           resolve: `gatsby-plugin-added-by-parent-theme`,
         }),
-      ])
+      ]),
     )
 
     expect(themes.length).toEqual(3)
@@ -66,8 +66,8 @@ describe(`loadThemes`, () => {
           // `gatsby-theme-child` is resolved to first level node_modules
           themeDir: path.dirname(
             require.resolve(
-              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child`
-            )
+              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child`,
+            ),
           ),
         }),
         expect.objectContaining({
@@ -75,8 +75,8 @@ describe(`loadThemes`, () => {
           // `gatsby-theme-child` is resolved to second level node_modules
           themeDir: path.dirname(
             require.resolve(
-              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent`
-            )
+              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent`,
+            ),
           ),
         }),
 
@@ -85,11 +85,11 @@ describe(`loadThemes`, () => {
           // `gatsby-theme-child` is resolved to third level node_modules
           themeDir: path.dirname(
             require.resolve(
-              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent/node_modules/gatsby-plugin-added-by-parent-theme`
-            )
+              `./fixtures/resolve-from-config-location/node_modules/gatsby-theme-child/node_modules/gatsby-theme-parent/node_modules/gatsby-plugin-added-by-parent-theme`,
+            ),
           ),
         }),
-      ])
+      ]),
     )
   })
 })

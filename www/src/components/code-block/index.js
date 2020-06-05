@@ -14,7 +14,7 @@ const getParams = (name = ``) => {
       const [key, value] = param.split(`=`)
       merged[key] = value
       return merged
-    }, {})
+    }, {}),
   )
 }
 
@@ -33,7 +33,7 @@ const CodeBlock = ({
     children.props && children.props.children
       ? children.props.children
       : children,
-    className
+    className,
   )
 
   return (
@@ -52,8 +52,8 @@ const CodeBlock = ({
                   fileName={title}
                   sx={{
                     position: `absolute`,
-                    right: t => t.space[1],
-                    top: t => t.space[1],
+                    right: (t) => t.space[1],
+                    top: (t) => t.space[1],
                     borderRadius: 2,
                   }}
                   content={content}

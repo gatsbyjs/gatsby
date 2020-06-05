@@ -36,7 +36,7 @@ const MAX_UI_WIDTH = 67
 // Check for what version of React is loaded & warn if it's too low.
 if (semver.lt(React.version, `16.8.0`)) {
   console.log(
-    `Recipes works best with newer versions of React. Please file a bug report if you see this warning.`
+    `Recipes works best with newer versions of React. Please file a bug report if you see this warning.`,
   )
 }
 
@@ -165,13 +165,13 @@ const RecipesList = ({ setRecipe }) => {
     <SelectInput
       items={items}
       onSelect={setRecipe}
-      indicatorComponent={item => (
+      indicatorComponent={(item) => (
         <Color magentaBright>
           {item.isSelected ? `>>` : `  `}
           {item.label}
         </Color>
       )}
-      itemComponent={props => (
+      itemComponent={(props) => (
         <Color magentaBright={props.isSelected}>{props.label}</Color>
       )}
     />
@@ -180,7 +180,7 @@ const RecipesList = ({ setRecipe }) => {
 
 let renderCount = 1
 
-const Div = props => {
+const Div = (props) => {
   const width = Math.min(process.stdout.columns, MAX_UI_WIDTH)
   return (
     <Box
@@ -195,7 +195,7 @@ const Div = props => {
 
 // Markdown ignores new lines and so do we.
 function eliminateNewLines(children) {
-  return React.Children.map(children, child => {
+  return React.Children.map(children, (child) => {
     if (!React.isValidElement(child)) {
       return child.replace(/(\r\n|\n|\r)/gm, ` `)
     }
@@ -211,8 +211,8 @@ function eliminateNewLines(children) {
 }
 
 const components = {
-  inlineCode: props => <Text {...props} />,
-  code: props => {
+  inlineCode: (props) => <Text {...props} />,
+  code: (props) => {
     // eslint-disable-next-line
     let language = "```"
     if (props.className) {
@@ -229,40 +229,40 @@ const components = {
       </Div>
     )
   },
-  h1: props => (
+  h1: (props) => (
     <Div marginBottom={1}>
       <Text bold underline {...props} />
     </Div>
   ),
-  h2: props => (
+  h2: (props) => (
     <Div>
       <Text bold {...props} />
     </Div>
   ),
-  h3: props => (
+  h3: (props) => (
     <Div>
       <Text bold italic {...props} />
     </Div>
   ),
-  h4: props => (
+  h4: (props) => (
     <Div>
       <Text bold {...props} />
     </Div>
   ),
-  h5: props => (
+  h5: (props) => (
     <Div>
       <Text bold {...props} />
     </Div>
   ),
-  h6: props => (
+  h6: (props) => (
     <Div>
       <Text bold {...props} />
     </Div>
   ),
   a: ({ href, children }) => <Link url={href}>{children}</Link>,
-  strong: props => <Text bold {...props} />,
-  em: props => <Text italic {...props} />,
-  p: props => {
+  strong: (props) => <Text bold {...props} />,
+  em: (props) => <Text italic {...props} />,
+  p: (props) => {
     const children = eliminateNewLines(props.children)
     return (
       <Div marginBottom={1}>
@@ -270,8 +270,8 @@ const components = {
       </Div>
     )
   },
-  ul: props => <Div marginBottom={1}>{props.children}</Div>,
-  li: props => <Text>* {props.children}</Text>,
+  ul: (props) => <Div marginBottom={1}>{props.children}</Div>,
+  li: (props) => <Text>* {props.children}</Text>,
   Config: () => null,
   GatsbyPlugin: () => null,
   NPMPackageJson: () => null,
@@ -295,7 +295,7 @@ const log = (label, textOrObj) => {
 
 log(
   `started client`,
-  `======================================= ${new Date().toJSON()}`
+  `======================================= ${new Date().toJSON()}`,
 )
 
 module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
@@ -307,7 +307,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
       {
         reconnect: true,
       },
-      ws
+      ws,
     )
 
     let showRecipesList = false
@@ -344,7 +344,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
           }
         `,
         },
-        (_prev, now) => now
+        (_prev, now) => now,
       )
 
       // eslint-disable-next-line
@@ -395,7 +395,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
               Select a recipe to run
             </Text>
             <RecipesList
-              setRecipe={async recipeItem => {
+              setRecipe={async (recipeItem) => {
                 trackCli(`RECIPE_RUN`, { name: recipeItem.value })
                 showRecipesList = false
                 try {
@@ -552,7 +552,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
           subscriptionClient.close()
           exit()
           process.stdout.write(
-            `\n\n---\n\n\nThe recipe finished successfully!\n\n`
+            `\n\n---\n\n\nThe recipe finished successfully!\n\n`,
           )
           lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
             process.stdout.write(`✅ ${res._message}\n`)
@@ -581,7 +581,7 @@ module.exports = async ({ recipe, graphqlPort, projectRoot }) => {
                     )
                   }
                   return <Text key={r.key}>✅ {r.value}</Text>
-                })
+                }),
               )}
             </Static>
           </Div>

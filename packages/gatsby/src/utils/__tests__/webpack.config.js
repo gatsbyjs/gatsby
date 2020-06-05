@@ -58,7 +58,7 @@ const getConfig = (args = {}) =>
       extensions: [`.js`],
     },
     process.cwd(),
-    `build-html`
+    `build-html`,
   )
 
 describe(`basic functionality`, () => {
@@ -72,9 +72,9 @@ describe(`basic functionality`, () => {
             merged[key] = expect.anything()
             return merged
           },
-          {}
-        )
-      )
+          {},
+        ),
+      ),
     )
   }, 30000)
 })
@@ -90,7 +90,7 @@ describe(`environment variables`, () => {
     expect(DefinePlugin).toHaveBeenCalledWith(
       expect.objectContaining({
         "process.env": `{}`,
-      })
+      }),
     )
   })
 
@@ -108,8 +108,8 @@ describe(`environment variables`, () => {
         ].reduce((merged, key) => {
           merged[key] = expect.anything()
           return merged
-        }, {})
-      )
+        }, {}),
+      ),
     )
   })
 
@@ -120,7 +120,7 @@ describe(`environment variables`, () => {
 
       expect(readFileSync).toHaveBeenCalledWith(
         expect.stringContaining(`.env.staging`),
-        expect.anything()
+        expect.anything(),
       )
       expect(DefinePlugin).toBeCalledTimes(1)
       expect(DefinePlugin.mock.calls[0][0]).toMatchObject({
@@ -133,7 +133,7 @@ describe(`environment variables`, () => {
 
       expect(readFileSync).toHaveBeenCalledWith(
         expect.stringContaining(`.env.${process.env.NODE_ENV}`),
-        expect.anything()
+        expect.anything(),
       )
     })
   })

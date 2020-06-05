@@ -6,7 +6,7 @@ import signalExit from "signal-exit"
 
 export const getGlobalStatus = (
   id: string,
-  status: ActivityStatuses
+  status: ActivityStatuses,
 ): ActivityStatuses => {
   const { logs } = getStore().getState()
 
@@ -15,7 +15,7 @@ export const getGlobalStatus = (
   return currentActivities.reduce(
     (
       generatedStatus: ActivityStatuses,
-      activityId: string
+      activityId: string,
     ): ActivityStatuses => {
       const activityStatus =
         activityId === id ? status : logs.activities[activityId].status
@@ -38,7 +38,7 @@ export const getGlobalStatus = (
       }
       return generatedStatus
     },
-    ActivityStatuses.Success
+    ActivityStatuses.Success,
   )
 }
 

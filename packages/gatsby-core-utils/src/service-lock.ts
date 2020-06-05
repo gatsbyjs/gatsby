@@ -36,7 +36,7 @@ const memoryServices = {}
 export const createServiceLock = async (
   programPath: string,
   serviceName: string,
-  content: Record<string, any>
+  content: Record<string, any>,
 ): Promise<UnlockFn | null> => {
   // NOTE(@mxstbr): In CI, we cannot reliably access the global config dir and do not need cross-process coordination anyway
   // so we fall back to storing the services in memory instead!
@@ -68,7 +68,7 @@ export const createServiceLock = async (
 
 export const getService = async (
   programPath: string,
-  serviceName: string
+  serviceName: string,
 ): Promise<string | null> => {
   if (isCI()) return memoryServices[serviceName] || null
 
@@ -78,7 +78,7 @@ export const getService = async (
   try {
     if (await lockfile.check(serviceDataFile, lockfileOptions)) {
       return JSON.parse(
-        await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`)
+        await fs.readFile(serviceDataFile, `utf8`).catch(() => `null`),
       )
     }
 
@@ -93,14 +93,14 @@ export const getServices = async (programPath: string): Promise<any> => {
   const siteDir = getSiteDir(programPath)
 
   const serviceNames = (await fs.readdir(siteDir))
-    .filter(file => file.endsWith(DATA_FILE_EXTENSION))
-    .map(file => file.replace(DATA_FILE_EXTENSION, ``))
+    .filter((file) => file.endsWith(DATA_FILE_EXTENSION))
+    .map((file) => file.replace(DATA_FILE_EXTENSION, ``))
 
   const services = {}
   await Promise.all(
-    serviceNames.map(async service => {
+    serviceNames.map(async (service) => {
       services[service] = await getService(programPath, service)
-    })
+    }),
   )
 
   return services

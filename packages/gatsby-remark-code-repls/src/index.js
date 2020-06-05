@@ -20,7 +20,7 @@ const {
 
 // Matches compression used in Babel and CodeSandbox REPLs
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
-const compress = string =>
+const compress = (string) =>
   LZString.compressToBase64(string)
     .replace(/\+/g, `-`) // Convert '+' to '-'
     .replace(/\//g, `_`) // Convert '/' to '_'
@@ -45,7 +45,7 @@ module.exports = (
     target,
     defaultText = OPTION_DEFAULT_LINK_TEXT,
     codesandbox = OPTION_DEFAULT_CODESANDBOX,
-  } = {}
+  } = {},
 ) => {
   codesandbox = { ...OPTION_DEFAULT_CODESANDBOX, ...codesandbox }
   if (!directory) {
@@ -69,7 +69,7 @@ module.exports = (
     urls
       .replace(protocol, ``)
       .split(`,`)
-      .map(url => {
+      .map((url) => {
         if (!url.includes(`.`)) {
           url += `.js`
         }
@@ -85,9 +85,9 @@ module.exports = (
       throw Error(
         `Code example path should only contain a single file, but found more than one: ${path.replace(
           directory,
-          ``
+          ``,
         )}. ` +
-          `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with ${PROTOCOL_CODE_SANDBOX}`
+          `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with ${PROTOCOL_CODE_SANDBOX}`,
       )
     }
     if (!fs.existsSync(path)) {
@@ -96,7 +96,7 @@ module.exports = (
   }
 
   const verifyMultipleFiles = (paths, protocol) =>
-    paths.forEach(path => verifyFile(path.filePath, protocol))
+    paths.forEach((path) => verifyFile(path.filePath, protocol))
 
   map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
@@ -125,7 +125,7 @@ module.exports = (
         const filesPaths = getMultipleFilesPaths(
           node.url,
           PROTOCOL_CODE_SANDBOX,
-          directory
+          directory,
         )
         verifyMultipleFiles(filesPaths, PROTOCOL_CODE_SANDBOX)
 
@@ -140,7 +140,7 @@ module.exports = (
                     map[name] = fetchSpec
                     return map
                   },
-                  {}
+                  {},
                 ),
 
                 main: filesPaths[0].url,

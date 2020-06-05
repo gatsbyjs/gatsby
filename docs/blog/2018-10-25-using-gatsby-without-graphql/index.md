@@ -151,7 +151,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
   // highlight-start
   // Create a page for each Pokémon.
-  allPokemon.forEach(pokemon => {
+  allPokemon.forEach((pokemon) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve("./src/templates/pokemon.js"),
@@ -176,7 +176,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   })
 
   // Create a page for each Pokémon.
-  allPokemon.forEach(pokemon => {
+  allPokemon.forEach((pokemon) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`,
       component: require.resolve("./src/templates/pokemon.js"),
@@ -185,7 +185,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
     // highlight-start
     // Create a page for each ability of the current Pokémon.
-    pokemon.abilities.forEach(ability => {
+    pokemon.abilities.forEach((ability) => {
       createPage({
         path: `/pokemon/${pokemon.name}/ability/${ability.name}/`,
         component: require.resolve("./src/templates/ability.js"),

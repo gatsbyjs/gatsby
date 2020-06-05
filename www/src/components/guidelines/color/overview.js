@@ -31,7 +31,7 @@ const colorNumber = {
   transform: `rotate(-45deg)`,
 }
 
-const colores = node => {
+const colores = (node) => {
   let colors = []
 
   Object.keys(palette[node].colors)
@@ -49,7 +49,7 @@ const colores = node => {
           name={c.name}
           isBase={c.base}
           swatchStyle={swatchStyle}
-        />
+        />,
       )
     })
 
@@ -58,8 +58,8 @@ const colores = node => {
 
 const Palette = ({ color, handler }) => {
   const node = Object.keys(palette)
-    .filter(group => group === color)
-    .map(node => node)
+    .filter((group) => group === color)
+    .map((node) => node)
   const name = palette[node].name
 
   return (
@@ -89,7 +89,7 @@ const Palette = ({ color, handler }) => {
           as="button"
           bg="none"
           p={0}
-          onClick={e => {
+          onClick={(e) => {
             handler(e, node)
           }}
           sx={{
@@ -112,7 +112,7 @@ const Palette = ({ color, handler }) => {
             fontSize={4}
             color="link.color"
             sx={{
-              borderBottom: t => `1px solid ${t.colors.link.border}`,
+              borderBottom: (t) => `1px solid ${t.colors.link.border}`,
             }}
             title={`Open “${name}” color modal`}
           >
@@ -122,10 +122,10 @@ const Palette = ({ color, handler }) => {
       </Box>
       <Flex flexWrap="wrap">
         <Flex flexDirection="row" alignItems="stretch">
-          {range.range(0, 5).map(i => colores(node)[i])}
+          {range.range(0, 5).map((i) => colores(node)[i])}
         </Flex>
         <Flex flexDirection="row" alignItems="stretch">
-          {range.range(5, 10).map(i => colores(node)[i])}
+          {range.range(5, 10).map((i) => colores(node)[i])}
         </Flex>
       </Flex>
     </Box>

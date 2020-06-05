@@ -17,7 +17,7 @@ export interface GraphQLFieldExtensionDefinition {
   args?: GraphQLFieldConfigArgumentMap;
   extend(
     args: GraphQLFieldConfigArgumentMap,
-    prevFieldConfig: GraphQLFieldConfig
+    prevFieldConfig: GraphQLFieldConfig,
   ): $Shape<ComposeFieldConfig>;
 }
 
@@ -168,7 +168,7 @@ const internalExtensionNames = [
   `directives`,
   `infer`,
   `plugin`,
-  ...specifiedDirectives.map(directive => directive.name),
+  ...specifiedDirectives.map((directive) => directive.name),
 ]
 const reservedExtensionNames = [
   ...internalExtensionNames,
@@ -180,7 +180,7 @@ const toDirectives = ({
   extensions,
   locations: defaultLocations,
 }) =>
-  Object.keys(extensions).map(name => {
+  Object.keys(extensions).map((name) => {
     const extension = extensions[name]
     const { args, description, locations, type } = extension
     // Allow field extensions to register a return type
@@ -203,13 +203,13 @@ const addDirectives = ({ schemaComposer, fieldExtensions = {} }) => {
     extensions: fieldExtensions,
     locations: [DirectiveLocation.FIELD_DEFINITION],
   })
-  fieldDirectives.forEach(directive => schemaComposer.addDirective(directive))
+  fieldDirectives.forEach((directive) => schemaComposer.addDirective(directive))
   const typeDirectives = toDirectives({
     schemaComposer,
     extensions: typeExtensions,
     locations: [DirectiveLocation.OBJECT],
   })
-  typeDirectives.forEach(directive => schemaComposer.addDirective(directive))
+  typeDirectives.forEach((directive) => schemaComposer.addDirective(directive))
 }
 
 const processFieldExtensions = ({
@@ -218,11 +218,11 @@ const processFieldExtensions = ({
   typeComposer,
   parentSpan,
 }) => {
-  typeComposer.getFieldNames().forEach(fieldName => {
+  typeComposer.getFieldNames().forEach((fieldName) => {
     const extensions = typeComposer.getFieldExtensions(fieldName)
     Object.keys(extensions)
-      .filter(name => !internalExtensionNames.includes(name))
-      .forEach(name => {
+      .filter((name) => !internalExtensionNames.includes(name))
+      .forEach((name) => {
         const { extend } = fieldExtensions[name] || {}
         if (typeof extend === `function`) {
           // Always get fresh field config as it will have been changed
@@ -230,7 +230,7 @@ const processFieldExtensions = ({
           const prevFieldConfig = typeComposer.getFieldConfig(fieldName)
           typeComposer.extendField(
             fieldName,
-            extend(extensions[name], prevFieldConfig, schemaComposer)
+            extend(extensions[name], prevFieldConfig, schemaComposer),
           )
         }
       })

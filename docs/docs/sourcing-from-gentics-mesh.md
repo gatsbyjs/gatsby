@@ -158,11 +158,11 @@ const IndexPage = () => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <div>
         <h1>Vehicles</h1>
         <ul>
-          {data.mesh.nodes.elements.map(vehicle => {
+          {data.mesh.nodes.elements.map((vehicle) => {
             const { name, weight } = vehicle.fields
             return (
               <li>

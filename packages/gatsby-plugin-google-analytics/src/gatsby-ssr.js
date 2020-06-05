@@ -25,7 +25,7 @@ const knownOptions = {
 
 export const onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
-  pluginOptions
+  pluginOptions,
 ) => {
   if (process.env.NODE_ENV !== `production` || !pluginOptions.trackingId) {
     return null
@@ -43,7 +43,7 @@ export const onRenderBody = (
   const excludeGAPaths = []
   if (typeof pluginOptions.exclude !== `undefined`) {
     const Minimatch = require(`minimatch`).Minimatch
-    pluginOptions.exclude.map(exclude => {
+    pluginOptions.exclude.map((exclude) => {
       const mm = new Minimatch(exclude)
       excludeGAPaths.push(mm.makeRe())
     })

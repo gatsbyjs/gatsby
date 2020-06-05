@@ -23,13 +23,13 @@ const opacityEntry = keyframes`
 `
 
 const WrapperDiv = styled(`div`)`
-  background-color: ${p => p.theme.colors.widget.background};
-  border-top: 1px solid ${p => p.theme.colors.ui.border};
+  background-color: ${(p) => p.theme.colors.widget.background};
+  border-top: 1px solid ${(p) => p.theme.colors.ui.border};
   height: 100%;
   opacity: 0.5;
-  padding: ${p => p.theme.space[6]} 0;
+  padding: ${(p) => p.theme.space[6]} 0;
   width: 100%;
-  z-index: ${p => p.theme.zIndices.widget};
+  z-index: ${(p) => p.theme.zIndices.widget};
 
   [tabindex="-1"]:focus {
     outline: none;
@@ -65,18 +65,18 @@ const WrapperDiv = styled(`div`)`
   }
 
   ${mediaQueries.lg} {
-    box-shadow: ${p => p.theme.shadows.overlay};
+    box-shadow: ${(p) => p.theme.shadows.overlay};
     border: 0;
-    border-radius: ${p => p.theme.radii[2]};
+    border-radius: ${(p) => p.theme.radii[2]};
     height: 100%;
-    padding: ${p => p.theme.space[7]} ${p => p.theme.space[6]};
+    padding: ${(p) => p.theme.space[7]} ${(p) => p.theme.space[6]};
     transform: scale(0);
     transform-origin: top center;
   }
 `
 
 const WidgetWrapper = ({ children, handleClose = () => {} }) => {
-  const handleEscapeKey = event => {
+  const handleEscapeKey = (event) => {
     if (event.keyCode === 27) {
       handleClose()
     }

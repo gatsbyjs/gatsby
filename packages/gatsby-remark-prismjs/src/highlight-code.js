@@ -9,7 +9,7 @@ module.exports = (
   code,
   additionalEscapeCharacters = {},
   lineNumbersHighlight = [],
-  noInlineHighlight = false
+  noInlineHighlight = false,
 ) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {

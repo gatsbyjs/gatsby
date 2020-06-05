@@ -23,7 +23,7 @@ export const readState = (): IGatsbyState => {
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
-      state.nodes.forEach(node => {
+      state.nodes.forEach((node) => {
         const { type } = node.internal
         if (!state.nodesByType.has(type)) {
           state.nodesByType.set(type, new Map())
@@ -48,18 +48,18 @@ export const readState = (): IGatsbyState => {
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware = ({ dispatch }) => next => (
-  action: ActionsUnion
+const multi: Middleware = ({ dispatch }) => (next) => (
+  action: ActionsUnion,
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
 export const configureStore = (
-  initialState: IGatsbyState
+  initialState: IGatsbyState,
 ): Store<IGatsbyState> =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
-    applyMiddleware(thunk, multi)
+    applyMiddleware(thunk, multi),
   )
 
 export const store: Store<IGatsbyState> = configureStore(readState())

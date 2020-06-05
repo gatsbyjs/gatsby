@@ -9,7 +9,7 @@ const pluginDefaults = {
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const { className, icon, offsetY } = Object.assign(
     pluginDefaults,
-    pluginOptions
+    pluginOptions,
   )
 
   const styles = `

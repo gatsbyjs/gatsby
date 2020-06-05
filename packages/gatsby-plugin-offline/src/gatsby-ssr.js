@@ -17,7 +17,7 @@ export const onPreRenderHTML = ({
         props.rel === `preload` &&
         (props.href.startsWith(`/static/d/`) ||
           props.href.startsWith(`/page-data/`))
-      )
+      ),
   )
 
   replaceHeadComponents(filteredHeadComponents)

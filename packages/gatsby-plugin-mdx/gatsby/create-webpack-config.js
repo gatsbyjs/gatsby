@@ -4,11 +4,11 @@ const defaultOptions = require(`../utils/default-options`)
 
 module.exports = (
   { stage, loaders, actions, plugins, cache, ...other },
-  pluginOptions
+  pluginOptions,
 ) => {
   const options = defaultOptions(pluginOptions)
   const testPattern = new RegExp(
-    options.extensions.map(ext => `${escapeStringRegexp(ext)}$`).join(`|`)
+    options.extensions.map((ext) => `${escapeStringRegexp(ext)}$`).join(`|`),
   )
   actions.setWebpackConfig({
     module: {
@@ -33,7 +33,7 @@ module.exports = (
               loader: path.join(
                 `gatsby-plugin-mdx`,
                 `loaders`,
-                `mdx-components`
+                `mdx-components`,
               ),
               options: {
                 plugins: options.mdxPlugins,

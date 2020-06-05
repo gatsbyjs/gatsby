@@ -42,7 +42,7 @@ describe(`StubList`, () => {
     })
 
     it(`renders links to stubs`, () => {
-      Array.from(stubs).forEach(stub => {
+      Array.from(stubs).forEach((stub) => {
         const anchor = stub.firstChild
         expect(anchor.nodeName).toBe(`A`)
         expect(anchor.getAttribute(`href`)).toMatch(/^\//)
@@ -50,7 +50,7 @@ describe(`StubList`, () => {
     })
 
     it(`removes the asterisks`, () => {
-      Array.from(stubs).forEach(stub => {
+      Array.from(stubs).forEach((stub) => {
         expect(stub.textContent).not.toContain(`*`)
       })
     })

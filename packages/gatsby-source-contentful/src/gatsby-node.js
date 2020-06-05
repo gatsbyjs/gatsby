@@ -45,7 +45,7 @@ exports.sourceNodes = async (
     getCache,
     reporter,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, deleteNode, touchNode, setPluginStatus } = actions
 
@@ -58,7 +58,7 @@ exports.sourceNodes = async (
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
-    getNodes().forEach(node => {
+    getNodes().forEach((node) => {
       if (node.internal.owner !== `gatsby-source-contentful`) {
         return
       }
@@ -71,7 +71,7 @@ exports.sourceNodes = async (
 
     reporter.info(`Using Contentful Offline cache ⚠️`)
     reporter.info(
-      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`,
     )
 
     return
@@ -81,7 +81,7 @@ exports.sourceNodes = async (
 
   const createSyncToken = () =>
     `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-      `environment`
+      `environment`,
     )}-${pluginConfig.get(`host`)}`
 
   // Get sync token if it exists.
@@ -122,20 +122,20 @@ exports.sourceNodes = async (
 
   function deleteContentfulNode(node) {
     const localizedNodes = locales
-      .map(locale => {
+      .map((locale) => {
         const nodeId = createNodeId(
           normalize.makeId({
             spaceId: space.sys.id,
             id: node.sys.id,
             currentLocale: locale.code,
             defaultLocale,
-          })
+          }),
         )
         return getNode(nodeId)
       })
-      .filter(node => node)
+      .filter((node) => node)
 
-    localizedNodes.forEach(node => {
+    localizedNodes.forEach((node) => {
       // touchNode first, to populate typeOwners & avoid erroring
       touchNode({ nodeId: node.id })
       deleteNode({ node })
@@ -146,9 +146,9 @@ exports.sourceNodes = async (
   currentSyncData.deletedAssets.forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
-    n => n.internal.owner === `gatsby-source-contentful`
+    (n) => n.internal.owner === `gatsby-source-contentful`,
   )
-  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
+  existingNodes.forEach((n) => touchNode({ nodeId: n.id }))
 
   const assets = currentSyncData.assets
 
@@ -189,8 +189,8 @@ exports.sourceNodes = async (
   })
 
   const newOrUpdatedEntries = []
-  entryList.forEach(entries => {
-    entries.forEach(entry => {
+  entryList.forEach((entries) => {
+    entries.forEach((entry) => {
       newOrUpdatedEntries.push(entry.sys.id)
     })
   })
@@ -198,10 +198,10 @@ exports.sourceNodes = async (
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => _.includes(newOrUpdatedEntries, n.id))
-    .forEach(n => {
+    .filter((n) => _.includes(newOrUpdatedEntries, n.id))
+    .forEach((n) => {
       if (foreignReferenceMap[n.id]) {
-        foreignReferenceMap[n.id].forEach(foreignReference => {
+        foreignReferenceMap[n.id].forEach((foreignReference) => {
           // Add reverse links
           if (n[foreignReference.name]) {
             n[foreignReference.name].push(foreignReference.id)
@@ -238,7 +238,7 @@ exports.sourceNodes = async (
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
         richTextOptions: pluginConfig.get(`richText`),
-      })
+      }),
     )
   }
 
@@ -252,7 +252,7 @@ exports.sourceNodes = async (
         defaultLocale,
         locales,
         space,
-      })
+      }),
     )
   }
 
@@ -278,7 +278,7 @@ exports.onPreExtractQueries = async ({ store, getNodesByType }) => {
   const program = store.getState().program
 
   const CACHE_DIR = path.resolve(
-    `${program.directory}/.cache/contentful/assets/`
+    `${program.directory}/.cache/contentful/assets/`,
   )
   await fs.ensureDir(CACHE_DIR)
 }

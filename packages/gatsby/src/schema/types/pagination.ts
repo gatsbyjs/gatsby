@@ -14,7 +14,7 @@ export const getPageInfo = <TContext = any>({
 }: {
   schemaComposer: SchemaComposer<TContext>
 }): ObjectTypeComposer =>
-  schemaComposer.getOrCreateOTC(`PageInfo`, tc => {
+  schemaComposer.getOrCreateOTC(`PageInfo`, (tc) => {
     tc.addFields({
       currentPage: `Int!`,
       hasPreviousPage: `Boolean!`,
@@ -35,7 +35,7 @@ export const getEdge = <TContext = any>({
 }): ObjectTypeComposer => {
   const typeName = `${typeComposer.getTypeName()}Edge`
   addDerivedType({ typeComposer, derivedTypeName: typeName })
-  return schemaComposer.getOrCreateOTC(typeName, tc => {
+  return schemaComposer.getOrCreateOTC(typeName, (tc) => {
     tc.addFields({
       next: typeComposer,
       node: typeComposer.getTypeNonNull(),
@@ -57,7 +57,7 @@ const createPagination = <TSource = any, TContext = any>({
 }): ObjectTypeComposer => {
   const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
     typeName,
-    tc => {
+    (tc) => {
       tc.addFields({
         totalCount: `Int!`,
         edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
@@ -65,7 +65,7 @@ const createPagination = <TSource = any, TContext = any>({
         pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
         ...fields,
       })
-    }
+    },
   )
   paginationTypeComposer.makeFieldNonNull(`edges`)
   paginationTypeComposer.makeFieldNonNull(`nodes`)

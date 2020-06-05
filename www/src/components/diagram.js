@@ -34,7 +34,7 @@ const SegmentTitle = ({ children }) => (
     sx={{
       bg: `accent`,
       borderRadius: 1,
-      bottom: t => `-${t.space[2]}`,
+      bottom: (t) => `-${t.space[2]}`,
       color: `black`,
       display: `inline`,
       fontSize: 1,
@@ -63,7 +63,7 @@ const VerticalLine = () => (
     <path
       d="M10 40 L10 -10"
       sx={{
-        stroke: t => t.colors.lilac,
+        stroke: (t) => t.colors.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -176,7 +176,7 @@ const Gatsby = () => (
       src={logo}
       sx={{
         display: `inline-block`,
-        height: [t => t.space[8], null, null, null, t => t.space[9]],
+        height: [(t) => t.space[8], null, null, null, (t) => t.space[9]],
         margin: 0,
         verticalAlign: `middle`,
         width: `auto`,
@@ -269,8 +269,8 @@ const Diagram = () => (
             sx={{
               ...box,
               backgroundColor: `purple.70`,
-              backgroundSize: t => `${t.sizes[10]} ${t.sizes[10]}`,
-              backgroundImage: t =>
+              backgroundSize: (t) => `${t.sizes[10]} ${t.sizes[10]}`,
+              backgroundImage: (t) =>
                 `linear-gradient(45deg, ${t.colors.purple[80]} 25%, transparent 25%, transparent 50%, ${t.colors.purple[80]} 50%, ${t.colors.purple[80]} 75%, transparent 75%, transparent)`,
               py: 0,
             }}

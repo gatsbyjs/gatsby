@@ -4,10 +4,10 @@ import gatsbyNode from "../gatsby-node"
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let createdNodes, updatedNodes
-  const createNodeId = jest.fn(id => id)
+  const createNodeId = jest.fn((id) => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
 
-  const getFileNode = fixture => {
+  const getFileNode = (fixture) => {
     return {
       id: `node_1`,
       children: [],
@@ -20,10 +20,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   }
 
   const actions = {
-    createNode: jest.fn(n => createdNodes.push(n)),
-    createParentChildLink: jest.fn(n => {
+    createNode: jest.fn((n) => createdNodes.push(n)),
+    createParentChildLink: jest.fn((n) => {
       updatedNodes.push(n)
-      const parentNode = createdNodes.find(node => node.id === n.parent.id)
+      const parentNode = createdNodes.find((node) => node.id === n.parent.id)
       if (parentNode) {
         parentNode.children.push(n.child.id)
       } else if (n.parent.id !== `node_1`) {
@@ -42,7 +42,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         createNodeId,
         createContentDigest,
       },
-      opts
+      opts,
     )
   }
 
@@ -52,44 +52,44 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     it(`creates doc json apple node`, () => {
-      const appleNode = createdNodes.find(node => node.name === `apple`)
+      const appleNode = createdNodes.find((node) => node.name === `apple`)
       expect(appleNode).toBeDefined()
     })
 
     it(`should extract out a description, params, and examples`, () => {
-      const appleNode = createdNodes.find(node => node.name === `apple`)
+      const appleNode = createdNodes.find((node) => node.name === `apple`)
 
       expect(appleNode.examples.length).toBe(1)
       expect(appleNode.examples[0]).toMatchSnapshot(`example`)
 
       const appleDescriptionNode = createdNodes.find(
-        node => node.id === appleNode.description___NODE
+        (node) => node.id === appleNode.description___NODE,
       )
 
       expect(appleDescriptionNode).toBeDefined()
       expect(appleDescriptionNode.internal.content).toMatchSnapshot(
-        `description content`
+        `description content`,
       )
 
       const paramNode = createdNodes.find(
-        node => node.id === appleNode.params___NODE[0]
+        (node) => node.id === appleNode.params___NODE[0],
       )
 
       expect(paramNode).toBeDefined()
       expect(paramNode.name).toMatchSnapshot(`param name`)
 
       const paramDescriptionNode = createdNodes.find(
-        node => node.id === paramNode.description___NODE
+        (node) => node.id === paramNode.description___NODE,
       )
 
       expect(paramDescriptionNode).toBeDefined()
       expect(paramDescriptionNode.internal.content).toMatchSnapshot(
-        `param description`
+        `param description`,
       )
     })
 
     it(`should extract code and docs location`, () => {
-      const appleNode = createdNodes.find(node => node.name === `apple`)
+      const appleNode = createdNodes.find((node) => node.name === `apple`)
 
       expect(appleNode.docsLocation).toBeDefined()
       expect(appleNode.docsLocation).toEqual(
@@ -100,7 +100,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
           end: expect.objectContaining({
             line: 7,
           }),
-        })
+        }),
       )
 
       expect(appleNode.codeLocation).toBeDefined()
@@ -112,14 +112,14 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
           end: expect.objectContaining({
             line: 10,
           }),
-        })
+        }),
       )
     })
 
     it(`doesn't create multiple nodes with same id`, () => {
       const groupedById = groupBy(createdNodes, `id`)
-      Object.keys(groupedById).forEach(id =>
-        expect(groupedById[id].length).toBe(1)
+      Object.keys(groupedById).forEach((id) =>
+        expect(groupedById[id].length).toBe(1),
       )
     })
   })
@@ -133,10 +133,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     it(`should create top-level node for callback`, () => {
       callbackNode = createdNodes.find(
-        node =>
+        (node) =>
           node.name === `CallbackType` &&
           node.kind === `typedef` &&
-          node.parent === `node_1`
+          node.parent === `node_1`,
       )
       expect(callbackNode).toBeDefined()
     })
@@ -144,10 +144,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     describe(`should handle typedefs`, () => {
       it(`should create top-level node for typedef`, () => {
         typedefNode = createdNodes.find(
-          node =>
+          (node) =>
             node.name === `ObjectType` &&
             node.kind === `typedef` &&
-            node.parent === `node_1`
+            node.parent === `node_1`,
         )
         expect(typedefNode).toBeDefined()
       })
@@ -157,8 +157,11 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       it(`should have property nodes for typedef`, () => {
         expect(typedefNode.properties___NODE).toBeDefined()
         expect(typedefNode.properties___NODE.length).toBe(2)
-        ;[readyNode, nestedNode] = typedefNode.properties___NODE.map(paramID =>
-          createdNodes.find(node => node.id === paramID)
+        ;[
+          readyNode,
+          nestedNode,
+        ] = typedefNode.properties___NODE.map((paramID) =>
+          createdNodes.find((node) => node.id === paramID),
         )
       })
 
@@ -176,8 +179,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
           nestedFooNode,
           nestedOptionalNode,
           nestedCallbackNode,
-        ] = nestedNode.properties___NODE.map(paramID =>
-          createdNodes.find(node => node.id === paramID)
+        ] = nestedNode.properties___NODE.map((paramID) =>
+          createdNodes.find((node) => node.id === paramID),
         )
       })
 
@@ -193,7 +196,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
           expect.objectContaining({
             name: `number`,
             type: `NameExpression`,
-          })
+          }),
         )
       })
 
@@ -205,7 +208,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
             name: `CallbackType`,
             type: `NameExpression`,
             typeDef___NODE: callbackNode.id,
-          })
+          }),
         )
       })
     })
@@ -214,7 +217,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       let complexNode, memberNode
       beforeAll(() => {
         complexNode = createdNodes.find(
-          node => node.name === `complex` && node.parent === `node_1`
+          (node) => node.name === `complex` && node.parent === `node_1`,
         )
       })
 
@@ -228,7 +231,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect(complexNode.members.static___NODE.length).toBe(1)
 
         memberNode = createdNodes.find(
-          node => node.id === complexNode.members.static___NODE[0]
+          (node) => node.id === complexNode.members.static___NODE[0],
         )
         expect(memberNode).toBeDefined()
         expect(memberNode.parent).toEqual(complexNode.id)
@@ -240,7 +243,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
       it(`should link to type to type definition`, () => {
         const typeElement = memberNode.type.elements.find(
-          type => type.name === `ObjectType`
+          (type) => type.name === `ObjectType`,
         )
         expect(typeElement.typeDef___NODE).toBe(typedefNode.id)
       })
@@ -248,8 +251,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     it(`doesn't create multiple nodes with same id`, () => {
       const groupedById = groupBy(createdNodes, `id`)
-      Object.keys(groupedById).forEach(id =>
-        expect(groupedById[id].length).toBe(1)
+      Object.keys(groupedById).forEach((id) =>
+        expect(groupedById[id].length).toBe(1),
       )
     })
   })
@@ -261,8 +264,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     it(`doesn't create multiple nodes with same id`, () => {
       const groupedById = groupBy(createdNodes, `id`)
-      Object.keys(groupedById).forEach(id =>
-        expect(groupedById[id].length).toBe(1)
+      Object.keys(groupedById).forEach((id) =>
+        expect(groupedById[id].length).toBe(1),
       )
     })
   })
@@ -273,13 +276,13 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     it(`merges JsDoc and flow types`, () => {
-      const firstParamNodes = createdNodes.filter(node => node.name === `$0`)
+      const firstParamNodes = createdNodes.filter((node) => node.name === `$0`)
 
       expect(firstParamNodes.length).toBe(1)
       expect(firstParamNodes[0].properties___NODE.length).toBe(1)
 
       const subField = createdNodes.find(
-        node => node.id === firstParamNodes[0].properties___NODE[0]
+        (node) => node.id === firstParamNodes[0].properties___NODE[0],
       )
 
       expect(subField).toBeDefined()
@@ -288,13 +291,13 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect.objectContaining({
           name: `string`,
           type: `NameExpression`,
-        })
+        }),
       )
     })
 
     it(`flow: required param result in same data shape as JsDoc`, () => {
       const requiredFlowParam = createdNodes.find(
-        node => node.name === `requiredParam`
+        (node) => node.name === `requiredParam`,
       )
 
       expect(requiredFlowParam).toBeDefined()
@@ -306,13 +309,13 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
             name: `string`,
             type: `NameExpression`,
           }),
-        })
+        }),
       )
     })
 
     it(`flow: optional param result in same data shape as JsDoc`, () => {
       const optionalFlowParam = createdNodes.find(
-        node => node.name === `optionalParam`
+        (node) => node.name === `optionalParam`,
       )
 
       expect(optionalFlowParam).toBeDefined()
@@ -324,7 +327,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
             name: `number`,
             type: `NameExpression`,
           }),
-        })
+        }),
       )
     })
   })
@@ -334,17 +337,17 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       let types = groupBy(createdNodes, `internal.type`)
       expect(
         types.DocumentationJSComponentDescription.every(
-          d => d.internal.mediaType === `text/markdown`
-        )
+          (d) => d.internal.mediaType === `text/markdown`,
+        ),
       ).toBe(true)
     })
 
     it(`creates parent nodes before children`, () => {
       const seenNodes = []
-      createdNodes.forEach(node => {
+      createdNodes.forEach((node) => {
         seenNodes.push(node.id)
 
-        node.children.forEach(childID => {
+        node.children.forEach((childID) => {
           expect(seenNodes.includes(childID)).not.toBe(true)
         })
       })

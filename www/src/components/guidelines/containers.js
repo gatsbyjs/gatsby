@@ -105,7 +105,7 @@ export const CopyColumn = ({
         position: `relative`,
         [mediaQueries.md]: {
           position: sticky ? `sticky` : `relative`,
-          top: t =>
+          top: (t) =>
             sticky
               ? `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + 2.5rem)`
               : false,

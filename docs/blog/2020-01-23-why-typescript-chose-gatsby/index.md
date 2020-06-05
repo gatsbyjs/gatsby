@@ -25,7 +25,7 @@ When I was evaluating static site generators, what makes Gatsby stand out is thi
 ```ts
 const files = fs.getDirSync()
 const htmlFiles = files.map(makePage)
-htmlFiles.forEach(html => {
+htmlFiles.forEach((html) => {
   fs.writeFileSync(filename, html)
 })
 ```
@@ -42,7 +42,7 @@ const setupData = () => {
 const createSite = () => {
   const pages = graphQLServer.query("{  pages { title, text } }")
   const htmls = pages.map(renderComponent)
-  htmls.forEach(html => {
+  htmls.forEach((html) => {
     fs.writeFileSync(filename, html)
   })
 }

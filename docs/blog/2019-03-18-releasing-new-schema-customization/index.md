@@ -54,7 +54,7 @@ createResolvers({
         const authors = context.nodeModel.getAllNodes({
           type: `AuthorJson`,
         })
-        return authors.map(author => author.name)
+        return authors.map((author) => author.name)
       },
     },
   },

@@ -10,7 +10,7 @@ describe(`selective tag rendering`, () => {
     const { container, getByText } = render(
       <ThemeProvider theme={theme}>
         <Button to="/somewhere">Hello</Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
 
     expect(container.nodeName).toBe(`DIV`)
@@ -23,7 +23,7 @@ describe(`selective tag rendering`, () => {
         <Button to="/somewhere" tag="button">
           Hello
         </Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
 
     expect(getByText(`Hello`).nodeName).toBe(`BUTTON`)
@@ -35,7 +35,7 @@ describe(`selective tag rendering`, () => {
         <Button to="/somewhere" tag="link">
           Hello
         </Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
 
     expect(getByText(`Hello`).nodeName).toBe(`A`)
@@ -52,7 +52,7 @@ describe(`tracking`, () => {
     const { getByText } = render(
       <ThemeProvider theme={theme}>
         <Button to="/not-tracked">Hello</Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
     fireEvent.click(getByText(`Hello`))
 
@@ -67,7 +67,7 @@ describe(`tracking`, () => {
         <Button to="/not-tracked" tracking={true}>
           Hello
         </Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
     fireEvent.click(getByText(`Hello`))
 
@@ -81,7 +81,7 @@ describe(`tracking`, () => {
         <Button to={to} tracking={true}>
           Hello
         </Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
 
     fireEvent.click(getByText(`Hello`))
@@ -93,7 +93,7 @@ describe(`tracking`, () => {
         eventCategory: `Outbound Link`,
         eventAction: `click`,
         eventLabel: expect.stringContaining(to),
-      })
+      }),
     )
   })
 })
@@ -107,7 +107,7 @@ describe(`props forwarding`, () => {
         <Button to="/custom-click" onClick={onClick}>
           Hello
         </Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
     fireEvent.click(getByText(`Hello`))
 
@@ -119,7 +119,7 @@ describe(`props forwarding`, () => {
     const { getByText } = render(
       <ThemeProvider theme={theme}>
         <Button to="/children">{children}</Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
 
     expect(getByText(`Hello World`)).toBeDefined()
@@ -133,7 +133,7 @@ describe(`props forwarding`, () => {
         <Button to="/with-icon" icon={icon}>
           Hello
         </Button>
-      </ThemeProvider>
+      </ThemeProvider>,
     )
 
     expect(getByText(`Icon`)).toBeDefined()

@@ -10,7 +10,7 @@ const logDeprecationNotice = (prop, replacement) => {
     `
     The "${prop}" prop is now deprecated and will be removed in the next major version
     of "gatsby-image".
-    `
+    `,
   )
 
   if (replacement) {
@@ -19,7 +19,7 @@ const logDeprecationNotice = (prop, replacement) => {
 }
 
 // Handle legacy props during their deprecation phase
-const convertProps = props => {
+const convertProps = (props) => {
   let convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
@@ -54,10 +54,10 @@ const convertProps = props => {
  * @param currentData  {{media?: string}[]}   The props to check for images.
  * @return {boolean}
  */
-const hasArtDirectionSupport = currentData =>
+const hasArtDirectionSupport = (currentData) =>
   !!currentData &&
   Array.isArray(currentData) &&
-  currentData.some(image => typeof image.media !== `undefined`)
+  currentData.some((image) => typeof image.media !== `undefined`)
 
 /**
  * Tries to detect if a media query matches the current viewport.
@@ -84,7 +84,7 @@ const getImageSrcKey = ({ fluid, fixed }) => {
  * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
  * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
-const getCurrentSrcData = currentData => {
+const getCurrentSrcData = (currentData) => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
     // Do we have an image for the current Viewport?
     const foundMedia = currentData.findIndex(matchesMedia)
@@ -94,7 +94,7 @@ const getCurrentSrcData = currentData => {
 
     // No media matches, select first element without a media condition
     const noMedia = currentData.findIndex(
-      image => typeof image.media === `undefined`
+      (image) => typeof image.media === `undefined`,
     )
     if (noMedia !== -1) {
       return currentData[noMedia]
@@ -107,14 +107,14 @@ const getCurrentSrcData = currentData => {
 // Cache if we've seen an image before so we don't bother with
 // lazy-loading & fading in on subsequent mounts.
 const imageCache = Object.create({})
-const inImageCache = props => {
+const inImageCache = (props) => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
   return imageCache[src] || false
 }
 
-const activateCacheForImage = props => {
+const activateCacheForImage = (props) => {
   const convertedProps = convertProps(props)
   // Find src
   const src = getImageSrcKey(convertedProps)
@@ -139,8 +139,8 @@ function getIO() {
     window.IntersectionObserver
   ) {
     io = new window.IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (listeners.has(entry.target)) {
             const cb = listeners.get(entry.target)
             // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
@@ -152,7 +152,7 @@ function getIO() {
           }
         })
       },
-      { rootMargin: `200px` }
+      { rootMargin: `200px` },
     )
   }
 
@@ -180,13 +180,13 @@ function generateImageSources(imageVariants) {
 function groupByMedia(imageVariants) {
   const withMedia = []
   const without = []
-  imageVariants.forEach(variant =>
-    (variant.media ? withMedia : without).push(variant)
+  imageVariants.forEach((variant) =>
+    (variant.media ? withMedia : without).push(variant),
   )
 
   if (without.length > 1 && process.env.NODE_ENV !== `production`) {
     console.warn(
-      `We've found ${without.length} sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`
+      `We've found ${without.length} sources without a media property. They might be ignored by the browser, see: https://www.gatsbyjs.org/packages/gatsby-image/#art-directing-multiple-images`,
     )
   }
 
@@ -217,9 +217,9 @@ function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
 function generateNoscriptSources(imageVariants) {
   return imageVariants
     .map(
-      variant =>
+      (variant) =>
         (variant.srcSetWebp ? generateNoscriptSource(variant, true) : ``) +
-        generateNoscriptSource(variant)
+        generateNoscriptSource(variant),
     )
     .join(``)
 }
@@ -238,7 +238,7 @@ const listenToIntersections = (el, cb) => {
   }
 }
 
-const noscriptImg = props => {
+const noscriptImg = (props) => {
   // Check if prop exists before adding each attribute to the string output below to prevent
   // HTML validation issues caused by empty values like width="" and height=""
   const src = props.src ? `src="${props.src}" ` : `src="" ` // required attribute

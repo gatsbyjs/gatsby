@@ -40,23 +40,23 @@ const traversePackagesDeps = ({
   seenPackages = [...packages],
   depTree = {},
 }) => {
-  packages.forEach(p => {
+  packages.forEach((p) => {
     let pkgJson
     try {
       pkgJson = require(path.join(root, `packages`, p, `package.json`))
     } catch {
       console.error(`"${p}" package doesn't exist in monorepo.`)
       // remove from seenPackages
-      seenPackages = seenPackages.filter(seenPkg => seenPkg !== p)
+      seenPackages = seenPackages.filter((seenPkg) => seenPkg !== p)
       return
     }
 
     const fromMonoRepo = _.intersection(
       Object.keys({ ...pkgJson.dependencies }),
-      monoRepoPackages
+      monoRepoPackages,
     )
 
-    fromMonoRepo.forEach(pkgName => {
+    fromMonoRepo.forEach((pkgName) => {
       depTree[pkgName] = (depTree[pkgName] || new Set()).add(p)
     })
 
@@ -64,7 +64,7 @@ const traversePackagesDeps = ({
     const newPackages = _.difference(fromMonoRepo, seenPackages)
 
     if (newPackages.length) {
-      newPackages.forEach(depFromMonorepo => {
+      newPackages.forEach((depFromMonorepo) => {
         seenPackages.push(depFromMonorepo)
       })
 

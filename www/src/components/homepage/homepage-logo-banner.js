@@ -8,9 +8,9 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { Name } from "./homepage-section"
 
 const Section = styled(`section`)`
-  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
+  border-bottom: 1px solid ${(p) => p.theme.colors.ui.border};
   overflow: hidden;
-  padding: ${p => p.theme.space[5]} 0;
+  padding: ${(p) => p.theme.space[5]} 0;
   width: 100%;
 
   ${mediaQueries.xl} {
@@ -19,19 +19,19 @@ const Section = styled(`section`)`
   }
 
   ${mediaQueries.xxl} {
-    padding: ${p => p.theme.space[7]} 0;
+    padding: ${(p) => p.theme.space[7]} 0;
   }
 `
 
 const Title = styled(`header`)`
-  padding-right: ${p => p.theme.space[6]};
-  padding-left: ${p => p.theme.space[6]};
+  padding-right: ${(p) => p.theme.space[6]};
+  padding-left: ${(p) => p.theme.space[6]};
   ${mediaQueries.md} {
     max-width: 30rem;
   }
 
   ${mediaQueries.lg} {
-    margin-left: ${p => p.theme.space[9]};
+    margin-left: ${(p) => p.theme.space[9]};
   }
 
   ${mediaQueries.xl} {
@@ -50,13 +50,13 @@ const LogoGroup = styled(`div`)`
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: auto;
-  grid-gap: ${p => p.theme.space[8]};
+  grid-gap: ${(p) => p.theme.space[8]};
   align-items: center;
   overflow-x: scroll;
-  padding-left: ${p => p.theme.space[3]};
-  padding-bottom: ${p => p.theme.space[4]};
+  padding-left: ${(p) => p.theme.space[3]};
+  padding-bottom: ${(p) => p.theme.space[4]};
   ${mediaQueries.xxl} {
-    padding-bottom: ${p => p.theme.space[6]};
+    padding-bottom: ${(p) => p.theme.space[6]};
   }
   &::-webkit-scrollbar {
     display: none;
@@ -91,7 +91,7 @@ const HomepageLogoBanner = () => {
         <Name>Trusted by</Name>
       </Title>
       <LogoGroup>
-        {data.allFile.nodes.map(image => (
+        {data.allFile.nodes.map((image) => (
           <Img
             alt={`${image.base.split(`.`)[0]}`}
             fixed={image.childImageSharp.fixed}

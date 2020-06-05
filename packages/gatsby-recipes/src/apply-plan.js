@@ -8,17 +8,17 @@ const asyncForEach = async (array, callback) => {
   }
 }
 
-const applyPlan = async stepPlan => {
+const applyPlan = async (stepPlan) => {
   let appliedResources = []
   // We apply each resource serially for now — we can parallelize in the
   // future for SPEED
-  await asyncForEach(stepPlan, async resourcePlan => {
+  await asyncForEach(stepPlan, async (resourcePlan) => {
     const resource = resources[resourcePlan.resourceName]
 
     try {
       const changedResources = await resource.create(
         ctx,
-        resourcePlan.resourceDefinitions
+        resourcePlan.resourceDefinitions,
       )
 
       appliedResources = appliedResources.concat(changedResources)

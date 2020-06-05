@@ -39,7 +39,7 @@ const Header = () => {
         }
       `}
       // highlight-next-line
-      render={data => (
+      render={(data) => (
         <header>
           <h1>{data.site.siteMetadata.title}</h1>
         </header>
@@ -68,7 +68,7 @@ const Header = () => {
           }
         }
       }
-    `
+    `,
   )
 
   return (
@@ -99,7 +99,7 @@ const useSiteMetadata = () => {
           }
         }
       }
-    `
+    `,
   )
   return site.siteMetadata
 }

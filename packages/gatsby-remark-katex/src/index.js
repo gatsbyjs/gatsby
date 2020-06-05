@@ -3,7 +3,7 @@ const katex = require(`katex`)
 const remarkMath = require(`remark-math`)
 
 module.exports = ({ markdownAST }, pluginOptions = {}) => {
-  visit(markdownAST, `inlineMath`, node => {
+  visit(markdownAST, `inlineMath`, (node) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: false,
@@ -11,7 +11,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) => {
     })
   })
 
-  visit(markdownAST, `math`, node => {
+  visit(markdownAST, `math`, (node) => {
     node.type = `html`
     node.value = katex.renderToString(node.value, {
       displayMode: true,

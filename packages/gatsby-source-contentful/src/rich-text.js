@@ -1,18 +1,18 @@
 const _ = require(`lodash`)
 const { BLOCKS, INLINES } = require(`@contentful/rich-text-types`)
 
-const isEntryReferenceNode = node =>
+const isEntryReferenceNode = (node) =>
   [
     BLOCKS.EMBEDDED_ENTRY,
     INLINES.ENTRY_HYPERLINK,
     INLINES.EMBEDDED_ENTRY,
   ].indexOf(node.nodeType) >= 0
 
-const isAssetReferenceNode = node =>
+const isAssetReferenceNode = (node) =>
   [BLOCKS.EMBEDDED_ASSET, INLINES.ASSET_HYPERLINK].indexOf(node.nodeType) >= 0
 
-const isEntryReferenceField = field => _.get(field, `sys.type`) === `Entry`
-const isAssetReferenceField = field => _.get(field, `sys.type`) === `Asset`
+const isEntryReferenceField = (field) => _.get(field, `sys.type`) === `Entry`
+const isAssetReferenceField = (field) => _.get(field, `sys.type`) === `Asset`
 
 const getFieldProps = (contentType, fieldName) =>
   contentType.fields.find(({ id }) => id === fieldName)
@@ -55,14 +55,14 @@ const getFieldWithLocaleResolved = ({
   }
 
   if (Array.isArray(field)) {
-    return field.map(fieldItem =>
+    return field.map((fieldItem) =>
       getFieldWithLocaleResolved({
         field: fieldItem,
         contentTypesById,
         getField,
         defaultLocale,
         resolvedEntryIDs,
-      })
+      }),
     )
   }
 
@@ -140,13 +140,13 @@ const getNormalizedRichTextNode = ({
   if (Array.isArray(node.content)) {
     return {
       ...node,
-      content: node.content.map(childNode =>
+      content: node.content.map((childNode) =>
         getNormalizedRichTextNode({
           node: childNode,
           contentTypesById,
           getField,
           defaultLocale,
-        })
+        }),
       ),
     }
   }
@@ -167,13 +167,13 @@ const getNormalizedRichTextField = ({
   if (field && field.content) {
     return {
       ...field,
-      content: field.content.map(node =>
+      content: field.content.map((node) =>
         getNormalizedRichTextNode({
           node,
           contentTypesById,
           getField,
           defaultLocale,
-        })
+        }),
       ),
     }
   }

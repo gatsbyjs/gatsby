@@ -2,9 +2,9 @@ import { transform } from "@babel/core"
 import preset from "babel-preset-gatsby"
 import plugin from "../optimize-hook-destructuring"
 
-const trim = s => s.join(`\n`).trim().replace(/^\s+/gm, ``)
+const trim = (s) => s.join(`\n`).trim().replace(/^\s+/gm, ``)
 
-const babel = code =>
+const babel = (code) =>
   transform(code, {
     filename: `noop.js`,
     presets: [preset],
@@ -25,7 +25,7 @@ describe(`optimize-hook-destructuring`, () => {
       trim`
       import { useState } from 'react';
       const [count, setCount] = useState(0);
-    `
+    `,
     )
 
     expect(output).toMatch(trim`
@@ -33,7 +33,7 @@ describe(`optimize-hook-destructuring`, () => {
     `)
 
     expect(output).toMatchInlineSnapshot(
-      `"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"`
+      `"\\"use strict\\";var _react=require(\\"react\\");const{0:count,1:setCount}=(0,_react.useState)(0);"`,
     )
   })
 
@@ -45,7 +45,7 @@ describe(`optimize-hook-destructuring`, () => {
 
     expect(() => babel(input)).not.toThrow()
     expect(babel(input)).toMatchInlineSnapshot(
-      `"\\"use strict\\";var _react=require(\\"react\\");const{1:setCount}=(0,_react.useState)(0);"`
+      `"\\"use strict\\";var _react=require(\\"react\\");const{1:setCount}=(0,_react.useState)(0);"`,
     )
   })
 })

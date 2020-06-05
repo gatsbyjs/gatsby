@@ -17,13 +17,13 @@ import { isTTY } from "./util/is-tty"
 const spawnWithArgs = (
   file: string,
   args: string[],
-  options?: execa.Options
+  options?: execa.Options,
 ): execa.ExecaChildProcess =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
 
 const spawn = (
   cmd: string,
-  options?: execa.Options
+  options?: execa.Options,
 ): execa.ExecaChildProcess => {
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
@@ -57,7 +57,7 @@ const isAlreadyGitRepository = async (): Promise<boolean> => {
   try {
     return await spawn(`git rev-parse --is-inside-work-tree`, {
       stdio: `pipe`,
-    }).then(output => output.stdout === `true`)
+    }).then((output) => output.stdout === `true`)
   } catch (err) {
     return false
   }
@@ -65,7 +65,7 @@ const isAlreadyGitRepository = async (): Promise<boolean> => {
 
 // Initialize newly cloned directory as a git repo
 const gitInit = async (
-  rootPath: string
+  rootPath: string,
 ): Promise<execa.ExecaReturnBase<string>> => {
   report.info(`Initialising git in ${rootPath}`)
 
@@ -81,14 +81,14 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
   report.info(`Creating minimal .gitignore in ${rootPath}`)
   await fs.writeFile(
     sysPath.join(rootPath, `.gitignore`),
-    `.cache\nnode_modules\npublic\n`
+    `.cache\nnode_modules\npublic\n`,
   )
 }
 
 // Create an initial git commit in the new directory
 const createInitialGitCommit = async (
   rootPath: string,
-  starterUrl: string
+  starterUrl: string,
 ): Promise<void> => {
   report.info(`Create initial git commit in ${rootPath}`)
 
@@ -132,7 +132,7 @@ const ignored = (path: string): boolean =>
 // Copy starter from file system.
 const copy = async (
   starterPath: string,
-  rootPath: string
+  rootPath: string,
 ): Promise<boolean> => {
   // Chmod with 755.
   // 493 = parseInt('755', 8)
@@ -147,7 +147,7 @@ const copy = async (
       `You can't create a starter from the existing directory. If you want to
       create a new site in the current directory, the trailing dot isn't
       necessary. If you want to create a new site from a local starter, run
-      something like "gatsby new new-gatsby-site ../my-gatsby-starter"`
+      something like "gatsby new new-gatsby-site ../my-gatsby-starter"`,
     )
   }
 
@@ -167,7 +167,7 @@ const copy = async (
 // Clones starter from URI.
 const clone = async (
   hostInfo: hostedGitInfo,
-  rootPath: string
+  rootPath: string,
 ): Promise<void> => {
   let url: string
   // Let people use private repos accessed over SSH.
@@ -189,7 +189,7 @@ const clone = async (
     rootPath,
     `--recursive`,
     `--depth=1`,
-  ].filter(arg => Boolean(arg))
+  ].filter((arg) => Boolean(arg))
 
   await spawnWithArgs(`git`, args)
 
@@ -212,7 +212,7 @@ interface IGetPaths {
 
 const getPaths = async (
   starterPath?: string,
-  rootPath?: string
+  rootPath?: string,
 ): Promise<IGetPaths> => {
   let selectedOtherStarter = false
 
@@ -244,7 +244,7 @@ const getPaths = async (
     // exit gracefully if responses aren't provided
     if (!response.starter || !response.path.trim()) {
       throw new Error(
-        `Please mention both starter package and project name along with path(if its not in the root)`
+        `Please mention both starter package and project name along with path(if its not in the root)`,
       )
     }
 
@@ -274,18 +274,18 @@ Your new Gatsby site has been successfully bootstrapped. Start developing it by 
  */
 export async function initStarter(
   starter?: string,
-  root?: string
+  root?: string,
 ): Promise<void> {
   const { starterPath, rootPath, selectedOtherStarter } = await getPaths(
     starter,
-    root
+    root,
   )
 
   const urlObject = url.parse(rootPath)
 
   if (selectedOtherStarter) {
     report.info(
-      `Opening the starter library at https://gatsby.dev/starters?v=2...\nThe starter library has a variety of options for starters you can browse\n\nYou can then use the gatsby new command with the link to a repository of a starter you'd like to use, for example:\ngatsby new ${rootPath} https://github.com/gatsbyjs/gatsby-starter-default`
+      `Opening the starter library at https://gatsby.dev/starters?v=2...\nThe starter library has a variety of options for starters you can browse\n\nYou can then use the gatsby new command with the link to a repository of a starter you'd like to use, for example:\ngatsby new ${rootPath} https://github.com/gatsbyjs/gatsby-starter-default`,
     )
     opn(`https://gatsby.dev/starters?v=2`)
     return

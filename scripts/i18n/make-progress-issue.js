@@ -11,7 +11,7 @@ function makeProgressIssue() {
   const issuesText = issues
     .map(({ name, pages }) => {
       // TODO query to find out if the pages are translated yet
-      const pagesText = pages.map(p => `* [ ] ${name}/${p}`).join(`\n`)
+      const pagesText = pages.map((p) => `* [ ] ${name}/${p}`).join(`\n`)
       return `
 ### ${capitalize(name)}
 

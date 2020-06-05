@@ -5,10 +5,10 @@ jest.mock(
   () => {
     return {}
   },
-  { virtual: true }
+  { virtual: true },
 )
 
-const clone = arr => arr.reduce((merged, item) => merged.concat(item), [])
+const clone = (arr) => arr.reduce((merged, item) => merged.concat(item), [])
 
 describe(`onRenderBody`, () => {
   const setup = (options = {}, env = `build-html`) => {
@@ -79,7 +79,7 @@ describe(`onPreRenderHTML`, () => {
         {
           key: `TypographyStyle`,
         },
-      ])
+      ]),
     )
   })
 

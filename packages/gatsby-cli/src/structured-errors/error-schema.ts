@@ -17,7 +17,7 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
           functionName: Joi.string().allow(null),
           lineNumber: Joi.number().allow(null),
           columnNumber: Joi.number().allow(null),
-        })
+        }),
       )
       .allow(null),
     level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
@@ -35,5 +35,5 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     context: Joi.object({}).unknown(),
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
-  }
+  },
 )

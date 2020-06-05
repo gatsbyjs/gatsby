@@ -30,7 +30,7 @@ describe(`catchLinks`, () => {
   let eventDestroyer
 
   beforeAll(() => {
-    eventDestroyer = catchLinks.default(window, href => {})
+    eventDestroyer = catchLinks.default(window, (href) => {})
   })
 
   afterAll(() => {
@@ -42,7 +42,7 @@ describe(`catchLinks`, () => {
   })
   it(`uses an instance of the handler returned by routeThroughBrowserOrApp`, () => {
     expect(handler.toString()).toEqual(
-      catchLinks.routeThroughBrowserOrApp(jest.fn()).toString()
+      catchLinks.routeThroughBrowserOrApp(jest.fn()).toString(),
     )
   })
 })
@@ -113,7 +113,7 @@ describe(`a user may be forcing navigation if`, () => {
 })
 
 describe(`the clicked element`, () => {
-  it(`must be an anchor tag`, done => {
+  it(`must be an anchor tag`, (done) => {
     const testAnchor = document.createElement(`a`)
     document.body.appendChild(testAnchor)
 
@@ -124,7 +124,7 @@ describe(`the clicked element`, () => {
       view: window,
     })
 
-    const handler = event => {
+    const handler = (event) => {
       expect(catchLinks.findClosestAnchor(event.target)).toBe(testAnchor)
 
       testAnchor.remove()
@@ -136,7 +136,7 @@ describe(`the clicked element`, () => {
 
     testAnchor.dispatchEvent(clickEvent)
   })
-  it(`could be inside of an anchor`, done => {
+  it(`could be inside of an anchor`, (done) => {
     const testAnchor = document.createElement(`a`)
     const clickTarget = document.createElement(`span`)
 
@@ -150,7 +150,7 @@ describe(`the clicked element`, () => {
       view: window,
     })
 
-    const handler = event => {
+    const handler = (event) => {
       expect(catchLinks.findClosestAnchor(event.target)).toBe(testAnchor)
 
       testAnchor.remove()
@@ -176,7 +176,7 @@ describe(`the author might be forcing navigation`, () => {
 
     beforeAll(() => {
       separateBrowsingContext = document.body.appendChild(
-        document.createElement(`iframe`)
+        document.createElement(`iframe`),
       )
     })
     afterAll(() => {
@@ -191,7 +191,7 @@ describe(`the author might be forcing navigation`, () => {
     })
     test(`target=_parent`, () => {
       const testAnchor = separateBrowsingContext.contentDocument.createElement(
-        `a`
+        `a`,
       )
       testAnchor.setAttribute(`target`, `_parent`)
 
@@ -199,7 +199,7 @@ describe(`the author might be forcing navigation`, () => {
     })
     test(`target=_top`, () => {
       const testAnchor = separateBrowsingContext.contentDocument.createElement(
-        `a`
+        `a`,
       )
       testAnchor.setAttribute(`target`, `_top`)
 
@@ -213,7 +213,7 @@ describe(`anchor target attribute looks like _self if`, () => {
 
   beforeAll(() => {
     separateBrowsingContext = document.body.appendChild(
-      document.createElement(`iframe`)
+      document.createElement(`iframe`),
     )
   })
   afterAll(() => {
@@ -233,7 +233,7 @@ describe(`anchor target attribute looks like _self if`, () => {
   })
   it(`is set to _parent, but window = window.parent`, () => {
     const testAnchor = separateBrowsingContext.contentDocument.createElement(
-      `a`
+      `a`,
     )
     testAnchor.setAttribute(`target`, `_parent`)
 
@@ -245,7 +245,7 @@ describe(`anchor target attribute looks like _self if`, () => {
   })
   it(`is set to _top, but window = window.top`, () => {
     const testAnchor = separateBrowsingContext.contentDocument.createElement(
-      `a`
+      `a`,
     )
     testAnchor.setAttribute(`target`, `_top`)
 
@@ -271,11 +271,11 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
     eventDestroyer()
   })
 
-  it(`shares the same origin and top path`, done => {
+  it(`shares the same origin and top path`, (done) => {
     const sameOriginAndTopPath = document.createElement(`a`)
     sameOriginAndTopPath.setAttribute(
       `href`,
-      `${window.location.href}/someSubPath`
+      `${window.location.href}/someSubPath`,
     )
     document.body.appendChild(sameOriginAndTopPath)
 
@@ -289,7 +289,7 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
     window.addEventListener(`click`, function onClick() {
       window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
-        `${sameOriginAndTopPath.pathname}`
+        `${sameOriginAndTopPath.pathname}`,
       )
 
       sameOriginAndTopPath.remove()
@@ -299,11 +299,11 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
 
     sameOriginAndTopPath.dispatchEvent(clickEvent)
   })
-  it(`is not a hash anchor for the current page`, done => {
+  it(`is not a hash anchor for the current page`, (done) => {
     const withAnchor = document.createElement(`a`)
     withAnchor.setAttribute(
       `href`,
-      `${window.location.href}/someSubPath#inside`
+      `${window.location.href}/someSubPath#inside`,
     )
     document.body.appendChild(withAnchor)
 
@@ -317,7 +317,7 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
     window.addEventListener(`click`, function onClick() {
       window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
-        `${withAnchor.pathname}${withAnchor.hash}`
+        `${withAnchor.pathname}${withAnchor.hash}`,
       )
 
       withAnchor.remove()
@@ -327,11 +327,11 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
 
     withAnchor.dispatchEvent(clickEvent)
   })
-  it(`has a URL "search" portion`, done => {
+  it(`has a URL "search" portion`, (done) => {
     const withSearch = document.createElement(`a`)
     withSearch.setAttribute(
       `href`,
-      `${window.location.href}${pathPrefix}/subPath?q=find+me#inside`
+      `${window.location.href}${pathPrefix}/subPath?q=find+me#inside`,
     )
     document.body.appendChild(withSearch)
 
@@ -345,7 +345,7 @@ describe(`navigation is routed through Gatsby if the destination href`, () => {
     window.addEventListener(`click`, function onClick() {
       window.removeEventListener(`click`, onClick)
       expect(hrefHandler).toHaveBeenCalledWith(
-        `${withSearch.pathname}${withSearch.search}${withSearch.hash}`
+        `${withSearch.pathname}${withSearch.search}${withSearch.hash}`,
       )
 
       withSearch.remove()
@@ -373,11 +373,11 @@ describe(`navigation is routed through browser if resources have failed and the 
     global.___failedResources = false
   })
 
-  it(`shares the same origin and top path`, done => {
+  it(`shares the same origin and top path`, (done) => {
     const sameOriginAndTopPath = document.createElement(`a`)
     sameOriginAndTopPath.setAttribute(
       `href`,
-      `${window.location.href}/someSubPath`
+      `${window.location.href}/someSubPath`,
     )
     document.body.appendChild(sameOriginAndTopPath)
 
@@ -416,7 +416,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
     eventDestroyer()
   })
 
-  test(`on sites with pathPrefix '${pathPrefix}'`, done => {
+  test(`on sites with pathPrefix '${pathPrefix}'`, (done) => {
     // simulate case with --prefix-paths and prefix /blog
     global.__BASE_PATH__ = pathPrefix
 
@@ -433,7 +433,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
     })
 
     // fake module handler
-    hrefHandler.mockImplementation(path => {
+    hrefHandler.mockImplementation((path) => {
       // place a mock where processing exits gatsby-link
       const checkPoint = (global.___navigate = jest.fn())
       // call gatsby-link.navigate as the default handler does
@@ -441,7 +441,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
       // compare href past gatsby-link against our clickElement
       expect(checkPoint).toHaveBeenCalledWith(
         `${pathPrefix}/article`,
-        undefined
+        undefined,
       )
 
       // cleanup
@@ -453,7 +453,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
     clickElement.dispatchEvent(clickEvent)
   })
 
-  test(`on sites without pathPrefix`, done => {
+  test(`on sites without pathPrefix`, (done) => {
     // simulate default case without --prefix-paths
     global.__BASE_PATH__ = ``
 
@@ -470,7 +470,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
     })
 
     // fake module handler
-    hrefHandler.mockImplementation(path => {
+    hrefHandler.mockImplementation((path) => {
       // place a mock where processing exits gatsby-link
       const checkPoint = (global.___navigate = jest.fn())
       // call gatsby-link.navigate as the default handler does
@@ -478,7 +478,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
       // compare href past gatsby-link against our clickElement
       expect(checkPoint).toHaveBeenCalledWith(
         `${pathPrefix}/article`,
-        undefined
+        undefined,
       )
 
       // cleanup

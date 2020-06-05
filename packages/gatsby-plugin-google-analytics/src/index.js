@@ -18,7 +18,7 @@ function OutboundLink(props) {
   return (
     <a
       {...rest}
-      onClick={e => {
+      onClick={(e) => {
         if (typeof props.onClick === `function`) {
           props.onClick(e)
         }
@@ -100,7 +100,7 @@ function trackCustomEvent({
     if (hitCallback && typeof hitCallback === `function`) {
       trackingEventOptions.hitCallback = createFunctionWithTimeout(
         hitCallback,
-        callbackTimeout
+        callbackTimeout,
       )
     }
 

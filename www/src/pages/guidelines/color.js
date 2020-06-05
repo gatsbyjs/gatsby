@@ -41,7 +41,7 @@ const LegacyColorIcon = () => (
     }}
   />
 )
-const Color = props => {
+const Color = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [color, setColor] = useState(false)
 
@@ -52,7 +52,7 @@ const Color = props => {
     setIsModalOpen(true)
   }
 
-  const handleModalClose = event => {
+  const handleModalClose = (event) => {
     event.persist()
     document.querySelector(`html`).style.overflowY = `auto`
     setIsModalOpen(false)

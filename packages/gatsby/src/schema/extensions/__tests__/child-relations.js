@@ -99,7 +99,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         name: `Another Child 2`,
       },
     ]
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       node.internal.contentDigest = `0`
       actions.createNode(node, { name: `test` })(store.dispatch)
     })
@@ -120,7 +120,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node @childOf(types: ["Parent"]) {
           id: ID!
         }
-      `)
+      `),
     )
     const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
@@ -149,7 +149,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node {
           id: ID!
         }
-      `)
+      `),
     )
     const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
@@ -170,7 +170,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
           id: ID!
         }
-      `)
+      `),
     )
     await buildSchema()
     expect(report.warn).toBeCalledTimes(1)
@@ -180,7 +180,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         `extension set to \`false\`, automatically adding fields for ` +
         `children types is deprecated.\n` +
         `In Gatsby v3, only children fields explicitly set with the ` +
-        `\`childOf\` extension will be added.\n`
+        `\`childOf\` extension will be added.\n`,
     )
   })
 
@@ -199,7 +199,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node @childOf(types: ["Parent"], many: true) {
           id: ID!
         }
-      `)
+      `),
     )
     const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
@@ -220,12 +220,12 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Wrong @childOf(types: ["Parent"]) {
           foo: String
         }
-      `)
+      `),
     )
     await buildSchema()
     expect(report.error).toBeCalledWith(
       `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
-        `Check the type definition of \`Wrong\`.`
+        `Check the type definition of \`Wrong\`.`,
     )
   })
 
@@ -244,7 +244,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node @childOf(types: ["Parent"]) {
           name: String
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -345,7 +345,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
             },
           },
         }),
-      ])
+      ]),
     )
     const query = `
       {
@@ -416,7 +416,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           id: ID!
         }
-      `)
+      `),
     )
     const { schema } = await buildSchema()
     const parentFields = schema.getType(`Parent`).getFields()
@@ -459,7 +459,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           name: String
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -535,7 +535,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type AnotherChild implements Node @childOf(types: ["Relative"], mimeTypes: ["multipart/related"], many: true) {
           name: String
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -610,7 +610,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutNodes implements Node & NextGeneration @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           name: String
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -690,7 +690,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type AnotherChild implements Node @childOf(types: ["Ancestors"], many: true) {
           name: String
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -762,7 +762,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(mimeTypes: ["application/listenup"]) {
           name: String
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -828,13 +828,13 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(types: ["Ancestors"]) {
           name: String
         }
-      `)
+      `),
     )
     await buildSchema()
     expect(report.error).toBeCalledWith(
       `With the \`childOf\` extension, children fields can only be added to ` +
         `interfaces which have the \`@nodeInterface\` extension.\n` +
-        `Check the type definition of \`Ancestors\`.`
+        `Check the type definition of \`Ancestors\`.`,
     )
   })
 
@@ -851,13 +851,13 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node & NextGeneration @childOf(types: ["Parent"]) {
           name: String
         }
-      `)
+      `),
     )
     await buildSchema()
     expect(report.error).toBeCalledWith(
       `The \`childOf\` extension can only be used on interface types that have ` +
         `the \`@nodeInterface\` extension.\n` +
-        `Check the type definition of \`NextGeneration\`.`
+        `Check the type definition of \`NextGeneration\`.`,
     )
   })
 
@@ -867,7 +867,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(types: ["NonExistent"]) {
           name: String
         }
-      `)
+      `),
     )
     await expect(buildSchema()).resolves.toEqual(expect.any(Object))
   })
@@ -881,13 +881,13 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type ChildWithoutSourceNodes implements Node @childOf(types: ["Parent"]) {
           name: String
         }
-      `)
+      `),
     )
     const { schema } = await buildSchema()
     const expectedArg = schema
       .getType(`Query`)
       .getFields()
-      .parent.args.find(arg => arg.name === `childChildWithoutSourceNodes`)
+      .parent.args.find((arg) => arg.name === `childChildWithoutSourceNodes`)
     const expectedArgType = schema.getType(`ChildWithoutSourceNodesFilterInput`)
 
     expect(expectedArg).toBeDefined()
@@ -905,7 +905,7 @@ const buildSchema = async () => {
   return { schema, schemaComposer }
 }
 
-const runQuery = async query => {
+const runQuery = async (query) => {
   const { schema, schemaComposer } = await buildSchema()
   const results = await graphql(
     schema,
@@ -914,7 +914,7 @@ const runQuery = async query => {
     withResolverContext({
       schema,
       schemaComposer,
-    })
+    }),
   )
   expect(results.errors).toBeUndefined()
   return results.data

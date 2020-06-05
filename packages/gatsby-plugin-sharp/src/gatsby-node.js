@@ -83,7 +83,7 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
     // and remove that entry from the map.
     const imageCountInJobsMap = new Map()
 
-    emitter.on(`CREATE_JOB_V2`, action => {
+    emitter.on(`CREATE_JOB_V2`, (action) => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
         const job = action.payload.job
         const imageCount = job.args.operations.length
@@ -93,7 +93,7 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
       }
     })
 
-    emitter.on(`END_JOB_V2`, action => {
+    emitter.on(`END_JOB_V2`, (action) => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
         const jobContentDigest = action.payload.jobContentDigest
         const imageCount = imageCountInJobsMap.get(jobContentDigest)

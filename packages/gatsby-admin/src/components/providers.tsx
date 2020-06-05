@@ -35,8 +35,8 @@ const GraphQLProvider: React.FC<{}> = ({ children }) => {
   React.useEffect(() => {
     setStatus(`loading`)
     fetch(`/___services`)
-      .then(res => res.json())
-      .then(json => {
+      .then((res) => res.json())
+      .then((json) => {
         setStatus(`idle`)
         if (json.recipesgraphqlserver) {
           setClient(createUrqlClient({ port: json.recipesgraphqlserver.port }))

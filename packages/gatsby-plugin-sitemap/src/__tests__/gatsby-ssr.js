@@ -22,7 +22,7 @@ describe(`Adds <Link> for site to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -39,7 +39,7 @@ describe(`Adds <Link> for site to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -58,7 +58,7 @@ describe(`Adds <Link> for site to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()

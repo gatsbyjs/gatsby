@@ -19,7 +19,7 @@ describe(`Custom better-queue memory store`, () => {
   ]
   beforeEach(() => {
     store = MemoryStoreWithPriorityBuckets()
-    functions.forEach(fnName => {
+    functions.forEach((fnName) => {
       if (store[fnName]) {
         store[fnName] = pify(store[fnName])
       }
@@ -27,7 +27,7 @@ describe(`Custom better-queue memory store`, () => {
   })
 
   it(`all required functions exist`, () => {
-    functions.forEach(fnName => {
+    functions.forEach((fnName) => {
       expect(typeof store[fnName]).toBe(`function`)
     })
   })

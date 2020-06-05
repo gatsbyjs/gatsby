@@ -7,7 +7,7 @@ const fs = require(`fs-extra`)
 const isUrl = require(`is-url`)
 const path = require(`path`)
 
-const asRoot = nodes => {
+const asRoot = (nodes) => {
   return {
     type: `root`,
     children: nodes,
@@ -16,10 +16,10 @@ const asRoot = nodes => {
 
 const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
 
-const partitionSteps = ast => {
+const partitionSteps = (ast) => {
   const steps = []
   let index = 0
-  ast.children.forEach(node => {
+  ast.children.forEach((node) => {
     if (node.type === `thematicBreak`) {
       index++
       return undefined
@@ -33,12 +33,12 @@ const partitionSteps = ast => {
   return steps
 }
 
-const toMdx = nodes => {
+const toMdx = (nodes) => {
   const stepAst = asRoot(nodes)
   return u.stringify(stepAst)
 }
 
-const parse = async src => {
+const parse = async (src) => {
   try {
     const ast = u.parse(src)
     const steps = partitionSteps(ast)
@@ -53,7 +53,7 @@ const parse = async src => {
   }
 }
 
-const isRelative = path => {
+const isRelative = (path) => {
   if (path.slice(0, 1) == `.`) {
     return true
   }
@@ -78,7 +78,7 @@ const getSource = async (pathOrUrl, projectRoot) => {
       throw new Error(
         JSON.stringify({
           fetchError: `Could not fetch ${pathOrUrl} from official recipes`,
-        })
+        }),
       )
     }
 

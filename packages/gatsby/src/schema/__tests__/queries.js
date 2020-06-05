@@ -35,7 +35,7 @@ describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
+  const runQuery = (query) =>
     graphql(
       schema,
       query,
@@ -43,7 +43,7 @@ describe(`Query schema`, () => {
       withResolverContext({
         schema,
         schemaComposer,
-      })
+      }),
     )
 
   beforeAll(async () => {
@@ -60,7 +60,7 @@ describe(`Query schema`, () => {
                     query: { filter: { email: { in: source.authors } } },
                     firstOnly: false,
                   })
-                  return authors.map(author => author.name)
+                  return authors.map((author) => author.name)
                 },
               },
               [`frontmatter.anotherField`]: {
@@ -88,14 +88,14 @@ describe(`Query schema`, () => {
                   // resolver is called the second time.
                   if (
                     source.authors.some(
-                      author => author && typeof author === `object`
+                      (author) => author && typeof author === `object`,
                     )
                   ) {
                     return source.authors
                   }
                   return context.nodeModel
                     .getAllNodes({ type: `Author` })
-                    .filter(author => source.authors.includes(author.email))
+                    .filter((author) => source.authors.includes(author.email))
                 },
               },
             },
@@ -136,7 +136,7 @@ describe(`Query schema`, () => {
                 resolve(source, args, context, info) {
                   return context.nodeModel
                     .getAllNodes({ type: `Author` })
-                    .map(author => author.name)
+                    .map((author) => author.name)
                 },
               },
             },
@@ -148,8 +148,8 @@ describe(`Query schema`, () => {
     })
 
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
 
     const typeDefs = [
@@ -157,8 +157,8 @@ describe(`Query schema`, () => {
       `type Frontmatter { authors: [Author] }`,
       `type Author implements Node { posts: [Markdown] }`,
     ]
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
+    typeDefs.forEach((def) =>
+      store.dispatch({ type: `CREATE_TYPES`, payload: def }),
     )
 
     store.dispatch({

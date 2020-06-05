@@ -5,7 +5,7 @@ const parseGHUrl = require(`parse-github-url`)
 const { GraphQLClient } = require(`@jamo/graphql-request`)
 const { loadYaml } = require(`../load-yaml`)
 const { starters: featuredStarters } = loadYaml(
-  `src/data/ecosystem/featured-items.yaml`
+  `src/data/ecosystem/featured-items.yaml`,
 )
 const { getTemplate } = require(`../get-template`)
 
@@ -14,7 +14,7 @@ if (
   !process.env.GITHUB_API_TOKEN
 ) {
   throw new Error(
-    `A GitHub token is required to build the site. Check the README.`
+    `A GitHub token is required to build the site. Check the README.`,
   )
 }
 
@@ -52,13 +52,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (errors) throw errors
 
   // Create starter pages.
-  const starters = _.filter(data.allStartersYaml.nodes, node => {
+  const starters = _.filter(data.allStartersYaml.nodes, (node) => {
     const slug = _.get(node, `fields.starterShowcase.slug`)
     if (!slug) {
       return null
     } else if (!_.get(node, `fields.hasScreenshot`)) {
       reporter.warn(
-        `Starter showcase entry "${node.repo}" seems offline. Skipping.`
+        `Starter showcase entry "${node.repo}" seems offline. Skipping.`,
       )
       return null
     } else {
@@ -66,7 +66,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   })
 
-  starters.forEach(node => {
+  starters.forEach((node) => {
     createPage({
       path: `/starters${node.fields.starterShowcase.slug}`,
       component: starterTemplate,
@@ -95,9 +95,9 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
         nameWithOwner
       }
     }
-  `
+  `,
     )
-    .catch(async err => {
+    .catch(async (err) => {
       // we only try to do a fetch once because we want to track the new owner's username.
       if (retry > 0) {
         throw err
@@ -108,12 +108,12 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
       const { owner: newOwner, name: newRepo } = parseGHUrl(url)
 
       reporter.warn(
-        `Starter showcase entry "${owner}/${repo}" was renamed to "${newOwner}/${newRepo}". Retrying....`
+        `Starter showcase entry "${owner}/${repo}" was renamed to "${newOwner}/${newRepo}". Retrying....`,
       )
 
       return fetchGithubData(
         { owner: newOwner, repo: newRepo, reporter },
-        retry + 1
+        retry + 1,
       )
     })
 
@@ -147,8 +147,8 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
     // determine if screenshot is available
     const screenshotNode = node.children
-      .map(childID => getNode(childID))
-      .find(node => node.internal.type === `Screenshot`)
+      .map((childID) => getNode(childID))
+      .find((node) => node.internal.type === `Screenshot`)
 
     createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
 
@@ -165,7 +165,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
         getpkgjson(node.repo),
         fetchGithubData({ owner, repo: repoStub, reporter }),
       ])
-        .then(results => {
+        .then((results) => {
           const [pkgjson, githubData] = results
           const {
             stargazers: { totalCount: stars },
@@ -177,12 +177,12 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
 
           const { dependencies = [], devDependencies = [] } = pkgjson
           const allDependencies = Object.entries(dependencies).concat(
-            Object.entries(devDependencies)
+            Object.entries(devDependencies),
           )
 
           const gatsbyMajorVersion = allDependencies
             .filter(([key]) => key === `gatsby`)
-            .map(version => {
+            .map((version) => {
               const [gatsby, versionNum] = version
               if (versionNum === `latest` || versionNum === `next`) {
                 return [gatsby, `2`]
@@ -205,11 +205,11 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
             allDependencies,
             gatsbyDependencies: allDependencies
               .filter(
-                ([key]) => ![`gatsby-cli`, `gatsby-link`].includes(key) // remove stuff everyone has
+                ([key]) => ![`gatsby-cli`, `gatsby-link`].includes(key), // remove stuff everyone has
               )
               .filter(([key]) => key.includes(`gatsby`)),
             miscDependencies: allDependencies.filter(
-              ([key]) => !key.includes(`gatsby`)
+              ([key]) => !key.includes(`gatsby`),
             ),
           }
           createNodeField({
@@ -218,10 +218,10 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
             value: starterShowcaseFields,
           })
         })
-        .catch(err => {
+        .catch((err) => {
           reporter.warn(
             `Error getting repo data for starter "${repoStub}":\n
-            ${err.message}`
+            ${err.message}`,
           )
           deleteNode(node)
         })

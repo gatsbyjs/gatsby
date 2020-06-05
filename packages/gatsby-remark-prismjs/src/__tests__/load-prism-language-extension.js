@@ -53,7 +53,7 @@ describe(`extend/add prism language`, () => {
     expect(Prism.languages[request.extend]).toBeDefined()
     expect(Prism.languages[request.extend]).toHaveProperty(`flexc_keyword`)
     expect(Prism.languages[request.extend][`flexc_keyword`]).toEqual(
-      request.definition.flexc_keyword
+      request.definition.flexc_keyword,
     )
   })
   it(`should extend not pre-loaded language`, () => {
@@ -69,7 +69,7 @@ describe(`extend/add prism language`, () => {
     expect(Prism.languages[request.extend]).toBeDefined()
     expect(Prism.languages[request.extend]).toHaveProperty(`flexc_keyword`)
     expect(Prism.languages[request.extend][`flexc_keyword`]).toEqual(
-      request.definition.flexc_keyword
+      request.definition.flexc_keyword,
     )
   })
   it(`should add new language from existing language`, () => {
@@ -90,7 +90,7 @@ describe(`extend/add prism language`, () => {
     expect(Prism.languages).toHaveProperty(request.language)
     expect(languagesAfterLoaded.length).toBe(languagesBeforeLoaded.length + 1)
     expect(Prism.languages[request.language][`flexc_keyword`]).toEqual(
-      request.definition.flexc_keyword
+      request.definition.flexc_keyword,
     )
   })
   it(`should add new language`, () => {
@@ -110,7 +110,7 @@ describe(`extend/add prism language`, () => {
     expect(Prism.languages).toHaveProperty(request.language)
     expect(languagesAfterLoaded.length).toBe(languagesBeforeLoaded.length + 1)
     expect(Prism.languages[request.language][`flexc_keyword`]).toEqual(
-      request.definition.flexc_keyword
+      request.definition.flexc_keyword,
     )
   })
   it(`should work to make two requests by sending an array`, () => {

@@ -8,7 +8,7 @@ describe(`gatsby config`, () => {
     expect(result).toEqual(
       expect.objectContaining({
         pathPrefix: ``,
-      })
+      }),
     )
   })
 
@@ -23,7 +23,7 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,
-      })
+      }),
     )
   })
 
@@ -36,7 +36,7 @@ describe(`gatsby config`, () => {
     expect(result).toEqual(
       expect.objectContaining({
         assetPrefix: `https://cdn.example.com`,
-      })
+      }),
     )
   })
 
@@ -70,7 +70,7 @@ describe(`gatsby config`, () => {
       expect.objectContaining({
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,
-      })
+      }),
     )
   })
 

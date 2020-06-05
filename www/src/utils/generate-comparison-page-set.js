@@ -26,15 +26,15 @@ function* generatePowerSet(arr) {
   return options
 }
 
-const generateComparisonPageSet = type => {
+const generateComparisonPageSet = (type) => {
   let pages = []
   for (const set of generatePowerSet(
-    featureComparisonOptions[type].map(option => option.key)
+    featureComparisonOptions[type].map((option) => option.key),
   )) {
     if (set.length > 0) {
       const optionSet = [...set]
-      const options = _.filter(featureComparisonOptions[type], o =>
-        optionSet.includes(o.key)
+      const options = _.filter(featureComparisonOptions[type], (o) =>
+        optionSet.includes(o.key),
       )
       pages.push({
         options,

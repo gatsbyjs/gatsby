@@ -36,7 +36,7 @@ function makeNodes() {
 
 async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     if (!node.internal.contentDigest) {
       node.internal.contentDigest = `0`
     }
@@ -56,7 +56,7 @@ async function queryResult(nodes, query) {
       schemaComposer: schemaCustomization.composer,
       context,
       customContext: schemaCustomization.context,
-    })
+    }),
   )
 }
 
@@ -85,7 +85,7 @@ describe(`filtering on linked nodes`, () => {
             edges { node { linked { hair, height }, foo } }
           }
         }
-      `
+      `,
     )
     expect(result.data.allTest.edges.length).toEqual(1)
     expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`blonde`)
@@ -119,10 +119,10 @@ describe(`filtering on linked nodes`, () => {
             edges { node { nested { linked { hair, height } }, foo } }
           }
         }
-      `
+      `,
     )
     expect(result.data.allTest.edges[0].node.nested.linked.hair).toEqual(
-      `blonde`
+      `blonde`,
     )
     expect(result.data.allTest.edges[0].node.nested.linked.height).toEqual(101)
     expect(result.data.allTest.edges[0].node.foo).toEqual(`bar`)
@@ -152,7 +152,7 @@ describe(`filtering on linked nodes`, () => {
             edges { node { linked { hair, height }, foo } }
           }
         }
-      `
+      `,
     )
     expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`blonde`)
     expect(result.data.allTest.edges[0].node.linked.height).toEqual(101)
@@ -273,10 +273,10 @@ describe(`filtering on linked nodes`, () => {
             }
           }
         }
-      `
+      `,
     )
 
-    const itemToEdge = item => {
+    const itemToEdge = (item) => {
       return {
         node: {
           foo: item,
@@ -287,10 +287,10 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
     expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
     expect(result.data.insideInlineArrayEq.edges).toEqual(
-      [`lorem`, `ipsum`, `sit`].map(itemToEdge)
+      [`lorem`, `ipsum`, `sit`].map(itemToEdge),
     )
     expect(result.data.insideInlineArrayIn.edges).toEqual(
-      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge),
     )
   })
 

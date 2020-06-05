@@ -15,7 +15,7 @@ import { startGraphQLServer } from "gatsby-recipes"
 const handlerP = (fn: Function) => (...args: unknown[]): void => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
-    err => report.panic(err)
+    (err) => report.panic(err),
   )
 }
 
@@ -60,7 +60,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
-          `'gatsby' is not specified as a dependency`
+          `'gatsby' is not specified as a dependency`,
       )
     }
 
@@ -71,7 +71,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
+          `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`,
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -82,20 +82,20 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       }
 
       return report.panic(
-        `Handler for command "${command}" is not a function. Your Gatsby package might be corrupted, try reinstalling it and running the command again.`
+        `Handler for command "${command}" is not a function. Your Gatsby package might be corrupted, try reinstalling it and running the command again.`,
       )
     } catch (err) {
       cli.showHelp()
       return report.panic(
         `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`,
-        err
+        err,
       )
     }
   }
 
   function getCommandHandler(
     command: string,
-    handler?: (args: yargs.Arguments, cmd: Function) => void
+    handler?: (args: yargs.Arguments, cmd: Function) => void,
   ) {
     return (argv: yargs.Arguments): void => {
       report.setVerbose(!!argv.verbose)
@@ -121,7 +121,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     describe:
       `Start development server. Watches files, rebuilds, and hot reloads ` +
       `if something changes`,
-    builder: _ =>
+    builder: (_) =>
       _.option(`H`, {
         alias: `host`,
         type: `string`,
@@ -181,14 +181,14 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         // The development server shouldn't ever exit until the user directly
         // kills it so this is fine.
         return new Promise(() => {})
-      })
+      }),
     ),
   })
 
   cli.command({
     command: `build`,
     describe: `Build a Gatsby project.`,
-    builder: _ =>
+    builder: (_) =>
       _.option(`prefix-paths`, {
         type: `boolean`,
         default:
@@ -233,14 +233,14 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       getCommandHandler(`build`, (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = `production`
         return cmd(args)
-      })
+      }),
     ),
   })
 
   cli.command({
     command: `serve`,
     describe: `Serve previously built Gatsby site.`,
-    builder: _ =>
+    builder: (_) =>
       _.option(`H`, {
         alias: `host`,
         type: `string`,
@@ -272,7 +272,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   cli.command({
     command: `info`,
     describe: `Get environment information for debugging and issue reporting`,
-    builder: _ =>
+    builder: (_) =>
       _.option(`C`, {
         alias: `clipboard`,
         type: `boolean`,
@@ -296,7 +296,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
             npmPackages: `gatsby*`,
             npmGlobalPackages: `gatsby*`,
           })
-          .then(envinfoOutput => {
+          .then((envinfoOutput) => {
             console.log(envinfoOutput)
 
             if (copyToClipboard) {
@@ -312,7 +312,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
   cli.command({
     command: `feedback`,
-    builder: _ =>
+    builder: (_) =>
       _.option(`disable`, {
         type: `boolean`,
         describe: `Opt out of future feedback requests`,
@@ -337,7 +337,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       (args: yargs.Arguments, cmd: Function) => {
         process.env.NODE_ENV = process.env.NODE_ENV || `development`
         return cmd(args)
-      }
+      },
     ),
   })
 
@@ -347,7 +347,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler: handlerP(
       async ({ recipe }: yargs.Arguments<{ recipe: string | undefined }>) => {
         await recipesHandler(siteInfo.directory, recipe)
-      }
+      },
     ),
   })
 }
@@ -356,7 +356,7 @@ function isLocalGatsbySite(): boolean {
   let inGatsbySite = false
   try {
     const { dependencies, devDependencies } = require(path.resolve(
-      `./package.json`
+      `./package.json`,
     ))
     inGatsbySite =
       (dependencies && dependencies.gatsby) ||
@@ -425,7 +425,7 @@ export const createCli = (argv: string[]): yargs.Arguments => {
     cli.version(
       `version`,
       `Show the version of the Gatsby CLI and the Gatsby package in the current project`,
-      getVersionInfo()
+      getVersionInfo(),
     )
     setDefaultTags({ gatsbyCliVersion: version })
   } catch (e) {
@@ -445,7 +445,7 @@ export const createCli = (argv: string[]): yargs.Arguments => {
         await initStarter(starterStr, rootPathStr)
       }),
     })
-    .command(`plugin`, `Useful commands relating to Gatsby plugins`, yargs =>
+    .command(`plugin`, `Useful commands relating to Gatsby plugins`, (yargs) =>
       yargs
         .command({
           command: `docs`,
@@ -470,18 +470,18 @@ Creating a plugin:
 - Source Plugin Tutorial (https://www.gatsbyjs.org/tutorial/source-plugin-tutorial/)
 - Maintaining a Plugin (https://www.gatsbyjs.org/docs/maintaining-a-plugin/)
 - Join Discord #plugin-authoring channel to ask questions! (https://gatsby.dev/discord/)
-          `)
+          `),
           ),
         })
         .demandCommand(
           1,
-          `Pass --help to see all available commands and options.`
-        )
+          `Pass --help to see all available commands and options.`,
+        ),
     )
     .command({
       command: `telemetry`,
       describe: `Enable or disable Gatsby anonymous analytics collection.`,
-      builder: yargs =>
+      builder: (yargs) =>
         yargs
           .option(`enable`, {
             type: `boolean`,

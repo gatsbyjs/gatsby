@@ -8,7 +8,7 @@ let store = createStore(
   combineReducers({
     logs: reducer,
   }),
-  {}
+  {},
 )
 
 type GatsbyCLIStore = typeof store
@@ -27,7 +27,7 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
   }
 
   if (Array.isArray(action)) {
-    action.forEach(item => dispatch(item))
+    action.forEach((item) => dispatch(item))
     return
   } else if (typeof action === `function`) {
     action(dispatch)
@@ -74,5 +74,5 @@ export const setStore = (s: GatsbyCLIStore): void => {
     payload: store.getState().logs,
   } as ISetLogs)
   store = s
-  storeSwapListeners.forEach(fn => fn(store))
+  storeSwapListeners.forEach((fn) => fn(store))
 }

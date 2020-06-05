@@ -65,11 +65,11 @@ describe(`Build schema`, () => {
 
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
+    nodes.forEach((node) =>
       actions.createNode(
         { ...node, internal: { ...node.internal } },
-        { name: `test` }
-      )(store.dispatch)
+        { name: `test` },
+      )(store.dispatch),
     )
   })
 
@@ -87,7 +87,7 @@ describe(`Build schema`, () => {
               type: GraphQLString,
             },
           },
-        })
+        }),
       )
       const schema = await buildSchema()
       const fooType = schema.getType(`Foo`)
@@ -128,7 +128,7 @@ describe(`Build schema`, () => {
             },
           },
           interfaces: [`Node`],
-        })
+        }),
       )
       const schema = await buildSchema()
       const fooType = schema.getType(`Foo`)
@@ -144,7 +144,7 @@ describe(`Build schema`, () => {
       expect(fields[`withArgs`].args[0].name).toEqual(`what`)
       expect(fields[`withArgs`].args[0].type).toBe(GraphQLBoolean)
       expect(await fields[`withArgs`].resolve({}, { what: true }, {}, {})).toBe(
-        true
+        true,
       )
     })
 
@@ -171,7 +171,7 @@ describe(`Build schema`, () => {
       ])
       const schema = await buildSchema()
 
-      ;[(`Foo`, `Bar`, `Baz`, `Author`)].forEach(typeName => {
+      ;[(`Foo`, `Bar`, `Baz`, `Author`)].forEach((typeName) => {
         const type = schema.getType(typeName)
         expect(type).toBeInstanceOf(GraphQLObjectType)
         const fields = type.getFields()
@@ -193,7 +193,7 @@ describe(`Build schema`, () => {
       `)
 
       const schema = await buildSchema()
-      ;[(`Foo`, `Bar`)].forEach(typeName => {
+      ;[(`Foo`, `Bar`)].forEach((typeName) => {
         const type = schema.getType(typeName)
         expect(type).toBeInstanceOf(GraphQLObjectType)
         expect(type.getInterfaces()).toEqual([schema.getType(`Node`)])
@@ -236,13 +236,13 @@ describe(`Build schema`, () => {
       expect(interfaceType).toBeInstanceOf(GraphQLInterfaceType)
       const unionType = schema.getType(`UFooBar`)
       expect(unionType).toBeInstanceOf(GraphQLUnionType)
-      ;[(`Foo`, `Bar`, `Author`)].forEach(typeName => {
+      ;[(`Foo`, `Bar`, `Author`)].forEach((typeName) => {
         const type = schema.getType(typeName)
         const typeSample = { internal: { type: typeName } }
         expect(interfaceType.resolveType(typeSample)).toBe(typeName)
         expect(unionType.resolveType(typeSample)).toBe(typeName)
         expect(new Set(type.getInterfaces())).toEqual(
-          new Set([schema.getType(`Node`), schema.getType(`FooBar`)])
+          new Set([schema.getType(`Node`), schema.getType(`FooBar`)]),
         )
       })
     })
@@ -289,13 +289,13 @@ describe(`Build schema`, () => {
       const unionType = schema.getType(`UFooBar`)
       expect(unionType).toBeInstanceOf(GraphQLUnionType)
       expect(unionType.getTypes().length).toBe(3)
-      ;[(`Foo`, `Bar`, `Author`)].forEach(typeName => {
+      ;[(`Foo`, `Bar`, `Author`)].forEach((typeName) => {
         const type = schema.getType(typeName)
         const typeSample = { internal: { type: typeName } }
         expect(interfaceType.resolveType(typeSample)).toBe(typeName)
         expect(unionType.resolveType(typeSample)).toBe(typeName)
         expect(new Set(type.getInterfaces())).toEqual(
-          new Set([schema.getType(`Node`), schema.getType(`FooBar`)])
+          new Set([schema.getType(`Node`), schema.getType(`FooBar`)]),
         )
       })
     })
@@ -309,7 +309,7 @@ describe(`Build schema`, () => {
       const schema = await buildSchema()
       const type = schema.getType(`Author`)
       const fields = type.getFields()
-      const arg = fields[`name`].args.find(arg => arg.name === `withHello`)
+      const arg = fields[`name`].args.find((arg) => arg.name === `withHello`)
       expect(arg).toBeDefined()
       expect(arg.type.toString()).toEqual(`Boolean`)
       expect(arg.defaultValue).toEqual(false)
@@ -321,14 +321,14 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
           name: `default-site-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -351,7 +351,7 @@ describe(`Build schema`, () => {
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
           infer: false,
-        })
+        }),
       )
     })
 
@@ -361,7 +361,7 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         [
@@ -385,7 +385,7 @@ describe(`Build schema`, () => {
         ],
         {
           name: `default-site-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -408,7 +408,7 @@ describe(`Build schema`, () => {
           createdFrom: `typeBuilder`,
           plugin: `default-site-plugin`,
           infer: false,
-        })
+        }),
       )
     })
 
@@ -435,7 +435,7 @@ describe(`Build schema`, () => {
         ],
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         `type PluginDefined implements Node @dontInfer {
@@ -445,7 +445,7 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { bar: Int }`,
         {
           name: `default-site-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -468,7 +468,7 @@ describe(`Build schema`, () => {
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
           infer: false,
-        })
+        }),
       )
     })
 
@@ -495,7 +495,7 @@ describe(`Build schema`, () => {
         ],
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         [
@@ -519,7 +519,7 @@ describe(`Build schema`, () => {
         ],
         {
           name: `default-site-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -542,7 +542,7 @@ describe(`Build schema`, () => {
           createdFrom: `typeBuilder`,
           plugin: `default-site-plugin`,
           infer: false,
-        })
+        }),
       )
     })
 
@@ -553,7 +553,7 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       const PluginDefinedNestedType = new GraphQLObjectType({
         name: `PluginDefinedNested`,
@@ -592,7 +592,7 @@ describe(`Build schema`, () => {
           createdFrom: `graphql-js`,
           plugin: `default-site-plugin`,
           infer: true,
-        })
+        }),
       )
     })
 
@@ -618,7 +618,7 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { bar: Int }`,
         {
           name: `default-site-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -641,7 +641,7 @@ describe(`Build schema`, () => {
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
           infer: true,
-        })
+        }),
       )
     })
 
@@ -651,14 +651,14 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         `type PluginDefined implements Node @dontInfer { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const PluginDefinedNested = schema.getType(`PluginDefinedNested`)
@@ -681,7 +681,7 @@ describe(`Build schema`, () => {
           createdFrom: `sdl`,
           plugin: `some-gatsby-plugin`,
           infer: false,
-        })
+        }),
       )
     })
 
@@ -691,14 +691,14 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         `type PluginDefined implements Node { bar: Int, qux: PluginDefinedNested }
          type PluginDefinedNested { bar: Int }`,
         {
           name: `some-other-gatsby-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const nestedFields = schema.getType(`PluginDefinedNested`).getFields()
@@ -715,12 +715,12 @@ describe(`Build schema`, () => {
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`.`,
       )
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`.`,
       )
     })
 
@@ -730,7 +730,7 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       createTypes(
         [
@@ -754,7 +754,7 @@ describe(`Build schema`, () => {
         ],
         {
           name: `some-other-gatsby-plugin`,
-        }
+        },
       )
       const schema = await buildSchema()
       const nestedFields = schema.getType(`PluginDefinedNested`).getFields()
@@ -771,12 +771,12 @@ describe(`Build schema`, () => {
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`.`,
       )
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`.`,
       )
     })
 
@@ -786,7 +786,7 @@ describe(`Build schema`, () => {
          type PluginDefinedNested { foo: Int }`,
         {
           name: `some-gatsby-plugin`,
-        }
+        },
       )
       const PluginDefinedNestedType = new GraphQLObjectType({
         name: `PluginDefinedNested`,
@@ -819,12 +819,12 @@ describe(`Build schema`, () => {
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`.`,
       )
       expect(report.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
-          `\`some-gatsby-plugin\`.`
+          `\`some-gatsby-plugin\`.`,
       )
     })
 
@@ -839,7 +839,7 @@ describe(`Build schema`, () => {
               resolve: () => `Mdx!`,
             },
           },
-        })
+        }),
       )
       createTypes(`
         type Mdx implements Node {
@@ -853,7 +853,7 @@ describe(`Build schema`, () => {
       expect(fields.body.type.toString()).toBe(`String!`)
       expect(typeof fields.body.resolve).toBe(`function`)
       expect(await fields.body.resolve({}, {}, {}, { fieldName: `body` })).toBe(
-        `Mdx!`
+        `Mdx!`,
       )
     })
 
@@ -865,13 +865,13 @@ describe(`Build schema`, () => {
         buildInterfaceType({ name: `Node`, fields: {} }),
       ]
       return Promise.all(
-        typeDefs.map(def => {
+        typeDefs.map((def) => {
           store.dispatch({ type: `DELETE_CACHE` })
           createTypes(def)
           return expect(buildSchema()).rejects.toThrow(
-            `The GraphQL type \`Node\` is reserved for internal use.`
+            `The GraphQL type \`Node\` is reserved for internal use.`,
           )
-        })
+        }),
       )
     })
 
@@ -900,7 +900,7 @@ describe(`Build schema`, () => {
         } catch (error) {
           expect(error.message).toBe(
             `GraphQL type names ending with "FilterInput" or "SortInput" are ` +
-              `reserved for internal use. Please rename \`${name}\`.`
+              `reserved for internal use. Please rename \`${name}\`.`,
           )
         }
       }
@@ -921,7 +921,7 @@ describe(`Build schema`, () => {
         } catch (error) {
           expect(error.message).toBe(
             `The GraphQL type \`${name}\` is reserved for internal use by ` +
-              `built-in scalar types.`
+              `built-in scalar types.`,
           )
         }
       }
@@ -978,7 +978,7 @@ describe(`Build schema`, () => {
       }
       store.dispatch(actions.createNode(node, { name: `test` }))
       const schema = await buildSchema()
-      const print = type => printType(schema.getType(type))
+      const print = (type) => printType(schema.getType(type))
 
       expect(print(`Nested`)).toMatchInlineSnapshot(`
         "type Nested implements Node {
@@ -1030,7 +1030,7 @@ describe(`Build schema`, () => {
     }
     store.dispatch(actions.createNode(node, { name: `test` }))
     const schema = await buildSchema()
-    const print = type => printType(schema.getType(type))
+    const print = (type) => printType(schema.getType(type))
 
     expect(print(`SomeNewNameForNested`)).toMatchInlineSnapshot(`
       "type SomeNewNameForNested {
@@ -1072,8 +1072,8 @@ describe(`Build schema`, () => {
           withResolverContext({}, schema),
           {
             fieldName: `name`,
-          }
-        )
+          },
+        ),
       ).toEqual(`Hello Mikhail`)
       expect(
         await fields[`name`].resolve(
@@ -1082,8 +1082,8 @@ describe(`Build schema`, () => {
           withResolverContext({}, schema),
           {
             fieldName: `name`,
-          }
-        )
+          },
+        ),
       ).toEqual(`Mikhail`)
     })
 
@@ -1118,8 +1118,8 @@ describe(`Build schema`, () => {
           withResolverContext({}, schema),
           {
             fieldName: `name`,
-          }
-        )
+          },
+        ),
       ).toEqual(`Hello Mikhail`)
       expect(
         await fields[`name`].resolve(
@@ -1128,8 +1128,8 @@ describe(`Build schema`, () => {
           withResolverContext({}, schema),
           {
             fieldName: `name`,
-          }
-        )
+          },
+        ),
       ).toEqual(`Mikhail`)
     })
 
@@ -1245,7 +1245,7 @@ describe(`Build schema`, () => {
                   },
                   args,
                   context,
-                  info
+                  info,
                 )
               } else {
                 return info.originalResolver(parent, args, context, info)
@@ -1264,8 +1264,8 @@ describe(`Build schema`, () => {
           withResolverContext({}, schema),
           {
             fieldName: `date`,
-          }
-        )
+          },
+        ),
       ).toEqual(`2019`)
       expect(
         await fields[`date`].resolve(
@@ -1274,8 +1274,8 @@ describe(`Build schema`, () => {
           withResolverContext({}, schema),
           {
             fieldName: `date`,
-          }
-        )
+          },
+        ),
       ).toEqual(`2018`)
     })
 
@@ -1333,10 +1333,10 @@ describe(`Build schema`, () => {
 
       const schema = await buildSchema()
       ;[`ThirdPartyFoo`, `ThirdPartyBar`, `ThirdPartyUnion`].forEach(
-        typeName => {
+        (typeName) => {
           const type = schema.getType(typeName)
           expect(type).toBeDefined()
-        }
+        },
       )
     })
   })
@@ -1399,7 +1399,7 @@ const createTypes = (types, plugin) => {
   store.dispatch({ type: `CREATE_TYPES`, payload: types, plugin })
 }
 
-const createCreateResolversMock = resolvers => {
+const createCreateResolversMock = (resolvers) => {
   const apiRunnerNode = require(`../../utils/api-runner-node`)
   apiRunnerNode.mockImplementation((api, { createResolvers }) => {
     if (api === `createResolvers`) {
@@ -1409,7 +1409,7 @@ const createCreateResolversMock = resolvers => {
   })
 }
 
-const createSetFieldsOnNodeTypeMock = mock => {
+const createSetFieldsOnNodeTypeMock = (mock) => {
   const apiRunnerNode = require(`../../utils/api-runner-node`)
   apiRunnerNode.mockImplementation((api, ...args) => {
     if (api === `setFieldsOnGraphQLNodeType`) {
@@ -1429,7 +1429,7 @@ const buildSchema = async () => {
   return store.getState().schema
 }
 
-const addThirdPartySchema = async typeDefs => {
+const addThirdPartySchema = async (typeDefs) => {
   const schemaComposer = new SchemaComposer()
   schemaComposer.addTypeDefs(typeDefs)
   const schema = schemaComposer.buildSchema()

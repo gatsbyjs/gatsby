@@ -4,7 +4,7 @@ test(`it defaults to generic error`, () => {
   expect(defaultError).toEqual(
     expect.objectContaining({
       level: `ERROR`,
-    })
+    }),
   )
 
   expect(defaultError.text({})).toEqual(`There was an error`)
@@ -18,6 +18,6 @@ test(`it supports structured lookups`, () => {
       text: expect.any(Function),
       docsUrl: `https://gatsby.dev/debug-html`,
       level: `ERROR`,
-    })
+    }),
   )
 })

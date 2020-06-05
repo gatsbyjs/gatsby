@@ -3,7 +3,7 @@ import { ActionsUnion, IGatsbyState } from "../types"
 
 export const webpackReducer = (
   state: IGatsbyState["webpack"] = {},
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["webpack"] => {
   switch (action.type) {
     case `SET_WEBPACK_CONFIG`: {

@@ -25,7 +25,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -48,7 +48,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -73,7 +73,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -99,7 +99,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -128,7 +128,7 @@ describe(`Adds <Link> for feed to head`, () => {
         setHeadComponents,
         pathname: `/gryffindor/welcome`,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -155,7 +155,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -181,7 +181,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -209,7 +209,7 @@ describe(`Adds <Link> for feed to head`, () => {
       {
         setHeadComponents,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()

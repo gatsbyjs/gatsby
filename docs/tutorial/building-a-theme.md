@@ -373,7 +373,7 @@ exports.createResolvers = ({ createResolvers }) => {
   const basePath = "/"
 
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
-  const slugify = str => {
+  const slugify = (str) => {
     const slug = str
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -385,7 +385,7 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
+        resolve: (source) => slugify(source.name),
       },
     },
   })
@@ -403,7 +403,7 @@ exports.createResolvers = ({ createResolvers }) => {
   const basePath = "/"
 
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
-  const slugify = str => {
+  const slugify = (str) => {
     const slug = str
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -415,7 +415,7 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
+        resolve: (source) => slugify(source.name),
       },
     },
   })
@@ -430,7 +430,7 @@ exports.createResolvers = ({ createResolvers }) => {
 
   // highlight-start
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
-  const slugify = str => {
+  const slugify = (str) => {
     const slug = str
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -443,7 +443,7 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
+        resolve: (source) => slugify(source.name),
       },
     },
   })
@@ -457,7 +457,7 @@ exports.createResolvers = ({ createResolvers }) => {
   const basePath = "/"
 
   // Quick-and-dirty helper to convert strings into URL-friendly slugs.
-  const slugify = str => {
+  const slugify = (str) => {
     const slug = str
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -470,7 +470,7 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
     Event: {
       slug: {
-        resolve: source => slugify(source.name),
+        resolve: (source) => slugify(source.name),
       },
     },
   })
@@ -579,7 +579,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   // highlight-start
   const events = result.data.allEvent.nodes
 
-  events.forEach(event => {
+  events.forEach((event) => {
     const slug = event.slug
 
     actions.createPage({
@@ -781,7 +781,7 @@ const EventList = ({ events }) => (
   <>
     <h2>Upcoming Events</h2>
     <ul>
-      {events.map(event => (
+      {events.map((event) => (
         <li key={event.id}>
           <strong>
             <Link to={event.slug}>{event.name}</Link>
@@ -883,7 +883,7 @@ There's some wishful programming here again -- the `<Event>` component doesn't e
 ```jsx:title=gatsby-theme-events/src/components/event.js
 import React from "react"
 
-const Event = props => <pre>{JSON.stringify(props, null, 2)}</pre>
+const Event = (props) => <pre>{JSON.stringify(props, null, 2)}</pre>
 
 export default Event
 ```
@@ -1282,7 +1282,7 @@ const EventList = ({ events }) => {
       <Styled.h1>Upcoming Events</Styled.h1>
       // highlight-next-line
       <Styled.ul>
-        {events.map(event => (
+        {events.map((event) => (
           // highlight-next-line
           <Styled.li key={event.id}>
             <strong>

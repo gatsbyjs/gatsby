@@ -126,11 +126,11 @@ const IndexPage = () => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <div>
         <h1>USA Mountains</h1>
         <ul>
-          {data.gcms.mountains.map(mountain => {
+          {data.gcms.mountains.map((mountain) => {
             const { title, elevation } = mountain
             return (
               <li>

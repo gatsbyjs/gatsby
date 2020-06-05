@@ -68,8 +68,8 @@ describe(`gatsby-plugin-preact`, () => {
                 // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
                 test: new RegExp(
                   `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-                    `|`
-                  )})[\\\\/]`
+                    `|`,
+                  )})[\\\\/]`,
                 ),
                 priority: 40,
                 // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)

@@ -97,13 +97,13 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
     // get the date and title from the file name
     const [, date, title] = filename.match(
-      /^\/([\d]{4}-[\d]{2}-[\d]{2})-{1}(.+)\/$/
+      /^\/([\d]{4}-[\d]{2}-[\d]{2})-{1}(.+)\/$/,
     )
 
     // create a new slug concatenating everything
     const slug = `/${slugify(
       categories.concat([date]).join("-"),
-      "/"
+      "/",
     )}/${title}/`
 
     createNodeField({ node, name: `slug`, value: slug })

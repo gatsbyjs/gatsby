@@ -11,7 +11,7 @@ const initialValue = JSON.stringify(
     hooks: {},
   },
   null,
-  2
+  2,
 )
 const updateValue = JSON.stringify(
   {
@@ -20,7 +20,7 @@ const updateValue = JSON.stringify(
     },
   },
   null,
-  2
+  2,
 )
 
 describe(`packageJson resource`, () => {
@@ -42,7 +42,7 @@ describe(`packageJson resource`, () => {
       {
         name,
         value: JSON.parse(initialValue),
-      }
+      },
     )
 
     expect(result).toMatchSnapshot()

@@ -25,7 +25,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
     pathPlugin = () =>
       async function transformer(markdownAST) {
         // Ensure relative links include `pathPrefix`
-        visit(markdownAST, `link`, node => {
+        visit(markdownAST, `link`, (node) => {
           if (
             node.url &&
             node.url.startsWith(`/`) &&
@@ -43,7 +43,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
 
   // return list of remarkPlugins
   const userPlugins = gatsbyRemarkPlugins
-    .filter(plugin => {
+    .filter((plugin) => {
       if (_.isFunction(interopDefault(require(plugin.resolve)))) {
         return true
       } else {
@@ -51,7 +51,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
         return false
       }
     })
-    .map(plugin => {
+    .map((plugin) => {
       debug(`userPlugins: constructing remark plugin for `, plugin)
       const requiredPlugin = interopDefault(require(plugin.resolve))
       const wrappedPlugin = () =>
@@ -68,7 +68,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               cache,
               ...helpers,
             },
-            plugin.options || {}
+            plugin.options || {},
           )
 
           return markdownAST

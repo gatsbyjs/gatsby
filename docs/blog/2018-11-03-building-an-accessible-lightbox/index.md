@@ -87,7 +87,7 @@ const Cars = () => (
         }
       }
     `}
-    render={data => <Lightbox carImages={data.carImages.edges} />}
+    render={(data) => <Lightbox carImages={data.carImages.edges} />}
   />
 )
 export default Cars
@@ -109,7 +109,7 @@ export default class Lightbox extends Component {
     const { carImages } = this.props
     return (
       <div>
-        {carImages.map(image => (
+        {carImages.map((image) => (
           <Img
             key={image.node.childImageSharp.fluid.src}
             fluid={image.node.childImageSharp.fluid}
@@ -170,7 +170,7 @@ export default class Lightbox extends Component {
     const { carImages } = this.props
     return (
       <LightboxContainer>
-        {carImages.map(image => (
+        {carImages.map((image) => (
           <Img
             key={image.node.childImageSharp.fluid.src}
             fluid={image.node.childImageSharp.fluid}
@@ -231,7 +231,7 @@ export default class Lightbox extends Component {
     return (
       <Fragment>
         <LightboxContainer>
-          {carImages.map(image => (
+          {carImages.map((image) => (
             <Img
               key={image.node.childImageSharp.fluid.src}
               fluid={image.node.childImageSharp.fluid}
@@ -310,7 +310,7 @@ export default class Lightbox extends Component {
     return (
       <Fragment>
         <LightboxContainer>
-          {carImages.map(image => (
+          {carImages.map((image) => (
             <PreviewButton
               key={image.node.childImageSharp.fluid.src}
               type="button"

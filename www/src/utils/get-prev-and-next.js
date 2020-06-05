@@ -2,7 +2,7 @@ const { loadYaml } = require(`./load-yaml`)
 const docLinksData = loadYaml(`src/data/sidebars/doc-links.yaml`)
 const tutorialLinksData = loadYaml(`src/data/sidebars/tutorial-links.yaml`)
 const contributingLinksData = loadYaml(
-  `src/data/sidebars/contributing-links.yaml`
+  `src/data/sidebars/contributing-links.yaml`,
 )
 
 const docLinks = docLinksData[0].items
@@ -75,12 +75,12 @@ function getPrevAndNext(slug) {
     prevAndNext.prev = getSibling(
       contributingIndex,
       flattenedContributing,
-      `prev`
+      `prev`,
     )
     prevAndNext.next = getSibling(
       contributingIndex,
       flattenedContributing,
-      `next`
+      `next`,
     )
   }
   return prevAndNext

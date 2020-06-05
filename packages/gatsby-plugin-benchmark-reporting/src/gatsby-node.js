@@ -33,7 +33,7 @@ function execToStr(cmd) {
   return String(
     execSync(cmd, {
       encoding: `utf8`,
-    }) ?? ``
+    }) ?? ``,
   ).trim()
 }
 function execToInt(cmd) {
@@ -71,7 +71,7 @@ class BenchMeta {
     } catch (e) {
       siteId = `error`
       reportInfo(
-        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`,
       )
     }
 
@@ -90,7 +90,7 @@ class BenchMeta {
         buildType = incomingHookBody && incomingHookBody.buildType
       } catch (e) {
         reportInfo(
-          `Suppressed an error trying to JSON.parse(INCOMING_HOOK_BODY): ${e}`
+          `Suppressed an error trying to JSON.parse(INCOMING_HOOK_BODY): ${e}`,
         )
       }
     }
@@ -144,23 +144,23 @@ class BenchMeta {
 
     const publicJsSize = glob(`public/*.js`).reduce(
       (t, file) => t + fs.statSync(file).size,
-      0
+      0,
     )
 
     const jpgCount = execToInt(
-      `find public .cache  -type f -iname "*.jpg" -or -iname "*.jpeg" | wc -l`
+      `find public .cache  -type f -iname "*.jpg" -or -iname "*.jpeg" | wc -l`,
     )
 
     const pngCount = execToInt(
-      `find public .cache  -type f -iname "*.png" | wc -l`
+      `find public .cache  -type f -iname "*.png" | wc -l`,
     )
 
     const gifCount = execToInt(
-      `find public .cache  -type f -iname "*.gif" | wc -l`
+      `find public .cache  -type f -iname "*.gif" | wc -l`,
     )
 
     const otherCount = execToInt(
-      `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
+      `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`,
     )
 
     const benchmarkMetadata = this.getMetadata()
@@ -198,7 +198,7 @@ class BenchMeta {
     if (this.started) {
       reportError(
         `gatsby-plugin-benchmark-reporting: `,
-        new Error(`Error: Should not call markStart() more than once`)
+        new Error(`Error: Should not call markStart() more than once`),
       )
       process.exit(1)
     }
@@ -210,7 +210,7 @@ class BenchMeta {
     if (BENCHMARK_REPORTING_URL) {
       if (!(name in this.timestamps)) {
         reportError(
-          `Attempted to record a timestamp with a name (\`${name}\`) that wasn't expected`
+          `Attempted to record a timestamp with a name (\`${name}\`) that wasn't expected`,
         )
         process.exit(1)
       }
@@ -222,7 +222,9 @@ class BenchMeta {
     if (!this.timestamps.benchmarkStart) {
       reportError(
         `gatsby-plugin-benchmark-reporting:`,
-        new Error(`Error: Should not call markEnd() before calling markStart()`)
+        new Error(
+          `Error: Should not call markEnd() before calling markStart()`,
+        ),
       )
       process.exit(1)
     }
@@ -253,14 +255,16 @@ class BenchMeta {
         "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET,
       },
       body: json,
-    }).then(res => {
+    }).then((res) => {
       lastStatus = res.status
       if ([401, 500].includes(lastStatus)) {
         reportInfo(`Got ${lastStatus} response, waiting for text`)
-        res.text().then(content => {
+        res.text().then((content) => {
           reportError(
             `Response error`,
-            new Error(`Server responded with a ${lastStatus} error: ${content}`)
+            new Error(
+              `Server responded with a ${lastStatus} error: ${content}`,
+            ),
           )
           process.exit(1)
         })
@@ -270,8 +274,8 @@ class BenchMeta {
       return res.text()
     })
 
-    this.flushing.then(text =>
-      reportInfo(`Server response: ${lastStatus}: ${text}`)
+    this.flushing.then((text) =>
+      reportInfo(`Server response: ${lastStatus}: ${text}`),
     )
 
     return this.flushing
@@ -285,7 +289,7 @@ function init(lifecycle) {
     reportInfo(
       `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${
         BENCHMARK_REPORTING_URL || `the CLI`
-      }`
+      }`,
     )
 
     benchMeta.markStart()
@@ -298,8 +302,8 @@ process.on(`exit`, () => {
     reportError(
       `gatsby-plugin-benchmark-reporting error`,
       new Error(
-        `This is process.exit(); Benchmark plugin has not completely flushed yet`
-      )
+        `This is process.exit(); Benchmark plugin has not completely flushed yet`,
+      ),
     )
     process.exit(1)
   }

@@ -1,4 +1,4 @@
-jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+jest.mock(`../resolve`, () => (module) => `/resolved/path/${module}`)
 
 const {
   resolvableExtensions,
@@ -20,7 +20,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
     onCreateWebpackConfig({ actions, loaders })
 
     expect(actions.setWebpackConfig).toHaveBeenCalledTimes(
-      resolvableExtensions().length
+      resolvableExtensions().length,
     )
 
     expect(actions.setWebpackConfig).toHaveBeenLastCalledWith({
@@ -41,7 +41,7 @@ describe(`gatsby-plugin-coffeescript`, () => {
         preprocessSource({
           filename: `test.js`,
           contents: `alert('hello');`,
-        })
+        }),
       ).toBe(null)
     })
 
@@ -52,8 +52,8 @@ describe(`gatsby-plugin-coffeescript`, () => {
             filename: `test.coffee`,
             contents: `alert "I knew it!" if elvis?`,
           },
-          {}
-        )
+          {},
+        ),
       ).toMatchSnapshot()
     })
   })

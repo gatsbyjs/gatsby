@@ -11,8 +11,8 @@ export default (pathname, localizedManifests) => {
     return defaultFilename
   }
 
-  const localizedManifest = localizedManifests.find(app =>
-    pathname.startsWith(app.start_url)
+  const localizedManifest = localizedManifests.find((app) =>
+    pathname.startsWith(app.start_url),
   )
 
   if (!localizedManifest) {

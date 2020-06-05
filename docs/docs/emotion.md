@@ -86,7 +86,7 @@ const underline = css`
   text-decoration: underline;
 `
 
-const User = props => (
+const User = (props) => (
   <UserWrapper>
     <Avatar src={props.avatar} alt="" />
     <Description>

@@ -150,7 +150,7 @@ app.post("/contact", function (req, res) {
     function (err, info) {
       if (err) return res.status(500).send(err)
       res.json({ success: true })
-    }
+    },
   )
 })
 

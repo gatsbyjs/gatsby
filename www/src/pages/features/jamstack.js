@@ -34,7 +34,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
   })
 
   const { sections, sectionHeaders } = getFeaturesData(
-    data.allGatsbyJamstackSpecsCsv.nodes
+    data.allGatsbyJamstackSpecsCsv.nodes,
   )
 
   return (
@@ -69,7 +69,7 @@ const JamstackFeaturesPage = ({ data, location }) => {
                 >
                   {display}
                 </CompareButton>
-              )
+              ),
             )}
           </div>
           <Button

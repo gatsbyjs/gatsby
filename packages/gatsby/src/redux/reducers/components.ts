@@ -9,7 +9,7 @@ let programStatus = `BOOTSTRAPPING`
 
 export const componentsReducer = (
   state: IGatsbyState["components"] = new Map(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["components"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -17,7 +17,7 @@ export const componentsReducer = (
     case `SET_PROGRAM_STATUS`:
       programStatus = action.payload
       if (programStatus === `BOOTSTRAP_QUERY_RUNNING_FINISHED`) {
-        services.forEach(s => s.send(`BOOTSTRAP_FINISHED`))
+        services.forEach((s) => s.send(`BOOTSTRAP_FINISHED`))
       }
       return state
     case `CREATE_PAGE`: {
@@ -58,8 +58,8 @@ export const componentsReducer = (
           {
             query: ``,
           },
-          service.state.context
-        )
+          service.state.context,
+        ),
       )
       return state
     }
@@ -104,11 +104,11 @@ export const componentsReducer = (
         ].filter(Boolean)
       }
 
-      servicesToSendEventTo.forEach(service =>
+      servicesToSendEventTo.forEach((service) =>
         service.send({
           type: action.type,
           ...action.payload,
-        })
+        }),
       )
 
       return state

@@ -7,7 +7,7 @@ const { exec, execSync } = require(`child_process`)
 
 const execP = util.promisify(exec)
 
-const getPackagesWithReadWriteAccess = async user => {
+const getPackagesWithReadWriteAccess = async (user) => {
   const cmd = `npm access ls-packages ${user}`
   const { stdout } = await execP(cmd)
   const permissions = JSON.parse(stdout)
@@ -27,15 +27,15 @@ module.exports = async function getUnownedPackages({
   // set registry because yarn run hijacks registry
   if (!user) {
     user = await execP(
-      `"node_modules/.bin/cross-env" npm_config_username="" npm whoami --registry https://registry.npmjs.org`
+      `"node_modules/.bin/cross-env" npm_config_username="" npm whoami --registry https://registry.npmjs.org`,
     )
       .then(({ stdout }) => stdout.trim())
-      .catch(err => {
+      .catch((err) => {
         throw new Error(`You are not logged-in`)
       })
   }
 
-  return getPackages(rootPath).then(async packages => {
+  return getPackages(rootPath).then(async (packages) => {
     const graph = new PackageGraph(packages, `dependencies`, true)
 
     // filter out private packages
@@ -44,13 +44,13 @@ module.exports = async function getUnownedPackages({
       graph.rawPackageList,
       [],
       [],
-      false
+      false,
     )
 
     const alreadyOwnedPackages = await getPackagesWithReadWriteAccess(user)
 
     const publicGatsbyPackagesWithoutAccess = publicGatsbyPackages.filter(
-      pkg => {
+      (pkg) => {
         if (alreadyOwnedPackages[pkg.name]) {
           return false
         }
@@ -61,7 +61,7 @@ module.exports = async function getUnownedPackages({
         } catch (e) {
           return false
         }
-      }
+      },
     )
 
     return {

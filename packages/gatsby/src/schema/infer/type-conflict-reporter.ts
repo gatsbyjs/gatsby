@@ -36,7 +36,7 @@ const formatValue = (value: unknown): string => {
   } else {
     let wasElipsisLast = false
     const usedTypes: string[] = []
-    value.forEach(item => {
+    value.forEach((item) => {
       const type = typeOf(item)
       if (usedTypes.includes(type)) {
         if (!wasElipsisLast) {
@@ -73,7 +73,7 @@ class TypeConflictEntry {
   printEntry(): void {
     const sortedByTypeName = sortBy(
       Array.from(this.types.entries()),
-      ([typeName]) => typeName
+      ([typeName]) => typeName,
     )
 
     report.log(
@@ -82,9 +82,9 @@ class TypeConflictEntry {
           ([typeName, { value, description }]) =>
             `\n - type: ${typeName}\n   value: ${formatValue(value)}${
               description && `\n   source: ${description}`
-            }`
+            }`,
         )
-        .join(``)}`
+        .join(``)}`,
     )
   }
 }
@@ -121,8 +121,8 @@ class TypeConflictReporter {
 
     const entry = this.getEntryFromSelector(selector)
     examples
-      .filter(example => example.value != null)
-      .forEach(example => entry.addExample(example))
+      .filter((example) => example.value != null)
+      .forEach((example) => entry.addExample(example))
   }
 
   printConflicts(): void {
@@ -135,9 +135,9 @@ class TypeConflictReporter {
           `If you know all field types in advance, the best strategy is to ` +
           `explicitly define them with the \`createTypes\` action, and skip ` +
           `inference with the \`@dontInfer\` directive.\n` +
-          `See https://www.gatsbyjs.org/docs/actions/#createTypes`
+          `See https://www.gatsbyjs.org/docs/actions/#createTypes`,
       )
-      this.entries.forEach(entry => entry.printEntry())
+      this.entries.forEach((entry) => entry.printEntry())
     }
   }
 

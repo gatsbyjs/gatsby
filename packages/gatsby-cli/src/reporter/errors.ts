@@ -7,16 +7,16 @@ import { IStructuredStackFrame } from "../structured-errors/types"
 const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
 
 const packagesToSkipTest = new RegExp(
-  `node_modules[\\/](${packagesToSkip.join(`|`)})`
+  `node_modules[\\/](${packagesToSkip.join(`|`)})`,
 )
 
 // TO-DO: move this this out of this file (and probably delete this file completely)
 // it's here because it re-implements similar thing as `pretty-error` already does
 export const sanitizeStructuredStackTrace = (
-  stack: stackTrace.StackFrame[]
+  stack: stackTrace.StackFrame[],
 ): IStructuredStackFrame[] => {
   // first filter out not useful call sites
-  stack = stack.filter(callSite => {
+  stack = stack.filter((callSite) => {
     if (!callSite.getFileName()) {
       return false
     }
@@ -38,7 +38,7 @@ export const sanitizeStructuredStackTrace = (
 
   // then sanitize individual call site objects to make sure we don't
   // emit objects with extra fields that won't be handled by consumers
-  return stack.map(callSite => {
+  return stack.map((callSite) => {
     return {
       fileName: callSite.getFileName(),
       functionName: callSite.getFunctionName(),
@@ -58,7 +58,7 @@ export function getErrorFormatter(): PrettyError {
   prettyError.skipPackage(
     `regenerator-runtime`,
     `graphql`,
-    `core-js`
+    `core-js`,
     // `static-site-generator-webpack-plugin`,
     // `tapable`, // webpack
   )
@@ -86,10 +86,10 @@ export function getErrorFormatter(): PrettyError {
   }
 
   prettyError.render = (
-    err: PrettyRenderError | PrettyRenderError[]
+    err: PrettyRenderError | PrettyRenderError[],
   ): string => {
     if (Array.isArray(err)) {
-      return err.map(e => prettyError.render(e)).join(`\n`)
+      return err.map((e) => prettyError.render(e)).join(`\n`)
     }
 
     let rendered = baseRender.call(prettyError, err)
@@ -105,7 +105,7 @@ export function getErrorFormatter(): PrettyError {
  */
 export async function createErrorFromString(
   errorStr: string = ``,
-  sourceMapFile: string
+  sourceMapFile: string,
 ): Promise<Error | ErrorWithCodeFrame> {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix

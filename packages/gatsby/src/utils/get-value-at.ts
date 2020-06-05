@@ -16,8 +16,8 @@ function get(obj: object, selectors: string[]): any {
 
 function getArray(arr: object[], selectors: string[]): any[] {
   return arr
-    .map(value =>
-      Array.isArray(value) ? getArray(value, selectors) : get(value, selectors)
+    .map((value) =>
+      Array.isArray(value) ? getArray(value, selectors) : get(value, selectors),
     )
-    .filter(v => v !== undefined)
+    .filter((v) => v !== undefined)
 }

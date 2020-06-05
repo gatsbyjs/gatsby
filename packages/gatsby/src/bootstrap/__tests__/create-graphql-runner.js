@@ -40,7 +40,7 @@ describe(`grapqhl-runner`, () => {
     const graphqlRunner = createGraphQLRunner(
       createStore(),
       reporter,
-      tracingContext
+      tracingContext,
     )
 
     const expectation = {
@@ -59,7 +59,7 @@ describe(`grapqhl-runner`, () => {
     const graphqlRunner = createGraphQLRunner(
       createStore(),
       reporter,
-      tracingContext
+      tracingContext,
     )
 
     const expectation = {
@@ -81,7 +81,7 @@ describe(`grapqhl-runner`, () => {
     const graphqlRunner = createGraphQLRunner(
       createStore(),
       reporter,
-      tracingContext
+      tracingContext,
     )
 
     const errorObject = {
@@ -94,7 +94,7 @@ describe(`grapqhl-runner`, () => {
     execute.mockImplementation(() =>
       Promise.resolve({
         errors: [errorObject],
-      })
+      }),
     )
 
     await graphqlRunner(``, {})

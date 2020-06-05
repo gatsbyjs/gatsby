@@ -4,9 +4,9 @@ const { match } = require(`@reach/router/lib/utils`)
 
 const now = Date.now()
 
-const generatePagesState = pages => {
+const generatePagesState = (pages) => {
   let state = new Map()
-  pages.forEach(page => {
+  pages.forEach((page) => {
     state.set(page.path, {
       component: ``,
       componentChunkName: ``,
@@ -65,7 +65,7 @@ describe(`requires-writer`, () => {
 
       expect(spy).toBeCalledWith(
         joinPath(`/dir`, `.cache`, `match-paths.json.${now}`),
-        JSON.stringify([{ path: `/path1`, matchPath: `matchPath1` }], null, 4)
+        JSON.stringify([{ path: `/path1`, matchPath: `matchPath1` }], null, 4),
       )
     })
   })
@@ -112,7 +112,7 @@ describe(`requires-writer`, () => {
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
       expect(matchPaths[matchPaths.length - 1].path).toBe(
-        pages.get(`/app/`).path
+        pages.get(`/app/`).path,
       )
       expect(matchPaths).toMatchSnapshot()
     })
@@ -221,7 +221,7 @@ describe(`requires-writer`, () => {
         program,
       })
 
-      expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
+      expect(matchPaths.map((p) => p.matchPath)).toMatchInlineSnapshot(`
         Array [
           "/mp1/mp2/mp3/mp4/*",
           "/mp1/mp2/hello",
@@ -258,7 +258,7 @@ describe(`requires-writer`, () => {
     })
 
     describe(`matching tests (~integration)`, () => {
-      const testScenario = async path => {
+      const testScenario = async (path) => {
         const pages = generatePagesState([...pagesInput].reverse())
         await requiresWriter.writeAll({
           pages,
@@ -266,8 +266,8 @@ describe(`requires-writer`, () => {
         })
 
         const allMatchingPages = matchPaths
-          .map(p => p.matchPath)
-          .filter(p => match(p, path))
+          .map((p) => p.matchPath)
+          .filter((p) => match(p, path))
 
         return {
           allMatchingPages,
@@ -277,7 +277,7 @@ describe(`requires-writer`, () => {
 
       it(`will find static path before dynamic paths`, async () => {
         const { allMatchingPages, selectedPage } = await testScenario(
-          `/mp1/mp2`
+          `/mp1/mp2`,
         )
 
         expect(allMatchingPages).toMatchInlineSnapshot(`
@@ -295,7 +295,7 @@ describe(`requires-writer`, () => {
 
       it(`will find path with dynamic parameter before path with wildcard`, async () => {
         const { allMatchingPages, selectedPage } = await testScenario(
-          `/mp1/test`
+          `/mp1/test`,
         )
 
         expect(allMatchingPages).toMatchInlineSnapshot(`
@@ -311,7 +311,7 @@ describe(`requires-writer`, () => {
 
       it(`it will find most specific path with wildcard`, async () => {
         const { allMatchingPages, selectedPage } = await testScenario(
-          `/mp1/mp2/wat`
+          `/mp1/mp2/wat`,
         )
 
         expect(allMatchingPages).toMatchInlineSnapshot(`
@@ -347,7 +347,7 @@ describe(`requires-writer`, () => {
       const pagesReversed = [...pagesInput.values()].reverse()
 
       expect(requiresWriter.getComponents(pages)).toEqual(
-        requiresWriter.getComponents(pagesReversed)
+        requiresWriter.getComponents(pagesReversed),
       )
     })
   })

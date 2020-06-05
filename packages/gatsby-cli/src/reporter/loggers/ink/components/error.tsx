@@ -89,5 +89,5 @@ export const Error: FunctionComponent<IErrorProps> = React.memo(
         </Box>
       )} */}
     </Box>
-  )
+  ),
 )

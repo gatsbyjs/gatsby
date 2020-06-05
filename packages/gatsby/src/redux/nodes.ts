@@ -115,13 +115,13 @@ export const hasNodeChanged = (id: string, digest: string): boolean => {
  */
 export const getNodeAndSavePathDependency = (
   id: string,
-  path: string
+  path: string,
 ): IGatsbyNode | undefined => {
   const node = getNode(id)
 
   if (!node) {
     console.error(
-      `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`
+      `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`,
     )
     return undefined
   }
@@ -134,7 +134,7 @@ type Resolver = (node: IGatsbyNode) => Promise<any> // TODO
 
 export const saveResolvedNodes = async (
   nodeTypeNames: string[],
-  resolver: Resolver
+  resolver: Resolver,
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
     const nodes = store.getState().nodesByType.get(typeName)
@@ -160,7 +160,7 @@ export const saveResolvedNodes = async (
  */
 export const getResolvedNode = (
   typeName: string,
-  id: string
+  id: string,
 ): IGatsbyNode | null => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
@@ -186,7 +186,7 @@ export const getResolvedNode = (
 
 export const addResolvedNodes = (
   typeName: string,
-  resolvedNodes: IGatsbyNode[] = []
+  resolvedNodes: IGatsbyNode[] = [],
 ): IGatsbyNode[] => {
   const { nodesByType, resolvedNodesCache } = store.getState()
   const nodes = nodesByType.get(typeName)
@@ -197,7 +197,7 @@ export const addResolvedNodes = (
 
   const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
 
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     if (resolvedNodesFromCache) {
       node.__gatsby_resolved = resolvedNodesFromCache.get(node.id)
     }
@@ -209,7 +209,7 @@ export const addResolvedNodes = (
 
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
-  op: FilterOp
+  op: FilterOp,
 ): void {
   // Loop through byValue and make sure the buckets are sorted by counter
   // Since we don't do insertion sort, we have to do it afterwards
@@ -240,8 +240,8 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
 
   const arr: Array<IGatsbyNode> = []
   filterCache.meta.nodesUnordered = arr
-  filterCache.byValue.forEach(v => {
-    v.forEach(node => {
+  filterCache.byValue.forEach((v) => {
+    v.forEach((node) => {
       arr.push(node)
     })
   })
@@ -249,7 +249,7 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
 
 function postIndexingMetaSetupLtLteGtGte(
   filterCache: IFilterCache,
-  op: FilterOp
+  op: FilterOp,
 ): void {
   // Create an ordered array of individual nodes, ordered (grouped) by the
   // value to which the filter resolves. Nodes per value are ordered by
@@ -264,7 +264,7 @@ function postIndexingMetaSetupLtLteGtGte(
   // By filtering them out early, the sort should be faster. Could be ...
   const entries: Array<[
     FilterValue,
-    Array<IGatsbyNode>
+    Array<IGatsbyNode>,
   ]> = entriesNullable.filter(([v]) => v != null) as Array<
     [FilterValue, Array<IGatsbyNode>]
   >
@@ -300,7 +300,7 @@ function postIndexingMetaSetupLtLteGtGte(
     offsets.set(v, [orderedNodes.length, orderedNodes.length + bucket.length])
     // We could do `arr.push(...bucket)` here but that's not safe with very
     // large sets, so we use a regular loop
-    bucket.forEach(node => orderedNodes.push(node))
+    bucket.forEach((node) => orderedNodes.push(node))
     orderedValues.push(v)
   })
 
@@ -333,7 +333,7 @@ export const ensureIndexByQuery = (
   filterCacheKey: FilterCacheKey,
   filterPath: string[],
   nodeTypeNames: string[],
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
 ): void => {
   const state = store.getState()
   const resolvedNodesCache = state.resolvedNodesCache
@@ -350,13 +350,13 @@ export const ensureIndexByQuery = (
   // it's probably faster to loop through all nodes. Perhaps. Maybe.
 
   if (nodeTypeNames.length === 1) {
-    getNodesByType(nodeTypeNames[0]).forEach(node => {
+    getNodesByType(nodeTypeNames[0]).forEach((node) => {
       addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
     })
   } else {
     // Here we must first filter for the node type
     // This loop is expensive at scale (!)
-    state.nodes.forEach(node => {
+    state.nodes.forEach((node) => {
       if (!nodeTypeNames.includes(node.internal.type)) {
         return
       }
@@ -371,7 +371,7 @@ export const ensureIndexByQuery = (
 export function ensureEmptyFilterCache(
   filterCacheKey,
   nodeTypeNames: string[],
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
 ): void {
   // This is called for queries without any filters
   // We want to cache the result since it's basically a list of nodes by type(s)
@@ -390,7 +390,7 @@ export function ensureEmptyFilterCache(
   })
 
   if (nodeTypeNames.length === 1) {
-    getNodesByType(nodeTypeNames[0]).forEach(node => {
+    getNodesByType(nodeTypeNames[0]).forEach((node) => {
       if (!node.__gatsby_resolved) {
         const typeName = node.internal.type
         const resolvedNodes = resolvedNodesCache.get(typeName)
@@ -404,7 +404,7 @@ export function ensureEmptyFilterCache(
   } else {
     // Here we must first filter for the node type
     // This loop is expensive at scale (!)
-    state.nodes.forEach(node => {
+    state.nodes.forEach((node) => {
       if (nodeTypeNames.includes(node.internal.type)) {
         if (!node.__gatsby_resolved) {
           const typeName = node.internal.type
@@ -429,7 +429,7 @@ function addNodeToFilterCache(
   chain: Array<string>,
   filterCache: IFilterCache,
   resolvedNodesCache,
-  valueOffset: any = node
+  valueOffset: any = node,
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
@@ -459,7 +459,7 @@ function addNodeToFilterCache(
       // Add an entry for each element of the array. This would work for ops
       // like eq and ne, but not sure about range ops like lt,lte,gt,gte.
 
-      v.forEach(v => markNodeForValue(filterCache, node, v))
+      v.forEach((v) => markNodeForValue(filterCache, node, v))
 
       return
     }
@@ -477,7 +477,7 @@ function addNodeToFilterCache(
 function markNodeForValue(
   filterCache: IFilterCache,
   node: IGatsbyNode,
-  value: FilterValueNullable
+  value: FilterValueNullable,
 ): void {
   let arr = filterCache.byValue.get(value)
   if (!arr) {
@@ -492,7 +492,7 @@ export const ensureIndexByElemMatch = (
   filterCacheKey: FilterCacheKey,
   filter: IDbQueryElemMatch,
   nodeTypeNames: Array<string>,
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
 ): void => {
   // Given an elemMatch filter, generate the cache that contains all nodes that
   // matches a given value for that sub-query
@@ -508,18 +508,18 @@ export const ensureIndexByElemMatch = (
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
-    getNodesByType(nodeTypeNames[0]).forEach(node => {
+    getNodesByType(nodeTypeNames[0]).forEach((node) => {
       addNodeToBucketWithElemMatch(
         node,
         node,
         filter,
         filterCache,
-        resolvedNodesCache
+        resolvedNodesCache,
       )
     })
   } else {
     // Expensive at scale
-    state.nodes.forEach(node => {
+    state.nodes.forEach((node) => {
       if (!nodeTypeNames.includes(node.internal.type)) {
         return
       }
@@ -529,7 +529,7 @@ export const ensureIndexByElemMatch = (
         node,
         filter,
         filterCache,
-        resolvedNodesCache
+        resolvedNodesCache,
       )
     })
   }
@@ -542,7 +542,7 @@ function addNodeToBucketWithElemMatch(
   valueAtCurrentStep: any, // Arbitrary step on the path inside the node
   filter: IDbQueryElemMatch,
   filterCache: IFilterCache,
-  resolvedNodesCache
+  resolvedNodesCache,
 ): void {
   // There can be a filter that targets `__gatsby_resolved` so fix that first
   if (!node.__gatsby_resolved) {
@@ -575,14 +575,14 @@ function addNodeToBucketWithElemMatch(
   // to multiple buckets (`{a:[{b:3},{b:4}]}`, for `a.elemMatch.b/eq` that
   // node ends up in buckets for value 3 and 4. This may lead to duplicate
   // work when elements resolve to the same value, but that can't be helped.
-  valueAtCurrentStep.forEach(elem => {
+  valueAtCurrentStep.forEach((elem) => {
     if (nestedQuery.type === `elemMatch`) {
       addNodeToBucketWithElemMatch(
         node,
         elem,
         nestedQuery,
         filterCache,
-        resolvedNodesCache
+        resolvedNodesCache,
       )
     } else {
       // Now take same route as non-elemMatch filters would take
@@ -591,7 +591,7 @@ function addNodeToBucketWithElemMatch(
         nestedQuery.path,
         filterCache,
         resolvedNodesCache,
-        elem
+        elem,
       )
     }
   })
@@ -599,7 +599,7 @@ function addNodeToBucketWithElemMatch(
 
 const binarySearchAsc = (
   values: Array<FilterValue>, // Assume ordered asc
-  needle: FilterValue
+  needle: FilterValue,
 ): [number, number] | undefined => {
   let min = 0
   let max = values.length - 1
@@ -634,7 +634,7 @@ const binarySearchAsc = (
 }
 const binarySearchDesc = (
   values: Array<FilterValue>, // Assume ordered desc
-  needle: FilterValue
+  needle: FilterValue,
 ): [number, number] | undefined => {
   let min = 0
   let max = values.length - 1
@@ -684,7 +684,7 @@ export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
   filterValue: FilterValueNullable,
   filtersCache: FiltersCache,
-  wasElemMatch
+  wasElemMatch,
 ): Array<IGatsbyNode> | undefined => {
   const filterCache = filtersCache?.get(filterCacheKey)
   if (!filterCache) {
@@ -726,7 +726,7 @@ export const getNodesFromCacheByValue = (
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
     filterValueArr.forEach((v: FilterValueNullable) =>
-      filterCache.byValue.get(v)?.forEach(v => arr.push(v))
+      filterCache.byValue.get(v)?.forEach((v) => arr.push(v)),
     )
 
     arr.sort((A, B) => A.internal.counter - B.internal.counter)
@@ -762,7 +762,7 @@ export const getNodesFromCacheByValue = (
     const set = new Set(filterCache.meta.nodesUnordered)
 
     // Do the action for "$ne" for each element in the set of values
-    values.forEach(filterValue => {
+    values.forEach((filterValue) => {
       removeBucketFromSet(filterValue, filterCache, set)
     })
 
@@ -790,7 +790,7 @@ export const getNodesFromCacheByValue = (
 
     if (!(filterValue instanceof RegExp)) {
       throw new Error(
-        `The value for the $regex comparator must be an instance of RegExp`
+        `The value for the $regex comparator must be an instance of RegExp`,
       )
     }
     const regex = filterValue
@@ -800,7 +800,7 @@ export const getNodesFromCacheByValue = (
       // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
       // Note: partial paths should also be included for regex (matching Sift behavior)
       if (value !== undefined && regex.test(String(value))) {
-        nodes.forEach(node => arr.push(node))
+        nodes.forEach((node) => arr.push(node))
       }
     })
 
@@ -830,7 +830,7 @@ export const getNodesFromCacheByValue = (
 
   if (Array.isArray(filterValue)) {
     throw new Error(
-      "Array is an invalid filter value for the `" + op + "` comparator"
+      "Array is an invalid filter value for the `" + op + "` comparator",
     )
   }
 
@@ -838,7 +838,7 @@ export const getNodesFromCacheByValue = (
     // This is most likely an internal error, although it is possible for
     // users to talk to this API more directly.
     throw new Error(
-      `A RegExp instance is only valid for $regex and $glob comparators`
+      `A RegExp instance is only valid for $regex and $glob comparators`,
     )
   }
 
@@ -1081,20 +1081,20 @@ export const getNodesFromCacheByValue = (
 function removeBucketFromSet(
   filterValue: FilterValueNullable,
   filterCache: IFilterCache,
-  set: Set<IGatsbyNode>
+  set: Set<IGatsbyNode>,
 ): void {
   if (filterValue === null) {
     // Edge case: $ne with `null` returns only the nodes that contain the full
     // path and that don't resolve to null, so drop `undefined` as well.
     let cache = filterCache.byValue.get(undefined)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach((node) => set.delete(node))
     cache = filterCache.byValue.get(null)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach((node) => set.delete(node))
   } else {
     // Not excluding null so it should include undefined leafs or leafs where
     // only the partial path exists for whatever reason.
     const cache = filterCache.byValue.get(filterValue)
-    if (cache) cache.forEach(node => set.delete(node))
+    if (cache) cache.forEach((node) => set.delete(node))
   }
 }
 
@@ -1107,7 +1107,7 @@ function removeBucketFromSet(
  */
 export function intersectNodesByCounter(
   a: Array<IGatsbyNode>,
-  b: Array<IGatsbyNode>
+  b: Array<IGatsbyNode>,
 ): Array<IGatsbyNode> {
   let pointerA = 0
   let pointerB = 0
@@ -1153,7 +1153,7 @@ export function intersectNodesByCounter(
  */
 export function unionNodesByCounter(
   a: Array<IGatsbyNode>,
-  b: Array<IGatsbyNode>
+  b: Array<IGatsbyNode>,
 ): Array<IGatsbyNode> {
   // TODO: perf check: is it helpful to init the array to max(maxA,maxB) items?
   const arr: Array<IGatsbyNode> = []

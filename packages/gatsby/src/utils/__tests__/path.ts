@@ -156,10 +156,10 @@ describe(`paths`, () => {
       const truncatedPathLong = truncatePath(VERY_LONG_PATH)
       const truncatedPathShort = truncatePath(SHORT_PATH_TRAILING)
       expect(truncatedPathLong.substring(truncatedPathLong.length - 1)).toEqual(
-        `/`
+        `/`,
       )
       expect(
-        truncatedPathShort.substring(truncatedPathShort.length - 1)
+        truncatedPathShort.substring(truncatedPathShort.length - 1),
       ).toEqual(`/`)
     })
 

@@ -109,14 +109,14 @@ const momentFormattingRegexes = {
   ".": `\\.`,
   Z: `(Z|[+-]\\d\\d(?::?\\d\\d)?)`,
 }
-const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format =>
+const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map((format) =>
   // convert ISO string to a map of momentTokens ([YYYY, MM, DD])
   [...format.match(momentFormattingTokens)]
-    .map(token =>
+    .map((token) =>
       // see if the token (YYYY or ss) is found, else we just return the value
-      momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token
+      momentFormattingRegexes[token] ? momentFormattingRegexes[token] : token,
     )
-    .join(``)
+    .join(``),
 ).join(`|`)
 
 // calculate all lengths of the formats, if a string is longer or smaller it can't be valid
@@ -129,7 +129,7 @@ const ISO_8601_FORMAT_LENGTHS = [
 
       // we add count of +01 & +01:00
       return acc.concat([val.length, val.length + 3, val.length + 5])
-    }, [])
+    }, []),
   ),
 ]
 
@@ -204,7 +204,7 @@ const formatDate = ({
   } else if (difference) {
     return moment().diff(
       moment.utc(normalizedDate, ISO_8601_FORMAT, true).locale(locale),
-      difference
+      difference,
     )
   }
   return normalizedDate
@@ -256,7 +256,7 @@ const getDateResolver = (options = {}, fieldConfig) => {
       if (date == null) return null
 
       return Array.isArray(date)
-        ? date.map(d => formatDate({ date: d, ...args }))
+        ? date.map((d) => formatDate({ date: d, ...args }))
         : formatDate({ date, ...args })
     },
   }

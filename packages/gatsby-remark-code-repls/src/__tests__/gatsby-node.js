@@ -31,7 +31,7 @@ const createPagesParams = {
   reporter,
 }
 
-const throwFileNotFoundErr = path => {
+const throwFileNotFoundErr = (path) => {
   const err = new Error(`no such file or directory '${path}'`)
   err.code = `ENOENT`
   throw err
@@ -46,7 +46,7 @@ describe(`gatsby-remark-code-repls`, () => {
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
 
     readdir.mockReset()
-    readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+    readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
     createPage.mockReset()
   })
@@ -61,7 +61,7 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(fs.readFileSync).toHaveBeenCalledWith(`root-file.js`, `utf8`)
       expect(fs.readFileSync).toHaveBeenCalledWith(
         `path/to/nested/file.jsx`,
-        `utf8`
+        `utf8`,
       )
     })
 
@@ -92,7 +92,7 @@ describe(`gatsby-remark-code-repls`, () => {
       await createPages(createPagesParams)
 
       expect(console.warn).toHaveBeenCalledWith(
-        `Specified REPL directory "REPL/" contains no files`
+        `Specified REPL directory "REPL/" contains no files`,
       )
     })
 
@@ -110,13 +110,13 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should use a default redirect template`, async () => {
-      readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+      readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
       await createPages(createPagesParams)
 
       expect(createPage).toHaveBeenCalledTimes(1)
       expect(createPage.mock.calls[0][0].component).toContain(
-        OPTION_DEFAULT_CODEPEN.redirectTemplate
+        OPTION_DEFAULT_CODEPEN.redirectTemplate,
       )
     })
 
@@ -133,12 +133,12 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should not load any external packages by default`, async () => {
-      readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+      readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
       await createPages(createPagesParams)
 
       const { js_external } = JSON.parse(
-        createPage.mock.calls[0][0].context.payload
+        createPage.mock.calls[0][0].context.payload,
       )
 
       expect(js_external).toBe(``)
@@ -146,7 +146,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
     describe(`codepen specific`, () => {
       it(`should use a specified redirect template override`, async () => {
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
         await createPages(createPagesParams, {
           codepen: { redirectTemplate: `foo/bar.js` },
@@ -157,7 +157,7 @@ describe(`gatsby-remark-code-repls`, () => {
       })
 
       it(`should error if an invalid redirect template is specified`, async () => {
-        fs.existsSync.mockImplementation(path => path !== `foo/bar.js`)
+        fs.existsSync.mockImplementation((path) => path !== `foo/bar.js`)
 
         try {
           await createPages(createPagesParams, {
@@ -165,13 +165,13 @@ describe(`gatsby-remark-code-repls`, () => {
           })
         } catch (err) {
           expect(err).toEqual(
-            Error(`Invalid REPL redirectTemplate specified: "foo/bar.js"`)
+            Error(`Invalid REPL redirectTemplate specified: "foo/bar.js"`),
           )
         }
       })
 
       it(`should load custom externals if specified`, async () => {
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
         await createPages(createPagesParams, {
           codepen: {
@@ -179,14 +179,14 @@ describe(`gatsby-remark-code-repls`, () => {
           },
         })
         const { js_external } = JSON.parse(
-          createPage.mock.calls[0][0].context.payload
+          createPage.mock.calls[0][0].context.payload,
         )
 
         expect(js_external).toContain(`foo.js`)
         expect(js_external).toContain(`bar.js`)
       })
       it(`should support custom, user-defined HTML for index page`, async () => {
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
         await createPages(createPagesParams, {
           codepen: { html: `<span id="foo"></span>` },
@@ -197,7 +197,7 @@ describe(`gatsby-remark-code-repls`, () => {
       })
 
       it(`should support includeMatchingCSS = "true" when matching file exists`, async () => {
-        readdir.mockImplementation(dir => [
+        readdir.mockImplementation((dir) => [
           nodePath.resolve(dir, `file.js`),
           nodePath.resolve(dir, `file.css`),
         ])
@@ -224,7 +224,7 @@ describe(`gatsby-remark-code-repls`, () => {
         })
 
         const { css, js } = JSON.parse(
-          createPage.mock.calls[0][0].context.payload
+          createPage.mock.calls[0][0].context.payload,
         )
 
         expect(js).toBe(`const foo = "bar";`)
@@ -232,7 +232,7 @@ describe(`gatsby-remark-code-repls`, () => {
       })
 
       it(`should support includeMatchingCSS = "false" when matching file exists`, async () => {
-        readdir.mockImplementation(dir => [
+        readdir.mockImplementation((dir) => [
           nodePath.resolve(dir, `file.js`),
           nodePath.resolve(dir, `file.css`),
         ])
@@ -259,7 +259,7 @@ describe(`gatsby-remark-code-repls`, () => {
         })
 
         const { css, js } = JSON.parse(
-          createPage.mock.calls[0][0].context.payload
+          createPage.mock.calls[0][0].context.payload,
         )
 
         expect(js).toBe(`const foo = "bar";`)
@@ -267,7 +267,7 @@ describe(`gatsby-remark-code-repls`, () => {
       })
 
       it(`should support includeMatchingCSS = "true" when matching file doesn't exist`, async () => {
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
         fs.readFileSync.mockReset()
         fs.readFileSync.mockImplementation((path, options) => {
           if (
@@ -287,7 +287,7 @@ describe(`gatsby-remark-code-repls`, () => {
         })
 
         const { css, js } = JSON.parse(
-          createPage.mock.calls[0][0].context.payload
+          createPage.mock.calls[0][0].context.payload,
         )
 
         expect(js).toBe(`const foo = "bar";`)
@@ -295,7 +295,7 @@ describe(`gatsby-remark-code-repls`, () => {
       })
 
       it(`should support includeMatchingCSS = "false" when matching file doesn't exist`, async () => {
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
         fs.readFileSync.mockReset()
         fs.readFileSync.mockImplementation((path, options) => {
           if (
@@ -315,7 +315,7 @@ describe(`gatsby-remark-code-repls`, () => {
         })
 
         const { css, js } = JSON.parse(
-          createPage.mock.calls[0][0].context.payload
+          createPage.mock.calls[0][0].context.payload,
         )
 
         expect(js).toBe(`const foo = "bar";`)
@@ -332,12 +332,12 @@ describe(`gatsby-remark-code-repls`, () => {
         fs.readFileSync.mockReturnValue(`const foo = "bar";`)
 
         readdir.mockReset()
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
         createPage.mockReset()
       })
       it(`should support custom, user-defined HTML for index page`, async () => {
-        readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+        readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
         await createPages(createPagesParams, {
           codepen: { html: `<span id="foo"></span>` },
@@ -350,7 +350,7 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should inject the required prop-types for the Codepen prefill API`, async () => {
-      readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+      readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
       await createPages(createPagesParams)
 
@@ -361,7 +361,7 @@ describe(`gatsby-remark-code-repls`, () => {
     })
 
     it(`should render default HTML for index page if no override specified`, async () => {
-      readdir.mockImplementation(dir => [nodePath.resolve(dir, `file.js`)])
+      readdir.mockImplementation((dir) => [nodePath.resolve(dir, `file.js`)])
 
       await createPages(createPagesParams, {})
 

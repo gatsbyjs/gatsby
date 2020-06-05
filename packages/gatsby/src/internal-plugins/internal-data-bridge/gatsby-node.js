@@ -8,7 +8,7 @@ const { boundActionCreators } = require(`../../redux/actions`)
 const { getNode } = require(`../../db/nodes`)
 
 function transformPackageJson(json) {
-  const transformDeps = deps =>
+  const transformDeps = (deps) =>
     _.entries(deps).map(([name, version]) => {
       return {
         name,
@@ -39,7 +39,7 @@ function transformPackageJson(json) {
   return json
 }
 
-const createPageId = path => `SitePage ${path}`
+const createPageId = (path) => `SitePage ${path}`
 
 exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   const { createNode } = actions
@@ -61,12 +61,12 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     },
   })
 
-  flattenedPlugins.forEach(plugin => {
+  flattenedPlugins.forEach((plugin) => {
     plugin.pluginFilepath = plugin.resolve
     createNode({
       ...plugin,
       packageJson: transformPackageJson(
-        require(`${plugin.resolve}/package.json`)
+        require(`${plugin.resolve}/package.json`),
       ),
       parent: null,
       children: [],
@@ -125,7 +125,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
 
   const pathToGatsbyConfig = systemPath.join(
     program.directory,
-    `gatsby-config.js`
+    `gatsby-config.js`,
   )
   chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
     const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
@@ -170,7 +170,7 @@ exports.createResolvers = ({ createResolvers }) => {
             },
             args,
             context,
-            info
+            info,
           )
         },
       },
@@ -202,7 +202,7 @@ exports.onCreatePage = ({ createContentDigest, page, actions }) => {
 }
 
 // Listen for DELETE_PAGE and delete page nodes.
-emitter.on(`DELETE_PAGE`, action => {
+emitter.on(`DELETE_PAGE`, (action) => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
   boundActionCreators.deleteNode({ node })

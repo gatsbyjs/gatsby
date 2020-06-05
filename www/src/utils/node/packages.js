@@ -2,7 +2,7 @@ const isOfficialPackage = require(`../is-official-package`)
 const { getTemplate } = require(`../get-template`)
 const { loadYaml } = require(`../load-yaml`)
 const { plugins: featuredPlugins } = loadYaml(
-  `src/data/ecosystem/featured-items.yaml`
+  `src/data/ecosystem/featured-items.yaml`,
 )
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -23,7 +23,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (errors) throw errors
 
   // Create package readme
-  data.allNpmPackage.nodes.forEach(node => {
+  data.allNpmPackage.nodes.forEach((node) => {
     if (!node.slug) {
       return
     }

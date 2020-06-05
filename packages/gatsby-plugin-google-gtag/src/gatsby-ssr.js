@@ -3,7 +3,7 @@ import { Minimatch } from "minimatch"
 
 exports.onRenderBody = (
   { setHeadComponents, setPostBodyComponents },
-  pluginOptions
+  pluginOptions,
 ) => {
   if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
     return null
@@ -32,7 +32,7 @@ exports.onRenderBody = (
 
   const excludeGtagPaths = []
   if (typeof pluginConfig.exclude !== `undefined`) {
-    pluginConfig.exclude.map(exclude => {
+    pluginConfig.exclude.map((exclude) => {
       const mm = new Minimatch(exclude)
       excludeGtagPaths.push(mm.makeRe())
     })
@@ -69,8 +69,8 @@ exports.onRenderBody = (
 
         ${pluginOptions.trackingIds
           .map(
-            trackingId =>
-              `gtag('config', '${trackingId}', ${JSON.stringify(gtagConfig)});`
+            (trackingId) =>
+              `gtag('config', '${trackingId}', ${JSON.stringify(gtagConfig)});`,
           )
           .join(``)}
       }

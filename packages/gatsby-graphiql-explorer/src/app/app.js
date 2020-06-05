@@ -21,7 +21,7 @@ window.location.search
     var eq = entry.indexOf(`=`)
     if (eq >= 0) {
       parameters[decodeURIComponent(entry.slice(0, eq))] = decodeURIComponent(
-        entry.slice(eq + 1)
+        entry.slice(eq + 1),
       )
     }
   })
@@ -172,26 +172,27 @@ class App extends React.Component {
   componentDidMount() {
     graphQLFetcher({
       query: getIntrospectionQuery(),
-    }).then(result => {
+    }).then((result) => {
       const newState = { schema: buildClientSchema(result.data) }
 
       if (this.state.query === null) {
         try {
           const siteMetadataType = result.data.__schema.types.find(
-            type => type.name === `SiteSiteMetadata` && type.kind === `OBJECT`
+            (type) =>
+              type.name === `SiteSiteMetadata` && type.kind === `OBJECT`,
           )
           if (siteMetadataType) {
             const titleField = siteMetadataType.fields.find(
-              field =>
+              (field) =>
                 field.name === `title` &&
                 field.type &&
                 field.type.kind === `SCALAR` &&
-                field.type.name === `String`
+                field.type.name === `String`,
             )
 
             if (titleField) {
               newState.query = generateDefaultFallbackQuery(
-                QUERY_EXAMPLE_SITEMETADATA_TITLE
+                QUERY_EXAMPLE_SITEMETADATA_TITLE,
               )
             }
           }
@@ -230,7 +231,7 @@ class App extends React.Component {
 
     const position = relevantMousePos
 
-    const def = parsedQuery.definitions.find(definition => {
+    const def = parsedQuery.definitions.find((definition) => {
       if (!definition.loc) {
         console.log(`Missing location information for definition`)
         return false
@@ -270,7 +271,7 @@ class App extends React.Component {
     return false
   }
 
-  _handleEditQuery = query => {
+  _handleEditQuery = (query) => {
     parameters.query = query
     updateURL()
     this.setState({ query })
@@ -281,7 +282,7 @@ class App extends React.Component {
     if (window.localStorage) {
       window.localStorage.setItem(
         `graphiql:graphiqlExplorerOpen`,
-        newExplorerIsOpen
+        newExplorerIsOpen,
       )
     }
     parameters.explorerIsOpen = newExplorerIsOpen
@@ -294,7 +295,7 @@ class App extends React.Component {
     if (window.localStorage) {
       window.localStorage.setItem(
         `graphiql:graphiqlCodeExporterOpen`,
-        newCodeExporterIsOpen
+        newCodeExporterIsOpen,
       )
     }
     parameters.codeExporterIsOpen = newCodeExporterIsOpen
@@ -321,12 +322,12 @@ class App extends React.Component {
           onEdit={this._handleEditQuery}
           explorerIsOpen={this.state.explorerIsOpen}
           onToggleExplorer={this._handleToggleExplorer}
-          onRunOperation={operationName =>
+          onRunOperation={(operationName) =>
             this._graphiql.handleRunQuery(operationName)
           }
         />
         <GraphiQL
-          ref={ref => (this._graphiql = ref)}
+          ref={(ref) => (this._graphiql = ref)}
           fetcher={graphQLFetcher}
           schema={schema}
           query={query}

@@ -22,12 +22,12 @@ const runCreatePages = async () => {
       traceId: `createPages`,
       waitForCascadingActions: true,
     },
-    { activity }
+    { activity },
   )
   activity.end()
 
   // Delete pages that weren't updated when running createPages.
-  Array.from(store.getState().pages.values()).forEach(page => {
+  Array.from(store.getState().pages.values()).forEach((page) => {
     if (
       !page.isCreatedByStatefulCreatePages &&
       page.updatedAt < timestamp &&
@@ -41,14 +41,14 @@ const runCreatePages = async () => {
   emitter.emit(`CREATE_PAGE_END`)
 }
 
-module.exports = graphqlRunner => {
+module.exports = (graphqlRunner) => {
   graphql = graphqlRunner
-  emitter.on(`CREATE_NODE`, action => {
+  emitter.on(`CREATE_NODE`, (action) => {
     if (action.payload.internal.type !== `SitePage`) {
       pagesDirty = true
     }
   })
-  emitter.on(`DELETE_NODE`, action => {
+  emitter.on(`DELETE_NODE`, (action) => {
     if (action.payload.internal.type !== `SitePage`) {
       pagesDirty = true
       // Make a fake API call to trigger `API_RUNNING_QUEUE_EMPTY` being called.

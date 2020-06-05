@@ -16,7 +16,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, {})
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -34,7 +34,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, {})
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
     })
   })
@@ -45,7 +45,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { icon })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -64,7 +64,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { icon })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
     })
   })
@@ -75,7 +75,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { className })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -94,7 +94,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { className })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
     })
   })
@@ -105,7 +105,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { icon })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -124,7 +124,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { icon })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
     })
   })
@@ -141,7 +141,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { maintainCase })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -160,7 +160,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { removeAccents })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
       expect(node.data.id).toEqual(expect.stringMatching(/^héading/))
     })
@@ -178,7 +178,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { removeAccents })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
       expect(node.data.id).toEqual(expect.stringMatching(/^heading/))
     })
@@ -205,7 +205,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
     const transformed = plugin({ markdownAST }, { enableCustomId })
 
     const headers = []
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       headers.push({ text: toString(node), id: node.data.id })
     })
     expect(headers).toEqual([
@@ -246,7 +246,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
     const isIconAfterHeader = true
     const transformed = plugin({ markdownAST }, { isIconAfterHeader })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.hProperties.style).toContain(`position:relative`)
       expect(node.children).toHaveLength(2)
       expect(node.children[1].data.hProperties.class).toContain(`after`)
@@ -260,7 +260,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { elements: [`h1`] })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -272,7 +272,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { elements: [`h2`] })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data).not.toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -284,7 +284,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { elements: [`h2`] })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data).not.toBeDefined()
 
       expect(node).toMatchSnapshot()
@@ -302,7 +302,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { elements: [`h2`] })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       if (node.depth === 2) {
         expect(node.data.id).toBeDefined()
       } else {
@@ -322,7 +322,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin({ markdownAST }, { elements: [] })
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data).not.toBeDefined()
     })
   })
@@ -344,10 +344,10 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
     const transformed = plugin(
       { markdownAST },
-      { elements: [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`] }
+      { elements: [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`] },
     )
 
-    visit(transformed, `heading`, node => {
+    visit(transformed, `heading`, (node) => {
       expect(node.data.id).toBeDefined()
     })
   })

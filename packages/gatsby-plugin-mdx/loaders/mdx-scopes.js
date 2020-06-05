@@ -14,7 +14,7 @@ module.exports = function () {
     files
       .map(
         (file, i) =>
-          `var scope_${i} = require('${slash(path.join(abs, file))}').default;`
+          `var scope_${i} = require('${slash(path.join(abs, file))}').default;`,
       )
       .join(`\n`) +
     `export default

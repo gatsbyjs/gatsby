@@ -19,7 +19,7 @@ const startServer = () => {
   // clear storage
   fs.removeSync(verdaccioConfig.storage)
 
-  VerdaccioInitPromise = new Promise(resolve => {
+  VerdaccioInitPromise = new Promise((resolve) => {
     startVerdaccio(
       verdaccioConfig,
       verdaccioConfig.port,
@@ -33,7 +33,7 @@ const startServer = () => {
 
           resolve()
         })
-      }
+      },
     )
   })
 

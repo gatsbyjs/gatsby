@@ -6,7 +6,7 @@ describe(`index.js`, () => {
   describe(`<OutboundLink />`, () => {
     afterEach(cleanup)
 
-    const setup = props => {
+    const setup = (props) => {
       const utils = render(<OutboundLink {...props}>link</OutboundLink>)
 
       return Object.assign({}, utils, {
@@ -69,10 +69,10 @@ describe(`index.js`, () => {
   describe(`trackCustomEvent()`, () => {
     afterEach(cleanup)
 
-    const setup = props => {
+    const setup = (props) => {
       const utils = render(
         <button
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault()
             trackCustomEvent({
               category: `event`,
@@ -83,7 +83,7 @@ describe(`index.js`, () => {
           }}
         >
           tapthis
-        </button>
+        </button>,
       )
 
       return Object.assign({}, utils, {

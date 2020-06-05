@@ -75,8 +75,8 @@ describe(`merges explicit and inferred type definitions`, () => {
         links___NODE: [`id1`],
       },
     ]
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
   })
 
@@ -121,8 +121,8 @@ describe(`merges explicit and inferred type definitions`, () => {
       }`,
     ]
 
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
+    typeDefs.forEach((def) =>
+      store.dispatch({ type: `CREATE_TYPES`, payload: def }),
     )
 
     await build({})
@@ -178,8 +178,8 @@ describe(`merges explicit and inferred type definitions`, () => {
       }),
     ]
 
-    typeDefs.forEach(def =>
-      store.dispatch({ type: `CREATE_TYPES`, payload: def })
+    typeDefs.forEach((def) =>
+      store.dispatch({ type: `CREATE_TYPES`, payload: def }),
     )
 
     await build({})
@@ -215,7 +215,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtraExtra.type.toString()).toBe(
-          `Boolean`
+          `Boolean`,
         )
 
         // Explicit typeDefs have proprity in case of type conflict
@@ -227,7 +227,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well
@@ -266,7 +266,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtraExtra.type.toString()).toBe(
-          `Boolean`
+          `Boolean`,
         )
 
         // Explicit typeDefs have proprity in case of type conflict
@@ -278,7 +278,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well
@@ -329,7 +329,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well
@@ -367,7 +367,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtraExtra.type.toString()).toBe(
-          `Boolean`
+          `Boolean`,
         )
 
         // Explicit typeDefs have proprity in case of type conflict
@@ -379,7 +379,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well
@@ -418,7 +418,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(nestedNestedFields.notExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtra.type.toString()).toBe(`Boolean`)
         expect(nestedNestedFields.extraExtraExtra.type.toString()).toBe(
-          `Boolean`
+          `Boolean`,
         )
 
         // Explicit typeDefs have proprity in case of type conflict
@@ -430,7 +430,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well
@@ -483,7 +483,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well
@@ -535,7 +535,7 @@ describe(`merges explicit and inferred type definitions`, () => {
         expect(fields.conflictScalarReverse.type.toString()).toBe(`Nested!`)
         expect(fields.conflictScalarArray.type.toString()).toBe(`[Int!]!`)
         expect(fields.conflcitScalarArrayReverse.type.toString()).toBe(
-          `[Nested!]!`
+          `[Nested!]!`,
         )
 
         // Explicit typeDefs have priority on nested types as well

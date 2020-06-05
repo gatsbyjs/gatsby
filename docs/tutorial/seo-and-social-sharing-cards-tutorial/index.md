@@ -67,7 +67,7 @@ function SEO({ description }) {
         }
         # highlight-end
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
@@ -99,7 +99,7 @@ function SEO({ description, lang, meta }) {
           }
         }
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
@@ -169,7 +169,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
           }
         }
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
@@ -247,7 +247,7 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
                   name: "twitter:card",
                   content: "summary",
                 },
-              ]
+              ],
           // highlight-end
         )
         .concat(meta)}
@@ -312,7 +312,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
           }
         }
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
@@ -402,7 +402,7 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
                   name: "twitter:card",
                   content: "summary",
                 },
-              ]
+              ],
         )
         .concat(meta)}
     />

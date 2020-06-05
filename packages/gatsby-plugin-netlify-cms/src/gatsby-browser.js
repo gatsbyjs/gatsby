@@ -7,7 +7,7 @@ const accessTokenRoute = /access_token=/
 
 exports.onInitialClientRender = (
   _,
-  { enableIdentityWidget = true, publicPath = `admin` }
+  { enableIdentityWidget = true, publicPath = `admin` },
 ) => {
   const hash = (document.location.hash || ``).replace(/^#\/?/, ``)
 
@@ -17,7 +17,7 @@ exports.onInitialClientRender = (
   ) {
     import(`netlify-identity-widget`).then(
       ({ default: netlifyIdentityWidget }) => {
-        netlifyIdentityWidget.on(`init`, user => {
+        netlifyIdentityWidget.on(`init`, (user) => {
           if (!user) {
             netlifyIdentityWidget.on(`login`, () => {
               document.location.href = `${__PATH_PREFIX__}/${publicPath}/`
@@ -25,7 +25,7 @@ exports.onInitialClientRender = (
           }
         })
         netlifyIdentityWidget.init()
-      }
+      },
     )
   }
 }

@@ -46,7 +46,7 @@ const createApi = () => {
   }
 }
 
-const tick = () => new Promise(resolve => setTimeout(resolve, 0))
+const tick = () => new Promise((resolve) => setTimeout(resolve, 0))
 
 describe(`tests`, () => {
   let on
@@ -57,7 +57,7 @@ describe(`tests`, () => {
       return
     }
 
-    listenerSet.forEach(listener => {
+    listenerSet.forEach((listener) => {
       listener(...args)
     })
     await tick()

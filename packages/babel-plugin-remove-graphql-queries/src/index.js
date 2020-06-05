@@ -8,7 +8,7 @@ class StringInterpolationNotAllowedError extends Error {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
         `fragments. Included fragments should be referenced ` +
-        `as \`...MyModule_foo\`.`
+        `as \`...MyModule_foo\`.`,
     )
     this.interpolationStart = JSON.parse(JSON.stringify(interpolationStart))
     this.interpolationEnd = JSON.parse(JSON.stringify(interpolationEnd))
@@ -27,7 +27,7 @@ class EmptyGraphQLTagError extends Error {
 class GraphQLSyntaxError extends Error {
   constructor(documentText, originalError, locationOfGraphqlString) {
     super(
-      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`
+      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${documentText}\n\nmessage:\n\n${originalError}`,
     )
     this.documentText = documentText
     this.originalError = originalError
@@ -36,7 +36,7 @@ class GraphQLSyntaxError extends Error {
   }
 }
 
-const isGlobalIdentifier = tag =>
+const isGlobalIdentifier = (tag) =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
 
 export function followVariableDeclarations(binding) {
@@ -47,7 +47,7 @@ export function followVariableDeclarations(binding) {
     node?.init?.type === `Identifier`
   ) {
     return followVariableDeclarations(
-      binding.path.scope.getBinding(node.init.name)
+      binding.path.scope.getBinding(node.init.name),
     )
   }
   return binding
@@ -79,7 +79,7 @@ function getTagImport(tag) {
     if (id.isObjectPattern()) {
       return id
         .get(`properties`)
-        .find(path => path.get(`value`).node.name === name)
+        .find((path) => path.get(`value`).node.name === name)
     }
     return id
   }
@@ -114,8 +114,8 @@ function removeImport(tag) {
   const identifier = isExpression ? tag.get(`object`) : tag
   const importPath = getTagImport(identifier)
 
-  const removeVariableDeclaration = statement => {
-    let declaration = statement.findParent(p => p.isVariableDeclaration())
+  const removeVariableDeclaration = (statement) => {
+    let declaration = statement.findParent((p) => p.isVariableDeclaration())
     if (declaration) {
       declaration.remove()
     }
@@ -150,7 +150,7 @@ function getGraphQLTag(path) {
   if (quasis.length !== 1) {
     throw new StringInterpolationNotAllowedError(
       quasis[0].loc.end,
-      quasis[1].loc.start
+      quasis[1].loc.start,
     )
   }
 
@@ -199,12 +199,12 @@ export default function ({ types: t }) {
               path2.parent.attributes.push(
                 t.jSXAttribute(
                   t.jSXIdentifier(`data`),
-                  t.jSXExpressionContainer(identifier)
-                )
+                  t.jSXExpressionContainer(identifier),
+                ),
               )
               // Add import
               const importDefaultSpecifier = t.importDefaultSpecifier(
-                identifier
+                identifier,
               )
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
@@ -212,10 +212,10 @@ export default function ({ types: t }) {
                   filename
                     ? nodePath.relative(
                         nodePath.parse(filename).dir,
-                        resultPath
+                        resultPath,
                       )
-                    : shortResultPath
-                )
+                    : shortResultPath,
+                ),
               )
               path.unshiftContainer(`body`, importDeclaration)
             }
@@ -251,12 +251,12 @@ export default function ({ types: t }) {
 
               // Add query
               path2.replaceWith(
-                t.memberExpression(identifier, t.identifier(`data`))
+                t.memberExpression(identifier, t.identifier(`data`)),
               )
 
               // Add import
               const importDefaultSpecifier = t.importDefaultSpecifier(
-                identifier
+                identifier,
               )
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
@@ -264,10 +264,10 @@ export default function ({ types: t }) {
                   filename
                     ? nodePath.relative(
                         nodePath.parse(filename).dir,
-                        resultPath
+                        resultPath,
                       )
-                    : shortResultPath
-                )
+                    : shortResultPath,
+                ),
               )
               path.unshiftContainer(`body`, importDeclaration)
             }
@@ -276,7 +276,7 @@ export default function ({ types: t }) {
 
         const tagsToRemoveImportsFrom = new Set()
 
-        const setImportForStaticQuery = templatePath => {
+        const setImportForStaticQuery = (templatePath) => {
           const { ast, text, hash, isGlobal } = getGraphQLTag(templatePath)
 
           if (!ast) return null

@@ -28,17 +28,17 @@ describe(`gatsby-plugin-typescript`, () => {
       expect(actions.setBabelPlugin).toHaveBeenCalledTimes(3)
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
-          path.join(`@babel`, `plugin-proposal-optional-chaining`)
+          path.join(`@babel`, `plugin-proposal-optional-chaining`),
         ),
       })
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
-          path.join(`@babel`, `plugin-proposal-nullish-coalescing-operator`)
+          path.join(`@babel`, `plugin-proposal-nullish-coalescing-operator`),
         ),
       })
       expect(actions.setBabelPlugin).toHaveBeenCalledWith({
         name: expect.stringContaining(
-          path.join(`@babel`, `plugin-proposal-numeric-separator`)
+          path.join(`@babel`, `plugin-proposal-numeric-separator`),
         ),
       })
     })

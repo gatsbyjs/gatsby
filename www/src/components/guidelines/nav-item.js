@@ -8,10 +8,10 @@ import shouldForwardProp from "@styled-system/should-forward-prop"
 import propTypes from "@styled-system/prop-types"
 import themeGet from "@styled-system/theme-get"
 
-const ActiveLink = props => <Link {...props} activeClassName="active" />
+const ActiveLink = (props) => <Link {...props} activeClassName="active" />
 
 const NavLink = styled(ActiveLink, { shouldForwardProp })(
-  props => {
+  (props) => {
     return {
       "&&.active": {
         color: themeGet(`colors.lilac`)(props),
@@ -20,7 +20,7 @@ const NavLink = styled(ActiveLink, { shouldForwardProp })(
   },
   color,
   typography,
-  space
+  space,
 )
 
 NavLink.propTypes = {
@@ -29,7 +29,7 @@ NavLink.propTypes = {
   ...propTypes.typography,
 }
 
-const NavItem = props => (
+const NavItem = (props) => (
   <NavLink
     sx={{
       // override the default link styling

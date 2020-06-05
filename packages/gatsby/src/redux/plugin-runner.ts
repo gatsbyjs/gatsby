@@ -9,7 +9,7 @@ type Plugin = any // TODO
 interface ICreatePageAction {
   graphql<TData, TVariables = any>(
     query: string,
-    variables?: TVariables
+    variables?: TVariables,
   ): Promise<{
     errors?: any
     data?: TData
@@ -45,7 +45,7 @@ export const startPluginRunner = (): void => {
     apiRunnerNode(
       `onCreatePage`,
       { page, traceId: action.traceId, parentSpan: action.parentSpan },
-      { pluginSource: action.plugin.name, activity: action.activity }
+      { pluginSource: action.plugin.name, activity: action.activity },
     )
   })
 }

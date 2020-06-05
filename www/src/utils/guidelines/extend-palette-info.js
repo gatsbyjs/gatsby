@@ -79,7 +79,7 @@ for (var color in colors) {
   if (m && typeof colors[color] === `object` && color !== `ui`) {
     Object.keys(colors[color])
       .sort((a, b) => a - b)
-      .forEach(shade => {
+      .forEach((shade) => {
         c[shade] = {
           hex: colors[color][shade],
           ...colorable(colors[color][shade]),

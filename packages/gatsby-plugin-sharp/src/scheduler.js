@@ -19,7 +19,7 @@ const processImages = async (jobId, job, boundActionCreators) => {
 const jobsInFlight = new Map()
 const scheduleJob = async (job, boundActionCreators, reporter) => {
   const inputPaths = job.inputPaths.filter(
-    inputPath => !fs.existsSync(path.join(job.outputDir, inputPath))
+    (inputPath) => !fs.existsSync(path.join(job.outputDir, inputPath)),
   )
 
   // all paths exists so we bail
@@ -28,7 +28,7 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
   }
 
   const convertedJob = {
-    inputPaths: inputPaths.map(inputPath => {
+    inputPaths: inputPaths.map((inputPath) => {
       return {
         path: inputPath,
         // we don't care about the content, we never did so the old api will still have the same flaws
@@ -65,7 +65,8 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
   // this has been in here from the beginning, job api v2 does this correct
   // to not break existing behahaviour we put this in here too.
   job.args.operations = job.args.operations.filter(
-    operation => !fs.existsSync(path.join(job.outputDir, operation.outputPath))
+    (operation) =>
+      !fs.existsSync(path.join(job.outputDir, operation.outputPath)),
   )
 
   if (!job.args.operations.length) {
@@ -80,7 +81,7 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
       description: `processing image ${job.inputPaths[0]}`,
       imagesCount: job.args.operations.length,
     },
-    { name: `gatsby-plugin-sharp` }
+    { name: `gatsby-plugin-sharp` },
   )
 
   const progressBar = createOrGetProgressBar(reporter)
@@ -89,7 +90,7 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
 
   const promise = new Promise((resolve, reject) => {
     setImmediate(() => {
-      processImages(jobId, convertedJob, boundActionCreators).then(result => {
+      processImages(jobId, convertedJob, boundActionCreators).then((result) => {
         progressBar.tick(transformsCount)
         resolve(result)
       }, reject)

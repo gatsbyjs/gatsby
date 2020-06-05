@@ -2,7 +2,7 @@ import { ActionsUnion, IGatsbyState } from "../types"
 
 export const pageDataReducer = (
   state: IGatsbyState["pageData"] = new Map(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["pageData"] => {
   switch (action.type) {
     case `DELETE_CACHE`:

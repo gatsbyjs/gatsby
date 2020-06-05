@@ -56,7 +56,7 @@ const Details = ({
         }}
       >
         {shownDeps &&
-          shownDeps.map(dep =>
+          shownDeps.map((dep) =>
             // gatsby-cypress is a helper plugin and not shown inside our plugins section
             // for that reason we are excluding it from our list of plugins
             /^gatsby-/.test(dep) && dep !== `gatsby-cypress` ? (
@@ -70,7 +70,7 @@ const Details = ({
                   <MdLaunch />
                 </a>
               </div>
-            )
+            ),
           )}
         {showMore && (
           <button sx={styles.showMoreButton} onClick={showAllDeps}>

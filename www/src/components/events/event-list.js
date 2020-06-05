@@ -3,14 +3,14 @@ import { graphql } from "gatsby"
 import Event from "./event"
 
 export default function EventList({ events }) {
-  const endOfDay = date => new Date(date).setHours(23, 59, 59, 999)
+  const endOfDay = (date) => new Date(date).setHours(23, 59, 59, 999)
 
   // const upcoming = events.nodes.filter(
   //   event => endOfDay(event.data.date) >= Date.now()
   // )
 
   const past = events.nodes
-    .filter(event => endOfDay(event.data.date) < Date.now())
+    .filter((event) => endOfDay(event.data.date) < Date.now())
     .reverse()
 
   return events.nodes.length > 0 ? (
@@ -26,7 +26,7 @@ export default function EventList({ events }) {
       </ul> */}
       <h2>Past Events</h2>
       <ul>
-        {past.map(event => (
+        {past.map((event) => (
           <li key={event.id}>
             <Event event={event.data} />
           </li>

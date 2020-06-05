@@ -3,7 +3,7 @@ const debug = require(`debug`)(`gatsby:component-shadowing`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 
-const pathWithoutExtension = fullPath => {
+const pathWithoutExtension = (fullPath) => {
   const parsed = path.parse(fullPath)
   return path.join(parsed.dir, parsed.name)
 }
@@ -20,7 +20,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   constructor({ projectRoot, themes, extensions }) {
     debug(
       `themes list`,
-      themes.map(({ themeName }) => themeName)
+      themes.map(({ themeName }) => themeName),
     )
     this.themes = themes
     this.projectRoot = projectRoot
@@ -39,8 +39,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         if (matchingThemes.length > 1) {
           throw new Error(
             `Gatsby can't differentiate between themes ${matchingThemes
-              .map(theme => theme.themeName)
-              .join(` and `)} for path ${request.path}`
+              .map((theme) => theme.themeName)
+              .join(` and `)} for path ${request.path}`,
           )
         }
 
@@ -52,7 +52,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         const [theme] = matchingThemes
         // get the location of the component relative to src/
         const [, component] = request.path.split(
-          path.join(theme.themeDir, `src`)
+          path.join(theme.themeDir, `src`),
         )
 
         if (
@@ -85,7 +85,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
             request,
             null,
             {},
-            callback
+            callback,
           )
         }
 
@@ -101,9 +101,9 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           { ...request, path: builtComponentPath || request.path },
           null,
           {},
-          callback
+          callback,
         )
-      }
+      },
     )
   }
 
@@ -116,10 +116,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       .concat(
         Array.from(themes)
           .reverse()
-          .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+          .map(({ themeDir }) => path.join(themeDir, `src`, theme)),
       )
-      .map(dir => path.join(dir, component))
-      .find(possibleComponentPath => {
+      .map((dir) => path.join(dir, component))
+      .find((possibleComponentPath) => {
         debug(`possibleComponentPath`, possibleComponentPath)
         let dir
         try {
@@ -129,7 +129,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         } catch (e) {
           return false
         }
-        const existsDir = dir.map(filepath => path.basename(filepath))
+        const existsDir = dir.map((filepath) => path.basename(filepath))
         const exists =
           // has extension, will match styles.css;
 
@@ -142,8 +142,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           // .js matches
           // styles.css.js
           // whatever.tsx.js
-          this.extensions.find(ext =>
-            existsDir.includes(path.basename(possibleComponentPath) + ext)
+          this.extensions.find((ext) =>
+            existsDir.includes(path.basename(possibleComponentPath) + ext),
           )
         return exists
       })
@@ -152,7 +152,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   getMatchingThemesForPath(filepath) {
     // find out which theme's src/components dir we're requiring from
     const allMatchingThemes = this.themes.filter(({ themeDir }) =>
-      filepath.includes(path.join(themeDir, `src`))
+      filepath.includes(path.join(themeDir, `src`)),
     )
 
     // The same theme can be included twice in the themes list causing multiple
@@ -187,7 +187,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     // get list of potential shadow locations
     const shadowFiles = this.getBaseShadowDirsForThemes(theme.themeName)
       .concat(path.join(userSiteDir, `src`, theme.themeName))
-      .map(dir => path.join(dir, component))
+      .map((dir) => path.join(dir, component))
 
     // if the issuer is requesting a path that is a potential shadow path of itself
     return shadowFiles.includes(pathWithoutExtension(issuerPath))

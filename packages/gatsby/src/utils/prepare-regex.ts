@@ -10,7 +10,7 @@ export const prepareRegex = (str: string): RegExp => {
       // but single escaping is needed for the RegExp constructor,
       // i.e. `"\\\\w+"` for `/\w+/`.
       .replace(/\\\\/, `\\`),
-    _.last(exploded)
+    _.last(exploded),
   )
   return regex
 }

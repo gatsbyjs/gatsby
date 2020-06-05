@@ -700,7 +700,7 @@ For vanilla CSS without a preprocessor:
 const cssLoaderRe = /\/css-loader\//
 const targetFile = `.module.css`
 
-const processRule = rule => {
+const processRule = (rule) => {
   if (rule.oneOf) {
     return {
       ...rule,
@@ -715,7 +715,7 @@ const processRule = rule => {
   if (Array.isArray(rule.use)) {
     return {
       ...rule,
-      use: rule.use.map(use => {
+      use: rule.use.map((use) => {
         if (!cssLoaderRe.test(use.loader)) {
           return use
         }

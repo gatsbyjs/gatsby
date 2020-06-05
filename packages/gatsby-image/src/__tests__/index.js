@@ -66,7 +66,7 @@ const setup = (
   fluid = false,
   props = {},
   onLoad = () => {},
-  onError = () => {}
+  onError = () => {},
 ) => {
   const { container } = render(
     <Image
@@ -85,7 +85,7 @@ const setup = (
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
       {...props}
-    />
+    />,
   )
 
   return container
@@ -94,7 +94,7 @@ const setup = (
 const setupImages = (
   fluidImages = false,
   onLoad = () => {},
-  onError = () => {}
+  onError = () => {},
 ) => {
   const { container } = render(
     <Image
@@ -111,7 +111,7 @@ const setupImages = (
       itemProp={`item-prop-for-the-image`}
       placeholderStyle={{ color: `red` }}
       placeholderClassName={`placeholder`}
-    />
+    />,
   )
 
   return container
@@ -121,14 +121,14 @@ describe(`<Image />`, () => {
   const OLD_MATCH_MEDIA = window.matchMedia
   beforeEach(() => {
     // None of the media conditions above match.
-    window.matchMedia = jest.fn(media =>
+    window.matchMedia = jest.fn((media) =>
       media === `only screen and (min-width: 1024px)`
         ? {
             matches: true,
           }
         : {
             matches: false,
-          }
+          },
     )
   })
   afterEach(() => {
@@ -170,11 +170,11 @@ describe(`<Image />`, () => {
     const placeholderImageTag = setup().querySelector(`img`)
     expect(placeholderImageTag.getAttribute(`src`)).toEqual(`string_of_base64`)
     expect(placeholderImageTag.getAttribute(`title`)).toEqual(
-      `Title for the image`
+      `Title for the image`,
     )
     // No Intersection Observer in JSDOM, so placeholder img will be visible (opacity 1) by default
     expect(placeholderImageTag.getAttribute(`style`)).toEqual(
-      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;`
+      `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; transition-delay: 500ms; color: red;`,
     )
     expect(placeholderImageTag.getAttribute(`class`)).toEqual(`placeholder`)
   })
@@ -215,7 +215,7 @@ describe(`<Image />`, () => {
         itemProp={`item-prop-for-the-image`}
         placeholderStyle={{ color: `red` }}
         placeholderClassName={`placeholder`}
-      />
+      />,
     )
     expect(console.warn).toBeCalled()
   })
@@ -242,11 +242,11 @@ describe(`<Image />`, () => {
         itemProp={`item-prop-for-the-image`}
         placeholderStyle={{ color: `red` }}
         placeholderClassName={`placeholder`}
-      />
+      />,
     )
     const aspectPreserver = container.querySelector(`div div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
-      expect.stringMatching(/padding-bottom: 20%/)
+      expect.stringMatching(/padding-bottom: 20%/),
     )
   })
 
@@ -272,11 +272,11 @@ describe(`<Image />`, () => {
         itemProp={`item-prop-for-the-image`}
         placeholderStyle={{ color: `red` }}
         placeholderClassName={`placeholder`}
-      />
+      />,
     )
     const aspectPreserver = container.querySelector(`div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
-      expect.stringMatching(/width: 1024px; height: 768px;/)
+      expect.stringMatching(/width: 1024px; height: 768px;/),
     )
   })
 
@@ -293,11 +293,11 @@ describe(`<Image />`, () => {
         itemProp={`item-prop-for-the-image`}
         placeholderStyle={{ color: `red` }}
         placeholderClassName={`placeholder`}
-      />
+      />,
     )
     const aspectPreserver = container.querySelector(`div div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
-      expect.stringMatching(/padding-bottom: 50%/)
+      expect.stringMatching(/padding-bottom: 50%/),
     )
   })
 
@@ -314,11 +314,11 @@ describe(`<Image />`, () => {
         itemProp={`item-prop-for-the-image`}
         placeholderStyle={{ color: `red` }}
         placeholderClassName={`placeholder`}
-      />
+      />,
     )
     const aspectPreserver = container.querySelector(`div div`)
     expect(aspectPreserver.getAttribute(`style`)).toEqual(
-      expect.stringMatching(/width: 100px; height: 100px;/)
+      expect.stringMatching(/width: 100px; height: 100px;/),
     )
   })
 
@@ -326,7 +326,7 @@ describe(`<Image />`, () => {
     const onLoadMock = jest.fn()
     const onErrorMock = jest.fn()
     const imageTag = setup(true, {}, onLoadMock, onErrorMock).querySelector(
-      `picture img`
+      `picture img`,
     )
     fireEvent.load(imageTag)
     fireEvent.error(imageTag)

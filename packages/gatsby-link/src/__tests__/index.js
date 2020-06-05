@@ -61,7 +61,7 @@ const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
       >
         link
       </Link>
-    </LocationProvider>
+    </LocationProvider>,
   )
 
   return Object.assign({}, utils, {
@@ -111,8 +111,8 @@ describe(`<Link />`, () => {
           >
             link
           </Link>
-        </LocationProvider>
-      )
+        </LocationProvider>,
+      ),
     ).not.toThrow()
   })
 
@@ -176,7 +176,7 @@ describe(`<Link />`, () => {
         sourcePath,
       })
       expect(link.getAttribute(`href`)).toEqual(
-        `${pathPrefix}/active/courses?sort=name`
+        `${pathPrefix}/active/courses?sort=name`,
       )
     })
 
@@ -220,7 +220,7 @@ describe(`<Link />`, () => {
       link.click()
 
       expect(
-        global.___navigate
+        global.___navigate,
       ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: false })
     })
 
@@ -231,7 +231,7 @@ describe(`<Link />`, () => {
       link.click()
 
       expect(
-        global.___navigate
+        global.___navigate,
       ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
     })
 
@@ -243,7 +243,7 @@ describe(`<Link />`, () => {
 
       expect(global.___navigate).toHaveBeenCalledWith(
         `${global.__BASE_PATH__}${to}`,
-        {}
+        {},
       )
     })
 
@@ -254,7 +254,7 @@ describe(`<Link />`, () => {
       link.click()
 
       expect(
-        global.___navigate
+        global.___navigate,
       ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
     })
   })
@@ -323,7 +323,7 @@ describe(`navigate`, () => {
 
     expect(global.___navigate).toHaveBeenCalledWith(
       `${global.__BASE_PATH__}${to}`,
-      undefined
+      undefined,
     )
   })
 
@@ -335,7 +335,7 @@ describe(`navigate`, () => {
 
     expect(global.___navigate).toHaveBeenCalledWith(
       `${global.__BASE_PATH__}${to}`,
-      options
+      options,
     )
   })
 })
@@ -379,7 +379,7 @@ describe(`state`, () => {
       {
         replace: true,
         state,
-      }
+      },
     )
   })
 })

@@ -36,7 +36,7 @@ class ShowcaseView extends Component {
     }
   }
 
-  setFilters = filters => {
+  setFilters = (filters) => {
     this.setState({
       filters: [].concat(filters),
     })

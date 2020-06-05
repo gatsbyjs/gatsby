@@ -3,7 +3,7 @@ const path = require(`path`)
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) {
   function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
@@ -57,7 +57,7 @@ async function onCreateNode(
       transformObject(
         obj,
         obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
-        getType({ node, object: obj, isArray: true })
+        getType({ node, object: obj, isArray: true }),
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
@@ -66,7 +66,7 @@ async function onCreateNode(
       parsedContent.id
         ? String(parsedContent.id)
         : createNodeId(`${node.id} >>> JSON`),
-      getType({ node, object: parsedContent, isArray: false })
+      getType({ node, object: parsedContent, isArray: false }),
     )
   }
 }

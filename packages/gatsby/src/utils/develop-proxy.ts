@@ -18,7 +18,7 @@ const noop = (): void => {}
 
 const adminFolder = path.join(
   path.dirname(require.resolve(`gatsby-admin`)),
-  `public`
+  `public`,
 )
 
 const serveAdmin = st({
@@ -56,7 +56,7 @@ export const startDevelopProxy = (input: {
 
     // Add a route at localhost:8000/___services for service discovery
     if (req.url === `/___services`) {
-      getServices(input.program.directory).then(services => {
+      getServices(input.program.directory).then((services) => {
         res.setHeader(`Content-Type`, `application/json`)
         res.end(JSON.stringify(services))
       })
@@ -65,7 +65,7 @@ export const startDevelopProxy = (input: {
 
     if (req.url === `/socket.io/socket.io.js`) {
       res.end(
-        fs.readFileSync(require.resolve(`socket.io-client/dist/socket.io.js`))
+        fs.readFileSync(require.resolve(`socket.io-client/dist/socket.io.js`)),
       )
       return
     }

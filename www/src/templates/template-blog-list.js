@@ -30,7 +30,7 @@ class BlogPostsIndex extends React.Component {
               ...pullIntoGutter,
               display: `flex`,
               justifyContent: `space-between`,
-              borderBottom: t => `1px solid ${t.colors.ui.border}`,
+              borderBottom: (t) => `1px solid ${t.colors.ui.border}`,
               mb: 6,
               pb: 6,
               [breakpointGutter]: {
@@ -67,10 +67,10 @@ class BlogPostsIndex extends React.Component {
                   border: 0,
                   mb: 6,
                   mx: 0,
-                  transition: t =>
+                  transition: (t) =>
                     `transform ${t.transition.default},  box-shadow ${t.transition.default}, padding ${t.transition.default}`,
                   "&:hover": {
-                    transform: t => `translateY(-${t.space[1]})`,
+                    transform: (t) => `translateY(-${t.space[1]})`,
                     boxShadow: `overlay`,
                   },
                   "&:active": {
@@ -79,8 +79,8 @@ class BlogPostsIndex extends React.Component {
                   },
                 },
                 [mediaQueries.md]: {
-                  marginLeft: t => `-${t.space[9]}`,
-                  marginRight: t => `-${t.space[9]}`,
+                  marginLeft: (t) => `-${t.space[9]}`,
+                  marginRight: (t) => `-${t.space[9]}`,
                 },
               }}
             />

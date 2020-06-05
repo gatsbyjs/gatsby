@@ -85,7 +85,7 @@ const setup = (setupProps = {}) => {
       <MDXProvider>
         <DocsMarkdownPage {...props} />
       </MDXProvider>
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 }
 

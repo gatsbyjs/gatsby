@@ -10,7 +10,7 @@ const buttonPropTypes = { ...propTypes.border, ...propTypes.typography }
 const styleProps = compose(border, typography)
 
 const Button = styled(Box)(
-  props => {
+  (props) => {
     return {
       "&&": {
         borderColor: themeGet(`colors.gatsby`)(props),
@@ -26,7 +26,7 @@ const Button = styled(Box)(
     textDecoration: `none`,
   },
   styleProps,
-  props =>
+  (props) =>
     props.outlined && {
       background: themeGet(`colors.white`)(props),
       fontWeight: themeGet(`fontWeights.body`)(props),
@@ -45,7 +45,7 @@ const Button = styled(Box)(
       [`@media (min-width: ${themeGet(`breakpoints.md`)(props)}px)`]: {
         fontSize: `${themeGet(`fontSizes.3`)(props)}`,
       },
-    }
+    },
 )
 
 Button.propTypes = buttonPropTypes

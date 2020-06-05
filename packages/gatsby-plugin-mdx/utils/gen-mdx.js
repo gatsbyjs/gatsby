@@ -51,10 +51,10 @@ module.exports = async function genMDX(
     pathPrefix,
     ...helpers
   },
-  { forceDisableCache = false } = {}
+  { forceDisableCache = false } = {},
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
-  const payloadCacheKey = node =>
+  const payloadCacheKey = (node) =>
     `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}`
 
   if (!forceDisableCache) {
@@ -118,10 +118,10 @@ export const _frontmatter = ${JSON.stringify(data)}`
       pathPrefix,
       compiler: {
         parseString: compiler.parse.bind(compiler),
-        generateHTML: ast => mdx(ast, options),
+        generateHTML: (ast) => mdx(ast, options),
       },
       ...helpers,
-    }
+    },
   )
 
   debug(`running mdx`)
@@ -129,7 +129,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
     filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
-      gatsbyRemarkPluginsAsremarkPlugins
+      gatsbyRemarkPluginsAsremarkPlugins,
     ),
   })
 
@@ -174,11 +174,11 @@ ${code}`
     results.body = result.code
       .replace(
         /export\s*default\s*function\s*MDXContent\s*/,
-        `return function MDXContent`
+        `return function MDXContent`,
       )
       .replace(
         /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
-        `return MDXContent;`
+        `return MDXContent;`,
       )
   }
   /* results.html = renderToStaticMarkup(

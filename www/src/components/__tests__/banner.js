@@ -12,15 +12,15 @@ const matchers = [
   `Gatsby Cloud!`,
 ]
 
-const getElement = utils => utils.getByText(text => matchers.includes(text))
+const getElement = (utils) => utils.getByText((text) => matchers.includes(text))
 
 test(`it renders an external link`, () => {
   const link = getElement(
     render(
       <ThemeProvider theme={theme}>
         <Banner />
-      </ThemeProvider>
-    )
+      </ThemeProvider>,
+    ),
   )
 
   expect(link.getAttribute(`href`)).toContain(`https://`)

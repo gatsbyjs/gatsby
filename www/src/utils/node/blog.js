@@ -93,7 +93,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (errors) throw errors
 
   // Create contributor pages.
-  data.allAuthorYaml.nodes.forEach(node => {
+  data.allAuthorYaml.nodes.forEach((node) => {
     createPage({
       path: `${node.fields.slug}`,
       component: contributorPageTemplate,
@@ -105,8 +105,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const blogPosts = data.allMdx.nodes
 
-  const releasedBlogPosts = blogPosts.filter(post =>
-    _.get(post, `fields.released`)
+  const releasedBlogPosts = blogPosts.filter((post) =>
+    _.get(post, `fields.released`),
   )
 
   // Create blog-list pages.
@@ -152,7 +152,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
-  const makeSlugTag = tag => _.kebabCase(tag.toLowerCase())
+  const makeSlugTag = (tag) => _.kebabCase(tag.toLowerCase())
 
   // Collect all tags and group them by their kebab-case so that
   // hyphenated and spaced tags are treated the same. e.g
@@ -160,7 +160,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // version will be used for the slug, and the spaced version
   // will be used for human readability (see templates/tags)
   const tagGroups = _(releasedBlogPosts)
-    .map(post => _.get(post, `frontmatter.tags`))
+    .map((post) => _.get(post, `frontmatter.tags`))
     .filter()
     .flatten()
     .uniq()

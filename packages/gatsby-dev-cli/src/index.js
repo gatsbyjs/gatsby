@@ -20,18 +20,18 @@ const argv = require(`yargs`)
   .describe(
     `p`,
     `Set path to Gatsby repository.
-You typically only need to configure this once.`
+You typically only need to configure this once.`,
   )
   .nargs(`force-install`, 0)
   .describe(
     `force-install`,
-    `Disables copying files into node_modules and forces usage of local npm repository.`
+    `Disables copying files into node_modules and forces usage of local npm repository.`,
   )
   .alias(`C`, `copy-all`)
   .nargs(`C`, 0)
   .describe(
     `C`,
-    `Copy all contents in packages/ instead of just gatsby packages`
+    `Copy all contents in packages/ instead of just gatsby packages`,
   )
   .array(`packages`)
   .describe(`packages`, `Explicitly specify packages to copy`)
@@ -76,7 +76,7 @@ You haven't set the path yet to your cloned
 version of Gatsby. Do so now by running:
 
 gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
-`
+`,
   )
   process.exit()
 }
@@ -88,7 +88,7 @@ const localPkg = JSON.parse(fs.readFileSync(`package.json`))
 // intersect dependencies with monoRepoPackages to get list of packages that are used
 let localPackages = _.intersection(
   monoRepoPackages,
-  Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))
+  Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies)),
 )
 
 if (!argv.packages && _.isEmpty(localPackages)) {
@@ -103,7 +103,7 @@ gatsby-dev --packages gatsby gatsby-transformer-remark
 
 If you prefer to place them in your package.json dependencies instead,
 gatsby-dev will pick them up.
-`
+`,
   )
   process.exit()
 }

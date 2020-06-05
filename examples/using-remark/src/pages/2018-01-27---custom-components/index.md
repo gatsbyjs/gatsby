@@ -36,7 +36,7 @@ export default class Counter extends React.Component {
   }
 
   handleIncrement = () => {
-    this.setState(state => {
+    this.setState((state) => {
       return {
         value: state.value + 1,
       }
@@ -44,7 +44,7 @@ export default class Counter extends React.Component {
   }
 
   handleDecrement = () => {
-    this.setState(state => {
+    this.setState((state) => {
       return {
         value: state.value - 1,
       }

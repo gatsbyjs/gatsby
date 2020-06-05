@@ -52,7 +52,7 @@ export const createTimerReporter = ({
 
     panicOnBuild(
       errorMeta: ErrorMeta,
-      error?: Error | Error[]
+      error?: Error | Error[],
     ): IStructuredError | IStructuredError[] {
       span.finish()
 

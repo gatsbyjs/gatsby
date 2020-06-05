@@ -2,7 +2,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
 
-const fixedPagePath = pagePath => (pagePath === `/` ? `index` : pagePath)
+const fixedPagePath = (pagePath) => (pagePath === `/` ? `index` : pagePath)
 
 const getFilePath = ({ publicDir }, pagePath) =>
   path.join(publicDir, `page-data`, fixedPagePath(pagePath), `page-data.json`)

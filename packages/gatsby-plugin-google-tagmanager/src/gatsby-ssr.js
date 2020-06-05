@@ -19,12 +19,12 @@ const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
   } else {
     if (dataLayer.type !== `object` || dataLayer.value.constructor !== Object) {
       reporter.panic(
-        `Oops the plugin option "defaultDataLayer" should be a plain object. "${dataLayer}" is not valid.`
+        `Oops the plugin option "defaultDataLayer" should be a plain object. "${dataLayer}" is not valid.`,
       )
     }
 
     result += `window.${dataLayerName}.push(${JSON.stringify(
-      dataLayer.value
+      dataLayer.value,
     )});`
   }
 
@@ -40,7 +40,7 @@ exports.onRenderBody = (
     gtmPreview,
     defaultDataLayer,
     dataLayerName = `dataLayer`,
-  }
+  },
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
     const environmentParamStr =
@@ -55,7 +55,7 @@ exports.onRenderBody = (
       defaultDataLayerCode = generateDefaultDataLayer(
         defaultDataLayer,
         reporter,
-        dataLayerName
+        dataLayerName,
       )
     }
 

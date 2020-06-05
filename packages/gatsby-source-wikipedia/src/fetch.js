@@ -5,7 +5,7 @@ const fetch = require(`node-fetch`)
 const apiBase = `https://en.wikipedia.org/w/api.php?`
 
 const fetchNodesFromSearch = ({ query, limit = 15 }) =>
-  search({ query, limit }).then(results =>
+  search({ query, limit }).then((results) =>
     Promise.map(results, async (result, queryIndex) => {
       const rendered = await getArticle(result.id)
       const metadata = await getMetaData(result.id)
@@ -17,10 +17,10 @@ const fetchNodesFromSearch = ({ query, limit = 15 }) =>
         queryIndex: queryIndex + 1,
         rendered,
       }
-    })
+    }),
   )
 
-const getMetaData = name =>
+const getMetaData = (name) =>
   fetch(
     `${apiBase}${queryString.stringify({
       action: `query`,
@@ -30,10 +30,10 @@ const getMetaData = name =>
       prop: `extracts|revisions`,
       explaintext: 1,
       exsentences: 1,
-    })}`
+    })}`,
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       var page = data.query.pages[Object.keys(data.query.pages)[0]]
 
       if (`missing` in page) {
@@ -62,9 +62,9 @@ const search = ({ query, limit }) =>
       format: `json`,
       redirects: `resolve`,
       limit,
-    })}`
+    })}`,
   )
-    .then(response => response.json())
+    .then((response) => response.json())
     .then(([term, pageTitles, descriptions, urls]) =>
       pageTitles.map((title, i) => {
         return {
@@ -72,14 +72,14 @@ const search = ({ query, limit }) =>
           description: descriptions[i],
           id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1],
         }
-      })
+      }),
     )
 
-const getArticle = name =>
+const getArticle = (name) =>
   fetch(`https://en.m.wikipedia.org/wiki/${name}?action=render`)
-    .then(res => res.text())
-    .then(pageContent =>
-      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`)
+    .then((res) => res.text())
+    .then((pageContent) =>
+      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`),
     )
 
 module.exports = { fetchNodesFromSearch, getMetaData, getArticle, search }

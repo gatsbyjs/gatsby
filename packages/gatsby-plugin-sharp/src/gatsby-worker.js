@@ -22,16 +22,16 @@ const q = queue(
     Promise.all(
       processFile(
         inputPaths[0].path,
-        args.operations.map(operation => {
+        args.operations.map((operation) => {
           return {
             outputPath: path.join(outputDir, operation.outputPath),
             args: operation.args,
           }
         }),
-        args.pluginOptions
-      )
+        args.pluginOptions,
+      ),
     ),
-  1
+  1,
 )
 
 /**

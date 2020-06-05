@@ -48,7 +48,7 @@ const CloseButton = ({ children, ...rest }) => (
       outline: 0,
       WebkitAppearance: `none`,
       pb: 6,
-      transition: t =>
+      transition: (t) =>
         `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
       ":hover, :focus": {
         ...focusStyle,
@@ -124,7 +124,7 @@ const TextSamples = ({ contrast, bg, colorName }) => {
                     width="40px"
                   >
                     {parseFloat(
-                      Math.round(a11yInfo.contrast * 100) / 100
+                      Math.round(a11yInfo.contrast * 100) / 100,
                     ).toFixed(2)}
                   </Text>
                   {a11yLabel}
@@ -215,7 +215,7 @@ const modalContent = (palette, color) => {
               {getA11yLabel(c.a11y) === `AA Large` && <AALargeDescription />}
             </Box>
           </Column>
-        </Box>
+        </Box>,
       )
     })
 
@@ -258,7 +258,7 @@ const ColorModal = ({ palette, color, handleModalClose }) => {
           Base {palette[color].base} {base.name && <span> — {base.name}</span>}
         </Heading>
       </Box>
-      {modalContent(palette, color).map(color => color)}
+      {modalContent(palette, color).map((color) => color)}
     </>
   )
 }

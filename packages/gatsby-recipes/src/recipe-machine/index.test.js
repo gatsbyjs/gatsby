@@ -5,7 +5,7 @@ const path = require(`path`)
 const recipeMachine = require(`.`)
 
 describe(`recipe-machine`, () => {
-  it(`creates empty plan when the step has no resources`, done => {
+  it(`creates empty plan when the step has no resources`, (done) => {
     const initialContext = {
       src: `
 # Hello, world!
@@ -13,8 +13,8 @@ describe(`recipe-machine`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       if (state.value === `presentPlan`) {
         expect(state.context.plan).toEqual([])
         service.stop()
@@ -25,7 +25,7 @@ describe(`recipe-machine`, () => {
     service.start()
   })
 
-  it(`creates plan for File resources`, done => {
+  it(`creates plan for File resources`, (done) => {
     const initialContext = {
       src: `
 # File!
@@ -37,8 +37,8 @@ describe(`recipe-machine`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       if (state.value === `presentPlan`) {
         if (state.context.currentStep === 0) {
           service.send(`CONTINUE`)
@@ -53,7 +53,7 @@ describe(`recipe-machine`, () => {
     service.start()
   })
 
-  it(`switches to done after the final apply step`, done => {
+  it(`switches to done after the final apply step`, (done) => {
     const filePath = `./hi.md`
     const initialContext = {
       src: `
@@ -66,8 +66,8 @@ describe(`recipe-machine`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       // Keep simulating moving onto the next step
       if (state.value === `presentPlan`) {
         service.send(`CONTINUE`)
@@ -85,7 +85,7 @@ describe(`recipe-machine`, () => {
     service.start()
   })
 
-  it(`stores created/changed/deleted resources on the context after applying plan`, done => {
+  it(`stores created/changed/deleted resources on the context after applying plan`, (done) => {
     const filePath = `./hi.md`
     const filePath2 = `./hi2.md`
     const filePath3 = `./hi3.md`
@@ -105,8 +105,8 @@ describe(`recipe-machine`, () => {
       currentStep: 0,
     }
     const service = interpret(
-      recipeMachine.withContext(initialContext)
-    ).onTransition(state => {
+      recipeMachine.withContext(initialContext),
+    ).onTransition((state) => {
       // Keep simulating moving onto the next step
       if (state.value === `presentPlan`) {
         service.send(`CONTINUE`)

@@ -15,5 +15,5 @@ export const test = (val: unknown): boolean =>
 
 export const print = (
   val: string,
-  serialize: (val: string) => string
+  serialize: (val: string) => string,
 ): string => serialize(cleanNodeModules(val))

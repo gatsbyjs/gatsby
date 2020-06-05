@@ -22,7 +22,7 @@ const SITE_ROOT = pkgDir.sync(process.cwd())
 const pubsub = new PubSub()
 const PORT = process.argv[2] || 50400
 
-const emitOperation = state => {
+const emitOperation = (state) => {
   console.log(state)
   pubsub.publish(`operation`, {
     state: JSON.stringify(state),
@@ -39,8 +39,8 @@ const applyPlan = ({ recipePath, projectRoot }) => {
 
   // Interpret the machine, and add a listener for whenever a transition occurs.
   service = interpret(
-    recipeMachine.withContext(initialState.context)
-  ).onTransition(state => {
+    recipeMachine.withContext(initialState.context),
+  ).onTransition((state) => {
     // Don't emit again unless there's a state change.
     console.log(`===onTransition`, {
       event: state.event,
@@ -124,7 +124,7 @@ const rootSubscriptionType = new GraphQLObjectType({
       operation: {
         type: OperationType,
         subscribe: () => pubsub.asyncIterator(`operation`),
-        resolve: payload => payload,
+        resolve: (payload) => payload,
       },
     }
   },
@@ -149,7 +149,7 @@ app.use(
     schema,
     graphiql: true,
     context: { root: SITE_ROOT },
-  })
+  }),
 )
 
 server.listen(PORT, () => {
@@ -162,6 +162,6 @@ server.listen(PORT, () => {
     {
       server,
       path: `/graphql`,
-    }
+    },
   )
 })

@@ -10,7 +10,7 @@ module.exports = async function onCreateNode(
     reporter,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) {
   const { createNode, createParentChildLink } = actions
 
@@ -28,7 +28,7 @@ module.exports = async function onCreateNode(
     const data = grayMatter(content, pluginOptions)
 
     if (data.data) {
-      data.data = _.mapValues(data.data, value => {
+      data.data = _.mapValues(data.data, (value) => {
         if (_.isDate(value)) {
           return value.toJSON()
         }
@@ -70,7 +70,7 @@ module.exports = async function onCreateNode(
       `Error processing Markdown ${
         node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
       }:\n
-      ${err.message}`
+      ${err.message}`,
     )
 
     return {} // eslint

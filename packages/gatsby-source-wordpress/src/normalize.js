@@ -36,8 +36,8 @@ function getValidKey({ key, verbose = false }) {
     console.log(
       colorized.out(
         `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
-        colorized.color.Font.FgRed
-      )
+        colorized.color.Font.FgRed,
+      ),
     )
 
   return nkey
@@ -46,8 +46,8 @@ function getValidKey({ key, verbose = false }) {
 exports.getValidKey = getValidKey
 
 // Remove the ACF key from the response when it's not an object
-const normalizeACF = entities =>
-  entities.map(e => {
+const normalizeACF = (entities) =>
+  entities.map((e) => {
     if (!_.isPlainObject(e[`acf`])) {
       delete e[`acf`]
     }
@@ -61,22 +61,22 @@ exports.combineACF = function (entities) {
   let acfOptionData = {}
   // Map each ACF Options object keys/data to single object
   _.forEach(
-    entities.filter(e => e.__type === `wordpress__acf_options`),
-    e => {
+    entities.filter((e) => e.__type === `wordpress__acf_options`),
+    (e) => {
       if (e[`acf`]) {
         acfOptionData[e.__acfOptionPageId || `options`] = {}
         Object.keys(e[`acf`]).map(
-          k =>
-            (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k])
+          (k) =>
+            (acfOptionData[e.__acfOptionPageId || `options`][k] = e[`acf`][k]),
         )
       }
-    }
+    },
   )
 
   // Remove previous ACF Options objects (if any)
   _.pullAll(
     entities,
-    entities.filter(e => e.__type === `wordpress__acf_options`)
+    entities.filter((e) => e.__type === `wordpress__acf_options`),
   )
 
   // Create single ACF Options object
@@ -89,8 +89,8 @@ exports.combineACF = function (entities) {
 }
 
 // Create wordpress_id if the entity don't have one
-exports.generateFakeWordpressId = entities =>
-  entities.map(e => {
+exports.generateFakeWordpressId = (entities) =>
+  entities.map((e) => {
     if (e.__type === `wordpress__yoast_redirects`) {
       e.wordpress_id = `${e.origin}-${e.url}-${e.type}`
     }
@@ -99,11 +99,11 @@ exports.generateFakeWordpressId = entities =>
 
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
-const normalizeEntities = entities => {
-  const mapType = e =>
+const normalizeEntities = (entities) => {
+  const mapType = (e) =>
     Object.keys(e)
-      .filter(key => key !== `__type`)
-      .map(key => {
+      .filter((key) => key !== `__type`)
+      .map((key) => {
         return {
           id: key,
           ...e[key],
@@ -132,17 +132,17 @@ const normalizeEntities = entities => {
 exports.normalizeEntities = normalizeEntities
 
 // Standardize ids + make sure keys are valid.
-exports.standardizeKeys = entities =>
-  entities.map(e =>
-    deepMapKeys(e, key =>
-      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
-    )
+exports.standardizeKeys = (entities) =>
+  entities.map((e) =>
+    deepMapKeys(e, (key) =>
+      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }),
+    ),
   )
 
 // Standardize dates on ISO 8601 version.
-exports.standardizeDates = entities =>
-  entities.map(e => {
-    Object.keys(e).forEach(key => {
+exports.standardizeDates = (entities) =>
+  entities.map((e) => {
+    Object.keys(e).forEach((key) => {
       if (e[`${key}_gmt`]) {
         e[key] = new Date(e[`${key}_gmt`] + `z`).toJSON()
         delete e[`${key}_gmt`]
@@ -153,9 +153,9 @@ exports.standardizeDates = entities =>
   })
 
 // Lift "rendered" fields to top-level
-exports.liftRenderedField = entities =>
-  entities.map(e => {
-    Object.keys(e).forEach(key => {
+exports.liftRenderedField = (entities) =>
+  entities.map((e) => {
+    Object.keys(e).forEach((key) => {
       const value = e[key]
       if (_.isObject(value) && _.isString(value.rendered)) {
         e[key] = value.rendered
@@ -168,12 +168,12 @@ exports.liftRenderedField = entities =>
 // Exclude entities of unknown shape
 // Assume all entities contain a wordpress_id,
 // except for whitelisted type wp_settings and the site_metadata
-exports.excludeUnknownEntities = entities =>
+exports.excludeUnknownEntities = (entities) =>
   entities.filter(
-    e =>
+    (e) =>
       e.wordpress_id ||
       e.__type === `wordpress__wp_settings` ||
-      e.__type === `wordpress__site_metadata`
+      e.__type === `wordpress__site_metadata`,
   )
 // Excluding entities without ID, or WP Settings
 
@@ -181,10 +181,10 @@ exports.excludeUnknownEntities = entities =>
 // excludeUnknownEntities whitelisted types don't contain a wordpress_id
 // we create the node ID based upon type if the wordpress_id doesn't exist
 exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
-  entities.map(e => {
+  entities.map((e) => {
     if (e.wordpress_id) {
       e.id = createNodeId(
-        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`
+        `${e.__type}-${e.wordpress_id.toString()}-${_siteURL}`,
       )
     } else {
       e.id = createNodeId(`${e.__type}-${_siteURL}`)
@@ -193,10 +193,10 @@ exports.createGatsbyIds = (createNodeId, entities, _siteURL) =>
   })
 
 // Build foreign reference map.
-exports.mapTypes = entities => {
-  const groups = _.groupBy(entities, e => e.__type)
+exports.mapTypes = (entities) => {
+  const groups = _.groupBy(entities, (e) => e.__type)
   for (let groupId in groups) {
-    groups[groupId] = groups[groupId].map(e => {
+    groups[groupId] = groups[groupId].map((e) => {
       return {
         wordpress_id: e.wordpress_id,
         id: e.id,
@@ -207,12 +207,12 @@ exports.mapTypes = entities => {
   return groups
 }
 
-exports.mapAuthorsToUsers = entities => {
-  const users = entities.filter(e => e.__type === `wordpress__wp_users`)
-  return entities.map(e => {
+exports.mapAuthorsToUsers = (entities) => {
+  const users = entities.filter((e) => e.__type === `wordpress__wp_users`)
+  return entities.map((e) => {
     if (users.length && e.author) {
       // Find the user
-      const user = users.find(u => u.wordpress_id === e.author)
+      const user = users.find((u) => u.wordpress_id === e.author)
       if (user) {
         e.author___NODE = user.id
 
@@ -233,22 +233,22 @@ exports.mapAuthorsToUsers = entities => {
   })
 }
 
-exports.mapPostsToTagsCategories = entities => {
+exports.mapPostsToTagsCategories = (entities) => {
   const categoryTypes = [`wordpress__wc_categories`, `wordpress__CATEGORY`]
   const tagTypes = [`wordpress__TAG`, `wordpress__wc_tags`]
-  const tags = entities.filter(e => tagTypes.includes(e.__type))
-  const categories = entities.filter(e => categoryTypes.includes(e.__type))
+  const tags = entities.filter((e) => tagTypes.includes(e.__type))
+  const categories = entities.filter((e) => categoryTypes.includes(e.__type))
 
-  return entities.map(e => {
+  return entities.map((e) => {
     // Replace tags & categories with links to their nodes.
 
     let entityHasTags = e.tags && Array.isArray(e.tags) && e.tags.length
     if (tags.length && entityHasTags) {
       e.tags___NODE = e.tags
-        .map(t => {
+        .map((t) => {
           const tagNode = tags.find(
-            tObj =>
-              (Number.isInteger(t) ? t : t.wordpress_id) === tObj.wordpress_id
+            (tObj) =>
+              (Number.isInteger(t) ? t : t.wordpress_id) === tObj.wordpress_id,
           )
           if (tagNode) {
             return tagNode.id
@@ -256,7 +256,7 @@ exports.mapPostsToTagsCategories = entities => {
             return undefined
           }
         })
-        .filter(node => node != undefined)
+        .filter((node) => node != undefined)
       delete e.tags
     }
 
@@ -264,10 +264,10 @@ exports.mapPostsToTagsCategories = entities => {
       e.categories && Array.isArray(e.categories) && e.categories.length
     if (categories.length && entityHasCategories) {
       e.categories___NODE = e.categories
-        .map(c => {
+        .map((c) => {
           const categoryNode = categories.find(
-            cObj =>
-              (Number.isInteger(c) ? c : c.wordpress_id) === cObj.wordpress_id
+            (cObj) =>
+              (Number.isInteger(c) ? c : c.wordpress_id) === cObj.wordpress_id,
           )
           if (categoryNode) {
             return categoryNode.id
@@ -275,7 +275,7 @@ exports.mapPostsToTagsCategories = entities => {
             return undefined
           }
         })
-        .filter(node => node != undefined)
+        .filter((node) => node != undefined)
       delete e.categories
     }
 
@@ -284,12 +284,12 @@ exports.mapPostsToTagsCategories = entities => {
 }
 
 // TODO generalize this for all taxonomy types.
-exports.mapTagsCategoriesToTaxonomies = entities =>
-  entities.map(e => {
+exports.mapTagsCategoriesToTaxonomies = (entities) =>
+  entities.map((e) => {
     // Where should api_menus stuff link to?
     if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
-      const taxonomyNode = entities.find(t => t.wordpress_id === e.taxonomy)
+      const taxonomyNode = entities.find((t) => t.wordpress_id === e.taxonomy)
       if (taxonomyNode) {
         e.taxonomy___NODE = taxonomyNode.id
         delete e.taxonomy
@@ -298,12 +298,12 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.mapElementsToParent = entities =>
-  entities.map(e => {
+exports.mapElementsToParent = (entities) =>
+  entities.map((e) => {
     if (e.wordpress_parent) {
       // Create parent_element with a link to the parent node of type.
       const parentElement = entities.find(
-        t => t.wordpress_id === e.wordpress_parent && t.__type === e.__type
+        (t) => t.wordpress_id === e.wordpress_parent && t.__type === e.__type,
       )
       if (parentElement) {
         e.parent_element___NODE = parentElement.id
@@ -312,15 +312,15 @@ exports.mapElementsToParent = entities =>
     return e
   })
 
-exports.mapPolylangTranslations = entities =>
-  entities.map(entity => {
+exports.mapPolylangTranslations = (entities) =>
+  entities.map((entity) => {
     if (entity.polylang_translations) {
       entity.polylang_translations___NODE = entity.polylang_translations.map(
-        translation => {
+        (translation) => {
           const post = entities.find(
-            t =>
+            (t) =>
               t.wordpress_id === translation.wordpress_id &&
-              entity.__type === t.__type
+              entity.__type === t.__type,
           )
 
           if (!post) {
@@ -328,7 +328,7 @@ exports.mapPolylangTranslations = entities =>
           }
 
           return post.id
-        }
+        },
       )
 
       delete entity.polylang_translations
@@ -371,7 +371,7 @@ exports.searchReplaceContentUrls = function ({
       var replaceable = JSON.stringify(whiteList)
       var replaced = replaceable.replace(
         new RegExp(sourceUrl, `g`),
-        replacementUrl
+        replacementUrl,
       )
       var parsed = JSON.parse(replaced)
     } catch (e) {
@@ -383,15 +383,15 @@ exports.searchReplaceContentUrls = function ({
   })
 }
 
-exports.mapEntitiesToMedia = entities => {
-  const media = entities.filter(e => e.__type === `wordpress__wp_media`)
+exports.mapEntitiesToMedia = (entities) => {
+  const media = entities.filter((e) => e.__type === `wordpress__wp_media`)
 
-  return entities.map(e => {
+  return entities.map((e) => {
     // Map featured_media to its media node
 
     // Check if it's value of ACF Image field, that has 'Return value' set to
     // 'Image Object' ( https://www.advancedcustomfields.com/resources/image/ )
-    const isPhotoObject = field =>
+    const isPhotoObject = (field) =>
       _.isObject(field) &&
       field.wordpress_id &&
       field.url &&
@@ -400,14 +400,14 @@ exports.mapEntitiesToMedia = entities => {
         ? true
         : false
 
-    const isURL = value => _.isString(value) && value.startsWith(`http`)
-    const isMediaUrlAlreadyProcessed = key => key == `source_url`
+    const isURL = (value) => _.isString(value) && value.startsWith(`http`)
+    const isMediaUrlAlreadyProcessed = (key) => key == `source_url`
     const isFeaturedMedia = (value, key) =>
       (_.isNumber(value) || _.isBoolean(value)) && key === `featured_media`
     // ACF Gallery and similarly shaped arrays
-    const isArrayOfPhotoObject = field =>
+    const isArrayOfPhotoObject = (field) =>
       _.isArray(field) && field.length > 0 && isPhotoObject(field[0])
-    const getMediaItemID = mediaItem => (mediaItem ? mediaItem.id : null)
+    const getMediaItemID = (mediaItem) => (mediaItem ? mediaItem.id : null)
 
     // Try to get media node from value:
     //  - special case - check if key is featured_media and value is photo ID
@@ -418,13 +418,13 @@ exports.mapEntitiesToMedia = entities => {
       if (isFeaturedMedia(value, key)) {
         return {
           mediaNodeID: _.isNumber(value)
-            ? getMediaItemID(media.find(m => m.wordpress_id === value))
+            ? getMediaItemID(media.find((m) => m.wordpress_id === value))
             : null,
           deleteField: true,
         }
       } else if (isURL(value) && !isMediaUrlAlreadyProcessed(key)) {
         const mediaNodeID = getMediaItemID(
-          media.find(m => m.source_url === value)
+          media.find((m) => m.source_url === value),
         )
         return {
           mediaNodeID,
@@ -432,7 +432,7 @@ exports.mapEntitiesToMedia = entities => {
         }
       } else if (isPhotoObject(value)) {
         const mediaNodeID = getMediaItemID(
-          media.find(m => m.source_url === value.url)
+          media.find((m) => m.source_url === value.url),
         )
         return {
           mediaNodeID,
@@ -441,8 +441,8 @@ exports.mapEntitiesToMedia = entities => {
       } else if (isArrayOfPhotoObject(value)) {
         return {
           mediaNodeID: value
-            .map(item => getMediaFromValue(item, key).mediaNodeID)
-            .filter(id => id !== null),
+            .map((item) => getMediaFromValue(item, key).mediaNodeID)
+            .filter((id) => id !== null),
           deleteField: true,
         }
       }
@@ -452,7 +452,7 @@ exports.mapEntitiesToMedia = entities => {
       }
     }
 
-    const replaceFieldsInObject = object => {
+    const replaceFieldsInObject = (object) => {
       let deletedAllFields = true
       _.each(object, (value, key) => {
         const { mediaNodeID, deleteField } = getMediaFromValue(value, key)
@@ -469,7 +469,7 @@ exports.mapEntitiesToMedia = entities => {
         }
 
         if (_.isArray(value)) {
-          value.forEach(v => replaceFieldsInObject(v))
+          value.forEach((v) => replaceFieldsInObject(v))
         } else if (_.isObject(value)) {
           replaceFieldsInObject(value)
         }
@@ -505,7 +505,7 @@ exports.downloadMediaFiles = async ({
   keepMediaSizes,
 }) =>
   Promise.all(
-    entities.map(async e => {
+    entities.map(async (e) => {
       let fileNodeID
       if (e.__type === `wordpress__wp_media`) {
         const mediaDataCacheKey = `wordpress-media-${e.wordpress_id}`
@@ -566,7 +566,7 @@ exports.downloadMediaFiles = async ({
       }
 
       return e
-    })
+    }),
   )
 
 const prepareACFChildNodes = (
@@ -576,7 +576,7 @@ const prepareACFChildNodes = (
   type,
   children,
   childrenNodes,
-  createContentDigest
+  createContentDigest,
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
@@ -590,8 +590,8 @@ const prepareACFChildNodes = (
             type + key,
             children,
             childrenNodes,
-            createContentDigest
-          ).id
+            createContentDigest,
+          ).id,
       )
       delete obj[key]
     }
@@ -620,7 +620,7 @@ exports.createNodesFromEntities = ({
   createNode,
   createContentDigest,
 }) => {
-  entities.forEach(e => {
+  entities.forEach((e) => {
     // Create subnodes for ACF Flexible layouts
     let { __type, ...entity } = e // eslint-disable-line no-unused-vars
     let children = []
@@ -640,11 +640,11 @@ exports.createNodesFromEntities = ({
                 type,
                 children,
                 childrenNodes,
-                createContentDigest
+                createContentDigest,
               )
 
               return acfChildNode.id
-            }
+            },
           )
 
           delete entity.acf[key]
@@ -662,14 +662,14 @@ exports.createNodesFromEntities = ({
       },
     }
     createNode(node)
-    childrenNodes.forEach(node => {
+    childrenNodes.forEach((node) => {
       createNode(node)
     })
   })
 }
 
-exports.createUrlPathsFromLinks = entities =>
-  entities.map(e => {
+exports.createUrlPathsFromLinks = (entities) =>
+  entities.map((e) => {
     if (e.link && !e.path) {
       try {
         const link = new URL(e.link)
@@ -681,8 +681,8 @@ exports.createUrlPathsFromLinks = entities =>
     return e
   })
 
-exports.normalizeMenuItems = entities =>
-  entities.map(e => {
+exports.normalizeMenuItems = (entities) =>
+  entities.map((e) => {
     if (e.__type === `wordpress__menus_menus_items`) {
       // in case of nested menus items might be object
       // this converts it into array so it's consistent

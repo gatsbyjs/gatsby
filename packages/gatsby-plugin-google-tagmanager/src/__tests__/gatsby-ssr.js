@@ -19,7 +19,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
     expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
     // check if no newlines were added
     expect(preBodyConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
-      `\n`
+      `\n`,
     )
   })
 
@@ -38,10 +38,10 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
       // eslint-disable-next-line no-useless-escape
       expect(headConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
-        `window.dataLayer`
+        `window.dataLayer`,
       )
       expect(headConfig.props.dangerouslySetInnerHTML.__html).not.toContain(
-        `undefined`
+        `undefined`,
       )
     })
 
@@ -62,7 +62,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-        `window.dataLayer`
+        `window.dataLayer`,
       )
     })
 
@@ -87,7 +87,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-        `window.dataLayer.push((${datalayerFuncAsString})());`
+        `window.dataLayer.push((${datalayerFuncAsString})());`,
       )
     })
 
@@ -96,7 +96,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         setHeadComponents: jest.fn(),
         setPreBodyComponents: jest.fn(),
         reporter: {
-          panic: msg => {
+          panic: (msg) => {
             throw new Error(msg)
           },
         },
@@ -142,7 +142,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
       const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toMatchSnapshot()
       expect(headConfig.props.dangerouslySetInnerHTML.__html).toContain(
-        `window.${dataLayerName}`
+        `window.${dataLayerName}`,
       )
     })
   })

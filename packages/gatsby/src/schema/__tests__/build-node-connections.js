@@ -65,8 +65,8 @@ describe(`build-node-connections`, () => {
   async function runQuery(query, nodes = makeNodes()) {
     store.dispatch({ type: `DELETE_CACHE` })
     store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
 
     const schemaComposer = createSchemaComposer()
@@ -123,7 +123,7 @@ describe(`build-node-connections`, () => {
           }
         }
       }
-    `
+    `,
     )
     expect(allParent.edges[0].node.hair).toEqual(`red`)
     expect(allChild.edges[0].node.hair).toEqual(`brown`)
@@ -144,10 +144,10 @@ describe(`build-node-connections`, () => {
           }
         }
       }
-    `
+    `,
     )
     expect(allParent.edges[0].node.children).toBeDefined()
-    expect(allParent.edges[0].node.children.map(c => c.id)).toEqual([
+    expect(allParent.edges[0].node.children.map((c) => c.id)).toEqual([
       `c1`,
       `c2`,
       `r1`,
@@ -168,10 +168,10 @@ describe(`build-node-connections`, () => {
           }
         }
       }
-    `
+    `,
     )
     expect(allParent.edges[0].node.childrenChild).toBeDefined()
-    expect(allParent.edges[0].node.childrenChild.map(c => c.id)).toEqual([
+    expect(allParent.edges[0].node.childrenChild.map((c) => c.id)).toEqual([
       `c1`,
       `c2`,
     ])
@@ -191,7 +191,7 @@ describe(`build-node-connections`, () => {
           }
         }
       }
-    `
+    `,
     )
 
     expect(allParent.edges[0].node.childRelative).toBeDefined()
@@ -212,7 +212,7 @@ describe(`build-node-connections`, () => {
           }
         }
       }
-    `
+    `,
     )
 
     expect(createPageDependency).toHaveBeenCalledWith({

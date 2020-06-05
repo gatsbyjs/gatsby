@@ -13,7 +13,7 @@ class Dev404Page extends React.Component {
   constructor(props) {
     super(props)
     const { data, location } = this.props
-    const pagePaths = data.allSitePage.nodes.map(node => node.path)
+    const pagePaths = data.allSitePage.nodes.map((node) => node.path)
     const urlState = queryString.parse(location.search)
 
     const initialPagePathSearchTerms = urlState.filter ? urlState.filter : ``
@@ -24,7 +24,7 @@ class Dev404Page extends React.Component {
       pagePathSearchTerms: initialPagePathSearchTerms,
       pagePaths: this.getFilteredPagePaths(
         pagePaths,
-        initialPagePathSearchTerms
+        initialPagePathSearchTerms,
       ),
     }
     this.showCustom404 = this.showCustom404.bind(this)
@@ -52,14 +52,14 @@ class Dev404Page extends React.Component {
     this.setState({
       pagePaths: this.getFilteredPagePaths(
         allPagePaths,
-        this.state.pagePathSearchTerms
+        this.state.pagePathSearchTerms,
       ),
     })
   }
 
   getFilteredPagePaths(allPagePaths, pagePathSearchTerms) {
     const searchTerm = new RegExp(`${pagePathSearchTerms}`)
-    return allPagePaths.filter(pagePath => searchTerm.test(pagePath))
+    return allPagePaths.filter((pagePath) => searchTerm.test(pagePath))
   }
 
   setSearchUrl(searchValue) {
@@ -151,7 +151,7 @@ class Dev404Page extends React.Component {
                     <li key={pagePath}>
                       <Link to={pagePath}>{pagePath}</Link>
                     </li>
-                  )
+                  ),
               )}
               {this.state.pagePaths.length > 100 && (
                 <p style={{ fontWeight: `bold` }}>

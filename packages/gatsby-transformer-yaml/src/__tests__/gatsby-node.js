@@ -5,7 +5,7 @@ const { onCreateNode } = require(`../gatsby-node`)
 const createNodeId = jest.fn().mockReturnValue(`uuid-from-gatsby`)
 const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
 
-const loadNodeContent = node => Promise.resolve(node.content)
+const loadNodeContent = (node) => Promise.resolve(node.content)
 
 let createNode
 let createParentChildLink
@@ -37,20 +37,20 @@ beforeEach(() => {
   }
 })
 
-const expectCreatedNodesMatchingSnapshot = count => {
+const expectCreatedNodesMatchingSnapshot = (count) => {
   expect(createNode.mock.calls).toMatchSnapshot()
   expect(createParentChildLink.mock.calls).toMatchSnapshot()
   expect(createNode).toHaveBeenCalledTimes(count)
   expect(createParentChildLink).toHaveBeenCalledTimes(count)
 }
 
-const expectCreatedNodeTypeName = nodeTypeName => {
+const expectCreatedNodeTypeName = (nodeTypeName) => {
   expect(createNode).toBeCalledWith(
     expect.objectContaining({
       internal: expect.objectContaining({
         type: nodeTypeName,
       }),
-    })
+    }),
   )
 }
 

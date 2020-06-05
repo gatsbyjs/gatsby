@@ -9,7 +9,7 @@ test(`it renders Copy by default`, () => {
   const { queryByText } = render(
     <ThemeProvider theme={theme}>
       <Copy content="1234" />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   expect(queryByText(`Copy`)).toBeInTheDocument()
@@ -19,7 +19,7 @@ test(`it renders screen-reader text`, () => {
   const { container } = render(
     <ThemeProvider theme={theme}>
       <Copy content="1234" />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   expect(container.querySelector(`[aria-roledescription]`)).toBeInTheDocument()

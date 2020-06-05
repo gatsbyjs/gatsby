@@ -3,7 +3,7 @@ const ProgressBar = require(`progress`)
 // TODO remove in V3
 function createGatsbyProgressOrFallbackToExternalProgressBar(
   message,
-  reporter
+  reporter,
 ) {
   if (reporter && reporter.createProgress) {
     return reporter.createProgress(message)
@@ -15,7 +15,7 @@ function createGatsbyProgressOrFallbackToExternalProgressBar(
       total: 0,
       width: 30,
       clear: true,
-    }
+    },
   )
 
   return {
@@ -33,11 +33,11 @@ function createGatsbyProgressOrFallbackToExternalProgressBar(
 let progressBar
 let pendingImagesCounter = 0
 let firstPass = true
-const createOrGetProgressBar = reporter => {
+const createOrGetProgressBar = (reporter) => {
   if (!progressBar) {
     progressBar = createGatsbyProgressOrFallbackToExternalProgressBar(
       `Generating image thumbnails`,
-      reporter
+      reporter,
     )
 
     const originalDoneFn = progressBar.done
@@ -51,7 +51,7 @@ const createOrGetProgressBar = reporter => {
       pendingImagesCounter = 0
     }
 
-    progressBar.addImageToProcess = imageCount => {
+    progressBar.addImageToProcess = (imageCount) => {
       if (pendingImagesCounter === 0) {
         progressBar.start()
       }

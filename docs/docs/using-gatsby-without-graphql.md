@@ -25,7 +25,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   })
 
   // Create a page for each Pokémon.
-  allPokemon.forEach(pokemon => {
+  allPokemon.forEach((pokemon) => {
     createPage({
       path: `/pokemon/${pokemon.name}/`, // highlight-line
       component: require.resolve("./src/templates/pokemon.js"),
@@ -52,7 +52,7 @@ export default function Pokemon({ pageContext: { pokemon } }) {
       <h2>Abilities</h2>
       <ul>
         {/* highlight-start */}
-        {pokemon.abilities.map(ability => (
+        {pokemon.abilities.map((ability) => (
           <li key={ability.name}>
             <Link to={`./pokemon/${pokemon.name}/ability/${ability.name}`}>
               {ability.name}

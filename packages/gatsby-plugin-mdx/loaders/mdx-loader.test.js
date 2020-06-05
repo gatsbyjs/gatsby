@@ -42,7 +42,7 @@ const fixtures = c
   .baseN([true, false], 3)
   .toArray()
   .map(([frontmatter, layout, namedExports]) =>
-    genMDXFile({ frontmatter, layout, namedExports })
+    genMDXFile({ frontmatter, layout, namedExports }),
   )
   .map(({ name, content }) => [
     name,
@@ -93,6 +93,6 @@ describe(`mdx-loader`, () => {
         resourcePath: fakeGatsbyNode.absolutePath,
       })
       await loader(content)
-    }
+    },
   )
 })

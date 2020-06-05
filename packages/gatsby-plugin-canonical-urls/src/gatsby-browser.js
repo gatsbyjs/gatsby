@@ -1,6 +1,6 @@
 exports.onRouteUpdate = (
   { location },
-  pluginOptions = { stripQueryString: false }
+  pluginOptions = { stripQueryString: false },
 ) => {
   const domElem = document.querySelector(`link[rel='canonical']`)
   const existingValue = domElem.getAttribute(`href`)

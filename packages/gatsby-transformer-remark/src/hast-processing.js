@@ -17,7 +17,7 @@ function getConcatenatedValue(node) {
   } else if (node.children && node.children.length) {
     return node.children
       .map(getConcatenatedValue)
-      .filter(value => value)
+      .filter((value) => value)
       .join(``)
   }
   return ``
@@ -41,7 +41,7 @@ function cloneTreeUntil(root, endCondition) {
     }
 
     if (node.children) {
-      node.children.forEach(child => {
+      node.children.forEach((child) => {
         clonedRoot = newNode
         preOrderTraversal(child)
       })
@@ -57,7 +57,7 @@ function findLastTextNode(node, textNode) {
     textNode = node
   }
   if (node.children) {
-    node.children.forEach(child => {
+    node.children.forEach((child) => {
       const laterTextNode = findLastTextNode(child, textNode)
       if (laterTextNode !== textNode) {
         textNode = laterTextNode

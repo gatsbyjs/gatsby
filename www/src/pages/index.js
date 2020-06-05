@@ -35,7 +35,7 @@ class IndexRoute extends React.Component {
       .fill(undefined)
       .reduce(
         (merged, _, index) => merged.concat([starters[index], plugins[index]]),
-        []
+        [],
       )
 
   render() {
@@ -47,7 +47,7 @@ class IndexRoute extends React.Component {
       },
     } = this.props
 
-    const starters = startersData.map(item => {
+    const starters = startersData.map((item) => {
       const {
         fields: {
           starterShowcase: { slug, name, description, stars },
@@ -69,7 +69,7 @@ class IndexRoute extends React.Component {
       }
     })
 
-    const plugins = pluginsData.map(item => {
+    const plugins = pluginsData.map((item) => {
       item.type = `Plugin`
 
       return item

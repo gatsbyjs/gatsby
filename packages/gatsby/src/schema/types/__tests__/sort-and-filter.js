@@ -21,7 +21,7 @@ const {
 const { GraphQLDate } = require(`../date`)
 const { GraphQLJSON } = require(`graphql-compose`)
 
-const getInferredFields = fields => {
+const getInferredFields = (fields) => {
   const schemaComposer = createSchemaComposer()
   const tc = schemaComposer.createObjectTC({ name: `Test`, fields })
   return getFilterInput({ schemaComposer, typeComposer: tc })
@@ -423,7 +423,7 @@ describe(`GraphQL Input args from fields`, () => {
                   fields: {
                     go: { type: GraphQLFloat },
                   },
-                })
+                }),
               ),
             },
           },

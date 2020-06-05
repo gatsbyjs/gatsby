@@ -29,8 +29,8 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest
-    )
+      params.createContentDigest,
+    ),
   ).toHaveProperty(`id`)
   expect(
     mapping(
@@ -38,8 +38,8 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest
-    )
+      params.createContentDigest,
+    ),
   ).toHaveProperty(`parent`)
   expect(
     mapping(
@@ -47,8 +47,8 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest
-    )
+      params.createContentDigest,
+    ),
   ).toHaveProperty(`children`)
   expect(
     mapping(
@@ -56,8 +56,8 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest
-    )
+      params.createContentDigest,
+    ),
   ).toHaveProperty(`internal`)
   expect(
     mapping(
@@ -65,8 +65,8 @@ test(`it returns an object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest
-    )
+      params.createContentDigest,
+    ),
   ).toHaveProperty(`someKey`)
 })
 
@@ -89,7 +89,7 @@ test(`it returns a transformed object`, () => {
       params.key,
       params.text,
       params.mediaType,
-      params.createContentDigest
-    )
+      params.createContentDigest,
+    ),
   ).toMatchObject(desiredResult)
 })

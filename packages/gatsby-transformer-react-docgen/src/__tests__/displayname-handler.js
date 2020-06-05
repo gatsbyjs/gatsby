@@ -22,7 +22,7 @@ describe(`DisplayNameHandler`, () => {
       `
     var MyComponent = React.createClass({ displayName: 'foo' });
   `,
-      displayNameHandler
+      displayNameHandler,
     )
 
     expect(doc).toEqual({ displayName: `foo` })
@@ -33,7 +33,7 @@ describe(`DisplayNameHandler`, () => {
       `
     class MyComponent { static displayName = 'foo'; render() {} }
   `,
-      displayNameHandler
+      displayNameHandler,
     )
 
     expect(doc).toEqual({ displayName: `foo` })
@@ -45,7 +45,7 @@ describe(`DisplayNameHandler`, () => {
         `
       function MyComponent() { return <div />; }
     `,
-        displayNameHandler
+        displayNameHandler,
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -55,7 +55,7 @@ describe(`DisplayNameHandler`, () => {
         `
       var x = function MyComponent() { return <div />; }
     `,
-        displayNameHandler
+        displayNameHandler,
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -68,7 +68,7 @@ describe(`DisplayNameHandler`, () => {
         `
       class MyComponent { render() {} }
     `,
-        displayNameHandler
+        displayNameHandler,
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -78,7 +78,7 @@ describe(`DisplayNameHandler`, () => {
         `
       var x = class MyComponent { render() {} }
     `,
-        displayNameHandler
+        displayNameHandler,
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -90,7 +90,7 @@ describe(`DisplayNameHandler`, () => {
       `
     var Foo = React.createClass({});
   `,
-      displayNameHandler
+      displayNameHandler,
     )
     expect(doc).toEqual({ displayName: `Foo` })
   })
@@ -101,7 +101,7 @@ describe(`DisplayNameHandler`, () => {
     var Foo = {};
     Foo.Bar = () => <div />
   `,
-      displayNameHandler
+      displayNameHandler,
     )
 
     expect(doc).toEqual({ displayName: `Foo.Bar` })
@@ -112,7 +112,7 @@ describe(`DisplayNameHandler`, () => {
       `
     module.exports = () => <div />;
   `,
-      createDisplayNameHandler(path.join(`foo`, `bar`, `MyComponent.js`))
+      createDisplayNameHandler(path.join(`foo`, `bar`, `MyComponent.js`)),
     )
     expect(doc).toEqual({ displayName: `MyComponent` })
   })
@@ -123,7 +123,7 @@ describe(`DisplayNameHandler`, () => {
         `
       module.exports = () => <div />;
     `,
-        createDisplayNameHandler(path.join(`foo`, `MyComponent`, `index.js`))
+        createDisplayNameHandler(path.join(`foo`, `MyComponent`, `index.js`)),
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -133,7 +133,7 @@ describe(`DisplayNameHandler`, () => {
         `
       module.exports = () => <div />;
     `,
-        createDisplayNameHandler(path.join(`foo`, `my-component`, `index.js`))
+        createDisplayNameHandler(path.join(`foo`, `my-component`, `index.js`)),
       )
 
       expect(doc).toEqual({ displayName: `MyComponent` })
@@ -145,7 +145,7 @@ describe(`DisplayNameHandler`, () => {
       `
     module.exports = () => <div />;
   `,
-      displayNameHandler
+      displayNameHandler,
     )
     expect(doc).toEqual({ displayName: `UnknownComponent` })
   })

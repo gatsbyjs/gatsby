@@ -13,7 +13,7 @@ const fs = require(`fs`)
  */
 function loadYaml(yamlPath) {
   return yaml.safeLoad(
-    fs.readFileSync(path.resolve(`${__dirname}/../../${yamlPath}`))
+    fs.readFileSync(path.resolve(`${__dirname}/../../${yamlPath}`)),
   )
 }
 

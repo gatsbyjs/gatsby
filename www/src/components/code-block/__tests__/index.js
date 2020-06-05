@@ -11,7 +11,7 @@ describe(`basic functionality`, () => {
       const { queryByText } = render(
         <ThemeProvider theme={theme}>
           <CodeBlock language="jsx">{`var a = 'b'`}</CodeBlock>
-        </ThemeProvider>
+        </ThemeProvider>,
       )
 
       expect(queryByText(`copy`)).toBeDefined()
@@ -43,7 +43,7 @@ describe(`basic functionality`, () => {
       instance = render(
         <ThemeProvider theme={theme}>
           <CodeBlock language="jsx">{text}</CodeBlock>
-        </ThemeProvider>
+        </ThemeProvider>,
       )
     })
 
@@ -54,7 +54,7 @@ describe(`basic functionality`, () => {
     it(`highlights lines appropriately`, () => {
       const lines = highlighted.split(`\n`)
       expect(
-        instance.container.querySelectorAll(`.gatsby-highlight-code-line`)
+        instance.container.querySelectorAll(`.gatsby-highlight-code-line`),
       ).toHaveLength(lines.length)
     })
   })

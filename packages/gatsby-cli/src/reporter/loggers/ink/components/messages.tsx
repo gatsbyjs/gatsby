@@ -5,7 +5,7 @@ import { createLabel } from "./utils"
 import { ActivityLogLevels, LogLevels } from "../../../constants"
 
 const getLabel = (
-  level: ActivityLogLevels | LogLevels
+  level: ActivityLogLevels | LogLevels,
 ): ReturnType<typeof createLabel> => {
   switch (level) {
     case ActivityLogLevels.Success:
@@ -56,5 +56,5 @@ export const Message = React.memo<IMessageProps>(
         {message}
       </Box>
     )
-  }
+  },
 )

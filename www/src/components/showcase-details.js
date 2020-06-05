@@ -42,7 +42,7 @@ const styles = {
   },
 }
 
-const cleanUrl = mainUrl => {
+const cleanUrl = (mainUrl) => {
   const parsed = url.parse(mainUrl)
   let path = parsed.pathname
   if (path[path.length - 1] === `/`) path = path.slice(0, path.length - 1)
@@ -60,10 +60,10 @@ const Featured = () => (
   >
     <span
       sx={{
-        height: t => t.space[5],
+        height: (t) => t.space[5],
         m: 0,
         mr: 2,
-        width: t => t.space[5],
+        width: (t) => t.space[5],
       }}
     >
       <FeaturedIcon />
@@ -122,7 +122,7 @@ function usePrevAndNextSite(item, filters = []) {
   `)
 
   const sites = filterByCategories(allSitesYaml.nodes, filters)
-  const currentIndex = sites.findIndex(node => node.fields.slug === item)
+  const currentIndex = sites.findIndex((node) => node.fields.slug === item)
   const nextSite = sites[(currentIndex + 1) % sites.length]
   const previousSite =
     sites[currentIndex === 0 ? sites.length - 1 : currentIndex - 1]
@@ -146,7 +146,7 @@ function ShowcaseModal({ children, location, isModal }) {
   const { filters } = location.state || {}
   const { previousSite, nextSite } = usePrevAndNextSite(
     location.pathname,
-    filters
+    filters,
   )
   return (
     <Modal

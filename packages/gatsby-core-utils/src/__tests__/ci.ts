@@ -12,7 +12,7 @@ describe(`CI detection`, () => {
       `CIRCLE_PULL_REQUEST`,
       `SYSTEM_TEAMFOUNDATIONCOLLECTIONURI`,
       `SYSTEM_PULLREQUEST_PULLREQUESTID`,
-    ].forEach(e => delete process.env[e])
+    ].forEach((e) => delete process.env[e])
   })
 
   afterEach(() => {

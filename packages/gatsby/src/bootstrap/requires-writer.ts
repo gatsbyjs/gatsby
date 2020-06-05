@@ -62,8 +62,8 @@ const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
 export const getComponents = (pages: IGatsbyPage[]): IGatsbyPageComponent[] =>
   _(pages)
     .map(pickComponentFields)
-    .uniqBy(c => c.componentChunkName)
-    .orderBy(c => c.componentChunkName)
+    .uniqBy((c) => c.componentChunkName)
+    .orderBy((c) => c.componentChunkName)
     .value()
 
 /**
@@ -79,13 +79,13 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
 
   const createMatchPathEntry = (
     page: IGatsbyPage,
-    index: number
+    index: number,
   ): IMatchPathEntry => {
     const { matchPath } = page
 
     if (matchPath === undefined) {
       return reporter.panic(
-        `Error: matchPath property is undefined for page ${page.path}, should be a string`
+        `Error: matchPath property is undefined for page ${page.path}, should be a string`,
       ) as never
     }
 
@@ -115,8 +115,8 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
 
     pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
-        pageWithMatchPath =>
-          !page.matchPath && match(pageWithMatchPath.matchPath, page.path)
+        (pageWithMatchPath) =>
+          !page.matchPath && match(pageWithMatchPath.matchPath, page.path),
       )
 
       if (isInsideMatchPath) {
@@ -126,8 +126,8 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
               ...page,
               matchPath: page.path,
             },
-            index
-          )
+            index,
+          ),
         )
       }
     })
@@ -154,7 +154,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
 
 const createHash = (
   matchPaths: IGatsbyPageMatchPath[],
-  components: IGatsbyPageComponent[]
+  components: IGatsbyPageComponent[],
 ): string =>
   crypto
     .createHash(`md5`)
@@ -198,7 +198,7 @@ const preferDefault = m => m && m.default || m
       (c: IGatsbyPageComponent): string =>
         `  "${
           c.componentChunkName
-        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`,
     )
     .join(`,\n`)}
 }\n\n`
@@ -212,11 +212,11 @@ const preferDefault = m => m && m.default || m
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
         path.join(program.directory, `.cache`),
-        c.component
+        c.component,
       )
 
       return `  "${c.componentChunkName}": () => import("${slash(
-        `./${relativeComponentPath}`
+        `./${relativeComponentPath}`,
       )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     })
     .join(`,\n`)}
@@ -256,7 +256,7 @@ const debouncedWriteAll = _.debounce(
     // using "leading" can cause double `writeAll` call - particularly
     // when refreshing data using `/__refresh` hook.
     leading: false,
-  }
+  },
 )
 
 /**

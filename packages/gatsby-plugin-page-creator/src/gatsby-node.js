@@ -21,11 +21,11 @@ const {
 exports.createPagesStatefully = async (
   { store, actions, reporter },
   { path: pagesPath, pathCheck = true, ignore },
-  doneCb
+  doneCb,
 ) => {
   const { createPage, deletePage } = actions
   const program = store.getState().program
-  const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
+  const exts = program.extensions.map((e) => `${e.slice(1)}`).join(`,`)
 
   if (!pagesPath) {
     reporter.panic(
@@ -33,7 +33,7 @@ exports.createPagesStatefully = async (
       "path" is a required option for gatsby-plugin-page-creator
 
       See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/
-      `
+      `,
     )
   }
 
@@ -46,7 +46,7 @@ exports.createPagesStatefully = async (
       ${pagesPath}
 
       Please pick a path to an existing directory.
-      `
+      `,
     )
   }
 
@@ -55,21 +55,21 @@ exports.createPagesStatefully = async (
 
   // Get initial list of files.
   let files = await glob(pagesGlob, { cwd: pagesPath })
-  files.forEach(file => _createPage(file, pagesDirectory, createPage, ignore))
+  files.forEach((file) => _createPage(file, pagesDirectory, createPage, ignore))
 
   watchDirectory(
     pagesPath,
     pagesGlob,
-    addedPath => {
+    (addedPath) => {
       if (!_.includes(files, addedPath)) {
         _createPage(addedPath, pagesDirectory, createPage, ignore)
         files.push(addedPath)
       }
     },
-    removedPath => {
+    (removedPath) => {
       // Delete the page for the now deleted component.
       const componentPath = systemPath.join(pagesDirectory, removedPath)
-      store.getState().pages.forEach(page => {
+      store.getState().pages.forEach((page) => {
         if (page.component === componentPath) {
           deletePage({
             path: createPath(removedPath),
@@ -77,8 +77,8 @@ exports.createPagesStatefully = async (
           })
         }
       })
-      files = files.filter(f => f !== removedPath)
-    }
+      files = files.filter((f) => f !== removedPath)
+    },
   ).then(() => doneCb())
 }
 const _createPage = (filePath, pagesDirectory, createPage, ignore) => {

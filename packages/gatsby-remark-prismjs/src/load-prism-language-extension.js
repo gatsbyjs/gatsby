@@ -2,29 +2,29 @@ const Prism = require(`prismjs`)
 const loadPrismLanguage = require(`./load-prism-language`)
 const replaceStringWithRegex = require(`./replace-string-with-regexp`)
 
-module.exports = languageExtensions => {
+module.exports = (languageExtensions) => {
   //Create array of languageExtensions (if input is object)
   languageExtensions = [].concat(languageExtensions)
 
-  languageExtensions.forEach(l => {
+  languageExtensions.forEach((l) => {
     loadLanguageExtension(l)
   })
 }
 
-let loadLanguageExtension = languageExtension => {
+let loadLanguageExtension = (languageExtension) => {
   if (!isObjectAndNotArray(languageExtension)) {
     throw new Error(
       `A languageExtension needs to be defined as an object. Given config is not valid: ${JSON.stringify(
-        languageExtension
-      )}`
+        languageExtension,
+      )}`,
     )
   }
 
   if (!containsMandatoryProperties(languageExtension)) {
     throw new Error(
       `A languageExtension needs to contain 'language' and 'extend' or both and a 'definition'. Given config is not valid: ${JSON.stringify(
-        languageExtension
-      )}`
+        languageExtension,
+      )}`,
     )
   }
 
@@ -36,7 +36,7 @@ let loadLanguageExtension = languageExtension => {
   // To allow RegEx as 'string' in the config, we replace all strings with a regex object.
   if (languageExtension.definition) {
     languageExtension.definition = replaceStringWithRegex(
-      languageExtension.definition
+      languageExtension.definition,
     )
   }
 
@@ -49,14 +49,14 @@ let loadLanguageExtension = languageExtension => {
 
     Prism.languages[languageExtension.language] = Prism.languages.extend(
       languageExtension.extend,
-      languageExtension.definition
+      languageExtension.definition,
     )
   }
 
   if (languageExtension.hasOwnProperty(`insertBefore`)) {
     // To allow RegEx as 'string' in the config, we replace all strings with a regex object.
     languageExtension.insertBefore = replaceStringWithRegex(
-      languageExtension.insertBefore
+      languageExtension.insertBefore,
     )
 
     Object.entries(languageExtension.insertBefore).forEach(([key, value]) => {
@@ -65,11 +65,11 @@ let loadLanguageExtension = languageExtension => {
   }
 }
 
-const isObjectAndNotArray = extension =>
+const isObjectAndNotArray = (extension) =>
   //Array is an Object in javascript
   !Array.isArray(extension) && typeof extension === `object`
 
-const containsMandatoryProperties = languageExtension => {
+const containsMandatoryProperties = (languageExtension) => {
   // 'language' or 'extend' is mandatory
   if (!(languageExtension.language || languageExtension.extend)) {
     return false

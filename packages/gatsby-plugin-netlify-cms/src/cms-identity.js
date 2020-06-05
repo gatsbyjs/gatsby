@@ -8,7 +8,7 @@ const addLoginListener = () =>
     document.location.href = `${__PATH_PREFIX__}/${CMS_PUBLIC_PATH}/`
   })
 
-netlifyIdentityWidget.on(`init`, user => {
+netlifyIdentityWidget.on(`init`, (user) => {
   if (!user) {
     addLoginListener()
   } else {

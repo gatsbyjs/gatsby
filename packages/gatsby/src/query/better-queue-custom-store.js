@@ -94,7 +94,7 @@ function MemoryStoreWithPriorityBuckets() {
       for (const priority of priorityKeys) {
         const taskWithSamePriority = queueMap.get(priority)
         const grabbedTaskIds = taskWithSamePriority.splice(0, remainingTasks)
-        grabbedTaskIds.forEach(taskId => {
+        grabbedTaskIds.forEach((taskId) => {
           // add task to task that will run
           // and remove it from waiting list
           tasksToRun[taskId] = tasks.get(taskId)
@@ -139,13 +139,13 @@ function MemoryStoreWithPriorityBuckets() {
         const taskWithSamePriority = queueMap.get(priority)
         const deleteCount = Math.min(
           remainingTasks,
-          taskWithSamePriority.length
+          taskWithSamePriority.length,
         )
         const grabbedTaskIds = taskWithSamePriority.splice(
           taskWithSamePriority.length - deleteCount,
-          deleteCount
+          deleteCount,
         )
-        grabbedTaskIds.forEach(taskId => {
+        grabbedTaskIds.forEach((taskId) => {
           // add task to task that will run
           // and remove it from waiting list
           tasksToRun[taskId] = tasks.get(taskId)

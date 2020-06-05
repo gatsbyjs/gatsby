@@ -39,18 +39,18 @@ export const babelrcReducer = (
       },
     },
   },
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["babelrc"] => {
   switch (action.type) {
     case `SET_BABEL_PLUGIN`: {
-      Object.keys(state.stages).forEach(stage => {
+      Object.keys(state.stages).forEach((stage) => {
         if (action.payload.stage && action.payload.stage !== stage) {
           return
         }
 
         const index = _.findIndex(
           state.stages[stage].plugins,
-          (plugin: IPlugin) => plugin.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name,
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.
@@ -71,14 +71,14 @@ export const babelrcReducer = (
       return state
     }
     case `SET_BABEL_PRESET`: {
-      Object.keys(state.stages).forEach(stage => {
+      Object.keys(state.stages).forEach((stage) => {
         if (action.payload.stage && action.payload.stage !== stage) {
           return
         }
 
         const index = _.findIndex(
           state.stages[stage].presets,
-          (plugin: IPlugin) => plugin.name === action.payload.name
+          (plugin: IPlugin) => plugin.name === action.payload.name,
         )
         // If the plugin already exists, merge the options.
         // Otherwise, add it to the end.
@@ -98,7 +98,7 @@ export const babelrcReducer = (
       return state
     }
     case `SET_BABEL_OPTIONS`: {
-      Object.keys(state.stages).forEach(stage => {
+      Object.keys(state.stages).forEach((stage) => {
         if (action.payload.stage && action.payload.stage !== stage) {
           return
         }

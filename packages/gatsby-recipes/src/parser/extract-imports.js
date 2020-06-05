@@ -6,7 +6,7 @@ class BabelPluginExtractImportNames {
     const names = {}
     this.state = names
 
-    this.plugin = declare(api => {
+    this.plugin = declare((api) => {
       api.assertVersion(7)
 
       return {
@@ -27,7 +27,7 @@ class BabelPluginExtractImportNames {
   }
 }
 
-module.exports = src => {
+module.exports = (src) => {
   try {
     const plugin = new BabelPluginExtractImportNames()
     babel.transform(src, {

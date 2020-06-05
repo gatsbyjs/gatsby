@@ -27,7 +27,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 
 exports.onPostBuild = async (
   { store, pathPrefix, reporter },
-  userPluginOptions
+  userPluginOptions,
 ) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
@@ -38,8 +38,8 @@ exports.onPostBuild = async (
   if (pluginOptions.generateMatchPathRewrites) {
     const { pages } = store.getState()
     rewrites = Array.from(pages.values())
-      .filter(page => page.matchPath && page.matchPath !== page.path)
-      .map(page => {
+      .filter((page) => page.matchPath && page.matchPath !== page.path)
+      .map((page) => {
         return {
           fromPath: page.matchPath,
           toPath: page.path,

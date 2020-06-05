@@ -5,13 +5,13 @@ getUnownedPackages()
   .then(({ packages, user }) => {
     if (packages.length > 0) {
       console.warn(
-        `The following packages will fail to publish, please add access for ${user}:`
+        `The following packages will fail to publish, please add access for ${user}:`,
       )
-      console.warn(packages.map(pkg => ` - ${pkg.name}`).join(`\n`))
+      console.warn(packages.map((pkg) => ` - ${pkg.name}`).join(`\n`))
       process.exit(1)
     }
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err)
     process.exit(1)
   })

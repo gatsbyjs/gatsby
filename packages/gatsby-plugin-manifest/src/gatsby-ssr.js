@@ -19,7 +19,7 @@ exports.onRenderBody = (
     theme_color_in_head: insertMetaTag,
     theme_color,
     crossOrigin,
-  }
+  },
 ) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
   const headComponents = []
@@ -31,15 +31,15 @@ exports.onRenderBody = (
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
     if (insertFaviconLinkTag) {
-      favicons.forEach(favicon => {
+      favicons.forEach((favicon) => {
         headComponents.push(
           <link
             key={`gatsby-plugin-manifest-icon-link`}
             rel="icon"
             href={withPrefix(
-              addDigestToPath(favicon.src, cacheDigest, cacheBusting)
+              addDigestToPath(favicon.src, cacheDigest, cacheBusting),
             )}
-          />
+          />,
         )
       })
     }
@@ -52,7 +52,7 @@ exports.onRenderBody = (
       rel="manifest"
       href={withPrefix(`/${manifestFileName}`)}
       crossOrigin={crossOrigin}
-    />
+    />,
   )
 
   // The user has an option to opt out of the theme_color meta tag being inserted into the head.
@@ -62,12 +62,12 @@ exports.onRenderBody = (
         key={`gatsby-plugin-manifest-meta`}
         name="theme-color"
         content={theme_color}
-      />
+      />,
     )
   }
 
   if (legacy) {
-    icons.forEach(icon => {
+    icons.forEach((icon) => {
       headComponents.push(
         <link
           key={`gatsby-plugin-manifest-apple-touch-icon-${icon.sizes}`}
@@ -77,10 +77,10 @@ exports.onRenderBody = (
             addDigestToPath(
               icon.src,
               cacheDigest,
-              srcIconExists ? cacheBusting : `none`
-            )
+              srcIconExists ? cacheBusting : `none`,
+            ),
           )}
-        />
+        />,
       )
     })
   }

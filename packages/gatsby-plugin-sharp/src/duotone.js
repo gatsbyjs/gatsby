@@ -3,7 +3,7 @@ const sharp = require(`./safe-sharp`)
 module.exports = async function duotone(duotone, format, pipeline) {
   const duotoneGradient = createDuotoneGradient(
     hexToRgb(duotone.highlight),
-    hexToRgb(duotone.shadow)
+    hexToRgb(duotone.shadow),
   )
 
   const options = {
@@ -41,7 +41,7 @@ module.exports = async function duotone(duotone, format, pipeline) {
       pipeline,
       duotone.opacity,
       format,
-      options
+      options,
     )
   } else {
     return duotoneImage
@@ -68,13 +68,13 @@ function createDuotoneGradient(primaryColorRGB, secondaryColorRGB) {
     const ratio = i / 255
     duotoneGradient.push([
       Math.round(
-        primaryColorRGB[0] * ratio + secondaryColorRGB[0] * (1 - ratio)
+        primaryColorRGB[0] * ratio + secondaryColorRGB[0] * (1 - ratio),
       ),
       Math.round(
-        primaryColorRGB[1] * ratio + secondaryColorRGB[1] * (1 - ratio)
+        primaryColorRGB[1] * ratio + secondaryColorRGB[1] * (1 - ratio),
       ),
       Math.round(
-        primaryColorRGB[2] * ratio + secondaryColorRGB[2] * (1 - ratio)
+        primaryColorRGB[2] * ratio + secondaryColorRGB[2] * (1 - ratio),
       ),
     ])
   }
@@ -87,17 +87,17 @@ async function overlayDuotone(
   originalImage,
   opacity,
   format,
-  options
+  options,
 ) {
   const info = await duotoneImage
     .flatten()
     .metadata()
-    .then(info => info)
+    .then((info) => info)
   // see https://github.com/lovell/sharp/issues/859#issuecomment-311319149
   const percentGrey = Math.round((opacity / 100) * 255)
   const percentTransparency = Buffer.alloc(
     info.width * info.height,
-    percentGrey
+    percentGrey,
   )
 
   const duotoneWithTransparency = await duotoneImage
@@ -119,6 +119,6 @@ async function overlayDuotone(
     .then(({ data, info }) =>
       sharp(data, {
         raw: info,
-      }).toFormat(format, { ...options })
+      }).toFormat(format, { ...options }),
     )
 }

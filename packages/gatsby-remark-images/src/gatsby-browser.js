@@ -16,7 +16,7 @@ exports.onRouteUpdate = (apiCallbackContext, pluginOptions) => {
     const imageWrapper = imageWrappers[i]
 
     const backgroundElement = imageWrapper.querySelector(
-      `.${imageBackgroundClass}`
+      `.${imageBackgroundClass}`,
     )
     const imageElement = imageWrapper.querySelector(`.${imageClass}`)
 

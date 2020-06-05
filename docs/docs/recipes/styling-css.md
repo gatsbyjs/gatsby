@@ -139,7 +139,7 @@ const Username = styled.h2`
   padding: 0;
 `
 
-const User = props => (
+const User = (props) => (
   <>
     <Avatar src={props.avatar} alt={props.username} />
     <Username>{props.username}</Username>

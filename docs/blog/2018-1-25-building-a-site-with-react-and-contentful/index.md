@@ -128,7 +128,7 @@ export default function Gallery({ data }) {
     <div>
       <h1>Photo Gallery</h1>
       // The next line is where I’m map the photos data into React components.
-      {photos.map(photo => (
+      {photos.map((photo) => (
         <div>
           <br />
           <br />
@@ -179,7 +179,7 @@ export default function TricksCommands({ data }) {
   return (
     <div>
       <h1>Tricks and Commands</h1>
-      {tricks.map(trick => (
+      {tricks.map((trick) => (
         <div>
           <br />
           <h2>{trick.node.commandPhrase}</h2>

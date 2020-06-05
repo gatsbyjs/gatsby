@@ -45,7 +45,7 @@ describe(`Resolver context`, () => {
         },
       },
     ]
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       dispatch({ type: `CREATE_NODE`, payload: { ...node } })
     })
   })
@@ -57,7 +57,7 @@ describe(`Resolver context`, () => {
           hello(planet) {
             return `Hello ${planet}!`
           },
-        })
+        }),
       )
       dispatch(
         createTypes(
@@ -78,8 +78,8 @@ describe(`Resolver context`, () => {
                 },
               },
             },
-          })
-        )
+          }),
+        ),
       )
       const query = `
         {
@@ -105,7 +105,7 @@ describe(`Resolver context`, () => {
           hello(planet) {
             return `Hello ${planet}!`
           },
-        })
+        }),
       )
       dispatch(
         createFieldExtension({
@@ -123,14 +123,14 @@ describe(`Resolver context`, () => {
               },
             }
           },
-        })
+        }),
       )
       dispatch(
         createTypes(`
           type Test implements Node {
             hello: String @hello
           }
-        `)
+        `),
       )
       const query = `
         {
@@ -159,8 +159,8 @@ describe(`Resolver context`, () => {
               return `Hello ${planet}!`
             },
           },
-          plugin
-        )
+          plugin,
+        ),
       )
       dispatch(
         createTypes(
@@ -183,8 +183,8 @@ describe(`Resolver context`, () => {
               },
             },
           }),
-          plugin
-        )
+          plugin,
+        ),
       )
       const query = `
         {
@@ -208,7 +208,7 @@ describe(`Resolver context`, () => {
       dispatch(createResolverContext())
       expect(report.error).toBeCalledWith(
         `Expected context value passed to \`createResolverContext\` to be an ` +
-          `object. Received "undefined".`
+          `object. Received "undefined".`,
       )
     })
 
@@ -216,13 +216,13 @@ describe(`Resolver context`, () => {
       dispatch(createResolverContext(() => {}))
       expect(report.error).toBeCalledWith(
         `Expected context value passed to \`createResolverContext\` to be an ` +
-          `object. Received "() => {}".`
+          `object. Received "() => {}".`,
       )
     })
   })
 })
 
-const runQuery = async query => {
+const runQuery = async (query) => {
   await build({})
   const { schema, schemaCustomization } = store.getState()
   const results = await graphql(
@@ -233,7 +233,7 @@ const runQuery = async query => {
       schema,
       schemaComposer: schemaCustomization.composer,
       customContext: schemaCustomization.context,
-    })
+    }),
   )
   expect(results.errors).toBeUndefined()
   return results.data

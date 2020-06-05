@@ -56,7 +56,7 @@ describe(`getNormalizedRichTextField()`, () => {
     })
     currentLocale = `en`
     defaultLocale = `en`
-    getField = field => field[currentLocale]
+    getField = (field) => field[currentLocale]
   })
 
   describe(`when the rich-text object has no entry references`, () => {
@@ -78,7 +78,7 @@ describe(`getNormalizedRichTextField()`, () => {
           contentTypesById,
           getField,
           defaultLocale,
-        })
+        }),
       ).toEqual(field)
     })
   })

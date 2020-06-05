@@ -13,7 +13,7 @@ interface IPresetOptions {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default (_?: unknown, options: IPresetOptions = {}) => {
   const absoluteRuntimePath = path.dirname(
-    require.resolve(`@babel/runtime/package.json`)
+    require.resolve(`@babel/runtime/package.json`),
   )
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option

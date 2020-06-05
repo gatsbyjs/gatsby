@@ -22,7 +22,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       sx={{
         bg: `ui.background`,
         border: selected
-          ? t => `2px ${t.colors[baseColor][60]} solid`
+          ? (t) => `2px ${t.colors[baseColor][60]} solid`
           : `2px transparent solid`,
         borderRadius: 3,
         color: `textMuted`,
@@ -34,7 +34,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
           outline: 0,
         },
         ":hover": {
-          borderColor: t => t.colors[baseColor][60],
+          borderColor: (t) => t.colors[baseColor][60],
         },
       }}
     >
@@ -66,7 +66,7 @@ const LayerModel = ({
   const [sourceIndex, setSourceIndex] = useState(0)
   const refs = useRef(layers.map(() => React.createRef()))
   function downHandler({ key }) {
-    const currentIndex = layers.findIndex(layer => layer.title === selected)
+    const currentIndex = layers.findIndex((layer) => layer.title === selected)
     if (key === `ArrowLeft` && currentIndex !== 0) {
       const targetIndex = currentIndex - 1
       setSelected(layers[targetIndex].title)
@@ -88,7 +88,7 @@ const LayerModel = ({
     <div
       sx={{
         borderRadius: 3,
-        border: t => `1px solid ${t.colors.ui.border}`,
+        border: (t) => `1px solid ${t.colors.ui.border}`,
         padding: 2,
         marginBottom: 6,
       }}
@@ -130,7 +130,7 @@ const LayerModel = ({
             setSourceIndex,
             index,
             displayCodeFullWidth,
-          })
+          }),
       )}
     </div>
   )

@@ -21,7 +21,7 @@ const {
  *
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
-module.exports = babelLoader.custom(babel => {
+module.exports = babelLoader.custom((babel) => {
   const toReturn = {
     // Passed the loader options.
     customOptions({ stage = `test`, ...options }) {
@@ -67,7 +67,7 @@ module.exports = babelLoader.custom(babel => {
       }
 
       // Merge in presets/plugins added from gatsby plugins.
-      reduxPresets.forEach(preset => {
+      reduxPresets.forEach((preset) => {
         options.presets = mergeConfigItemOptions({
           items: options.presets,
           itemToMerge: preset,
@@ -76,7 +76,7 @@ module.exports = babelLoader.custom(babel => {
         })
       })
 
-      reduxPlugins.forEach(plugin => {
+      reduxPlugins.forEach((plugin) => {
         options.plugins = mergeConfigItemOptions({
           items: options.plugins,
           itemToMerge: plugin,

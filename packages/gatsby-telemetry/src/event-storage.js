@@ -22,7 +22,7 @@ module.exports = class EventStorage {
     } catch (e) {
       // This should never happen
       this.config = {
-        get: key => this.config[key],
+        get: (key) => this.config[key],
         set: (key, value) => (this.config[key] = value),
         all: this.config,
         path: path.join(os.tmpdir(), `gatsby`),
@@ -69,11 +69,11 @@ module.exports = class EventStorage {
   }
 
   async sendEvents() {
-    return this.store.startFlushEvents(async eventsData => {
+    return this.store.startFlushEvents(async (eventsData) => {
       const events = eventsData
         .split(`\n`)
-        .filter(e => e && e.length > 2) // drop empty lines
-        .map(e => JSON.parse(e))
+        .filter((e) => e && e.length > 2) // drop empty lines
+        .map((e) => JSON.parse(e))
 
       return this.submitEvents(events)
     })

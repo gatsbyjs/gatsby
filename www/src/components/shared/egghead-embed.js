@@ -9,7 +9,7 @@ const EggheadEmbed = ({ lessonLink, lessonTitle }) => {
 
   const handleResize = useCallback(
     () => setIframeWidth(iframeRef.current.clientWidth),
-    [iframeRef.current]
+    [iframeRef.current],
   )
 
   useLayoutEffect(() => {

@@ -1,4 +1,4 @@
-export const getHeadingID = heading => {
+export const getHeadingID = (heading) => {
   const data = heading.data
   if (data) {
     if (data.id) return data.id

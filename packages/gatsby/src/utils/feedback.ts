@@ -17,7 +17,7 @@ export function setFeedbackDisabledValue(enabled: boolean): void {
 export function showFeedbackRequest(): void {
   getConfigStore().set(lastDateKey, Date.now())
   report.log(
-    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
+    `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`,
   )
   report.log(`\nGive us your feedback here: https://gatsby.dev/feedback\n\n`)
 }
@@ -30,7 +30,7 @@ const randomChanceToBeTrue = (): boolean => {
   const randomNumber = Math.floor(
     Math.random() *
       // One quarter year in days (roughly)
-      (30 * 3)
+      (30 * 3),
   )
   const randomNumberWithinQuarter = randomNumber * currentQuarter
 

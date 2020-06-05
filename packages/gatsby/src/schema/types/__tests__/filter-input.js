@@ -56,8 +56,8 @@ const nodes = [
 describe(`Filter input`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node =>
-      actions.createNode({ ...node }, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode({ ...node }, { name: `test` })(store.dispatch),
     )
   })
 

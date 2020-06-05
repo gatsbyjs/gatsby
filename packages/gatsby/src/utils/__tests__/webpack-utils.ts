@@ -52,36 +52,36 @@ describe(`webpack utils`, () => {
       it(`includes source files from user code`, () => {
         expect(
           js.include(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`,
+          ),
         ).toEqual(true)
       })
       it(`includes files from .cache`, () => {
         expect(
           js.include(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`,
+          ),
         ).toEqual(true)
       })
       it(`includes dependencies that use gatsby`, () => {
         expect(
           js.include(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`,
+          ),
         ).toEqual(true)
       })
       it(`does not include other dependencies`, () => {
         expect(
           js.include(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`,
+          ),
         ).toEqual(false)
       })
       it(`includes gatsby-browser.js`, () => {
         expect(
           js.include(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`,
+          ),
         ).toEqual(true)
       })
     })
@@ -116,50 +116,50 @@ describe(`webpack utils`, () => {
       it(`excludes source files from user code`, () => {
         expect(
           dependencies.exclude(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`,
+          ),
         ).toEqual(true)
       })
       it(`excludes files from .cache`, () => {
         expect(
           dependencies.exclude(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`,
+          ),
         ).toEqual(true)
       })
       it(`excludes dependencies that use gatsby`, () => {
         expect(
           dependencies.exclude(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`,
+          ),
         ).toEqual(true)
       })
       it(`excludes babel-runtime`, () => {
         expect(
           dependencies.exclude(
-            `/Users/misiek/test/pr15285/node_modules/@babel/runtime/helpers/interopRequireDefault.js`
-          )
+            `/Users/misiek/test/pr15285/node_modules/@babel/runtime/helpers/interopRequireDefault.js`,
+          ),
         ).toEqual(true)
       })
       it(`excludes core-js`, () => {
         expect(
           dependencies.exclude(
-            `/Users/misiek/test/pr15285/node_modules/core-js/modules/es6.array.iterator.js`
-          )
+            `/Users/misiek/test/pr15285/node_modules/core-js/modules/es6.array.iterator.js`,
+          ),
         ).toEqual(true)
       })
       it(`includes dependencies that don't use gatsby`, () => {
         expect(
           dependencies.exclude(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/awesome-lib/index.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/awesome-lib/index.js`,
+          ),
         ).toEqual(false)
       })
       it(`excludes gatsby-browser.js`, () => {
         expect(
           dependencies.exclude(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
-          )
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`,
+          ),
         ).toEqual(true)
       })
     })

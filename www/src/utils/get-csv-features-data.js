@@ -7,7 +7,7 @@
 export const getFeaturesData = function (data) {
   const sections = (data || [])
     .map((row, i) => (row.Category ? i : -1))
-    .filter(rowNum => rowNum !== -1)
+    .filter((rowNum) => rowNum !== -1)
     .map((rowNum, i, arr) => {
       if (i < arr.length - 1) {
         return [rowNum, arr[i + 1]]
@@ -15,11 +15,11 @@ export const getFeaturesData = function (data) {
 
       return [rowNum, data.length]
     })
-    .map(bounds => data.slice(bounds[0], bounds[1]))
+    .map((bounds) => data.slice(bounds[0], bounds[1]))
 
   const sectionHeaders = (data || [])
-    .filter(row => row.Category)
-    .map(row => row.Category)
+    .filter((row) => row.Category)
+    .map((row) => row.Category)
 
   return {
     sectionHeaders,

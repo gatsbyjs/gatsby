@@ -181,7 +181,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-    `
+    `,
   )
 
   if (result.errors) {
@@ -195,7 +195,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Instagram post. Since the scraped Instagram data
   // already includes an ID field, we just use that for
   // each page's path.
-  result.data.allPostsJson.edges.forEach(edge => {
+  result.data.allPostsJson.edges.forEach((edge) => {
     // Gatsby uses Redux to manage its internal state.
     // Plugins and sites can use functions like "createPage"
     // to interact with Gatsby.

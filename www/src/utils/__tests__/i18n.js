@@ -7,7 +7,7 @@ describe(`getLanguages`, () => {
 
   it(`returns a list of languages`, () => {
     expect(
-      getLanguages(`es ja id pl pt-BR zh-Hans`).map(lang => lang.code)
+      getLanguages(`es ja id pl pt-BR zh-Hans`).map((lang) => lang.code),
     ).toEqual([`es`, `ja`, `id`, `pl`, `pt-BR`, `zh-Hans`])
   })
 
@@ -26,7 +26,7 @@ describe(`localizedPath`, () => {
     expect(localizedPath(`en`, `/`)).toEqual(`/`)
     expect(localizedPath(`en`, `/docs/`)).toEqual(`/docs/`)
     expect(localizedPath(`en`, `/docs/quick-start/`)).toEqual(
-      `/docs/quick-start/`
+      `/docs/quick-start/`,
     )
   })
 
@@ -34,7 +34,7 @@ describe(`localizedPath`, () => {
     expect(localizedPath(`es`, `/`)).toEqual(`/es/`)
     expect(localizedPath(`es`, `/docs/`)).toEqual(`/es/docs/`)
     expect(localizedPath(`es`, `/docs/quick-start/`)).toEqual(
-      `/es/docs/quick-start/`
+      `/es/docs/quick-start/`,
     )
   })
 

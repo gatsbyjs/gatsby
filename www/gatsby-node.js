@@ -15,11 +15,11 @@ const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
 const sections = [docs, blog, showcase, starters, creators, packages, features]
 
-exports.createPages = async helpers => {
+exports.createPages = async (helpers) => {
   const { actions } = helpers
   const { createRedirect } = actions
 
-  redirects.forEach(redirect => {
+  redirects.forEach((redirect) => {
     createRedirect({ isPermanent: true, ...redirect, force: true })
   })
 
@@ -32,18 +32,18 @@ exports.createPages = async helpers => {
     })
   })
 
-  await Promise.all(sections.map(section => section.createPages(helpers)))
+  await Promise.all(sections.map((section) => section.createPages(helpers)))
 }
 
 // Create slugs for files, set released status for blog posts.
-exports.onCreateNode = helpers => {
-  sections.forEach(section => section.onCreateNode(helpers))
+exports.onCreateNode = (helpers) => {
+  sections.forEach((section) => section.onCreateNode(helpers))
 }
 
 exports.onPostBuild = () => {
   fs.copySync(
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-    `./public/gatsbygram.mp4`
+    `./public/gatsbygram.mp4`,
   )
 }
 
@@ -151,13 +151,13 @@ exports.createResolvers = ({ createResolvers }) => {
             return []
           }
 
-          const availableIn = tags.find(tag => tag.title === `availableIn`)
+          const availableIn = tags.find((tag) => tag.title === `availableIn`)
           if (availableIn) {
             return availableIn.description
               .split(`\n`)[0]
               .replace(/[[\]]/g, ``)
               .split(`,`)
-              .map(api => api.trim())
+              .map((api) => api.trim())
           }
 
           return []

@@ -35,11 +35,11 @@ const getQueriesSnapshot = () => {
 
 const handleComponentsWithRemovedQueries = (
   { components, staticQueryComponents },
-  queries
+  queries,
 ) => {
   // If a component had static query and it doesn't have it
   // anymore - update the store
-  staticQueryComponents.forEach(c => {
+  staticQueryComponents.forEach((c) => {
     if (c.query !== `` && !queries.has(c.componentPath)) {
       debug(`Static query was removed from ${c.componentPath}`)
       store.dispatch({
@@ -54,7 +54,7 @@ const handleComponentsWithRemovedQueries = (
 const handleQuery = (
   { components, staticQueryComponents },
   query,
-  component
+  component,
 ) => {
   // If this is a static query
   // Add action / reducer + watch staticquery files
@@ -83,7 +83,7 @@ const handleQuery = (
       debug(
         `Static query in ${component} ${
           isNewQuery ? `was added` : `has changed`
-        }.`
+        }.`,
       )
 
       boundActionCreators.deleteComponentsDependencies([query.id])
@@ -97,7 +97,7 @@ const handleQuery = (
 
 const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
   const snapshot = getQueriesSnapshot()
-  return queryCompiler({ parentSpan }).then(queries => {
+  return queryCompiler({ parentSpan }).then((queries) => {
     // If there's an error while extracting queries, the queryCompiler returns false
     // or zero results.
     // Yeah, should probably be an error but don't feel like threading the error
@@ -109,11 +109,11 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
     // Run action for each component
     const { components } = snapshot
-    components.forEach(c =>
+    components.forEach((c) =>
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
         query: queries.get(c.componentPath)?.text || ``,
-      })
+      }),
     )
 
     let queriesWillNotRun = false
@@ -127,7 +127,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
         // show a warning about having a query in a non-page component.
       } else if (isFirstRun && !snapshot.components.has(component)) {
         report.warn(
-          `The GraphQL query in the non-page component "${component}" will not be run.`
+          `The GraphQL query in the non-page component "${component}" will not be run.`,
         )
         queriesWillNotRun = true
       }
@@ -164,15 +164,15 @@ const clearInactiveComponents = () => {
   const { components, pages } = store.getState()
 
   const activeTemplates = new Set()
-  pages.forEach(page => {
+  pages.forEach((page) => {
     // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.component))
   })
 
-  components.forEach(component => {
+  components.forEach((component) => {
     if (!activeTemplates.has(component.componentPath)) {
       debug(
-        `${component.componentPath} component was removed because it isn't used by any page`
+        `${component.componentPath} component was removed because it isn't used by any page`,
       )
       store.dispatch({
         type: `REMOVE_TEMPLATE_COMPONENT`,
@@ -200,7 +200,7 @@ exports.extractQueries = ({ parentSpan } = {}) => {
 
 const filesToWatch = new Set()
 let watcher
-const watchComponent = componentPath => {
+const watchComponent = (componentPath) => {
   // We don't start watching until mid-way through the bootstrap so ignore
   // new components being added until then. This doesn't affect anything as
   // when extractQueries is called from bootstrap, we make sure that all
@@ -220,12 +220,12 @@ const debounceCompile = _.debounce(() => {
   updateStateAndRunQueries()
 }, 100)
 
-const watch = async rootDir => {
+const watch = async (rootDir) => {
   if (watcher) return
 
   const modulesThatUseGatsby = await getGatsbyDependents()
 
-  const packagePaths = modulesThatUseGatsby.map(module => {
+  const packagePaths = modulesThatUseGatsby.map((module) => {
     const filesRegex = `*.+(t|j)s?(x)`
     const pathRegex = `/{${filesRegex},!(node_modules)/**/${filesRegex}}`
     return slash(path.join(module.path, pathRegex))
@@ -236,16 +236,16 @@ const watch = async rootDir => {
       slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)),
       ...packagePaths,
     ])
-    .on(`change`, path => {
+    .on(`change`, (path) => {
       report.pendingActivity({ id: `query-extraction` })
       debounceCompile()
     })
 
-  filesToWatch.forEach(filePath => watcher.add(filePath))
+  filesToWatch.forEach((filePath) => watcher.add(filePath))
 }
 
 exports.startWatchDeletePage = () => {
-  emitter.on(`DELETE_PAGE`, action => {
+  emitter.on(`DELETE_PAGE`, (action) => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
     let otherPageWithTemplateExists = false

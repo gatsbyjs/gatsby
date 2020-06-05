@@ -5,7 +5,7 @@ const OutboundLink = React.forwardRef(({ children, ...props }, ref) => (
   <a
     ref={ref}
     {...props}
-    onClick={e => {
+    onClick={(e) => {
       if (typeof props.onClick === `function`) {
         props.onClick(e)
       }

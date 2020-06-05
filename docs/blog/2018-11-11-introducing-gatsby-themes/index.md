@@ -131,7 +131,7 @@ function that will look for the page component first in the user's
 site and then fall back to the theme's default implementation.
 
 ```js
-const withThemePath = relativePath => {
+const withThemePath = (relativePath) => {
   let pathResolvedPath = path.resolve(relativePath)
   let finalPath = pathResolvedPath
 

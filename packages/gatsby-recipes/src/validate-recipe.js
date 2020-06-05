@@ -1,12 +1,12 @@
 const resources = require(`./resources`)
 const _ = require(`lodash`)
 
-module.exports = plan => {
+module.exports = (plan) => {
   const validationErrors = _.compact(
     _.flattenDeep(
       plan.map((step, i) =>
-        Object.keys(step).map(key =>
-          step[key].map(resourceDeclaration => {
+        Object.keys(step).map((key) =>
+          step[key].map((resourceDeclaration) => {
             if (!resources[key]) {
               return {
                 step: i,
@@ -21,7 +21,7 @@ module.exports = plan => {
               return undefined
             }
             const result = resources[key].validate(
-              resourceDeclaration.resourceDefinitions
+              resourceDeclaration.resourceDefinitions,
             )
             if (result.error) {
               return {
@@ -32,10 +32,10 @@ module.exports = plan => {
               }
             }
             return undefined
-          })
-        )
-      )
-    )
+          }),
+        ),
+      ),
+    ),
   )
 
   return validationErrors

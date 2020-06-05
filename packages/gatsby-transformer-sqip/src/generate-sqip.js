@@ -42,7 +42,7 @@ module.exports = async function generateSqip(options) {
   const cachePath = resolve(cacheDir, `${contentDigest}-${optionsHash}.svg`)
 
   debug(
-    `Request preview generation for ${name} (${contentDigest}-${optionsHash})`
+    `Request preview generation for ${name} (${contentDigest}-${optionsHash})`,
   )
 
   return queue.add(async () => {
@@ -51,19 +51,19 @@ module.exports = async function generateSqip(options) {
 
     if (!primitiveData) {
       debug(
-        `Executing preview generation request for ${name} (${contentDigest}-${optionsHash})`
+        `Executing preview generation request for ${name} (${contentDigest}-${optionsHash})`,
       )
 
       try {
         if (await exists(cachePath)) {
           debug(
-            `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`
+            `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`,
           )
           const svgBuffer = await readFile(cachePath)
           svg = svgBuffer.toString()
         } else {
           debug(
-            `Generate primitive result file of ${name} (${contentDigest}-${optionsHash})`
+            `Generate primitive result file of ${name} (${contentDigest}-${optionsHash})`,
           )
 
           const result = await new Promise((resolve, reject) => {
@@ -82,7 +82,7 @@ module.exports = async function generateSqip(options) {
 
           await writeFile(cachePath, svg)
           debug(
-            `Wrote primitive result file to disk for ${name} (${contentDigest}-${optionsHash})`
+            `Wrote primitive result file to disk for ${name} (${contentDigest}-${optionsHash})`,
           )
         }
 

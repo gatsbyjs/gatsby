@@ -6,7 +6,7 @@ import PrismCodeBlock from "@theme-ui/prism"
 
 import headings from "../components/headings"
 
-const CodeBlock = preProps => {
+const CodeBlock = (preProps) => {
   const props = preToCodeBlock(preProps)
 
   if (props) {

@@ -96,7 +96,7 @@ describe(`Print type definitions`, () => {
             types: [`OneMoreTest`],
           },
         },
-      })
+      }),
     )
     store.dispatch({
       type: `CREATE_TYPES`,
@@ -128,7 +128,7 @@ describe(`Print type definitions`, () => {
     await build({})
     expect(report.error).toHaveBeenCalledTimes(1)
     expect(report.error).toHaveBeenCalledWith(
-      `Printing type definitions aborted. The file \`typedefs.gql\` already exists.`
+      `Printing type definitions aborted. The file \`typedefs.gql\` already exists.`,
     )
     fs.existsSync.mockReset()
   })
@@ -145,7 +145,7 @@ describe(`Print type definitions`, () => {
         include: {
           types: [`AnotherTest`],
         },
-      })
+      }),
     )
     await build({})
     expect(fs.writeFile.mock.calls[0][1]).toMatchSnapshot()
@@ -157,7 +157,7 @@ describe(`Print type definitions`, () => {
         include: {
           plugins: [`gatsby-plugin-another-test`],
         },
-      })
+      }),
     )
     await build({})
     expect(fs.writeFile.mock.calls[0][1]).toMatchSnapshot()
@@ -169,7 +169,7 @@ describe(`Print type definitions`, () => {
         exclude: {
           types: [`InlineTest`],
         },
-      })
+      }),
     )
     await build({})
     expect(fs.writeFile.mock.calls[0][1]).toMatchSnapshot()
@@ -181,7 +181,7 @@ describe(`Print type definitions`, () => {
         exclude: {
           plugins: [`gatsby-plugin-test`],
         },
-      })
+      }),
     )
     await build({})
     expect(fs.writeFile.mock.calls[0][1]).toMatchSnapshot()
@@ -194,7 +194,7 @@ describe(`Print type definitions`, () => {
           types: [`InlineTest`],
         },
         withFieldTypes: false,
-      })
+      }),
     )
     await build({})
     expect(fs.writeFile.mock.calls[0][1]).toMatchSnapshot()

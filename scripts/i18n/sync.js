@@ -71,7 +71,7 @@ async function getRepository(owner, name) {
       owner,
       name,
       syncLabel: syncLabelName,
-    }
+    },
   )
   return repository
 }
@@ -92,7 +92,7 @@ async function createLabel(input) {
         accept: `application/vnd.github.bane-preview+json`,
       },
       input,
-    }
+    },
   )
   return createLabel.label
 }
@@ -114,7 +114,7 @@ async function createPullRequest(input) {
         accept: `application/vnd.github.shadow-cat-preview+json`,
       },
       input,
-    }
+    },
   )
   return createPullRequest.pullRequest
 }
@@ -136,7 +136,7 @@ async function addLabelToPullRequest(pullRequest, label) {
         labelableId: pullRequest.id,
         labelIds: [label.id],
       },
-    }
+    },
   )
 }
 
@@ -151,7 +151,7 @@ For more information on how to resolve sync conflicts, check out the [guide for 
     conflictFiles.length
   } files have conflicts:</summary><br />
 
-${conflictFiles.map(file => `* [ ] ${file}`).join(`\n`)}
+${conflictFiles.map((file) => `* [ ] ${file}`).join(`\n`)}
 </details>
 
 Once all the commits have been fixed, mark this pull request as "Ready for review" and merge it in!
@@ -195,7 +195,7 @@ async function syncTranslationRepo(code) {
 
   if (repository.syncPullRequests.nodes.length > 0) {
     logger.info(
-      `There are currently open sync pull requests. Please ask the language maintainers to merge the existing PR(s) in before opening another one. Exiting...`
+      `There are currently open sync pull requests. Please ask the language maintainers to merge the existing PR(s) in before opening another one. Exiting...`,
     )
     process.exit(0)
   }
@@ -205,7 +205,7 @@ async function syncTranslationRepo(code) {
   let syncLabel
   if (!repository.syncLabel) {
     logger.info(
-      `Repository does not have a "${syncLabelName}" label. Creating one...`
+      `Repository does not have a "${syncLabelName}" label. Creating one...`,
     )
     syncLabel = await createLabel({
       repositoryId: repository.id,
@@ -281,8 +281,8 @@ async function syncTranslationRepo(code) {
   const lines = output.split(`\n`)
 
   // find all merge conflicts
-  const conflictLines = lines.filter(line =>
-    line.startsWith(`CONFLICT (content)`)
+  const conflictLines = lines.filter((line) =>
+    line.startsWith(`CONFLICT (content)`),
   )
 
   // If no conflicts, exit early
@@ -293,8 +293,8 @@ async function syncTranslationRepo(code) {
 
   // Message is of the form:
   // CONFLICT (content): Merge conflict in {file path}
-  const conflictFiles = conflictLines.map(line =>
-    line.substr(line.lastIndexOf(` `) + 1)
+  const conflictFiles = conflictLines.map((line) =>
+    line.substr(line.lastIndexOf(` `) + 1),
   )
   // Do a soft reset and unstage non-conflicted files
   shell.exec(`git reset`, { silent: true })
@@ -302,13 +302,13 @@ async function syncTranslationRepo(code) {
   // Add all the conflicts as-is
   shell.exec(`git add ${conflictFiles.join(` `)}`)
 
-  const removedLines = lines.filter(line =>
-    line.startsWith(`CONFLICT (modify/delete)`)
+  const removedLines = lines.filter((line) =>
+    line.startsWith(`CONFLICT (modify/delete)`),
   )
   // Deleted message format:
   // CONFLICT (modify/delete): {file path} deleted in {hash} and modified in HEAD. Version HEAD of {file path} left in tree.
   const removedFiles = removedLines.map(
-    line => line.replace(`CONFLICT (modify/delete): `, ``).split(` `)[0]
+    (line) => line.replace(`CONFLICT (modify/delete): `, ``).split(` `)[0],
   )
   if (removedFiles.length > 0) {
     shell.exec(`git rm ${removedFiles.join(` `)}`, { silent: true })

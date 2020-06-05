@@ -12,7 +12,7 @@ module.exports = (code, additionalHtmlEscapes = {}) => {
     ...baseHTMLEscapes,
   }
 
-  const escapedChars = char => htmlEscapes[char]
+  const escapedChars = (char) => htmlEscapes[char]
 
   const chars = Object.keys(htmlEscapes)
 

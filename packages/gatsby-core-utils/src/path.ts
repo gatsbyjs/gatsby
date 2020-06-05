@@ -75,7 +75,7 @@ const nodePaths = [
  * @param fileName File name
  */
 export const isNodeInternalModulePath = (fileName: string): boolean =>
-  nodePaths.some(regTest => regTest.test(fileName))
+  nodePaths.some((regTest) => regTest.test(fileName))
 
 /**
  * Convert Windows backslash paths to slash paths: foo\\bar ➔ foo/bar

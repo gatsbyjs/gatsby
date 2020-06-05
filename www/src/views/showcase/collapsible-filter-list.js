@@ -13,13 +13,13 @@ const CollapsibleFilterList = ({
   heading,
 }) => (
   <Collapsible heading={heading}>
-    {categoryKeys.map(c => (
+    {categoryKeys.map((c) => (
       <button
         key={c}
         className={filters.includes(c) ? `selected` : ``}
         onClick={() => {
           if (filters.includes(c)) {
-            setFilters(filters.filter(f => f !== c))
+            setFilters(filters.filter((f) => f !== c))
           } else {
             setFilters([...filters, c])
           }

@@ -98,8 +98,8 @@ class Messages extends React.Component {
   // note: this is a simplified example without error handling, authentication, etc.
   async componentDidMount() {
     const messages = await fetch(
-      `/api/some-url-to-get-messages`
-    ).then(response => response.json())
+      `/api/some-url-to-get-messages`,
+    ).then((response) => response.json())
 
     this.setState({
       messages,
@@ -114,7 +114,7 @@ class Messages extends React.Component {
           <p>Loading messages&hellip;</p>
         ) : (
           <ul>
-            {messages.map(message => (
+            {messages.map((message) => (
               <li key={message.id}>{message.text}</li>
             ))}
           </ul>

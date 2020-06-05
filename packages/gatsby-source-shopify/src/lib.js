@@ -5,7 +5,7 @@ import { get, getOr, last } from "lodash/fp"
 /**
  * Print an error from a GraphQL client
  */
-export const printGraphQLError = e => {
+export const printGraphQLError = (e) => {
   const prettyjsonOptions = { keysColor: `red`, dashColor: `red` }
 
   if (e.response && e.response.errors) {
@@ -35,11 +35,11 @@ export const queryAll = async (
   query,
   first = 250,
   after = null,
-  aggregatedResponse = null
+  aggregatedResponse = null,
 ) => {
   const data = await queryOnce(client, query, first, after)
   const edges = getOr([], [...path, `edges`], data)
-  const nodes = edges.map(edge => edge.node)
+  const nodes = edges.map((edge) => edge.node)
 
   aggregatedResponse = aggregatedResponse
     ? aggregatedResponse.concat(nodes)
@@ -52,7 +52,7 @@ export const queryAll = async (
       query,
       first,
       last(edges).cursor,
-      aggregatedResponse
+      aggregatedResponse,
     )
   }
 

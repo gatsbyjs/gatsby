@@ -21,7 +21,7 @@ const { ensureDir, writeFile } = require(`fs-extra`)
 const { createFileNode } = require(`../create-file-node`)
 const createFileNodeFromBuffer = require(`../create-file-node-from-buffer`)
 
-const createMockBuffer = content => {
+const createMockBuffer = (content) => {
   const buffer = Buffer.alloc(content.length)
   buffer.write(content)
   return buffer
@@ -69,7 +69,7 @@ describe(`create-file-node-from-buffer`, () => {
 
     it(`rejects when the buffer can't be read`, () => {
       expect(setup({ buffer: null })).rejects.toEqual(
-        expect.stringContaining(`bad buffer`)
+        expect.stringContaining(`bad buffer`),
       )
     })
 
@@ -115,7 +115,7 @@ describe(`create-file-node-from-buffer`, () => {
       expect(createFileNode).toBeCalledWith(
         expect.stringContaining(`cached-file-path`),
         expect.any(Function),
-        expect.any(Object)
+        expect.any(Object),
       )
     })
   })
@@ -128,7 +128,7 @@ describe(`create-file-node-from-buffer`, () => {
           createNode: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"createNode must be a function, was undefined"`
+        `"createNode must be a function, was undefined"`,
       )
     })
 
@@ -139,7 +139,7 @@ describe(`create-file-node-from-buffer`, () => {
           createNodeId: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"createNodeId must be a function, was undefined"`
+        `"createNodeId must be a function, was undefined"`,
       )
     })
 
@@ -151,7 +151,7 @@ describe(`create-file-node-from-buffer`, () => {
           getCache: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
+        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`,
       )
     })
 

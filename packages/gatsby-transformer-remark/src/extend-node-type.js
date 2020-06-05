@@ -27,19 +27,19 @@ const { timeToRead } = require(`./utils/time-to-read`)
 let fileNodes
 let pluginsCacheStr = ``
 let pathPrefixCacheStr = ``
-const astCacheKey = node =>
+const astCacheKey = (node) =>
   `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const htmlCacheKey = node =>
+const htmlCacheKey = (node) =>
   `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const htmlAstCacheKey = node =>
+const htmlAstCacheKey = (node) =>
   `transformer-remark-markdown-html-ast-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
-const headingsCacheKey = node =>
+const headingsCacheKey = (node) =>
   `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const tableOfContentsCacheKey = (node, appliedTocOptions) =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
   }-${pluginsCacheStr}-${JSON.stringify(
-    appliedTocOptions
+    appliedTocOptions,
   )}-${pathPrefixCacheStr}`
 
 // ensure only one `/` in new url
@@ -47,7 +47,7 @@ const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
 // TODO: remove this check with next major release
-const safeGetCache = ({ getCache, cache }) => id => {
+const safeGetCache = ({ getCache, cache }) => (id) => {
   if (!getCache) {
     return cache
   }
@@ -91,12 +91,12 @@ module.exports = (
     reporter,
     ...rest
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
-  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  pluginsCacheStr = pluginOptions.plugins.map((p) => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
 
   const getCache = safeGetCache({ cache, getCache: possibleGetCache })
@@ -130,7 +130,7 @@ module.exports = (
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (let parserPlugin of requiredPlugin.setParserPlugins(
-          plugin.pluginOptions
+          plugin.pluginOptions,
         )) {
           if (_.isArray(parserPlugin)) {
             const [parser, options] = parserPlugin
@@ -152,10 +152,10 @@ module.exports = (
         return await ASTPromiseMap.get(cacheKey)
       } else {
         const ASTGenerationPromise = getMarkdownAST(markdownNode)
-        ASTGenerationPromise.then(markdownAST => {
+        ASTGenerationPromise.then((markdownAST) => {
           ASTPromiseMap.delete(cacheKey)
           return cache.set(cacheKey, markdownAST)
-        }).catch(err => {
+        }).catch((err) => {
           ASTPromiseMap.delete(cacheKey)
           return err
         })
@@ -173,8 +173,8 @@ module.exports = (
       // so that they can use our parser/generator
       // with all the options and plugins from the user
       const compiler = {
-        parseString: string => parseString(string, markdownNode),
-        generateHTML: ast =>
+        parseString: (string) => parseString(string, markdownNode),
+        generateHTML: (ast) =>
           hastToHTML(markdownASTToHTMLAst(ast), {
             allowDangerousHTML: true,
           }),
@@ -184,7 +184,7 @@ module.exports = (
 
       if (basePath) {
         // Ensure relative links include `pathPrefix`
-        visit(markdownAST, [`link`, `definition`], node => {
+        visit(markdownAST, [`link`, `definition`], (node) => {
           if (
             node.url &&
             node.url.startsWith(`/`) &&
@@ -199,7 +199,7 @@ module.exports = (
         fileNodes = getNodesByType(`File`)
       }
       // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      await Promise.each(pluginOptions.plugins, (plugin) => {
         const requiredPlugin = require(plugin.resolve)
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
@@ -222,7 +222,7 @@ module.exports = (
               compiler,
               ...rest,
             },
-            plugin.pluginOptions
+            plugin.pluginOptions,
           )
         } else {
           return Promise.resolve()
@@ -241,7 +241,7 @@ module.exports = (
       // before parsing its content
       //
       // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      await Promise.each(pluginOptions.plugins, (plugin) => {
         const requiredPlugin = require(plugin.resolve)
         if (_.isFunction(requiredPlugin.mutateSource)) {
           return requiredPlugin.mutateSource(
@@ -254,7 +254,7 @@ module.exports = (
               getCache,
               ...rest,
             },
-            plugin.pluginOptions
+            plugin.pluginOptions,
           )
         } else {
           return Promise.resolve()
@@ -270,7 +270,7 @@ module.exports = (
         return cachedHeadings
       } else {
         const ast = await getAST(markdownNode)
-        const headings = select(ast, `heading`).map(heading => {
+        const headings = select(ast, `heading`).map((heading) => {
           return {
             id: getHeadingID(heading),
             value: mdastToString(heading),
@@ -288,7 +288,7 @@ module.exports = (
       let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
       // get cached toc
       const cachedToc = await cache.get(
-        tableOfContentsCacheKey(markdownNode, appliedTocOptions)
+        tableOfContentsCacheKey(markdownNode, appliedTocOptions),
       )
       if (cachedToc) {
         return cachedToc
@@ -305,7 +305,7 @@ module.exports = (
                 undefined
               ) {
                 console.warn(
-                  `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`
+                  `Skipping TableOfContents. Field '${appliedTocOptions.pathToSlugField}' missing from markdown node`,
                 )
                 return null
               }
@@ -319,7 +319,7 @@ module.exports = (
             }
             if (node.children) {
               node.children = node.children
-                .map(node => addSlugToUrl(node))
+                .map((node) => addSlugToUrl(node))
                 .filter(Boolean)
             }
 
@@ -382,13 +382,13 @@ module.exports = (
     async function getExcerptAst(
       fullAST,
       markdownNode,
-      { pruneLength, truncate, excerptSeparator }
+      { pruneLength, truncate, excerptSeparator },
     ) {
       if (excerptSeparator && markdownNode.excerpt !== ``) {
         return cloneTreeUntil(
           fullAST,
           ({ nextNode }) =>
-            nextNode.type === `raw` && nextNode.value === excerptSeparator
+            nextNode.type === `raw` && nextNode.value === excerptSeparator,
         )
       }
       if (!fullAST.children.length) {
@@ -415,7 +415,7 @@ module.exports = (
         lastTextNode.value = prune(
           lastTextNode.value,
           desiredLengthOfLastNode,
-          `…`
+          `…`,
         )
       } else {
         lastTextNode.value = _.truncate(lastTextNode.value, {
@@ -430,7 +430,7 @@ module.exports = (
       markdownNode,
       pruneLength,
       truncate,
-      excerptSeparator
+      excerptSeparator,
     ) {
       const fullAST = await getHTMLAst(markdownNode)
       const excerptAST = await getExcerptAst(fullAST, markdownNode, {
@@ -448,7 +448,7 @@ module.exports = (
       markdownNode,
       pruneLength,
       truncate,
-      excerptSeparator
+      excerptSeparator,
     ) {
       // if excerptSeparator in options and excerptSeparator in content then we will get an excerpt from grayMatter that we can use
       if (excerptSeparator && markdownNode.excerpt !== ``) {
@@ -468,15 +468,15 @@ module.exports = (
       markdownNode,
       pruneLength,
       truncate,
-      excerptSeparator
+      excerptSeparator,
     ) {
-      const text = await getAST(markdownNode).then(ast => {
+      const text = await getAST(markdownNode).then((ast) => {
         let excerptNodes = []
         let isBeforeSeparator = true
         visit(
           ast,
-          node => isBeforeSeparator,
-          node => {
+          (node) => isBeforeSeparator,
+          (node) => {
             if (excerptSeparator && node.value === excerptSeparator) {
               isBeforeSeparator = false
             } else if (node.type === `text` || node.type === `inlineCode`) {
@@ -487,7 +487,7 @@ module.exports = (
               // Add a space when encountering one of these node types.
               excerptNodes.push(` `)
             }
-          }
+          },
         )
 
         const excerptText = excerptNodes.join(``).trim()
@@ -508,28 +508,28 @@ module.exports = (
 
     async function getExcerpt(
       markdownNode,
-      { format, pruneLength, truncate, excerptSeparator }
+      { format, pruneLength, truncate, excerptSeparator },
     ) {
       if (format === `HTML`) {
         return getExcerptHtml(
           markdownNode,
           pruneLength,
           truncate,
-          excerptSeparator
+          excerptSeparator,
         )
       } else if (format === `MARKDOWN`) {
         return getExcerptMarkdown(
           markdownNode,
           pruneLength,
           truncate,
-          excerptSeparator
+          excerptSeparator,
         )
       }
       return getExcerptPlain(
         markdownNode,
         pruneLength,
         truncate,
-        excerptSeparator
+        excerptSeparator,
       )
     }
 
@@ -543,7 +543,7 @@ module.exports = (
       htmlAst: {
         type: `JSON`,
         resolve(markdownNode) {
-          return getHTMLAst(markdownNode).then(ast => {
+          return getHTMLAst(markdownNode).then((ast) => {
             const strippedAst = stripPosition(_.clone(ast), true)
             return hastReparseRaw(strippedAst)
           })
@@ -588,14 +588,14 @@ module.exports = (
         },
         resolve(markdownNode, { pruneLength, truncate }) {
           return getHTMLAst(markdownNode)
-            .then(fullAST =>
+            .then((fullAST) =>
               getExcerptAst(fullAST, markdownNode, {
                 pruneLength,
                 truncate,
                 excerptSeparator: pluginOptions.excerpt_separator,
-              })
+              }),
             )
-            .then(ast => {
+            .then((ast) => {
               const strippedAst = stripPosition(_.clone(ast), true)
               return hastReparseRaw(strippedAst)
             })
@@ -607,10 +607,10 @@ module.exports = (
           depth: `MarkdownHeadingLevels`,
         },
         resolve(markdownNode, { depth }) {
-          return getHeadings(markdownNode).then(headings => {
+          return getHeadings(markdownNode).then((headings) => {
             const level = depth && headingLevels[depth]
             if (typeof level === `number`) {
-              headings = headings.filter(heading => heading.depth === level)
+              headings = headings.filter((heading) => heading.depth === level)
             }
             return headings
           })

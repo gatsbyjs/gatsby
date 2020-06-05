@@ -5,7 +5,7 @@ import normalizePagePath from "./normalize-page-path"
 const pathCache = new Map()
 let matchPaths = []
 
-const trimPathname = rawPathname => {
+const trimPathname = (rawPathname) => {
   const pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
   const trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
@@ -30,7 +30,7 @@ function absolutify(path) {
   // match behavior of @reach/router
   return new URL(
     path,
-    window.location.href + (window.location.href.endsWith(`/`) ? `` : `/`)
+    window.location.href + (window.location.href.endsWith(`/`) ? `` : `/`),
   ).pathname
 }
 
@@ -39,7 +39,7 @@ function absolutify(path) {
  *
  * @param {Array<{path: string, matchPath: string}>} value collection of matchPaths
  */
-export const setMatchPaths = value => {
+export const setMatchPaths = (value) => {
   matchPaths = value
 }
 
@@ -51,7 +51,7 @@ export const setMatchPaths = value => {
  * @param {string} rawPathname A raw pathname
  * @return {string|null}
  */
-export const findMatchPath = rawPathname => {
+export const findMatchPath = (rawPathname) => {
   const trimmedPathname = cleanPath(rawPathname)
 
   for (const { matchPath, path } of matchPaths) {
@@ -71,7 +71,7 @@ export const findMatchPath = rawPathname => {
 //
 // Or if `match-paths.json` contains `{ "/foo*": "/page1", ...}`, then
 // `/foo?bar=far` => `/page1`
-export const findPath = rawPathname => {
+export const findPath = (rawPathname) => {
   const trimmedPathname = trimPathname(absolutify(rawPathname))
   if (pathCache.has(trimmedPathname)) {
     return pathCache.get(trimmedPathname)
@@ -95,7 +95,7 @@ export const findPath = rawPathname => {
  * @param {string} rawPathname A raw pathname
  * @return {string}
  */
-export const cleanPath = rawPathname => {
+export const cleanPath = (rawPathname) => {
   const trimmedPathname = trimPathname(absolutify(rawPathname))
 
   let foundPath = trimmedPathname

@@ -1,4 +1,4 @@
-export default path => {
+export default (path) => {
   if (path === undefined) {
     return path
   }

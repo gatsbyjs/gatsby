@@ -25,7 +25,7 @@ export function getPhysicalCpuCount(): number {
   try {
     if (platform === `linux`) {
       const output = exec(
-        `lscpu -p | egrep -v "^#" | sort -u -t, -k 2,4 | wc -l`
+        `lscpu -p | egrep -v "^#" | sort -u -t, -k 2,4 | wc -l`,
       )
       return Number(output.trim())
     }
@@ -40,8 +40,8 @@ export function getPhysicalCpuCount(): number {
       return output
         .replace(/\r/g, ``)
         .split(`\n`)
-        .map(line => Number(line))
-        .filter(value => !isNaN(value))
+        .map((line) => Number(line))
+        .filter((value) => !isNaN(value))
         .reduce((sum, number) => sum + number, 0)
     }
   } catch (err) {

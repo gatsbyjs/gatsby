@@ -22,17 +22,17 @@ function isCodeFile(node) {
     node.internal.type === `File` &&
     node.sourceInstanceName === `gatsby-core` &&
     [`js`].includes(node.extension) &&
-    !ignorePatterns.some(ignorePattern =>
-      minimatch(node.relativePath, ignorePattern)
+    !ignorePatterns.some((ignorePattern) =>
+      minimatch(node.relativePath, ignorePattern),
     )
   )
 }
 
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
-const slugToAnchor = slug =>
+const slugToAnchor = (slug) =>
   slug
     .split(`/`) // split on dir separators
-    .filter(item => item !== ``) // remove empty values
+    .filter((item) => item !== ``) // remove empty values
     .pop() // take last item
 
 exports.createPages = async ({ graphql, actions }) => {
@@ -67,7 +67,7 @@ exports.createPages = async ({ graphql, actions }) => {
   if (errors) throw errors
 
   // Create docs pages.
-  data.allMdx.nodes.forEach(node => {
+  data.allMdx.nodes.forEach((node) => {
     const slug = _.get(node, `fields.slug`)
     const locale = _.get(node, `fields.locale`)
     if (!slug) return
@@ -113,7 +113,7 @@ exports.onCreateNode = async ({
   if (isCodeFile(node)) {
     const calls = await findApiCalls({ node, loadNodeContent })
     if (calls.length > 0) {
-      calls.forEach(call => {
+      calls.forEach((call) => {
         const apiCallNode = {
           id: createNodeId(`findApiCalls-${JSON.stringify(call)}`),
           parent: node.id,

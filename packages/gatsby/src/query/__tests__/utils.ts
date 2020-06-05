@@ -6,8 +6,8 @@ describe(`Text formatting `, () => {
       indentString(
         `  Line 1
 Line 2
-  - Line 3`
-      )
+  - Line 3`,
+      ),
     ).toMatchSnapshot()
   })
 
@@ -18,7 +18,7 @@ Line 2
       `Bar`,
       `Three
 line
-error`
+error`,
     )
     expect(formatErrorDetails(testErrors)).toMatchSnapshot()
   })

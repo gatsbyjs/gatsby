@@ -157,7 +157,7 @@ exports.createResolvers = ({ createResolvers, schema }) => {
               },
               args,
               context,
-              info
+              info,
             )
           } else {
             return info.originalResolver(source, args, context, info)
@@ -180,7 +180,7 @@ createResolvers({
         const authors = context.nodeModel.getAllNodes({
           type: `AuthorJson`,
         })
-        return authors.map(author => author.name)
+        return authors.map((author) => author.name)
       },
     },
   },

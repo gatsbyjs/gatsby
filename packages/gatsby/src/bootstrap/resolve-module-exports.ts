@@ -9,7 +9,7 @@ import { testRequireError } from "../utils/test-require-error"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
-  resolver = require.resolve
+  resolver = require.resolve,
 ): string[] => {
   let absPath: string | undefined
   const exportNames: string[] = []
@@ -34,11 +34,11 @@ const staticallyAnalyzeExports = (
         },
         {
           highlightCode: true,
-        }
+        },
       )
 
       report.panic(
-        `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`
+        `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`,
       )
     } else {
       // if it's not syntax error, just throw it
@@ -129,7 +129,7 @@ plugin: ${modulePath}.js
 
 This didn't cause a problem in Gatsby v1 so you might want to review the migration doc for this:
 https://gatsby.dev/no-mixed-modules
-      `
+      `,
     )
   }
   return exportNames
@@ -147,14 +147,14 @@ https://gatsby.dev/no-mixed-modules
  */
 export const resolveModuleExports = (
   modulePath: string,
-  { mode = `analysis`, resolver = require.resolve } = {}
+  { mode = `analysis`, resolver = require.resolve } = {},
 ): string[] => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {
       absPath = resolver(modulePath)
       return Object.keys(require(modulePath)).filter(
-        exportName => exportName !== `__esModule`
+        (exportName) => exportName !== `__esModule`,
       )
     } catch (e) {
       if (!testRequireError(modulePath, e)) {

@@ -53,7 +53,7 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
           createContentDigest,
         })
         expect(loadNodeContent).toBeCalled()
-      }
+      },
     )
 
     it(`should not loadNodeContent for not javascript file`, async () => {
@@ -111,7 +111,7 @@ describe(`gatsby-transformer-javascript-frontmatter`, () => {
         createContentDigest,
       })
       expect(actions.createNode.mock.calls[0][0].fileAbsolutePath).toEqual(
-        node.absolutePath
+        node.absolutePath,
       )
     })
   })

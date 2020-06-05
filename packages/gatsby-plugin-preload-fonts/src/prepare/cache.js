@@ -17,7 +17,7 @@ try {
   fs.accessSync(cacheDir, fs.constants.W_OK)
 } catch (e) {
   console.log(
-    `could not write to cache directory, please make sure the following path exists and is writable`
+    `could not write to cache directory, please make sure the following path exists and is writable`,
   )
   console.log(`  ${cacheDir}`)
   console.error(e)

@@ -39,7 +39,7 @@ export function initializeYurnalistLogger(): void {
     },
   }
 
-  onLogAction(action => {
+  onLogAction((action) => {
     switch (action.type) {
       case Actions.Log: {
         const yurnalistMethod = levelToYurnalist[action.payload.level]
@@ -98,7 +98,7 @@ export function initializeYurnalistLogger(): void {
               curr: action.payload.current,
               width: 30,
               clear: true,
-            }
+            },
           )
 
           activities[action.payload.id] = {

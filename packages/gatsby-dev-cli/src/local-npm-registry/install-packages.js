@@ -11,8 +11,8 @@ const installPackages = async ({
 }) => {
   console.log(
     `Installing packages from local registry:\n${packagesToInstall
-      .map(packageAndVersion => ` - ${packageAndVersion}`)
-      .join(`\n`)}`
+      .map((packageAndVersion) => ` - ${packageAndVersion}`)
+      .join(`\n`)}`,
   )
   let installCmd
   if (yarnWorkspaceRoot) {
@@ -65,7 +65,7 @@ const installPackages = async ({
           workspacesLayout = JSON.parse(jsonString)
         } catch (e) {
           console.error(
-            `Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`
+            `Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`,
           )
           // not exitting here, because we have general check for `workspacesLayout` being set below
         }
@@ -75,18 +75,18 @@ const installPackages = async ({
     if (!workspacesLayout) {
       console.error(
         `Couldn't parse output of "yarn workspaces info" command`,
-        stdout
+        stdout,
       )
       process.exit(1)
     }
 
-    const handleDeps = deps => {
+    const handleDeps = (deps) => {
       if (!deps) {
         return false
       }
 
       let changed = false
-      Object.keys(deps).forEach(depName => {
+      Object.keys(deps).forEach((depName) => {
         if (packagesToInstall.includes(depName)) {
           deps[depName] = `gatsby-dev`
           changed = true
@@ -95,7 +95,7 @@ const installPackages = async ({
       return changed
     }
 
-    Object.keys(workspacesLayout).forEach(workspaceName => {
+    Object.keys(workspacesLayout).forEach((workspaceName) => {
       const { location } = workspacesLayout[workspaceName]
       const pkgJsonPath = path.join(yarnWorkspaceRoot, location, `package.json`)
       if (!fs.existsSync(pkgJsonPath)) {
@@ -124,7 +124,7 @@ const installPackages = async ({
       `yarn`,
       [
         `add`,
-        ...packagesToInstall.map(packageName => {
+        ...packagesToInstall.map((packageName) => {
           const packageVersion = newlyPublishedPackageVersions[packageName]
           return `${packageName}@${packageVersion}`
         }),

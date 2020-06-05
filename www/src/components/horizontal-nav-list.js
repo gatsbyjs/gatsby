@@ -19,7 +19,7 @@ const HorizontalNavList = ({ items = [], slug }) => (
         },
       }}
     >
-      {items.map(item => (
+      {items.map((item) => (
         <li
           sx={{
             m: 0,

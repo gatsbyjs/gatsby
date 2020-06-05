@@ -48,7 +48,7 @@ describe(`shadow-file create relative path for theme file`, () => {
       relativePathForShadowedFile({
         theme: `foo-theme`,
         filePath: `src/foo.js`,
-      })
+      }),
     ).toEqual(`src/foo-theme/foo.js`)
   })
   it(`should create the corect path for a scoped npm package`, () => {
@@ -56,7 +56,7 @@ describe(`shadow-file create relative path for theme file`, () => {
       relativePathForShadowedFile({
         theme: `@bar/foo-theme`,
         filePath: `src/foo.js`,
-      })
+      }),
     ).toEqual(`src/@bar/foo-theme/foo.js`)
   })
 })
@@ -69,7 +69,7 @@ describe(`shadow-file create full path to theme file`, () => {
         root: `/sup/`,
         theme: `foo-theme`,
         filePath: `src/foo.js`,
-      })
+      }),
     ).toEqual(`/sup/node_modules/foo-theme/src/foo.js`)
   })
   it(`should create the corect path for a scoped npm package`, () => {
@@ -78,7 +78,7 @@ describe(`shadow-file create full path to theme file`, () => {
         root: `/sup/`,
         theme: `@bar/foo-theme`,
         filePath: `src/foo.js`,
-      })
+      }),
     ).toEqual(`/sup/node_modules/@bar/foo-theme/src/foo.js`)
   })
 })

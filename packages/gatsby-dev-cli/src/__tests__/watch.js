@@ -25,7 +25,7 @@ jest.mock(`verdaccio`, () => {
           port: `aa`,
           path: `bb`,
           host: `cc,`,
-        }
+        },
       )
     },
   }
@@ -105,7 +105,7 @@ describe(`watching`, () => {
       expect(fs.copy).toHaveBeenCalledWith(
         filePath,
         path.join(`node_modules`, `gatsby`, `dist`, `index.js`),
-        expect.any(Function)
+        expect.any(Function),
       )
     })
 
@@ -114,7 +114,7 @@ describe(`watching`, () => {
 
       const filePath = path.join(
         process.cwd(),
-        `packages/gatsby/cache-dir/register-service-worker.js`
+        `packages/gatsby/cache-dir/register-service-worker.js`,
       )
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
@@ -123,12 +123,12 @@ describe(`watching`, () => {
       expect(fs.copy).toHaveBeenLastCalledWith(
         filePath,
         path.join(`.cache`, `register-service-worker.js`),
-        expect.any(Function)
+        expect.any(Function),
       )
     })
 
     it(`filters non-existent files/directories`, () => {
-      fs.existsSync.mockReset().mockImplementation(file => false)
+      fs.existsSync.mockReset().mockImplementation((file) => false)
 
       watch(...args)
 
@@ -142,7 +142,7 @@ describe(`watching`, () => {
 
       expect(chokidar.watch).toHaveBeenCalledWith(
         [expect.stringContaining(`gatsby`)],
-        expect.any(Object)
+        expect.any(Object),
       )
     })
   })
@@ -286,7 +286,7 @@ const monoRepoPackages = [
   `gatsby-transformer-yaml`,
 ]
 
-const mockDepsChanges = packagesWithChangedDeps => ({ packageName }) =>
+const mockDepsChanges = (packagesWithChangedDeps) => ({ packageName }) =>
   Promise.resolve({
     didDepsChanged: packagesWithChangedDeps.includes(packageName),
   })
@@ -323,47 +323,47 @@ describe(`dependency changes`, () => {
   const { promisifiedSpawn } = require(`../utils/promisified-spawn`)
 
   const assertPublish = ({ include = [], exclude = [] }) => {
-    include.forEach(includedPackage => {
+    include.forEach((includedPackage) => {
       expect(publishPackage).toBeCalledWith(
         expect.objectContaining({
           packageName: includedPackage,
-        })
+        }),
       )
     })
 
-    exclude.forEach(excludedPackage => {
+    exclude.forEach((excludedPackage) => {
       expect(publishPackage).not.toBeCalledWith(
         expect.objectContaining({
           packageName: excludedPackage,
-        })
+        }),
       )
     })
   }
 
   const assertInstall = ({ include = [], exclude = [] }) => {
-    include.forEach(includedPackage => {
+    include.forEach((includedPackage) => {
       expect(installPackages).toBeCalledWith(
         expect.objectContaining({
           packagesToInstall: expect.arrayContaining([includedPackage]),
-        })
+        }),
       )
     })
 
-    exclude.forEach(excludedPackage => {
+    exclude.forEach((excludedPackage) => {
       expect(installPackages).not.toBeCalledWith(
         expect.objectContaining({
           packagesToInstall: expect.arrayContaining([excludedPackage]),
-        })
+        }),
       )
     })
   }
 
-  const assertCopy = packages => {
-    packages.forEach(pkgName => {
+  const assertCopy = (packages) => {
+    packages.forEach((pkgName) => {
       expect(fs.copy).toBeCalledWith(
         expect.stringContaining(path.join(`packages`, pkgName)),
         expect.stringContaining(path.join(`node_modules`, pkgName)),
-        expect.anything()
+        expect.anything(),
       )
     })
   }
@@ -430,7 +430,7 @@ describe(`dependency changes`, () => {
       // no deps changes in gatsby-plugin-sharp, just copy files over
       await callEventCallback(
         `add`,
-        path.join(process.cwd(), `packages/gatsby-plugin-sharp/index.js`)
+        path.join(process.cwd(), `packages/gatsby-plugin-sharp/index.js`),
       )
       await callReadyCallback()
 
@@ -459,7 +459,7 @@ describe(`dependency changes`, () => {
 
       const filePath = path.join(
         process.cwd(),
-        `packages/gatsby-cli/package.json`
+        `packages/gatsby-cli/package.json`,
       )
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
@@ -477,7 +477,7 @@ describe(`dependency changes`, () => {
 
     it(`watching gatsby-source-filesystem and having gatsby-source-wordpress installs gatsby-source-wordpress`, async () => {
       checkDepsChanges.mockImplementationOnce(
-        mockDepsChanges([`gatsby-source-filesystem`])
+        mockDepsChanges([`gatsby-source-filesystem`]),
       )
 
       watch(process.cwd(), [`gatsby-source-filesystem`], {
@@ -493,7 +493,7 @@ describe(`dependency changes`, () => {
 
       const filePath = path.join(
         process.cwd(),
-        `packages/gatsby-source-filesystem/package.json`
+        `packages/gatsby-source-filesystem/package.json`,
       )
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
@@ -511,7 +511,7 @@ describe(`dependency changes`, () => {
 
     it(`watching gatsby-source-filesystem and having gatsby-source-filesystem installs gatsby-source-filesystem`, async () => {
       checkDepsChanges.mockImplementationOnce(
-        mockDepsChanges([`gatsby-source-filesystem`])
+        mockDepsChanges([`gatsby-source-filesystem`]),
       )
 
       watch(process.cwd(), [`gatsby-source-filesystem`], {
@@ -527,7 +527,7 @@ describe(`dependency changes`, () => {
 
       const filePath = path.join(
         process.cwd(),
-        `packages/gatsby-source-filesystem/package.json`
+        `packages/gatsby-source-filesystem/package.json`,
       )
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
@@ -545,7 +545,7 @@ describe(`dependency changes`, () => {
 
     it(`watching gatsby-source-filesystem and not having gatsby-source-filesystem or gatsby-source-wordpress, installs nothing`, async () => {
       checkDepsChanges.mockImplementationOnce(
-        mockDepsChanges([`gatsby-source-filesystem`])
+        mockDepsChanges([`gatsby-source-filesystem`]),
       )
 
       watch(process.cwd(), [`gatsby-source-filesystem`], {
@@ -557,7 +557,7 @@ describe(`dependency changes`, () => {
 
       const filePath = path.join(
         process.cwd(),
-        `packages/gatsby-source-filesystem/package.json`
+        `packages/gatsby-source-filesystem/package.json`,
       )
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
@@ -585,7 +585,7 @@ describe(`dependency changes`, () => {
 
     it(`watching gatsby-source-filesystem and both having gatsby-source-filesystem and gatsby-source-wordpress, should install both`, async () => {
       checkDepsChanges.mockImplementationOnce(
-        mockDepsChanges([`gatsby-source-filesystem`])
+        mockDepsChanges([`gatsby-source-filesystem`]),
       )
 
       watch(process.cwd(), [`gatsby-source-filesystem`], {
@@ -602,7 +602,7 @@ describe(`dependency changes`, () => {
 
       const filePath = path.join(
         process.cwd(),
-        `packages/gatsby-source-filesystem/package.json`
+        `packages/gatsby-source-filesystem/package.json`,
       )
       await callEventCallback(`add`, filePath)
       await callReadyCallback()
@@ -646,7 +646,7 @@ describe(`dependency changes`, () => {
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
       await callEventCallback(
         `add`,
-        path.join(process.cwd(), `packages/gatsby/not-package.json`)
+        path.join(process.cwd(), `packages/gatsby/not-package.json`),
       )
       await callEventCallback(`add`, filePath)
 
@@ -675,7 +675,7 @@ describe(`dependency changes`, () => {
         Promise.resolve({
           didDepsChanged: false,
           packageNotInstalled: true,
-        })
+        }),
       )
 
       watch(process.cwd(), [`gatsby`], {
@@ -688,7 +688,7 @@ describe(`dependency changes`, () => {
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
       await callEventCallback(
         `add`,
-        path.join(process.cwd(), `packages/gatsby/not-package.json`)
+        path.join(process.cwd(), `packages/gatsby/not-package.json`),
       )
       await callEventCallback(`add`, filePath)
 

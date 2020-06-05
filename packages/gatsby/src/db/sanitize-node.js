@@ -46,20 +46,20 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
  * @param {Object|Array} data
  * @returns {Object|Array} data without undefined values
  */
-const omitUndefined = data => {
+const omitUndefined = (data) => {
   const isPlainObject = _.isPlainObject(data)
   if (isPlainObject) {
-    return _.pickBy(data, p => p !== undefined)
+    return _.pickBy(data, (p) => p !== undefined)
   }
 
-  return data.filter(p => p !== undefined)
+  return data.filter((p) => p !== undefined)
 }
 
 /**
  * @param {*} data
  * @return {boolean}
  */
-const isTypeSupported = data => {
+const isTypeSupported = (data) => {
   if (data === null) {
     return true
   }

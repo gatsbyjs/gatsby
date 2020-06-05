@@ -84,7 +84,7 @@ const Excerpt = styled.p`
   margin: 0;
 `
 
-const User = props => (
+const User = (props) => (
   <UserWrapper>
     <Avatar src={props.avatar} alt="" />
     <Description>
@@ -126,7 +126,7 @@ import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
   body {
-    color: ${props => (props.theme === "purple" ? "purple" : "white")};
+    color: ${(props) => (props.theme === "purple" ? "purple" : "white")};
   }
 `
 export default function Layout({ children }) {

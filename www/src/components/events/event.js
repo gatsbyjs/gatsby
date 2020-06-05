@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import { css } from "@emotion/core"
 import GatsbyLogo from "../../assets/monogram.svg"
 
-const displayDate = date =>
+const displayDate = (date) =>
   date.toLocaleDateString(`en-US`, {
     year: `numeric`,
     month: `long`,

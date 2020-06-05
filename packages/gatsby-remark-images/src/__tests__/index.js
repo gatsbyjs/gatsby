@@ -1,5 +1,5 @@
 const mockTraceSVG = jest.fn(
-  async () => `data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e`
+  async () => `data:image/svg+xml,%3csvg 'MOCK SVG'%3c/svg%3e`,
 )
 
 jest.mock(`gatsby-plugin-sharp`, () => {
@@ -39,7 +39,7 @@ const remark = new Remark().data(`settings`, {
   pedantic: true,
 })
 
-const createNode = content => {
+const createNode = (content) => {
   const node = {
     id: 1234,
   }
@@ -66,7 +66,7 @@ const createNode = content => {
 const createPluginOptions = (content, imagePaths = `/`) => {
   const dirName = `not-a-real-dir`
   return {
-    files: [].concat(imagePaths).map(imagePath => {
+    files: [].concat(imagePaths).map((imagePath) => {
       return {
         absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
       }
@@ -80,7 +80,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
     },
     compiler: {
       parseString: remark.parse.bind(remark),
-      generateHTML: node => hastToHTML(toHAST(node)),
+      generateHTML: (node) => hastToHTML(toHAST(node)),
     },
   }
 }
@@ -365,7 +365,7 @@ test(`it uses tracedSVG placeholder when enabled`, async () => {
       fileArgs: expect.any(Object),
       // args containing Potrace constants should be translated to their values
       args: { color: Potrace.COLOR_AUTO, turnPolicy: Potrace.TURNPOLICY_LEFT },
-    })
+    }),
   )
 })
 

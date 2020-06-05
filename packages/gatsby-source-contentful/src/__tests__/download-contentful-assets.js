@@ -7,7 +7,7 @@ jest.mock(
       constructor() {
         this.tick = jest.fn()
       }
-    }
+    },
 )
 
 jest.mock(`gatsby-source-filesystem`, () => {
@@ -67,13 +67,13 @@ describe.only(`downloadContentfulAssets`, () => {
       cache,
     })
 
-    fixtures.forEach(n => {
+    fixtures.forEach((n) => {
       expect(cache.get).toHaveBeenCalledWith(
-        `contentful-asset-${n.contentful_id}-${n.node_locale}`
+        `contentful-asset-${n.contentful_id}-${n.node_locale}`,
       )
       expect(cache.set).toHaveBeenCalledWith(
         `contentful-asset-${n.contentful_id}-${n.node_locale}`,
-        expect.anything()
+        expect.anything(),
       )
     })
   })

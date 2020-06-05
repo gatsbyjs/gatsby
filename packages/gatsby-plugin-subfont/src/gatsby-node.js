@@ -18,6 +18,6 @@ exports.onPostBuild = async ({ store, reporter }, options) => {
       inputFiles: [path.join(root, `index.html`)],
       ...options,
     },
-    subfontConsole
+    subfontConsole,
   )
 }

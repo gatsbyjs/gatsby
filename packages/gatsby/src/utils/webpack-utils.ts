@@ -118,7 +118,7 @@ interface IWebpackUtils {
  */
 export const createWebpackUtils = (
   stage: Stage,
-  program: IProgram
+  program: IProgram,
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
   const vendorRegex = /(node_modules|bower_components)/
@@ -129,7 +129,7 @@ export const createWebpackUtils = (
   const isSSR = stage.includes(`html`)
 
   const makeExternalOnly = (original: RuleFactory) => (
-    options = {}
+    options = {},
   ): RuleSetRule => {
     const rule = original(options)
     rule.include = vendorRegex
@@ -137,7 +137,7 @@ export const createWebpackUtils = (
   }
 
   const makeInternalOnly = (original: RuleFactory) => (
-    options = {}
+    options = {},
   ): RuleSetRule => {
     const rule = original(options)
     rule.exclude = vendorRegex
@@ -256,7 +256,7 @@ export const createWebpackUtils = (
       }
     },
 
-    js: options => {
+    js: (options) => {
       return {
         options: {
           stage,
@@ -266,7 +266,7 @@ export const createWebpackUtils = (
       }
     },
 
-    dependencies: options => {
+    dependencies: (options) => {
       return {
         options,
         loader: require.resolve(`babel-loader`),
@@ -321,8 +321,8 @@ export const createWebpackUtils = (
 
           // If the module uses Gatsby as a dependency
           // we want to treat it as src so we can extract queries
-          return modulesThatUseGatsby.some(module =>
-            modulePath.includes(module.path)
+          return modulesThatUseGatsby.some((module) =>
+            modulePath.includes(module.path),
           )
         },
         type: `javascript/auto`,
@@ -377,8 +377,8 @@ export const createWebpackUtils = (
           if (vendorRegex.test(modulePath)) {
             // If dep uses Gatsby, exclude
             if (
-              modulesThatUseGatsby.some(module =>
-                modulePath.includes(module.path)
+              modulesThatUseGatsby.some((module) =>
+                modulePath.includes(module.path),
               )
             ) {
               return true
@@ -387,7 +387,7 @@ export const createWebpackUtils = (
             // TODO this needs rework, this is buggy as hell
             if (
               /node_modules[\\/](@babel[\\/]runtime|core-js|react|react-dom|scheduler|prop-types)[\\/]/.test(
-                modulePath
+                modulePath,
               )
             ) {
               return true
@@ -477,7 +477,7 @@ export const createWebpackUtils = (
       ]
       if (!isSSR)
         use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules }),
         )
 
       return {
@@ -623,7 +623,7 @@ export const createWebpackUtils = (
           },
         ],
       },
-    }
+    },
   ): OptimizeCssAssetsPlugin => new OptimizeCssAssetsPlugin(options)
 
   plugins.fastRefresh = (): Plugin =>

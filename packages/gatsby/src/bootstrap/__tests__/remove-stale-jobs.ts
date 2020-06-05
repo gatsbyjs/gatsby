@@ -80,7 +80,7 @@ describe(`remove-stale-jobs`, () => {
     expect(publicActions.createJobV2).toHaveBeenCalledTimes(1)
     expect(publicActions.createJobV2).toHaveBeenCalledWith(
       data.job,
-      data.plugin
+      data.plugin,
     )
   })
 })

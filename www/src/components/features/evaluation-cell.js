@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { MdInfoOutline } from "react-icons/md"
 
-const renderText = txt => {
+const renderText = (txt) => {
   const words = txt.split(` `)
   return [
     words.slice(0, words.length - 1).join(` `),
@@ -11,7 +11,7 @@ const renderText = txt => {
       {`${words[words.length - 1]} `}
       <MdInfoOutline
         sx={{
-          height: t => t.space[3],
+          height: (t) => t.space[3],
           mb: 1,
           verticalAlign: `baseline`,
         }}
@@ -41,7 +41,7 @@ const renderCell = (text, column) => {
             p: 0,
             textAlign: `left`,
           }}
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault()
           }}
         >
@@ -55,14 +55,14 @@ const renderCell = (text, column) => {
   return null
 }
 
-const getBackground = num => {
+const getBackground = (num) => {
   switch (num) {
     case `2`: {
-      return t =>
+      return (t) =>
         `linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `1`: {
-      return t =>
+      return (t) =>
         `linear-gradient(180deg, transparent 50%, ${t.colors.orange[20]} 50%), linear-gradient(90deg, transparent 50%, ${t.colors.orange[20]} 50%)`
     }
     case `3`:
@@ -76,8 +76,8 @@ const getBackground = num => {
 }
 
 const basicStyling = {
-  height: t => t.space[5],
-  width: t => t.space[5],
+  height: (t) => t.space[5],
+  width: (t) => t.space[5],
   borderRadius: `50%`,
   margin: `0 auto`,
 }

@@ -224,7 +224,7 @@ const yaml = require("js-yaml")
 exports.createPages = ({ actions }) => {
   const { createPage } = actions
   const ymlDoc = yaml.safeLoad(fs.readFileSync("./content/index.yaml", "utf-8"))
-  ymlDoc.forEach(element => {
+  ymlDoc.forEach((element) => {
     createPage({
       path: element.path,
       component: require.resolve("./src/templates/basicTemplate.js"),
@@ -253,7 +253,7 @@ To match the component referenced in `gatsby-config.js`, create a file called `b
 ```jsx:title=src/templates/basicTemplate.js
 import React from "react"
 import { Link } from "gatsby"
-const basicTemplate = props => {
+const basicTemplate = (props) => {
   const { pageContext } = props
   const { pageContent, links } = pageContext
 

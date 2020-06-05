@@ -17,7 +17,7 @@ const files = glob.sync(`./**/*.svg`, {
 const proc = execa(
   `./node_modules/.bin/svgo`,
   [`--pretty`, `--indent=2`, `--config=svgo.yml`, `--multipass`].concat(files),
-  { cwd: path.join(__dirname, `..`) }
+  { cwd: path.join(__dirname, `..`) },
 )
 
 proc.stdout.pipe(process.stdout)

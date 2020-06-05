@@ -12,7 +12,7 @@ interface IFeedbackProgram extends IProgram {
 }
 
 module.exports = async function feedback(
-  program: IFeedbackProgram
+  program: IFeedbackProgram,
 ): Promise<void> {
   if (program.disable) {
     program.report.info(`Disabling gatsby feedback requests`)

@@ -17,14 +17,14 @@ export class GatsbyWebpackStatsExtractor {
           for (const chunk of chunkGroup.chunks) {
             files.push(...chunk.files)
           }
-          assets[chunkGroup.name] = files.filter(f => f.slice(-4) !== `.map`)
+          assets[chunkGroup.name] = files.filter((f) => f.slice(-4) !== `.map`)
           assetsMap[chunkGroup.name] = files
             .filter(
-              f =>
+              (f) =>
                 f.slice(-4) !== `.map` &&
-                f.slice(0, chunkGroup.name.length) === chunkGroup.name
+                f.slice(0, chunkGroup.name.length) === chunkGroup.name,
             )
-            .map(filename => `/${filename}`)
+            .map((filename) => `/${filename}`)
         }
       }
       const webpackStats = {
@@ -38,9 +38,9 @@ export class GatsbyWebpackStatsExtractor {
           fs.writeFile(
             path.join(`public`, `webpack.stats.json`),
             JSON.stringify(webpackStats),
-            done
+            done,
           )
-        }
+        },
       )
     })
   }

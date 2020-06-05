@@ -680,7 +680,7 @@ const DesignTokens = ({ location }) => (
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(theme.transition).map(token => {
+                {Object.keys(theme.transition).map((token) => {
                   if (typeof theme.transition[token] === `object`) {
                     return Object.keys(theme.transition[token]).map(
                       (value, i) => (
@@ -690,7 +690,7 @@ const DesignTokens = ({ location }) => (
                           </td>
                           <td>{theme.transition[token][value]}</td>
                         </tr>
-                      )
+                      ),
                     )
                   }
                   return false

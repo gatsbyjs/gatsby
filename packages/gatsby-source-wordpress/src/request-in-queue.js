@@ -40,10 +40,10 @@ module.exports = function requestInQueue(tasks, opts = {}) {
     const q = new Queue(handleQueue, { ..._defaults, ...opts })
 
     const taskMap = new Map(
-      tasks.map(t => {
+      tasks.map((t) => {
         q.push(t)
         return [t.url, null]
-      })
+      }),
     )
 
     q.on(`task_failed`, (id, err) => {

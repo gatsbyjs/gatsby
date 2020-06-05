@@ -45,12 +45,12 @@ const GradientOverlay = () => {
         background: () =>
           `linear-gradient(90deg, ${hex2rgba(gradientColor, 0)} 0%, ${hex2rgba(
             gradientColor,
-            1
+            1,
           )} 100%)`,
-        bottom: t => t.space[6],
+        bottom: (t) => t.space[6],
         pointerEvents: `none`,
         position: `absolute`,
-        right: t => `-${t.space[6]}`,
+        right: (t) => `-${t.space[6]}`,
         top: 0,
         width: 60,
       }}
@@ -59,7 +59,7 @@ const GradientOverlay = () => {
 }
 
 class FeaturedSites extends Component {
-  setFilterToFeatured = e => {
+  setFilterToFeatured = (e) => {
     e.preventDefault()
 
     this.props.setFilters(`Featured`)
@@ -158,15 +158,15 @@ class FeaturedSites extends Component {
         <div css={{ position: `relative` }}>
           <div
             sx={{
-              borderBottom: t => `1px solid ${t.colors.ui.border}`,
+              borderBottom: (t) => `1px solid ${t.colors.ui.border}`,
               display: `flex`,
               flexShrink: 0,
-              margin: t => `0 -${t.space[6]}`,
+              margin: (t) => `0 -${t.space[6]}`,
               overflowX: `scroll`,
-              padding: t => `${t.space[6]} ${t.space[6]} 0`,
+              padding: (t) => `${t.space[6]} ${t.space[6]} 0`,
             }}
           >
-            {featured.slice(0, 9).map(node => (
+            {featured.slice(0, 9).map((node) => (
               <div
                 key={node.id}
                 sx={{
@@ -182,7 +182,7 @@ class FeaturedSites extends Component {
                       fontFamily: `heading`,
                       fontSize: 3,
                       fontWeight: `bold`,
-                      transition: t =>
+                      transition: (t) =>
                         `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform .3s ${t.transition.curve.default}`,
                       "&:hover": { ...screenshotHover },
                     },
@@ -223,7 +223,7 @@ class FeaturedSites extends Component {
                   )}
                   <ShowcaseItemCategories
                     categories={node.categories}
-                    onCategoryClick={c => setFilters(c)}
+                    onCategoryClick={(c) => setFilters(c)}
                   />
                 </div>
               </div>
@@ -234,13 +234,13 @@ class FeaturedSites extends Component {
                 sx={{
                   backgroundColor: `card.background`,
                   borderRadius: 1,
-                  marginRight: t => `${t.space[6]} !important`,
+                  marginRight: (t) => `${t.space[6]} !important`,
                   textAlign: `center`,
                   "&&": {
                     border: 0,
                     transition: `default`,
                     "&:hover": {
-                      transform: t => `translateY(-${t.space[1]})`,
+                      transform: (t) => `translateY(-${t.space[1]})`,
                       boxShadow: `overlay`,
                     },
                   },

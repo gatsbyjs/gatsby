@@ -7,7 +7,7 @@ const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 
 const basePath = slash(__dirname)
-const filePath = p => slash(path.join(basePath, p))
+const filePath = (p) => slash(path.join(basePath, p))
 
 const nodes = [
   {
@@ -113,7 +113,7 @@ describe(`Query fields of type File`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
+  const runQuery = (query) =>
     graphql(
       schema,
       query,
@@ -121,12 +121,12 @@ describe(`Query fields of type File`, () => {
       withResolverContext({
         schema,
         schemaComposer,
-      })
+      }),
     )
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       actions.createNode(node, { name: `test` })(store.dispatch)
     })
 

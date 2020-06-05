@@ -20,7 +20,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
   if (errors) throw errors
 
-  data.allCreatorsYaml.nodes.forEach(node => {
+  data.allCreatorsYaml.nodes.forEach((node) => {
     if (!node.fields) return
     if (!node.fields.slug) return
     createPage({
@@ -47,7 +47,7 @@ exports.onCreateNode = ({ node, actions }) => {
 
     if (!validTypes[node.type]) {
       throw new Error(
-        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`
+        `Creators must have a type of “individual”, “agency”, or “company”, but invalid type “${node.type}” was provided for ${node.name}.`,
       )
     }
     slug = `/creators/${validTypes[node.type]}/${slugify(node.name, {

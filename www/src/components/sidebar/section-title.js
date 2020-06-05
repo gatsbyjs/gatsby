@@ -27,7 +27,7 @@ const Chevron = ({ isExpanded }) => (
         color: `textMuted`,
         mx: `auto`,
         transform: isExpanded ? `rotate(180deg)` : `rotate(270deg)`,
-        transition: t =>
+        transition: (t) =>
           `transform ${t.transition.speed.fast} ${t.transition.curve.default}`,
       }}
     />
@@ -105,7 +105,7 @@ const TitleButton = ({ item, uid }) => {
           position: `absolute`,
           right: 0,
           bottom: 0,
-          left: t => (item.level === 0 ? t.space[6] : 0),
+          left: (t) => (item.level === 0 ? t.space[6] : 0),
           top: `auto`,
         },
       }}
@@ -157,7 +157,7 @@ const SplitButton = ({ itemRef, item, uid }) => {
           item={item}
           overrideCSS={{
             "&&": item.level === 0 && item.ui !== `steps` && styles.level0,
-            pr: t => t.sizes.sidebarItemMinHeight,
+            pr: (t) => t.sizes.sidebarItemMinHeight,
           }}
         />
       </span>

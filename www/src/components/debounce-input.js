@@ -31,7 +31,7 @@ class DebounceInput extends Component {
     this.setState({ inputValue: value })
   }
 
-  onChangeInputText = e => {
+  onChangeInputText = (e) => {
     this.setInputValue(e.target.value)
     e.persist()
     this.debounceOnChange()

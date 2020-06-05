@@ -19,13 +19,13 @@ const createBuildQueue = (graphqlRunner, runnerOptions = {}) => {
   }
   const handler = ({ job, activity }, callback) =>
     queryRunner(graphqlRunner, job, activity?.span)
-      .then(result => callback(null, result))
+      .then((result) => callback(null, result))
       .catch(callback)
   const queue = new Queue(handler, createBaseOptions())
   return queue
 }
 
-const createDevelopQueue = getRunner => {
+const createDevelopQueue = (getRunner) => {
   const queueOptions = {
     ...createBaseOptions(),
     priority: ({ job }, cb) => {
@@ -42,7 +42,7 @@ const createDevelopQueue = getRunner => {
 
   const handler = ({ job: queryJob, activity }, callback) => {
     queryRunner(getRunner(), queryJob, activity?.span).then(
-      result => {
+      (result) => {
         if (queryJob.isPage) {
           websocketManager.emitPageData({
             result,
@@ -57,7 +57,7 @@ const createDevelopQueue = getRunner => {
 
         callback(null, result)
       },
-      error => callback(error)
+      (error) => callback(error),
     )
   }
 
@@ -108,11 +108,11 @@ const processBatch = async (queue, jobs, activity) => {
       //       `empty` fires when queue is empty (but tasks are still running)
       .on(`drain`, drainCallback)
 
-    jobs.forEach(job =>
+    jobs.forEach((job) =>
       queue.push({
         job,
         activity,
-      })
+      }),
     )
   })
 }

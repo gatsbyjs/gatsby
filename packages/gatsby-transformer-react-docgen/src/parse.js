@@ -21,10 +21,10 @@ let fileCount = 0
  * Wrap handlers to pass in additional arguments such as the File node
  */
 function makeHandlers(node, handlers) {
-  handlers = (handlers || []).map(h => (...args) => h(...args, node))
+  handlers = (handlers || []).map((h) => (...args) => h(...args, node))
   return [
     createDisplayNameHandler(
-      node.absolutePath || `/UnknownComponent${++fileCount}`
+      node.absolutePath || `/UnknownComponent${++fileCount}`,
     ),
     ...handlers,
   ]
@@ -41,7 +41,7 @@ export default function parseMetadata(content, node, options) {
       {
         ...parseOptions,
         filename: node.absolutePath,
-      }
+      },
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
@@ -53,7 +53,7 @@ export default function parseMetadata(content, node, options) {
         err.loc.start || { start: err.loc },
         {
           highlightCode: true,
-        }
+        },
       )
     }
     throw err
@@ -63,12 +63,12 @@ export default function parseMetadata(content, node, options) {
     components[0].displayName = components[0].displayName.replace(/\d+$/, ``)
   }
 
-  components.forEach(component => {
+  components.forEach((component) => {
     component.docblock = component.description || ``
     component.doclets = parseDoclets(component)
     component.description = cleanDoclets(component.description)
 
-    component.props = Object.keys(component.props || {}).map(propName => {
+    component.props = Object.keys(component.props || {}).map((propName) => {
       const prop = component.props[propName]
       prop.name = propName
       prop.docblock = prop.description || ``

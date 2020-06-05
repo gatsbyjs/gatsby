@@ -8,6 +8,6 @@ test(`does not throw on a valid schema`, () => {
   expect(
     errorSchema.validate({
       context: {},
-    })
+    }),
   ).resolves.toEqual(expect.any(Object))
 })

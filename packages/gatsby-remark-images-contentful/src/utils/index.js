@@ -1,6 +1,6 @@
 const axios = require(`axios`)
 
-const getBase64Img = async url => {
+const getBase64Img = async (url) => {
   const response = await axios({
     method: `GET`,
     responseType: `arraybuffer`,
@@ -37,19 +37,20 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
   images.push(metadata.width * 2)
   images.push(metadata.width * 3)
 
-  const filteredSizes = images.filter(size => size < width)
+  const filteredSizes = images.filter((size) => size < width)
 
   filteredSizes.push(width)
 
   const base64Img = await getBase64Img(`${imageUrl}?w=40`)
 
   const srcSet = filteredSizes
-    .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
+    .map((size) => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
     .join(`,\n`)
 
   const webpSrcSet = filteredSizes
     .map(
-      size => `${imageUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
+      (size) =>
+        `${imageUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`,
     )
     .join(`,\n`)
 

@@ -4,7 +4,7 @@ module.exports = function stringifyObjectIds(val) {
   if (val instanceof ObjectID) {
     return val.toHexString()
   } else if (Array.isArray(val)) {
-    return val.map(el => stringifyObjectIds(el))
+    return val.map((el) => stringifyObjectIds(el))
   } else if (val && val.constructor === Object) {
     const keys = Object.keys(val)
     return keys.reduce((obj, key) => {

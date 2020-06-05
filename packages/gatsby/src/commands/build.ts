@@ -53,7 +53,7 @@ interface IBuildArgs extends IProgram {
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (program.profile) {
     report.warn(
-      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
+      `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`,
     )
   }
 
@@ -63,7 +63,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
-  signalExit(exitCode => {
+  signalExit((exitCode) => {
     telemetry.trackCli(`BUILD_END`, { exitCode })
   })
 
@@ -100,7 +100,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const buildActivityTimer = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
-    { parentSpan: buildSpan }
+    { parentSpan: buildSpan },
   )
   buildActivityTimer.start()
   let stats
@@ -128,7 +128,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `Rewriting compilation hashes`,
       {
         parentSpan: buildSpan,
-      }
+      },
     )
     rewriteActivityTimer.start()
 
@@ -161,8 +161,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = stats
       .toJson({ assets: true })
-      .assets.filter(asset => asset.name.endsWith(`.js`))
-      .map(asset => asset.size / 1000)
+      .assets.filter((asset) => asset.name.endsWith(`.js`))
+      .map((asset) => asset.size / 1000)
     const pageDataSizes = [...store.getState().pageDataStats.values()]
 
     telemetry.addSiteMeasurement(`BUILD_END`, {
@@ -191,7 +191,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   ) {
     pagePaths = buildUtils.getChangedPageDataKeys(
       store.getState(),
-      cachedPageData
+      cachedPageData,
     )
   }
 
@@ -201,7 +201,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     0,
     {
       parentSpan: buildSpan,
-    }
+    },
   )
   buildHTMLActivityProgress.start()
   try {
@@ -220,7 +220,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
 
     const match = err.message.match(
-      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i,
     )
     if (match && match[1]) {
       id = `95312`
@@ -238,12 +238,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let deletedPageKeys: string[] = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const deletePageDataActivityTimer = report.activityTimer(
-      `Delete previous page data`
+      `Delete previous page data`,
     )
     deletePageDataActivityTimer.start()
     deletedPageKeys = buildUtils.collectRemovedPageData(
       store.getState(),
-      cachedPageData
+      cachedPageData,
     )
     await buildUtils.removePageFiles(publicDir, deletedPageKeys)
 
@@ -277,16 +277,16 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     if (pagePaths.length) {
       report.info(
         `Built pages:\n${pagePaths
-          .map(path => `Updated page: ${path}`)
-          .join(`\n`)}`
+          .map((path) => `Updated page: ${path}`)
+          .join(`\n`)}`,
       )
     }
 
     if (deletedPageKeys.length) {
       report.info(
         `Deleted pages:\n${deletedPageKeys
-          .map(path => `Deleted page: ${path}`)
-          .join(`\n`)}`
+          .map((path) => `Deleted page: ${path}`)
+          .join(`\n`)}`,
       )
     }
   }
@@ -297,11 +297,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   ) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,
-      `newPages.txt`
+      `newPages.txt`,
     )
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
-      `deletedPages.txt`
+      `deletedPages.txt`,
     )
 
     if (pagePaths.length) {
@@ -312,7 +312,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       await fs.writeFile(
         deletedFilesPath,
         `${deletedPageKeys.join(`\n`)}\n`,
-        `utf8`
+        `utf8`,
       )
       report.info(`.cache/deletedPages.txt created`)
     }

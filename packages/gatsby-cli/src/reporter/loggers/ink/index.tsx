@@ -16,6 +16,6 @@ export function initializeINKLogger(): void {
   render(
     <StoreStateProvider>
       <ConnectedCLI />
-    </StoreStateProvider>
+    </StoreStateProvider>,
   )
 }

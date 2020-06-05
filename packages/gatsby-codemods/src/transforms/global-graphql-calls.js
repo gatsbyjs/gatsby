@@ -14,7 +14,7 @@ function findGatsbyRequire(root, j) {
 
   if (string.length) return string
   // require(`gatsby`)
-  return requires.filter(path => {
+  return requires.filter((path) => {
     let template = path.get(`init`, `arguments`, 0, `quasis`, 0).node
     return !!template && template.value.raw === MODULE_NAME
   })
@@ -36,7 +36,7 @@ function addEsmImport(j, root, tag) {
     const comments = first.node.comments.splice(0)
     const importStatement = j.importDeclaration(
       [j.importSpecifier(j.identifier(IMPORT_NAME))],
-      j.literal(MODULE_NAME)
+      j.literal(MODULE_NAME),
     )
     importStatement.comments = comments
     root.find(j.Program).get(`body`, 0).insertBefore(importStatement)
@@ -52,7 +52,7 @@ function addEsmImport(j, root, tag) {
       .replaceWith(({ node }) => {
         node.tag = j.memberExpression(
           j.identifier(name),
-          j.identifier(IMPORT_NAME)
+          j.identifier(IMPORT_NAME),
         )
         return node
       })
@@ -76,7 +76,7 @@ function addRequire(j, root, tag) {
       .insertBefore(
         j.template.statement([
           `const { ${IMPORT_NAME} } = require('${MODULE_NAME}');\n`,
-        ])
+        ]),
       )
     return
   }
@@ -90,7 +90,7 @@ function addRequire(j, root, tag) {
       .replaceWith(({ node }) => {
         node.tag = j.memberExpression(
           j.identifier(name),
-          j.identifier(IMPORT_NAME)
+          j.identifier(IMPORT_NAME),
         )
         return node
       })
@@ -99,7 +99,7 @@ function addRequire(j, root, tag) {
   let { properties } = pattern.get(0).node
   let property = j.objectProperty(
     j.identifier(IMPORT_NAME),
-    j.identifier(IMPORT_NAME)
+    j.identifier(IMPORT_NAME),
   )
   property.shorthand = true
   pattern.get(`properties`, properties.length - 1).insertAfter(property)

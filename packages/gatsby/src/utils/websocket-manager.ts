@@ -29,7 +29,7 @@ type QueryResultsMap = Map<string, IStaticQueryResult>
  * @param {string} pagePath Path to a page.
  */
 const getCachedPageData = async (
-  pagePath: string
+  pagePath: string,
 ): Promise<IPageQueryResult> => {
   const { program, pages } = store.getState()
   const publicDir = path.join(program.directory, `public`)
@@ -43,7 +43,7 @@ const getCachedPageData = async (
       }
     } catch (err) {
       throw new Error(
-        `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+        `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`,
       )
     }
   }
@@ -58,7 +58,7 @@ const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
   if (!paths) {
     return undefined
   }
-  return paths.map(path => {
+  return paths.map((path) => {
     if (!path) {
       return undefined
     }
@@ -73,11 +73,11 @@ const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
  */
 const getCachedStaticQueryResults = (
   resultsMap: QueryResultsMap,
-  directory: string
+  directory: string,
 ): QueryResultsMap => {
   const cachedStaticQueryResults: QueryResultsMap = new Map()
   const { staticQueryComponents } = store.getState()
-  staticQueryComponents.forEach(staticQueryComponent => {
+  staticQueryComponents.forEach((staticQueryComponent) => {
     // Don't read from file if results were already passed from query runner
     if (resultsMap.has(staticQueryComponent.hash)) return
     const filePath = path.join(
@@ -85,12 +85,12 @@ const getCachedStaticQueryResults = (
       `public`,
       `static`,
       `d`,
-      `${staticQueryComponent.hash}.json`
+      `${staticQueryComponent.hash}.json`,
     )
     const fileResult = fs.readFileSync(filePath, `utf-8`)
     if (fileResult === `undefined`) {
       console.log(
-        `Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`
+        `Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`,
       )
       return
     }
@@ -121,7 +121,7 @@ export class WebsocketManager {
   }): socketIO.Server => {
     const cachedStaticQueryResults = getCachedStaticQueryResults(
       this.staticQueryResults,
-      directory
+      directory,
     )
     this.staticQueryResults = new Map([
       ...this.staticQueryResults,
@@ -130,7 +130,7 @@ export class WebsocketManager {
 
     this.websocket = socketIO(server)
 
-    this.websocket.on(`connection`, socket => {
+    this.websocket.on(`connection`, (socket) => {
       let activePath: string | null = null
       if (socket?.handshake?.headers?.referer) {
         const path = url.parse(socket.handshake.headers.referer).path
@@ -142,7 +142,7 @@ export class WebsocketManager {
 
       this.connectedClients += 1
       // Send already existing static query results
-      this.staticQueryResults.forEach(result => {
+      this.staticQueryResults.forEach((result) => {
         socket.send({
           type: `staticQueryResult`,
           payload: result,
@@ -197,7 +197,7 @@ export class WebsocketManager {
                 paths: hashPaths(Array.from(this.activePaths)),
               },
             },
-            { debounce: true }
+            { debounce: true },
           )
         }
       }
@@ -239,7 +239,7 @@ export class WebsocketManager {
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
-          { debounce: true }
+          { debounce: true },
         )
       }
     }
@@ -261,7 +261,7 @@ export class WebsocketManager {
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
-          { debounce: true }
+          { debounce: true },
         )
       }
     }

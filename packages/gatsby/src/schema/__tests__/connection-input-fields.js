@@ -134,8 +134,8 @@ function makeNodes() {
 async function queryResult(nodes, query) {
   store.dispatch({ type: `DELETE_CACHE` })
   store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-  nodes.forEach(node =>
-    actions.createNode(node, { name: `test` })(store.dispatch)
+  nodes.forEach((node) =>
+    actions.createNode(node, { name: `test` })(store.dispatch),
   )
 
   const schemaComposer = createSchemaComposer()
@@ -176,7 +176,7 @@ describe(`connection input fields`, () => {
             nestedField: distinct(field: anotherKey___withANested___nestedKey)
           }
         }
-      `
+      `,
     )
 
     expect(result.errors).not.toBeDefined()
@@ -214,7 +214,7 @@ describe(`connection input fields`, () => {
             totalCount
           }
         }
-      }`
+      }`,
     )
     expect(result.errors).not.toBeDefined()
 
@@ -240,19 +240,19 @@ describe(`connection input fields`, () => {
             totalCount
           }
         }
-      }`
+      }`,
     )
 
     expect(result.errors).not.toBeDefined()
     expect(result.data.allTest.nestedKey).toHaveLength(2)
     expect(result.data.allTest.nestedKey[0].fieldValue).toEqual(`bar`)
     expect(result.data.allTest.nestedKey[0].field).toEqual(
-      `anotherKey.withANested.nestedKey`
+      `anotherKey.withANested.nestedKey`,
     )
     expect(result.data.allTest.nestedKey[0].totalCount).toEqual(1)
     expect(result.data.allTest.nestedKey[1].fieldValue).toEqual(`foo`)
     expect(result.data.allTest.nestedKey[1].field).toEqual(
-      `anotherKey.withANested.nestedKey`
+      `anotherKey.withANested.nestedKey`,
     )
     expect(result.data.allTest.nestedKey[1].totalCount).toEqual(2)
   })
@@ -274,7 +274,7 @@ describe(`connection input fields`, () => {
             }
           }
         }
-      `
+      `,
     )
     expect(result.errors).not.toBeDefined()
 

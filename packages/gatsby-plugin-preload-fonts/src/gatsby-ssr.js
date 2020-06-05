@@ -16,7 +16,7 @@ function getLinkProps({ crossOrigin, pathname }) {
 
 exports.onRenderBody = (
   { setHeadComponents, pathname = `/` },
-  { crossOrigin = `anonymous` } = {}
+  { crossOrigin = `anonymous` } = {},
 ) => {
   const cache = loadCache()
   // try to load assets from cache. Consider route with and without trailing slash as lookup key
@@ -28,7 +28,7 @@ exports.onRenderBody = (
   const assets = Object.keys(cacheEntry)
 
   setHeadComponents(
-    assets.map(href => {
+    assets.map((href) => {
       let assetProps
 
       // External urls should get the props from the plugin configuration.
@@ -44,6 +44,6 @@ exports.onRenderBody = (
       return (
         <link key={href} as="font" href={href} rel="preload" {...assetProps} />
       )
-    })
+    }),
   )
 }

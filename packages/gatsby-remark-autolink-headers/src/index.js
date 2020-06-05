@@ -23,11 +23,11 @@ module.exports = (
     enableCustomId = false,
     isIconAfterHeader = false,
     elements = null,
-  }
+  },
 ) => {
   slugs.reset()
 
-  visit(markdownAST, `heading`, node => {
+  visit(markdownAST, `heading`, (node) => {
     // If elements array exists, do not create links for heading types not included in array
     if (Array.isArray(elements) && !elements.includes(`h${node.depth}`)) {
       return

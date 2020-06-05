@@ -29,7 +29,7 @@ const generalArgs = {
 }
 
 let pluginOptions = Object.assign({}, pluginDefaults)
-exports.setPluginOptions = opts => {
+exports.setPluginOptions = (opts) => {
   pluginOptions = Object.assign({}, pluginOptions, opts)
   generalArgs.quality = pluginOptions.defaultQuality
 
@@ -43,7 +43,7 @@ exports.getPluginOptions = () => pluginOptions
  *
  * @param {Partial<import('./process-file').TransformArgs>} args
  */
-exports.createTransformObject = args => {
+exports.createTransformObject = (args) => {
   const options = {
     height: args.height,
     width: args.width,
@@ -72,7 +72,7 @@ exports.healOptions = (
   { defaultQuality: quality },
   args,
   fileExtension = ``,
-  defaultArgs = {}
+  defaultArgs = {},
 ) => {
   let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
@@ -85,7 +85,7 @@ exports.healOptions = (
   if (options.toFormat === ``) {
     if (!fileExtension) {
       throw new Error(
-        `toFormat seems to be empty, we need a fileExtension to set it.`
+        `toFormat seems to be empty, we need a fileExtension to set it.`,
       )
     }
     options.toFormat = fileExtension.toLowerCase()
@@ -113,10 +113,10 @@ exports.healOptions = (
     options.maxHeight = parseInt(options.maxHeight, 10)
   }
 
-  ;[`width`, `height`, `maxWidth`, `maxHeight`].forEach(prop => {
+  ;[`width`, `height`, `maxWidth`, `maxHeight`].forEach((prop) => {
     if (typeof options[prop] !== `undefined` && options[prop] < 1) {
       throw new Error(
-        `${prop} has to be a positive int larger than zero (> 0), now it's ${options[prop]}`
+        `${prop} has to be a positive int larger than zero (> 0), now it's ${options[prop]}`,
       )
     }
   })

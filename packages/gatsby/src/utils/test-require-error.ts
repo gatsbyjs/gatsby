@@ -13,8 +13,8 @@ export const testRequireError = (moduleName: string, err: any): boolean => {
   const regex = new RegExp(
     `Error:\\s(\\S+\\s)?[Cc]annot find module\\s.${moduleName.replace(
       /[-/\\^$*+?.()|[\]{}]/g,
-      `\\$&`
-    )}`
+      `\\$&`,
+    )}`,
   )
   const firstLine = err.toString().split(`\n`)[0]
   return regex.test(firstLine)

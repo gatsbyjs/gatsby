@@ -7,28 +7,28 @@ import { CirclesOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const CloudCalloutRoot = styled(`div`)`
-  border: 1px solid ${p => console.log(p) || p.theme.colors.purple[`20`]};
-  border-radius: ${p => p.theme.radii[2]};
-  font-family: ${p => p.theme.fonts.heading};
-  font-size: ${p => p.theme.fontSizes[3]};
+  border: 1px solid ${(p) => console.log(p) || p.theme.colors.purple[`20`]};
+  border-radius: ${(p) => p.theme.radii[2]};
+  font-family: ${(p) => p.theme.fonts.heading};
+  font-size: ${(p) => p.theme.fontSizes[3]};
   font-weight: bold;
-  padding: ${p => p.theme.space[7]} 3rem;
+  padding: ${(p) => p.theme.space[7]} 3rem;
   position: relative;
-  margin: ${p => p.theme.space[8]} 0;
+  margin: ${(p) => p.theme.space[8]} 0;
 
   p {
     margin-bottom: 0;
   }
 
   ${mediaQueries.lg} {
-    line-height: ${p => p.theme.lineHeights.loose};
-    margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
+    line-height: ${(p) => p.theme.lineHeights.loose};
+    margin: ${(p) => p.theme.space[8]} ${(p) => (p.narrow ? 0 : `-3.5rem`)};
     padding: 2.8rem 3.5rem;
   }
 `
 
 const CloudText = styled(`p`)`
-  color: ${p => p.theme.colors.text};
+  color: ${(p) => p.theme.colors.text};
   font-weight: normal;
   margin-bottom: 0;
 `
@@ -39,7 +39,7 @@ const Circles = styled(`span`)`
   bottom: 16px;
   right: 0px;
   transform: translateX(15px);
-  color: ${p => p.theme.colors.purple[`30`]};
+  color: ${(p) => p.theme.colors.purple[`30`]};
 `
 
 const CloudCallout = ({ narrow = true, children }) => (

@@ -45,7 +45,7 @@ async function onCreateNode({
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> HJSON`),
-        _.upperFirst(_.camelCase(`${node.name} HJson`))
+        _.upperFirst(_.camelCase(`${node.name} HJson`)),
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
@@ -54,7 +54,7 @@ async function onCreateNode({
       parsedContent.id
         ? parsedContent.id
         : createNodeId(`${node.id} >>> HJSON`),
-      _.upperFirst(_.camelCase(`${path.basename(node.dir)} HJson`))
+      _.upperFirst(_.camelCase(`${path.basename(node.dir)} HJson`)),
     )
   }
 }

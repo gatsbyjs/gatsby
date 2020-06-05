@@ -10,7 +10,7 @@ jest.mock(`sqip`, () =>
     return {
       final_svg: `<svg><!-- Mocked SQIP SVG --></svg>`,
     }
-  })
+  }),
 )
 
 jest.mock(`fs-extra`, () => {
@@ -32,7 +32,7 @@ describe(`gatsby-transformer-sqip`, () => {
   const absolutePath = resolve(
     __dirname,
     `images`,
-    `this-file-does-not-need-to-exist-for-the-test.jpg`
+    `this-file-does-not-need-to-exist-for-the-test.jpg`,
   )
   const cacheDir = __dirname
 

@@ -10,7 +10,7 @@ const validLanguages = [`dot`, `circo`]
 module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   let codeNodes = []
 
-  visit(markdownAST, `code`, node => {
+  visit(markdownAST, `code`, (node) => {
     const chunks = (node.lang || ``).match(/^(\S+)(\s+(.+))?/)
 
     if (!chunks || !chunks.length) {
@@ -52,12 +52,12 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
         node.value = $.html(`svg`)
       } catch (error) {
         console.log(
-          `Error during viz.js execution. Leaving code block unchanged`
+          `Error during viz.js execution. Leaving code block unchanged`,
         )
         console.log(error)
       }
 
       return node
-    })
+    }),
   )
 }

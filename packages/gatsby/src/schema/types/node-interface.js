@@ -3,11 +3,11 @@ const { SEARCHABLE_ENUM } = require(`./filter`)
 
 const NodeInterfaceFields = [`id`, `parent`, `children`, `internal`]
 
-const getOrCreateNodeInterface = schemaComposer => {
+const getOrCreateNodeInterface = (schemaComposer) => {
   // TODO: why is `mediaType` on Internal? Applies only to File!?
   // `fieldOwners` is an object
   // Should we drop ignoreType?
-  const internalTC = schemaComposer.getOrCreateOTC(`Internal`, tc => {
+  const internalTC = schemaComposer.getOrCreateOTC(`Internal`, (tc) => {
     tc.addFields({
       content: `String`,
       contentDigest: `String!`,
@@ -22,7 +22,7 @@ const getOrCreateNodeInterface = schemaComposer => {
     tc.getInputTypeComposer()
   })
 
-  const nodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, tc => {
+  const nodeInterfaceTC = schemaComposer.getOrCreateIFTC(`Node`, (tc) => {
     tc.setDescription(`Node Interface`)
     tc.addFields({
       id: `ID!`,
@@ -44,7 +44,7 @@ const getOrCreateNodeInterface = schemaComposer => {
           const { path } = context
           return context.nodeModel.getNodesByIds(
             { ids: source.children },
-            { path }
+            { path },
           )
         },
         extensions: {
@@ -73,7 +73,7 @@ const addNodeInterface = ({ schemaComposer, typeComposer }) => {
 const addNodeInterfaceFields = ({ schemaComposer, typeComposer }) => {
   const nodeInterfaceTC = getOrCreateNodeInterface(schemaComposer)
   typeComposer.addFields(nodeInterfaceTC.getFields())
-  nodeInterfaceTC.setResolveType(node => node.internal.type)
+  nodeInterfaceTC.setResolveType((node) => node.internal.type)
   schemaComposer.addSchemaMustHaveType(typeComposer)
 }
 

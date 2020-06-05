@@ -116,8 +116,8 @@ class BlogPost extends Component {
   }
   componentDidMount() {
     getBlogPost(this.props.match.slug)
-      .then(data => this.setState({ data }))
-      .catch(error => this.setState({ status: "error" }))
+      .then((data) => this.setState({ data }))
+      .catch((error) => this.setState({ status: "error" }))
   }
   render() {
     if (!this.state.status === "error") {
@@ -163,7 +163,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-    `
+    `,
   )
 
   if (result.errors) {
@@ -172,7 +172,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // Create blog post pages.
-  result.data.allContentfulBlogPost.edges.forEach(edge => {
+  result.data.allContentfulBlogPost.edges.forEach((edge) => {
     createPage({
       path: `${edge.node.slug}`, // required
       component: blogPostTemplate,

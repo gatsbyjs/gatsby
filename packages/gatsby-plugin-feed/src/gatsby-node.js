@@ -18,7 +18,7 @@ const warnMessage = (error, behavior) => `
 // TODO: remove in the next major release
 // A default function to transform query data into feed entries.
 const serialize = ({ query: { site, allMarkdownRemark } }) =>
-  allMarkdownRemark.edges.map(edge => {
+  allMarkdownRemark.edges.map((edge) => {
     return {
       ...edge.node.frontmatter,
       description: edge.node.excerpt,
@@ -30,7 +30,7 @@ const serialize = ({ query: { site, allMarkdownRemark } }) =>
 
 exports.onPreBootstrap = async function onPreBootstrap(
   { reporter },
-  pluginOptions
+  pluginOptions,
 ) {
   delete pluginOptions.plugins
 
@@ -41,32 +41,34 @@ exports.onPreBootstrap = async function onPreBootstrap(
     if (!normalized.feeds) {
       reporter.warn(
         reporter.stripIndent(
-          warnMessage(`feeds option`, `the internal RSS feed creation`)
-        )
-      )
-    } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(`title in a feed`, `the default feed title`)
-        )
+          warnMessage(`feeds option`, `the internal RSS feed creation`),
+        ),
       )
     } else if (
-      normalized.feeds.some(feed => typeof feed.serialize !== `function`)
+      normalized.feeds.some((feed) => typeof feed.title !== `string`)
+    ) {
+      reporter.warn(
+        reporter.stripIndent(
+          warnMessage(`title in a feed`, `the default feed title`),
+        ),
+      )
+    } else if (
+      normalized.feeds.some((feed) => typeof feed.serialize !== `function`)
     ) {
       reporter.warn(
         reporter.stripIndent(
           warnMessage(
             `serialize function in a feed`,
-            `the internal serialize function`
-          )
-        )
+            `the internal serialize function`,
+          ),
+        ),
       )
     }
   } catch (e) {
     throw new Error(
       e.details
-        .map(detail => `[Config Validation]: ${detail.message}`)
-        .join(`\n`)
+        .map((detail) => `[Config Validation]: ${detail.message}`)
+        .join(`\n`),
     )
   }
 }
@@ -85,8 +87,8 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
   for (let { ...feed } of options.feeds) {
     if (feed.query) {
-      feed.query = await runQuery(graphql, feed.query).then(result =>
-        merge({}, baseQuery, result)
+      feed.query = await runQuery(graphql, feed.query).then((result) =>
+        merge({}, baseQuery, result),
       )
     }
 

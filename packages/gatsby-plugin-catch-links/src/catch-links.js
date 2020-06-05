@@ -1,7 +1,7 @@
 import escapeStringRegexp from "escape-string-regexp"
 import { withPrefix } from "gatsby"
 
-export const userIsForcingNavigation = event =>
+export const userIsForcingNavigation = (event) =>
   event.button !== 0 ||
   event.altKey ||
   event.ctrlKey ||
@@ -9,12 +9,12 @@ export const userIsForcingNavigation = event =>
   event.shiftKey
 
 // IE does not include leading slash in anchor.pathname
-export const slashedPathname = pathname =>
+export const slashedPathname = (pathname) =>
   pathname[0] === `/` ? pathname : `/${pathname}`
 
-export const navigationWasHandledElsewhere = event => event.defaultPrevented
+export const navigationWasHandledElsewhere = (event) => event.defaultPrevented
 
-export const findClosestAnchor = node => {
+export const findClosestAnchor = (node) => {
   for (; node.parentNode; node = node.parentNode) {
     if (node.nodeName.toLowerCase() === `a`) {
       return node
@@ -24,7 +24,7 @@ export const findClosestAnchor = node => {
   return null
 }
 
-export const anchorsTargetIsEquivalentToSelf = anchor =>
+export const anchorsTargetIsEquivalentToSelf = (anchor) =>
   /* If target attribute is not present it's treated as _self */
   anchor.hasAttribute(`target`) === false ||
   /**
@@ -54,7 +54,7 @@ export const anchorsTargetIsEquivalentToSelf = anchor =>
       anchor.ownerDocument.defaultView.top ===
         anchor.ownerDocument.defaultView))
 
-export const authorIsForcingNavigation = anchor =>
+export const authorIsForcingNavigation = (anchor) =>
   /**
    * HTML5 attribute that informs the browser to handle the
    * href as a downloadable file; let the browser handle it
@@ -105,10 +105,9 @@ export const hashShouldBeFollowed = (origin, destination) =>
     /* Don't catch links pointed to the same page but with a hash. */
     destination.pathname === origin.pathname)
 
-export const routeThroughBrowserOrApp = (
-  hrefHandler,
-  pluginOptions
-) => event => {
+export const routeThroughBrowserOrApp = (hrefHandler, pluginOptions) => (
+  event,
+) => {
   if (window.___failedResources) return true
 
   if (userIsForcingNavigation(event)) return true
@@ -165,7 +164,7 @@ export const routeThroughBrowserOrApp = (
   // by gatsby-transformer-remark but gatsby-link.navigate needs href without
   const destinationPathname = slashedPathname(destination.pathname).replace(
     pathStartRegEx,
-    `/`
+    `/`,
   )
 
   hrefHandler(`${destinationPathname}${destination.search}${destination.hash}`)

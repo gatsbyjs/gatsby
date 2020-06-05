@@ -230,8 +230,8 @@ export default () => {
   const parser = new FileParser()
 
   beforeAll(() => {
-    fs.readFile.mockImplementation(file =>
-      Promise.resolve(MOCK_FILE_INFO[file])
+    fs.readFile.mockImplementation((file) =>
+      Promise.resolve(MOCK_FILE_INFO[file]),
     )
   })
 
@@ -240,7 +240,7 @@ export default () => {
     const addError = errors.push.bind(errors)
     const results = await parser.parseFiles(
       Object.keys(MOCK_FILE_INFO),
-      addError
+      addError,
     )
     expect(results).toMatchSnapshot()
     expect(reporter.warn).toMatchSnapshot()

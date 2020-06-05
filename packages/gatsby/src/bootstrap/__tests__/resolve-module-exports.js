@@ -128,8 +128,8 @@ describe(`Resolve module exports`, () => {
   }
 
   beforeEach(() => {
-    resolver = jest.fn(arg => arg)
-    fs.readFileSync.mockImplementation(file => {
+    resolver = jest.fn((arg) => arg)
+    fs.readFileSync.mockImplementation((file) => {
       const existing = MOCK_FILE_INFO[file]
       return existing
     })
@@ -149,11 +149,11 @@ describe(`Resolve module exports`, () => {
   it(`Show meaningful error message for invalid JavaScript`, () => {
     resolveModuleExports(`/bad/file`, { resolver })
     expect(
-      reporter.panic.mock.calls.map(c =>
+      reporter.panic.mock.calls.map((c) =>
         // Remove console colors + trim whitespace
         // eslint-disable-next-line
         c[0].replace(/\x1B[[(?);]{0,2}(;?\d)*./g, ``).trim()
-      )
+      ),
     ).toMatchSnapshot()
   })
 

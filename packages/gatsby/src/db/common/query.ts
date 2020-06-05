@@ -51,7 +51,7 @@ export function createDbQueriesFromObject(filter: object): Array<DbQuery> {
 
 function createDbQueriesFromObjectNested(
   filter: object,
-  path: Array<string> = []
+  path: Array<string> = [],
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
   return _.flatMap(
@@ -59,7 +59,7 @@ function createDbQueriesFromObjectNested(
     (key: string): Array<DbQuery> => {
       if (key === `$elemMatch`) {
         const queries = createDbQueriesFromObjectNested(filter[key])
-        return queries.map(query => {
+        return queries.map((query) => {
           return {
             type: `elemMatch`,
             path: path,
@@ -80,23 +80,23 @@ function createDbQueriesFromObjectNested(
       } else {
         return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
       }
-    }
+    },
   )
 }
 
 export function prefixResolvedFields(
   queries: Array<DbQuery>,
-  resolvedFields: object
+  resolvedFields: object,
 ): Array<DbQuery> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.getOwnPropertyNames(dottedFields)
-  queries.forEach(query => {
+  queries.forEach((query) => {
     const prefixPath = query.path.join(`.`)
     if (
       dottedFields[prefixPath] ||
-      (dottedFieldKeys.some(dottedKey => dottedKey.startsWith(prefixPath)) &&
+      (dottedFieldKeys.some((dottedKey) => dottedKey.startsWith(prefixPath)) &&
         query.type === `elemMatch`) ||
-      dottedFieldKeys.some(dottedKey => prefixPath.startsWith(dottedKey))
+      dottedFieldKeys.some((dottedKey) => prefixPath.startsWith(dottedKey))
     ) {
       query.path.unshift(`__gatsby_resolved`)
     }
@@ -157,10 +157,10 @@ export function dbQueryToSiftQuery(query: DbQuery): object {
 // Like above, but doesn't handle $elemMatch
 export function objectToDottedField(
   obj: object,
-  path: Array<string> = []
+  path: Array<string> = [],
 ): object {
   let result = {}
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     const value = obj[key]
     if (_.isPlainObject(value)) {
       const pathResult = objectToDottedField(value, path.concat(key))

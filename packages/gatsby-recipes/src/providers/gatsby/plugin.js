@@ -20,7 +20,7 @@ const { REQUIRES_KEYS } = require(`./utils/constants`)
 
 const { read: readPackageJSON } = require(`../npm/package`)
 
-const fileExists = filePath => fs.existsSync(filePath)
+const fileExists = (filePath) => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
   const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
@@ -29,7 +29,7 @@ const listShadowableFilesForTheme = (directory, theme) => {
     follow: true,
   })
 
-  const toShadowPath = filePath => {
+  const toShadowPath = (filePath) => {
     const relativeFilePath = slash(filePath).replace(slash(themeSrcPath), ``)
     return path.join(`src`, theme, relativeFilePath)
   }
@@ -37,18 +37,20 @@ const listShadowableFilesForTheme = (directory, theme) => {
   const shadowPaths = shadowableThemeFiles.map(toShadowPath)
 
   const shadowedFiles = shadowPaths.filter(fileExists)
-  const shadowableFiles = shadowPaths.filter(filePath => !fileExists(filePath))
+  const shadowableFiles = shadowPaths.filter(
+    (filePath) => !fileExists(filePath),
+  )
 
   return { shadowedFiles, shadowableFiles }
 }
 
-const getOptionsForPlugin = node => {
+const getOptionsForPlugin = (node) => {
   if (!t.isObjectExpression(node)) {
     return undefined
   }
 
   const options = node.properties.find(
-    property => property.key.name === `options`
+    (property) => property.key.name === `options`,
   )
 
   if (options) {
@@ -58,7 +60,7 @@ const getOptionsForPlugin = node => {
   return undefined
 }
 
-const getPlugin = node => {
+const getPlugin = (node) => {
   const plugin = {
     name: getNameForPlugin(node),
     options: getOptionsForPlugin(node),
@@ -73,9 +75,9 @@ const getPlugin = node => {
   return plugin
 }
 
-const getKeyForPlugin = node => {
+const getKeyForPlugin = (node) => {
   if (t.isObjectExpression(node)) {
-    const key = node.properties.find(p => p.key.name === `__key`)
+    const key = node.properties.find((p) => p.key.name === `__key`)
 
     return key ? getValueFromNode(key.value) : null
   }
@@ -83,13 +85,13 @@ const getKeyForPlugin = node => {
   return null
 }
 
-const getNameForPlugin = node => {
+const getNameForPlugin = (node) => {
   if (t.isStringLiteral(node) || t.isTemplateLiteral(node)) {
     return getValueFromNode(node)
   }
 
   if (t.isObjectExpression(node)) {
-    const resolve = node.properties.find(p => p.key.name === `resolve`)
+    const resolve = node.properties.find((p) => p.key.name === `resolve`)
 
     return resolve ? getValueFromNode(resolve.value) : null
   }
@@ -97,7 +99,7 @@ const getNameForPlugin = node => {
   return null
 }
 
-const getDescriptionForPlugin = async name => {
+const getDescriptionForPlugin = async (name) => {
   const pkg = await readPackageJSON({}, name)
 
   return pkg ? pkg.description : null
@@ -134,7 +136,7 @@ const removePluginFromConfig = (src, { id, name, key }) => {
   return code
 }
 
-const getPluginsFromConfig = src => {
+const getPluginsFromConfig = (src) => {
   const getPlugins = new BabelPluginGetPluginsFromGatsbyConfig()
 
   babel.transform(src, {
@@ -145,9 +147,9 @@ const getPluginsFromConfig = src => {
   return getPlugins.state
 }
 
-const getConfigPath = root => path.join(root, `gatsby-config.js`)
+const getConfigPath = (root) => path.join(root, `gatsby-config.js`)
 
-const readConfigFile = async root => {
+const readConfigFile = async (root) => {
   let src
   try {
     src = await fs.readFile(getConfigPath(root), `utf8`)
@@ -187,14 +189,14 @@ const read = async ({ root }, id) => {
     const configSrc = await readConfigFile(root)
 
     const plugin = getPluginsFromConfig(configSrc).find(
-      plugin => plugin.key === id || plugin.name === id
+      (plugin) => plugin.key === id || plugin.name === id,
     )
 
     if (plugin) {
       const description = await getDescriptionForPlugin(id)
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
         root,
-        plugin.name
+        plugin.name,
       )
 
       return {
@@ -224,7 +226,7 @@ const destroy = async ({ root }, resource) => {
 
 class BabelPluginAddPluginsToGatsbyConfig {
   constructor({ pluginOrThemeName, shouldAdd, options, key }) {
-    this.plugin = declare(api => {
+    this.plugin = declare((api) => {
       api.assertVersion(7)
 
       return {
@@ -238,12 +240,12 @@ class BabelPluginAddPluginsToGatsbyConfig {
             }
 
             const pluginNodes = right.properties.find(
-              p => p.key.name === `plugins`
+              (p) => p.key.name === `plugins`,
             )
 
             if (shouldAdd) {
               const plugins = pluginNodes.value.elements.map(getPlugin)
-              const matches = plugins.filter(plugin => {
+              const matches = plugins.filter((plugin) => {
                 if (!key) {
                   return plugin.name === pluginOrThemeName
                 }
@@ -261,7 +263,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                 pluginNodes.value.elements.push(pluginNode)
               } else {
                 pluginNodes.value.elements = pluginNodes.value.elements.map(
-                  node => {
+                  (node) => {
                     const plugin = getPlugin(node)
 
                     if (plugin.key !== key) {
@@ -277,12 +279,12 @@ class BabelPluginAddPluginsToGatsbyConfig {
                       options,
                       key,
                     })
-                  }
+                  },
                 )
               }
             } else {
               pluginNodes.value.elements = pluginNodes.value.elements.filter(
-                node => {
+                (node) => {
                   const plugin = getPlugin(node)
 
                   if (key) {
@@ -290,7 +292,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                   }
 
                   return plugin.name !== pluginOrThemeName
-                }
+                },
               )
             }
 
@@ -306,12 +308,12 @@ class BabelPluginGetPluginsFromGatsbyConfig {
   constructor() {
     this.state = []
 
-    this.plugin = declare(api => {
+    this.plugin = declare((api) => {
       api.assertVersion(7)
 
       return {
         visitor: {
-          ExpressionStatement: path => {
+          ExpressionStatement: (path) => {
             const { node } = path
             const { left, right } = node.expression
 
@@ -319,9 +321,11 @@ class BabelPluginGetPluginsFromGatsbyConfig {
               return
             }
 
-            const plugins = right.properties.find(p => p.key.name === `plugins`)
+            const plugins = right.properties.find(
+              (p) => p.key.name === `plugins`,
+            )
 
-            plugins.value.elements.map(node => {
+            plugins.value.elements.map((node) => {
               this.state.push(getPlugin(node))
             })
           },
@@ -357,7 +361,7 @@ const schema = {
   ...resourceSchema,
 }
 
-const validate = resource => {
+const validate = (resource) => {
   if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
     return {
       error: `${resource.name} requires a key to be set`,

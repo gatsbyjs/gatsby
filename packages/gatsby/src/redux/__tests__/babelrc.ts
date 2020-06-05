@@ -9,7 +9,7 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows adding a new plugin`, () => {
     const action = actions.setBabelPlugin(
       { name: `test-babel-plugin` },
-      { name: `test` }
+      { name: `test` },
     )
     expect(babelrcReducer(undefined, action)).toMatchSnapshot()
   })
@@ -17,14 +17,14 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows updating the options of an existing plugin`, () => {
     const action = actions.setBabelPlugin(
       { name: `test-babel-plugin`, options: { id: 1 } },
-      { name: `test` }
+      { name: `test` },
     )
     let state = babelrcReducer(undefined, action)
     expect(state.stages.develop.plugins[0].options.id).toBe(1)
 
     const updateAction = actions.setBabelPlugin(
       { name: `test-babel-plugin`, options: { id: 2 } },
-      { name: `test` }
+      { name: `test` },
     )
     state = babelrcReducer(state, updateAction)
     expect(state.stages.develop.plugins[0].options.id).toBe(2)
@@ -33,7 +33,7 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows adding a new preset`, () => {
     const action = actions.setBabelPreset(
       { name: `test-babel-preset` },
-      { name: `test` }
+      { name: `test` },
     )
     expect(babelrcReducer(undefined, action)).toMatchSnapshot()
   })
@@ -41,14 +41,14 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows updating the options of an existing preset`, () => {
     const action = actions.setBabelPreset(
       { name: `test-babel-preset`, options: { id: 1 } },
-      { name: `test` }
+      { name: `test` },
     )
     let state = babelrcReducer(undefined, action)
     expect(state.stages.develop.presets[0].options.id).toBe(1)
 
     const updateAction = actions.setBabelPreset(
       { name: `test-babel-preset`, options: { id: 2 } },
-      { name: `test` }
+      { name: `test` },
     )
     state = babelrcReducer(state, updateAction)
     expect(state.stages.develop.presets[0].options.id).toBe(2)
@@ -57,7 +57,7 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows specifying the stage for the plugin`, () => {
     const action = actions.setBabelPlugin(
       { name: `test-babel-plugin`, stage: `build-javascript` },
-      { name: `test` }
+      { name: `test` },
     )
     const state = babelrcReducer(undefined, action)
     expect(state.stages.develop.plugins.length).toBe(0)
@@ -67,7 +67,7 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows specifying the stage for the preset`, () => {
     const action = actions.setBabelPreset(
       { name: `test-babel-preset`, stage: `build-javascript` },
-      { name: `test` }
+      { name: `test` },
     )
     const state = babelrcReducer(undefined, action)
     expect(state.stages.develop.presets.length).toBe(0)
@@ -86,14 +86,14 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows setting options`, () => {
     const action = actions.setBabelOptions(
       { options: { sourceMaps: `inline` } },
-      { name: `test` }
+      { name: `test` },
     )
     let state = babelrcReducer(undefined, action)
     expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
 
     const updateAction = actions.setBabelOptions(
       { options: { sourceMaps: true } },
-      { name: `test` }
+      { name: `test` },
     )
     state = babelrcReducer(state, updateAction)
 
@@ -103,7 +103,7 @@ describe(`Babelrc actions/reducer`, () => {
   it(`allows setting options on a particular stage`, () => {
     const action = actions.setBabelOptions(
       { options: { sourceMaps: `inline` }, stage: `develop` },
-      { name: `test` }
+      { name: `test` },
     )
     const state = babelrcReducer(undefined, action)
     expect(state.stages.develop.options.sourceMaps).toBe(`inline`)
@@ -127,7 +127,7 @@ describe(`Babelrc actions/reducer`, () => {
         itemToMerge: { options: { wat: 2 }, file: { resolved: `hi2` } },
         type: `plugin`,
         babel,
-      })
+      }),
     ).toMatchSnapshot()
   })
 })

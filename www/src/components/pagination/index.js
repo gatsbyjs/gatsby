@@ -10,7 +10,7 @@ import PaginationLink from "./PaginationLink"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 class Pagination extends React.Component {
-  changePage = e => {
+  changePage = (e) => {
     navigate(e.target.value ? `/blog/page/${e.target.value}` : `/blog/`)
   }
   render() {
@@ -35,7 +35,7 @@ class Pagination extends React.Component {
         sx={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: t => `0 -${t.space[6]}`,
+          margin: (t) => `0 -${t.space[6]}`,
           p: 6,
           flexDirection: `column`,
           fontSize: 1,

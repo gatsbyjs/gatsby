@@ -45,7 +45,7 @@ exports.checkDepsChanges = async ({
     // this is nice because devs won't need to do initial package installation - we can handle this.
     if (!isInitialScan) {
       console.log(
-        `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to publish it`
+        `'${packageName}' doesn't seem to be installed. Restart gatsby-dev to publish it`,
       )
       return {
         didDepsChanged: false,
@@ -69,12 +69,12 @@ exports.checkDepsChanges = async ({
             }
 
             return reject(error)
-          }
+          },
         )
       })
     } catch {
       console.log(
-        `'${packageName}' doesn't seem to be installed and is not published on NPM.`
+        `'${packageName}' doesn't seem to be installed and is not published on NPM.`,
       )
       return {
         didDepsChanged: true,
@@ -89,7 +89,7 @@ exports.checkDepsChanges = async ({
   })
   const monorepoPKGjsonString = fs.readFileSync(
     monoRepoPackageJsonPath,
-    `utf-8`
+    `utf-8`,
   )
   const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
   if (ignoredPackageJSON.has(packageName)) {
@@ -108,18 +108,18 @@ exports.checkDepsChanges = async ({
 
   const areDepsEqual = _.isEqual(
     monorepoPKGjson.dependencies,
-    localPKGjson.dependencies
+    localPKGjson.dependencies,
   )
 
   if (!areDepsEqual) {
     const diff = difference(
       monorepoPKGjson.dependencies,
-      localPKGjson.dependencies
+      localPKGjson.dependencies,
     )
 
     const diff2 = difference(
       localPKGjson.dependencies,
-      monorepoPKGjson.dependencies
+      monorepoPKGjson.dependencies,
     )
 
     let needPublishing = false
@@ -150,7 +150,7 @@ exports.checkDepsChanges = async ({
           // changes - they will be covered
           if (!monoRepoPackages.includes(key)) {
             acc.push(
-              ` - '${key}' changed version from ${localPKGjson.dependencies[key]} to ${monorepoPKGjson.dependencies[key]}`
+              ` - '${key}' changed version from ${localPKGjson.dependencies[key]} to ${monorepoPKGjson.dependencies[key]}`,
             )
             needPublishing = true
           }
@@ -169,11 +169,11 @@ exports.checkDepsChanges = async ({
       console.log(`Dependencies of '${packageName}' changed:\n${depChangeLog}`)
       if (isInitialScan) {
         console.log(
-          `Will ${!needPublishing ? `not ` : ``}publish to local npm registry.`
+          `Will ${!needPublishing ? `not ` : ``}publish to local npm registry.`,
         )
       } else {
         console.warn(
-          `Installation of dependencies after initial scan is not implemented`
+          `Installation of dependencies after initial scan is not implemented`,
         )
       }
       return {

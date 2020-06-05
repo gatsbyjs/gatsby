@@ -17,7 +17,7 @@ afterEach(() => {
 Date.now = jest.fn(
   () =>
     // const diff = new Date().getTime() - start
-    1482363367071 // + diff
+    1482363367071, // + diff
 )
 
 glob.sync = jest.fn()
@@ -29,7 +29,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
@@ -41,7 +41,7 @@ describe(`Add pages`, () => {
       {
         component: `/path/to/file1.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     expect(action).toMatchSnapshot()
   })
@@ -51,7 +51,7 @@ describe(`Add pages`, () => {
       {
         path: `/whatever/`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     expect(action).toMatchSnapshot()
   })
@@ -62,7 +62,7 @@ describe(`Add pages`, () => {
         path: `/whatever/`,
         component: `cheese.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     expect(action).toMatchSnapshot()
   })
@@ -77,7 +77,7 @@ describe(`Add pages`, () => {
           matchPath: `/pizz*`,
         },
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     expect(action).toMatchSnapshot()
   })
@@ -88,7 +88,7 @@ describe(`Add pages`, () => {
         path: `hi/`,
         component: `/whatever/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     const state = reducer(undefined, action)
     expect(Array.from(state.values())[0].path).toEqual(`/hi/`)
@@ -103,7 +103,7 @@ describe(`Add pages`, () => {
           id: 123,
         },
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
@@ -117,7 +117,7 @@ describe(`Add pages`, () => {
         component: `/whatever/index.js`,
         matchPath: `/hi-from-somewhere-else/`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
@@ -130,14 +130,14 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     const action2 = actions.createPage(
       {
         path: `/hi/pizza/`,
         component: `/whatever/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     let state = reducer(undefined, action)
     state = reducer(state, action2)
@@ -151,7 +151,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
 
     // Change the component
@@ -160,7 +160,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever2/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
 
     let state = reducer(undefined, action)
@@ -175,7 +175,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { id: `test`, name: `test` }
+      { id: `test`, name: `test` },
     )
     const action2 = actions.deletePage({ path: `/hi/` })
 

@@ -19,7 +19,7 @@ class Collapsible extends Component {
     return (
       <div
         sx={{
-          borderBottom: t =>
+          borderBottom: (t) =>
             collapsed ? 0 : `1px solid ${t.colors.ui.border}`,
           display: collapsed ? false : `flex`,
           flex: collapsed ? `0 0 auto` : `1 1 auto`,

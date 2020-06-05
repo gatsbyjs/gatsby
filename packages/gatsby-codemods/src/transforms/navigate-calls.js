@@ -64,7 +64,7 @@ const addGatsbyImport = (j, root) => {
     const [first] = getFirstNode(j, root)
     let statement = j.importDeclaration(
       [j.importSpecifier(j.identifier(METHOD))],
-      j.literal(MODULE_NAME)
+      j.literal(MODULE_NAME),
     )
     first.insertAfter(statement)
     return
@@ -72,7 +72,7 @@ const addGatsbyImport = (j, root) => {
 
   gatsbyImport.replaceWith(({ node }) => {
     node.specifiers = node.specifiers.concat(
-      j.importSpecifier(j.identifier(METHOD))
+      j.importSpecifier(j.identifier(METHOD)),
     )
     return node
   })
@@ -98,7 +98,7 @@ const replaceGatsbyLinkImport = (j, root, importStatement) => {
   const imports = importStatement.find(j.Identifier)
 
   const allExistingMethods = imports.every(
-    node => node.value.name === EXISTING_METHOD
+    (node) => node.value.name === EXISTING_METHOD,
   )
 
   if (allExistingMethods) {
@@ -108,13 +108,13 @@ const replaceGatsbyLinkImport = (j, root, importStatement) => {
 
 const replaceGatsbyLinkRequire = (j, root, requires) => {
   const links = requires.filter(
-    el =>
+    (el) =>
       j(el).find(j.CallExpression, {
         arguments: [{ value: EXISTING_MODULE_NAME }],
-      }).length > 0
+      }).length > 0,
   )
 
-  links.forEach(el => {
+  links.forEach((el) => {
     const node = j(el)
 
     node.remove()

@@ -25,7 +25,7 @@ module.exports = async (
     cache,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const defaults = {
     maxWidth: 650,
@@ -80,7 +80,7 @@ module.exports = async (
     } catch (err) {
       reporter.panic(
         `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
-        err
+        err,
       )
       return []
     }
@@ -114,9 +114,9 @@ module.exports = async (
       reporter.warn(
         reporter.stripIndent(`
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
-          `loading`
+          `loading`,
         )} option. Please pass one of "lazy", "eager" or "auto".
-      `)
+      `),
       )
     }
 
@@ -208,7 +208,7 @@ ${rawHTML}
   return Promise.all(
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
-      node =>
+      (node) =>
         new Promise(async (resolve, reject) => {
           if (node.url.indexOf(`images.ctfassets.net`) !== -1) {
             const rawHTML = await generateImagesAndUpdateNode(node, resolve)
@@ -223,14 +223,14 @@ ${rawHTML}
             // Image isn't relative so there's nothing for us to do.
             return resolve()
           }
-        })
-    )
-  ).then(markdownImageNodes =>
+        }),
+    ),
+  ).then((markdownImageNodes) =>
     // HTML image node stuff
     Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
-        node =>
+        (node) =>
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve()
@@ -261,7 +261,7 @@ ${rawHTML}
               if (formattedImgTag.url.indexOf(`images.ctfassets.net`) !== -1) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,
-                  resolve
+                  resolve,
                 )
 
                 if (rawHTML) {
@@ -278,10 +278,10 @@ ${rawHTML}
             node.value = $(`body`).html() // fix for cheerio v1
 
             return resolve(node)
-          })
-      )
-    ).then(htmlImageNodes =>
-      markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
-    )
+          }),
+      ),
+    ).then((htmlImageNodes) =>
+      markdownImageNodes.concat(htmlImageNodes).filter((node) => !!node),
+    ),
   )
 }

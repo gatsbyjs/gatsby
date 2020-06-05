@@ -27,7 +27,7 @@ interface ITransformedWebpackError {
 
 const transformWebpackError = (
   stage: keyof typeof stageCodeToReadableLabel,
-  webpackError: any
+  webpackError: any,
 ): ITransformedWebpackError => {
   const handlers = [
     {
@@ -101,17 +101,17 @@ const transformWebpackError = (
 
 export const structureWebpackErrors = (
   stage: Stage,
-  webpackError: any
+  webpackError: any,
 ): ITransformedWebpackError[] | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
-    return webpackError.map(e => transformWebpackError(stage, e))
+    return webpackError.map((e) => transformWebpackError(stage, e))
   }
 
   return transformWebpackError(stage, webpackError)
 }
 
 export const reportWebpackWarnings = (stats: Stats): void => {
-  stats.compilation.warnings.forEach(webpackWarning => {
+  stats.compilation.warnings.forEach((webpackWarning) => {
     if (webpackWarning.warning) {
       // grab inner Exception if it exists
       reporter.warn(webpackWarning.warning.toString())

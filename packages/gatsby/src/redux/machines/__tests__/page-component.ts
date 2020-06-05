@@ -13,11 +13,11 @@ const getService = (args = {}): Interpreter<IContext, IState, IEvent> =>
       pages: new Set([`/`]),
       isInBootstrap: true,
       ...args,
-    })
+    }),
   ).start()
 
 const sleep = (delay = 50): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, delay))
+  new Promise((resolve) => setTimeout(resolve, delay))
 
 describe(`bootstrap`, () => {
   beforeEach(() => {

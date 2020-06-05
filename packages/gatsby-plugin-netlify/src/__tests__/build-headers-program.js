@@ -24,7 +24,7 @@ describe(`build-headers-program`, () => {
 
   const createPluginData = async () => {
     const tmpDir = await fs.mkdtemp(
-      path.join(os.tmpdir(), `gatsby-plugin-netlify-`)
+      path.join(os.tmpdir(), `gatsby-plugin-netlify-`),
     )
 
     return {
@@ -178,7 +178,7 @@ describe(`build-headers-program`, () => {
     expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(`_headers`),
-      `utf8`
+      `utf8`,
     )
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/app-data\.json/)
@@ -190,7 +190,7 @@ describe(`build-headers-program`, () => {
   it(`with manifest['pages-manifest']`, async () => {
     const pluginData = await createPluginData()
 
-    fs.existsSync.mockImplementation(path => {
+    fs.existsSync.mockImplementation((path) => {
       if (path.includes(`page-data.json`) || path.includes(`app-data.json`)) {
         return false
       }
@@ -213,7 +213,7 @@ describe(`build-headers-program`, () => {
     expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(`_headers`),
-      `utf8`
+      `utf8`,
     )
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
@@ -232,7 +232,7 @@ describe(`build-headers-program`, () => {
       ...DEFAULT_OPTIONS,
       mergeCachingHeaders: true,
     }
-    fs.existsSync.mockImplementation(path => {
+    fs.existsSync.mockImplementation((path) => {
       if (path.includes(`app-data.json`)) {
         return false
       }
@@ -245,7 +245,7 @@ describe(`build-headers-program`, () => {
     expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(`_headers`),
-      `utf8`
+      `utf8`,
     )
     expect(output).not.toMatch(/app-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
@@ -263,7 +263,7 @@ describe(`build-headers-program`, () => {
 
     expect(reporter.warn).not.toHaveBeenCalled()
     expect(
-      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
+      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`),
     ).toMatchSnapshot()
   })
 
@@ -286,7 +286,7 @@ describe(`build-headers-program`, () => {
 
     expect(reporter.warn).not.toHaveBeenCalled()
     expect(
-      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
+      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`),
     ).toMatchSnapshot()
   })
 
@@ -306,7 +306,7 @@ describe(`build-headers-program`, () => {
     expect(reporter.warn).toHaveBeenCalled()
 
     expect(
-      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
+      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`),
     ).toMatchSnapshot()
   })
 })

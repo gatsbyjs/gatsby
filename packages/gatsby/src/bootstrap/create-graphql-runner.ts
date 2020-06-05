@@ -13,7 +13,7 @@ import { IMatch } from "../types"
 
 export type Runner = (
   query: string | Source,
-  context: Record<string, any>
+  context: Record<string, any>,
 ) => Promise<ExecutionResult<ExecutionResultDataDefault>>
 
 export const createGraphQLRunner = (
@@ -25,7 +25,7 @@ export const createGraphQLRunner = (
   }: { parentSpan: Span | undefined; graphqlTracing?: boolean } = {
     parentSpan: undefined,
     graphqlTracing: false,
-  }
+  },
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
   let runner = new GraphQLRunner(store, { graphqlTracing })
@@ -41,7 +41,7 @@ export const createGraphQLRunner = (
     `ADD_CHILD_NODE_TO_PARENT_NODE`,
   ]
 
-  eventTypes.forEach(type => {
+  eventTypes.forEach((type) => {
     emitter.on(type, () => {
       runner = new GraphQLRunner(store)
     })
@@ -53,14 +53,14 @@ export const createGraphQLRunner = (
         queryName: `gatsby-node query`,
         parentSpan,
       })
-      .then(result => {
+      .then((result) => {
         if (result.errors) {
           const structuredErrors = result.errors
-            .map(e => {
+            .map((e) => {
               // Find the file where graphql was called.
               const file = stackTrace
                 .parse(e)
-                .find(file => /createPages/.test(file.getFunctionName()))
+                .find((file) => /createPages/.test(file.getFunctionName()))
 
               if (file) {
                 const structuredError = errorParser({

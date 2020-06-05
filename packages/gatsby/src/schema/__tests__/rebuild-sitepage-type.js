@@ -58,8 +58,8 @@ describe(`build and update schema for SitePage`, () => {
 
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    nodes().forEach(node =>
-      store.dispatch({ type: `CREATE_NODE`, payload: node })
+    nodes().forEach((node) =>
+      store.dispatch({ type: `CREATE_NODE`, payload: node }),
     )
 
     await build({})
@@ -123,7 +123,7 @@ describe(`build and update schema for SitePage`, () => {
     expect(fields.length).toBe(1)
     expect(fields).toEqual([`oldKey`])
     inputFields = Object.keys(
-      schema.getType(`SitePageFieldsFilterInput`).getFields()
+      schema.getType(`SitePageFieldsFilterInput`).getFields(),
     )
     expect(inputFields.length).toBe(1)
     expect(inputFields).toEqual([`oldKey`])
@@ -138,7 +138,7 @@ describe(`build and update schema for SitePage`, () => {
     expect(fields).toEqual([`oldKey`, `key`])
 
     inputFields = Object.keys(
-      schema.getType(`SitePageFieldsFilterInput`).getFields()
+      schema.getType(`SitePageFieldsFilterInput`).getFields(),
     )
     expect(inputFields.length).toBe(2)
     expect(inputFields).toEqual([`oldKey`, `key`])
@@ -146,7 +146,7 @@ describe(`build and update schema for SitePage`, () => {
     const fieldsEnum = schema
       .getType(`SitePageFieldsEnum`)
       .getValues()
-      .map(value => value.name)
+      .map((value) => value.name)
     expect(fieldsEnum.includes(`fields___oldKey`)).toBeTruthy()
     expect(fieldsEnum.includes(`fields___key`)).toBeTruthy()
   })

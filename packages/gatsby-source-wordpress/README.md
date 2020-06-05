@@ -157,7 +157,7 @@ module.exports = {
         // should return the array of entities that are passed to it.
         // This is useful if you need more control over the order of normalizers,
         // instead of your normalizer being applied after the built in normalizers (as is the case with the normalizer option).
-        normalizers: normalizers => [
+        normalizers: (normalizers) => [
           ...normalizers,
           {
             name: "nameOfTheFunction",
@@ -815,7 +815,7 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers => [...normalizers, mapMoviesToGenres],
+        normalizers: (normalizers) => [...normalizers, mapMoviesToGenres],
       },
     },
   ],
@@ -832,7 +832,7 @@ const dropUnusedMediaNormalizer = {
   name: "dropUnusedMediaNormalizer",
   normalizer: function ({ entities }) {
     return entities.filter(
-      e => !(e.__type === "wordpress__wp_media" && !e.post)
+      (e) => !(e.__type === "wordpress__wp_media" && !e.post),
     )
   },
 }
@@ -847,7 +847,10 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
+        normalizers: (normalizers) => [
+          dropUnusedMediaNormalizer,
+          ...normalizers,
+        ],
       },
     },
   ],
@@ -913,7 +916,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // The path field contains the relative original WordPress link
   // and we use it for the slug to preserve url structure.
   // The Page ID is prefixed with 'PAGE_'
-  allWordpressPage.edges.forEach(edge => {
+  allWordpressPage.edges.forEach((edge) => {
     // Gatsby uses Redux to manage its internal state.
     // Plugins and sites can use functions like "createPage"
     // to interact with Gatsby.
@@ -935,7 +938,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // The path field stems from the original WordPress link
   // and we use it for the slug to preserve url structure.
   // The Post ID is prefixed with 'POST_'
-  allWordpressPost.edges.forEach(edge => {
+  allWordpressPost.edges.forEach((edge) => {
     createPage({
       path: edge.node.path,
       component: slash(postTemplate),

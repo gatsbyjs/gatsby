@@ -43,7 +43,7 @@ module.exports = async ({
   // Ensure that resource was destroyed
   const postDestroyReadResponse = await resource.read(
     context,
-    createResponse.id
+    createResponse.id,
   )
   expect(postDestroyReadResponse).toBeUndefined()
 }

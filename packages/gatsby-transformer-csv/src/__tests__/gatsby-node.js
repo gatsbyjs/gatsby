@@ -20,7 +20,7 @@ describe(`Process nodes correctly`, () => {
   }
 
   // Make some fake functions its expecting.
-  const loadNodeContent = node => Promise.resolve(node.content)
+  const loadNodeContent = (node) => Promise.resolve(node.content)
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
     const fields = [`blue`, `funny`]
@@ -70,7 +70,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { noheader: true }
+      { noheader: true },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -100,7 +100,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { noheader: true, extensions: [`ksv`], delimiter: `\t` }
+      { noheader: true, extensions: [`ksv`], delimiter: `\t` },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -130,7 +130,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { noheader: true, extensions: [`tsv`], delimiter: `\t` }
+      { noheader: true, extensions: [`tsv`], delimiter: `\t` },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -158,7 +158,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { typeName: typeNameFromFile }
+      { typeName: typeNameFromFile },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -188,7 +188,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { typeName: typeNameFromDir }
+      { typeName: typeNameFromDir },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -218,7 +218,7 @@ describe(`Process nodes correctly`, () => {
       },
       {
         typeName: ({ node, object }) => `CsvTypeSetByFunction`,
-      }
+      },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -248,7 +248,7 @@ describe(`Process nodes correctly`, () => {
       },
       {
         typeName: `CsvTypeSetByFunction`,
-      }
+      },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -278,7 +278,7 @@ describe(`Process nodes correctly`, () => {
       },
       {
         nodePerFile: false,
-      }
+      },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -308,7 +308,7 @@ describe(`Process nodes correctly`, () => {
       },
       {
         nodePerFile: true,
-      }
+      },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -338,7 +338,7 @@ describe(`Process nodes correctly`, () => {
       },
       {
         nodePerFile: `theItems`,
-      }
+      },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

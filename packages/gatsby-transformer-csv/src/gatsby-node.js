@@ -8,7 +8,7 @@ const convertToJson = (data, options) =>
   new Promise((res, rej) => {
     csv(options)
       .fromString(data)
-      .on(`end_parsed`, jsonData => {
+      .on(`end_parsed`, (jsonData) => {
         if (!jsonData) {
           rej(`CSV to JSON conversion failed!`)
         }
@@ -18,7 +18,7 @@ const convertToJson = (data, options) =>
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) {
   const { createNode, createParentChildLink } = actions
 

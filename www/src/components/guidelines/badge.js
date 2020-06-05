@@ -13,7 +13,7 @@ const BadgeBase = styled(Flex)(
     position: `relative`,
     textTransform: `uppercase`,
   },
-  styleProps
+  styleProps,
 )
 
 BadgeBase.propTypes = {

@@ -22,7 +22,7 @@ describe(`onCreatePage`, () => {
           createPage,
         },
       },
-      { prefixes: [`/*`, `/app/*`] }
+      { prefixes: [`/*`, `/app/*`] },
     )
     expect(createPage).toHaveBeenCalledWith({
       matchPath: `/app/*`,
@@ -41,7 +41,7 @@ describe(`onCreatePage`, () => {
           createPage,
         },
       },
-      { prefixes: [`/*`, `/app/*`] }
+      { prefixes: [`/*`, `/app/*`] },
     )
     expect(createPage).toHaveBeenCalledTimes(0)
   })

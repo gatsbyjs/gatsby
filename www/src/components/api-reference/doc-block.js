@@ -124,7 +124,7 @@ const AvailableIn = ({ definition }) => {
     return (
       <div>
         <span>Only available in:</span>
-        {definition.availableIn.map(api => (
+        {definition.availableIn.map((api) => (
           <a
             key={api}
             href={`/docs/node-apis/#${api}`}

@@ -87,7 +87,7 @@ describe(`mett`, (): void => {
         (): string => (out += `p`),
       ]
 
-      list.forEach(f => met.on(`foo`, f))
+      list.forEach((f) => met.on(`foo`, f))
 
       met.emit(`foo`, `pass`)
 
@@ -116,7 +116,7 @@ describe(`mett`, (): void => {
         (): string => (out += `p`),
       ]
 
-      list.forEach(f => met.on(`foo`, f))
+      list.forEach((f) => met.on(`foo`, f))
 
       met.off(`foo`, list[3]) // d
       met.off(`foo`, list[8]) // h
@@ -148,7 +148,7 @@ describe(`mett`, (): void => {
         (): string => (out += `p`),
       ]
 
-      list.forEach(f => met.on(`foo`, f))
+      list.forEach((f) => met.on(`foo`, f))
 
       met.off(`foo`, list[3]) // d
       met.off(`foo`, list[8]) // i

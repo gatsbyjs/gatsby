@@ -73,7 +73,7 @@ module.exports = {
         typeName: "GitHub",
         fieldName: "github",
         // Create Apollo Link manually. Can return a Promise.
-        createLink: pluginOptions => {
+        createLink: (pluginOptions) => {
           return createHttpLink({
             uri: "https://api.github.com/graphql",
             headers: {
@@ -127,7 +127,7 @@ module.exports = {
 
         createSchema: async () => {
           const json = JSON.parse(
-            fs.readFileSync(`${__dirname}/introspection.json`)
+            fs.readFileSync(`${__dirname}/introspection.json`),
           )
           return buildClientSchema(json.data)
         },

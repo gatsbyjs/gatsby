@@ -64,10 +64,10 @@ class ScrollSyncSection extends Component {
   }
 }
 
-const _getItemIds = section => {
+const _getItemIds = (section) => {
   let list = []
 
-  section.forEach(subSection => {
+  section.forEach((subSection) => {
     if (subSection.hasOwnProperty(`hash`)) list.push(subSection.hash)
     if (subSection.items) list.push(..._getItemIds(subSection.items))
   })
@@ -75,14 +75,14 @@ const _getItemIds = section => {
   return list
 }
 
-const _getElementTopOffsetsById = ids => {
+const _getElementTopOffsetsById = (ids) => {
   const banner = document.getElementsByClassName(`banner`)
   const navigation = document.getElementsByClassName(`navigation`)
   const bannerHeight = banner[0].offsetHeight || 0
   const navigationHeight = navigation[0].offsetHeight || 0
 
   return ids
-    .map(hash => {
+    .map((hash) => {
       const element = document.getElementById(hash)
       return element
         ? {
@@ -91,7 +91,7 @@ const _getElementTopOffsetsById = ids => {
           }
         : null
     })
-    .filter(item => item)
+    .filter((item) => item)
 }
 
 export default ScrollSyncSection

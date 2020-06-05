@@ -62,8 +62,8 @@ const howToMerge = {
     _.uniqWith(a.concat(b), (a, b) =>
       _.isEqual(
         _.pick(normalizePluginEntry(a), [`resolve`, `options`]),
-        _.pick(normalizePluginEntry(b), [`resolve`, `options`])
-      )
+        _.pick(normalizePluginEntry(b), [`resolve`, `options`]),
+      ),
     ),
   mapping: (objA: Mapping, objB: Mapping): Mapping => _.merge({}, objA, objB),
 } as const
@@ -73,11 +73,11 @@ const howToMerge = {
  */
 export const mergeGatsbyConfig = (
   a: IGatsbyConfigInput,
-  b: IGatsbyConfigInput
+  b: IGatsbyConfigInput,
 ): IGatsbyConfigInput => {
   // a and b are gatsby configs, If they have keys, that means there are values to merge
   const allGatsbyConfigKeysWithAValue = _.uniq(
-    Object.keys(a).concat(Object.keys(b))
+    Object.keys(a).concat(Object.keys(b)),
   ) as ConfigKey[]
 
   // reduce the array of mergable keys into a single gatsby config object
@@ -91,7 +91,7 @@ export const mergeGatsbyConfig = (
         [gatsbyConfigKey]: mergeFn(a[gatsbyConfigKey], b[gatsbyConfigKey]),
       }
     },
-    {} as IGatsbyConfigInput
+    {} as IGatsbyConfigInput,
   )
 
   // return the fully merged config

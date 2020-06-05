@@ -16,7 +16,7 @@ import { TAGS_AND_DOCS } from "../data/tags-docs"
 // Select first tag with whitespace instead of hyphens for
 // readability. But if none present, just use the first tag in the
 // collection
-const preferSpacedTag = tags => {
+const preferSpacedTag = (tags) => {
   for (const tag of tags) {
     if (!tag.includes(` `)) {
       return tag
@@ -48,7 +48,7 @@ const Tags = ({ pageContext, data }) => {
       <PageMetadata
         title={`${preferSpacedTag(tags)} Tag`}
         description={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
-          tags
+          tags,
         )}`}
       />
       <h1>{tagHeader}</h1>
@@ -74,7 +74,7 @@ const Tags = ({ pageContext, data }) => {
           </React.Fragment>
         ) : null}
       </ButtonWrapper>
-      {nodes.map(node => (
+      {nodes.map((node) => (
         <BlogPostPreviewItem
           post={node}
           key={node.fields.slug}

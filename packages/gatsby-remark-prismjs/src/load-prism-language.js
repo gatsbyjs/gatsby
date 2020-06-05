@@ -6,7 +6,7 @@ const getBaseLanguageName = (nameOrAlias, components = prismComponents) => {
   if (components.languages[nameOrAlias]) {
     return nameOrAlias
   }
-  return Object.keys(components.languages).find(language => {
+  return Object.keys(components.languages).find((language) => {
     const { alias } = components.languages[language]
     if (!alias) return false
     if (Array.isArray(alias)) {

@@ -9,11 +9,11 @@ const childItemsBySlug = (
   docsHierarchy,
   tutorialHierarchy,
   contributingHierarchy,
-  slug
+  slug,
 ) => {
   let result
 
-  const iter = a => {
+  const iter = (a) => {
     if (a.link === slug) {
       result = a
       return true
@@ -33,7 +33,7 @@ const GuideList = ({ slug }) => {
       docsHierarchy,
       tutorialHierarchy,
       contributingHierarchy,
-      slug
+      slug,
     ) || []
   const subitemList = subitemsForPage.map((subitem, i) => (
     <li key={i}>

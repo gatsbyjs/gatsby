@@ -36,12 +36,13 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 const reporter = require(`gatsby-cli/lib/reporter`)
-const typePrinter = schema => typeName => printType(schema.getType(typeName))
+const typePrinter = (schema) => (typeName) =>
+  printType(schema.getType(typeName))
 
-const addNode = node => store.dispatch({ type: `CREATE_NODE`, payload: node })
+const addNode = (node) => store.dispatch({ type: `CREATE_NODE`, payload: node })
 const updateNode = (node, oldNode) =>
   store.dispatch({ type: `CREATE_NODE`, payload: node, oldNode })
-const deleteNode = node =>
+const deleteNode = (node) =>
   store.dispatch({ type: `DELETE_NODE`, payload: node })
 
 const createParentChildLink = ({ parent, child }) =>
@@ -62,13 +63,13 @@ const rebuildTestSchema = async () => {
   return store.getState().schema
 }
 
-const addNodeAndRebuild = async node => {
+const addNodeAndRebuild = async (node) => {
   const nodes = Array.isArray(node) ? node : [node]
   nodes.forEach(addNode)
   return await rebuildTestSchema()
 }
 
-const deleteNodeAndRebuild = async node => {
+const deleteNodeAndRebuild = async (node) => {
   const nodes = Array.isArray(node) ? node : [node]
   nodes.forEach(deleteNode)
   return await rebuildTestSchema()
@@ -84,7 +85,7 @@ const createExternalSchema = () => {
           fields: {
             externalFoo: {
               type: GraphQLString,
-              resolve: parentValue =>
+              resolve: (parentValue) =>
                 `${parentValue}.ExternalType.externalFoo.defaultResolver`,
             },
           },
@@ -155,7 +156,7 @@ describe(`build and update individual types`, () => {
     initialPrintedSchema = printSchema(lexicographicSortSchema(schema))
   })
 
-  const expectSymmetricDelete = async node => {
+  const expectSymmetricDelete = async (node) => {
     const newSchema = await deleteNodeAndRebuild(node)
     const printed = printSchema(lexicographicSortSchema(newSchema))
     expect(printed).toEqual(initialPrintedSchema)
@@ -286,7 +287,7 @@ describe(`build and update individual types`, () => {
     expect(types).toEqual(
       initialTypes
         .concat([`NestedNestedFooAnother`, `NestedNestedFooAnotherFilterInput`])
-        .sort()
+        .sort(),
     )
 
     const print = typePrinter(newSchema)
@@ -532,7 +533,7 @@ describe(`build and update individual types`, () => {
       },
     ]
     const parent = createNodes()[0]
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       addNode(node)
       createParentChildLink({ parent, child: node })
     })
@@ -541,7 +542,7 @@ describe(`build and update individual types`, () => {
     const fields = newSchema.getType(`Foo`).getFields()
     const fieldNames = Object.keys(fields).sort()
     expect(fieldNames).toEqual(
-      initialFooFields.concat(`childBar`, `childBaz`).sort()
+      initialFooFields.concat(`childBar`, `childBaz`).sort(),
     )
     expect(String(fields.childBar.type)).toEqual(`Bar`)
     expect(String(fields.childBaz.type)).toEqual(`Baz`)
@@ -565,7 +566,7 @@ describe(`build and update individual types`, () => {
       },
     ]
     const parent = createNodes()[0]
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       addNode(node)
       createParentChildLink({ parent, child: node })
     })
@@ -591,7 +592,7 @@ describe(`build and update individual types`, () => {
     const newSchema = await rebuildTestSchema()
     const types = Object.keys(newSchema.getTypeMap()).sort()
     expect(types).toEqual(
-      initialTypes.concat([`NestedFields`, `NestedFieldsFilterInput`]).sort()
+      initialTypes.concat([`NestedFields`, `NestedFieldsFilterInput`]).sort(),
     )
 
     const print = typePrinter(newSchema)
@@ -830,7 +831,7 @@ describe(`rebuilds node types having existing relations`, () => {
   let schema
   let i
 
-  const setup = async nodes => {
+  const setup = async (nodes) => {
     i = 0
     store.dispatch({ type: `DELETE_CACHE` })
     nodes.forEach(addNode)
@@ -839,9 +840,9 @@ describe(`rebuilds node types having existing relations`, () => {
     schema = store.getState().schema
   }
 
-  const rebuild = async nodes => {
+  const rebuild = async (nodes) => {
     i++
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       // Adding new field to enforce type structure change
       node[`field${i}`] = i
       node.id = `${node.id}${i}`
@@ -872,7 +873,7 @@ describe(`rebuilds node types having existing relations`, () => {
           baz: 7,
           bar___NODE: `Bar1`,
         },
-      ].filter(node => !ids.length || ids.includes(node.id))
+      ].filter((node) => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
     await expect(rebuild(nodes(`Baz1`))).resolves.toBeDefined()
@@ -903,7 +904,7 @@ describe(`rebuilds node types having existing relations`, () => {
           internal: { type: `Foo`, contentDigest: `0` },
           children: [],
         },
-      ].filter(node => !ids.length || ids.includes(node.id))
+      ].filter((node) => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
     await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
@@ -929,7 +930,7 @@ describe(`rebuilds node types having existing relations`, () => {
           children: [],
           foo___NODE: `Foo1`,
         },
-      ].filter(node => !ids.length || ids.includes(node.id))
+      ].filter((node) => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
     await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
@@ -962,7 +963,7 @@ describe(`rebuilds node types having existing relations`, () => {
           children: [],
           foo___NODE: `Foo1`,
         },
-      ].filter(node => !ids.length || ids.includes(node.id))
+      ].filter((node) => !ids.length || ids.includes(node.id))
 
     await setup(nodes())
     await expect(rebuild(nodes(`Foo1`))).resolves.toBeDefined()
@@ -1023,7 +1024,7 @@ describe(`compatibility with createTypes`, () => {
             infer: false,
           },
         }),
-      ])
+      ]),
     )
     await build({})
   })
@@ -1149,7 +1150,7 @@ describe(`compatibility with createTypes`, () => {
   it(`should not collect inference metadata for types with inference disabled`, async () => {
     const { inferenceMetadata } = store.getState()
     const typesToIgnore = Object.keys(inferenceMetadata.typeMap).filter(
-      type => inferenceMetadata.typeMap[type].ignored
+      (type) => inferenceMetadata.typeMap[type].ignored,
     )
     expect(typesToIgnore).toEqual([`FooFieldsBaz`, `Bar`, `BarBaz`])
   })
@@ -1168,7 +1169,7 @@ describe(`Compatibility with addThirdPartySchema`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     store.dispatch(
-      actions.addThirdPartySchema({ schema: createExternalSchema() })
+      actions.addThirdPartySchema({ schema: createExternalSchema() }),
     )
     mockCreateResolvers({
       ExternalType: {
@@ -1284,7 +1285,7 @@ describe(`Compatibility with addThirdPartySchema`, () => {
   })
 })
 
-const mockCreateResolvers = resolvers => {
+const mockCreateResolvers = (resolvers) => {
   const apiRunnerNode = require(`../../utils/api-runner-node`)
   apiRunnerNode.mockImplementation((api, { createResolvers }) => {
     if (api === `createResolvers`) {

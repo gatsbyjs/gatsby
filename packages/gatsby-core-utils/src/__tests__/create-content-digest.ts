@@ -8,7 +8,7 @@ describe(`Create content digest`, () => {
 
     expect(typeof contentDigest).toEqual(`string`)
     expect(contentDigest).toMatchInlineSnapshot(
-      `"b37e16c620c055cf8207b999e3270e9b"`
+      `"b37e16c620c055cf8207b999e3270e9b"`,
     )
   })
 
@@ -19,7 +19,7 @@ describe(`Create content digest`, () => {
 
     expect(typeof contentDigest).toEqual(`string`)
     expect(contentDigest).toMatchInlineSnapshot(
-      `"db1aa405ee004296a31f04620bbb8e28"`
+      `"db1aa405ee004296a31f04620bbb8e28"`,
     )
   })
 

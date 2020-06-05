@@ -1,5 +1,5 @@
 describe(`gatsby-plugin-sass`, () => {
-  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+  jest.mock(`../resolve`, () => (module) => `/resolved/path/${module}`)
 
   const actions = {
     setWebpackConfig: jest.fn(),
@@ -8,8 +8,8 @@ describe(`gatsby-plugin-sass`, () => {
   // loaders "mocks"
   const loaders = {
     miniCssExtract: () => `miniCssExtract`,
-    css: args => `css(${JSON.stringify(args)})`,
-    postcss: args => `postcss(${JSON.stringify(args)})`,
+    css: (args) => `css(${JSON.stringify(args)})`,
+    postcss: (args) => `postcss(${JSON.stringify(args)})`,
     null: () => `null`,
   }
 
@@ -43,7 +43,7 @@ describe(`gatsby-plugin-sass`, () => {
     },
   }
 
-  tests.stages.forEach(stage => {
+  tests.stages.forEach((stage) => {
     for (let label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {

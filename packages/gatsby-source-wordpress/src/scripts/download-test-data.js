@@ -20,9 +20,9 @@ fetchData({
   _perPage: 100,
   typePrefix,
   refactoredEntityTypes,
-}).then(data => {
+}).then((data) => {
   fs.writeFileSync(
     `${__dirname}/../__tests__/data.json`,
-    JSON.stringify(data, null, 4)
+    JSON.stringify(data, null, 4),
   )
 })

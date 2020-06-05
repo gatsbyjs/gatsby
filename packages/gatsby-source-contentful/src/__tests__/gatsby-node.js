@@ -21,16 +21,16 @@ describe(`gatsby-node`, () => {
   const reporter = {
     info: jest.fn(),
   }
-  const createNodeId = jest.fn(value => value)
+  const createNodeId = jest.fn((value) => value)
   let currentNodeMap
   let getNodes = () => Array.from(currentNodeMap.values())
-  let getNode = id => currentNodeMap.get(id)
+  let getNode = (id) => currentNodeMap.get(id)
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
 
-  const testIfContentTypesExists = contentTypeItems => {
-    contentTypeItems.forEach(contentType => {
+  const testIfContentTypesExists = (contentTypeItems) => {
+    contentTypeItems.forEach((contentType) => {
       const contentTypeId = createNodeId(contentType.name)
       expect(getNode(contentTypeId)).toMatchObject({
         name: contentType.name,
@@ -45,10 +45,10 @@ describe(`gatsby-node`, () => {
 
     const nodeMap = new Map()
     const references = new Map()
-    locales.forEach(locale => {
-      entries.forEach(entry => {
+    locales.forEach((locale) => {
+      entries.forEach((entry) => {
         const currentContentType = contentTypes.find(
-          contentType => contentType.sys.id === entry.sys.contentType.sys.id
+          (contentType) => contentType.sys.id === entry.sys.contentType.sys.id,
         )
 
         const nodeId = createNodeId(
@@ -57,19 +57,19 @@ describe(`gatsby-node`, () => {
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: entry.sys.id,
-          })
+          }),
         )
 
         const matchedObject = {}
-        Object.keys(entry.fields).forEach(field => {
+        Object.keys(entry.fields).forEach((field) => {
           const value = getFieldValue(
             entry.fields[field],
             locale,
-            defaultLocale
+            defaultLocale,
           )
 
           const fieldDefinition = currentContentType.fields.find(
-            cField => cField.id === field
+            (cField) => cField.id === field,
           )
           switch (fieldDefinition.type) {
             case `Link`: {
@@ -79,7 +79,7 @@ describe(`gatsby-node`, () => {
                   defaultLocale: defaultLocale,
                   currentLocale: locale,
                   id: value.sys.id,
-                })
+                }),
               )
               matchedObject[`${field}___NODE`] = linkId
 
@@ -134,15 +134,15 @@ describe(`gatsby-node`, () => {
   const testIfEntriesDeleted = (deletedEntries, locales) => {
     const defaultLocale = locales[0]
 
-    locales.forEach(locale => {
-      deletedEntries.forEach(entry => {
+    locales.forEach((locale) => {
+      deletedEntries.forEach((entry) => {
         const nodeId = createNodeId(
           normalize.makeId({
             spaceId: entry.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: entry.sys.id,
-          })
+          }),
         )
 
         // check if all deleted nodes are gone
@@ -150,7 +150,7 @@ describe(`gatsby-node`, () => {
 
         // check if all references got removed references should be removed
         for (const value of currentNodeMap.values()) {
-          Object.keys(value).forEach(field => {
+          Object.keys(value).forEach((field) => {
             if (field.endsWith(`___NODE`)) {
               expect([].concat(value[field])).not.toContain(nodeId)
             }
@@ -162,15 +162,15 @@ describe(`gatsby-node`, () => {
 
   const testIfAssetsExists = (assets, locales) => {
     const defaultLocale = locales[0]
-    locales.forEach(locale => {
-      assets.forEach(asset => {
+    locales.forEach((locale) => {
+      assets.forEach((asset) => {
         const assetId = createNodeId(
           normalize.makeId({
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: asset.sys.id,
-          })
+          }),
         )
 
         // check if asset exists
@@ -179,7 +179,7 @@ describe(`gatsby-node`, () => {
           description: getFieldValue(
             asset.fields.description,
             locale,
-            defaultLocale
+            defaultLocale,
           ),
           file: getFieldValue(asset.fields.file, locale, defaultLocale),
         })
@@ -190,15 +190,15 @@ describe(`gatsby-node`, () => {
   const testIfAssetsDeleted = (deletedAssets, locales) => {
     const defaultLocale = locales[0]
 
-    locales.forEach(locale => {
-      deletedAssets.forEach(asset => {
+    locales.forEach((locale) => {
+      deletedAssets.forEach((asset) => {
         const assetId = createNodeId(
           normalize.makeId({
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
             id: asset.sys.id,
-          })
+          }),
         )
 
         // check if asset got removed
@@ -210,7 +210,7 @@ describe(`gatsby-node`, () => {
   beforeEach(() => {
     fetch.mockClear()
     currentNodeMap = new Map()
-    actions.createNode = jest.fn(async node => {
+    actions.createNode = jest.fn(async (node) => {
       node.internal.owner = `gatsby-source-contentful`
       // don't allow mutations (this isn't traversing so only top level is frozen)
       currentNodeMap.set(node.id, Object.freeze(node))
@@ -246,11 +246,11 @@ describe(`gatsby-node`, () => {
     testIfEntriesExists(
       startersBlogFixture.initialSync.currentSyncData.entries,
       startersBlogFixture.initialSync.contentTypeItems,
-      locales
+      locales,
     )
     testIfAssetsExists(
       startersBlogFixture.initialSync.currentSyncData.assets,
-      locales
+      locales,
     )
   })
 
@@ -263,13 +263,13 @@ describe(`gatsby-node`, () => {
 
     const createdBlogEntry =
       startersBlogFixture.createBlogPost.currentSyncData.entries[0]
-    const createdBlogEntryIds = locales.map(locale =>
+    const createdBlogEntryIds = locales.map((locale) =>
       normalize.makeId({
         spaceId: createdBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
         id: createdBlogEntry.sys.id,
-      })
+      }),
     )
 
     // initial sync
@@ -285,7 +285,7 @@ describe(`gatsby-node`, () => {
     })
 
     // check if blog posts do not exists
-    createdBlogEntryIds.forEach(entryId => {
+    createdBlogEntryIds.forEach((entryId) => {
       expect(getNode(entryId)).toBeUndefined()
     })
 
@@ -301,19 +301,19 @@ describe(`gatsby-node`, () => {
       getCache,
     })
     testIfContentTypesExists(
-      startersBlogFixture.createBlogPost.contentTypeItems
+      startersBlogFixture.createBlogPost.contentTypeItems,
     )
     testIfEntriesExists(
       startersBlogFixture.createBlogPost.currentSyncData.entries,
       startersBlogFixture.createBlogPost.contentTypeItems,
-      locales
+      locales,
     )
     testIfAssetsExists(
       startersBlogFixture.createBlogPost.currentSyncData.assets,
-      locales
+      locales,
     )
 
-    createdBlogEntryIds.forEach(blogEntryId => {
+    createdBlogEntryIds.forEach((blogEntryId) => {
       const blogEntry = getNode(blogEntryId)
       expect(blogEntry).toMatchSnapshot()
       expect(getNode(blogEntry[`author___NODE`])).toMatchSnapshot()
@@ -329,13 +329,13 @@ describe(`gatsby-node`, () => {
 
     const updatedBlogEntry =
       startersBlogFixture.updateBlogPost.currentSyncData.entries[0]
-    const updatedBlogEntryIds = locales.map(locale =>
+    const updatedBlogEntryIds = locales.map((locale) =>
       normalize.makeId({
         spaceId: updatedBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
         id: updatedBlogEntry.sys.id,
-      })
+      }),
     )
 
     // initial sync
@@ -362,7 +362,7 @@ describe(`gatsby-node`, () => {
       getCache,
     })
 
-    updatedBlogEntryIds.forEach(blogEntryId => {
+    updatedBlogEntryIds.forEach((blogEntryId) => {
       expect(getNode(blogEntryId).title).toBe(`Hello world`)
     })
 
@@ -379,19 +379,19 @@ describe(`gatsby-node`, () => {
     })
 
     testIfContentTypesExists(
-      startersBlogFixture.updateBlogPost.contentTypeItems
+      startersBlogFixture.updateBlogPost.contentTypeItems,
     )
     testIfEntriesExists(
       startersBlogFixture.updateBlogPost.currentSyncData.entries,
       startersBlogFixture.updateBlogPost.contentTypeItems,
-      locales
+      locales,
     )
     testIfAssetsExists(
       startersBlogFixture.updateBlogPost.currentSyncData.assets,
-      locales
+      locales,
     )
 
-    updatedBlogEntryIds.forEach(blogEntryId => {
+    updatedBlogEntryIds.forEach((blogEntryId) => {
       const blogEntry = getNode(blogEntryId)
       expect(blogEntry.title).toBe(`Hello world 1234`)
       expect(blogEntry).toMatchSnapshot()
@@ -408,13 +408,13 @@ describe(`gatsby-node`, () => {
 
     const removedBlogEntry =
       startersBlogFixture.removeBlogPost.currentSyncData.deletedEntries[0]
-    const removedBlogEntryIds = locales.map(locale =>
+    const removedBlogEntryIds = locales.map((locale) =>
       normalize.makeId({
         spaceId: removedBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
         id: removedBlogEntry.sys.id,
-      })
+      }),
     )
 
     // initial sync
@@ -443,7 +443,7 @@ describe(`gatsby-node`, () => {
 
     let authorIds = []
     // check if blog post exists
-    removedBlogEntryIds.forEach(entryId => {
+    removedBlogEntryIds.forEach((entryId) => {
       const blogEntry = getNode(entryId)
       authorIds.push(blogEntry[`author___NODE`])
       expect(blogEntry).not.toBeUndefined()
@@ -462,15 +462,15 @@ describe(`gatsby-node`, () => {
     })
 
     testIfContentTypesExists(
-      startersBlogFixture.removeBlogPost.contentTypeItems
+      startersBlogFixture.removeBlogPost.contentTypeItems,
     )
     testIfEntriesDeleted(
       startersBlogFixture.removeBlogPost.currentSyncData.assets,
-      locales
+      locales,
     )
 
     // check if references are gone
-    authorIds.forEach(authorId => {
+    authorIds.forEach((authorId) => {
       expect(getNode(authorId)).toMatchSnapshot()
     })
   })
@@ -486,13 +486,13 @@ describe(`gatsby-node`, () => {
 
     const removedAssetEntry =
       startersBlogFixture.removeAsset.currentSyncData.deletedEntries[0]
-    const removedAssetEntryIds = locales.map(locale =>
+    const removedAssetEntryIds = locales.map((locale) =>
       normalize.makeId({
         spaceId: removedAssetEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
         id: removedAssetEntry.sys.id,
-      })
+      }),
     )
 
     // initial sync
@@ -520,7 +520,7 @@ describe(`gatsby-node`, () => {
     })
 
     // check if blog post exists
-    removedAssetEntryIds.forEach(assetId => {
+    removedAssetEntryIds.forEach((assetId) => {
       expect(getNode(assetId)).not.toBeUndefined()
     })
 
@@ -540,15 +540,15 @@ describe(`gatsby-node`, () => {
     testIfEntriesExists(
       startersBlogFixture.removeAsset.currentSyncData.entries,
       startersBlogFixture.removeAsset.contentTypeItems,
-      locales
+      locales,
     )
     testIfEntriesDeleted(
       startersBlogFixture.removeAsset.currentSyncData.assets,
-      locales
+      locales,
     )
     testIfAssetsDeleted(
       startersBlogFixture.removeAsset.currentSyncData.assets,
-      locales
+      locales,
     )
   })
 })

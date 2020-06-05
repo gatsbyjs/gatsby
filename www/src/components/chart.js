@@ -2,7 +2,7 @@ import React from "react"
 import loadable from "@loadable/component"
 import { radii } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const dateToUTC = date => {
+const dateToUTC = (date) => {
   const d = String(date)
   const year = Number(d.slice(0, 4))
   const monthNum = Number(d.slice(5))
@@ -59,7 +59,7 @@ const highchartsOptions = {
 
 const LazyHighChart = loadable(() => import(`react-highcharts`))
 
-const DateChart = props => {
+const DateChart = (props) => {
   const seriesData = JSON.parse(props.seriesData || props[`series-data`])
   const yAxisLabel = props.yAxisLabel || props[`y-axis-label`]
   const config = {
@@ -87,10 +87,10 @@ const DateChart = props => {
         format: `{value}%`,
       },
     },
-    series: seriesData.map(series => {
+    series: seriesData.map((series) => {
       return {
         name: series.name,
-        data: series.data.map(edge => [
+        data: series.data.map((edge) => [
           dateToUTC(edge.date),
           100 * parseFloat(edge.value),
         ]),

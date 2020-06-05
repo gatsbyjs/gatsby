@@ -3,7 +3,7 @@ import { GraphQLSchema } from "graphql"
 
 export const schemaReducer = (
   state: IGatsbyState["schema"] = new GraphQLSchema({ query: null }),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["schema"] => {
   switch (action.type) {
     case `SET_SCHEMA`:

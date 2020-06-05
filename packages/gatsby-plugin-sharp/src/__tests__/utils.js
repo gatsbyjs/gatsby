@@ -21,7 +21,7 @@ describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {
     reporter.createProgress = null
     const bar = createGatsbyProgressOrFallbackToExternalProgressBar(
       `test`,
-      reporter
+      reporter,
     )
     expect(progress).toHaveBeenCalledTimes(1)
     expect(bar).toHaveProperty(`start`, expect.any(Function))

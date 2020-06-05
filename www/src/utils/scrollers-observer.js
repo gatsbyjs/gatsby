@@ -10,24 +10,24 @@ export const setupScrollersObserver = () => {
 
     scrollers = Array.from(document.querySelectorAll(`.${SCROLLER_CLASSNAME}`))
 
-    scrollers.forEach(scroller => observer.observe(scroller))
+    scrollers.forEach((scroller) => observer.observe(scroller))
   }
 }
 
 export const unobserveScrollers = () => {
   if (typeof window.IntersectionObserver !== `undefined`) {
-    scrollers.forEach(scroller => observer.unobserve(scroller))
+    scrollers.forEach((scroller) => observer.unobserve(scroller))
   }
 }
 
 const handleIntersect = (entries, observer) => {
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     const target = entry.target
 
     if (entry.intersectionRatio > 0.5) {
       setTimeout(
         () => turnOnLeadScroll({ target, duration: 1000, distance: 20 }),
-        250
+        250,
       )
       observer.unobserve(target)
     }

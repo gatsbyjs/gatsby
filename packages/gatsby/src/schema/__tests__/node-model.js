@@ -15,11 +15,11 @@ describe(`NodeModel`, () => {
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
-      nodes.forEach(node =>
+      nodes.forEach((node) =>
         actions.createNode(
           { ...node, internal: { ...node.internal } },
-          { name: `test` }
-        )(store.dispatch)
+          { name: `test` },
+        )(store.dispatch),
       )
 
       const types = `
@@ -151,7 +151,7 @@ describe(`NodeModel`, () => {
         })
         expect(result.length).toBe(3)
         expect(
-          result.every(r => [`File`, `RemoteFile`].includes(r.internal.type))
+          result.every((r) => [`File`, `RemoteFile`].includes(r.internal.type)),
         ).toBeTruthy()
       })
 
@@ -162,7 +162,9 @@ describe(`NodeModel`, () => {
         })
         expect(result.length).toBe(3)
         expect(
-          result.every(r => [`Author`, `Contributor`].includes(r.internal.type))
+          result.every((r) =>
+            [`Author`, `Contributor`].includes(r.internal.type),
+          ),
         ).toBeTruthy()
       })
 
@@ -280,7 +282,7 @@ describe(`NodeModel`, () => {
             `Post`,
             `File`,
             `RemoteFile`,
-          ])
+          ]),
         )
       })
     })
@@ -334,7 +336,7 @@ describe(`NodeModel`, () => {
               firstOnly,
               type,
             },
-            { path: `/` }
+            { path: `/` },
           )
           expect(createPageDependency).toHaveBeenCalledTimes(2)
           expect(createPageDependency).toHaveBeenCalledWith({
@@ -383,7 +385,7 @@ describe(`NodeModel`, () => {
               firstOnly,
               type,
             },
-            { path: `/`, connectionType: `Post` }
+            { path: `/`, connectionType: `Post` },
           )
           expect(createPageDependency).toHaveBeenCalledTimes(1)
           expect(createPageDependency).toHaveBeenCalledWith({
@@ -403,7 +405,7 @@ describe(`NodeModel`, () => {
             type,
           })
           return expect(result).rejects.toThrowError(
-            `Querying GraphQLUnion types is not supported.`
+            `Querying GraphQLUnion types is not supported.`,
           )
         })
 
@@ -497,7 +499,7 @@ describe(`NodeModel`, () => {
       it(`returns an object's ancestor node that matches the provided predicate`, () => {
         const node = nodeModel.getNodeById({ id: `post1` })
         const obj = node.frontmatter.authors
-        const predicate = obj => obj.internal && obj.internal.type === `File`
+        const predicate = (obj) => obj.internal && obj.internal.type === `File`
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
       })
@@ -572,8 +574,8 @@ describe(`NodeModel`, () => {
         },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
-      nodes.forEach(node =>
-        actions.createNode(node, { name: `test` })(store.dispatch)
+      nodes.forEach((node) =>
+        actions.createNode(node, { name: `test` })(store.dispatch),
       )
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
@@ -600,7 +602,7 @@ describe(`NodeModel`, () => {
               },
               hidden: {
                 type: `Boolean!`,
-                resolve: parent => Boolean(parent.hidden),
+                resolve: (parent) => Boolean(parent.hidden),
               },
             },
           }),
@@ -632,7 +634,7 @@ describe(`NodeModel`, () => {
             firstOnly: false,
             type: `Test`,
           },
-          { path: `/` }
+          { path: `/` },
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
@@ -643,7 +645,7 @@ describe(`NodeModel`, () => {
             firstOnly: false,
             type: `Test`,
           },
-          { path: `/` }
+          { path: `/` },
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
@@ -656,7 +658,7 @@ describe(`NodeModel`, () => {
             firstOnly: false,
             type: `Test`,
           },
-          { path: `/` }
+          { path: `/` },
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
@@ -669,7 +671,7 @@ describe(`NodeModel`, () => {
             firstOnly: false,
             type: `Test`,
           },
-          { path: `/` }
+          { path: `/` },
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
@@ -682,7 +684,7 @@ describe(`NodeModel`, () => {
             firstOnly: true,
             type: `Test`,
           },
-          { path: `/` }
+          { path: `/` },
         )
         expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
         expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
@@ -698,7 +700,7 @@ describe(`NodeModel`, () => {
             firstOnly: false,
             type: `Test`,
           },
-          { path: `/` }
+          { path: `/` },
         )
         expect(result.length).toBe(2)
         expect(result[0].id).toBe(`id1`)
@@ -738,8 +740,8 @@ describe(`NodeModel`, () => {
         },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
-      nodes.forEach(node =>
-        actions.createNode(node, { name: `test` })(store.dispatch)
+      nodes.forEach((node) =>
+        actions.createNode(node, { name: `test` })(store.dispatch),
       )
 
       await build({})
@@ -775,7 +777,7 @@ describe(`NodeModel`, () => {
         const node = nodeModel.getNodeById({ id: `id1` })
         const copiedInlineObject = { ...node.inlineObject }
         const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
+          copiedInlineObject,
         )
 
         expect(trackedRootNode).not.toEqual(node)
@@ -801,7 +803,7 @@ describe(`NodeModel`, () => {
         const node = nodeModel.getNodesByIds({ ids: [`id1`] })[0]
         const copiedInlineObject = { ...node.inlineObject }
         const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
+          copiedInlineObject,
         )
 
         expect(trackedRootNode).not.toEqual(node)
@@ -827,7 +829,7 @@ describe(`NodeModel`, () => {
         const node = nodeModel.getAllNodes({ type: `Test` })[0]
         const copiedInlineObject = { ...node.inlineObject }
         const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
+          copiedInlineObject,
         )
 
         expect(trackedRootNode).not.toEqual(node)
@@ -848,10 +850,10 @@ describe(`NodeModel`, () => {
 
           expect(result.length).toEqual(2)
           expect(
-            nodeModel.findRootNodeAncestor(result[0].inlineObject)
+            nodeModel.findRootNodeAncestor(result[0].inlineObject),
           ).toEqual(result[0])
           expect(
-            nodeModel.findRootNodeAncestor(result[1].inlineObject)
+            nodeModel.findRootNodeAncestor(result[1].inlineObject),
           ).toEqual(result[1])
         })
 
@@ -873,7 +875,7 @@ describe(`NodeModel`, () => {
 
           expect(result.length).toEqual(1)
           expect(
-            nodeModel.findRootNodeAncestor(result[0].inlineObject)
+            nodeModel.findRootNodeAncestor(result[0].inlineObject),
           ).toEqual(result[0])
         })
       })

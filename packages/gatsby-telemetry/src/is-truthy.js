@@ -1,6 +1,6 @@
 // Returns true for `true`, true, positive numbers
 // Returns false for `false`, false, 0, negative integers and anything else
-const isTruthy = value => {
+const isTruthy = (value) => {
   // Return if Boolean
   if (typeof value === `boolean`) return value
 

@@ -10,7 +10,7 @@ const isFile = (nodeStore, fieldPath, relativePath) => {
   if (!filePath) return false
   const filePathExists = nodeStore
     .getNodesByType(`File`)
-    .some(node => node.absolutePath === filePath)
+    .some((node) => node.absolutePath === filePath)
   return filePathExists
 }
 
@@ -46,7 +46,7 @@ const getFilePath = (nodeStore, fieldPath, relativePath) => {
   const normalizedPath = slash(relativePath)
   const node = nodeStore
     .getNodesByType(typeName)
-    .find(node => getFirstValueAt(node, selector) === normalizedPath)
+    .find((node) => getFirstValueAt(node, selector) === normalizedPath)
 
   return node ? getAbsolutePath(nodeStore, node, normalizedPath) : null
 }
@@ -67,14 +67,14 @@ const getBaseDir = (nodeStore, node) => {
       findAncestorNode(
         nodeStore,
         node,
-        node => node.internal.type === `File`
+        (node) => node.internal.type === `File`,
       ) || {}
     return dir
   }
   return null
 }
 
-const withBaseDir = dir => p => path.posix.join(dir, slash(p))
+const withBaseDir = (dir) => (p) => path.posix.join(dir, slash(p))
 
 const findAncestorNode = (nodeStore, childNode, predicate) => {
   let node = childNode

@@ -16,11 +16,11 @@ if (process.env.NODE_ENV === `production`) {
       `Unless your site has a complex or custom webpack/Gatsby ` +
       `configuration this is likely a bug in Gatsby. ` +
       `Please report this at https://github.com/gatsbyjs/gatsby/issues ` +
-      `with steps to reproduce this error.`
+      `with steps to reproduce this error.`,
   )
 }
 
-const getPathFromProps = props =>
+const getPathFromProps = (props) =>
   props.pageResources && props.pageResources.page
     ? normalizePagePath(props.pageResources.page.path)
     : undefined

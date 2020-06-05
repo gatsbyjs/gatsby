@@ -34,11 +34,12 @@ export default function DefaultLayout({ location, children }) {
         className={`main-body docSearch-content`}
         sx={{
           px: `env(safe-area-inset-left)`,
-          pt: t => t.sizes.bannerHeight,
+          pt: (t) => t.sizes.bannerHeight,
           // make room for the mobile navigation
-          pb: t => t.sizes.headerHeight,
+          pb: (t) => t.sizes.headerHeight,
           [breakpointGutter]: {
-            pt: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+            pt: (t) =>
+              `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
             pb: 0,
           },
         }}

@@ -1,8 +1,8 @@
 // Prefixes should be globs (i.e. of the form "/*" or "/foo/*")
-const validatePrefixEntry = prefix => {
+const validatePrefixEntry = (prefix) => {
   if (!prefix.match(/^\//) || !prefix.match(/\/\*$/)) {
     throw Error(
-      `Plugin "gatsby-plugin-client-only-paths" found invalid prefix pattern: ${prefix}`
+      `Plugin "gatsby-plugin-client-only-paths" found invalid prefix pattern: ${prefix}`,
     )
   }
 }
@@ -17,7 +17,7 @@ exports.onCreatePage = ({ page, actions }, { prefixes }) => {
     return
   }
 
-  prefixes.forEach(prefix => {
+  prefixes.forEach((prefix) => {
     if (!re[prefix]) {
       // Remove the * from the prefix and memoize
       const trimmedPrefix = prefix.replace(/\*$/, ``)

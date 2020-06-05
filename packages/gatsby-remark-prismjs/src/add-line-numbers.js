@@ -2,7 +2,7 @@ const GATSBY_HIGHLIGHT_LINE_CLASS = /gatsby-highlight-code-line/g
 
 module.exports = (code = []) => {
   // Generate as many `<span></span>` as there are code lines
-  const generateSpans = numberOfLines => {
+  const generateSpans = (numberOfLines) => {
     let spans = ``
     for (let i = 0; i < numberOfLines; i++) {
       spans += `<span></span>`

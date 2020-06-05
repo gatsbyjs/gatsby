@@ -14,8 +14,8 @@ const {
   getRemoteFileName,
   createFilePath,
 } = require(`./utils`)
-const cacheIdForHeaders = url => `create-remote-file-node-headers-${url}`
-const cacheIdForExtensions = url => `create-remote-file-node-extension-${url}`
+const cacheIdForHeaders = (url) => `create-remote-file-node-headers-${url}`
+const cacheIdForExtensions = (url) => `create-remote-file-node-extension-${url}`
 
 let bar
 // Keep track of the total number of jobs we push in the queue
@@ -137,7 +137,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1),
         )
       } else {
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
@@ -160,7 +160,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     responseStream.pipe(fsWriteStream)
 
     // If there's a 400/500 response or other error.
-    responseStream.on(`error`, error => {
+    responseStream.on(`error`, (error) => {
       if (timeout) {
         clearTimeout(timeout)
       }
@@ -168,14 +168,14 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       reject(error)
     })
 
-    fsWriteStream.on(`error`, error => {
+    fsWriteStream.on(`error`, (error) => {
       if (timeout) {
         clearTimeout(timeout)
       }
       reject(error)
     })
 
-    responseStream.on(`response`, response => {
+    responseStream.on(`response`, (response) => {
       resetTimeout()
 
       fsWriteStream.on(`finish`, () => {
@@ -294,14 +294,14 @@ const processingCache = {}
  * @param {CreateRemoteFileNodePayload} task
  * @return {Promise<Object>}
  */
-const pushTask = task =>
+const pushTask = (task) =>
   new Promise((resolve, reject) => {
     queue
       .push(task)
-      .on(`finish`, task => {
+      .on(`finish`, (task) => {
         resolve(task)
       })
-      .on(`failed`, err => {
+      .on(`failed`, (err) => {
         reject(`failed to process ${task.url}\n${err}`)
       })
   })
@@ -339,7 +339,7 @@ module.exports = ({
   // see gatsbyjs/gatsby#6643
   if (typeof createNodeId !== `function`) {
     throw new Error(
-      `createNodeId must be a function, was ${typeof createNodeId}`
+      `createNodeId must be a function, was ${typeof createNodeId}`,
     )
   }
   if (typeof createNode !== `function`) {
@@ -351,7 +351,7 @@ module.exports = ({
   }
   if (typeof cache !== `object`) {
     throw new Error(
-      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`,
     )
   }
 
@@ -385,7 +385,7 @@ module.exports = ({
     name,
   })
 
-  processingCache[url] = fileDownloadPromise.then(node => {
+  processingCache[url] = fileDownloadPromise.then((node) => {
     bar.tick()
 
     return node

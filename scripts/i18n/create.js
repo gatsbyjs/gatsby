@@ -53,7 +53,7 @@ async function getIssue(issueNo) {
       issueRepo,
       owner,
       issueNo,
-    }
+    },
   )
   return repository.issue
 }
@@ -96,7 +96,9 @@ function pushSourceContent(transRepo, langName, codeowners) {
 
   // create the codeowners file
   logger.info(`writing ${codeownersFile}`)
-  const codeownersFileContent = `*   ${codeowners.map(m => `@` + m).join(` `)}`
+  const codeownersFileContent = `*   ${codeowners
+    .map((m) => `@` + m)
+    .join(` `)}`
   shell.exec(`echo "${codeownersFileContent}" > ${codeownersFile}`)
   shell.exec(`git add ${codeownersFile}`)
 
@@ -146,7 +148,7 @@ async function createRepoOnGitHub(repoName, langName) {
       headers: {
         authorization: `token ${process.env.GITHUB_ADMIN_AUTH_TOKEN}`,
       },
-    }
+    },
   )
 
   // create the repo in github
@@ -173,7 +175,7 @@ async function createRepoOnGitHub(repoName, langName) {
         description: `${langName} translation of Gatsbyjs.org`,
         visibility: `PUBLIC`,
       },
-    }
+    },
   )
 
   logger.debug(`successfully created repo`)
@@ -205,7 +207,7 @@ async function createBranchProtections(repo) {
         requiresApprovingReviews: true,
         requiredApprovingReviewCount: 1,
       },
-    }
+    },
   )
 }
 // publish issue as the bot and pin it
@@ -234,7 +236,7 @@ async function createProgressIssue(repo, langName) {
         body: issueBody,
         repositoryId: repo.id,
       },
-    }
+    },
   )
   await graphql(
     `
@@ -254,7 +256,7 @@ async function createProgressIssue(repo, langName) {
       input: {
         issueId: issue.id,
       },
-    }
+    },
   )
   return issue
 }
@@ -263,9 +265,9 @@ async function commentOnRequestIssue(
   issueId,
   transRepo,
   progressIssue,
-  maintainers
+  maintainers,
 ) {
-  const maintainerStr = maintainers.map(m => `@` + m).join(`, `)
+  const maintainerStr = maintainers.map((m) => `@` + m).join(`, `)
   const body = `
 Hi ${maintainerStr}!
 
@@ -300,7 +302,7 @@ Happy translating!
         subjectId: issueId,
         body,
       },
-    }
+    },
   )
 }
 
@@ -319,7 +321,7 @@ async function closeRequestIssue(issueId) {
         authorization: `token ${process.env.GITHUB_ADMIN_AUTH_TOKEN}`,
       },
       input: { issueId },
-    }
+    },
   )
 }
 

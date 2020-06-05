@@ -36,7 +36,7 @@ exports.createSchemaCustomization = async ({ actions }) => {
 
 exports.sourceNodes = async (
   { actions, getNode, store, cache, createNodeId, createContentDigest },
-  { site, verboseOutput }
+  { site, verboseOutput },
 ) => {
   const { createNode } = actions
 

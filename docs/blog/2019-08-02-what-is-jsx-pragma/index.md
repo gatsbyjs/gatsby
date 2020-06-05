@@ -53,7 +53,7 @@ That JSX syntax _compiles to_ a call to `React.createElement`, like this:
 const element = React.createElement(
   "h1",
   { className: "greeting" },
-  "Hello, world!"
+  "Hello, world!",
 )
 ```
 

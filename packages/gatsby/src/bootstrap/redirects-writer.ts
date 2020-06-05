@@ -13,7 +13,7 @@ export const writeRedirects = async (): Promise<void> => {
   const { program, redirects } = store.getState()
 
   // Filter for redirects that are meant for the browser.
-  const browserRedirects = redirects.filter(r => r.redirectInBrowser)
+  const browserRedirects = redirects.filter((r) => r.redirectInBrowser)
 
   const newHash = crypto
     .createHash(`md5`)
@@ -28,7 +28,7 @@ export const writeRedirects = async (): Promise<void> => {
 
   await fs.writeFile(
     joinPath(program.directory, `.cache/redirects.json`),
-    JSON.stringify(browserRedirects, null, 2)
+    JSON.stringify(browserRedirects, null, 2),
   )
 }
 

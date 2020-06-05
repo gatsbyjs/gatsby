@@ -17,7 +17,7 @@ const mockTypographyCache = (googleFonts = [`Roboto`]) => {
         },
       }
     },
-    { virtual: true }
+    { virtual: true },
   )
 }
 
@@ -33,7 +33,7 @@ describe(`gatsby-plugin-typography`, () => {
   beforeEach(() => {
     jest.resetModules()
     jest.resetAllMocks()
-    Array.from(global.document.head.children).forEach(child => child.remove())
+    Array.from(global.document.head.children).forEach((child) => child.remove())
     mockTypographyCache()
   })
 

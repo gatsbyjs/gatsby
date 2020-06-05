@@ -3,7 +3,7 @@
 import apiHandler, { waitForAPI } from "./api-handler"
 
 Cypress.Commands.add(`getTestElement`, (selector, options = {}) =>
-  cy.get(`[data-testid="${selector}"]`, options)
+  cy.get(`[data-testid="${selector}"]`, options),
 )
 
 const TIMEOUT = 10000
@@ -17,32 +17,32 @@ Cypress.Commands.add(
       message: api,
     })
 
-    cy.window({ log: false }).then({ timeout: timeout }, win => {
+    cy.window({ log: false }).then({ timeout: timeout }, (win) => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
 
       return waitForAPI.call(win, api).then(() => subject)
     })
-  }
+  },
 )
 
 Cypress.Commands.add(
   `waitForAPIorTimeout`,
   { prevSubject: `optional` },
   (subject, api, { timeout = TIMEOUT } = {}) => {
-    cy.window().then({ timeout: timeout + 1000 }, win => {
+    cy.window().then({ timeout: timeout + 1000 }, (win) => {
       if (!win.___apiHandler) {
         win.___apiHandler = apiHandler.bind(win)
       }
       return Promise.race([
         waitForAPI.call(win, api).then(() => subject),
-        new Promise(resolve => {
+        new Promise((resolve) => {
           setTimeout(resolve, timeout)
         }),
       ])
     })
-  }
+  },
 )
 
 Cypress.Commands.add(
@@ -50,5 +50,5 @@ Cypress.Commands.add(
   {
     prevSubject: `optional`,
   },
-  subject => cy.waitForAPI(`onRouteUpdate`).then(() => subject)
+  (subject) => cy.waitForAPI(`onRouteUpdate`).then(() => subject),
 )

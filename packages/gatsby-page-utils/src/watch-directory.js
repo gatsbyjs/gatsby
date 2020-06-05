@@ -6,11 +6,11 @@ module.exports = async (path, glob, onNewFile, onRemovedFile) =>
   new Promise((resolve, reject) => {
     chokidar
       .watch(glob, { cwd: path })
-      .on(`add`, path => {
+      .on(`add`, (path) => {
         path = slash(path)
         onNewFile(path)
       })
-      .on(`unlink`, path => {
+      .on(`unlink`, (path) => {
         path = slash(path)
         onRemovedFile(path)
       })

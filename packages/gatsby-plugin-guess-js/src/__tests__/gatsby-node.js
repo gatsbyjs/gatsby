@@ -35,7 +35,7 @@ describe(`gatsby-plugin-guess-js`, () => {
         expect.objectContaining({
           jwt: `mykeys`,
           GA: `1234`,
-        })
+        }),
       )
     })
   })

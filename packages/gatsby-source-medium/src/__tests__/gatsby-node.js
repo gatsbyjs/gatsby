@@ -16,14 +16,14 @@ describe(`gatsby-source-medium`, () => {
       actions = {
         createNode: jest.fn(),
       }
-      createNodeId = jest.fn(id => id)
+      createNodeId = jest.fn((id) => id)
       createContentDigest = jest.fn().mockReturnValue(`digest`)
     })
 
     it(`should create node based on medium data`, async () => {
       await sourceNodes(
         { actions, createNodeId, createContentDigest },
-        { username: `foo`, limit: 5 }
+        { username: `foo`, limit: 5 },
       )
       expect(actions.createNode).toBeCalled()
       expect(actions.createNode.mock.calls).toMatchSnapshot()
@@ -34,10 +34,10 @@ describe(`gatsby-source-medium`, () => {
       const limit = 5
       await sourceNodes(
         { actions, createNodeId, createContentDigest },
-        { username, limit }
+        { username, limit },
       )
       expect(axios.get).toBeCalledWith(
-        `https://medium.com/${username}/?format=json&limit=${limit}`
+        `https://medium.com/${username}/?format=json&limit=${limit}`,
       )
     })
   })

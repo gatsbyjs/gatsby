@@ -49,7 +49,7 @@ export default class Cache {
       },
     ]
 
-    const caches = configs.map(cache => manager.caching(cache))
+    const caches = configs.map((cache) => manager.caching(cache))
 
     this.cache = manager.multiCaching(caches)
 
@@ -57,10 +57,10 @@ export default class Cache {
   }
 
   get<T = unknown>(key): Promise<T | undefined> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `Cache wasn't initialised yet, please run the init method first`,
         )
       }
       this.cache.get<T>(key, (err, res) => {
@@ -72,15 +72,15 @@ export default class Cache {
   set<T>(
     key: string,
     value: T,
-    args: CachingConfig = { ttl: TTL }
+    args: CachingConfig = { ttl: TTL },
   ): Promise<T | undefined> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `Cache wasn't initialised yet, please run the init method first`,
         )
       }
-      this.cache.set(key, value, args, err => {
+      this.cache.set(key, value, args, (err) => {
         resolve(err ? undefined : value)
       })
     })

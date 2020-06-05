@@ -14,7 +14,7 @@ const EmptyGridItems = ({ styles }) => {
           ...styles,
           my: 0,
         }}
-      />
+      />,
     )
   }
 

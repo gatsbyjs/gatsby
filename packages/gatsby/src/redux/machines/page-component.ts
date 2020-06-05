@@ -177,5 +177,5 @@ export const componentMachine = machine<IContext, IState, IEvent>(
         isInBootstrap: false,
       }),
     },
-  }
+  },
 )

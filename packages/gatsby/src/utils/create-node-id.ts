@@ -16,7 +16,7 @@ export function createNodeId(id: string | number, namespace: string): string {
     id = id.toString()
   } else if (typeof id !== `string`) {
     report.panic(
-      `Parameter passed to createNodeId must be a String or Number (got ${typeof id})`
+      `Parameter passed to createNodeId must be a String or Number (got ${typeof id})`,
     )
   }
 

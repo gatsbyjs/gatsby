@@ -1,6 +1,6 @@
 module.exports = (
   state = { directory: `/`, state: `BOOTSTRAPPING` },
-  action
+  action,
 ) => {
   switch (action.type) {
     case `SET_PROGRAM`:

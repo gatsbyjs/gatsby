@@ -10,7 +10,7 @@ const tests = [
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
 
 describe(`codemods`, () => {
-  tests.forEach(test =>
-    defineTest(__dirname, `import-link`, null, `import-link/${test}`)
+  tests.forEach((test) =>
+    defineTest(__dirname, `import-link`, null, `import-link/${test}`),
   )
 })

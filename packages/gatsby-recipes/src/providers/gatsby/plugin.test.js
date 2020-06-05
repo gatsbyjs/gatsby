@@ -12,11 +12,11 @@ const resourceTestHelper = require(`../resource-test-helper`)
 
 const STARTER_BLOG_FIXTURE = path.join(
   __dirname,
-  `./fixtures/gatsby-starter-blog`
+  `./fixtures/gatsby-starter-blog`,
 )
 const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
-  `./fixtures/gatsby-starter-hello-world`
+  `./fixtures/gatsby-starter-hello-world`,
 )
 const name = `gatsby-source-filesystem`
 
@@ -111,7 +111,7 @@ describe(`gatsby-plugin resource`, () => {
 
     let plugins = await getPluginsFromConfig(configSrc)
 
-    let pluginNames = plugins.map(p => p.name)
+    let pluginNames = plugins.map((p) => p.name)
     expect(pluginNames).toContain(`gatsby-plugin-foo`)
     expect(pluginNames).toContain(`gatsby-plugin-bar`)
     expect(pluginNames).not.toContain(`gatsby-plugin-baz`)
@@ -120,7 +120,7 @@ describe(`gatsby-plugin resource`, () => {
 
     plugins = await getPluginsFromConfig(configSrc)
 
-    pluginNames = plugins.map(p => p.name)
+    pluginNames = plugins.map((p) => p.name)
     expect(pluginNames).not.toContain(`gatsby-plugin-baz`)
     expect(pluginNames).not.toContain(`gatsby-plugin-bar`)
     expect(pluginNames).toContain(`gatsby-plugin-foo`)
@@ -132,7 +132,7 @@ describe(`gatsby-plugin resource`, () => {
     const result = plugin.validate({ name: `gatsby-source-filesystem` })
 
     expect(result.error).toEqual(
-      `gatsby-source-filesystem requires a key to be set`
+      `gatsby-source-filesystem requires a key to be set`,
     )
   })
 
@@ -143,7 +143,7 @@ describe(`gatsby-plugin resource`, () => {
     })
 
     expect(result.error).toEqual(
-      `gatsby-source-filesystem requires a key to be different than the plugin name`
+      `gatsby-source-filesystem requires a key to be different than the plugin name`,
     )
   })
 
@@ -214,7 +214,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`creates default gatsby-config.js if there isn't one already`, async () => {
     const result = await plugin.create(
       { root: emptyRoot },
-      { name: `gatsby-source-filesystem` }
+      { name: `gatsby-source-filesystem` },
     )
     expect(result).toMatchSnapshot()
   })

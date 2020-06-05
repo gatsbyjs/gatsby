@@ -85,7 +85,7 @@ module.exports = {
           {
             /* highlight-start */
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map(edge => {
+              return allMarkdownRemark.edges.map((edge) => {
                 /* highlight-end */
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,

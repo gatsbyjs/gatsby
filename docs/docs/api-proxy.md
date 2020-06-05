@@ -53,7 +53,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware") //v1.x.x
 // be sure to replace 'createProxyMiddleware' with 'proxy' where applicable
 
 module.exports = {
-  developMiddleware: app => {
+  developMiddleware: (app) => {
     app.use(
       "/.netlify/functions/",
       createProxyMiddleware({
@@ -61,7 +61,7 @@ module.exports = {
         pathRewrite: {
           "/.netlify/functions/": "",
         },
-      })
+      }),
     )
   },
 }
@@ -80,7 +80,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware") //v1.x.x
 // be sure to replace 'createProxyMiddleware' with 'proxy' where applicable
 
 module.exports = {
-  developMiddleware: app => {
+  developMiddleware: (app) => {
     app.use(
       "/.netlify/functions/",
       createProxyMiddleware({
@@ -89,7 +89,7 @@ module.exports = {
         pathRewrite: {
           "/.netlify/functions/": "",
         },
-      })
+      }),
     )
   },
 }

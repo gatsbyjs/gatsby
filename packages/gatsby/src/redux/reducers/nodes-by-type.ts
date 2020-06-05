@@ -2,7 +2,7 @@ import { IGatsbyNode, IGatsbyState, ActionsUnion } from "../types"
 
 const getNodesOfType = (
   node: IGatsbyNode,
-  state: IGatsbyState["nodesByType"]
+  state: IGatsbyState["nodesByType"],
 ): Map<string, IGatsbyNode> => {
   const { type } = node.internal
   if (!state.has(type)) {
@@ -12,7 +12,7 @@ const getNodesOfType = (
 
   if (!nodeByType) {
     throw new Error(
-      `An error occurred finding a node by it's type. This is likely a bug in gatsby. If you experience this error please open an issue.`
+      `An error occurred finding a node by it's type. This is likely a bug in gatsby. If you experience this error please open an issue.`,
     )
   }
 
@@ -21,7 +21,7 @@ const getNodesOfType = (
 
 export const nodesByTypeReducer = (
   state: IGatsbyState["nodesByType"] = new Map(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["nodesByType"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -56,7 +56,7 @@ export const nodesByTypeReducer = (
     // Deprecated, will be removed in Gatsby v3.
     case `DELETE_NODES`: {
       const ids = action.payload
-      ids.forEach(id => {
+      ids.forEach((id) => {
         Array.from(state).some(([type, nodes]) => {
           if (nodes.has(id)) {
             nodes.delete(id)

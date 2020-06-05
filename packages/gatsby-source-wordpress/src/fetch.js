@@ -10,18 +10,18 @@ const requestInQueue = require(`./request-in-queue`)
 /**
  * Check auth object to see if we should fetch JWT access token
  */
-const shouldUseJwt = auth => auth && (auth.jwt_user || auth.jwt_pass)
+const shouldUseJwt = (auth) => auth && (auth.jwt_user || auth.jwt_pass)
 
 /**
  * Check auth object to see if we should use HTTP Basic Auth
  */
-const shouldUseHtaccess = auth =>
+const shouldUseHtaccess = (auth) =>
   auth && (auth.htaccess_user || auth.htaccess_pass)
 
 /**
  * Format Auth settings for verbose output
  */
-const formatAuthSettings = auth => {
+const formatAuthSettings = (auth) => {
   let authOutputLines = []
   if (shouldUseJwt(auth)) {
     authOutputLines.push(`  JWT Auth: ${auth.jwt_user}:${auth.jwt_pass}`)
@@ -29,7 +29,7 @@ const formatAuthSettings = auth => {
 
   if (shouldUseHtaccess(auth)) {
     authOutputLines.push(
-      `  HTTP Basic Auth: ${auth.htaccess_user}:${auth.htaccess_pass}`
+      `  HTTP Basic Auth: ${auth.htaccess_user}:${auth.htaccess_pass}`,
     )
   }
 
@@ -90,8 +90,8 @@ Verbose output: ${_verbose}
 
 Mama Route URL: ${url}
 `,
-        colorized.color.Font.FgBlue
-      )
+        colorized.color.Font.FgBlue,
+      ),
     )
   }
 
@@ -157,8 +157,8 @@ Mama Route URL: ${url}
           `
 Fetching the JSON data from ${validRoutes.length} valid API Routes...
 `,
-          colorized.color.Font.FgBlue
-        )
+          colorized.color.Font.FgBlue,
+        ),
       )
     }
 
@@ -173,7 +173,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
           _cookies,
           _accessToken,
           _concurrentRequests,
-        })
+        }),
       )
       if (_verbose) console.log(``)
     }
@@ -182,7 +182,7 @@ Fetching the JSON data from ${validRoutes.length} valid API Routes...
       console.timeEnd(`=END PLUGIN=====================================`)
   } else {
     console.log(
-      colorized.out(`No routes to fetch. Ending.`, colorized.color.Font.FgRed)
+      colorized.out(`No routes to fetch. Ending.`, colorized.color.Font.FgRed),
     )
   }
 
@@ -266,9 +266,9 @@ async function fetchData({
     console.log(
       colorized.out(
         `=== [ Fetching ${type} ] ===`,
-        colorized.color.Font.FgBlue
+        colorized.color.Font.FgBlue,
       ),
-      url
+      url,
     )
 
     console.time(`Fetching the ${type} took`)
@@ -287,13 +287,13 @@ async function fetchData({
   let entities = []
   if (routeResponse) {
     if (type.includes(`wordpress__menus_menus`)) {
-      routeResponse = routeResponse.map(r => {
+      routeResponse = routeResponse.map((r) => {
         return { ...r, ID: r.term_id }
       })
     }
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
-      routeResponse = routeResponse.map(r => {
+      routeResponse = routeResponse.map((r) => {
         return {
           ...r,
           ...(optionPageId ? { __acfOptionPageId: optionPageId } : {}),
@@ -325,7 +325,7 @@ async function fetchData({
               _auth,
               _cookies,
               _accessToken,
-            })
+            }),
           )
         }
       }
@@ -342,7 +342,7 @@ async function fetchData({
             _auth,
             _accessToken,
             _cookies,
-          })
+          }),
         )
       }
     }
@@ -357,8 +357,8 @@ async function fetchData({
     console.log(
       colorized.out(
         ` -> ${type} fetched : ${length}`,
-        colorized.color.Font.FgGreen
-      )
+        colorized.color.Font.FgGreen,
+      ),
     )
   }
 
@@ -386,12 +386,12 @@ async function getPages(
     _concurrentRequests,
     _verbose,
   },
-  page = 1
+  page = 1,
 ) {
   try {
     let result = []
 
-    const getOptions = page => {
+    const getOptions = (page) => {
       let o = {
         method: `get`,
         url: `${url}?${querystring.stringify({
@@ -448,16 +448,16 @@ Pages to be requested : ${totalPages}`)
     }
 
     // We got page 1, now we want pages 2 through totalPages
-    const pageOptions = _.range(2, totalPages + 1).map(getPage =>
-      getOptions(getPage)
+    const pageOptions = _.range(2, totalPages + 1).map((getPage) =>
+      getOptions(getPage),
     )
 
     const pages = await requestInQueue(pageOptions, {
       concurrent: _concurrentRequests,
     })
 
-    const pageData = pages.map(page => page.data)
-    pageData.forEach(list => {
+    const pageData = pages.map((page) => page.data)
+    pageData.forEach((list) => {
       result = result.concat(list)
     })
 
@@ -476,7 +476,7 @@ Pages to be requested : ${totalPages}`)
  * @returns {boolean}
  */
 function checkRouteList(routePath, routeList) {
-  return routeList.some(route => minimatch(routePath, route))
+  return routeList.some((route) => minimatch(routePath, route))
 }
 
 /**
@@ -504,7 +504,7 @@ function getValidRoutes({
     let defaultAcfNamespace = `acf/v3`
     // Grab ACF Version from namespaces
     const acfNamespace = allRoutes.data.namespaces
-      ? allRoutes.data.namespaces.find(namespace => namespace.includes(`acf`))
+      ? allRoutes.data.namespaces.find((namespace) => namespace.includes(`acf`))
       : null
     const acfRestNamespace = acfNamespace ? acfNamespace : defaultAcfNamespace
     _includedRoutes.push(`/${acfRestNamespace}/**`)
@@ -513,8 +513,8 @@ function getValidRoutes({
       console.log(
         colorized.out(
           `Detected ACF to REST namespace: ${acfRestNamespace}.`,
-          colorized.color.Font.FgGreen
-        )
+          colorized.color.Font.FgGreen,
+        ),
       )
     // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually
     // and pass ACF option page ID
@@ -539,8 +539,8 @@ function getValidRoutes({
         console.log(
           colorized.out(
             `Added ACF Options route(s).`,
-            colorized.color.Font.FgGreen
-          )
+            colorized.color.Font.FgGreen,
+          ),
         )
     }
     if (_acfOptionPageIds.length > 0 && _hostingWPCOM) {
@@ -549,8 +549,8 @@ function getValidRoutes({
         console.log(
           colorized.out(
             `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
-            colorized.color.Effect.Blink
-          )
+            colorized.color.Effect.Blink,
+          ),
         )
     }
   }
@@ -591,8 +591,8 @@ function getValidRoutes({
           console.log(
             colorized.out(
               `Valid route found. Will try to fetch.`,
-              colorized.color.Font.FgGreen
-            )
+              colorized.color.Font.FgGreen,
+            ),
           )
 
         const manufacturer = getManufacturer(route)
@@ -619,7 +619,7 @@ function getValidRoutes({
           default:
             validType = `${typePrefix}${manufacturer.replace(
               /-/g,
-              `_`
+              `_`,
             )}_${entityType.replace(/-/g, `_`)}`
             break
         }
@@ -634,8 +634,8 @@ function getValidRoutes({
           console.log(
             colorized.out(
               `Excluded route: ${invalidType}`,
-              colorized.color.Font.FgYellow
-            )
+              colorized.color.Font.FgYellow,
+            ),
           )
         }
       }
@@ -644,8 +644,8 @@ function getValidRoutes({
         console.log(
           colorized.out(
             `Invalid route: detail route`,
-            colorized.color.Font.FgRed
-          )
+            colorized.color.Font.FgRed,
+          ),
         )
     }
   }
@@ -658,7 +658,7 @@ function getValidRoutes({
  *
  * @param {any} full path to extract raw entity from
  */
-const getRawEntityType = fullPath =>
+const getRawEntityType = (fullPath) =>
   fullPath.substring(fullPath.lastIndexOf(`/`) + 1, fullPath.length)
 
 /**
@@ -710,7 +710,7 @@ const buildFullUrl = (baseUrl, fullPath, _hostingWPCOM) => {
  *
  * @param {any} route
  */
-const getManufacturer = route =>
+const getManufacturer = (route) =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
 
 /**
@@ -718,7 +718,7 @@ const getManufacturer = route =>
  *
  * @param {any} cookies
  */
-const getCookieString = cookies =>
+const getCookieString = (cookies) =>
   Object.entries(cookies)
     .map(([key, value]) => `${key}=${value}`)
     .join(`; `)

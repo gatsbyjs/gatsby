@@ -7,7 +7,7 @@ const getPlaceholderFileNode = async ({ createNode, createNodeId }) => {
     const fileNode = await createFileNode(
       path.join(__dirname, `placeholder.png`),
       createNodeId,
-      {}
+      {},
     )
     createNode(fileNode, { name: `gatsby-source-filesystem` })
     placeholderFileNode = fileNode

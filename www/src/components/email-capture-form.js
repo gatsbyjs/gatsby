@@ -10,34 +10,35 @@ import { themedInput, formInputFocus, buttonStyles } from "../utils/styles"
 import { rhythm } from "../utils/typography"
 
 const Container = styled(`div`)`
-  background: ${p => p.theme.colors.newsletter.background};
-  box-shadow: ${p => p.theme.shadows.floating},
-    inset 0 0 0 1px ${p => p.theme.colors.newsletter.border};
-  border-radius: ${p => p.theme.radii[2]};
-  margin-top: ${p => p.theme.space[8]};
-  padding: calc(${p => p.theme.space[6]} * 1.2);
+  background: ${(p) => p.theme.colors.newsletter.background};
+  box-shadow: ${(p) => p.theme.shadows.floating},
+    inset 0 0 0 1px ${(p) => p.theme.colors.newsletter.border};
+  border-radius: ${(p) => p.theme.radii[2]};
+  margin-top: ${(p) => p.theme.space[8]};
+  padding: calc(${(p) => p.theme.space[6]} * 1.2);
   padding-bottom: calc(
-    ${props => rhythm(props.theme.space[6] * 1.2)} + ${p => p.theme.space[1]}
+    ${(props) => rhythm(props.theme.space[6] * 1.2)} +
+      ${(p) => p.theme.space[1]}
   );
   position: relative;
 
   :after {
-    border-radius: 0 0 ${p => p.theme.radii[2]} ${p => p.theme.radii[2]};
-    background: ${p => p.theme.colors.newsletter.background}
+    border-radius: 0 0 ${(p) => p.theme.radii[2]} ${(p) => p.theme.radii[2]};
+    background: ${(p) => p.theme.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
-        ${p => p.theme.colors.newsletter.stripeColorA},
-        ${p => p.theme.colors.newsletter.stripeColorA} 20px,
+        ${(p) => p.theme.colors.newsletter.stripeColorA},
+        ${(p) => p.theme.colors.newsletter.stripeColorA} 20px,
         transparent 20px,
         transparent 40px,
-        ${p => p.theme.colors.newsletter.stripeColorB} 40px,
-        ${p => p.theme.colors.newsletter.stripeColorB} 60px,
+        ${(p) => p.theme.colors.newsletter.stripeColorB} 40px,
+        ${(p) => p.theme.colors.newsletter.stripeColorB} 60px,
         transparent 60px,
         transparent 80px
       );
     bottom: 0;
     content: "";
-    height: ${p => p.theme.space[1]};
+    height: ${(p) => p.theme.space[1]};
     left: 0;
     right: 0;
     position: absolute;
@@ -57,27 +58,27 @@ const StyledForm = styled(`form`)`
   margin: 0;
 
   ${mediaQueries.lg} {
-    display: ${props => (props.isHomepage ? `flex` : `block`)};
+    display: ${(props) => (props.isHomepage ? `flex` : `block`)};
   }
 `
 
 const Label = styled(`label`)`
-  font-size: ${p => p.theme.fontSizes[1]};
+  font-size: ${(p) => p.theme.fontSizes[1]};
   :after {
-    content: ${props => (props.isRequired ? `'*'` : ``)};
-    color: ${p => p.theme.colors.textMuted};
+    content: ${(props) => (props.isRequired ? `'*'` : ``)};
+    color: ${(p) => p.theme.colors.textMuted};
   }
 `
 
 const ErrorMessage = styled(`div`)`
-  color: ${p => p.theme.colors.warning};
-  font-family: ${p => p.theme.fonts.system};
-  font-size: ${p => p.theme.fontSizes[1]};
-  margin: ${p => p.theme.space[2]} 0;
+  color: ${(p) => p.theme.colors.warning};
+  font-family: ${(p) => p.theme.fonts.system};
+  font-size: ${(p) => p.theme.fontSizes[1]};
+  margin: ${(p) => p.theme.space[2]} 0;
 `
 
 const SuccessMessage = styled(`div`)`
-  font-family: ${p => p.theme.fonts.system};
+  font-family: ${(p) => p.theme.fonts.system};
 `
 
 function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
@@ -86,7 +87,7 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
   const [fieldErrors, setFieldErrors] = React.useState({})
 
   const onSubmit = React.useCallback(
-    e => {
+    (e) => {
       e.preventDefault()
 
       // validation here or use Formik or something like that
@@ -130,7 +131,7 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
               // {"message":"Error in 'fields.email'. Required field 'email' is missing","errorType":"REQUIRED_FIELD"}
 
               const errorRe = /^Error in 'fields.([^']+)'. (.+)$/
-              response.errors.map(error => {
+              response.errors.map((error) => {
                 const [, fieldName, message] = errorRe.exec(error.message)
                 fieldErrors[fieldName] = message
               })
@@ -149,7 +150,7 @@ function Form({ isHomepage, portalId, formId, sfdcCampaignId, onSuccess }) {
 
       xhr.send(JSON.stringify(data))
     },
-    [portalId, formId, sfdcCampaignId]
+    [portalId, formId, sfdcCampaignId],
   )
 
   return (
@@ -227,7 +228,7 @@ function EmailCaptureForm({
 }) {
   const [successMessage, setSuccessMessage] = React.useState(``)
 
-  const FormComponent = props => (
+  const FormComponent = (props) => (
     <Form
       onSuccess={setSuccessMessage}
       portalId="4731712"

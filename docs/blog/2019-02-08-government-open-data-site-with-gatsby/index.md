@@ -123,7 +123,7 @@ return (
       barSelectedCallback={this.dataKeySelectedHandler.bind(
         this,
         dataSetId,
-        this.state[dataSetId].syncId
+        this.state[dataSetId].syncId,
       )}
     />
   </div>

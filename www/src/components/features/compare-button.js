@@ -19,7 +19,7 @@ const compareButtonStyles = {
   },
   ":focus": {
     outline: 0,
-    boxShadow: t =>
+    boxShadow: (t) =>
       `0 0 0 ${t.space[1]} ${t.colors.themedInput.focusBoxShadow}`,
   },
 }
@@ -36,7 +36,7 @@ const CompareButton = ({ children, optionKey, selected, setSelected }) => (
   >
     <img
       sx={{
-        height: t => t.space[6],
+        height: (t) => t.space[6],
         mb: 0,
       }}
       src={logoDictionary[optionKey]}

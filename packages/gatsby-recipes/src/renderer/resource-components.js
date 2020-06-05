@@ -6,7 +6,7 @@ const { ResourceComponent } = require(`./render`)
 
 const resourceComponents = Object.keys(resources).reduce(
   (acc, resourceName) => {
-    acc[resourceName] = props => (
+    acc[resourceName] = (props) => (
       <ResourceComponent _resourceName={resourceName} {...props} />
     )
 
@@ -15,7 +15,7 @@ const resourceComponents = Object.keys(resources).reduce(
 
     return acc
   },
-  {}
+  {},
 )
 
 module.exports = resourceComponents

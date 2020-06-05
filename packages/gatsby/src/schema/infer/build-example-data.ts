@@ -45,7 +45,7 @@ const buildExampleValue = ({
   if (conflicts && typeConflictReporter) {
     typeConflictReporter.addConflict(
       path,
-      prepareConflictExamples(descriptor, isArrayItem)
+      prepareConflictExamples(descriptor, isArrayItem),
     )
   }
 
@@ -81,7 +81,7 @@ const buildExampleValue = ({
       const { nodes = {} } = typeInfo
       return {
         multiple: type === `relatedNodeList`,
-        linkedNodes: Object.keys(nodes).filter(key => nodes[key] > 0),
+        linkedNodes: Object.keys(nodes).filter((key) => nodes[key] > 0),
       }
     }
 
@@ -89,7 +89,7 @@ const buildExampleValue = ({
       const { dprops } = typeInfo
       let hasKeys = false
       const result = {}
-      Object.keys(dprops).forEach(prop => {
+      Object.keys(dprops).forEach((prop) => {
         const value = buildExampleValue({
           descriptor: dprops[prop],
           typeConflictReporter,
@@ -109,7 +109,7 @@ const buildExampleValue = ({
 }
 
 const resolveWinnerType = (
-  descriptor: IValueDescriptor
+  descriptor: IValueDescriptor,
 ): [ValueType | "null", boolean?] => {
   const candidates = possibleTypes(descriptor)
   if (candidates.length === 1) {
@@ -129,7 +129,7 @@ const resolveWinnerType = (
 
 const prepareConflictExamples = (
   descriptor: IValueDescriptor,
-  isArrayItem: boolean
+  isArrayItem: boolean,
 ): ITypeConflictExample[] => {
   const typeNameMapper = (typeName: ValueType): string => {
     if (typeName === `relatedNode`) {
@@ -143,11 +143,11 @@ const prepareConflictExamples = (
   const reportedValueMapper = (typeName: ValueType): unknown => {
     if (typeName === `relatedNode`) {
       const { nodes } = descriptor.relatedNode ?? { nodes: {} }
-      return Object.keys(nodes).find(key => nodes[key] > 0)
+      return Object.keys(nodes).find((key) => nodes[key] > 0)
     }
     if (typeName === `relatedNodeList`) {
       const { nodes } = descriptor.relatedNodeList ?? { nodes: {} }
-      return Object.keys(nodes).filter(key => nodes[key] > 0)
+      return Object.keys(nodes).filter((key) => nodes[key] > 0)
     }
     if (typeName === `object`) {
       return getExampleObject({
@@ -171,9 +171,9 @@ const prepareConflictExamples = (
     // See Caveats section in the header of the ./inference-metadata.ts
     const groups = groupBy(
       conflictingTypes,
-      type => descriptor[type]?.first || ``
+      (type) => descriptor[type]?.first || ``,
     )
-    return Object.keys(groups).map(nodeId => {
+    return Object.keys(groups).map((nodeId) => {
       return {
         type: `[${groups[nodeId].map(typeNameMapper).join(`,`)}]`,
         value: groups[nodeId].map(reportedValueMapper),
@@ -181,7 +181,7 @@ const prepareConflictExamples = (
     })
   }
 
-  return conflictingTypes.map(type => {
+  return conflictingTypes.map((type) => {
     return {
       type: typeNameMapper(type),
       value: reportedValueMapper(type),
@@ -206,7 +206,7 @@ const hasOnlyEmptyStrings = (descriptor: IValueDescriptor): boolean => {
 
 const possibleTypes = (descriptor: IValueDescriptor = {}): ValueType[] =>
   Object.keys(descriptor).filter(
-    type => descriptor[type].total > 0
+    (type) => descriptor[type].total > 0,
   ) as ValueType[]
 
 export { getExampleObject }

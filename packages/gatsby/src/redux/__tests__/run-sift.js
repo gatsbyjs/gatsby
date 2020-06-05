@@ -113,7 +113,7 @@ const gqlType = new GraphQLObjectType({
                       },
                     }),
                   },
-                })
+                }),
               ),
             },
           },
@@ -126,8 +126,8 @@ const gqlType = new GraphQLObjectType({
 describe(`run-sift tests`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
-    mockNodes().forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    mockNodes().forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
   })
   ;[
@@ -159,8 +159,8 @@ describe(`run-sift tests`, () => {
             filtersCache: createFiltersCache(),
           })
 
-          expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
-          expect(resultMany.map(o => o.id)).toEqual([mockNodes()[1].id])
+          expect(resultSingular.map((o) => o.id)).toEqual([mockNodes()[1].id])
+          expect(resultMany.map((o) => o.id)).toEqual([mockNodes()[1].id])
         })
 
         it(`eq operator honors type`, async () => {
@@ -214,8 +214,8 @@ describe(`run-sift tests`, () => {
             filtersCache: createFiltersCache(),
           })
 
-          expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
-          expect(resultMany.map(o => o.id)).toEqual([
+          expect(resultSingular.map((o) => o.id)).toEqual([mockNodes()[2].id])
+          expect(resultMany.map((o) => o.id)).toEqual([
             mockNodes()[2].id,
             mockNodes()[3].id,
           ])
@@ -251,7 +251,7 @@ describe(`run-sift tests`, () => {
           expect(Array.isArray(resultSingular)).toBe(true)
           expect(resultSingular.length).toEqual(1)
 
-          resultSingular.map(node => {
+          resultSingular.map((node) => {
             expect(node.slog).toEqual(`def`)
           })
         })
@@ -273,7 +273,7 @@ describe(`run-sift tests`, () => {
           expect(Array.isArray(resultMany)).toBe(true)
           expect(resultMany.length).toEqual(2)
 
-          resultMany.map(node => {
+          resultMany.map((node) => {
             expect(node.slog).toEqual(`def`)
           })
         })
@@ -295,7 +295,7 @@ describe(`run-sift tests`, () => {
           expect(Array.isArray(resultSingular)).toBe(true)
           expect(resultSingular.length).toEqual(1)
 
-          resultSingular.map(node => {
+          resultSingular.map((node) => {
             expect(node.deep.flat.search.chain).toEqual(300)
           })
         })
@@ -317,7 +317,7 @@ describe(`run-sift tests`, () => {
           expect(Array.isArray(resultMany)).toBe(true)
           expect(resultMany.length).toEqual(2)
 
-          resultMany.map(node => {
+          resultMany.map((node) => {
             expect(node.deep.flat.search.chain).toEqual(300)
           })
         })
@@ -385,8 +385,8 @@ describe(`run-sift tests`, () => {
 describe(`filterWithoutSift`, () => {
   beforeAll(() => {
     store.dispatch({ type: `DELETE_CACHE` })
-    mockNodes().forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    mockNodes().forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
   })
 
@@ -398,12 +398,12 @@ describe(`filterWithoutSift`, () => {
     const result = filterWithoutSift(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
     )
     expect(Array.isArray(result)).toBe(true)
     expect(result.length).toEqual(2)
 
-    result.map(node => {
+    result.map((node) => {
       expect(node.slog).toEqual(`def`)
     })
   })
@@ -416,12 +416,12 @@ describe(`filterWithoutSift`, () => {
     const result = filterWithoutSift(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
     )
     expect(Array.isArray(result)).toBe(true)
     expect(result.length).toEqual(2)
 
-    result.map(node => {
+    result.map((node) => {
       expect(node.deep.flat.search.chain).toEqual(300)
     })
   })
@@ -435,7 +435,7 @@ describe(`filterWithoutSift`, () => {
     const results = filterWithoutSift(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
     )
 
     // Count is irrelevant as long as it is non-zero and they all match filter
@@ -455,7 +455,7 @@ describe(`filterWithoutSift`, () => {
     const result = filterWithoutSift(
       createDbQueriesFromObject(filter),
       [typeName],
-      new Map()
+      new Map(),
     )
 
     expect(result).not.toBe(undefined)

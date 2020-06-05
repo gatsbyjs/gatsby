@@ -23,7 +23,7 @@ const generateSqip = require(`./generate-sqip`)
 const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
 
-module.exports = async args => {
+module.exports = async (args) => {
   const {
     type: { name },
   } = args
@@ -45,7 +45,7 @@ module.exports = async args => {
 async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   const program = store.getState().program
   const cacheDir = resolve(
-    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
+    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`,
   )
 
   await ensureDir(cacheDir)
@@ -144,7 +144,7 @@ async function sqipContentful({ type, cache, store }) {
 
   const program = store.getState().program
   const cacheDir = resolve(
-    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
+    `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`,
   )
 
   await ensureDir(cacheDir)

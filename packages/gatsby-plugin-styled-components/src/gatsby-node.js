@@ -3,7 +3,7 @@ try {
   require.resolve(`babel-plugin-styled-components`)
 } catch (e) {
   throw new Error(
-    `'babel-plugin-styled-components' is not installed which is needed by plugin 'gatsby-plugin-styled-components'`
+    `'babel-plugin-styled-components' is not installed which is needed by plugin 'gatsby-plugin-styled-components'`,
   )
 }
 

@@ -11,7 +11,8 @@ const PACKAGE_MANGER = getConfigStore().get(packageMangerConfigKey) || `yarn`
 
 const resourceSchema = require(`../resource-schema`)
 
-const getPackageNames = packages => packages.map(n => `${n.name}@${n.version}`)
+const getPackageNames = (packages) =>
+  packages.map((n) => `${n.name}@${n.version}`)
 
 // Generate install commands
 const generateClientComands = ({ packageManager, depType, packageNames }) => {
@@ -39,8 +40,8 @@ const generateClientComands = ({ packageManager, depType, packageNames }) => {
 exports.generateClientComands = generateClientComands
 
 let installs = []
-const executeInstalls = async root => {
-  const types = _.groupBy(installs, c => c.resource.dependencyType)
+const executeInstalls = async (root) => {
+  const types = _.groupBy(installs, (c) => c.resource.dependencyType)
 
   // Grab the key of the first install & delete off installs these packages
   // then run intall
@@ -48,10 +49,10 @@ const executeInstalls = async root => {
   const depType = installs[0].resource.dependencyType
   const packagesToInstall = types[depType]
   installs = installs.filter(
-    i => !_.some(packagesToInstall, p => i.resource.id === p.resource.id)
+    (i) => !_.some(packagesToInstall, (p) => i.resource.id === p.resource.id),
   )
 
-  const pkgs = packagesToInstall.map(p => p.resource)
+  const pkgs = packagesToInstall.map((p) => p.resource)
   const packageNames = getPackageNames(pkgs)
 
   const commands = generateClientComands({
@@ -66,17 +67,17 @@ const executeInstalls = async root => {
     })
   } catch (e) {
     // A package failed so call the rejects
-    return packagesToInstall.forEach(p => {
+    return packagesToInstall.forEach((p) => {
       p.outsideReject(
         JSON.stringify({
           message: e.shortMessage,
           installationError: `Could not install package`,
-        })
+        }),
       )
     })
   }
 
-  packagesToInstall.forEach(p => p.outsideResolve())
+  packagesToInstall.forEach((p) => p.outsideResolve())
 
   // Run again if there's still more installs.
   if (installs.length > 0) {
@@ -121,7 +122,7 @@ const read = async ({ root }, id) => {
   let packageJSON
   try {
     packageJSON = JSON.parse(
-      await fs.readFile(resolveCwd(path.join(id, `package.json`)))
+      await fs.readFile(resolveCwd(path.join(id, `package.json`))),
     )
   } catch (e) {
     return undefined
@@ -141,13 +142,13 @@ const schema = {
   version: Joi.string().default(`latest`, `Defaults to "latest"`),
   dependencyType: Joi.string().default(
     `dependency`,
-    `defaults to regular dependency`
+    `defaults to regular dependency`,
   ),
   description: Joi.string(),
   ...resourceSchema,
 }
 
-const validate = resource =>
+const validate = (resource) =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 exports.validate = validate

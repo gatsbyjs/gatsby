@@ -11,7 +11,7 @@ describe(`create-file-node`, () => {
     return createFileNode(
       path.resolve(`${__dirname}/fixtures/file.json`),
       createNodeId,
-      {}
+      {},
     )
   })
 })

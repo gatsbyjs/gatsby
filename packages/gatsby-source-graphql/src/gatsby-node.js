@@ -17,7 +17,7 @@ const {
 
 exports.sourceNodes = async (
   { actions, createNodeId, cache, createContentDigest },
-  options
+  options,
 ) => {
   const { addThirdPartySchema, createNode } = actions
   const {
@@ -35,15 +35,15 @@ exports.sourceNodes = async (
 
   invariant(
     typeName && typeName.length > 0,
-    `gatsby-source-graphql requires option \`typeName\` to be specified`
+    `gatsby-source-graphql requires option \`typeName\` to be specified`,
   )
   invariant(
     fieldName && fieldName.length > 0,
-    `gatsby-source-graphql requires option \`fieldName\` to be specified`
+    `gatsby-source-graphql requires option \`fieldName\` to be specified`,
   )
   invariant(
     (url && url.length > 0) || createLink,
-    `gatsby-source-graphql requires either option \`url\` or \`createLink\` callback`
+    `gatsby-source-graphql requires either option \`url\` or \`createLink\` callback`,
   )
 
   let link
@@ -101,13 +101,13 @@ exports.sourceNodes = async (
     },
     [
       new StripNonQueryTransform(),
-      new RenameTypes(name => `${typeName}_${name}`),
+      new RenameTypes((name) => `${typeName}_${name}`),
       new NamespaceUnderFieldTransform({
         typeName,
         fieldName,
         resolver,
       }),
-    ]
+    ],
   )
 
   addThirdPartySchema({ schema })
@@ -122,7 +122,7 @@ exports.sourceNodes = async (
             typeName,
             fieldName,
             createContentDigest,
-          })
+          }),
         )
         setTimeout(refetcher, msRefetchInterval)
       }

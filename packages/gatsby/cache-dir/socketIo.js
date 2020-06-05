@@ -30,7 +30,7 @@ export default function socketIo() {
           )
         }
 
-        socket.on(`message`, msg => {
+        socket.on(`message`, (msg) => {
           if (msg.type === `staticQueryResult`) {
             if (didDataChange(msg, staticQueryData)) {
               staticQueryData = {
@@ -72,12 +72,12 @@ function getPageData(pathname) {
   if (inFlightGetPageDataPromiseCache[pathname]) {
     return inFlightGetPageDataPromiseCache[pathname]
   } else {
-    inFlightGetPageDataPromiseCache[pathname] = new Promise(resolve => {
+    inFlightGetPageDataPromiseCache[pathname] = new Promise((resolve) => {
       if (pageQueryData[pathname]) {
         delete inFlightGetPageDataPromiseCache[pathname]
         resolve(pageQueryData[pathname])
       } else {
-        const onPageDataCallback = msg => {
+        const onPageDataCallback = (msg) => {
           if (
             msg.type === `pageQueryResult` &&
             normalizePagePath(msg.payload.id) === pathname

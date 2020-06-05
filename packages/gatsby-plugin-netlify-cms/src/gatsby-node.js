@@ -21,10 +21,10 @@ function deepMap(obj, fn) {
 
   // Recursively deep map arrays and plain objects, otherwise return the value.
   if (Array.isArray(obj)) {
-    return obj.map(value => deepMap(value, fn))
+    return obj.map((value) => deepMap(value, fn))
   }
   if (isPlainObject(obj)) {
-    return mapValues(obj, value => deepMap(value, fn))
+    return mapValues(obj, (value) => deepMap(value, fn))
   }
   return obj
 }
@@ -49,7 +49,7 @@ function replaceRule(value, stage) {
     value.use[0].options &&
     value.use[0].options.presets &&
     /babel-preset-gatsby[/\\]dependencies\.js/.test(
-      value.use[0].options.presets
+      value.use[0].options.presets,
     )
   ) {
     return null
@@ -91,7 +91,7 @@ exports.onPreInit = ({ reporter }) => {
   try {
     require.resolve(`netlify-cms`)
     reporter.warn(
-      `The netlify-cms package is deprecated, please install netlify-cms-app instead. You can do this by running "npm install netlify-cms-app"`
+      `The netlify-cms package is deprecated, please install netlify-cms-app instead. You can do this by running "npm install netlify-cms-app"`,
     )
   } catch (err) {
     // carry on
@@ -104,11 +104,11 @@ exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
   app.get(`/${publicPathClean}`, function (req, res) {
     res.sendFile(
       path.join(program.directory, `public`, publicPathClean, `index.html`),
-      err => {
+      (err) => {
         if (err) {
           res.status(500).end(err.message)
         }
-      }
+      },
     )
   })
 }
@@ -124,7 +124,7 @@ exports.onCreateWebpackConfig = (
     htmlFavicon = ``,
     manualInit = false,
     includeRobots = false,
-  }
+  },
 ) => {
   if (![`develop`, `build-javascript`].includes(stage)) {
     return Promise.resolve()
@@ -140,7 +140,7 @@ exports.onCreateWebpackConfig = (
         /\.module\.s(a|c)ss$/,
         /\.less$/,
         /\.module\.less$/,
-      ].map(t => t.toString())
+      ].map((t) => t.toString()),
     )
   }
 
@@ -188,25 +188,25 @@ exports.onCreateWebpackConfig = (
         enableIdentityWidget && path.join(__dirname, `cms-identity.js`),
       ]
         .concat(modulePath)
-        .filter(p => p),
+        .filter((p) => p),
     },
     output: {
       path: path.join(program.directory, `public`, publicPathClean),
     },
     module: {
-      rules: deepMap(gatsbyConfig.module.rules, value =>
-        replaceRule(value, stage)
+      rules: deepMap(gatsbyConfig.module.rules, (value) =>
+        replaceRule(value, stage),
       ).filter(Boolean),
     },
     plugins: [
       // Remove plugins that either attempt to process the core Netlify CMS
       // application, or that we want to replace with our own instance.
       ...gatsbyConfig.plugins.filter(
-        plugin =>
+        (plugin) =>
           ![`MiniCssExtractPlugin`, `GatsbyWebpackStatsExtractor`].find(
-            pluginName =>
-              plugin.constructor && plugin.constructor.name === pluginName
-          )
+            (pluginName) =>
+              plugin.constructor && plugin.constructor.name === pluginName,
+          ),
       ),
 
       /**
@@ -265,9 +265,9 @@ exports.onCreateWebpackConfig = (
                 from: require.resolve(path.join(name, assetDir, sourceMap)),
                 to: sourceMap,
               },
-            ].filter(item => item)
-          )
-        )
+            ].filter((item) => item),
+          ),
+        ),
       ),
 
       new HtmlWebpackTagsPlugin({
@@ -279,7 +279,7 @@ exports.onCreateWebpackConfig = (
         CMS_MANUAL_INIT: JSON.stringify(manualInit),
         PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
-    ].filter(p => p),
+    ].filter((p) => p),
 
     // Remove common chunks style optimizations from Gatsby's default
     // config, they cause issues for our pre-bundled code.

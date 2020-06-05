@@ -4,8 +4,8 @@ const visit = require(`unist-util-visit`)
 
 const { u } = require(`.`)
 
-const validateJsx = () => tree => {
-  visit(tree, `jsx`, node => {
+const validateJsx = () => (tree) => {
+  visit(tree, `jsx`, (node) => {
     try {
       transform(`<>${node.value}<>`, {
         plugins: [babelPluginTransformReactJsx],
@@ -25,7 +25,7 @@ const validateJsx = () => tree => {
   })
 }
 
-module.exports = mdx => {
+module.exports = (mdx) => {
   try {
     u.use(validateJsx).processSync(mdx)
   } catch (e) {

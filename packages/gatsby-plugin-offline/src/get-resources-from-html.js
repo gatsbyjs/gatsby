@@ -51,5 +51,5 @@ module.exports = (htmlPath, pathPrefix) => {
   // Remove the custom prefix (if any) so Workbox can find the files.
   // This is added back at runtime (see modifyUrlPrefix in gatsby-node.js) in
   // order to serve from the correct location.
-  return _.uniq(criticalFilePaths).map(url => url.slice(pathPrefix.length))
+  return _.uniq(criticalFilePaths).map((url) => url.slice(pathPrefix.length))
 }

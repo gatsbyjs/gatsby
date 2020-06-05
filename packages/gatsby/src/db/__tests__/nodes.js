@@ -24,8 +24,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -40,8 +40,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createParentChildLink(
@@ -51,8 +51,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -67,8 +67,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createParentChildLink(
@@ -78,8 +78,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -94,8 +94,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     expect(getNodes()).toHaveLength(1)
   })
@@ -114,8 +114,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -130,8 +130,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -146,8 +146,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createParentChildLink(
@@ -157,8 +157,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -173,8 +173,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createParentChildLink(
@@ -184,8 +184,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.deleteNode(
@@ -194,8 +194,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     expect(getNodes()).toHaveLength(1)
   })
@@ -214,8 +214,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -230,8 +230,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createParentChildLink(
@@ -241,8 +241,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createNode(
@@ -257,8 +257,8 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.createParentChildLink(
@@ -268,16 +268,16 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.deleteNode(
         { node: getNode(`hi`) },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     expect(getNodes()).toHaveLength(0)
   })
@@ -306,13 +306,13 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     store.dispatch(
       actions.deleteNode({
         node: getNode(`hi`),
-      })
+      }),
     )
     expect(getNode(`hi`)).toBeUndefined()
   })
@@ -331,14 +331,14 @@ describe(`nodes db tests`, () => {
         },
         {
           name: `tests`,
-        }
-      )
+        },
+      ),
     )
     expect(getNode(`hi`)).toMatchObject({ id: `hi` })
     store.dispatch(
       actions.deleteNode(`hi`, getNode(`hi`), {
         name: `tests`,
-      })
+      }),
     )
     expect(getNode(`hi`)).toBeUndefined()
     const deprecationNotice =
@@ -363,13 +363,13 @@ describe(`nodes db tests`, () => {
           },
           {
             name: `other`,
-          }
-        )
+          },
+        ),
       )
       store.dispatch(
         actions.deleteNode(`hi`, getNode(`hi`), {
           name: `tests`,
-        })
+        }),
       )
     }).toThrow(/deleted/)
   })

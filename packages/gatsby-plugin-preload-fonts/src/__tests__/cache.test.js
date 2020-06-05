@@ -54,7 +54,7 @@ describe(`cache`, () => {
     expect(writeFileSync).toHaveBeenCalledWith(
       join(`/project/root`, `font-preload-cache.json`),
       `{"some":"cache"}`,
-      `utf-8`
+      `utf-8`,
     )
   })
 })

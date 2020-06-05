@@ -7,8 +7,8 @@ exports.browse = ({ ...params }) => {
   const browser = searchIndex.browseAll(params)
 
   return new Promise((resolve, reject) => {
-    browser.on(`result`, content => (hits = hits.concat(content.hits)))
+    browser.on(`result`, (content) => (hits = hits.concat(content.hits)))
     browser.on(`end`, () => resolve(hits))
-    browser.on(`error`, err => reject(err))
+    browser.on(`error`, (err) => reject(err))
   })
 }

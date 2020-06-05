@@ -23,7 +23,7 @@ async function getCounts({ mdast }) {
   // convert the mdxast to back to mdast
   remove(mdast, `import`)
   remove(mdast, `export`)
-  visit(mdast, `jsx`, node => {
+  visit(mdast, `jsx`, (node) => {
     node.type = `html`
   })
 
@@ -60,7 +60,7 @@ module.exports = (
     schema,
     ...helpers
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   let mdxHTMLLoader
   const { createTypes } = actions
@@ -97,7 +97,7 @@ module.exports = (
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (let parserPlugin of requiredPlugin.setParserPlugins(
-        plugin.options || {}
+        plugin.options || {},
       )) {
         if (_.isArray(parserPlugin)) {
           const [parser, parserPluginOptions] = parserPlugin
@@ -159,7 +159,7 @@ module.exports = (
           const { mdast } = await processMDX({ node: mdxNode })
 
           const excerptNodes = []
-          visit(mdast, node => {
+          visit(mdast, (node) => {
             if (node.type === `text` || node.type === `inlineCode`) {
               excerptNodes.push(node.value)
             }
@@ -187,14 +187,16 @@ module.exports = (
           // TODO: change this to operate on html instead of mdast
           const { mdast } = await processMDX({ node: mdxNode })
           let headings = []
-          visit(mdast, `heading`, heading => {
+          visit(mdast, `heading`, (heading) => {
             headings.push({
               value: toString(heading),
               depth: heading.depth,
             })
           })
           if (headingsMdx.includes(depth)) {
-            headings = headings.filter(heading => `h${heading.depth}` === depth)
+            headings = headings.filter(
+              (heading) => `h${heading.depth}` === depth,
+            )
           }
           return headings
         },
@@ -218,7 +220,7 @@ module.exports = (
 This field is intended for use with RSS feed generation.
 If you're trying to use it in application-level code, try querying for \`Mdx.body\` instead.
 Original error:
-${e}`
+${e}`,
             )
             return undefined
           }

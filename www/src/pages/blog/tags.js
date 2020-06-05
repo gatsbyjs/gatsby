@@ -60,7 +60,7 @@ class TagsPage extends React.Component {
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
             totalCount: PropTypes.number.isRequired,
-          }).isRequired
+          }).isRequired,
         ),
       }),
     }),
@@ -86,7 +86,7 @@ class TagsPage extends React.Component {
     } = this.props
     const { filterQuery } = this.state
     const uniqGroup = group
-      .filter(x => TAGS_AND_DOCS.has(x.fieldValue))
+      .filter((x) => TAGS_AND_DOCS.has(x.fieldValue))
       .reduce((lookup, tag) => {
         const key = kebabCase(tag.fieldValue.toLowerCase())
         if (!lookup[key]) {
@@ -104,10 +104,10 @@ class TagsPage extends React.Component {
       }, {})
     const results = Object.keys(uniqGroup)
       .sort((tagA, tagB) => tagA.localeCompare(tagB))
-      .filter(key => uniqGroup[key].fieldValue.includes(filterQuery))
+      .filter((key) => uniqGroup[key].fieldValue.includes(filterQuery))
 
     let PopularTagButtons = []
-    POPULAR_TAGS.forEach(key => {
+    POPULAR_TAGS.forEach((key) => {
       PopularTagButtons.push(<PopularTagButton key={key} tag={key} />)
     })
 
@@ -165,7 +165,7 @@ class TagsPage extends React.Component {
             }}
           >
             {results.length > 0 ? (
-              results.map(key => {
+              results.map((key) => {
                 const tag = uniqGroup[key]
                 const firstLetter = tag.fieldValue.charAt(0).toLowerCase()
                 const buildTag = (

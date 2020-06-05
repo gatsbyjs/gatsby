@@ -19,7 +19,7 @@ class EcosystemPage extends Component {
       },
     } = this.props
 
-    const starters = startersData.map(item => {
+    const starters = startersData.map((item) => {
       const {
         fields: {
           starterShowcase: { slug, name, description, stars },

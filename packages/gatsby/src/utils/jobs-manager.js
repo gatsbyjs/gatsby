@@ -30,7 +30,7 @@ const externalJobsMap = new Map()
  * @param {string} filePath
  * @return {string}
  */
-const convertPathsToAbsolute = filePath => {
+const convertPathsToAbsolute = (filePath) => {
   if (!path.isAbsolute(filePath)) {
     throw new Error(`${filePath} should be an absolute path.`)
   }
@@ -42,7 +42,7 @@ const convertPathsToAbsolute = filePath => {
  *
  * @param {string} path
  */
-const createFileHash = path => hasha.fromFileSync(path, { algorithm: `sha1` })
+const createFileHash = (path) => hasha.fromFileSync(path, { algorithm: `sha1` })
 
 /**
  * @typedef BaseJobInterface
@@ -95,7 +95,7 @@ const runLocalWorker = async (workerFn, job) => {
             inputPaths: job.inputPaths,
             outputDir: job.outputDir,
             args: job.args,
-          })
+          }),
         )
       } catch (err) {
         reject(new WorkerError(err))
@@ -105,7 +105,7 @@ const runLocalWorker = async (workerFn, job) => {
 }
 
 const listenForJobMessages = () => {
-  process.on(`message`, msg => {
+  process.on(`message`, (msg) => {
     if (
       msg &&
       msg.type &&
@@ -137,7 +137,7 @@ const listenForJobMessages = () => {
 /**
  * @param {InternalJob} job
  */
-const runExternalWorker = job => {
+const runExternalWorker = (job) => {
   const deferred = pDefer()
   externalJobsMap.set(job.id, {
     job,
@@ -181,7 +181,7 @@ const runJob = (job, forceLocal = false) => {
         if (!hasShownIPCDisabledWarning) {
           hasShownIPCDisabledWarning = true
           reporter.warn(
-            `Offloading of a job failed as IPC could not be detected. Running job locally.`
+            `Offloading of a job failed as IPC could not be detected. Running job locally.`,
           )
         }
       }
@@ -189,7 +189,7 @@ const runJob = (job, forceLocal = false) => {
     return runLocalWorker(worker[job.name], job)
   } catch (err) {
     throw new Error(
-      `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`
+      `We couldn't find a gatsby-worker.js(${plugin.resolve}/gatsby-worker.js) file for ${plugin.name}@${plugin.version}`,
     )
   }
 }
@@ -213,7 +213,7 @@ exports.createInternalJob = (job, plugin) => {
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
   // are still processing their hashes
-  const inputPathsWithContentDigest = inputPaths.map(path => {
+  const inputPathsWithContentDigest = inputPaths.map((path) => {
     return {
       path: convertPathsToAbsolute(path),
       contentDigest: createFileHash(path),
@@ -240,7 +240,7 @@ exports.createInternalJob = (job, plugin) => {
   internalJob.contentDigest = createContentDigest({
     name: job.name,
     inputPaths: internalJob.inputPaths.map(
-      inputPath => inputPath.contentDigest
+      (inputPath) => inputPath.contentDigest,
     ),
     outputDir: internalJob.outputDir,
     args: internalJob.args,
@@ -256,7 +256,7 @@ exports.createInternalJob = (job, plugin) => {
  * @param {InternalJob} job
  * @return {Promise<object>}
  */
-exports.enqueueJob = async job => {
+exports.enqueueJob = async (job) => {
   // When we already have a job that's executing, return the same promise.
   // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
@@ -285,7 +285,7 @@ exports.enqueueJob = async job => {
     // this check is to keep our worker results consistent for cloud
     if (result != null && !_.isPlainObject(result)) {
       throw new Error(
-        `Result of a worker should be an object, type of "${typeof result}" was given`
+        `Result of a worker should be an object, type of "${typeof result}" was given`,
       )
     }
     deferred.resolve(result)
@@ -314,7 +314,7 @@ exports.enqueueJob = async job => {
  * @param {string} contentDigest
  * @return {Promise<void>}
  */
-exports.getInProcessJobPromise = contentDigest =>
+exports.getInProcessJobPromise = (contentDigest) =>
   jobsInProcess.get(contentDigest)?.deferred.promise
 
 /**
@@ -322,7 +322,7 @@ exports.getInProcessJobPromise = contentDigest =>
  *
  * @param {string} contentDigest
  */
-exports.removeInProgressJob = contentDigest => {
+exports.removeInProgressJob = (contentDigest) => {
   jobsInProcess.delete(contentDigest)
 }
 
@@ -338,8 +338,8 @@ exports.waitUntilAllJobsComplete = () =>
  * @param {Partial<InternalJob>  & {inputPaths: InternalJob['inputPaths']}} job
  * @return {boolean}
  */
-exports.isJobStale = job => {
-  const areInputPathsStale = job.inputPaths.some(inputPath => {
+exports.isJobStale = (job) => {
+  const areInputPathsStale = job.inputPaths.some((inputPath) => {
     // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
       return true

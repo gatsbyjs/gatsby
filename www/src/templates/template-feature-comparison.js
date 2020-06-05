@@ -23,7 +23,7 @@ class FeatureComparison extends Component {
       location,
       data,
     } = this.props
-    const optionsDisplay = options.map(o => o.display)
+    const optionsDisplay = options.map((o) => o.display)
     const titleString = `Comparison of Gatsby vs ${optionsDisplay.join(` vs `)}`
 
     const { sections, sectionHeaders } =
@@ -38,7 +38,7 @@ class FeatureComparison extends Component {
           <main>
             <Breadcrumb location={location} />
             <h1>{titleString}</h1>
-            {options.map(o => (
+            {options.map((o) => (
               <section key={o.key} sx={{ mb: 6 }}>
                 <h2
                   css={css`

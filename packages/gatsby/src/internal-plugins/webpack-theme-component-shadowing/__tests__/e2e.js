@@ -15,7 +15,7 @@ test.each([
             themes: [],
             projectRoot: path.resolve(
               __dirname,
-              `fixtures/test-sites/non-usage`
+              `fixtures/test-sites/non-usage`,
             ),
           }),
         ],
@@ -38,13 +38,13 @@ test.each([
                 themeName: `theme-a`,
                 themeDir: path.join(
                   __dirname,
-                  `./fixtures/test-sites/basic-shadowing/node_modules/theme-a`
+                  `./fixtures/test-sites/basic-shadowing/node_modules/theme-a`,
                 ),
               },
             ],
             projectRoot: path.resolve(
               __dirname,
-              `fixtures/test-sites/basic-shadowing`
+              `fixtures/test-sites/basic-shadowing`,
             ),
           }),
         ],
@@ -68,13 +68,13 @@ test.each([
                 themeName: `theme-a`,
                 themeDir: path.join(
                   __dirname,
-                  `./fixtures/test-sites/css-shadowing/node_modules/theme-a`
+                  `./fixtures/test-sites/css-shadowing/node_modules/theme-a`,
                 ),
               },
             ],
             projectRoot: path.resolve(
               __dirname,
-              `fixtures/test-sites/css-shadowing`
+              `fixtures/test-sites/css-shadowing`,
             ),
           }),
         ],
@@ -104,13 +104,13 @@ test.each([
                 themeName: `theme-a`,
                 themeDir: path.join(
                   __dirname,
-                  `./fixtures/test-sites/ts-shadowing/node_modules/theme-a`
+                  `./fixtures/test-sites/ts-shadowing/node_modules/theme-a`,
                 ),
               },
             ],
             projectRoot: path.resolve(
               __dirname,
-              `fixtures/test-sites/ts-shadowing`
+              `fixtures/test-sites/ts-shadowing`,
             ),
           }),
         ],
@@ -139,7 +139,7 @@ test.each([
         alias: {
           "@components": path.join(
             __dirname,
-            `./fixtures/test-sites/dot-shadowing/node_modules/theme-a/src`
+            `./fixtures/test-sites/dot-shadowing/node_modules/theme-a/src`,
           ),
         },
         plugins: [
@@ -150,13 +150,13 @@ test.each([
                 themeName: `theme-a`,
                 themeDir: path.join(
                   __dirname,
-                  `./fixtures/test-sites/dot-shadowing/node_modules/theme-a`
+                  `./fixtures/test-sites/dot-shadowing/node_modules/theme-a`,
                 ),
               },
             ],
             projectRoot: path.resolve(
               __dirname,
-              `fixtures/test-sites/dot-shadowing`
+              `fixtures/test-sites/dot-shadowing`,
             ),
           }),
         ],
@@ -198,7 +198,7 @@ test.each([
     const moduleNames = statsJSON.modules.map(({ name }) => name)
 
     if (Array.isArray(shadowPath)) {
-      shadowPath.forEach(aShadowPath => {
+      shadowPath.forEach((aShadowPath) => {
         expect(moduleNames.includes(aShadowPath)).toBe(true)
       })
     } else {

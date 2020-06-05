@@ -13,7 +13,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     // remove React refresh plugin, we want to add preact refresh instead.
     const webpackConfig = getConfig()
     webpackConfig.plugins = webpackConfig.plugins.filter(
-      plugin => plugin.constructor.name !== `ReactRefreshPlugin`
+      (plugin) => plugin.constructor.name !== `ReactRefreshPlugin`,
     )
     actions.replaceWebpackConfig(webpackConfig)
 
@@ -34,9 +34,11 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         webpackConfig.optimization.splitChunks.cacheGroups.framework.test
 
       // replace react libs with preact
-      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = module =>
+      webpackConfig.optimization.splitChunks.cacheGroups.framework.test = (
+        module,
+      ) =>
         /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/.test(
-          module.resource
+          module.resource,
         ) || frameworkRegex.test(module.resource)
 
       actions.replaceWebpackConfig(webpackConfig)

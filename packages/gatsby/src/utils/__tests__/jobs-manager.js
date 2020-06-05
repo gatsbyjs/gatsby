@@ -5,7 +5,7 @@ let jobManager = null
 
 // I need a mock to spy on
 jest.mock(`p-defer`, () =>
-  jest.fn().mockImplementation(jest.requireActual(`p-defer`))
+  jest.fn().mockImplementation(jest.requireActual(`p-defer`)),
 )
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -22,7 +22,7 @@ jest.mock(
       TEST_JOB: jest.fn(),
     }
   },
-  { virtual: true }
+  { virtual: true },
 )
 
 jest.mock(
@@ -32,11 +32,11 @@ jest.mock(
       TEST_JOB: jest.fn(),
     }
   },
-  { virtual: true }
+  { virtual: true },
 )
 
 jest.mock(`uuid/v4`, () =>
-  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
+  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`)),
 )
 
 const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
@@ -125,7 +125,7 @@ describe(`Jobs manager`, () => {
             resolve: `/node_modules/gatsby-plugin-test`,
             isLocal: false,
           },
-        })
+        }),
       )
     })
 
@@ -140,7 +140,7 @@ describe(`Jobs manager`, () => {
         createInternalJob(jobArgs, plugin)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[Error: ./files/image.jpg should be an absolute path.]`
+          `[Error: ./files/image.jpg should be an absolute path.]`,
         )
       }
     })
@@ -166,7 +166,7 @@ describe(`Jobs manager`, () => {
         createInternalMockJob({
           inputPaths: [],
           name: `NEXT_JOB`,
-        })
+        }),
       )
       await Promise.all([
         expect(job1).resolves.toStrictEqual({ output: `myresult` }),
@@ -220,7 +220,7 @@ describe(`Jobs manager`, () => {
       worker.TEST_JOB.mockImplementationOnce(() => {
         throw new Error(`An error occurred`)
       }).mockImplementationOnce(() =>
-        Promise.reject(new Error(`An error occurred`))
+        Promise.reject(new Error(`An error occurred`)),
       )
 
       expect.assertions(4)
@@ -228,7 +228,7 @@ describe(`Jobs manager`, () => {
         await enqueueJob(jobArgs)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[WorkerError: Error: An error occurred]`
+          `[WorkerError: Error: An error occurred]`,
         )
       }
       try {
@@ -253,7 +253,7 @@ describe(`Jobs manager`, () => {
         await enqueueJob(jobArgs)
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[WorkerError: Result of a worker should be an object, type of "string" was given]`
+          `[WorkerError: Result of a worker should be an object, type of "string" was given]`,
         )
       }
       await expect(enqueueJob(jobArgs2)).resolves.toBeNull()
@@ -270,7 +270,7 @@ describe(`Jobs manager`, () => {
       const promise = enqueueJob(internalJob)
 
       expect(getInProcessJobPromise(internalJob.contentDigest)).toStrictEqual(
-        promise
+        promise,
       )
     })
   })
@@ -284,13 +284,13 @@ describe(`Jobs manager`, () => {
       await enqueueJob(internalJob)
 
       expect(
-        jobManager.getInProcessJobPromise(internalJob.contentDigest)
+        jobManager.getInProcessJobPromise(internalJob.contentDigest),
       ).not.toBeUndefined()
 
       removeInProgressJob(internalJob.contentDigest)
 
       expect(
-        jobManager.getInProcessJobPromise(internalJob.contentDigest)
+        jobManager.getInProcessJobPromise(internalJob.contentDigest),
       ).toBeUndefined()
     })
   })
@@ -437,7 +437,7 @@ describe(`Jobs manager`, () => {
       jest.runAllTimers()
 
       await expect(promise).rejects.toStrictEqual(
-        new jobManager.WorkerError(`JOB failed...`)
+        new jobManager.WorkerError(`JOB failed...`),
       )
       expect(worker.TEST_JOB).not.toHaveBeenCalled()
     })

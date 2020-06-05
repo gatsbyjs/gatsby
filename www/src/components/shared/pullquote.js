@@ -6,30 +6,30 @@ import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const PullquoteRoot = styled(`blockquote`)`
-  border: 1px solid ${p => p.theme.colors.pullquote.borderColor};
-  border-radius: ${p => p.theme.radii[2]};
-  color: ${p => p.theme.colors.pullquote.color};
-  font-family: ${p => p.theme.fonts.heading};
-  font-size: ${p => p.theme.fontSizes[3]};
+  border: 1px solid ${(p) => p.theme.colors.pullquote.borderColor};
+  border-radius: ${(p) => p.theme.radii[2]};
+  color: ${(p) => p.theme.colors.pullquote.color};
+  font-family: ${(p) => p.theme.fonts.heading};
+  font-size: ${(p) => p.theme.fontSizes[3]};
   font-weight: bold;
-  padding: ${p => p.theme.space[7]} 3rem;
+  padding: ${(p) => p.theme.space[7]} 3rem;
   position: relative;
-  text-indent: ${p => p.theme.space[7]};
-  margin: ${p => p.theme.space[8]} 0;
+  text-indent: ${(p) => p.theme.space[7]};
+  margin: ${(p) => p.theme.space[8]} 0;
 
   /* needed for overriding typography.js style "p *:last-child {"" */
   p > & {
-    margin: ${p => p.theme.space[8]} 0;
+    margin: ${(p) => p.theme.space[8]} 0;
   }
 
   ${mediaQueries.lg} {
-    line-height: ${p => p.theme.lineHeights.loose};
-    margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
+    line-height: ${(p) => p.theme.lineHeights.loose};
+    margin: ${(p) => p.theme.space[8]} ${(p) => (p.narrow ? 0 : `-3.5rem`)};
     padding: 2.8rem 3.5rem;
     text-indent: 1.8rem;
 
     p > & {
-      margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
+      margin: ${(p) => p.theme.space[8]} ${(p) => (p.narrow ? 0 : `-3.5rem`)};
     }
   }
 `
@@ -38,18 +38,18 @@ const Citation = styled(`cite`)`
   display: block;
   font-style: italic;
   font-weight: normal;
-  margin-top: ${p => p.theme.space[4]};
+  margin-top: ${(p) => p.theme.space[4]};
   text-align: right;
 `
 
 const QuotationMark = styled(`span`)`
   display: flex;
-  left: ${p => p.theme.space[8]};
+  left: ${(p) => p.theme.space[8]};
   position: absolute;
-  top: ${p => p.theme.space[7]};
+  top: ${(p) => p.theme.space[7]};
 
   svg {
-    fill: ${p => p.theme.colors.purple[80]};
+    fill: ${(p) => p.theme.colors.purple[80]};
   }
 
   ${mediaQueries.lg} {
@@ -57,7 +57,7 @@ const QuotationMark = styled(`span`)`
     top: 2.8rem;
 
     svg {
-      fill: ${p => p.theme.colors.purple[80]};
+      fill: ${(p) => p.theme.colors.purple[80]};
       transform: scale(1.1);
     }
   }
@@ -80,7 +80,7 @@ const Star = styled(`span`)`
     width: 20px;
 
     svg {
-      fill: ${p => p.theme.colors.yellow[40]};
+      fill: ${(p) => p.theme.colors.yellow[40]};
     }
 
     ${mediaQueries.lg} {
@@ -91,7 +91,7 @@ const Star = styled(`span`)`
     .variantB & {
       left: auto;
       right: 0;
-      top: ${p => p.theme.space[7]};
+      top: ${(p) => p.theme.space[7]};
       transform: translate(50%, 0);
     }
 
@@ -112,7 +112,7 @@ const Star = styled(`span`)`
     width: 14px;
 
     svg {
-      fill: ${p => p.theme.colors.teal[40]};
+      fill: ${(p) => p.theme.colors.teal[40]};
     }
     .variantB & {
       bottom: 0;
@@ -132,13 +132,13 @@ const Star = styled(`span`)`
 
   :nth-of-type(3) {
     bottom: 0;
-    height: ${p => p.theme.space[3]};
+    height: ${(p) => p.theme.space[3]};
     right: 4rem;
     transform: translateY(50%);
-    width: ${p => p.theme.space[3]};
+    width: ${(p) => p.theme.space[3]};
 
     svg {
-      fill: ${p => p.theme.colors.red[60]};
+      fill: ${(p) => p.theme.colors.red[60]};
     }
 
     .variantB & {

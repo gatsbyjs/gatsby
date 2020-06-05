@@ -10,7 +10,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     onRouteUpdate({ location: { pathname: `/hogwarts`, hash: ``, search: `` } })
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`
+      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`,
     )
   })
   it(`should keep the hash`, () => {
@@ -19,7 +19,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     })
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts#harry-potter\\" rel=\\"canonical\\">"`
+      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts#harry-potter\\" rel=\\"canonical\\">"`,
     )
   })
   it(`shouldn't strip search parameter by default`, () => {
@@ -32,7 +32,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
     })
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts?house=gryffindor\\" rel=\\"canonical\\">"`
+      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts?house=gryffindor\\" rel=\\"canonical\\">"`,
     )
   })
   it(`should strip search parameters if option stripQueryString is true`, () => {
@@ -48,11 +48,11 @@ describe(`gatsby-plugin-canonical-urls`, () => {
           search: `?house=gryffindor`,
         },
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(global.document.head.innerHTML).toMatchInlineSnapshot(
-      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`
+      `"<link data-basehost=\\"someurl.com\\" data-baseprotocol=\\"http:\\" href=\\"http://someurl.com/hogwarts\\" rel=\\"canonical\\">"`,
     )
   })
 })

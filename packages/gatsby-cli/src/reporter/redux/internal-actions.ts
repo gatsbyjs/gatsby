@@ -47,7 +47,7 @@ let cancelDelayedSetStatus: (() => void) | null
 // TODO: THIS IS NOT WORKING ATM
 export const setStatus = (
   status: ActivityStatuses | "",
-  force: boolean = false
+  force: boolean = false,
 ) => (dispatch: Dispatch<ISetStatus>): void => {
   const currentStatus = getStore().getState().logs.status
   if (cancelDelayedSetStatus) {
@@ -271,7 +271,7 @@ export const endActivity = ({
           activity_current: activity.current,
           activity_total: activity.total,
           activity_type: activity.type,
-        })
+        }),
       )
     }
   }

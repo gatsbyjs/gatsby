@@ -3,7 +3,7 @@ const cheerio = require(`cheerio`)
 const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
 
-const needsSemicolon = str => !str.endsWith(`;`)
+const needsSemicolon = (str) => !str.endsWith(`;`)
 
 /**
  * Convert anything to number, except for % value.
@@ -12,7 +12,7 @@ const needsSemicolon = str => !str.endsWith(`;`)
  * @param {*} n something to be converted to number
  * @returns {number}
  */
-const convert = n =>
+const convert = (n) =>
   typeof n === `string` && n.trim().endsWith(`%`) ? NaN : parseInt(n, 10)
 
 /**
@@ -20,14 +20,14 @@ const convert = n =>
  * @param  {...number} args dimension to check
  * @returns {boolean}
  */
-const isValidDimensions = (...args) => args.every(n => _.isFinite(n))
+const isValidDimensions = (...args) => args.every((n) => _.isFinite(n))
 
 module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   const defaults = {
     wrapperStyle: ``,
   }
   const options = _.defaults(pluginOptions, defaults)
-  visit(markdownAST, [`html`, `jsx`], node => {
+  visit(markdownAST, [`html`, `jsx`], (node) => {
     const $ = cheerio.load(node.value)
     const iframe = $(`iframe, object`)
     if (iframe.length === 0) {
@@ -57,7 +57,7 @@ module.exports = async ({ markdownAST }, pluginOptions = {}) => {
       left: 0;
       width: 100%;
       height: 100%;
-      `
+      `,
       )
       .attr(`width`, null)
       .attr(`height`, null)

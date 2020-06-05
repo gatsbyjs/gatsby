@@ -6,7 +6,7 @@ const bar = new ProgressBar(
   {
     total: 0,
     width: 30,
-  }
+  },
 )
 
 let totalJobs = 0
@@ -18,7 +18,7 @@ let totalJobs = 0
  * @param gatsbyFunctions - Gatsby's internal helper functions
  */
 
-const downloadContentfulAssets = async gatsbyFunctions => {
+const downloadContentfulAssets = async (gatsbyFunctions) => {
   const {
     actions: { createNode, touchNode },
     createNodeId,
@@ -32,13 +32,13 @@ const downloadContentfulAssets = async gatsbyFunctions => {
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
   const contentfulAssetNodes = getNodes().filter(
-    n =>
+    (n) =>
       n.internal.owner === `gatsby-source-contentful` &&
-      n.internal.type === `ContentfulAsset`
+      n.internal.type === `ContentfulAsset`,
   )
 
   await Promise.all(
-    contentfulAssetNodes.map(async node => {
+    contentfulAssetNodes.map(async (node) => {
       totalJobs += 1
       bar.total = totalJobs
 
@@ -52,7 +52,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       }
       if (!node.file.url) {
         reporter.warn(
-          `The asset with id: ${id} has a file but the file contains no url.`
+          `The asset with id: ${id} has a file but the file contains no url.`,
         )
         return Promise.resolve()
       }
@@ -95,7 +95,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       }
 
       return node
-    })
+    }),
   )
 }
 exports.downloadContentfulAssets = downloadContentfulAssets

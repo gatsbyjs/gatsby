@@ -31,7 +31,7 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
  * shadowing changes during develop session, so no invalidation is not a deal breaker.
  */
 const shadowCreatePagePath = _.memoize(
-  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
+  require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`),
 )
 const {
   enqueueJob,
@@ -43,14 +43,14 @@ const {
 const actions = {}
 const isWindows = platform() === `win32`
 
-const ensureWindowsDriveIsUppercase = filePath => {
-  const segments = filePath.split(`:`).filter(s => s !== ``)
+const ensureWindowsDriveIsUppercase = (filePath) => {
+  const segments = filePath.split(`:`).filter((s) => s !== ``)
   return segments.length > 0
     ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
     : filePath
 }
 
-const findChildren = initialChildren => {
+const findChildren = (initialChildren) => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
   const traversedNodes = new Set()
@@ -167,7 +167,7 @@ const reservedFields = [
 actions.createPage = (
   page: PageInput,
   plugin?: Plugin,
-  actionOptions?: ActionOptions
+  actionOptions?: ActionOptions,
 ) => {
   let name = `The plugin "${plugin.name}"`
   if (plugin.name === `default-site-plugin`) {
@@ -193,7 +193,9 @@ actions.createPage = (
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
   if (typeof page.context === `object`) {
-    const invalidFields = reservedFields.filter(field => field in page.context)
+    const invalidFields = reservedFields.filter(
+      (field) => field in page.context,
+    )
 
     if (invalidFields.length > 0) {
       const error = `${
@@ -202,7 +204,7 @@ actions.createPage = (
           : `${name} used reserved field names in the context object when creating a page:`
       }
 
-${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
+${invalidFields.map((f) => `  * "${f}"`).join(`\n`)}
 
 ${JSON.stringify(page, null, 4)}
 
@@ -220,7 +222,7 @@ Please choose another name for the conflicting fields.
 
 The following fields are used by the page object and should be avoided.
 
-${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
+${reservedFields.map((f) => `  * "${f}"`).join(`\n`)}
 
             `
       if (process.env.NODE_ENV === `test`) {
@@ -228,7 +230,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
-      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
+      } else if (invalidFields.some((f) => page.context[f] !== page[f])) {
         report.panic({
           id: `11324`,
           context: {
@@ -268,7 +270,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
     store.getState().program.directory,
-    name
+    name,
   )
 
   if (error) {
@@ -307,12 +309,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // systems where user doesn't have access to /
         const commonDir = getCommonDir(
           store.getState().program.directory,
-          page.component
+          page.component,
         )
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
-          path.win32.relative(commonDir, page.component)
+          path.win32.relative(commonDir, page.component),
         )
 
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
@@ -341,7 +343,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
           page.component:     "${page.component}"
           path in filesystem: "${trueComponentPath}"
                                ${markers}
-        `
+        `,
           )
           hasWarnedForPageComponentInvalidCasing.add(page.component)
         }
@@ -409,8 +411,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       chalk.bold.yellow(`Non-deterministic routing danger: `) +
         `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
         chalk.bold.yellow(
-          `This could lead to non-deterministic routing behavior`
-        )
+          `This could lead to non-deterministic routing behavior`,
+        ),
     )
   }
 
@@ -475,7 +477,7 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
         `)
   }
 
-  const createDeleteAction = node => {
+  const createDeleteAction = (node) => {
     return {
       type: `DELETE_NODE`,
       plugin,
@@ -516,7 +518,7 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   // Also delete any nodes transformed from these.
   const descendantNodes = _.flatten(
-    nodes.map(n => findChildren(getNode(n).children))
+    nodes.map((n) => findChildren(getNode(n).children)),
   )
 
   const nodeIds = [...nodes, ...descendantNodes]
@@ -618,13 +620,13 @@ const typeOwners = {}
 const createNode = (
   node: any,
   plugin?: Plugin,
-  actionOptions?: ActionOptions = {}
+  actionOptions?: ActionOptions = {},
 ) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
-        `The node passed to the "createNode" action creator must be an object`
-      )
+        `The node passed to the "createNode" action creator must be an object`,
+      ),
     )
   }
 
@@ -651,8 +653,8 @@ const createNode = (
     report.error(JSON.stringify(node, null, 4))
     report.panic(
       chalk.bold.red(
-        `The node internal.owner field is set automatically by Gatsby and not by plugins`
-      )
+        `The node internal.owner field is set automatically by Gatsby and not by plugins`,
+      ),
     )
   }
 
@@ -712,7 +714,7 @@ const createNode = (
       Plugin that created the node:
 
       ${JSON.stringify(plugin, null, 4)}
-    `
+    `,
     )
   }
 
@@ -756,7 +758,7 @@ const createNode = (
         owned by "${oldNode.internal.owner}" and another plugin "${pluginName}"
         tried to update it.
 
-        `
+        `,
       )
     }
   }
@@ -780,7 +782,7 @@ const createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const createDeleteAction = node => {
+      const createDeleteAction = (node) => {
         return {
           ...actionOptions,
           type: `DELETE_NODE`,
@@ -809,12 +811,12 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
+actions.createNode = (...args) => (dispatch) => {
   const actions = createNode(...args)
 
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
+    (action) => action.type === `CREATE_NODE`,
   )
 
   if (!createNodeAction) {
@@ -847,7 +849,7 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   // Check if using old method signature. Warn about incorrect usage
   if (typeof options === `string`) {
     console.warn(
-      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
+      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`,
     )
 
     if (plugin && plugin.name) {
@@ -901,11 +903,11 @@ type CreateNodeInput = {
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue }: CreateNodeInput,
   plugin: Plugin,
-  actionOptions?: ActionOptions
+  actionOptions?: ActionOptions,
 ) => {
   if (fieldName) {
     console.warn(
-      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
+      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`,
     )
     if (!name) {
       name = fieldName
@@ -913,7 +915,7 @@ actions.createNodeField = (
   }
   if (fieldValue) {
     console.warn(
-      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
+      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`,
     )
     if (!value) {
       value = fieldValue
@@ -943,7 +945,7 @@ actions.createNodeField = (
       Plugin: ${plugin.name}
       name: ${name}
       value: ${value}
-      `
+      `,
     )
   }
 
@@ -975,7 +977,7 @@ actions.createNodeField = (
  */
 actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
-  plugin?: Plugin
+  plugin?: Plugin,
 ) => {
   if (!parent.children.includes(child.id)) {
     parent.children.push(child.id)
@@ -1183,7 +1185,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
     currentState.jobsV2.complete.has(jobContentDigest)
   ) {
     return Promise.resolve(
-      currentState.jobsV2.complete.get(jobContentDigest).result
+      currentState.jobsV2.complete.get(jobContentDigest).result,
     )
   }
 
@@ -1202,7 +1204,7 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   })
 
   const enqueuedJobPromise = enqueueJob(internalJob)
-  return enqueuedJobPromise.then(result => {
+  return enqueuedJobPromise.then((result) => {
     // store the result in redux so we have it for the next run
     dispatch({
       type: `END_JOB_V2`,
@@ -1265,7 +1267,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
  */
 actions.setPluginStatus = (
   status: { [key: string]: mixed },
-  plugin: Plugin
+  plugin: Plugin,
 ) => {
   return {
     type: `SET_PLUGIN_STATUS`,
@@ -1348,10 +1350,10 @@ actions.createPageDependency = (
     nodeId,
     connection,
   }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
+  plugin: string = ``,
 ) => {
   console.warn(
-    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
+    `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`,
   )
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,

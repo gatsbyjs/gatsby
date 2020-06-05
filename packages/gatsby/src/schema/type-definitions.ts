@@ -22,7 +22,7 @@ export type GatsbyResolver<TSource, TArgs = { [argName: string]: any }> = (
   source: TSource,
   args: TArgs,
   context: IGatsbyResolverContext<TSource, TArgs>,
-  info: GatsbyGraphQLResolveInfo
+  info: GatsbyGraphQLResolveInfo,
 ) => any
 
 export interface IGatsbyConnection<NodeType> {

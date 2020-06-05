@@ -17,7 +17,7 @@ export async function runPageQueries({
   }
   const { pageQueryIds } = queryIds
   const state = store.getState()
-  const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
+  const pageQueryIdsCount = pageQueryIds.filter((id) => state.pages.has(id))
     .length
 
   if (!pageQueryIdsCount) {
@@ -31,7 +31,7 @@ export async function runPageQueries({
     {
       id: `page-query-running`,
       parentSpan,
-    }
+    },
   )
 
   activity.start()

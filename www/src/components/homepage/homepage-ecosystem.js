@@ -23,19 +23,19 @@ const Sections = styled(`div`)`
 
   ${mediaQueries.md} {
     flex-direction: row;
-    margin: 0 -${p => p.theme.space[2]};
+    margin: 0 -${(p) => p.theme.space[2]};
   }
 `
 
 const Section = styled(EcosystemSection)`
-  box-shadow: ${p => p.theme.shadows.raised};
-  border-radius: ${p => p.theme.radii[2]};
-  margin-bottom: ${p => p.theme.space[6]};
-  padding: ${p => p.theme.space[6]};
+  box-shadow: ${(p) => p.theme.shadows.raised};
+  border-radius: ${(p) => p.theme.radii[2]};
+  margin-bottom: ${(p) => p.theme.space[6]};
+  padding: ${(p) => p.theme.space[6]};
 
   ${mediaQueries.md} {
-    margin: 0 ${p => p.theme.space[2]} 0;
-    padding: ${p => p.theme.space[6]};
+    margin: 0 ${(p) => p.theme.space[2]} 0;
+    padding: ${(p) => p.theme.space[6]};
     max-height: none;
 
     :last-child {
@@ -45,18 +45,18 @@ const Section = styled(EcosystemSection)`
 `
 
 const SubTitle = styled(`h3`)`
-  font-size: ${p => p.theme.fontSizes[3]};
-  margin-bottom: ${p => p.theme.space[1]};
-  margin-top: ${p => p.theme.space[7]};
+  font-size: ${(p) => p.theme.fontSizes[3]};
+  margin-bottom: ${(p) => p.theme.space[1]};
+  margin-top: ${(p) => p.theme.space[7]};
 
   ${mediaQueries.lg} {
-    margin-left: ${p => p.theme.space[9]};
-    margin-bottom: ${p => p.theme.space[4]};
+    margin-left: ${(p) => p.theme.space[9]};
+    margin-bottom: ${(p) => p.theme.space[4]};
   }
 `
 
 const FeaturedItems = styled(HorizontalScroller)`
-  margin: 0 -${p => p.theme.space[6]};
+  margin: 0 -${(p) => p.theme.space[6]};
 
   ${mediaQueries.lg} {
     margin: 0;
@@ -74,11 +74,11 @@ const FeaturedItemsList = styled(HorizontalScrollerContent)`
 `
 
 const FeaturedItem = styled(EcosystemFeaturedItem)`
-  margin-right: ${p => p.theme.space[6]};
+  margin-right: ${(p) => p.theme.space[6]};
 
   ${mediaQueries.md} {
     border-bottom: none;
-    margin: ${p => p.theme.space[6]};
+    margin: ${(p) => p.theme.space[6]};
     margin-top: 0;
     margin-left: 0;
     width: 20rem;
@@ -93,48 +93,48 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
   }
 
   ${FeaturedItemBlockLink} {
-    padding-left: calc(${p => p.theme.space[5]} + ${props =>
+    padding-left: calc(${(p) => p.theme.space[5]} + ${(props) =>
   props.theme.space[6]});
     position: relative;
     border: 0;
-    box-shadow: ${p => p.theme.shadows.raised};
+    box-shadow: ${(p) => p.theme.shadows.raised};
 
     ${mediaQueries.md} {
-      border-radius: ${p => p.theme.radii[2]};
+      border-radius: ${(p) => p.theme.radii[2]};
     }
 
     ${mediaQueries.lg} {
       :hover {
-        background: ${p => p.theme.colors.ui.hover};
+        background: ${(p) => p.theme.colors.ui.hover};
       }
     }
 
     :before {
-      background: ${props =>
+      background: ${(props) =>
         props.item.type === `Starter`
           ? props.theme.colors.card.starterLabelBackground
           : props.theme.colors.card.pluginLabelBackground};
-      border-radius: ${p => p.theme.radii[2]} 0 0 ${props =>
+      border-radius: ${(p) => p.theme.radii[2]} 0 0 ${(props) =>
   props.theme.radii[2]};
       bottom: 0;
       content: "";
       left: 0;
       position: absolute;
       top: 0;
-      width: ${p => p.theme.space[5]};
+      width: ${(p) => p.theme.space[5]};
     }
 
     :after {
       bottom: 0;
-      content: "${props => props.item.type}";
-      color: ${props =>
+      content: "${(props) => props.item.type}";
+      color: ${(props) =>
         props.item.type === `Starter`
           ? props.theme.colors.card.starterLabelText
           : props.theme.colors.card.pluginLabelText};
-      font-family: ${p => p.theme.fonts.heading};
-      font-size: ${p => p.theme.fontSizes[0]};
+      font-family: ${(p) => p.theme.fonts.heading};
+      font-size: ${(p) => p.theme.fontSizes[0]};
       left: 0;
-      letter-spacing: ${p => p.theme.letterSpacings.tracked};
+      letter-spacing: ${(p) => p.theme.letterSpacings.tracked};
       text-transform: uppercase;
       position: absolute;
       transform: rotate(-90deg) translate(-0.5em, -0);
@@ -196,8 +196,8 @@ const HomepageEcosystem = ({ featuredItems }) => (
     <FeaturedItems className={SCROLLER_CLASSNAME}>
       <FeaturedItemsList>
         {featuredItems
-          .filter(e => Boolean(e))
-          .map(item => {
+          .filter((e) => Boolean(e))
+          .map((item) => {
             const { slug } = item
             return <FeaturedItem key={slug} item={item} />
           })}

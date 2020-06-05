@@ -6,11 +6,11 @@ import { sortBy } from "lodash-es"
 import APIReference from "../components/api-reference"
 import DocsMarkdownPage from "../components/docs-markdown-page"
 
-const normalizeGatsbyApiCall = array =>
-  array.map(entry => {
+const normalizeGatsbyApiCall = (array) =>
+  array.map((entry) => {
     const codeLocation =
       entry.nodes.length > 1
-        ? entry.nodes.map(l => {
+        ? entry.nodes.map((l) => {
             return {
               file: l.file,
               start: { line: l.codeLocation.start.line },
@@ -31,8 +31,8 @@ const mergeFunctions = (data, context) => {
 
   const docs = data.jsdoc.nodes.reduce((acc, node) => {
     const doc = node.childrenDocumentationJs
-      .filter(def => def.kind !== `typedef`)
-      .map(def => {
+      .filter((def) => def.kind !== `typedef`)
+      .map((def) => {
         if (!context.apiCalls) {
           // When an api call list is not available, the line numbers from jsdoc
           // might be useful. Just for actions.mdx right now.
@@ -51,12 +51,12 @@ const mergeFunctions = (data, context) => {
     return acc.concat(doc)
   }, [])
 
-  let funcs = sortBy(docs, func => func.name)
+  let funcs = sortBy(docs, (func) => func.name)
 
-  const mergedFuncs = funcs.map(func => {
+  const mergedFuncs = funcs.map((func) => {
     return {
       ...func,
-      ...normalized.find(n => n.name === func.name),
+      ...normalized.find((n) => n.name === func.name),
     }
   })
 
@@ -80,7 +80,7 @@ export default function APITemplate({ data, location, pageContext }) {
     {
       title: heading,
       url: `#${headingId}`,
-      items: mergedFuncs.map(mergedFunc => {
+      items: mergedFuncs.map((mergedFunc) => {
         return {
           url: `#${mergedFunc.name}`,
           title: mergedFunc.name,

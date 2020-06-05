@@ -13,7 +13,7 @@ const pageQuery = {
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
-  generate: arg => `import React from "react"
+  generate: (arg) => `import React from "react"
 import { graphql } from "gatsby"
 
 const ComponentName = ({ data }) => <pre>{JSON.stringify(data, null, 4)}</pre>
@@ -32,7 +32,7 @@ const staticHook = {
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
-  generate: arg => `import React from "react"
+  generate: (arg) => `import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 const ComponentName = () => {
@@ -52,7 +52,7 @@ const staticQuery = {
   language: `JavaScript`,
   codeMirrorMode: `jsx`,
   options: [],
-  generate: arg => `import React from "react"
+  generate: (arg) => `import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
 const ComponentName = () => (

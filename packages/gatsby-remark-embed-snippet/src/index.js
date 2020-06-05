@@ -21,7 +21,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   tex: `latex`,
 }
 
-const getLanguage = file => {
+const getLanguage = (file) => {
   if (!file.includes(`.`)) {
     return `none`
   }
@@ -42,7 +42,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
     throw Error(`Invalid directory specified "${directory}"`)
   }
 
-  visit(markdownAST, `inlineCode`, node => {
+  visit(markdownAST, `inlineCode`, (node) => {
     const { value } = node
 
     if (value.startsWith(`embed:`)) {

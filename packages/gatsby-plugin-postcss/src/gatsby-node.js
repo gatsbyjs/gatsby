@@ -3,19 +3,19 @@ import resolve from "./resolve"
 const CSS_PATTERN = /\.css$/
 const MODULE_CSS_PATTERN = /\.module\.css$/
 
-const isCssRules = rule =>
+const isCssRules = (rule) =>
   rule.test &&
   (rule.test.toString() === CSS_PATTERN.toString() ||
     rule.test.toString() === MODULE_CSS_PATTERN.toString())
 
-const findCssRules = config =>
+const findCssRules = (config) =>
   config.module.rules.find(
-    rule => Array.isArray(rule.oneOf) && rule.oneOf.every(isCssRules)
+    (rule) => Array.isArray(rule.oneOf) && rule.oneOf.every(isCssRules),
   )
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
-  { cssLoaderOptions = {}, postCssPlugins, ...postcssOptions }
+  { cssLoaderOptions = {}, postCssPlugins, ...postcssOptions },
 ) => {
   const isProduction = !stage.includes(`develop`)
   const isSSR = stage.includes(`html`)

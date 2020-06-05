@@ -32,7 +32,7 @@ jest.mock(`progress`, () => {
 })
 jest.spyOn(console, `log`).mockImplementation(() => {})
 
-const mockPageRequests = requests => {
+const mockPageRequests = (requests) => {
   const createMockBrowser = () => {
     const prefixLength = `http://localhost:8000`.length
     const listeners = []
@@ -40,12 +40,12 @@ const mockPageRequests = requests => {
 
     const page = {
       on: (_event, cb) => listeners.push(cb),
-      goto: path => {
+      goto: (path) => {
         currentPath = path
         const pageRequests = requests[path.substring(prefixLength)]
 
         if (pageRequests) {
-          pageRequests.forEach(req => listeners.forEach(cb => cb(req)))
+          pageRequests.forEach((req) => listeners.forEach((cb) => cb(req)))
         }
       },
       url: () => currentPath,
@@ -55,11 +55,11 @@ const mockPageRequests = requests => {
   }
 
   puppeteer.launch.mockImplementationOnce(() =>
-    Promise.resolve(createMockBrowser())
+    Promise.resolve(createMockBrowser()),
   )
 }
 
-const createMockRequest = asset => {
+const createMockRequest = (asset) => {
   return {
     url: () => asset,
     method: () => `GET`,

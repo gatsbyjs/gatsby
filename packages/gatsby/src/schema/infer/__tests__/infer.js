@@ -106,8 +106,8 @@ const makeNodes = () => [
   },
 ]
 
-const addNodes = nodes => {
-  nodes.forEach(node => {
+const addNodes = (nodes) => {
+  nodes.forEach((node) => {
     if (!node.internal.contentDigest) {
       node.internal.contentDigest = `0`
     }
@@ -115,8 +115,8 @@ const addNodes = nodes => {
   })
 }
 
-const deleteNodes = nodes => {
-  nodes.forEach(node => {
+const deleteNodes = (nodes) => {
+  nodes.forEach((node) => {
     store.dispatch(actions.deleteNode({ node }, { name: `test` }))
   })
 }
@@ -179,7 +179,7 @@ describe(`Inference states`, () => {
   })
 
   describe(`Any state`, () => {
-    const runInAllStates = callback => {
+    const runInAllStates = (callback) => {
       callback(`initialBuild`)
       store.dispatch({ type: `DELETE_CACHE` })
       store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
@@ -187,7 +187,7 @@ describe(`Inference states`, () => {
     }
 
     it(`supports full type inference`, () => {
-      runInAllStates(state => {
+      runInAllStates((state) => {
         store.dispatch({
           type: `BUILD_TYPE_METADATA`,
           payload: {
@@ -202,7 +202,7 @@ describe(`Inference states`, () => {
     })
 
     it(`supports createTypes`, () => {
-      runInAllStates(state => {
+      runInAllStates((state) => {
         store.dispatch({
           type: `CREATE_TYPES`,
           payload: buildObjectType({
@@ -232,7 +232,7 @@ describe(`GraphQL type inference`, () => {
     addNodes(nodes)
 
     const { builtInFieldExtensions } = require(`../../extensions`)
-    Object.keys(builtInFieldExtensions).forEach(name => {
+    Object.keys(builtInFieldExtensions).forEach((name) => {
       const extension = builtInFieldExtensions[name]
       store.dispatch({
         type: `CREATE_FIELD_EXTENSION`,
@@ -263,12 +263,12 @@ describe(`GraphQL type inference`, () => {
     fragment,
     buildSchemaArgs,
     extraquery = ``,
-    typeDefs
+    typeDefs,
   ) => {
     const { schema, schemaComposer } = await buildTestSchema(
       nodes,
       buildSchemaArgs,
-      typeDefs
+      typeDefs,
     )
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
     return graphql(
@@ -285,7 +285,7 @@ describe(`GraphQL type inference`, () => {
       }
       `,
       undefined,
-      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
+      withResolverContext({ schema, schemaComposer, context: { path: `/` } }),
     )
   }
 
@@ -307,11 +307,11 @@ describe(`GraphQL type inference`, () => {
       `
         foo
         bar
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
+      `Cannot query field "foo" on type "Test".`,
     )
   })
 
@@ -321,7 +321,7 @@ describe(`GraphQL type inference`, () => {
       nodes,
       `
         longint
-      `
+      `,
     )
     expect(result.errors).toBeUndefined()
   })
@@ -335,7 +335,7 @@ describe(`GraphQL type inference`, () => {
       nodes,
       `
         number
-      `
+      `,
     )
     expect(result.data.allTest.edges[0].node.number).toEqual(1.1)
   })
@@ -347,11 +347,11 @@ describe(`GraphQL type inference`, () => {
       `
         foo
         bar
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
+      `Cannot query field "foo" on type "Test".`,
     )
   })
 
@@ -362,11 +362,11 @@ describe(`GraphQL type inference`, () => {
       `
         foo
         bar
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
+      `Cannot query field "foo" on type "Test".`,
     )
   })
 
@@ -384,11 +384,11 @@ describe(`GraphQL type inference`, () => {
       `
         foo
         bar
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Cannot query field "foo" on type "Test".`
+      `Cannot query field "foo" on type "Test".`,
     )
   })
 
@@ -402,7 +402,7 @@ describe(`GraphQL type inference`, () => {
       nodes,
       `
       sparse
-      `
+      `,
     )
     const { edges } = result.data.allTest
     expect(edges[0].node.sparse).toEqual([null, true])
@@ -418,7 +418,7 @@ describe(`GraphQL type inference`, () => {
       nodes,
       `
       sparse { foo }
-      `
+      `,
     )
     const { edges } = result.data.allTest
     expect(edges[0].node.sparse[1].foo).toBe(true)
@@ -489,7 +489,7 @@ describe(`GraphQL type inference`, () => {
         _456 {
           testingTypeNameCreation
         }
-      `
+      `,
     )
 
     expect(result.errors).not.toBeDefined()
@@ -499,7 +499,7 @@ describe(`GraphQL type inference`, () => {
     expect(result.data.allTest.edges[1].node.with_space).toEqual(3)
     expect(result.data.allTest.edges[1].node.with_hyphen).toEqual(4)
     expect(result.data.allTest.edges[0].node.with_resolver).toEqual(
-      `01.11.1012`
+      `01.11.1012`,
     )
     expect(result.data.allTest.edges[0].node._123).toEqual(42)
     expect(result.data.allTest.edges[1].node._123).toEqual(24)
@@ -529,7 +529,7 @@ describe(`GraphQL type inference`, () => {
             field_that_needs_to_be_sanitized_: `String`,
             _another__field_that_needs_to_be_sanitized: {
               type: `String`,
-              resolve: source =>
+              resolve: (source) =>
                 source[`(another)_field_that_needs_to_be_sanitized`],
             },
           },
@@ -548,15 +548,15 @@ describe(`GraphQL type inference`, () => {
           _third_field_that_needs_to_be_sanitized
         }
       `,
-      typeDefs
+      typeDefs,
     )
     expect(result.errors).not.toBeDefined()
     expect(result.data.repro[`field_that_needs_to_be_sanitized_`]).toBe(`foo`)
     expect(
-      result.data.repro[`_another__field_that_needs_to_be_sanitized`]
+      result.data.repro[`_another__field_that_needs_to_be_sanitized`],
     ).toBe(`bar`)
     expect(result.data.repro[`_third_field_that_needs_to_be_sanitized`]).toBe(
-      `baz`
+      `baz`,
     )
   })
 
@@ -593,7 +593,7 @@ describe(`GraphQL type inference`, () => {
       `
       sibling { id }
       _2invalid
-      `
+      `,
     )
     expect(result).toMatchSnapshot()
   })
@@ -618,7 +618,7 @@ describe(`GraphQL type inference`, () => {
       nodes,
       `
       _2invalid { nested { check } }
-      `
+      `,
     )
     const { edges } = result.data.allTest
     expect(edges[0].node[`_2invalid`].nested.check).toBe(true)
@@ -657,7 +657,7 @@ describe(`GraphQL type inference`, () => {
         }
       `,
       undefined,
-      withResolverContext({ schema, schemaComposer, context: { path: `/` } })
+      withResolverContext({ schema, schemaComposer, context: { path: `/` } }),
     )
 
     expect(result).toMatchSnapshot()
@@ -673,7 +673,7 @@ describe(`GraphQL type inference`, () => {
         nodes,
         `
           number
-        `
+        `,
       )
       expect(result.data.allTest.edges[0].node.number).toEqual(2018)
     })
@@ -695,7 +695,7 @@ describe(`GraphQL type inference`, () => {
         nodes,
         `
           dateObject
-        `
+        `,
       )
       expect(result).toMatchSnapshot()
     })
@@ -720,7 +720,7 @@ describe(`GraphQL type inference`, () => {
         nodes,
         `
           dateObject
-        `
+        `,
       )
       expect(result).toMatchSnapshot()
     })
@@ -733,7 +733,7 @@ describe(`GraphQL type inference`, () => {
         nodes,
         `
           date(formatString:"DD.MM.YYYY")
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.date).toEqual(`01.11.1012`)
@@ -751,7 +751,7 @@ describe(`GraphQL type inference`, () => {
         nodes,
         `
           date(formatString:"DD.MM.YYYY")
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.date.length).toEqual(2)
@@ -776,13 +776,13 @@ describe(`GraphQL type inference`, () => {
         nodes,
         `
           date
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges.length).toEqual(2)
       expect(result.data.allTest.edges[0].node.date).toEqual(`1012-11-01`)
       expect(result.data.allTest.edges[1].node.date).toEqual(
-        `totally-not-a-date`
+        `totally-not-a-date`,
       )
     })
   })
@@ -840,7 +840,7 @@ describe(`GraphQL type inference`, () => {
             "Test.linkedOnID": `MappingTest`,
             "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
           },
-        }
+        },
       )
 
       expect(result.errors).not.toBeDefined()
@@ -848,7 +848,7 @@ describe(`GraphQL type inference`, () => {
       expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined()
       expect(result.data.allTest.edges[1].node.linkedOnID).toEqual(null)
       expect(result.data.allTest.edges[0].node.linkedOnID.label).toEqual(
-        `First node`
+        `First node`,
       )
     })
 
@@ -872,7 +872,7 @@ describe(`GraphQL type inference`, () => {
             "Test.linkedOnID": `MappingTest`,
             "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
           },
-        }
+        },
       )
 
       expect(result.errors).not.toBeDefined()
@@ -880,10 +880,10 @@ describe(`GraphQL type inference`, () => {
       expect(result.data.allTest.edges[0].node.linkedOnID).toBeDefined()
       expect(result.data.allTest.edges[0].node.linkedOnID.length).toEqual(2)
       expect(result.data.allTest.edges[0].node.linkedOnID[0].label).toEqual(
-        `First node`
+        `First node`,
       )
       expect(result.data.allTest.edges[0].node.linkedOnID[1].label).toEqual(
-        `Second node`
+        `Second node`,
       )
     })
 
@@ -912,19 +912,19 @@ describe(`GraphQL type inference`, () => {
             "Test.linkedOnID": `MappingTest`,
             "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
           },
-        }
+        },
       )
 
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges.length).toEqual(2)
       expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField
+        result.data.allTest.edges[0].node.linkedOnCustomField,
       ).toBeDefined()
       expect(result.data.allTest.edges[1].node.linkedOnCustomField).toEqual(
-        null
+        null,
       )
       expect(
-        result.data.allTest.edges[0].node.linkedOnCustomField.label
+        result.data.allTest.edges[0].node.linkedOnCustomField.label,
       ).toEqual(`Second node`)
     })
 
@@ -948,7 +948,7 @@ describe(`GraphQL type inference`, () => {
             "Test.linkedOnID": `MappingTest`,
             "Test.linkedOnCustomField": `MappingTest.nestedField.mapTarget`,
           },
-        }
+        },
       )
 
       expect(result).toMatchInlineSnapshot(`
@@ -1015,12 +1015,12 @@ Object {
           file {
             absolutePath
           }
-        `
+        `,
       )
 
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.file.absolutePath).toEqual(
-        slash(path.resolve(dir, `file_1.jpg`))
+        slash(path.resolve(dir, `file_1.jpg`)),
       )
     })
 
@@ -1040,16 +1040,16 @@ Object {
           files {
             absolutePath
           }
-        `
+        `,
       )
 
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.files.length).toEqual(2)
       expect(result.data.allTest.edges[0].node.files[0].absolutePath).toEqual(
-        slash(path.resolve(dir, `file_1.jpg`))
+        slash(path.resolve(dir, `file_1.jpg`)),
       )
       expect(result.data.allTest.edges[0].node.files[1].absolutePath).toEqual(
-        slash(path.resolve(dir, `file_2.txt`))
+        slash(path.resolve(dir, `file_2.txt`)),
       )
     })
 
@@ -1074,7 +1074,7 @@ Object {
           file___________________________ {
             absolutePath
           }
-        `
+        `,
       )
 
       expect(result.errors).not.toBeDefined()
@@ -1082,7 +1082,7 @@ Object {
       const expectedFilePath = slash(path.resolve(dir, `file_1.jpg`))
       expect(node.file_dashed.absolutePath).toEqual(expectedFilePath)
       expect(node.file___________________________.absolutePath).toEqual(
-        expectedFilePath
+        expectedFilePath,
       )
     })
   })
@@ -1104,7 +1104,7 @@ Object {
           linked {
             hair
           }
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`brown`)
@@ -1124,7 +1124,7 @@ Object {
           linked {
             hair
           }
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(`brown`)
@@ -1141,7 +1141,7 @@ Object {
           linked {
             hair
           }
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.linked.hair).toEqual(`brown`)
@@ -1161,7 +1161,7 @@ Object {
           linked {
             hair
           }
-        `
+        `,
       )
       expect(result.errors).not.toBeDefined()
       expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(`brown`)
@@ -1178,7 +1178,7 @@ Object {
         expect(e.message).toEqual(
           `Encountered an error trying to infer a GraphQL type ` +
             `for: \`linked___NODE\`. There is no corresponding node with the \`id\` ` +
-            `field matching: "baz".`
+            `field matching: "baz".`,
         )
       }
     })
@@ -1193,7 +1193,7 @@ Object {
       }).toThrow(
         `Encountered an error trying to infer a GraphQL type ` +
           `for: \`linked___NODE\`. There is no corresponding GraphQL type ` +
-          `\`Bar\` available to link to this node.`
+          `\`Bar\` available to link to this node.`,
       )
     })
 
@@ -1218,20 +1218,20 @@ Object {
                 species
               }
             }
-          `
+          `,
         )
         expect(result.errors).not.toBeDefined()
         expect(result.data.allTest.edges[0].node.linked[0].hair).toEqual(
-          `brown`
+          `brown`,
         )
         expect(result.data.allTest.edges[0].node.linked[0].__typename).toEqual(
-          `Child`
+          `Child`,
         )
         expect(result.data.allTest.edges[0].node.linked[1].species).toEqual(
-          `dog`
+          `dog`,
         )
         expect(result.data.allTest.edges[0].node.linked[1].__typename).toEqual(
-          `Pet`
+          `Pet`,
         )
       })
 
@@ -1253,10 +1253,10 @@ Object {
         const otherFields = schema.getType(`OtherType`).getFields()
 
         expect(fields.test.type.ofType.name).toBe(
-          otherFields.test.type.ofType.name
+          otherFields.test.type.ofType.name,
         )
         expect(fields.test.type.ofType.getTypes()).toEqual(
-          otherFields.test.type.ofType.getTypes()
+          otherFields.test.type.ofType.getTypes(),
         )
         expect(fields.test.type.ofType).toBe(otherFields.test.type.ofType)
       })
@@ -1286,7 +1286,7 @@ Object {
         expect(fields.test.type.ofType.name).toBe(`ChildPetUnion`)
         expect(otherFields.test.type.ofType.name).toBe(`ChildPetToyUnion`)
         expect(fields.test.type.ofType).not.toEqual(
-          otherFields.test.type.ofType
+          otherFields.test.type.ofType,
         )
       })
 
@@ -1339,7 +1339,7 @@ Object {
           title,
           date(formatString: "YYYY")
         }
-    `
+    `,
     )
     expect(result).toMatchSnapshot()
   })
@@ -1355,13 +1355,13 @@ Object {
         `
           foo
           number
-        `
+        `,
       )
       expect(typeConflictReporter.getConflicts()).toMatchSnapshot()
 
       expect(result.errors.length).toEqual(1)
       expect(result.errors[0].message).toMatch(
-        `Cannot query field "number" on type "Test".`
+        `Cannot query field "number" on type "Test".`,
       )
     })
 
@@ -1377,13 +1377,13 @@ Object {
           foo
           number
         `,
-        { ignoreFields: [`number`] }
+        { ignoreFields: [`number`] },
       )
       expect(typeConflictReporter.getConflicts()).toEqual([])
 
       expect(result.errors.length).toEqual(1)
       expect(result.errors[0].message).toMatch(
-        `Cannot query field "number" on type "Test".`
+        `Cannot query field "number" on type "Test".`,
       )
     })
   })

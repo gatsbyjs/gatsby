@@ -23,7 +23,7 @@ class ScrollContainer extends React.Component {
     this.props.context.registerElement(
       this.props.scrollKey,
       ReactDOM.findDOMNode(this), // eslint-disable-line react/no-find-dom-node
-      this.shouldUpdateScroll
+      this.shouldUpdateScroll,
     )
 
     // Only keep around the current DOM node in development, as this is only
@@ -36,7 +36,7 @@ class ScrollContainer extends React.Component {
   componentDidUpdate(prevProps) {
     warning(
       prevProps.scrollKey === this.props.scrollKey,
-      `<ScrollContainer> does not support changing scrollKey.`
+      `<ScrollContainer> does not support changing scrollKey.`,
     )
     if (process.env.NODE_ENV !== `production`) {
       const prevDomNode = this.domNode
@@ -44,7 +44,7 @@ class ScrollContainer extends React.Component {
 
       warning(
         this.domNode === prevDomNode,
-        `<ScrollContainer> does not support changing DOM node.`
+        `<ScrollContainer> does not support changing DOM node.`,
       )
     }
   }
@@ -63,7 +63,7 @@ class ScrollContainer extends React.Component {
     return shouldUpdateScroll.call(
       this.props.context.scrollBehavior,
       prevRouterProps,
-      routerProps
+      routerProps,
     )
   }
 
@@ -72,9 +72,9 @@ class ScrollContainer extends React.Component {
   }
 }
 
-const ScrollContainerConsumer = props => (
+const ScrollContainerConsumer = (props) => (
   <ScrollBehaviorContext.Consumer>
-    {context => <ScrollContainer {...props} context={context} />}
+    {(context) => <ScrollContainer {...props} context={context} />}
   </ScrollBehaviorContext.Consumer>
 )
 

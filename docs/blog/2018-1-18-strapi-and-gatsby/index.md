@@ -341,7 +341,7 @@ const IndexPage = ({ data }) => (
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <ul>
-      {data.allStrapiArticle.edges.map(document => (
+      {data.allStrapiArticle.edges.map((document) => (
         <li key={document.node.id}>
           <h2>
             <Link to={`/${document.node.id}`}>{document.node.title}</Link>
@@ -399,7 +399,7 @@ const IndexPage = ({ data }) => (
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <ul>
-      {data.allStrapiArticle.edges.map(document => (
+      {data.allStrapiArticle.edges.map((document) => (
         <li key={document.node.id}>
           <h2>
             <Link to={`/${document.node.id}`}>{document.node.title}</Link>
@@ -509,13 +509,13 @@ const makeRequest = (graphql, request) =>
   new Promise((resolve, reject) => {
     // Query for nodes to use in creating pages.
     resolve(
-      graphql(request).then(result => {
+      graphql(request).then((result) => {
         if (result.errors) {
           reject(result.errors)
         }
 
         return result
-      })
+      }),
     )
   })
 
@@ -536,8 +536,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `
-  ).then(result => {
+    `,
+  ).then((result) => {
     // Create pages for each article.
     result.data.allStrapiArticle.edges.forEach(({ node }) => {
       createPage({
@@ -586,7 +586,7 @@ const UserTemplate = ({ data }) => (
   <Layout>
     <h1>{data.strapiUser.username}</h1>
     <ul>
-      {data.strapiUser.articles.map(article => (
+      {data.strapiUser.articles.map((article) => (
         <li key={article.id}>
           <h2>
             <Link to={`/Article_${article.id}`}>{article.title}</Link>
@@ -632,13 +632,13 @@ const makeRequest = (graphql, request) =>
   new Promise((resolve, reject) => {
     // Query for article nodes to use in creating pages.
     resolve(
-      graphql(request).then(result => {
+      graphql(request).then((result) => {
         if (result.errors) {
           reject(result.errors)
         }
 
         return result
-      })
+      }),
     )
   })
 
@@ -659,8 +659,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `
-  ).then(result => {
+    `,
+  ).then((result) => {
     // Create pages for each article.
     result.data.allStrapiArticle.edges.forEach(({ node }) => {
       createPage({
@@ -685,8 +685,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `
-  ).then(result => {
+    `,
+  ).then((result) => {
     // Create pages for each user.
     result.data.allStrapiUser.edges.forEach(({ node }) => {
       createPage({

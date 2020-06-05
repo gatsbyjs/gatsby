@@ -15,15 +15,15 @@ const extractedQueryIds = new Set()
 
 // Remove pages from seenIdsWithoutDataDependencies when they're deleted
 // so their query will be run again if they're created again.
-emitter.on(`DELETE_PAGE`, action => {
+emitter.on(`DELETE_PAGE`, (action) => {
   seenIdsWithoutDataDependencies.delete(action.payload.path)
 })
 
-emitter.on(`CREATE_NODE`, action => {
+emitter.on(`CREATE_NODE`, (action) => {
   queuedDirtyActions.push(action)
 })
 
-emitter.on(`DELETE_NODE`, action => {
+emitter.on(`DELETE_NODE`, (action) => {
   queuedDirtyActions.push({ payload: action.payload })
 })
 
@@ -36,27 +36,27 @@ const popExtractedQueries = () => {
   return queries
 }
 
-const findIdsWithoutDataDependencies = state => {
+const findIdsWithoutDataDependencies = (state) => {
   const allTrackedIds = new Set()
   const boundAddToTrackedIds = allTrackedIds.add.bind(allTrackedIds)
-  state.componentDataDependencies.nodes.forEach(dependenciesOnNode => {
+  state.componentDataDependencies.nodes.forEach((dependenciesOnNode) => {
     dependenciesOnNode.forEach(boundAddToTrackedIds)
   })
   state.componentDataDependencies.connections.forEach(
-    dependenciesOnConnection => {
+    (dependenciesOnConnection) => {
       dependenciesOnConnection.forEach(boundAddToTrackedIds)
-    }
+    },
   )
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
   const notTrackedIds = new Set(
     [
-      ...Array.from(state.pages.values(), p => p.path),
-      ...[...state.staticQueryComponents.values()].map(c => c.id),
+      ...Array.from(state.pages.values(), (p) => p.path),
+      ...[...state.staticQueryComponents.values()].map((c) => c.id),
     ].filter(
-      x => !allTrackedIds.has(x) && !seenIdsWithoutDataDependencies.has(x)
-    )
+      (x) => !allTrackedIds.has(x) && !seenIdsWithoutDataDependencies.has(x),
+    ),
   )
 
   // Add new IDs to our seen array so we don't keep trying to run queries for them.
@@ -68,8 +68,8 @@ const findIdsWithoutDataDependencies = state => {
   return notTrackedIds
 }
 
-const popNodeQueries = state => {
-  const actions = _.uniq(queuedDirtyActions, a => a.payload.id)
+const popNodeQueries = (state) => {
+  const actions = _.uniq(queuedDirtyActions, (a) => a.payload.id)
   const uniqDirties = actions.reduce((dirtyIds, action) => {
     const node = action.payload
 
@@ -77,7 +77,7 @@ const popNodeQueries = state => {
 
     // Find components that depend on this node so are now dirty.
     if (state.componentDataDependencies.nodes.has(node.id)) {
-      state.componentDataDependencies.nodes.get(node.id).forEach(n => {
+      state.componentDataDependencies.nodes.get(node.id).forEach((n) => {
         if (n) {
           dirtyIds.add(n)
         }
@@ -88,7 +88,7 @@ const popNodeQueries = state => {
     if (state.componentDataDependencies.connections.has(node.internal.type)) {
       state.componentDataDependencies.connections
         .get(node.internal.type)
-        .forEach(n => {
+        .forEach((n) => {
           if (n) {
             dirtyIds.add(n)
           }
@@ -104,7 +104,7 @@ const popNodeQueries = state => {
   return uniqDirties
 }
 
-const popNodeAndDepQueries = state => {
+const popNodeAndDepQueries = (state) => {
   const nodeQueries = popNodeQueries(state)
 
   const noDepQueries = findIdsWithoutDataDependencies(state)
@@ -127,7 +127,7 @@ const popNodeAndDepQueries = state => {
  * to the caller to reference the results
  */
 
-const calcDirtyQueryIds = state =>
+const calcDirtyQueryIds = (state) =>
   _.union(popNodeAndDepQueries(state), popExtractedQueries())
 
 /**
@@ -138,12 +138,12 @@ const calcDirtyQueryIds = state =>
  * page queries if their data hasn't changed since the last time we
  * ran Gatsby.
  */
-const calcInitialDirtyQueryIds = state => {
+const calcInitialDirtyQueryIds = (state) => {
   const nodeAndNoDepQueries = popNodeAndDepQueries(state)
 
   const extractedQueriesThatNeedRunning = _.intersection(
     popExtractedQueries(),
-    nodeAndNoDepQueries
+    nodeAndNoDepQueries,
   )
   return _.union(extractedQueriesThatNeedRunning, nodeAndNoDepQueries)
 }
@@ -151,9 +151,9 @@ const calcInitialDirtyQueryIds = state => {
 /**
  * groups queryIds by whether they are static or page queries.
  */
-const groupQueryIds = queryIds => {
-  const grouped = _.groupBy(queryIds, p =>
-    p.slice(0, 4) === `sq--` ? `static` : `page`
+const groupQueryIds = (queryIds) => {
+  const grouped = _.groupBy(queryIds, (p) =>
+    p.slice(0, 4) === `sq--` ? `static` : `page`,
   )
   return {
     staticQueryIds: grouped.static || [],
@@ -163,7 +163,7 @@ const groupQueryIds = queryIds => {
 
 const processQueries = async (
   queryJobs,
-  { activity, graphqlRunner, graphqlTracing }
+  { activity, graphqlRunner, graphqlTracing },
 ) => {
   const queue = queryQueue.createBuildQueue(graphqlRunner, { graphqlTracing })
   return queryQueue.processBatch(queue, queryJobs, activity)
@@ -206,36 +206,36 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
 
 const processStaticQueries = async (
   queryIds,
-  { state, activity, graphqlRunner, graphqlTracing }
+  { state, activity, graphqlRunner, graphqlTracing },
 ) => {
   state = state || store.getState()
   await processQueries(
-    queryIds.map(id => createStaticQueryJob(state, id)),
+    queryIds.map((id) => createStaticQueryJob(state, id)),
     {
       activity,
       graphqlRunner,
       graphqlTracing,
-    }
+    },
   )
 }
 
 const processPageQueries = async (
   queryIds,
-  { state, activity, graphqlRunner, graphqlTracing }
+  { state, activity, graphqlRunner, graphqlTracing },
 ) => {
   state = state || store.getState()
   // Make sure we filter out pages that don't exist. An example is
   // /dev-404-page/, whose SitePage node is created via
   // `internal-data-bridge`, but the actual page object is only
   // created during `gatsby develop`.
-  const pages = _.filter(queryIds.map(id => state.pages.get(id)))
+  const pages = _.filter(queryIds.map((id) => state.pages.get(id)))
   await processQueries(
-    pages.map(page => createPageQueryJob(state, page)),
+    pages.map((page) => createPageQueryJob(state, page)),
     {
       activity,
       graphqlRunner,
       graphqlTracing,
-    }
+    },
   )
 }
 
@@ -269,12 +269,12 @@ const runQueuedQueries = () => {
   if (listenerQueue) {
     const state = store.getState()
     const { staticQueryIds, pageQueryIds } = groupQueryIds(
-      calcDirtyQueryIds(state)
+      calcDirtyQueryIds(state),
     )
-    const pages = _.filter(pageQueryIds.map(id => state.pages.get(id)))
+    const pages = _.filter(pageQueryIds.map((id) => state.pages.get(id)))
     const queryJobs = [
-      ...staticQueryIds.map(id => createStaticQueryJob(state, id)),
-      ...pages.map(page => createPageQueryJob(state, page)),
+      ...staticQueryIds.map((id) => createStaticQueryJob(state, id)),
+      ...pages.map((page) => createPageQueryJob(state, page)),
     ]
     listenerQueue.push(queryJobs)
   }
@@ -330,33 +330,33 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
     `SET_SCHEMA`,
     `ADD_FIELD_TO_NODE`,
     `ADD_CHILD_NODE_TO_PARENT_NODE`,
-  ].forEach(eventType => {
-    emitter.on(eventType, event => {
+  ].forEach((eventType) => {
+    emitter.on(eventType, (event) => {
       graphqlRunner = null
     })
   })
 }
 
-const enqueueExtractedQueryId = pathname => {
+const enqueueExtractedQueryId = (pathname) => {
   extractedQueryIds.add(pathname)
 }
 
-const getPagesForComponent = componentPath => {
+const getPagesForComponent = (componentPath) => {
   const state = store.getState()
   return [...state.pages.values()].filter(
-    p => p.componentPath === componentPath
+    (p) => p.componentPath === componentPath,
   )
 }
 
-const enqueueExtractedPageComponent = componentPath => {
+const enqueueExtractedPageComponent = (componentPath) => {
   const pages = getPagesForComponent(componentPath)
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
   boundActionCreators.deleteComponentsDependencies(
-    pages.map(p => p.path || p.id)
+    pages.map((p) => p.path || p.id),
   )
-  pages.forEach(page => enqueueExtractedQueryId(page.path))
+  pages.forEach((page) => enqueueExtractedQueryId(page.path))
   runQueuedQueries()
 }
 

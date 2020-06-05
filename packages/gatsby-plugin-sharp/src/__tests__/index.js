@@ -57,14 +57,14 @@ describe(`gatsby-plugin-sharp`, () => {
   const file = getFileObject(absolutePath)
 
   // used to find all breakpoints in a srcSet string
-  const findAllBreakpoints = srcSet => {
+  const findAllBreakpoints = (srcSet) => {
     // RegEx to find all occurrences of 'Xw', where 'X' can be any int
     const regEx = /[0-9]+w/g
     return srcSet.match(regEx)
   }
 
   describe(`queueImageResizing`, () => {
-    ;[`createJob`, `createJobV2`].forEach(api => {
+    ;[`createJob`, `createJobV2`].forEach((api) => {
       describe(`with ${api}`, () => {
         let boundActionCreators
         beforeEach(() => {
@@ -104,7 +104,7 @@ describe(`gatsby-plugin-sharp`, () => {
           const queueResult = queueImageResizing({
             file: getFileObject(
               path.join(__dirname, `images/144-density.png`),
-              testName
+              testName,
             ),
             args: { width: 3 },
           })
@@ -276,7 +276,7 @@ describe(`gatsby-plugin-sharp`, () => {
         },
       ]
       const fileObject = getFileObject(
-        path.join(__dirname, `images/144-density.png`)
+        path.join(__dirname, `images/144-density.png`),
       )
 
       for (const testCase of testsCases) {
@@ -313,7 +313,7 @@ describe(`gatsby-plugin-sharp`, () => {
 
       // width of the image tested
       const originalWidth = 281
-      const expected = srcSetBreakpoints.map(size => `${size}w`)
+      const expected = srcSetBreakpoints.map((size) => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
@@ -373,8 +373,8 @@ describe(`gatsby-plugin-sharp`, () => {
       const originalWidth = 281
       const expected = srcSetBreakpoints
         // filter out the widths that are larger than the source image width
-        .filter(size => size < originalWidth)
-        .map(size => `${size}w`)
+        .filter((size) => size < originalWidth)
+        .map((size) => `${size}w`)
       // add the original size of `144-density.png`
       expected.push(`${originalWidth}w`)
 
@@ -489,7 +489,7 @@ describe(`gatsby-plugin-sharp`, () => {
     // issue https://github.com/nodeca/probe-image-size/issues/20
     it(`handles padding bytes correctly`, () => {
       const result = getImageSize(
-        getFileObject(path.join(__dirname, `images/padding-bytes.jpg`))
+        getFileObject(path.join(__dirname, `images/padding-bytes.jpg`)),
       )
 
       expect(result).toMatchSnapshot()

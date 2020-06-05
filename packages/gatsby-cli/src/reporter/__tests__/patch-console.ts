@@ -9,7 +9,7 @@ describe(`patchConsole`, () => {
   }
 
   patchConsole((reporter as unknown) as typeof gatsbyReporter)
-  ;[`info`, `log`, `warn`].forEach(method => {
+  ;[`info`, `log`, `warn`].forEach((method) => {
     describe(method, () => {
       beforeEach(reporter[method].mockReset)
 
@@ -45,7 +45,7 @@ describe(`patchConsole`, () => {
         expect(reporter[method].mock.calls[3][0]).toBe(`false`)
         expect(reporter[method].mock.calls[4][0]).toBe(`[ 1, true, false, {} ]`)
         expect(reporter[method].mock.calls[5][0]).toBe(
-          `{ '1': 1, true: true, false: 'false', obj: {} }`
+          `{ '1': 1, true: true, false: 'false', obj: {} }`,
         )
       })
 

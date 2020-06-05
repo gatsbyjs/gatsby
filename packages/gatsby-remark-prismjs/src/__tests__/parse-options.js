@@ -17,43 +17,43 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
   describe(`parses line numbering options from the languages markdown code directive`, () => {
     it(`parses the right line number start index from the languages variable`, () => {
       expect(
-        parseOptions(`jsx{numberLines: true}`).showLineNumbersLocal
+        parseOptions(`jsx{numberLines: true}`).showLineNumbersLocal,
       ).toEqual(true)
       expect(parseOptions(`jsx{numberLines: true}`).numberLinesStartAt).toEqual(
-        1
+        1,
       )
       expect(parseOptions(`jsx{numberLines: 3}`).showLineNumbersLocal).toEqual(
-        true
+        true,
       )
       expect(parseOptions(`jsx{numberLines: 3}`).numberLinesStartAt).toEqual(3)
     })
 
     it(`parses the right line number start index without a specified language`, () => {
       expect(parseOptions(`{numberLines: true}`).showLineNumbersLocal).toEqual(
-        true
+        true,
       )
       expect(parseOptions(`{numberLines: true}`).numberLinesStartAt).toEqual(1)
       expect(parseOptions(`{numberLines: 3}`).showLineNumbersLocal).toEqual(
-        true
+        true,
       )
       expect(parseOptions(`{numberLines: 3}`).numberLinesStartAt).toEqual(3)
     })
 
     it(`ignores non-true or non-number values`, () => {
       expect(
-        parseOptions(`jsx{numberLines: false}`).showLineNumbersLocal
+        parseOptions(`jsx{numberLines: false}`).showLineNumbersLocal,
       ).toEqual(false)
       expect(
-        parseOptions(`jsx{numberLines: NaN}`).showLineNumbersLocal
+        parseOptions(`jsx{numberLines: NaN}`).showLineNumbersLocal,
       ).toEqual(false)
     })
 
     it(`casts decimals line number start into the nearest lower integer`, () => {
       expect(parseOptions(`jsx{numberLines: 1.2}`).numberLinesStartAt).toEqual(
-        1
+        1,
       )
       expect(parseOptions(`jsx{numberLines: 1.8}`).numberLinesStartAt).toEqual(
-        1
+        1,
       )
     })
   })
@@ -65,13 +65,13 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
 
     it(`parses only promptHost option supplied`, () => {
       expect(
-        parseOptions(`bash{promptHost: dev.localhost}`).promptHostLocal
+        parseOptions(`bash{promptHost: dev.localhost}`).promptHostLocal,
       ).toEqual(`dev.localhost`)
     })
 
     it(`parses promptHost and promptUser options supplied together`, () => {
       expect(
-        parseOptions(`bash{promptUser: pi}{promptHost: dev.localhost}`)
+        parseOptions(`bash{promptUser: pi}{promptHost: dev.localhost}`),
       ).toMatchObject({
         promptHostLocal: `dev.localhost`,
         promptUserLocal: `pi`,

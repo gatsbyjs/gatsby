@@ -17,7 +17,7 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
+    expect(query.map((q) => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
       Array [
         Object {
           "id": Object {
@@ -47,7 +47,7 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
+    expect(query.map((q) => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
       Array [
         Object {
           "internal.value": Object {
@@ -88,7 +88,7 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
+    expect(query.map((q) => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
       Array [
         Object {
           "internal.value": Object {
@@ -148,7 +148,7 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
+    expect(query.map((q) => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
       Array [
         Object {
           "id": Object {
@@ -193,7 +193,7 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
+    expect(query.map((q) => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
       Array [
         Object {
           "nested": Object {
@@ -230,7 +230,7 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
+    expect(query.map((q) => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
       Array [
         Object {
           "nested": Object {

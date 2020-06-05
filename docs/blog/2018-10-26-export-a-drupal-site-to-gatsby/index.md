@@ -55,7 +55,7 @@ const tags = db
   .prepare(
     `SELECT td.name FROM taxonomy_index ti
     INNER JOIN taxonomy_term_data td ON td.tid = ti.tid AND ti.nid = ?
-    WHERE ti.tid NOT IN (SELECT tid FROM taxonomy_index GROUP BY tid HAVING count(nid) = 1)`
+    WHERE ti.tid NOT IN (SELECT tid FROM taxonomy_index GROUP BY tid HAVING count(nid) = 1)`,
   )
   .pluck()
   .all(row.nid)
@@ -67,7 +67,7 @@ To avoid 404 in case you created some url aliases you can query the `url_alias` 
 const aliases = db
   .prepare(
     `SELECT alias FROM url_alias
-    WHERE source = ? AND alias != ?`
+    WHERE source = ? AND alias != ?`,
   )
   .pluck()
   .all("node/" + row.nid, slug)
@@ -80,7 +80,7 @@ let image = db
   .prepare(
     `SELECT filename, uri FROM field_data_field_image i
     INNER JOIN file_managed f ON f.fid = i.field_image_fid
-    WHERE i.entity_id = ?`
+    WHERE i.entity_id = ?`,
   )
   .get(row.nid)
 if (image) {
@@ -143,7 +143,7 @@ const rows = db
   INNER JOIN field_data_body b ON b.entity_id = n.nid
   INNER JOIN comment c ON c.nid = n.nid AND c.status = 1
   INNER JOIN field_data_comment_body cb ON cb.entity_id = c.cid
-  ORDER BY n.nid, c.cid`
+  ORDER BY n.nid, c.cid`,
   )
   .all()
 
@@ -156,7 +156,7 @@ console.log(`<?xml version="1.0" encoding="UTF-8"?>
 >
   <channel>`)
 let previous_slug = ""
-rows.forEach(row => {
+rows.forEach((row) => {
   const slug = slugify(row.title)
   const date = new Date(row.created * 1000)
   const date_comment = new Date(row.created_comment * 1000)
@@ -215,7 +215,7 @@ function slugify(string) {
     .toString()
     .toLowerCase()
     .replace(/\s+/g, "-") // Replace spaces with
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(p, (c) => b.charAt(a.indexOf(c))) // Replace special characters
     .replace(/&/g, "-and-") // Replace & with ‘and’
     .replace(/[^\w\-]+/g, "") // Remove all non-word characters
     .replace(/\-\-+/g, "-") // Replace multiple — with single -

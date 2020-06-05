@@ -61,7 +61,7 @@ let mockPersistedState = {}
 jest.mock(`../../redux/persist`, () => {
   return {
     readFromCache: () => mockPersistedState,
-    writeToCache: state => {
+    writeToCache: (state) => {
       mockPersistedState = state
     },
   }
@@ -70,18 +70,17 @@ jest.mock(`../../redux/persist`, () => {
 const pluginOptions = {}
 
 let mockAPIs = {}
-const setAPIhooks = hooks => (mockAPIs = { ...mockAPIs, ...hooks })
+const setAPIhooks = (hooks) => (mockAPIs = { ...mockAPIs, ...hooks })
 
 let pageQueries = {}
-const setPageQueries = queries => (pageQueries = queries)
+const setPageQueries = (queries) => (pageQueries = queries)
 
 let staticQueries = {}
-const setStaticQueries = queries => (staticQueries = queries)
+const setStaticQueries = (queries) => (staticQueries = queries)
 
-const typedNodeCreator = (
-  type,
-  { createNode, createContentDigest }
-) => node => {
+const typedNodeCreator = (type, { createNode, createContentDigest }) => (
+  node,
+) => {
   node.internal = {
     type,
     contentDigest: createContentDigest(node),
@@ -128,21 +127,21 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   jest.doMock(`../query-runner`, () => {
     const { queryRunner: actualQueryRunner } = jest.requireActual(
-      `../query-runner`
+      `../query-runner`,
     )
     return {
       queryRunner: jest.fn(actualQueryRunner),
     }
   })
 
-  jest.doMock(`../../utils/api-runner-node`, () => apiName => {
+  jest.doMock(`../../utils/api-runner-node`, () => (apiName) => {
     if (mockAPIs[apiName]) {
       return mockAPIs[apiName](
         {
           actions: doubleBoundActionCreators,
           createContentDigest: require(`gatsby-core-utils`).createContentDigest,
         },
-        pluginOptions
+        pluginOptions,
       )
     }
     return undefined
@@ -163,7 +162,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
         })
       return acc
     },
-    {}
+    {},
   )
   const apiRunner = require(`../../utils/api-runner-node`)
 
@@ -177,7 +176,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   })
 
   await require(`../../utils/create-schema-customization`).createSchemaCustomization(
-    {}
+    {},
   )
 
   await require(`../../utils/source-nodes`).default({})
@@ -227,15 +226,15 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     require(`../../bootstrap/page-hot-reloader`)
   }
 
-  const idsOfQueriesThatRan = queryRunner.mock.calls.map(call => call[1].id)
+  const idsOfQueriesThatRan = queryRunner.mock.calls.map((call) => call[1].id)
 
   const pathsOfPagesWithQueriesThatRan = idsOfQueriesThatRan
-    .filter(p => !p.startsWith(`sq--`))
+    .filter((p) => !p.startsWith(`sq--`))
     .sort()
 
   const staticQueriesThatRan = idsOfQueriesThatRan
-    .filter(p => p.startsWith(`sq--`))
-    .map(p => p.slice(4))
+    .filter((p) => p.startsWith(`sq--`))
+    .map((p) => p.slice(4))
     .sort()
 
   return {
@@ -312,7 +311,7 @@ describe(`query caching between builds`, () => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
           const { createSiteNode, createTestNode } = getTypedNodeCreators(
-            nodeApiContext
+            nodeApiContext,
           )
 
           createTestNode({
@@ -408,7 +407,7 @@ describe(`query caching between builds`, () => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
           const { createSiteNode, createTestNode } = getTypedNodeCreators(
-            nodeApiContext
+            nodeApiContext,
           )
 
           createTestNode({
@@ -493,7 +492,7 @@ describe(`query caching between builds`, () => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
           const { createSiteNode, createTestNode } = getTypedNodeCreators(
-            nodeApiContext
+            nodeApiContext,
           )
 
           createTestNode({
@@ -668,7 +667,7 @@ describe(`query caching between builds`, () => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
           const { createTestNode, createTestBNode } = getTypedNodeCreators(
-            nodeApiContext
+            nodeApiContext,
           )
 
           createTestNode({
@@ -809,7 +808,7 @@ describe(`query caching between builds`, () => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
           const { createTestNode, createSiteNode } = getTypedNodeCreators(
-            nodeApiContext
+            nodeApiContext,
           )
 
           createTestNode({

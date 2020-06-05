@@ -443,7 +443,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
     }
   `)
 
-  pages.data.allShopifyProduct.edges.forEach(edge => {
+  pages.data.allShopifyProduct.edges.forEach((edge) => {
     createPage({
       path: `/${edge.node.handle}`,
       component: path.resolve("./src/templates/product.js"),

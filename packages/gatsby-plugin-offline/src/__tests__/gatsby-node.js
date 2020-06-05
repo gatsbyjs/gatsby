@@ -10,10 +10,10 @@ describe(`getPrecachePages`, () => {
     const base = `${__dirname}/fixtures/public`
 
     const allPages = getPrecachePages([`**/*`], base)
-    expect(allPages.map(page => path.normalize(page))).toMatchSnapshot()
+    expect(allPages.map((page) => path.normalize(page))).toMatchSnapshot()
 
     const dir1Pages = getPrecachePages([`/dir1/*`], base)
-    expect(dir1Pages.map(page => path.normalize(page))).toMatchSnapshot()
+    expect(dir1Pages.map((page) => path.normalize(page))).toMatchSnapshot()
   })
 })
 
@@ -83,7 +83,7 @@ describe(`onPostBuild`, () => {
           },
         },
       },
-      { appendScript: `${__dirname}/fixtures/custom-sw-code.js` }
+      { appendScript: `${__dirname}/fixtures/custom-sw-code.js` },
     )
 
     expect(swText).toContain(`console.log(\`Hello, world!\`)`)
@@ -101,7 +101,7 @@ describe(`onPostBuild`, () => {
           },
         },
       },
-      { debug: true }
+      { debug: true },
     )
 
     expect(swText).toContain(`debug: true`)

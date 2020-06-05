@@ -21,7 +21,7 @@ describe(`ignore-path`, () => {
       { path: `dir/example.jsx` },
     ])
 
-    expect(testFiles.filter(file => ignorePath(file.path, null))).toEqual([])
+    expect(testFiles.filter((file) => ignorePath(file.path, null))).toEqual([])
   })
 
   it(`does not filter files without any ignore patterns`, () => {
@@ -44,7 +44,7 @@ describe(`ignore-path`, () => {
       { path: `dir/example.jsx` },
     ])
 
-    expect(testFiles.filter(file => ignorePath(file.path, {}))).toEqual([])
+    expect(testFiles.filter((file) => ignorePath(file.path, {}))).toEqual([])
   })
 
   it(`filters out files matching ignore patterns`, () => {
@@ -75,7 +75,7 @@ describe(`ignore-path`, () => {
     ])
 
     expect(
-      testFiles.filter(file => ignorePath(file.path, { patterns }))
+      testFiles.filter((file) => ignorePath(file.path, { patterns })),
     ).toEqual(ignoreFiles)
   })
 
@@ -111,7 +111,7 @@ describe(`ignore-path`, () => {
     ])
 
     expect(
-      testFiles.filter(file => ignorePath(file.path, { patterns, options }))
+      testFiles.filter((file) => ignorePath(file.path, { patterns, options })),
     ).toEqual(ignoreFiles)
   })
 
@@ -142,8 +142,8 @@ describe(`ignore-path`, () => {
       { path: `dir/example.jsx` },
     ])
 
-    expect(testFiles.filter(file => ignorePath(file.path, patterns))).toEqual(
-      ignoreFiles
+    expect(testFiles.filter((file) => ignorePath(file.path, patterns))).toEqual(
+      ignoreFiles,
     )
   })
 
@@ -160,8 +160,8 @@ describe(`ignore-path`, () => {
       { path: `other.js` },
     ])
 
-    expect(testFiles.filter(file => ignorePath(file.path, pattern))).toEqual(
-      ignoreFiles
+    expect(testFiles.filter((file) => ignorePath(file.path, pattern))).toEqual(
+      ignoreFiles,
     )
   })
 })

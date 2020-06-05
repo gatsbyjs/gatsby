@@ -10,7 +10,7 @@ import { reportWebpackWarnings } from "../utils/webpack-error-utils"
 
 export const buildProductionBundle = async (
   program: IProgram,
-  parentSpan: Span
+  parentSpan: Span,
 ): Promise<webpack.Stats> => {
   const { directory } = program
 
@@ -19,7 +19,7 @@ export const buildProductionBundle = async (
     directory,
     `build-javascript`,
     null,
-    { parentSpan }
+    { parentSpan },
   )
 
   return new Promise((resolve, reject) => {
@@ -33,8 +33,8 @@ export const buildProductionBundle = async (
       if (stats.hasErrors()) {
         const flattenStatsErrors = (stats: webpack.Stats): Error[] => [
           ...stats.compilation.errors,
-          ...flatMap(stats.compilation.children, child =>
-            flattenStatsErrors(child.getStats())
+          ...flatMap(stats.compilation.children, (child) =>
+            flattenStatsErrors(child.getStats()),
           ),
         ]
         return reject(flattenStatsErrors(stats))

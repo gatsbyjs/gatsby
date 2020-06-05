@@ -17,7 +17,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
     assetPrefix: stripTrailingSlash(
       Joi.string().uri({
         allowRelative: true,
-      })
+      }),
     ),
     pathPrefix: addLeadingSlash(
       stripTrailingSlash(
@@ -29,11 +29,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           .default(``)
           // removes single / value
           .allow(``)
-          .replace(/^\/$/, ``)
-      )
+          .replace(/^\/$/, ``),
+      ),
     ),
     linkPrefix: Joi.forbidden().error(
-      new Error(`"linkPrefix" should be changed to "pathPrefix"`)
+      new Error(`"linkPrefix" should be changed to "pathPrefix"`),
     ),
     siteMetadata: Joi.object({
       siteUrl: stripTrailingSlash(Joi.string()).uri(),
@@ -45,7 +45,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
         Joi.object().keys({
           prefix: Joi.string().required(),
           url: Joi.string().required(),
-        })
+        }),
       )
       .single(),
     developMiddleware: Joi.func(),
@@ -72,11 +72,11 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
           })
           .error(
             new Error(
-              `assetPrefix must be an absolute URI when used with pathPrefix`
-            )
+              `assetPrefix must be an absolute URI when used with pathPrefix`,
+            ),
           ),
       }),
-    }
+    },
   )
 
 export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()

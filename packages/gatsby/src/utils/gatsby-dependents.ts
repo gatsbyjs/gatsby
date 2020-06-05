@@ -26,7 +26,7 @@ const readJSON = async (file: string): Promise<PackageJson> => {
 
 const getTreeFromNodeModules = async (
   dir: string,
-  results: Map<string, IDependency> = new Map()
+  results: Map<string, IDependency> = new Map(),
 ): Promise<IDependency[]> => {
   const requireFromHere = createRequireFromPath(`${dir}/:internal:`)
   let packageJSON: PackageJson
@@ -58,7 +58,7 @@ const getTreeFromNodeModules = async (
         // Sometimes dev dependencies of dependencies aren't installed
         // when using `yarn`. This is okay and safe to ignore.
       }
-    })
+    }),
   )
 
   return Array.from(results.values())
@@ -68,5 +68,5 @@ export const getGatsbyDependents = memoize(
   async (): Promise<IDependency[]> => {
     const { program } = store.getState()
     return getTreeFromNodeModules(program.directory)
-  }
+  },
 )

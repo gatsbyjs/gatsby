@@ -48,7 +48,7 @@ const {
 const overlayErrorID = `graphql-compiler`
 
 export default async function compile({ parentSpan } = {}): Promise<
-  Map<string, RootQuery>
+  Map<string, RootQuery>,
 > {
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
@@ -67,11 +67,11 @@ export default async function compile({ parentSpan } = {}): Promise<
     additional: resolveThemes(
       themes.themes
         ? themes.themes
-        : flattenedPlugins.map(plugin => {
+        : flattenedPlugins.map((plugin) => {
             return {
               themeDir: plugin.pluginFilepath,
             }
-          })
+          }),
     ),
     addError,
     parentSpan,
@@ -123,18 +123,18 @@ export const parseQueries = async ({
   let files = [
     path.join(base, `src`),
     path.join(base, `.cache`, `fragments`),
-    ...additional.map(additional => path.join(additional, `src`)),
-    ...modulesThatUseGatsby.map(module => module.path),
+    ...additional.map((additional) => path.join(additional, `src`)),
+    ...modulesThatUseGatsby.map((module) => module.path),
   ].reduce((merged, folderPath) => {
     merged.push(
       ...glob.sync(path.join(folderPath, pathRegex), {
         nodir: true,
-      })
+      }),
     )
     return merged
   }, [])
 
-  files = files.filter(d => !d.match(/\.d\.ts$/))
+  files = files.filter((d) => !d.match(/\.d\.ts$/))
 
   files = files.map(normalize)
 
@@ -150,7 +150,7 @@ export const parseQueries = async ({
   // Otherwise the component will throw an error in the browser of
   // "graphql is not defined".
   files = files.concat(
-    Array.from(store.getState().components.keys(), c => normalize(c))
+    Array.from(store.getState().components.keys(), (c) => normalize(c)),
   )
 
   files = _.uniq(files)
@@ -170,7 +170,7 @@ export const processQueries = ({
     schema,
     parsedQueries,
     addError,
-    parentSpan
+    parentSpan,
   )
 
   return processDefinitions({
@@ -209,18 +209,18 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
 
     if (errors && errors.length) {
       addError(
-        ...errors.map(error => {
+        ...errors.map((error) => {
           const location = {
             start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
           }
           return errorParser({ message: error.message, filePath, location })
-        })
+        }),
       )
 
       store.dispatch(
         actions.queryExtractionGraphQLError({
           componentPath: filePath,
-        })
+        }),
       )
       // Something is super wrong with this document, so we report it and skip
       continue
@@ -249,7 +249,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
                   templateLoc,
                 },
                 rightDefinition: otherDef,
-              })
+              }),
             )
             // We won't know which one to use, so it's better to fail both of
             // them.
@@ -306,14 +306,14 @@ const processDefinitions = ({
         multipleRootQueriesError(
           filePath,
           originalDefinition.def,
-          otherQuery && definitionsByName.get(otherQuery.name).def
-        )
+          otherQuery && definitionsByName.get(otherQuery.name).def,
+        ),
       )
 
       store.dispatch(
         actions.queryExtractionGraphQLError({
           componentPath: filePath,
-        })
+        }),
       )
       continue
     }
@@ -324,7 +324,7 @@ const processDefinitions = ({
     } = determineUsedFragmentsForDefinition(
       originalDefinition,
       definitionsByName,
-      fragmentsUsedByFragment
+      fragmentsUsedByFragment,
     )
 
     if (missingFragments.length > 0) {
@@ -332,7 +332,7 @@ const processDefinitions = ({
         store.dispatch(
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
-          })
+          }),
         )
         addError(
           unknownFragmentError({
@@ -340,7 +340,7 @@ const processDefinitions = ({
             filePath,
             definition,
             node,
-          })
+          }),
         )
       }
       continue
@@ -349,7 +349,7 @@ const processDefinitions = ({
     let document = {
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
-        .map(name => definitionsByName.get(name).def)
+        .map((name) => definitionsByName.get(name).def)
         .concat([operation]),
     }
 
@@ -358,7 +358,7 @@ const processDefinitions = ({
       for (const error of errors) {
         const { formattedMessage, message } = graphqlError(
           definitionsByName,
-          error
+          error,
         )
 
         const filePath = originalDefinition.filePath
@@ -366,11 +366,11 @@ const processDefinitions = ({
           actions.queryExtractionGraphQLError({
             componentPath: filePath,
             error: formattedMessage,
-          })
+          }),
         )
         const location = locInGraphQlToLocInFile(
           originalDefinition.templateLoc,
-          error.locations[0]
+          error.locations[0],
         )
         addError(
           errorParser({
@@ -380,7 +380,7 @@ const processDefinitions = ({
             },
             message,
             filePath,
-          })
+          }),
         )
       }
       continue
@@ -402,7 +402,7 @@ const processDefinitions = ({
       query.id =
         `sq--` +
         _.kebabCase(
-          `${path.relative(store.getState().program.directory, filePath)}`
+          `${path.relative(store.getState().program.directory, filePath)}`,
         )
     }
 
@@ -413,7 +413,7 @@ const processDefinitions = ({
     ) {
       report.panicOnBuild(
         `You're likely using a version of React that doesn't support Hooks\n` +
-          `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
+          `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`,
       )
     }
 
@@ -427,7 +427,7 @@ const determineUsedFragmentsForDefinition = (
   definition,
   definitionsByName,
   fragmentsUsedByFragment,
-  traversalPath = []
+  traversalPath = [],
 ) => {
   const { def, name, isFragment, filePath } = definition
   const cachedUsedFragments = fragmentsUsedByFragment.get(name)
@@ -437,7 +437,7 @@ const determineUsedFragmentsForDefinition = (
     const usedFragments = new Set()
     const missingFragments = []
     visit(def, {
-      [Kind.FRAGMENT_SPREAD]: node => {
+      [Kind.FRAGMENT_SPREAD]: (node) => {
         const name = node.name.value
         const fragmentDefinition = definitionsByName.get(name)
         if (fragmentDefinition) {
@@ -455,11 +455,11 @@ const determineUsedFragmentsForDefinition = (
             fragmentDefinition,
             definitionsByName,
             fragmentsUsedByFragment,
-            traversalPath
+            traversalPath,
           )
           traversalPath.pop()
-          usedFragmentsForFragment.forEach(fragmentName =>
-            usedFragments.add(fragmentName)
+          usedFragmentsForFragment.forEach((fragmentName) =>
+            usedFragments.add(fragmentName),
           )
           missingFragments.push(...missingFragmentsForFragment)
         } else {
@@ -490,12 +490,12 @@ const addExtraFields = (document, schema) => {
 
   const transformer = visitWithTypeInfo(typeInfo, {
     enter: {
-      [Kind.SELECTION_SET]: node => {
+      [Kind.SELECTION_SET]: (node) => {
         // Entering selection set:
         //   selection sets can be nested, so keeping their metadata stacked
         contextStack.push({ hasTypename: false })
       },
-      [Kind.FIELD]: node => {
+      [Kind.FIELD]: (node) => {
         // Entering a field of the current selection-set:
         //   mark which fields already exist in this selection set to avoid duplicates
         const context = contextStack[contextStack.length - 1]
@@ -508,7 +508,7 @@ const addExtraFields = (document, schema) => {
       },
     },
     leave: {
-      [Kind.SELECTION_SET]: node => {
+      [Kind.SELECTION_SET]: (node) => {
         // Modify the selection-set AST on leave (add extra fields unless they already exist)
         const context = contextStack.pop()
         const parentType = typeInfo.getParentType()

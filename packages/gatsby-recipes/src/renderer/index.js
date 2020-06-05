@@ -14,14 +14,14 @@ const scope = {
 
 // We want to call the function constructor with our resulting
 // transformed JS so we need to turn it into a "function body"
-const transformCodeForEval = code => {
+const transformCodeForEval = (code) => {
   const newCode = code.replace(/;$/, ``)
 
   return `return (${newCode})`
 }
 
 // TODO: Release MDX v2 canary so we can avoid the hacks
-const stripMdxLayout = str => {
+const stripMdxLayout = (str) => {
   const newJsx = str
     .replace(/^.*mdxType="MDXLayout">/ms, ``)
     .replace(/<\/MDXLayout>.*/ms, ``)
@@ -29,7 +29,7 @@ const stripMdxLayout = str => {
   return `<doc>${newJsx}</doc>`
 }
 
-const transformJsx = jsx => {
+const transformJsx = (jsx) => {
   const { code } = transform(jsx, {
     plugins: [[babelPluginTransformReactJsx, { useBuiltIns: true }]],
   })
@@ -39,7 +39,7 @@ const transformJsx = jsx => {
 
 // This is overloaded to handle MDX input, JSX input
 // or MDX's JSX output as input.
-module.exports = jsx => {
+module.exports = (jsx) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 

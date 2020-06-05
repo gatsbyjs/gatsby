@@ -88,7 +88,7 @@ export default ({ children, title, ...props }) => {
   if (!disableThemeUiStyling) {
     const [colorMode, setColorMode] = useColorMode()
     const isDark = colorMode === `dark`
-    const toggleColorMode = e => {
+    const toggleColorMode = (e) => {
       setColorMode(isDark ? `light` : `dark`)
     }
     switchToggle = (

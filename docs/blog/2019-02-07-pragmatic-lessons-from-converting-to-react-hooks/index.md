@@ -44,7 +44,7 @@ const updateStateBad = () => this.setState({ count: this.state.count + 1 })
 
 // Preferred way to reference current state in setState call
 const updateStateGood = () =>
-  this.setState(state => ({ count: state.count + 1 }))
+  this.setState((state) => ({ count: state.count + 1 }))
 ```
 
 The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to useState. The `useEffect` hook checks if the isPlaying state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or isPlaying state changes. The hook includes a function to update the slide. The necessary state and functions are return in an object.
@@ -58,7 +58,7 @@ function useSlideshow(slides, { timerLength = 5000 } = {}) {
     if (isPlaying) {
       const timer = setTimeout(
         () => setCurrIndex((currIndex + 1) % slides.length),
-        timerLength
+        timerLength,
       )
 
       return () => clearTimeout(timer)

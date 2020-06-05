@@ -9,7 +9,7 @@ describe(`load prism language`, () => {
 
   it(`throw if language not support`, () => {
     expect(() => loadPrismLanguage(`imnotalanguage`)).toThrow(
-      `Prism doesn't support language 'imnotalanguage'.`
+      `Prism doesn't support language 'imnotalanguage'.`,
     )
   })
 

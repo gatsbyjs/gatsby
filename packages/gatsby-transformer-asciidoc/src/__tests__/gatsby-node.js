@@ -42,8 +42,8 @@ describe(`gatsby-transformer-asciidoc`, () => {
       createNode: jest.fn(),
       createParentChildLink: jest.fn(),
     }
-    loadNodeContent = jest.fn(node => node)
-    createNodeId = jest.fn(node => node)
+    loadNodeContent = jest.fn((node) => node)
+    createNodeId = jest.fn((node) => node)
     createContentDigest = jest.fn(() => `digest`)
   })
 
@@ -51,7 +51,7 @@ describe(`gatsby-transformer-asciidoc`, () => {
     node.extension = `foo`
     await onCreateNode(
       { node, actions, loadNodeContent, createNodeId, createContentDigest },
-      {}
+      {},
     )
     expect(actions.createNode).not.toHaveBeenCalled()
   })
@@ -60,7 +60,7 @@ describe(`gatsby-transformer-asciidoc`, () => {
     node.extension = `ad`
     await onCreateNode(
       { node, actions, loadNodeContent, createNodeId, createContentDigest },
-      { fileExtensions: [`ad`] }
+      { fileExtensions: [`ad`] },
     )
     expect(actions.createNode).toHaveBeenCalled()
   })
@@ -74,7 +74,7 @@ describe(`gatsby-transformer-asciidoc`, () => {
         createNodeId,
         createContentDigest,
       },
-      {}
+      {},
     )
     expect(actions.createNode).toHaveBeenCalledWith({
       author: null,

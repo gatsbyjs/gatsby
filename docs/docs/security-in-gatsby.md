@@ -24,7 +24,7 @@ On the other hand, fields in your application may need to render inner HTML tags
 In order to render those HTML tags you need to use an HTML parser (e.g. [html-react-parser](https://github.com/remarkablemark/html-react-parser)) or the `dangerouslySetInnerHTML` prop, like so:
 
 ```jsx
-const CommentRenderer = comment => (
+const CommentRenderer = (comment) => (
   // highlight-next-line
   <p dangerouslySetInnerHTML={{ __html: comment }} />
 ) // dangerous indeed.

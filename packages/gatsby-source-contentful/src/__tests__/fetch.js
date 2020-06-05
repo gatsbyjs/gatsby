@@ -10,7 +10,7 @@ const mockClient = {
           default: true,
         },
       ],
-    })
+    }),
   ),
   getSpace: jest.fn(() =>
     Promise.resolve({
@@ -18,7 +18,7 @@ const mockClient = {
         sys: { type: `Space`, id: `x2t9il8x6p` },
         name: `space-name`,
       },
-    })
+    }),
   ),
   sync: jest.fn(() => {
     return {
@@ -110,7 +110,7 @@ it(`calls contentful.createClient with expected params`, async () => {
       host: `host`,
       space: `rocybtov1ozk`,
       proxy: proxyOption,
-    })
+    }),
   )
 })
 
@@ -130,7 +130,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       environment: `master`,
       host: `cdn.contentful.com`,
       space: `rocybtov1ozk`,
-    })
+    }),
   )
 })
 
@@ -182,8 +182,8 @@ it(`panics when localeFilter reduces locale list to 0`, async () => {
 
   expect(reporter.panic).toBeCalledWith(
     expect.stringContaining(
-      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`
-    )
+      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`,
+    ),
   )
 })
 
@@ -196,18 +196,18 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Accessing your Contentful space failed`)
+      expect.stringContaining(`Accessing your Contentful space failed`),
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.stringContaining(`formatPluginOptionsForCLIMock`),
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
         ...options,
       }),
-      undefined
+      undefined,
     )
   })
 
@@ -221,18 +221,18 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`You seem to be offline`)
+      expect.stringContaining(`You seem to be offline`),
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.stringContaining(`formatPluginOptionsForCLIMock`),
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
         ...options,
       }),
-      undefined
+      undefined,
     )
   })
 
@@ -246,11 +246,11 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Check if host and spaceId settings are correct`)
+      expect.stringContaining(`Check if host and spaceId settings are correct`),
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.stringContaining(`formatPluginOptionsForCLIMock`),
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -260,7 +260,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       {
         host: `Check if setting is correct`,
         spaceId: `Check if setting is correct`,
-      }
+      },
     )
   })
 
@@ -275,12 +275,12 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
-        `Check if accessToken and environment are correct`
-      )
+        `Check if accessToken and environment are correct`,
+      ),
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.stringContaining(`formatPluginOptionsForCLIMock`),
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -290,7 +290,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       {
         accessToken: `Check if setting is correct`,
         environment: `Check if setting is correct`,
-      }
+      },
     )
   })
 })

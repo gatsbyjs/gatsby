@@ -57,7 +57,7 @@ describe(`isDate`, () => {
     `1970-01-01T00:00:00.000001Z`,
     `2012-04-01T00:00:00-05:00`,
     `2012-11-12T00:00:00+01:00`,
-  ])(`should return true for valid ISO 8601: %s`, dateString => {
+  ])(`should return true for valid ISO 8601: %s`, (dateString) => {
     expect(isDate(dateString)).toBeTruthy()
   })
 
@@ -79,29 +79,32 @@ describe(`isDate`, () => {
     `1970-01-01 000000 Z`,
     `1970-01-01 00:00 Z`,
     `1970-01-01 00 Z`,
-  ])(`should return true for ISO 8601 (no T, extra space): %s`, dateString => {
-    expect(isDate(dateString)).toBeTruthy()
-  })
+  ])(
+    `should return true for ISO 8601 (no T, extra space): %s`,
+    (dateString) => {
+      expect(isDate(dateString)).toBeTruthy()
+    },
+  )
 
   it.each([`1970-W31`, `2006-W01`, `1970W31`, `2009-W53-7`, `2009W537`])(
     `should return true for ISO 8601 week dates: %s`,
-    dateString => {
+    (dateString) => {
       expect(isDate(dateString)).toBeTruthy()
-    }
+    },
   )
 
   it.each([`1970-334`, `1970334`, `2090-001`, `2090001`])(
     `should return true for ISO 8601 ordinal dates: %s`,
-    dateString => {
+    (dateString) => {
       expect(isDate(dateString)).toBeTruthy()
-    }
+    },
   )
 
   it.each([`2018-08-31T23:25:16.019345+02:00`, `2018-08-31T23:25:16.019345Z`])(
     `should return true for microsecond precision: %s`,
-    dateString => {
+    (dateString) => {
       expect(isDate(dateString)).toBeTruthy()
-    }
+    },
   )
 
   it.each([
@@ -131,7 +134,7 @@ describe(`isDate`, () => {
     ``,
     ` `,
     `2012-04-01T00:basketball`,
-  ])(`should return false for invalid ISO 8601: %s`, dateString => {
+  ])(`should return false for invalid ISO 8601: %s`, (dateString) => {
     expect(isDate(dateString)).toBeFalsy()
   })
 })
@@ -164,7 +167,7 @@ describe(`looksLikeADate`, () => {
     `1970-01-01T00:00:00.000001Z`,
     `2012-04-01T00:00:00-05:00`,
     `2012-11-12T00:00:00+01:00`,
-  ])(`should return true for valid ISO 8601: %s`, dateString => {
+  ])(`should return true for valid ISO 8601: %s`, (dateString) => {
     expect(looksLikeADate(dateString)).toBeTruthy()
   })
 
@@ -186,22 +189,25 @@ describe(`looksLikeADate`, () => {
     `1970-01-01 000000 Z`,
     `1970-01-01 00:00 Z`,
     `1970-01-01 00 Z`,
-  ])(`should return true for ISO 8601 (no T, extra space): %s`, dateString => {
-    expect(looksLikeADate(dateString)).toBeTruthy()
-  })
+  ])(
+    `should return true for ISO 8601 (no T, extra space): %s`,
+    (dateString) => {
+      expect(looksLikeADate(dateString)).toBeTruthy()
+    },
+  )
 
   it.each([`1970-W31`, `2006-W01`, `1970W31`, `2009-W53-7`, `2009W537`])(
     `should return true for ISO 8601 week dates: %s`,
-    dateString => {
+    (dateString) => {
       expect(looksLikeADate(dateString)).toBeTruthy()
-    }
+    },
   )
 
   it.each([`1970-334`, `1970334`, `2090-001`, `2090001`])(
     `should return true for ISO 8601 ordinal dates: %s`,
-    dateString => {
+    (dateString) => {
       expect(looksLikeADate(dateString)).toBeTruthy()
-    }
+    },
   )
 
   it.each([
@@ -214,7 +220,7 @@ describe(`looksLikeADate`, () => {
     `2010-01-01T23:59:60`,
     `2010-01-40T23:60+00:00`,
     `2010-01-40T23:59:60+00:00`,
-  ])(`should return true for some valid ISO 8601: %s`, dateString => {
+  ])(`should return true for some valid ISO 8601: %s`, (dateString) => {
     expect(looksLikeADate(dateString)).toBeTruthy()
   })
 
@@ -236,7 +242,7 @@ describe(`looksLikeADate`, () => {
     ``,
     ` `,
     `2012-04-01T00:basketball`,
-  ])(`should return false for invalid ISO 8601: %s`, dateString => {
+  ])(`should return false for invalid ISO 8601: %s`, (dateString) => {
     expect(looksLikeADate(dateString)).toBeFalsy()
   })
 })
@@ -304,8 +310,8 @@ describe(`dateResolver`, () => {
         defaultFormatDate: `2010-01-30T23:59:59.999-07:00`,
       },
     ]
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
   })
 
@@ -404,7 +410,7 @@ describe(`dateResolver`, () => {
     // Seems to not require nanosecond definition to not fail
     `2018-01-29T23:25:16.019345123+02:00`,
     `2018-01-29T23:25:16.019345123Z`,
-  ])(`should return "Jan 29, 2018": %s`, async dateString => {
+  ])(`should return "Jan 29, 2018": %s`, async (dateString) => {
     const schema = await buildTestSchema()
     const fields = schema.getType(`Test`).getFields()
     expect(
@@ -414,8 +420,8 @@ describe(`dateResolver`, () => {
         withResolverContext({}, schema),
         {
           fieldName: `date`,
-        }
-      )
+        },
+      ),
     ).toEqual(`Jan 29, 2018`)
   })
 
@@ -429,7 +435,7 @@ describe(`dateResolver`, () => {
     `2010-01-40T23:59:59.9999`,
     // Combine with above statement once we figure out why it passes
     // `2018-08-31T23:25:16.01234567899993+02:00`,
-  ])(`should return "Invalid Date": %s`, async dateString => {
+  ])(`should return "Invalid Date": %s`, async (dateString) => {
     const schema = await buildTestSchema()
     const fields = schema.getType(`Test`).getFields()
     expect(
@@ -439,8 +445,8 @@ describe(`dateResolver`, () => {
         withResolverContext({}, schema),
         {
           fieldName: `date`,
-        }
-      )
+        },
+      ),
     ).toEqual(`Invalid date`)
   })
 })

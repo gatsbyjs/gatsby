@@ -2,7 +2,7 @@ import React from "react"
 import { css } from "theme-ui"
 
 // from https://octicons.github.com/icon/link/
-const LinkIcon = props => (
+const LinkIcon = (props) => (
   <svg
     {...props}
     viewBox="0 0 16 16"
@@ -18,7 +18,7 @@ const LinkIcon = props => (
   </svg>
 )
 
-const heading = Tag => props => (
+const heading = (Tag) => (props) => (
   <Tag
     {...props}
     css={css({

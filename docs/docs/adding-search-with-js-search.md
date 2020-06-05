@@ -71,12 +71,12 @@ class Search extends Component {
    */
   async componentDidMount() {
     Axios.get("https://bvaughn.github.io/js-search/books.json")
-      .then(result => {
+      .then((result) => {
         const bookData = result.data
         this.setState({ bookList: bookData.books })
         this.rebuildIndex()
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ isError: true })
         console.log("====================================")
         console.log(`Something bad happened while fetching the data\n${err}`)
@@ -118,12 +118,12 @@ class Search extends Component {
    * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
-  searchData = e => {
+  searchData = (e) => {
     const { search } = this.state
     const queryResult = search.search(e.target.value)
     this.setState({ searchQuery: e.target.value, searchResults: queryResult })
   }
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault()
   }
 
@@ -199,7 +199,7 @@ class Search extends Component {
                 </tr>
               </thead>
               <tbody>
-                {queryResults.map(item => {
+                {queryResults.map((item) => {
                   return (
                     <tr key={`row_${item.isbn}`}>
                       <td
@@ -272,7 +272,7 @@ exports.createPages = ({ actions }) => {
   return new Promise((resolve, reject) => {
     axios
       .get("https://bvaughn.github.io/js-search/books.json")
-      .then(result => {
+      .then((result) => {
         const { data } = result
         /**
          * creates a dynamic page with the data received
@@ -297,7 +297,7 @@ exports.createPages = ({ actions }) => {
         })
         resolve()
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("====================================")
         console.log(`error creating Page:${err}`)
         console.log("====================================")
@@ -313,7 +313,7 @@ Create a file named `ClientSearchTemplate.js` in the `src/templates/` folder, th
 import React from "react"
 import ClientSearch from "../components/ClientSearch"
 
-const SearchTemplate = props => {
+const SearchTemplate = (props) => {
   const { pageContext } = props
   const { bookData } = pageContext
   const { allBooks, options } = bookData
@@ -390,7 +390,7 @@ class ClientSearch extends Component {
 
     if (removeStopWords) {
       dataToSearch.tokenizer = new JsSearch.StopWordsTokenizer(
-        dataToSearch.tokenizer
+        dataToSearch.tokenizer,
       )
     }
     /**
@@ -435,12 +435,12 @@ class ClientSearch extends Component {
    * handles the input change and perform a search with js-search
    * in which the results will be added to the state
    */
-  searchData = e => {
+  searchData = (e) => {
     const { search } = this.state
     const queryResult = search.search(e.target.value)
     this.setState({ searchQuery: e.target.value, searchResults: queryResult })
   }
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault()
   }
   render() {
@@ -516,7 +516,7 @@ class ClientSearch extends Component {
                 </tr>
               </thead>
               <tbody>
-                {queryResults.map(item => {
+                {queryResults.map((item) => {
                   return (
                     <tr key={`row_${item.isbn}`}>
                       <td

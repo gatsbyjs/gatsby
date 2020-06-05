@@ -30,7 +30,7 @@ onExit(() => {
 })
 
 const readMatchPaths = async (
-  program: IServeProgram
+  program: IServeProgram,
 ): Promise<IMatchPath[]> => {
   const filePath = path.join(program.directory, `.cache`, `match-paths.json`)
   let rawJSON = `[]`
@@ -40,13 +40,13 @@ const readMatchPaths = async (
     report.warn(error)
     report.warn(
       `Could not read ${chalk.bold(
-        `match-paths.json`
-      )} from the .cache directory`
+        `match-paths.json`,
+      )} from the .cache directory`,
     )
     report.warn(
       `Client-side routing will not work correctly. Maybe you need to re-run ${chalk.bold(
-        `gatsby build`
-      )}?`
+        `gatsby build`,
+      )}?`,
     )
   }
   return JSON.parse(rawJSON) as IMatchPath[]
@@ -56,26 +56,26 @@ const matchPathRouter = (
   matchPaths: IMatchPath[],
   options: {
     root: string
-  }
+  },
 ) => (
   req: express.Request,
   res: express.Response,
-  next: express.NextFunction
+  next: express.NextFunction,
 ): void => {
   const { url } = req
   if (req.accepts(`html`)) {
     const matchPath = matchPaths.find(
-      ({ matchPath }) => reachMatch(matchPath, url) !== null
+      ({ matchPath }) => reachMatch(matchPath, url) !== null,
     )
     if (matchPath) {
       return res.sendFile(
         path.join(matchPath.path, `index.html`),
         options,
-        err => {
+        (err) => {
           if (err) {
             next()
           }
-        }
+        },
       )
     }
   }
@@ -90,7 +90,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
   const { configModule } = await getConfigFile(
     program.directory,
-    `gatsby-config`
+    `gatsby-config`,
   )
   const config = preferDefault(configModule)
 
@@ -118,12 +118,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(function (
     _: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ) {
     res.header(`Access-Control-Allow-Origin`, `*`)
     res.header(
       `Access-Control-Allow-Headers`,
-      `Origin, X-Requested-With, Content-Type, Accept`
+      `Origin, X-Requested-With, Content-Type, Accept`,
     )
     next()
   })
@@ -136,10 +136,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
     if (urls.lanUrlForTerminal) {
       console.log(
-        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`,
       )
       console.log(
-        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`,
       )
     } else {
       console.log(`  ${urls.localUrlForTerminal}`)
@@ -151,16 +151,16 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       const urls = prepareUrls(
         program.ssl ? `https` : `http`,
         program.host,
-        port
+        port,
       )
       printInstructions(
         program.sitePackageJson.name || `(Unnamed package)`,
-        urls
+        urls,
       )
       if (open) {
         report.info(`Opening browser...`)
         Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
-          report.warn(`Browser not opened because no browser was found`)
+          report.warn(`Browser not opened because no browser was found`),
         )
       }
     })

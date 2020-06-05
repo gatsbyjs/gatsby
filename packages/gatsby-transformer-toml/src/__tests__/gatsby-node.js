@@ -13,7 +13,7 @@ describe(`Process TOML nodes correctly`, () => {
   }
 
   // Provide fake functions
-  const loadNodeContent = node => Promise.resolve(node.content)
+  const loadNodeContent = (node) => Promise.resolve(node.content)
 
   it(`Correctly creates nodes from TOML test file`, async () => {
     // Unfortunately due to TOML limitations no JSON -> TOML converters exist,

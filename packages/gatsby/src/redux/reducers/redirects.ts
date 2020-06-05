@@ -8,7 +8,7 @@ function exists(newRedirect: IRedirect): boolean {
 
   if (!fromPathRedirects) return false
 
-  return fromPathRedirects.some(redirect => _.isEqual(redirect, newRedirect))
+  return fromPathRedirects.some((redirect) => _.isEqual(redirect, newRedirect))
 }
 
 function add(redirect: IRedirect): void {
@@ -24,7 +24,7 @@ function add(redirect: IRedirect): void {
 
 export const redirectsReducer = (
   state: IGatsbyState["redirects"] = [],
-  action: ICreateRedirectAction
+  action: ICreateRedirectAction,
 ): IGatsbyState["redirects"] => {
   switch (action.type) {
     case `CREATE_REDIRECT`: {

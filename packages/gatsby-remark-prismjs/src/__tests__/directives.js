@@ -1,7 +1,7 @@
 const highlightLineRange = require(`../directives`)
 const fixtures = require(`./fixtures`)
-const output = highlighted => highlighted.map(({ code }) => code).join(`\n`)
-const getHighlighted = lines => lines.filter(line => line.highlight)
+const output = (highlighted) => highlighted.map(({ code }) => code).join(`\n`)
+const getHighlighted = (lines) => lines.filter((line) => line.highlight)
 
 describe(`hiding lines`, () => {
   it(`should support hide markers in CSS`, () => {
@@ -50,7 +50,7 @@ describe(`highlighting lines`, () => {
     it(`strips directives`, () => {
       const highlights = highlightLineRange(fixtures.highlightStartEnd)
       const code = output(highlights)
-      ;[`highlight-start`, `highlight-end`].forEach(directive => {
+      ;[`highlight-start`, `highlight-end`].forEach((directive) => {
         expect(code).not.toContain(directive)
       })
     })
@@ -79,12 +79,12 @@ describe(`highlighting lines`, () => {
       const highlights = highlightLineRange(fixtures.highlightRangeInvalid)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
       expect(console.warn).toHaveBeenCalledWith(
-        `Invalid match specified: "// highlight-range"`
+        `Invalid match specified: "// highlight-range"`,
       )
     })
     it(`highlights until end of code block if ranges goes farther`, () => {
       const highlights = highlightLineRange(
-        fixtures.highlightRangeLongerThanCode
+        fixtures.highlightRangeLongerThanCode,
       )
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
@@ -101,7 +101,7 @@ describe(`highlighting lines`, () => {
     })
     it(`highlights comment line after Prism highlighting`, () => {
       const highlights = highlightLineRange(
-        fixtures.highlightJsxCommentAfterPrismHighlighting
+        fixtures.highlightJsxCommentAfterPrismHighlighting,
       )
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
@@ -128,7 +128,7 @@ describe(`highlighting lines`, () => {
         `highlight-range`,
         `highlight-start`,
         `highlight-end`,
-      ].forEach(directive => {
+      ].forEach((directive) => {
         expect(code).not.toContain(directive)
       })
     })
@@ -149,7 +149,7 @@ describe(`mixed highlight and hide lines`, () => {
 
   it(`should error when hidden and highlighted lines overlap`, () => {
     expect(() => highlightLineRange(fixtures.hideAndHighlightOverlap)).toThrow(
-      `Line 8 has been marked as both hidden and highlighted.\n  - Line 1: hide ("hide-range{2-3,7}")\n  - Line 2: highlight ("highlight-range{5-7,9}")`
+      `Line 8 has been marked as both hidden and highlighted.\n  - Line 1: hide ("hide-range{2-3,7}")\n  - Line 2: highlight ("highlight-range{5-7,9}")`,
     )
   })
 })

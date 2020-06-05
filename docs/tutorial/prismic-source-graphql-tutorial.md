@@ -149,7 +149,7 @@ const BlogPosts = ({ posts }) => {
   if (!posts) return null
   return (
     <div>
-      {posts.map(post => {
+      {posts.map((post) => {
         return (
           <div key={post.node._meta.id}>
             <h2>{RichText.asText(post.node.title)}</h2>
@@ -216,7 +216,7 @@ const BlogPosts = ({ posts }) => {
   if (!posts) return null
   return (
     <ul>
-      {posts.map(post => {
+      {posts.map((post) => {
         return (
           <li key={post.node._meta.id}>
             // highlight-start

@@ -19,7 +19,7 @@ ${sentence}
 
     const transformed = plugin({ markdownAST })
 
-    visit(transformed, `text`, node => {
+    visit(transformed, `text`, (node) => {
       expect(node.value).not.toBe(sentence)
       expect(node.value).toMatchSnapshot()
     })

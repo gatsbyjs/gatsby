@@ -18,14 +18,14 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
 
   if (!path) {
     report.error(
-      `Printing type definitions aborted. Please provide a file path.`
+      `Printing type definitions aborted. Please provide a file path.`,
     )
     return Promise.resolve()
   }
 
   if (fs.existsSync(path)) {
     report.error(
-      `Printing type definitions aborted. The file \`${path}\` already exists.`
+      `Printing type definitions aborted. The file \`${path}\` already exists.`,
     )
     return Promise.resolve()
   }
@@ -51,9 +51,9 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   const typesToExclude = exclude.types || []
   const pluginsToExclude = exclude.plugins || []
 
-  const getName = tc => tc.name || tc.getTypeName()
+  const getName = (tc) => tc.name || tc.getTypeName()
 
-  const isInternalType = tc => {
+  const isInternalType = (tc) => {
     const typeName = getName(tc)
     if (internalTypes.includes(typeName)) {
       return true
@@ -67,7 +67,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     return false
   }
 
-  const shouldIncludeType = tc => {
+  const shouldIncludeType = (tc) => {
     const typeName = getName(tc)
     if (typesToExclude.includes(typeName)) {
       return false
@@ -93,7 +93,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   const processedTypes = new Set()
   const typeDefs = new Set()
 
-  const addType = tc => {
+  const addType = (tc) => {
     const typeName = getName(tc)
     if (!processedTypes.has(typeName) && !isInternalType(tc)) {
       processedTypes.add(typeName)
@@ -103,7 +103,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     return null
   }
 
-  const addWithFieldTypes = tc => {
+  const addWithFieldTypes = (tc) => {
     if (
       addType(tc) &&
       (tc instanceof ObjectTypeComposer ||
@@ -112,7 +112,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     ) {
       if (tc instanceof ObjectTypeComposer) {
         const interfaces = tc.getInterfaces()
-        interfaces.forEach(iface => {
+        interfaces.forEach((iface) => {
           const ifaceName = getName(iface)
           if (ifaceName !== `Node`) {
             addWithFieldTypes(schemaComposer.getAnyTC(ifaceName))
@@ -120,13 +120,13 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
         })
       }
 
-      tc.getFieldNames().forEach(fieldName => {
+      tc.getFieldNames().forEach((fieldName) => {
         const fieldType = tc.getFieldTC(fieldName)
         addWithFieldTypes(fieldType)
 
         if (!(tc instanceof InputTypeComposer)) {
           const fieldArgs = tc.getFieldArgs(fieldName)
-          Object.keys(fieldArgs).forEach(argName => {
+          Object.keys(fieldArgs).forEach((argName) => {
             addWithFieldTypes(tc.getFieldArgTC(fieldName, argName))
           })
         }
@@ -134,7 +134,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     }
   }
 
-  schemaComposer.forEach(tc => {
+  schemaComposer.forEach((tc) => {
     if (!isInternalType(tc) && shouldIncludeType(tc)) {
       if (withFieldTypes) {
         addWithFieldTypes(tc)
@@ -149,7 +149,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   ]
 
   try {
-    typeDefs.forEach(tc => printedTypeDefs.push(printType(tc)))
+    typeDefs.forEach((tc) => printedTypeDefs.push(printType(tc)))
     report.info(`Writing GraphQL type definitions to ${path}`)
     return fs.writeFile(path, printedTypeDefs.join(`\n\n`))
   } catch (error) {
@@ -187,16 +187,16 @@ const {
 const { printBlockString } = require(`graphql/language/blockString`)
 const _ = require(`lodash`)
 
-const printScalarType = tc => {
+const printScalarType = (tc) => {
   const type = tc.getType()
   return printDescription(type) + `scalar ${type.name}`
 }
 
-const printObjectType = tc => {
+const printObjectType = (tc) => {
   const type = tc.getType()
   const interfaces = type.getInterfaces()
   const implementedInterfaces = interfaces.length
-    ? ` implements ` + interfaces.map(i => i.name).join(` & `)
+    ? ` implements ` + interfaces.map((i) => i.name).join(` & `)
     : ``
   const extensions = tc.getExtensions()
   if (tc.hasInterface(`Node`)) {
@@ -206,7 +206,8 @@ const printObjectType = tc => {
   const printedDirectives = printDirectives(extensions, directives)
   const fields = tc.hasInterface(`Node`)
     ? Object.values(type.getFields()).filter(
-        field => ![`id`, `parent`, `children`, `internal`].includes(field.name)
+        (field) =>
+          ![`id`, `parent`, `children`, `internal`].includes(field.name),
       )
     : Object.values(type.getFields())
   return (
@@ -216,7 +217,7 @@ const printObjectType = tc => {
   )
 }
 
-const printInterfaceType = tc => {
+const printInterfaceType = (tc) => {
   const type = tc.getType()
   const extensions = tc.getExtensions()
   const directives = tc.schemaComposer.getDirectives()
@@ -228,14 +229,14 @@ const printInterfaceType = tc => {
   )
 }
 
-const printUnionType = tc => {
+const printUnionType = (tc) => {
   const type = tc.getType()
   const types = type.getTypes()
   const possibleTypes = types.length ? ` = ` + types.join(` | `) : ``
   return printDescription(type) + `union ` + type.name + possibleTypes
 }
 
-const printEnumType = tc => {
+const printEnumType = (tc) => {
   const type = tc.getType()
   const values = type
     .getValues()
@@ -244,16 +245,16 @@ const printEnumType = tc => {
         printDescription(value, `  `, !i) +
         `  ` +
         value.name +
-        printDeprecated(value)
+        printDeprecated(value),
     )
 
   return printDescription(type) + `enum ${type.name}` + printBlock(values)
 }
 
-const printInputObjectType = tc => {
+const printInputObjectType = (tc) => {
   const type = tc.getType()
   const fields = Object.values(type.getFields()).map(
-    (f, i) => printDescription(f, `  `, !i) + `  ` + printInputValue(f)
+    (f, i) => printDescription(f, `  `, !i) + `  ` + printInputValue(f),
   )
   return printDescription(type) + `input ${type.name}` + printBlock(fields)
 }
@@ -268,12 +269,12 @@ const printFields = (fields, directives) => {
       `: ` +
       String(f.type) +
       printDirectives(f.extensions || {}, directives) +
-      printDeprecated(f)
+      printDeprecated(f),
   )
   return printBlock(printedFields)
 }
 
-const printBlock = items =>
+const printBlock = (items) =>
   items.length !== 0 ? ` {\n` + items.join(`\n`) + `\n}` : ``
 
 const printArgs = (args, indentation = ``) => {
@@ -282,7 +283,7 @@ const printArgs = (args, indentation = ``) => {
   }
 
   // If all args have no description, print them on one line
-  if (args.every(arg => !arg.description)) {
+  if (args.every((arg) => !arg.description)) {
     return `(` + args.map(printInputValue).join(`, `) + `)`
   }
 
@@ -294,7 +295,7 @@ const printArgs = (args, indentation = ``) => {
           printDescription(arg, `  ` + indentation, !i) +
           `  ` +
           indentation +
-          printInputValue(arg)
+          printInputValue(arg),
       )
       .join(`\n`) +
     `\n` +
@@ -303,7 +304,7 @@ const printArgs = (args, indentation = ``) => {
   )
 }
 
-const printInputValue = arg => {
+const printInputValue = (arg) => {
   const defaultAST = astFromValue(arg.defaultValue, arg.type)
   let argDecl = arg.name + `: ` + String(arg.type)
   if (defaultAST) {
@@ -320,7 +321,7 @@ const printDirectives = (extensions, directives) =>
         ` @${name}` +
         printDirectiveArgs(
           args,
-          directives.find(directive => directive.name === name)
+          directives.find((directive) => directive.name === name),
         )
       )
     })
@@ -341,7 +342,7 @@ const printDirectiveArgs = (args, directive) => {
     directiveArgs
       .map(([name, value]) => {
         const arg =
-          directive.args && directive.args.find(arg => arg.name === name)
+          directive.args && directive.args.find((arg) => arg.name === name)
         return arg && `${name}: ${print(astFromValue(value, arg.type))}`
       })
       .join(`, `) +
@@ -349,7 +350,7 @@ const printDirectiveArgs = (args, directive) => {
   )
 }
 
-const printDeprecated = fieldOrEnumVal => {
+const printDeprecated = (fieldOrEnumVal) => {
   if (!fieldOrEnumVal.isDeprecated) {
     return ``
   }
@@ -378,7 +379,7 @@ const printDescription = (def, indentation = ``, firstInBlock = true) => {
 
 const descriptionLines = (description, maxLen) => {
   const rawLines = description.split(`\n`)
-  return _.flatMap(rawLines, line => {
+  return _.flatMap(rawLines, (line) => {
     if (line.length < maxLen + 5) {
       return line
     }

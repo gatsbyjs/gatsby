@@ -11,18 +11,18 @@ const makeFetch = (expectedResult = fetchResult) =>
   jest.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve(expectedResult),
-    })
+    }),
   )
 
 describe(`createDataloaderLink`, () => {
-  it(`works with minimal set of options`, done => {
+  it(`works with minimal set of options`, (done) => {
     const link = createDataloaderLink({
       uri: `some-endpoint`,
       fetch: makeFetch(),
     })
     const observable = execute(link, { query: sampleQuery })
     observable.subscribe({
-      next: result => {
+      next: (result) => {
         expect(result).toEqual(expectedSampleQueryResult)
         done()
       },
@@ -30,14 +30,14 @@ describe(`createDataloaderLink`, () => {
     })
   })
 
-  it(`reports fetch errors`, done => {
+  it(`reports fetch errors`, (done) => {
     const link = createDataloaderLink({
       uri: `some-endpoint`,
       fetch: jest.fn(() => Promise.reject(`FetchError`)),
     })
     const observable = execute(link, { query: sampleQuery })
     observable.subscribe({
-      error: error => {
+      error: (error) => {
         expect(error).toEqual(`FetchError`)
         done()
       },
@@ -47,7 +47,7 @@ describe(`createDataloaderLink`, () => {
     })
   })
 
-  it(`reports graphql errors`, done => {
+  it(`reports graphql errors`, (done) => {
     const result = {
       errors: [{ message: `Error1` }, { message: `Error2`, path: [`foo`] }],
     }
@@ -57,10 +57,10 @@ describe(`createDataloaderLink`, () => {
     })
     const observable = execute(link, { query: sampleQuery })
     observable.subscribe({
-      error: error => {
+      error: (error) => {
         expect(error.name).toEqual(`GraphQLError`)
         expect(error.message).toEqual(
-          `Failed to load query batch:\nError1\nError2 (path: ["foo"])`
+          `Failed to load query batch:\nError1\nError2 (path: ["foo"])`,
         )
         expect(error.originalResult).toEqual(result)
         done()
@@ -71,7 +71,7 @@ describe(`createDataloaderLink`, () => {
     })
   })
 
-  it(`supports custom fetch options`, done => {
+  it(`supports custom fetch options`, (done) => {
     const fetch = makeFetch()
     const fetchOptions = {
       credentials: `include`,

@@ -30,7 +30,7 @@ const MAX_COPY_RETRIES = 3
 async function watch(
   root,
   packages,
-  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
+  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages },
 ) {
   setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
@@ -44,9 +44,9 @@ async function watch(
   let afterPackageInstallation = false
   let queuedCopies = []
 
-  const realCopyPath = arg => {
+  const realCopyPath = (arg) => {
     const { oldPath, newPath, quiet, resolve, reject, retry = 0 } = arg
-    fs.copy(oldPath, newPath, err => {
+    fs.copy(oldPath, newPath, (err) => {
       if (err) {
         if (retry >= MAX_COPY_RETRIES) {
           console.error(err)
@@ -55,7 +55,7 @@ async function watch(
         } else {
           setTimeout(
             () => realCopyPath({ ...arg, retry: retry + 1 }),
-            500 * Math.pow(2, retry)
+            500 * Math.pow(2, retry),
           )
           return
         }
@@ -90,7 +90,7 @@ async function watch(
 
   const runQueuedCopies = () => {
     afterPackageInstallation = true
-    queuedCopies.forEach(argObj => realCopyPath(argObj))
+    queuedCopies.forEach((argObj) => realCopyPath(argObj))
     queuedCopies = []
   }
 
@@ -104,13 +104,13 @@ async function watch(
 
     await Promise.all(
       [...packagesToClear].map(
-        async packageToClear =>
+        async (packageToClear) =>
           await del([
             `node_modules/${packageToClear}/**/*.{js,js.map}`,
             `!node_modules/${packageToClear}/node_modules/**/*.{js,js.map}`,
             `!node_modules/${packageToClear}/src/**/*.{js,js.map}`,
-          ])
-      )
+          ]),
+      ),
     )
   }
   // check packages deps and if they depend on other packages from monorepo
@@ -156,7 +156,7 @@ async function watch(
   }
 
   const allPackagesIgnoringThemesToWatch = allPackagesToWatch.filter(
-    pkgName => !pkgName.startsWith(`gatsby-theme`)
+    (pkgName) => !pkgName.startsWith(`gatsby-theme`),
   )
 
   const ignored = [
@@ -168,13 +168,13 @@ async function watch(
     /\.npmrc/i,
   ].concat(
     allPackagesIgnoringThemesToWatch.map(
-      p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`)
-    )
+      (p) => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`),
+    ),
   )
   const watchers = _.uniq(
     allPackagesToWatch
-      .map(p => path.join(root, `/packages/`, p))
-      .filter(p => fs.existsSync(p))
+      .map((p) => path.join(root, `/packages/`, p))
+      .filter((p) => fs.existsSync(p)),
   )
 
   let allCopies = []
@@ -189,7 +189,7 @@ async function watch(
 
   chokidar
     .watch(watchers, {
-      ignored: [filePath => _.some(ignored, reg => reg.test(filePath))],
+      ignored: [(filePath) => _.some(ignored, (reg) => reg.test(filePath))],
     })
     .on(`all`, async (event, filePath) => {
       if (!watchEvents.includes(event)) {
@@ -212,7 +212,7 @@ async function watch(
 
       const newPath = path.join(
         `./node_modules/${packageName}`,
-        relativePackageFile
+        relativePackageFile,
       )
 
       if (relativePackageFile === `package.json`) {
@@ -269,7 +269,7 @@ async function watch(
               packageName,
               depTree,
               packages,
-            }).forEach(packageToPublish => {
+            }).forEach((packageToPublish) => {
               // scheduling publish - we will publish when `ready` is emitted
               // as we can do single publish then
               packagesToPublish.add(packageToPublish)
@@ -288,7 +288,7 @@ async function watch(
       if (_.includes(filePath, `cache-dir`)) {
         const newCachePath = path.join(
           `.cache/`,
-          path.relative(path.join(prefix, `cache-dir`), filePath)
+          path.relative(path.join(prefix, `cache-dir`), filePath),
         )
         localCopies.push(copyPath(filePath, newCachePath, quiet))
       }

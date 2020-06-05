@@ -7,7 +7,7 @@ import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-const isAbsolutePath = path => path?.startsWith(`/`)
+const isAbsolutePath = (path) => path?.startsWith(`/`)
 
 export function withPrefix(path, prefix = __BASE_PATH__) {
   if (!isLocalLink(path)) {
@@ -24,7 +24,7 @@ export function withPrefix(path, prefix = __BASE_PATH__) {
   }`
 }
 
-const isLocalLink = path =>
+const isLocalLink = (path) =>
   path &&
   !path.startsWith(`http://`) &&
   !path.startsWith(`https://`) &&
@@ -57,8 +57,8 @@ const NavLinkPropTypes = {
 
 // Set up IntersectionObserver
 const createIntersectionObserver = (el, cb) => {
-  const io = new window.IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  const io = new window.IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (el === entry.target) {
         // Check if element is within viewport, remove listener, destroy observer, and run link callback.
         // MSEdge doesn't currently support isIntersecting, so also test for  an intersectionRatio > 0
@@ -95,7 +95,7 @@ class GatsbyLink extends React.Component {
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
       ___loader.enqueue(
         parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-          .pathname
+          .pathname,
       )
     }
   }
@@ -105,7 +105,7 @@ class GatsbyLink extends React.Component {
     if (!this.state.IOSupported) {
       ___loader.enqueue(
         parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-          .pathname
+          .pathname,
       )
     }
   }
@@ -132,7 +132,7 @@ class GatsbyLink extends React.Component {
       this.io = createIntersectionObserver(ref, () => {
         ___loader.enqueue(
           parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-            .pathname
+            .pathname,
         )
       })
     }
@@ -168,7 +168,7 @@ class GatsbyLink extends React.Component {
     } = this.props
     if (process.env.NODE_ENV !== `production` && !isLocalLink(to)) {
       console.warn(
-        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
+        `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`,
       )
     }
 
@@ -182,13 +182,13 @@ class GatsbyLink extends React.Component {
               state={state}
               getProps={getProps}
               innerRef={this.handleRef}
-              onMouseEnter={e => {
+              onMouseEnter={(e) => {
                 if (onMouseEnter) {
                   onMouseEnter(e)
                 }
                 ___loader.hovering(parsePath(prefixedTo).pathname)
               }}
-              onClick={e => {
+              onClick={(e) => {
                 if (onClick) {
                   onClick(e)
                 }
@@ -241,7 +241,7 @@ GatsbyLink.propTypes = {
 
 const showDeprecationWarning = (functionName, altFunctionName, version) =>
   console.warn(
-    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
+    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`,
   )
 
 export default React.forwardRef((props, ref) => (
@@ -252,18 +252,18 @@ export const navigate = (to, options) => {
   window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
 }
 
-export const push = to => {
+export const push = (to) => {
   showDeprecationWarning(`push`, `navigate`, 3)
   window.___push(rewriteLinkPath(to, window.location.pathname))
 }
 
-export const replace = to => {
+export const replace = (to) => {
   showDeprecationWarning(`replace`, `navigate`, 3)
   window.___replace(rewriteLinkPath(to, window.location.pathname))
 }
 
 // TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
+export const navigateTo = (to) => {
   showDeprecationWarning(`navigateTo`, `navigate`, 3)
   return push(to)
 }

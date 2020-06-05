@@ -36,7 +36,7 @@ export default {
       options: { collapsible: true },
     },
   ],
-  fields: supportedLanguages.map(lang => ({
+  fields: supportedLanguages.map((lang) => ({
     title: lang.title,
     name: lang.id,
     type: "string",
@@ -130,14 +130,14 @@ So let's make _that_ work.
 Once again, you can use the example from the Sanity.io documentation for [a function to localize](https://www.sanity.io/docs/localization#code-snippet-deeply-localizing-an-entire-document) the text from a given Sanity document. I've modified the example below to always default to English. This suits my use case and it's a good starting point if your use case differs. The function walks through a given document and updates any object with `_type: 'locale<TEXT_TYPE>'` ( for example `_type: 'localeText'`, or `_type: 'localeString'` ) and returns only the correct translation text.
 
 ```js:title=src/util/index.js
-export const createLocaleTextGetter = languageCode => {
+export const createLocaleTextGetter = (languageCode) => {
   const languages = [languageCode, "en"] // last language in array is default;
-  const localize = value => {
+  const localize = (value) => {
     if (Array.isArray(value)) {
-      return value.map(v => localize(v, languages))
+      return value.map((v) => localize(v, languages))
     } else if (typeof value == "object") {
       if (/^locale[A-Z]/.test(value._type)) {
-        const language = languages.find(lang => value[lang])
+        const language = languages.find((lang) => value[lang])
         return value[language]
       }
 
@@ -172,7 +172,7 @@ function localize(Component) {
       super(props)
 
       this.getLocalizedContent = createLocaleTextGetter(
-        this.props.pageContext.locale
+        this.props.pageContext.locale,
       )
     }
 
@@ -242,7 +242,7 @@ const createLocalePage = (page, createPage) => {
   })
 
   if (extraLanguages.length) {
-    extraLanguages.forEach(code => {
+    extraLanguages.forEach((code) => {
       const { path, context, ...rest } = page
 
       createPage({

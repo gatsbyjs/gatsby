@@ -206,7 +206,7 @@ exports.downloadMediaFiles = ({
   createNodeId,
   _auth,
 }) => {
-  nodes.map(async node => {
+  nodes.map(async (node) => {
     let fileNode
     // Ensures we are only processing Media Files
     // `wordpress__wp_media` is the media file type name for WordPress
@@ -276,12 +276,12 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   try {
     queries
       .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
+      .forEach((result) =>
         createMySqlNodes(result, results, createNode, {
           createNode,
           createNodeId,
           getCache,
-        })
+        }),
       )
     db.end()
   } catch (e) {
@@ -298,13 +298,13 @@ const { createNodeFactory } = createNodeHelpers({ typePrefix: `mysql` })
 
 function attach(node, key, value, ctx) {
   if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
+    ctx.linkChildren.push((parentNodeId) =>
       createFileNodeFromBuffer({
         buffer: value,
         getCache: ctx.getCache,
         createNode: ctx.createNode,
         createNodeId: ctx.createNodeId,
-      })
+      }),
     )
     value = `Buffer`
   }
@@ -316,7 +316,7 @@ function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
   const MySqlNode = createNodeFactory(name)
   ctx.linkChildren = []
 
-  return __sql.forEach(row => {
+  return __sql.forEach((row) => {
     if (!keys) keys = Object.keys(row)
 
     const node = { id: row[idField] }

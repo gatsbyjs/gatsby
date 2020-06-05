@@ -17,7 +17,7 @@ const reconciler = ReactReconciler({
     props,
     rootContainerInstance,
     hostContext,
-    internalInstanceHandle
+    internalInstanceHandle,
   ) {
     const instance = {
       type,
@@ -32,7 +32,7 @@ const reconciler = ReactReconciler({
     text,
     rootContainerInstance,
     hostContext,
-    internalInstanceHandle
+    internalInstanceHandle,
   ) {
     debug(`creating text instance`, text)
     return { text }
@@ -40,7 +40,7 @@ const reconciler = ReactReconciler({
   appendChildToContainer(container, child) {
     debug(`appending child to container`, { container, child })
     container.children = container.children || []
-    const index = container.children.findIndex(c => c.key === child.key)
+    const index = container.children.findIndex((c) => c.key === child.key)
 
     if (index === -1) {
       container.children.push(child)
@@ -70,7 +70,7 @@ const reconciler = ReactReconciler({
     oldProps,
     newProps,
     rootContainerInstance,
-    currentHostContext
+    currentHostContext,
   ) {},
   commitUpdate(
     instance,
@@ -78,7 +78,7 @@ const reconciler = ReactReconciler({
     type,
     oldProps,
     newProps,
-    finishedWork
+    finishedWork,
   ) {},
   hideInstance() {},
   unhideInstance() {},

@@ -20,7 +20,7 @@ describe(`escaping html entities`, () => {
       "{": `&#123;`,
     }
     expect(escapeHtml(code, mapping)).toBe(
-      `hello world&amp;&gt;&lt;&quot;&#39;&#123;`
+      `hello world&amp;&gt;&lt;&quot;&#39;&#123;`,
     )
   })
 })

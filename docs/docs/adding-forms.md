@@ -83,7 +83,7 @@ export default class IndexPage extends React.Component {
     lastName: "",
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target
     const value = target.value
     const name = target.name
@@ -132,7 +132,7 @@ export default class IndexPage extends React.Component {
     lastName: "",
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const target = event.target
     const value = target.value
     const name = target.name
@@ -142,7 +142,7 @@ export default class IndexPage extends React.Component {
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault()
     alert(`Welcome ${this.state.firstName} ${this.state.lastName}!`)
   }

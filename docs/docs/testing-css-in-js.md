@@ -63,7 +63,7 @@ const Button = styled.div`
 
 test("Button renders correctly", () => {
   expect(
-    renderer.create(<Button>This is hotpink.</Button>).toJSON()
+    renderer.create(<Button>This is hotpink.</Button>).toJSON(),
   ).toMatchSnapshot()
 })
 ```
@@ -105,7 +105,7 @@ const theme = {
 }
 
 const Wrapper = styled.section`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${(props) => props.theme.maxWidth};
 `
 
 test("Wrapper renders correctly", () => {
@@ -114,9 +114,9 @@ test("Wrapper renders correctly", () => {
       .create(
         <ThemeProvider theme={theme}>
           <Wrapper>Content.</Wrapper>
-        </ThemeProvider>
+        </ThemeProvider>,
       )
-      .toJSON()
+      .toJSON(),
   ).toMatchSnapshot()
 })
 ```

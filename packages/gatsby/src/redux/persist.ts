@@ -47,19 +47,19 @@ export function readFromCache(): ICachedReduxState {
   }
 
   const obj: ICachedReduxState = v8.deserialize(
-    readFileSync(reduxSharedFile(reduxCacheFolder))
+    readFileSync(reduxSharedFile(reduxCacheFolder)),
   )
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const chunks = globSync(
-    reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
-  ).map(file => v8.deserialize(readFileSync(file)))
+    reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`,
+  ).map((file) => v8.deserialize(readFileSync(file)))
 
   const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
 
   if (!chunks.length) {
     report.info(
-      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`,
     )
     // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
     return {} as ICachedReduxState
@@ -89,7 +89,7 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if (maxSize > 500000) {
     report.warn(
-      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
+      `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`,
     )
   }
 
@@ -101,7 +101,7 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
 
 function prepareCacheFolder(
   targetDir: string,
-  contents: ICachedReduxState
+  contents: ICachedReduxState,
 ): void {
   // Temporarily save the nodes and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain to much data
@@ -121,7 +121,7 @@ function prepareCacheFolder(
     for (let i = 0; i < chunks; ++i) {
       writeFileSync(
         reduxChunkedNodesFilePrefix(targetDir) + i,
-        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize))
+        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize)),
       )
     }
   }
@@ -177,7 +177,7 @@ export function writeToCache(contents: ICachedReduxState): void {
     }
   } catch (e) {
     report.warn(
-      `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`
+      `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`,
     )
   }
 }

@@ -80,7 +80,7 @@ var proxy = require("http-proxy-middleware")
 module.exports = {
   // for avoiding CORS while developing Netlify Functions locally
   // read more: https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying
-  developMiddleware: app => {
+  developMiddleware: (app) => {
     app.use(
       "/.netlify/functions/",
       proxy({
@@ -88,7 +88,7 @@ module.exports = {
         pathRewrite: {
           "/.netlify/functions/": "",
         },
-      })
+      }),
     )
   },
   // ...
@@ -115,7 +115,7 @@ Now you are ready to access this API from anywhere in your Gatsby app! For examp
 
 ```js
 fetch("/.netlify/functions/hello")
-  .then(response => response.json())
+  .then((response) => response.json())
   .then(console.log)
 ```
 
@@ -170,15 +170,15 @@ export const getUser = () =>
     ? JSON.parse(window.localStorage.getItem("netlifyUser"))
     : {}
 
-const setUser = user =>
+const setUser = (user) =>
   window.localStorage.setItem("netlifyUser", JSON.stringify(user))
 
-export const handleLogin = callback => {
+export const handleLogin = (callback) => {
   if (isLoggedIn()) {
     callback(getUser())
   } else {
     netlifyIdentity.open()
-    netlifyIdentity.on("login", user => {
+    netlifyIdentity.on("login", (user) => {
       setUser(user)
       callback(user)
     })
@@ -191,7 +191,7 @@ export const isLoggedIn = () => {
   return !!user
 }
 
-export const logout = callback => {
+export const logout = (callback) => {
   netlifyIdentity.logout()
   netlifyIdentity.on("logout", () => {
     setUser({})
@@ -270,7 +270,7 @@ export default function NavBar() {
         {isLoggedIn() ? (
           <a
             href="/"
-            onClick={event => {
+            onClick={(event) => {
               event.preventDefault()
               logout(() => navigate(`/app/login`))
             }}
@@ -316,7 +316,7 @@ import { navigate } from "gatsby"
 import { handleLogin, isLoggedIn } from "./services/auth"
 
 class Login extends React.Component {
-  handleSubmit = () => handleLogin(user => navigate(`/app/profile`))
+  handleSubmit = () => handleLogin((user) => navigate(`/app/profile`))
   render() {
     return (
       <>

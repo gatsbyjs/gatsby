@@ -281,7 +281,7 @@ module.exports = (createPage, nodes) => {
         ? nodes.slice(index, index + paginateSize)
         : null
     })
-    .filter(item => item)
+    .filter((item) => item)
 
   // Create new indexed route for each array
   groupedPages.forEach((group, index, groups) => {

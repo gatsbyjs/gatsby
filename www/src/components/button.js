@@ -30,7 +30,7 @@ const Button = ({
     ...rest,
   }
 
-  const trackingOnClick = e => {
+  const trackingOnClick = (e) => {
     if (typeof props.onClick === `function`) {
       props.onClick(e)
     }

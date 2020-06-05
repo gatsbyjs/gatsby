@@ -73,7 +73,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-    `
+    `,
   )
 
   // Handle errors
@@ -210,7 +210,7 @@ _Note: If you need to perform an asynchronous action within `onCreatePage` you c
 
 ```javascript:title=gatsby-node.js
 // Replacing '/' would result in empty string which is invalid
-const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
+const replacePath = (path) => (path === `/` ? path : path.replace(/\/$/, ``))
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, actions }) => {

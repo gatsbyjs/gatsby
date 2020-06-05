@@ -45,7 +45,7 @@ export class GraphQLRunner {
     }: {
       collectStats?: boolean
       graphqlTracing?: boolean
-    } = {}
+    } = {},
   ) {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -95,7 +95,7 @@ export class GraphQLRunner {
 
   validate(
     schema: GraphQLSchema,
-    document: DocumentNode
+    document: DocumentNode,
   ): readonly GraphQLError[] {
     if (!this.validDocuments.has(document)) {
       const errors = validate(schema, document)
@@ -140,7 +140,7 @@ export class GraphQLRunner {
     {
       parentSpan,
       queryName,
-    }: { parentSpan: Span | undefined; queryName: string }
+    }: { parentSpan: Span | undefined; queryName: string },
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -157,7 +157,7 @@ export class GraphQLRunner {
       }
 
       this.stats.uniqueQueries.add(
-        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)
+        crypto.createHash(`sha1`).update(statsQuery).digest(`hex`),
       )
     }
 

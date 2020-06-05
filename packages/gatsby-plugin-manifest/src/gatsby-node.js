@@ -70,14 +70,14 @@ exports.onPreInit = (_, pluginOptions) => {
 
   if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
     pluginOptions.cacheDigest = createContentDigest(
-      fs.readFileSync(pluginOptions.icon)
+      fs.readFileSync(pluginOptions.icon),
     )
   }
 }
 
 exports.onPostBootstrap = async (
   { reporter, parentSpan, basePath },
-  { localize, ...manifest }
+  { localize, ...manifest },
 ) => {
   const activity = reporter.activityTimer(`Build manifest and related icons`, {
     parentSpan,
@@ -92,7 +92,7 @@ exports.onPostBootstrap = async (
   if (Array.isArray(localize)) {
     const locales = [...localize]
     await Promise.all(
-      locales.map(locale => {
+      locales.map((locale) => {
         let cacheModeOverride = {}
 
         /* localization requires unique filenames for output files if a different src Icon is defined.
@@ -114,7 +114,7 @@ exports.onPostBootstrap = async (
           shouldLocalize: true,
           basePath,
         })
-      })
+      }),
     )
   }
   activity.end()
@@ -163,7 +163,7 @@ const makeManifest = async ({
 
   // Specify extra options for each icon (if requested).
   if (pluginOptions.icon_options) {
-    manifest.icons = manifest.icons.map(icon => {
+    manifest.icons = manifest.icons.map((icon) => {
       return {
         ...pluginOptions.icon_options,
         ...icon,
@@ -173,7 +173,7 @@ const makeManifest = async ({
 
   // Determine destination path for icons.
   let paths = {}
-  manifest.icons.forEach(icon => {
+  manifest.icons.forEach((icon) => {
     const iconPath = path.join(`public`, path.dirname(icon.src))
     if (!paths[iconPath]) {
       const exists = fs.existsSync(iconPath)
@@ -190,7 +190,7 @@ const makeManifest = async ({
     // Check if the icon exists
     if (!doesIconExist(icon)) {
       throw new Error(
-        `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+        `icon (${icon}) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`,
       )
     }
 
@@ -201,7 +201,7 @@ const makeManifest = async ({
     if (metadata.width !== metadata.height) {
       reporter.warn(
         `The icon(${icon}) you provided to 'gatsby-plugin-manifest' is not square.\n` +
-          `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`
+          `The icons we generate will be square and for the best results we recommend you provide a square icon.\n`,
       )
     }
 
@@ -221,14 +221,14 @@ const makeManifest = async ({
       //if cacheBusting is being done via url query icons must be generated before cache busting runs
       if (cacheMode === `query`) {
         await Promise.all(
-          iconSet.map(dstIcon =>
-            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-          )
+          iconSet.map((dstIcon) =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon),
+          ),
         )
       }
 
       if (cacheMode !== `none`) {
-        iconSet = iconSet.map(icon => {
+        iconSet = iconSet.map((icon) => {
           let newIcon = { ...icon }
           newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
           return newIcon
@@ -238,9 +238,9 @@ const makeManifest = async ({
       //if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== `query`) {
         await Promise.all(
-          iconSet.map(dstIcon =>
-            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-          )
+          iconSet.map((dstIcon) =>
+            checkCache(cache, dstIcon, icon, iconDigest, generateIcon),
+          ),
         )
       }
 
@@ -257,7 +257,7 @@ const makeManifest = async ({
   }
 
   //Fix #18497 by prefixing paths
-  manifest.icons = manifest.icons.map(icon => {
+  manifest.icons = manifest.icons.map((icon) => {
     return {
       ...icon,
       src: slash(path.join(basePath, icon.src)),
@@ -271,7 +271,7 @@ const makeManifest = async ({
   //Write manifest
   fs.writeFileSync(
     path.join(`public`, `manifest${suffix}.webmanifest`),
-    JSON.stringify(manifest)
+    JSON.stringify(manifest),
   )
 }
 

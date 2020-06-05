@@ -13,7 +13,7 @@ still same one used in the official React documentation.
 function NumberList(props) {
   // highlight-line
   const numbers = props.numbers
-  const listItems = numbers.map(number => (
+  const listItems = numbers.map((number) => (
     // highlight-start
     <li key={number.toString()}>{number}</li>
   ))
@@ -24,6 +24,6 @@ function NumberList(props) {
 const numbers = [1, 2, 3, 4, 5]
 ReactDOM.render(
   <NumberList numbers={numbers} />,
-  document.getElementById("root")
+  document.getElementById("root"),
 )
 ```

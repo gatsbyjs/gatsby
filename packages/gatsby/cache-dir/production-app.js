@@ -49,7 +49,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // Resetting `basepath`/`baseuri` keeps current behaviour
   // to not introduce breaking change.
   // Remove this in v3
-  const RouteHandler = props => (
+  const RouteHandler = (props) => (
     <BaseContext.Provider
       value={{
         baseuri: `/`,
@@ -82,7 +82,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                         ? stripPrefix(location.pathname, __BASE_PATH__)
                         : encodeURI(
                             pageResources.page.matchPath ||
-                              pageResources.page.path
+                              pageResources.page.path,
                           )
                     }
                     {...this.props}
@@ -123,10 +123,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  publicLoader.loadPage(browserLoc.pathname).then(page => {
+  publicLoader.loadPage(browserLoc.pathname).then((page) => {
     if (!page || page.status === PageResourceStatus.Error) {
       throw new Error(
-        `page resources for ${browserLoc.pathname} not found. Not rendering React`
+        `page resources for ${browserLoc.pathname} not found. Not rendering React`,
       )
     }
 
@@ -134,7 +134,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     const Root = () => (
       <Location>
-        {locationContext => <LocationHandler {...locationContext} />}
+        {(locationContext) => <LocationHandler {...locationContext} />}
       </Location>
     )
 
@@ -144,7 +144,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       <Root />,
       ({ result }) => {
         return { element: result }
-      }
+      },
     ).pop()
 
     const NewRoot = () => WrappedRoot
@@ -152,7 +152,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      ReactDOM.hydrate
+      ReactDOM.hydrate,
     )[0]
 
     domReady(() => {
@@ -163,7 +163,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           : void 0,
         () => {
           apiRunner(`onInitialClientRender`)
-        }
+        },
       )
     })
   })

@@ -51,7 +51,7 @@ To display a custom message once your service worker finds an update, you can us
 export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(
     `This application has been updated. ` +
-      `Reload to display the latest version?`
+      `Reload to display the latest version?`,
   )
 
   if (answer === true) {

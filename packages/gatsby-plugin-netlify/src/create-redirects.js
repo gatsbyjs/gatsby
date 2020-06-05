@@ -4,7 +4,7 @@ import { exists, readFile, writeFile } from "fs-extra"
 export default async function writeRedirectsFile(
   pluginData,
   redirects,
-  rewrites
+  rewrites,
 ) {
   const { publicFolder } = pluginData
 
@@ -14,7 +14,7 @@ export default async function writeRedirectsFile(
 
   // Map redirect data to the format Netlify expects
   // https://www.netlify.com/docs/redirects/
-  redirects = redirects.map(redirect => {
+  redirects = redirects.map((redirect) => {
     const {
       fromPath,
       isPermanent,
@@ -40,7 +40,7 @@ export default async function writeRedirectsFile(
       if (typeof value === `string` && value.includes(` `)) {
         console.warn(
           `Invalid redirect value "${value}" specified for key "${key}". ` +
-            `Values should not contain spaces.`
+            `Values should not contain spaces.`,
         )
       } else {
         pieces.push(`${key}=${value}`)
@@ -51,7 +51,7 @@ export default async function writeRedirectsFile(
   })
 
   rewrites = rewrites.map(
-    ({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`
+    ({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`,
   )
 
   let commentFound = false
@@ -75,6 +75,6 @@ export default async function writeRedirectsFile(
 
   return writeFile(
     FILE_PATH,
-    [data, HEADER_COMMENT, ...redirects, ...rewrites].join(`\n`)
+    [data, HEADER_COMMENT, ...redirects, ...rewrites].join(`\n`),
   )
 }

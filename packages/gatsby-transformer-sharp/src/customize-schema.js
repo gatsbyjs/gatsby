@@ -66,7 +66,7 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent =>
+          resolve: (parent) =>
             getTracedSVG({
               ...parent,
               cache,
@@ -93,7 +93,7 @@ const fixedNodeType = ({
                 args,
                 reporter,
                 cache,
-              })
+              }),
             ).then(({ src }) => src)
           },
         },
@@ -110,7 +110,7 @@ const fixedNodeType = ({
                 args,
                 reporter,
                 cache,
-              })
+              }),
             ).then(({ srcSet }) => srcSet)
           },
         },
@@ -197,13 +197,13 @@ const fixedNodeType = ({
           args,
           reporter,
           cache,
-        })
-      ).then(o =>
+        }),
+      ).then((o) =>
         Object.assign({}, o, {
           fieldArgs: args,
           image,
           file,
-        })
+        }),
       )
     },
   }
@@ -223,7 +223,7 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent =>
+          resolve: (parent) =>
             getTracedSVG({
               ...parent,
               cache,
@@ -246,7 +246,7 @@ const fluidNodeType = ({
                 args,
                 reporter,
                 cache,
-              })
+              }),
             ).then(({ src }) => src)
           },
         },
@@ -263,7 +263,7 @@ const fluidNodeType = ({
                 args,
                 reporter,
                 cache,
-              })
+              }),
             ).then(({ srcSet }) => srcSet)
           },
         },
@@ -363,13 +363,13 @@ const fluidNodeType = ({
           args,
           reporter,
           cache,
-        })
-      ).then(o =>
+        }),
+      ).then((o) =>
         Object.assign({}, o, {
           fieldArgs: args,
           image,
           file,
-        })
+        }),
       )
     },
   }
@@ -424,14 +424,14 @@ const createFields = ({
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
         const dimensions = imageSize.sync(
-          toArray(fs.readFileSync(details.absolutePath))
+          toArray(fs.readFileSync(details.absolutePath)),
         )
         const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
         const publicPath = path.join(
           process.cwd(),
           `public`,
           `static`,
-          imageName
+          imageName,
         )
 
         if (
@@ -441,13 +441,13 @@ const createFields = ({
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
           inProgressCopy.add(publicPath)
-          fsExtra.copy(details.absolutePath, publicPath, err => {
+          fsExtra.copy(details.absolutePath, publicPath, (err) => {
             // this is no longer in progress
             inProgressCopy.delete(publicPath)
             if (err) {
               console.error(
                 `error copying file from ${details.absolutePath} to ${publicPath}`,
-                err
+                err,
               )
             }
           })
@@ -467,7 +467,7 @@ const createFields = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent =>
+            resolve: (parent) =>
               getTracedSVG({
                 ...parent,
                 cache,
@@ -555,13 +555,13 @@ const createFields = ({
       resolve: (image, fieldArgs, context) => {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const args = { ...fieldArgs, pathPrefix }
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           if (fieldArgs.base64) {
             resolve(
               base64({
                 file,
                 cache,
-              })
+              }),
             )
           } else {
             const o = queueImageResizing({
@@ -573,7 +573,7 @@ const createFields = ({
                 image,
                 file,
                 fieldArgs: args,
-              })
+              }),
             )
           }
         })

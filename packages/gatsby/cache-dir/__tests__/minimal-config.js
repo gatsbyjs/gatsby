@@ -1,7 +1,7 @@
 const path = require(`path`)
 const child = require(`child_process`)
 
-it(`Builds cache-dir with minimal config`, done => {
+it(`Builds cache-dir with minimal config`, (done) => {
   const args = [
     require.resolve(`@babel/cli/bin/babel.js`),
     path.join(__dirname, `..`),

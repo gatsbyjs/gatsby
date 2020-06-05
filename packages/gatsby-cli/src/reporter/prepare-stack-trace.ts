@@ -23,33 +23,33 @@ export class ErrorWithCodeFrame extends Error {
 
 export async function prepareStackTrace(
   error: Error,
-  source: string
+  source: string,
 ): Promise<ErrorWithCodeFrame> {
   const newError = new ErrorWithCodeFrame(error)
   const map = await new SourceMapConsumer(readFileSync(source, `utf8`))
   const stack = stackTrace
     .parse(newError)
-    .map(frame => wrapCallSite(map, frame))
+    .map((frame) => wrapCallSite(map, frame))
     .filter(
-      frame =>
+      (frame) =>
         `wasConverted` in frame &&
         (!frame.getFileName() ||
           !frame
             .getFileName()
-            .match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/))
+            .match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/)),
     )
 
   newError.codeFrame = getErrorSource(map, stack[0])
   newError.stack =
     `${newError.name}: ${newError.message}\n` +
-    stack.map(frame => `    at ${frame}`).join(`\n`)
+    stack.map((frame) => `    at ${frame}`).join(`\n`)
 
   return newError
 }
 
 function getErrorSource(
   map: BasicSourceMapConsumer | IndexedSourceMapConsumer,
-  topFrame: stackTrace.StackFrame | IWrappedStackFrame
+  topFrame: stackTrace.StackFrame | IWrappedStackFrame,
 ): string {
   const source = map.sourceContentFor(topFrame.getFileName(), true)
   return source
@@ -63,7 +63,7 @@ function getErrorSource(
         },
         {
           highlightCode: true,
-        }
+        },
       )
     : ``
 }
@@ -79,7 +79,7 @@ interface IWrappedStackFrame {
 
 function wrapCallSite(
   map: BasicSourceMapConsumer | IndexedSourceMapConsumer,
-  frame: stackTrace.StackFrame
+  frame: stackTrace.StackFrame,
 ): IWrappedStackFrame | stackTrace.StackFrame {
   const source = frame.getFileName()
   if (!source) return frame

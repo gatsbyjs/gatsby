@@ -36,7 +36,7 @@ describe(`gatsby-remark-code-repls`, () => {
     JSONstringifySpy.mockClear()
   })
 
-  Object.keys(REMARK_TESTS).forEach(name => {
+  Object.keys(REMARK_TESTS).forEach((name) => {
     describe(`${name} remark transform`, () => {
       const protocol = REMARK_TESTS[name]
 
@@ -53,7 +53,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
         const transformed = plugin(
           { markdownAST },
-          { directory: `examples`, target: `_blank` }
+          { directory: `examples`, target: `_blank` },
         )
 
         expect(transformed).toMatchSnapshot()
@@ -61,7 +61,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
       it(`generates a link for files in nested directories`, async () => {
         const markdownAST = remark.parse(
-          `[](${protocol}path/to/nested/file.js)`
+          `[](${protocol}path/to/nested/file.js)`,
         )
 
         const transformed = plugin({ markdownAST }, { directory: `examples` })
@@ -74,7 +74,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
         const transformed = plugin(
           { markdownAST },
-          { directory: `examples`, defaultText: `Click me` }
+          { directory: `examples`, defaultText: `Click me` },
         )
 
         expect(transformed).toMatchSnapshot()
@@ -82,12 +82,12 @@ describe(`gatsby-remark-code-repls`, () => {
 
       it(`generates a link with the specified inline text even if default text is specified`, () => {
         const markdownAST = remark.parse(
-          `[Custom link text](${protocol}file.js)`
+          `[Custom link text](${protocol}file.js)`,
         )
 
         const transformed = plugin(
           { markdownAST },
-          { defaultText: `Click me`, directory: `examples` }
+          { defaultText: `Click me`, directory: `examples` },
         )
 
         expect(transformed).toMatchSnapshot()
@@ -95,13 +95,13 @@ describe(`gatsby-remark-code-repls`, () => {
 
       it(`verifies example files relative to the specified directory`, () => {
         const markdownAST = remark.parse(
-          `[](${protocol}path/to/nested/file.js)`
+          `[](${protocol}path/to/nested/file.js)`,
         )
 
         plugin({ markdownAST }, { directory: `examples` })
 
         expect(fs.existsSync).toHaveBeenCalledWith(
-          `examples/path/to/nested/file.js`
+          `examples/path/to/nested/file.js`,
         )
       })
 
@@ -109,7 +109,7 @@ describe(`gatsby-remark-code-repls`, () => {
         const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
         expect(() => plugin({ markdownAST })).toThrow(
-          `Required REPL option "directory" not specified`
+          `Required REPL option "directory" not specified`,
         )
       })
 
@@ -119,13 +119,13 @@ describe(`gatsby-remark-code-repls`, () => {
         const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
         expect(() => plugin({ markdownAST }, { directory: `fake` })).toThrow(
-          `Invalid REPL directory specified "fake"`
+          `Invalid REPL directory specified "fake"`,
         )
       })
 
       it(`errors if you provide multiple files in non-codesandbox examples`, () => {
         const markdownAST = remark.parse(
-          `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+          `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`,
         )
         const runPlugin = () =>
           plugin({ markdownAST }, { directory: `examples` })
@@ -134,7 +134,7 @@ describe(`gatsby-remark-code-repls`, () => {
           expect(runPlugin).toThrow(
             `Code example path should only contain a single file, but found more than one: ` +
               `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css. ` +
-              `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with codesandbox://`
+              `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with codesandbox://`,
           )
         } else {
           expect(runPlugin).not.toThrow()
@@ -143,7 +143,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
       it(`supports includeMatchingCSS`, () => {
         const markdownAST = remark.parse(
-          `[](${protocol}path/to/nested/file.js)`
+          `[](${protocol}path/to/nested/file.js)`,
         )
         const runPlugin = () =>
           plugin(
@@ -153,7 +153,7 @@ describe(`gatsby-remark-code-repls`, () => {
               codepen: {
                 includeMatchingCSS: true,
               },
-            }
+            },
           )
         expect(runPlugin).not.toThrow()
       })
@@ -161,7 +161,7 @@ describe(`gatsby-remark-code-repls`, () => {
       if (protocol === PROTOCOL_CODE_SANDBOX) {
         it(`supports custom html config option for index html`, () => {
           const markdownAST = remark.parse(
-            `[](${protocol}path/to/nested/file.js)`
+            `[](${protocol}path/to/nested/file.js)`,
           )
 
           const transformed = plugin(
@@ -171,7 +171,7 @@ describe(`gatsby-remark-code-repls`, () => {
               codesandbox: {
                 html: `<span id="foo"></span>`,
               },
-            }
+            },
           )
 
           expect(transformed).toMatchSnapshot()
@@ -179,7 +179,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
         it(`supports custom dependencies config option for NPM module dependencies`, () => {
           const markdownAST = remark.parse(
-            `[](${protocol}path/to/nested/file.js)`
+            `[](${protocol}path/to/nested/file.js)`,
           )
 
           const transformed = plugin(
@@ -194,7 +194,7 @@ describe(`gatsby-remark-code-repls`, () => {
                 ],
               },
               directory: `examples`,
-            }
+            },
           )
 
           expect(JSONstringifySpy).toHaveBeenCalledWith(
@@ -211,14 +211,14 @@ describe(`gatsby-remark-code-repls`, () => {
                   }),
                 }),
               }),
-            })
+            }),
           )
           expect(transformed).toMatchSnapshot()
         })
 
         it(`supports importing multiple files`, () => {
           const markdownAST = remark.parse(
-            `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+            `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`,
           )
           const transformed = plugin({ markdownAST }, { directory: `examples` })
           expect(transformed).toMatchSnapshot()

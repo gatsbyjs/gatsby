@@ -38,7 +38,7 @@ const setup = ({ columnNumber, fileName, lineNumber }, code = ``) => {
 describe(`ignores gatsby stack traces`, () => {
   it(`returns null if gatsby code path`, () => {
     expect(
-      setup({ fileName: path.dirname(require.resolve(`gatsby/package.json`)) })
+      setup({ fileName: path.dirname(require.resolve(`gatsby/package.json`)) }),
     ).toBe(null)
   })
 })

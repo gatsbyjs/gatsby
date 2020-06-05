@@ -45,7 +45,7 @@ export const initializeIPCLogger = (): void => {
       // Override Success and Log types to Info over IPC
       if (
         [LogLevels.Success, LogLevels.Log].includes(
-          sanitizedAction.payload.level as LogLevels
+          sanitizedAction.payload.level as LogLevels,
         )
       ) {
         sanitizedAction.payload.level = LogLevels.Info

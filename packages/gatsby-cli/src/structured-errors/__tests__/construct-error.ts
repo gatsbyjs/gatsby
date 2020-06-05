@@ -6,7 +6,7 @@ beforeEach(() => {
   log = jest.spyOn(console, `log`).mockImplementation(() => {})
   processExit = ((jest.spyOn(
     process,
-    `exit`
+    `exit`,
   ) as unknown) as jest.Mock).mockImplementation(() => {})
 
   log.mockReset()
@@ -29,7 +29,7 @@ test(`it logs error on invalid schema`, () => {
 
   expect(log).toHaveBeenCalledWith(
     `Failed to validate error`,
-    expect.any(Object)
+    expect.any(Object),
   )
 })
 

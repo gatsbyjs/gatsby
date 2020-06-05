@@ -22,7 +22,7 @@ module.exports = (schema, config = {}) => {
 
   Hoek.assert(
     typeConstructor._type === `object`,
-    `schema must be a Joi Object type.`
+    `schema must be a Joi Object type.`,
   )
 
   return joiToGraphql(typeConstructor)

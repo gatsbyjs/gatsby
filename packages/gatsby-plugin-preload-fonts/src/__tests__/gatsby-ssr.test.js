@@ -7,7 +7,7 @@ jest.mock(`../prepare/cache`, () => {
   }
 })
 
-const setCachedAssets = assets =>
+const setCachedAssets = (assets) =>
   loadCache.mockImplementationOnce(() => {
     return {
       timestamp: 0,
@@ -55,14 +55,14 @@ describe(`gatsby-ssr`, () => {
 
       onRenderBody(
         { setHeadComponents, pathname: `/foo` },
-        { crossOrigin: `use-credentials` }
+        { crossOrigin: `use-credentials` },
       )
       expect(setHeadComponents.mock.calls[0][0]).toMatchSnapshot()
     })
 
     it(`accepts function \`crossOrigin\` in plugin config`, () => {
       const config = {
-        crossOrigin: path => (path === `/foo` ? false : `use-credentials`),
+        crossOrigin: (path) => (path === `/foo` ? false : `use-credentials`),
       }
 
       setCachedAssets({

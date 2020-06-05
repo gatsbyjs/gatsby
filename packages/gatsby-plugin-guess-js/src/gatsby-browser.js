@@ -19,7 +19,7 @@ exports.onPrefetchPathname = ({ loadPage }, pluginOptions) => {
     guess({
       path: window.location.pathname,
       threshold: pluginOptions.minimumThreshold,
-    })
+    }),
   )
 
   // Don't prefetch from client for the initial path as we did that

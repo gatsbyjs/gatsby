@@ -64,7 +64,7 @@ const Html = require(`../html`) // the HTML template
 
 module.exports = function renderPage(template, pagePath, props) {
   const htmlContent = renderToStaticMarkup(
-    <Html>{React.createElement(require(path.resolve(template)), props)}</Html>
+    <Html>{React.createElement(require(path.resolve(template)), props)}</Html>,
   )
 
   fs.writeFileSync(path.join(`public`, pagePath), htmlContent, `utf8`)
@@ -168,7 +168,7 @@ import * as yup from "yup"
 
 import { Layout } from "../components/layout"
 
-const handleSubmit = values => {
+const handleSubmit = (values) => {
   // submit the form
 }
 
@@ -184,7 +184,7 @@ export default function Contact() {
           message: yup.string().required(),
         })}
       >
-        {props => (
+        {(props) => (
           <form onSubmit={props.onSubmit}>{/* the rendered form */}</form>
         )}
       </Formik>

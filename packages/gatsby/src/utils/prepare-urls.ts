@@ -12,7 +12,7 @@ export interface IPreparedUrls {
 export function prepareUrls(
   protocol: `http` | `https`,
   host: string,
-  port: number
+  port: number,
 ): IPreparedUrls {
   const formatUrl = (hostname: string): string =>
     url.format({
@@ -44,7 +44,7 @@ export function prepareUrls(
         // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
         if (
           /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-            lanUrlForConfig
+            lanUrlForConfig,
           )
         ) {
           // Address is private, format it for later use

@@ -13,7 +13,8 @@ const onRenderBody = (args, pluginOptions) => {
 }
 
 let headComponents
-const setHeadComponents = args => (headComponents = headComponents.concat(args))
+const setHeadComponents = (args) =>
+  (headComponents = headComponents.concat(args))
 
 const defaultIcon = `pretend/this/exists.png`
 const ssrArgs = {
@@ -37,10 +38,10 @@ describe(`gatsby-plugin-manifest`, () => {
     })
 
     headComponents
-      .filter(component => component.type === `link`)
-      .forEach(component => {
+      .filter((component) => component.type === `link`)
+      .forEach((component) => {
         expect(component.props.href).toEqual(
-          expect.stringMatching(/^\/path-prefix\//)
+          expect.stringMatching(/^\/path-prefix\//),
         )
       })
   })
@@ -126,7 +127,7 @@ describe(`gatsby-plugin-manifest`, () => {
           ],
         })
         expect(headComponents).toMatchSnapshot()
-      })
+      }),
     )
   })
 

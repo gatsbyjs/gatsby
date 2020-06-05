@@ -1,4 +1,4 @@
-const preferDefault = m => (m && m.default) || m
+const preferDefault = (m) => (m && m.default) || m
 
 if (process.env.BUILD_STAGE === `develop`) {
   module.exports = preferDefault(require(`./public-page-renderer-dev`))

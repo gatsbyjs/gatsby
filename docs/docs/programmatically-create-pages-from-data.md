@@ -37,7 +37,7 @@ exports.createPages = async function ({ actions, graphql }) {
     }
   `)
   // highlight-start
-  data.allMarkdownRemark.edges.forEach(edge => {
+  data.allMarkdownRemark.edges.forEach((edge) => {
     const slug = edge.node.fields.slug
     actions.createPage({
       path: slug,

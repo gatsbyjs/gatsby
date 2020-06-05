@@ -10,8 +10,8 @@ describe(`highlighting`, () => {
     var b = 'c'
     // highlight-end
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([expect.any(String), { 0: true, 1: true }])
   })
 
@@ -24,8 +24,8 @@ describe(`highlighting`, () => {
     var b = 'c'
     var d = 'e'
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([expect.any(String), { 1: true, 2: true }])
   })
 
@@ -35,8 +35,8 @@ describe(`highlighting`, () => {
         `
     var a = 'b' // highlight-line
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([expect.any(String), { 0: true }])
   })
 
@@ -47,8 +47,8 @@ describe(`highlighting`, () => {
     var a = 'b' // highlight-next-line
     var b = 'c'
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([expect.any(String), { 1: true }])
   })
 
@@ -61,8 +61,8 @@ describe(`highlighting`, () => {
     var b = 'i am not'
     \`\`\`
   `.trim(),
-        `jsx{1}`
-      )
+        `jsx{1}`,
+      ),
     ).toEqual([expect.any(String), { 0: true }])
   })
 })
@@ -76,8 +76,8 @@ describe(`languages`, () => {
       alert('hi') /* highlight-linen */
     }
   `.trim(),
-        `html`
-      )
+        `html`,
+      ),
     ).toEqual([expect.any(String), { 1: true }])
   })
 
@@ -89,8 +89,8 @@ describe(`languages`, () => {
       <h1>Oh shit waddup</h1> <!-- highlight-line -->
     </div>
   `.trim(),
-        `html`
-      )
+        `html`,
+      ),
     ).toEqual([expect.any(String), { 1: true }])
   })
 
@@ -101,8 +101,8 @@ describe(`languages`, () => {
     something: true
     highlighted: you bedda believe it # highlight-line
   `.trim(),
-        `html`
-      )
+        `html`,
+      ),
     ).toEqual([expect.any(String), { 1: true }])
   })
 
@@ -114,8 +114,8 @@ describe(`languages`, () => {
       color: red; // highlight-line
     }
   `.trim(),
-        `css`
-      )
+        `css`,
+      ),
     ).toEqual([expect.any(String), { 1: true }])
   })
 
@@ -127,8 +127,8 @@ describe(`languages`, () => {
       field # highlight-line
     }
   `.trim(),
-        `graphql`
-      )
+        `graphql`,
+      ),
     ).toEqual([expect.any(String), { 1: true }])
   })
 })
@@ -141,8 +141,8 @@ describe(`hiding`, () => {
     var a = 'b' // hide-line
     var b = 'c'
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([`var b = 'c'`, expect.any(Object)])
   })
 
@@ -155,8 +155,8 @@ describe(`hiding`, () => {
     var b = 'c'
     // hide-end
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([``, expect.any(Object)])
   })
 
@@ -169,8 +169,8 @@ describe(`hiding`, () => {
     var b = 'c'
     var d = 'e'
     `.trim(),
-        `jsx`
-      )
+        `jsx`,
+      ),
     ).toEqual([`var a = 'b'`, expect.any(Object)])
   })
 
@@ -182,8 +182,8 @@ describe(`hiding`, () => {
       var a = 'b' // hide-next-line
       var b = 'c'
       `.trim(),
-          `jsx`
-        )
+          `jsx`,
+        ),
       ).toEqual([`var a = 'b'`, expect.any(Object)])
     })
 
@@ -195,8 +195,8 @@ describe(`hiding`, () => {
       // hide-next-line
       var b = 'c'
       `.trim(),
-          `jsx`
-        )
+          `jsx`,
+        ),
       ).toEqual([`var a = 'b'`, expect.any(Object)])
     })
   })

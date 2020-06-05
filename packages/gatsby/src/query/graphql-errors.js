@@ -105,14 +105,14 @@ export function getCodeFrame(query: string, line?: number, column?: number) {
     {
       linesAbove: 10,
       linesBelow: 10,
-    }
+    },
   )
 }
 
 function getCodeFrameFromRelayError(
   def: any,
   extractedMessage: string,
-  error: Error
+  error: Error,
 ) {
   const { start, source } = findLocation(extractedMessage, def) || {}
   const query = source ? source.body : print(def)
@@ -126,14 +126,14 @@ function getCodeFrameFromRelayError(
 export function multipleRootQueriesError(
   filePath: string,
   def: any,
-  otherDef: any
+  otherDef: any,
 ) {
   const name = def.name.value
   const otherName = otherDef.name.value
   const field = def.selectionSet.selections[0].name.value
   const otherField = otherDef.selectionSet.selections[0].name.value
   const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
-    _.camelCase(otherName)
+    _.camelCase(otherName),
   )}`
 
   // colors are problematic for tests as we can different
@@ -170,7 +170,7 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
           highlightCode,
-        }
+        },
       ),
       afterCodeFrame: codeFrameColumns(
         report.stripIndent`
@@ -192,7 +192,7 @@ export function multipleRootQueriesError(
         {
           linesBelow: Number.MAX_SAFE_INTEGER,
           highlightCode,
-        }
+        },
       ),
     },
   }
@@ -200,7 +200,7 @@ export function multipleRootQueriesError(
 
 export function graphqlError(
   definitionsByName: Map<string, any>,
-  error: Error | RelayGraphQLError
+  error: Error | RelayGraphQLError,
 ) {
   let codeBlock
   const { message, docName } = extractError(error)
@@ -237,10 +237,10 @@ export function unknownFragmentError({
 }) {
   const name = node.name.value
   const closestFragment = fragmentNames
-    .map(f => {
+    .map((f) => {
       return { fragment: f, score: levenshtein.get(name, f) }
     })
-    .filter(f => f.score < 10)
+    .filter((f) => f.score < 10)
     .sort((a, b) => a.score > b.score)[0]?.fragment
 
   let text
@@ -261,17 +261,17 @@ export function unknownFragmentError({
         {
           start: locInGraphQlToLocInFile(
             definition.templateLoc,
-            getLocation({ body: definition.text }, node.loc.start)
+            getLocation({ body: definition.text }, node.loc.start),
           ),
           end: locInGraphQlToLocInFile(
             definition.templateLoc,
-            getLocation({ body: definition.text }, node.loc.end)
+            getLocation({ body: definition.text }, node.loc.end),
           ),
         },
         {
           linesAbove: 10,
           linesBelow: 10,
-        }
+        },
       ),
     },
   }
@@ -293,17 +293,17 @@ export function duplicateFragmentError({
           {
             start: getLocation(
               { body: leftDefinition.text },
-              leftDefinition.def.name.loc.start
+              leftDefinition.def.name.loc.start,
             ),
             end: getLocation(
               { body: leftDefinition.text },
-              leftDefinition.def.name.loc.end
+              leftDefinition.def.name.loc.end,
             ),
           },
           {
             linesAbove: 10,
             linesBelow: 10,
-          }
+          },
         ),
       },
       rightFragment: {
@@ -313,17 +313,17 @@ export function duplicateFragmentError({
           {
             start: getLocation(
               { body: rightDefinition.text },
-              rightDefinition.def.name.loc.start
+              rightDefinition.def.name.loc.start,
             ),
             end: getLocation(
               { body: rightDefinition.text },
-              rightDefinition.def.name.loc.end
+              rightDefinition.def.name.loc.end,
             ),
           },
           {
             linesAbove: 10,
             linesBelow: 10,
-          }
+          },
         ),
       },
     },

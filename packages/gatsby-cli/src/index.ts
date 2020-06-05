@@ -10,7 +10,7 @@ import pkg from "../package.json"
 import updateNotifier from "update-notifier"
 import { ensureWindowsDriveLetterIsUppercase } from "./util/ensure-windows-drive-letter-is-uppercase"
 
-const useJsonLogger = process.argv.slice(2).some(arg => arg.includes(`json`))
+const useJsonLogger = process.argv.slice(2).some((arg) => arg.includes(`json`))
 
 if (useJsonLogger) {
   process.env.GATSBY_LOGGER = `json`
@@ -38,7 +38,7 @@ if (
     report.stripIndent(`
       Gatsby requires Node.js ${MIN_NODE_VERSION} or higher (you have ${version}).
       Upgrade Node to the latest stable release: https://gatsby.dev/upgrading-node-js
-    `)
+    `),
   )
 }
 
@@ -47,7 +47,7 @@ if (semver.prerelease(version)) {
     report.stripIndent(`
     You are currently using a prerelease version of Node (${version}), which is not supported.
     You can use this for testing, but we do not recommend it in production. 
-    Before reporting any bugs, please test with a supported version of Node (>=${MIN_NODE_VERSION}).`)
+    Before reporting any bugs, please test with a supported version of Node (>=${MIN_NODE_VERSION}).`),
   )
 }
 
@@ -61,7 +61,7 @@ if (semver.prerelease(version)) {
 //   )
 // }
 
-process.on(`unhandledRejection`, reason => {
+process.on(`unhandledRejection`, (reason) => {
   // This will exit the process in newer Node anyway so lets be consistent
   // across versions and crash
 
@@ -74,7 +74,7 @@ process.on(`unhandledRejection`, reason => {
   report.panic(`UNHANDLED REJECTION`, reason as Error)
 })
 
-process.on(`uncaughtException`, error => {
+process.on(`uncaughtException`, (error) => {
   report.panic(`UNHANDLED EXCEPTION`, error)
 })
 

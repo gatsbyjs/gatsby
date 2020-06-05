@@ -221,15 +221,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             }
           }
-        `
-      ).then(result => {
+        `,
+      ).then((result) => {
         if (result.errors) {
           console.log(result.errors)
           reject(result.errors)
         }
 
         // Create blog posts pages.
-        result.data.allMarkdownRemark.edges.forEach(edge => {
+        result.data.allMarkdownRemark.edges.forEach((edge) => {
           createPage({
             path: edge.node.fields.slug, // required
             component: blogPost,
@@ -240,7 +240,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         })
 
         return
-      })
+      }),
     )
   })
 }

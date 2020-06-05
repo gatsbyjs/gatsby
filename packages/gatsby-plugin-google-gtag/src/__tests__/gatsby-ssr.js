@@ -33,7 +33,7 @@ it(`adds a preconnect link for Google Analytics`, () => {
       rel="preconnect dns-prefetch"
       key="preconnect-google-analytics"
       href="https://www.google-analytics.com"
-    />
+    />,
   )
 })
 
@@ -52,7 +52,7 @@ describe(`respectDNT`, () => {
     const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
 
     expect(config.props.dangerouslySetInnerHTML.__html).not.toContain(
-      DO_NOT_TRACK_STRING
+      DO_NOT_TRACK_STRING,
     )
   })
 
@@ -72,7 +72,7 @@ describe(`respectDNT`, () => {
     const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
 
     expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      DO_NOT_TRACK_STRING
+      DO_NOT_TRACK_STRING,
     )
   })
 
@@ -91,7 +91,7 @@ describe(`respectDNT`, () => {
     const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
 
     expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      DO_NOT_TRACK_STRING
+      DO_NOT_TRACK_STRING,
     )
   })
 })

@@ -11,7 +11,7 @@ const promises = []
 const errors = []
 const cache = new Map()
 
-const getUserProps = props => {
+const getUserProps = (props) => {
   // eslint-disable-next-line
   const { mdxType, children, ...userProps } = props
   return userProps
@@ -62,8 +62,8 @@ const readResource = (resourceName, context, props) => {
   try {
     promise = resources[resourceName]
       .plan(context, props)
-      .then(result => cache.set(key, result))
-      .catch(e => console.log(e))
+      .then((result) => cache.set(key, result))
+      .catch((e) => console.log(e))
   } catch (e) {
     throw e
   }
@@ -73,7 +73,7 @@ const readResource = (resourceName, context, props) => {
   throw promise
 }
 
-const render = async recipe => {
+const render = async (recipe) => {
   const plan = {}
 
   const recipeWithWrapper = <Wrapper>{recipe}</Wrapper>

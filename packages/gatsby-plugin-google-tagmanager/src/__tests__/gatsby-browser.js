@@ -1,4 +1,4 @@
-const getAPI = setup => {
+const getAPI = (setup) => {
   if (setup) {
     setup()
   }
@@ -62,7 +62,7 @@ describe(`onRouteUpdate`, () => {
       {},
       {
         includeInDevelopment: true,
-      }
+      },
     )
 
     jest.runAllTimers()
@@ -80,7 +80,7 @@ describe(`onRouteUpdate`, () => {
       {},
       {
         routeChangeEventName: customEventName,
-      }
+      },
     )
 
     jest.runAllTimers()
@@ -103,7 +103,7 @@ describe(`onRouteUpdate`, () => {
       {},
       {
         dataLayerName,
-      }
+      },
     )
 
     jest.runAllTimers()

@@ -12,10 +12,10 @@ const getHeadingIds = (
   toc,
   traverseFullDepth = true,
   depth,
-  recursionDepth = 1
+  recursionDepth = 1,
 ) => {
   const idList = []
-  const hashToId = str => str.slice(1)
+  const hashToId = (str) => str.slice(1)
 
   if (toc) {
     for (const item of toc) {
@@ -29,7 +29,7 @@ const getHeadingIds = (
       // undefined if not set in the tableOfContentsDepth frontmatter field
       if (item.items && traverseFullDepth && recursionDepth < (depth || 6)) {
         idList.push(
-          ...getHeadingIds(item.items, true, depth, recursionDepth + 1)
+          ...getHeadingIds(item.items, true, depth, recursionDepth + 1),
         )
       }
     }
@@ -66,15 +66,16 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
                 "&&": {
                   color: isActive ? `link.color` : `textMuted`,
                   border: 0,
-                  borderBottom: t =>
+                  borderBottom: (t) =>
                     isActive
                       ? `1px solid ${t.colors.link.hoverBorder}`
                       : `none`,
-                  transition: t =>
+                  transition: (t) =>
                     `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
                   ":hover": {
                     color: `link.color`,
-                    borderBottom: t => `1px solid ${t.colors.link.hoverBorder}`,
+                    borderBottom: (t) =>
+                      `1px solid ${t.colors.link.hoverBorder}`,
                   },
                 },
               }}
@@ -91,7 +92,7 @@ function createItems(items, location, depth, maxDepth, activeHash, isDesktop) {
                 depth + 1,
                 maxDepth,
                 activeHash,
-                isDesktop
+                isDesktop,
               )}
             </ul>
           )}
@@ -109,7 +110,7 @@ function TableOfContents({ items, depth, location }) {
     const isDesktopQuery = window.matchMedia(`(min-width: ${breakpoints[4]})`) // 1200px
     setIsDesktop(isDesktopQuery.matches)
 
-    const updateIsDesktop = e => setIsDesktop(e.matches)
+    const updateIsDesktop = (e) => setIsDesktop(e.matches)
     isDesktopQuery.addListener(updateIsDesktop)
     return () => isDesktopQuery.removeListener(updateIsDesktop)
   }, [])
@@ -119,7 +120,7 @@ function TableOfContents({ items, depth, location }) {
       sx={{
         mb: [8, null, null, null, null, 0],
         pb: [6, null, null, null, null, 0],
-        borderBottom: t => [
+        borderBottom: (t) => [
           `1px solid ${t.colors.ui.border}`,
           null,
           null,

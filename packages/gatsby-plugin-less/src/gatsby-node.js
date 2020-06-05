@@ -2,7 +2,7 @@ import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
-  { cssLoaderOptions = {}, postCssPlugins, ...lessOptions }
+  { cssLoaderOptions = {}, postCssPlugins, ...lessOptions },
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`

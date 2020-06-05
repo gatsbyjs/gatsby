@@ -77,16 +77,16 @@ graphql(`
       }
     }
   }
-`).then(result => {
+`).then((result) => {
   if (result.errors) {
     reject(result.errors)
   }
-  result.data.allKenticoCloudItemPhase.edges.forEach(edge =>
+  result.data.allKenticoCloudItemPhase.edges.forEach((edge) =>
     createPage({
       path: edge.node.elements.url.value,
       component: path.resolve(`src/templates/phase.js`),
       context: { id: edge.node.system.id },
-    })
+    }),
   )
   resolve()
 })

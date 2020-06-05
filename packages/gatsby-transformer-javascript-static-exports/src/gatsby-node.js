@@ -62,14 +62,14 @@ async function onCreateNode({
       if (node.type === `TemplateLiteral`) {
         // Experimental basic support for template literals:
         // Extract and join any text content; ignore interpolations
-        value = node.quasis.map(quasi => quasi.value.cooked).join(``)
+        value = node.quasis.map((quasi) => quasi.value.cooked).join(``)
       } else if (node.type === `ObjectExpression`) {
         value = {}
-        node.properties.forEach(elem => {
+        node.properties.forEach((elem) => {
           value[elem.key.name] = parseData(elem.value)
         })
       } else if (node.type === `ArrayExpression`) {
-        value = node.elements.map(elem => parseData(elem))
+        value = node.elements.map((elem) => parseData(elem))
       } else {
         value = node.value
       }
@@ -84,7 +84,7 @@ async function onCreateNode({
           astPath.node.left.type === `MemberExpression` &&
           astPath.node.left.property.name === `data`
         ) {
-          astPath.node.right.properties.forEach(node => {
+          astPath.node.right.properties.forEach((node) => {
             data[node.key.name] = parseData(node.value)
           })
         }
@@ -94,11 +94,11 @@ async function onCreateNode({
         if (declaration && declaration.type === `VariableDeclaration`) {
           const dataVariableDeclarator = _.find(
             declaration.declarations,
-            d => d.id.name === `data`
+            (d) => d.id.name === `data`,
           )
 
           if (dataVariableDeclarator && dataVariableDeclarator.init) {
-            dataVariableDeclarator.init.properties.forEach(node => {
+            dataVariableDeclarator.init.properties.forEach((node) => {
               data[node.key.name] = parseData(node.value)
             })
           }

@@ -15,7 +15,7 @@ jest.mock(`readline`, () => {
 // our mocked version persists the same interface between `createInterface` calls
 const getReadlineInterface = () => createInterface()
 
-const answer = a =>
+const answer = (a) =>
   getReadlineInterface().question.mockImplementationOnce((_prompt, cb) => cb(a))
 
 describe(`logger`, () => {
@@ -59,11 +59,11 @@ describe(`logger`, () => {
 
     expect(adapter).toHaveBeenCalledWith(
       expect.stringContaining(`[info]`),
-      `foo`
+      `foo`,
     )
     expect(consoleSpy).toHaveBeenCalledWith(
       expect.stringContaining(`[info]`),
-      `bar`
+      `bar`,
     )
   })
 

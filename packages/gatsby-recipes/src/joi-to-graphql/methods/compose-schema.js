@@ -43,14 +43,14 @@ module.exports = (schema = {}) => {
   return new GraphQLSchema(attrs)
 }
 
-internals.buildFields = obj => {
+internals.buildFields = (obj) => {
   const attrs = {}
 
   for (const key in obj) {
     if (obj[key].isJoi) {
       attrs[key] = {
         type: typeDictionary[obj[key]._type],
-        resolve: obj[key]._meta.find(item => item.resolve instanceof Function)
+        resolve: obj[key]._meta.find((item) => item.resolve instanceof Function)
           .resolve,
       }
     } else {

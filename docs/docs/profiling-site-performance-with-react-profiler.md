@@ -32,7 +32,7 @@ The react profiler component can be used anywhere in a react tree to measure the
 import * as React from "react"
 import { Profiler } from "react"
 
-export const MyComponent = props => (
+export const MyComponent = (props) => (
   // See https://reactjs.org/docs/profiler.html#onrender-callback for onRender parameters
   <Profiler id={props.someUniqueId} onRender={capturePageMetrics}>
     <SlowComponent />

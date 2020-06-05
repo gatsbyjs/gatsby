@@ -61,7 +61,7 @@ const Method = () =>
                   type: { type: GraphQLJSON },
                 }
               },
-            })
+            }),
           ),
         },
         returns: { type: new GraphQLList(GraphQLJSON) },

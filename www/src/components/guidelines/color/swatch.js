@@ -17,7 +17,7 @@ export default function Swatch(props) {
     }, 2500)
   }
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     event.preventDefault()
     event.stopPropagation()
   }

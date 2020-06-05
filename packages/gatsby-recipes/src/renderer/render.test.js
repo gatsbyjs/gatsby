@@ -48,6 +48,6 @@ test(`renders to a plan`, async () => {
       },
       "resourceName": "NPMPackage",
     }
-  `
+  `,
   )
 })

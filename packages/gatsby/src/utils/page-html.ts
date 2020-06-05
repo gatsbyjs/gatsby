@@ -7,7 +7,7 @@ const checkForHtmlSuffix = (pagePath: string): boolean =>
 // copied from https://github.com/markdalgleish/static-site-generator-webpack-plugin/blob/master/index.js#L161
 export const getPageHtmlFilePath = (
   dir: string,
-  outputPath: string
+  outputPath: string,
 ): string => {
   let outputFileName = outputPath.replace(/^(\/|\\)/, ``) // Remove leading slashes for webpack-dev-server
 
@@ -20,7 +20,7 @@ export const getPageHtmlFilePath = (
 
 export const remove = async (
   { publicDir }: { publicDir: string },
-  pagePath: string
+  pagePath: string,
 ): Promise<void> => {
   const filePath = getPageHtmlFilePath(publicDir, pagePath)
   if (fs.existsSync(filePath)) {

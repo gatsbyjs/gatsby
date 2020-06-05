@@ -30,7 +30,7 @@ module.exports = async (
   directory,
   suppliedStage,
   port,
-  { parentSpan } = {}
+  { parentSpan } = {},
 ) => {
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
@@ -62,7 +62,7 @@ module.exports = async (
       if (err.code !== `ENOENT`) {
         report.error(
           `There was a problem processing the .env file (${envFile})`,
-          err
+          err,
         )
       }
     }
@@ -94,7 +94,7 @@ module.exports = async (
       },
       {
         "process.env": JSON.stringify({}),
-      }
+      },
     )
   }
 
@@ -126,7 +126,7 @@ module.exports = async (
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
           publicPath: process.env.GATSBY_WEBPACK_PUBLICPATH || `/`,
-          devtoolModuleFilenameTemplate: info =>
+          devtoolModuleFilenameTemplate: (info) =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
           // Avoid React cross-origin errors
           // See https://reactjs.org/docs/cross-origin-errors.html
@@ -164,7 +164,7 @@ module.exports = async (
           commons: [
             require.resolve(`event-source-polyfill`),
             `${require.resolve(
-              `webpack-hot-middleware/client`
+              `webpack-hot-middleware/client`,
             )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
           ],
@@ -197,7 +197,7 @@ module.exports = async (
         __BASE_PATH__: JSON.stringify(program.prefixPaths ? pathPrefix : ``),
         __PATH_PREFIX__: JSON.stringify(program.prefixPaths ? publicPath : ``),
         __ASSET_PREFIX__: JSON.stringify(
-          program.prefixPaths ? assetPrefix : ``
+          program.prefixPaths ? assetPrefix : ``,
         ),
       }),
     ]
@@ -288,19 +288,19 @@ module.exports = async (
       configRules.push(
         rules.dependencies({
           modulesThatUseGatsby,
-        })
+        }),
       )
     }
 
     if (store.getState().themes.themes) {
       configRules = configRules.concat(
-        store.getState().themes.themes.map(theme => {
+        store.getState().themes.themes.map((theme) => {
           return {
             test: /\.jsx?$/,
             include: theme.themeDir,
             use: [loaders.js()],
           }
-        })
+        }),
       )
     }
 
@@ -386,26 +386,26 @@ module.exports = async (
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
         "@babel/runtime": path.dirname(
-          require.resolve(`@babel/runtime/package.json`)
+          require.resolve(`@babel/runtime/package.json`),
         ),
         "core-js": path.dirname(require.resolve(`core-js/package.json`)),
         // TODO: Remove entire block when we make fast-refresh the default
         ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
           ? {
               "react-hot-loader": path.dirname(
-                require.resolve(`react-hot-loader/package.json`)
+                require.resolve(`react-hot-loader/package.json`),
               ),
             }
           : {}),
         "react-lifecycles-compat": directoryPath(
-          `.cache/react-lifecycles-compat.js`
+          `.cache/react-lifecycles-compat.js`,
         ),
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
         "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
-          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`),
         ),
         "socket.io-client": path.dirname(
-          require.resolve(`socket.io-client/package.json`)
+          require.resolve(`socket.io-client/package.json`),
         ),
       },
       plugins: [
@@ -425,7 +425,7 @@ module.exports = async (
       // for browser bundles
       resolve.alias[`@reach/router`] = path.join(
         path.dirname(require.resolve(`@reach/router/package.json`)),
-        `es`
+        `es`,
       )
     }
 
@@ -490,7 +490,7 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module => module.type === `css/mini-extract`
+    const isCssModule = (module) => module.type === `css/mini-extract`
 
     const splitChunks = {
       chunks: `all`,
@@ -503,8 +503,8 @@ module.exports = async (
           // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
           test: new RegExp(
             `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-              `|`
-            )})[\\\\/]`
+              `|`,
+            )})[\\\\/]`,
           ),
           priority: 40,
           // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
@@ -523,7 +523,7 @@ module.exports = async (
             const hash = crypto.createHash(`sha1`)
             if (!module.libIdent) {
               throw new Error(
-                `Encountered unknown module type: ${module.type}. Please open an issue.`
+                `Encountered unknown module type: ${module.type}. Please open an issue.`,
               )
             }
 
@@ -600,7 +600,7 @@ module.exports = async (
                     keep_fnames: true,
                   },
                 }
-              : {}
+              : {},
           ),
         plugins.minifyCss(),
       ].filter(Boolean),
@@ -639,11 +639,11 @@ module.exports = async (
       return false
     }
 
-    const isExternal = request => {
-      if (externalList.some(item => checkItem(item, request))) {
+    const isExternal = (request) => {
+      if (externalList.some((item) => checkItem(item, request))) {
         return `umd ${require.resolve(request)}`
       }
-      if (userExternalList.some(item => checkItem(item, request))) {
+      if (userExternalList.some((item) => checkItem(item, request))) {
         return `umd ${request}`
       }
       return null

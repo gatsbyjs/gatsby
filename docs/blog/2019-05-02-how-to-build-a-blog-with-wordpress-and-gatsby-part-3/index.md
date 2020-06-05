@@ -89,7 +89,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const BlogPosts = result.data.allWordpressPost.edges
-  BlogPosts.forEach(post => {
+  BlogPosts.forEach((post) => {
     createPage({
       path: `/post/${post.node.slug}`,
       component: BlogPostTemplate,
@@ -99,7 +99,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
 
     const Pages = result.data.allWordpressPage.edges
-    Pages.forEach(page => {
+    Pages.forEach((page) => {
       createPage({
         path: `/${page.node.slug}`,
         component: PageTemplate,
@@ -206,7 +206,7 @@ const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <ul style={{ listStyle: "none" }}>
-      {data.allWordpressPost.edges.map(post => (
+      {data.allWordpressPost.edges.map((post) => (
         <li style={{ padding: "20px 0", borderBottom: "1px solid #ccc" }}>
           <Link
             to={`/post/${post.node.slug}`}
@@ -363,7 +363,7 @@ const Header = () => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <header
         style={{
           background: `rebeccapurple`,
@@ -508,7 +508,7 @@ const Header = () => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <header
         style={{
           background: `rebeccapurple`,
@@ -537,7 +537,7 @@ const Header = () => (
             </Link>
           </h1>
           <ul style={{ listStyle: `none`, display: `flex`, margin: 0 }}>
-            {data.wordpressWpApiMenusMenusItems.items.map(item => (
+            {data.wordpressWpApiMenusMenusItems.items.map((item) => (
               <li key={item.object_slug} style={{ margin: `0 10px` }}>
                 <Link
                   to={`/${item.object_slug}`}

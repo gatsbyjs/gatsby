@@ -20,7 +20,7 @@ const containerStyles = {
   // of whitespace in between main content and TOC
   //
   // could be much cleaner/clearer, please feel free to improve 🙏
-  maxWidth: t =>
+  maxWidth: (t) =>
     `calc(${t.sizes.mainContentWidth.withSidebar} + ${t.sizes.tocWidth} + ${t.space[9]} + ${t.space[9]} + ${t.space[9]})`,
   px: 9,
 }
@@ -90,9 +90,9 @@ function DocsMarkdownPage({
                   ml: 9,
                   maxWidth: `tocWidth`,
                   position: `sticky`,
-                  top: t =>
+                  top: (t) =>
                     `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight} + ${t.space[9]})`,
-                  maxHeight: t =>
+                  maxHeight: (t) =>
                     `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${t.space[9]} - ${t.space[9]})`,
                   overflow: `auto`,
                 },

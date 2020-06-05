@@ -53,7 +53,7 @@ const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
 
 exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { themes, flattenedPlugins } = store.getState()
 
@@ -63,7 +63,7 @@ exports.onCreateWebpackConfig = (
         new GatsbyThemeComponentShadowingResolverPlugin({
           themes: themes.themes
             ? themes.themes
-            : flattenedPlugins.map(plugin => {
+            : flattenedPlugins.map((plugin) => {
                 return {
                   themeDir: plugin.pluginFilepath,
                   themeName: plugin.name,
@@ -117,7 +117,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   getMatchingThemesForPath(filepath) {
     // find out which theme's src/components dir we're requiring from
     const allMatchingThemes = this.themes.filter(({ themeName }) =>
-      filepath.includes(path.join(themeName, `src`))
+      filepath.includes(path.join(themeName, `src`)),
     )
 
     // The same theme can be included twice in the themes list causing multiple
@@ -174,7 +174,7 @@ return resolver.doResolve(
   { ...request, path: builtComponentPath || request.path },
   null,
   {},
-  callback
+  callback,
 )
 ```
 
@@ -204,7 +204,7 @@ const locationsToCheck = [
     // Last theme wins, so start matching reverse
     .reverse()
     // Create the full theme directory path to check against
-    .map(({ themeDir }) => path.join(themeDir, `src`, theme))
+    .map(({ themeDir }) => path.join(themeDir, `src`, theme)),
 )
 ```
 

@@ -5,22 +5,22 @@ export const useActiveHash = (itemIds, rootMargin = undefined) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveHash(entry.target.id)
           }
         })
       },
-      { rootMargin: rootMargin || `0% 0% -80% 0%` }
+      { rootMargin: rootMargin || `0% 0% -80% 0%` },
     )
 
-    itemIds.forEach(id => {
+    itemIds.forEach((id) => {
       observer.observe(document.getElementById(id))
     })
 
     return () => {
-      itemIds.forEach(id => {
+      itemIds.forEach((id) => {
         observer.unobserve(document.getElementById(id))
       })
     }

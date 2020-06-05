@@ -20,7 +20,7 @@ const defaultMessage =
  */
 const showAnalyticsNotification = (
   config = defaultConfig,
-  message = defaultMessage
+  message = defaultMessage,
 ) => {
   console.log(boxen(message, config))
 }

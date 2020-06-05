@@ -83,7 +83,7 @@ describe(`Process contentful data (by name)`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const assets = currentSyncData.assets
-    assets.forEach(assetItem => {
+    assets.forEach((assetItem) => {
       normalize.createAssetNodes({
         assetItem,
         createNode,
@@ -162,7 +162,7 @@ describe(`Process contentful data (by id)`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
     const assets = currentSyncData.assets
-    assets.forEach(assetItem => {
+    assets.forEach((assetItem) => {
       normalize.createAssetNodes({
         assetItem,
         createNode,
@@ -371,7 +371,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `en-US`,
         },
-      })
+      }),
     ).toBe(field[`en-US`])
     expect(
       normalize.getLocalizedField({
@@ -380,7 +380,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `de`,
         },
-      })
+      }),
     ).toBe(field[`de`])
   })
   it(`Gets the specified locale if the field is falsey`, () => {
@@ -395,7 +395,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `en-US`,
         },
-      })
+      }),
     ).toBe(falseyField[`en-US`])
 
     expect(
@@ -405,7 +405,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `de`,
         },
-      })
+      }),
     ).toBe(falseyField[`de`])
   })
   it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
@@ -416,7 +416,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `gsw_CH`,
         },
-      })
+      }),
     ).toBe(field[`de`])
   })
   it(`returns null if passed a locale that doesn't have a field on a localized field`, () => {
@@ -427,7 +427,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `es-US`,
         },
-      })
+      }),
     ).toEqual(null)
   })
   it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
@@ -438,7 +438,7 @@ describe(`Gets field value based on current locale`, () => {
         locale: {
           code: `es-US`,
         },
-      })
+      }),
     ).toEqual(null)
   })
 })
@@ -451,7 +451,7 @@ describe(`Make IDs`, () => {
         id: `id`,
         defaultLocale: `en-US`,
         currentLocale: `en-US`,
-      })
+      }),
     ).toBe(`spaceId___id`)
   })
   it(`It does postfix the spaceId and the id if its not the default locale`, () => {
@@ -461,7 +461,7 @@ describe(`Make IDs`, () => {
         id: `id`,
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,
-      })
+      }),
     ).toBe(`spaceId___id___en-GB`)
   })
 })

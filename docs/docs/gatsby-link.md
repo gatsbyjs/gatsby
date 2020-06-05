@@ -205,7 +205,7 @@ import { navigate } from "gatsby" // highlight-line
 
 const Form = () => (
   <form
-    onSubmit={event => {
+    onSubmit={(event) => {
       event.preventDefault()
 
       // TODO: do something with form values
@@ -228,7 +228,7 @@ import { navigate } from "gatsby"
 
 const Form = () => (
   <form
-    onSubmit={event => {
+    onSubmit={(event) => {
       event.preventDefault()
 
       // Implementation of this function is an exercise for the reader.
@@ -239,7 +239,7 @@ const Form = () => (
         // highlight-start
         {
           state: { formValues },
-        }
+        },
         // highlight-end
       )
     }}
@@ -261,14 +261,14 @@ import { navigate } from "gatsby"
 
 const Form = () => (
   <form
-    onSubmit={event => {
+    onSubmit={(event) => {
       event.preventDefault()
 
       // TODO: do something with form values
       navigate(
         "/form-submitted/",
         // highlight-next-line
-        { replace: true }
+        { replace: true },
       )
     }}
   >

@@ -8,7 +8,7 @@ const md5File = require(`md5-file`)
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
-  pluginOptions = {}
+  pluginOptions = {},
 ) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
@@ -18,7 +18,7 @@ exports.createFileNode = async (
     // Useful for limiting graphql query with certain parent directory
     relativeDirectory: path.relative(
       pluginOptions.path || process.cwd(),
-      parsedSlashed.dir
+      parsedSlashed.dir,
     ),
   }
 
@@ -59,8 +59,8 @@ exports.createFileNode = async (
       relativePath: slash(
         path.relative(
           pluginOptions.path || process.cwd(),
-          slashedFile.absolutePath
-        )
+          slashedFile.absolutePath,
+        ),
       ),
       extension: slashedFile.ext.slice(1).toLowerCase(),
       size: stats.size,
@@ -71,6 +71,6 @@ exports.createFileNode = async (
       birthTime: stats.birthtime,
       ...slashedFile,
       ...stats,
-    })
+    }),
   )
 }

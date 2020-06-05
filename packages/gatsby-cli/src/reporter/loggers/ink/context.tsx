@@ -7,14 +7,14 @@ import { IGatsbyState } from "gatsby/src/redux/types"
 // to not use it's own store temporarily.
 // By the time this is actually running, it will become an `IGatsbyState`
 const StoreStateContext = createContext<IGatsbyState>(
-  (getStore().getState() as any) as IGatsbyState
+  (getStore().getState() as any) as IGatsbyState,
 )
 
 export const StoreStateProvider: React.FC = ({
   children,
 }): React.ReactElement => {
   const [state, setState] = useState(
-    (getStore().getState() as any) as IGatsbyState
+    (getStore().getState() as any) as IGatsbyState,
   )
 
   useEffect(
@@ -22,7 +22,7 @@ export const StoreStateProvider: React.FC = ({
       onLogAction(() => {
         setState((getStore().getState() as any) as IGatsbyState)
       }),
-    []
+    [],
   )
 
   return (

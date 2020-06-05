@@ -32,7 +32,7 @@ exports.onPreBootstrap = async ({ store, parentSpan }) => {
       browserslist,
     },
     null,
-    2
+    2,
   )
 
   await fs.writeFile(directoryPath(`.cache/babelState.json`), babelState)

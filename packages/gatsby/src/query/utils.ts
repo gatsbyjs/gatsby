@@ -7,7 +7,7 @@ export const formatErrorDetails = (errorDetails: Map<string, any>): string =>
   Array.from(errorDetails.entries())
     .map(
       ([name, details]) => `${name}:
-  ${indentString(details.toString())}`
+  ${indentString(details.toString())}`,
     )
     .join(`\n`)
 

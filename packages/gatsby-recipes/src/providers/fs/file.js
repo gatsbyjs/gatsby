@@ -11,7 +11,7 @@ const resourceSchema = require(`../resource-schema`)
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
 
-const fileExists = fullPath => {
+const fileExists = (fullPath) => {
   try {
     fs.accessSync(fullPath, fs.constants.F_OK)
     return true
@@ -22,7 +22,7 @@ const fileExists = fullPath => {
 
 const downloadFile = async (url, filePath) =>
   fetch(url).then(
-    res =>
+    (res) =>
       new Promise((resolve, reject) => {
         const dest = fs.createWriteStream(filePath)
         res.body.pipe(dest)
@@ -30,7 +30,7 @@ const downloadFile = async (url, filePath) =>
           resolve(true)
         })
         dest.on(`error`, reject)
-      })
+      }),
   )
 
 const create = async ({ root }, { id, path: filePath, content }) => {
@@ -109,7 +109,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   return plan
 }
 
-const message = resource => `Wrote file ${resource.path}`
+const message = (resource) => `Wrote file ${resource.path}`
 
 const schema = {
   path: Joi.string(),
@@ -117,7 +117,7 @@ const schema = {
   ...resourceSchema,
 }
 exports.schema = schema
-exports.validate = resource =>
+exports.validate = (resource) =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 module.exports.exists = fileExists

@@ -22,7 +22,7 @@ const pagesDirectory = "/pages"
 watchDirectory(
   pagesDirectory,
   "**/*.{js, jsx}",
-  addedPath => {
+  (addedPath) => {
     // Filter out special components that shouldn't be made into
     // pages.
     if (!validatePath(addedPath)) {
@@ -44,10 +44,10 @@ watchDirectory(
     // Add page
     createPage(page)
   },
-  removedPath => {
+  (removedPath) => {
     // Delete the page for the now deleted component.
     const componentPath = systemPath.join(pagesDirectory, removedPath)
-    store.getState().pages.forEach(page => {
+    store.getState().pages.forEach((page) => {
       if (page.component === componentPath) {
         deletePage({
           path: createPath(removedPath),
@@ -55,7 +55,7 @@ watchDirectory(
         })
       }
     })
-  }
+  },
 )
 ```
 

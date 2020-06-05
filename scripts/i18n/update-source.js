@@ -32,7 +32,7 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   if (shell.ls(repoName).code !== 0) {
     logger.info(`No local clone. Cloning ${repoName}`)
     const { code } = shell.exec(
-      `git clone --quiet --depth 1 ${repoUrl} --branch ${branch} > /dev/null`
+      `git clone --quiet --depth 1 ${repoUrl} --branch ${branch} > /dev/null`,
     )
     // If cloning fails for whatever reason, we need to exit immediately
     // or we might accidentally push to the monorepo
@@ -58,7 +58,7 @@ async function updateSourceRepo() {
   // Get potential commit message early (before we "cd" into sourceRepo clone directory) to use last gatsbyjs/gatsby commit
   const commitMessage =
     shell.exec(
-      `git log -1 --pretty="sync with monorepo gatsbyjs/gatsby@%H - %B"`
+      `git log -1 --pretty="sync with monorepo gatsbyjs/gatsby@%H - %B"`,
     ).stdout || `Update from gatsbyjs/gatsby`
 
   logger.info(`Checking if cache directory exists`)
@@ -74,7 +74,7 @@ async function updateSourceRepo() {
   logger.info(`Repopulating content`)
   shell.rm(`-rf`, `docs/*`)
   // Repopulate content from the monorepo
-  pathsToCopy.forEach(p => {
+  pathsToCopy.forEach((p) => {
     shell.cp(`-r`, path.join(gatsbyMonorepoPath, p), `docs`)
   })
 
@@ -92,7 +92,7 @@ async function updateSourceRepo() {
   // http://blog.stvjam.es/2016/11/using-quotes-in-git-command-line-commit-messages/#Using-Single-Quotes
   if (
     shell.exec(
-      `git commit -m '${commitMessage.replace(/'/g, `'\\''`)}' > /dev/null`
+      `git commit -m '${commitMessage.replace(/'/g, `'\\''`)}' > /dev/null`,
     ).code !== 0
   ) {
     logger.error(`Failed to commit to ${sourceRepo}`)

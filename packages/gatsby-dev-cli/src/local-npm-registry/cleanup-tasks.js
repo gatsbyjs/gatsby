@@ -2,7 +2,7 @@ const signalExit = require(`signal-exit`)
 
 const cleanupTasks = new Set()
 
-exports.registerCleanupTask = taskFn => {
+exports.registerCleanupTask = (taskFn) => {
   cleanupTasks.add(taskFn)
   return () => {
     const result = taskFn()
@@ -14,6 +14,6 @@ exports.registerCleanupTask = taskFn => {
 signalExit(() => {
   if (cleanupTasks.size) {
     console.log(`Process exitted in middle of publishing - cleaning up`)
-    cleanupTasks.forEach(taskFn => taskFn())
+    cleanupTasks.forEach((taskFn) => taskFn())
   }
 })

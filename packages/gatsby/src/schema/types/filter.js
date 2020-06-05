@@ -41,7 +41,7 @@ const convert = ({
         name: inputTypeName,
         fields: {},
       }),
-      schemaComposer
+      schemaComposer,
     )
   }
 
@@ -49,7 +49,7 @@ const convert = ({
 
   const fieldNames = inputTypeComposer.getFieldNames()
   const convertedFields = {}
-  fieldNames.forEach(fieldName => {
+  fieldNames.forEach((fieldName) => {
     const fieldConfig = inputTypeComposer.getFieldConfig(fieldName)
     const type = getNamedType(fieldConfig.type)
     const searchable = typeComposer.getFieldExtension(fieldName, `searchable`)
@@ -64,7 +64,7 @@ const convert = ({
       // Input type composers has names `FooInput`, get the type associated
       // with it
       const typeComposer = schemaComposer.getAnyTC(
-        type.name.replace(/Input$/, ``)
+        type.name.replace(/Input$/, ``),
       )
       const itc = new InputTypeComposer(type, schemaComposer)
 
@@ -105,16 +105,16 @@ const convert = ({
 
 const removeEmptyFields = (
   { schemaComposer, inputTypeComposer },
-  cache = new Set()
+  cache = new Set(),
 ) => {
-  const convert = itc => {
+  const convert = (itc) => {
     if (cache.has(itc)) {
       return itc
     }
     cache.add(itc)
     const fields = itc.getFields()
     const nonEmptyFields = {}
-    Object.keys(fields).forEach(fieldName => {
+    Object.keys(fields).forEach((fieldName) => {
       const fieldITC = fields[fieldName]
       if (fieldITC instanceof InputTypeComposer) {
         const convertedITC = convert(fieldITC)
@@ -134,7 +134,7 @@ const removeEmptyFields = (
 const getFilterInput = ({ schemaComposer, typeComposer }) => {
   const typeName = typeComposer.getTypeName()
   const filterInputComposer = schemaComposer.getOrCreateITC(
-    `${typeName}FilterInput`
+    `${typeName}FilterInput`,
   )
   const inputTypeComposer = typeComposer.getInputTypeComposer()
 
@@ -186,7 +186,7 @@ const ARRAY_OPERATORS = [IN, NIN]
 
 const getOperatorFields = (fieldType, operators) => {
   const result = {}
-  operators.forEach(op => {
+  operators.forEach((op) => {
     if (ARRAY_OPERATORS.includes(op)) {
       result[op] = [fieldType]
     } else {
@@ -206,19 +206,20 @@ const getQueryOperatorInput = ({ schemaComposer, type }) => {
     typeName = `CustomScalar`
   }
   const operators = ALLOWED_OPERATORS[typeName]
-  return schemaComposer.getOrCreateITC(type.name + `QueryOperatorInput`, itc =>
-    itc.addFields(getOperatorFields(type, operators))
+  return schemaComposer.getOrCreateITC(
+    type.name + `QueryOperatorInput`,
+    (itc) => itc.addFields(getOperatorFields(type, operators)),
   )
 }
 
 const getQueryOperatorListInput = ({ schemaComposer, inputTypeComposer }) => {
   const typeName = inputTypeComposer.getTypeName().replace(/Input/, `ListInput`)
-  return schemaComposer.getOrCreateITC(typeName, itc => {
+  return schemaComposer.getOrCreateITC(typeName, (itc) => {
     itc.addFields({
       elemMatch: inputTypeComposer,
     })
   })
 }
 
-const isBuiltInScalarType = type =>
+const isBuiltInScalarType = (type) =>
   isSpecifiedScalarType(type) || type === GraphQLDate || type === GraphQLJSON

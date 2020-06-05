@@ -31,7 +31,7 @@ function SEO({
           }
         }
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
@@ -103,7 +103,7 @@ function SEO({
                 name: `keywords`,
                 content: keywords.join(`, `),
               }
-            : []
+            : [],
         )
         .concat(meta)}
     />

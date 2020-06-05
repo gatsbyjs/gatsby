@@ -4,7 +4,7 @@ const defaultOptions = require(`../utils/default-options`)
 
 module.exports = async function preprocessSource(
   { filename, contents },
-  pluginOptions
+  pluginOptions,
 ) {
   const { extensions, ...options } = defaultOptions(pluginOptions)
   const ext = path.extname(filename)

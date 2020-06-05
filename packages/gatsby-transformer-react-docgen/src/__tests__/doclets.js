@@ -14,7 +14,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
             `type`,
             expect.objectContaining({
               ...tsType,
-            })
+            }),
           )
         })
       })
@@ -39,7 +39,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
                   name: `any`,
                 },
               ],
-            })
+            }),
           )
         })
       })
@@ -56,7 +56,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
             `type`,
             expect.objectContaining({
               name: `React.Component<Props>`,
-            })
+            }),
           )
         })
       })
@@ -89,7 +89,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
             `type`,
             expect.objectContaining({
               name: `string`,
-            })
+            }),
           )
         })
       })
@@ -120,7 +120,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
                   name: `any`,
                 },
               ],
-            })
+            }),
           )
         })
       })
@@ -140,7 +140,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
             `type`,
             expect.objectContaining({
               ...flowType,
-            })
+            }),
           )
         })
       })
@@ -165,7 +165,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
                   name: `any`,
                 },
               ],
-            })
+            }),
           )
         })
       })
@@ -182,7 +182,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
             `type`,
             expect.objectContaining({
               name: `React.Component<Props>`,
-            })
+            }),
           )
         })
       })
@@ -200,7 +200,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
             `type`,
             {
               name: `number`,
-            }
+            },
           )
         })
       })
@@ -216,7 +216,7 @@ describe(`transformer-react-doc-gen: Doclets`, () => {
         `type`,
         expect.objectContaining({
           name: `propertyName`,
-        })
+        }),
       )
     })
   })

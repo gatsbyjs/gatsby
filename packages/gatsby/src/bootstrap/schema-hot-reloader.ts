@@ -11,11 +11,11 @@ type InferenceMetadata = IGatsbyState["inferenceMetadata"]
 
 const inferredTypesChanged = (
   typeMap: TypeMap,
-  prevTypeMap: TypeMap
+  prevTypeMap: TypeMap,
 ): boolean =>
   Object.keys(typeMap).some(
-    type =>
-      typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type])
+    (type) =>
+      typeMap[type].dirty && !haveEqualFields(typeMap[type], prevTypeMap[type]),
   )
 
 let lastMetadata: InferenceMetadata

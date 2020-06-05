@@ -20,7 +20,7 @@ module.exports = {
     externals: [],
     includeMatchingCSS: false,
     redirectTemplate: normalizePath(
-      join(__dirname, `default-redirect-template.js`)
+      join(__dirname, `default-redirect-template.js`),
     ),
   },
   OPTION_DEFAULT_CODESANDBOX: {

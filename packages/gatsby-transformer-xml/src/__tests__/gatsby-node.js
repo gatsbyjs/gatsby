@@ -39,7 +39,7 @@ describe(`Process XML nodes correctly`, () => {
          </book>
       </catalog>
     `
-  const loadNodeContent = node => Promise.resolve(node.content)
+  const loadNodeContent = (node) => Promise.resolve(node.content)
 
   it(`correctly creates nodes from XML`, async () => {
     const createNode = jest.fn()

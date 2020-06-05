@@ -49,7 +49,7 @@ export const actions = {
   addThirdPartySchema: (
     { schema }: { schema: GraphQLSchema },
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): IAddThirdPartySchema => {
     return {
       type: `ADD_THIRD_PARTY_SCHEMA`,
@@ -207,7 +207,7 @@ export const actions = {
       | GatsbyGraphQLType
       | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): ICreateTypes => {
     return {
       type: `CREATE_TYPES`,
@@ -263,25 +263,25 @@ export const actions = {
   createFieldExtension: (
     extension: GraphQLFieldExtensionDefinition,
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): ThunkAction<void, IGatsbyState, {}, ICreateFieldExtension> => (
     dispatch,
-    getState
+    getState,
   ): void => {
     const { name } = extension || {}
     const { fieldExtensions } = getState().schemaCustomization
 
     if (!name) {
       report.error(
-        `The provided field extension must have a \`name\` property.`
+        `The provided field extension must have a \`name\` property.`,
       )
     } else if (reservedExtensionNames.includes(name)) {
       report.error(
-        `The field extension name \`${name}\` is reserved for internal use.`
+        `The field extension name \`${name}\` is reserved for internal use.`,
       )
     } else if (fieldExtensions[name]) {
       report.error(
-        `A field extension with the name \`${name}\` has already been registered.`
+        `A field extension with the name \`${name}\` has already been registered.`,
       )
     } else {
       dispatch({
@@ -328,7 +328,7 @@ export const actions = {
       withFieldTypes?: boolean
     },
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): IPrintTypeDefinitions => {
     return {
       type: `PRINT_SCHEMA_REQUESTED`,
@@ -376,13 +376,13 @@ export const actions = {
   createResolverContext: (
     context: IGatsbyPluginContext,
     plugin: IGatsbyPlugin,
-    traceId?: string
+    traceId?: string,
   ): ThunkAction<void, IGatsbyState, {}, ICreateResolverContext> => (
-    dispatch
+    dispatch,
   ): void => {
     if (!context || typeof context !== `object`) {
       report.error(
-        `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
+        `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`,
       )
     } else {
       const { name } = plugin || {}
@@ -404,11 +404,11 @@ const withDeprecationWarning = (
   actionName: RestrictionActionNames,
   action: SomeActionCreator,
   api: API,
-  allowedIn: API[]
+  allowedIn: API[],
 ): SomeActionCreator => (...args: any[]): ReturnType<ActionCreator<any>> => {
   report.warn(
     `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
-      `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+      `Please use: ${allowedIn.map((a) => `\`${a}\``).join(`, `)}.`,
   )
   return action(...args)
 }
@@ -416,13 +416,13 @@ const withDeprecationWarning = (
 const withErrorMessage = (
   actionName: RestrictionActionNames,
   api: API,
-  allowedIn: API[]
+  allowedIn: API[],
 ) => () =>
   // return a thunk that does not dispatch anything
   (): void => {
     report.error(
       `\`${actionName}\` is not available in the \`${api}\` API. ` +
-        `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+        `Please use: ${allowedIn.map((a) => `\`${a}\``).join(`, `)}.`,
     )
   }
 
@@ -450,46 +450,46 @@ const set = (
   availableActionsByAPI: {},
   api: API,
   actionName: RestrictionActionNames,
-  action: SomeActionCreator
+  action: SomeActionCreator,
 ): void => {
   availableActionsByAPI[api] = availableActionsByAPI[api] || {}
   availableActionsByAPI[api][actionName] = action
 }
 
 const mapAvailableActionsToAPIs = (
-  restrictions: Restrictions
+  restrictions: Restrictions,
 ): AvailableActionsByAPI => {
   const availableActionsByAPI: AvailableActionsByAPI = {}
 
   const actionNames = Object.keys(restrictions) as (keyof typeof restrictions)[]
-  actionNames.forEach(actionName => {
+  actionNames.forEach((actionName) => {
     const action = actions[actionName]
 
     const allowedIn: API[] = restrictions[actionName][ALLOWED_IN] || []
-    allowedIn.forEach(api =>
-      set(availableActionsByAPI, api, actionName, action)
+    allowedIn.forEach((api) =>
+      set(availableActionsByAPI, api, actionName, action),
     )
 
     const deprecatedIn: API[] = restrictions[actionName][DEPRECATED_IN] || []
-    deprecatedIn.forEach(api =>
+    deprecatedIn.forEach((api) =>
       set(
         availableActionsByAPI,
         api,
         actionName,
-        withDeprecationWarning(actionName, action, api, allowedIn)
-      )
+        withDeprecationWarning(actionName, action, api, allowedIn),
+      ),
     )
 
     const forbiddenIn = nodeAPIs.filter(
-      api => ![...allowedIn, ...deprecatedIn].includes(api)
+      (api) => ![...allowedIn, ...deprecatedIn].includes(api),
     )
-    forbiddenIn.forEach(api =>
+    forbiddenIn.forEach((api) =>
       set(
         availableActionsByAPI,
         api,
         actionName,
-        withErrorMessage(actionName, api, allowedIn)
-      )
+        withErrorMessage(actionName, api, allowedIn),
+      ),
     )
   })
 

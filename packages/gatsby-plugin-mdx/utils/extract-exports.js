@@ -4,7 +4,7 @@ const objRestSpread = require(`@babel/plugin-proposal-object-rest-spread`)
 const BabelPluginGatherExports = require(`./babel-plugin-gather-exports`)
 
 // grab all the export values
-module.exports = code => {
+module.exports = (code) => {
   const instance = new BabelPluginGatherExports()
   babel.transform(code, {
     presets: [babelReact],

@@ -11,7 +11,7 @@ describe(`worker`, () => {
 
   it(`should call processFile with the right arguments`, async () => {
     processFile.mockImplementation((file, transforms) =>
-      transforms.map(transform => Promise.resolve(transform))
+      transforms.map((transform) => Promise.resolve(transform)),
     )
     const job = {
       inputPaths: [
@@ -45,11 +45,11 @@ describe(`worker`, () => {
           ...job.args.operations[0],
           outputPath: path.join(
             job.outputDir,
-            job.args.operations[0].outputPath
+            job.args.operations[0].outputPath,
           ),
         },
       ],
-      job.args.pluginOptions
+      job.args.pluginOptions,
     )
   })
 

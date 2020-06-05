@@ -201,7 +201,7 @@ ReactDOM.render(
     {/* highlight-range{1-3} */}
     <h1>Hello, ${name}!</h1>
   </div>,
-  document.getElementById("root")
+  document.getElementById("root"),
 )
 ```
 

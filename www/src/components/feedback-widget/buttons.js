@@ -69,9 +69,9 @@ export const SubmitButton = styled(`button`)`
 
 export const CloseButton = styled(`button`)`
   ${buttonStyles};
-  background: ${p => p.theme.colors.widget.background};
-  border: 1px solid ${p => p.theme.colors.input.border};
-  color: ${p => p.theme.colors.textMuted};
+  background: ${(p) => p.theme.colors.widget.background};
+  border: 1px solid ${(p) => p.theme.colors.input.border};
+  color: ${(p) => p.theme.colors.textMuted};
 
   :focus {
     ${formInputFocus}
@@ -80,14 +80,14 @@ export const CloseButton = styled(`button`)`
 
 export const ToggleButtonLabel = styled(`span`)`
   align-items: center;
-  border-radius: ${p => p.theme.radii[2]};
+  border-radius: ${(p) => p.theme.radii[2]};
   display: flex;
   height: 2.5rem;
-  padding: 0 ${p => p.theme.space[9]} 0 ${p => p.theme.space[3]};
-  background: ${p => p.theme.colors.widget.background};
-  color: ${p => p.theme.colors.text};
-  box-shadow: ${p => p.theme.shadows.floating},
-    inset 0 0 0 1px ${p => p.theme.colors.widget.border};
+  padding: 0 ${(p) => p.theme.space[9]} 0 ${(p) => p.theme.space[3]};
+  background: ${(p) => p.theme.colors.widget.background};
+  color: ${(p) => p.theme.colors.text};
+  box-shadow: ${(p) => p.theme.shadows.floating},
+    inset 0 0 0 1px ${(p) => p.theme.colors.widget.border};
   transition: 0.5s;
   white-space: nowrap;
   width: 100%;
@@ -98,7 +98,7 @@ export const ToggleButtonLabel = styled(`span`)`
   }
 `
 
-export const ToggleButtonIcon = styled(`span`)(props => {
+export const ToggleButtonIcon = styled(`span`)((props) => {
   return {
     alignItems: `center`,
     background: props.theme.colors.accent,
@@ -144,7 +144,7 @@ export const ToggleButton = styled(`button`)`
   align-items: center;
   background: none;
   border: none;
-  border-radius: ${p => p.theme.radii[2]};
+  border-radius: ${(p) => p.theme.radii[2]};
   cursor: pointer;
   display: flex;
   padding: 0;
@@ -155,7 +155,7 @@ export const ToggleButton = styled(`button`)`
 
   &:hover {
     ${ToggleButtonLabel} {
-      box-shadow: 0 0 0 0.12rem ${p => p.theme.colors.accent}88;
+      box-shadow: 0 0 0 0.12rem ${(p) => p.theme.colors.accent}88;
     }
   }
 
@@ -181,15 +181,15 @@ export const ToggleButton = styled(`button`)`
     .success &,
     .submitting & {
       display: flex;
-      transform: translate(-${p => p.theme.space[2]}, -26rem);
+      transform: translate(-${(p) => p.theme.space[2]}, -26rem);
 
       ${ToggleButtonIcon} {
-        background: ${p => p.theme.colors.widget.background};
-        border: 1px solid ${p => p.theme.colors.ui.border};
+        background: ${(p) => p.theme.colors.widget.background};
+        border: 1px solid ${(p) => p.theme.colors.ui.border};
         transform: scale(1);
 
         svg {
-          fill: ${p => p.theme.colors.textMuted};
+          fill: ${(p) => p.theme.colors.textMuted};
         }
       }
 

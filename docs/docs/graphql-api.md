@@ -105,7 +105,7 @@ The `StaticQuery` component takes two values as props in JSX:
     }
   `}
   render={(
-    data //highlight-line
+    data, //highlight-line
   ) => (
     <header>
       <h1>{data.site.siteMetadata.title}</h1>
@@ -122,7 +122,7 @@ The StaticQuery component returns `data` in a `render` prop:
 <StaticQuery
   // ...
   // highlight-start
-  render={data => (
+  render={(data) => (
     <header>
       <h1>{data.site.siteMetadata.title}</h1>
     </header>

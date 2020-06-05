@@ -5,7 +5,7 @@ const fileType = require(`file-type`)
 const { createFileNode } = require(`./create-file-node`)
 const { createFilePath } = require(`./utils`)
 const { createContentDigest } = require(`gatsby-core-utils`)
-const cacheId = hash => `create-file-node-from-buffer-${hash}`
+const cacheId = (hash) => `create-file-node-from-buffer-${hash}`
 
 /********************
  * Type Definitions *
@@ -40,7 +40,7 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  */
 const writeBuffer = (filename, buffer) =>
   new Promise((resolve, reject) => {
-    fs.writeFile(filename, buffer, err => (err ? reject(err) : resolve()))
+    fs.writeFile(filename, buffer, (err) => (err ? reject(err) : resolve()))
   })
 
 /**
@@ -133,7 +133,7 @@ module.exports = ({
   // see gatsbyjs/gatsby#6643
   if (typeof createNodeId !== `function`) {
     throw new Error(
-      `createNodeId must be a function, was ${typeof createNodeId}`
+      `createNodeId must be a function, was ${typeof createNodeId}`,
     )
   }
   if (typeof createNode !== `function`) {
@@ -145,7 +145,7 @@ module.exports = ({
   }
   if (typeof cache !== `object`) {
     throw new Error(
-      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`,
     )
   }
 

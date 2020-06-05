@@ -15,7 +15,7 @@ const SORTABLE_ENUM = {
 }
 
 const getSortOrderEnum = ({ schemaComposer }) =>
-  schemaComposer.getOrCreateETC(`SortOrderEnum`, etc => {
+  schemaComposer.getOrCreateETC(`SortOrderEnum`, (etc) => {
     etc.setFields({
       ASC: { value: `ASC` },
       DESC: { value: `DESC` },
@@ -26,14 +26,14 @@ const getFieldsEnum = ({ schemaComposer, typeComposer, inputTypeComposer }) => {
   const typeName = typeComposer.getTypeName()
   const fieldsEnumTypeName = `${typeName}FieldsEnum`
   const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
-    fieldsEnumTypeName
+    fieldsEnumTypeName,
   )
   addDerivedType({ typeComposer, derivedTypeName: fieldsEnumTypeName })
 
   const fields = convert(
     schemaComposer,
     typeComposer,
-    inputTypeComposer.getFields()
+    inputTypeComposer.getFields(),
   )
   fieldsEnumTypeComposer.setFields(fields)
   return fieldsEnumTypeComposer
@@ -53,7 +53,7 @@ const getSortInput = ({ schemaComposer, typeComposer }) => {
   const sortInputTypeName = `${typeName}SortInput`
   addDerivedType({ typeComposer, derivedTypeName: sortInputTypeName })
 
-  return schemaComposer.getOrCreateITC(sortInputTypeName, itc => {
+  return schemaComposer.getOrCreateITC(sortInputTypeName, (itc) => {
     itc.addFields({
       fields: [fieldsEnumTC],
       order: { type: [sortOrderEnumTC], defaultValue: [`ASC`] },
@@ -77,11 +77,11 @@ const convert = (
   fields,
   prefix = null,
   depth = 0,
-  deprecationReason
+  deprecationReason,
 ) => {
   const sortFields = {}
 
-  Object.keys(fields).forEach(fieldName => {
+  Object.keys(fields).forEach((fieldName) => {
     const fieldConfig = fields[fieldName]
     const sortable = typeComposer.getFieldExtension(fieldName, `sortable`)
     if (sortable === SORTABLE_ENUM.NOT_SORTABLE) {
@@ -104,7 +104,7 @@ const convert = (
     if (type instanceof GraphQLInputObjectType) {
       if (depth < MAX_SORT_DEPTH) {
         const typeComposer = schemaComposer.getAnyTC(
-          type.name.replace(/Input$/, ``)
+          type.name.replace(/Input$/, ``),
         )
         Object.assign(
           sortFields,
@@ -114,8 +114,8 @@ const convert = (
             type.getFields(),
             sortKey,
             depth + 1,
-            deprecationReason
-          )
+            deprecationReason,
+          ),
         )
       }
     } else {

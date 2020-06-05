@@ -9,10 +9,10 @@ const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 const screenshotQueue = new Queue(
   (input, cb) => {
     createScreenshotNode(input)
-      .then(r => cb(null, r))
-      .catch(e => cb(e))
+      .then((r) => cb(null, r))
+      .catch((e) => cb(e))
   },
-  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
+  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 },
 )
 
 exports.onPreBootstrap = (
@@ -26,7 +26,7 @@ exports.onPreBootstrap = (
     createContentDigest,
     reporter,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, touchNode } = actions
   const screenshotNodes = getNodesByType(`Screenshot`)
@@ -39,7 +39,7 @@ exports.onPreBootstrap = (
 
   // Check for updated screenshots and placeholder flag
   // and prevent Gatsby from garbage collecting remote file nodes
-  screenshotNodes.forEach(n => {
+  screenshotNodes.forEach((n) => {
     if (
       (n.expires && new Date() >= new Date(n.expires)) ||
       USE_PLACEHOLDER_IMAGE !== n.usingPlaceholder
@@ -78,7 +78,7 @@ exports.onPreBootstrap = (
 
 exports.onCreateNode = async (
   { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, createParentChildLink } = actions
 
@@ -105,10 +105,10 @@ exports.onCreateNode = async (
           createContentDigest,
           parentNodeId: node.id,
         })
-        .on(`finish`, r => {
+        .on(`finish`, (r) => {
           resolve(r)
         })
-        .on(`failed`, e => {
+        .on(`failed`, (e) => {
           reject(e)
         })
     })

@@ -32,8 +32,8 @@ module.exports = async ({ page, actions }, pluginOptions) => {
             },
           },
         },
-        page
-      )
+        page,
+      ),
     )
   }
 }

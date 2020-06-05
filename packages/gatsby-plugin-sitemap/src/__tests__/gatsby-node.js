@@ -91,7 +91,7 @@ describe(`Test plugin sitemap`, () => {
     const options = {
       output: `custom-sitemap.xml`,
       serialize: ({ site, allSitePage }) =>
-        allSitePage.edges.map(edge => {
+        allSitePage.edges.map((edge) => {
           return {
             url: site.siteMetadata.siteUrl + `/post` + edge.node.path,
             changefreq: `weekly`,
@@ -161,13 +161,13 @@ describe(`Test plugin sitemap`, () => {
       }
       await onPostBuild({ graphql, pathPrefix }, options)
       expect(fs.createWriteStream.mock.calls[0][0]).toEqual(
-        `./public/sitemap-0.xml`
+        `./public/sitemap-0.xml`,
       )
       expect(fs.createWriteStream.mock.calls[1][0]).toEqual(
-        `./public/sitemap-1.xml`
+        `./public/sitemap-1.xml`,
       )
       expect(fs.createWriteStream.mock.calls[2][0]).toEqual(
-        `./public/sitemap-index.xml`
+        `./public/sitemap-index.xml`,
       )
       const [originalFile, newFile] = internals.renameFile.mock.calls[0]
       expect(originalFile).toEqual(path.join(`public`, `sitemap-index.xml`))
@@ -190,7 +190,7 @@ describe(`Test plugin sitemap`, () => {
       const prefix = `/test`
       await onPostBuild({ graphql, pathPrefix: prefix }, options)
       expect(sitemapSpy.mock.calls[0][0].hostname).toEqual(
-        `${queryResult.data.site.siteMetadata.siteUrl}${prefix}`
+        `${queryResult.data.site.siteMetadata.siteUrl}${prefix}`,
       )
     })
   })

@@ -14,7 +14,7 @@ function findGatsbyRequire(root, j) {
 
   if (string.length) return string
   // require(`gatsby`)
-  return requires.filter(path => {
+  return requires.filter((path) => {
     let template = path.get(`init`, `arguments`, 0, `quasis`, 0).node
     return !!template && template.value.raw === MODULE_NAME
   })
@@ -46,8 +46,8 @@ function addEsmImport(j, root) {
       .insertBefore(
         j.importDeclaration(
           [j.importSpecifier(j.identifier(IMPORT_NAME))],
-          j.literal(MODULE_NAME)
-        )
+          j.literal(MODULE_NAME),
+        ),
       )
 
     const newFirstNode = getFirstNode(j, root)
@@ -76,13 +76,13 @@ function addEsmImport(j, root) {
 }
 
 function removeGatsbyLinkEsmImport(j, root) {
-  root.find(j.ImportDeclaration).forEach(path => {
+  root.find(j.ImportDeclaration).forEach((path) => {
     if (path.value.source.value === `gatsby-link`) {
       if (path.value.specifiers.length === 1) {
         j(path).remove()
       } else {
         path.value.specifiers = path.value.specifiers.filter(
-          specifier => specifier.local.name !== IMPORT_NAME
+          (specifier) => specifier.local.name !== IMPORT_NAME,
         )
       }
     }
@@ -96,7 +96,7 @@ function removeGatsbyLinkRequire(j, root) {
         callee: { name: `require` },
       },
     })
-    .forEach(path => {
+    .forEach((path) => {
       let template = path.get(`init`, `arguments`, 0, `value`)
       if (template.value === `gatsby-link`) {
         j(path).remove()
@@ -122,7 +122,7 @@ function addRequire(j, root) {
       .insertBefore(
         j.template.statement([
           `const { ${IMPORT_NAME} } = require('${MODULE_NAME}');\n`,
-        ])
+        ]),
       )
     return
   }
@@ -142,7 +142,7 @@ function addRequire(j, root) {
   let { properties } = pattern.get(0).node
   let property = j.objectProperty(
     j.identifier(IMPORT_NAME),
-    j.identifier(IMPORT_NAME)
+    j.identifier(IMPORT_NAME),
   )
   property.shorthand = true
   pattern.get(`properties`, properties.length - 1).insertAfter(property)

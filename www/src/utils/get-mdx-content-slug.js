@@ -1,6 +1,6 @@
 const path = require(`path`)
 
-const docSlugFromPath = parsedFilePath => {
+const docSlugFromPath = (parsedFilePath) => {
   if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
     return `/${parsedFilePath.dir}/${parsedFilePath.name}/`
   } else if (parsedFilePath.dir === ``) {

@@ -9,8 +9,8 @@ describe(`validatePath`, () => {
       { path: `somedir/dir2/test1.js` },
     ]
 
-    expect(validFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(validFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
@@ -22,8 +22,8 @@ describe(`validatePath`, () => {
       { path: `_blah.js` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(testFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
@@ -38,8 +38,8 @@ describe(`validatePath`, () => {
       { path: `something/.markdownlint.json` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(testFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
@@ -54,8 +54,8 @@ describe(`validatePath`, () => {
       { path: `dir1/dir2/file.json` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(testFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
@@ -66,8 +66,8 @@ describe(`validatePath`, () => {
       { path: `template-cool-page-type.js` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(testFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
@@ -82,8 +82,8 @@ describe(`validatePath`, () => {
       { path: `something-else/other-declaration-file.d.tsx` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(testFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
@@ -103,16 +103,16 @@ describe(`validatePath`, () => {
       { path: `src\\pages\\__tests__\\nested-directory\\something.js` },
     ])
 
-    expect(testFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(testFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 
   it(`doesn't filter out test.js`, () => {
     const validFiles = [{ path: `src/pages/test.js` }]
 
-    expect(validFiles.filter(file => validatePath(file.path))).toEqual(
-      validFiles
+    expect(validFiles.filter((file) => validatePath(file.path))).toEqual(
+      validFiles,
     )
   })
 })

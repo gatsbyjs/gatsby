@@ -6,7 +6,7 @@ const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, hasNodeChanged, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode } = actions
 
@@ -20,7 +20,7 @@ exports.sourceNodes = (
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
   let connectionExtraParams = getConnectionExtraParams(
-    pluginOptions.extraParams
+    pluginOptions.extraParams,
   )
   const clientOptions = pluginOptions.clientOptions || {
     useNewUrlParser: true,
@@ -32,7 +32,7 @@ exports.sourceNodes = (
   const mongoClient = new MongoClient(connectionURL, clientOptions)
   return mongoClient
     .connect()
-    .then(client => {
+    .then((client) => {
       const db = client.db(dbName)
       let collection = pluginOptions.collection || [`documents`]
       if (!Array.isArray(collection)) {
@@ -40,7 +40,7 @@ exports.sourceNodes = (
       }
 
       return Promise.all(
-        collection.map(col =>
+        collection.map((col) =>
           createNodes(
             db,
             pluginOptions,
@@ -48,20 +48,20 @@ exports.sourceNodes = (
             createNode,
             createNodeId,
             col,
-            createContentDigest
-          )
-        )
+            createContentDigest,
+          ),
+        ),
       )
         .then(() => {
           mongoClient.close()
         })
-        .catch(err => {
+        .catch((err) => {
           console.warn(err)
           mongoClient.close()
           return err
         })
     })
-    .catch(err => {
+    .catch((err) => {
       console.warn(err)
       return err
     })
@@ -78,7 +78,7 @@ function createNodes(
   createNode,
   createNodeId,
   collectionName,
-  createContentDigest
+  createContentDigest,
 ) {
   const { preserveObjectIds = false } = pluginOptions
   return new Promise((resolve, reject) => {
@@ -110,7 +110,7 @@ function createNodes(
           children: [],
           internal: {
             type: `mongodb${sanitizeName(dbName)}${sanitizeName(
-              collectionName
+              collectionName,
             )}`,
             content: JSON.stringify(item),
             contentDigest: createContentDigest(item),
@@ -123,7 +123,7 @@ function createNodes(
             mapObj = pluginOptions.map[collectionName]
           }
           // We need to map certain fields to a contenttype.
-          Object.keys(mapObj).forEach(mediaItemFieldKey => {
+          Object.keys(mapObj).forEach((mediaItemFieldKey) => {
             if (
               node[mediaItemFieldKey] &&
               (typeof mapObj[mediaItemFieldKey] === `string` ||
@@ -134,7 +134,7 @@ function createNodes(
                 mediaItemFieldKey,
                 node[mediaItemFieldKey],
                 mapObj[mediaItemFieldKey],
-                createContentDigest
+                createContentDigest,
               )
 
               node[`${mediaItemFieldKey}___NODE`] = mappingChildNode.id
@@ -145,7 +145,7 @@ function createNodes(
           })
         }
         createNode(node)
-        childrenNodes.forEach(node => {
+        childrenNodes.forEach((node) => {
           createNode(node)
         })
       })

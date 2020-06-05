@@ -14,7 +14,7 @@ const handleReferences = (node, { getNode, createNodeId }) => {
       const nodeFieldName = `${k}___NODE`
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
-          v.data.map(data => {
+          v.data.map((data) => {
             const referencedNodeId = createNodeId(data.id)
             if (!getNode(referencedNodeId)) {
               return null
@@ -22,11 +22,11 @@ const handleReferences = (node, { getNode, createNodeId }) => {
 
             referencedNodes.push(referencedNodeId)
             return referencedNodeId
-          })
+          }),
         )
 
         const meta = _.compact(
-          v.data.map(data => (!_.isEmpty(data.meta) ? data.meta : null))
+          v.data.map((data) => (!_.isEmpty(data.meta) ? data.meta : null)),
         )
         // If there's meta on the field and it's not an existing/internal one
         // create a new node's field with that meta. It can't exist on both
@@ -53,7 +53,7 @@ const handleReferences = (node, { getNode, createNodeId }) => {
     referencedNodesLookup.set(node, referencedNodes)
     if (referencedNodes.length) {
       const nodeFieldName = `${node.internal.type}___NODE`
-      referencedNodes.forEach(nodeID => {
+      referencedNodes.forEach((nodeID) => {
         const referencedNode = getNode(nodeID)
         if (!referencedNode.relationships[nodeFieldName]) {
           referencedNode.relationships[nodeFieldName] = []
@@ -93,7 +93,7 @@ const handleWebhookUpdate = async (
     reporter,
     store,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode } = actions
 
@@ -112,7 +112,7 @@ const handleWebhookUpdate = async (
     const backRefsNames = backRefsNamesLookup.get(oldNode)
     if (backRefsNames) {
       backRefsNamesLookup.set(newNode, backRefsNames)
-      backRefsNames.forEach(backRefFieldName => {
+      backRefsNames.forEach((backRefFieldName) => {
         newNode.relationships[backRefFieldName] =
           oldNode.relationships[backRefFieldName]
       })
@@ -124,32 +124,32 @@ const handleWebhookUpdate = async (
     // see what nodes are no longer referenced and remove backRefs from them
     const removedReferencedNodes = _.difference(
       oldNodeReferencedNodes,
-      newNodeReferencedNodes
-    ).map(id => getNode(id))
+      newNodeReferencedNodes,
+    ).map((id) => getNode(id))
 
     nodesToUpdate.push(...removedReferencedNodes)
 
     const nodeFieldName = `${newNode.internal.type}___NODE`
-    removedReferencedNodes.forEach(referencedNode => {
+    removedReferencedNodes.forEach((referencedNode) => {
       referencedNode.relationships[
         nodeFieldName
       ] = referencedNode.relationships[nodeFieldName].filter(
-        id => id !== newNode.id
+        (id) => id !== newNode.id,
       )
     })
 
     // see what nodes are newly referenced, and make sure to call `createNode` on them
     const addedReferencedNodes = _.difference(
       newNodeReferencedNodes,
-      oldNodeReferencedNodes
-    ).map(id => getNode(id))
+      oldNodeReferencedNodes,
+    ).map((id) => getNode(id))
 
     nodesToUpdate.push(...addedReferencedNodes)
   } else {
     // if we are inserting new node, we need to update all referenced nodes
     const newNodes = referencedNodesLookup.get(newNode)
     if (typeof newNodes !== `undefined`) {
-      newNodes.forEach(id => nodesToUpdate.push(getNode(id)))
+      newNodes.forEach((id) => nodesToUpdate.push(getNode(id)))
     }
   }
 
@@ -164,7 +164,7 @@ const handleWebhookUpdate = async (
         createNodeId,
         getCache,
       },
-      pluginOptions
+      pluginOptions,
     )
   }
 

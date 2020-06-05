@@ -28,7 +28,7 @@ export async function runStaticQueries({
     {
       id: `static-query-running`,
       parentSpan,
-    }
+    },
   )
 
   activity.start()

@@ -6,7 +6,7 @@ import { IGatsbyState, ActionsUnion } from "../types"
 
 export const jobsReducer = (
   state: IGatsbyState["jobs"] = { active: [], done: [] },
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["jobs"] => {
   switch (action.type) {
     case `CREATE_JOB`:
@@ -14,7 +14,7 @@ export const jobsReducer = (
       if (!action.payload.id) {
         throw new Error(`An ID must be provided when creating or setting job`)
       }
-      const index = _.findIndex(state.active, j => j.id === action.payload.id)
+      const index = _.findIndex(state.active, (j) => j.id === action.payload.id)
       if (index !== -1) {
         const mergedJob = _.merge(state.active[index], {
           ...action.payload,
@@ -38,7 +38,7 @@ export const jobsReducer = (
         throw new Error(`An ID must be provided when ending a job`)
       }
       const completedAt = Date.now()
-      const index = _.findIndex(state.active, j => j.id === action.payload.id)
+      const index = _.findIndex(state.active, (j) => j.id === action.payload.id)
       if (index === -1) {
         throw new Error(oneLine`
           The plugin "${_.get(action, `plugin.name`, `anonymous`)}"

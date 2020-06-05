@@ -71,7 +71,7 @@ exports.sourceNodes = async ({ actions }) => {
   const data = await fetch(REMOTE_API)
 
   // Process data and create nodes.using a custom processDatum function
-  data.forEach(datum => createNode(processDatum(datum)))
+  data.forEach((datum) => createNode(processDatum(datum)))
 
   // You're done, return.
   return
@@ -105,7 +105,7 @@ exports.sourceNodes = async ({ cache }) => {
 
   // pull data from some remote source using cached data as an option in the request
   const data = await fetch(
-    `https://remotedatasource.com/posts?lastUpdated=${lastFetched}`
+    `https://remotedatasource.com/posts?lastUpdated=${lastFetched}`,
   )
   // ...
 }

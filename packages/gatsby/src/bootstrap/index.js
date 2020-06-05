@@ -112,7 +112,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.start()
   const { configModule, configFilePath } = await getConfigFile(
     program.directory,
-    `gatsby-config`
+    `gatsby-config`,
   )
   let config = preferDefault(configModule)
 
@@ -130,7 +130,7 @@ module.exports = async (args: BootstrapArgs) => {
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     reporter.warn(
-      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
+      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`,
     )
     const themes = await loadThemes(config, {
       useLegacyThemes: true,
@@ -154,7 +154,7 @@ module.exports = async (args: BootstrapArgs) => {
 
   if (config && config.polyfill) {
     reporter.warn(
-      `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
+      `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`,
     )
   }
 
@@ -174,7 +174,9 @@ module.exports = async (args: BootstrapArgs) => {
 
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
-  const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
+  const pluginsStr = _.uniq(
+    flattenedPlugins.map((p) => `${p.name}@${p.version}`),
+  )
   telemetry.decorateEvent(`BUILD_END`, {
     plugins: pluginsStr,
   })
@@ -201,7 +203,7 @@ module.exports = async (args: BootstrapArgs) => {
       `delete html and css files from previous builds`,
       {
         parentSpan: bootstrapSpan,
-      }
+      },
     )
     activity.start()
     await del([
@@ -225,15 +227,15 @@ module.exports = async (args: BootstrapArgs) => {
   // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
-  const pluginVersions = flattenedPlugins.map(p => p.version)
+  const pluginVersions = flattenedPlugins.map((p) => p.version)
   const hashes = await Promise.all([
     !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     Promise.resolve(
-      md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
+      md5File(`${program.directory}/gatsby-config.js`).catch(() => {}),
     ), // ignore as this file isn't required),
     Promise.resolve(
-      md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
+      md5File(`${program.directory}/gatsby-node.js`).catch(() => {}),
     ), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
@@ -323,7 +325,7 @@ module.exports = async (args: BootstrapArgs) => {
     try {
       if (env === `browser`) {
         return slash(
-          require.resolve(path.join(plugin.resolve, `gatsby-${env}`))
+          require.resolve(path.join(plugin.resolve, `gatsby-${env}`)),
         )
       }
     } catch (e) {
@@ -337,27 +339,27 @@ module.exports = async (args: BootstrapArgs) => {
   }
 
   const ssrPlugins = _.filter(
-    flattenedPlugins.map(plugin => {
+    flattenedPlugins.map((plugin) => {
       return {
         resolve: hasAPIFile(`ssr`, plugin),
         options: plugin.pluginOptions,
       }
     }),
-    plugin => plugin.resolve
+    (plugin) => plugin.resolve,
   )
 
   const browserPlugins = _.filter(
-    flattenedPlugins.map(plugin => {
+    flattenedPlugins.map((plugin) => {
       return {
         resolve: hasAPIFile(`browser`, plugin),
         options: plugin.pluginOptions,
       }
     }),
-    plugin => plugin.resolve
+    (plugin) => plugin.resolve,
   )
 
   const browserPluginsRequires = browserPlugins
-    .map(plugin => {
+    .map((plugin) => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativePluginPath = path.relative(siteDir, plugin.resolve)
       return `{
@@ -379,11 +381,11 @@ module.exports = async (args: BootstrapArgs) => {
 
   const ssrPluginsRequires = ssrPlugins
     .map(
-      plugin =>
+      (plugin) =>
         `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
-    }`
+    }`,
     )
     .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
@@ -391,7 +393,7 @@ module.exports = async (args: BootstrapArgs) => {
   fs.writeFileSync(
     `${siteDir}/api-runner-browser-plugins.js`,
     browserAPIRunner,
-    `utf-8`
+    `utf-8`,
   )
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
@@ -431,7 +433,7 @@ module.exports = async (args: BootstrapArgs) => {
       store.getState().nodesByType.size
     } types: [${[...store.getState().nodesByType.entries()]
       .map(([type, nodes]) => type + `:` + nodes.size)
-      .join(`, `)}]`
+      .join(`, `)}]`,
   )
   activity.end()
 
@@ -475,14 +477,14 @@ module.exports = async (args: BootstrapArgs) => {
       waitForCascadingActions: true,
       parentSpan: activity.span,
     },
-    { activity }
+    { activity },
   )
   reporter.verbose(
     `Now have ${store.getState().nodes.size} nodes with ${
       store.getState().nodesByType.size
     } types, and ${
       store.getState().nodesByType?.get(`SitePage`).size
-    } SitePage nodes`
+    } SitePage nodes`,
   )
   activity.end()
 
@@ -504,7 +506,7 @@ module.exports = async (args: BootstrapArgs) => {
     },
     {
       activity,
-    }
+    },
   )
   activity.end()
 
@@ -557,7 +559,7 @@ module.exports = async (args: BootstrapArgs) => {
   reporter.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_FINISHED`
+    `BOOTSTRAP_FINISHED`,
   )
 
   bootstrapSpan.finish()

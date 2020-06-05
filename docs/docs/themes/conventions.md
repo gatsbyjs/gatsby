@@ -23,7 +23,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
     path.join(program.directory, "src/data"),
   ]
 
-  dirs.forEach(dir => {
+  dirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
       reporter.log(`creating the ${dir} directory`)
       mkdirp.sync(dir)
@@ -104,7 +104,7 @@ const Layout = ({ children }) => {
           }
         }
       }
-    `
+    `,
   )
 
   const { title, social } = siteMetadata

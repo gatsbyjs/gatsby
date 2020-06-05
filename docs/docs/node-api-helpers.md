@@ -11,7 +11,7 @@ The first argument passed to each of [Gatsby’s Node APIs](/docs/node-apis/) is
 
 ```javascript
 // in gatsby-node.js
-exports.createPages = gatsbyNodeHelpers => {
+exports.createPages = (gatsbyNodeHelpers) => {
   const { actions, reporter } = gatsbyNodeHelpers
   // use helpers
 }

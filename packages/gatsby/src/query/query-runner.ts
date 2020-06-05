@@ -36,14 +36,14 @@ interface IExecutionResult extends ExecutionResult {
 export const queryRunner = async (
   graphqlRunner: GraphQLRunner,
   queryJob: IQueryJob,
-  parentSpan: Span | undefined
+  parentSpan: Span | undefined,
 ): Promise<IExecutionResult> => {
   const { program } = store.getState()
 
   const graphql = (
     query: string,
     context: Record<string, unknown>,
-    queryName: string
+    queryName: string,
   ): Promise<ExecutionResult> => {
     // Check if query takes too long, print out warning
     const promise = graphqlRunner.query(query, context, {
@@ -102,7 +102,7 @@ export const queryRunner = async (
     }
 
     const structuredErrors = result.errors
-      .map(e => {
+      .map((e) => {
         const structuredError = errorParser({
           message: e.message,
           filePath: undefined,
@@ -114,7 +114,7 @@ export const queryRunner = async (
           codeFrame: getCodeFrame(
             queryJob.query,
             e.locations && e.locations[0].line,
-            e.locations && e.locations[0].column
+            e.locations && e.locations[0].column,
           ),
           filePath: queryJob.componentPath,
           ...(urlPath ? { urlPath } : {}),
@@ -169,7 +169,7 @@ export const queryRunner = async (
         `public`,
         `static`,
         `d`,
-        `${queryJob.hash}.json`
+        `${queryJob.hash}.json`,
       )
       await fs.outputFile(resultPath, resultJSON)
     }

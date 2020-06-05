@@ -20,7 +20,7 @@ exports.sourceNodes = async (
     reporter,
     webhookBody,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   let {
     baseUrl,
@@ -39,14 +39,14 @@ exports.sourceNodes = async (
       `loading Drupal content changes`,
       {
         parentSpan,
-      }
+      },
     )
     changesActivity.start()
 
     const { secret, action, id, data } = webhookBody
     if (pluginOptions.secret && pluginOptions.secret !== secret) {
       reporter.warn(
-        `The secret in this request did not match your plugin options secret.`
+        `The secret in this request did not match your plugin options secret.`,
       )
       return
     }
@@ -74,7 +74,7 @@ exports.sourceNodes = async (
           reporter,
           store,
         },
-        pluginOptions
+        pluginOptions,
       )
     }
 
@@ -180,7 +180,7 @@ exports.sourceNodes = async (
 
       // eslint-disable-next-line consistent-return
       return result
-    })
+    }),
   )
 
   drupalFetchActivity.end()
@@ -188,9 +188,9 @@ exports.sourceNodes = async (
   const nodes = new Map()
 
   // first pass - create basic nodes
-  _.each(allData, contentType => {
+  _.each(allData, (contentType) => {
     if (!contentType) return
-    _.each(contentType.data, datum => {
+    _.each(contentType.data, (datum) => {
       if (!datum) return
       const node = nodeFromData(datum, createNodeId)
       nodes.set(node.id, node)
@@ -198,7 +198,7 @@ exports.sourceNodes = async (
   })
 
   // second pass - handle relationships and back references
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     handleReferences(node, {
       getNode: nodes.get.bind(nodes),
       createNodeId,
@@ -211,13 +211,13 @@ exports.sourceNodes = async (
   const fileNodes = [...nodes.values()].filter(isFileNode)
   if (fileNodes.length) {
     const downloadingFilesActivity = reporter.activityTimer(
-      `Remote file download`
+      `Remote file download`,
     )
     downloadingFilesActivity.start()
-    await asyncPool(concurrentFileRequests, fileNodes, async node => {
+    await asyncPool(concurrentFileRequests, fileNodes, async (node) => {
       await downloadFile(
         { node, store, cache, createNode, createNodeId, getCache, reporter },
-        pluginOptions
+        pluginOptions,
       )
     })
     downloadingFilesActivity.end()
@@ -245,7 +245,7 @@ exports.onCreateDevServer = (
     getCache,
     reporter,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   app.use(
     `/___updatePreview/`,
@@ -254,14 +254,14 @@ exports.onCreateDevServer = (
     }),
     async (req, res) => {
       console.warn(
-        `The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.`
+        `The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.`,
       )
       if (!_.isEmpty(req.body)) {
         const requestBody = JSON.parse(JSON.parse(req.body))
         const { secret, action, id } = requestBody
         if (pluginOptions.secret && pluginOptions.secret !== secret) {
           return reporter.warn(
-            `The secret in this request did not match your plugin options secret.`
+            `The secret in this request did not match your plugin options secret.`,
           )
         }
         if (action === `delete`) {
@@ -281,12 +281,12 @@ exports.onCreateDevServer = (
             reporter,
             store,
           },
-          pluginOptions
+          pluginOptions,
         )
       } else {
         res.status(400).send(`Received body was empty!`)
         return reporter.log(`Received body was empty!`)
       }
-    }
+    },
   )
 }

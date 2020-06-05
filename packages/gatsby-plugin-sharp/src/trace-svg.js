@@ -57,16 +57,16 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
   }
 
   await new Promise((resolve, reject) =>
-    pipeline.toFile(tmpFilePath, err => {
+    pipeline.toFile(tmpFilePath, (err) => {
       if (err) {
         return reject(err)
       }
       return resolve()
-    })
+    }),
   )
 }
 
-const optimize = svg => {
+const optimize = (svg) => {
   const SVGO = require(`svgo`)
   const svgo = new SVGO({
     multipass: true,
@@ -104,7 +104,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
         : {}),
       ...fileArgs,
     },
-    file.extension
+    file.extension,
   )
 
   const optionsHash = createContentDigest(options)
@@ -133,7 +133,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     const optionsSVG = _.defaults(args, defaultArgs)
 
     // `srcset` attribute rejects URIs with literal spaces
-    const encodeSpaces = str => str.replace(/ /gi, `%20`)
+    const encodeSpaces = (str) => str.replace(/ /gi, `%20`)
 
     return trace(tmpFilePath, optionsSVG)
       .then(optimize)
@@ -148,15 +148,15 @@ let memoizedPrepareTraceSVGInputFile, memoizedTraceSVG
 const createMemoizedFunctions = () => {
   exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile = _.memoize(
     exports.notMemoizedPrepareTraceSVGInputFile,
-    ({ tmpFilePath }) => tmpFilePath
+    ({ tmpFilePath }) => tmpFilePath,
   )
 
   exports.memoizedTraceSVG = memoizedTraceSVG = _.memoize(
     exports.notMemoizedtraceSVG,
     ({ file, args, fileArgs }) =>
       `${file.internal.contentDigest}${JSON.stringify(args)}${JSON.stringify(
-        fileArgs
-      )}`
+        fileArgs,
+      )}`,
   )
 }
 

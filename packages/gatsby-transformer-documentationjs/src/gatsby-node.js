@@ -17,7 +17,7 @@ const docId = (parentId, docsJson) => {
     : docsJson.lineNumber
 
   return `documentationJS ${parentId} path #${JSON.stringify(
-    docsJson.path
+    docsJson.path,
   )} line ${lineNumber}`
 }
 
@@ -136,7 +136,7 @@ exports.createResolvers = ({ createResolvers }) => {
 
           const fieldsToVisit = [`elements`, `expression`, `applications`]
 
-          const resolve = obj => {
+          const resolve = (obj) => {
             if (!obj.typeDef___NODE) {
               return obj
             }
@@ -145,26 +145,26 @@ exports.createResolvers = ({ createResolvers }) => {
               ...obj,
               typeDef: context.nodeModel.getNodeById(
                 { id: obj.typeDef___NODE, type: `DocumentationJs` },
-                { path: context.path }
+                { path: context.path },
               ),
             }
           }
 
-          const visit = obj => {
+          const visit = (obj) => {
             if (!obj) {
               return null
             }
 
             const ret = { ...obj }
 
-            fieldsToVisit.forEach(fieldName => {
+            fieldsToVisit.forEach((fieldName) => {
               const v = obj[fieldName]
               if (!v) {
                 return
               }
 
               if (Array.isArray(v)) {
-                ret[fieldName] = v.map(t => visit(resolve(t)))
+                ret[fieldName] = v.map((t) => visit(resolve(t)))
               } else {
                 ret[fieldName] = visit(resolve(v))
               }
@@ -212,15 +212,15 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
     const handledDocs = new WeakMap()
     const typeDefs = new Map()
 
-    const getNodeIDForType = typeName => {
+    const getNodeIDForType = (typeName) => {
       if (typeDefs.has(typeName)) {
         return typeDefs.get(typeName)
       }
 
       const index = documentationJson.findIndex(
-        docsJson =>
+        (docsJson) =>
           docsJson.name === typeName &&
-          [`typedef`, `constant`].includes(docsJson.kind)
+          [`typedef`, `constant`].includes(docsJson.kind),
       )
 
       if (index !== -1) {
@@ -232,7 +232,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       return null
     }
 
-    const tryToAddTypeDef = type => {
+    const tryToAddTypeDef = (type) => {
       if (type.applications) {
         type.applications.forEach(tryToAddTypeDef)
       }
@@ -264,7 +264,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
      */
     const prepareNodeForDocs = (
       docsJson,
-      { commentNumber = null, level = 0, parent = node.id } = {}
+      { commentNumber = null, level = 0, parent = node.id } = {},
     ) => {
       if (handledDocs.has(docsJson)) {
         // this was already handled
@@ -333,13 +333,13 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       const mdFields = [`description`, `deprecated`]
 
-      mdFields.forEach(fieldName => {
+      mdFields.forEach((fieldName) => {
         if (docsJson[fieldName]) {
           const childNode = prepareDescriptionNode(
             docSkeletonNode,
             stringifyMarkdownAST(docsJson[fieldName]),
             `comment.${fieldName}`,
-            helpers
+            helpers,
           )
 
           picked[`${fieldName}___NODE`] = childNode.id
@@ -359,7 +359,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
         `todos`,
         `yields`,
       ]
-      docsSubfields.forEach(fieldName => {
+      docsSubfields.forEach((fieldName) => {
         if (docsJson[fieldName] && docsJson[fieldName].length > 0) {
           picked[`${fieldName}___NODE`] = docsJson[fieldName].map(
             (docObj, fieldIndex) => {
@@ -380,7 +380,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               })
               children.push(nodeHierarchy)
               return nodeHierarchy.node.id
-            }
+            },
           )
         }
       })
@@ -401,7 +401,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
           docsJson.members,
           (acc, membersOfType, key) => {
             if (membersOfType.length > 0) {
-              acc[`${key}___NODE`] = membersOfType.map(member => {
+              acc[`${key}___NODE`] = membersOfType.map((member) => {
                 const nodeHierarchy = prepareNodeForDocs(member, {
                   level: level + 1,
                   parent: docSkeletonNode.id,
@@ -412,18 +412,18 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
             }
             return acc
           },
-          {}
+          {},
         )
       }
 
       if (docsJson.examples) {
-        picked.examples = docsJson.examples.map(example => {
+        picked.examples = docsJson.examples.map((example) => {
           return {
             ...example,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,
-              Prism.languages.javascript
+              Prism.languages.javascript,
             ),
           }
         })
@@ -448,12 +448,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
     }
 
     const rootNodes = documentationJson.map((docJson, index) =>
-      prepareNodeForDocs(docJson, { commentNumber: index })
+      prepareNodeForDocs(docJson, { commentNumber: index }),
     )
 
     const createChildrenNodesRecursively = ({ node: parent, children }) => {
       if (children) {
-        children.forEach(nodeHierarchy => {
+        children.forEach((nodeHierarchy) => {
           createNode(nodeHierarchy.node)
           createParentChildLink({
             parent,

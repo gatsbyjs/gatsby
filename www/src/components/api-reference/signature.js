@@ -7,7 +7,7 @@ import { graphql } from "gatsby"
 import { SubHeader } from "./utils"
 
 const Wrapper = styled(`span`)`
-  font-family: ${p => p.theme.fonts.heading};
+  font-family: ${(p) => p.theme.fonts.heading};
   font-weight: 400;
 
   :before,
@@ -22,7 +22,7 @@ const Wrapper = styled(`span`)`
     content: " }";
   }
 
-  ${props =>
+  ${(props) =>
     props.block &&
     css`
       display: block;
@@ -48,7 +48,7 @@ const ReactJoin = (arrayOfElements, joiner) =>
       acc.push(
         React.cloneElement(joiner, {
           key: `joiner ${index}`,
-        })
+        }),
       )
     }
     acc.push(current)
@@ -70,7 +70,7 @@ const TypeExpression = ({ type }) => {
           type.elements.map((element, index) => (
             <TypeExpression key={`union element ${index}`} type={element} />
           )),
-          <Operator> | </Operator>
+          <Operator> | </Operator>,
         )}
       </React.Fragment>
     )
@@ -99,7 +99,7 @@ const TypeExpression = ({ type }) => {
 const FunctionSignature = ({ definition, block, ignoreParams }) => {
   const params = definition.params
     ? definition.params
-        .filter(param => !ignoreParams.includes(param.name))
+        .filter((param) => !ignoreParams.includes(param.name))
         .map((param, index) => (
           <React.Fragment key={param.name}>
             {index > 0 && <Punctuation>, </Punctuation>}

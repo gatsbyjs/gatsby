@@ -41,7 +41,7 @@ ReactDOM.render(
     <h1>Hello, ${name}!</h1>
     <h2>Welcome to this example</h2>
   </div>,
-  document.getElementById(`root`)
+  document.getElementById(`root`),
 )
 ```
 
@@ -70,7 +70,7 @@ ReactDOM.render(
     <h1>Hello, ${name}!</h1>
     <h2>Welcome to this example</h2>
   </div>,
-  document.getElementById(`root`) // hide-line
+  document.getElementById(`root`), // hide-line
 ) // hide-line
 ```
 

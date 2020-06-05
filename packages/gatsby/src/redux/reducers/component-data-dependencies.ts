@@ -5,7 +5,7 @@ export const componentDataDependenciesReducer = (
     nodes: new Map(),
     connections: new Map(),
   },
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["componentDataDependencies"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -41,12 +41,12 @@ export const componentDataDependenciesReducer = (
 
       return state
     case `DELETE_COMPONENTS_DEPENDENCIES`:
-      state.nodes.forEach(val => {
+      state.nodes.forEach((val) => {
         for (const path of action.payload.paths) {
           val.delete(path)
         }
       })
-      state.connections.forEach(val => {
+      state.connections.forEach((val) => {
         for (const path of action.payload.paths) {
           val.delete(path)
         }

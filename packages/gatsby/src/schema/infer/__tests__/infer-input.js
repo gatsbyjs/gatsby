@@ -31,11 +31,11 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-const buildTestSchema = async nodes => {
+const buildTestSchema = async (nodes) => {
   store.dispatch({ type: `DELETE_CACHE` })
   store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
-  nodes.forEach(node =>
-    actions.createNode(node, { name: `test` })(store.dispatch)
+  nodes.forEach((node) =>
+    actions.createNode(node, { name: `test` })(store.dispatch),
   )
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
@@ -78,11 +78,11 @@ describe(`GraphQL Input args`, () => {
             edges { node { bar } }
           }
         }
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type BarFilterInput.`,
     )
   })
 
@@ -104,11 +104,11 @@ describe(`GraphQL Input args`, () => {
             edges { node { bar } }
           }
         }
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type BarFilterInput.`,
     )
   })
 
@@ -130,11 +130,11 @@ describe(`GraphQL Input args`, () => {
             edges { node { bar } }
           }
         }
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type BarFilterInput.`,
     )
   })
 
@@ -156,11 +156,11 @@ describe(`GraphQL Input args`, () => {
             edges { node { bar } }
           }
         }
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type BarFilterInput.`,
     )
   })
 
@@ -187,11 +187,11 @@ describe(`GraphQL Input args`, () => {
             edges { node { linked { id } } }
           }
         }
-      `
+      `,
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "linked___NODE" is not defined by type BarFilterInput.`
+      `Field "linked___NODE" is not defined by type BarFilterInput.`,
     )
   })
 

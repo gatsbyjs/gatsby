@@ -5,7 +5,7 @@ import Link from "./localized-link"
 
 import Avatar from "./avatar"
 
-const formatDate = dateString =>
+const formatDate = (dateString) =>
   new Date(dateString).toLocaleDateString(`en-EN`, {
     timeZone: `UTC`,
     month: `long`,

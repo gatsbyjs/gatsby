@@ -45,7 +45,7 @@ class HubspotForm extends React.Component {
         // patch: disable HubSpot's default CSS
         css: ``,
         target: `#${this.el.getAttribute(`id`)}`,
-        onFormSubmit: $form => {
+        onFormSubmit: ($form) => {
           // ref: https://developers.hubspot.com/docs/methods/forms/advanced_form_options
           var formData = $form.serializeArray()
           this.props.onSubmit(formData)
@@ -95,7 +95,7 @@ class HubspotForm extends React.Component {
     return (
       <div>
         <div
-          ref={el => (this.el = el)}
+          ref={(el) => (this.el = el)}
           id={`reactHubspotForm${this.id}`}
           style={{ display: this.state.loaded ? `block` : `none` }}
         />

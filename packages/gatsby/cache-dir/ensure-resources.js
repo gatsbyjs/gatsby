@@ -27,7 +27,7 @@ class EnsureResources extends React.Component {
   }
 
   loadResources(rawPath) {
-    loader.loadPage(rawPath).then(pageResources => {
+    loader.loadPage(rawPath).then((pageResources) => {
       if (pageResources && pageResources.status !== PageResourceStatus.Error) {
         this.setState({
           location: { ...window.location },
@@ -78,7 +78,7 @@ class EnsureResources extends React.Component {
       throw new Error(
         `EnsureResources was not able to find resources for path: "${this.props.location.pathname}"
 This typically means that an issue occurred building components for that path.
-Run \`gatsby clean\` to remove any cached elements.`
+Run \`gatsby clean\` to remove any cached elements.`,
       )
     }
 

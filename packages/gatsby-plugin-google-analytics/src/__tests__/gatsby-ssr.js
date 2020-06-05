@@ -25,7 +25,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
           process.env.NODE_ENV = env
         })
 
-        const setup = options => {
+        const setup = (options) => {
           const setHeadComponents = jest.fn()
           const setPostBodyComponents = jest.fn()
 

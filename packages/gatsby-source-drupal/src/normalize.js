@@ -23,14 +23,14 @@ const nodeFromData = (datum, createNodeId) => {
 
 exports.nodeFromData = nodeFromData
 
-const isFileNode = node =>
+const isFileNode = (node) =>
   node.internal.type === `files` || node.internal.type === `file__file`
 
 exports.isFileNode = isFileNode
 
 exports.downloadFile = async (
   { node, store, cache, createNode, createNodeId, getCache, reporter },
-  { basicAuth, baseUrl }
+  { basicAuth, baseUrl },
 ) => {
   // handle file downloads
   if (isFileNode(node)) {

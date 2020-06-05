@@ -4,8 +4,8 @@ import { visuallyHidden } from "../../utils/styles"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 export const WidgetContainer = styled(`div`)`
-  margin: ${p => p.theme.space[7]} auto;
-  padding: 0 ${p => p.theme.space[6]} ${p => p.theme.space[9]};
+  margin: ${(p) => p.theme.space[7]} auto;
+  padding: 0 ${(p) => p.theme.space[6]} ${(p) => p.theme.space[9]};
   max-width: 42rem;
 
   ${mediaQueries.md} {
@@ -18,10 +18,10 @@ export const WidgetContainer = styled(`div`)`
       width: 20rem;
     }
 
-    bottom: ${p => p.theme.space[6]};
+    bottom: ${(p) => p.theme.space[6]};
     padding: 0;
     position: fixed;
-    right: ${p => p.theme.space[6]};
+    right: ${(p) => p.theme.space[6]};
     margin: 0;
     width: auto;
   }
@@ -29,11 +29,11 @@ export const WidgetContainer = styled(`div`)`
 
 export const Title = styled(`h2`)`
   display: block;
-  font-size: ${p => p.theme.fontSizes[4]};
-  letter-spacing: ${p => p.theme.letterSpacings.tight};
-  line-height: ${p => p.theme.lineHeights.dense};
+  font-size: ${(p) => p.theme.fontSizes[4]};
+  letter-spacing: ${(p) => p.theme.letterSpacings.tight};
+  line-height: ${(p) => p.theme.lineHeights.dense};
   margin: 0;
-  margin-bottom: ${p => p.theme.space[2]};
+  margin-bottom: ${(p) => p.theme.space[2]};
   text-align: center;
 `
 

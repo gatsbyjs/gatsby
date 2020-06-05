@@ -9,7 +9,7 @@ exports.onCreateWebpackConfig = (
     sassRuleTest,
     sassRuleModulesTest,
     ...sassOptions
-  }
+  },
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`

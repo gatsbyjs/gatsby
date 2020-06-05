@@ -154,7 +154,7 @@ const getCommentsBySlug = (request, response) => {
         throw error
       }
       response.status(200).json(results.rows)
-    }
+    },
   )
 }
 ```
@@ -171,14 +171,14 @@ const createComment = (request, response) => {
   pool.query(
     "INSERT INTO comments (name, slug, text, parent_comment_id) VALUES ($1, $2, $3, $4)",
     [name, slug, text, parentCommentId],
-    error => {
+    (error) => {
       if (error) {
         throw error
       }
       response
         .status(201)
         .json({ status: "success", message: "New comment added." })
-    }
+    },
   )
 }
 ```
@@ -196,14 +196,14 @@ const updateComment = (request, response) => {
   pool.query(
     "UPDATE comments SET name = $1, slug = $2, text = $3, parent_comment_id = $4 WHERE id = $5",
     [name, slug, text, parentCommentId, id],
-    error => {
+    (error) => {
       if (error) {
         throw error
       }
       response
         .status(200)
         .json({ status: "success", message: `Comment modified with ID: ${id}` })
-    }
+    },
   )
 }
 ```
@@ -216,7 +216,7 @@ Another protected endpoint, only I will have the ability to delete a comment.
 const deleteComment = (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query("DELETE FROM comments WHERE id = $1", [id], error => {
+  pool.query("DELETE FROM comments WHERE id = $1", [id], (error) => {
     if (error) {
       throw error
     }
@@ -304,7 +304,7 @@ I'll admit this code is not the most pristine I've ever seen, but as I mentioned
 When a comment is submitted, I'll use `fetch` once again, this time with the `post` method. If everything went through correctly, append the new comment to the comments array, and reset the new comment.
 
 ```jsx:title=components/comments.js
-onSubmitComment = async event => {
+onSubmitComment = async (event) => {
   event.preventDefault()
 
   // Set this so the button can't be pressed repeatedly
@@ -325,7 +325,7 @@ onSubmitComment = async event => {
     })
 
     // Append comment and reset newComment
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
       comments: [newComment, ...comments],
       newComment: {
@@ -346,7 +346,7 @@ onSubmitComment = async event => {
 I'll also have an `onChange` handler for the form.
 
 ```jsx:title=components/comments.js
-handleChange = event => {
+handleChange = (event) => {
   const { newComment } = this.state
   const { name, value } = event.target
 
@@ -429,11 +429,11 @@ return (
     {success || error ? showError() || showSuccess() : commentForm()}
     {comments.length > 0 &&
       comments
-        .filter(comment => !comment.parent_comment_id)
+        .filter((comment) => !comment.parent_comment_id)
         .map((comment, i) => {
           let child
           if (comment.id) {
-            child = comments.find(c => comment.id == c.parent_comment_id)
+            child = comments.find((c) => comment.id == c.parent_comment_id)
           }
 
           return (

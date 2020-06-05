@@ -232,7 +232,7 @@ const Header = ({ siteTitle, menuLinks }) => (
         <div>
           <nav>
             <ul style={{ display: "flex", flex: 1 }}>
-              {menuLinks.map(link => (
+              {menuLinks.map((link) => (
                 <li
                   key={link.name}
                   style={{

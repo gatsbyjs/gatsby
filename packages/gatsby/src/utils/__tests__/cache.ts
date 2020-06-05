@@ -53,7 +53,7 @@ describe(`cache`, () => {
     expect(manager.caching).toHaveBeenLastCalledWith(
       expect.objectContaining({
         store,
-      })
+      }),
     )
   })
 
@@ -69,7 +69,7 @@ describe(`cache`, () => {
         options: expect.objectContaining({
           ttl: Number.MAX_SAFE_INTEGER,
         }),
-      })
+      }),
     )
   })
 
@@ -84,7 +84,7 @@ describe(`cache`, () => {
       getCache({ name })
 
       expect(fs.ensureDirSync).toHaveBeenCalledWith(
-        expect.stringContaining(name)
+        expect.stringContaining(name),
       )
     })
 
@@ -102,7 +102,7 @@ describe(`cache`, () => {
 
       const containsThenMethod = (result): void =>
         expect(result).toEqual(
-          expect.objectContaining({ then: expect.any(Function) })
+          expect.objectContaining({ then: expect.any(Function) }),
         )
 
       containsThenMethod(cache.get(`a`))
@@ -112,14 +112,14 @@ describe(`cache`, () => {
     it(`throws if set is called without initting`, () => {
       const cache = new Cache({ name: `__test__` })
       return expect(cache.set(`a`, `b`)).rejects.toThrowError(
-        `Cache wasn't initialised yet, please run the init method first`
+        `Cache wasn't initialised yet, please run the init method first`,
       )
     })
 
     it(`throws if get is called without initting`, () => {
       const cache = new Cache({ name: `__test__` })
       return expect(cache.get(`a`)).rejects.toThrowError(
-        `Cache wasn't initialised yet, please run the init method first`
+        `Cache wasn't initialised yet, please run the init method first`,
       )
     })
   })

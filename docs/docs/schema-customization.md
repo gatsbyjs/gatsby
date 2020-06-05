@@ -279,7 +279,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         email: "String!",
         receivedSwag: {
           type: "Boolean",
-          resolve: source => source.receivedSwag || false,
+          resolve: (source) => source.receivedSwag || false,
         },
       },
       interfaces: ["Node"],
@@ -358,7 +358,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             // node:
             return context.nodeModel
               .getAllNodes({ type: "AuthorJson" })
-              .find(author => author.email === source.author)
+              .find((author) => author.email === source.author)
           },
         },
       },
@@ -497,7 +497,7 @@ and `ContributorJson`.
 You could of course write a `fullNameResolver`, and use it in two places:
 
 ```js:title=gatsby-node.js
-const fullNameResolver = source => `${source.firstName} ${source.name}`
+const fullNameResolver = (source) => `${source.firstName} ${source.name}`
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   actions.createTypes([
@@ -587,7 +587,7 @@ exports.createSchemaCustomization = ({ actions }) => {
             source,
             args,
             context,
-            info
+            info,
           )
           const shouldSanitize =
             args.sanitize != null ? args.sanitize : options.sanitize
@@ -840,7 +840,7 @@ exports.createResolvers = ({ createResolvers }) => {
         resolve: (source, args, context, info) => {
           return context.nodeModel
             .getAllNodes({ type: "MarkdownRemark" })
-            .filter(post => post.frontmatter.author === source.email).length
+            .filter((post) => post.frontmatter.author === source.email).length
         },
       },
     },
@@ -865,7 +865,7 @@ you can add a page data dependency either programmatically with
 ```js
 context.nodeModel.getAllNodes(
   { type: "MarkdownRemark" },
-  { connectionType: "MarkdownRemark" }
+  { connectionType: "MarkdownRemark" },
 )
 ```
 
@@ -1021,7 +1021,7 @@ Including the `__typeName` introspection field allows to check the node type whe
 over the query results in your component:
 
 ```js
-data.allTeamMember.nodes.map(node => {
+data.allTeamMember.nodes.map((node) => {
   switch (node.__typeName) {
     case `AuthorJson`:
       return <Author {...node} />

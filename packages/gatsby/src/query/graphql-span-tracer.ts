@@ -18,7 +18,7 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
   constructor(name: string, activityArgs: IActivityArgs) {
     this.parentActivity = report.phantomActivity(
       name,
-      activityArgs
+      activityArgs,
     ) as IPhantomReporter
     this.activities = new Map()
   }
@@ -32,7 +32,7 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
   }
 
   end(): void {
-    this.activities.forEach(activity => {
+    this.activities.forEach((activity) => {
       activity.end()
     })
     this.parentActivity.end()

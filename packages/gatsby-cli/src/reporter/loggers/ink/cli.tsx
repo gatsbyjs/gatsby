@@ -82,7 +82,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
             <ErrorComponent details={msg as IStructuredError} key={index} />
           ) : (
             <Message key={index} {...(msg as IMessageProps)} />
-          )
+          ),
         )
       }
     }
@@ -90,7 +90,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
     const spinners: Array<IActivity> = []
     const progressBars: Array<IActivity> = []
     if (showProgress) {
-      Object.keys(activities).forEach(activityName => {
+      Object.keys(activities).forEach((activityName) => {
         const activity = activities[activityName]
         if (activity.status !== `IN_PROGRESS`) {
           return
@@ -109,11 +109,11 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
         <Box flexDirection="column">
           <Static>{this.memoizedReactElementsForMessages}</Static>
 
-          {spinners.map(activity => (
+          {spinners.map((activity) => (
             <Spinner key={activity.id} {...activity} />
           ))}
 
-          {progressBars.map(activity => (
+          {progressBars.map((activity) => (
             <ProgressBar
               key={activity.id}
               message={activity.text}

@@ -17,7 +17,7 @@ const readStats = () => {
     return s
   } else {
     s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`),
     )
     return s
   }
@@ -25,7 +25,7 @@ const readStats = () => {
 
 exports.onRenderBody = (
   { setHeadComponents, pathname, pathPrefix, loadPageDataSync },
-  pluginOptions
+  pluginOptions,
 ) => {
   if (
     process.env.NODE_ENV === `production` ||
@@ -33,12 +33,12 @@ exports.onRenderBody = (
   ) {
     const stats = readStats()
     const matchedPaths = Object.keys(
-      guess({ path: pathname, threshold: pluginOptions.minimumThreshold })
+      guess({ path: pathname, threshold: pluginOptions.minimumThreshold }),
     )
     if (!_.isEmpty(matchedPaths)) {
       const matchedPages = matchedPaths.map(loadPageDataSync)
       let componentUrls = []
-      matchedPages.forEach(p => {
+      matchedPages.forEach((p) => {
         if (p && p.componentChunkName) {
           const fetchKey = `assetsByChunkName[${p.componentChunkName}]`
           let chunks = _.get(stats, fetchKey)
@@ -46,14 +46,14 @@ exports.onRenderBody = (
         }
       })
       componentUrls = _.uniq(componentUrls)
-      const components = componentUrls.map(c =>
+      const components = componentUrls.map((c) =>
         React.createElement(`Link`, {
           as: c.slice(-2) === `js` ? `script` : undefined,
           rel:
             c.slice(-2) === `js` ? `prefetch` : `prefetch alternate stylesheet`,
           key: c,
           href: urlJoin(pathPrefix, c),
-        })
+        }),
       )
       setHeadComponents(components)
     }

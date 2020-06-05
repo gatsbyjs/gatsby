@@ -2,7 +2,7 @@ import path from "path"
 import ShadowingPlugin from "../"
 
 // allow writing paths like path/to/thing, even on windows
-const xplatPath = uri => uri.split(`/`).join(path.sep)
+const xplatPath = (uri) => uri.split(`/`).join(path.sep)
 describe(`Component Shadowing`, () => {
   it.each([
     [
@@ -25,16 +25,16 @@ describe(`Component Shadowing`, () => {
   ])(`gets matching themes`, (componentFullPath, { themeDir, themeName }) => {
     const plugin = new ShadowingPlugin({
       themes: [`a-theme`, `theme-b`, `gatsby-theme-c`, `@orgname/theme-d`].map(
-        name => {
+        (name) => {
           return {
             themeName: name,
             themeDir: xplatPath(`/some/place/${name}`),
           }
-        }
+        },
       ),
     })
     expect(
-      plugin.getMatchingThemesForPath(xplatPath(componentFullPath))
+      plugin.getMatchingThemesForPath(xplatPath(componentFullPath)),
     ).toEqual([
       {
         themeDir: xplatPath(themeDir),
@@ -94,7 +94,7 @@ describe(`Component Shadowing`, () => {
           `theme-b`,
           `gatsby-theme-c`,
           `@orgname/theme-d`,
-        ].map(name => {
+        ].map((name) => {
           return {
             themeName: name,
             themeDir: xplatPath(`/some/node_modules/${name}`),
@@ -108,8 +108,8 @@ describe(`Component Shadowing`, () => {
           // require'ing a file it is a "shadow child" of in a-theme
           requestPath: xplatPath(requestPath),
           userSiteDir: xplatPath(userSiteDir),
-        })
+        }),
       ).toEqual(result)
-    }
+    },
   )
 })

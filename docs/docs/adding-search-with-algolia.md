@@ -130,7 +130,7 @@ const postQuery = `{
   }
 }`
 
-const flatten = arr =>
+const flatten = (arr) =>
   arr.map(({ node: { frontmatter, ...rest } }) => ({
     ...frontmatter,
     ...rest,
@@ -194,17 +194,17 @@ import * as hitComps from "./hitComps"
 
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
-    res && res.nbHits > 0 ? children : `No results for '${state.query}'`
+    res && res.nbHits > 0 ? children : `No results for '${state.query}'`,
 )
 
 const Stats = connectStateResults(
   ({ searchResults: res }) =>
-    res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`
+    res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`,
 )
 
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
-  const detectClickOutside = event =>
+  const detectClickOutside = (event) =>
     !ref.current.contains(event.target) && handler()
   useEffect(() => {
     for (const event of events)
@@ -222,7 +222,7 @@ export default function Search({ indices, collapse, hitsAsGrid }) {
   const [focus, setFocus] = useState(false)
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID,
-    process.env.GATSBY_ALGOLIA_SEARCH_KEY
+    process.env.GATSBY_ALGOLIA_SEARCH_KEY,
   )
   useClickOutside(ref, () => setFocus(false))
   return (
@@ -274,12 +274,12 @@ Next you define two connected components. `Results` informs the user that no mat
 ```jsx:title=src/components/search/index.js
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
-    res && res.nbHits > 0 ? children : `No results for ${state.query}`
+    res && res.nbHits > 0 ? children : `No results for ${state.query}`,
 )
 
 const Stats = connectStateResults(
   ({ searchResults: res }) =>
-    res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`
+    res && res.nbHits > 0 && `${res.nbHits} result${res.nbHits > 1 ? `s` : ``}`,
 )
 ```
 
@@ -357,7 +357,7 @@ export default connectSearchBox(({ refine, ...rest }) => (
       type="text"
       placeholder="Search"
       aria-label="Search"
-      onChange={e => refine(e.target.value)}
+      onChange={(e) => refine(e.target.value)}
       {...rest}
     />
     <SearchIcon />
@@ -390,11 +390,11 @@ export const SearchIcon = styled(Search)`
 
 const focus = css`
   background: white;
-  color: ${props => props.theme.darkBlue};
+  color: ${(props) => props.theme.darkBlue};
   cursor: text;
   width: 5em;
   + ${SearchIcon} {
-    color: ${props => props.theme.darkBlue};
+    color: ${(props) => props.theme.darkBlue};
     margin: 0.3em;
   }
 `
@@ -402,20 +402,20 @@ const focus = css`
 const collapse = css`
   width: 0;
   cursor: pointer;
-  color: ${props => props.theme.lightBlue};
+  color: ${(props) => props.theme.lightBlue};
   + ${SearchIcon} {
     color: white;
   }
-  ${props => props.focus && focus}
-  margin-left: ${props => (props.focus ? `-1.6em` : `-1em`)};
-  padding-left: ${props => (props.focus ? `1.6em` : `1em`)};
+  ${(props) => props.focus && focus}
+  margin-left: ${(props) => (props.focus ? `-1.6em` : `-1em`)};
+  padding-left: ${(props) => (props.focus ? `1.6em` : `1em`)};
   ::placeholder {
-    color: ${props => props.theme.gray};
+    color: ${(props) => props.theme.gray};
   }
 `
 
 const expand = css`
-  background: ${props => props.theme.veryLightGray};
+  background: ${(props) => props.theme.veryLightGray};
   width: 6em;
   margin-left: -1.6em;
   padding-left: 1.6em;
@@ -429,10 +429,10 @@ export const Input = styled.input`
   border: none;
   font-size: 1em;
   background: transparent;
-  transition: ${props => props.theme.shortTrans};
-  border-radius: ${props => props.theme.smallBorderRadius};
+  transition: ${(props) => props.theme.shortTrans};
+  border-radius: ${(props) => props.theme.smallBorderRadius};
   {highlight-next-line}
-  ${props => (props.collapse ? collapse : expand)};
+  ${(props) => (props.collapse ? collapse : expand)};
 `
 
 export const Form = styled.form`
@@ -442,7 +442,7 @@ export const Form = styled.form`
 `
 
 export const HitsWrapper = styled.div`
-  display: ${props => (props.show ? `grid` : `none`)};
+  display: ${(props) => (props.show ? `grid` : `none`)};
   max-height: 80vh;
   overflow: scroll;
   z-index: 2;
@@ -455,15 +455,15 @@ export const HitsWrapper = styled.div`
   box-shadow: 0 0 5px 0;
   padding: 0.7em 1em 0.4em;
   background: white;
-  border-radius: ${props => props.theme.smallBorderRadius};
+  border-radius: ${(props) => props.theme.smallBorderRadius};
   > * + * {
     padding-top: 1em !important;
-    border-top: 2px solid ${props => props.theme.darkGray};
+    border-top: 2px solid ${(props) => props.theme.darkGray};
   }
   li + li {
     margin-top: 0.7em;
     padding-top: 0.7em;
-    border-top: 1px solid ${props => props.theme.lightGray};
+    border-top: 1px solid ${(props) => props.theme.lightGray};
   }
   * {
     margin-top: 0;
@@ -473,8 +473,8 @@ export const HitsWrapper = styled.div`
     list-style: none;
   }
   mark {
-    color: ${props => props.theme.lightBlue};
-    background: ${props => props.theme.darkBlue};
+    color: ${(props) => props.theme.lightBlue};
+    background: ${(props) => props.theme.darkBlue};
   }
   header {
     display: flex;
@@ -482,9 +482,9 @@ export const HitsWrapper = styled.div`
     margin-bottom: 0.3em;
     h3 {
       color: white;
-      background: ${props => props.theme.gray};
+      background: ${(props) => props.theme.gray};
       padding: 0.1em 0.4em;
-      border-radius: ${props => props.theme.smallBorderRadius};
+      border-radius: ${(props) => props.theme.smallBorderRadius};
     }
   }
   h3 {
@@ -518,7 +518,7 @@ import { Link } from "gatsby"
 import { Calendar } from "styled-icons/octicons/Calendar"
 import { Tags } from "styled-icons/fa-solid/Tags"
 
-export const PageHit = clickHandler => ({ hit }) => (
+export const PageHit = (clickHandler) => ({ hit }) => (
   <div>
     <Link to={hit.slug} onClick={clickHandler}>
       <h4>
@@ -529,7 +529,7 @@ export const PageHit = clickHandler => ({ hit }) => (
   </div>
 )
 
-export const PostHit = clickHandler => ({ hit }) => (
+export const PostHit = (clickHandler) => ({ hit }) => (
   <div>
     <Link to={`/blog` + hit.slug} onClick={clickHandler}>
       <h4>

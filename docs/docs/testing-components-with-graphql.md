@@ -58,7 +58,7 @@ beforeEach(() => {
           title: `Default Starter`,
         },
       },
-    })
+    }),
   )
 })
 
@@ -152,7 +152,7 @@ beforeEach(() => {
           title: `Default Starter`,
         },
       },
-    })
+    }),
   )
 })
 
@@ -215,7 +215,7 @@ export default function MyHeader(props) {
           }
         }
       `}
-      render={data => <Header {...props} data={data} />}
+      render={(data) => <Header {...props} data={data} />}
     />
   )
 }
@@ -234,7 +234,7 @@ export const PureHeader = ({ data }) => (
   </header>
 )
 
-export const Header = props => (
+export const Header = (props) => (
   <StaticQuery
     query={graphql`
       query {
@@ -245,7 +245,7 @@ export const Header = props => (
         }
       }
     `}
-    render={data => <PureHeader {...props} data={data} />}
+    render={(data) => <PureHeader {...props} data={data} />}
   />
 )
 
@@ -265,7 +265,7 @@ export const PureHeader = ({ data }) => (
   </header>
 )
 
-export const Header = props => {
+export const Header = (props) => {
   const data = useStaticQuery(graphql`
     query {
       site {

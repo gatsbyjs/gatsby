@@ -4,7 +4,7 @@ const Joi = require(`@hapi/joi`)
 
 const resourceSchema = require(`../resource-schema`)
 
-const readPackageJson = async root => {
+const readPackageJson = async (root) => {
   const fullPath = path.join(root, `package.json`)
   const contents = await fs.readFile(fullPath, `utf8`)
   const obj = JSON.parse(contents)
@@ -51,7 +51,7 @@ const schema = {
   value: Joi.string(),
   ...resourceSchema,
 }
-const validate = resource =>
+const validate = (resource) =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 exports.schema = schema
@@ -76,7 +76,7 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
 module.exports.all = async ({ root }) => {
   const pkg = await readPackageJson(root)
 
-  return Object.keys(pkg).map(key => {
+  return Object.keys(pkg).map((key) => {
     return {
       name: key,
       value: JSON.stringify(pkg[key]),

@@ -15,11 +15,11 @@ const defaultOptions = {
   useNameForId: true,
 }
 
-const createPluginConfig = pluginOptions => {
+const createPluginConfig = (pluginOptions) => {
   const conf = { ...defaultOptions, ...pluginOptions }
 
   return {
-    get: key => conf[key],
+    get: (key) => conf[key],
     getOriginalPluginOptions: () => pluginOptions,
   }
 }
@@ -57,7 +57,7 @@ const validateOptions = ({ reporter }, options) => {
   const result = optionsSchema.validate(options, { abortEarly: false })
   if (result.error) {
     const errors = {}
-    result.error.details.forEach(detail => {
+    result.error.details.forEach((detail) => {
       errors[detail.path[0]] = detail.message
     })
     reporter.panic(`Problems with gatsby-source-contentful plugin options:
@@ -69,11 +69,11 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
   const optionKeys = new Set(
     Object.keys(pluginOptions)
       .concat(Object.keys(defaultOptions))
-      .concat(Object.keys(errors))
+      .concat(Object.keys(errors)),
   )
 
-  const getDisplayValue = key => {
-    const formatValue = value => {
+  const getDisplayValue = (key) => {
+    const formatValue = (value) => {
       if (_.isFunction(value)) {
         return `[Function]`
       } else if (maskedFields.includes(key) && typeof value === `string`) {
@@ -92,7 +92,7 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
   }
 
   const lines = []
-  optionKeys.forEach(key => {
+  optionKeys.forEach((key) => {
     if (key === `plugins`) {
       // skip plugins field automatically added by gatsby
       return
@@ -106,7 +106,7 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
           : ``
       }: ${getDisplayValue(key)}${
         typeof errors[key] !== `undefined` ? ` - ${chalk.red(errors[key])}` : ``
-      }`
+      }`,
     )
   })
   return lines.join(`\n`)
@@ -117,13 +117,13 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
  * @param {string} input
  * @returns {string} masked text
  */
-const maskText = input => {
+const maskText = (input) => {
   // show just 25% of string up to 4 characters
   const hiddenCharactersLength =
     input.length - Math.min(4, Math.floor(input.length * 0.25))
 
   return `${`*`.repeat(hiddenCharactersLength)}${input.substring(
-    hiddenCharactersLength
+    hiddenCharactersLength,
   )}`
 }
 

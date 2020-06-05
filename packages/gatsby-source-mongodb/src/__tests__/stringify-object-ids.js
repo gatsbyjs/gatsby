@@ -18,7 +18,7 @@ test(`when passed an array of ObjectIDs it returns an array of strings`, () => {
     new ObjectID().toHexString(),
     new ObjectID().toHexString(),
   ]
-  const arrOfObjectIds = ids.map(id => new ObjectID(id))
+  const arrOfObjectIds = ids.map((id) => new ObjectID(id))
   expect(stringifyObjectIds(arrOfObjectIds)).toEqual(ids)
   expect(stringifyObjectIds(arrOfObjectIds)).not.toEqual(arrOfObjectIds)
 })

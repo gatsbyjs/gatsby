@@ -55,7 +55,7 @@ const feedbackMachine = Machine({
     submitting: {
       invoke: {
         id: `postFeedback`,
-        src: ctx => postFeedback(ctx),
+        src: (ctx) => postFeedback(ctx),
         onDone: `success`,
         onError: `failed`,
       },
@@ -120,19 +120,19 @@ const FeedbackWidget = () => {
           })
         },
       },
-    })
+    }),
   )
 
   const { rating, comment } = current.context
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     send({
       type: `RATE`,
       value: +event.target.value, // Use + to cast to an integer.
     })
   }
 
-  const handleCommentChange = event => {
+  const handleCommentChange = (event) => {
     // XXX is this actually safe?
     const safeComment = event.target.value.replace(/(<([^>]+)>)/gi, ``)
     send({
@@ -141,7 +141,7 @@ const FeedbackWidget = () => {
     })
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     send(`SUBMIT`)
   }

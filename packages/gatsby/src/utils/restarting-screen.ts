@@ -88,13 +88,13 @@ export default html`
         <script src="/socket.io/socket.io.js"></script>
         <script>
           fetch("/___services")
-            .then(res => res.json())
-            .then(services => {
+            .then((res) => res.json())
+            .then((services) => {
               const socket = io(
                 "http://" +
                   window.location.hostname +
                   ":" +
-                  services.developstatusserver.port
+                  services.developstatusserver.port,
               )
               socket.on("develop:started", () => {
                 window.location.reload()

@@ -169,7 +169,7 @@ exports.onPostBuild = () => {
   console.log("Copying locales")
   fs.copySync(
     path.join(__dirname, "/src/locales"),
-    path.join(__dirname, "/public/locales")
+    path.join(__dirname, "/public/locales"),
   )
 }
 ```
@@ -264,7 +264,7 @@ class LanguageSwitcher extends Component {
 
     return (
       <div className="LanguageSwitcher">
-        {languages.map(language => this.renderLanguageChoice(language))}
+        {languages.map((language) => this.renderLanguageChoice(language))}
       </div>
     )
   }

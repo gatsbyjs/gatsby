@@ -12,7 +12,7 @@ describe(`getDependantPackages`, () => {
     })
 
     expect(packagesToPublish).toEqual(
-      new Set([`package-a`, `package-a-dep1`, `package-a-dep1-dep1`])
+      new Set([`package-a`, `package-a-dep1`, `package-a-dep1-dep1`]),
     )
   })
 

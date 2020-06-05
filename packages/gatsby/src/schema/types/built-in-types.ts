@@ -83,4 +83,4 @@ const sitePageType = `
 `
 
 export const builtInTypeDefinitions = (): DocumentNode[] =>
-  [fileType, directoryType, sitePageType].map(type => parse(type))
+  [fileType, directoryType, sitePageType].map((type) => parse(type))

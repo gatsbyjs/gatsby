@@ -94,9 +94,9 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         }
-      `
+      `,
     )
-      .then(result => {
+      .then((result) => {
         if (result.errors) {
           console.log(result.errors)
           reject(result.errors)
@@ -106,7 +106,7 @@ exports.createPages = ({ graphql, actions }) => {
         const pageTemplate = path.resolve("./src/templates/page.js")
         // We want to create a detailed page for each
         // lever node. We'll just use the ID for the slug.
-        _.each(result.data.allLever.edges, edge => {
+        _.each(result.data.allLever.edges, (edge) => {
           // Gatsby uses Redux to manage its internal state.
           // Plugins and sites can use functions like "createPage"
           // to interact with Gatsby.

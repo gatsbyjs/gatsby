@@ -32,7 +32,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     const markdownAST = remark.parse(`\`embed:hello-world.js\``)
 
     expect(() => plugin({ markdownAST }, { directory: `invalid` })).toThrow(
-      `Invalid directory specified "invalid"`
+      `Invalid directory specified "invalid"`,
     )
   })
 
@@ -87,12 +87,14 @@ window.addEventListener('resize', () => {
   })
 
   it(`should error if an invalid file path is specified`, () => {
-    fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
+    fs.existsSync.mockImplementation(
+      (path) => path !== `examples/hello-world.js`,
+    )
 
     const markdownAST = remark.parse(`\`embed:hello-world.js\``)
 
     expect(() => plugin({ markdownAST }, { directory: `examples` })).toThrow(
-      `Invalid snippet specified; no such file "examples/hello-world.js"`
+      `Invalid snippet specified; no such file "examples/hello-world.js"`,
     )
   })
 
@@ -119,7 +121,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()
@@ -133,7 +135,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()
@@ -147,7 +149,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()
@@ -161,7 +163,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()
@@ -175,7 +177,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()
@@ -189,7 +191,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()
@@ -201,7 +203,7 @@ window.addEventListener('resize', () => {
         { markdownAST },
         {
           directory: `examples`,
-        }
+        },
       )
 
       expect(transformed).toMatchSnapshot()

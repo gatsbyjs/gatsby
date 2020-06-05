@@ -8,7 +8,7 @@ const createMDXNode = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
 const genMDX = require(`../utils/gen-mdx`)
 
-const contentDigest = val => createContentDigest(val)
+const contentDigest = (val) => createContentDigest(val)
 
 module.exports = async (
   {
@@ -23,7 +23,7 @@ module.exports = async (
     pathPrefix,
     ...helpers
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { createNode, createParentChildLink } = actions
   const options = defaultOptions(pluginOptions)
@@ -70,7 +70,7 @@ module.exports = async (
       createNodeId,
       ...helpers,
     },
-    { forceDisableCache: true }
+    { forceDisableCache: true },
   )
   await cacheScope({
     cache,
@@ -110,7 +110,7 @@ export default { ${scopeIdentifiers.join(`, `)} }`
   const filePath = path.join(
     cache.directory,
     MDX_SCOPES_LOCATION,
-    `${createContentDigest(scopeFileContent)}.js`
+    `${createContentDigest(scopeFileContent)}.js`,
   )
 
   fs.writeFileSync(filePath, scopeFileContent)
@@ -120,7 +120,7 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 
 class BabelPluginTransformRelativeImports {
   constructor({ parentFilepath, cache }) {
-    this.plugin = declare(api => {
+    this.plugin = declare((api) => {
       api.assertVersion(7)
 
       return {
@@ -135,7 +135,7 @@ class BabelPluginTransformRelativeImports {
                 loaders +
                 path.relative(
                   path.join(cache.directory, MDX_SCOPES_LOCATION),
-                  valueAbsPath
+                  valueAbsPath,
                 )
               node.value = replacementPath
             }

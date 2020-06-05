@@ -16,12 +16,12 @@ class EvaluationTable extends Component {
     const showTooltip = (section, row) => this.state[`${section},${row}`]
 
     const { options, sections, sectionHeaders } = this.props
-    const flatten = arrays => [].concat.apply([], arrays)
+    const flatten = (arrays) => [].concat.apply([], arrays)
     const columnHeaders = [`Category`, `Gatsby`].concat(
-      options.map(o => o.display)
+      options.map((o) => o.display),
     )
     const nodeFieldProperties = [`Feature`, `Gatsby`].concat(
-      options.map(o => o.nodeField)
+      options.map((o) => o.nodeField),
     )
 
     return (
@@ -67,7 +67,7 @@ class EvaluationTable extends Component {
                               "&:hover": {
                                 cursor: j >= 0 ? `pointer` : `inherit`,
                               },
-                              borderBottom: t =>
+                              borderBottom: (t) =>
                                 !showTooltip(s, i)
                                   ? `1px solid ${t.colors.ui.border}`
                                   : `none`,
@@ -103,7 +103,7 @@ class EvaluationTable extends Component {
                       >
                         <td
                           sx={{
-                            paddingBottom: t => `calc(${t.space[5]} - 1px)`,
+                            paddingBottom: (t) => `calc(${t.space[5]} - 1px)`,
                             "&&": {
                               [mediaQueries.xs]: {
                                 px: 3,
@@ -121,11 +121,11 @@ class EvaluationTable extends Component {
                           }
                         </td>
                       </tr>,
-                    ])
-                  )
-                )
-              )
-            )
+                    ]),
+                  ),
+                ),
+              ),
+            ),
           )}
         </tbody>
       </div>

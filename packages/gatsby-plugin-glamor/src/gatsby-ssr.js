@@ -8,7 +8,7 @@ exports.replaceRenderer = ({
   setHeadComponents,
 }) => {
   let { html, css, ids } = renderStaticOptimized(() =>
-    renderToString(bodyComponent)
+    renderToString(bodyComponent),
   )
 
   replaceBodyHTMLString(html)

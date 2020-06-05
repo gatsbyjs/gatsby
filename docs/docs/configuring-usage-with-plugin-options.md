@@ -28,7 +28,7 @@ For example, `gatsby-plugin-console-log` can access the `message` in order to lo
 ```javascript:title=plugins/gatsby-plugin-console-log/gatsby-node.js
 exports.onPreInit = (_, pluginOptions) => {
   console.log(
-    `logging: "${pluginOptions.message || `default message`}" to the console` // highlight-line
+    `logging: "${pluginOptions.message || `default message`}" to the console`, // highlight-line
   )
 }
 ```

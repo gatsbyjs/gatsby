@@ -53,12 +53,12 @@ export const sourceNodes = async (
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
-  }
+  },
 ) => {
   const client = createClient(shopName, accessToken, apiVersion)
 
   // Convenience function to namespace console messages.
-  const formatMsg = msg =>
+  const formatMsg = (msg) =>
     chalk`\n{blue gatsby-source-shopify/${shopName}} ${msg}`
 
   try {
@@ -93,27 +93,27 @@ export const sourceNodes = async (
     if (includeCollections.includes(SHOP)) {
       promises = promises.concat([
         createNodes(COLLECTION, COLLECTIONS_QUERY, CollectionNode, args),
-        createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async x => {
+        createNodes(PRODUCT, PRODUCTS_QUERY, ProductNode, args, async (x) => {
           if (x.variants)
-            await forEach(x.variants.edges, async edge => {
+            await forEach(x.variants.edges, async (edge) => {
               const v = edge.node
               if (v.metafields)
-                await forEach(v.metafields.edges, async edge =>
+                await forEach(v.metafields.edges, async (edge) =>
                   createNode(
-                    await ProductVariantMetafieldNode(imageArgs)(edge.node)
-                  )
+                    await ProductVariantMetafieldNode(imageArgs)(edge.node),
+                  ),
                 )
               return createNode(await ProductVariantNode(imageArgs)(edge.node))
             })
 
           if (x.metafields)
-            await forEach(x.metafields.edges, async edge =>
-              createNode(await ProductMetafieldNode(imageArgs)(edge.node))
+            await forEach(x.metafields.edges, async (edge) =>
+              createNode(await ProductMetafieldNode(imageArgs)(edge.node)),
             )
 
           if (x.options)
-            await forEach(x.options, async option =>
-              createNode(await ProductOptionNode(imageArgs)(option))
+            await forEach(x.options, async (option) =>
+              createNode(await ProductOptionNode(imageArgs)(option)),
             )
         }),
         createShopPolicies(args),
@@ -122,10 +122,10 @@ export const sourceNodes = async (
     if (includeCollections.includes(CONTENT)) {
       promises = promises.concat([
         createNodes(BLOG, BLOGS_QUERY, BlogNode, args),
-        createNodes(ARTICLE, ARTICLES_QUERY, ArticleNode, args, async x => {
+        createNodes(ARTICLE, ARTICLES_QUERY, ArticleNode, args, async (x) => {
           if (x.comments)
-            await forEach(x.comments.edges, async edge =>
-              createNode(await CommentNode(imageArgs)(edge.node))
+            await forEach(x.comments.edges, async (edge) =>
+              createNode(await CommentNode(imageArgs)(edge.node)),
             )
         }),
         createPageNodes(PAGE, PAGES_QUERY, PageNode, args),
@@ -153,7 +153,7 @@ const createNodes = async (
   query,
   nodeFactory,
   { client, createNode, formatMsg, verbose, imageArgs, paginationSize },
-  f = async () => {}
+  f = async () => {},
 ) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${endpoint} nodes`)
@@ -164,13 +164,13 @@ const createNodes = async (
       client,
       [NODE_TO_ENDPOINT_MAPPING[endpoint]],
       query,
-      paginationSize
+      paginationSize,
     ),
-    async entity => {
+    async (entity) => {
       const node = await nodeFactory(imageArgs)(entity)
       createNode(node)
       await f(entity)
-    }
+    },
   )
   if (verbose) console.timeEnd(msg)
 }
@@ -192,7 +192,7 @@ const createShopPolicies = async ({
   Object.entries(policies)
     .filter(([_, policy]) => Boolean(policy))
     .forEach(
-      pipe(([type, policy]) => ShopPolicyNode(policy, { type }), createNode)
+      pipe(([type, policy]) => ShopPolicyNode(policy, { type }), createNode),
     )
   if (verbose) console.timeEnd(msg)
 }
@@ -202,7 +202,7 @@ const createPageNodes = async (
   query,
   nodeFactory,
   { client, createNode, formatMsg, verbose, paginationSize },
-  f = async () => {}
+  f = async () => {},
 ) => {
   // Message printed when fetching is complete.
   const msg = formatMsg(`fetched and processed ${endpoint} nodes`)
@@ -213,13 +213,13 @@ const createPageNodes = async (
       client,
       [NODE_TO_ENDPOINT_MAPPING[endpoint]],
       query,
-      paginationSize
+      paginationSize,
     ),
-    async entity => {
+    async (entity) => {
       const node = await nodeFactory(entity)
       createNode(node)
       await f(entity)
-    }
+    },
   )
   if (verbose) console.timeEnd(msg)
 }

@@ -15,7 +15,7 @@ if (!CMS_MANUAL_INIT) {
   CMS.init()
 } else {
   console.log(
-    `\`CMS_MANUAL_INIT\` flag set, skipping automatic initialization.'`
+    `\`CMS_MANUAL_INIT\` flag set, skipping automatic initialization.'`,
   )
 }
 

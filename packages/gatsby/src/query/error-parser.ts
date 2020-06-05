@@ -163,7 +163,7 @@ interface ILocOfGraphQLDocInSrcFile {
 
 export const locInGraphQlToLocInFile = (
   locationOfGraphQLDocInSourceFile: ILocOfGraphQLDocInSrcFile,
-  graphqlLocation: SourceLocation
+  graphqlLocation: SourceLocation,
 ): SourceLocation => {
   return {
     line:

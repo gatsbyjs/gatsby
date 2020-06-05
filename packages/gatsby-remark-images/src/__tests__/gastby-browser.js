@@ -28,7 +28,7 @@ test(`it sets the default box-shadow on img element`, () => {
 
   expect(imageElement.style[`box-shadow`]).toBe(defaultImageBoxShadowStyle)
   expect(
-    window.getComputedStyle(imageElement).getPropertyValue(`box-shadow`)
+    window.getComputedStyle(imageElement).getPropertyValue(`box-shadow`),
   ).toBe(defaultImageBoxShadowStyle)
 })
 
@@ -44,7 +44,7 @@ const customBackgroundColors = [
   `doesnotexist`,
   `none`,
 ]
-customBackgroundColors.forEach(c => {
+customBackgroundColors.forEach((c) => {
   test(`it sets box-shadow color to '${c}' on img when backgroundColor is set to '${c}'`, () => {
     const pluginOptions = { backgroundColor: `${c}` }
     const imageElement = createImageElement()
@@ -53,10 +53,10 @@ customBackgroundColors.forEach(c => {
     imageElement.dispatchEvent(new Event(`load`))
 
     expect(imageElement.style[`box-shadow`]).toBe(
-      `inset 0px 0px 0px 400px ${c}`
+      `inset 0px 0px 0px 400px ${c}`,
     )
     expect(
-      window.getComputedStyle(imageElement).getPropertyValue(`box-shadow`)
+      window.getComputedStyle(imageElement).getPropertyValue(`box-shadow`),
     ).toBe(`inset 0px 0px 0px 400px ${c}`)
   })
 })

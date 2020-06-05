@@ -12,13 +12,13 @@ const internals = {}
 let cache = {}
 const lazyLoadQueue = []
 
-module.exports = constructor => {
+module.exports = (constructor) => {
   let target
   const { name, args, resolve, description } = constructor._meta[0]
 
   Hoek.assert(
     Hoek.reach(constructor, `_inner.children.length`) > 0,
-    `Joi object must have at least 1 key`
+    `Joi object must have at least 1 key`,
   )
 
   const compiledFields = internals.buildFields(constructor._inner.children)
@@ -46,7 +46,7 @@ module.exports = constructor => {
   return target
 }
 
-internals.buildEnumFields = values => {
+internals.buildEnumFields = (values) => {
   const attrs = {}
 
   for (let i = 0; i < values.length; ++i) {
@@ -56,14 +56,14 @@ internals.buildEnumFields = values => {
   return attrs
 }
 
-internals.setType = schema => {
+internals.setType = (schema) => {
   // Helpful for Int or Float
 
   if (schema._tests.length) {
     if (schema._flags.presence) {
       return {
         type: new TypeDictionary.required(
-          TypeDictionary[schema._tests[0].name]
+          TypeDictionary[schema._tests[0].name],
         ),
       }
     }
@@ -105,7 +105,7 @@ internals.processLazyLoadQueue = (attrs, recursiveType) => {
   return attrs
 }
 
-internals.buildFields = fields => {
+internals.buildFields = (fields) => {
   const attrs = {}
 
   for (let i = 0; i < fields.length; ++i) {
@@ -147,7 +147,7 @@ internals.buildFields = fields => {
       } else {
         Hoek.assert(
           field.schema._inner.items.length > 0,
-          `Need to provide scalar type as an item when using joi array`
+          `Need to provide scalar type as an item when using joi array`,
         )
 
         if (Hoek.reach(field, `schema._inner.items.0._type`) === `object`) {
@@ -155,13 +155,13 @@ internals.buildFields = fields => {
           const Item = new GraphQLObjectType({
             name,
             fields: internals.buildFields(
-              field.schema._inner.items[0]._inner.children
+              field.schema._inner.items[0]._inner.children,
             ),
           })
           Type = new GraphQLList(Item)
         } else {
           Type = new GraphQLList(
-            TypeDictionary[field.schema._inner.items[0]._type]
+            TypeDictionary[field.schema._inner.items[0]._type],
           )
         }
       }
@@ -206,7 +206,7 @@ internals.buildFields = fields => {
   }
 }
 
-internals.buildArgs = args => {
+internals.buildArgs = (args) => {
   const argAttrs = {}
 
   for (const key in args) {

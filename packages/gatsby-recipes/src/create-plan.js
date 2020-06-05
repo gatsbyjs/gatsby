@@ -4,7 +4,7 @@ const render = require(`./renderer`)
 // const SITE_ROOT = process.cwd()
 // const ctx = { root: SITE_ROOT }
 
-module.exports = async context => {
+module.exports = async (context) => {
   const stepAsMdx = context.steps[context.currentStep]
 
   try {

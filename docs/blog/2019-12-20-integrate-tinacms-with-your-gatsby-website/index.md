@@ -183,7 +183,7 @@ Editing in the sidebar works fine for many types of content. Yet, long-form cont
 
    {
      process.env.NODE_ENV != "production" && (
-       <TinaButton primary onClick={() => setIsEditing(p => !p)}>
+       <TinaButton primary onClick={() => setIsEditing((p) => !p)}>
          {isEditing ? "Preview" : "Edit"}
        </TinaButton>
      )
@@ -222,7 +222,7 @@ We will register the `content-creator` plugin in a component on the site. When t
    ```javascript
    const CreateBlogPlugin = new RemarkCreatorPlugin({
      label: "New Blog Post",
-     filename: form => {
+     filename: (form) => {
        return form.filename
      },
      fields: [

@@ -99,7 +99,7 @@ describe(`create-remote-file-node`, () => {
     const setup = (
       args = {},
       type = `response`,
-      response = { statusCode: 200 }
+      response = { statusCode: 200 },
     ) => {
       const url = `https://images.whatever.com/real-image-trust-me-${uuid}.png`
 
@@ -172,7 +172,7 @@ describe(`create-remote-file-node`, () => {
           expect.any(String),
           expect.objectContaining({
             headers: {},
-          })
+          }),
         )
       })
 
@@ -189,7 +189,7 @@ describe(`create-remote-file-node`, () => {
           expect.any(String),
           expect.objectContaining({
             auth: [auth.htaccess_user, auth.htaccess_pass].join(`:`),
-          })
+          }),
         )
       })
 
@@ -206,7 +206,7 @@ describe(`create-remote-file-node`, () => {
             headers: expect.objectContaining({
               Authorization: `Bearer foobar`,
             }),
-          })
+          }),
         )
       })
 
@@ -217,13 +217,13 @@ describe(`create-remote-file-node`, () => {
         } catch (err) {
           expect(err).toEqual(
             expect.stringContaining(
-              `failed to process https://images.whatever.com/real-image-trust-me`
-            )
+              `failed to process https://images.whatever.com/real-image-trust-me`,
+            ),
           )
         }
       })
 
-      it(`retries if stalled`, done => {
+      it(`retries if stalled`, (done) => {
         const fs = require(`fs-extra`)
 
         fs.createWriteStream.mockReturnValue({
@@ -267,7 +267,7 @@ describe(`create-remote-file-node`, () => {
           createNode: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"createNode must be a function, was undefined"`
+        `"createNode must be a function, was undefined"`,
       )
     })
 
@@ -278,7 +278,7 @@ describe(`create-remote-file-node`, () => {
           createNodeId: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"createNodeId must be a function, was undefined"`
+        `"createNodeId must be a function, was undefined"`,
       )
     })
 
@@ -290,7 +290,7 @@ describe(`create-remote-file-node`, () => {
           getCache: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
+        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`,
       )
     })
 

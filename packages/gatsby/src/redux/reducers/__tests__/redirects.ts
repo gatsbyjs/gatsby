@@ -77,7 +77,7 @@ describe(`redirects`, () => {
   it(`prevents duplicate redirects`, () => {
     function createRedirect(
       fromPath: string,
-      toPath: string
+      toPath: string,
     ): ICreateRedirectAction {
       return {
         type: `CREATE_REDIRECT`,
@@ -110,7 +110,7 @@ describe(`redirects`, () => {
         fromPath: `/page`,
         toPath: `/en/page`,
         Language: `en`,
-      })
+      }),
     )
     state = reducer(
       state,
@@ -118,7 +118,7 @@ describe(`redirects`, () => {
         fromPath: `/page`,
         toPath: `/pt/page`,
         Language: `pt`,
-      })
+      }),
     )
 
     expect(state).toEqual([

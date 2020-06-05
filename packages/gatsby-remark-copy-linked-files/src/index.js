@@ -8,13 +8,13 @@ const imageSize = require(`probe-image-size`)
 
 const DEPLOY_DIR = `public`
 
-const invalidDestinationDirMessage = dir =>
+const invalidDestinationDirMessage = (dir) =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
 // dest must be a child
-const destinationIsValid = dest => !path.relative(`./`, dest).startsWith(`..`)
+const destinationIsValid = (dest) => !path.relative(`./`, dest).startsWith(`..`)
 
-const validateDestinationDir = dir => {
+const validateDestinationDir = (dir) => {
   if (typeof dir === `undefined`) {
     return true
   } else if (typeof dir === `string`) {
@@ -28,7 +28,7 @@ const validateDestinationDir = dir => {
   }
 }
 
-const defaultDestination = linkNode =>
+const defaultDestination = (linkNode) =>
   `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
 
 const getDestination = (linkNode, dir) => {
@@ -58,8 +58,8 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
-    lpath ? true : false
+  const linkPaths = [`/`, pathPrefix, destination].filter((lpath) =>
+    lpath ? true : false,
   )
   return path.posix.join(...linkPaths)
 }
@@ -76,7 +76,7 @@ function toArray(buf) {
 
 module.exports = (
   { files, markdownNode, markdownAST, pathPrefix, getNode },
-  pluginOptions = {}
+  pluginOptions = {},
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
@@ -90,16 +90,16 @@ module.exports = (
   const filesToCopy = new Map()
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
-  const visitor = link => {
+  const visitor = (link) => {
     if (
       isRelativeUrl(link.url) &&
       getNode(markdownNode.parent).internal.type === `File`
     ) {
       const linkPath = path.posix.join(
         getNode(markdownNode.parent).dir,
-        link.url
+        link.url,
       )
-      const linkNode = _.find(files, file => {
+      const linkNode = _.find(files, (file) => {
         if (file && file.absolutePath) {
           return file.absolutePath === linkPath
         }
@@ -123,9 +123,9 @@ module.exports = (
   const generateImagesAndUpdateNode = function (image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
-      image.attr(`src`)
+      image.attr(`src`),
     )
-    const imageNode = _.find(files, file => {
+    const imageNode = _.find(files, (file) => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
       }
@@ -142,14 +142,14 @@ module.exports = (
     visitor(link)
     node.value = node.value.replace(
       new RegExp(image.attr(`src`), `g`),
-      link.url
+      link.url,
     )
 
     let dimensions
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
       dimensions = imageSize.sync(
-        toArray(fsExtra.readFileSync(imageNode.absolutePath))
+        toArray(fsExtra.readFileSync(imageNode.absolutePath)),
       )
     }
 
@@ -162,15 +162,15 @@ module.exports = (
     image.attr(`alt`, image.attr(`alt`) ? image.attr(`alt`) : defaultAlt)
     image.attr(
       `width`,
-      image.attr(`width`) ? image.attr(`width`) : dimensions.width
+      image.attr(`width`) ? image.attr(`width`) : dimensions.width,
     )
     image.attr(
       `height`,
-      image.attr(`height`) ? image.attr(`height`) : dimensions.height
+      image.attr(`height`) ? image.attr(`height`) : dimensions.height,
     )
   }
 
-  visit(markdownAST, `link`, link => {
+  visit(markdownAST, `link`, (link) => {
     const ext = link.url.split(`.`).pop()
     if (options.ignoreFileExtensions.includes(ext)) {
       return
@@ -179,7 +179,7 @@ module.exports = (
     visitor(link)
   })
 
-  visit(markdownAST, `definition`, definition => {
+  visit(markdownAST, `definition`, (definition) => {
     const ext = definition.url.split(`.`).pop()
     if (options.ignoreFileExtensions.includes(ext)) {
       return
@@ -189,7 +189,7 @@ module.exports = (
   })
 
   // This will only work for markdown img tags
-  visit(markdownAST, `image`, image => {
+  visit(markdownAST, `image`, (image) => {
     const ext = image.url.split(`.`).pop()
     if (options.ignoreFileExtensions.includes(ext)) {
       return
@@ -205,9 +205,9 @@ module.exports = (
 
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
-      image.url
+      image.url,
     )
-    const imageNode = _.find(files, file => {
+    const imageNode = _.find(files, (file) => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
       }
@@ -220,7 +220,7 @@ module.exports = (
   })
 
   // For each HTML Node
-  visit(markdownAST, [`html`, `jsx`], node => {
+  visit(markdownAST, [`html`, `jsx`], (node) => {
     const $ = cheerio.load(node.value)
 
     function processUrl({ url, isRequired }) {
@@ -269,32 +269,32 @@ module.exports = (
         } catch (err) {
           // Ignore
         }
-      }
+      },
     )
 
     // Handle video tags.
     extractUrlAttributeAndElement(
       $(`video source[src], video[src]`),
-      `src`
+      `src`,
     ).forEach(processUrl)
 
     // Handle video poster.
     extractUrlAttributeAndElement(
       $(`video[poster]`),
-      `poster`
-    ).forEach(extractedUrlAttributeAndElement =>
-      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
+      `poster`,
+    ).forEach((extractedUrlAttributeAndElement) =>
+      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true }),
     )
 
     // Handle audio tags.
     extractUrlAttributeAndElement(
       $(`audio source[src], audio[src]`),
-      `src`
+      `src`,
     ).forEach(processUrl)
 
     // Handle flash embed tags.
     extractUrlAttributeAndElement($(`object param[value]`), `value`).forEach(
-      processUrl
+      processUrl,
     )
 
     // Handle a tags.
@@ -314,6 +314,6 @@ module.exports = (
           console.error(`error copying file`, err)
         }
       }
-    })
+    }),
   )
 }

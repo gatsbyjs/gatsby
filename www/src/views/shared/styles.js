@@ -20,11 +20,11 @@ export const showcaseItem = {
 
 export const withTitleHover = {
   "& .title": {
-    transition: t =>
+    transition: (t) =>
       `box-shadow ${t.transition.speed.slow} ${t.transition.curve.default}, transform ${t.transition.speed.slow} ${t.transition.curve.default}`,
   },
   "&:hover .title": {
-    boxShadow: t => `inset 0 -1px 0px 0px ${t.colors.link.hoverBorder}`,
+    boxShadow: (t) => `inset 0 -1px 0px 0px ${t.colors.link.hoverBorder}`,
     color: `link.hoverColor`,
   },
 }
@@ -49,7 +49,7 @@ export const screenshotHover = {
   bg: `transparent`,
   color: `link.hoverColor`,
   "& .gatsby-image-wrapper": {
-    transform: t => `translateY(-${t.space[1]})`,
+    transform: (t) => `translateY(-${t.space[1]})`,
     boxShadow: `overlay`,
   },
 }

@@ -70,7 +70,7 @@ const Breadcrumb = ({ location }) => {
         <Separator />
         <Link to={`/${topLevel}/`}>{topLevelTitle}</Link>
         <Separator />
-        {activeItemParents.reverse().map(item => {
+        {activeItemParents.reverse().map((item) => {
           const itemTitle = item.breadcrumbTitle || item.title
           return (
             <React.Fragment key={itemTitle}>

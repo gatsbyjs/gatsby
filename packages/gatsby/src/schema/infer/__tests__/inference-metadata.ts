@@ -137,19 +137,19 @@ describe(`Get example value for type inference`, () => {
 
   it(`builds field examples from an array of nodes`, () => {
     expect(
-      getExampleValueWithoutConflicts({ nodes, typeConflictReporter })
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }),
     ).toMatchSnapshot()
   })
 
   it(`skips null fields`, () => {
     expect(
-      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }).iAmNull
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }).iAmNull,
     ).not.toBeDefined()
   })
 
   it(`skips fields with key set to empty string`, () => {
     expect(
-      getExampleValueWithoutConflicts({ nodes, typeConflictReporter })[``]
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter })[``],
     ).not.toBeDefined()
   })
 
@@ -164,10 +164,10 @@ describe(`Get example value for type inference`, () => {
   it(`skips empty or sparse arrays`, () => {
     expect(
       getExampleValueWithoutConflicts({ nodes, typeConflictReporter })
-        .emptyArray
+        .emptyArray,
     ).not.toBeDefined()
     expect(
-      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }).hair
+      getExampleValueWithoutConflicts({ nodes, typeConflictReporter }).hair,
     ).toBeDefined()
   })
 
@@ -778,7 +778,7 @@ describe(`Get example value for type inference`, () => {
         ignoredFields: new Set(),
       } as ITypeMetadata
 
-      const revisions = nodes.map(node => {
+      const revisions = nodes.map((node) => {
         inferenceMetadata = addNode(inferenceMetadata, node)
         return getExampleObject(inferenceMetadata)
       })
@@ -1051,7 +1051,7 @@ describe(`Type change detection`, () => {
 
   const addOne = (
     node: object,
-    metadata: ITypeMetadata = initialMetadata
+    metadata: ITypeMetadata = initialMetadata,
   ): ITypeMetadata => addNode(_.cloneDeep(metadata), node as Node)
 
   const deleteOne = (node: object, metadata = initialMetadata): ITypeMetadata =>

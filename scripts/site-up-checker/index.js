@@ -12,16 +12,16 @@ const usersDMChannels = []
 client.on(`ready`, () => {
   console.log(`client ready`)
   client.users
-    .filter(u => _.includes(usersToAlert, u.id))
-    .forEach(userObject => {
+    .filter((u) => _.includes(usersToAlert, u.id))
+    .forEach((userObject) => {
       console.log(userObject)
-      userObject.createDM().then(dmChannel => usersDMChannels.push(dmChannel))
+      userObject.createDM().then((dmChannel) => usersDMChannels.push(dmChannel))
     })
 })
 
 const webhook = new Webhook(process.env.WEBHOOK_URL)
 
-const checkWebsite = async site => {
+const checkWebsite = async (site) => {
   try {
     const { statusCode } = await request({
       uri: site,
@@ -38,8 +38,8 @@ const checkWebsite = async site => {
     webhook.error(`Gatsby bot`, `A Gatsby site is down ${site}`)
 
     // Alert admins over DM
-    usersDMChannels.forEach(chan =>
-      chan.send(`A Gatsby website is down! ${site}`)
+    usersDMChannels.forEach((chan) =>
+      chan.send(`A Gatsby website is down! ${site}`),
     )
   }
 }
@@ -52,11 +52,11 @@ const main = () => {
   ]
 
   // Run immediately.
-  websites.forEach(w => checkWebsite(w))
+  websites.forEach((w) => checkWebsite(w))
 
   // Check each website every 60 seconds.
   setInterval(() => {
-    websites.forEach(w => checkWebsite(w))
+    websites.forEach((w) => checkWebsite(w))
   }, 60000)
 }
 

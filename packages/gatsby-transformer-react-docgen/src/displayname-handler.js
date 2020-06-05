@@ -26,7 +26,7 @@ function getNameFromPath(path: NodePath): ?string {
             computed && getNameFromPath(path)
               ? name
               : `${name}.${getNameFromPath(path) || ``}`,
-          getNameFromPath(path.get(`object`))
+          getNameFromPath(path.get(`object`)),
         )
     default:
       return null
@@ -98,11 +98,11 @@ function getNameFromFilePath(filePath: string = ``): ?string {
 }
 
 export function createDisplayNameHandler(
-  filePath: string
+  filePath: string,
 ): (documentation: Documentation, path: NodePath) => void {
   return function displayNameHandler(
     documentation: Documentation,
-    path: NodePath
+    path: NodePath,
   ): void {
     let displayName: ?string = [
       getStaticDisplayName,

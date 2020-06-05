@@ -4,13 +4,13 @@ import MdxLink from "../mdx-link"
 
 jest.mock(`../localized-link`, () =>
   // Mock the component to use a different tag so we can easily differentiate
-  () => <span />
+  () => <span />,
 )
 
 describe(`mdx-link`, () => {
   it(`creates a raw link on external links`, () => {
     const { container } = render(
-      <MdxLink href="https://github.com/gatsbyjs.gatsby" />
+      <MdxLink href="https://github.com/gatsbyjs.gatsby" />,
     )
     expect(container.firstChild.nodeName).toBe(`A`)
   })

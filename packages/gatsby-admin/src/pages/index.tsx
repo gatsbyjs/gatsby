@@ -103,7 +103,7 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
   )
 }
 
-const SectionHeading: React.FC<HeadingProps> = props => (
+const SectionHeading: React.FC<HeadingProps> = (props) => (
   <Heading sx={{ color: `white`, fontWeight: `500` }} {...props} />
 )
 
@@ -152,8 +152,8 @@ const Index: React.FC<{}> = () => {
       <SectionHeading>Plugins</SectionHeading>
       <Grid gap={6} columns={[1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-plugin`) === 0)
-          .map(plugin => (
+          .filter((plugin) => plugin.name.indexOf(`gatsby-plugin`) === 0)
+          .map((plugin) => (
             <PluginCard key={plugin.id} name={plugin.name} />
           ))}
       </Grid>
@@ -162,8 +162,8 @@ const Index: React.FC<{}> = () => {
       <SectionHeading>Themes</SectionHeading>
       <Grid gap={6} columns={[1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
-          .filter(plugin => plugin.name.indexOf(`gatsby-theme`) === 0)
-          .map(plugin => (
+          .filter((plugin) => plugin.name.indexOf(`gatsby-theme`) === 0)
+          .map((plugin) => (
             <PluginCard key={plugin.id} name={plugin.name} />
           ))}
       </Grid>

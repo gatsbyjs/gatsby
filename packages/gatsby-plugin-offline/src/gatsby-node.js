@@ -31,7 +31,7 @@ const readStats = () => {
     return s
   } else {
     s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`),
     )
     return s
   }
@@ -39,7 +39,7 @@ const readStats = () => {
 
 function getAssetsForChunks(chunks) {
   const files = _.flatten(
-    chunks.map(chunk => readStats().assetsByChunkName[chunk])
+    chunks.map((chunk) => readStats().assetsByChunkName[chunk]),
   )
   return _.compact(files)
 }
@@ -47,9 +47,9 @@ function getAssetsForChunks(chunks) {
 function getPrecachePages(globs, base) {
   const precachePages = []
 
-  globs.forEach(page => {
+  globs.forEach((page) => {
     const matches = glob.sync(base + page)
-    matches.forEach(path => {
+    matches.forEach((path) => {
       const isDirectory = fs.lstatSync(path).isDirectory()
       let precachePath
 
@@ -77,7 +77,7 @@ exports.onPostBuild = (
     appendScript = null,
     debug = undefined,
     workboxConfig = {},
-  }
+  },
 ) => {
   const { pathPrefix, reporter } = args
   const rootDir = `public`
@@ -88,7 +88,7 @@ exports.onPostBuild = (
     `webpack-runtime`,
     `component---node-modules-gatsby-plugin-offline-app-shell-js`,
   ])
-  const appFile = files.find(file => file.startsWith(`app-`))
+  const appFile = files.find((file) => file.startsWith(`app-`))
 
   function flat(arr) {
     return Array.prototype.flat ? arr.flat() : [].concat(...arr)
@@ -99,12 +99,12 @@ exports.onPostBuild = (
     offlineShellPath,
     ...getPrecachePages(
       precachePagesGlobs,
-      `${process.cwd()}/${rootDir}`
-    ).filter(page => page !== offlineShellPath),
+      `${process.cwd()}/${rootDir}`,
+    ).filter((page) => page !== offlineShellPath),
   ]
 
   const criticalFilePaths = _.uniq(
-    flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix)))
+    flat(precachePages.map((page) => getResourcesFromHTML(page, pathPrefix))),
   )
 
   const globPatterns = files.concat([
@@ -114,7 +114,7 @@ exports.onPostBuild = (
   ])
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
-  manifests.forEach(file => {
+  manifests.forEach((file) => {
     if (fs.existsSync(`${rootDir}/${file}`)) globPatterns.push(file)
   })
 
@@ -169,14 +169,14 @@ exports.onPostBuild = (
   return workboxBuild
     .generateSW({ swDest, ...combinedOptions })
     .then(({ count, size, warnings }) => {
-      if (warnings) warnings.forEach(warning => console.warn(warning))
+      if (warnings) warnings.forEach((warning) => console.warn(warning))
 
       if (debug !== undefined) {
         const swText = fs
           .readFileSync(swDest, `utf8`)
           .replace(
             /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
-            `$1, debug: ${JSON.stringify(debug)}});`
+            `$1, debug: ${JSON.stringify(debug)}});`,
           )
         fs.writeFileSync(swDest, swText)
       }
@@ -202,8 +202,8 @@ exports.onPostBuild = (
         `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.\n` +
           `The following pages will be precached:\n` +
           precachePages
-            .map(path => path.replace(`${process.cwd()}/public`, ``))
-            .join(`\n`)
+            .map((path) => path.replace(`${process.cwd()}/public`, ``))
+            .join(`\n`),
       )
     })
 }

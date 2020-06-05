@@ -30,26 +30,26 @@ export default class FilteredStarterLibrary extends Component {
   state = {
     sitesToShow: 12,
   }
-  setFiltersCategory = filtersCategory => {
+  setFiltersCategory = (filtersCategory) => {
     this.props.setURLState({ c: Array.from(filtersCategory) })
   }
-  setFiltersDependency = filtersDependency =>
+  setFiltersDependency = (filtersDependency) =>
     this.props.setURLState({ d: Array.from(filtersDependency) })
-  setFiltersVersion = filtersVersion =>
+  setFiltersVersion = (filtersVersion) =>
     this.props.setURLState({ v: Array.from(filtersVersion) })
   toggleSort = () =>
     this.props.setURLState({
       sort: this.props.urlState.sort === `recent` ? `stars` : `recent`,
     })
   resetFilters = () => this.props.setURLState({ c: [], d: [], v: [], s: `` })
-  showMoreSites = starters => {
+  showMoreSites = (starters) => {
     const showAll =
       this.state.sitesToShow + 15 > starters.length ? starters.length : false
     this.setState({
       sitesToShow: showAll ? showAll : this.state.sitesToShow + 15,
     })
   }
-  onChangeUrlWithText = value => this.props.setURLState({ s: value })
+  onChangeUrlWithText = (value) => this.props.setURLState({ s: value })
 
   render() {
     const { data, urlState } = this.props
@@ -61,31 +61,31 @@ export default class FilteredStarterLibrary extends Component {
       toggleSort,
     } = this
     const filtersCategory = new Set(
-      Array.isArray(urlState.c) ? urlState.c : [urlState.c]
+      Array.isArray(urlState.c) ? urlState.c : [urlState.c],
     )
     const filtersDependency = new Set(
-      Array.isArray(urlState.d) ? urlState.d : [urlState.d]
+      Array.isArray(urlState.d) ? urlState.d : [urlState.d],
     )
     const filtersVersion = new Set(
-      Array.isArray(urlState.v) ? urlState.v : [urlState.v]
+      Array.isArray(urlState.v) ? urlState.v : [urlState.v],
     )
     // https://stackoverflow.com/a/32001444/1106414
     const filters = new Set(
       [].concat(
-        ...[filtersCategory, filtersDependency, filtersVersion].map(set =>
-          Array.from(set)
-        )
-      )
+        ...[filtersCategory, filtersDependency, filtersVersion].map((set) =>
+          Array.from(set),
+        ),
+      ),
     )
 
     // stopgap for missing gh data (#8763)
     let starterNodes = data.allStartersYaml.nodes.filter(
-      starter => starter.fields && starter.fields.starterShowcase
+      (starter) => starter.fields && starter.fields.starterShowcase,
     )
 
     if (urlState.s.length > 0) {
-      starterNodes = starterNodes.filter(node =>
-        JSON.stringify(node).toLowerCase().includes(urlState.s.toLowerCase())
+      starterNodes = starterNodes.filter((node) =>
+        JSON.stringify(node).toLowerCase().includes(urlState.s.toLowerCase()),
       )
     }
 
@@ -105,7 +105,7 @@ export default class FilteredStarterLibrary extends Component {
         <SidebarContainer css={{ overflowY: `auto` }}>
           <SidebarHeader />
           <SidebarBody>
-            <div sx={{ height: t => t.space[10] }}>
+            <div sx={{ height: (t) => t.space[10] }}>
               {(filters.size > 0 || urlState.s.length > 0) && ( // search is a filter too https://gatsbyjs.slack.com/archives/CB4V648ET/p1529224551000008
                 <ResetFilters onClick={resetFilters} />
               )}
@@ -116,13 +116,13 @@ export default class FilteredStarterLibrary extends Component {
               data={Array.from(
                 count(
                   starterNodes.map(
-                    node =>
+                    (node) =>
                       node.fields &&
                       node.fields.starterShowcase.gatsbyMajorVersion.map(
-                        str => str[1]
-                      )
-                  )
-                )
+                        (str) => str[1],
+                      ),
+                  ),
+                ),
               )}
               filters={filtersVersion}
               setFilters={setFiltersVersion}
@@ -130,7 +130,7 @@ export default class FilteredStarterLibrary extends Component {
             <LHSFilter
               heading="Categories"
               data={Array.from(
-                count(starterNodes.map(starter => starter.tags))
+                count(starterNodes.map((starter) => starter.tags)),
               )}
               filters={filtersCategory}
               setFilters={setFiltersCategory}
@@ -141,13 +141,13 @@ export default class FilteredStarterLibrary extends Component {
               data={Array.from(
                 count(
                   starterNodes.map(
-                    starter =>
+                    (starter) =>
                       starter.fields &&
                       starter.fields.starterShowcase.gatsbyDependencies.map(
-                        str => str[0]
-                      )
-                  )
-                )
+                        (str) => str[0],
+                      ),
+                  ),
+                ),
               )}
               filters={filtersDependency}
               setFilters={setFiltersDependency}
@@ -277,7 +277,7 @@ function count(arrays) {
 }
 
 function filterByCategories(nodes, categories) {
-  return nodes.filter(node => isSuperset(node.tags, categories))
+  return nodes.filter((node) => isSuperset(node.tags, categories))
 }
 
 function filterByDependencies(nodes, categories) {
@@ -285,9 +285,9 @@ function filterByDependencies(nodes, categories) {
     ({ fields }) =>
       fields &&
       isSuperset(
-        fields.starterShowcase.gatsbyDependencies.map(c => c[0]),
-        categories
-      )
+        fields.starterShowcase.gatsbyDependencies.map((c) => c[0]),
+        categories,
+      ),
   )
 }
 
@@ -296,9 +296,9 @@ function filterByVersions(nodes, versions) {
     ({ fields }) =>
       fields &&
       isSuperset(
-        fields.starterShowcase.gatsbyMajorVersion.map(c => c[1]),
-        versions
-      )
+        fields.starterShowcase.gatsbyMajorVersion.map((c) => c[1]),
+        versions,
+      ),
   )
 }
 

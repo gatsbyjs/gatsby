@@ -21,15 +21,15 @@ const Form = styled(`form`)`
 
 const Fieldset = styled(`fieldset`)`
   border: 0;
-  margin: 0 0 ${p => p.theme.space[4]};
+  margin: 0 0 ${(p) => p.theme.space[4]};
   padding: 0;
 `
 
 const Legend = styled(`legend`)`
   display: inline-block;
-  font-size: ${p => p.theme.fontSizes[1]};
-  margin-bottom: ${p => p.theme.space[4]};
-  padding: 0 ${p => p.theme.space[2]};
+  font-size: ${(p) => p.theme.fontSizes[1]};
+  margin-bottom: ${(p) => p.theme.space[4]};
+  padding: 0 ${(p) => p.theme.space[2]};
   text-align: center;
 `
 
@@ -60,7 +60,7 @@ const Rating = ({ children }) => (
 )
 
 const TextareaLabel = styled(`label`)`
-  font-size: ${p => p.theme.fontSizes[1]};
+  font-size: ${(p) => p.theme.fontSizes[1]};
   font-weight: bold;
 
   span {

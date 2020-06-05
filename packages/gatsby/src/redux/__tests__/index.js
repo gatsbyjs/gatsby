@@ -13,9 +13,9 @@ const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
   return {
     writeFileSync: jest.fn((file, content) =>
-      mockWrittenContent.set(file, content)
+      mockWrittenContent.set(file, content),
     ),
-    readFileSync: jest.fn(file => mockWrittenContent.get(file)),
+    readFileSync: jest.fn((file) => mockWrittenContent.get(file)),
     moveSync: jest.fn((from, to) => {
       // This will only work for folders if they are always the full prefix
       // of the file... (that goes for both input dirs). That's the case here.
@@ -30,24 +30,24 @@ jest.mock(`fs-extra`, () => {
           // (.replace with string arg will only replace the first occurrence)
           mockWrittenContent.set(
             key.replace(from, to),
-            mockWrittenContent.get(key)
+            mockWrittenContent.get(key),
           )
           mockWrittenContent.delete(key)
         }
       })
     }),
-    existsSync: jest.fn(target => mockWrittenContent.has(target)),
-    mkdtempSync: jest.fn(suffix => {
+    existsSync: jest.fn((target) => mockWrittenContent.has(target)),
+    mkdtempSync: jest.fn((suffix) => {
       let dir = mockCompatiblePath.join(`some`, `tmp` + suffix + Math.random())
       mockWrittenContent.set(dir, Buffer(`empty dir`))
       return dir
     }),
-    removeSync: jest.fn(file => mockWrittenContent.delete(file)),
+    removeSync: jest.fn((file) => mockWrittenContent.delete(file)),
   }
 })
 jest.mock(`glob`, () => {
   return {
-    sync: jest.fn(pattern => {
+    sync: jest.fn((pattern) => {
       // Tricky.
       // Expecting a path prefix, ending with star. Else this won't work :/
       if (pattern.slice(-1) !== `*`) {
@@ -103,8 +103,8 @@ describe(`redux db`, () => {
             id: `123456`,
           },
         },
-        { name: `default-site-plugin` }
-      )
+        { name: `default-site-plugin` },
+      ),
     )
 
     writeToCache.mockClear()
@@ -142,7 +142,7 @@ describe(`redux db`, () => {
     const legacyLocation = path.join(process.cwd(), `.cache/redux.state`)
     mockWrittenContent.set(
       legacyLocation,
-      Buffer.from(`legacy location for cache`)
+      Buffer.from(`legacy location for cache`),
     )
 
     await saveState()

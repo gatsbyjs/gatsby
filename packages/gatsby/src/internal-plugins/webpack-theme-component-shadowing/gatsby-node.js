@@ -2,7 +2,7 @@ const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
 
 exports.onCreateWebpackConfig = (
   { store, stage, getConfig, rules, loaders, actions },
-  pluginOptions
+  pluginOptions,
 ) => {
   const { themes, flattenedPlugins, program } = store.getState()
 
@@ -13,7 +13,7 @@ exports.onCreateWebpackConfig = (
           extensions: getConfig().resolve.extensions,
           themes: themes.themes
             ? themes.themes
-            : flattenedPlugins.map(plugin => {
+            : flattenedPlugins.map((plugin) => {
                 return {
                   themeDir: plugin.pluginFilepath,
                   themeName: plugin.name,

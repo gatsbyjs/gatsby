@@ -22,7 +22,7 @@ function createFileContentHash(root: string, globPattern: string): string {
   const hash = crypto.createHash(`md5`)
   const files = glob.sync(`${root}/${globPattern}`, { nodir: true })
 
-  files.forEach(filepath => {
+  files.forEach((filepath) => {
     hash.update(fs.readFileSync(filepath))
   })
 
@@ -38,11 +38,11 @@ function createFileContentHash(root: string, globPattern: string): string {
  */
 const createPluginId = (
   name: string,
-  pluginObject: IPluginRefObject | null = null
+  pluginObject: IPluginRefObject | null = null,
 ): string =>
   createNodeId(
     name + (pluginObject ? JSON.stringify(pluginObject.options) : ``),
-    `Plugin`
+    `Plugin`,
   )
 
 /**
@@ -55,7 +55,7 @@ const createPluginId = (
  */
 export function resolvePlugin(
   pluginName: string,
-  rootDir: string | null
+  rootDir: string | null,
 ): IPluginInfo {
   // Only find plugins when we're not given an absolute path
   if (!existsSync(pluginName)) {
@@ -65,7 +65,7 @@ export function resolvePlugin(
     if (existsSync(resolvedPath)) {
       if (existsSync(`${resolvedPath}/package.json`)) {
         const packageJSON = JSON.parse(
-          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
         ) as PackageJson
         const name = packageJSON.name || pluginName
         warnOnIncompatiblePeerDependency(name, packageJSON)
@@ -101,13 +101,13 @@ export function resolvePlugin(
         requireSource.resolve(
           path.isAbsolute(pluginName)
             ? pluginName
-            : `${pluginName}/package.json`
-        )
-      )
+            : `${pluginName}/package.json`,
+        ),
+      ),
     )
 
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
     )
     warnOnIncompatiblePeerDependency(packageJSON.name, packageJSON)
 
@@ -119,14 +119,14 @@ export function resolvePlugin(
     }
   } catch (err) {
     throw new Error(
-      `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`
+      `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`,
     )
   }
 }
 
 export function loadPlugins(
   config: ISiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string | null = null,
 ): IPluginInfo[] {
   // Instantiate plugins.
   const plugins: IPluginInfo[] = []
@@ -153,14 +153,14 @@ export function loadPlugins(
         !_.isEmpty((plugin as { option?: unknown }).option)
       ) {
         throw new Error(
-          `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`
+          `Plugin "${plugin.resolve}" has an "option" key in the configuration. Did you mean "options"?`,
         )
       }
 
       // Plugins can have plugins.
       const subplugins: IPluginInfo[] = []
       if (plugin.options.plugins) {
-        plugin.options.plugins.forEach(p => {
+        plugin.options.plugins.forEach((p) => {
           subplugins.push(processPlugin(p))
         })
 
@@ -201,14 +201,14 @@ export function loadPlugins(
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
   ]
-  internalPlugins.forEach(relPath => {
+  internalPlugins.forEach((relPath) => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath))
   })
 
   // Add plugins from the site config.
   if (config.plugins) {
-    config.plugins.forEach(plugin => {
+    config.plugins.forEach((plugin) => {
       plugins.push(processPlugin(plugin))
     })
   }
@@ -218,7 +218,7 @@ export function loadPlugins(
   // match the plugin definition order before that. This works fine for themes
   // because themes have already been added in the proper order to the plugins
   // array
-  plugins.forEach(plugin => {
+  plugins.forEach((plugin) => {
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-page-creator`),
@@ -226,7 +226,7 @@ export function loadPlugins(
           path: slash(path.join(plugin.resolve, `src/pages`)),
           pathCheck: false,
         },
-      })
+      }),
     )
   })
 
@@ -255,7 +255,7 @@ export function loadPlugins(
         typeof plugin !== `string` &&
         plugin.resolve === `gatsby-plugin-page-creator` &&
         slash((plugin.options && plugin.options.path) || ``) ===
-          slash(path.join(program.directory, `src/pages`))
+          slash(path.join(program.directory, `src/pages`)),
     )
     if (pageCreatorPlugin) {
       // override the options if there are any user specified options
@@ -265,16 +265,16 @@ export function loadPlugins(
 
   // TypeScript support by default! use the user-provided one if it exists
   const typescriptPlugin = (config.plugins || []).find(
-    plugin =>
+    (plugin) =>
       (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
-      plugin === `gatsby-plugin-typescript`
+      plugin === `gatsby-plugin-typescript`,
   )
 
   if (typescriptPlugin === undefined) {
     plugins.push(
       processPlugin({
         resolve: require.resolve(`gatsby-plugin-typescript`),
-      })
+      }),
     )
   }
 
@@ -282,7 +282,7 @@ export function loadPlugins(
     processPlugin({
       resolve: require.resolve(`gatsby-plugin-page-creator`),
       options: pageCreatorOptions,
-    })
+    }),
   )
 
   return plugins

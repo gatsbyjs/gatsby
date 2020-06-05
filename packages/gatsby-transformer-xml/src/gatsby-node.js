@@ -35,7 +35,7 @@ async function onCreateNode({
     }
   })
 
-  _.each(nodeArray, j => {
+  _.each(nodeArray, (j) => {
     createNode(j)
     createParentChildLink({ parent: node, child: j })
   })

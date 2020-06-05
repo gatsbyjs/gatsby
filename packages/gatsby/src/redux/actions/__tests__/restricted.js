@@ -8,13 +8,13 @@ afterEach(() => {
   report.error.mockClear()
 })
 
-const dispatchWithThunk = actionOrThunk =>
+const dispatchWithThunk = (actionOrThunk) =>
   typeof actionOrThunk === `function` ? actionOrThunk() : actionOrThunk
 
 describe(`Restricted actions`, () => {
   it(`handles actions allowed in API`, () => {
     const action = dispatchWithThunk(
-      availableActionsByAPI.sourceNodes.createTypes()
+      availableActionsByAPI.sourceNodes.createTypes(),
     )
     expect(action).toEqual({ type: `CREATE_TYPES` })
     expect(report.warn).not.toHaveBeenCalled()
@@ -23,7 +23,7 @@ describe(`Restricted actions`, () => {
 
   it(`handles actions deprecated in API`, () => {
     const action = dispatchWithThunk(
-      availableActionsByAPI.onPreBootstrap.createTypes()
+      availableActionsByAPI.onPreBootstrap.createTypes(),
     )
     expect(action).toEqual({ type: `CREATE_TYPES` })
     expect(report.warn).toHaveBeenCalled()
@@ -32,7 +32,7 @@ describe(`Restricted actions`, () => {
 
   it(`handles actions forbidden in API`, () => {
     const action = dispatchWithThunk(
-      availableActionsByAPI.onPostBootstrap.createTypes()
+      availableActionsByAPI.onPostBootstrap.createTypes(),
     )
     expect(action).toBeUndefined()
     expect(report.warn).not.toHaveBeenCalled()

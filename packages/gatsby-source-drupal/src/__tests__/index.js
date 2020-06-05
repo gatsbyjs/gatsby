@@ -1,6 +1,6 @@
 jest.mock(`axios`, () => {
   return {
-    get: path => {
+    get: (path) => {
       const last = path.split(`/`).pop()
       try {
         return { data: require(`./fixtures/${last}.json`) }
@@ -25,12 +25,12 @@ const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
   const nodes = {}
-  const createNodeId = id => `generated-id-${id}`
+  const createNodeId = (id) => `generated-id-${id}`
   const baseUrl = `http://fixture`
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
   const { objectContaining } = expect
   const actions = {
-    createNode: jest.fn(node => (nodes[node.id] = node)),
+    createNode: jest.fn((node) => (nodes[node.id] = node)),
   }
 
   const activity = {
@@ -48,7 +48,7 @@ describe(`gatsby-source-drupal`, () => {
     createContentDigest,
     actions,
     reporter,
-    getNode: id => nodes[id],
+    getNode: (id) => nodes[id],
   }
 
   beforeAll(async () => {
@@ -70,17 +70,17 @@ describe(`gatsby-source-drupal`, () => {
     expect(nodes[createNodeId(`file-1`)]).toEqual(
       objectContaining({
         internal: objectContaining({ contentDigest: `contentDigest` }),
-      })
+      }),
     )
     expect(nodes[createNodeId(`article-2`)]).toEqual(
       objectContaining({
         internal: objectContaining({ contentDigest: `contentDigest` }),
-      })
+      }),
     )
     expect(nodes[createNodeId(`tag-1`)]).toEqual(
       objectContaining({
         internal: objectContaining({ contentDigest: `contentDigest` }),
-      })
+      }),
     )
   })
 
@@ -96,49 +96,49 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Handles 1:1 relationship`, () => {
     expect(
-      nodes[createNodeId(`article-1`)].relationships.field_main_image___NODE
+      nodes[createNodeId(`article-1`)].relationships.field_main_image___NODE,
     ).not.toBeDefined()
     expect(
-      nodes[createNodeId(`article-2`)].relationships.field_main_image___NODE
+      nodes[createNodeId(`article-2`)].relationships.field_main_image___NODE,
     ).toEqual(createNodeId(`file-1`))
     expect(
-      nodes[createNodeId(`article-3`)].relationships.field_main_image___NODE
+      nodes[createNodeId(`article-3`)].relationships.field_main_image___NODE,
     ).toEqual(createNodeId(`file-1`))
   })
 
   it(`Handles 1:N relationship`, () => {
     expect(
-      nodes[createNodeId(`article-1`)].relationships.field_tags___NODE
+      nodes[createNodeId(`article-1`)].relationships.field_tags___NODE,
     ).toEqual(
-      expect.arrayContaining([createNodeId(`tag-1`), createNodeId(`tag-2`)])
+      expect.arrayContaining([createNodeId(`tag-1`), createNodeId(`tag-2`)]),
     )
     expect(
-      nodes[createNodeId(`article-2`)].relationships.field_tags___NODE
+      nodes[createNodeId(`article-2`)].relationships.field_tags___NODE,
     ).not.toBeDefined()
     expect(
-      nodes[createNodeId(`article-3`)].relationships.field_tags___NODE
+      nodes[createNodeId(`article-3`)].relationships.field_tags___NODE,
     ).toEqual(expect.arrayContaining([createNodeId(`tag-1`)]))
   })
 
   it(`Creates back references`, () => {
     expect(
-      nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
+      nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`],
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-2`),
         createNodeId(`article-3`),
-      ])
+      ]),
     )
     expect(
-      nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+      nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`],
     ).toEqual(
       expect.arrayContaining([
         createNodeId(`article-1`),
         createNodeId(`article-3`),
-      ])
+      ]),
     )
     expect(
-      nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
+      nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`],
     ).toEqual(expect.arrayContaining([createNodeId(`article-1`)]))
   })
 
@@ -148,14 +148,14 @@ describe(`gatsby-source-drupal`, () => {
       `/sites/default/files/secondary-image.png`,
       `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
       `/sites/default/files/forth-image.png`,
-    ].map(fileUrl => new URL(fileUrl, baseUrl).href)
+    ].map((fileUrl) => new URL(fileUrl, baseUrl).href)
 
-    urls.forEach(url => {
+    urls.forEach((url) => {
       expect(createRemoteFileNode).toBeCalledWith(
         expect.objectContaining({
           url,
           auth: {},
-        })
+        }),
       )
     })
   })
@@ -171,7 +171,7 @@ describe(`gatsby-source-drupal`, () => {
       `http://fixture/sites/default/files/secondary-image.png`,
       `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
       `/sites/default/files/forth-image.png`,
-    ].map(fileUrl => new URL(fileUrl, baseUrl).href)
+    ].map((fileUrl) => new URL(fileUrl, baseUrl).href)
     //first call without basicAuth (no fileSystem defined)
     //(the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
@@ -179,7 +179,7 @@ describe(`gatsby-source-drupal`, () => {
       expect.objectContaining({
         url: urls[0],
         auth: {},
-      })
+      }),
     )
     //2nd call with basicAuth (public: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
@@ -190,7 +190,7 @@ describe(`gatsby-source-drupal`, () => {
           htaccess_pass: `password`,
           htaccess_user: `user`,
         },
-      })
+      }),
     )
     //3rd call without basicAuth (s3: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
@@ -198,7 +198,7 @@ describe(`gatsby-source-drupal`, () => {
       expect.objectContaining({
         url: urls[2],
         auth: {},
-      })
+      }),
     )
     //4th call with basicAuth (private: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
@@ -209,7 +209,7 @@ describe(`gatsby-source-drupal`, () => {
           htaccess_pass: `password`,
           htaccess_user: `user`,
         },
-      })
+      }),
     )
   })
 
@@ -227,13 +227,13 @@ describe(`gatsby-source-drupal`, () => {
         })
         it(`Back references`, () => {
           expect(
-            nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`],
           ).toContain(createNodeId(`article-3`))
           expect(
-            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`],
           ).toContain(createNodeId(`article-3`))
           expect(
-            nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`],
           ).not.toContain(createNodeId(`article-3`))
         })
       })
@@ -249,7 +249,7 @@ describe(`gatsby-source-drupal`, () => {
         })
         it(`Attributes`, () => {
           expect(nodes[createNodeId(`article-3`)].title).toBe(
-            `Article #3 - Updated`
+            `Article #3 - Updated`,
           )
         })
         it(`Relationships`, () => {
@@ -261,15 +261,15 @@ describe(`gatsby-source-drupal`, () => {
         it(`Back references`, () => {
           // removed `field_main_image`, `file-1` no longer has back reference to `article-3`
           expect(
-            nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`file-1`)].relationships[`node__article___NODE`],
           ).not.toContain(createNodeId(`article-3`))
           // changed `field_tags`, `tag-1` no longer has back reference to `article-3`
           expect(
-            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`],
           ).not.toContain(createNodeId(`article-3`))
           // changed `field_tags`, `tag-2` now has back reference to `article-3`
           expect(
-            nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`],
           ).toContain(createNodeId(`article-3`))
         })
       })
@@ -279,7 +279,7 @@ describe(`gatsby-source-drupal`, () => {
       it(`Node doesn't exist before webhook`, () => {
         expect(nodes[createNodeId(`article-4`)]).not.toBeDefined()
         expect(
-          nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+          nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`],
         ).not.toContain(createNodeId(`article-4`))
       })
 
@@ -299,7 +299,7 @@ describe(`gatsby-source-drupal`, () => {
 
         it(`Adds back references to referenced nodes`, () => {
           expect(
-            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`]
+            nodes[createNodeId(`tag-1`)].relationships[`node__article___NODE`],
           ).toContain(createNodeId(`article-4`))
         })
       })
@@ -308,7 +308,7 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Control disallowed link types`, async () => {
     // Reset nodes and test new disallowed link type.
-    Object.keys(nodes).forEach(key => delete nodes[key])
+    Object.keys(nodes).forEach((key) => delete nodes[key])
     const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
     await sourceNodes(args, { baseUrl, disallowedLinkTypes })
     expect(Object.keys(nodes).length).not.toEqual(0)
@@ -323,7 +323,7 @@ describe(`gatsby-source-drupal`, () => {
 
   it(`Verify JSON:API includes relationships`, async () => {
     // Reset nodes and test includes relationships.
-    Object.keys(nodes).forEach(key => delete nodes[key])
+    Object.keys(nodes).forEach((key) => delete nodes[key])
     const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
     const filters = {
       "node--article": `include=field_tags`,

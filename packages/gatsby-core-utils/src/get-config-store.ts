@@ -13,7 +13,7 @@ export const getConfigStore = (): Configstore => {
       {},
       {
         globalConfigPath: true,
-      }
+      },
     )
   }
 

@@ -1,7 +1,7 @@
 import parseMetadata from "./parse"
 
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
-const descId = parentId => `${parentId}--ComponentDescription`
+const descId = (parentId) => `${parentId}--ComponentDescription`
 
 function canParse(node) {
   return (
@@ -21,7 +21,7 @@ function createDescriptionNode(
   entry,
   actions,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 ) {
   const { createNode } = actions
 
@@ -52,7 +52,7 @@ function createPropNodes(
   component,
   actions,
   createNodeId,
-  createContentDigest
+  createContentDigest,
 ) {
   const { createNode } = actions
   let children = new Array(component.props.length)
@@ -78,7 +78,7 @@ function createPropNodes(
       prop,
       actions,
       createNodeId,
-      createContentDigest
+      createContentDigest,
     )
     createNode(propNode)
   })
@@ -97,7 +97,7 @@ export default async function onCreateNode(
     reporter,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) {
   const { createNode, createParentChildLink } = actions
 
@@ -111,12 +111,12 @@ export default async function onCreateNode(
   } catch (err) {
     reporter.error(
       `There was a problem parsing component metadata for file: "${node.relativePath}"`,
-      err
+      err,
     )
     return
   }
 
-  components.forEach(component => {
+  components.forEach((component) => {
     const strContent = JSON.stringify(component)
     const contentDigest = createContentDigest(strContent)
     const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
@@ -139,14 +139,14 @@ export default async function onCreateNode(
       component,
       actions,
       createNodeId,
-      createContentDigest
+      createContentDigest,
     )
     metadataNode = createDescriptionNode(
       metadataNode,
       component,
       actions,
       createNodeId,
-      createContentDigest
+      createContentDigest,
     )
     createNode(metadataNode)
   })

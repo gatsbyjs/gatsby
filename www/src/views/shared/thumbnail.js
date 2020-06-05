@@ -35,7 +35,7 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
           transition: `default`,
           "&:hover": screenshotHover,
           "&:hover ~ .meta > .featured-site": {
-            transform: t => `translateY(-${t.space[1]})`,
+            transform: (t) => `translateY(-${t.space[1]})`,
           },
         },
       }}

@@ -30,7 +30,7 @@ function SearchForm() {
     a.href = e._args[0].url
     searchInput.current.blur()
     // Compare hash and slug and remove hash if both are same
-    const paths = a.pathname.split(`/`).filter(el => el !== ``)
+    const paths = a.pathname.split(`/`).filter((el) => el !== ``)
     const slug = paths[paths.length - 1]
     const path =
       `#${slug}` === a.hash ? `${a.pathname}` : `${a.pathname}${a.hash}`
@@ -39,7 +39,7 @@ function SearchForm() {
 
   function loadAlgoliaJS() {
     if (!loadedJs) {
-      loadJS().then(a => {
+      loadJS().then((a) => {
         loadedJs = true
         window.docsearch = a.default
         setInit(true)
@@ -54,7 +54,7 @@ function SearchForm() {
       window.addEventListener(
         `autocomplete:selected`,
         autocompleteSelected,
-        true
+        true,
       )
       window.docsearch({
         apiKey: `71af1f9c4bd947f0252e17051df13f9c`,
@@ -75,7 +75,7 @@ function SearchForm() {
       window.removeEventListener(
         `autocomplete:selected`,
         autocompleteSelected,
-        true
+        true,
       )
     }
   }, [isInit])
@@ -118,14 +118,14 @@ function SearchForm() {
       onMouseOver={() => loadAlgoliaJS()}
       onClick={() => loadAlgoliaJS()}
       onFocus={() => loadAlgoliaJS()}
-      onSubmit={e => e.preventDefault()}
+      onSubmit={(e) => e.preventDefault()}
     >
       <Global styles={algoliaStyles} />
       <label
         sx={{
           position: `relative`,
           width: [`100%`, `100%`, `100%`, focused ? `14rem` : 24, `100%`],
-          transition: t =>
+          transition: (t) =>
             `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
         }}
       >
@@ -142,7 +142,7 @@ function SearchForm() {
             ],
             pl: [7, null, null, focused ? 7 : 24, 7],
             width: [`100%`, null, null, focused ? `14rem` : 24, `100%`],
-            transition: t =>
+            transition: (t) =>
               `width ${t.transition.speed.default} ${t.transition.curve.default}, padding ${t.transition.speed.default} ${t.transition.curve.default}`,
           }}
           type="search"

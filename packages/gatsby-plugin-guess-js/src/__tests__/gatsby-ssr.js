@@ -19,10 +19,10 @@ describe(`gatsby-plugin-guess-js`, () => {
           [componentChunkName]: chunks,
         },
       }
-      fs.readFileSync.mockImplementation(file =>
+      fs.readFileSync.mockImplementation((file) =>
         file === `${process.cwd()}/public/webpack.stats.json`
           ? JSON.stringify(stats)
-          : undefined
+          : undefined,
       )
 
       // Mock out guess plugin
@@ -41,7 +41,7 @@ describe(`gatsby-plugin-guess-js`, () => {
 
       gatsbySsr.onRenderBody(
         { loadPageDataSync, setHeadComponents },
-        pluginOptions
+        pluginOptions,
       )
 
       expect(setHeadComponents.mock.calls[0][0]).toMatchObject([

@@ -4,7 +4,7 @@ const path = require(`path`)
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
-  pluginOptions
+  pluginOptions,
 ) {
   function getType({ node, object, isArray }) {
     if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
@@ -49,14 +49,14 @@ async function onCreateNode(
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
-        getType({ node, object: obj, isArray: true })
+        getType({ node, object: obj, isArray: true }),
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
-      getType({ node, object: parsedContent, isArray: false })
+      getType({ node, object: parsedContent, isArray: false }),
     )
   }
 }

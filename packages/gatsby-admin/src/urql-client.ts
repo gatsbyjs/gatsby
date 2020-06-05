@@ -17,7 +17,7 @@ export const createUrqlClient = ({
     `ws://localhost:${port}/graphql`,
     {
       reconnect: true,
-    }
+    },
   )
 
   const client = createClient({

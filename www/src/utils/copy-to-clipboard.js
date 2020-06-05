@@ -1,4 +1,4 @@
-const copyToClipboard = str => {
+const copyToClipboard = (str) => {
   const clipboard = window.navigator.clipboard
   /*
    * fallback to older browsers (including Safari)

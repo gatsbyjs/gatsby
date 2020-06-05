@@ -1,5 +1,5 @@
 module.exports = function replaceStringWithRegex(object) {
-  Object.keys(object).forEach(propName => {
+  Object.keys(object).forEach((propName) => {
     if (typeof object[propName] === `string`) {
       try {
         object[propName] = new RegExp(object[propName])

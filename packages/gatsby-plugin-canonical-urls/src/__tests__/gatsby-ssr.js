@@ -13,7 +13,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
         setHeadComponents,
         pathname,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -32,7 +32,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
         setHeadComponents,
         pathname,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -52,7 +52,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
         setHeadComponents,
         pathname,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()
@@ -69,7 +69,7 @@ describe(`gatsby-plugin-canonical-urls`, () => {
         setHeadComponents,
         pathname,
       },
-      pluginOptions
+      pluginOptions,
     )
 
     expect(setHeadComponents).toMatchSnapshot()

@@ -18,7 +18,7 @@ export const renderHTML = ({
 
   return Promise.map(
     paths,
-    path =>
+    (path) =>
       new Promise((resolve, reject) => {
         const htmlComponentRenderer = require(htmlComponentRendererPath)
         try {
@@ -26,8 +26,8 @@ export const renderHTML = ({
             resolve(
               fs.outputFile(
                 getPageHtmlFilePath(join(process.cwd(), `public`), path),
-                htmlString
-              )
+                htmlString,
+              ),
             )
           })
         } catch (e) {
@@ -37,6 +37,6 @@ export const renderHTML = ({
           }
           reject(e)
         }
-      })
+      }),
   )
 }

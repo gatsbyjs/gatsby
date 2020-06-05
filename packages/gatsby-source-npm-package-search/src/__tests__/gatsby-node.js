@@ -15,7 +15,7 @@ describe(`gatsby-source-npm-package-search`, () => {
       boundActionCreators = {
         createNode: jest.fn(),
       }
-      createNodeId = jest.fn(id => id)
+      createNodeId = jest.fn((id) => id)
       createContentDigest = jest.fn(() => `digest`)
     })
 
@@ -35,7 +35,7 @@ describe(`gatsby-source-npm-package-search`, () => {
           },
           {
             keywords: [`foo`, `bar`],
-          }
+          },
         )
       })
 
@@ -68,13 +68,13 @@ describe(`gatsby-source-npm-package-search`, () => {
           },
           {
             keywords: [`foo`, `bar`],
-          }
+          },
         )
       })
 
       it(`should fetch readme`, () => {
         expect(got.get).toBeCalledWith(
-          `https://unpkg.com/${packageName}/README.md`
+          `https://unpkg.com/${packageName}/README.md`,
         )
       })
     })

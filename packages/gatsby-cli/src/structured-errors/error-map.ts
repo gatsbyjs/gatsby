@@ -195,7 +195,7 @@ const errors = {
         There was an error in your GraphQL query:\n\n${
           context.sourceMessage
         }${optionalGraphQLInfo(
-        context
+        context,
       )}\n\n${staticQueryMessage}\n\n${generalMessage}`)
     },
     type: Type.GRAPHQL,
@@ -238,7 +238,7 @@ const errors = {
       }\n\nThe field "${
         context.field
       }" was explicitly defined as non-nullable via the schema customization API (by yourself or a plugin/theme). This means that this field is not optional and you have to define a value. If this is not your desired behavior and you defined the schema yourself, go to "createTypes" in gatsby-node.js. If you're using a plugin/theme, you can learn more here on how to fix field types:\nhttps://www.gatsbyjs.org/docs/schema-customization/#fixing-field-types${optionalGraphQLInfo(
-        context
+        context,
       )}`,
     type: Type.GRAPHQL,
     level: Level.ERROR,
@@ -297,7 +297,7 @@ const errors = {
         context.pathToLocalTheme &&
           `Tried looking for a local plugin in ${context.pathToLocalTheme}.`,
         `Tried looking for an installed package in the following paths:\n${context.nodeResolutionPaths
-          .map(potentialLocationPath => ` - ${potentialLocationPath}`)
+          .map((potentialLocationPath) => ` - ${potentialLocationPath}`)
           .join(`\n`)}`,
       ]
         .filter(Boolean)
@@ -323,7 +323,7 @@ const errors = {
       } created a page and didn't pass the path to the component.\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.pageObject,
         null,
-        4
+        4,
       )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
     level: Level.ERROR,
   },
@@ -334,7 +334,7 @@ const errors = {
       } must set the page path when creating a page.\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.pageObject,
         null,
-        4
+        4,
       )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
     level: Level.ERROR,
   },
@@ -352,7 +352,7 @@ const errors = {
       }"\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.pageObject,
         null,
-        4
+        4,
       )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
     level: Level.ERROR,
   },
@@ -367,7 +367,7 @@ const errors = {
       }")\n\nThe page object passed to createPage:\n${JSON.stringify(
         context.pageObject,
         null,
-        4
+        4,
       )}\n\nSee the documentation for the "createPage" action — https://www.gatsbyjs.org/docs/actions/#createPage`,
     level: Level.ERROR,
   },
@@ -398,9 +398,9 @@ const errors = {
                 ``,
                 `Some of the following may help fix the error(s):`,
                 ``,
-                ...context.fixes.map(fix => `- ${fix}`),
+                ...context.fixes.map((fix) => `- ${fix}`),
               ]
-            : []
+            : [],
         )
         .join(`\n`),
     level: Level.ERROR,
@@ -427,7 +427,7 @@ const errors = {
         `One or more path segments are too long - they exceed OS filename length limit.\n`,
         `Page path: "${context.path}"`,
         `Invalid segments:\n${context.invalidPathSegments
-          .map(segment => ` - "${segment}"`)
+          .map((segment) => ` - "${segment}"`)
           .join(`\n`)}`,
         ...(!context.isProduction
           ? [

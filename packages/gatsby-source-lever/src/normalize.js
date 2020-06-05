@@ -17,7 +17,7 @@ async function createGraphQLNode(
   createNode,
   store,
   cache,
-  createContentDigest
+  createContentDigest,
 ) {
   let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
   let node = {
@@ -91,7 +91,7 @@ function getValidKey({ key, verbose = false }) {
   }
   if (changed && verbose)
     console.log(
-      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`
+      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
     )
 
   return nkey
@@ -101,20 +101,20 @@ exports.getValidKey = getValidKey
 
 // Create entities from the few the lever API returns as an object for presumably
 // legacy reasons.
-exports.normalizeEntities = entities =>
+exports.normalizeEntities = (entities) =>
   entities.reduce((acc, e) => acc.concat(e), [])
 
 // Standardize ids + make sure keys are valid.
-exports.standardizeKeys = entities =>
-  entities.map(e =>
-    deepMapKeys(e, key =>
-      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key })
-    )
+exports.standardizeKeys = (entities) =>
+  entities.map((e) =>
+    deepMapKeys(e, (key) =>
+      key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }),
+    ),
   )
 
 // Standardize dates on ISO 8601 version.
-exports.standardizeDates = entities =>
-  entities.map(e => {
+exports.standardizeDates = (entities) =>
+  entities.map((e) => {
     if (e.createdAt) {
       e.createdAt = new Date(e.createdAt).toJSON()
     }
@@ -122,7 +122,7 @@ exports.standardizeDates = entities =>
   })
 
 exports.createGatsbyIds = (createNodeId, entities) =>
-  entities.map(e => {
+  entities.map((e) => {
     e.id = createNodeId(e.lever_id.toString())
     return e
   })
@@ -132,7 +132,7 @@ exports.createNodesFromEntities = ({
   createNode,
   createContentDigest,
 }) => {
-  entities.forEach(e => {
+  entities.forEach((e) => {
     let { ...entity } = e
     let node = {
       ...entity,

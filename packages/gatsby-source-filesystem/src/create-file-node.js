@@ -9,7 +9,7 @@ const { createContentDigest, slash } = require(`gatsby-core-utils`)
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
-  pluginOptions = {}
+  pluginOptions = {},
 ) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
@@ -18,7 +18,7 @@ exports.createFileNode = async (
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
     relativeDirectory: slash(
-      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir)
+      path.relative(pluginOptions.path || process.cwd(), parsedSlashed.dir),
     ),
   }
 
@@ -60,8 +60,8 @@ exports.createFileNode = async (
       relativePath: slash(
         path.relative(
           pluginOptions.path || process.cwd(),
-          slashedFile.absolutePath
-        )
+          slashedFile.absolutePath,
+        ),
       ),
       extension: slashedFile.ext.slice(1).toLowerCase(),
       size: stats.size,
@@ -72,6 +72,6 @@ exports.createFileNode = async (
       birthTime: stats.birthtime,
       ...slashedFile,
       ...stats,
-    })
+    }),
   )
 }

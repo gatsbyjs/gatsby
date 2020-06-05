@@ -72,7 +72,7 @@ module.exports = {
   stories: ["../stories/**/*.stories.js"],
   addons: ["@storybook/addon-actions", "@storybook/addon-links"],
   // highlight-start
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 
@@ -121,7 +121,7 @@ global.__PATH_PREFIX__ = ""
 // Navigating through a gatsby app using gatsby-link or any other gatsby component will use the `___navigate` method.
 // In Storybook it makes more sense to log an action than doing an actual navigate. Checkout the actions addon docs for more info: https://github.com/storybookjs/storybook/tree/master/addons/actions.
 
-window.___navigate = pathname => {
+window.___navigate = (pathname) => {
   action("NavigateTo:")(pathname)
 }
 ```
@@ -163,7 +163,7 @@ module.exports = {
   stories: ["../stories/**/*.stories.js", "../stories/**/*.stories.tsx"],
   // highlight-end
   addons: ["@storybook/addon-actions", "@storybook/addon-links"],
-  webpackFinal: async config => {
+  webpackFinal: async (config) => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 

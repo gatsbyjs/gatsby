@@ -11,7 +11,7 @@ As an example consider the following code snippet in a `gatsby-node.js` file:
 ```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
 
-exports.onCreateNode = args => {
+exports.onCreateNode = (args) => {
   const { actions, node } = args
 
   if (node.internal.type === "MarkdownRemark") {
@@ -45,7 +45,7 @@ Adding a `console.log` statement in the sample from above will print the variabl
 ```js:title=gatsby-node.js
 const { createFilePath } = require("gatsby-source-filesystem")
 
-exports.onCreateNode = args => {
+exports.onCreateNode = (args) => {
   console.log(args) // highlight-line
   const { actions, node } = args
   if (node.internal.type === "MarkdownRemark") {

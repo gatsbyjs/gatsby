@@ -18,8 +18,8 @@ const axios = require(`axios`)
 import { getLatestAPIs, IAPIResponse } from "../get-latest-apis"
 
 beforeEach(() => {
-  ;[fs, axios].forEach(mock =>
-    Object.keys(mock).forEach(key => mock[key].mockReset())
+  ;[fs, axios].forEach((mock) =>
+    Object.keys(mock).forEach((key) => mock[key].mockReset()),
   )
 })
 
@@ -42,7 +42,7 @@ describe(`default behavior: has network connectivity`, () => {
 
     expect(axios.get).toHaveBeenCalledWith(
       expect.stringContaining(`unpkg.com`),
-      expect.any(Object)
+      expect.any(Object),
     )
     expect(data).toEqual(getMockAPIFile())
   })
@@ -53,7 +53,7 @@ describe(`default behavior: has network connectivity`, () => {
     expect(fs.writeFile).toHaveBeenCalledWith(
       expect.stringContaining(`latest-apis.json`),
       JSON.stringify(data, null, 2),
-      expect.any(String)
+      expect.any(String),
     )
   })
 })
@@ -72,7 +72,7 @@ describe(`downloading APIs failure`, () => {
 
     expect(fs.writeFile).not.toHaveBeenCalled()
     expect(fs.readJSON).toHaveBeenCalledWith(
-      expect.stringContaining(`${path.sep}latest-apis.json`)
+      expect.stringContaining(`${path.sep}latest-apis.json`),
     )
     expect(data).toEqual(apis)
   })
@@ -85,7 +85,7 @@ describe(`downloading APIs failure`, () => {
     await getLatestAPIs()
 
     expect(fs.readJSON).toHaveBeenCalledWith(
-      expect.stringContaining(`${path.sep}apis.json`)
+      expect.stringContaining(`${path.sep}apis.json`),
     )
   })
 })

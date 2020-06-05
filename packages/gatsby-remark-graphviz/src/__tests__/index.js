@@ -10,7 +10,7 @@ const remark = new Remark().data(`settings`, {
   pedantic: true,
 })
 
-const run = async content => {
+const run = async (content) => {
   const markdownAST = remark.parse(content)
   await plugin({ markdownAST })
 

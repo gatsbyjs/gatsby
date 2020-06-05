@@ -11,7 +11,7 @@ import FooterLinks from "../components/shared/footer-links"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 
-const removeProtocol = input => input.replace(/^https?:\/\//, ``)
+const removeProtocol = (input) => input.replace(/^https?:\/\//, ``)
 
 const breakpoint2Columns = mediaQueries.md
 
@@ -40,10 +40,10 @@ const MetaSection = ({ children, background, last, first }) => (
   <div
     sx={{
       background: background ? background : `ui.background`,
-      mx: t => `-${t.space[5]}`,
+      mx: (t) => `-${t.space[5]}`,
       p: 5,
-      borderTop: t => (first ? `1px solid ${t.colors.ui.border}` : null),
-      borderBottom: t => (last ? null : `1px solid ${t.colors.ui.border}`),
+      borderTop: (t) => (first ? `1px solid ${t.colors.ui.border}` : null),
+      borderBottom: (t) => (last ? null : `1px solid ${t.colors.ui.border}`),
       [breakpoint2Columns]: {
         background: `transparent`,
         px: 0,
@@ -204,7 +204,7 @@ class CreatorTemplate extends Component {
                     flexWrap: `wrap`,
                   }}
                 >
-                  {sites.map(site => (
+                  {sites.map((site) => (
                     <Link
                       key={site.title}
                       sx={{

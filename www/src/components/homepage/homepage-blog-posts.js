@@ -17,11 +17,11 @@ import {
 import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
 
 const HomepageBlogPostsRootMobile = styled(HorizontalScroller)`
-  margin: -6px -${p => p.theme.space[6]};
+  margin: -6px -${(p) => p.theme.space[6]};
 `
 
 const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
-  `div`
+  `div`,
 )
 
 const HomepageBlogPostsRootDesktop = styled(`div`)`
@@ -33,7 +33,7 @@ const PostsColumn = styled(`div`)`
   display: flex;
   flex-direction: column;
   flex-basis: 45%;
-  margin-right: ${p => p.theme.space[8]};
+  margin-right: ${(p) => p.theme.space[8]};
   position: relative;
 
   :last-child {
@@ -45,7 +45,7 @@ const PostsColumn = styled(`div`)`
 
 const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
   display: flex;
-  font-family: ${p => p.theme.fonts.heading};
+  font-family: ${(p) => p.theme.fonts.heading};
   width: auto;
 
   a {
@@ -54,10 +54,10 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
     display: flex;
     flex-direction: column;
     font-weight: bold;
-    font-size: ${p => p.theme.fontSizes[4]};
+    font-size: ${(p) => p.theme.fontSizes[4]};
     justify-content: center;
-    line-height: ${p => p.theme.lineHeights.dense};
-    padding: ${p => p.theme.space[7]};
+    line-height: ${(p) => p.theme.lineHeights.dense};
+    padding: ${(p) => p.theme.space[7]};
     width: 100%;
 
     span {
@@ -67,27 +67,27 @@ const ViewAllStyle = styled(HorizontalScrollerItem.withComponent(`div`))`
 
     svg {
       height: 18px;
-      margin-left: ${p => p.theme.space[1]};
+      margin-left: ${(p) => p.theme.space[1]};
       width: 18px;
     }
   }
 
   ${mediaQueries.lg} {
-    background: ${p => p.theme.colors.gatsby};
-    color: ${p => p.theme.colors.white};
+    background: ${(p) => p.theme.colors.gatsby};
+    color: ${(p) => p.theme.colors.white};
     flex-shrink: 0;
     height: 160px;
 
-    margin-left: ${p => p.theme.space[8]};
+    margin-left: ${(p) => p.theme.space[8]};
     width: 125px;
 
     a {
-      color: ${p => p.theme.colors.white};
-      padding: ${p => p.theme.space[5]};
+      color: ${(p) => p.theme.colors.white};
+      padding: ${(p) => p.theme.space[5]};
       justify-content: flex-start;
 
       &:hover {
-        background: ${p => p.theme.colors.purple[80]};
+        background: ${(p) => p.theme.colors.purple[80]};
       }
     }
   }
@@ -135,7 +135,7 @@ class HomepageBlogPosts extends Component {
     this.setState({ desktopViewport: this.desktopMediaQuery.matches })
   }
 
-  splitPostsToColumns = posts =>
+  splitPostsToColumns = (posts) =>
     posts.reduce(
       (merge, post, idx) => {
         if (idx % 2) {
@@ -146,7 +146,7 @@ class HomepageBlogPosts extends Component {
 
         return merge
       },
-      [[], []]
+      [[], []],
     )
 
   render() {

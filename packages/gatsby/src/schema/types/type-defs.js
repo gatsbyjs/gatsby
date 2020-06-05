@@ -3,7 +3,7 @@ const { isGatsbyType } = require(`./type-builders`)
 const { inferExtensionName, dontInferExtensionName } = require(`../extensions`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-const isASTDocument = typeOrTypeDef =>
+const isASTDocument = (typeOrTypeDef) =>
   typeof typeOrTypeDef === `object` &&
   typeOrTypeDef.kind &&
   GraphQLASTNodeKind.DOCUMENT === typeOrTypeDef.kind
@@ -12,7 +12,7 @@ const isASTDocument = typeOrTypeDef =>
  * Parses type definition represented as an SDL string into an AST Document.
  * Type definitions of other formats (other than SDL) are returned as is
  */
-const parseTypeDef = typeOrTypeDef => {
+const parseTypeDef = (typeOrTypeDef) => {
   if (typeof typeOrTypeDef === `string`) {
     try {
       return parse(typeOrTypeDef)
@@ -23,7 +23,7 @@ const parseTypeDef = typeOrTypeDef => {
   return typeOrTypeDef
 }
 
-const reportParsingError = error => {
+const reportParsingError = (error) => {
   const { message, source, locations } = error
 
   if (source && locations && locations.length) {
@@ -32,14 +32,14 @@ const reportParsingError = error => {
     const frame = codeFrameColumns(
       source.body,
       { start: locations[0] },
-      { linesAbove: 5, linesBelow: 5 }
+      { linesAbove: 5, linesBelow: 5 },
     )
     report.panic(
       `Encountered an error parsing the provided GraphQL type definitions:\n` +
         message +
         `\n\n` +
         frame +
-        `\n`
+        `\n`,
     )
   } else {
     throw error
@@ -54,13 +54,13 @@ const typesWithoutInference = (typeNames = [], typeOrTypeDef) => {
     typeOrTypeDef = parseTypeDef(typeOrTypeDef)
   }
   if (isASTDocument(typeOrTypeDef)) {
-    typeOrTypeDef.definitions.forEach(def => {
+    typeOrTypeDef.definitions.forEach((def) => {
       if (!def.directives) return
 
-      def.directives.forEach(directive => {
+      def.directives.forEach((directive) => {
         if (directive.name.value === dontInferExtensionName) {
           const noDefaultResolversArg = (directive.arguments || []).find(
-            arg => arg.name.value === `noDefaultResolvers`
+            (arg) => arg.name.value === `noDefaultResolvers`,
           )
           const shouldAddDefaultResolver =
             noDefaultResolversArg &&

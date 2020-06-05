@@ -20,7 +20,7 @@ const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 
 const imageSizeCache = new Map()
-const getImageSize = file => {
+const getImageSize = (file) => {
   if (
     process.env.NODE_ENV !== `test` &&
     imageSizeCache.has(file.internal.contentDigest)
@@ -28,13 +28,13 @@ const getImageSize = file => {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
     const dimensions = imageSize.sync(
-      toArray(fs.readFileSync(file.absolutePath))
+      toArray(fs.readFileSync(file.absolutePath)),
     )
 
     if (!dimensions) {
       reportError(
         `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
-        ``
+        ``,
       )
     }
 
@@ -49,7 +49,7 @@ const getImageSize = file => {
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
 let boundActionCreators
-exports.setBoundActionCreators = actions => {
+exports.setBoundActionCreators = (actions) => {
   boundActionCreators = actions
 }
 
@@ -78,7 +78,7 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
       width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
       height = Math.min(
         heightOption,
-        Math.round(widthOption / imageAspectRatio)
+        Math.round(widthOption / imageAspectRatio),
       )
       break
     }
@@ -89,7 +89,7 @@ function calculateImageDimensionsAndAspectRatio(file, options) {
       width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
       height = Math.max(
         heightOption,
-        Math.round(widthOption / imageAspectRatio)
+        Math.round(widthOption / imageAspectRatio),
       )
       break
     }
@@ -122,7 +122,7 @@ function prepareQueue({ file, args }) {
     process.cwd(),
     `public`,
     `static`,
-    file.internal.contentDigest
+    file.internal.contentDigest,
   )
   const outputFilePath = path.join(argsDigestShort, imgSrc)
 
@@ -131,7 +131,7 @@ function prepareQueue({ file, args }) {
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,
-    options
+    options,
   )
 
   // encode the file name for URL
@@ -158,7 +158,7 @@ function prepareQueue({ file, args }) {
 function createJob(job, { reporter }) {
   if (!boundActionCreators) {
     reporter.panic(
-      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
+      `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`,
     )
   }
 
@@ -176,7 +176,7 @@ function createJob(job, { reporter }) {
     promise = scheduleJob(job, boundActionCreators, reporter)
   }
 
-  promise.catch(err => {
+  promise.catch((err) => {
     reporter.panic(err)
   })
 
@@ -211,7 +211,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
         pluginOptions: getPluginOptions(),
       },
     },
-    { reporter }
+    { reporter },
   )
 
   return {
@@ -230,7 +230,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   const images = []
 
   // loop through all transforms to set correct variables
-  transforms.forEach(transform => {
+  transforms.forEach((transform) => {
     const {
       src,
       width,
@@ -266,17 +266,17 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         process.cwd(),
         `public`,
         `static`,
-        file.internal.contentDigest
+        file.internal.contentDigest,
       ),
       args: {
         operations,
         pluginOptions: getPluginOptions(),
       },
     },
-    { reporter }
+    { reporter },
   )
 
-  return images.map(image => {
+  return images.map((image) => {
     image.finishedPromise = finishedPromise
 
     return image
@@ -419,7 +419,7 @@ async function stats({ file, reporter }) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,
       err,
-      reporter
+      reporter,
     )
     return null
   }
@@ -444,7 +444,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
      * TODO: remove the sizeByPixelDensity option in the next breaking release
      */
     reporter.warn(
-      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
+      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`,
     )
   }
 
@@ -457,7 +457,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
       err,
-      reporter
+      reporter,
     )
     return null
   }
@@ -476,7 +476,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   if (options[fixedDimension] < 1) {
     throw new Error(
-      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`
+      `${fixedDimension} has to be a positive int larger than zero (> 0), now it's ${options[fixedDimension]}`,
     )
   }
 
@@ -498,10 +498,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
     fluidSizes.push(options[fixedDimension] * 1.5)
     fluidSizes.push(options[fixedDimension] * 2)
   } else {
-    options.srcSetBreakpoints.forEach(breakpoint => {
+    options.srcSetBreakpoints.forEach((breakpoint) => {
       if (breakpoint < 1) {
         throw new Error(
-          `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`
+          `All ints in srcSetBreakpoints should be positive ints larger than zero (> 0), found ${breakpoint}`,
         )
       }
       // ensure no duplicates are added
@@ -512,7 +512,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     })
   }
   let filteredSizes = fluidSizes.filter(
-    size => size < (fixedDimension === `maxWidth` ? width : height)
+    (size) => size < (fixedDimension === `maxWidth` ? width : height),
   )
 
   // Add the original image to ensure the largest image possible
@@ -526,11 +526,11 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const otherDimensionAttr = fixedDimension === `maxWidth` ? `height` : `width`
 
   const imageWithDensityOneIndex = filteredSizes.findIndex(
-    size => size === (fixedDimension === `maxWidth` ? maxWidth : maxHeight)
+    (size) => size === (fixedDimension === `maxWidth` ? maxWidth : maxHeight),
   )
 
   // Sort sizes for prettiness.
-  const transforms = filteredSizes.map(size => {
+  const transforms = filteredSizes.map((size) => {
     const arrrgs = createTransformObject(options)
     if (arrrgs[otherDimensionAttr]) {
       arrrgs[otherDimensionAttr] = undefined
@@ -560,7 +560,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     const base64Width = options.base64Width || defaultBase64Width()
     const base64Height = Math.max(
       1,
-      Math.round(base64Width / images[0].aspectRatio)
+      Math.round(base64Width / images[0].aspectRatio),
     )
     const base64Args = {
       duotone: options.duotone,
@@ -581,13 +581,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
   const tracedSVG = await getTracedSVG({ options, file, cache, reporter })
 
   // Construct src and srcSet strings.
-  const originalImg = _.maxBy(images, image => image.width).src
-  const fallbackSrc = _.minBy(images, image =>
-    Math.abs(options[fixedDimension] - image[dimensionAttr])
+  const originalImg = _.maxBy(images, (image) => image.width).src
+  const fallbackSrc = _.minBy(images, (image) =>
+    Math.abs(options[fixedDimension] - image[dimensionAttr]),
   ).src
 
   const srcSet = images
-    .map(image => `${image.src} ${Math.round(image.width)}w`)
+    .map((image) => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
   const originalName = file.base
 
@@ -651,7 +651,9 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension] * 2)
   const dimensions = getImageSize(file)
 
-  const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
+  const filteredSizes = sizes.filter(
+    (size) => size <= dimensions[fixedDimension],
+  )
 
   // If there's no fluid images after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
@@ -663,12 +665,12 @@ async function fixed({ file, args = {}, reporter, cache }) {
                  the file ${file.absolutePath}
                  was larger than the actual image ${fixedDimension} of ${dimensions[fixedDimension]}px!
                  If possible, replace the current image with a larger one.
-                 `
+                 `,
     )
   }
 
   // Sort images for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = _.sortBy(filteredSizes).map((size) => {
     const arrrgs = createTransformObject(options)
     arrrgs[fixedDimension] = Math.round(size)
 
@@ -695,7 +697,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     const base64Width = options.base64Width || defaultBase64Width()
     const base64Height = Math.max(
       1,
-      Math.round(base64Width / images[0].aspectRatio)
+      Math.round(base64Width / images[0].aspectRatio),
     )
     const base64Args = {
       duotone: options.duotone,

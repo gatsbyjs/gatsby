@@ -2,7 +2,7 @@
 const { isString, once } = require(`lodash`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:utils/default-options`)
 
-const optDebug = once(options => {
+const optDebug = once((options) => {
   debug(`options`, options)
 })
 
@@ -20,12 +20,12 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
       globalScope: `export default {}`,
       shouldBlockNodeFromTransformation: () => false,
     },
-    pluginOptions
+    pluginOptions,
   )
 
   if (options.gatsbyRemarkPlugins.length > 0) {
-    options.gatsbyRemarkPlugins = options.gatsbyRemarkPlugins.map(plugin =>
-      typeof plugin === `string` ? { resolve: plugin } : plugin
+    options.gatsbyRemarkPlugins = options.gatsbyRemarkPlugins.map((plugin) =>
+      typeof plugin === `string` ? { resolve: plugin } : plugin,
     )
   }
 
@@ -34,13 +34,13 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
   // break immediately
   if (pluginOptions.hastPlugins && options.rehypePlugins.length === 0) {
     console.warn(
-      `hastPlugins should be renamed to rehypePlugins in your gatsby-plugin-mdx config`
+      `hastPlugins should be renamed to rehypePlugins in your gatsby-plugin-mdx config`,
     )
     options.rehypePlugins = hastPlugins
   }
   if (pluginOptions.mdPlugins && options.remarkPlugins.length === 0) {
     console.warn(
-      `mdPlugins should be renamed to remarkPlugins in your gatsby-plugin-mdx config`
+      `mdPlugins should be renamed to remarkPlugins in your gatsby-plugin-mdx config`,
     )
     options.remarkPlugins = mdPlugins
   }

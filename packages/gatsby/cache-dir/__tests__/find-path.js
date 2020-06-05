@@ -77,7 +77,7 @@ describe(`find-path`, () => {
       ])
 
       expect(findPath(`/notanapp/my-page#anchor?gatsby=cool`)).toBe(
-        `/notanapp/my-page`
+        `/notanapp/my-page`,
       )
     })
 
@@ -96,10 +96,10 @@ describe(`find-path`, () => {
       ])
 
       expect(findPath(`/notanapp/my-page#anchor?gatsby=cool`)).toBe(
-        `/notanapp/my-page`
+        `/notanapp/my-page`,
       )
       expect(findPath(`/notanapp/my-page#anchor?gatsby=cool`)).toBe(
-        `/notanapp/my-page`
+        `/notanapp/my-page`,
       )
       expect(findPath(`/notanapp/my-page`)).toBe(`/notanapp/my-page`)
 

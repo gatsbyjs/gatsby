@@ -101,7 +101,7 @@ You can do this:
 import React from "react"
 import PortableText from "@sanity/block-content-to-react"
 
-export default post => (
+export default (post) => (
   <PortableText
     serializers={{
       types: {

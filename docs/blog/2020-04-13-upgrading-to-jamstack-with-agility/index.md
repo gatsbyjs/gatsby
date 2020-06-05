@@ -82,7 +82,7 @@ Here's an example Page Template component with a single content zone called "Mai
 import React from "react"
 import ContentZone from "../agility/components/ContentZone"
 
-const MainTemplate = props => {
+const MainTemplate = (props) => {
   return (
     <div className="main-template">
       <ContentZone name="Main" {...props} />
@@ -222,7 +222,7 @@ You can also see that I'm only allowing for 60 seconds on caching in the CDN for
 
 ```javascript
 // sample script
-addEventListener("fetch", event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request))
 })
 

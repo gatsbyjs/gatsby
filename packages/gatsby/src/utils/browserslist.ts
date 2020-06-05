@@ -8,7 +8,7 @@ const installedGatsbyVersion = (directory: string): number | undefined => {
       directory,
       `node_modules`,
       `gatsby`,
-      `package.json`
+      `package.json`,
     ))
     return parseInt(version.split(`.`)[0], 10)
   } catch (e) {

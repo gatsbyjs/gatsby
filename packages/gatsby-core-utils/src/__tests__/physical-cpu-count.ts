@@ -20,7 +20,7 @@ describe(`physical-cpu-count`, () => {
       mockPlatform(platform)
       const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
       expect(getPhysicalCpuCount()).toBe(4)
-    }
+    },
   )
 
   it.each([`linux`, `darwin`])(
@@ -31,7 +31,7 @@ describe(`physical-cpu-count`, () => {
       mockPlatform(platform)
       const { getPhysicalCpuCount } = require(`../physical-cpu-count`)
       expect(getPhysicalCpuCount()).toBe(4)
-    }
+    },
   )
 
   it(`should return correct CPU count on Windows`, () => {
@@ -40,7 +40,7 @@ describe(`physical-cpu-count`, () => {
     cProc.execSync.mockImplementation(
       () => `NumberOfCores
     4
-    `
+    `,
     )
     mockPlatform(`win32`)
     const { getPhysicalCpuCount } = require(`../physical-cpu-count`)

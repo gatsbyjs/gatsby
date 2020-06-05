@@ -29,7 +29,7 @@ const actions = {
 
 const boundActions = bindActionCreators<typeof actions, any>(
   actions,
-  (dispatch as any) as Dispatch
+  (dispatch as any) as Dispatch,
 )
 
 export const createLog = boundActions.createLog as typeof internalCreateLog

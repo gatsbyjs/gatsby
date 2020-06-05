@@ -11,7 +11,7 @@ export default ({ items, color }) => (
       },
     }}
   >
-    {items.map(item => (
+    {items.map((item) => (
       <span key={item} sx={{ color: color }}>
         {item}
       </span>

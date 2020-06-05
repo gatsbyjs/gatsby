@@ -11,7 +11,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 function isItemInActiveTree(item, activeItem, activeItemParents) {
   return (
     activeItem.title === item.title ||
-    activeItemParents.some(parent => parent.title === item.title)
+    activeItemParents.some((parent) => parent.title === item.title)
   )
 }
 
@@ -22,7 +22,7 @@ function getOpenItemHash(itemList, activeItem, activeItemParents) {
       result[item.title] = isItemInActiveTree(
         item,
         activeItem,
-        activeItemParents
+        activeItemParents,
       )
       result = {
         ...result,
@@ -60,12 +60,12 @@ export default function Sidebar({
 
   const activeItem = React.useMemo(
     () => getActiveItem(itemList, location, activeItemHash),
-    [itemList, location, activeItemHash]
+    [itemList, location, activeItemHash],
   )
 
   const activeItemParents = React.useMemo(
     () => getActiveItemParents(itemList, activeItem),
-    [itemList, activeItem]
+    [itemList, activeItem],
   )
 
   // Get the hash where the only open items are
@@ -73,10 +73,10 @@ export default function Sidebar({
   const initialHash = getOpenItemHash(itemList, activeItem, activeItemParents)
 
   const [openSectionHash, setOpenSectionHash] = React.useState(initialHash)
-  const expandAll = Object.values(openSectionHash).every(isOpen => isOpen)
+  const expandAll = Object.values(openSectionHash).every((isOpen) => isOpen)
 
-  const toggleSection = React.useCallback(item => {
-    setOpenSectionHash(openSectionHash => {
+  const toggleSection = React.useCallback((item) => {
+    setOpenSectionHash((openSectionHash) => {
       return {
         ...openSectionHash,
         [item.title]: !openSectionHash[item.title],
@@ -98,14 +98,14 @@ export default function Sidebar({
   }
 
   const getItemState = React.useCallback(
-    item => {
+    (item) => {
       return {
         isExpanded: openSectionHash[item.title] || disableAccordions,
         isActive: item.title === activeItem.title,
         inActiveTree: isItemInActiveTree(item, activeItem, activeItemParents),
       }
     },
-    [openSectionHash, disableAccordions, activeItem, activeItemParents]
+    [openSectionHash, disableAccordions, activeItem, activeItemParents],
   )
 
   const context = React.useMemo(() => {
@@ -150,18 +150,18 @@ export default function Sidebar({
             border: 0,
             display: `block`,
             overflowY: `auto`,
-            transition: t =>
+            transition: (t) =>
               `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             zIndex: 10,
             borderRightWidth: `1px`,
             borderRightStyle: `solid`,
             borderColor: `ui.border`,
-            height: t =>
+            height: (t) =>
               disableExpandAll
                 ? `100%`
                 : `calc(100% - ${t.sizes.sidebarUtilityHeight})`,
             [mediaQueries.md]: {
-              top: t =>
+              top: (t) =>
                 `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
             },
           }}
@@ -195,7 +195,7 @@ export default function Sidebar({
               },
             }}
           >
-            {itemList.map(item => (
+            {itemList.map((item) => (
               <Item item={item} key={item.title} />
             ))}
           </ul>

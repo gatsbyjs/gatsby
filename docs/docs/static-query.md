@@ -33,7 +33,7 @@ export default function Header() {
           }
         }
       `}
-      render={data => (
+      render={(data) => (
         <header>
           <h1>{data.site.siteMetadata.title}</h1>
         </header>
@@ -76,7 +76,7 @@ export default function MyHeader(props) {
           }
         }
       `}
-      render={data => <Header data={data} {...props} />}
+      render={(data) => <Header data={data} {...props} />}
     />
   )
 }

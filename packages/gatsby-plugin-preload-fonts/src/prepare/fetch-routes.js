@@ -17,7 +17,7 @@ module.exports = async ({ logger, endpoint, cache }) => {
   let routes
   try {
     const { allSitePage } = await request(endpoint, query)
-    routes = allSitePage.nodes.map(n => n.path)
+    routes = allSitePage.nodes.map((n) => n.path)
   } catch (err) {
     logger.fatal(`
 

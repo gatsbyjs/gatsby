@@ -3,7 +3,7 @@ jest.mock(`axios`)
 const requestInQueue = require(`../request-in-queue`)
 const axios = require(`axios`)
 
-axios.mockImplementation(opts => {
+axios.mockImplementation((opts) => {
   if (opts.throw) {
     throw new Error(opts.throw)
   }
@@ -30,7 +30,7 @@ describe(`requestInQueue`, () => {
   it(`runs all requests in queue`, async () => {
     await requestInQueue(requests)
 
-    requests.forEach(req => {
+    requests.forEach((req) => {
       expect(axios).toHaveBeenCalledWith(req)
     })
   })

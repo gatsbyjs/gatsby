@@ -37,7 +37,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `tests`,
-      }
+      },
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
     expect(action).toMatchSnapshot({
@@ -71,7 +71,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `tests`,
-      }
+      },
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
 
@@ -94,7 +94,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `tests`,
-      }
+      },
     )(dispatch)
     const updateAction = dispatch.mock.calls[1][0]
 
@@ -120,7 +120,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `tests`,
-      }
+      },
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
 
@@ -145,7 +145,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `tests`,
-      }
+      },
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
     let state = nodesReducer(undefined, action)
@@ -158,7 +158,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `test`,
-      }
+      },
     )
 
     state = nodesReducer(state, addFieldAction)
@@ -181,7 +181,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `tests`,
-      }
+      },
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
     let state = nodesReducer(undefined, action)
@@ -194,7 +194,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `test`,
-      }
+      },
     )
     state = nodesReducer(state, addFieldAction)
 
@@ -207,11 +207,11 @@ describe(`Create and update nodes`, (): void => {
         },
         {
           name: `test2`,
-        }
+        },
       )
     }
     expect(callActionCreator).toThrowError(
-      `A plugin tried to update a node field that it doesn't own`
+      `A plugin tried to update a node field that it doesn't own`,
     )
   })
 
@@ -229,7 +229,7 @@ describe(`Create and update nodes`, (): void => {
       },
       {
         name: `pluginA`,
-      }
+      },
     )(dispatch)
 
     function callActionCreator(): void {
@@ -246,12 +246,12 @@ describe(`Create and update nodes`, (): void => {
         },
         {
           name: `pluginB`,
-        }
+        },
       )(dispatch)
     }
 
     expect(callActionCreator).toThrowError(
-      `The plugin "pluginB" created a node of a type owned by another plugin.`
+      `The plugin "pluginB" created a node of a type owned by another plugin.`,
     )
   })
 
@@ -273,13 +273,13 @@ describe(`Create and update nodes`, (): void => {
         },
         {
           name: `pluginA`,
-        }
+        },
       )(dispatch)
     }
 
     expect(callActionCreator).toThrowError(
       `Plugins creating nodes can not set data on the reserved field "fields"
-      as this is reserved for plugins which wish to extend your nodes.`
+      as this is reserved for plugins which wish to extend your nodes.`,
     )
   })
 })

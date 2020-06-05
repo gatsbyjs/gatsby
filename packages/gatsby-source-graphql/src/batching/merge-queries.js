@@ -2,8 +2,8 @@ const { visit, visitInParallel, Kind } = require(`graphql`)
 const _ = require(`lodash`)
 
 const Prefix = {
-  create: index => `gatsby${index}_`,
-  parseKey: prefixedKey => {
+  create: (index) => `gatsby${index}_`,
+  parseKey: (prefixedKey) => {
     const match = /^gatsby([\d]+)_(.*)$/.exec(prefixedKey)
     if (!match || match.length !== 3 || isNaN(Number(match[1])) || !match[2]) {
       throw new Error(`Unexpected data key: ${prefixedKey}`)
@@ -57,7 +57,7 @@ export function merge(queries) {
   queries.forEach((query, index) => {
     const prefixedQuery = prefixQueryParts(Prefix.create(index), query)
 
-    prefixedQuery.query.definitions.forEach(def => {
+    prefixedQuery.query.definitions.forEach((def) => {
       if (isQueryDefinition(def)) {
         mergedSelections.push(...def.selectionSet.selections)
         mergedVariableDefinitions.push(...(def.variableDefinitions ?? []))
@@ -107,11 +107,11 @@ export function resolveResult(mergedQueryResult) {
 }
 
 const Visitors = {
-  detectFragmentsWithVariables: fragmentsWithVariables => {
+  detectFragmentsWithVariables: (fragmentsWithVariables) => {
     let currentFragmentName
     return {
       [Kind.FRAGMENT_DEFINITION]: {
-        enter: def => {
+        enter: (def) => {
           currentFragmentName = def.name.value
         },
         leave: () => {
@@ -125,16 +125,16 @@ const Visitors = {
       },
     }
   },
-  prefixVariables: prefix => {
+  prefixVariables: (prefix) => {
     return {
-      [Kind.VARIABLE]: variable => prefixNodeName(variable, prefix),
+      [Kind.VARIABLE]: (variable) => prefixNodeName(variable, prefix),
     }
   },
   prefixFragmentNames: (prefix, fragmentNames) => {
     return {
-      [Kind.FRAGMENT_DEFINITION]: def =>
+      [Kind.FRAGMENT_DEFINITION]: (def) =>
         fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def,
-      [Kind.FRAGMENT_SPREAD]: def =>
+      [Kind.FRAGMENT_SPREAD]: (def) =>
         fragmentNames.has(def.name.value) ? prefixNodeName(def, prefix) : def,
     }
   },
@@ -156,7 +156,7 @@ function prefixQueryParts(prefix, query) {
       // Note: the sequence is important due to how visitInParallel deals with node edits
       Visitors.detectFragmentsWithVariables(fragmentsWithVariables),
       Visitors.prefixVariables(prefix),
-    ])
+    ]),
   )
 
   if (fragmentsWithVariables.size > 0) {
@@ -173,7 +173,7 @@ function prefixQueryParts(prefix, query) {
         [Kind.INLINE_FRAGMENT]: [`selectionSet`],
         [Kind.FIELD]: [`selectionSet`],
         [Kind.SELECTION_SET]: [`selections`],
-      }
+      },
     )
   }
 
@@ -195,7 +195,7 @@ function prefixQueryParts(prefix, query) {
  */
 function aliasTopLevelFields(prefix, doc) {
   const transformer = {
-    [Kind.OPERATION_DEFINITION]: def => {
+    [Kind.OPERATION_DEFINITION]: (def) => {
       const { selections } = def.selectionSet
       return {
         ...def,
@@ -230,7 +230,7 @@ function aliasTopLevelFields(prefix, doc) {
  *   }
  */
 function aliasFieldsInSelection(prefix, selections, document) {
-  return _.flatMap(selections, selection => {
+  return _.flatMap(selections, (selection) => {
     switch (selection.kind) {
       case Kind.INLINE_FRAGMENT:
         return [aliasFieldsInInlineFragment(prefix, selection, document)]
@@ -298,9 +298,9 @@ function aliasFieldsInInlineFragment(prefix, fragment, document) {
  */
 function inlineFragmentSpread(spread, document) {
   const fragment = document.definitions.find(
-    def =>
+    (def) =>
       def.kind === Kind.FRAGMENT_DEFINITION &&
-      def.name.value === spread.name.value
+      def.name.value === spread.name.value,
   )
   if (!fragment) {
     throw new Error(`Fragment ${spread.name.value} does not exist`)

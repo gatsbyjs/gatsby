@@ -2,7 +2,7 @@ jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
   return {
     ...fs,
-    readFileSync: jest.fn(file => `${file}::file`),
+    readFileSync: jest.fn((file) => `${file}::file`),
   }
 })
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -30,11 +30,11 @@ describe(`gets ssl certs`, () => {
   describe(`Custom SSL certificate`, () => {
     it.each([[{ certFile: `foo` }], [{ keyFile: `bar` }]])(
       `panic if cert and key are not both included`,
-      args => {
+      (args) => {
         getSslCert(args)
 
         expect(reporter.panic.mock.calls).toMatchSnapshot()
-      }
+      },
     )
     it(`loads a cert relative to a directory`, () => {
       expect(
@@ -43,7 +43,7 @@ describe(`gets ssl certs`, () => {
           certFile: `foo.crt`,
           keyFile: `foo.key`,
           directory: `/app/directory`,
-        })
+        }),
       ).resolves.toMatchSnapshot()
     })
     it(`loads a cert from absolute paths`, () => {
@@ -53,7 +53,7 @@ describe(`gets ssl certs`, () => {
           certFile: `/foo.crt`,
           keyFile: `/foo.key`,
           directory: `/app/directory`,
-        })
+        }),
       ).resolves.toMatchSnapshot()
     })
   })

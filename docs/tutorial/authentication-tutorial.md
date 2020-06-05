@@ -98,7 +98,7 @@ export const getUser = () =>
     ? JSON.parse(window.localStorage.getItem("gatsbyUser"))
     : {}
 
-const setUser = user =>
+const setUser = (user) =>
   window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
 
 export const handleLogin = ({ username, password }) => {
@@ -119,7 +119,7 @@ export const isLoggedIn = () => {
   return !!user.username
 }
 
-export const logout = callback => {
+export const logout = (callback) => {
   setUser({})
   callback()
 }
@@ -204,13 +204,13 @@ class Login extends React.Component {
     password: ``,
   }
 
-  handleUpdate = event => {
+  handleUpdate = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault()
     handleLogin(this.state)
   }
@@ -225,7 +225,7 @@ class Login extends React.Component {
         <h1>Log in</h1>
         <form
           method="post"
-          onSubmit={event => {
+          onSubmit={(event) => {
             this.handleSubmit(event)
             navigate(`/app/profile`)
           }}
@@ -338,7 +338,7 @@ export default function NavBar() {
         {isLoggedIn() ? (
           <a
             href="/"
-            onClick={event => {
+            onClick={(event) => {
               event.preventDefault()
               logout(() => navigate(`/app/login`))
             }}

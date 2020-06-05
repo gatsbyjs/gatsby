@@ -20,7 +20,7 @@ export default ({ links }) => {
       })}
     >
       <BreadcrumbHome text={homeText} />
-      {links.map(link => (
+      {links.map((link) => (
         <>
           <BreadcrumbDivider text={breadcrumbSeparator} />
           <Styled.a as={Link} to={link.url} key={link.url}>

@@ -38,7 +38,7 @@ class CreatorsView extends Component {
       }
       if (filterStateChanged && isFiltered) {
         let items = this.state.creators.filter(
-          item => item[this.props.location.state.filter] === true
+          (item) => item[this.props.location.state.filter] === true,
         )
         this.setState({
           creators: items,
@@ -53,7 +53,7 @@ class CreatorsView extends Component {
     const query = qs.parse(this.props.location.search.slice(1))
     if (query.filter) {
       let items = this.state.creators.filter(
-        item => item[query.filter] === true
+        (item) => item[query.filter] === true,
       )
       this.setState({
         creators: items,
@@ -81,7 +81,7 @@ class CreatorsView extends Component {
       submissionText = `Add Your Company`
     }
 
-    const applyFilter = filter => {
+    const applyFilter = (filter) => {
       if (this.state[filter] === true) {
         this.setState({
           creators: data.allCreatorsYaml.nodes,
@@ -89,7 +89,7 @@ class CreatorsView extends Component {
         })
         navigate(`${location.pathname}`, { state: { filter: `` } })
       } else {
-        let items = creators.filter(item => item[filter] === true)
+        let items = creators.filter((item) => item[filter] === true)
         this.setState({
           creators: items,
           [filter]: true,
@@ -107,7 +107,7 @@ class CreatorsView extends Component {
           description="Discover developers skilled in working on Gatsby applications available for hire"
         />
         <CreatorsHeader
-          applyFilter={filter => applyFilter(filter)}
+          applyFilter={(filter) => applyFilter(filter)}
           forHire={this.state.for_hire}
           hiring={this.state.hiring}
           submissionText={submissionText}
@@ -135,7 +135,7 @@ class CreatorsView extends Component {
             {creators.length < 1 ? (
               <p sx={{ color: `gatsby` }}>No results</p>
             ) : (
-              creators.map(node => (
+              creators.map((node) => (
                 <div key={node.name} sx={styles.creatorCard}>
                   <ThumbnailLink
                     slug={node.fields.slug}

@@ -1,7 +1,7 @@
 import React from "react"
 import ReactSwitch from "react-switch"
 
-export const Switch = props => <ReactSwitch {...props} />
+export const Switch = (props) => <ReactSwitch {...props} />
 
 Switch.defaultProps = {
   checkedIcon: false,

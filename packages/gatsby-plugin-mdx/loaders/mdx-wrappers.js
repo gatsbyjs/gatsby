@@ -18,10 +18,12 @@ module.exports = function () {
   const options = loaderUtils.getOptions(this)
   const { flattenedPlugins: plugins } = options.store.getState()
   const wrapperPlugins = plugins
-    .filter(plugin => plugin.ssrAPIs.includes(`wrapRootElement`))
-    .map(plugin => `${plugin.resolve}/gatsby-ssr.js`)
+    .filter((plugin) => plugin.ssrAPIs.includes(`wrapRootElement`))
+    .map((plugin) => `${plugin.resolve}/gatsby-ssr.js`)
   const pluginRequires = !wrapperPlugins.length
     ? `[]`
-    : `[` + wrapperPlugins.map(plugin => `require("${plugin}")`).join(`,`) + `]`
+    : `[` +
+      wrapperPlugins.map((plugin) => `require("${plugin}")`).join(`,`) +
+      `]`
   return `module.exports = {plugins: ${pluginRequires}}`
 }

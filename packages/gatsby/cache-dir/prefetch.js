@@ -24,7 +24,7 @@ const linkPrefetchStrategy = function (url, options) {
     link.setAttribute(`rel`, `prefetch`)
     link.setAttribute(`href`, url)
 
-    Object.keys(options).forEach(key => {
+    Object.keys(options).forEach((key) => {
       link.setAttribute(key, options[key])
     })
 
@@ -62,7 +62,7 @@ const supportedPrefetchStrategy = support(`prefetch`)
 const preFetched = {}
 
 const prefetch = function (url, options) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (preFetched[url]) {
       resolve()
       return

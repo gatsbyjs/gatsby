@@ -23,11 +23,11 @@ describe(`EnsureResources`, () => {
     const { container } = render(
       <EnsureResources location={location}>
         {(data: any): string => JSON.stringify(data.pageResources)}
-      </EnsureResources>
+      </EnsureResources>,
     )
 
     expect(getNodeText(container)).toMatchInlineSnapshot(
-      `"{\\"loadPageSync\\":true,\\"path\\":\\"/\\"}"`
+      `"{\\"loadPageSync\\":true,\\"path\\":\\"/\\"}"`,
     )
   })
 })

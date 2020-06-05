@@ -64,7 +64,7 @@ const hasDefaultExport = (str, options) => {
     return undefined
   }
 
-  tokenizeEsSyntax.locator = value =>
+  tokenizeEsSyntax.locator = (value) =>
     isExport(value) || isImport(value) ? -1 : 1
 
   function esSyntax() {
@@ -103,15 +103,15 @@ module.exports = async function (content) {
   const options = withDefaultOptions(pluginOptions)
 
   let fileNode = getNodes().find(
-    node =>
+    (node) =>
       node.internal.type === `File` &&
-      node.absolutePath === slash(this.resourcePath)
+      node.absolutePath === slash(this.resourcePath),
   )
   let isFakeFileNode = false
   if (!fileNode) {
     fileNode = await createFileNode(
       this.resourcePath,
-      pth => `fakeFileNodeMDX${pth}`
+      (pth) => `fakeFileNodeMDX${pth}`,
     )
     isFakeFileNode = true
   }
@@ -134,7 +134,7 @@ module.exports = async function (content) {
   const defaultLayout = _.get(
     options.defaultLayouts,
     source,
-    _.get(options.defaultLayouts, `default`)
+    _.get(options.defaultLayouts, `default`),
   )
 
   let code = content
@@ -153,7 +153,7 @@ export default DefaultLayout
 ${contentWithoutFrontmatter}`
   }
 
-  const getNode = id => {
+  const getNode = (id) => {
     if (isFakeFileNode && id === fileNode.id) {
       return fileNode
     } else {
@@ -187,7 +187,7 @@ ${contentWithoutFrontmatter}`
       null,
       `import * as React from 'react'
   ${result.code}
-      `
+      `,
     )
   } catch (e) {
     return callback(e)

@@ -19,7 +19,9 @@ module.exports = function () {
     ? `[]`
     : `[` +
       options.plugins
-        .map(plugin => `require("${plugin.resolve ? plugin.resolve : plugin}")`)
+        .map(
+          (plugin) => `require("${plugin.resolve ? plugin.resolve : plugin}")`,
+        )
         .join(`,`) +
       `]`
   return `module.exports = {plugins: ${pluginRequires}}`

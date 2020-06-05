@@ -66,7 +66,7 @@ function renderSidebar(pathname, { activeItemHash } = {}) {
           activeItemHash={activeItemHash}
         />
       </I18nProvider>
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 }
 
@@ -110,7 +110,7 @@ describe(`sidebar`, () => {
 
     it(`closes all sections except active items when already expanded`, () => {
       const { queryByText, getByText } = renderSidebar(
-        `/characters/jay-gatsby/`
+        `/characters/jay-gatsby/`,
       )
       fireEvent.click(getByText(`Expand All`))
       fireEvent.click(getByText(`Collapse All`))

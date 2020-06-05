@@ -40,8 +40,8 @@ export const buttonStyles = () => {
       whiteSpace: `nowrap`,
       px: 3,
       height: `36px`,
-      backgroundSize: t => `${t.space[7]} ${t.space[7]}`,
-      transition: t => `all ${t.transition.default}`,
+      backgroundSize: (t) => `${t.space[7]} ${t.space[7]}`,
+      transition: (t) => `all ${t.transition.default}`,
       ":hover, :focus": {
         backgroundColor: `gatsby`,
         backgroundImage: `linear-gradient(135deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
@@ -132,7 +132,7 @@ export const formInput = {
 
 export const themedInputFocus = {
   bg: `themedInput.backgroundFocus`,
-  boxShadow: t => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
+  boxShadow: (t) => `0 0 0 2px ${t.colors.themedInput.focusBoxShadow}`,
   outline: 0,
   width: `100%`,
 }

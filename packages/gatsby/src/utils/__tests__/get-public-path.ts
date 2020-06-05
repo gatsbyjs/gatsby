@@ -9,7 +9,7 @@ describe(`basic functionality`, () => {
       getPublicPath({
         assetPrefix,
         prefixPaths: true,
-      })
+      }),
     ).toBe(assetPrefix)
   })
 
@@ -18,7 +18,7 @@ describe(`basic functionality`, () => {
       getPublicPath({
         pathPrefix,
         prefixPaths: true,
-      })
+      }),
     ).toBe(`/blog`)
   })
 
@@ -28,7 +28,7 @@ describe(`basic functionality`, () => {
         pathPrefix,
         assetPrefix,
         prefixPaths: true,
-      })
+      }),
     ).toBe(`${assetPrefix}${pathPrefix}`)
   })
 
@@ -40,7 +40,7 @@ describe(`basic functionality`, () => {
           pathPrefix,
           assetPrefix: localAssetPrefix,
           prefixPaths: true,
-        })
+        }),
       ).toBe(`${localAssetPrefix}${pathPrefix}`)
     })
 
@@ -51,7 +51,7 @@ describe(`basic functionality`, () => {
           pathPrefix,
           assetPrefix: cdn,
           prefixPaths: true,
-        })
+        }),
       ).toBe(`${cdn}${pathPrefix}`)
     })
 
@@ -62,18 +62,18 @@ describe(`basic functionality`, () => {
           pathPrefix,
           assetPrefix: cdn,
           prefixPaths: true,
-        })
+        }),
       ).toBe(`${cdn}${pathPrefix}`)
     })
 
     it(`handles trailing slashes`, () => {
-      ;[`/assets/`, `https://cdn.example.org/`].forEach(prefix => {
+      ;[`/assets/`, `https://cdn.example.org/`].forEach((prefix) => {
         expect(
           getPublicPath({
             pathPrefix,
             assetPrefix: prefix,
             prefixPaths: true,
-          })
+          }),
         ).toBe(`${prefix.slice(0, -1)}${pathPrefix}`)
       })
     })

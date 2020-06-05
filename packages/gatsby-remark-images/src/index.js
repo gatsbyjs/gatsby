@@ -33,15 +33,15 @@ module.exports = (
     cache,
     compiler,
   },
-  pluginOptions
+  pluginOptions,
 ) => {
   const options = _.defaults(pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
-      node =>
+      (node) =>
         (node.type === `html` && !!node.value.match(/<a /)) ||
-        node.type === `link`
+        node.type === `link`,
     )
 
   // Get all the available definitions in the markdown tree
@@ -66,10 +66,10 @@ module.exports = (
       const inLink = ancestors.some(findParentLinks)
 
       markdownImageNodes.push({ node, inLink })
-    }
+    },
   )
 
-  const getImageInfo = uri => {
+  const getImageInfo = (uri) => {
     const { url, query } = queryString.parseUrl(uri)
     return {
       ext: path.extname(url).split(`.`).pop(),
@@ -124,7 +124,7 @@ module.exports = (
     node,
     resolve,
     inLink,
-    overWrites = {}
+    overWrites = {},
   ) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
@@ -136,7 +136,7 @@ module.exports = (
       return null
     }
 
-    const imageNode = _.find(files, file => {
+    const imageNode = _.find(files, (file) => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
       }
@@ -170,7 +170,7 @@ module.exports = (
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
     const alt = _.escape(
-      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt,
     )
 
     const title = node.title ? _.escape(node.title) : alt
@@ -181,9 +181,9 @@ module.exports = (
       reporter.warn(
         reporter.stripIndent(`
         ${chalk.bold(loading)} is an invalid value for the ${chalk.bold(
-          `loading`
+          `loading`,
         )} option. Please pass one of "lazy", "eager" or "auto".
-      `)
+      `),
       )
     }
 
@@ -219,7 +219,7 @@ module.exports = (
           // override options if it's an object, otherwise just pass through defaults
           options.withWebp === true ? {} : options.withWebp,
           pluginOptions,
-          DEFAULT_OPTIONS
+          DEFAULT_OPTIONS,
         ),
         reporter,
       })
@@ -385,7 +385,7 @@ module.exports = (
               node,
               resolve,
               inLink,
-              overWrites
+              overWrites,
             )
 
             if (rawHTML) {
@@ -401,9 +401,9 @@ module.exports = (
             // Image isn't relative so there's nothing for us to do.
             return resolve()
           }
-        })
-    )
-  ).then(markdownImageNodes =>
+        }),
+    ),
+  ).then((markdownImageNodes) =>
     // HTML image node stuff
     Promise.all(
       // Complex because HTML nodes can contain multiple images
@@ -448,7 +448,7 @@ module.exports = (
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,
                   resolve,
-                  inLink
+                  inLink,
                 )
 
                 if (rawHTML) {
@@ -465,10 +465,10 @@ module.exports = (
             node.value = $(`body`).html() // fix for cheerio v1
 
             return resolve(node)
-          })
-      )
-    ).then(htmlImageNodes =>
-      markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
-    )
+          }),
+      ),
+    ).then((htmlImageNodes) =>
+      markdownImageNodes.concat(htmlImageNodes).filter((node) => !!node),
+    ),
   )
 }

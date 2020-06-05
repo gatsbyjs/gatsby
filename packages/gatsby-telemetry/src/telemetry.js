@@ -68,7 +68,7 @@ module.exports = class AnalyticsTracker {
       process.cwd(),
       `node_modules`,
       `gatsby`,
-      `package.json`
+      `package.json`,
     ))
     try {
       return packageInfo.version
@@ -86,7 +86,7 @@ module.exports = class AnalyticsTracker {
           .split(sep)
           .slice(0, -2) // drop lib/index.js
           .join(sep),
-        `package.json`
+        `package.json`,
       )
       const { version } = require(jsonfile).version
       return version
@@ -151,7 +151,7 @@ module.exports = class AnalyticsTracker {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
         const { error, ...restOfTags } = tags
-        error.forEach(err => {
+        error.forEach((err) => {
           this.formatErrorAndStoreEvent(eventType, {
             error: err,
             ...restOfTags,
@@ -293,7 +293,7 @@ module.exports = class AnalyticsTracker {
     const stdDev =
       Math.sqrt(
         data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
-          (data.length - 1)
+          (data.length - 1),
       ) || 0
 
     const skewness =

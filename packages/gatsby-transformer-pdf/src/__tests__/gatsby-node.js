@@ -19,7 +19,7 @@ describe(`gatsby-transformer-pdf`, () => {
       createParentChildLink: jest.fn(),
     }
     loadNodeContent = jest.fn()
-    createNodeId = jest.fn(node => node)
+    createNodeId = jest.fn((node) => node)
     createContentDigest = jest.fn(() => `digest`)
   })
 

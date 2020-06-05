@@ -4,7 +4,7 @@ import { css } from "theme-ui"
 import { Layout, Main, Container } from "theme-ui"
 import Footer from "./footer"
 
-export default props => (
+export default (props) => (
   <>
     <Global
       styles={css({

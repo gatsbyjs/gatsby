@@ -27,7 +27,7 @@ const easeInOutSine = (elapsed, start, change, length) =>
 const animateScroll = (
   element,
   elapsedTime,
-  { position, stepSize, increment, duration, callback = () => {} }
+  { position, stepSize, increment, duration, callback = () => {} },
 ) => {
   const nextTime = elapsedTime + increment
 
@@ -51,7 +51,7 @@ const animateScroll = (
 }
 
 const scrollToLocation = (element, targetPos, duration, callback) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     animateScroll(element, 0, {
       position: element.scrollTop,
       stepSize: targetPos - element.scrollTop,
@@ -64,7 +64,7 @@ const scrollToLocation = (element, targetPos, duration, callback) =>
     })
   })
 
-const scrollToAnchor = (target, callback) => event => {
+const scrollToAnchor = (target, callback) => (event) => {
   if (event) {
     event.preventDefault()
   }

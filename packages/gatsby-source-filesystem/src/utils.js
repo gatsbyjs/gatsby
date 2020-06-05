@@ -53,7 +53,7 @@ export function createProgress(message, reporter) {
       total: 0,
       width: 30,
       clear: true,
-    }
+    },
   )
 
   return {

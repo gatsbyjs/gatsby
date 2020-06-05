@@ -73,7 +73,7 @@ const incrementalReducer = (state = {}, action) => {
         ? action.payload
         : [action.payload]
       const ignoredTypes = typeDefs.reduce(typesWithoutInference, [])
-      ignoredTypes.forEach(type => {
+      ignoredTypes.forEach((type) => {
         state[type] = ignore(state[type] || initialTypeMetadata())
       })
       return state
@@ -91,7 +91,7 @@ const incrementalReducer = (state = {}, action) => {
     case `DISABLE_TYPE_INFERENCE`: {
       // Note: types disabled here will be re-enabled after BUILD_TYPE_METADATA
       const types = action.payload
-      types.forEach(type => {
+      types.forEach((type) => {
         state[type] = disable(state[type] || initialTypeMetadata())
       })
       return state
@@ -143,7 +143,7 @@ const incrementalReducer = (state = {}, action) => {
     // Deprecated, will be removed in Gatsby v3.
     case `DELETE_NODES`: {
       const { fullNodes } = action
-      fullNodes.forEach(node => {
+      fullNodes.forEach((node) => {
         const { type } = node.internal
         state[type] = deleteNode(state[type] || initialTypeMetadata(), node)
       })
@@ -151,7 +151,7 @@ const incrementalReducer = (state = {}, action) => {
     }
 
     case `SET_SCHEMA`: {
-      Object.keys(state).forEach(type => {
+      Object.keys(state).forEach((type) => {
         state[type].dirty = false
       })
       return state

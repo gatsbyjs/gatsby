@@ -10,15 +10,15 @@ describe(`Load plugins`, () => {
    * Both will cause snapshots to differ.
    */
   const replaceFieldsThatCanVary = (
-    plugins: IFlattenedPlugin[]
+    plugins: IFlattenedPlugin[],
   ): IFlattenedPlugin[] =>
-    plugins.map(plugin => {
+    plugins.map((plugin) => {
       if (plugin.pluginOptions && plugin.pluginOptions.path) {
         plugin.pluginOptions = {
           ...plugin.pluginOptions,
           path: plugin.pluginOptions.path.replace(
             slash(process.cwd()),
-            `<PROJECT_ROOT>`
+            `<PROJECT_ROOT>`,
           ),
         }
       }
@@ -123,7 +123,7 @@ describe(`Load plugins`, () => {
             ssrAPIs: [],
             version: `1.0.0`,
           }),
-        ])
+        ]),
       )
     })
 
@@ -162,7 +162,7 @@ describe(`Load plugins`, () => {
             ssrAPIs: [],
             version: `1.0.0`,
           }),
-        ])
+        ]),
       )
     })
 
@@ -179,7 +179,8 @@ describe(`Load plugins`, () => {
       plugins = replaceFieldsThatCanVary(plugins)
 
       const tsplugins = plugins.filter(
-        (plugin: { name: string }) => plugin.name === `gatsby-plugin-typescript`
+        (plugin: { name: string }) =>
+          plugin.name === `gatsby-plugin-typescript`,
       )
 
       // TODO: I think we should probably be de-duping, so this should be 1.

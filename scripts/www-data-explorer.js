@@ -5,12 +5,12 @@ const gatsbyPath = path.resolve(
   `www`,
   `node_modules`,
   `gatsby`,
-  `dist`
+  `dist`,
 )
 const explorer = require(path.resolve(
   gatsbyPath,
   `commands`,
-  `data-explorer.js`
+  `data-explorer.js`,
 ))
 
 const port = process.env.PORT || 8080

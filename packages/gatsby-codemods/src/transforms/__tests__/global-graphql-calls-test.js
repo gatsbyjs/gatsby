@@ -10,12 +10,12 @@ const tests = [
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
 
 describe(`codemods`, () => {
-  tests.forEach(test =>
+  tests.forEach((test) =>
     defineTest(
       __dirname,
       `global-graphql-calls`,
       null,
-      `global-graphql-calls/${test}`
-    )
+      `global-graphql-calls/${test}`,
+    ),
   )
 })

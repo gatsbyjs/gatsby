@@ -8,12 +8,12 @@ beforeEach(() => {
 })
 
 const verifyUrlsExistInResults = (results, urls) => {
-  expect(results.map(result => result.url)).toEqual(urls)
+  expect(results.map((result) => result.url)).toEqual(urls)
 }
 
 describe(`results using default settings`, () => {
   const generateQueryResultsMock = (
-    { siteUrl } = { siteUrl: `http://dummy.url` }
+    { siteUrl } = { siteUrl: `http://dummy.url` },
   ) => {
     return {
       data: {
@@ -60,7 +60,7 @@ describe(`results using default settings`, () => {
     it(`sanitize siteUrl`, async () => {
       const graphql = () =>
         Promise.resolve(
-          generateQueryResultsMock({ siteUrl: `http://dummy.url/` })
+          generateQueryResultsMock({ siteUrl: `http://dummy.url/` }),
         )
 
       const data = await graphql(``)
@@ -101,7 +101,9 @@ describe(`results using default settings`, () => {
         filterQuery(data, [], pathPrefix)
       } catch (err) {
         expect(err.message).toEqual(
-          expect.stringContaining(`SiteMetaData 'siteUrl' property is required`)
+          expect.stringContaining(
+            `SiteMetaData 'siteUrl' property is required`,
+          ),
         )
       }
     })
@@ -118,7 +120,7 @@ describe(`results using default settings`, () => {
 
 describe(`results using non default alternatives`, () => {
   const generateQueryResultsMockNodes = (
-    { siteUrl } = { siteUrl: `http://dummy.url` }
+    { siteUrl } = { siteUrl: `http://dummy.url` },
   ) => {
     return {
       data: {

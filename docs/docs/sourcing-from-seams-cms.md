@@ -107,7 +107,7 @@ import Layout from "../components/layout"
 
 const BlogIndex = ({ pageContext: { blogPosts } }) => (
   <Layout>
-    {blogPosts.map(blogPost => (
+    {blogPosts.map((blogPost) => (
       <>
         <h4>Title: {blogPost.node.content.title.value}</h4>
         <h4>

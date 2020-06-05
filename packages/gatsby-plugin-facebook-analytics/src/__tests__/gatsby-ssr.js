@@ -1,6 +1,6 @@
 jest.mock(`common-tags`, () => {
   return {
-    stripIndent: args => args,
+    stripIndent: (args) => args,
   }
 })
 

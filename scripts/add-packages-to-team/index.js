@@ -18,7 +18,7 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
     return
   } else {
     console.log(`Will be adding ${user} to packages:`)
-    packages.forEach(pkg => {
+    packages.forEach((pkg) => {
       console.log(` - ${pkg.name}`)
     })
   }
@@ -46,9 +46,9 @@ getUnownedPackages({ user }).then(async ({ packages }) => {
   // })
   console.log(
     JSON.stringify(
-      packages.map(pkg => pkg.name),
+      packages.map((pkg) => pkg.name),
       null,
-      2
-    )
+      2,
+    ),
   )
 })

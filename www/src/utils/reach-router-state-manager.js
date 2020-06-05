@@ -10,7 +10,7 @@ class RRSM extends Component {
     defaultSearchState: {},
   }
 
-  setUrlState = newState => {
+  setUrlState = (newState) => {
     const finalState = { ...this.state, ...newState }
     // update RSSM state
     this.setState({ ...finalState })

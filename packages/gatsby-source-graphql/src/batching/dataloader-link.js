@@ -4,12 +4,12 @@ const { print } = require(`graphql`)
 const { merge, resolveResult } = require(`./merge-queries`)
 
 export function createDataloaderLink(options) {
-  const load = async keys => {
+  const load = async (keys) => {
     const query = merge(keys)
     const result = await request(query, options)
     if (!isValidGraphQLResult(result)) {
       const error = new Error(
-        `Failed to load query batch:\n${formatErrors(result)}`
+        `Failed to load query batch:\n${formatErrors(result)}`,
       )
       error.name = `GraphQLError`
       error.originalResult = result
@@ -26,37 +26,37 @@ export function createDataloaderLink(options) {
   const dataloader = new DataLoader(load, {
     cache: false,
     maxBatchSize,
-    batchScheduleFn: callback => setTimeout(callback, 50),
+    batchScheduleFn: (callback) => setTimeout(callback, 50),
     ...options.dataLoaderOptions,
   })
 
   return new ApolloLink(
-    operation =>
-      new Observable(observer => {
+    (operation) =>
+      new Observable((observer) => {
         const { query, variables } = operation
 
         dataloader
           .load({ query, variables })
-          .then(response => {
+          .then((response) => {
             operation.setContext({ response })
             observer.next(response)
             observer.complete()
             return response
           })
-          .catch(err => {
+          .catch((err) => {
             if (err.name === `AbortError`) {
               return
             }
             observer.error(err)
           })
-      })
+      }),
   )
 }
 
 function formatErrors(result) {
   if (result?.errors?.length > 0) {
     return result.errors
-      .map(error => {
+      .map((error) => {
         const { message, path = [] } = error
         return path.length > 0
           ? `${message} (path: ${JSON.stringify(path)})`

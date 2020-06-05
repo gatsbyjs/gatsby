@@ -12,12 +12,12 @@ const octokit = new Octokit({
  */
 async function inviteMaintainers(org, usernames) {
   await Promise.all(
-    usernames.map(async username => {
+    usernames.map(async (username) => {
       await octokit.orgs.addOrUpdateMembership({
         org,
         username,
       })
-    })
+    }),
   )
 }
 

@@ -36,10 +36,10 @@ const getDetailedMessage = () => {
     const { dependencies } = JSON.parse(
       childProcess.execSync(`npm list sharp --json`, {
         encoding: `utf-8`,
-      })
+      }),
     )
 
-    const findSharpVersion = dependency => {
+    const findSharpVersion = (dependency) => {
       if (dependency.dependencies.sharp) {
         return dependency.dependencies.sharp.version
       }
@@ -55,7 +55,7 @@ const getDetailedMessage = () => {
     }
 
     const { latestVersion, topLevelPackages } = Object.keys(
-      dependencies
+      dependencies,
     ).reduce(
       (acc, depName) => {
         const sharpVersion = findSharpVersion(dependencies[depName])
@@ -75,14 +75,14 @@ const getDetailedMessage = () => {
       {
         latestVersion: undefined,
         topLevelPackages: {},
-      }
+      },
     )
 
     let packagesToUpdate = []
     // list top level dependencies
     msg = msg.concat([
       `List of installed packages that depend on sharp:`,
-      ...Object.keys(topLevelPackages).map(depName => {
+      ...Object.keys(topLevelPackages).map((depName) => {
         const sharpVersion = topLevelPackages[depName]
         if (sharpVersion !== latestVersion) {
           packagesToUpdate.push(depName)
@@ -117,7 +117,7 @@ const getDetailedMessage = () => {
   }
 }
 
-const handleMessage = msg => {
+const handleMessage = (msg) => {
   if (msg.includes(`Incompatible library version: sharp.node requires`)) {
     restoreConsoleError()
 

@@ -189,7 +189,7 @@ test(`Table of contents (depth == 0)`, () => {
   const { getByTestId } = render(
     <ThemeProvider theme={theme}>
       <TableOfContents items={items} depth={depth} location={location} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   for (const item of items) {
@@ -204,7 +204,7 @@ test(`Table of contents (depth >= 1)`, () => {
   const { getByTestId } = render(
     <ThemeProvider theme={theme}>
       <TableOfContents items={items} depth={depth} location={location} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   testHeadingsRecursively(getByTestId, items, depth - 1)
@@ -215,7 +215,7 @@ test(`Table of contents (missing URLs)`, () => {
   const { getByTestId } = render(
     <ThemeProvider theme={theme}>
       <TableOfContents items={items} depth={depth} location={location} />
-    </ThemeProvider>
+    </ThemeProvider>,
   )
 
   testHeadingsRecursively(getByTestId, items, depth - 1)

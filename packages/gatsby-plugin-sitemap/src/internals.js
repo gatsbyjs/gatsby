@@ -2,7 +2,7 @@ import fs from "fs"
 import pify from "pify"
 import minimatch from "minimatch"
 
-export const withoutTrailingSlash = path =>
+export const withoutTrailingSlash = (path) =>
   path === `/` ? path : path.replace(/\/$/, ``)
 
 export const writeFile = pify(fs.writeFile)
@@ -12,7 +12,7 @@ export function filterQuery(
   results,
   excludes,
   pathPrefix,
-  resolveSiteUrl = defaultOptions.resolveSiteUrl
+  resolveSiteUrl = defaultOptions.resolveSiteUrl,
 ) {
   const { errors, data } = results
 
@@ -26,17 +26,17 @@ export function filterQuery(
 
   // Removing excluded paths
   allPages = allPages.filter(
-    page =>
-      !excludes.some(excludedRoute =>
+    (page) =>
+      !excludes.some((excludedRoute) =>
         minimatch(
           withoutTrailingSlash(page.path),
-          withoutTrailingSlash(excludedRoute)
-        )
-      )
+          withoutTrailingSlash(excludedRoute),
+        ),
+      ),
   )
 
   // Add path prefix
-  allPages = allPages.map(page => {
+  allPages = allPages.map((page) => {
     page.path = (pathPrefix + page.path).replace(/^\/\//g, `/`)
     return page
   })
@@ -47,7 +47,7 @@ export function filterQuery(
 
   if (!siteUrl || siteUrl.trim().length == 0) {
     throw new Error(
-      `SiteMetaData 'siteUrl' property is required and cannot be left empty. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
+      `SiteMetaData 'siteUrl' property is required and cannot be left empty. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`,
     )
   }
 
@@ -60,7 +60,7 @@ export function filterQuery(
       [originalType]:
         originalType === `nodes`
           ? allPages
-          : allPages.map(page => {
+          : allPages.map((page) => {
               return { node: page }
             }),
     },
@@ -95,7 +95,7 @@ export const defaultOptions = {
   createLinkInHead: true,
   serialize: ({ site, allSitePage }) => {
     const { allPages } = getNodes(allSitePage)
-    return allPages?.map(page => {
+    return allPages?.map((page) => {
       return {
         url: `${site.siteMetadata?.siteUrl ?? ``}${page.path}`,
         changefreq: `daily`,
@@ -103,7 +103,7 @@ export const defaultOptions = {
       }
     })
   },
-  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
+  resolveSiteUrl: (data) => data.site.siteMetadata.siteUrl,
 }
 
 function getNodes(results) {
@@ -113,11 +113,11 @@ function getNodes(results) {
 
   if (`edges` in results) {
     return {
-      allPages: results?.edges?.map(edge => edge.node),
+      allPages: results?.edges?.map((edge) => edge.node),
       originalType: `edges`,
     }
   }
   throw new Error(
-    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`
+    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`,
   )
 }

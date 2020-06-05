@@ -10,7 +10,7 @@ export const jobsV2Reducer = (
     incomplete: new Map(),
     complete: new Map(),
   },
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
     case `CREATE_JOB_V2`: {
@@ -27,12 +27,12 @@ export const jobsV2Reducer = (
     case `END_JOB_V2`: {
       const { jobContentDigest, result } = action.payload
       const { job } = state.incomplete.get(
-        jobContentDigest
+        jobContentDigest,
       ) as IGatsbyIncompleteJobV2
 
       if (!job) {
         throw new Error(
-          `If you encounter this error, it's probably a Gatsby internal bug. Please open an issue reporting us this.`
+          `If you encounter this error, it's probably a Gatsby internal bug. Please open an issue reporting us this.`,
         )
       }
 

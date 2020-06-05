@@ -47,7 +47,7 @@ describe(`Dev loader`, () => {
           .body(
             typeof responseText === `string`
               ? responseText
-              : JSON.stringify(responseText)
+              : JSON.stringify(responseText),
           )
       })
     }
@@ -127,7 +127,7 @@ describe(`Dev loader`, () => {
         payload,
       }
       expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -147,7 +147,7 @@ describe(`Dev loader`, () => {
         payload,
       }
       expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -167,7 +167,7 @@ describe(`Dev loader`, () => {
         payload,
       }
       expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -188,7 +188,7 @@ describe(`Dev loader`, () => {
         payload,
       }
       expect(await devLoader.loadPageDataJson(`/unknown-page/`)).toEqual(
-        expectation
+        expectation,
       )
 
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual({
@@ -259,7 +259,7 @@ describe(`Dev loader`, () => {
         payload,
       }
       expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
-        expectation
+        expectation,
       )
       expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(2)
@@ -277,7 +277,7 @@ describe(`Dev loader`, () => {
   })
 
   describe(`loadPage`, () => {
-    const createSyncRequires = components => {
+    const createSyncRequires = (components) => {
       return {
         components,
       }
@@ -296,8 +296,8 @@ describe(`Dev loader`, () => {
           .body(
             JSON.stringify({
               webpackCompilationHash: `123`,
-            })
-          )
+            }),
+          ),
       )
       emitter.emit.mockReset()
     })
@@ -323,7 +323,7 @@ describe(`Dev loader`, () => {
         Promise.resolve({
           payload: pageData,
           status: `success`,
-        })
+        }),
       )
 
       const expectation = await devLoader.loadPage(`/mypage/`)
@@ -333,7 +333,7 @@ describe(`Dev loader`, () => {
         expect.objectContaining({
           payload: expectation,
           status: `success`,
-        })
+        }),
       )
       expect(emitter.emit).toHaveBeenCalledTimes(1)
       expect(emitter.emit).toHaveBeenCalledWith(`onPostLoadPageResources`, {
@@ -356,7 +356,7 @@ describe(`Dev loader`, () => {
           payload: pageData,
           status: `success`,
           notFound: true,
-        })
+        }),
       )
 
       await devLoader.loadPage(`/mypage/`)
@@ -382,7 +382,7 @@ describe(`Dev loader`, () => {
         Promise.resolve({
           payload: pageData,
           status: `success`,
-        })
+        }),
       )
 
       await devLoader.loadPage(`/mypage/`)
@@ -404,7 +404,7 @@ describe(`Dev loader`, () => {
         Promise.resolve({
           payload: pageData,
           status: `error`,
-        })
+        }),
       )
 
       expect(await devLoader.loadPage(`/mypage/`)).toEqual({ status: `error` })
@@ -422,7 +422,7 @@ describe(`Dev loader`, () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
+        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`,
       )
 
       mock.error(defaultXHRMockErrorHandler)
@@ -443,7 +443,7 @@ describe(`Dev loader`, () => {
             componentChunkName: `chunk`,
           },
           status: `success`,
-        })
+        }),
       )
 
       const expectation = await devLoader.loadPage(`/mypage/`)
@@ -468,7 +468,7 @@ describe(`Dev loader`, () => {
   })
 
   describe(`prefetch`, () => {
-    const flushPromises = () => new Promise(resolve => setImmediate(resolve))
+    const flushPromises = () => new Promise((resolve) => setImmediate(resolve))
 
     it(`shouldn't prefetch when shouldPrefetch is false`, () => {
       const devLoader = new DevLoader(null, [])
@@ -517,7 +517,7 @@ describe(`Dev loader`, () => {
         `onPostPrefetchPathname`,
         {
           pathname: `/mypath/`,
-        }
+        },
       )
     })
 
@@ -537,12 +537,12 @@ describe(`Dev loader`, () => {
       expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
         1,
         `onPrefetchPathname`,
-        expect.anything()
+        expect.anything(),
       )
       expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
         2,
         `onPostPrefetchPathname`,
-        expect.anything()
+        expect.anything(),
       )
     })
   })

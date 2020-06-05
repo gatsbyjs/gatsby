@@ -9,13 +9,13 @@ exports.onPreInit = ({ store }, { component }) => {
     // Default to `src/layouts/index.[js|jsx]` for drop-in replacement of v1 layouts
     component = path.join(
       store.getState().program.directory,
-      defaultLayoutComponentPath
+      defaultLayoutComponentPath,
     )
   }
 
   if (didRunAlready) {
     throw new Error(
-      `You can only have single instance of gatsby-plugin-layout in your gatsby-config.js`
+      `You can only have single instance of gatsby-plugin-layout in your gatsby-config.js`,
     )
   }
 

@@ -12,7 +12,7 @@ const minimums = {
   aaaLarge: 4.5,
 }
 
-const rgbArray = color => {
+const rgbArray = (color) => {
   const pars = color.indexOf(`,`)
   const repars = color.indexOf(`,`, pars + 1)
 
@@ -20,15 +20,18 @@ const rgbArray = color => {
     parseInt(color.substr(5, pars)),
     parseInt(color.substr(pars + 1, repars)),
     parseInt(
-      color.substr(color.indexOf(`,`, pars + 1) + 1, color.indexOf(`,`, repars))
+      color.substr(
+        color.indexOf(`,`, pars + 1) + 1,
+        color.indexOf(`,`, repars),
+      ),
     ),
     parseFloat(
-      color.substr(color.indexOf(`,`, repars + 1) + 1, color.indexOf(`)`))
+      color.substr(color.indexOf(`,`, repars + 1) + 1, color.indexOf(`)`)),
     ),
   ]
 }
 
-const colorToHex = color =>
+const colorToHex = (color) =>
   color.startsWith(`rgba(`)
     ? rgbArray(color)
     : hexRgb(color, { format: `array` })
@@ -47,12 +50,12 @@ export const a11y = function (hex, bg) {
       b: background[2],
       a: background[3],
     },
-    { r: text[0], g: text[1], b: text[2], a: text[3] }
+    { r: text[0], g: text[1], b: text[2], a: text[3] },
   )
 
   const contrast = wcag(
     [overlaid.r, overlaid.g, overlaid.b],
-    [background[0], background[1], background[2]]
+    [background[0], background[1], background[2]],
   )
 
   return {
@@ -100,5 +103,5 @@ export const getA11yLabel = (color, compact) => {
   return label
 }
 
-export const getTextColor = contrast =>
+export const getTextColor = (contrast) =>
   contrast.blackOnColor < contrast.whiteOnColor ? `white` : `black`

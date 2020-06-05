@@ -1,7 +1,7 @@
 const { join } = require(`path`)
 const { fork } = require(`child_process`)
 
-module.exports = isTrackingEnabled => async () => {
+module.exports = (isTrackingEnabled) => async () => {
   if (!isTrackingEnabled) {
     return
   }

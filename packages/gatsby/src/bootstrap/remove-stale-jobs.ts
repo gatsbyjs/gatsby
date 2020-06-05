@@ -9,7 +9,7 @@ import { isJobStale } from "../utils/jobs-manager"
 import { publicActions, internalActions } from "../redux/actions"
 
 export const removeStaleJobs = (
-  state: IGatsbyState
+  state: IGatsbyState,
 ): IRemoveStaleJobAction[] => {
   const actions: IRemoveStaleJobAction[] = []
 
@@ -19,7 +19,7 @@ export const removeStaleJobs = (
       if (isJobStale(job)) {
         actions.push(internalActions.removeStaleJob(contentDigest))
       }
-    }
+    },
   )
 
   // If any of our pending jobs do not have an existing inputPath or the inputPath changed
@@ -31,7 +31,7 @@ export const removeStaleJobs = (
       } else {
         actions.push(publicActions.createJobV2(job, plugin))
       }
-    }
+    },
   )
 
   return actions

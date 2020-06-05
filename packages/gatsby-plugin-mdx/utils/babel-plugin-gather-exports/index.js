@@ -6,7 +6,7 @@ module.exports = class Plugin {
   constructor() {
     const exports = {}
     this.state = { exports: exports }
-    this.plugin = declare(api => {
+    this.plugin = declare((api) => {
       api.assertVersion(7)
 
       return {
@@ -19,10 +19,10 @@ module.exports = class Plugin {
               declaration.type === `VariableDeclaration` &&
               declaration.kind === `const`
             ) {
-              declaration.declarations.forEach(declarator => {
+              declaration.declarations.forEach((declarator) => {
                 try {
                   exports[declarator.id.name] = JSON5.parse(
-                    generate(declarator.init).code
+                    generate(declarator.init).code,
                   )
                 } catch (e) {
                   // if we can't parse it, don't export it

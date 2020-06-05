@@ -4,7 +4,7 @@ import { Styled } from "theme-ui"
 
 export default ({ files }) => (
   <ul css={{ padding: 0 }}>
-    {files.map(url => (
+    {files.map((url) => (
       <li key={url}>
         <Styled.a as={Link} to={url}>
           {url}

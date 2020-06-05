@@ -15,7 +15,7 @@ exports.createPages = async (
   {
     directory = OPTION_DEFAULT_REPL_DIRECTORY,
     codepen = OPTION_DEFAULT_CODEPEN,
-  } = {}
+  } = {},
 ) => {
   codepen = { ...OPTION_DEFAULT_CODEPEN, ...codepen }
   if (!directory.endsWith(`/`)) {
@@ -30,7 +30,7 @@ exports.createPages = async (
 
   if (!fs.existsSync(codepen.redirectTemplate)) {
     reporter.panic(
-      `Invalid REPL redirectTemplate specified: "${codepen.redirectTemplate}"`
+      `Invalid REPL redirectTemplate specified: "${codepen.redirectTemplate}"`,
     )
   }
 
@@ -44,7 +44,7 @@ exports.createPages = async (
 
     // escape backslashes for windows
     const resolvedDirectory = resolve(directory)
-    files.forEach(file => {
+    files.forEach((file) => {
       if (extname(file) === `.js` || extname(file) === `.jsx`) {
         const parsedFile = parse(file)
         const relativeDir = parsedFile.dir.replace(`${resolvedDirectory}`, ``)
@@ -59,7 +59,7 @@ exports.createPages = async (
           try {
             css = fs.readFileSync(
               join(parsedFile.dir, `${parsedFile.name}.css`),
-              `utf8`
+              `utf8`,
             )
           } catch (err) {
             // If the file doesn't exist, we gracefully ignore the error
@@ -97,7 +97,7 @@ exports.createPages = async (
       Error in gatsby-remark-code-repls plugin: cannot read directory ${directory}.
       More details can be found in the error reporting below.
       `,
-      error
+      error,
     )
   }
 }

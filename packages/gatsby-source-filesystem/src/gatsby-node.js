@@ -10,21 +10,21 @@ const { createFileNode } = require(`./create-file-node`)
  */
 const createFSMachine = (
   { actions: { createNode, deleteNode }, getNode, createNodeId, reporter },
-  pluginOptions
+  pluginOptions,
 ) => {
-  const createAndProcessNode = path => {
+  const createAndProcessNode = (path) => {
     const fileNodePromise = createFileNode(
       path,
       createNodeId,
-      pluginOptions
-    ).then(fileNode => {
+      pluginOptions,
+    ).then((fileNode) => {
       createNode(fileNode)
       return null
     })
     return fileNodePromise
   }
 
-  const deletePathNode = path => {
+  const deletePathNode = (path) => {
     const node = getNode(createNodeId(path))
     // It's possible the node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
@@ -49,11 +49,11 @@ const createFSMachine = (
           case `upsert`:
             return createAndProcessNode(path)
         }
-      })
+      }),
     )
   }
 
-  const log = expr => (ctx, action, meta) => {
+  const log = (expr) => (ctx, action, meta) => {
     if (meta.state.matches(`BOOTSTRAP.BOOTSTRAPPED`)) {
       reporter.info(expr(ctx, action, meta))
     }
@@ -95,7 +95,7 @@ const createFSMachine = (
                   actions: [
                     `createAndProcessNode`,
                     log(
-                      (_, { pathType, path }) => `added ${pathType} at ${path}`
+                      (_, { pathType, path }) => `added ${pathType} at ${path}`,
                     ),
                   ],
                 },
@@ -104,7 +104,7 @@ const createFSMachine = (
                     `createAndProcessNode`,
                     log(
                       (_, { pathType, path }) =>
-                        `changed ${pathType} at ${path}`
+                        `changed ${pathType} at ${path}`,
                     ),
                   ],
                 },
@@ -113,7 +113,7 @@ const createFSMachine = (
                     `deletePathNode`,
                     log(
                       (_, { pathType, path }) =>
-                        `deleted ${pathType} at ${path}`
+                        `deleted ${pathType} at ${path}`,
                     ),
                   ],
                 },
@@ -126,7 +126,7 @@ const createFSMachine = (
     {
       actions: {
         createAndProcessNode(_, { pathType, path }) {
-          createAndProcessNode(path).catch(err => reporter.error(err))
+          createAndProcessNode(path).catch((err) => reporter.error(err))
         },
         deletePathNode(_, { pathType, path }, { state }) {
           deletePathNode(path)
@@ -141,7 +141,7 @@ const createFSMachine = (
           pathQueue.push({ op: `upsert`, path })
         },
       },
-    }
+    },
   )
   return interpret(fsMachine).start()
 }
@@ -186,23 +186,23 @@ See docs here - https://www.gatsbyjs.org/packages/gatsby-source-filesystem/
     ],
   })
 
-  watcher.on(`add`, path => {
+  watcher.on(`add`, (path) => {
     fsMachine.send({ type: `CHOKIDAR_ADD`, pathType: `file`, path })
   })
 
-  watcher.on(`change`, path => {
+  watcher.on(`change`, (path) => {
     fsMachine.send({ type: `CHOKIDAR_CHANGE`, pathType: `file`, path })
   })
 
-  watcher.on(`unlink`, path => {
+  watcher.on(`unlink`, (path) => {
     fsMachine.send({ type: `CHOKIDAR_UNLINK`, pathType: `file`, path })
   })
 
-  watcher.on(`addDir`, path => {
+  watcher.on(`addDir`, (path) => {
     fsMachine.send({ type: `CHOKIDAR_ADD`, pathType: `directory`, path })
   })
 
-  watcher.on(`unlinkDir`, path => {
+  watcher.on(`unlinkDir`, (path) => {
     fsMachine.send({ type: `CHOKIDAR_UNLINK`, pathType: `directory`, path })
   })
 

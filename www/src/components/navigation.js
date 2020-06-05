@@ -23,7 +23,7 @@ const navItemHorizontalSpacing = [1, null, 2]
 
 const overrideDefaultMdLineHeight = {
   [mediaQueries.md]: {
-    lineHeight: t => t.sizes.headerHeight,
+    lineHeight: (t) => t.sizes.headerHeight,
   },
 }
 
@@ -32,9 +32,9 @@ const navItemStyles = {
   color: `navigation.linkDefault`,
   display: `block`,
   fontSize: 3,
-  lineHeight: t => t.sizes.headerHeight,
+  lineHeight: (t) => t.sizes.headerHeight,
   [mediaQueries.md]: {
-    lineHeight: t => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
+    lineHeight: (t) => `calc(${t.sizes.headerHeight} - ${navItemTopOffset})`,
   },
   position: `relative`,
   textDecoration: `none`,
@@ -105,7 +105,7 @@ const Navigation = ({ pathname }) => {
         px: `env(safe-area-inset-left)`,
         position: `relative`,
         right: 0,
-        top: t => t.sizes.bannerHeight,
+        top: (t) => t.sizes.bannerHeight,
         zIndex: `navigation`,
         // use this to test if the header items are properly aligned to the logo
         // wordmark
@@ -199,7 +199,7 @@ const Navigation = ({ pathname }) => {
                 display: `flex`,
                 listStyle: `none`,
                 m: 0,
-                maskImage: t =>
+                maskImage: (t) =>
                   `linear-gradient(to right, transparent, white ${t.space[1]}, white 98%, transparent)`,
                 overflowX: `auto`,
               },

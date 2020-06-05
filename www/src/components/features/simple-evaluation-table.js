@@ -12,14 +12,14 @@ class SimpleEvaluationTable extends Component {
     this.state = {}
   }
   render() {
-    const showTooltip = row => this.state[`feature-cell-${row}`]
+    const showTooltip = (row) => this.state[`feature-cell-${row}`]
     const { title, headers, data } = this.props
     return (
       <div>
         {title && <SectionTitle text={title} />}
         <table>
           <tbody>
-            <SectionHeaderTop columnHeaders={headers.map(h => h.display)} />
+            <SectionHeaderTop columnHeaders={headers.map((h) => h.display)} />
             {data.map((node, idx) =>
               [].concat([
                 <tr key={`feature-first-row-${idx}`}>
@@ -31,7 +31,7 @@ class SimpleEvaluationTable extends Component {
                         "&:hover": {
                           cursor: `pointer`,
                         },
-                        borderBottom: t =>
+                        borderBottom: (t) =>
                           !showTooltip(idx)
                             ? `1px solid ${t.colors.ui.border}`
                             : `none`,
@@ -62,7 +62,7 @@ class SimpleEvaluationTable extends Component {
                 >
                   <td
                     sx={{
-                      paddingBottom: t => `calc(${t.space[5]} - 1px)`,
+                      paddingBottom: (t) => `calc(${t.space[5]} - 1px)`,
                       "&&": {
                         [mediaQueries.xs]: {
                           px: 3,
@@ -80,7 +80,7 @@ class SimpleEvaluationTable extends Component {
                     }
                   </td>
                 </tr>,
-              ])
+              ]),
             )}
           </tbody>
         </table>

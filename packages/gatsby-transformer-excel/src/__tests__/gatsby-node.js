@@ -17,7 +17,7 @@ describe(`Process nodes correctly`, () => {
   }
 
   // Make some fake functions its expecting.
-  const loadNodeContent = node => Promise.resolve(node.content)
+  const loadNodeContent = (node) => Promise.resolve(node.content)
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
     const data = [
@@ -74,7 +74,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { raw: false }
+      { raw: false },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -108,7 +108,7 @@ describe(`Process nodes correctly`, () => {
         createNodeId,
         createContentDigest,
       },
-      { rawOutput: false }
+      { rawOutput: false },
     ).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

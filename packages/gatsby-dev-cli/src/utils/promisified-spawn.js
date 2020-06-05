@@ -5,7 +5,7 @@ const defaultSpawnArgs = {
   stdio: `inherit`,
 }
 
-exports.setDefaultSpawnStdio = stdio => {
+exports.setDefaultSpawnStdio = (stdio) => {
   defaultSpawnArgs.stdio = stdio
 }
 
@@ -20,8 +20,8 @@ exports.promisifiedSpawn = async ([cmd, args = [], spawnArgs = {}]) => {
     if (spawnOptions.stdio === `ignore`) {
       console.log(
         `\nCommand "${cmd} ${args.join(
-          ` `
-        )}" failed.\nTo see details of failed command, rerun "gatsby-dev" without "--quiet" or "-q" switch\n`
+          ` `,
+        )}" failed.\nTo see details of failed command, rerun "gatsby-dev" without "--quiet" or "-q" switch\n`,
       )
     }
     throw e

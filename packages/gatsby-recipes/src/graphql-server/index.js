@@ -30,7 +30,7 @@ exports.startGraphQLServer = async (programPath, forceStart) => {
     })
 
     // eslint-disable-next-line no-unused-expressions
-    subprocess.stderr?.on(`data`, data => {
+    subprocess.stderr?.on(`data`, (data) => {
       console.log(data.toString())
     })
 

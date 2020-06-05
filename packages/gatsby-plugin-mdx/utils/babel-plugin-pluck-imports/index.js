@@ -5,7 +5,7 @@ module.exports = class Plugin {
     const imports = []
     const identifiers = []
     this.state = { imports: imports, identifiers: identifiers }
-    this.plugin = declare(api => {
+    this.plugin = declare((api) => {
       api.assertVersion(7)
 
       return {
@@ -24,7 +24,7 @@ module.exports = class Plugin {
 
             const importString = path.hub.file.code.slice(
               path.node.start,
-              path.node.end
+              path.node.end,
             )
             imports.push(importString)
             path.remove()

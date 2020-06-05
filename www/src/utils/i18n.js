@@ -15,14 +15,14 @@ function getLanguages(localeStr) {
   for (let code of langCodes) {
     if (code === defaultLang) {
       throw new Error(
-        `${code} is the default locale and should not be put in the locale list.`
+        `${code} is the default locale and should not be put in the locale list.`,
       )
     }
-    const lang = allLangs.find(lang => lang.code === code)
+    const lang = allLangs.find((lang) => lang.code === code)
     // Error if one of the locales provided isn't a valid locale
     if (!lang) {
       throw new Error(
-        `Invalid locale provided: ${code}. See i18n.json for the list of available locales.`
+        `Invalid locale provided: ${code}. See i18n.json for the list of available locales.`,
       )
     }
     langs.push(lang)
@@ -31,7 +31,7 @@ function getLanguages(localeStr) {
 }
 
 const langs = getLanguages(process.env.LOCALES)
-const langCodes = langs.map(lang => lang.code)
+const langCodes = langs.map((lang) => lang.code)
 
 const i18nEnabled = langs.length > 0
 

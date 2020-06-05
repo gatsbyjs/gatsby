@@ -2,9 +2,9 @@ module.exports = (
   code = [],
   highlightLines = [],
   user = `root`,
-  host = `localhost`
+  host = `localhost`,
 ) => {
-  const generatePrompts = numberOfLines => {
+  const generatePrompts = (numberOfLines) => {
     let prompts = ``
     for (let i = 0; i < numberOfLines; i++) {
       if (highlightLines.includes(i + 1)) {

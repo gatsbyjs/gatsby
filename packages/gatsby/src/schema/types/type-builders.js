@@ -44,49 +44,49 @@ export type GatsbyGraphQLType =
       config: ComposeScalarTypeConfig,
     }
 
-const buildObjectType = config => {
+const buildObjectType = (config) => {
   return {
     kind: GatsbyGraphQLTypeKind.OBJECT,
     config,
   }
 }
 
-const buildUnionType = config => {
+const buildUnionType = (config) => {
   return {
     kind: GatsbyGraphQLTypeKind.UNION,
     config,
   }
 }
 
-const buildInterfaceType = config => {
+const buildInterfaceType = (config) => {
   return {
     kind: GatsbyGraphQLTypeKind.INTERFACE,
     config,
   }
 }
 
-const buildInputObjectType = config => {
+const buildInputObjectType = (config) => {
   return {
     kind: GatsbyGraphQLTypeKind.INPUT_OBJECT,
     config,
   }
 }
 
-const buildEnumType = config => {
+const buildEnumType = (config) => {
   return {
     kind: GatsbyGraphQLTypeKind.ENUM,
     config,
   }
 }
 
-const buildScalarType = config => {
+const buildScalarType = (config) => {
   return {
     kind: GatsbyGraphQLTypeKind.SCALAR,
     config,
   }
 }
 
-const isGatsbyType = something =>
+const isGatsbyType = (something) =>
   typeof something === `object` &&
   something.kind &&
   GatsbyGraphQLTypeKind[something.kind]

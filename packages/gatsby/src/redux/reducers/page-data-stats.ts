@@ -2,7 +2,7 @@ import { IGatsbyState, ActionsUnion } from "./../types"
 
 export const pageDataStatsReducer = (
   state: IGatsbyState["pageDataStats"] = new Map(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["pageDataStats"] => {
   switch (action.type) {
     case `ADD_PAGE_DATA_STATS`:

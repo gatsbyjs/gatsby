@@ -24,7 +24,7 @@ const resolve = require(`./resolve`)
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
-  { postCssPlugins, ...stylusOptions }
+  { postCssPlugins, ...stylusOptions },
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`

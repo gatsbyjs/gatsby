@@ -3,7 +3,7 @@ import { ActionsUnion, IGatsbyPage, IGatsbyState } from "../types"
 
 export const pagesReducer = (
   state: IGatsbyState["pages"] = new Map<string, IGatsbyPage>(),
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["pages"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -19,7 +19,7 @@ export const pagesReducer = (
         console.log(``)
 
         throw new Error(
-          `Pages can only be created by plugins. There wasn't a plugin set when creating this page.`
+          `Pages can only be created by plugins. There wasn't a plugin set when creating this page.`,
         )
       }
 

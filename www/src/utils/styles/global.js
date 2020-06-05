@@ -1,6 +1,6 @@
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const prismToken = t => {
+const prismToken = (t) => {
   return {
     // PrismJS syntax highlighting token styles
     // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
@@ -62,7 +62,7 @@ const prismToken = t => {
   }
 }
 
-const gatsbyHighlightLanguageBadges = t => {
+const gatsbyHighlightLanguageBadges = (t) => {
   return {
     ".gatsby-highlight pre[class*='language-']": {
       backgroundColor: `transparent`,
@@ -168,7 +168,7 @@ const gatsbyHighlightLanguageBadges = t => {
   }
 }
 
-const gatsbyHighlight = t => {
+const gatsbyHighlight = (t) => {
   return {
     // gatsby-remark-prismjs styles
     ".gatsby-highlight": {
@@ -208,7 +208,7 @@ const gatsbyHighlight = t => {
   }
 }
 
-export const globalStyles = t => {
+export const globalStyles = (t) => {
   return {
     ...prismToken(t),
     ...gatsbyHighlight(t),

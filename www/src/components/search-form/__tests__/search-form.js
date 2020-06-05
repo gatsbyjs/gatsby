@@ -12,7 +12,7 @@ test(`it initializes algola docsearch on form click, and keeps focus`, async () 
       <ThemeProvider theme={theme}>
         <SearchForm />
       </ThemeProvider>
-    </I18nProvider>
+    </I18nProvider>,
   )
 
   const input = container.querySelector(`#doc-search`)
@@ -37,7 +37,7 @@ test(`it initializes algola docsearch on form mouse hover, and keeps focus`, asy
       <ThemeProvider theme={theme}>
         <SearchForm />
       </ThemeProvider>
-    </I18nProvider>
+    </I18nProvider>,
   )
 
   const input = container.querySelector(`#doc-search`)
@@ -62,7 +62,7 @@ test(`it initializes algola docsearch on form focus, and keeps focus`, async () 
       <ThemeProvider theme={theme}>
         <SearchForm />
       </ThemeProvider>
-    </I18nProvider>
+    </I18nProvider>,
   )
 
   const input = container.querySelector(`#doc-search`)

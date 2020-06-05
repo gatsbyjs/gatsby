@@ -37,28 +37,28 @@ describe(`getValidKey`, () => {
     expect(
       normalize.getValidKey({
         key: `hi`,
-      })
+      }),
     ).toBe(`hi`)
   })
   it(`It prefixes keys that start with numbers`, () => {
     expect(
       normalize.getValidKey({
         key: `0hi`,
-      })
+      }),
     ).toBe(`lever_0hi`)
   })
   it(`It prefixes keys that conflict with default Gatsby fields`, () => {
     expect(
       normalize.getValidKey({
         key: `children`,
-      })
+      }),
     ).toBe(`lever_children`)
   })
   it(`It replaces invalid characters`, () => {
     expect(
       normalize.getValidKey({
         key: `h:i`,
-      })
+      }),
     ).toBe(`h_i`)
   })
 })

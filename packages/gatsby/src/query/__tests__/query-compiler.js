@@ -29,7 +29,7 @@ describe(`Runner`, () => {
       await parseQueries({
         base,
         additional: [],
-        addError: e => {
+        addError: (e) => {
           errors.push(e)
         },
       })
@@ -38,7 +38,7 @@ describe(`Runner`, () => {
 
       expect(glob.sync).toHaveBeenCalledWith(
         expect.stringContaining(path.join(base, `src`)),
-        expect.any(Object)
+        expect.any(Object),
       )
     })
 
@@ -47,7 +47,7 @@ describe(`Runner`, () => {
       await parseQueries({
         base,
         additional: [],
-        addError: e => {
+        addError: (e) => {
           errors.push(e)
         },
       })
@@ -56,7 +56,7 @@ describe(`Runner`, () => {
 
       expect(glob.sync).toHaveBeenCalledWith(
         expect.stringContaining(path.join(base, `src`)),
-        expect.any(Object)
+        expect.any(Object),
       )
     })
 
@@ -66,7 +66,7 @@ describe(`Runner`, () => {
       await parseQueries({
         base,
         additional: [path.join(base, `node_modules`, theme)],
-        addError: e => {
+        addError: (e) => {
           errors.push(e)
         },
       })
@@ -75,7 +75,7 @@ describe(`Runner`, () => {
 
       expect(glob.sync).toHaveBeenCalledWith(
         expect.stringContaining(path.join(base, `node_modules`, theme)),
-        expect.any(Object)
+        expect.any(Object),
       )
     })
   })
@@ -83,7 +83,7 @@ describe(`Runner`, () => {
 
 describe(`resolveThemes`, () => {
   it(`returns empty array if zero themes appear in store`, () => {
-    ;[[], undefined].forEach(testRun => {
+    ;[[], undefined].forEach((testRun) => {
       expect(resolveThemes(testRun)).toEqual([])
     })
   })
@@ -96,7 +96,7 @@ describe(`resolveThemes`, () => {
           name: theme,
           themeDir: path.join(base, `gatsby-theme-example`),
         },
-      ])
+      ]),
     ).toEqual([expect.stringContaining(theme)])
   })
 
@@ -109,7 +109,7 @@ describe(`resolveThemes`, () => {
           name: theme,
           themeDir: path.join(base, theme),
         },
-      ])
+      ]),
     ).toEqual([expect.stringContaining(theme.split(`/`).join(path.sep))])
   })
 })
@@ -119,7 +119,7 @@ describe(`actual compiling`, () => {
   beforeAll(async () => {
     const ast = await fs.readFile(
       path.join(__dirname, `./fixtures/query-compiler-schema.graphql`),
-      { encoding: `utf-8` }
+      { encoding: `utf-8` },
     )
     schema = buildSchema(ast)
   })
@@ -134,14 +134,14 @@ describe(`actual compiling`, () => {
                  id
                }
             }
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -162,14 +162,14 @@ describe(`actual compiling`, () => {
           }`,
         {
           isStaticQuery: true,
-        }
+        },
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -193,14 +193,14 @@ describe(`actual compiling`, () => {
 
           fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -218,20 +218,20 @@ describe(`actual compiling`, () => {
                  ...PostsJsonFragment
                }
             }
-          }`
+          }`,
       ),
       createGatsbyDoc(
         `mockComponent`,
         `fragment PostsJsonFragment on PostsJson {
              id
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -249,7 +249,7 @@ describe(`actual compiling`, () => {
                  ...PostsJsonFragment
                }
             }
-          }`
+          }`,
       ),
       createGatsbyDoc(
         `mockComponent`,
@@ -260,7 +260,7 @@ describe(`actual compiling`, () => {
 
           fragment AnotherPostsJsonFragment on PostsJson {
             text
-          }`
+          }`,
       ),
     ]
 
@@ -268,7 +268,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -287,7 +287,7 @@ describe(`actual compiling`, () => {
               ...Bar
             }
           }
-        }`
+        }`,
       ),
       createGatsbyDoc(
         `mockFile2`,
@@ -297,7 +297,7 @@ describe(`actual compiling`, () => {
               ...Bar
             }
           }
-        }`
+        }`,
       ),
       createGatsbyDoc(
         `mockComponent1`,
@@ -309,7 +309,7 @@ describe(`actual compiling`, () => {
         fragment Foo on Directory {
           id
         }
-        `
+        `,
       ),
     ]
 
@@ -317,7 +317,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -418,7 +418,7 @@ describe(`actual compiling`, () => {
           children {
             ...Bar
           }
-        }`
+        }`,
       ),
     ]
 
@@ -426,7 +426,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -456,7 +456,7 @@ describe(`actual compiling`, () => {
         "id": "85901",
         "location": Any<Object>,
       }
-    `
+    `,
     )
     expect(result.size).toEqual(0)
   })
@@ -479,14 +479,14 @@ describe(`actual compiling`, () => {
 
           fragment UnusedFragment on PostsJson {
             id
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -504,7 +504,7 @@ describe(`actual compiling`, () => {
                  ...UnknownFragment
                }
             }
-          }`
+          }`,
       ),
     ]
 
@@ -512,7 +512,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -549,14 +549,14 @@ describe(`actual compiling`, () => {
                  ...PostsJsonFragment
                }
             }
-          }`
+          }`,
       ),
       createGatsbyDoc(
         `mockComponent`,
         `fragment PostsJsonFragment on PostsJson {
              id
              ...UnknownFragment
-          }`
+          }`,
       ),
     ]
 
@@ -564,7 +564,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -602,7 +602,7 @@ describe(`actual compiling`, () => {
 
           fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
     ]
 
@@ -610,7 +610,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -641,7 +641,7 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `
+    `,
     )
     expect(result).toEqual(new Map())
   })
@@ -660,14 +660,14 @@ describe(`actual compiling`, () => {
 
         fragment PostsJsonFragment on PostsJson {
           id
-        }`
+        }`,
       ),
 
       createGatsbyDoc(
         `mockComponent`,
         `fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
     ]
 
@@ -675,7 +675,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -698,24 +698,24 @@ describe(`actual compiling`, () => {
         fragment PostsJsonFragment on PostsJson {
           id
           node
-        }`
+        }`,
       ),
       createGatsbyDoc(
         `mockComponent`,
         `fragment PostsJsonFragment on PostsJson {
             id
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
-    expect(_.orderBy(errors, e => e.id)).toMatchInlineSnapshot(`
+    expect(_.orderBy(errors, (e) => e.id)).toMatchInlineSnapshot(`
       Array [
         Object {
           "context": Object {
@@ -782,7 +782,7 @@ describe(`actual compiling`, () => {
                ...PostsJsonFragment
              }
           }
-        }`
+        }`,
       ),
       createGatsbyDoc(
         `mockComponent`,
@@ -790,7 +790,7 @@ describe(`actual compiling`, () => {
           nodes {
             id
           }
-        }`
+        }`,
       ),
     ]
 
@@ -798,7 +798,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -850,14 +850,14 @@ describe(`actual compiling`, () => {
                 id
               }
             }
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -883,14 +883,14 @@ describe(`actual compiling`, () => {
                 id
               }
             }
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -922,14 +922,14 @@ describe(`actual compiling`, () => {
              allPostsJson {
                id
             }
-          }`
+          }`,
       ),
     ]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -965,7 +965,7 @@ describe(`actual compiling`, () => {
         `unusedFragment`,
         `fragment Foo on ThisTypeSurelyDoesntExistInSchema {
           field
-        }`
+        }`,
       ),
       createGatsbyDoc(
         `mockFile`,
@@ -975,7 +975,7 @@ describe(`actual compiling`, () => {
               id
             }
           }
-        }`
+        }`,
       ),
     ]
 
@@ -983,7 +983,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -1022,7 +1022,7 @@ describe(`actual compiling`, () => {
         `usedFragment`,
         `fragment Foo on ThisTypeSurelyDoesntExistInSchema {
           field
-        }`
+        }`,
       ),
       createGatsbyDoc(
         `mockFile`,
@@ -1032,7 +1032,7 @@ describe(`actual compiling`, () => {
               ...Foo
             }
           }
-        }`
+        }`,
       ),
     ]
 
@@ -1040,7 +1040,7 @@ describe(`actual compiling`, () => {
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -1079,18 +1079,18 @@ describe(`Extra fields`, () => {
   beforeAll(async () => {
     const sdl = await fs.readFile(
       path.join(__dirname, `./fixtures/query-compiler-schema.graphql`),
-      { encoding: `utf-8` }
+      { encoding: `utf-8` },
     )
     schema = buildSchema(sdl)
   })
 
-  const transformQuery = queryString => {
+  const transformQuery = (queryString) => {
     const nodes = [createGatsbyDoc(`mockFile`, queryString)]
     const errors = []
     const result = processQueries({
       schema,
       parsedQueries: nodes,
-      addError: e => {
+      addError: (e) => {
         errors.push(e)
       },
     })
@@ -1301,7 +1301,7 @@ describe(`Extra fields`, () => {
 const createGatsbyDoc = (
   filePath,
   query,
-  { isHook, isStaticQuery } = { isHook: false, isStaticQuery: false }
+  { isHook, isStaticQuery } = { isHook: false, isStaticQuery: false },
 ) => {
   const doc = parse(query)
   return {

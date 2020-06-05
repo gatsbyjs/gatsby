@@ -194,7 +194,7 @@ const visit = require("unist-util-visit")
 
 module.exports = ({ markdownAST }, pluginOptions) => {
   // highlight-next-line
-  visit(markdownAST, "heading", node => {
+  visit(markdownAST, "heading", (node) => {
     // Do stuff with heading nodes
   })
 
@@ -238,7 +238,7 @@ const visit = require("unist-util-visit")
 const toString = require("mdast-util-to-string")
 
 module.exports = ({ markdownAST }, pluginOptions) => {
-  visit(markdownAST, "heading", node => {
+  visit(markdownAST, "heading", (node) => {
     let { depth } = node
 
     // Skip if not an h1

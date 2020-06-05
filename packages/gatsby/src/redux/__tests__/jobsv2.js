@@ -11,7 +11,7 @@ describe(`Job v2 actions/reducer`, () => {
     version: `1.0.0`,
     resolve: `/node_modules/test-plugin`,
   }
-  const createGlobalState = defaultState => {
+  const createGlobalState = (defaultState) => {
     return {
       program: {
         directory: __dirname,
@@ -26,11 +26,11 @@ describe(`Job v2 actions/reducer`, () => {
     jobsManager.enqueueJob.mockImplementation(() => Promise.resolve(`myresult`))
   })
 
-  const createDispatcher = globalState => {
-    const dispatch = realAction => jobsReducer(getState().jobsV2, realAction)
+  const createDispatcher = (globalState) => {
+    const dispatch = (realAction) => jobsReducer(getState().jobsV2, realAction)
     const getState = () => globalState
 
-    return action => action(dispatch, getState)
+    return (action) => action(dispatch, getState)
   }
 
   const getIsolatedActions = () => {
@@ -56,8 +56,8 @@ describe(`Job v2 actions/reducer`, () => {
           outputDir: `/public/static`,
           args: {},
         },
-        plugin
-      )
+        plugin,
+      ),
     )
 
     expect(globalState.jobsV2).toMatchSnapshot()
@@ -90,10 +90,10 @@ describe(`Job v2 actions/reducer`, () => {
     }
 
     await expect(dispatch(actions.createJobV2(job, plugin))).resolves.toBe(
-      `myresult`
+      `myresult`,
     )
     await expect(dispatch(actions.createJobV2(job, plugin))).resolves.toBe(
-      `myresult`
+      `myresult`,
     )
     expect(jobsManager.enqueueJob).toHaveBeenCalledTimes(1)
   })

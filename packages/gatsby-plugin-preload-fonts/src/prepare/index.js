@@ -23,7 +23,7 @@ const {
 const logger = createLogger(LOG_LEVEL)
 
 const devServer = `http://${HOST}:${PORT}`
-const endpoint = path => `${devServer}${path}`
+const endpoint = (path) => `${devServer}${path}`
 
 export async function main() {
   logger.newline()
@@ -60,7 +60,7 @@ export async function main() {
 
   const browser = await puppeteer.launch({ args: process.argv.slice(2) })
   const page = await browser.newPage()
-  page.on(`requestfinished`, req => {
+  page.on(`requestfinished`, (req) => {
     if (req.url().match(/(socket\.io|commons\.js)/)) return
 
     logger.info(`load`, req.method(), req.url())

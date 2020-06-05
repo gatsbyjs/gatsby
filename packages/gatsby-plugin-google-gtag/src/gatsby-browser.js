@@ -6,7 +6,7 @@ exports.onRouteUpdate = ({ location }) => {
   const pathIsExcluded =
     location &&
     typeof window.excludeGtagPaths !== `undefined` &&
-    window.excludeGtagPaths.some(rx => rx.test(location.pathname))
+    window.excludeGtagPaths.some((rx) => rx.test(location.pathname))
 
   if (pathIsExcluded) return null
 

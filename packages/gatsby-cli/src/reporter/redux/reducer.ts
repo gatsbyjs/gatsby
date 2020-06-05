@@ -7,7 +7,7 @@ export const reducer = (
     activities: {},
     status: ``,
   },
-  action: ActionsUnion | ISetLogs
+  action: ActionsUnion | ISetLogs,
 ): IGatsbyCLIState => {
   switch (action.type) {
     case Actions.SetStatus: {

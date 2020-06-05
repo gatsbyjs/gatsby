@@ -23,7 +23,7 @@ The core theme APIs have been stable for a long time under the `__experimentalTh
 Stability for composition means that any plugin can now take advantage of adding configuration, plugins, and metadata via a `gatsby-config`. The `gatsby-config` in any plugin can be an object, similar to the way any Gatsby project works today, or a function whose argument is the options specified by a user.
 
 ```js:title=my-plugin/gatsby-config.js
-module.exports = options => {
+module.exports = (options) => {
   return {
     plugins: [],
   }

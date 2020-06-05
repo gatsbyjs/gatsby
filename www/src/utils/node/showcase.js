@@ -22,12 +22,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `)
   if (errors) throw errors
 
-  data.allSitesYaml.nodes.forEach(node => {
+  data.allSitesYaml.nodes.forEach((node) => {
     if (!node.fields) return
     if (!node.fields.slug) return
     if (!node.fields.hasScreenshot) {
       reporter.warn(
-        `Site showcase entry "${node.main_url}" seems offline. Skipping.`
+        `Site showcase entry "${node.main_url}" seems offline. Skipping.`,
       )
       return
     }
@@ -52,8 +52,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
     // determine if screenshot is available
     const screenshotNode = node.children
-      .map(childID => getNode(childID))
-      .find(node => node.internal.type === `Screenshot`)
+      .map((childID) => getNode(childID))
+      .find((node) => node.internal.type === `Screenshot`)
 
     createNodeField({ node, name: `hasScreenshot`, value: !!screenshotNode })
   }

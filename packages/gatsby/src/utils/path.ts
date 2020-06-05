@@ -10,8 +10,8 @@ export const withTrailingSlash = (basePath: string): string => `${basePath}/`
 const posixJoinWithLeadingSlash = (paths: string[]): string =>
   path.posix.join(
     ...paths.map((segment, index) =>
-      segment === `` && index === 0 ? `/` : segment
-    )
+      segment === `` && index === 0 ? `/` : segment,
+    ),
   )
 
 export const getCommonDir = (path1: string, path2: string): string => {
@@ -57,7 +57,7 @@ export const tooLongSegmentsInPath = (path: string): Array<string> => {
 }
 
 export const truncatePath = (path: string): string =>
-  path.replace(pathSegmentRe, match => {
+  path.replace(pathSegmentRe, (match) => {
     if (isNameTooLong(match)) {
       return (
         match.slice(0, SLICING_INDEX) +

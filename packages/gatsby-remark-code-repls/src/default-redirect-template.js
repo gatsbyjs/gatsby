@@ -14,7 +14,7 @@ class GatsbyRemarkCodeReplsRedirect extends Component {
     return (
       <form
         style={{ paddingBottom: `50px` }}
-        ref={form => {
+        ref={(form) => {
           this.form = form
         }}
         action={action}

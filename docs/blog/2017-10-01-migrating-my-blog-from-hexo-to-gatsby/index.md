@@ -500,7 +500,7 @@ we add custom fields. Example:
 // gatsby-node.js
 const { GraphQLString } = require("gatsby/graphql")
 
-const getURL = node => {
+const getURL = (node) => {
   /* See the source link below for implementation */
 }
 
@@ -512,7 +512,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
   return Promise.resolve({
     url: {
       type: GraphQLString,
-      resolve: node => getURL(node),
+      resolve: (node) => getURL(node),
     },
   })
 }
@@ -596,7 +596,7 @@ some props. So in pseudo code:
 ```js
 // Get all markdown files
 // Call create page for each one
-markdownFiles.forEach(post => {
+markdownFiles.forEach((post) => {
   createPage({
     path: post.url,
     component: "./src/templates/post.js",

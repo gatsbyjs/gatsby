@@ -54,7 +54,7 @@ describe(`validation`, () => {
   ].forEach(([testName, pluginOptions]) => {
     it(testName, () => {
       expect(
-        sourceNodes(getInternalGatsbyAPI(), pluginOptions)
+        sourceNodes(getInternalGatsbyAPI(), pluginOptions),
       ).rejects.toThrowErrorMatchingSnapshot()
     })
   })
@@ -86,7 +86,7 @@ describe(`createHttpLink`, () => {
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(
-      expect.objectContaining({ fetch: mockFetch })
+      expect.objectContaining({ fetch: mockFetch }),
     )
   })
   it(`use default fetch if not provided`, async () => {
@@ -98,7 +98,7 @@ describe(`createHttpLink`, () => {
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(
-      expect.objectContaining({ fetch: nodeFetch })
+      expect.objectContaining({ fetch: nodeFetch }),
     )
   })
 })

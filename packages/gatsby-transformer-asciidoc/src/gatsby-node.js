@@ -11,7 +11,7 @@ async function onCreateNode(
     reporter,
     createContentDigest,
   },
-  pluginOptions
+  pluginOptions,
 ) {
   const extensionsConfig = pluginOptions.fileExtensions
 
@@ -29,7 +29,7 @@ async function onCreateNode(
   if (pluginOptions.converterFactory) {
     asciidoc.ConverterFactory.register(
       new pluginOptions.converterFactory(asciidoc),
-      [`html5`]
+      [`html5`],
     )
   }
 
@@ -104,7 +104,7 @@ async function onCreateNode(
       `Error processing Asciidoc ${
         node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`
       }:\n
-      ${err.message}`
+      ${err.message}`,
     )
   }
 }
@@ -121,7 +121,7 @@ const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
 
   clonedPluginOptions.attributes.imagesdir = withPathPrefix(
     currentPathPrefix,
-    clonedPluginOptions.attributes.imagesdir || defaultImagesDir
+    clonedPluginOptions.attributes.imagesdir || defaultImagesDir,
   )
 
   return clonedPluginOptions
@@ -130,7 +130,7 @@ const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
 const withPathPrefix = (pathPrefix, url) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
-const extractPageAttributes = allAttributes =>
+const extractPageAttributes = (allAttributes) =>
   Object.entries(allAttributes).reduce((pageAttributes, [key, value]) => {
     if (key.startsWith(`page-`)) {
       pageAttributes[key.replace(/^page-/, ``)] = value

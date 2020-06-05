@@ -21,27 +21,27 @@ const getPrompt = (promptOrInfo, prompt) => {
   return prompt
 }
 
-module.exports = level => {
+module.exports = (level) => {
   let logLevel = logLevels[level]
   if (typeof logLevel === `undefined`) logLevel = logLevels.error
 
-  const question = prompt =>
-    new Promise(resolve => {
+  const question = (prompt) =>
+    new Promise((resolve) => {
       const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
       })
-      rl.question(prompt, res => {
+      rl.question(prompt, (res) => {
         rl.close()
         resolve(res)
       })
     })
 
   let adapter = console.log
-  const setAdapter = a => (adapter = a)
+  const setAdapter = (a) => (adapter = a)
   const resetAdapter = () => (adapter = console.log)
 
-  const prepend = tag => (...args) => adapter(tag, ...args)
+  const prepend = (tag) => (...args) => adapter(tag, ...args)
 
   return {
     setAdapter,

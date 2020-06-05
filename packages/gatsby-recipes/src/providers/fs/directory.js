@@ -6,7 +6,7 @@ const resourceSchema = require(`../resource-schema`)
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
 
-const directoryExists = fullPath => {
+const directoryExists = (fullPath) => {
   try {
     fs.accessSync(fullPath, fs.constants.F_OK)
     return true
@@ -58,14 +58,14 @@ module.exports.plan = async (context, { id, path: directoryPath }) => {
   return plan
 }
 
-const message = resource => `Created directory "${resource.path}"`
+const message = (resource) => `Created directory "${resource.path}"`
 
 const schema = {
   path: Joi.string(),
   ...resourceSchema,
 }
 exports.schema = schema
-exports.validate = resource =>
+exports.validate = (resource) =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 module.exports.create = create

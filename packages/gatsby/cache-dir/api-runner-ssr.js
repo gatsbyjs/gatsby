@@ -20,7 +20,7 @@ module.exports = (api, args, defaultReturn, argTransform) => {
 
   // Run each plugin in series.
   // eslint-disable-next-line no-undef
-  let results = plugins.map(plugin => {
+  let results = plugins.map((plugin) => {
     if (!plugin.plugin[api]) {
       return undefined
     }
@@ -32,7 +32,7 @@ module.exports = (api, args, defaultReturn, argTransform) => {
   })
 
   // Filter out undefined results.
-  results = results.filter(result => typeof result !== `undefined`)
+  results = results.filter((result) => typeof result !== `undefined`)
 
   if (results.length > 0) {
     return results

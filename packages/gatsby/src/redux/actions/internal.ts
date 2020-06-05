@@ -32,7 +32,7 @@ export const createPageDependency = (
     nodeId,
     connection,
   }: { path: string; nodeId?: string; connection?: string },
-  plugin = ``
+  plugin = ``,
 ): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
@@ -51,7 +51,7 @@ export const createPageDependency = (
  * @private
  */
 export const deleteComponentsDependencies = (
-  paths: string[]
+  paths: string[],
 ): IDeleteComponentDependenciesAction => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
@@ -89,7 +89,7 @@ export const replaceComponentQuery = ({
  */
 export const replaceStaticQuery = (
   args: any,
-  plugin: IGatsbyPlugin | null | undefined = null
+  plugin: IGatsbyPlugin | null | undefined = null,
 ): IReplaceStaticQueryAction => {
   return {
     type: `REPLACE_STATIC_QUERY`,
@@ -107,7 +107,7 @@ export const replaceStaticQuery = (
 export const queryExtracted = (
   { componentPath, query }: { componentPath: string; query: string },
   plugin: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): IQueryExtractedAction => {
   return {
     type: `QUERY_EXTRACTED`,
@@ -125,7 +125,7 @@ export const queryExtracted = (
 export const queryExtractionGraphQLError = (
   { componentPath, error }: { componentPath: string; error: string },
   plugin: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): IQueryExtractionGraphQLErrorAction => {
   return {
     type: `QUERY_EXTRACTION_GRAPHQL_ERROR`,
@@ -144,7 +144,7 @@ export const queryExtractionGraphQLError = (
 export const queryExtractedBabelSuccess = (
   { componentPath },
   plugin: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): IQueryExtractedBabelSuccessAction => {
   return {
     type: `QUERY_EXTRACTION_BABEL_SUCCESS`,
@@ -162,7 +162,7 @@ export const queryExtractedBabelSuccess = (
 export const queryExtractionBabelError = (
   { componentPath, error }: { componentPath: string; error: Error },
   plugin: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): IQueryExtractionBabelErrorAction => {
   return {
     type: `QUERY_EXTRACTION_BABEL_ERROR`,
@@ -179,7 +179,7 @@ export const queryExtractionBabelError = (
 export const setProgramStatus = (
   status: ProgramStatus,
   plugin: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): ISetProgramStatusAction => {
   return {
     type: `SET_PROGRAM_STATUS`,
@@ -196,7 +196,7 @@ export const setProgramStatus = (
 export const pageQueryRun = (
   { path, componentPath, isPage },
   plugin: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): IPageQueryRunAction => {
   return {
     type: `PAGE_QUERY_RUN`,
@@ -213,7 +213,7 @@ export const pageQueryRun = (
 export const removeStaleJob = (
   contentDigest: string,
   plugin?: IGatsbyPlugin,
-  traceId?: string
+  traceId?: string,
 ): IRemoveStaleJobAction => {
   return {
     type: `REMOVE_STALE_JOB_V2`,
@@ -235,11 +235,11 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
-      details => details.type === `object.allowUnknown`
+      (details) => details.type === `object.allowUnknown`,
     )
 
     if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {
-      const errorMessages = hasUnknownKeys.map(unknown => {
+      const errorMessages = hasUnknownKeys.map((unknown) => {
         const { context, message } = unknown
         const key = context?.key
         const suggestion = key && didYouMean(key)

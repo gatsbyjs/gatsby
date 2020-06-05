@@ -45,7 +45,7 @@ export function ensureWindowsDriveLetterIsUppercase(): void {
             cd "C:\\"
             cd "${normalizedCwd}"
           (Windows requires two directory switches to change the case of the drive letter)
-        `)
+        `),
       )
     }
   }

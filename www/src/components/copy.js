@@ -6,7 +6,8 @@ import PropTypes from "prop-types"
 import { ScreenReaderText } from "./feedback-widget/styled-elements"
 import copyToClipboard from "../utils/copy-to-clipboard"
 
-const delay = duration => new Promise(resolve => setTimeout(resolve, duration))
+const delay = (duration) =>
+  new Promise((resolve) => setTimeout(resolve, duration))
 
 function Copy({ className, content, duration, fileName, trim = false }) {
   const [copied, setCopied] = useState(false)

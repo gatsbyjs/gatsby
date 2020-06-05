@@ -46,7 +46,7 @@ navigationInit()
 // Resetting `basepath`/`baseuri` keeps current behaviour
 // to not introduce breaking change.
 // Remove this in v3
-const RouteHandler = props => (
+const RouteHandler = (props) => (
   <BaseContext.Provider
     value={{
       baseuri: `/`,
@@ -64,7 +64,7 @@ class LocationHandler extends React.Component {
     if (!loader.isPageNotFound(location.pathname)) {
       return (
         <EnsureResources location={location}>
-          {locationAndPageResources => (
+          {(locationAndPageResources) => (
             <RouteUpdates location={location}>
               <ScrollContext
                 location={location}
@@ -78,7 +78,7 @@ class LocationHandler extends React.Component {
                   <RouteHandler
                     path={encodeURI(
                       locationAndPageResources.pageResources.page.matchPath ||
-                        locationAndPageResources.pageResources.page.path
+                        locationAndPageResources.pageResources.page.path,
                     )}
                     {...this.props}
                     {...locationAndPageResources}
@@ -121,7 +121,7 @@ class LocationHandler extends React.Component {
 
 const Root = () => (
   <Location>
-    {locationContext => <LocationHandler {...locationContext} />}
+    {(locationContext) => <LocationHandler {...locationContext} />}
   </Location>
 )
 
@@ -132,7 +132,7 @@ const WrappedRoot = apiRunner(
   <Root />,
   ({ result, plugin }) => {
     return { element: result }
-  }
+  },
 ).pop()
 
 export default () => <StaticQueryStore>{WrappedRoot}</StaticQueryStore>

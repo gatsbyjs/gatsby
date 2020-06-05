@@ -1,5 +1,5 @@
 export const runQuery = (handler, query) =>
-  handler(query).then(r => {
+  handler(query).then((r) => {
     if (r.errors) {
       throw new Error(r.errors.join(`, `))
     }

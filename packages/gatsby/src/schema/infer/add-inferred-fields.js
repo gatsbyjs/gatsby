@@ -53,7 +53,7 @@ const addInferredFieldsImpl = ({
   config,
 }) => {
   const fields = []
-  Object.keys(exampleObject).forEach(unsanitizedKey => {
+  Object.keys(exampleObject).forEach((unsanitizedKey) => {
     const key = createFieldName(unsanitizedKey)
     fields.push({
       key,
@@ -62,18 +62,18 @@ const addInferredFieldsImpl = ({
     })
   })
 
-  const fieldsByKey = _.groupBy(fields, field => field.key)
+  const fieldsByKey = _.groupBy(fields, (field) => field.key)
 
-  Object.keys(fieldsByKey).forEach(key => {
+  Object.keys(fieldsByKey).forEach((key) => {
     const possibleFields = fieldsByKey[key]
     let selectedField
     if (possibleFields.length > 1) {
       const field = resolveMultipleFields(possibleFields)
       const possibleFieldsNames = possibleFields
-        .map(field => `\`${field.unsanitizedKey}\``)
+        .map((field) => `\`${field.unsanitizedKey}\``)
         .join(`, `)
       report.warn(
-        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`
+        `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`,
       )
       selectedField = field
     } else {
@@ -113,21 +113,21 @@ const addInferredFieldsImpl = ({
           const { extensions } = fieldConfig
           if (extensions) {
             Object.keys(extensions)
-              .filter(name =>
+              .filter((name) =>
                 // It is okay to list allowed extensions explicitly here,
                 // since this is deprecated anyway and won't change.
                 [`dateformat`, `fileByRelativePath`, `link`, `proxy`].includes(
-                  name
-                )
+                  name,
+                ),
               )
-              .forEach(name => {
+              .forEach((name) => {
                 if (!typeComposer.hasFieldExtension(key, name)) {
                   typeComposer.setFieldExtension(key, name, extensions[name])
                   report.warn(
                     `Deprecation warning - adding inferred resolver for field ` +
                       `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
                       `only fields with an explicit directive/extension will ` +
-                      `get a resolver.`
+                      `get a resolver.`,
                   )
                 }
               })
@@ -212,22 +212,22 @@ const getFieldConfig = ({
   return fieldConfig
 }
 
-const resolveMultipleFields = possibleFields => {
-  const nodeField = possibleFields.find(field =>
-    field.unsanitizedKey.includes(`___NODE`)
+const resolveMultipleFields = (possibleFields) => {
+  const nodeField = possibleFields.find((field) =>
+    field.unsanitizedKey.includes(`___NODE`),
   )
   if (nodeField) {
     return nodeField
   }
 
   const canonicalField = possibleFields.find(
-    field => field.unsanitizedKey === field.key
+    (field) => field.unsanitizedKey === field.key,
   )
   if (canonicalField) {
     return canonicalField
   }
 
-  return _.sortBy(possibleFields, field => field.unsanitizedKey)[0]
+  return _.sortBy(possibleFields, (field) => field.unsanitizedKey)[0]
 }
 
 // XXX(freiksenet): removing this as it's a breaking change
@@ -258,21 +258,21 @@ const getFieldConfigFromFieldNameConvention = ({
   // Allow linking by nested fields, e.g. `author___NODE___contact___email`
   const foreignKey = path && path.replace(/___/g, `.`)
 
-  const getNodeBy = value =>
+  const getNodeBy = (value) =>
     foreignKey
-      ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
+      ? nodeStore.getNodes().find((node) => _.get(node, foreignKey) === value)
       : nodeStore.getNode(value)
 
   const linkedNodes = value.linkedNodes.map(getNodeBy)
 
   const linkedTypes = _.uniq(
-    linkedNodes.filter(Boolean).map(node => node.internal.type)
+    linkedNodes.filter(Boolean).map((node) => node.internal.type),
   )
 
   invariant(
     linkedTypes.length,
     `Encountered an error trying to infer a GraphQL type for: \`${key}\`. ` +
-      `There is no corresponding node with the \`id\` field matching: "${value.linkedNodes}".`
+      `There is no corresponding node with the \`id\` field matching: "${value.linkedNodes}".`,
   )
 
   let type
@@ -283,9 +283,11 @@ const getFieldConfigFromFieldNameConvention = ({
   // fields are arrays, but not if they are scalars. See the tests for an example.
   if (linkedTypes.length > 1) {
     const typeName = linkedTypes.sort().join(``) + `Union`
-    type = schemaComposer.getOrCreateUTC(typeName, utc => {
-      utc.setTypes(linkedTypes.map(typeName => schemaComposer.getOTC(typeName)))
-      utc.setResolveType(node => node.internal.type)
+    type = schemaComposer.getOrCreateUTC(typeName, (utc) => {
+      utc.setTypes(
+        linkedTypes.map((typeName) => schemaComposer.getOTC(typeName)),
+      )
+      utc.setResolveType((node) => node.internal.type)
     })
   } else {
     type = linkedTypes[0]
@@ -366,12 +368,12 @@ const getSimpleFieldConfig = ({
           } else {
             fieldTypeComposer = ObjectTypeComposer.create(
               typeName,
-              schemaComposer
+              schemaComposer,
             )
             fieldTypeComposer.setExtension(`createdFrom`, `inference`)
             fieldTypeComposer.setExtension(
               `plugin`,
-              typeComposer.getExtension(`plugin`)
+              typeComposer.getExtension(`plugin`),
             )
             addDerivedType({
               typeComposer,
@@ -404,7 +406,7 @@ const getSimpleFieldConfig = ({
   throw new Error(`Can't determine type for "${value}" in \`${selector}\`.`)
 }
 
-const createTypeName = selector => {
+const createTypeName = (selector) => {
   const keys = selector.split(`.`)
   const suffix = keys.slice(1).map(_.upperFirst).join(``)
   return `${keys[0]}${suffix}`
@@ -417,11 +419,11 @@ const NON_ALPHA_NUMERIC_EXPR = new RegExp(`[^a-zA-Z0-9_]`, `g`)
  * alphanumeric characters and `_`. They also can't start with `__` which is
  * reserved for internal fields (`___foo` doesn't work either).
  */
-const createFieldName = key => {
+const createFieldName = (key) => {
   // Check if the key is really a string otherwise GraphQL will throw.
   invariant(
     typeof key === `string`,
-    `GraphQL field name (key) is not a string: \`${key}\`.`
+    `GraphQL field name (key) is not a string: \`${key}\`.`,
   )
 
   const fieldName = key.split(`___NODE`)[0]

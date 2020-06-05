@@ -1,5 +1,5 @@
 describe(`gatsby-plugin-postcss`, () => {
-  jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
+  jest.mock(`../resolve`, () => (module) => `/resolved/path/${module}`)
 
   const actions = {
     setWebpackConfig: jest.fn(),
@@ -9,7 +9,7 @@ describe(`gatsby-plugin-postcss`, () => {
   const loaders = {
     miniCssExtract: () => `miniCssExtract`,
     null: () => `null-loader`,
-    css: args => `css-loader(${JSON.stringify(args)})`,
+    css: (args) => `css-loader(${JSON.stringify(args)})`,
   }
 
   const { onCreateWebpackConfig } = require(`../gatsby-node`)
@@ -89,7 +89,7 @@ describe(`gatsby-plugin-postcss`, () => {
     actions.replaceWebpackConfig.mockClear()
   })
 
-  tests.stages.forEach(stage => {
+  tests.stages.forEach((stage) => {
     for (const label in tests.options) {
       const options = tests.options[label]
 

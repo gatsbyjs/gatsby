@@ -495,7 +495,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   //customer case study template
   const customerCaseStudy = path.resolve(
-    `./src/templates/customer-case-study.js`
+    `./src/templates/customer-case-study.js`,
   )
 
   let posts
@@ -572,7 +572,7 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   //Create Customer Case study pages
-  pages.data.allButterPage.edges.forEach(page => {
+  pages.data.allButterPage.edges.forEach((page) => {
     createPage({
       path: `/case-study/${page.node.slug}`,
       component: customerCaseStudy,
@@ -657,7 +657,7 @@ const Faq = ({ data }) => {
         {headline}
       </h1>
       <div style={{ display: `flex`, padding: `10px` }}>
-        {FAQs.map(faq => (
+        {FAQs.map((faq) => (
           <div
             style={{
               flexBasis: `50%`,
@@ -847,7 +847,7 @@ class BlogPostTemplate extends React.Component {
         >
           <div style={{ maxWidth: `960px`, padding: `30px` }}>
             <h1>{post.seo_title}</h1> <span>{post.date}</span> &bull;
-            {post.categories.map(category => (
+            {post.categories.map((category) => (
               <span>{category.name}</span>
             ))}
             <hr />

@@ -6,7 +6,7 @@ const { registryUrl } = require(`./verdaccio-config`)
 
 const NPMRCContent = `${registryUrl.replace(
   /https?:/g,
-  ``
+  ``,
 )}/:_authToken="gatsby-dev"`
 
 const {
@@ -35,12 +35,12 @@ const adjustPackageJson = ({
 
   const monorepoPKGjsonString = fs.readFileSync(
     monoRepoPackageJsonPath,
-    `utf-8`
+    `utf-8`,
   )
   const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
 
   monorepoPKGjson.version = `${monorepoPKGjson.version}-dev-${versionPostFix}`
-  packagesToPublish.forEach(packageThatWillBePublished => {
+  packagesToPublish.forEach((packageThatWillBePublished) => {
     if (
       monorepoPKGjson.dependencies &&
       monorepoPKGjson.dependencies[packageThatWillBePublished]
@@ -51,8 +51,8 @@ const adjustPackageJson = ({
             packageName: packageThatWillBePublished,
             root,
           }),
-          `utf-8`
-        )
+          `utf-8`,
+        ),
       ).version
 
       monorepoPKGjson.dependencies[
@@ -131,13 +131,13 @@ const publishPackage = async ({
   ]
 
   console.log(
-    `Publishing ${packageName}@${newPackageVersion} to local registry`
+    `Publishing ${packageName}@${newPackageVersion} to local registry`,
   )
   try {
     await promisifiedSpawn(publishCmd)
 
     console.log(
-      `Published ${packageName}@${newPackageVersion} to local registry`
+      `Published ${packageName}@${newPackageVersion} to local registry`,
     )
   } catch (e) {
     console.error(`Failed to publish ${packageName}@${newPackageVersion}`, e)

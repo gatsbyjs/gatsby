@@ -4,7 +4,7 @@
 
 type MettHandler<EventName, Payload> = (
   e: Payload,
-  eventName: EventName
+  eventName: EventName,
 ) => void
 
 interface IMett {

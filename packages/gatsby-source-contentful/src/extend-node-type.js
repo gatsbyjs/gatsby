@@ -25,7 +25,7 @@ const cacheImage = require(`./cache-image`)
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
-    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
+    `Please be aware that the \`GATSBY_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`,
   )
 }
 const REMOTE_CACHE_FOLDER =
@@ -42,13 +42,13 @@ const {
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
-const isImage = image =>
+const isImage = (image) =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
-    _.get(image, `file.contentType`)
+    _.get(image, `file.contentType`),
   )
 
-const getBase64Image = imageProps => {
+const getBase64Image = (imageProps) => {
   if (!imageProps) return null
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
@@ -68,7 +68,7 @@ const getBase64Image = imageProps => {
     return fs.promises.readFile(cacheFile, `utf8`)
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
       fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
@@ -107,7 +107,7 @@ const createUrl = (imgUrl, options = {}) => {
       f: options.cropFocus || ``,
       bg: options.background || ``,
     },
-    _.identity
+    _.identity,
   )
   return `${imgUrl}?${qs.stringify(args)}`
 }
@@ -152,7 +152,7 @@ const resolveFixed = (image, options) => {
   fixedSizes = fixedSizes.map(Math.round)
 
   // Filter out sizes larger than the image's width and the contentful image's max size.
-  const filteredSizes = fixedSizes.filter(size => {
+  const filteredSizes = fixedSizes.filter((size) => {
     const calculatedHeight = Math.round(size / desiredAspectRatio)
     return (
       size <= CONTENTFUL_IMAGE_MAX_SIZE &&
@@ -258,7 +258,7 @@ const resolveFluid = (image, options) => {
   fluidSizes = fluidSizes.map(Math.round)
 
   // Filter out sizes larger than the image's maxWidth and the contentful image's max size.
-  const filteredSizes = fluidSizes.filter(size => {
+  const filteredSizes = fluidSizes.filter((size) => {
     const calculatedHeight = Math.round(size / desiredAspectRatio)
     return (
       size <= CONTENTFUL_IMAGE_MAX_SIZE &&
@@ -282,7 +282,7 @@ const resolveFluid = (image, options) => {
 
   // Create the srcSet.
   const srcSet = sortedSizes
-    .map(width => {
+    .map((width) => {
       const h = Math.round(width / desiredAspectRatio)
       return `${createUrl(image.file.url, {
         ...options,
@@ -430,7 +430,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
       },
     },
     resolve: (image, options, context) =>
-      Promise.resolve(resolveFixed(image, options)).then(node => {
+      Promise.resolve(resolveFixed(image, options)).then((node) => {
         if (!node) return null
 
         return {
@@ -529,7 +529,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
       },
     },
     resolve: (image, options, context) =>
-      Promise.resolve(resolveFluid(image, options)).then(node => {
+      Promise.resolve(resolveFluid(image, options)).then((node) => {
         if (!node) return null
 
         return {
@@ -563,7 +563,7 @@ exports.extendNodeType = ({ type, store }) => {
     return {}
   }
 
-  const getTracedSVG = async args => {
+  const getTracedSVG = async (args) => {
     const { traceSVG } = require(`gatsby-plugin-sharp`)
 
     const { image, options } = args

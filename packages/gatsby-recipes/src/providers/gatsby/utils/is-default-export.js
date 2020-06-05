@@ -1,6 +1,6 @@
 const t = require(`@babel/types`)
 
-module.exports = node => {
+module.exports = (node) => {
   if (!node || !t.isMemberExpression(node)) {
     return false
   }

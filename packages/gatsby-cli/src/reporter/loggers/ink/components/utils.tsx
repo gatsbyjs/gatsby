@@ -8,7 +8,7 @@ export const ColorSwitcher: FunctionComponent<ColorProps> = ({
 
 export const createLabel = (
   text: string,
-  color: string
+  color: string,
 ): FunctionComponent<ColorProps> => (...props): JSX.Element => (
   <ColorSwitcher {...{ [color]: true, ...props }}>{text}</ColorSwitcher>
 )

@@ -20,9 +20,9 @@ export default function Accordion({ itemRef, item }) {
         bg:
           item.level === 0 && inActiveTree && `sidebar.activeSectionBackground`,
         position: `relative`,
-        transition: t =>
+        transition: (t) =>
           `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
-        mt: t =>
+        mt: (t) =>
           item.level === 0 && disableAccordions && `${t.space[4]} !important`,
         ...(item.level === 0 && {
           "::before": {
@@ -63,7 +63,7 @@ export default function Accordion({ itemRef, item }) {
             }),
           }}
         >
-          {item.items.map(subitem => (
+          {item.items.map((subitem) => (
             <Item
               item={subitem}
               key={subitem.title}

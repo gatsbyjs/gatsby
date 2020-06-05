@@ -71,8 +71,8 @@ describe(`Queryable Node interfaces`, () => {
         date: new Date(`2018-01-01`),
       },
     ]
-    nodes.forEach(node =>
-      actions.createNode(node, { name: `test` })(store.dispatch)
+    nodes.forEach((node) =>
+      actions.createNode(node, { name: `test` })(store.dispatch),
     )
     dispatch(
       createTypes(`
@@ -91,7 +91,7 @@ describe(`Queryable Node interfaces`, () => {
           baz: String
           date: Date @dateformat
         }
-      `)
+      `),
     )
   })
 
@@ -117,7 +117,7 @@ describe(`Queryable Node interfaces`, () => {
         type WrongAgain implements Node & WrongInterface {
           foo: String
         }
-      `)
+      `),
     )
     const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
@@ -138,13 +138,13 @@ describe(`Queryable Node interfaces`, () => {
         type WrongAgain implements WrongInterface {
           foo: String
         }
-      `)
+      `),
     )
     await buildSchema()
     expect(report.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must only be implemented ` +
         `by types which also implement the \`Node\` interface. Check the type ` +
-        `definition of \`Wrong\`, \`WrongAgain\`.`
+        `definition of \`Wrong\`, \`WrongAgain\`.`,
     )
   })
 
@@ -193,7 +193,7 @@ describe(`Queryable Node interfaces`, () => {
             },
           },
         }),
-      ])
+      ]),
     )
     const query = `
       {
@@ -351,13 +351,13 @@ describe(`Queryable Node interfaces`, () => {
         interface WrongInterface @nodeInterface {
           foo: String
         }
-      `)
+      `),
     )
     await build({})
     expect(report.panic).toBeCalledTimes(1)
     expect(report.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must have a field ` +
-        `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
+        `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`,
     )
   })
 
@@ -409,8 +409,8 @@ describe(`Queryable Node interfaces`, () => {
         author: `author2`,
       },
     ]
-    nodes.forEach(node =>
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    nodes.forEach((node) =>
+      dispatch({ type: `CREATE_NODE`, payload: { ...node } }),
     )
     dispatch(
       createFieldExtension({
@@ -425,7 +425,7 @@ describe(`Queryable Node interfaces`, () => {
             },
           }
         },
-      })
+      }),
     )
     dispatch(
       createTypes(`
@@ -452,7 +452,7 @@ describe(`Queryable Node interfaces`, () => {
           name: String
           echo: String @echo(value: "Another Concrete Type")
         }
-      `)
+      `),
     )
     const query = `
       {
@@ -511,8 +511,8 @@ describe(`Queryable Node interfaces`, () => {
       },
     ]
 
-    nodes.forEach(node =>
-      dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    nodes.forEach((node) =>
+      dispatch({ type: `CREATE_NODE`, payload: { ...node } }),
     )
 
     dispatch(
@@ -528,7 +528,7 @@ describe(`Queryable Node interfaces`, () => {
           title: String
           slug: String @proxy(from: "slugInternal")
         }
-      `)
+      `),
     )
 
     expect(
@@ -540,7 +540,7 @@ describe(`Queryable Node interfaces`, () => {
           }
           }
         }
-        `)
+        `),
     ).toMatchInlineSnapshot(`
       Object {
         "allFooConcrete": Object {
@@ -562,7 +562,7 @@ describe(`Queryable Node interfaces`, () => {
             }
           }
         }
-        `)
+        `),
     ).toMatchInlineSnapshot(`
       Object {
         "allFooInterface": Object {
@@ -586,7 +586,7 @@ const buildSchema = async () => {
   return { schema, schemaComposer }
 }
 
-const runQuery = async query => {
+const runQuery = async (query) => {
   const { schema, schemaComposer } = await buildSchema()
   const results = await graphql(
     schema,
@@ -595,7 +595,7 @@ const runQuery = async query => {
     withResolverContext({
       schema,
       schemaComposer,
-    })
+    }),
   )
   expect(results.errors).toBeUndefined()
   return results.data

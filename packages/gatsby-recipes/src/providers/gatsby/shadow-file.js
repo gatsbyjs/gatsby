@@ -6,7 +6,7 @@ const { slash } = require(`gatsby-core-utils`)
 
 const resourceSchema = require(`../resource-schema`)
 const getDiff = require(`../utils/get-diff`)
-const fileExists = filePath => fs.existsSync(filePath)
+const fileExists = (filePath) => fs.existsSync(filePath)
 
 const relativePathForShadowedFile = ({ theme, filePath }) => {
   // eslint-disable-next-line
@@ -24,7 +24,7 @@ const createPathToThemeFile = ({ root, theme, filePath }) => {
 }
 exports.createPathToThemeFile = createPathToThemeFile
 
-const splitId = id => {
+const splitId = (id) => {
   // Remove src
   // eslint-disable-next-line
   const [_src, ...filePathParts] = id.split(`/`)
@@ -98,7 +98,7 @@ const schema = {
   ...resourceSchema,
 }
 module.exports.schema = schema
-module.exports.validate = resource =>
+module.exports.validate = (resource) =>
   Joi.validate(resource, schema, { abortEarly: false })
 
 module.exports.create = create
@@ -106,7 +106,7 @@ module.exports.update = create
 module.exports.read = read
 module.exports.destroy = destroy
 
-const message = resource =>
+const message = (resource) =>
   `Shadowed ${resource.id || resource.path} from ${resource.theme}`
 
 module.exports.plan = async ({ root }, { theme, path: filePath, id }) => {

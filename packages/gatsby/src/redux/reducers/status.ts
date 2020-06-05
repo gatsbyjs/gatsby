@@ -8,7 +8,7 @@ const defaultState: IGatsbyState["status"] = {
 
 export const statusReducer = (
   state: IGatsbyState["status"] = defaultState,
-  action: ActionsUnion
+  action: ActionsUnion,
 ): IGatsbyState["status"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
@@ -27,8 +27,8 @@ export const statusReducer = (
           `You must pass an object into setPluginStatus. What was passed in was ${JSON.stringify(
             action.payload,
             null,
-            4
-          )}`
+            4,
+          )}`,
         )
       }
       return {
@@ -38,7 +38,7 @@ export const statusReducer = (
           [action.plugin.name]: _.merge(
             {},
             state.plugins[action.plugin.name],
-            action.payload
+            action.payload,
           ),
         },
       }

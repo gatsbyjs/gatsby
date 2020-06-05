@@ -27,16 +27,16 @@ exports.onServiceWorkerActive = ({
     .call(nodes)
     // don't include preconnect/prefetch/prerender resources
     .filter(
-      node =>
+      (node) =>
         node.tagName !== `LINK` ||
-        whiteListLinkRels.test(node.getAttribute(`rel`))
+        whiteListLinkRels.test(node.getAttribute(`rel`)),
     )
-    .map(node => node.src || node.href || node.getAttribute(`data-href`))
+    .map((node) => node.src || node.href || node.getAttribute(`data-href`))
 
   // Loop over prefetched pages and add their resources to an array,
   // plus specify which resources are required for those paths.
   const prefetchedResources = []
-  prefetchedPathnames.forEach(path => {
+  prefetchedPathnames.forEach((path) => {
     const resources = getResourceURLsForPathname(path)
     prefetchedResources.push(...resources)
 
@@ -50,7 +50,7 @@ exports.onServiceWorkerActive = ({
   // Loop over all resources and fetch the page component + JSON data
   // to add it to the SW cache.
   const resources = [...headerResources, ...prefetchedResources]
-  resources.forEach(resource => {
+  resources.forEach((resource) => {
     // Create a prefetch link for each resource, so Workbox runtime-caches them
     const link = document.createElement(`link`)
     link.rel = `prefetch`

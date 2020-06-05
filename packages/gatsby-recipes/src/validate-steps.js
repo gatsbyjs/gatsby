@@ -1,7 +1,7 @@
 const validate = require(`./parser/validate`)
 const render = require(`./renderer`)
 
-module.exports = async steps => {
+module.exports = async (steps) => {
   const errors = []
 
   steps.map((stepMdx, i) => {

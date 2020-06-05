@@ -13,7 +13,7 @@ import * as reporterActions from "../redux/actions"
 jest
   .spyOn(reporterActions, `createLog`)
   // @ts-ignore
-  .mockImplementation(structuredLog => structuredLog)
+  .mockImplementation((structuredLog) => structuredLog)
 
 // We don't care about this
 reporter.log = jest.fn()
@@ -21,7 +21,7 @@ reporter.log = jest.fn()
 const getErrorMessages = (fn: jest.Mock): any =>
   fn.mock.calls
     .map(([firstArg]) => firstArg)
-    .filter(structuredMessage => structuredMessage.level === `ERROR`)
+    .filter((structuredMessage) => structuredMessage.level === `ERROR`)
 
 describe(`report.error`, () => {
   beforeEach(() => {
@@ -31,10 +31,10 @@ describe(`report.error`, () => {
   it(`handles "String, Error" signature correctly`, () => {
     reporter.error(
       `Error string passed to reporter`,
-      new Error(`Message from new Error`)
+      new Error(`Message from new Error`),
     )
     const generatedError = getErrorMessages(
-      reporterActions.createLog as jest.Mock
+      reporterActions.createLog as jest.Mock,
     )[0]
 
     expect(generatedError).toMatchSnapshot({
@@ -45,7 +45,7 @@ describe(`report.error`, () => {
   it(`handles "Error" signature correctly`, () => {
     reporter.error(new Error(`Message from new Error`))
     const generatedError = getErrorMessages(
-      reporterActions.createLog as jest.Mock
+      reporterActions.createLog as jest.Mock,
     )[0]
     expect(generatedError).toMatchSnapshot({
       stack: expect.any(Array),
@@ -60,7 +60,7 @@ describe(`report.error`, () => {
     ])
 
     const generatedErrors = getErrorMessages(
-      reporterActions.createLog as jest.Mock
+      reporterActions.createLog as jest.Mock,
     )
 
     expect(generatedErrors.length).toEqual(3)
@@ -80,7 +80,7 @@ describe(`report.error`, () => {
       },
     })
     const generatedError = getErrorMessages(
-      reporterActions.createLog as jest.Mock
+      reporterActions.createLog as jest.Mock,
     )[0]
     expect(generatedError).toMatchSnapshot()
   })
@@ -88,7 +88,7 @@ describe(`report.error`, () => {
   it(`handles "String" signature correctly`, () => {
     reporter.error(`Error created in Jest`)
     const generatedError = getErrorMessages(
-      reporterActions.createLog as jest.Mock
+      reporterActions.createLog as jest.Mock,
     )[0]
     expect(generatedError).toMatchSnapshot()
   })

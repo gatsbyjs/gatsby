@@ -38,7 +38,7 @@ You can access options that are passed to your theme in your theme's `gatsby-con
 To take advantage of the options that are passed in when configuring your theme in a user's site, return a function in your theme's `gatsby-config.js`. The argument the function receives is the options the user passed in.
 
 ```js:title=gatsby-config.js
-module.exports = themeOptions => {
+module.exports = (themeOptions) => {
   console.log(themeOptions)
   // logs `postsPath` and `colors`
 

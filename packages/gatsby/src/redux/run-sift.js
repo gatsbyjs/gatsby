@@ -104,7 +104,7 @@ function handleFirst(siftArgs, nodes) {
     : nodes.findIndex(
         sift({
           $and: siftArgs,
-        })
+        }),
       )
 
   if (index !== -1) {
@@ -120,7 +120,7 @@ function handleMany(siftArgs, nodes) {
     : nodes.filter(
         sift({
           $and: siftArgs,
-        })
+        }),
       )
 
   return result?.length ? result : null
@@ -149,7 +149,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   const nodesPerValueArrs /*: Array<Array<IGatsbyNode>> */ = getBucketsForFilters(
     filters,
     nodeTypeNames,
-    filtersCache
+    filtersCache,
   )
 
   if (!nodesPerValueArrs) {
@@ -163,7 +163,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   // Put smallest last (we'll pop it)
   nodesPerValueArrs.sort(
     (a /*: Array<IGatsbyNode> */, b /*: Array<IGatsbyNode> */) =>
-      b.length - a.length
+      b.length - a.length,
   )
 
   // All elements of nodesPerValueArrs should be sorted by counter and deduped
@@ -171,7 +171,7 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
 
   while (nodesPerValueArrs.length > 1) {
     nodesPerValueArrs.push(
-      intersectNodesByCounter(nodesPerValueArrs.pop(), nodesPerValueArrs.pop())
+      intersectNodesByCounter(nodesPerValueArrs.pop(), nodesPerValueArrs.pop()),
     )
   }
 
@@ -209,7 +209,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
         q,
         nodeTypeNames,
         filtersCache,
-        nodesPerValueArrs
+        nodesPerValueArrs,
       )
     } else {
       // (Let TS warn us if a new query type gets added)
@@ -219,7 +219,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
         q,
         nodeTypeNames,
         filtersCache,
-        nodesPerValueArrs
+        nodesPerValueArrs,
       )
     }
   })
@@ -247,7 +247,7 @@ const getBucketsForQueryFilter = (
   filter,
   nodeTypeNames,
   filtersCache,
-  nodesPerValueArrs
+  nodesPerValueArrs,
 ) => {
   let {
     path: filterPath,
@@ -260,7 +260,7 @@ const getBucketsForQueryFilter = (
       filterCacheKey,
       filterPath,
       nodeTypeNames,
-      filtersCache
+      filtersCache,
     )
   }
 
@@ -268,7 +268,7 @@ const getBucketsForQueryFilter = (
     filterCacheKey,
     filterValue,
     filtersCache,
-    false
+    false,
   )
 
   // If we couldn't find the needle then maybe sift can, for example if the
@@ -297,7 +297,7 @@ const collectBucketForElemMatch = (
   filter,
   nodeTypeNames,
   filtersCache,
-  nodesPerValueArrs
+  nodesPerValueArrs,
 ) => {
   // Get comparator and target value for this elemMatch
   let comparator = ``
@@ -321,7 +321,7 @@ const collectBucketForElemMatch = (
       filterCacheKey,
       filter,
       nodeTypeNames,
-      filtersCache
+      filtersCache,
     )
   }
 
@@ -329,7 +329,7 @@ const collectBucketForElemMatch = (
     filterCacheKey,
     targetValue,
     filtersCache,
-    true
+    true,
   )
 
   // If we couldn't find the needle then maybe sift can, for example if the
@@ -378,7 +378,7 @@ const runFilterAndSort = (args: Object) => {
     nodeTypeNames,
     filtersCache,
     resolvedFields,
-    stats
+    stats,
   )
 
   return sortNodes(result, sort, resolvedFields, stats)
@@ -409,12 +409,12 @@ const applyFilters = (
   nodeTypeNames,
   filtersCache,
   resolvedFields,
-  stats
+  stats,
 ) => {
   const filters /*: Array<DbQuery>*/ = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
-        resolvedFields
+        resolvedFields,
       )
     : []
 
@@ -424,7 +424,7 @@ const applyFilters = (
       const comparatorPath = filterStats.comparatorPath.join(`.`)
       stats.comparatorsUsed.set(
         comparatorPath,
-        (stats.comparatorsUsed.get(comparatorPath) || 0) + 1
+        (stats.comparatorsUsed.get(comparatorPath) || 0) + 1,
       )
       stats.uniqueFilterPaths.add(filterStats.filterPath.join(`.`))
     })
@@ -452,7 +452,7 @@ const applyFilters = (
   const result /*: Array<IGatsbyNode> | null */ = filterWithoutSift(
     filters,
     nodeTypeNames,
-    filtersCache
+    filtersCache,
   )
 
   lastFilterUsedSift = false
@@ -494,13 +494,13 @@ const applyFilters = (
 const filterToStats = (
   filter /*: DbQuery*/,
   filterPath = [],
-  comparatorPath = []
+  comparatorPath = [],
 ) => {
   if (filter.type === `elemMatch`) {
     return filterToStats(
       filter.nestedQuery,
       filterPath.concat(filter.path),
-      comparatorPath.concat([`elemMatch`])
+      comparatorPath.concat([`elemMatch`]),
     )
   } else {
     return {
@@ -524,15 +524,15 @@ const filterToStats = (
 // eslint-disable-next-line no-unused-vars
 const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
   let nodes /*: IGatsbyNode[]*/ = []
-  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
+  nodeTypeNames.forEach((typeName) => addResolvedNodes(typeName, nodes))
 
   return runSiftOnNodes(
     nodes,
-    filters.map(f => dbQueryToSiftQuery(f)),
+    filters.map((f) => dbQueryToSiftQuery(f)),
     firstOnly,
     nodeTypeNames,
     resolvedFields,
-    siftGetNode
+    siftGetNode,
   )
 }
 
@@ -554,7 +554,7 @@ const runSiftOnNodes = (
   firstOnly,
   nodeTypeNames,
   resolvedFields,
-  getNode
+  getNode,
 ) => {
   // If the query for single node only has a filter for an "id"
   // using "eq" operator, then we'll just grab that ID and return it.
@@ -598,21 +598,21 @@ const sortNodes = (nodes, sort, resolvedFields, stats) => {
   // create functions that return the item to compare on
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.keys(dottedFields)
-  const sortFields = sort.fields.map(field => {
+  const sortFields = sort.fields.map((field) => {
     if (
       dottedFields[field] ||
-      dottedFieldKeys.some(key => field.startsWith(key))
+      dottedFieldKeys.some((key) => field.startsWith(key))
     ) {
       return `__gatsby_resolved.${field}`
     } else {
       return field
     }
   })
-  const sortFns = sortFields.map(field => v => getValueAt(v, field))
-  const sortOrder = sort.order.map(order => order.toLowerCase())
+  const sortFns = sortFields.map((field) => (v) => getValueAt(v, field))
+  const sortOrder = sort.order.map((order) => order.toLowerCase())
 
   if (stats) {
-    sortFields.forEach(sortField => {
+    sortFields.forEach((sortField) => {
       stats.uniqueSorts.add(sortField)
     })
   }

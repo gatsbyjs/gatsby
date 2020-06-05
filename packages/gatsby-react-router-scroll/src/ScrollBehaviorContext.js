@@ -58,7 +58,7 @@ class ScrollContext extends React.Component {
     return shouldUpdateScroll.call(
       this.scrollBehavior,
       prevRouterProps,
-      routerProps
+      routerProps,
     )
   }
 
@@ -67,11 +67,11 @@ class ScrollContext extends React.Component {
       key,
       element,
       shouldUpdateScroll,
-      this.getRouterProps()
+      this.getRouterProps(),
     )
   }
 
-  unregisterElement = key => {
+  unregisterElement = (key) => {
     this.scrollBehavior.unregisterElement(key)
   }
 

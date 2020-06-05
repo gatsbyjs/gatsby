@@ -5,16 +5,16 @@ import PropTypes from "prop-types"
 import PageHeading from "./page-heading"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const LayoutWithHeading = props => {
+const LayoutWithHeading = (props) => {
   const { children, pageTitle = ``, pageIcon } = props
 
   return (
     <div
       sx={{
-        pb: t => t.fontSizes[10],
+        pb: (t) => t.fontSizes[10],
 
         [mediaQueries.md]: {
-          ml: t => t.sizes.pageHeadingDesktopWidth,
+          ml: (t) => t.sizes.pageHeadingDesktopWidth,
           pb: 0,
         },
       }}

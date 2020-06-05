@@ -98,7 +98,7 @@ export default class ExampleComponent extends React.Component {
           }
         }
       `}
-      render={staticData => (
+      render={(staticData) => (
         <div>
           <Helmet title={staticData.site.siteMetadata.title} />
           <h1>Welcome to {staticData.site.siteMetadata.title}!</h1>
@@ -130,7 +130,7 @@ export default class ExampleComponent extends React.Component {
   render() {
     ;<StaticQuery
       data={staticData12513}
-      render={staticData => (
+      render={(staticData) => (
         <div>
           <Helmet title={staticData.site.siteMetadata.title} />
           <h1>Welcome to {staticData.site.siteMetadata.title}!</h1>

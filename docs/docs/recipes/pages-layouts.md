@@ -215,7 +215,7 @@ exports.createPages = ({ actions }) => {
     },
   ]
   // highlight-start
-  dogData.forEach(dog => {
+  dogData.forEach((dog) => {
     createPage({
       path: `/${dog.name}`,
       component: require.resolve(`./src/templates/dog-template.js`),

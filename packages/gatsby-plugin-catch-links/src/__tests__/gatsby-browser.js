@@ -13,7 +13,7 @@ describe(`gatsby-plugin-catch-links`, () => {
     expect(mockedCatchLinks).toHaveBeenCalledWith(
       window,
       {},
-      expect.any(Function)
+      expect.any(Function),
     )
   })
 })

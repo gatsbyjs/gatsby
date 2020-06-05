@@ -6,7 +6,7 @@ import gitUp from "git-up"
 // there are no types for git-up, so we create our own
 // based on https://github.com/IonicaBizau/git-up/blob/60e6a4ff93d50360bbb80953bfab2f82d3418900/lib/index.js#L8-L28
 const typedGitUp = gitUp as (
-  input: string
+  input: string,
 ) => { resource: string; pathname: string }
 
 interface IRepositoryData {
@@ -50,7 +50,7 @@ const getGitRemoteWithGit = (): IRepositoryId | null => {
     // we may live multiple levels in git repo
     const originBuffer = execSync(
       `git config --local --get remote.origin.url`,
-      { timeout: 1000, stdio: `pipe` }
+      { timeout: 1000, stdio: `pipe` },
     )
     const repo = String(originBuffer).trim()
     if (repo) {

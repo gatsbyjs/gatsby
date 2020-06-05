@@ -28,7 +28,7 @@ jest.mock(`sharp`, () => () => {
   }
 })
 
-const createNode = content => {
+const createNode = (content) => {
   const node = {
     id: 1234,
   }
@@ -55,7 +55,7 @@ const createNode = content => {
 const createPluginOptions = (content, imagePaths = `/`, options = {}) => {
   const dirName = `not-a-real-dir`
   return {
-    files: [].concat(imagePaths).map(imagePath => {
+    files: [].concat(imagePaths).map((imagePath) => {
       return {
         absolutePath: `${dirName}/${imagePath}`,
       }
@@ -89,7 +89,7 @@ beforeEach(() => {
         pipe: jest.fn(),
         destroy: jest.fn(),
       },
-    })
+    }),
   )
 })
 
@@ -172,7 +172,7 @@ test(`it throws specific error if the image is not found`, async () => {
   expect(reporter.panic).toHaveBeenCalledTimes(1)
   expect(reporter.panic).toHaveBeenCalledWith(
     `Image downloading failed for ${imagePath}, please check if the image still exists on contentful`,
-    expect.any(Error)
+    expect.any(Error),
   )
 })
 

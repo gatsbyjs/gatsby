@@ -4,7 +4,7 @@ const os = require(`os`)
 const { onCreateNode } = require(`../gatsby-node`)
 
 // Make some fake functions its expecting.
-const loadNodeContent = node => Promise.resolve(node.content)
+const loadNodeContent = (node) => Promise.resolve(node.content)
 
 const bootstrapTest = async (node, pluginOptions = {}) => {
   const createNode = jest.fn()
@@ -22,7 +22,7 @@ const bootstrapTest = async (node, pluginOptions = {}) => {
       createNodeId,
       createContentDigest,
     },
-    pluginOptions
+    pluginOptions,
   ).then(() => {
     return {
       createNode,
@@ -141,18 +141,18 @@ describe(`Process JSON nodes correctly`, () => {
                 internal: expect.objectContaining({
                   type: expectedOne,
                 }),
-              })
+              }),
             )
             expect(createNode).toBeCalledWith(
               expect.objectContaining({
                 internal: expect.objectContaining({
                   type: expectedTwo,
                 }),
-              })
+              }),
             )
-          }
+          },
         )
-      }
+      },
     )
   })
 
@@ -185,9 +185,9 @@ describe(`Process JSON nodes correctly`, () => {
               internal: expect.objectContaining({
                 type: expectedNodeType,
               }),
-            })
+            }),
           )
-        }
+        },
       )
     })
   })

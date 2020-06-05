@@ -63,7 +63,7 @@ describe(`renderer`, () => {
         },
         "resourceName": "NPMPackage",
       }
-    `
+    `,
     )
   })
 

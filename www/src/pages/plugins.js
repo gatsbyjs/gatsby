@@ -38,8 +38,8 @@ class Plugins extends Component {
               src={logo}
               sx={{
                 display: `inline-block`,
-                height: t => t.space[12],
-                width: t => t.space[12],
+                height: (t) => t.space[12],
+                width: (t) => t.space[12],
                 mx: `auto`,
               }}
               alt=""

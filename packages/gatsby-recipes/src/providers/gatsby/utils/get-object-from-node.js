@@ -1,15 +1,15 @@
 const generate = require(`@babel/generator`).default
 const t = require(`@babel/types`)
 
-const getKeyNameFromAttribute = node => node.key.name || node.key.value
+const getKeyNameFromAttribute = (node) => node.key.name || node.key.value
 
-const unwrapTemplateLiteral = str =>
+const unwrapTemplateLiteral = (str) =>
   str.trim().replace(/^`/, ``).replace(/`$/, ``)
 
-const isLiteral = node =>
+const isLiteral = (node) =>
   t.isLiteral(node) || t.isStringLiteral(node) || t.isNumericLiteral(node)
 
-const getValueFromNode = node => {
+const getValueFromNode = (node) => {
   if (t.isTemplateLiteral(node)) {
     delete node.leadingComments
     const literalContents = generate(node).code
@@ -31,7 +31,7 @@ const getValueFromNode = node => {
   return null
 }
 
-const getObjectFromNode = nodeValue => {
+const getObjectFromNode = (nodeValue) => {
   if (!nodeValue || !nodeValue.properties) {
     return getValueFromNode(nodeValue)
   }

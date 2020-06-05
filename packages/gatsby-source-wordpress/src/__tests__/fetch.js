@@ -26,7 +26,7 @@ describe(`Fetching`, () => {
     const baseUrl = `https://public-api.wordpress.com/wp/v2/sites/example.wordpress.com`
     const fullUrl = fetch.buildFullUrl(baseUrl, key, true)
     expect(fullUrl).toEqual(
-      `https://public-api.wordpress.com/wp/v2/sites/example.wordpress.com/posts`
+      `https://public-api.wordpress.com/wp/v2/sites/example.wordpress.com/posts`,
     )
   })
 
@@ -35,7 +35,7 @@ describe(`Fetching`, () => {
     const baseUrl = `http://dev-gatbsyjswp.pantheonsite.io/wp-json`
     const fullUrl = fetch.buildFullUrl(baseUrl, key, false)
     expect(fullUrl).toEqual(
-      `http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts`
+      `http://dev-gatbsyjswp.pantheonsite.io/wp-json/wp/v2/posts`,
     )
   })
 
@@ -43,8 +43,8 @@ describe(`Fetching`, () => {
     expect(
       fetch.useApiUrl(
         `http://example.com/wp-json`,
-        `http://example.com/wp-json/wp-api-menus/v2/menus/2`
-      )
+        `http://example.com/wp-json/wp-api-menus/v2/menus/2`,
+      ),
     ).toEqual(`http://example.com/wp-json/wp-api-menus/v2/menus/2`)
   })
 
@@ -52,8 +52,8 @@ describe(`Fetching`, () => {
     expect(
       fetch.useApiUrl(
         `http://example.com/wp-json`,
-        `http://localhost:8080/wp-json/wp-api-menus/v2/menus/2`
-      )
+        `http://localhost:8080/wp-json/wp-api-menus/v2/menus/2`,
+      ),
     ).toEqual(`http://example.com/wp-json/wp-api-menus/v2/menus/2`)
   })
 })

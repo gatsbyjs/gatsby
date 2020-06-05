@@ -3,12 +3,12 @@ import { groupBy } from "lodash"
 import onCreateNode from "../on-node-create"
 import path from "path"
 
-const readFile = file =>
+const readFile = (file) =>
   new Promise((y, n) => {
     fs.readFile(
       path.join(__dirname, `fixtures`, file),
       `utf8`,
-      (err, content) => (err ? n(err) : y(content))
+      (err, content) => (err ? n(err) : y(content)),
     )
   })
 
@@ -33,7 +33,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         reporter: { error: console.error },
         createContentDigest,
       },
-      { cwd: path.join(__dirname, `fixtures`), ...opts }
+      { cwd: path.join(__dirname, `fixtures`), ...opts },
     )
   }
 
@@ -54,10 +54,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       },
       __fixture: `classes.js`,
     }
-    loadNodeContent = jest.fn(node => readFile(node.__fixture))
+    loadNodeContent = jest.fn((node) => readFile(node.__fixture))
     actions = {
-      createNode: jest.fn(n => createdNodes.push(n)),
-      createParentChildLink: jest.fn(n => updatedNodes.push(n)),
+      createNode: jest.fn((n) => createdNodes.push(n)),
+      createParentChildLink: jest.fn((n) => updatedNodes.push(n)),
     }
   })
 
@@ -86,7 +86,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       []
         .concat(unknown)
         .concat(expected)
-        .map(node => run(node))
+        .map((node) => run(node)),
     )
 
     expect(loadNodeContent).toHaveBeenCalledTimes(expected.length)
@@ -95,7 +95,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   it(`should extract all components in a file`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, n => n.internal.type)
+    let types = groupBy(createdNodes, (n) => n.internal.type)
     expect(types.ComponentMetadata).toHaveLength(6)
   })
 
@@ -104,7 +104,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
     let types = groupBy(createdNodes, `internal.type`)
 
-    expect(types.ComponentMetadata.map(c => c.displayName)).toEqual([
+    expect(types.ComponentMetadata.map((c) => c.displayName)).toEqual([
       `Baz`,
       `Buz`,
       `Foo`,
@@ -118,10 +118,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     let Bar = groupBy(createdNodes, `internal.type`).ComponentMetadata.find(
-      d => d.displayName === `Bar`
+      (d) => d.displayName === `Bar`,
     )
 
-    expect(Bar.doclets.filter(d => d.tag === `property`)).toHaveLength(2)
+    expect(Bar.doclets.filter((d) => d.tag === `property`)).toHaveLength(2)
   })
 
   it(`should infer a name`, async () => {
@@ -130,7 +130,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     expect(
-      groupBy(createdNodes, `internal.type`).ComponentMetadata[0].displayName
+      groupBy(createdNodes, `internal.type`).ComponentMetadata[0].displayName,
     ).toEqual(`Unnamed`)
   })
 
@@ -140,7 +140,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     await run(node)
 
     expect(
-      groupBy(createdNodes, `internal.type`).ComponentDescription
+      groupBy(createdNodes, `internal.type`).ComponentDescription,
     ).toHaveLength(1)
   })
 
@@ -163,8 +163,10 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       { tag: `default`, value: `blue` },
     ])
 
-    expect(types.ComponentDescription.find(d => d.parent === id).text).toEqual(
-      `An object hash of field (fix this @mention?) errors for the form.`
+    expect(
+      types.ComponentDescription.find((d) => d.parent === id).text,
+    ).toEqual(
+      `An object hash of field (fix this @mention?) errors for the form.`,
     )
   })
 
@@ -173,8 +175,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     let types = groupBy(createdNodes, `internal.type`)
     expect(
       types.ComponentDescription.every(
-        d => d.internal.mediaType === `text/markdown`
-      )
+        (d) => d.internal.mediaType === `text/markdown`,
+      ),
     ).toBe(true)
   })
 
@@ -195,30 +197,30 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     it(`should add flow type info`, async () => {
       await run(node)
 
-      const created = createdNodes.map(f => f.flowType).filter(Boolean)
+      const created = createdNodes.map((f) => f.flowType).filter(Boolean)
 
       expect(created).toMatchSnapshot(`flow types`)
     })
     it(`literalsAndUnion property should be union type`, async () => {
       await run(node)
-      const created = createdNodes.find(f => f.name === `literalsAndUnion`)
+      const created = createdNodes.find((f) => f.name === `literalsAndUnion`)
 
       expect(created.flowType).toEqual(
         expect.objectContaining({
           name: `union`,
           raw: `"string" | "otherstring" | number`,
-        })
+        }),
       )
     })
 
     it(`badDocumented property should flowType ReactNode`, async () => {
       await run(node)
-      const created = createdNodes.find(f => f.name === `badDocumented`)
+      const created = createdNodes.find((f) => f.name === `badDocumented`)
 
       expect(created.flowType).toEqual(
         expect.objectContaining({
           name: `ReactNode`,
-        })
+        }),
       )
     })
   })
@@ -235,7 +237,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         },
       })
 
-      const created = createdNodes.map(f => f.tsType).filter(Boolean)
+      const created = createdNodes.map((f) => f.tsType).filter(Boolean)
 
       expect(created).toMatchSnapshot(`typescript types`)
     })

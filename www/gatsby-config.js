@@ -24,7 +24,7 @@ if (process.env.ANALYTICS_SERVICE_ACCOUNT) {
         // replace \n characters in real new lines for circleci deploys
         private_key: process.env.ANALYTICS_SERVICE_ACCOUNT_KEY.replace(
           /\\n/g,
-          `\n`
+          `\n`,
         ),
       },
       period: {
@@ -307,7 +307,7 @@ module.exports = {
               }
             },
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.nodes.map(node => {
+              allMdx.nodes.map((node) => {
                 return {
                   title: node.frontmatter.title,
                   description: node.fields.excerpt,

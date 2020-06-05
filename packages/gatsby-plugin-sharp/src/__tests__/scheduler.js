@@ -47,7 +47,7 @@ describe(`scheduler`, () => {
 
     expect(workerMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        inputPaths: job.inputPaths.map(inputPath => {
+        inputPaths: job.inputPaths.map((inputPath) => {
           return {
             path: inputPath,
             contentDigest: expect.any(String),
@@ -55,7 +55,7 @@ describe(`scheduler`, () => {
         }),
         outputDir: job.outputDir,
         args: job.args,
-      })
+      }),
     )
   })
 
@@ -79,7 +79,7 @@ describe(`scheduler`, () => {
             pluginOptions: {},
           },
         },
-        boundActionCreators
+        boundActionCreators,
       )
     } catch (err) {
       expect(err).toEqual(`failed transform`)
@@ -177,7 +177,7 @@ describe(`scheduler`, () => {
             options: job.args.pluginOptions,
           },
           json: true,
-        }
+        },
       )
     })
   })
