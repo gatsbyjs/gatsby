@@ -9,8 +9,11 @@ export function generateQueryFromString(
   queryStringParent: string,
   fileAbsolutePath: string
 ): string {
-  const needsAllPrefix = queryStringParent.startsWith(`all`) === false
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
+  if (queryStringParent.includes(`...CollectionPagesQueryFragment`)) {
+    return fragmentInterpolator(queryStringParent, fields)
+  }
+  const needsAllPrefix = queryStringParent.startsWith(`all`) === false
 
   return `{${
     needsAllPrefix ? `all` : ``
@@ -32,7 +35,10 @@ export function reverseLookupParams(
     if (regex === null) return
     const extracted = regex[1]
 
-    const results = _.get(queryResults, extracted.replace(/__/g, `.`))
+    const results = _.get(
+      queryResults.nodes ? queryResults.nodes[0] : queryResults,
+      extracted.replace(/__/g, `.`)
+    )
     reversedParams[extracted] = results
   })
 
@@ -75,4 +81,8 @@ function deriveNesting(part: string): string {
       }, ``)
   }
   return part
+}
+
+function fragmentInterpolator(query: string, fields: string): string {
+  return query.replace(`...CollectionPagesQueryFragment`, `nodes{${fields}}`)
 }

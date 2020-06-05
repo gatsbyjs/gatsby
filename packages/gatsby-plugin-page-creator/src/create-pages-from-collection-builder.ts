@@ -10,7 +10,6 @@ import fs from "fs-extra"
 import traverse, { NodePath } from "@babel/traverse"
 import generate from "@babel/generator"
 import * as t from "@babel/types"
-import { string } from "joi"
 
 function isCreatePagesFromData(path: NodePath<t.CallExpression>): boolean {
   return (
@@ -87,7 +86,9 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
     )
   }
 
-  const nodes = data[rootKey[1]].nodes
+  const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
+    Record<string, unknown>
+  >
 
   if (nodes) {
     console.info(`CollectionPageCreator:`)
