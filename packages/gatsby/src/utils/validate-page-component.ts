@@ -4,6 +4,9 @@ import { IGatsbyPage } from "../redux/types"
 
 const validationCache = new Set<string>()
 
+const sourceExtensionsArray = [`jsx`, `tsx`, `js`, `ts`]
+const sourceExtensions = new Set<string>(sourceExtensionsArray)
+
 interface IErrorMeta {
   id: string
   context: Record<string, unknown>
@@ -83,7 +86,7 @@ export function validatePageComponent(
 
     // this check only applies to js and ts, not mdx
     if (
-      /\.(jsx?|tsx?)/.test(path.extname(component)) &&
+      sourceExtensions.has(path.extname(component)) &&
       !includesDefaultExport
     ) {
       return {
