@@ -10,7 +10,7 @@
     "directory": "packages/gatsby-admin"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
-  "dependencies": {
+  "devDependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
@@ -18,7 +18,7 @@
     "csstype": "^2.6.10",
     "formik": "^2.1.4",
     "gatsby": "^2.23.1",
-    "gatsby-interface": "0.0.167",
+    "gatsby-interface": "^0.0.167",
     "gatsby-plugin-typescript": "^2.4.4",
     "gatsby-source-graphql": "^2.5.3",
     "react": "^16.12.0",
