@@ -193,6 +193,10 @@ export interface IGatsbyState {
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
   >
+  pendingPageDataWrites: {
+    pagePaths: Set<string>
+    templatePaths: Set<SystemPath>
+  }
   // @deprecated
   jobs: {
     active: any[] // TODO
@@ -245,6 +249,7 @@ export interface ICachedReduxState {
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
   pageData: IGatsbyState["pageData"]
+  pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
 }
 
 export type ActionsUnion =
@@ -293,6 +298,9 @@ export type ActionsUnion =
   | ICreateJobAction
   | ISetJobAction
   | IEndJobAction
+  | IAddPendingPageDataWriteAction
+  | IAddPendingTemplateDataWriteAction
+  | IClearPendingPageDataWritesAction
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -546,6 +554,24 @@ export interface IRemoveTemplateComponentAction {
   payload: {
     componentPath: string
   }
+}
+
+export interface IAddPendingPageDataWriteAction {
+  type: `ADD_PENDING_PAGE_DATA_WRITE`
+  payload: {
+    path: string
+  }
+}
+
+export interface IAddPendingTemplateDataWriteAction {
+  type: `ADD_PENDING_TEMPLATE_DATA_WRITE`
+  payload: {
+    componentPath: SystemPath
+  }
+}
+
+export interface IClearPendingPageDataWritesAction {
+  type: `CLEAR_PENDING_PAGE_DATA_WRITES`
 }
 
 export interface IDeletePageAction {
