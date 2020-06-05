@@ -30,16 +30,28 @@ let hasNotWarnedDeprecation = true
 class ScrollContainerImplementation extends React.Component<
   IPropsWithContextAndLocation
 > {
-  constructor(props) {
+  constructor(props: IPropsWithContextAndLocation) {
     super(props)
 
     if (hasNotWarnedDeprecation) {
       hasNotWarnedDeprecation = false
-      console.warn(
-        `Deprecation Warning: Gatsby <ScrollContainer> is deprecated in Gatsby v2 and will be removed in Gatsby v3.`
-      )
-      console.warn(
-        `Deprecation Warning: Update to the React hook alternative useScrollRestoration`
+      console.log(
+        `Deprecation Warning:
+
+  Gatsby <ScrollContainer> is deprecated in Gatsby v2 and will be removed in Gatsby v3.
+  Update to the React hook alternative useScrollRestoration, like this:.
+  
+  \`\`\`
+  import React from 'react';
+  import { useScrollRestoration } from 'gatsby-react-router-scroll';
+
+  function Component() {
+    const scrollRestoration = useScrollRestoration('${this.props.scrollKey}');
+
+    return <ul {...scrollRestoration} />;
+  }
+  \`\`\`
+  `
       )
     }
   }
