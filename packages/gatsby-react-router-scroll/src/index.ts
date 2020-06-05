@@ -1,5 +1,3 @@
-import { ScrollHandler as ScrollContext } from "./scroll-handler"
-import { ScrollContainer } from "./scroll-container"
-import { useScrollRestoration } from "./use-scroll-restoration"
-
-export { ScrollContext, ScrollContainer, useScrollRestoration }
+export { ScrollHandler as ScrollContext } from "./scroll-handler"
+export { ScrollContainer } from "./scroll-container"
+export { useScrollRestoration } from "./use-scroll-restoration"
