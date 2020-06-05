@@ -24,6 +24,7 @@ import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { ErrorMeta } from "gatsby-cli/lib/reporter/types"
 import { globalTracer } from "opentracing"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
+import { internalActions } from "../redux/actions"
 
 const tracer = globalTracer()
 
@@ -150,10 +151,7 @@ export async function initialize(
     )
   }
 
-  store.dispatch({
-    type: `SET_SITE_CONFIG`,
-    payload: config,
-  })
+  store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
 
@@ -279,28 +277,6 @@ export async function initialize(
   await fs.ensureDir(`${program.directory}/public/static`)
 
   activity.end()
-
-  if (process.env.GATSBY_DB_NODES === `loki`) {
-    const loki = require(`../db/loki`)
-    // Start the nodes database (in memory loki js with interval disk
-    // saves). If data was saved from a previous build, it will be
-    // loaded here
-    activity = reporter.activityTimer(`start nodes db`, {
-      parentSpan: bootstrapSpan,
-    })
-    activity.start()
-    const dbSaveFile = `${cacheDirectory}/loki/loki.db`
-    try {
-      await loki.start({
-        saveFile: dbSaveFile,
-      })
-    } catch (e) {
-      reporter.error(
-        `Error starting DB. Perhaps try deleting ${path.dirname(dbSaveFile)}`
-      )
-    }
-    activity.end()
-  }
 
   activity = reporter.activityTimer(`copy gatsby files`, {
     parentSpan: bootstrapSpan,
