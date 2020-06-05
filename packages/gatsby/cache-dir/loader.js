@@ -436,9 +436,9 @@ const createComponentUrls = componentChunkName =>
 
 export class ProdLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]
-        ? asyncRequires.components[chunkName]()
+    const loadComponent = (chunkName, key = `components`) =>
+      asyncRequires[key][chunkName]
+        ? asyncRequires[key][chunkName]()
             .then(preferDefault)
             // loader will handle the case when component is null
             .catch(() => null)
