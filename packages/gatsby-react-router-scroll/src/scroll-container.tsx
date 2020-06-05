@@ -33,7 +33,7 @@ class ScrollContainerImplementation extends React.Component<
   constructor(props: IPropsWithContextAndLocation) {
     super(props)
 
-    if (hasNotWarnedDeprecation) {
+    if (process.env.NODE_ENV !== 'production' && hasNotWarnedDeprecation) {
       hasNotWarnedDeprecation = false
       console.log(
         `Deprecation Warning:
