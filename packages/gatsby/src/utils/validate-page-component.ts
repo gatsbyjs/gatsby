@@ -79,11 +79,13 @@ export function validatePageComponent(
       fileContent.includes(`module.exports`) ||
       fileContent.includes(`exports.default`) ||
       fileContent.includes(`exports["default"]`) ||
-      fileContent.match(/export \{.* as default.*\}/s) ||
-      // this check only applies to js and ts, not mdx
-      /\.(jsx?|tsx?)/.test(path.extname(component))
+      fileContent.match(/export \{.* as default.*\}/s)
 
-    if (!includesDefaultExport) {
+    // this check only applies to js and ts, not mdx
+    if (
+      /\.(jsx?|tsx?)/.test(path.extname(component)) &&
+      !includesDefaultExport
+    ) {
       return {
         error: {
           id: `11328`,
