@@ -86,7 +86,7 @@ The Recipe we’re going to write will install `gatsby-plugin-google-analytics` 
 
 This recipe will utilize two of the Recipe components/providers. The first is `<NPMPackage />` the second is `<GatsbyPlugin />`
 
-You can read more about the components/providers [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/README.md#developing-recipes).
+You can read more about the components/providers in the [Gatsby Recipes README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/README.md#developing-recipes).
 
 To get things started you can clone this bare bones repo which has just the bits we need to create and test your very first Recipe:
 
