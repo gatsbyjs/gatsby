@@ -1,14 +1,11 @@
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
-const {
-  generateComparisonPageSet,
-} = require(`../generate-comparison-page-set.js`)
+const { generateComparisonPageSet } = require(`../generate-comparison-page-set`)
+const { getTemplate } = require(`../get-template`)
 
 exports.createPages = async ({ actions }) => {
   const { createPage } = actions
 
-  const featureComparisonPageTemplate = path.resolve(
-    `src/templates/template-feature-comparison.js`
+  const featureComparisonPageTemplate = getTemplate(
+    `template-feature-comparison`
   )
 
   // Create feature comparison pages
@@ -18,7 +15,7 @@ exports.createPages = async ({ actions }) => {
   for (const { path, options, featureType } of comparisonPages) {
     createPage({
       path,
-      component: slash(featureComparisonPageTemplate),
+      component: featureComparisonPageTemplate,
       context: {
         options,
         featureType,
