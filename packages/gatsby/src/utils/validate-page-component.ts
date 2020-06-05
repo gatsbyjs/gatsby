@@ -4,7 +4,7 @@ import { IGatsbyPage } from "../redux/types"
 
 const validationCache = new Set<string>()
 
-const sourceExtensionsArray = [`jsx`, `tsx`, `js`, `ts`]
+const sourceExtensionsArray = [`.jsx`, `.tsx`, `.js`, `.ts`]
 const sourceExtensions = new Set<string>(sourceExtensionsArray)
 
 interface IErrorMeta {
