@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-const Badge = ({ children, ...rest }) => (
+const Badge = ({ children }) => (
   <div
     sx={{
       display: `inline-flex`,
@@ -20,7 +20,7 @@ const Badge = ({ children, ...rest }) => (
       borderRadius: 5,
       py: 1,
       px: 2,
-      ...rest,
+      my: 3,
     }}
   >
     {children}
