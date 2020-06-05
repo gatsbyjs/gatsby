@@ -1,7 +1,7 @@
 import { Span } from "opentracing"
 import { IProgram } from "../commands/types"
 import { Store } from "../.."
-import { GraphQLRunner } from "../query/graphql-runner"
+import { Runner } from "../bootstrap/create-graphql-runner"
 
 export interface IGroupedQueryIds {
   pageQueryIds: string[]
@@ -16,6 +16,7 @@ export interface IBuildContext {
   program?: IProgram
   store?: Store
   parentSpan?: Span
-  graphqlRunner?: GraphQLRunner
+  graphqlRunner?: Runner
   queryIds?: IGroupedQueryIds
+  webhookBody?: Record<string, unknown>
 }
