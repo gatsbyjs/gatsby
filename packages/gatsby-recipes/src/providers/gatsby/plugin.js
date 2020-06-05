@@ -23,7 +23,18 @@ const { read: readPackageJSON } = require(`../npm/package`)
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
+  // To support local plugins in the ./plugins folder, we try to resolve to either node_modules or that folder
+  const pkgPath =
+    resolveCwd.silent(path.join(theme, `package.json`)) ||
+    resolveCwd.silent(
+      `.${path.sep}${path.join(`plugins`, theme, `package.json`)}`
+    )
+  if (!pkgPath)
+    return {
+      shadowableFiles: [],
+      shadowedFiles: [],
+    }
+  const themePath = path.dirname(pkgPath)
   const themeSrcPath = path.join(themePath, `src`)
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
