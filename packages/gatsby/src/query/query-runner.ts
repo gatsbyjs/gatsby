@@ -7,7 +7,6 @@ import crypto from "crypto"
 import path from "path"
 import { store } from "../redux"
 import { boundActionCreators } from "../redux/actions"
-import pageDataUtil from "../utils/page-data"
 import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
@@ -157,10 +156,21 @@ export const queryRunner = async (
     resultHashes.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
-      const publicDir = path.join(program.directory, `public`)
-      const { pages } = store.getState()
-      const page = pages.get(queryJob.id)
-      await pageDataUtil.write({ publicDir }, page, result)
+      // We need to save this temporarily in cache because
+      // this might be incomplete at the moment
+      const resultPath = path.join(
+        program.directory,
+        `.cache`,
+        `json`,
+        `${queryJob.id.replace(/\//g, `_`)}.json`
+      )
+      await fs.outputFile(resultPath, resultJSON)
+      store.dispatch({
+        type: `ADD_PENDING_PAGE_DATA_WRITE`,
+        payload: {
+          path: queryJob.id,
+        },
+      })
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/

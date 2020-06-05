@@ -1,3 +1,4 @@
+import { websocketManager } from "./websocket-manager"
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
@@ -21,8 +22,16 @@ const remove = async ({ publicDir }, pagePath) => {
   return Promise.resolve()
 }
 
-const write = async ({ publicDir }, page, result) => {
-  const filePath = getFilePath({ publicDir }, page.path)
+const write = async ({ publicDir }, page) => {
+  const inputFilePath = path.join(
+    publicDir,
+    `..`,
+    `.cache`,
+    `json`,
+    `${page.path.replace(/\//g, `_`)}.json`
+  )
+  const outputFilePath = getFilePath({ publicDir }, page.path)
+  const result = await fs.readJSON(inputFilePath)
   const body = {
     componentChunkName: page.componentChunkName,
     path: page.path,
@@ -36,12 +45,52 @@ const write = async ({ publicDir }, page, result) => {
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
-      filePath,
+      filePath: outputFilePath,
       size: pageDataSize,
     },
   })
 
-  await fs.outputFile(filePath, bodyStr)
+  await fs.outputFile(outputFilePath, bodyStr)
+}
+
+const flush = async () => {
+  const { pendingPageDataWrites, components, pages, program } = store.getState()
+
+  const { pagePaths, templatePaths } = pendingPageDataWrites
+
+  const pagesToWrite = Array.from(templatePaths).reduce(
+    (set, componentPath) => {
+      const { pages } = components.get(componentPath)
+      pages.forEach(set.add.bind(set))
+      return set
+    },
+    new Set(pagePaths.values())
+  )
+
+  for (const pagePath of pagesToWrite) {
+    const page = pages.get(pagePath)
+    const body = await write(
+      { publicDir: path.join(program.directory, `public`) },
+      page
+    )
+
+    if (program.command === `develop`) {
+      websocketManager.emitPageData({
+        ...body.result,
+        id: pagePath,
+        result: {
+          data: body.result.data,
+          pageContext: body.result.pageContext,
+        },
+      })
+    }
+  }
+
+  store.dispatch({
+    type: `CLEAR_PENDING_PAGE_DATA_WRITES`,
+  })
+
+  return
 }
 
 module.exports = {
@@ -49,4 +98,6 @@ module.exports = {
   write,
   remove,
   fixedPagePath,
+  flush,
+  getFilePath,
 }
