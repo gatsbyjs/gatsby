@@ -111,12 +111,13 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
     const { components } = snapshot
     components.forEach(c => {
       const query = queries.get(c.componentPath)
-      if (!query?.isStaticQuery) {
-        boundActionCreators.queryExtracted({
-          componentPath: c.componentPath,
-          query: query?.text || ``,
-        })
-      }
+
+      const { isStaticQuery = false, text = `` } = query
+
+      boundActionCreators.queryExtracted({
+        componentPath: c.componentPath,
+        query: isStaticQuery ? `` : text,
+      })
     })
 
     let queriesWillNotRun = false
