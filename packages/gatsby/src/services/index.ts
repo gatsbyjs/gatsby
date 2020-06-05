@@ -13,8 +13,9 @@ import { writeHTML } from "./write-html"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { ServiceConfig } from "xstate"
 import { IBuildContext } from "./"
+import { writeOutRedirects } from "./write-out-redirects"
+import { postBootstrap } from "./post-bootstrap"
 export * from "./types"
-
 export {
   customizeSchema,
   sourceNodes,
@@ -29,6 +30,8 @@ export {
   initialize,
   writeHTML,
   waitUntilAllJobsComplete,
+  postBootstrap,
+  writeOutRedirects,
 }
 
 export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
@@ -45,4 +48,6 @@ export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
   initialize,
   writeHTML,
   waitUntilAllJobsComplete,
+  postBootstrap,
+  writeOutRedirects,
 }
