@@ -43,7 +43,6 @@ import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { rebuild as rebuildSchema } from "../schema"
 import { websocketManager } from "../utils/websocket-manager"
-import getSslCert from "../utils/get-ssl-cert"
 import { slash } from "gatsby-core-utils"
 import { initTracer } from "../utils/tracer"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -64,9 +63,11 @@ import {
 } from "../utils/feedback"
 
 import { Stage, IProgram } from "./types"
-
-// checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+import {
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+} from "../services"
 
 // const isInteractive = process.stdout.isTTY
 
@@ -108,7 +109,7 @@ interface IServer {
   webpackActivity: ActivityTracker
 }
 
-async function startServer(program: IDevelopArgs): Promise<IServer> {
+async function startServer(program: IProgram): Promise<IServer> {
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
@@ -344,15 +345,14 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
 
   /**
    * Set up the HTTP server and socket.io.
-   * If a SSL cert exists in program, use it with `createServer`.
    **/
-  const server = program.ssl
-    ? https.createServer(program.ssl, app)
-    : new http.Server(app)
+  const server = new http.Server(app)
 
   const socket = websocketManager.init({ server, directory: program.directory })
 
-  const listener = server.listen(program.port, program.host)
+  // hardcoded `localhost`, because host should match `target` we set
+  // in http proxy in `develop-proxy`
+  const listener = server.listen(program.port, `localhost`)
 
   // Register watcher that rebuilds index.html every time html.js changes.
   const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
@@ -367,11 +367,7 @@ async function startServer(program: IDevelopArgs): Promise<IServer> {
   return { compiler, listener, webpackActivity }
 }
 
-interface IDevelopArgs extends IProgram {
-  graphqlTracing: boolean
-}
-
-module.exports = async (program: IDevelopArgs): Promise<void> => {
+module.exports = async (program: IProgram): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
@@ -402,14 +398,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
-  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
-  // used together
-  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
-    report.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
-    )
-  }
-
   try {
     program.port = await detectPortInUseAndPrompt(port)
   } catch (e) {
@@ -418,29 +406,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     }
 
     throw e
-  }
-
-  // Check if https is enabled, then create or get SSL cert.
-  // Certs are named 'devcert' and issued to the host.
-  if (program.https) {
-    const sslHost =
-      program.host === `0.0.0.0` || program.host === `::`
-        ? `localhost`
-        : program.host
-
-    if (REGEX_IP.test(sslHost)) {
-      report.panic(
-        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
-      )
-    }
-
-    program.ssl = await getSslCert({
-      name: sslHost,
-      caFile: program[`ca-file`],
-      certFile: program[`cert-file`],
-      keyFile: program[`key-file`],
-      directory: program.directory,
-    })
   }
 
   // Start bootstrap process.
@@ -452,9 +417,10 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
 
-  await queryUtil.initialProcessQueries({
-    graphqlTracing: program.graphqlTracing,
-  })
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  await runStaticQueries({ queryIds, store, program })
+  await runPageQueries({ queryIds, store, program })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
@@ -666,7 +632,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
     const urls = prepareUrls(
-      program.ssl ? `https` : `http`,
+      program.https ? `https` : `http`,
       program.host,
       program.proxyPort
     )

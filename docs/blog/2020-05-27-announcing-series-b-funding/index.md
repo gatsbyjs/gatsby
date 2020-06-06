@@ -73,7 +73,7 @@ One thing that remains unchanged since Day Zero is our commitment to open source
 
 - **Support the ecosystem.** We employ the lead maintainers of [MDX](https://mdxjs.com/), [WPGraphQL](https://www.wpgraphql.com/), and [GraphiQL](https://github.com/graphql/graphiql), so they can continue to work on key projects that benefit more than just Gatsby. In addition, we have an active [OpenCollective](https://opencollective.com/gatsbyjs) where we contribute to key open source projects we rely on.
 
-- **Commercialization.** We're building a sustainable revenue base to [support our thriving open source community](https://www.gatsbyjs.org/blog/2020-02-11-founding-organizations/) by providing teams and enterprises purpose-built infrastructure for running their Gatsby sites with [Gatsby Cloud](http://gatsbyjs.com).
+- **Commercialization.** We're building a sustainable revenue base to [support our thriving open source community](https://www.gatsbyjs.org/blog/2020-02-11-founding-organizations/) by providing teams and enterprises purpose-built infrastructure for running their Gatsby sites with [Gatsby Cloud](https://gatsbyjs.com).
 
 - **Access.** Gatsby's open source framework will always be free. We also offer a permanent free tier on Gatsby Cloud for individuals. This guarantees community access to the best platform for building and deploying Gatsby sites.
 

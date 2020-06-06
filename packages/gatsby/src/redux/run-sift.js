@@ -166,12 +166,8 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
       b.length - a.length
   )
 
-  if (nodesPerValueArrs.length === 1) {
-    // If there's only one bucket then we have to run it against itself to
-    // make sure it doesn't contain dupes. Otherwise the deduping would
-    // already happen while merging.
-    nodesPerValueArrs.push(nodesPerValueArrs[nodesPerValueArrs.length - 1])
-  }
+  // All elements of nodesPerValueArrs should be sorted by counter and deduped
+  // So if there's only one bucket in this list the next loop is skipped
 
   while (nodesPerValueArrs.length > 1) {
     nodesPerValueArrs.push(
@@ -271,7 +267,8 @@ const getBucketsForQueryFilter = (
   const nodesPerValue /*: Array<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
     filterCacheKey,
     filterValue,
-    filtersCache
+    filtersCache,
+    false
   )
 
   // If we couldn't find the needle then maybe sift can, for example if the
@@ -331,7 +328,8 @@ const collectBucketForElemMatch = (
   const nodesByValue /*: Array<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
     filterCacheKey,
     targetValue,
-    filtersCache
+    filtersCache,
+    true
   )
 
   // If we couldn't find the needle then maybe sift can, for example if the
@@ -469,20 +467,28 @@ const applyFilters = (
   }
   lastFilterUsedSift = true
 
-  const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
-    filters,
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields
-  )
+  // const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
+  //   filters,
+  //   firstOnly,
+  //   nodeTypeNames,
+  //   resolvedFields
+  // )
+
+  // if (stats) {
+  //   if (!siftResult || siftResult.length === 0) {
+  //     stats.totalSiftHits++
+  //   }
+  // }
 
   if (stats) {
-    if (!siftResult || siftResult.length === 0) {
-      stats.totalSiftHits++
-    }
+    // to mean, "empty results"
+    stats.totalSiftHits++
   }
 
-  return siftResult
+  if (firstOnly) {
+    return []
+  }
+  return null
 }
 
 const filterToStats = (
@@ -514,6 +520,8 @@ const filterToStats = (
  * @returns {Array<IGatsbyNode> | null} Collection of results.
  *   Collection will be limited to 1 if `firstOnly` is true
  */
+// TODO: we will drop this entirely when removing all Sift code
+// eslint-disable-next-line no-unused-vars
 const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
   let nodes /*: IGatsbyNode[]*/ = []
   nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
