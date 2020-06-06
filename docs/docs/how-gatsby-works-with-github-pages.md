@@ -67,7 +67,7 @@ For a repository named like `username.github.io`, you don't need to specify `pat
 > - Change the default branch from `master` to something else, and use `master` as a site deployment directory only:
 >   1. To create a new branch called `source` run this command:
 >      `git checkout -b source master`
->   2. change default branch in repository settings ("Branches" menu item) from master to source
+>   2. Change the default branch in your repository settings ("Branches" menu item) from `master` to `source`
 > - have separate repository for your source code (so <username>.github.io is used only for deployment and not really for tracking your source code)
 
 ```json:title=package.json
