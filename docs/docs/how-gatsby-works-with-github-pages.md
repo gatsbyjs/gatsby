@@ -62,7 +62,7 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 
 For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `master` branch.
 
-> :warning: Keep in mind that Github Pages forces deployment of user\organization pages to master branch. So if you use master branch for development you need to do one of this:
+> :warning: Keep in mind that GitHub Pages forces deployment of user/organization pages to the `master` branch. So if you use `master` for development you need to do one of these:
 >
 > - change the default branch from master to something else, and use master just as site deployment directory:
 >   1. to create new branch called `source` run this command:
