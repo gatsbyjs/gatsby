@@ -475,14 +475,15 @@ class Image extends React.Component {
       itemProp,
     }
 
+    // Use a dummy empty object for initial state of `image`.
+    // Fixes React state hydration bug: https://github.com/gatsbyjs/gatsby/pull/24811
+    let image = getCurrentSrcData(fluid || fixed)
+    if (isBrowser && !this.state.isHydrated) {
+      image = {}
+    }
+
     if (fluid) {
       const imageVariants = fluid
-      const image = getCurrentSrcData(fluid)
-
-      let aspectRatio = image.aspectRatio
-      if (isBrowser && !this.state.isHydrated) {
-        aspectRatio += 0.0001
-      }
 
       return (
         <Tag
@@ -502,7 +503,7 @@ class Image extends React.Component {
             aria-hidden
             style={{
               width: `100%`,
-              paddingBottom: `${100 / aspectRatio}%`,
+              paddingBottom: `${100 / image.aspectRatio}%`,
             }}
           />
 
@@ -590,7 +591,6 @@ class Image extends React.Component {
 
     if (fixed) {
       const imageVariants = fixed
-      const image = getCurrentSrcData(fixed)
 
       const divStyle = {
         position: `relative`,
