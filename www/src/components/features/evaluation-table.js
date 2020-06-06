@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useState } from "react"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { renderCell } from "./evaluation-cell"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
@@ -68,8 +67,7 @@ const EvaluationTable = props => {
                                 ? `1px solid ${t.colors.ui.border}`
                                 : `none`,
                             minWidth: 40,
-                            paddingRight: 0,
-                            paddingLeft: 0,
+                            px: 0,
                             textAlign: `left`,
                             verticalAlign: `middle`,
                             fontSize: 1,
@@ -100,11 +98,9 @@ const EvaluationTable = props => {
                     >
                       <td
                         sx={{
-                          paddingBottom: t => `calc(${t.space[5]} - 1px)`,
+                          pb: t => `calc(${t.space[5]} - 1px)`,
                           "&&": {
-                            [mediaQueries.xs]: {
-                              px: 3,
-                            },
+                            px: [null, 3],
                           },
                         }}
                         colSpan="5"
