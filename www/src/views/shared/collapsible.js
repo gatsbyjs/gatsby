@@ -3,6 +3,8 @@ import { jsx } from "theme-ui"
 import { useState } from "react"
 import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 
+import { Flex } from "theme-ui"
+
 const Collapsible = props => {
   const { heading, fixed, children } = props
   const [collapsed, setCollapsed] = useState(false)
@@ -19,9 +21,8 @@ const Collapsible = props => {
         overflowY: collapsed ? false : `auto`,
       }}
     >
-      <div
-        css={{
-          display: `flex`,
+      <Flex
+        sx={{
           flexDirection: `column`,
           minHeight: `100%`,
           width: `100%`,
@@ -52,19 +53,19 @@ const Collapsible = props => {
         >
           {heading}
           {` `}
-          <span sx={{ ml: `auto` }} css={{ display: `flex` }}>
+          <span sx={{ display: `flex`, ml: `auto` }}>
             {collapsed ? <FaAngleDown /> : <FaAngleUp />}
           </span>
         </button>
         <div
-          css={{
+          sx={{
             display: collapsed ? `none` : `block`,
             overflowY: `auto`,
           }}
         >
           {children}
         </div>
-      </div>
+      </Flex>
     </div>
   )
 }
