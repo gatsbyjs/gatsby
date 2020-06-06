@@ -64,7 +64,7 @@ For a repository named like `username.github.io`, you don't need to specify `pat
 
 > :warning: Keep in mind that GitHub Pages forces deployment of user/organization pages to the `master` branch. So if you use `master` for development you need to do one of these:
 >
-> - change the default branch from master to something else, and use master just as site deployment directory:
+> - Change the default branch from `master` to something else, and use `master` as a site deployment directory only:
 >   1. to create new branch called `source` run this command:
 >      `git checkout -b source master`
 >   2. change default branch in repository settings ("Branches" menu item) from master to source
