@@ -211,7 +211,7 @@ function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
     media,
     sizes,
     srcset: isWebp ? srcSetWebp : srcSet,
-    type: isWebp ? "image/webp" : undefined,
+    type: isWebp ? `image/webp` : undefined,
   }
 
   return <source {...props} />
@@ -240,10 +240,10 @@ const listenToIntersections = (el, cb) => {
   }
 }
 
-const noscriptImg = (props) => {
+const noscriptImg = props => {
   const {
-    src = "",
-    alt = "",
+    src = ``,
+    alt = ``,
     sizes,
     srcSet,
     title,
@@ -267,14 +267,14 @@ const noscriptImg = (props) => {
     draggable,
 
     style: {
-      position: "absolute",
+      position: `absolute`,
       top: 0,
       left: 0,
       opacity: 1,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      objectPosition: "center",
+      width: `100%`,
+      height: `100%`,
+      objectFit: `cover`,
+      objectPosition: `center`,
       ...props.imgStyle,
     },
   }
