@@ -1347,6 +1347,25 @@
     - Portfolio
   built_by: Aman Mittal
   built_by_url: https://amanhimself.dev/
+- title: janosh.dev
+  description: >
+    Janosh Riebesell's blog. Writes about physics, machine learning, sustainability
+    and web development. Site is fully responsive and has fluid typography. Built with
+    MDX (for interactive content), styled-components (for design), KaTeX (for math),
+    gatsby-remark-vscode (for syntax highlighting), Disqus (for reader comments),
+    Algolia (for search), react-spring (for animations).
+  main_url: https://janosh.dev
+  url: https://janosh.dev
+  source_url: https://github.com/janosh/blog
+  categories:
+    - Portfolio
+    - Blog
+    - Science
+    - Photography
+    - Travel
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.dev
+  featured: false
 - title: Ocean artUp
   description: >
     Science outreach site built using styled-components and Contentful. Ocean artUp
@@ -1360,6 +1379,22 @@
   categories:
     - Science
     - Education
+    - Blog
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.dev
+  featured: false
+- title: Studenten bilden Schüler
+  description: >
+    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
+    contribute to more equal educational opportunities by providing free tutoring to refugees
+    and children from underprivileged families. The site is built with styled-components,
+    Contentful, CSS grid, fluid typography, Algolia search.
+  main_url: https://studenten-bilden-schueler.de
+  url: https://studenten-bilden-schueler.de
+  source_url: https://github.com/StudentenBildenSchueler/homepage
+  categories:
+    - Education
+    - Nonprofit
     - Blog
   built_by: Janosh Riebesell
   built_by_url: https://janosh.dev
@@ -1951,22 +1986,6 @@
     - Portfolio
     - Freelance
   featured: false
-- title: Studenten bilden Schüler
-  description: >
-    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
-    contribute to more equal educational opportunities by providing free tutoring to refugees
-    and children from underprivileged families. The site is built with styled-components,
-    Contentful, CSS grid, fluid typography, Algolia search.
-  main_url: https://studenten-bilden-schueler.de
-  url: https://studenten-bilden-schueler.de
-  source_url: https://github.com/StudentenBildenSchueler/homepage
-  categories:
-    - Education
-    - Nonprofit
-    - Blog
-  built_by: Janosh Riebesell
-  built_by_url: https://janosh.dev
-  featured: false
 - title: Mike's Remote List
   main_url: https://www.mikesremotelist.com
   url: https://www.mikesremotelist.com
@@ -2163,25 +2182,6 @@
     - Web Development
   built_by: Coletiv
   built_by_url: https://coletiv.com
-  featured: false
-- title: janosh.dev
-  description: >
-    Janosh Riebesell's blog. Writes about physics, machine learning, sustainability
-    and web development. Site is fully responsive and has fluid typography. Built with
-    MDX (for interactive content), styled-components (for design), KaTeX (for math),
-    gatsby-remark-vscode (for syntax highlighting), Disqus (for reader comments),
-    Algolia (for search), react-spring (for animations).
-  main_url: https://janosh.dev
-  url: https://janosh.dev
-  source_url: https://github.com/janosh/blog
-  categories:
-    - Portfolio
-    - Blog
-    - Science
-    - Photography
-    - Travel
-  built_by: Janosh Riebesell
-  built_by_url: https://janosh.dev
   featured: false
 - title: Gold Edge Training
   url: https://www.goldedgetraining.co.uk
