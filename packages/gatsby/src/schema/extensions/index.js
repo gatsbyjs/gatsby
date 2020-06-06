@@ -92,7 +92,7 @@ const typeExtensions = {
 const builtInFieldExtensions = {
   dateformat: {
     name: `dateformat`,
-    description: `Add date formating options.`,
+    description: `Add date formatting options.`,
     args: {
       formatString: `String`,
       locale: `String`,

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.37...gatsby-recipes@0.1.38) (2020-06-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.36...gatsby-recipes@0.1.37) (2020-06-03)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.35...gatsby-recipes@0.1.36) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.34...gatsby-recipes@0.1.35) (2020-06-02)
+
+### Bug Fixes
+
+- **gatsby-recipes:** move strip-ansi to dependencies ([#24687](https://github.com/gatsbyjs/gatsby/issues/24687)) ([19dc8a9](https://github.com/gatsbyjs/gatsby/commit/19dc8a9)), closes [#20949](https://github.com/gatsbyjs/gatsby/issues/20949)
+- **recipe:** AVA - fix brand name ([#24696](https://github.com/gatsbyjs/gatsby/issues/24696)) ([c92da12](https://github.com/gatsbyjs/gatsby/commit/c92da12))
+- **recipe:** Preact - brand name ([#24699](https://github.com/gatsbyjs/gatsby/issues/24699)) ([3c55efe](https://github.com/gatsbyjs/gatsby/commit/3c55efe))
+
 ## [0.1.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.33...gatsby-recipes@0.1.34) (2020-05-31)
 
 ### Bug Fixes
@@ -49,7 +69,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **recipes:** add recipe for Gitlab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
+- **recipes:** add recipe for GitLab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
 
 ## [0.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.27...gatsby-recipes@0.1.28) (2020-05-22)
 

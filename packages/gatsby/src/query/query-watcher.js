@@ -109,12 +109,15 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
     // Run action for each component
     const { components } = snapshot
-    components.forEach(c =>
+    components.forEach(c => {
+      const { isStaticQuery = false, text = `` } =
+        queries.get(c.componentPath) || {}
+
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
+        query: isStaticQuery ? `` : text,
       })
-    )
+    })
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -165,7 +168,7 @@ const clearInactiveComponents = () => {
 
   const activeTemplates = new Set()
   pages.forEach(page => {
-    // Set will guarantee uniqeness of entires
+    // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.component))
   })
 

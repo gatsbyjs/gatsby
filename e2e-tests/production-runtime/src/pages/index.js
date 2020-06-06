@@ -61,6 +61,11 @@ const IndexPage = ({ pageContext }) => (
           Go to page with unicode path
         </Link>
       </li>
+      <li>
+        <Link to="subdirectory/page-1" data-testid="subdir-link">
+          Go to subdirectory
+        </Link>
+      </li>
     </ul>
   </Layout>
 )

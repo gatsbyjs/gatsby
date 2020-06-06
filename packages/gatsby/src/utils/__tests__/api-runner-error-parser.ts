@@ -21,7 +21,7 @@ describe(`error matching`, () => {
   })
 })
 
-describe(`unkown error parser`, () => {
+describe(`unknown error parser`, () => {
   test(`it handles Errors`, () => {
     const match = errorParser({ err: new Error(`error`) })
 
