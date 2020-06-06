@@ -58,7 +58,7 @@ const SimpleEvaluationTable = props => {
               >
                 <td
                   sx={{
-                    paddingBottom: t => `calc(${t.space[5]} - 1px)`,
+                    pb: t => `calc(${t.space[5]} - 1px)`,
                     "&&": {
                       px: [null, 3],
                     },
