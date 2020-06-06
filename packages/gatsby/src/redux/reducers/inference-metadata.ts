@@ -121,9 +121,9 @@ const incrementalReducer = (
   }
 }
 
-const StepsEnum = {
-  initialBuild: `initialBuild`,
-  incrementalBuild: `incrementalBuild`,
+enum StepsEnum {
+  initialBuild = `initialBuild`,
+  incrementalBuild = `incrementalBuild`,
 }
 
 const initialState = (): IGatsbyState["inferenceMetadata"] => {
@@ -133,7 +133,7 @@ const initialState = (): IGatsbyState["inferenceMetadata"] => {
   }
 }
 
-module.exports = (
+export const inferenceMetadataReducer = (
   state: IGatsbyState["inferenceMetadata"] = initialState(),
   action: ActionsUnion
 ): IGatsbyState["inferenceMetadata"] => {
