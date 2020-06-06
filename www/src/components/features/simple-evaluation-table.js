@@ -4,7 +4,6 @@ import { useState } from "react"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import { renderCell } from "./evaluation-cell"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const SimpleEvaluationTable = props => {
   const { title, headers, data } = props
@@ -33,8 +32,7 @@ const SimpleEvaluationTable = props => {
                           ? `1px solid ${t.colors.ui.border}`
                           : `none`,
                       minWidth: 40,
-                      paddingRight: 0,
-                      paddingLeft: 0,
+                      px: 0,
                       textAlign: `left`,
                       verticalAlign: `middle`,
                       fontSize: 1,
@@ -62,9 +60,7 @@ const SimpleEvaluationTable = props => {
                   sx={{
                     paddingBottom: t => `calc(${t.space[5]} - 1px)`,
                     "&&": {
-                      [mediaQueries.xs]: {
-                        px: 3,
-                      },
+                      px: [null, 3],
                     },
                   }}
                   colSpan="5"
