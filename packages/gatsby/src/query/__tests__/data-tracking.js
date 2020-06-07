@@ -176,6 +176,10 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     },
   })
 
+  await require(`../../utils/create-schema-customization`).createSchemaCustomization(
+    {}
+  )
+
   await require(`../../utils/source-nodes`).default({})
   // trigger page-hot-reloader (if it was setup in previous test)
   emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
@@ -1027,6 +1031,161 @@ describe(`query caching between builds`, () => {
 
     describe(`With restarts`, () => {
       runDataDependencyClearingOnDirtyTest({ withRestarts: true })
+    })
+  })
+
+  describe(`Properly track connection when querying node interfaces`, () => {
+    let stage
+    beforeAll(() => {
+      setAPIhooks({
+        sourceNodes: ({ actions: { createNode }, createContentDigest }) => {
+          const typeACreator = typedNodeCreator(`TypeA`, {
+            createNode,
+            createContentDigest,
+          })
+
+          const typeBCreator = typedNodeCreator(`TypeB`, {
+            createNode,
+            createContentDigest,
+          })
+
+          const typeUnrelatedCreator = typedNodeCreator(`TypeUnrelated`, {
+            createNode,
+            createContentDigest,
+          })
+
+          // in every stage:
+          typeACreator({
+            id: `type-A-1`,
+            test: `Node A1`,
+          })
+
+          // in every stage other than initial
+          if (stage !== `initial`) {
+            typeACreator({
+              id: `type-A-2`,
+              test: `Node A2`,
+            })
+          }
+
+          if (stage === `add-type-b` || stage === `add-unrelated-node`) {
+            typeBCreator({
+              id: `type-B-1`,
+              test: `Node B1`,
+            })
+          }
+
+          if (stage === `add-unrelated-node`) {
+            typeUnrelatedCreator({
+              id: `type-Unrelated-1`,
+              test: `Node Unrelated1`,
+            })
+          }
+        },
+        createPages: ({ actions: { createPage } }, _pluginOptions) => {
+          createPage({
+            component: `/src/templates/details.js`,
+            path: `/`,
+          })
+        },
+        createSchemaCustomization: ({ actions: { createTypes } }) => {
+          createTypes(`
+            interface NodeInterface @nodeInterface {
+              id: ID!
+              test: String
+            }
+
+            type TypeA implements Node & NodeInterface {
+              id: ID!
+              test: String
+            }
+
+            type TypeB implements Node & NodeInterface {
+              id: ID!
+              test: String
+            }
+          `)
+        },
+      })
+      setPageQueries({
+        "/src/templates/details.js": `
+          {
+            allNodeInterface {
+              nodes {
+                id
+                test
+              }
+            }
+          }
+        `,
+      })
+      setStaticQueries({})
+    })
+
+    const runNodeInterfaceConnectionTrackingTest = ({ withRestarts }) => {
+      it(`Initial - adds linked node dependency`, async () => {
+        stage = `initial`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: true,
+          clearCache: true,
+        })
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // on initial we want query to run
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Adds another node of type that was already used - query should be dirty`, async () => {
+        stage = `add-another-type-a`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: withRestarts,
+        })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we add node of type that implements node interface we query
+        // we should rerun query
+
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Adds node of the other type implementing same node interface - query should be dirty`, async () => {
+        stage = `add-type-b`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: withRestarts,
+        })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we add node of type that implements node interface we query
+        // we should rerun query
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Adds node of type NOT implementing same node interface - query should NOT be dirty`, async () => {
+        stage = `add-unrelated-node`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: withRestarts,
+        })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we add node of type that implements node interface we query
+        // we should rerun query
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([])
+      }, 999999)
+    }
+
+    describe(`No restarts`, () => {
+      runNodeInterfaceConnectionTrackingTest({ withRestarts: false })
+    })
+
+    describe(`With restarts`, () => {
+      runNodeInterfaceConnectionTrackingTest({ withRestarts: true })
     })
   })
 

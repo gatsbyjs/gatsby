@@ -6,14 +6,13 @@ const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { platform } = require(`os`)
 const path = require(`path`)
-const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../db/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
-const fileExistsSync = require(`fs-exists-cached`).sync
+const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
 const {
@@ -135,8 +134,14 @@ const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
 const pageComponentCache = {}
-const fileOkCache = {}
-
+const reservedFields = [
+  `path`,
+  `matchPath`,
+  `component`,
+  `componentChunkName`,
+  `pluginCreator___NODE`,
+  `pluginCreatorId`,
+]
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
@@ -187,22 +192,14 @@ actions.createPage = (
 
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
-  if (_.isObject(page.context)) {
-    const reservedFields = [
-      `path`,
-      `matchPath`,
-      `component`,
-      `componentChunkName`,
-      `pluginCreator___NODE`,
-      `pluginCreatorId`,
-    ]
-    const invalidFields = Object.keys(_.pick(page.context, reservedFields))
+  if (typeof page.context === `object`) {
+    const invalidFields = reservedFields.filter(field => field in page.context)
 
-    const singularMessage = `${name} used a reserved field name in the context object when creating a page:`
-    const pluralMessage = `${name} used reserved field names in the context object when creating a page:`
     if (invalidFields.length > 0) {
       const error = `${
-        invalidFields.length === 1 ? singularMessage : pluralMessage
+        invalidFields.length === 1
+          ? `${name} used a reserved field name in the context object when creating a page:`
+          : `${name} used reserved field names in the context object when creating a page:`
       }
 
 ${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
@@ -268,35 +265,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
-  // Don't check if the component exists during tests as we use a lot of fake
-  // component paths.
-  if (process.env.NODE_ENV !== `test`) {
-    if (!fileExistsSync(page.component)) {
-      report.panic({
-        id: `11325`,
-        context: {
-          pluginName: name,
-          pageObject: page,
-          component: page.component,
-        },
-      })
-    }
-  }
-  if (!path.isAbsolute(page.component)) {
-    // Don't log out when testing
+  const { error, message, panicOnBuild } = validatePageComponent(
+    page,
+    store.getState().program.directory,
+    name
+  )
+
+  if (error) {
     if (process.env.NODE_ENV !== `test`) {
-      report.panic({
-        id: `11326`,
-        context: {
-          pluginName: name,
-          pageObject: page,
-          component: page.component,
-        },
-      })
-    } else {
-      const message = `${name} must set the absolute path to the page component when create creating a page`
-      return message
+      if (panicOnBuild) {
+        report.panicOnBuild(error)
+      } else {
+        report.panic(error)
+      }
     }
+    return message
   }
 
   // check if we've processed this component path
@@ -402,8 +385,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
-      actionOptions &&
-      actionOptions.traceId === `initial-createPagesStatefully`,
+      actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
@@ -412,63 +394,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // If the path doesn't have an initial forward slash, add it.
   if (internalPage.path[0] !== `/`) {
     internalPage.path = `/${internalPage.path}`
-  }
-
-  // Validate that the page component imports React and exports something
-  // (hopefully a component).
-  //
-  // Only run validation once during builds.
-  if (
-    !internalPage.component.includes(`/.cache/`) &&
-    process.env.NODE_ENV === `production` &&
-    !fileOkCache[internalPage.component]
-  ) {
-    const fileName = internalPage.component
-    const fileContent = fs.readFileSync(fileName, `utf-8`)
-    let notEmpty = true
-    let includesDefaultExport = true
-
-    if (fileContent === ``) {
-      notEmpty = false
-    }
-
-    if (
-      !fileContent.includes(`export default`) &&
-      !fileContent.includes(`module.exports`) &&
-      !fileContent.includes(`exports.default`) &&
-      !fileContent.includes(`exports["default"]`) &&
-      !fileContent.match(/export \{.* as default.*\}/s) &&
-      // this check only applies to js and ts, not mdx
-      /\.(jsx?|tsx?)/.test(path.extname(fileName))
-    ) {
-      includesDefaultExport = false
-    }
-    if (!notEmpty || !includesDefaultExport) {
-      const relativePath = path.relative(
-        store.getState().program.directory,
-        fileName
-      )
-
-      if (!notEmpty) {
-        report.panicOnBuild({
-          id: `11327`,
-          context: {
-            relativePath,
-          },
-        })
-      }
-
-      if (!includesDefaultExport) {
-        report.panicOnBuild({
-          id: `11328`,
-          context: {
-            fileName,
-          },
-        })
-      }
-    }
-
-    fileOkCache[internalPage.component] = true
   }
 
   const oldPage: Page = store.getState().pages.get(internalPage.path)

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.65](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.64...gatsby-admin@0.1.65) (2020-06-05)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.64](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.63...gatsby-admin@0.1.64) (2020-06-04)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.63](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.62...gatsby-admin@0.1.63) (2020-06-04)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.61...gatsby-admin@0.1.62) (2020-06-04)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.60...gatsby-admin@0.1.61) (2020-06-03)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.59...gatsby-admin@0.1.60) (2020-06-03)
+
+**Note:** Version bump only for package gatsby-admin
+
+## [0.1.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.58...gatsby-admin@0.1.59) (2020-06-03)
+
+**Note:** Version bump only for package gatsby-admin
+
 ## [0.1.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.57...gatsby-admin@0.1.58) (2020-06-02)
 
 **Note:** Version bump only for package gatsby-admin

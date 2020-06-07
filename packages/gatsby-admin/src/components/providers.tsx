@@ -18,12 +18,15 @@ const theme = {
   },
   borders: {
     default: `1px solid ${baseTheme.colors.whiteFade[20]}`,
+    sixtywhite: `1px solid ${baseTheme.colors.whiteFade[40]}`,
+    white: `1px solid ${baseTheme.colors.white}`,
   },
   sizes: {
     // NOTE(@mxstbr): Hacks around issues with strict-ui that I have to fix upstream eventually
     "1px": `1px`,
     "100%": `100%`,
     "16px": `16px`,
+    "15em": `15em`,
     initial: `initial`,
   },
 }

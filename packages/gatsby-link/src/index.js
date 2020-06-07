@@ -7,7 +7,7 @@ import { parsePath } from "./parse-path"
 
 export { parsePath }
 
-const isAbsolutePath = path => path.startsWith(`/`)
+const isAbsolutePath = path => path?.startsWith(`/`)
 
 export function withPrefix(path, prefix = __BASE_PATH__) {
   if (!isLocalLink(path)) {
@@ -25,6 +25,7 @@ export function withPrefix(path, prefix = __BASE_PATH__) {
 }
 
 const isLocalLink = path =>
+  path &&
   !path.startsWith(`http://`) &&
   !path.startsWith(`https://`) &&
   !path.startsWith(`//`)
