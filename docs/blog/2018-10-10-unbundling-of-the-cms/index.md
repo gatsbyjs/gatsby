@@ -34,10 +34,12 @@ One popular, paywalled, news site that currently stores all content and data in 
 Another digital consumer brand moved from using Sitecore as a content and development platform to using [Contentful](https://www.contentful.com/) as a [headless CMS](/docs/headless-cms/), [Yotpo](https://www.yotpo.com/) for user-generated content -- primarily reviews, while development transitioned to React to provide a modern look and feel.
 
 <figure>
-  <img alt="The modularization of the CMS" height="400" src="./modular-cms-architecture.png" />
-  <figcaption>
-   The modularization of the CMS
-  </figcaption>
+  <img
+    alt="The modularization of the CMS"
+    height="400"
+    src="./modular-cms-architecture.png"
+  />
+  <figcaption>The modularization of the CMS</figcaption>
 </figure>
 
 ## Integrating modular services
@@ -49,10 +51,12 @@ With these solutions available, customers can pick vendors _à la carte_. The co
 Enterprises who have purchased these CMS solutions are left asking themselves one of the oldest questions in corporate IT: should they stick with their single-vendor application suite, with inferior but integrated modules? Or, unlock a way to integrate the best-of-breed solutions?
 
 <figure>
-  <img alt="The modularization of the CMS" height="400" src="./headless-cms-landscape.png" />
-  <figcaption>
-   The [headless CMS](/docs/headless-cms/) landscape
-  </figcaption>
+  <img
+    alt="The modularization of the CMS"
+    height="400"
+    src="./headless-cms-landscape.png"
+  />
+  <figcaption>The [headless CMS](/docs/headless-cms/) landscape</figcaption>
 </figure>
 
 ## Making integration feasible via a content mesh
@@ -63,4 +67,4 @@ The next post, [The Rise of Modern Web Development](/blog/2018-10-11-rise-of-mod
 
 After that, [Why Mobile Performance is Crucial](/blog/2018-10-16-why-mobile-performance-is-crucial) discusses the rise of e-commerce on smartphones, why the average site haven't been getting any faster on mobile, and existing technology that can make sites fast _by default_.
 
-Finally, in our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing an "content mesh" that makes all the other choices easy.
+Finally, in our conclusion, Creating Compelling Experiences, we’ll discuss a step-by-step approach for choosing a content architecture, modern development environment, a performance strategy -- and most importantly, choosing a "content mesh" that makes all the other choices easy.

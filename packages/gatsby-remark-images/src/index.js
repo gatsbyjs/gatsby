@@ -13,7 +13,7 @@ const _ = require(`lodash`)
 const { fluid, stats, traceSVG } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
 // If the image is relative (not hosted elsewhere)
@@ -72,16 +72,13 @@ module.exports = (
   const getImageInfo = uri => {
     const { url, query } = queryString.parseUrl(uri)
     return {
-      ext: path
-        .extname(url)
-        .split(`.`)
-        .pop(),
+      ext: path.extname(url).split(`.`).pop(),
       url,
       query,
     }
   }
 
-  const getImageCaption = (node, overWrites) => {
+  const getImageCaption = async (node, overWrites) => {
     const getCaptionString = () => {
       const captionOptions = Array.isArray(options.showCaptions)
         ? options.showCaptions
@@ -118,12 +115,12 @@ module.exports = (
       return _.escape(captionString)
     }
 
-    return compiler.generateHTML(compiler.parseString(captionString))
+    return compiler.generateHTML(await compiler.parseString(captionString))
   }
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(
+  const generateImagesAndUpdateNode = async function (
     node,
     resolve,
     inLink,
@@ -190,6 +187,15 @@ module.exports = (
       )
     }
 
+    const imageStyle = `
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      vertical-align: middle;
+      position: absolute;
+      top: 0;
+      left: 0;`.replace(/\s*(\S+:)\s*/g, `$1`)
+
     // Create our base image tag
     let imageTag = `
       <img
@@ -199,6 +205,7 @@ module.exports = (
         src="${fallbackSrc}"
         srcset="${srcSet}"
         sizes="${fluidResult.sizes}"
+        style="${imageStyle}"
         loading="${loading}"
       />
     `.trim()
@@ -239,6 +246,7 @@ module.exports = (
           alt="${alt}"
           title="${title}"
           loading="${loading}"
+          style="${imageStyle}"
         />
       </picture>
       `.trim()
@@ -280,12 +288,15 @@ module.exports = (
 
     // Construct new image node w/ aspect ratio placeholder
     const imageCaption =
-      options.showCaptions && getImageCaption(node, overWrites)
+      options.showCaptions && (await getImageCaption(node, overWrites))
 
     let removeBgImage = false
     if (options.disableBgImageOnAlpha) {
       const imageStats = await stats({ file: imageNode, reporter })
       if (imageStats && imageStats.isTransparent) removeBgImage = true
+    }
+    if (options.disableBgImage) {
+      removeBgImage = true
     }
 
     const bgImage = removeBgImage
@@ -318,9 +329,9 @@ module.exports = (
     rawHTML = `
     <span
       class="${imageWrapperClass}"
-      style="position: relative; display: block; margin-left: auto; margin-right: auto; ${
-        imageCaption ? `` : wrapperStyle
-      } max-width: ${presentationWidth}px;"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px; ${
+      imageCaption ? `` : wrapperStyle
+    }"
     >
       ${rawHTML}
     </span>
@@ -410,7 +421,7 @@ module.exports = (
             }
 
             let imageRefs = []
-            $(`img`).each(function() {
+            $(`img`).each(function () {
               imageRefs.push($(this))
             })
 

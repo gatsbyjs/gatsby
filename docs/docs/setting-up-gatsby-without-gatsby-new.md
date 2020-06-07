@@ -8,9 +8,8 @@ There are many Enterprise level companies that maintain an internal clone of the
 
 To get started with Gatsby, you’ll need to make sure you have the following software tools installed:
 
-1. [Node.js](/tutorial/part-zero/#install-nodejs)
-1. [npm CLI](/tutorial/part-zero/#familiarize-with-npm)
-1. [Gatsby CLI](/tutorial/part-zero/#install-the-gatsby-cli)
+1. [Node.js](/tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system)
+2. [Gatsby CLI](/tutorial/part-zero/#using-the-gatsby-cli)
 
 For step-by-step installation instructions and detailed explanations of the required software, head on over to the [Gatsby tutorial](/tutorial/part-zero/).
 
@@ -55,7 +54,9 @@ Now, add some React code to your `index.js` file as a starting point for your pr
 ```jsx:title=src/pages/index.js
 import React from "react"
 
-export default () => <h1>Hello Gatsby!</h1>
+export default function Home() {
+  return <h1>Hello Gatsby!</h1>
+}
 ```
 
 Finally, go back to the root of your project and run the `gatsby develop` command to start a development server and begin coding.
@@ -65,4 +66,4 @@ cd ../../
 gatsby develop
 ```
 
-And that's it! You should now have your initial page running on `localhost:8000` with a GraphiQL IDE running on `localhost:8000/___graphql`. From here, you can follow the rest of the [Gatsby tutorial](/tutorial/part-zero/#set-up-a-code-editor) starting with setting up a code editor to get the full experience of what Gatsby can offer.
+And that's it! You should now have your initial page running on `http://localhost:8000` with a GraphiQL IDE running on `http://localhost:8000/___graphql`. From here, you can follow the rest of the [Gatsby tutorial](/tutorial/part-zero/#set-up-a-code-editor) starting with setting up a code editor to get the full experience of what Gatsby can offer.

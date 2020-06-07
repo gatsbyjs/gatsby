@@ -125,7 +125,6 @@ We've shaved off ~75ms from Time to Interactive, while also improving the Speed 
 
 Gatsby v2 is an iterative approach to improving the solid foundational base that was Gatsby v1. By upgrading your site, you can fully realize these performance benefits and deliver that blazing fast experience your users want, need, and expect. You've learned some tangible ways to measure performance so you can _prove_ for yourself that your site is as fast as it should be. Finally, you’ve learned in more depth about some of the changes and improvements that will be available merely by upgrading to Gatsby v2. [Follow our migration guide and update today][migration-guide] to see for yourself!
 
-[bbc]: https://www.blackbeltcommerce.com/bigcommerce/poor-website-performance/
 [web-perf]: https://github.com/google/WebFundamentals/blob/master/src/data/glossary.yaml
 [speed-index]: https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index
 [lighthouse]: https://www.google.com/search?q=google+audit&ie=utf-8&oe=utf-8&client=firefox-b-1-ab

@@ -50,17 +50,21 @@ async function queryResult(
     addInferredFields,
   } = require(`../../../gatsby/src/schema/infer/add-inferred-fields`)
   const {
-    getExampleValue,
-  } = require(`../../../gatsby/src/schema/infer/example-value`)
+    addNodes,
+  } = require(`../../../gatsby/src/schema/infer/inference-metadata`)
+  const {
+    getExampleObject,
+  } = require(`../../../gatsby/src/schema/infer/build-example-data`)
 
   const typeName = `MarkdownRemark`
   const sc = createSchemaComposer()
   const tc = sc.createObjectTC(typeName)
   sc.addTypeDefs(typeDefs)
+  const inferenceMetadata = addNodes({ typeName }, nodes)
   addInferredFields({
     schemaComposer: sc,
     typeComposer: tc,
-    exampleValue: getExampleValue({ nodes, typeName }),
+    exampleValue: getExampleObject(inferenceMetadata),
   })
   tc.addFields(extendNodeTypeFields)
   sc.Query.addFields({
@@ -290,6 +294,40 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
     { pluginOptions: { excerpt_separator: `<!-- end -->` } }
   )
 
+  const contentWithoutSeparator = `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+Where oh where **is** my little pony? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi auctor sit amet velit id facilisis. Nulla viverra, eros at efficitur pulvinar, lectus orci accumsan nisi, eu blandit elit nulla nec lectus. Integer porttitor imperdiet sapien. Quisque in orci sed nisi consequat aliquam. Aenean id mollis nisi. Sed auctor odio id erat facilisis venenatis. Quisque posuere faucibus libero vel fringilla.
+
+In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincidunt, sem velit vulputate enim, nec interdum augue enim nec mauris. Nulla iaculis ante sed enim placerat pretium. Nulla metus odio, facilisis vestibulum lobortis vitae, bibendum at nunc. Donec sit amet efficitur metus, in bibendum nisi. Vivamus tempus vel turpis sit amet auctor. Maecenas luctus vestibulum velit, at sagittis leo volutpat quis. Praesent posuere nec augue eget sodales. Pellentesque vitae arcu ut est varius venenatis id maximus sem. Curabitur non consectetur turpis.
+`
+
+  bootstrapTest(
+    `given MARKDOWN without excerpt separator, falls back to pruneLength`,
+    contentWithoutSeparator,
+    `excerpt(pruneLength: 40, format: MARKDOWN)`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.excerpt.length).toBe(45)
+      expect(node.excerpt).toBe(
+        `Where oh where **is** my little pony? Lorem…\n`
+      )
+    },
+    { pluginOptions: { excerpt_separator: `<!-- end -->` } }
+  )
+
+  bootstrapTest(
+    `given MARKDOWN, pruning is done not counting markdown characters`,
+    contentWithoutSeparator,
+    `excerpt(pruneLength: 19, format: MARKDOWN)`,
+    node => {
+      expect(node).toMatchSnapshot()
+      // we want the pruning to preserve markdown chars and not count them in the length
+      expect(node.excerpt.length).toBe(23)
+      expect(node.excerpt).toBe(`Where oh where **is**…\n`)
+    }
+  )
   const content = `---
 title: "my little pony"
 date: "2017-09-18T23:19:51.246Z"
@@ -829,18 +867,13 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
 以声明式编写 UI，可以让你的代码更加可靠，且方便调试。
 创建拥有各自状态的组件，再由这些组件构成更加复杂的 UI。
 组件逻辑使用 JavaScript 编写而非模版，因此你可以轻松地在应用中传递数据，并使得状态与 DOM 分离。
-
-React は、インタラクティブなユーザーインターフェイスの作成にともなう苦痛を取り除きます。アプリケーションの各状態に対応するシンプルな View を設計するだけで、React はデータの変更を検知し、関連するコンポーネントだけを効率的に更新、描画します。
-宣言的な View を用いてアプリケーションを構築することで、コードはより見通しが立ちやすく、デバッグのしやすいものになります。
-自分自身の状態を管理するカプセル化されたコンポーネントをまず作成し、これらを組み合わせることで複雑なユーザーインターフェイスを構築します。
-コンポーネントのロジックは、Template ではなく JavaScript そのもので書くことができるので、様々なデータをアプリケーション内で簡単に取り回すことができ、かつ DOM に状態を持たせないようにすることができます。
-
-    React는 상호작용이 많은 UI를 만들 때 생기는 어려움을 줄여줍니다. 애플리케이션의 각 상태에 대한 간단한 뷰만 설계하세요. 그럼 React는 데이터가 변경됨에 따라 적절한 컴포넌트만 효율적으로 갱신하고 렌더링합니다.선언형 뷰는 코드를 예측 가능하고 디버그하기 쉽게 만들어 줍니다.
+宣言的な View React は、インタラクティブなユーザインターフェイスの作成にともなう苦痛を取り除きます。アプリケーションの各状態に対応するシンプルな View を設計するだけで、React はデータの変更を検知し、関連するコンポーネントだけを効率的に更新、描画します。 宣言的な View を用いてアプリケーションを構築することで、コードはより見通しが立ちやすく、デバッグのしやすいものになります。
+コンポーネントベース 自分自身の状態を管理するカプセル化されたコンポーネントをまず作成し、これらを組み合わせることで複雑なユーザインターフェイスを構築します。 コンポーネントのロジックは、Template ではなく JavaScript そのもので書くことができるので、様々なデータをアプリケーション内で簡単に取り回すことができ、かつ DOM に状態を持たせないようにすることができます。
 `,
     `timeToRead`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.timeToRead).toEqual(2)
+      expect(node.timeToRead).toEqual(1)
     }
   )
 
@@ -938,6 +971,33 @@ final text
   )
 
   bootstrapTest(
+    `correctly generates table of contents in relative path`,
+    `---
+title: "my little pony"
+date: "2017-09-18T23:19:51.246Z"
+---
+# first title
+
+some text
+
+## second title
+
+some other text
+
+# third title
+
+final text
+`,
+    `tableOfContents(absolute: false)
+    frontmatter {
+        title
+    }`,
+    node => {
+      expect(node).toMatchSnapshot()
+    }
+  )
+
+  bootstrapTest(
     `table of contents is generated with correct depth (graphql option)`,
     `---
 title: "my little pony"
@@ -1017,6 +1077,71 @@ final text`,
       expect(node.tableOfContents).toBe(`<ul>
 <li><a href="/my%20little%20pony/#third-title">third title</a></li>
 </ul>`)
+    }
+  )
+})
+
+describe(`Table of contents properly handles headings containing inline code blocks`, () => {
+  bootstrapTest(
+    `Inline code blocks within headings are translated to <code> tags in generated TOC`,
+    `---
+title: "My Blog Post"
+date: "2019-12-09"
+---
+# My Blog Post
+
+text
+
+## Generating TOCs with \`gatsby-transformer-remark\`
+
+Content - content
+
+### Embedding \`<code>\` Tags
+
+It's easier than you may imagine`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+    node => expect(node).toMatchSnapshot()
+  )
+
+  bootstrapTest(
+    `<code> tags generated by \`gatsby-remark-prismjs\` are properly treated as unescaped HTML`,
+    `---
+title: "My Blog Post"
+date: "2019-12-09"
+---
+# My Blog Post
+
+text
+
+## Generating TOCs with \`gatsby-transformer-remark\`
+
+Content - content
+
+### Embedding \`<code>\` Tags
+
+It's easier than you may imagine`,
+    `tableOfContents(pathToSlugField: "frontmatter.title")
+    frontmatter {
+        title
+    }`,
+    node => expect(node).toMatchSnapshot(),
+    {
+      pluginOptions: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: `language-`,
+              inlineCodeMarker: null,
+              showLineNumbers: false,
+              noInlineHighlight: false,
+            },
+          },
+        ],
+      },
     }
   )
 })
@@ -1104,9 +1229,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
-        [`language-js`]
-      )
+      expect(
+        node.htmlAst.children[0].children[0].properties.className
+      ).toEqual([`language-js`])
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )
@@ -1138,6 +1263,77 @@ describe(`Headings are generated correctly from schema`, () => {
           depth: 2,
         },
       ])
+    }
+  )
+
+  bootstrapTest(
+    `returns null id if heading has no id`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: null,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: null,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns id if heading has one`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: `first-title`,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: `second-title`,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    },
+    {
+      pluginOptions: {
+        plugins: [
+          // to pass subplugin we need to use object with `resolve` and `pluginOptions`
+          // (this is what gatsby core internally turns plugin entries to + gatsby core always set empty object {}
+          // if options were not provided and lot of plugins rely on this and are not checking for options existence)
+          {
+            resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
+            pluginOptions: {},
+          },
+        ],
+      },
     }
   )
 

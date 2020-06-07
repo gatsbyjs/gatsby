@@ -12,7 +12,12 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import { setLoader, ProdLoader, publicLoader } from "./loader"
+import {
+  setLoader,
+  ProdLoader,
+  publicLoader,
+  PageResourceStatus,
+} from "./loader"
 import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
@@ -72,12 +77,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   id="gatsby-focus-wrapper"
                 >
                   <RouteHandler
-                    path={encodeURI(
+                    path={
                       pageResources.page.path === `/404.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
-                        : pageResources.page.matchPath ||
-                            pageResources.page.path
-                    )}
+                        : encodeURI(
+                            pageResources.page.matchPath ||
+                              pageResources.page.path
+                          )
+                    }
                     {...this.props}
                     location={location}
                     pageResources={pageResources}
@@ -117,7 +124,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   publicLoader.loadPage(browserLoc.pathname).then(page => {
-    if (!page || page.status === `error`) {
+    if (!page || page.status === PageResourceStatus.Error) {
       throw new Error(
         `page resources for ${browserLoc.pathname} not found. Not rendering React`
       )
@@ -140,7 +147,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       }
     ).pop()
 
-    let NewRoot = () => WrappedRoot
+    const NewRoot = () => WrappedRoot
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,

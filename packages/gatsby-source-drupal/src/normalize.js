@@ -29,23 +29,29 @@ const isFileNode = node =>
 exports.isFileNode = isFileNode
 
 exports.downloadFile = async (
-  { node, store, cache, createNode, createNodeId },
+  { node, store, cache, createNode, createNodeId, getCache, reporter },
   { basicAuth, baseUrl }
 ) => {
   // handle file downloads
   if (isFileNode(node)) {
     let fileNode
+    let fileType
+
     try {
       let fileUrl = node.url
       if (typeof node.uri === `object`) {
         // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
         fileUrl = node.uri.url
+        // get file type from uri prefix ("S3:", "public:", etc.)
+        const uri_prefix = node.uri.value.match(/^\w*:/)
+        fileType = uri_prefix ? uri_prefix[0] : null
       }
       // Resolve w/ baseUrl if node.uri isn't absolute.
       const url = new URL(fileUrl, baseUrl)
       // If we have basicAuth credentials, add them to the request.
+      const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
       const auth =
-        typeof basicAuth === `object`
+        typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
           ? {
               htaccess_user: basicAuth.username,
               htaccess_pass: basicAuth.password,
@@ -57,8 +63,10 @@ exports.downloadFile = async (
         cache,
         createNode,
         createNodeId,
+        getCache,
         parentNodeId: node.id,
         auth,
+        reporter,
       })
     } catch (e) {
       // Ignore

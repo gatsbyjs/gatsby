@@ -11,20 +11,18 @@ In the last three sections, we’ve described the different facets of how to cre
 
 While these trends target different stakeholders, they’re deeply interrelated. That’s because to adopt a new architecture in one area, you often need to adopt new technologies in the other two.
 
-With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these these technologies are meant to be used together.
+With users after user writing headlines like "[Gatsby + Contentful + Netlify (and Algolia)](/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/)" -- grouping a React-based website framework, a headless CMS, a static host + CDN, and a search provider -- it’s clear these technologies are meant to be used together.
 
 Website teams moving to this space have to plan four steps -- one for each category, plus integration.
 
 <figure>
   <img alt="" src="./modern-website-performance.png" />
-  <figcaption>
-    Three facets of modern website projects
-  </figcaption>
+  <figcaption>Three facets of modern website projects</figcaption>
 </figure>
 
 ## Moving to the content mesh
 
-### First, choose content systems.
+### First, choose content systems
 
 In a modular CMS system, website teams can [use preferred workflows to choose your content systems](/blog/2018-10-10-unbundling-of-the-cms).
 
@@ -70,9 +68,14 @@ The answer: choose a content mesh. A content mesh:
 - automatically makes your site fast out of the box
 
 <figure>
-  <img alt="The modern website landscape" src="./content-mesh.png" height="300" />
+  <img
+    alt="The modern website landscape"
+    src="./content-mesh.png"
+    height="300"
+  />
   <figcaption>
-   The Content Mesh integrates <b>headless</b> content systems, modern development tools, and website performance
+    The Content Mesh integrates <b>headless</b> content systems, modern
+    development tools, and website performance
   </figcaption>
 </figure>
 

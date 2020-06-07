@@ -1,6 +1,6 @@
 /*  eslint-disable new-cap */
 const graphql = require(`gatsby/graphql`)
-const murmurhash = require(`./murmur`)
+const { murmurhash } = require(`./murmur`)
 const nodePath = require(`path`)
 
 class StringInterpolationNotAllowedError extends Error {
@@ -38,6 +38,20 @@ class GraphQLSyntaxError extends Error {
 
 const isGlobalIdentifier = tag =>
   tag.isIdentifier({ name: `graphql` }) && tag.scope.hasGlobal(`graphql`)
+
+export function followVariableDeclarations(binding) {
+  const node = binding.path?.node
+  if (
+    node?.type === `VariableDeclarator` &&
+    node?.id.type === `Identifier` &&
+    node?.init?.type === `Identifier`
+  ) {
+    return followVariableDeclarations(
+      binding.path.scope.getBinding(node.init.name)
+    )
+  }
+  return binding
+}
 
 function getTagImport(tag) {
   const name = tag.node.name
@@ -141,7 +155,9 @@ function getGraphQLTag(path) {
   }
 
   const text = quasis[0].value.raw
-  const hash = murmurhash(text, `abc`)
+  const normalizedText = graphql.stripIgnoredCharacters(text)
+
+  const hash = murmurhash(normalizedText, `abc`)
 
   try {
     const ast = graphql.parse(text)
@@ -149,13 +165,23 @@ function getGraphQLTag(path) {
     if (ast.definitions.length === 0) {
       throw new EmptyGraphQLTagError(quasis[0].loc)
     }
-    return { ast, text, hash, isGlobal }
+    return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
     throw new GraphQLSyntaxError(text, err, quasis[0].loc)
   }
 }
 
-export default function({ types: t }) {
+function isUseStaticQuery(path) {
+  return (
+    (path.node.callee.type === `MemberExpression` &&
+      path.node.callee.property.name === `useStaticQuery` &&
+      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
+    (path.node.callee.name === `useStaticQuery` &&
+      path.get(`callee`).referencesImport(`gatsby`))
+  )
+}
+
+export default function ({ types: t }) {
   return {
     visitor: {
       Program(path, state) {
@@ -202,25 +228,28 @@ export default function({ types: t }) {
           CallExpression(path2) {
             if (
               [`production`, `test`].includes(process.env.NODE_ENV) &&
-              path2.node.callee.name === `useStaticQuery` &&
-              path2.get(`callee`).referencesImport(`gatsby`)
+              isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
               const shortResultPath = `public/static/d/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
 
-              // Remove query variable since it is useless now
-              if (this.templatePath.parentPath.isVariableDeclarator()) {
-                this.templatePath.parentPath.remove()
+              // only remove the import if its like:
+              // import { useStaticQuery } from 'gatsby'
+              // but not if its like:
+              // import * as Gatsby from 'gatsby'
+              // because we know we can remove the useStaticQuery import,
+              // but we don't know if other 'gatsby' exports are used, so we
+              // cannot remove all 'gatsby' imports.
+              if (path2.node.callee.type !== `MemberExpression`) {
+                // Remove imports to useStaticQuery
+                const importPath = path2.scope.getBinding(`useStaticQuery`).path
+                const parent = importPath.parentPath
+                if (importPath.isImportSpecifier())
+                  if (parent.node.specifiers.length === 1) parent.remove()
+                  else importPath.remove()
               }
-
-              // Remove imports to useStaticQuery
-              const importPath = path2.scope.getBinding(`useStaticQuery`).path
-              const parent = importPath.parentPath
-              if (importPath.isImportSpecifier())
-                if (parent.node.specifiers.length === 1) parent.remove()
-                else importPath.remove()
 
               // Add query
               path2.replaceWith(
@@ -340,39 +369,32 @@ export default function({ types: t }) {
         // Traverse once again for useStaticQuery instances
         path.traverse({
           CallExpression(hookPath) {
+            if (!isUseStaticQuery(hookPath)) return
+
+            function TaggedTemplateExpression(templatePath) {
+              setImportForStaticQuery(templatePath)
+            }
+
+            // See if the query is a variable that's being passed in
+            // and if it is, go find it.
             if (
-              hookPath.node.callee.name !== `useStaticQuery` ||
-              !hookPath.get(`callee`).referencesImport(`gatsby`)
+              hookPath.node.arguments.length === 1 &&
+              hookPath.node.arguments[0].type === `Identifier`
             ) {
-              return
+              const [{ name: varName }] = hookPath.node.arguments
+
+              let binding = hookPath.scope.getBinding(varName)
+
+              if (binding) {
+                followVariableDeclarations(binding).path.traverse({
+                  TaggedTemplateExpression,
+                })
+              }
             }
 
             hookPath.traverse({
               // Assume the query is inline in the component and extract that.
-              TaggedTemplateExpression(templatePath) {
-                setImportForStaticQuery(templatePath)
-              },
-              // // Also see if it's a variable that's passed in as a prop
-              // // and if it is, go find it.
-              Identifier(identifierPath) {
-                if (identifierPath.node.name !== `graphql`) {
-                  const varName = identifierPath.node.name
-                  path.traverse({
-                    VariableDeclarator(varPath) {
-                      if (
-                        varPath.node.id.name === varName &&
-                        varPath.node.init.type === `TaggedTemplateExpression`
-                      ) {
-                        varPath.traverse({
-                          TaggedTemplateExpression(templatePath) {
-                            setImportForStaticQuery(templatePath)
-                          },
-                        })
-                      }
-                    },
-                  })
-                }
-              },
+              TaggedTemplateExpression,
             })
           },
         })

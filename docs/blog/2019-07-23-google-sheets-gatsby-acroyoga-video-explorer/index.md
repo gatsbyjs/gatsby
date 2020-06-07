@@ -20,7 +20,7 @@ I've long found it challenging to find just the right video to work on. Sometime
 
 My requirements for this Acroyoga videos site is that it be simple to add data to, load fast on mobile, and be generally intuitive to use. For this reason, I'm using Gatsby (and of course, React) and the Google Sheets API for this site. This simple stack will allow me to build a fast loading application that consumes data from a Google Sheet.
 
-As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: [https://github.com/kpennell/acrotagsgatsbyblog](https://github.com/kpennell/acrotagsgatsbyblog). Finally, if you want to check out the demo app, that can be found here: [https://acrotagsgatsbyblog.netlify.com](https://acrotagsgatsbyblog.netlify.com/).
+As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: https://github.com/kpennell/acrotagsgatsbyblog. Finally, if you want to check out the demo app, that can be found here: https://acrotagsgatsbyblog.netlify.com.
 
 ## Creating a Basic Gatsby Setup with Material-UI
 
@@ -144,7 +144,7 @@ Here's my new array of objects with the properties matching the first row.
 Next, I'd like for my comma-separated strings of tags (column I) to be arrays of tags (so I can `.map` over them in my React UI). This code allows me to do that:
 
 ```javascript
-let itemsArrayWithTagsArray = rows.map(function(item) {
+let itemsArrayWithTagsArray = rows.map(function (item) {
   item.tags = item.tags.split(",").map(item => item.trim())
   item = { ...item }
   return item
@@ -336,7 +336,7 @@ This was such a clear and easy 'aha!' moment. I hadn't optimized my images and w
 
 I dug into my normal gatsby-image workflow but I quickly hit a snag. My previous use of Gatsby-image had been for local images whilst I was now trying to use remote images (cloud storage image links). Thankfully, with just a bit more searching, I found the right plugin to solve this: [gatsby-plugin-remote-images](/packages/gatsby-plugin-remote-images/).
 
-Gatsby-plugin-remote-images fetches image URL links (e.g. http://super-image.png) and prepares them in a way that gatsby-image can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
+Gatsby-plugin-remote-images fetches image URL links (e.g. `http://super-image.png`) and prepares them in a way that gatsby-image can use them. To make my cards load faster, I'd need to optimize both the video thumbnail as well as the small instructor image. It makes no sense at all to load a 300+ pixel image of an instructor when all you really need are maybe 40 pixels max.
 
 ![Acroyoga Card with Optimized Images](./images/word-image-4.png)
 

@@ -5,6 +5,9 @@
 /docs/                                          @gatsbyjs/learning
 **/README.md                                    @gatsbyjs/learning
 
+# All blog posts must be reviewed by the content team.
+/docs/blog/                                     @gatsbyjs/content
+
 # The website auto-deploys, so we need an extra check to avoid shenanigans.
 /www/                                           @gatsbyjs/website
 
@@ -14,5 +17,6 @@
 /themes/                                        @gatsbyjs/themes-core
 /packages/gatsby-plugin-mdx/                    @gatsbyjs/themes-core
 /packages/gatsby/src/bootstrap/load-themes      @gatsbyjs/themes-core
-/packages/gatsby/src/bootstrap/index.js         @gatsbyjs/themes-core
+/packages/gatsby-recipes/                       @gatsbyjs/themes-core
+/packages/gatsby-admin/                         @gatsbyjs/themes-core
 /packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/   @gatsbyjs/themes-core

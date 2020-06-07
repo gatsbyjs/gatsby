@@ -12,7 +12,7 @@ const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
@@ -20,7 +20,7 @@ const queryCompiler = require(`./query-compiler`).default
 const report = require(`gatsby-cli/lib/reporter`)
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
-const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+import { getGatsbyDependents } from "../utils/gatsby-dependents"
 
 const getQueriesSnapshot = () => {
   const state = store.getState()
@@ -70,7 +70,7 @@ const handleQuery = (
     if (
       isNewQuery ||
       oldQuery.hash !== query.hash ||
-      oldQuery.text !== query.text
+      oldQuery.query !== query.text
     ) {
       boundActionCreators.replaceStaticQuery({
         name: query.name,
@@ -109,12 +109,15 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
     // Run action for each component
     const { components } = snapshot
-    components.forEach(c =>
+    components.forEach(c => {
+      const { isStaticQuery = false, text = `` } =
+        queries.get(c.componentPath) || {}
+
       boundActionCreators.queryExtracted({
         componentPath: c.componentPath,
-        query: queries.get(c.componentPath)?.text || ``,
+        query: isStaticQuery ? `` : text,
       })
-    )
+    })
 
     let queriesWillNotRun = false
     queries.forEach((query, component) => {
@@ -146,7 +149,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
 
         If you're more experienced with GraphQL, you can also export GraphQL
         fragments from components and compose the fragments in the Page component
-        query and pass data down into the child component — http://graphql.org/learn/queries/#fragments
+        query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
     }
@@ -165,7 +168,7 @@ const clearInactiveComponents = () => {
 
   const activeTemplates = new Set()
   pages.forEach(page => {
-    // Set will guarantee uniqeness of entires
+    // Set will guarantee uniqueness of entries
     activeTemplates.add(slash(page.component))
   })
 
@@ -265,3 +268,5 @@ exports.startWatchDeletePage = () => {
     }
   })
 }
+
+exports.updateStateAndRunQueries = updateStateAndRunQueries

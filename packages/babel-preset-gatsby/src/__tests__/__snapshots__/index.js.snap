@@ -4,10 +4,22 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
+    Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
         "loose": true,
       },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
@@ -61,10 +73,22 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
+    Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
         "loose": true,
       },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
@@ -122,10 +146,22 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
+    Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
         "loose": true,
       },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",
@@ -177,10 +213,22 @@ exports[`babel-preset-gatsby should specify proper presets and plugins when stag
 Object {
   "plugins": Array [
     Array [
+      "<PROJECT_ROOT>/packages/babel-preset-gatsby/src/optimize-hook-destructuring.ts",
+      Object {
+        "lib": true,
+      },
+    ],
+    Array [
       "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-class-properties/lib/index.js",
       Object {
         "loose": true,
       },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-nullish-coalescing-operator/lib/index.js",
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-proposal-optional-chaining/lib/index.js",
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-macros/dist/index.js",
     "<PROJECT_ROOT>/node_modules/@babel/plugin-syntax-dynamic-import/lib/index.js",

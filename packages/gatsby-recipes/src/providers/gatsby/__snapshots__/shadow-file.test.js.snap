@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile create 1`] = `
+Object {
+  "_message": "Shadowed src/gatsby-theme-blog/components/author.js from gatsby-theme-blog",
+  "contents": "import React from 'react'
+
+export default () => <h1>F. Scott Fitzgerald</h1>
+",
+  "id": "src/gatsby-theme-blog/components/author.js",
+  "path": "src/gatsby-theme-blog/components/author.js",
+  "theme": "gatsby-theme-blog",
+}
+`;
+
+exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile create plan 1`] = `
+Object {
+  "currentState": Object {},
+  "describe": "Shadow src/components/author.js from the theme gatsby-theme-blog",
+  "diff": "- Original  - 0
++ Modified  + 4
+
++ import React from 'react'
++
++ export default () => <h1>F. Scott Fitzgerald</h1>
++",
+  "id": "src/gatsby-theme-blog/components/author.js",
+  "newState": Object {
+    "contents": "import React from 'react'
+
+export default () => <h1>F. Scott Fitzgerald</h1>
+",
+    "id": "src/gatsby-theme-blog/components/author.js",
+    "path": "src/components/author.js",
+    "theme": "gatsby-theme-blog",
+  },
+  "path": "src/components/author.js",
+  "theme": "gatsby-theme-blog",
+}
+`;
+
+exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile destroy 1`] = `
+Object {
+  "_message": "Shadowed src/gatsby-theme-blog/components/author.js from gatsby-theme-blog",
+  "contents": "import React from 'react'
+
+export default () => <h1>F. Scott Fitzgerald</h1>
+",
+  "id": "src/gatsby-theme-blog/components/author.js",
+  "path": "src/gatsby-theme-blog/components/author.js",
+  "theme": "gatsby-theme-blog",
+}
+`;
+
+exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile update 1`] = `
+Object {
+  "_message": "Shadowed src/gatsby-theme-blog/components/author.js from gatsby-theme-blog",
+  "contents": "import React from 'react'
+
+export default () => <h1>F. Scott Fitzgerald</h1>
+",
+  "id": "src/gatsby-theme-blog/components/author.js",
+  "path": "src/gatsby-theme-blog/components/author.js",
+  "theme": "gatsby-theme-blog",
+}
+`;
+
+exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile update plan 1`] = `
+Object {
+  "currentState": Object {
+    "_message": "Shadowed src/gatsby-theme-blog/components/author.js from gatsby-theme-blog",
+    "contents": "import React from 'react'
+
+export default () => <h1>F. Scott Fitzgerald</h1>
+",
+    "id": "src/gatsby-theme-blog/components/author.js",
+    "path": "src/gatsby-theme-blog/components/author.js",
+    "theme": "gatsby-theme-blog",
+  },
+  "describe": "Shadow src/components/author.js from the theme gatsby-theme-blog",
+  "diff": "Compared values have no visual difference.",
+  "id": "src/gatsby-theme-blog/components/author.js",
+  "newState": Object {
+    "contents": "import React from 'react'
+
+export default () => <h1>F. Scott Fitzgerald</h1>
+",
+    "id": "src/gatsby-theme-blog/components/author.js",
+    "path": "src/components/author.js",
+    "theme": "gatsby-theme-blog",
+  },
+  "path": "src/components/author.js",
+  "theme": "gatsby-theme-blog",
+}
+`;

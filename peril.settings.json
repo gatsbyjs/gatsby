@@ -6,7 +6,6 @@
     "modules": ["@slack/client", "joi", "js-yaml", "date-fns"]
   },
   "rules": {
-    "issue_comment": ["peril/rules/not-stale.ts"],
     "issues.opened": ["peril/rules/emptybody.ts", "peril/rules/labeler.ts"],
     "pull_request.closed (pull_request.merged == true)": [
       "peril/rules/invite-collaborator.ts"
@@ -14,6 +13,10 @@
   },
   "repos": {
     "gatsbyjs/gatsby": {
+      "issues.opened": ["gatsbyjs/gatsby@peril/rules/apply-triage-needed.ts"],
+      "pull_request.opened": [
+        "gatsbyjs/gatsby@peril/rules/apply-triage-needed.ts"
+      ],
       "pull_request": ["gatsbyjs/gatsby@peril/rules/validate-yaml.ts"],
       "check_run": ["gatsbyjs/gatsby@peril/rules/validate-yaml.ts"],
       "pull_request.labeled": ["gatsbyjs/gatsby@peril/rules/merge-on-green.ts"],
@@ -40,11 +43,5 @@
         "gatsbyjs/gatsby@peril/rules/pull-request-on-starter.ts"
       ]
     }
-  },
-  "tasks": {
-    "stale": "peril/tasks/stale.ts"
-  },
-  "scheduler": {
-    "daily": "stale"
   }
 }

@@ -27,7 +27,7 @@ const Link = () => (
       },
     }}
   >
-    Skip to main content
+    rans>Skip to main content
   </SkipNavLink>
 )
 

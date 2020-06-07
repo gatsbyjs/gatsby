@@ -13,7 +13,7 @@ Most recently, I had the opportunity to lead the first Gatsby project at Work & 
 Our project was to build a new website for [Whittle School & Studios](https://www.whittleschool.org/en). Whittle is an innovative educator that will soon open campuses in the United States and China.
 
 <video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="./whittle.mp4"></source>
+  <source type="video/mp4" src="./whittle.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
@@ -73,11 +73,11 @@ Here’s a `modules` field on a `ContentPage` currently in use on production:
 
 ![modules field](./modules.png)
 
-Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](http://graphql.org/learn/queries/#inline-fragments).
+Figuring out how to set this up in GraphQL took some trial and error, but we settled on using [inline fragments](https://graphql.org/learn/queries/#inline-fragments).
 
 The GraphQL looks like this:
 
-```
+```graphql
 ContentfulContentPage {
   headline
   slug
@@ -103,7 +103,7 @@ We ran into one schematic limitation working with Gatsby that’s helpful to be 
 
 The are some really promising discussions on the topic on GitHub, including an [RFC to refactor Gatsby’s schema generation](https://github.com/gatsbyjs/gatsby/issues/4261), but in the meantime, most users are getting around this issue by creating placeholder content on Contentful (or whatever their data source is) to guarantee a fully built-up schema.
 
-This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like ‘PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
+This got the job done in our case, and we augmented the approach by creating a `DummyContentIndex` model on Contentful linking to all placeholder content. (In retrospect, I wish I had picked the a more PC name, like `PlaceholderContentIndex` 😉.) Using this approach, we could inform our Contentful scripts to make sure placeholder content was copied to the production environment during deploys, so that new models would not break the build.
 
 ### Netlify
 
@@ -127,7 +127,7 @@ Building off of Gatsby’s Contentful example, we were able to easily support dy
 
 This worked so well that at first I was sure we wouldn’t even need to create any pages with static urls, but these wound up coming in handy for development and testing. We settled on a structure like this:
 
-```
+```text
 |-pages/
   |-dev/
     |-article-components.js
@@ -155,7 +155,7 @@ That same validation page also served as a site status page, containing the time
 
 Capturing this information was easy and only took a few additional lines in our `createPages` hook. Netlify exposes a lot of interesting [environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) (including some I hope to play with more on a future project, like `WEBHOOK_TITLE`, which can help you deduce the origin of the current build). In order to display these variables on the frontend, we needed to rename them to begin with `GATSBY_`:
 
-```
+```javascript
 exports.createPages = () => {
   ['COMMIT_REF', ‘BRANCH’]].forEach((variableName) => {
     // only variables beginning with GATSBY_ are available client-side
@@ -166,21 +166,21 @@ exports.createPages = () => {
 
 After that, we just added one more variable to store the current time:
 
-```
-process.env.GATSBY_BUILD_TIME = Date.now();
+```javascript
+process.env.GATSBY_BUILD_TIME = Date.now()
 ```
 
 #### Covering our tracks
 
 We filtered out our dev pages in production by adding a simple `onCreatePage` hook to our `gatsby-node` file:
 
-```
+```javascript
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   if (process.env.GATSBY_ENV === ENV.PRODUCTION) {
-    const { deletePage } = boundActionCreators;
-    if (/^\/dev\//.test(page.path)) deletePage(page);
+    const { deletePage } = boundActionCreators
+    if (/^\/dev\//.test(page.path)) deletePage(page)
   }
-};
+}
 ```
 
 ### Staging
@@ -213,13 +213,13 @@ Backing up a second, let’s review why we selected the preview URLs `mystagingu
 
 Here’s why: Contentful’s Content Preview dashboard doesn’t give you that kind of flexibility. To get around this, we opted to build special paths just for the staging environment. Here’s how we set it up in `gatsby-node.js`:
 
-```
+```javascript
 // Always create a page at the regular path
 createPage({
   component: contentPageTemplate,
   context,
-  path: `${language}/${slugs.join('/')}/`,
-});
+  path: `${language}/${slugs.join("/")}/`,
+})
 
 // On staging, recreate the page with a path corresponding to its ID
 if (process.env.GATSBY_ENV === ENV.STAGING) {
@@ -227,7 +227,7 @@ if (process.env.GATSBY_ENV === ENV.STAGING) {
     component: contentPageTemplate,
     context,
     path: `${language}/${id}/`,
-  });
+  })
 }
 ```
 
@@ -277,7 +277,7 @@ As I said, I was impressed by the Gatsby team’s quick turnaround time with PR 
 
 Of course, this is something developers do all the time. They push their fork to Git and link to it in their project’s `package.json`:
 
-```
+```json
 “dependencies”: {
   "some-library": "git+ssh://git@github.com:workco/some-library.git#cool-feature"
 }

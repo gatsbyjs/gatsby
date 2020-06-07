@@ -1,26 +1,25 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import Rotator from "../components/rotator"
-import { Link } from "gatsby"
+import Link from "../components/localized-link"
 import logo from "../assets/monogram.svg"
-import { sizes } from "../gatsby-plugin-theme-ui"
+import { sizes } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
+import PageWithPluginSearchBar from "../components/page-with-plugin-searchbar"
 
 class Plugins extends Component {
   render() {
+    const { location } = this.props
     return (
-      <React.Fragment>
-        <Helmet>
-          <title>Plugins</title>
-          <meta
-            name="description"
-            content="The library for searching and exploring Gatsby's vast plugin ecosystem to implement Node.js packages using Gatsby APIs"
-          />
-        </Helmet>
+      <PageWithPluginSearchBar location={location} isPluginsIndex={true}>
+        <PageMetadata
+          title="Plugins"
+          description="The library for searching and exploring Gatsby's vast plugin ecosystem to implement Node.js packages using Gatsby APIs"
+        />
         <Container
           overrideCSS={{
             alignItems: `center`,
@@ -124,7 +123,7 @@ class Plugins extends Component {
           </div>
           <FooterLinks />
         </Container>
-      </React.Fragment>
+      </PageWithPluginSearchBar>
     )
   }
 }

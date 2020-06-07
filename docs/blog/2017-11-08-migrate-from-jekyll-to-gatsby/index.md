@@ -15,7 +15,7 @@ I’ve built apps with it (Rails / Sinatra / Jekyll / etc).
 
 I used to like Jekyll because I could write my posts in Markdown which is super
 easy to write and edit.. When I started my blog, I took a theme called
-[Lanyon](https://github.com/poole/lanyon) and tweaked it a bit. That was a
+[Lanyon](https://github.com/poole/lanyon) and tweaked it a bit. That was
 enough for me.
 
 But recently I find that I only install Ruby and Jekyll to manage my blog (I
@@ -25,7 +25,7 @@ but this was extremely slow.
 Some weeks ago, one of my colleagues at work told me about
 [Gatsby](/) Since I was already learning
 [React](https://reactjs.org/) and had started looking at
-[GraphQL](http://graphql.org/) (after attending a talk at
+[GraphQL](https://graphql.org/) (after attending a talk at
 [Nordic.js](http://nordicjs.com/))—I was very interested in giving it a try.
 
 ## Migrating from Jekyll to Gatsby
@@ -67,7 +67,7 @@ need to extract the date from the file name.
 
 The slug in my case is generated with this (default in Jekyll) structure:
 
-```
+```text
 https://blog.singuerinc.com/[n-categories]/YYYY/MM/DD/dashed-title/
 
 // Given this data:

@@ -5,6 +5,7 @@ import Switch from "./switch"
 import Bio from "../components/bio"
 import sun from "../../assets/sun.png"
 import moon from "../../assets/moon.png"
+import useBlogThemeConfig from "../hooks/configOptions"
 
 const rootPath = `${__PATH_PREFIX__}/`
 
@@ -19,11 +20,11 @@ const Title = ({ children, location }) => {
       >
         <Styled.a
           as={Link}
-          css={{
+          css={css({
             color: `inherit`,
             boxShadow: `none`,
             textDecoration: `none`,
-          }}
+          })}
           to={`/`}
         >
           {children}
@@ -54,6 +55,8 @@ const Title = ({ children, location }) => {
   }
 }
 
+const iconCss = [{ pointerEvents: `none`, margin: 4 }]
+
 const checkedIcon = (
   <img
     alt="moon indicating dark mode"
@@ -61,10 +64,7 @@ const checkedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={{
-      pointerEvents: `none`,
-      margin: 4,
-    }}
+    css={iconCss}
   />
 )
 
@@ -75,20 +75,34 @@ const uncheckedIcon = (
     width="16"
     height="16"
     role="presentation"
-    css={{
-      pointerEvents: `none`,
-      margin: 4,
-    }}
+    css={iconCss}
   />
 )
 
 export default ({ children, title, ...props }) => {
-  const [colorMode, setColorMode] = useColorMode()
-  const isDark = colorMode === `dark`
-  const toggleColorMode = e => {
-    setColorMode(isDark ? `light` : `dark`)
-  }
+  const blogThemeConfig = useBlogThemeConfig()
 
+  const { disableThemeUiStyling } = blogThemeConfig
+
+  var switchToggle
+  if (!disableThemeUiStyling) {
+    const [colorMode, setColorMode] = useColorMode()
+    const isDark = colorMode === `dark`
+    const toggleColorMode = e => {
+      setColorMode(isDark ? `light` : `dark`)
+    }
+    switchToggle = (
+      <Switch
+        aria-label={`Toggle dark mode ${isDark ? `off` : `on`}`}
+        checkedIcon={checkedIcon}
+        uncheckedIcon={uncheckedIcon}
+        checked={isDark}
+        onChange={toggleColorMode}
+      />
+    )
+  } else {
+    switchToggle = null
+  }
   return (
     <header>
       <div
@@ -103,22 +117,13 @@ export default ({ children, title, ...props }) => {
           css={css({
             display: `flex`,
             justifyContent: `space-between`,
-            alignItems: `baseline`,
+            alignItems: `center`,
             mb: 4,
           })}
         >
           <Title {...props}>{title}</Title>
           {children}
-          <Switch
-            aria-label="Toggle dark mode"
-            css={css({
-              bg: `black`,
-            })}
-            checkedIcon={checkedIcon}
-            uncheckedIcon={uncheckedIcon}
-            checked={isDark}
-            onChange={toggleColorMode}
-          />
+          {switchToggle}
         </div>
         {props.location.pathname === rootPath && <Bio />}
       </div>

@@ -8,11 +8,11 @@ Want to submit a site to the [Site Showcase](/showcase/)? Follow these instructi
 
 There are three major steps:
 
-1.  If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
+1. If this is your first contribution to the Gatsby open source repo, follow the [Contribution guidelines](/contributing/code-contributions/).
 
-2.  If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
+2. If there is a chance that someone else could have already submitted the site, please make sure no one else has already submitted it by searching existing PRs: https://github.com/gatsbyjs/gatsby/pulls
 
-3.  Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
+3. Edit the [`sites.yml`](https://github.com/gatsbyjs/gatsby/blob/master/docs/sites.yml) file by adding your submission to the bottom of the list of sites in the following format:
 
 ```yaml:title=docs/sites.yml
 - title: Title of the Site
@@ -28,7 +28,7 @@ There are three major steps:
 
   # optional: short paragraph describing the content and/or purpose of the site that will appear in the modal detail view and permalink views for your site
   description: >
-    {titleofthesite} is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
+    This blog is a shiny new website built with Gatsby v2 that makes important contributions towards a faster web for everyone.
 
   # You can list as many categories as you want here. Check list of Categories below in this doc!
   # If you'd like to create a new category, simply list it here.
@@ -71,7 +71,7 @@ Categories currently include both _type of site_ (structure) and the _content of
 - Blog
 - Directory
 - Documentation
-- eCommerce
+- E-commerce
 - Education
 - Portfolio
 - Gallery
@@ -128,11 +128,11 @@ _Note: the Gatsby team will choose featured sites, leave as `featured: false` wh
 
 If your site is chosen as featured, here's what to do next:
 
-1.  Change `featured: false` to `featured: true`
+1. Change `featured: false` to `featured: true`
 
-2.  Add `featured` as a category:
+2. Add `featured` as a category:
 
-```shell
+```yaml
 categories:
   - featured
 ```

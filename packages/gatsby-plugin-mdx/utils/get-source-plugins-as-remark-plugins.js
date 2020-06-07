@@ -1,6 +1,7 @@
 const visit = require(`unist-util-visit`)
 const _ = require(`lodash`)
 const debug = require(`debug`)(`get-source-plugins-as-remark-plugins`)
+const { interopDefault } = require(`./interop-default`)
 
 let fileNodes
 
@@ -12,10 +13,11 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins,
   mdxNode,
   getNode,
-  getNodes,
+  getNodesByType,
   reporter,
   cache,
   pathPrefix,
+  ...helpers
 }) {
   debug(`getSourcePluginsAsRemarkPlugins`)
   let pathPlugin = undefined
@@ -37,12 +39,12 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
       }
   }
 
-  fileNodes = getNodes().filter(n => n.internal.type === `File`)
+  fileNodes = getNodesByType(`File`)
 
   // return list of remarkPlugins
   const userPlugins = gatsbyRemarkPlugins
     .filter(plugin => {
-      if (_.isFunction(require(plugin.resolve))) {
+      if (_.isFunction(interopDefault(require(plugin.resolve)))) {
         return true
       } else {
         debug(`userPlugins: filtering out`, plugin)
@@ -51,7 +53,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
     })
     .map(plugin => {
       debug(`userPlugins: constructing remark plugin for `, plugin)
-      const requiredPlugin = require(plugin.resolve)
+      const requiredPlugin = interopDefault(require(plugin.resolve))
       const wrappedPlugin = () =>
         async function transformer(markdownAST) {
           await requiredPlugin(
@@ -59,10 +61,12 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
               markdownAST,
               markdownNode: mdxNode,
               getNode,
+              getNodesByType,
               files: fileNodes,
               pathPrefix,
               reporter,
               cache,
+              ...helpers,
             },
             plugin.options || {}
           )

@@ -2,18 +2,25 @@
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
-exports.createPages = ({ actions }) => {
+exports.onPreBootstrap = ({ cache }) => {
+  const appShellSourcePath = path.join(__dirname, `app-shell.js`)
+  const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
+  fs.copyFileSync(appShellSourcePath, appShellTargetPath)
+}
+
+exports.createPages = ({ actions, cache }) => {
+  const appShellPath = path.join(cache.directory, `app-shell.js`)
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
     createPage({
       path: `/offline-plugin-app-shell-fallback/`,
-      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+      component: slash(appShellPath),
     })
   }
 }
@@ -134,7 +141,7 @@ exports.onPostBuild = (
       {
         // page-data.json files are not content hashed
         urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `NetworkFirst`,
+        handler: `StaleWhileRevalidate`,
       },
       {
         // Add runtime caching of various other page resources
@@ -151,10 +158,7 @@ exports.onPostBuild = (
     clientsClaim: true,
   }
 
-  const combinedOptions = {
-    ...options,
-    ...workboxConfig,
-  }
+  const combinedOptions = _.merge(options, workboxConfig)
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)

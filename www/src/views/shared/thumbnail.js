@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
+import Link from "../../components/localized-link"
 
 import {
   screenshot as screenshotStyles,
@@ -27,12 +28,11 @@ const ThumbnailLink = ({ slug, image, title, children, state }) => {
       sx={{
         ...withTitleHover,
         lineHeight: `dense`,
-        fontFamily: `header`,
+        fontFamily: `heading`,
         "&&": {
           borderBottom: `none`,
           color: `heading`,
-          transition: t =>
-            `all ${t.transition.speed.default} ${t.transition.curve.default}`,
+          transition: `default`,
           "&:hover": screenshotHover,
           "&:hover ~ .meta > .featured-site": {
             transform: t => `translateY(-${t.space[1]})`,

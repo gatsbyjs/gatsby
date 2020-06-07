@@ -11,13 +11,13 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
   }
 })
-jest.mock(`devcert-san`, () => {
+jest.mock(`devcert`, () => {
   return {
-    default: jest.fn(),
+    certificateFor: jest.fn(),
   }
 })
 
-const devcertSan = require(`devcert-san`).default
+const getDevCert = require(`devcert`).certificateFor
 const reporter = require(`gatsby-cli/lib/reporter`)
 const getSslCert = require(`../get-ssl-cert`)
 
@@ -25,7 +25,7 @@ describe(`gets ssl certs`, () => {
   beforeEach(() => {
     reporter.panic.mockClear()
     reporter.info.mockClear()
-    devcertSan.mockClear()
+    getDevCert.mockClear()
   })
   describe(`Custom SSL certificate`, () => {
     it.each([[{ certFile: `foo` }], [{ keyFile: `bar` }]])(
@@ -46,7 +46,7 @@ describe(`gets ssl certs`, () => {
         })
       ).resolves.toMatchSnapshot()
     })
-    it(`loads a cert from a absolute paths`, () => {
+    it(`loads a cert from absolute paths`, () => {
       expect(
         getSslCert({
           name: `mock-cert`,
@@ -60,11 +60,17 @@ describe(`gets ssl certs`, () => {
   describe(`automatic SSL certificate`, () => {
     it(`sets up dev cert`, () => {
       getSslCert({ name: `mock-cert` })
-      expect(devcertSan).toBeCalledWith(`mock-cert`, { installCertutil: true })
+      expect(getDevCert).toBeCalledWith(`mock-cert`, {
+        getCaPath: true,
+        skipCertutilInstall: false,
+        ui: {
+          getWindowsEncryptionPassword: expect.any(Function),
+        },
+      })
       expect(reporter.info.mock.calls).toMatchSnapshot()
     })
     it(`panics if certificate can't be created`, () => {
-      devcertSan.mockImplementation(() => {
+      getDevCert.mockImplementation(() => {
         throw new Error(`mock error message`)
       })
       getSslCert({ name: `mock-cert` })

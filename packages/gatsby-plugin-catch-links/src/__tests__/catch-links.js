@@ -257,7 +257,7 @@ describe(`anchor target attribute looks like _self if`, () => {
   })
 })
 
-describe(`navigation is routed through gatsby if the destination href`, () => {
+describe(`navigation is routed through Gatsby if the destination href`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
@@ -401,7 +401,7 @@ describe(`navigation is routed through browser if resources have failed and the 
   })
 })
 
-describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
+describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer

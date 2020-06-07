@@ -16,9 +16,9 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 [Gatsby's manifest plugin](/packages/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
-### Using `gatsby-plugin-manifest`
+## Using `gatsby-plugin-manifest`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-manifest

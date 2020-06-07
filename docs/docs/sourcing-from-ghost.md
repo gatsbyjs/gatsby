@@ -4,11 +4,9 @@ title: Sourcing from Ghost
 
 [Ghost](https://ghost.org) is an open source, professional publishing platform built on a modern Node.js technology stack — designed for teams who need power, flexibility and performance - used by Apple, NASA, Sky News, OpenAI & many more.
 
-It comes with all the benefits of modern, centralized Headless CMS platforms, with the added benefit of being released completely for free under an MIT license, so you have total ownership and control of it without needing to depend on a third party back-end.
+It comes with all the benefits of modern, centralized Headless CMS platforms, with the added benefit of being released completely for free under an MIT license, so you have total ownership and control of it without needing to depend on a third party backend.
 
 This guide will walk you through using [Gatsby](/) with the [Ghost Content API](https://docs.ghost.org/api/content/).
-
-&nbsp;
 
 ---
 
@@ -21,11 +19,9 @@ The fastest way to get started is with the official **Gatsby Starter Ghost** rep
 
 [![Gatsby Starter Ghost](./images/gatsby-starter-ghost.jpg)](https://gatsby.ghost.org)
 
-&nbsp;
-
 ---
 
-## Install & setup
+## Install and setup
 
 If you prefer to start from scratch or integrate the Ghost Content API into an existing site, you can set up the **Gatsby Source Ghost** plugin.
 
@@ -51,13 +47,11 @@ module.exports = {
 }
 ```
 
-&nbsp;
-
 ---
 
 ## Generating pages
 
-Once the source plugin is set up, you can use the `createPages` API in `gatsby-node.js` to create queries on your Ghost data with GraphQL. In this example, Gatsby iterates over each post returned by the Ghost API and generates a new page with that data, using the `post.js` template file.
+Once the source plugin is set up, you can use the [`createPages` API](/docs/node-apis/#createPages) in `gatsby-node.js` to run queries against your Ghost data with GraphQL. In this example, Gatsby iterates over each post returned by the Ghost API and generates a new page with that data, using the `post.js` template file.
 
 There are several ways to structure queries depending on how you prefer to work, but here's a very minimal example:
 
@@ -65,7 +59,6 @@ There are several ways to structure queries depending on how you prefer to work,
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
   const postTemplate = path.resolve(`./src/templates/post.js`)
 
   // Query Ghost data
@@ -96,9 +89,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   items.forEach(({ node }) => {
     node.url = `/${node.slug}/`
 
-    createPage({
+    actions.createPage({
       path: node.url,
-      component: path.resolve(postTemplate),
+      component: postTemplate,
       context: {
         slug: node.slug,
       },
@@ -107,15 +100,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-&nbsp;
-
 ---
 
 ## Outputting data
 
+The code above will create pages in the root of the site at `/`, with the path being the slug of the post.
+
 Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so a simple example looks something like this:
 
-```javascript:title=templates/post.js
+```jsx:title=templates/post.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -139,16 +132,14 @@ export default Post
 export const postQuery = graphql`
   query($slug: String!) {
     ghostPost(slug: { eq: $slug }) {
-      id
       title
       slug
       feature_image
+      html
     }
   }
 `
 ```
-
-&nbsp;
 
 ---
 

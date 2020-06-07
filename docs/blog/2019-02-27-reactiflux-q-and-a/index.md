@@ -29,7 +29,7 @@ Date of interview: December 13 2018
 
 **Q:** Any plans for custom hooks in Gatsby? — alexanderson1993
 
-**A:** No plans just yet for custom hooks — most of our efforts with Gatsby are making integrations with custom data services (CMSs, ecommerce, etc.) really smooth along with making builds super scalable and fast — React hooks are an amazing improvement for client-side React code but not sure yet if there's any hooks we'd want to build ourselves.
+**A:** No plans just yet for custom hooks — most of our efforts with Gatsby are making integrations with custom data services (CMSs, e-commerce, etc.) really smooth along with making builds super scalable and fast — React hooks are an amazing improvement for client-side React code but not sure yet if there's any hooks we'd want to build ourselves.
 
 — kylemathews
 
@@ -71,7 +71,7 @@ We're also working on adding [Gatsby Theme support](/blog/2018-11-11-introducing
 
 **Q:** Is there any specific place for documented or known issues with the react component lifecycle/prerendering in v2? I have a website that renders images correctly using gatsby build and serve, but when deployed to a CDN it seems my component never starts its animation and images are stuck with 0 opacity. (no asset optimization or configured prerendering selected on the CDN) — Tyler Churchill
 
-**A:** Yes, (this is GitHub issues)[https://github.com/gatsbyjs/gatsby/issues] which you should definitely file an issue for so we can investigate your issue in depth.
+**A:** Yes, [this is GitHub issues](https://github.com/gatsbyjs/gatsby/issues) which you should definitely file an issue for so we can investigate your issue in depth.
 
 — biscarch
 
@@ -171,7 +171,7 @@ Check it out, and hope it's helpful!
 
 **Q:** What is the most exciting feature you are working right now? — Checkmatez
 
-**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, ecommerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi)
+**A:** I'm very excited about themes right now. With the core functionality (composable gatsby configs and Component Shadowing) merged in as experimental, we can start to build very powerful abstractions for complete documentation sites, marketing sites, e-commerce sites, etc. I'm happy to talk to anyone in more depth about themes at any time either in the community spectrum (https://spectrum.chat/gatsby-themes) or on Twitter (https://twitter.com/chrisbiscardi).
 
 A Gatsby email _application_. Contribute to DSchau/gatsby-mail development by creating an account on GitHub.
 

@@ -83,7 +83,7 @@ Mapping from `component` (path on disk) to its [Page object](#page-object). It i
 }
 ```
 
-Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
+Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
 
 ### componentChunkName
 
@@ -105,7 +105,7 @@ Created as part of page, but currently unused.
 
 ### page.context
 
-This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L153) and then is [passed to graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-runner.js#L40) queries as the `context` parameter.
+This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L79) and then is [passed to graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L36) queries as the `context` parameter.
 
 ## Query
 
@@ -121,7 +121,7 @@ Set after [Query Execution](/docs/query-execution/#save-query-results-to-redux-a
 
 Map of page [jsonName](#jsonname) to [dataPath](#datapath). Updated after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk). E.g
 
-```
+```json
 {
   // jsonName -> dataPath
   "blog-2018-07-17-announcing-gatsby-preview-995": "621/path---blog-2018-07-17-announcing-gatsby-preview-995-a74-dwfQIanOJGe2gi27a9CLKHjamc"
@@ -189,7 +189,7 @@ export const pageQuery = graphql`
 `
 ```
 
-## Webpack stuff
+## webpack stuff
 
 ### /.cache/async-requires.js
 

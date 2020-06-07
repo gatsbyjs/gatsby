@@ -3,6 +3,220 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.9...gatsby-source-wordpress@3.3.10) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.8...gatsby-source-wordpress@3.3.9) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.7...gatsby-source-wordpress@3.3.8) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.6...gatsby-source-wordpress@3.3.7) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.5...gatsby-source-wordpress@3.3.6) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.4...gatsby-source-wordpress@3.3.5) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.3...gatsby-source-wordpress@3.3.4) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.2...gatsby-source-wordpress@3.3.3) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.1...gatsby-source-wordpress@3.3.2) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.0...gatsby-source-wordpress@3.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.6...gatsby-source-wordpress@3.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.5...gatsby-source-wordpress@3.2.6) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.4...gatsby-source-wordpress@3.2.5) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [3.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.3...gatsby-source-wordpress@3.2.4) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.2...gatsby-source-wordpress@3.2.3) (2020-03-30)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.1...gatsby-source-wordpress@3.2.2) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.2.0...gatsby-source-wordpress@3.2.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.74...gatsby-source-wordpress@3.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [3.1.74](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.73...gatsby-source-wordpress@3.1.74) (2020-03-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.73](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.72...gatsby-source-wordpress@3.1.73) (2020-03-18)
+
+### Bug Fixes
+
+- update dependency axios to ^0.19.2 ([#22317](https://github.com/gatsbyjs/gatsby/issues/22317)) ([91e780f](https://github.com/gatsbyjs/gatsby/commit/91e780f))
+
+## [3.1.72](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.71...gatsby-source-wordpress@3.1.72) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.71](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.70...gatsby-source-wordpress@3.1.71) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.70](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.69...gatsby-source-wordpress@3.1.70) (2020-03-13)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.68...gatsby-source-wordpress@3.1.69) (2020-03-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.67...gatsby-source-wordpress@3.1.68) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.67](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.66...gatsby-source-wordpress@3.1.67) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.66](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.65...gatsby-source-wordpress@3.1.66) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.65](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.64...gatsby-source-wordpress@3.1.65) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.64](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.63...gatsby-source-wordpress@3.1.64) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.63](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.62...gatsby-source-wordpress@3.1.63) (2020-02-25)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.62](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.61...gatsby-source-wordpress@3.1.62) (2020-02-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.61](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.60...gatsby-source-wordpress@3.1.61) (2020-02-10)
+
+### Features
+
+- **gatsby-source-wordpress:** Ability to set a custom rest api route prefix ([#20998](https://github.com/gatsbyjs/gatsby/issues/20998)) ([789fb1c](https://github.com/gatsbyjs/gatsby/commit/789fb1c))
+
+## [3.1.60](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.59...gatsby-source-wordpress@3.1.60) (2020-02-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.58...gatsby-source-wordpress@3.1.59) (2020-01-29)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.57...gatsby-source-wordpress@3.1.58) (2020-01-15)
+
+### Bug Fixes
+
+- **docs:** improve WordPress tutorial ([#20520](https://github.com/gatsbyjs/gatsby/issues/20520)) ([d5253f2](https://github.com/gatsbyjs/gatsby/commit/d5253f2))
+
+## [3.1.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.56...gatsby-source-wordpress@3.1.57) (2020-01-09)
+
+### Features
+
+- **gatsby-source-wordpress:** add normalizers option to modif… ([#18079](https://github.com/gatsbyjs/gatsby/issues/18079)) ([2f67bce](https://github.com/gatsbyjs/gatsby/commit/2f67bce))
+
+## [3.1.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.54...gatsby-source-wordpress@3.1.56) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.54...gatsby-source-wordpress@3.1.55) (2020-01-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.53...gatsby-source-wordpress@3.1.54) (2019-12-20)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.51...gatsby-source-wordpress@3.1.53) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.51...gatsby-source-wordpress@3.1.52) (2019-12-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.50...gatsby-source-wordpress@3.1.51) (2019-12-02)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.49...gatsby-source-wordpress@3.1.50) (2019-11-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.48...gatsby-source-wordpress@3.1.49) (2019-11-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.47...gatsby-source-wordpress@3.1.48) (2019-11-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.46...gatsby-source-wordpress@3.1.47) (2019-11-10)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Cannot read property of undefined error with polylang ([#19331](https://github.com/gatsbyjs/gatsby/issues/19331)) ([bd48b21](https://github.com/gatsbyjs/gatsby/commit/bd48b21)), closes [gatsbyjs#19285](https://github.com/gatsbyjs/issues/19285)
+
+## [3.1.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.45...gatsby-source-wordpress@3.1.46) (2019-10-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.1.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.44...gatsby-source-wordpress@3.1.45) (2019-10-28)
+
+### Bug Fixes
+
+- update minor updates in packages ([#18875](https://github.com/gatsbyjs/gatsby/issues/18875)) ([b692879](https://github.com/gatsbyjs/gatsby/commit/b692879))
+
+## [3.1.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.43...gatsby-source-wordpress@3.1.44) (2019-10-22)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** add undefined check to avoid mapPostsToTagsCategories error ([#18895](https://github.com/gatsbyjs/gatsby/issues/18895)) ([ad646d6](https://github.com/gatsbyjs/gatsby/commit/ad646d6))
+
 ## [3.1.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.1.42...gatsby-source-wordpress@3.1.43) (2019-10-14)
 
 **Note:** Version bump only for package gatsby-source-wordpress

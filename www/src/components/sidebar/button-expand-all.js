@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import GoFold from "react-icons/lib/go/fold"
-import GoUnfold from "react-icons/lib/go/unfold"
+import { GoFold, GoUnfold } from "react-icons/go"
 
 const iconStyles = {
   display: `inline-block`,
@@ -27,8 +26,8 @@ const ExpandAllButton = ({ onClick, expandAll }) => (
       textAlign: `left`,
       transition: t => `all ${t.transition.speed.fast}`,
       "&:hover": {
-        bg: `purple.10`,
-        color: `gatsby`,
+        bg: `sidebar.itemHoverBackground`,
+        color: `navigation.linkHover`,
       },
     }}
   >

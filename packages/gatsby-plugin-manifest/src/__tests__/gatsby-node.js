@@ -39,9 +39,11 @@ jest.mock(`sharp`, () => {
 })
 
 jest.mock(`gatsby-core-utils`, () => {
+  const originalCoreUtils = jest.requireActual(`gatsby-core-utils`)
   return {
+    slash: originalCoreUtils.slash,
     cpuCoreCount: jest.fn(() => `1`),
-    createContentDigest: jest.fn(() => `contentDigest`),
+    createContentDigest: originalCoreUtils.createContentDigest,
   }
 })
 
@@ -49,7 +51,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
 const reporter = {
-  activityTimer: jest.fn().mockImplementation(function() {
+  activityTimer: jest.fn().mockImplementation(function () {
     return {
       start: jest.fn(),
       end: jest.fn(),
@@ -84,6 +86,13 @@ const manifestOptions = {
   ],
 }
 
+// Some of these tests check the number of sharp calls to assert that the
+// correct number of images are created.
+//
+// As long as an `icon` is defined in the config, there's always an extra
+// call to sharp to check the source icon is square. Therefore the assertions
+// check for N + 1 sharp calls, where N is the expected number of icons
+// generated.
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
@@ -149,6 +158,9 @@ describe(`Test plugin manifest options`, () => {
       path.dirname(`other-icons/icon-48x48.png`)
     )
 
+    // No sharp calls because this is manual mode: user provides all icon sizes
+    // rather than the plugin generating them
+    expect(sharp).toHaveBeenCalledTimes(0)
     expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
     expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
   })
@@ -175,8 +187,44 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
+    // One call to sharp to check the source icon is square
+    // + another for the favicon (enabled by default)
+    // + another for the single icon in the `icons` config
+    // => 3 total calls
+    expect(sharp).toHaveBeenCalledTimes(3)
+    expect(sharp).toHaveBeenCalledWith(icon, { density: 32 }) // the default favicon
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
+  })
+
+  it(`skips favicon generation if "include_favicon" option is set to false`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const icon = `pretend/this/exists.png`
+    const size = 48
+
+    const pluginSpecificOptions = {
+      icon: icon,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+      ],
+      include_favicon: false,
+    }
+
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    // Only two sharp calls here: one to check the source icon size,
+    // and another to generate the single icon in the config.
+    // By default, there would be a 3rd call for the favicon, but that's
+    // disabled by the `include_favicon` option.
     expect(sharp).toHaveBeenCalledTimes(2)
+    expect(sharp).toHaveBeenCalledWith(icon, { density: size })
   })
 
   it(`fails on non existing icon`, async () => {
@@ -186,15 +234,16 @@ describe(`Test plugin manifest options`, () => {
       icon: `non/existing/path`,
     }
 
-    return onPostBootstrap(apiArgs, {
-      ...manifestOptions,
-      ...pluginSpecificOptions,
-    }).catch(err => {
-      expect(sharp).toHaveBeenCalledTimes(0)
-      expect(err).toBe(
-        `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
-      )
-    })
+    await expect(
+      onPostBootstrap(apiArgs, {
+        ...manifestOptions,
+        ...pluginSpecificOptions,
+      })
+    ).rejects.toThrow(
+      `icon (non/existing/path) does not exist as defined in gatsby-config.js. Make sure the file exists relative to the root of the site.`
+    )
+
+    expect(sharp).toHaveBeenCalledTimes(0)
   })
 
   it(`doesn't write extra properties to manifest`, async () => {
@@ -233,7 +282,11 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    // Two icons in the config, plus a favicon, plus one call to check the
+    // source icon size => 4 total calls to sharp.
+    expect(sharp).toHaveBeenCalledTimes(4)
+
+    // Filenames in the manifest should be suffixed with the content digest
     expect(fs.writeFileSync).toMatchSnapshot()
   })
 
@@ -250,7 +303,9 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    // Two icons in the config, plus a favicon, plus one call to check the
+    // source icon size => 4 total calls to sharp.
+    expect(sharp).toHaveBeenCalledTimes(4)
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
       JSON.stringify(manifestOptions)
@@ -271,15 +326,39 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    // Two icons in the config, plus a favicon, plus one call to check the
+    // source icon size => 4 total calls to sharp.
+    expect(sharp).toHaveBeenCalledTimes(4)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content.icons[0].purpose).toEqual(`all`)
     expect(content.icons[1].purpose).toEqual(`maskable`)
   })
 
+  it(`correctly works with pathPrefix`, async () => {
+    await onPostBootstrap(
+      { ...apiArgs, basePath: `/blog` },
+      {
+        name: `GatsbyJS`,
+        short_name: `GatsbyJS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+      }
+    )
+    const contents = fs.writeFileSync.mock.calls[0][1]
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      path.join(`public`, `manifest.webmanifest`),
+      expect.anything()
+    )
+    expect(sharp).toHaveBeenCalledTimes(0)
+    expect(contents).toMatchSnapshot()
+  })
+
   it(`generates all language versions`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {
+      ...manifestOptions,
       localize: [
         {
           ...manifestOptions,
@@ -291,10 +370,6 @@ describe(`Test plugin manifest options`, () => {
           start_url: `/es/`,
           lang: `es`,
         },
-        {
-          ...manifestOptions,
-          start_url: `/`,
-        },
       ],
     }
     const { localize, ...manifest } = pluginSpecificOptions
@@ -303,6 +378,58 @@ describe(`Test plugin manifest options`, () => {
     })
 
     await onPostBootstrap(apiArgs, pluginSpecificOptions)
+
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[0])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[1])
+    )
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.anything(),
+      JSON.stringify(expectedResults[2])
+    )
+  })
+
+  it(`generates all language versions with pathPrefix`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+    const pluginSpecificOptions = {
+      ...manifestOptions,
+      localize: [
+        {
+          ...manifestOptions,
+          start_url: `/de/`,
+          lang: `de`,
+        },
+        {
+          ...manifestOptions,
+          start_url: `/es/`,
+          lang: `es`,
+        },
+      ],
+    }
+
+    const { localize, ...manifest } = pluginSpecificOptions
+    const expectedResults = [manifest].concat(localize).map(x => {
+      return {
+        ...manifest,
+        ...x,
+        start_url: path.posix.join(`/blog`, x.start_url),
+        icons: manifest.icons.map(icon => {
+          return {
+            ...icon,
+            src: path.posix.join(`/blog`, icon.src),
+          }
+        }),
+      }
+    })
+
+    await onPostBootstrap(
+      { ...apiArgs, basePath: `/blog` },
+      pluginSpecificOptions
+    )
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),

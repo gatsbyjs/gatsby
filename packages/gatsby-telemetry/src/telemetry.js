@@ -1,13 +1,13 @@
 const uuidv4 = require(`uuid/v4`)
 const EventStorage = require(`./event-storage`)
 const { cleanPaths } = require(`./error-helpers`)
-const ci = require(`./ci`)
+const { isCI, getCIName } = require(`gatsby-core-utils`)
 const os = require(`os`)
 const { join, sep } = require(`path`)
 const isDocker = require(`is-docker`)
 const showAnalyticsNotification = require(`./showAnalyticsNotification`)
 const lodash = require(`lodash`)
-const { getRepositoryId } = require(`./repository-id`)
+import { getRepositoryId as _getRepositoryId } from "./repository-id"
 
 module.exports = class AnalyticsTracker {
   store = new EventStorage()
@@ -43,6 +43,13 @@ module.exports = class AnalyticsTracker {
       process.gatsbyTelemetrySessionId ||
       (process.gatsbyTelemetrySessionId = uuidv4())
     )
+  }
+
+  getRepositoryId() {
+    if (!this.repositoryId) {
+      this.repositoryId = _getRepositoryId()
+    }
+    return this.repositoryId
   }
 
   getTagsFromEnv() {
@@ -182,9 +189,14 @@ module.exports = class AnalyticsTracker {
       componentId: `gatsby-cli`,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
-      ...getRepositoryId(),
+      dbEngine: this.getDbEngine(),
+      ...this.getRepositoryId(),
     }
     this.store.addEvent(event)
+  }
+
+  getDbEngine() {
+    return `redux`
   }
 
   getMachineId() {
@@ -208,7 +220,7 @@ module.exports = class AnalyticsTracker {
     }
     let enabled = this.store.getConfig(`telemetry.enabled`)
     if (enabled === undefined || enabled === null) {
-      if (!ci.isCI()) {
+      if (!isCI()) {
         showAnalyticsNotification()
       }
       enabled = true
@@ -229,8 +241,8 @@ module.exports = class AnalyticsTracker {
       release: os.release(),
       cpus: (cpus && cpus.length > 0 && cpus[0].model) || undefined,
       arch: os.arch(),
-      ci: ci.isCI(),
-      ciName: ci.getCIName(),
+      ci: isCI(),
+      ciName: getCIName(),
       docker: isDocker(),
     }
     this.osInfo = osInfo
@@ -257,6 +269,14 @@ module.exports = class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
+  addSiteMeasurement(event, obj) {
+    const cachedEvent = this.metadataCache[event] || {}
+    const cachedMeasurements = cachedEvent.siteMeasurements || {}
+    this.metadataCache[event] = Object.assign(cachedEvent, {
+      siteMeasurements: Object.assign(cachedMeasurements, obj),
+    })
+  }
+
   decorateAll(tags) {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
@@ -266,10 +286,38 @@ module.exports = class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
+  aggregateStats(data) {
+    const sum = data.reduce((acc, x) => acc + x, 0)
+    const mean = sum / data.length || 0
+    const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
+    const stdDev =
+      Math.sqrt(
+        data.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0) /
+          (data.length - 1)
+      ) || 0
+
+    const skewness =
+      data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) /
+      data.length /
+      Math.pow(stdDev, 3)
+
+    return {
+      count: data.length,
+      min: data.reduce((acc, x) => (x < acc ? x : acc), data[0] || 0),
+      max: data.reduce((acc, x) => (x > acc ? x : acc), 0),
+      sum: sum,
+      mean: mean,
+      median: median,
+      stdDev: stdDev,
+      skewness: !Number.isNaN(skewness) ? skewness : 0,
+    }
+  }
+
   async sendEvents() {
     if (!this.isTrackingEnabled()) {
       return Promise.resolve()
     }
+
     return this.store.sendEvents()
   }
 }

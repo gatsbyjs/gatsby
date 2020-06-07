@@ -1,5 +1,3 @@
-const path = require(`path`)
-const git = require(`git-rev-sync`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
@@ -67,6 +65,23 @@ module.exports = {
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
+      resolve: `gatsby-alias-imports`,
+      options: {
+        aliases: {
+          // Relative paths when importing components from MDX break translations of the docs,
+          // so use an alias instead inside MDX:
+          // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
+          "@components": `${__dirname}/src/components`,
+        },
+      },
+    },
+    {
+      resolve: `gatsby-transformer-gitinfo`,
+      options: {
+        include: /mdx?$/i,
+      },
+    },
+    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
         keywords: [`gatsby-plugin`, `gatsby-component`],
@@ -82,16 +97,9 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `packages`,
-        path: `${__dirname}/../packages/`,
+        name: `gatsby-core`,
+        path: `${__dirname}/../packages/gatsby/`,
         ignore: [`**/dist/**`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `ecosystem`,
-        path: `${__dirname}/src/data/ecosystem/`,
       },
     },
     {
@@ -101,11 +109,10 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        pathToConfigModule: `${__dirname}/src/utils/typography`,
       },
     },
     `gatsby-transformer-documentationjs`,
@@ -130,12 +137,12 @@ module.exports = {
           return (
             [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
             (node.internal.type === `File` &&
-              path.parse(node.dir).dir.endsWith(`packages`))
+              node.sourceInstanceName === `gatsby-core`)
           )
         },
         gatsbyRemarkPlugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -149,7 +156,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
@@ -159,8 +171,8 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-embedder`,
           `gatsby-remark-graphviz`,
-          `gatsby-remark-embed-video`,
           `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-images`,
@@ -175,7 +187,12 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.5rem`,
             },
           },
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 104,
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -195,6 +212,8 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
+          // convert images using http to https in plugin library READMEs
+          `gatsby-remark-http-to-https`,
         ],
       },
     },
@@ -219,7 +238,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
     `gatsby-plugin-offline`,
@@ -253,25 +272,21 @@ module.exports = {
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
                   filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
+                    fields: { section: { eq: "blog" }, released: { eq: true } }
                   }
                 ) {
-                  edges {
-                    node {
+                  nodes {
+                    html
+                    frontmatter {
+                      title
+                      date
+                      author {
+                        id
+                      }
+                    }
+                    fields {
                       excerpt
-                      html
-                      frontmatter {
-                        title
-                        date
-                        excerpt
-                        author {
-                          id
-                        }
-                      }
-                      fields {
-                        slug
-                      }
+                      slug
                     }
                   }
                 }
@@ -292,21 +307,29 @@ module.exports = {
               }
             },
             serialize: ({ query: { site, allMdx } }) =>
-              allMdx.edges.map(({ node }) => {
+              allMdx.nodes.map(node => {
                 return {
                   title: node.frontmatter.title,
-                  description: node.frontmatter.excerpt || node.excerpt,
+                  description: node.fields.excerpt,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
                   custom_elements: [{ "content:encoded": node.html }],
                   author: node.frontmatter.author.id,
+                  date: node.frontmatter.date,
                 }
               }),
           },
         ],
       },
     },
-    `gatsby-plugin-netlify`,
+    {
+      resolve: `gatsby-plugin-netlify`,
+      options: {
+        headers: {
+          "/*": [`Referrer-Policy: strict-origin-when-cross-origin`],
+        },
+      },
+    },
     `gatsby-plugin-netlify-cache`,
     {
       resolve: `gatsby-plugin-mailchimp`,
@@ -318,16 +341,6 @@ module.exports = {
       resolve: `gatsby-transformer-screenshot`,
       options: {
         nodeTypes: [`StartersYaml`],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sentry`,
-      options: {
-        dsn: `https://2904ad31b1744c688ae19b627f51a5de@sentry.io/1471074`,
-        release: git.long(),
-        environment: process.env.NODE_ENV,
-        enabled: (() =>
-          [`production`, `stage`].indexOf(process.env.NODE_ENV) !== -1)(),
       },
     },
     // `gatsby-plugin-subfont`,

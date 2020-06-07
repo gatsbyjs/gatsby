@@ -1,20 +1,21 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { kebabCase } from "lodash-es"
-import TiArrowRight from "react-icons/lib/ti/arrow-right"
+import { TiArrowRight } from "react-icons/ti"
 
+import PageMetadata from "../../components/page-metadata"
+import Link from "../../components/localized-link"
 import Button from "../../components/button"
-import Layout from "../../components/layout"
 import Container from "../../components/container"
 import SearchIcon from "../../components/search-icon"
+import FooterLinks from "../../components/shared/footer-links"
 import { TAGS_AND_DOCS } from "../../data/tags-docs"
 import { themedInput } from "../../utils/styles"
-import { colors, space, mediaQueries } from "../../gatsby-plugin-theme-ui"
+import { colors, space } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const POPULAR_TAGS = [
   `themes`,
@@ -31,14 +32,14 @@ const POPULAR_TAGS = [
   `contentful`,
 ]
 
+// Responsive tag list using grid
+// https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/
+
 const PopularTagGrid = styled.div`
   display: grid;
   grid-auto-rows: 1fr;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   grid-gap: ${space[2]};
-  ${mediaQueries.md} {
-    grid-template-columns: repeat(4, 1fr);
-  }
 `
 
 const PopularTagButton = ({ children, tag }) => (
@@ -82,7 +83,6 @@ class TagsPage extends React.Component {
       data: {
         allMdx: { group },
       },
-      location,
     } = this.props
     const { filterQuery } = this.state
     const uniqGroup = group
@@ -108,110 +108,106 @@ class TagsPage extends React.Component {
 
     let PopularTagButtons = []
     POPULAR_TAGS.forEach(key => {
-      PopularTagButtons.push(<PopularTagButton tag={key} />)
+      PopularTagButtons.push(<PopularTagButton key={key} tag={key} />)
     })
 
     return (
-      <Layout location={location}>
-        <Container>
-          <Helmet>
-            <title>Tags</title>
-            <meta
-              name={`description`}
-              content={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
-            />
-          </Helmet>
-          <div>
-            <h1
-              css={{
-                padding: `${space[6]} 0`,
-                margin: 0,
-                borderBottom: `1px solid ${colors.ui.border}`,
-              }}
-            >
-              Tags ({Object.keys(uniqGroup).length || 0})
-            </h1>
-            <div />
-            <h2>Popular tags</h2>
-            <PopularTagGrid>{PopularTagButtons}</PopularTagGrid>
-            <div
-              sx={{
-                display: `flex`,
-                flexFlow: `row nowrap`,
-                justifyContent: `space-between`,
-                pb: 4,
-                alignItems: `center`,
-              }}
-            >
-              <h2>All tags</h2>
-              <label css={{ position: `relative` }}>
-                <input
-                  sx={{ ...themedInput, pl: 7 }}
-                  id="tagsFilter"
-                  name="filterQuery"
-                  type="search"
-                  placeholder="Search tags"
-                  aria-label="Tag Search"
-                  title="Filter tag list"
-                  value={filterQuery}
-                  onChange={this.handleChange}
-                />
-                <SearchIcon />
-              </label>
-            </div>
-            <ul
-              sx={{
-                display: `flex`,
-                flexFlow: `row wrap`,
-                justifyContent: `start`,
-                p: 0,
-                m: 0,
-              }}
-            >
-              {results.length > 0 ? (
-                results.map(key => {
-                  const tag = uniqGroup[key]
-                  const firstLetter = tag.fieldValue.charAt(0).toLowerCase()
-                  const buildTag = (
-                    <li
-                      key={tag.fieldValue}
-                      sx={{
-                        py: 3,
-                        px: 1,
-                        m: 4,
-                        listStyleType: `none`,
-                      }}
-                    >
-                      <Link to={tag.slug}>
-                        {tag.fieldValue} ({tag.totalCount})
-                      </Link>
-                    </li>
-                  )
-
-                  if (currentLetter !== firstLetter) {
-                    currentLetter = firstLetter
-                    return (
-                      <React.Fragment key={`letterheader-${currentLetter}`}>
-                        <h4 sx={{ width: `100%`, flexBasis: `100%` }}>
-                          {currentLetter.toUpperCase()}
-                        </h4>
-                        {buildTag}
-                      </React.Fragment>
-                    )
-                  }
-                  return buildTag
-                })
-              ) : (
-                <h4>
-                  No tags found for &quot;
-                  {filterQuery}
-                  &quot; 😔
-                </h4>
-              )}
-            </ul>
+      <Container>
+        <PageMetadata
+          title="Tags"
+          description={`Find case studies, tutorials, and more about Gatsby related topics by tag`}
+        />
+        <div>
+          <h1
+            css={{
+              padding: `${space[6]} 0`,
+              margin: 0,
+              borderBottom: `1px solid ${colors.ui.border}`,
+            }}
+          >
+            Tags ({Object.keys(uniqGroup).length || 0})
+          </h1>
+          <div />
+          <h2>Popular tags</h2>
+          <PopularTagGrid>{PopularTagButtons}</PopularTagGrid>
+          <div
+            sx={{
+              display: `flex`,
+              flexFlow: `row nowrap`,
+              justifyContent: `space-between`,
+              pb: 4,
+              alignItems: `center`,
+            }}
+          >
+            <h2>All tags</h2>
+            <label css={{ position: `relative` }}>
+              <input
+                sx={{ ...themedInput, pl: 7 }}
+                id="tagsFilter"
+                name="filterQuery"
+                type="search"
+                placeholder="Search tags"
+                aria-label="Tag Search"
+                title="Filter tag list"
+                value={filterQuery}
+                onChange={this.handleChange}
+              />
+              <SearchIcon />
+            </label>
           </div>
-        </Container>
-      </Layout>
+          <ul
+            sx={{
+              display: `flex`,
+              flexFlow: `row wrap`,
+              justifyContent: `start`,
+              p: 0,
+              m: 0,
+            }}
+          >
+            {results.length > 0 ? (
+              results.map(key => {
+                const tag = uniqGroup[key]
+                const firstLetter = tag.fieldValue.charAt(0).toLowerCase()
+                const buildTag = (
+                  <li
+                    key={tag.fieldValue}
+                    sx={{
+                      py: 3,
+                      px: 1,
+                      m: 4,
+                      listStyleType: `none`,
+                    }}
+                  >
+                    <Link to={tag.slug}>
+                      {tag.fieldValue} ({tag.totalCount})
+                    </Link>
+                  </li>
+                )
+
+                if (currentLetter !== firstLetter) {
+                  currentLetter = firstLetter
+                  return (
+                    <React.Fragment key={`letterheader-${currentLetter}`}>
+                      <h4 sx={{ width: `100%`, flexBasis: `100%` }}>
+                        {currentLetter.toUpperCase()}
+                      </h4>
+                      {buildTag}
+                    </React.Fragment>
+                  )
+                }
+                return buildTag
+              })
+            ) : (
+              <h4>
+                No tags found for &quot;
+                {filterQuery}
+                &quot; 😔
+              </h4>
+            )}
+          </ul>
+        </div>
+        <FooterLinks />
+      </Container>
     )
   }
 }
@@ -222,10 +218,7 @@ export const pageQuery = graphql`
   query {
     allMdx(
       limit: 2000
-      filter: {
-        fields: { released: { eq: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-      }
+      filter: { fields: { released: { eq: true }, section: { eq: "blog" } } }
     ) {
       group(field: frontmatter___tags) {
         fieldValue

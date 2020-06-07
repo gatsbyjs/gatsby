@@ -75,7 +75,7 @@ module.exports = {
 
 Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code snippets inside the Markdown file `index.md`.
 
-```none
+```text
 .
 ├── content
 │   └── my-first-post
@@ -88,7 +88,7 @@ Add the following syntax to the Markdown file `index.md` to embed `javascript-co
 
 **`index.md`:**
 
-```md
+```markdown
 # Sample JavaScript
 
 `embed:javascript-code.js`
@@ -124,7 +124,7 @@ The resulting HTML generated from the Markdown file above would look something l
 
 Suppose you have the following file/folder structure and you want to embed `javascript-code.js` and `html-code.html` files as code snippets inside the Markdown file `my-first-post.md`.
 
-```none
+```text
 .
 ├── content
 │   └── my-first-post.md
@@ -149,7 +149,7 @@ Add the following syntax to the Markdown file `my-first-post.md` to embed `javas
 
 **`my-first-post.md`:**
 
-```md
+```markdown
 # Sample JavaScript 2
 
 `embed:javascript-code.js`
@@ -185,13 +185,12 @@ The resulting HTML generated from the markdown file above would look something l
 
 ### Highlighting Lines
 
-You can also specify specific lines for Prism to highlight using
-`highlight-line` and `highlight-next-line` comments. You can also specify a
-range of lines to highlight, relative to a `highlight-range` comment.
+You can specify specific lines for Prism to highlight using
+`highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
 
 **JavaScript example**:
 
-```js
+```jsx
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -250,9 +249,50 @@ quz: "highlighted"
 
 It's also possible to specify a range of lines to be hidden.
 
-**JavaScript example**:
+You can either specify line ranges in the embed using the syntax:
+
+- #Lx - Embed one line from a file
+- #Lx-y - Embed a range of lines from a file
+- #Lx-y,a-b - Embed non-consecutive ranges of lines from a file
+
+**Markdown example**:
+
+```markdown
+This is the JSX of my app:
+
+`embed:App.js#L6-8`
+```
+
+With this example snippet:
 
 ```js
+import React from "react"
+import ReactDOM from "react-dom"
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello world</h1>
+    </div>
+  )
+}
+```
+
+Will produce something like this:
+
+```markdown
+This is the JSX of my app:
+
+    <div className="App">
+      <h1>Hello world</h1>
+    </div>
+```
+
+**JavaScript example**:
+
+You can also add `// hide-range` comments to your files.
+
+```jsx
 // hide-range{1-2}
 import React from "react"
 import ReactDOM from "react-dom"
@@ -280,7 +320,7 @@ ReactDOM.render(<App />, rootElement)
 
 Will produce something like this:
 
-```js
+```jsx
 function App() {
   return (
     <div className="App">

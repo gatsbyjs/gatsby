@@ -54,7 +54,7 @@ By user testing a few variations of known routing techniques, we gained some val
 
 ## Working with Fable
 
-We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I connected with Fable’s lead front end developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
+We worked with [Fable Tech Labs](https://makeitfable.com) to conduct this research and found it to be a very productive process. I connected with Fable’s lead frontend developer Perry Trinier at the CSUN accessibility conference in early 2019. Fable’s generous offer to pair with us on this initiative has been wonderful, and we’re grateful for the opportunity to see this through.
 
 The experience of testing with people with disabilities and the results that followed felt very important, and something product teams should seek out regularly. We’d highly recommend this process for anyone working on digital experiences; particularly if you can test prototypes to adapt to the findings early and often in design & development. User testing for accessibility can provide game-changing detail that you’ll be eternally grateful to have uncovered. Addressing accessibility issues sooner than later is both a [smart business investment](https://www.w3.org/WAI/business-case/) and can make your project more [inclusive](https://www.microsoft.com/design/inclusive/) from the start!
 
@@ -106,7 +106,7 @@ A big motivation to test with screen reader users was to confirm whether the rec
 
 **Focusing on a wrapper element for new content worked okay** with our test subjects: they were informed of the new content and moved into the right place. It was **very subtle compared to focusing on a heading**, and better than resetting the page to the top (think Gmail - it would be a pain to have to start over every time you click on a link). In general, we found that **resetting focus to the top of the app would be very overwhelming**, especially in large applications.
 
-**Focusing on a heading was found to be the best experience**, as it would save time and make it clear what happened. In NVDA, there was some duplicate reading of content and `<main>` was doing some extra announcements–seemed like an screen reader quirk more than a problem with the prototype.
+**Focusing on a heading was found to be the best experience**, as it would save time and make it clear what happened. In NVDA, there was some duplicate reading of content and `<main>` was doing some extra announcements–seemed like a screen reader quirk more than a problem with the prototype.
 
 **A back button would help** to use browser history (this was a limitation of the prototypes).
 
@@ -170,8 +170,17 @@ The exact implementation(s) we integrate into Gatsby will likely evolve as we tr
 - Rendering an interactive UI control in each view that becomes visible when the user navigates through the app by keyboard.
 - Making it function as a tab stop in a content region for keyboard users and providing a way to skip back to navigation so it is actually operable: a skip link is the most natural choice for this.
 - Making the control small in width and height (like a link or icon button) so the focus outline and content aren’t cut off when zoomed way in.
-- Putting an `aria-label` or `aria-labelledby` attribute with an indication of the nearby content (like a heading), and what action the control does. E.g. “Portfolio, skip back to navigation”. This would benefit from more user testing.
 - Focusing this skip link when a user completes an action that triggers a route change and updates the client-rendered view, both managing focus and notifying users of assistive technology.
+- ~~Putting an `aria-label` or `aria-labelledby` attribute with an indication of the nearby content (like a heading), and what action the control does. E.g. “Portfolio, skip back to navigation”. This would benefit from more user testing.~~
+
+**Note:** The advice for labeling a skip link component which also serves as a focus management target has evolved since this article was initially published. Rather than compose a label "with nearby content" to both indicate the link action _and_ the current page on focus, a better approach would be to decouple the two so when the skip link is focused with a screen reader without a route change, its purpose would be more clear: "skip to navigation". Including an ARIA Live Region to make an announcement on route change would notify screen reader users and keep skip link text clear. This would serve assistive technology users with the necessary page and element focus context, while also supporting sighted and low-vision keyboard users.
+
+The technique developed from this article was presented and tested again with Fable Tech Labs at the [Inclusive Design 24 virtual conference](https://www.youtube.com/watch?v=Tr21FqQQv-U) in October 2019. For an example of the most recent research in action, check out these [workshop materials](https://github.com/marcysutton/gatsby-a11y-workshop/blob/master/examples/client-side-routing/).
+
+The advice now looks like this:
+
+- Provide a skip link that takes focus on a route change within the site, with a label that indicates what the link will do when activated: e.g. "skip to main navigation".
+- Include an [ARIA Live Region](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) on page load. On a route change, append text to it indicating the current page, e.g. "Portfolio page".
 
 Part of the challenge with this work is what might be ideal for one user with a disability might not be for another. These recommendations are an attempt at weaving multiple perspectives into one usable pattern, with the historical knowledge of where teams run into conflicts over accessibility in design (e.g. turning off visible focus outlines on container elements).
 

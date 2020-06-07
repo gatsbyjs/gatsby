@@ -1,11 +1,11 @@
 import React, { Component } from "react"
-import { Helmet } from "react-helmet"
 import qs from "qs"
 import { navigate } from "gatsby"
+
+import PageMetadata from "../../components/page-metadata"
 import scrollToAnchor from "../../utils/scroll-to-anchor"
 import FeaturedSites from "./featured-sites"
 import FilteredShowcase from "./filtered-showcase"
-import Layout from "../../components/layout"
 
 class ShowcaseView extends Component {
   showcase = React.createRef()
@@ -45,21 +45,18 @@ class ShowcaseView extends Component {
   }
 
   render() {
-    const { location, data } = this.props
+    const { data } = this.props
     const { filters } = this.state
 
     return (
-      <Layout location={location}>
-        <Helmet>
-          <title>Showcase</title>
-          <meta
-            name="description"
-            content="Gallery of sites using Gatsby across the web, find inspiration or inspect the code of popular projects."
-          />
-        </Helmet>
+      <>
+        <PageMetadata
+          title="Showcase"
+          description="Gallery of sites using Gatsby across the web, find inspiration or inspect the code of popular projects."
+        />
         <FeaturedSites
           setFilters={this.setFilters}
-          featured={data.featured.edges}
+          featured={data.featured.nodes}
         />
         <div id="showcase" css={{ height: 0 }} ref={this.showcase} />
         <FilteredShowcase
@@ -67,7 +64,7 @@ class ShowcaseView extends Component {
           setFilters={this.setFilters}
           data={data}
         />
-      </Layout>
+      </>
     )
   }
 }

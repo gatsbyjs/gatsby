@@ -9,14 +9,14 @@ Caching is already used by Gatsby and plugins for example:
 - any nodes created by source/transformer plugins are cached
 - `gatsby-plugin-sharp` caches built thumbnails
 
-Data is stored in the `.cache` directory relative to your project root.
+Build outputs are stored in the `.cache` and `public` directories relative to your project root.
 
 ## The cache API
 
 The cache API is passed to [Gatsby's Node APIs](/docs/node-apis/) which is typically implemented by plugins.
 
 ```js
-exports.onPostBootstrap = async function({ cache, store, graphql }) {}
+exports.onPostBootstrap = async function ({ cache, store, graphql }) {}
 ```
 
 The two functions you would want to use are:
@@ -40,7 +40,7 @@ The [Node API helpers](/docs/node-api-helpers/#cache) documentation offers more 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
 ```js:title=gatsby-node.js
-exports.onPostBuild = async function({ cache, store, graphql }, { query }) {
+exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
   const cacheKey = "some-key-name"
   let obj = await cache.get(cacheKey)
 

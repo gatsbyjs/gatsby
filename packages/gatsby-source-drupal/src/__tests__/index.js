@@ -142,19 +142,75 @@ describe(`gatsby-source-drupal`, () => {
     ).toEqual(expect.arrayContaining([createNodeId(`article-1`)]))
   })
 
-  it(`Download files`, () => {
+  it(`Download files without Basic Auth`, () => {
     const urls = [
       `/sites/default/files/main-image.png`,
       `/sites/default/files/secondary-image.png`,
+      `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
+      `/sites/default/files/forth-image.png`,
     ].map(fileUrl => new URL(fileUrl, baseUrl).href)
 
     urls.forEach(url => {
       expect(createRemoteFileNode).toBeCalledWith(
         expect.objectContaining({
           url,
+          auth: {},
         })
       )
     })
+  })
+
+  it(`Download files with Basic Auth`, async () => {
+    const basicAuth = {
+      username: `user`,
+      password: `password`,
+    }
+    await sourceNodes(args, { baseUrl, basicAuth })
+    const urls = [
+      `http://fixture/sites/default/files/main-image.png`,
+      `http://fixture/sites/default/files/secondary-image.png`,
+      `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
+      `/sites/default/files/forth-image.png`,
+    ].map(fileUrl => new URL(fileUrl, baseUrl).href)
+    //first call without basicAuth (no fileSystem defined)
+    //(the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
+    expect(createRemoteFileNode).toHaveBeenNthCalledWith(
+      5,
+      expect.objectContaining({
+        url: urls[0],
+        auth: {},
+      })
+    )
+    //2nd call with basicAuth (public: fileSystem defined)
+    expect(createRemoteFileNode).toHaveBeenNthCalledWith(
+      6,
+      expect.objectContaining({
+        url: urls[1],
+        auth: {
+          htaccess_pass: `password`,
+          htaccess_user: `user`,
+        },
+      })
+    )
+    //3rd call without basicAuth (s3: fileSystem defined)
+    expect(createRemoteFileNode).toHaveBeenNthCalledWith(
+      7,
+      expect.objectContaining({
+        url: urls[2],
+        auth: {},
+      })
+    )
+    //4th call with basicAuth (private: fileSystem defined)
+    expect(createRemoteFileNode).toHaveBeenNthCalledWith(
+      8,
+      expect.objectContaining({
+        url: urls[3],
+        auth: {
+          htaccess_pass: `password`,
+          htaccess_user: `user`,
+        },
+      })
+    )
   })
 
   describe(`Update webhook`, () => {
@@ -248,5 +304,36 @@ describe(`gatsby-source-drupal`, () => {
         })
       })
     })
+  })
+
+  it(`Control disallowed link types`, async () => {
+    // Reset nodes and test new disallowed link type.
+    Object.keys(nodes).forEach(key => delete nodes[key])
+    const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
+    await sourceNodes(args, { baseUrl, disallowedLinkTypes })
+    expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`file-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`file-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
+    expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()
+    expect(nodes[createNodeId(`article-1`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-2`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-3`)]).toBeDefined()
+  })
+
+  it(`Verify JSON:API includes relationships`, async () => {
+    // Reset nodes and test includes relationships.
+    Object.keys(nodes).forEach(key => delete nodes[key])
+    const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
+    const filters = {
+      "node--article": `include=field_tags`,
+    }
+    const apiBase = `jsonapi-includes`
+    await sourceNodes(args, { baseUrl, apiBase, disallowedLinkTypes, filters })
+    expect(Object.keys(nodes).length).not.toEqual(0)
+    expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
+    expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()
+    expect(nodes[createNodeId(`tag-3`)]).toBeDefined()
+    expect(nodes[createNodeId(`article-5`)]).toBeDefined()
   })
 })

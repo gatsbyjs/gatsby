@@ -1,14 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import hex2rgba from "hex2rgba"
-import { colors } from "gatsby-design-tokens"
 
 import logoDictionary from "./logo-dictionary"
 
 const compareButtonStyles = {
   display: `flex`,
   flexDirection: `column`,
-  fontFamily: `header`,
+  fontFamily: `heading`,
   alignItems: `center`,
   justifyContent: `center`,
   borderRadius: 1,
@@ -21,7 +19,8 @@ const compareButtonStyles = {
   },
   ":focus": {
     outline: 0,
-    boxShadow: t => `0 0 0 ${t.space[1]} ${hex2rgba(colors.grey[20], 0.25)}`,
+    boxShadow: t =>
+      `0 0 0 ${t.space[1]} ${t.colors.themedInput.focusBoxShadow}`,
   },
 }
 
@@ -33,7 +32,7 @@ const CompareButton = ({ children, optionKey, selected, setSelected }) => (
       borderColor: selected ? `purple.60` : `ui.border`,
       color: selected ? `white` : `textMuted`,
     }}
-    onClick={e => setSelected({ [optionKey]: !selected })}
+    onClick={() => setSelected({ [optionKey]: !selected })}
   >
     <img
       sx={{

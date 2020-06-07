@@ -14,7 +14,7 @@ gatsby new gatsby-YAML-JSON-at-buildtime https://github.com/gatsbyjs/gatsby-star
 
 ## Directly import data with YAML
 
-This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#Directly-importing-data-with-JSON).
+This section starts with YAML data sourcing. If you want to see how to do it using JSON instead, jump to the [next section](#directly-import-data-with-json).
 
 ### Add the YAML content
 
@@ -65,7 +65,7 @@ const YAMLbuildtime = () => (
 export default YAMLbuildtime
 ```
 
-The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional stateless React component.
+The above code imports YAML source data as an array, iterates over it with the `Array.map` method, and renders the data-filled markup through a functional React component.
 
 ## Directly import data with JSON
 
@@ -218,7 +218,7 @@ Once the dynamic site structure and content exists, you need to tell Gatsby to g
 
 If you don't already have one, create a `gatsby-node.js` file at the root of the project. Add the following code inside the file:
 
-```jsx:title=gatsby-node.js
+```js:title=gatsby-node.js
 const fs = require("fs")
 const yaml = require("js-yaml")
 exports.createPages = ({ actions }) => {
@@ -283,7 +283,7 @@ export default basicTemplate
 
 After parsing a YAML file into data and configuring Gatsby to produce pages with a template, you should have the following file and folder structure:
 
-```
+```text
   |gatsby-YAML-JSON-at-buildtime
     |content
       - index.yaml

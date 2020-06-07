@@ -2,12 +2,14 @@ const withDefaults = require(`./utils/default-options`)
 
 module.exports = themeOptions => {
   const options = withDefaults(themeOptions)
-  const { mdx = true } = themeOptions
+  let { mdxOtherwiseConfigured = false, mdx: legacyConfigureMdxFlag = true } = themeOptions // keep mdx flag so we don't introduce a breaking change
+  
   return {
     siteMetadata: {
       title: `Blog Title Placeholder`,
       author: `Name Placeholder`,
       description: `Description placeholder`,
+      siteUrl: 'https://example.com',
       social: [
         {
           name: `Twitter`,
@@ -20,7 +22,7 @@ module.exports = themeOptions => {
       ],
     },
     plugins: [
-      mdx && {
+      (!mdxOtherwiseConfigured && legacyConfigureMdxFlag) && {
         resolve: `gatsby-plugin-mdx`,
         options: {
           extensions: [`.mdx`, `.md`],

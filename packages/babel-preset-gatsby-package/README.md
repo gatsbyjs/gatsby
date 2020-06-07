@@ -41,6 +41,6 @@ Outputs the targets/plugins used and the version specified in [plugin data versi
 
 ### `nodeVersion`
 
-`string`, defaults to `8.0`
+`string`, defaults to `10.13`
 
 Allows the Node.js version target to be modified per [`@babel/preset-env` documentation](https://babeljs.io/docs/en/babel-preset-env#targetsnode)

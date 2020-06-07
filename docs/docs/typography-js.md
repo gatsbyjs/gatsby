@@ -10,7 +10,11 @@ Typography.js is a JavaScript library that allows you to explore the typographic
 
 Gatsby has the plugin `gatsby-plugin-typography` to integrate Typography.js into your project.
 
-You can install the plugin and its peer dependencies into your project by running the command `npm install gatsby-plugin-typography react-typography typography --save`
+You can install the plugin and its peer dependencies into your project by running the following command:
+
+```shell
+npm install gatsby-plugin-typography react-typography typography
+```
 
 After the installation of the plugin is complete, navigate to your `gatsby-config.js` file located in the root of your project's directory and add the plugin to the configuration:
 
@@ -32,7 +36,7 @@ module.exports = {
 `gatsby-plugin-typography` takes two options for you to specify:
 
 - **pathToConfigModule** (string): The path to the file where you export your Typography configuration.
-- **omitGoogleFont** (boolean, `default: false`): By default, Typography includes a helper that makes a request to Google Font's CDN for fonts you need. You may want to use your own fonts, either by injecting fonts or using a CDN of your choosing. By setting `omitGoogleFont: true`, `gatsby-plugin-typography` will skip adding the font helper. Instead, you will have to include the appropriate fonts yourself - see [Adding a Local Font](https://www.gatsbyjs.org/docs/recipes/#adding-a-local-font)
+- **omitGoogleFont** (boolean, `default: false`): By default, Typography includes a helper that makes a request to Google Font's CDN for fonts you need. You may want to use your own fonts, either by injecting fonts or using a CDN of your choosing. By setting `omitGoogleFont: true`, `gatsby-plugin-typography` will skip adding the font helper. Instead, you will have to include the appropriate fonts yourself - see [Adding a Local Font](/docs/recipes/styling-css#adding-a-local-font)
 
 ## Creating the Typography configuration
 
@@ -68,7 +72,11 @@ To find or create a new typography theme, you can visit [Typography.js](https://
 
 ## Installing Typography themes
 
-Typography.js has built in themes that can save time when defining your website's font styling. The Funston theme, maintained by Typography, is one of the built in themes. To install the Funston theme from npm, run the command: `npm install typography-theme-funston --save`
+Typography.js has built in themes that can save time when defining your website's font styling. The Funston theme, maintained by Typography, is one of the built in themes. To install the Funston theme from npm, run the command:
+
+```shell
+npm install typography-theme-funston
+```
 
 To use the theme, edit the `typography.js` file that you created before and inform Typography of the new configuration:
 

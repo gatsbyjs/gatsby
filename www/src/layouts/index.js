@@ -1,22 +1,16 @@
-import React, { useState } from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import BaseLayout from "../components/layout"
 
-let PluginLibraryWrapper
-export default props => {
-  const [loaded, setLoaded] = useState(false)
+import { I18nProvider } from "../components/i18n-context"
+import { IconContext } from "react-icons"
 
-  const promise = import(`../components/layout/plugin-library-wrapper`)
-  if (props.pageContext.layout === `plugins` && !loaded) {
-    promise.then(pl => {
-      PluginLibraryWrapper = pl.default
-      setLoaded(true)
-    })
-    return null
-  } else if (props.pageContext.layout === `plugins` && loaded) {
-    return (
-      <PluginLibraryWrapper location={props.location}>
-        {props.children}
-      </PluginLibraryWrapper>
-    )
-  }
-  return <>{props.children}</>
+export default function Layout({ location, pageContext, children }) {
+  return (
+    <IconContext.Provider value={{ style: { verticalAlign: `middle` } }}>
+      <I18nProvider locale={pageContext.locale}>
+        <BaseLayout location={location}>{children}</BaseLayout>
+      </I18nProvider>
+    </IconContext.Provider>
+  )
 }

@@ -10,8 +10,6 @@ If you're a Gatsby community member, you may have noticed something: we write _a
 
 Community members are often surprised by the comprehensiveness of our [documentation](/docs/). We publish new articles on this blog multiple times per week, from both the core team and the community.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The <a href="https://twitter.com/gatsbyjs?ref_src=twsrc%5Etfw">@gatsbyjs</a> docs are some of the best I&#39;ve ever read. Super clear setup instructions, especially Step 0 for those new to dev. Too many other frameworks assume dev environment setup experience, so it&#39;s nice to see the Gatsby team be better here.</p>&mdash; Matt Convente (@mattconvente) <a href="https://twitter.com/mattconvente/status/1099706762897342465?ref_src=twsrc%5Etfw">February 24, 2019</a></blockquote>
-
 Writing isn't something we just do because we love it (although we do). Writing is core to who we are as a project, a company, and a community.
 
 Writing is core to the success we've enjoyed so far, and it's core to our strategy to become the default way to build on the web.
@@ -31,7 +29,7 @@ The answer:
 
 ## Principle 2: content acts as a guide unlocking the power of Gatsby.
 
-Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, Webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
+Gatsby is so powerful, because of its core _and the ecosystem_ — not just plugins and themes, but React, webpack and Babel, the entire npm ecosystem, and modern JavaScript in general.
 
 You can do almost anything you want with Gatsby, you just have to:
 
@@ -96,7 +94,7 @@ In the docs, things are structured hierarchically, so usually content is mostly 
 
 But outside the docs, that's far from the case. We have blog posts, [using-\* example sites / guides](https://github.com/gatsbyjs/gatsby/tree/master/examples), [starters](/starters/), conference talks, podcast appearances, tweets, and whatever Gatsby community members dream up and publish!
 
-**It's a constant challenge to organize these in ways that are useful and obvious for the end-user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs.
+**It's a constant challenge to organize these in ways that are useful and obvious for the end user**. We're always attacking this in five or ten different ways -- discoverability via search, cross-linking, hierarchy, navbars and breadcrumbs, turning conference talks into blog posts and blog posts into docs.
 
 Our goal is to make it easy for the user to gather relevant context, know where to look when they get stuck, and feel confident that they can make it if they keep on reading, learning, and trying.
 

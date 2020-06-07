@@ -27,7 +27,7 @@ generated content.
 Gatsby [recently released][gatsby-release] a v1.0.0 with a bunch of new
 features, including (but not limited to) the ability to create content queries
 with GraphQL, integration with various CMSs--including WordPress, Contentful,
-Drupal, etc., and route based code splitting to keep the end-user experience as
+Drupal, etc., and route based code splitting to keep the end user experience as
 snappy as possible. In this post, we'll take a deep dive into Gatsby and some of
 these new features by creating a static blog. Let's get on it!
 
@@ -647,7 +647,7 @@ Now go build something great.
     (previous link), and expands upon it with a bunch of features and some more
     advanced functionality
 
-[react-dom-server]: https://facebook.github.io/react/docs/react-dom-server.html
+[react-dom-server]: https://reactjs.org/docs/react-dom-server.html
 [gatsby-release]: /blog/gatsby-v1/
 [gatsby-plugins]: /docs/plugins/
 [gatsby-plugin-catch-links]: /packages/gatsby-plugin-catch-links/

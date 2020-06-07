@@ -53,11 +53,15 @@ module.exports = {
       options: {
         /*
          * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
-         * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
+         * Example : 'demo.wp-api.org' or 'www.example-site.com'
          */
-        baseUrl: "gatsbyjsexamplewordpress.wordpress.com",
+        baseUrl: "live-gatbsyjswp.pantheonsite.io",
         // The protocol. This can be http or https.
-        protocol: "http",
+        protocol: "https",
+        // The rest api route prefix that your WordPress site is using.
+        // Sometimes this is modified by WordPress plugins.
+        // If not set, it uses the default of "wp-json"
+        restApiRoutePrefix: "wp-json",
         // Indicates whether the site is hosted on wordpress.com.
         // If false, then the assumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
@@ -141,9 +145,28 @@ module.exports = {
         // Defaults to false
         keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
         },
+        // The normalizers option allows you to manipulate the array of internal
+        // normalizers that are applied to entities after they're fetched
+        // from WordPress.
+        // You can add your own normalizers to this array by adding an object
+        // that contains name and normalizer properties.
+        // Name is the name of your normalizer, and normalizer is a function that
+        // should return the array of entities that are passed to it.
+        // This is useful if you need more control over the order of normalizers,
+        // instead of your normalizer being applied after the built in normalizers (as is the case with the normalizer option).
+        normalizers: normalizers => [
+          ...normalizers,
+          {
+            name: "nameOfTheFunction",
+            normalizer: function ({ entities }) {
+              // manipulate entities here
+              return entities
+            },
+          },
+        ],
       },
     },
   ],
@@ -185,6 +208,9 @@ plugins.
 - [x] [wp-rest-polylang](https://github.com/maru3l/wp-rest-polylang) which adds
       the current locale and available translations to all post types translated with Polylang.
 
+- [x] [wp-rest-polylang-pro](https://github.com/dannyvaughton/wp-rest-polylang-pro) which adds
+      the current locale and available translations to all post types & taxonomies translated with Polylang Pro.
+
 - [x] [Yoast](https://yoast.com/wordpress/plugins/seo/)
   - You must have the plugin [wp-api-yoast-meta](https://github.com/maru3l/wp-api-yoast-meta) installed in WordPress.
   - Will pull the `yoast_meta: { ... }` field's contents in entity.
@@ -201,9 +227,9 @@ You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/
 
 Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
 
-### For Business, and eCommerce Plans
+### For Business, and E-commerce Plans
 
-Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
+Business and e-commerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -247,7 +273,7 @@ and would skip pulling Comments.
 
 You can query nodes created from WordPress using GraphQL like the following:
 Note : Learn to use the GraphQL tool and Ctrl+Spacebar at
-<http://localhost:3000/___graphiql> to discover the types and properties of your
+`http://localhost:3000/___graphiql` to discover the types and properties of your
 GraphQL model.
 
 ### Query posts
@@ -335,11 +361,11 @@ Whether you are using V2 or V3 of ACF to REST, the query below will return `opti
 
 If you have specified `acfOptionPageIds` in your site's `gatsby-config.js` (ex: `option_page_1`), then they will be accessible by their ID:
 
-```
+```graphql
 {
   allWordpressAcfOptions {
     edges {
-      node{
+      node {
         option_page_1 {
           test_acf
         }
@@ -420,11 +446,11 @@ To access those fields, instead of using their field name, you need to use
 your WordPress pages you would need to use `page_builder_page`).
 
 To access data stored in these fields, you need to use GraphQL
-[inline fragments](http://graphql.org/learn/queries/#inline-fragments). This
+[inline fragments](https://graphql.org/learn/queries/#inline-fragments). This
 require you to know types of nodes. The easiest way to get the types of nodes is to use
 `___GraphiQL` debugger and run the below query (adjust post type and field name):
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -445,7 +471,7 @@ When you have node type names, you can use them to create inline fragments.
 
 Full example:
 
-```graphQL
+```graphql
 {
   allWordpressPage {
     edges {
@@ -687,7 +713,7 @@ currently not supported.
 
 To access image processing in your queries you need to use this pattern:
 
-```
+```graphql
 {
   imageFieldName {
     localFile {
@@ -751,7 +777,7 @@ To learn more about image processing check
 ## Using a custom normalizer
 
 The plugin uses the concept of normalizers to transform the json data from WordPress into
-GraphQL nodes. You can extend the normalizers by passing a custom function to your `gatsby-config.js`.
+GraphQL nodes. You can extend the normalizers by modifying the normalizers array in plugin options in `gatsby-config.js`.
 
 ### Example:
 
@@ -759,7 +785,9 @@ You have a custom post type `movie` and a related custom taxonomy `genre` in you
 `gatsby-source-wordpress` doesn't know about the relation of the two, we can build an additional normalizer function to map the movie GraphQL nodes to the genre nodes:
 
 ```javascript
-function mapMoviesToGenres({ entities }) {
+const mapMoviesToGenres = {
+  name: `mapMoviesToGenres`,
+  normalizer: function({ entities }) {
   const genres = entities.filter(e => e.__type === `wordpress__wp_genre`)
 
   return entities.map(e => {
@@ -778,7 +806,7 @@ function mapMoviesToGenres({ entities }) {
 }
 ```
 
-In your `gatsby-config.js` you can then pass the function to the plugin options:
+In your `gatsby-config.js` you can then add the normalizer to the plugin options called normalizers:
 
 ```javascript
 module.exports = {
@@ -787,7 +815,7 @@ module.exports = {
       resolve: "gatsby-source-wordpress",
       options: {
         // ...
-        normalizer: mapMoviesToGenres,
+        normalizers: normalizers => [...normalizers, mapMoviesToGenres],
       },
     },
   ],
@@ -797,11 +825,40 @@ module.exports = {
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
 and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
 
+### Example with modyfing gatsby-source-wordpress normalizers
+
+```javascript
+const dropUnusedMediaNormalizer = {
+  name: "dropUnusedMediaNormalizer",
+  normalizer: function ({ entities }) {
+    return entities.filter(
+      e => !(e.__type === "wordpress__wp_media" && !e.post)
+    )
+  },
+}
+```
+
+Adding this normalizer on top of other/builtin normalizers, so unused media entities are not further processed.
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-wordpress",
+      options: {
+        // ...
+        normalizers: normalizers => [dropUnusedMediaNormalizer, ...normalizers],
+      },
+    },
+  ],
+}
+```
+
 ## Site's `gatsby-node.js` example
 
 ```javascript
 const path = require(`path`)
-const slash = require(`slash`)
+const { slash } = require(`gatsby-core-utils`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -959,14 +1016,14 @@ During the upload process to the WordPress media library, the `post_parent` valu
 
 When the post an image is attached to becomes inaccessible (e.g. from changing visibility settings, or deleting the post), the image itself is restricted in the REST API:
 
-```
-   {
-      "code":"rest_forbidden",
-      "message":"You don't have permission to do this.",
-      "data":{
-         "status":403
-      }
-   }
+```json
+{
+  "code": "rest_forbidden",
+  "message": "You don't have permission to do this.",
+  "data": {
+    "status": 403
+  }
+}
 ```
 
 which prevents Gatsby from retrieving it.
@@ -993,7 +1050,7 @@ When running locally, or in other situations that may involve self-signed certif
 
 To solve this, you can disable Node.js' rejection of unauthorized certificates by adding the following to `.env.development`:
 
-```
+```shell
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 

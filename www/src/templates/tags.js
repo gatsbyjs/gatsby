@@ -1,15 +1,16 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { Helmet } from "react-helmet"
+import styled from "@emotion/styled"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { graphql } from "gatsby"
-import TagsIcon from "react-icons/lib/ti/tags"
-import TiArrowRight from "react-icons/lib/ti/arrow-right"
+import { TiTags as TagsIcon, TiArrowRight } from "react-icons/ti"
 
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Button from "../components/button"
 import Container from "../components/container"
-import Layout from "../components/layout"
+import FooterLinks from "../components/shared/footer-links"
+import PageMetadata from "../components/page-metadata"
 import { TAGS_AND_DOCS } from "../data/tags-docs"
 
 // Select first tag with whitespace instead of hyphens for
@@ -24,27 +25,34 @@ const preferSpacedTag = tags => {
   return tags[0]
 }
 
-const Tags = ({ pageContext, data, location }) => {
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  ${mediaQueries.xs} {
+    flex-direction: row;
+  }
+`
+
+const Tags = ({ pageContext, data }) => {
   const { tags } = pageContext
-  const { edges, totalCount } = data.allMdx
+  const { nodes, totalCount } = data.allMdx
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? `` : `s`
   } tagged with "${preferSpacedTag(tags)}"`
   const doc = TAGS_AND_DOCS.get(tags[0])
 
   return (
-    <Layout location={location}>
-      <Helmet>
-        <title>{`${preferSpacedTag(tags)} Tag`}</title>
-        <meta
-          name="description"
-          content={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
-            tags
-          )}`}
-        />
-      </Helmet>
-      <Container>
-        <h1>{tagHeader}</h1>
+    <Container>
+      <PageMetadata
+        title={`${preferSpacedTag(tags)} Tag`}
+        description={`Case studies, tutorials, and other posts about Gatsby related to ${preferSpacedTag(
+          tags
+        )}`}
+      />
+      <h1>{tagHeader}</h1>
+      <ButtonWrapper>
         <Button
           variant="small"
           key="blog-post-view-all-tags-button"
@@ -65,15 +73,16 @@ const Tags = ({ pageContext, data, location }) => {
             </Button>
           </React.Fragment>
         ) : null}
-        {edges.map(({ node }) => (
-          <BlogPostPreviewItem
-            post={node}
-            key={node.fields.slug}
-            sx={{ my: 9 }}
-          />
-        ))}
-      </Container>
-    </Layout>
+      </ButtonWrapper>
+      {nodes.map(node => (
+        <BlogPostPreviewItem
+          post={node}
+          key={node.fields.slug}
+          sx={{ my: 9 }}
+        />
+      ))}
+      <FooterLinks />
+    </Container>
   )
 }
 
@@ -86,15 +95,12 @@ export const pageQuery = graphql`
       sort: { fields: [frontmatter___date, fields___slug], order: DESC }
       filter: {
         frontmatter: { tags: { in: $tags } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-        fields: { released: { eq: true } }
+        fields: { section: { eq: "blog" }, released: { eq: true } }
       }
     ) {
       totalCount
-      edges {
-        node {
-          ...BlogPostPreview_item
-        }
+      nodes {
+        ...BlogPostPreview_item
       }
     }
   }

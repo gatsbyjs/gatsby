@@ -22,7 +22,7 @@ queue.on(`active`, () => {
   )
 })
 
-var findAsset = function(src, compilation, webpackStatsJson) {
+var findAsset = function (src, compilation, webpackStatsJson) {
   if (!src) {
     var chunkNames = Object.keys(webpackStatsJson.assetsByChunkName)
 
@@ -43,7 +43,7 @@ var findAsset = function(src, compilation, webpackStatsJson) {
   // Webpack outputs an array for each chunk when using sourcemaps
   if (chunkValue instanceof Array) {
     // Is the main bundle always the first element?
-    chunkValue = chunkValue.find(function(filename) {
+    chunkValue = chunkValue.find(function (filename) {
       return /\.js$/.test(filename)
     })
   }
@@ -155,9 +155,8 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
                 keys.map(({ body }) =>
                   renderMdxBody
                     ? renderMdxBody(body)
-                    : reporter.error(
-                        `gatsby-plugin-mdx: renderMdxBody was unavailable when rendering html.
->> This is a bug.`
+                    : new Error(
+                        `renderMdxBody was unavailable when rendering html.`
                       )
                 )
               )

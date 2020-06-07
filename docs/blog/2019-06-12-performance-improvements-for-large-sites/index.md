@@ -18,7 +18,7 @@ In this post, I'll dive deep into the technical intricacies of what was actually
 There were two main symptoms experienced by users of large Gatsby sites.
 
 1. After navigating to a Gatsby site, it took a while for all the JavaScript to load so that it was "interactive". Therefore, clicks immediately after loading the page could take many seconds to actually navigate.
-1. Even after the initial load, clicking links could be somewhat laggy even though the target's resources had already been pre-fetched.
+2. Even after the initial load, clicking links could be somewhat laggy even though the target's resources had already been pre-fetched.
 
 ## The Problem: Global pages manifest
 

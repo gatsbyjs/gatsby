@@ -2,7 +2,7 @@ import { rgb as wcag } from "wcag-contrast"
 import hexRgb from "hex-rgb"
 import { normal } from "color-blend"
 
-import theme from "./theme"
+import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 // adapted from https://github.com/jxnblk/colorable 🙏
 const minimums = {
@@ -33,7 +33,7 @@ const colorToHex = color =>
     ? rgbArray(color)
     : hexRgb(color, { format: `array` })
 
-export const a11y = function(hex, bg) {
+export const a11y = function (hex, bg) {
   const text = colorToHex(hex)
   const background = colorToHex(bg)
 
@@ -64,7 +64,7 @@ export const a11y = function(hex, bg) {
   }
 }
 
-export const colorable = function(hex) {
+export const colorable = function (hex) {
   let result = {}
 
   result.hex = hex
@@ -78,7 +78,7 @@ export const colorable = function(hex) {
   }
 
   result.a11y = {
-    ...a11y(hex, theme.colors.white),
+    ...a11y(hex, colors.white),
   }
 
   return result

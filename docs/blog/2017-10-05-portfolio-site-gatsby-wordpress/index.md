@@ -19,7 +19,7 @@ _This article was originally published on
 [my portfolio site](http://dfjames.com/blog/site-generating-with-the-great-gatsbyjs)
 on October 1, 2017._
 
-# Site generating with the great GatsbyJS
+## Site generating with the great GatsbyJS
 
 When someone mentions static site generation, many people think of
 [Jekyll](https://jekyllrb.com/). I had heard some good things about it and
@@ -33,7 +33,7 @@ video on
 [GatsbyJS](/) is a static site generator, similar to Jekyll, however it is
 written using [React](https://reactjs.org/) and allows you to write your pages
 as React components! It is somewhat similar to create-react-app where almost all
-the scary Webpack config has been abstracted away from you and everything is
+the scary webpack config has been abstracted away from you and everything is
 setup ready to go, so you can get to the important stuff like...building the
 site! (If you are a fan of React and not convinced, the
 [React website/docs](https://reactjs.org/) were just released using Gatsby!)
@@ -47,7 +47,7 @@ me the opportunity to learn some more React and JavaScript. Another reason I
 ended up going with Gatsby was the promise that your project could be connected
 to various APIs or even a CMS of your choice.
 
-## The magic of GraphQL and Gatsby Plugins
+### The magic of GraphQL and Gatsby Plugins
 
 Originally, following Scott's and the official Gatsby tutorial, I had it pulling
 my content from good ol' Markdown files. Then I saw it... too good to be true,
@@ -61,7 +61,7 @@ I was skeptical at first: would I have to parse large amounts of JSON to get the
 data I needed? I have never even interacted with the WordPress REST API, how
 will I query it?
 
-The answer... [GraphQL](http://graphql.org/). Gatsby ships with it and through
+The answer... [GraphQL](https://graphql.org/). Gatsby ships with it and through
 an npm install of a
 [gatsby-source plugin](/docs/plugins/) of your choice
 and a tiny bit of a config, you can start querying in no time. I was amazed with
@@ -115,7 +115,7 @@ export const postQuery = graphql`
 `
 ```
 
-## Wrap up and future
+### Wrap up and future
 
 In just a few weekends I managed to rebuild my portfolio site with the blog I
 wanted. I'd highly recommend [Gatsby](/tutorial/) for
@@ -129,7 +129,7 @@ project I didn't know a lot about:
 - WordPress REST API
 
 Moving forward with Gatsby, I'd like to extend my site to include pagination
-within the blog, use [Styled Components](https://www.styled-components.com/) and
+within the blog, use [Styled Components](https://styled-components.com/) and
 ensure the site scores a 90+ overall on
 [Lighthouse](https://developers.google.com/web/tools/lighthouse/), Google’s
 performance auditing tool.

@@ -1,0 +1,849 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin resource all returns plugins as array 1`] = `
+Array [
+  Object {
+    "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+    "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+    "id": "gatsby-source-filesystem",
+    "name": "gatsby-source-filesystem",
+    "options": Object {
+      "name": "pages",
+      "path": "\${__dirname}/src/pages",
+    },
+    "shadowableFiles": Array [
+      "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
+      "src/gatsby-source-filesystem/__tests__/create-file-node.js",
+      "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
+      "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
+      "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
+      "src/gatsby-source-filesystem/__tests__/index.js",
+      "src/gatsby-source-filesystem/__tests__/utils.js",
+      "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
+      "src/gatsby-source-filesystem/create-file-node.js",
+      "src/gatsby-source-filesystem/create-file-path.js",
+      "src/gatsby-source-filesystem/create-remote-file-node.js",
+      "src/gatsby-source-filesystem/extend-file-node.js",
+      "src/gatsby-source-filesystem/gatsby-node.js",
+      "src/gatsby-source-filesystem/index.js",
+      "src/gatsby-source-filesystem/utils.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-transformer-sharp in gatsby-config.js",
+    "description": "Gatsby transformer plugin for images using Sharp",
+    "id": "gatsby-transformer-sharp",
+    "name": "gatsby-transformer-sharp",
+    "options": undefined,
+    "shadowableFiles": Array [
+      "src/gatsby-transformer-sharp/__tests__/__snapshots__/gatsby-node.js.snap",
+      "src/gatsby-transformer-sharp/__tests__/gatsby-node.js",
+      "src/gatsby-transformer-sharp/create-resolvers.js",
+      "src/gatsby-transformer-sharp/customize-schema.js",
+      "src/gatsby-transformer-sharp/fragments.js",
+      "src/gatsby-transformer-sharp/gatsby-node.js",
+      "src/gatsby-transformer-sharp/on-node-create.js",
+      "src/gatsby-transformer-sharp/safe-sharp.js",
+      "src/gatsby-transformer-sharp/supported-extensions.js",
+      "src/gatsby-transformer-sharp/types.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-emotion in gatsby-config.js",
+    "description": "Gatsby plugin to add support for Emotion",
+    "id": "gatsby-plugin-emotion",
+    "name": "gatsby-plugin-emotion",
+    "options": undefined,
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-emotion/__tests__/gatsby-node.js",
+      "src/gatsby-plugin-emotion/gatsby-node.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-typography in gatsby-config.js",
+    "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
+    "id": "gatsby-plugin-typography",
+    "name": "gatsby-plugin-typography",
+    "options": Object {
+      "pathToConfigModule": "src/utils/typography",
+    },
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-typography/__tests__/gatsby-browser.js",
+      "src/gatsby-plugin-typography/__tests__/gatsby-ssr.js",
+      "src/gatsby-plugin-typography/gatsby-browser.js",
+      "src/gatsby-plugin-typography/gatsby-node.js",
+      "src/gatsby-plugin-typography/gatsby-ssr.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-transformer-remark in gatsby-config.js",
+    "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
+    "id": "gatsby-transformer-remark",
+    "name": "gatsby-transformer-remark",
+    "options": Object {
+      "plugins": Array [
+        Object {
+          "options": Object {
+            "maxWidth": 590,
+          },
+          "resolve": "gatsby-remark-images",
+        },
+        Object {
+          "options": Object {
+            "wrapperStyle": "margin-bottom: 1.0725rem",
+          },
+          "resolve": "gatsby-remark-responsive-iframe",
+        },
+        "gatsby-remark-prismjs",
+        "gatsby-remark-copy-linked-files",
+        "gatsby-remark-smartypants",
+      ],
+    },
+    "shadowableFiles": Array [
+      "src/gatsby-transformer-remark/__tests__/__snapshots__/extend-node.js.snap",
+      "src/gatsby-transformer-remark/__tests__/__snapshots__/on-node-create.js.snap",
+      "src/gatsby-transformer-remark/__tests__/extend-node.js",
+      "src/gatsby-transformer-remark/__tests__/on-node-create.js",
+      "src/gatsby-transformer-remark/code-handler.js",
+      "src/gatsby-transformer-remark/create-schema-customization.js",
+      "src/gatsby-transformer-remark/extend-node-type.js",
+      "src/gatsby-transformer-remark/gatsby-node.js",
+      "src/gatsby-transformer-remark/hast-processing.js",
+      "src/gatsby-transformer-remark/on-node-create.js",
+      "src/gatsby-transformer-remark/utils/get-heading-id.js",
+      "src/gatsby-transformer-remark/utils/time-to-read.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-sharp in gatsby-config.js",
+    "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
+    "id": "gatsby-plugin-sharp",
+    "name": "gatsby-plugin-sharp",
+    "options": undefined,
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-sharp/__tests__/__snapshots__/index.js.snap",
+      "src/gatsby-plugin-sharp/__tests__/gatsby-worker.js",
+      "src/gatsby-plugin-sharp/__tests__/images/144-density.png",
+      "src/gatsby-plugin-sharp/__tests__/images/alphatest.png",
+      "src/gatsby-plugin-sharp/__tests__/images/padding-bytes.jpg",
+      "src/gatsby-plugin-sharp/__tests__/images/test.png",
+      "src/gatsby-plugin-sharp/__tests__/index.js",
+      "src/gatsby-plugin-sharp/__tests__/process-file.js",
+      "src/gatsby-plugin-sharp/__tests__/scheduler.js",
+      "src/gatsby-plugin-sharp/__tests__/trace-svg.js",
+      "src/gatsby-plugin-sharp/__tests__/utils.js",
+      "src/gatsby-plugin-sharp/duotone.js",
+      "src/gatsby-plugin-sharp/gatsby-node.js",
+      "src/gatsby-plugin-sharp/gatsby-worker.js",
+      "src/gatsby-plugin-sharp/index.js",
+      "src/gatsby-plugin-sharp/plugin-options.js",
+      "src/gatsby-plugin-sharp/process-file.js",
+      "src/gatsby-plugin-sharp/report-error.js",
+      "src/gatsby-plugin-sharp/safe-sharp.js",
+      "src/gatsby-plugin-sharp/scheduler.js",
+      "src/gatsby-plugin-sharp/sharp-error.js",
+      "src/gatsby-plugin-sharp/trace-svg.js",
+      "src/gatsby-plugin-sharp/utils.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-google-analytics in gatsby-config.js",
+    "description": "Gatsby plugin to add google analytics onto a site",
+    "id": "gatsby-plugin-google-analytics",
+    "name": "gatsby-plugin-google-analytics",
+    "options": Object {
+      "trackingId": "UA-774017-3",
+    },
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-google-analytics/__tests__/__snapshots__/index.js.snap",
+      "src/gatsby-plugin-google-analytics/__tests__/gatsby-browser.js",
+      "src/gatsby-plugin-google-analytics/__tests__/gatsby-ssr.js",
+      "src/gatsby-plugin-google-analytics/__tests__/index.js",
+      "src/gatsby-plugin-google-analytics/gatsby-browser.js",
+      "src/gatsby-plugin-google-analytics/gatsby-node.js",
+      "src/gatsby-plugin-google-analytics/gatsby-ssr.js",
+      "src/gatsby-plugin-google-analytics/index.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-manifest in gatsby-config.js",
+    "description": "Gatsby plugin which adds a manifest.webmanifest to make sites progressive web apps",
+    "id": "gatsby-plugin-manifest",
+    "name": "gatsby-plugin-manifest",
+    "options": Object {
+      "background_color": null,
+      "display": "minimal-ui",
+      "icon": "static/logo.png",
+      "name": "Bricolage",
+      "short_name": "Bricolage",
+      "start_url": "/",
+      "theme_color": null,
+    },
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-manifest/__tests__/__snapshots__/common.js.snap",
+      "src/gatsby-plugin-manifest/__tests__/__snapshots__/gatsby-node.js.snap",
+      "src/gatsby-plugin-manifest/__tests__/__snapshots__/gatsby-ssr.js.snap",
+      "src/gatsby-plugin-manifest/__tests__/common.js",
+      "src/gatsby-plugin-manifest/__tests__/gatsby-browser.js",
+      "src/gatsby-plugin-manifest/__tests__/gatsby-node.js",
+      "src/gatsby-plugin-manifest/__tests__/gatsby-ssr.js",
+      "src/gatsby-plugin-manifest/__tests__/images/gatsby-logo.png",
+      "src/gatsby-plugin-manifest/common.js",
+      "src/gatsby-plugin-manifest/gatsby-browser.js",
+      "src/gatsby-plugin-manifest/gatsby-node.js",
+      "src/gatsby-plugin-manifest/gatsby-ssr.js",
+      "src/gatsby-plugin-manifest/get-manifest-pathname.js",
+      "src/gatsby-plugin-manifest/safe-sharp.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-offline in gatsby-config.js",
+    "description": "Gatsby plugin which sets up a site to be able to run offline",
+    "id": "gatsby-plugin-offline",
+    "name": "gatsby-plugin-offline",
+    "options": undefined,
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-offline/__tests__/__snapshots__/gatsby-node.js.snap",
+      "src/gatsby-plugin-offline/__tests__/__snapshots__/get-resources-from-html.js.snap",
+      "src/gatsby-plugin-offline/__tests__/fixtures/custom-sw-code.js",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/index.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/page1.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/page2.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/script.js",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/style.css",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/index.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/page1.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/page2.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/script.js",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/style.css",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/index.html",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/no-index-html/style.css",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/script.js",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/style.css",
+      "src/gatsby-plugin-offline/__tests__/fixtures/public/test.html",
+      "src/gatsby-plugin-offline/__tests__/gatsby-browser.test.js",
+      "src/gatsby-plugin-offline/__tests__/gatsby-node.js",
+      "src/gatsby-plugin-offline/__tests__/get-resources-from-html.js",
+      "src/gatsby-plugin-offline/app-shell.js",
+      "src/gatsby-plugin-offline/gatsby-browser.js",
+      "src/gatsby-plugin-offline/gatsby-node.js",
+      "src/gatsby-plugin-offline/gatsby-ssr.js",
+      "src/gatsby-plugin-offline/get-resources-from-html.js",
+      "src/gatsby-plugin-offline/sw-append.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+  Object {
+    "_message": "Installed gatsby-plugin-react-helmet in gatsby-config.js",
+    "description": "Manage document head data with react-helmet. Provides drop-in server rendering support for Gatsby.",
+    "id": "gatsby-plugin-react-helmet",
+    "name": "gatsby-plugin-react-helmet",
+    "options": undefined,
+    "shadowableFiles": Array [
+      "src/gatsby-plugin-react-helmet/__mocks__/react-helmet.js",
+      "src/gatsby-plugin-react-helmet/__tests__/gatsby-ssr.js",
+      "src/gatsby-plugin-react-helmet/gatsby-ssr.js",
+    ],
+    "shadowedFiles": Array [],
+  },
+]
+`;
+
+exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "shadowableFiles": Array [
+    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
+    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
+    "src/gatsby-source-filesystem/__tests__/index.js",
+    "src/gatsby-source-filesystem/__tests__/utils.js",
+    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/create-file-node.js",
+    "src/gatsby-source-filesystem/create-file-path.js",
+    "src/gatsby-source-filesystem/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/extend-file-node.js",
+    "src/gatsby-source-filesystem/gatsby-node.js",
+    "src/gatsby-source-filesystem/index.js",
+    "src/gatsby-source-filesystem/utils.js",
+  ],
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "shadowableFiles": Array [
+    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
+    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
+    "src/gatsby-source-filesystem/__tests__/index.js",
+    "src/gatsby-source-filesystem/__tests__/utils.js",
+    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/create-file-node.js",
+    "src/gatsby-source-filesystem/create-file-path.js",
+    "src/gatsby-source-filesystem/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/extend-file-node.js",
+    "src/gatsby-source-filesystem/gatsby-node.js",
+    "src/gatsby-source-filesystem/index.js",
+    "src/gatsby-source-filesystem/utils.js",
+  ],
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create plan 1`] = `
+Object {
+  "currentState": "/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+module.exports = {
+  /* Your site config here */
+  plugins: [],
+};
+",
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 1
++ Modified  + 7
+
+@@ -5,6 +5,12 @@
+   */
+  module.exports = {
+    /* Your site config here */
+-   plugins: [],
++   plugins: [
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
++   ],
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+module.exports = {
+  /* Your site config here */
+  plugins: [
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ],
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "shadowableFiles": Array [
+    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
+    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
+    "src/gatsby-source-filesystem/__tests__/index.js",
+    "src/gatsby-source-filesystem/__tests__/utils.js",
+    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/create-file-node.js",
+    "src/gatsby-source-filesystem/create-file-path.js",
+    "src/gatsby-source-filesystem/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/extend-file-node.js",
+    "src/gatsby-source-filesystem/gatsby-node.js",
+    "src/gatsby-source-filesystem/index.js",
+    "src/gatsby-source-filesystem/utils.js",
+  ],
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update plan 1`] = `
+Object {
+  "currentState": "/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+module.exports = {
+  /* Your site config here */
+  plugins: [\\"gatsby-source-filesystem\\"],
+};
+",
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 1
++ Modified  + 8
+
+@@ -5,6 +5,13 @@
+   */
+  module.exports = {
+    /* Your site config here */
+-   plugins: [\\"gatsby-source-filesystem\\"],
++   plugins: [
++     \\"gatsby-source-filesystem\\",
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
++   ],
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+module.exports = {
+  /* Your site config here */
+  plugins: [
+    \\"gatsby-source-filesystem\\",
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ],
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "shadowableFiles": Array [
+    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
+    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
+    "src/gatsby-source-filesystem/__tests__/index.js",
+    "src/gatsby-source-filesystem/__tests__/utils.js",
+    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/create-file-node.js",
+    "src/gatsby-source-filesystem/create-file-path.js",
+    "src/gatsby-source-filesystem/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/extend-file-node.js",
+    "src/gatsby-source-filesystem/gatsby-node.js",
+    "src/gatsby-source-filesystem/index.js",
+    "src/gatsby-source-filesystem/utils.js",
+  ],
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create plan 1`] = `
+Object {
+  "currentState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
+  },
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+  ],
+};
+",
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 0
++ Modified  + 5
+
+@@ -64,6 +64,11 @@
+      },
+      \`gatsby-plugin-offline\`,
+      \`gatsby-plugin-react-helmet\`,
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ],
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
+  },
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ],
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "shadowableFiles": Array [
+    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
+    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
+    "src/gatsby-source-filesystem/__tests__/index.js",
+    "src/gatsby-source-filesystem/__tests__/utils.js",
+    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
+    "src/gatsby-source-filesystem/create-file-node.js",
+    "src/gatsby-source-filesystem/create-file-path.js",
+    "src/gatsby-source-filesystem/create-remote-file-node.js",
+    "src/gatsby-source-filesystem/extend-file-node.js",
+    "src/gatsby-source-filesystem/gatsby-node.js",
+    "src/gatsby-source-filesystem/index.js",
+    "src/gatsby-source-filesystem/utils.js",
+  ],
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update plan 1`] = `
+Object {
+  "currentState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
+  },
+  plugins: [
+    \\"gatsby-source-filesystem\\",
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+  ],
+};
+",
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 0
++ Modified  + 5
+
+@@ -58,6 +58,11 @@
+      },
+      \`gatsby-plugin-offline\`,
+      \`gatsby-plugin-react-helmet\`,
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ],
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
+  },
+  plugins: [
+    \\"gatsby-source-filesystem\\",
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ],
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource handles config options as an object 1`] = `
+Array [
+  Object {
+    "name": "gatsby-source-filesystem",
+    "options": Object {
+      "bar": "baz",
+      "baz": "qux",
+      "foo": 1,
+      "otherStuff": Array [
+        Object {
+          "bar": Array [
+            Object {
+              "foo": "bar",
+            },
+          ],
+          "foo": "bar2",
+        },
+      ],
+    },
+  },
+]
+`;

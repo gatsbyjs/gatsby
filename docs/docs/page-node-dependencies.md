@@ -11,15 +11,15 @@ title: Page -> Node Dependency Tracking
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L788), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/index.js#L198) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, when a node's content is changed the pages whose queries depend on that node will be re-run. This is one of the things that makes `develop` so awesome.
+In almost every GraphQL Resolver, you'll see the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions/add-page-dependency.ts#L5), or [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/nodes.ts#L108) functions. These are responsible for recording which nodes are depended on by which pages. In `develop` mode, when a node's content is changed the pages whose queries depend on that node will be re-run. This is one of the things that makes `develop` so awesome.
 
 ## How dependencies are recorded
 
-Recording of Page -> Node dependencies are handled by the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L788) action. It takes the page (in the form of its `path`), and either a `nodeId`, or `connection`.
+Recording of Page -> Node dependencies are handled by the [createPageDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions/add-page-dependency.ts#L5) action. It takes the page (in the form of its `path`), and either a `nodeId`, or `connection`.
 
 Passing `nodeId` tells Gatsby that the page depends specifically on this node. So, if the node is changed, then the page's query needs to be re-executed.
 
-`connection` is a Type string. E.g. `MarkdownRemark`, or `File`. Calling `createPageDependency` with a page path and a `connection` tells Gatsby that this page depends on all nodes of this type. Therefore if any node of this type changes (e.g. a change to a markdown node), then this page must be rebuilt. This variant is only called from [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/run-sift.js#L264) when a query such as `allFile`, or `allMarkdownRemark` is run. See [Schema Connections](/docs/schema-connections/) for more info.
+`connection` is a Type string. E.g. `MarkdownRemark`, or `File`. Calling `createPageDependency` with a page path and a `connection` tells Gatsby that this page depends on all nodes of this type. Therefore if any node of this type changes (e.g. a change to a markdown node), then this page must be rebuilt. This variant is only called from [run-sift.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/run-sift.js) when a query such as `allFile`, or `allMarkdownRemark` is run. See [Schema Connections](/docs/schema-connections/) for more info.
 
 ## How dependencies are stored
 
@@ -62,14 +62,14 @@ Page -> Node dependencies are tracked via the `componentDataDependencies` redux 
 
 ## How dependency information is used
 
-Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty", and therefore which page's queries need to be re-executed. This occurs in `page-query-runner.js` in the [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L89) and [findDirtyIds](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/page-query-runner.js#L171) functions. This is described in greater detail in the [Query Execution](/docs/query-execution/) docs.
+Page -> Node dependencies are used entirely during query execution to figure out which nodes are "dirty", and therefore which page's queries need to be re-executed. This occurs in `query/index.js` in the [findIdsWithoutDataDependencies](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L39) and [popNodeQueries](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/index.js#L71) functions. This is described in greater detail in the [Query Execution](/docs/query-execution/) docs.
 
 ## Other forms
 
-### add-page-dependency.js
+### add-page-dependency.ts
 
-[redux/actions/add-page-dependency.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions/add-page-dependency.js) is a wrapper around the `createPageDependency` action that performs some additional performance optimizations. It should be used instead of the raw action.
+[redux/actions/add-page-dependency.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions/add-page-dependency.ts) is a wrapper around the `createPageDependency` action that performs some additional performance optimizations. It should be used instead of the raw action.
 
 ### getNodeAndSavePathDependency action
 
-The [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/index.js#L198) action simply calls `getNode`, and then calls `createPageDependency` using that result. It is a programmer convenience.
+The [getNodeAndSavePathDependency](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/nodes.ts#L108) action simply calls `getNode`, and then calls `createPageDependency` using that result. It is a programmer convenience.

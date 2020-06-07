@@ -41,13 +41,13 @@ function MemoryStoreWithPriorityBuckets() {
   }
 
   return {
-    connect: function(cb) {
+    connect: function (cb) {
       cb(null, tasks.size)
     },
-    getTask: function(taskId, cb) {
+    getTask: function (taskId, cb) {
       cb(null, tasks.get(taskId))
     },
-    deleteTask: function(taskId, cb) {
+    deleteTask: function (taskId, cb) {
       if (tasks.get(taskId)) {
         tasks.delete(taskId)
         const priority = taskIdToPriority.get(taskId)
@@ -57,7 +57,7 @@ function MemoryStoreWithPriorityBuckets() {
       }
       cb()
     },
-    putTask: function(taskId, task, priority = 0, cb) {
+    putTask: function (taskId, task, priority = 0, cb) {
       const oldTask = tasks.get(taskId)
       tasks.set(taskId, task)
       let needToUpdatePriorityKeys = false
@@ -84,14 +84,14 @@ function MemoryStoreWithPriorityBuckets() {
       }
       cb()
     },
-    takeFirstN: function(n, cb) {
+    takeFirstN: function (n, cb) {
       const lockId = uuid++
       let remainingTasks = n
       let needToUpdatePriorityKeys = false
       let haveSomeTasks = false
       const tasksToRun = {}
 
-      for (let priority of priorityKeys) {
+      for (const priority of priorityKeys) {
         const taskWithSamePriority = queueMap.get(priority)
         const grabbedTaskIds = taskWithSamePriority.splice(0, remainingTasks)
         grabbedTaskIds.forEach(taskId => {
@@ -123,7 +123,7 @@ function MemoryStoreWithPriorityBuckets() {
 
       cb(null, lockId)
     },
-    takeLastN: function(n, cb) {
+    takeLastN: function (n, cb) {
       // This is not really used by Gatsby, but will be implemented for
       // completion in easiest possible way (so not very performant).
       // Mostly done so generic test suite used by other stores passes.
@@ -135,7 +135,7 @@ function MemoryStoreWithPriorityBuckets() {
       let haveSomeTasks = false
       const tasksToRun = {}
 
-      for (let priority of priorityKeys.reverse()) {
+      for (const priority of priorityKeys.reverse()) {
         const taskWithSamePriority = queueMap.get(priority)
         const deleteCount = Math.min(
           remainingTasks,
@@ -174,13 +174,13 @@ function MemoryStoreWithPriorityBuckets() {
 
       cb(null, lockId)
     },
-    getRunningTasks: function(cb) {
+    getRunningTasks: function (cb) {
       cb(null, running)
     },
-    getLock: function(lockId, cb) {
+    getLock: function (lockId, cb) {
       cb(null, running[lockId])
     },
-    releaseLock: function(lockId, cb) {
+    releaseLock: function (lockId, cb) {
       delete running[lockId]
       cb()
     },

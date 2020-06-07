@@ -145,7 +145,7 @@
 
 ```graphql
 query GetBlogPosts($limit: Int, $filter: filterMarkdownRemark, $sort: markdownRemarkConnectionSort) {
-	allMarkdownRemark(
+  allMarkdownRemark(
     limit: $limit,
     filter: $filter,
     sort: $sort
