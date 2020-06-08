@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { renderToString } from "react-dom/server"
 import domReady from "@mikaelkristiansson/domready"
 import io from "socket.io-client"
 
@@ -83,17 +84,26 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ReactDOM.render
   )[0]
 
+  const wasReplaced = renderer !== ReactDOM.render
+
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
     const preferDefault = m => (m && m.default) || m
-    let Root = preferDefault(require(`./root`))
+    const Root = preferDefault(require(`./root`))
     domReady(() => {
-      renderer(<Root />, rootElement, () => {
-        apiRunner(`onInitialClientRender`)
-      })
+      if (wasReplaced || process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
+        renderer(<Root />, rootElement, () => {
+          apiRunner(`onInitialClientRender`)
+        })
+      } else {
+        rootElement.innerHTML = renderToString(<Root />)
+        ReactDOM.hydrate(<Root />, rootElement, () => {
+          apiRunner(`onInitialClientRender`)
+        })
+      }
     })
   })
 })
