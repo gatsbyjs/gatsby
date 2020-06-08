@@ -1,15 +1,15 @@
 {
   "name": "gatsby-source-graphql",
   "description": "Gatsby plugin which adds a third-party GraphQL API to Gatsby GraphQL",
-  "version": "2.4.2",
+  "version": "2.5.3",
   "author": "Mikhail Novikov <freiksenet@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
-    "apollo-link": "1.2.13",
-    "apollo-link-http": "^1.5.16",
+    "@babel/runtime": "^7.10.2",
+    "apollo-link": "1.2.14",
+    "apollo-link-http": "^1.5.17",
     "dataloader": "^2.0.0",
     "graphql": "^14.6.0",
     "graphql-tools": "^5.0.0",
@@ -18,9 +18,9 @@
     "uuid": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.1",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "babel-preset-gatsby-package": "^0.4.3",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-graphql#readme",

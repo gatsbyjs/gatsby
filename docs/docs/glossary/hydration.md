@@ -32,7 +32,7 @@ A typical React application relies on client-side rendering. Instead of parsing 
 </html>
 ```
 
-With client-side rendering, most actions trigger local DOM updates instead of network requests. Clicking a clicking a navigation link builds the requested page on the client instead of requesting it from the server. Because they make fewer network requests, applications rendered in the browser provide a blazing-fast user experience &mdash; after the initial download.
+With client-side rendering, most actions trigger local DOM updates instead of network requests. Clicking a navigation link builds the requested page on the client instead of requesting it from the server. Because they make fewer network requests, applications rendered in the browser provide a blazing-fast user experience &mdash; after the initial download.
 
 That's the drawback to client-side rendering: none of your site's content is visible or interactive until the client downloads JavaScript and builds the DOM. However, not all clients can construct a DOM. For example, client-side rendering can prevent search engine and social media crawlers from consuming and indexing your site's URLs. Browser users, on the other hand, may see a blank page or loading image while your JavaScript bundle downloads and executes.
 

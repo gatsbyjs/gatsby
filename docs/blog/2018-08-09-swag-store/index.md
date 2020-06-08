@@ -39,12 +39,12 @@ For more details and instructions on how to claim your free swag, see [the “sw
 
 Here’s the short version:
 
-1.  Head to the [swag store][store]
-2.  Log in with your GitHub account at the top right of the page
-3.  Request a discount code with your name and email
-4.  Use that discount code at checkout to get one free item from the swag store!
+1. Head to the [swag store][store]
+2. Log in with your GitHub account at the top right of the page
+3. Request a discount code with your name and email
+4. Use that discount code at checkout to get one free item from the swag store!
 
-> **NOTE:** The way this works is by checking that your GitHub account has at least one merged PR in the [Gatsby organization][org]. However, **contributing code is _not_ the only way to contribute to open source!** Check out [the “how to contribute” docs][contribute] for more examples of contributions that qualify for free swag. Email us at <mailto:team@gatsbyjs.com> if you’re a non-code contributor and want your free swag.
+> **NOTE:** The way this works is by checking that your GitHub account has at least one merged PR in the [Gatsby organization][org]. However, **contributing code is _not_ the only way to contribute to open source!** Check out [the “how to contribute” docs][contribute] for more examples of contributions that qualify for free swag. Email us at [team@gatsbyjs.com](mailto:team@gatsbyjs.com) if you’re a non-code contributor and want your free swag.
 
 ## Shipping is free on all orders globally
 

@@ -353,84 +353,553 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
 `;
 
 exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "operations": Array [
-            Object {
-              "args": Object {
-                "height": 5,
-                "toFormat": "png",
-                "width": 5,
-              },
-              "outputPath": "9363c/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 10,
-                "toFormat": "png",
-                "width": 10,
-              },
-              "outputPath": "480f5/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 20,
-                "toFormat": "png",
-                "width": 20,
-              },
-              "outputPath": "cad77/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 30,
-                "toFormat": "png",
-                "width": 30,
-              },
-              "outputPath": "ef107/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 40,
-                "toFormat": "png",
-                "width": 40,
-              },
-              "outputPath": "4fa69/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 281,
-                "toFormat": "png",
-                "width": 281,
-              },
-              "outputPath": "1a70e/test.png",
-            },
-          ],
-          "pluginOptions": Object {
-            "defaultQuality": 50,
-            "forceBase64Format": false,
-            "lazyImageGeneration": true,
-            "stripMetadata": true,
-            "useMozJpeg": false,
-          },
-        },
-        "inputPaths": Array [
-          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
-        ],
-        "name": "IMAGE_PROCESSING",
-        "outputDir": "<PROJECT_ROOT>/public/static/1234",
-      },
-    ],
-  ],
-  "results": Array [
+Array [
+  Array [
     Object {
-      "type": "return",
-      "value": Promise {},
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "9363c/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "480f5/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "cad77/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "ef107/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "4fa69/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "1a70e/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
     },
   ],
-}
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 2`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "f018e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "40ed2/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "ec252/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "d228c/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "48fd7/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "b9b70/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 3`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "068c4/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "ffe9f/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "d4f5e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "33bda/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "f5042/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "7aa47/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 4`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "484a6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "02248/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "a30d6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "e240e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "c993a/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "9b0d3/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 5`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "be55a/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "f56f3/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "14fcf/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "1a70e/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 6`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "5e5c6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "ad3ed/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "9e7dd/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "b9b70/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 7`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "d9f78/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "997ba/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "6ad4e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "7aa47/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 8`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "2bae6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "c2888/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "518f4/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "9b0d3/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "defaultQuality": 50,
+          "forceBase64Format": false,
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
 `;
 
 exports[`gatsby-plugin-sharp fluid does not change the arguments object it is given 1`] = `

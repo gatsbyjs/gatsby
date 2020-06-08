@@ -1,13 +1,10 @@
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
 const slugify = require(`slugify`)
+const { getTemplate } = require(`../get-template`)
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const creatorPageTemplate = path.resolve(
-    `src/templates/template-creator-details.js`
-  )
+  const creatorPageTemplate = getTemplate(`template-creator-details`)
 
   const { data, errors } = await graphql(`
     query {
@@ -28,7 +25,7 @@ exports.createPages = async ({ graphql, actions }) => {
     if (!node.fields.slug) return
     createPage({
       path: `${node.fields.slug}`,
-      component: slash(creatorPageTemplate),
+      component: creatorPageTemplate,
       context: {
         slug: node.fields.slug,
         name: node.name,

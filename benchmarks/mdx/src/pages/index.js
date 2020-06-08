@@ -8,7 +8,7 @@ const Index = ({ data }) => {
       {data.site.siteMetadata.siteTitle}
       <ul>
         {data?.articles?.nodes.map((article) => (
-          <li>
+          <li key={article.fields.path}>
             <Link to={article.fields.path}>{article.frontmatter.title}</Link>
           </li>
         ))}

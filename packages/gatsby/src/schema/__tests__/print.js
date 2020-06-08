@@ -3,7 +3,6 @@ const { buildObjectType } = require(`../types/type-builders`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions/restricted`)
 const { printTypeDefinitions } = actions
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`fs-extra`)
 const fs = require(`fs-extra`)
