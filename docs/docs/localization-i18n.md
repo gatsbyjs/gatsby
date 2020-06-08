@@ -38,7 +38,7 @@ React-i18next is an internationalization library built on the i18next framework.
 
 React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with webpack.
 
-This framework also has experimental support for the React suspense API and React hooks.
+This framework also has experimental support for the React suspense API and it supports a stable version of React hooks.
 
 ## Other resources
 

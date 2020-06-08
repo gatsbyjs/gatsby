@@ -132,7 +132,7 @@ describe(`run-sift tests`, () => {
   })
   ;[
     { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-    { desc: `no cache`, cb: () => null }, // Always goes through sift
+    // { desc: `no cache`, cb: () => null }, // Always goes through sift
   ].forEach(({ desc, cb: createFiltersCache }) => {
     describe(desc, () => {
       describe(`filters by just id correctly`, () => {
