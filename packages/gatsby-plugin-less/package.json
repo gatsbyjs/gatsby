@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.2",
-    "less-loader": "^5.0.0"
+    "less-loader": "^6.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
