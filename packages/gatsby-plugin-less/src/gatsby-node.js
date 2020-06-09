@@ -12,8 +12,10 @@ exports.onCreateWebpackConfig = (
     loader: resolve(`less-loader`),
     options: {
       sourceMap: !PRODUCTION,
-      ...lessOptions,
-      plugins: lessOptions.lessPlugins || [], // for #4645
+      lessOptions: {
+        ...lessOptions,
+        plugins: lessOptions.lessPlugins || [], // for #4645
+      },
     },
   }
 

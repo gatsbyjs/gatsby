@@ -17,12 +17,14 @@ exports[`gatsby-plugin-less Stage: build-html / Less options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
+                          "strictMath": true,
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
-                        "strictMath": true,
                       },
                     },
                   ],
@@ -66,10 +68,12 @@ exports[`gatsby-plugin-less Stage: build-html / Less options #2 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
                       },
                     },
@@ -114,7 +118,9 @@ exports[`gatsby-plugin-less Stage: build-html / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -159,7 +165,9 @@ exports[`gatsby-plugin-less Stage: build-html / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -204,7 +212,9 @@ exports[`gatsby-plugin-less Stage: build-html / css-loader options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -250,12 +260,14 @@ exports[`gatsby-plugin-less Stage: build-javascript / Less options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
+                          "strictMath": true,
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
-                        "strictMath": true,
                       },
                     },
                   ],
@@ -269,12 +281,14 @@ exports[`gatsby-plugin-less Stage: build-javascript / Less options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
+                          "strictMath": true,
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
-                        "strictMath": true,
                       },
                     },
                   ],
@@ -313,10 +327,12 @@ exports[`gatsby-plugin-less Stage: build-javascript / Less options #2 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
                       },
                     },
@@ -331,10 +347,12 @@ exports[`gatsby-plugin-less Stage: build-javascript / Less options #2 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
                       },
                     },
@@ -374,7 +392,9 @@ exports[`gatsby-plugin-less Stage: build-javascript / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -389,7 +409,9 @@ exports[`gatsby-plugin-less Stage: build-javascript / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -429,7 +451,9 @@ exports[`gatsby-plugin-less Stage: build-javascript / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -444,7 +468,9 @@ exports[`gatsby-plugin-less Stage: build-javascript / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -484,7 +510,9 @@ exports[`gatsby-plugin-less Stage: build-javascript / css-loader options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -499,7 +527,9 @@ exports[`gatsby-plugin-less Stage: build-javascript / css-loader options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -539,12 +569,14 @@ exports[`gatsby-plugin-less Stage: develop / Less options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
+                          "strictMath": true,
                         },
-                        "plugins": Array [],
                         "sourceMap": true,
-                        "strictMath": true,
                       },
                     },
                   ],
@@ -558,12 +590,14 @@ exports[`gatsby-plugin-less Stage: develop / Less options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
+                          "strictMath": true,
                         },
-                        "plugins": Array [],
                         "sourceMap": true,
-                        "strictMath": true,
                       },
                     },
                   ],
@@ -602,10 +636,12 @@ exports[`gatsby-plugin-less Stage: develop / Less options #2 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
                         },
-                        "plugins": Array [],
                         "sourceMap": true,
                       },
                     },
@@ -620,10 +656,12 @@ exports[`gatsby-plugin-less Stage: develop / Less options #2 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
                         },
-                        "plugins": Array [],
                         "sourceMap": true,
                       },
                     },
@@ -663,7 +701,9 @@ exports[`gatsby-plugin-less Stage: develop / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -678,7 +718,9 @@ exports[`gatsby-plugin-less Stage: develop / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -718,7 +760,9 @@ exports[`gatsby-plugin-less Stage: develop / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -733,7 +777,9 @@ exports[`gatsby-plugin-less Stage: develop / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -773,7 +819,9 @@ exports[`gatsby-plugin-less Stage: develop / css-loader options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -788,7 +836,9 @@ exports[`gatsby-plugin-less Stage: develop / css-loader options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -827,12 +877,14 @@ exports[`gatsby-plugin-less Stage: develop-html / Less options #1 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
+                          "strictMath": true,
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
-                        "strictMath": true,
                       },
                     },
                   ],
@@ -876,10 +928,12 @@ exports[`gatsby-plugin-less Stage: develop-html / Less options #2 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "modifyVars": Object {
-                          "text-color": "#fff",
+                        "lessOptions": Object {
+                          "modifyVars": Object {
+                            "text-color": "#fff",
+                          },
+                          "plugins": Array [],
                         },
-                        "plugins": Array [],
                         "sourceMap": false,
                       },
                     },
@@ -924,7 +978,9 @@ exports[`gatsby-plugin-less Stage: develop-html / No options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -969,7 +1025,9 @@ exports[`gatsby-plugin-less Stage: develop-html / PostCss plugins 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },
@@ -1014,7 +1072,9 @@ exports[`gatsby-plugin-less Stage: develop-html / css-loader options 1`] = `
                     Object {
                       "loader": "/resolved/path/less-loader",
                       "options": Object {
-                        "plugins": Array [],
+                        "lessOptions": Object {
+                          "plugins": Array [],
+                        },
                         "sourceMap": false,
                       },
                     },

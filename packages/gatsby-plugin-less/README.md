@@ -4,7 +4,7 @@ Provides drop-in support for Less stylesheets
 
 ## Install
 
-`npm install --save less gatsby-plugin-less`
+`npm install --save gatsby-plugin-less`
 
 ## How to use
 
@@ -16,7 +16,7 @@ Provides drop-in support for Less stylesheets
 plugins: [`gatsby-plugin-less`]
 ```
 
-If you need to pass options to Less use the plugins options; see [less-loader](https://github.com/webpack-contrib/less-loader)
+If you need to pass options to Less use the plugins options; see [less options](http://lesscss.org/usage/#less-options)
 for all available options.
 
 ```javascript
