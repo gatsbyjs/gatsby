@@ -19,7 +19,7 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
 
 ## Setup
 
-### Quickstart
+### Quickstart using a Flotiq starter
 
 1. **Start project from template using Gatsby CLI**
 
