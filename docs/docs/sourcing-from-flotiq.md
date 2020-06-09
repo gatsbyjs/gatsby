@@ -8,7 +8,7 @@ Flotiq is a headless CMS with a primary focus on developer experience and integr
 
 Using a website generator like Gatsby to consume content stored in Flotiq is one of the most frequent use cases. The integration is enabled by the [gatsby-source-flotiq](https://github.com/flotiq/gatsby-source-flotiq) source plugin, which bridges the dynamic REST API of your Flotiq account with Gatsby's GraphQL.
 
-> This document will base on the simple [gatsby-starter-blog](https://github.com/flotiq/gatsby-starter-blog) blog starter, but remember to check out the more advanced starters we've prepared to work with Flotiq:
+> This guide will reference the [gatsby-starter-blog](https://github.com/flotiq/gatsby-starter-blog) blog starter, but remember to check out the more advanced starters prepared to work with Flotiq:
 >
 > - [Recipe website Gatsby starter](https://github.com/flotiq/gatsby-starter-recipes)
 > - [Event calendar Gatsby starter](https://github.com/flotiq/gatsby-starter-event-calendar)
