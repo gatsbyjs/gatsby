@@ -6520,21 +6520,31 @@
     - Twitter Cards meta
     - Beautiful XML Sitemaps
     - Netlify Contact Form, Works right out of the box after deployment.
-    - Invite collaborators into Netlify CMS, without giving access to your Github account via Git Gateway
+    - Invite collaborators into Netlify CMS, without giving access to your GitHub account via Git Gateway
     - Gatsby Incremental Builds with Netlify.
     - For more info, Take a look at readme.md on the Github repo.
-- url: https://gatsby-starter-moonclerk.netlify.app
-  repo: https://github.com/moonclerk/gatsby-starter-moonclerk
+- url: https://gatsby-starter-payments.netlify.app
+  repo: https://github.com/moonclerk/gatsby-starter-payments
   description: A Gatsby starter for creating SaaS landing pages using MoonClerk to accept payments.
   tags:
-    - SEO
     - Landing Page
-    - Styling:CSS-in-JS
     - Netlify
     - Onepage
+    - SEO
+    - Stripe
+    - Styling:CSS-in-JS
   features:
-    - Landing Page
     - SEO optimized
+    - Landing Page
+    - Fully responsive
+    - Gatsby images
+    - MoonClerk Payment Forms
+    - Open source illustrations from Icons8
+    - Google Analytics
+    - Includes React Helmet to allow editing site meta tags
+    - Includes plugins for easy, beautiful typography
+    - Styling with styled-components
+    - Organized using ABEM
 - url: https://schoolfront.netlify.app
   repo: https://github.com/orzechdev/schoolfront
   description: School website starter
@@ -6564,7 +6574,10 @@
   tags:
     - Donations
     - Landing Page
+    - Netlify
+    - Onepage
     - SEO
+    - Stripe
     - Styling:CSS-in-JS
   features:
     - SEO optimized
@@ -6572,6 +6585,7 @@
     - Gatsby images
     - MoonClerk Payment Forms
     - Open source illustrations from Icons8
+    - Open source image from Unsplash
     - Google Analytics
     - Includes React Helmet to allow editing site meta tags
     - Includes plugins for easy, beautiful typography
@@ -6618,3 +6632,31 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
+- url: https://simple.rickkln.com
+  repo: https://github.com/rickkln/gatsby-starter-simple
+  description: Simple Gatsby starter for a small static site. Replaces Prettier with ESLint (AirBnB style), and adds TypeScript and Firebase hosting.
+  tags:
+    - Linting
+    - Language:TypeScript
+    - Firebase
+    - SEO
+    - Markdown
+    - Portfolio
+  features:
+    - TypeScript is used for a better developer experience.
+    - ESLint and the AirBnB TypeScript style guide help you avoid, and fix, simple issues in your code.
+    - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
+    - Firebase Hosting is supported and configured for Gatsby from the start.
+    - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-woo.surge.sh/
+  repo: https://github.com/desmukh/gatsby-starter-woo
+  description: Simple, clean and responsive landing page for your product or service. This is a GatsbyJS port of StyleShout's Woo template.
+  tags:
+    - Landing Page
+    - Onepage
+    - Portfolio
+  features:
+    - Ported from StyleShout Woo theme
+    - Fully responsive
+    - Includes React Helmet to allow editing site meta tags
+    - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js

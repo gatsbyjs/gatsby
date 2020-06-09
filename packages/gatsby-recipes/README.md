@@ -196,10 +196,20 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 
 #### props
 
-- **path**: path to the file that should be created. The path is local to the root of the Node.js project (where the package.json is)
+- **path**: path to the file that should be created. The path is local to the root of the Node.js project (where the `package.json` is)
 - **content**: URL to the content that should be written to the path. Eventually we'll support directly putting content here after some fixes to MDX.
 
 > Note that this content is stored in a [GitHub gist](https://gist.github.com/). When linking to a gist you'll want to click on the "Raw" button and copy the URL from that page.
+
+### `<Directory>`
+
+```jsx
+<Directory path="test" />
+```
+
+#### props
+
+- **path**: path to the directory that should be created. The path is local to the root of the Node.js project (where the `package.json` is)
 
 ## How to set up your development environment to work on Gatsby Recipes core
 
