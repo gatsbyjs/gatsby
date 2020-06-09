@@ -121,7 +121,8 @@ const redirectToCheckout = async event => {
   event.preventDefault()
   const stripe = await stripePromise
   const { error } = await stripe.redirectToCheckout({
-    items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
+    lineItems: [{ price: "price_1GriHeAKu92npuros981EDUL", quantity: 1 }],
+    mode: "payment",
     successUrl: `http://localhost:8000/page-2/`,
     cancelUrl: `http://localhost:8000/`,
   })
@@ -140,6 +141,18 @@ const Checkout = () => {
 }
 
 export default Checkout
+```
+
+#### If you are using the deprecated Stripe Orders API
+
+Replace the invokation of `redirectToCheckout` with the following snippet and it will allow you to accept SKU type products.
+
+```jsx:title=src/components/checkout.js
+const { error } = await stripe.redirectToCheckout({
+  items: [{ sku: "sku_DjQJN2HJ1kkvI3", quantity: 1 }],
+  successUrl: `http://localhost:8000/page-2/`,
+  cancelUrl: `http://localhost:8000/`,
+})
 ```
 
 #### What did you just do?
