@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.1...gatsby@2.23.2) (2020-06-09)
+
+### Bug Fixes
+
+- **babel-plugin-remove-graphql-queries:** Strip ignored characters from query text for better caching and deduping ([#24807](https://github.com/gatsbyjs/gatsby/issues/24807)) ([752f5ff](https://github.com/gatsbyjs/gatsby/commit/752f5ff))
+- **gatsby:** Fix issue where inline static query in page gets added to page data ([#24805](https://github.com/gatsbyjs/gatsby/issues/24805)) ([7c9711b](https://github.com/gatsbyjs/gatsby/commit/7c9711b))
+
 ## [2.23.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.0...gatsby@2.23.1) (2020-06-05)
 
 **Note:** Version bump only for package gatsby

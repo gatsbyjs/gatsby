@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.3...gatsby-remark-embed-snippet@4.3.4) (2020-06-09)
+
+### Bug Fixes
+
+- **gatsby-remark-embed-snippet:** readme - change code language ([#24821](https://github.com/gatsbyjs/gatsby/issues/24821)) ([8fcff17](https://github.com/gatsbyjs/gatsby/commit/8fcff17))
+
 ## [4.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.2...gatsby-remark-embed-snippet@4.3.3) (2020-06-02)
 
 **Note:** Version bump only for package gatsby-remark-embed-snippet
