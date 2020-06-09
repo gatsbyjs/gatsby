@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-ui-preset",
-  "version": "0.0.56",
+  "version": "0.0.57",
   "description": "A Gatsby theme for theme-ui styles",
   "main": "index.js",
   "keywords": [
@@ -22,7 +22,7 @@
     "@theme-ui/prism": "^0.2.50",
     "@theme-ui/typography": "^0.2.46",
     "deepmerge": "^4.2.2",
-    "gatsby-plugin-emotion": "^4.3.3",
+    "gatsby-plugin-emotion": "^4.3.4",
     "gatsby-plugin-theme-ui": "^0.2.53",
     "theme-ui": "^0.2.52",
     "typeface-merriweather": "0.0.72",
@@ -30,7 +30,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.23.2",
+    "gatsby": "^2.23.3",
     "prettier": "2.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

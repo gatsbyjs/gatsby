@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-blog",
-  "version": "1.6.41",
+  "version": "1.6.42",
   "description": "A Gatsby theme for miscellaneous blogging with a dark/light mode",
   "main": "index.js",
   "keywords": [
@@ -23,13 +23,13 @@
     "@theme-ui/prism": "^0.2.50",
     "@theme-ui/typography": "^0.2.46",
     "deepmerge": "^4.2.2",
-    "gatsby-image": "^2.4.6",
-    "gatsby-plugin-emotion": "^4.3.3",
-    "gatsby-plugin-feed": "^2.5.4",
-    "gatsby-plugin-react-helmet": "^3.3.3",
+    "gatsby-image": "^2.4.7",
+    "gatsby-plugin-emotion": "^4.3.4",
+    "gatsby-plugin-feed": "^2.5.5",
+    "gatsby-plugin-react-helmet": "^3.3.4",
     "gatsby-plugin-theme-ui": "^0.2.53",
-    "gatsby-plugin-twitter": "^2.3.3",
-    "gatsby-theme-blog-core": "^1.5.41",
+    "gatsby-plugin-twitter": "^2.3.4",
+    "gatsby-theme-blog-core": "^1.5.42",
     "mdx-utils": "0.2.0",
     "react-helmet": "^5.2.1",
     "react-switch": "^5.0.1",
@@ -39,7 +39,7 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "gatsby": "^2.23.2",
+    "gatsby": "^2.23.3",
     "prettier": "2.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
