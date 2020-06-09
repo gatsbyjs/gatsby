@@ -64,7 +64,6 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
 
    It will add 1 image and 2 blog posts to your Flotiq account.
 
-   _Note: You need to put your Read and write API key in `.env` for import to work. You don't need Blog Post content type in your account. If you already have posts with ids `blogpost-1` and `blogpost-2` they will be overwritten._
 
 ### Source plugin
 
