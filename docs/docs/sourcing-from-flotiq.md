@@ -65,7 +65,7 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
    It will add 1 image and 2 blog posts to your Flotiq account.
 
 
-### Source plugin
+### Setting up the Flotiq source plugin in a Gatsby project
 
 The Blog starter you've just set up uses the [gatsby-source-flotiq](https://github.com/flotiq/gatsby-source-flotiq) source plugin to pull content from Flotiq.
 
