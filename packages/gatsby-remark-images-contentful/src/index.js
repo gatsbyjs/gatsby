@@ -91,11 +91,14 @@ module.exports = async (
 
     response.data.destroy()
 
-    const responsiveSizesResult = await buildResponsiveSizes({
-      metadata,
-      imageUrl: originalImg,
-      options,
-    })
+    const responsiveSizesResult = await buildResponsiveSizes(
+      {
+        metadata,
+        imageUrl: originalImg,
+        options,
+      },
+      reporter
+    )
 
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`

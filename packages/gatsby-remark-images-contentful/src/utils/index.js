@@ -1,20 +1,31 @@
 const axios = require(`axios`)
 
-const getBase64Img = async url => {
-  const response = await axios({
-    method: `GET`,
-    responseType: `arraybuffer`,
-    url: `${url}`,
-  })
+const getBase64Img = async (url, reporter) => {
+  let base64Img
+  try {
+    const response = await axios({
+      method: `GET`,
+      responseType: `arraybuffer`,
+      url: `${url}`,
+    })
 
-  const base64Img = `data:${
-    response.headers[`content-type`]
-  };base64,${new Buffer(response.data).toString(`base64`)}`
+    base64Img = `data:${response.headers[`content-type`]};base64,${new Buffer(
+      response.data
+    ).toString(`base64`)}`
+  } catch (err) {
+    reporter.panic(
+      `Failed downloading the base64 image for ${originalImg}`,
+      err
+    )
+  }
 
   return base64Img
 }
 
-const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
+const buildResponsiveSizes = async (
+  { metadata, imageUrl, options = {} },
+  reporter
+) => {
   const { width, height, density } = metadata
   const { sizeByPixelDensity, maxWidth, sizes } = options
   const aspectRatio = width / height
@@ -41,7 +52,7 @@ const buildResponsiveSizes = async ({ metadata, imageUrl, options = {} }) => {
 
   filteredSizes.push(width)
 
-  const base64Img = await getBase64Img(`${imageUrl}?w=40`)
+  const base64Img = await getBase64Img(`${imageUrl}?w=40`, reporter)
 
   const srcSet = filteredSizes
     .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
