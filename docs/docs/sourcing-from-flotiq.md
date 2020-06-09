@@ -37,7 +37,7 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
 
    The next step is to configure your application to know from where it has to fetch the data.
 
-   You need to create a file called `.env` inside the root project directory, with the following structure:
+   You need to create a file called `.env` inside the root project directory, with the following structure. The Read-Only API key can be copied from the Flotiq user settings menu, under API Keys.
 
    ```shell:title=.env
    GATSBY_FLOTIQ_BASE_URL=https://api.flotiq.com
