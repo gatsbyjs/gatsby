@@ -5,7 +5,7 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 
 import { Flex } from "theme-ui"
 
-const Collapsible = props => {
+export default function Collapsible(props) {
   const { heading, fixed, children } = props
   const [collapsed, setCollapsed] = useState(false)
 
@@ -69,5 +69,3 @@ const Collapsible = props => {
     </div>
   )
 }
-
-export default Collapsible
