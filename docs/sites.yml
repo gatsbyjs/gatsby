@@ -10779,7 +10779,7 @@
   featured: false
 - title: Que Jamear
   description: >-
-    A directory with a map of food delivery services 
+    A directory with a map of food delivery services
     to be used during the health emergency caused by covid 19.
   main_url: https://quejamear.com/encebollados
   url: https://quejamear.com/encebollados
@@ -10930,4 +10930,20 @@
     - Blog
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
+  featured: false
+- title: Impuls-e
+  main_url: https://impuls-e.works/
+  url: https://impuls-e.works/
+  description: >
+    Digital Agency focused on helping our clients build their online digital presence. Located in Santa Catarina, Brazil
+  categories:
+    - Web Development
+    - E-commerce
+    - Mobile Development
+    - Landing Page
+    - Blog
+    - Programming
+    - Agency
+  built_by: Impuls-e
+  built_by_url: https://www.instagram.com/impulse.works/
   featured: false
