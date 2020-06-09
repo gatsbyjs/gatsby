@@ -79,7 +79,7 @@ Here are the steps to use this source plugin in other Gatsby projects:
    ```
 2. Provide API credentials in `.env` (see above for more details)
 3. Register the source plugin in `gatsby-config.js`:
-   Make sure your `gatsby-config.js` has the following configuration:
+   Make sure your `gatsby-config.js` contains the following configuration:
    ```javascript:title=gatsby-config.js
    module.exports = {
      // ...
@@ -96,13 +96,13 @@ Here are the steps to use this source plugin in other Gatsby projects:
    }
    ```
 
-By default the source plugin will pull all the data you've stored in Flotiq. In some cases, e.g. when building sites that have thousands of pages - you'll likely want to limit the number of pulled data during development. You can do that either by narrowing down the scope to specific content types or by limiting the number of pulled objects (see the `includeTypes` and `objectLimit` options). The source plugin will do its best to resolve any dependencies for you.
+By default the source plugin will pull all the data you've stored in Flotiq. In some cases, e.g. when building sites that have thousands of pages - you'll likely want to limit the amount of pulled data during development. You can do that either by narrowing down the scope to specific content types or by limiting the number of pulled objects (see the `includeTypes` and `objectLimit` options). The source plugin will do its best to resolve any dependencies for you.
 
 > You can find more details about how to configure the Flotiq source plugin in the [plugin's README](https://github.com/flotiq/gatsby-source-flotiq).
 
 ## Accessing Flotiq data in Gatsby
 
-Once you finish configuring your environment you can start developing. The source plugin will pull all the content from your Flotiq account and create respective Gatsby GraphQL nodes. It will also preserve the relations you've setup in Flotiq, so the GraphQL nodes will be automatically linked, just as you would expect.
+Once you finish configuring your environment you can start developing. The source plugin will pull all the content from your Flotiq account and create respective Gatsby GraphQL nodes. It will also preserve the relations you've setup in Flotiq, so the GraphQL nodes will be automatically linked.
 
 For example, if you define a relation between `BlogPost` and `Category` content types in Flotiq - they will retain their relationship in Gatsby's GraphQL, so you can retrieve that in a query:
 
