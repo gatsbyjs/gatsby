@@ -4299,8 +4299,8 @@
     - Styling:PostCSS
   features:
     - Tailwind CSS for rapid development
-    - Emotion with `tailwind.macro` for flexible styled components
-    - PostCSS configured out-of-the-box for when you need to write your own CSS
+    - Emotion with `twin.macro` for flexible styled components
+    - PostCSS configured out-of-the-box to write your own custom CSS
     - postcss-preset-env to write tomorrow's CSS today
     - Bare bones starter to help you hit the ground running
 - url: https://gatsby-starter-grayscale-promo.netlify.com/
