@@ -119,7 +119,7 @@ query {
 }
 ```
 
-The next step is implementing these queries in your `gatsby-node.js`
+The next step is implementing these queries in your `gatsby-node.js` file:
 
 ```javascript:title=gatsby-node.js
 const blogPost = path.resolve(`./src/templates/blog-post.js`)
