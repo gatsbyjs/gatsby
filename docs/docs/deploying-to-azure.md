@@ -20,7 +20,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
    `git init`.
 2. Next, create a file called `.gitignore` in the root of your project and give it the following content:
 
-   ```bash
+   ```text
    node_modules
    build
    ```
@@ -29,7 +29,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
 3. Finally, add the change and commit it.
 
-   ```bash
+   ```shell
    git add .
    git commit -m "adding Gatsby project"
    ```
@@ -44,7 +44,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
 4. Finally, add your GitHub repository as a remote and push. Type the following commands to accomplish that (replacing `<user>` with your GitHub user name):
 
-   ```bash
+   ```shell
    git remote add origin https://github.com/<user>/gatsby-app.git
    git push -u origin master
    ```

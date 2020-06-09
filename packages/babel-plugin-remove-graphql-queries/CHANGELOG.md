@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.4](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.3...babel-plugin-remove-graphql-queries@2.9.4) (2020-06-09)
+
+### Bug Fixes
+
+- **babel-plugin-remove-graphql-queries:** Strip ignored characters from query text for better caching and deduping ([#24807](https://github.com/gatsbyjs/gatsby/issues/24807)) ([752f5ff](https://github.com/gatsbyjs/gatsby/commit/752f5ff))
+
 ## [2.9.3](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.9.2...babel-plugin-remove-graphql-queries@2.9.3) (2020-06-02)
 
 **Note:** Version bump only for package babel-plugin-remove-graphql-queries
