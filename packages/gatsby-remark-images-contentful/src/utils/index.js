@@ -13,10 +13,7 @@ const getBase64Img = async (url, reporter) => {
       response.data
     ).toString(`base64`)}`
   } catch (err) {
-    reporter.panic(
-      `Failed downloading the base64 image for ${originalImg}`,
-      err
-    )
+    reporter.panic(`Failed downloading the base64 image for ${url}`, err)
   }
 
   return base64Img
@@ -26,6 +23,12 @@ const buildResponsiveSizes = async (
   { metadata, imageUrl, options = {} },
   reporter
 ) => {
+  // Remove search params from the image url
+  let formattedImgUrl = imageUrl
+  if (imageUrl.includes(`?`)) {
+    formattedImgUrl = imageUrl.split(`?`)[0]
+  }
+
   const { width, height, density } = metadata
   const { sizeByPixelDensity, maxWidth, sizes } = options
   const aspectRatio = width / height
@@ -52,15 +55,18 @@ const buildResponsiveSizes = async (
 
   filteredSizes.push(width)
 
-  const base64Img = await getBase64Img(`${imageUrl}?w=40`, reporter)
+  const base64Img = await getBase64Img(`${formattedImgUrl}?w=40`, reporter)
 
   const srcSet = filteredSizes
-    .map(size => `${imageUrl}?w=${Math.round(size)} ${Math.round(size)}w`)
+    .map(
+      size => `${formattedImgUrl}?w=${Math.round(size)} ${Math.round(size)}w`
+    )
     .join(`,\n`)
 
   const webpSrcSet = filteredSizes
     .map(
-      size => `${imageUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
+      size =>
+        `${formattedImgUrl}?fm=webp&w=${Math.round(size)} ${Math.round(size)}w`
     )
     .join(`,\n`)
 
@@ -70,7 +76,7 @@ const buildResponsiveSizes = async (
     aspectRatio,
     srcSet,
     webpSrcSet,
-    src: imageUrl,
+    src: formattedImgUrl,
     sizes: sizesQuery,
     density,
     presentationWidth,
