@@ -54,7 +54,9 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
    gatsby develop
    ```
 
-   If you wish to import example blog posts to your account, before running `gatsby develop` run:
+   If you wish to import example blog posts to your account, before running `gatsby develop` run this Node.js script provided by Flotiq.
+   
+    _Note: You need to put your Full Access API key in `.env` for import to work, but this can be swapped back to the Read Only API key afterwards. You don't need the Blog Post content type already in your account. If you already have posts with ids `blogpost-1` and `blogpost-2` they will be overwritten._
 
    ```shell
    node ./.flotiq/importExample.js
