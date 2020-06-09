@@ -23,7 +23,7 @@ Using a static website generator, like Gatsby, to consume content stored in Flot
 
 1. **Start project from template using Gatsby CLI**
 
-   ```bash
+   ```shell
    gatsby new my-blog-starter https://github.com/flotiq/gatsby-starter-blog
    ```
 
