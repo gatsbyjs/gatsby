@@ -2,7 +2,7 @@
 title: Sourcing from Flotiq
 ---
 
-This guide will help you understand how to setup Gatsby to pull data from [Flotiq](https://flotiq.com).
+This guide will help you understand how to set up Gatsby to pull data from [Flotiq](https://flotiq.com).
 
 Flotiq is a headless CMS with a primary focus on developer experience and integration capabilities. Flotiq's cloud-based dashboard allows you to easily design your content types and work with your data, but Flotiq also provides support for powerful integrations. One of Flotiq's key principles is to provide an effortless way to consume your content in the applications you build. It's solved by supporting technologies like OpenAPI 3.0 or Zapier as well as by providing customized API docs and SDK libraries based on your content types.
 
