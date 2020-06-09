@@ -151,7 +151,7 @@ if (result.errors) {
 const posts = result.data.allBlogpost.edges
 ```
 
-Now the only thing you have to do is let Gatsby create appropriate pages for your Content Objects:
+Now you'll want to let Gatsby create appropriate pages for your Content Objects. This example uses a `blogPost` component as a template, which can also be found below:
 
 ```javascript:title=gatsby-node.js
 posts.forEach((post, index) => {
