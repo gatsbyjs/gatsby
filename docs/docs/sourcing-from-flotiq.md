@@ -27,7 +27,7 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
    gatsby new my-blog-starter https://github.com/flotiq/gatsby-starter-blog
    ```
 
-2. **Setup "Blog Post" Content Type in Flotiq**
+2. **Set up "Blog Post" Content Type in Flotiq**
 
    Create your [Flotiq.com](https://flotiq.com) account. Next, create the `Blog Post` Content Type straight from the `Type definitions` page.
 
