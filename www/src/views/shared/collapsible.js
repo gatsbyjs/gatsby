@@ -9,6 +9,10 @@ export default function Collapsible(props) {
   const { heading, fixed, children } = props
   const [collapsed, setCollapsed] = useState(false)
 
+  function toggleCollapsible() {
+    setCollapsed(!collapsed)
+  }
+
   return (
     <div
       sx={{
@@ -49,7 +53,7 @@ export default function Collapsible(props) {
             },
           }}
           aria-expanded={!collapsed}
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={toggleCollapsible}
         >
           {heading}
           {` `}
