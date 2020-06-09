@@ -6,7 +6,7 @@ import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
 
-const EvaluationTable = props => {
+export default function EvaluationTable(props) {
   const { options, sections, sectionHeaders } = props
   const [isFeatureCellOpen, setIsFeatureCellOpen] = useState({})
   const showTooltip = (section, row) => isFeatureCellOpen[`${section},${row}`]
@@ -124,5 +124,3 @@ const EvaluationTable = props => {
     </div>
   )
 }
-
-export default EvaluationTable
