@@ -10931,3 +10931,17 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: DUDOS
+  main_url: https://dudos.co.uk
+  url: https://dudos.co.uk
+  description: >
+    UK based web design agency building premium bespoke websites with light-speed performance and rock-solid security
+  categories:
+    - Agency
+    - JAMStack
+    - Web development
+    - Headless CMS
+    - UX design
+  built_by: Mark A Hext
+  built_by_url: https://dudos.co.uk/about
+  featured: false
