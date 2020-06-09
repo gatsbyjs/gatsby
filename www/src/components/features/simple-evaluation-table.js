@@ -5,7 +5,7 @@ import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import { renderCell } from "./evaluation-cell"
 
-const SimpleEvaluationTable = props => {
+export default function SimpleEvaluationTable(props) {
   const { title, headers, data } = props
   const [featureCell, setFeatureCell] = useState({})
   const showTooltip = row => featureCell[`feature-cell-${row}`]
@@ -81,5 +81,3 @@ const SimpleEvaluationTable = props => {
     </div>
   )
 }
-
-export default SimpleEvaluationTable
