@@ -6,7 +6,7 @@ This guide will help you understand how to set up Gatsby to pull data from [Flot
 
 Flotiq is a headless CMS with a primary focus on developer experience and integration capabilities. Flotiq's cloud-based dashboard allows you to easily design your content types and work with your data, but Flotiq also provides support for powerful integrations. One of Flotiq's key principles is to provide an effortless way to consume your content in the applications you build. It's solved by supporting technologies like OpenAPI 3.0 or Zapier as well as by providing customized API docs and SDK libraries based on your content types.
 
-Using a static website generator, like Gatsby, to consume content stored in Flotiq is one of the most frequent use cases. The integration is based on the [gatsby-source-flotiq](https://github.com/flotiq/gatsby-source-flotiq) source plugin, which bridges the dynamic REST API of your Flotiq account with Gatsby's GraphQL.
+Using a website generator like Gatsby to consume content stored in Flotiq is one of the most frequent use cases. The integration is enabled by the [gatsby-source-flotiq](https://github.com/flotiq/gatsby-source-flotiq) source plugin, which bridges the dynamic REST API of your Flotiq account with Gatsby's GraphQL.
 
 > This document will base on the simple [gatsby-starter-blog](https://github.com/flotiq/gatsby-starter-blog) blog starter, but remember to check out the more advanced starters we've prepared to work with Flotiq:
 >
