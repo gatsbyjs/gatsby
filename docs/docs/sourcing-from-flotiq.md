@@ -31,7 +31,7 @@ Using a website generator like Gatsby to consume content stored in Flotiq is one
 
    Create your [Flotiq.com](https://flotiq.com) account. Next, create the `Blog Post` Content Type straight from the `Type definitions` page.
 
-   _Note: You can also create `Blog Post` using [Flotiq REST API](https://flotiq.com/docs/API/)._
+   _Note: You can also define the `Blog Post` Content Type using the [Flotiq REST API](https://flotiq.com/docs/API/)._
 
 3. **Configure application**
 
