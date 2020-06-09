@@ -173,7 +173,7 @@ posts.forEach((post, index) => {
 
 Once you're finished with your website there are several ways to deploy it. You can use any hosting provider you choose - Netlify, Heroku, AWS S3, Cloudflare, etc.
 
-If you're using Gatsby Cloud - we've provided an integration that allows the to streamline your workflow by providing live updates in preview and push-button deployments.
+If you're using Gatsby Cloud, you can use the Flotiq integration to streamline your workflow by providing live updates in preview and push-button deployments.
 
 You can read the relevant [Flotiq Gatsby Cloud integration](https://flotiq.com/docs/panel/Plugins/Gatsby-cloud-integration/) documentation page to learn more.
 
