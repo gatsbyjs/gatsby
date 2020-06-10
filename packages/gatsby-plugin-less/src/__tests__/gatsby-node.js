@@ -23,6 +23,11 @@ describe(`gatsby-plugin-less`, () => {
     stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
     options: {
       "No options": {},
+      "Loader options #1": {
+        loaderOptions: {
+          appendData: `@env: ${process.env.NODE_ENV};`,
+        },
+      },
       "Less options #1": {
         lessOptions: {
           modifyVars: {
