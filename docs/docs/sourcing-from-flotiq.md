@@ -79,7 +79,11 @@ Here are the steps to use this source plugin in other Gatsby projects:
 2. Provide API credentials in `.env` (see above for more details)
 3. Register the source plugin in `gatsby-config.js`:
    Make sure your `gatsby-config.js` contains the following configuration:
+
    ```javascript:title=gatsby-config.js
+   // required to pull the variables from .env
+   require("dotenv").config()
+
    module.exports = {
      // ...
      plugins: [
