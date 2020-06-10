@@ -33,7 +33,7 @@ video on
 [GatsbyJS](/) is a static site generator, similar to Jekyll, however it is
 written using [React](https://reactjs.org/) and allows you to write your pages
 as React components! It is somewhat similar to create-react-app where almost all
-the scary Webpack config has been abstracted away from you and everything is
+the scary webpack config has been abstracted away from you and everything is
 setup ready to go, so you can get to the important stuff like...building the
 site! (If you are a fan of React and not convinced, the
 [React website/docs](https://reactjs.org/) were just released using Gatsby!)

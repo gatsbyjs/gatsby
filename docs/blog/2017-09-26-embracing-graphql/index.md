@@ -21,7 +21,7 @@ Gatsby at the time was still pre-1.0 but its workflow met my needs. I loved that
 I could drop my existing Markdown files into a `pages` directory and Gatsby
 would do the rest.
 
-Webpack loader —> React.js wrapper component —> static HTML page. Done.
+webpack loader —> React.js wrapper component —> static HTML page. Done.
 
 Well...done until I read this
 [GitHub Issue](https://github.com/gatsbyjs/gatsby/issues/420) … "New GraphQL
