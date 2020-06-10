@@ -3,7 +3,6 @@ const stringify = require(`json-stringify-safe`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const digest = str => createContentDigest(str)
-const { getNormalizedRichTextField } = require(`./rich-text`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -324,7 +323,6 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
-  richTextOptions,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -372,25 +370,6 @@ exports.createNodesForContentType = ({
         const localizedField = fieldProps.localized
           ? getField(v)
           : v[defaultLocale]
-
-        if (
-          fieldProps.type === `RichText` &&
-          richTextOptions &&
-          richTextOptions.resolveFieldLocales
-        ) {
-          const contentTypesById = new Map()
-          contentTypeItems.forEach(contentTypeItem =>
-            contentTypesById.set(contentTypeItem.sys.id, contentTypeItem)
-          )
-
-          return getNormalizedRichTextField({
-            field: localizedField,
-            fieldProps,
-            contentTypesById,
-            getField,
-            defaultLocale,
-          })
-        }
 
         return localizedField
       })
