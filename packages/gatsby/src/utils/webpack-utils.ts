@@ -1,5 +1,6 @@
 import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
+import postcss from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
@@ -44,7 +45,9 @@ interface ILoaderUtils {
   postcss: LoaderResolver<{
     browsers?: string[]
     overrideBrowserslist?: string[]
-    plugins?: Plugin[] | ((loader: Loader) => Plugin[])
+    plugins?:
+      | postcss.Plugin<any>[]
+      | ((loader: Loader) => postcss.Plugin<any>[])
   }>
 
   file: LoaderResolver
@@ -219,15 +222,25 @@ export const createWebpackUtils = (
         options: {
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): Plugin[] => {
+          plugins: (loader: Loader): postcss.Plugin<any>[] => {
+            const autoprefixerOptions = {
+              overrideBrowserslist,
+              flexbox: `no-2009`,
+            }
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
-            return [
-              flexbugs,
-              autoprefixer({ overrideBrowserslist, flexbox: `no-2009` }),
-              ...plugins,
-            ]
+            if (plugins && plugins.length) {
+              const autoprefixerOverride: autoprefixer.Autoprefixer = plugins.find(
+                plugin => plugin.postcssPlugin === `autoprefixer`
+              )
+              Object.assign(
+                autoprefixerOptions,
+                autoprefixerOverride.options || {}
+              )
+            }
+
+            return [flexbugs, autoprefixer(autoprefixerOptions), ...plugins]
           },
           ...postcssOpts,
         },
