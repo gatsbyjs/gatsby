@@ -4413,7 +4413,7 @@
   url: https://arctica.io
   main_url: https://arctica.io
   description: >
-    Arctica specialises in purpose-built web sites and progressive web applications with user optimal experiences, tailored to meet the objectives of your business.
+    Arctica specialises in purpose-built websites and progressive web applications with user optimal experiences, tailored to meet the objectives of your business.
   categories:
     - Portfolio
     - Agency
@@ -4585,7 +4585,7 @@
   url: https://gmartinez.dev/
   source_url: https://github.com/nephlin7/gmartinez.dev
   description: >
-    Personal web site for show my skills and my works.
+    Personal website for show my skills and my works.
   categories:
     - Web Development
     - Portfolio
@@ -10713,7 +10713,7 @@
   main_url: https://xn--28jma5da5l6e.com/en/
   source_url: https://github.com/dondoko-susumu/website-v2
   description: >
-    The Web site of Dondoko Susumu, a Japanese cartoonist. His cartoons have been posted. It is internationalized into 12 languages.
+    The Website of Dondoko Susumu, a Japanese cartoonist. His cartoons have been posted. It is internationalized into 12 languages.
   categories:
     - Blog
     - Entertainment
@@ -10779,7 +10779,7 @@
   featured: false
 - title: Que Jamear
   description: >-
-    A directory with a map of food delivery services 
+    A directory with a map of food delivery services
     to be used during the health emergency caused by covid 19.
   main_url: https://quejamear.com/encebollados
   url: https://quejamear.com/encebollados
