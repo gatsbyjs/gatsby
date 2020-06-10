@@ -8,6 +8,7 @@ import {
   writeOutRequires,
   createPages,
   createPagesStatefully,
+  extractQueries,
 } from "../services"
 import { Runner } from "./create-graphql-runner"
 import { writeOutRedirects } from "../services/write-out-redirects"
@@ -31,6 +32,8 @@ export async function bootstrap(
   await createPages(currentContext)
 
   await createPagesStatefully(currentContext)
+
+  await extractQueries(currentContext)
 
   await writeOutRequires(currentContext)
 

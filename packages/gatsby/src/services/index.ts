@@ -1,3 +1,4 @@
+export { extractQueries } from "./extract-queries"
 export { writeOutRedirects } from "./write-out-redirects"
 export { postBootstrap } from "./post-bootstrap"
 export { buildSchema } from "./build-schema"
@@ -10,5 +11,4 @@ export { writeOutRequires } from "./write-out-requires"
 export { calculateDirtyQueries } from "./calculate-dirty-queries"
 export { runStaticQueries } from "./run-static-queries"
 export { runPageQueries } from "./run-page-queries"
-
 export * from "./types"
