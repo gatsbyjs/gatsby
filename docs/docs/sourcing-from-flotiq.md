@@ -189,7 +189,6 @@ Now you'll want to let Gatsby create appropriate pages for your Content Objects.
 import React from "react"
 import { graphql } from "gatsby"
 
-
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.blogpost
@@ -199,10 +198,7 @@ class BlogPostTemplate extends React.Component {
     return (
       <article>
         <header>
-          <h1
-          >
-            {post.title}
-          </h1>
+          <h1>{post.title}</h1>
           <p
             style={{
               ...scale(-1 / 5),
@@ -214,7 +210,7 @@ class BlogPostTemplate extends React.Component {
         {post.headerImage && post.headerImage[0] && (
           <img
             src={`${process.env.GATSBY_FLOTIQ_BASE_URL}/image/1920x0/${post.headerImage[0].id}.${post.headerImage[0].extension}`}
-            alt="test"
+            alt="${post.title}"
             style={{ maxWidth: "100%", height: "auto" }}
           />
         )}
