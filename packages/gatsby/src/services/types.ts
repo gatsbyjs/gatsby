@@ -22,4 +22,5 @@ export interface IBuildContext {
   graphqlRunner?: GraphQLRunner
   queryIds?: IGroupedQueryIds
   webhookBody?: Record<string, unknown>
+  refresh?: boolean
 }
