@@ -14,7 +14,7 @@ Gatsby generates your site's HTML pages, but also creates a JavaScript runtime t
 
 ## webpack config
 
-The [build-javascript.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.js) Gatsby file is the entry point to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g. `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
+The [build-javascript.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/commands/build-javascript.ts) Gatsby file is the entry point to this section. It dynamically creates a webpack configuration by calling [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js). This can produce radically different configs depending on the stage. E.g. `build-javascript`, `build-html`, `develop`, or `develop-html`. This section deals with the `build-javascript` stage.
 
 The config is quite large, but here are some of the important values in the final output.
 
@@ -95,15 +95,15 @@ This bundle is produced from [production-app.js](https://github.com/gatsbyjs/gat
 
 This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practice, the app and webpack-runtime are always needed together.
 
-##### framework-[contenthash].js
+### framework-[contenthash].js
 
 The framework bundle contains the React framework. Based on user behavior, React hardly gets upgraded to a newer version. Creating a separate bundle improves users' browser cache hit rate as this bundle is likely not going to be updated often.
 
-##### commons-[contenthash].js
+### commons-[contenthash].js
 
 Libraries used on every Gatsby page are bundled into the commons javascript file. By bundling these together, you can make sure your users only need to download this bundle once.
 
-##### component---[name]-[contenthash].js
+### component---[name]-[contenthash].js
 
 This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](/docs/how-code-splitting-works/).
 

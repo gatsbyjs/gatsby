@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.5...gatsby-link@2.4.6) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-link
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.4...gatsby-link@2.4.5) (2020-06-03)
+
+### Bug Fixes
+
+- **gatsby-link:** Fail gracefully on empty `to` prop ([#24745](https://github.com/gatsbyjs/gatsby/issues/24745)) ([700cff7](https://github.com/gatsbyjs/gatsby/commit/700cff7))
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.3...gatsby-link@2.4.4) (2020-06-02)
+
+### Features
+
+- **gatsby:** Add support for relative links ([#24054](https://github.com/gatsbyjs/gatsby/issues/24054)) ([e2c6cf2](https://github.com/gatsbyjs/gatsby/commit/e2c6cf2))
+
 ## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.2...gatsby-link@2.4.3) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-link
