@@ -9,8 +9,8 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
 
-import GatsbyWebpackStatsExtractor from "./gatsby-webpack-stats-extractor"
-import GatsbyWebpackEslintGraphqlSchemaReload from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
+import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -250,6 +250,7 @@ export const createWebpackUtils = (
         options: {
           limit: 10000,
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          fallback: require.resolve(`file-loader`),
           ...options,
         },
       }
@@ -627,7 +628,9 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      disableRefreshCheck: true,
+      overlay: {
+        sockIntegration: `whm`,
+      },
     })
 
   plugins.extractText = (options: any): Plugin =>
@@ -639,13 +642,11 @@ export const createWebpackUtils = (
 
   plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
 
-  plugins.extractStats = (options: any): GatsbyWebpackStatsExtractor =>
-    new GatsbyWebpackStatsExtractor(options)
+  plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
+    new GatsbyWebpackStatsExtractor()
 
-  plugins.eslintGraphqlSchemaReload = (
-    options
-  ): GatsbyWebpackEslintGraphqlSchemaReload =>
-    new GatsbyWebpackEslintGraphqlSchemaReload(options)
+  plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
+    new GatsbyWebpackEslintGraphqlSchemaReload()
 
   return {
     loaders,

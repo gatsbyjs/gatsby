@@ -8,7 +8,10 @@ const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
-const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
+const {
+  setDefaultSpawnStdio,
+  promisifiedSpawn,
+} = require(`./utils/promisified-spawn`)
 const { traversePackagesDeps } = require(`./utils/traverse-package-deps`)
 
 let numCopied = 0
@@ -29,6 +32,7 @@ async function watch(
   packages,
   { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
+  setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
   // as current logic of copying files will not work correctly.
   const yarnWorkspaceRoot = findWorkspaceRoot()
@@ -176,6 +180,7 @@ async function watch(
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
+  let isPublishing = false
 
   const waitFor = new Set()
   let anyPackageNotInstalled = false
@@ -211,6 +216,12 @@ async function watch(
       )
 
       if (relativePackageFile === `package.json`) {
+        // package.json files will change during publish to adjust version of package (and dependencies), so ignore
+        // changes during this process
+        if (isPublishing) {
+          return
+        }
+
         // Compare dependencies with local version
 
         const didDepsChangedPromise = checkDepsChanges({
@@ -292,6 +303,7 @@ async function watch(
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
+          isPublishing = true
           await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
@@ -299,6 +311,7 @@ async function watch(
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
+          isPublishing = false
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]

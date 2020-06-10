@@ -78,8 +78,9 @@ Setting this up only involves adding a few form attributes:
 
 ```diff:title=src/pages/contact.js
 - <form method="post" action="#">
-+ <form method="post" netlify-honeypot="bot-field" data-netlify="true">
++ <form method="post" netlify-honeypot="bot-field" data-netlify="true" name="contact">
 +   <input type="hidden" name="bot-field" />
++   <input type="hidden" name="form-name" value="contact" />
   ...
 ```
 
@@ -156,12 +157,12 @@ app.post("/contact", function (req, res) {
 app.listen(3000)
 ```
 
-This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Now](https://zeit.co/now).
+This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Vercel](https://vercel.com/home).
 
-Once deployed, note the url of the deployment (something like `my-project-abcd123.now.sh`), and use it as your form action:
+Once deployed, note the url of the deployment (something like `my-project-abcd123.vercel.app`), and use it as your form action:
 
 ```jsx:title=src/pages/contact.js
-<form method="post" action="my-project-abcd123.now.sh/contact">
+<form method="post" action="my-project-abcd123.vercel.app/contact">
   ...
 </form>
 ```
