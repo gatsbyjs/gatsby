@@ -7,9 +7,9 @@
   "dependencies": {
     "apollo-boost": "^0.4.9",
     "babel-plugin-styled-components": "^1.10.7",
-    "gatsby": "^2.21.37",
-    "gatsby-plugin-jss": "^2.3.1",
-    "gatsby-plugin-styled-components": "^3.3.1",
+    "gatsby": "^2.22.15",
+    "gatsby-plugin-jss": "^2.3.2",
+    "gatsby-plugin-styled-components": "^3.3.2",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.4.0",
     "react-apollo": "^2.5.8",
