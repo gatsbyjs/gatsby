@@ -29,9 +29,9 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 [Khabarovsk](http://myceevee.netlify.com/) ([source](https://github.com/msergushova/myceevee))
 
-[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.com/)
+[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.app/)
 
-[TruDesigns](https://trudesignsongatsby.netlify.com/) ([source](https://github.com/trudesigns/newStuff))
+[TruDesigns](https://trudesignsongatsby.netlify.app/) ([source](https://github.com/trudesigns/newStuff))
 
 After our initial phone conversation, Phil responded to a series of interview questions via email.
 

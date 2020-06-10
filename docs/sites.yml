@@ -1597,8 +1597,8 @@
 - title: Lisa Ye's Blog
   description: |
     Simple blog/portofolio for a fashion designer. Gatsby_v2 + Netlify cms
-  main_url: https://lisaye.netlify.com/
-  url: https://lisaye.netlify.com/
+  main_url: https://lisaye.netlify.app/
+  url: https://lisaye.netlify.app/
   categories:
     - Blog
     - Portfolio
@@ -2085,8 +2085,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Pomegranate Opera
-  main_url: https://pomegranateopera.netlify.com
-  url: https://pomegranateopera.netlify.com
+  main_url: https://pomegranateopera.netlify.app
+  url: https://pomegranateopera.netlify.app
   description: Pomegranate Opera is a lesbian opera written by Amanda Hale & Kye Marshall. Site designed by Stephen Bell.
   categories:
     - Gallery
@@ -2105,8 +2105,8 @@
   built_by_url: https://www.michaeluloth.com
   featured: false
 - title: Artist.Center
-  main_url: https://artistcenter.netlify.com
-  url: https://artistcenter.netlify.com
+  main_url: https://artistcenter.netlify.app
+  url: https://artistcenter.netlify.app
   description: The marketing page for Artist.Center, a soon-to-launch platform designed to connect opera singers to opera companies. Site designed by Stephen Bell.
   categories:
     - Music
@@ -2368,8 +2368,8 @@
   built_by: Hudl
   built_by_url: https://www.hudl.com/
 - title: Subtle UI
-  main_url: https://subtle-ui.netlify.com/
-  url: https://subtle-ui.netlify.com/
+  main_url: https://subtle-ui.netlify.app/
+  url: https://subtle-ui.netlify.app/
   source_url: https://github.com/ryanwiemer/subtle-ui
   description: >
     A collection of clever yet understated user interactions found on the web.
@@ -4147,8 +4147,8 @@
 - title: re-geo
   description: >
     re-geo is react based geo cities style component.
-  main_url: https://re-geo.netlify.com/
-  url: https://re-geo.netlify.com/
+  main_url: https://re-geo.netlify.app/
+  url: https://re-geo.netlify.app/
   source_url: https://github.com/sadnessOjisan/re-geo-lp
   categories:
     - Open Source
@@ -4827,8 +4827,8 @@
   built_by_url: https://www.web-hart.com
   featured: false
 - title: nicdougall.com
-  url: https://nicdougall.netlify.com/
-  main_url: https://nicdougall.netlify.com/
+  url: https://nicdougall.netlify.app/
+  main_url: https://nicdougall.netlify.app/
   source_url: https://github.com/riencoertjens/nicdougall.com
   description: >
     Athlete website with Netlify CMS for blog content.
@@ -5553,8 +5553,8 @@
   built_by: Acto
   built_by_url: https://www.acto.dk/
 - title: Gatsby GitHub Stats
-  url: https://gatsby-github-stats.netlify.com
-  main_url: https://gatsby-github-stats.netlify.com
+  url: https://gatsby-github-stats.netlify.app
+  main_url: https://gatsby-github-stats.netlify.app
   source_url: https://github.com/lannonbr/gatsby-github-stats/
   description: >
     Statistics Dashboard for Gatsby GitHub repository
@@ -6070,8 +6070,8 @@
   built_by: Daniel Spajic
   featured: false
 - title: Cosmotory
-  url: https://cosmotory.netlify.com/
-  main_url: https://cosmotory.netlify.com/
+  url: https://cosmotory.netlify.app/
+  main_url: https://cosmotory.netlify.app/
   description: >
     This is the educational blog containing various courses,learning materials from various authors from all over the world.
   categories:
@@ -6081,7 +6081,7 @@
     - Open Source
     - Education
   built_by: Hanishraj B Rao.
-  built_by_url: https://hanishrao.netlify.com/
+  built_by_url: https://hanishrao.netlify.app/
   featured: false
 - title: Armorblox | Security Powered by Understanding
   url: https://www.armorblox.com
@@ -6439,8 +6439,8 @@
   built_by: afc163
   built_by_url: https://github.com/afc163
 - title: ReactStudy Blog
-  url: https://elated-lewin-51cf0d.netlify.com
-  main_url: https://elated-lewin-51cf0d.netlify.com
+  url: https://elated-lewin-51cf0d.netlify.app
+  main_url: https://elated-lewin-51cf0d.netlify.app
   description: >
     Belong to your own blog by gatsby
   categories:
@@ -6449,8 +6449,8 @@
   built_by_url: https://github.com/97thjingba
   featured: false
 - title: George
-  main_url: https://kind-mestorf-5a2bc0.netlify.com
-  url: https://kind-mestorf-5a2bc0.netlify.com
+  main_url: https://kind-mestorf-5a2bc0.netlify.app
+  url: https://kind-mestorf-5a2bc0.netlify.app
   description: >
     shiny new web built with Gatsby
   categories:
@@ -6764,8 +6764,8 @@
   built_by_url: https://github.com/Abhith
   featured: false
 - title: Mr & Mrs Wilkinson
-  url: https://thewilkinsons.netlify.com/
-  main_url: https://thewilkinsons.netlify.com/
+  url: https://thewilkinsons.netlify.app/
+  main_url: https://thewilkinsons.netlify.app/
   source_url: https://github.com/davemullenjnr/the-wilkinsons
   description: >
     A one-page wedding photography showcase using Gatsby Image and featuring a lovely hero and intro section.
@@ -6991,8 +6991,8 @@
   built_by_url: https://www.thedelta.io
   featured: false
 - title: GatsbyFinds
-  main_url: https://gatsbyfinds.netlify.com
-  url: https://gatsbyfinds.netlify.com
+  main_url: https://gatsbyfinds.netlify.app
+  url: https://gatsbyfinds.netlify.app
   description: >
     GatsbyFinds is a website built ontop of Gatsby v2 by providing developers with a showcase of all the latest projects made with the beloved GatsbyJS.
   categories:
@@ -7137,8 +7137,8 @@
   built_by_url: https://www.nts.live
   featured: false
 - title: BALAJIRAO676
-  main_url: https://thebalajiraoecommerce.netlify.com/
-  url: https://thebalajiraoecommerce.netlify.com/
+  main_url: https://thebalajiraoecommerce.netlify.app/
+  url: https://thebalajiraoecommerce.netlify.app/
   featured: false
   categories:
     - Blog
@@ -7275,8 +7275,8 @@
   built_by_url: https://www.pixelize.com.au
   featured: false
 - title: VS Code GitHub Stats
-  url: https://vscode-github-stats.netlify.com
-  main_url: https://vscode-github-stats.netlify.com
+  url: https://vscode-github-stats.netlify.app
+  main_url: https://vscode-github-stats.netlify.app
   source_url: https://github.com/lannonbr/vscode-github-stats/
   description: >
     Statistics Dashboard for VS Code GitHub repository
@@ -7328,8 +7328,8 @@
 - title: Roman Kravets
   description: >
     Portfolio of Roman Kravets. Web Developer, HTML & CSS Coder.
-  main_url: https://romkravets.netlify.com/
-  url: https://romkravets.netlify.com/
+  main_url: https://romkravets.netlify.app/
+  url: https://romkravets.netlify.app/
   categories:
     - Portfolio
     - Open Source
@@ -7354,8 +7354,8 @@
 - title: Gatsby Bomb
   description: >
     A fan made version of the website Giantbomb, fully static and powered by Gatsby JS and the GiantBomb API.
-  main_url: https://gatsbybomb.netlify.com
-  url: https://gatsbybomb.netlify.com
+  main_url: https://gatsbybomb.netlify.app
+  url: https://gatsbybomb.netlify.app
   categories:
     - App
     - Entertainment
@@ -7806,8 +7806,8 @@
   built_by: Cade Kynaston
   built_by_url: https://cade.codes
 - title: diff001a's blog
-  main_url: https://diff001a.netlify.com/
-  url: https://diff001a.netlify.com/
+  main_url: https://diff001a.netlify.app/
+  url: https://diff001a.netlify.app/
   description: >
     This is diff001a's blog which contains blogs related to programming.
   categories:
@@ -7850,8 +7850,8 @@
   built_by_url: https://thecouch.nyc
   featured: false
 - title: MyPrograming Steps
-  main_url: https://mysteps.netlify.com/
-  url: https://mysteps.netlify.com/
+  main_url: https://mysteps.netlify.app/
+  url: https://mysteps.netlify.app/
   description: >
     FrontEnd Tutorial Information
   featured: false
@@ -7952,8 +7952,8 @@
   built_by: Handsome Creative
   built_by_url: https://www.hellohandsome.com.au
 - title: Fuzzy String Matching
-  main_url: https://fuzzy-string-matching.netlify.com
-  url: https://fuzzy-string-matching.netlify.com
+  main_url: https://fuzzy-string-matching.netlify.app
+  url: https://fuzzy-string-matching.netlify.app
   source_url: https://github.com/jdemieville/fuzzyStringMatching
   description: >
     This site is built to assess the performance of various approximate string matching algorithms aka fuzzy string searching.
@@ -8478,8 +8478,8 @@
   built_by_url: https://github.com/isamrish
   featured: false
 - title: Jarod Peachey
-  main_url: https://jarodpeachey.netlify.com
-  url: https://jarodpeachey.netlify.com
+  main_url: https://jarodpeachey.netlify.app
+  url: https://jarodpeachey.netlify.app
   source_url: https://github.com/jarodpeachey/portfolio
   description: >
     Jarod Peachey is a front-end developer focused on building modern and fast websites for everyone.

@@ -5340,7 +5340,7 @@ export const pageQuery = graphql`
 - Did the intitial build of the new gatsbyjs.org! It's in the `www` subdirectory
   on the 1.0 branch and is built on each push! That's my kind of integration
   testing :-) You can see the early version of the site at
-  https://gatsbyjs.netlify.com/. PRs welcome!
+  https://gatsbyjs.netlify.app/. PRs welcome!
 - Added <link preload> for page scripts. This speeds up loading scripts slightly
   by telling the browser to start downloading the scripts when the HTML first
   starts being parsed instead of when the browser reaches the end. This is
