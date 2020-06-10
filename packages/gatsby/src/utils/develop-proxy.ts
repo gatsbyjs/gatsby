@@ -11,6 +11,7 @@ import { IProgram } from "../commands/types"
 interface IProxyControls {
   serveRestartingScreen: () => void
   serveSite: () => void
+  refreshEnded: () => void
   server: any
 }
 
@@ -33,6 +34,12 @@ export const startDevelopProxy = (input: {
   program: IProgram
 }): IProxyControls => {
   let shouldServeRestartingScreen = false
+  let isRefreshing = false
+  const refreshQueue: {
+    res: http.ServerResponse
+    req: http.IncomingMessage
+    body: string
+  }[] = []
 
   const proxy = httpProxy.createProxyServer({
     target: `http://localhost:${input.targetPort}`,
@@ -70,6 +77,52 @@ export const startDevelopProxy = (input: {
       return
     }
 
+    /**
+     * Refresh external data sources.
+     * This behavior is disabled by default, but the ENABLE_GATSBY_REFRESH_ENDPOINT env var enables it
+     * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
+     **/
+    const REFRESH_ENDPOINT = `/__refresh`
+    if (req.url === REFRESH_ENDPOINT) {
+      const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+      const refreshToken = process.env.GATSBY_REFRESH_TOKEN
+      const authorizedRefresh =
+        !refreshToken || req.headers.authorization === refreshToken
+
+      if (!enableRefresh || !authorizedRefresh) {
+        return
+      }
+
+      readRequestBody(req).then((body: string) => {
+        const isRequestWithSameBodyQueued = !!refreshQueue.filter(
+          queued => queued.body === body
+        ).length
+
+        if (!isRequestWithSameBodyQueued) {
+          refreshQueue.push({ req, res, body })
+        }
+
+        if (isRefreshing) {
+          if (isRequestWithSameBodyQueued) {
+            res.end(
+              `already queued ${JSON.stringify(refreshQueue.map(q => q.body))}`
+            )
+            return
+          }
+          res.end(`queued ${JSON.stringify(refreshQueue.map(q => q.body))}`)
+          return
+        }
+
+        isRefreshing = true
+        const queued = refreshQueue.shift()
+        if (queued) {
+          proxy.web(queued.req, queued.res)
+        }
+      })
+
+      return
+    }
+
     if (
       shouldServeRestartingScreen ||
       req.url === `/___debug-restarting-screen`
@@ -79,6 +132,18 @@ export const startDevelopProxy = (input: {
     }
 
     proxy.web(req, res)
+  }
+
+  function readRequestBody(request: http.IncomingMessage): Promise<string> {
+    return new Promise(resolve => {
+      let body = ``
+      request.on(`data`, chunk => {
+        body += chunk.toString()
+      })
+      request.on(`end`, () => {
+        resolve(body)
+      })
+    })
   }
 
   const server = input.program.ssl
@@ -98,6 +163,16 @@ export const startDevelopProxy = (input: {
     },
     serveSite: (): void => {
       shouldServeRestartingScreen = false
+    },
+    refreshEnded: (): void => {
+      if (!refreshQueue.length) {
+        isRefreshing = false
+      } else {
+        const queued = refreshQueue.shift()
+        if (queued) {
+          proxy.web(queued.req, queued.res)
+        }
+      }
     },
   }
 }

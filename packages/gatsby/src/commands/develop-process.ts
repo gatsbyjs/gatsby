@@ -231,13 +231,15 @@ async function startServer(program: IProgram): Promise<IServer> {
     )
   )
 
-  /**
-   * Refresh external data sources.
-   * This behavior is disabled by default, but the ENABLE_GATSBY_REFRESH_ENDPOINT env var enables it
-   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
-   **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
+    if (process.send) {
+      process.send({
+        type: `REFRESH`,
+        action: `STARTED`,
+      })
+    }
+
     stopSchemaHotReloader()
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
@@ -256,17 +258,18 @@ async function startServer(program: IProgram): Promise<IServer> {
     await rebuildSchema({ parentSpan: activity })
     activity.end()
     startSchemaHotReloader()
+
+    if (process.send) {
+      process.send({
+        type: `REFRESH`,
+        action: `FINISHED`,
+      })
+    }
   }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {
-    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
-    const authorizedRefresh =
-      !refreshToken || req.headers.authorization === refreshToken
+    refresh(req)
 
-    if (enableRefresh && authorizedRefresh) {
-      refresh(req)
-    }
     res.end()
   })
 
