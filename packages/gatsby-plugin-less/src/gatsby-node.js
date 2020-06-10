@@ -2,7 +2,7 @@ import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
-  { cssLoaderOptions = {}, postCssPlugins, ...lessOptions }
+  { cssLoaderOptions = {}, postCssPlugins, loaderOptions, lessOptions }
 ) => {
   const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
@@ -14,8 +14,8 @@ exports.onCreateWebpackConfig = (
       sourceMap: !PRODUCTION,
       lessOptions: {
         ...lessOptions,
-        plugins: lessOptions.lessPlugins || [], // for #4645
       },
+      ...loaderOptions,
     },
   }
 

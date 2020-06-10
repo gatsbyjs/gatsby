@@ -24,13 +24,17 @@ describe(`gatsby-plugin-less`, () => {
     options: {
       "No options": {},
       "Less options #1": {
-        modifyVars: {
-          "text-color": `#fff`,
+        lessOptions: {
+          modifyVars: {
+            "text-color": `#fff`,
+          },
+          strictMath: true,
         },
-        strictMath: true,
       },
       "Less options #2": {
-        modifyVars: require(`../theme-test.js`),
+        lessOptions: {
+          modifyVars: require(`../theme-test.js`),
+        },
       },
       "PostCss plugins": {
         postCssPlugins: [`test1`],
