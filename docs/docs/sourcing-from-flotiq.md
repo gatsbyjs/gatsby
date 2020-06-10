@@ -183,13 +183,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 }
 ```
 
-Now you'll want to let Gatsby create appropriate pages for your Content Objects. This example uses a `blogPost` component as a template, which can also be found below:
+Now you'll want to let Gatsby create appropriate pages for your Content Objects. This example uses a `blogPost` component as a template:
 
 ```javascript:title=blog-post.js
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
-import { rhythm, scale } from "../utils/typography"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -201,10 +200,6 @@ class BlogPostTemplate extends React.Component {
       <article>
         <header>
           <h1
-            style={{
-              marginTop: rhythm(1),
-              marginBottom: 0,
-            }}
           >
             {post.title}
           </h1>
@@ -223,7 +218,7 @@ class BlogPostTemplate extends React.Component {
             style={{ maxWidth: "100%", height: "auto" }}
           />
         )}
-        <section dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
     )
   }
