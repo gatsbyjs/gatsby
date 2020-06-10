@@ -123,7 +123,11 @@ export const startDevelopProxy = (input: {
       return
     }
 
+    const canShowRestartingScreenOnRefresh = !!process.env
+      .ENABLE_GATSBY_RESTARTING_SCREEN_ON_REFRESH
+
     if (
+      (isRefreshing && canShowRestartingScreenOnRefresh) ||
       shouldServeRestartingScreen ||
       req.url === `/___debug-restarting-screen`
     ) {

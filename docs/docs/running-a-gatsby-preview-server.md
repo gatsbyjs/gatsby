@@ -12,6 +12,7 @@ Roughly, you can follow these steps to enable your own preview server:
 
 - Run `gatsby develop` on a Node.js host like [Heroku](/docs/deploying-to-heroku/) with the [ENABLE_GATSBY_REFRESH_ENDPOINT environment variable](/docs/environment-variables/#reserved-environment-variables) enabled. This will configure the develop server to re-source data when it receives a `POST` request to `/__refresh`.
 - Then setup your CMS to ping this URL on the preview server whenever content is changed.
+- if you want to show a restarting screen when the refresh endpoint is hit until it finishes refreshing add the [ENABLE_GATSBY_RESTARTING_SCREEN_ON_REFRESH environment variable](/docs/environment-variables/#reserved-environment-variables)
 
 ## Using Gatsby Cloud Preview
 

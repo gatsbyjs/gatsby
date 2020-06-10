@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { graphql, Link, navigate } from "gatsby"
 import queryString from "query-string"
+import io from "socket.io-client"
 
 class Dev404Page extends React.Component {
   static propTypes = {
@@ -75,6 +76,22 @@ class Dev404Page extends React.Component {
     if (search !== `?${newSearch}`) {
       navigate(`${pathname}?${newSearch}`, { replace: true })
     }
+  }
+
+  componentDidMount() {
+    fetch(`/___services`)
+      .then(res => res.json())
+      .then(services => {
+        if (services.developstatusserver) {
+          const parentSocket = io(
+            `http://${window.location.hostname}:${services.developstatusserver.port}`
+          )
+
+          parentSocket.on(`develop:refresh-started`, msg => {
+            window.location.reload()
+          })
+        }
+      })
   }
 
   render() {

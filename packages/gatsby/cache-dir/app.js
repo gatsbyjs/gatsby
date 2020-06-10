@@ -38,6 +38,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           `http://${window.location.hostname}:${services.developstatusserver.port}`
         )
 
+        parentSocket.on(`develop:refresh-started`, msg => {
+          window.location.reload()
+        })
+
         parentSocket.on(`develop:needs-restart`, msg => {
           if (
             window.confirm(

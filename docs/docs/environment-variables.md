@@ -138,6 +138,10 @@ If set to true, this will expose a `/__refresh` webhook that is able to receive 
 
 You can trigger this endpoint locally, for example, on Unix-based operating systems (like Ubuntu and MacOS) using `curl -X POST http://localhost:8000/__refresh`.
 
+- `ENABLE_GATSBY_RESTARTING_SCREEN_ON_REFRESH`
+
+If set to true, this will show the restarting screen when the refresh endpoint is hit, until the refresh finishes.
+
 ## Build Variables
 
 Gatsby uses additional environment variables in the build step to fine-tune the outcome of a build. You may find these helpful for more advanced configurations, such as using [CI/CD](https://en.wikipedia.org/wiki/CI/CD) to deploy a Gatsby site.
