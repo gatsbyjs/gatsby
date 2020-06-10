@@ -6,6 +6,8 @@ import {
   sourceNodes,
   buildSchema,
   writeOutRequires,
+  createPages,
+  createPagesStatefully,
 } from "../services"
 import { Runner } from "./create-graphql-runner"
 import { writeOutRedirects } from "../services/write-out-redirects"
@@ -25,6 +27,10 @@ export async function bootstrap(
   const { bootstrapGraphQLFunction } = await buildSchema(currentContext)
 
   currentContext.bootstrapGraphQLFunction = bootstrapGraphQLFunction
+
+  await createPages(currentContext)
+
+  await createPagesStatefully(currentContext)
 
   await writeOutRequires(currentContext)
 
