@@ -284,7 +284,7 @@ The function to use is:
 
 `embed:api.js{snippet: "funcA"}`
 
-And it is invoked via
+And it is invoked via:
 
 `embed:api.js{snippet: "invokeA"}`
 ```
@@ -310,15 +310,15 @@ function display() {
 
 Will produce something like this:
 
-```
-The function to use is
+```markdown
+The function to use is:
 
 function factorial(x) {
-    if (x <= 1) return 1
-    else return x * factorial(x - 1)
+if (x <= 1) return 1
+else return x \* factorial(x - 1)
 }
 
-And it is invoked via
+And it is invoked via:
 
 let xfact = factorial(x)
 ```
