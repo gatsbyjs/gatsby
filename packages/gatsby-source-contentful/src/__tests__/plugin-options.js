@@ -171,7 +171,6 @@ describe(`Options validation`, () => {
         downloadLocal: 5,
         useNameForId: 5,
         pageLimit: `fifty`,
-        richText: true,
       }
     )
 
@@ -203,9 +202,6 @@ describe(`Options validation`, () => {
     )
     expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(`"pageLimit" must be a number`)
-    )
-    expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`"richText" must be an object`)
     )
   })
 

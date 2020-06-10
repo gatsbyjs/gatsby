@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.3",
+    "@contentful/rich-text-react-renderer": "^14.1.1",
     "@contentful/rich-text-types": "^13.4.0",
     "@hapi/joi": "^15.1.1",
     "axios": "^0.19.2",

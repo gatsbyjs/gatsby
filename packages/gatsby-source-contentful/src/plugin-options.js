@@ -44,11 +44,6 @@ const optionsSchema = Joi.object().keys({
   useNameForId: Joi.boolean(),
   // default plugins passed by gatsby
   plugins: Joi.array(),
-  richText: Joi.object()
-    .keys({
-      resolveFieldLocales: Joi.boolean(),
-    })
-    .default({}),
 })
 
 const maskedFields = [`accessToken`, `spaceId`]
