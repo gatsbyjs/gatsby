@@ -6660,7 +6660,7 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
- - url: https://code-notes-example.netlify.com/
+- url: https://code-notes-example.netlify.com/
   repo: https://github.com/MrMartineau/gatsby-starter-code-notes
   description: A starter for the "Code Notes" Gatsby theme
   tags:
