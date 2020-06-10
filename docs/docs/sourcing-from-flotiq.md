@@ -199,13 +199,6 @@ class BlogPostTemplate extends React.Component {
       <article>
         <header>
           <h1>{post.title}</h1>
-          <p
-            style={{
-              ...scale(-1 / 5),
-              display: `block`,
-              marginBottom: rhythm(1),
-            }}
-          ></p>
         </header>
         {post.headerImage && post.headerImage[0] && (
           <img
