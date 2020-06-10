@@ -122,3 +122,5 @@ export {
   // Experimental API
   unstable_collectionGraphql,
 }
+
+export { getModule } from "./modules"

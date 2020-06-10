@@ -18,6 +18,7 @@ const {
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`$virtual/sync-requires`)
+const { addModule, getModule } = require(`./modules`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
@@ -205,9 +206,25 @@ export default (pagePath, callback) => {
 
   const appDataUrl = getAppDataUrl()
 
-  const { componentChunkName, staticQueryHashes = [] } = pageData
+  const {
+    componentChunkName,
+    staticQueryHashes = [],
+    moduleDependencies,
+  } = pageData
 
   const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
+
+  // make sure needed modules for the page are loaded in modules provider
+  if (moduleDependencies) {
+    moduleDependencies.forEach(moduleId => {
+      if (getModule(moduleId)) {
+        return
+      }
+
+      const module = syncRequires.modules[moduleId]
+      addModule(moduleId, module)
+    })
+  }
 
   class RouteHandler extends React.Component {
     render() {
@@ -284,7 +301,7 @@ export default (pagePath, callback) => {
 
   // Create paths to scripts
   let scriptsAndStyles = flatten(
-    [`app`, componentChunkName].map(s => {
+    [`app`, componentChunkName, ...(moduleDependencies || [])].map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
 
       let chunks = get(stats, fetchKey)
