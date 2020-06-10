@@ -38,7 +38,7 @@ Now run your first Lighthouse test.
 
 ![Lighthouse audit start](./images/lighthouse-audit.png)
 
-3.  Choose whether to audit on Mobile or Desktop and then click "Generate Report". You will also see a list of all available audits that you can choose to run for this report. Once the audit starts it'll take around a minute depending on the site speed and which audits were selected. When that is complete, you should see results that look like this:
+3. Choose whether to audit on Mobile or Desktop and then click "Generate Report". You will also see a list of all available audits that you can choose to run for this report. Once the audit starts it'll take around a minute depending on the site speed and which audits were selected. When that is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./images/lighthouse-audit-results.png)
 
