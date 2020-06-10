@@ -2,7 +2,7 @@
 title: Deploying to 21YunBox
 ---
 
-[21YunBox](https://www.21yunbox.com) provides blazing fast Chinese CDN, Continuous Deployment, one click HTTPS and [other services like ..... ](https://www.21yunbox.com/docs/v2/index.html), providing developers a hassle-free solution to launch their web projects in China.
+[21YunBox](https://www.21yunbox.com) provides blazing fast Chinese CDN, Continuous Deployment, one click HTTPS and [other services like managed databases and backend web services ](https://www.21yunbox.com/docs/v2/index.html), providing developers a hassle-free solution to launch their web projects in China.
 
 Static sites are **quick to deploy** on 21YunBox and include the following features:
 
