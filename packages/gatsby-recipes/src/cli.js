@@ -143,6 +143,7 @@ const RecipesList = ({ setRecipe }) => {
       label: `Add Github Pages deployment with Travis`,
       value: `travis-deploy-github-pages.mdx`,
     },
+    {
       label: `Add Headless WordPress integration`,
       value: `wordpress.mdx`,
     },
