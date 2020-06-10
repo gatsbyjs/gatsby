@@ -19,14 +19,53 @@ const scope = {
   RecipeIntroduction,
   Input,
   useInputByUuid,
-  MDXLayout: ({ children }) => <React.Fragment>{children}</React.Fragment>,
   Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
-  mdx: React.createElement,
+  mdx: mdxPragma,
 }
 
-const transformCodeForEval = code =>
-  `${code}; return React.createElement(MDXContent)`
+// TODO: Using MDXContent instantiation with return React.createElement causes
+//       a weird circular structure, so for now lets be hacky and unwrap the MDXContent
+// We also need to pluck out the exports essentially by hand because they need to be
+// _outside_ the return statement.
+const transformCodeForEval = code => {
+  console.log({ code })
+  return (
+    `
+    const doc = props => mdx('doc', props)
+    const dopeFile = ({ path, ...props }) => {
+      console.log('hiiiiiiiiii')
+      if (path === 'foo.js') {
+        return mdx(File, {...props, path: 'butts.js' })
+      }  else {
+        return mdx(File, { path, ...props})
+      }
+    }
+    return mdx(doc, null, mdx(RecipeIntroduction, {
+    mdxType: "RecipeIntroduction"
+  }, mdx("h1", null, 'Hello, world!'), mdx(dopeFile, {
+    path: "foo.js",
+    content: "/** foo */",
+    _uuid: "8c137376-30d3-44b5-ab2c-6f9985ac0794",
+    _type: "File",
+    mdxType: "File"
+  }), mdx(File, {
+    path: "foo2.js",
+    content: "/** foo2 */",
+    _uuid: "a7e3f2c9-a8e0-43cd-9850-8e120c3943d1",
+    _type: "File",
+    mdxType: "File"
+  }), mdx(NPMPackage, {
+    name: "gatsby",
+    _uuid: "cc5e9eaf-ce2b-4ccf-b83c-2fa7d779f357",
+    _type: "NPMPackage",
+    mdxType: "NPMPackage"
+  })))` ||
+    `${code}
+  return React.createElement(MDXContent)
+  `
+  )
+}
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {

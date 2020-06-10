@@ -68,7 +68,7 @@ const transform = (props = {}) => {
 }
 
 module.exports = renderTree => {
-  console.log(JSON.stringify(renderTree, null, 2))
+  //console.log(require('circular-json').stringify(renderTree, null, 2))
   const [doc] = renderTree.children
 
   return transform(doc)

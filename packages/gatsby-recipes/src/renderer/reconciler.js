@@ -44,15 +44,13 @@ const reconciler = ReactReconciler({
       c => c[propName] === child[propName]
     )
 
-    console.log(container._context)
-    console.log(child._context)
-    console.log(
-      require(`util`).inspect({ child: child.children[0].props, container })
-    )
-
     debug(
       `appending child to container at index ${index}`,
-      JSON.stringify({ container, child }, null, 2)
+      (require(`circular-json`) && JSON).stringify(
+        { container, child },
+        null,
+        2
+      )
     )
 
     if (index === -1) {
@@ -107,7 +105,7 @@ const RecipesRenderer = {
     let container = reconciler.createContainer(currState, false, false)
     reconciler.updateContainer(whatToRender, container, null, null)
 
-    debug(`render result`, JSON.stringify(currState, null, 2))
+    //debug(`render result`, require('circular-json').stringify(currState, null, 2))
 
     return currState
   },

@@ -11,9 +11,8 @@ const mdxFixture = `
 
 describe(`renderer`, () => {
   test(`handles MDX as input`, async () => {
-    const fullMdx = await parse(mdxFixture)
-    console.log({ fullMdx })
-    const result = await render(fullMdx)
+    const { stepsAsMdx } = await parse(mdxFixture)
+    const result = await render(stepsAsMdx.join(`\n`))
 
     // Gatsby latest version is ever changing so we use regex matcher for currentState property.
     // Unfortunately jest property matchers work weirdly on arrays so instead
