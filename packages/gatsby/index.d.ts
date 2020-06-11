@@ -46,7 +46,7 @@ export const prefetchPathname: (path: string) => void
  *
  * type IndexQueryProps = { downloadCount: number }
  * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
- * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+ * type IndexPageProps = PageProps<IndexQueryProps, LocaleLookUpInfo>
  *
  * export default (props: IndexProps) => {
  *   ..
@@ -92,7 +92,7 @@ export type PageProps<
    * import {PageProps} from "gatsby"
    *
    * type IndexQueryProps = { downloadCount: number }
-   * type IndexPageProps = PageProps<IndexPageProps>
+   * type IndexPageProps = PageProps<IndexQueryProps>
    *
    * export default (props: IndexProps) => {
    *   ..
@@ -109,7 +109,7 @@ export type PageProps<
    *
    * type IndexQueryProps = { downloadCount: number }
    * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
-   * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+   * type IndexPageProps = PageProps<IndexQueryProps, LocaleLookUpInfo>
    *
    * export default (props: IndexProps) => {
    *   ..
