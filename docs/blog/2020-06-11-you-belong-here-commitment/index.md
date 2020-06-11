@@ -1,7 +1,7 @@
 ---
 title: "You Belong Here."
 date: 2020-06-11
-author: Bianca Feliciano Nedjar, SHRM SCP
+author: Bianca Feliciano Nedjar
 excerpt: "This is a pivotal time for the fight against systemic racism and injustice in the US. It has also sparked a lot of difficult reflection and realizations from those of us who would be allies: the understanding that we all own a piece of this -- that we can, and we must, do better. At Gatsby we have been asking ourselves some hard questions about how we need to change so we can become better allies."
 tags:
   - announcements
