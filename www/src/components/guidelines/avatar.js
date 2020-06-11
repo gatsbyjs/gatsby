@@ -11,7 +11,7 @@ const Avatar = ({ ...rest }) => (
       lineHeight: `solid`,
       width: `avatar`,
     }}
-    {…rest}
+    {...rest}
   />
 )
 
