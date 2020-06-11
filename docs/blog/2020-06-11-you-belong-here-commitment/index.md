@@ -1,14 +1,13 @@
 ---
-title: "You Belong Here."
+title: You Belong Here
 date: 2020-06-11
 author: Bianca Feliciano Nedjar
 excerpt: "This is a pivotal time for the fight against systemic racism and injustice in the US. It has also sparked a lot of difficult reflection and realizations from those of us who would be allies: the understanding that we all own a piece of this. That we can, and we must, do better. At Gatsby we have been asking ourselves some hard questions about how we need to change so we can become better allies."
 tags:
-  - announcements
-  - diversity-and-inclusion
-  - community
+  - announcements
+  - diversity-and-inclusion
+  - community
 ---
-
 A little more than two weeks ago, George Floyd was murdered. The days since then have marked a pivotal moment in the fight against systemic racism and injustice in the United States. We've witnessed a broad and representative cross-section of Americans take to the streets day after day in peaceful protest, demanding change. We are watching our communities turn pain into reflection and start to hold themselves responsible, asking how we got here and how we move forward. And we are awakening to wide recognition that we all own a piece of this -- that we can, and we must, do better. At Gatsby we have been asking ourselves some hard questions about how we need to change so we can become better allies.
 
 It is no secret that the tech industry is primarily white and male. As an industry built around innovation and disruption, tech has failed to do either when it comes to advancing equity. Our sector has failed to ensure fairness in hiring practices and career development for gender and racial/ethnic minorities, and all other underrepresented groups. At the root of this problem are conscious and unconscious biases deeply ingrained in our systems and culture. Implicit biases that reinforce privilege and cause us to fear rather than accept our differences. Until we recognize the power of those biases, until we begin the hard work of naming and deconstructing them to build genuine equity in the workplace, nothing will change. It is not enough to stand in solidarity with those who have been historically disenfranchised. We must now actively work to ensure equity, opportunity and advancement and remove any barriers blocking the way. But how best to do this?
