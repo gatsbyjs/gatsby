@@ -90,8 +90,9 @@ module.exports = {
 
 4. Use twin.macro to create your styled component
 
-```javascript
-import tw, { styled } from "twin.macro"
+```jsx:title=src/pages/index.js
+import React from "react"
+import tw, { styled } from "twin.macro" //highlight-line
 
 const Button = styled.button`
   ${tw`bg-blue-500 hover:bg-blue-800 text-white p-2 rounded`}
@@ -102,6 +103,15 @@ const Button = styled.button`
 const Button = tw.button`
   bg-blue-500 hover:bg-blue-800 text-white p-2 rounded
 `
+
+const IndexPage = () => (
+  <div>
+    <h1>Hi people</h1>
+    <Button>Activate</Button> // highlight-line
+  </div>
+)
+
+export default IndexPage
 ```
 
 See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/emotion/gatsby.md) for more information.
