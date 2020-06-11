@@ -16,35 +16,35 @@ import { postBootstrap } from "../services/post-bootstrap"
 import { rebuildWithSitePage } from "../schema"
 
 export async function bootstrap(
-  context: IBuildContext
+  initialContext: IBuildContext
 ): Promise<{ bootstrapGraphQLFunction: Runner }> {
-  const currentContext: IBuildContext = {
-    ...context,
-    ...(await initialize(context)),
+  const context: IBuildContext = {
+    ...initialContext,
+    ...(await initialize(initialContext)),
   }
 
-  await customizeSchema(currentContext)
-  await sourceNodes(currentContext)
+  await customizeSchema(context)
+  await sourceNodes(context)
 
-  const { bootstrapGraphQLFunction } = await buildSchema(currentContext)
+  const { bootstrapGraphQLFunction } = await buildSchema(context)
 
-  currentContext.bootstrapGraphQLFunction = bootstrapGraphQLFunction
+  context.bootstrapGraphQLFunction = bootstrapGraphQLFunction
 
-  await createPages(currentContext)
+  await createPages(context)
 
-  await createPagesStatefully(currentContext)
+  await createPagesStatefully(context)
 
-  await rebuildWithSitePage(currentContext)
+  await rebuildWithSitePage(context)
 
-  await extractQueries(currentContext)
+  await extractQueries(context)
 
-  await writeOutRequires(currentContext)
+  await writeOutRequires(context)
 
-  await writeOutRedirects(currentContext)
+  await writeOutRedirects(context)
 
   startRedirectListener()
 
-  await postBootstrap(currentContext)
+  await postBootstrap(context)
 
   return { bootstrapGraphQLFunction }
 }
