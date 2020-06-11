@@ -10934,7 +10934,7 @@
 - title: Petite & Minimal
   url: https://www.petiteandminimal.com/
   main_url: https://www.petiteandminimal.com/
-  description: >
+  description: >-
     Eco-friendly lifestyle website. Green, sustainable, minimal. Covering food,
     style, travel, living and featuring several eco-friendly directories.
   categories:
@@ -10950,7 +10950,7 @@
   url: https://petiteandminimalstore.netlify.app/
   main_url: https://petiteandminimalstore.netlify.app/
   source_url: https://github.com/AnnieTaylorCHEN/PetiteandMinimalStore
-  description: >
+  description: >-
     A JAMstack e-commerce solution built with Gatsby, Contentful and
     CommerceLayer.  
   categories:
