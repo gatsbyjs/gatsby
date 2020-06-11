@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-export default function Avatar({ ...rest }) {
+export default function Avatar() {
   return (
     <div
       sx={{
@@ -11,8 +11,8 @@ export default function Avatar({ ...rest }) {
         height: `avatar`,
         lineHeight: `solid`,
         width: `avatar`,
+        mr: 2,
       }}
-      {...rest}
     />
   )
 }
