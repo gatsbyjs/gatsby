@@ -1,7 +1,3 @@
-/* global importScripts, workbox, idbKeyval */
-
-importScripts(`idb-keyval-iife.min.js`)
-
 const { NavigationRoute } = workbox.routing
 
 let lastNavigationRequest = null
