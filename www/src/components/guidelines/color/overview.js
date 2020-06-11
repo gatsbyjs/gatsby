@@ -68,11 +68,10 @@ const Palette = ({ color, handler }) => {
       sx={{
         display: `flex`,
         flexDirection: `column`,
-        mb: 4,
+        mb: [4, null, null, 0],
         [mediaQueries.lg]: {
           flexDirection: `row`,
           alignItems: `center`,
-          mb: 0,
         },
       }}
     >
