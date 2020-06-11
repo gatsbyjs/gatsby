@@ -5,13 +5,8 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 
 import { Flex } from "theme-ui"
 
-export default function Collapsible(props) {
-  const { heading, fixed, children } = props
+export default function Collapsible({ heading, fixed, children }) {
   const [collapsed, setCollapsed] = useState(false)
-
-  function toggleCollapsible() {
-    setCollapsed(!collapsed)
-  }
 
   return (
     <div
@@ -53,7 +48,7 @@ export default function Collapsible(props) {
             },
           }}
           aria-expanded={!collapsed}
-          onClick={toggleCollapsible}
+          onClick={() => setCollapsed(collapsed => !collapsed)}
         >
           {heading}
           {` `}
