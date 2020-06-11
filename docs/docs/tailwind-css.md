@@ -68,11 +68,7 @@ To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documen
 
 These steps assume you have a CSS-in-JS library already installed, and the examples are based on Emotion.
 
-1. Install the Twin Babel Macro
-
-**Note**: `twin.macro` currently doesn't support all Tailwind plugins but full support is coming soon.
-
-1. Install Twin and Emotion
+1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction)
 
 ```shell
 npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
