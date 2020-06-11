@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-emotion",
   "description": "Gatsby plugin to add support for Emotion",
-  "version": "4.3.3",
+  "version": "4.3.4",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
-    "babel-preset-gatsby-package": "^0.4.3",
+    "babel-preset-gatsby-package": "^0.4.4",
     "cross-env": "^5.2.1"
   },
   "peerDependencies": {

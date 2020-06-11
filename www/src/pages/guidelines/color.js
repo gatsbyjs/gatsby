@@ -68,7 +68,7 @@ const Color = props => {
           consistent experiences and meaningful expressions across marketing and
           products.
         </Intro>
-        <Badge my={3}>
+        <Badge>
           Work in Progress{` `}
           <MdWarning style={{ fontSize: 16, marginLeft: `0.25rem` }} />
         </Badge>

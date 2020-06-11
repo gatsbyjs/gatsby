@@ -21,7 +21,7 @@ A JAMStack backend is a content API that returns JSON or XML. This API can be a 
 
 ### Advantages of a JAMStack architecture
 
-JAMStack sites, such as those created with Gatsby, offer four key advantages over other web site architectures.
+JAMStack sites, such as those created with Gatsby, offer four key advantages over other website architectures.
 
 - **Speed**: JAMStack sites lack the overhead caused by software and database layers. As a result, they render and load more quickly than sites that use monolithic architectures.
 - **Hosting flexibility**: Because they're static files, JAMStack sites can be hosted anywhere. You can use traditional web server software, such as Apache or Nginx. For the best performance and security, you can use an object storage service and content delivery network such as [Netlify](/docs/deploying-to-netlify), [Render](/docs/deploying-to-render), or Amazon Web Services' [S3 and Cloudfront](/docs/deploying-to-s3-cloudfront).
