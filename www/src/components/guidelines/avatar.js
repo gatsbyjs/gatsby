@@ -10,8 +10,8 @@ const Avatar = ({ ...rest }) => (
       height: `avatar`,
       lineHeight: `solid`,
       width: `avatar`,
-      ...rest,
     }}
+    {…rest}
   ></div>
 )
 
