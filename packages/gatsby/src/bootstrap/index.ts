@@ -13,6 +13,7 @@ import {
 import { Runner } from "./create-graphql-runner"
 import { writeOutRedirects } from "../services/write-out-redirects"
 import { postBootstrap } from "../services/post-bootstrap"
+import { rebuildWithSitePage } from "../schema"
 
 export async function bootstrap(
   context: IBuildContext
@@ -32,6 +33,8 @@ export async function bootstrap(
   await createPages(currentContext)
 
   await createPagesStatefully(currentContext)
+
+  await rebuildWithSitePage(currentContext)
 
   await extractQueries(currentContext)
 
