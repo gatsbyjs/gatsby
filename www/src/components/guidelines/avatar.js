@@ -12,7 +12,7 @@ const Avatar = ({ ...rest }) => (
       width: `avatar`,
     }}
     {…rest}
-  ></div>
+  />
 )
 
 export default Avatar
