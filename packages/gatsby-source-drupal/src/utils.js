@@ -154,7 +154,8 @@ const handleWebhookUpdate = async (
   }
 
   // download file
-  if (isFileNode(newNode)) {
+  const skipFileDownloads = pluginOptions.skipFileDownloads || false
+  if (isFileNode(newNode) && !skipFileDownloads) {
     await downloadFile(
       {
         node: newNode,
