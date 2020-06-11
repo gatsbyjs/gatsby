@@ -10,7 +10,7 @@ import {
   ComposeScalarTypeConfig,
   ComposeUnionTypeConfig,
 } from "graphql-compose"
-import { GraphQLOutputType } from "graphql"
+import { GraphQLOutputType, GraphQLFieldConfigMap } from "graphql"
 
 export {
   default as Link,
