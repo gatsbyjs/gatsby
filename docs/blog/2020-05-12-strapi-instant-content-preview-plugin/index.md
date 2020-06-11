@@ -15,9 +15,9 @@ tags:
 
 Strapi is the #1 open source headless CMS frontend developers all over the world love. You can easily and quickly manage your content through an API and it's made entirely with Node & React. Gatsby developers will feel right at home in a Javascript environment that they know like the back of their hand.
 
-A lot of developers in the community are already familiar with setting up Gatsby with Strapi, and happy with how easy it is to combine the two. People really appreciate how [the Gatsby source plugin](https://www.gatsbyjs.org/packages/gatsby-source-strapi/) works great for easily and seamlessly pulling any Strapi content into any Gatsby application.
+A lot of developers in the community are already familiar with setting up Gatsby with Strapi, and happy with how easy it is to combine the two. People really appreciate how [the Gatsby source plugin](/packages/gatsby-source-strapi/) works great for easily and seamlessly pulling any Strapi content into any Gatsby application.
 
-However, with the arrival of [Gatsby Preview](<[https://www.gatsbyjs.com/preview/](https://www.gatsbyjs.com/preview/)>), things got even better between Strapi and Gatsby!
+However, with the arrival of [Gatsby Preview](https://www.gatsbyjs.com/preview/), things got even better between Strapi and Gatsby!
 
 Gatsby Preview gives you a live URL where you can see changes made in a CMS before publishing -- sort of like “hot reloading” but for content editing! To take maximum advantage of Preview, then, we shipped a new version of our original using [Strapi Webhooks](https://strapi.io/blog/webhooks) to instantly rebuild Gatsby applications on Gatsby Cloud as content changes. No manual rebuilds -- create, update or delete content and then instantly see what it really looks like to end users.
 
@@ -50,7 +50,7 @@ Now it's time to deploy your Gatsby app!
 
 ![https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/create-a-new-site.png](https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/create-a-new-site.png "Gatsby Cloud landing page with selected option")
 
-(Deploying your Gatsby site on Gatsby Cloud means builds are now faster than ever, thanks to Gatsby's brand new [Incremental Builds feature](https://www.gatsbyjs.org/blog/2020-04-22-announcing-incremental-builds/) for data changes!
+(Deploying your Gatsby site on Gatsby Cloud means builds are now faster than ever, thanks to Gatsby's brand new [Incremental Builds feature](/blog/2020-04-22-announcing-incremental-builds/) for data changes!
 
 2. When asked to select the repository you want to use:
 
@@ -62,9 +62,9 @@ Now it's time to deploy your Gatsby app!
 
 ![https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/skip.png](https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/skip.png "screen shot of sample cut and paste webhook url")
 
-4. Paste your Strapi `API_URL` for both of your Builds Environment variables and Preview Environment variables. That usually means pasting the url of your Strapi instances deployed on Heroku (eg: https://your-app.herokuapp.com)
+4. Paste your Strapi `API_URL` for both of your Builds Environment variables and Preview Environment variables. That usually means pasting the url of your Strapi instances deployed on Heroku (eg: `https://your-app.herokuapp.com`)
 
-_Note: Be sure to paste your Heroku url without the trailing slash (eg: "https://your-app.herokuapp.com" and not "https://your-app.herokuapp.com/")._
+_Note: Be sure to paste your Heroku url without the trailing slash (eg: `https://your-app.herokuapp.com` and not `https://your-app.herokuapp.com/`)._
 
 ![https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/env.png](https://raw.githubusercontent.com/strapi/strapi-starter-gatsby-blog/master/medias/env.png "screen shot of environment variables form")
 
