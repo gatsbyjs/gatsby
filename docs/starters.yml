@@ -1281,7 +1281,7 @@
     - Features a custom, accessible lightbox with gatsby-image
     - Styled with styled-components using CSS Grid
     - React Helmet for SEO
-- url: http://jackbravo.github.io/gatsby-starter-i18n-blog/
+- url: https://jackbravo.github.io/gatsby-starter-i18n-blog/
   repo: https://github.com/jackbravo/gatsby-starter-i18n-blog
   description: Same as official gatsby-starter-blog but with i18n support
   tags:
