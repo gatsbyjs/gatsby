@@ -34,7 +34,13 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
         "jsx-a11y/aria-proptypes": `warn`,
         "jsx-a11y/aria-role": `warn`,
         "jsx-a11y/aria-unsupported-elements": `warn`,
-        "jsx-a11y/autocomplete-valid": `warn`,
+        // TODO: It looks like the `autocomplete-valid` rule hasn't been published yet
+        // "jsx-a11y/autocomplete-valid": [
+        //   "warn",
+        //   {
+        //     inputComponents: [],
+        //   },
+        // ],
         "jsx-a11y/click-events-have-key-events": `warn`,
         "jsx-a11y/control-has-associated-label": [
           `warn`,
