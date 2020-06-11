@@ -1,4 +1,4 @@
-- url: https://ghost-balsa.draftbox.co/
+- url: https://ghost-balsa-preview.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
   tags:
@@ -46,8 +46,8 @@
     - Work page with blog type content management
     - Personal webiste to create content and put your portfolio items
     - Landing pages for your work items, not just links
-- url: https://gatsby-wordpress-libre.netlify.app/
-  repo: https://github.com/armada-inc/gatsby-wordpress-libre-starter
+- url: https://wp-libre-preview.draftbox.co/
+  repo: https://github.com/draftbox-co/gatsby-wordpress-libre-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
   tags:
     - Blog
@@ -5679,8 +5679,8 @@
     - Robots.txt
     - Sitemap
     - PWA
-- url: https://gatsby-attila.netlify.app/
-  repo: https://github.com/armada-inc/gatsby-attila-theme-starter
+- url: https://ghost-attila-preview.draftbox.co/
+  repo: https://github.com/draftbox-co/gatsby-attila-theme-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
   tags:
     - Blog
@@ -6293,7 +6293,7 @@
     - PurgeCSS support to remove unused styles
     - PostCSS including Autoprefixer
     - React Helmet for better SEO
-- url: https://wordpress-balsa.draftbox.co/
+- url: https://wp-balsa-preview.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-wordpress-balsa-starter
   description: A Gatsby starter for creating blogs from headless WordPress CMS.
   tags:
