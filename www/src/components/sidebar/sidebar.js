@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import Item from "./item"
 import ExpandAllButton from "./button-expand-all"
@@ -41,8 +39,7 @@ export function useSidebarContext() {
   return React.useContext(SidebarContext)
 }
 
-export default withI18n()(function Sidebar({
-  i18n,
+export default function Sidebar({
   title,
   closeSidebar,
   itemList,
@@ -123,7 +120,7 @@ export default withI18n()(function Sidebar({
   return (
     <SidebarContext.Provider value={context}>
       <section
-        aria-label={i18n._(t`Secondary Navigation`)}
+        aria-label="Secondary Navigation"
         id="SecondaryNavigation"
         className="docSearch-sidebar"
         sx={{ height: `100%` }}
@@ -153,6 +150,7 @@ export default withI18n()(function Sidebar({
             border: 0,
             display: `block`,
             overflowY: `auto`,
+            overscrollBehavior: `contain`,
             transition: t =>
               `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
             zIndex: 10,
@@ -206,4 +204,4 @@ export default withI18n()(function Sidebar({
       </section>
     </SidebarContext.Provider>
   )
-})
+}

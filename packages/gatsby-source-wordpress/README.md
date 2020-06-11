@@ -825,7 +825,7 @@ module.exports = {
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
 and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
 
-### Example with modyfing gatsby-source-wordpress normalizers
+### Example with modifying gatsby-source-wordpress normalizers
 
 ```javascript
 const dropUnusedMediaNormalizer = {

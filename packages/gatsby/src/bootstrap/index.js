@@ -16,7 +16,7 @@ import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { startPluginRunner } from "../redux/plugin-runner"
 const { store, emitter } = require(`../redux`)
 import { internalActions } from "../redux/actions"
-const loadPlugins = require(`./load-plugins`)
+const { loadPlugins } = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 import { getConfigFile } from "./get-config-file"

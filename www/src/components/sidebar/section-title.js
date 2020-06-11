@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { withI18n } from "@lingui/react"
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
 import ItemLink from "./item-link"
@@ -132,7 +131,7 @@ const TitleButton = ({ item, uid }) => {
 
 // A split title with a link that can be navigated to, and a button
 // that can expand it
-const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
+const SplitButton = ({ itemRef, item, uid }) => {
   const { getItemState, onSectionTitleClick } = useSidebarContext()
   const { isExpanded = false } = getItemState(item)
   return (
@@ -164,7 +163,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
       <button
         aria-controls={uid}
         aria-expanded={isExpanded}
-        aria-label={i18n._(item.title)}
+        aria-label={`${item.title} toggle`}
         sx={{
           ...styles.resetButton,
           bottom: 0,
@@ -182,7 +181,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
       </button>
     </span>
   )
-})
+}
 
 export default function SectionTitle({ itemRef, item, uid }) {
   const { disableAccordions } = useSidebarContext()
