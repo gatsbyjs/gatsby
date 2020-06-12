@@ -3,7 +3,7 @@ const { getTemplate } = require(`../get-template`)
 
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type CreatorsYaml implements Node {
+    type CreatorsYaml implements Node @dontInfer {
       name: String!
       type: String!
       description: String!
@@ -14,6 +14,11 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       for_hire: Boolean
       hiring: Boolean
       portfolio: Boolean
+      fields: CreatorsYamlFields!
+    }
+
+    type CreatorsYamlFields @dontInfer {
+      slug: String!
     }
   `)
 }

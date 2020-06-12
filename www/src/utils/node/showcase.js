@@ -4,7 +4,7 @@ const { getTemplate } = require(`../get-template`)
 
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type SitesYaml implements Node {
+    type SitesYaml implements Node @dontInfer {
       title: String!
       main_url: String!
       url: String!
@@ -15,6 +15,12 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       built_by_url: String
       description: String
       screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+      fields: SitesYamlFields!
+    }
+
+    type SitesYamlFields @dontInfer {
+      slug: String!
+      hasScreenshot: Boolean
     }
   `)
 }

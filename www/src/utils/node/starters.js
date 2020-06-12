@@ -28,13 +28,35 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
   : null
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type StartersYaml implements Node {
+    type StartersYaml implements Node @dontInfer {
       url: String!
       repo: String!
       description: String
       tags: [String!]
       features: [String!]
       screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+      fields: StartersYamlFields!
+    }
+
+    type StartersYamlFields @dontInfer {
+      featured: Boolean
+      hasScreenshot: Boolean
+      starterShowcase: StartersYamlFieldsStarterShowcase
+    }
+
+    type StartersYamlFieldsStarterShowcase @dontInfer {
+      slug: String!
+      stub: String
+      name: String
+      description: String
+      stars: Int
+      lastUpdated: String
+      owner: String
+      githubFullName: String
+      gatsbyMajorVersion: [[String]]
+      allDependencies: [[String]]
+      gatsbyDependencies: [[String]]
+      miscDependencies: [[String]]
     }
   `)
 }
