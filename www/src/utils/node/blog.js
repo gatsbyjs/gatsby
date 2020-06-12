@@ -9,6 +9,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type Mdx implements Node {
       frontmatter: Frontmatter
+      fields: MdxFields
     }
 
     type Frontmatter @dontInfer {
@@ -20,13 +21,21 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       tags: [String!]
       author: AuthorYaml @link
       twittercard: String
-      # TODO this was only used for one blog post; maybe it can be replaced with Image?
-      cover: File
+      publishedAt: String
+      cover: File # TODO this was only used for one blog post; maybe it can be replaced with Image?
       image: File
       imageAuthor: String
       imageAuthorLink: String
       imageTitle: String
       showImageInArticle: Boolean
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      section: String
+      released: Boolean
+      publishedAt: String
+      excerpt: String
     }
 
     type AuthorYaml implements Node @dontInfer {

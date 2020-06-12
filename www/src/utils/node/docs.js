@@ -39,13 +39,13 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type Mdx implements Node {
       frontmatter: Frontmatter
+      fields: MdxFields
     }
 
     type Frontmatter @dontInfer {
       title: String!
       description: String
       contentsHeading: String
-      publishedAt: String
       showTopLevelSignatures: Boolean
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
@@ -53,6 +53,13 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       issue: String
       jsdoc: [String!]
       apiCalls: String
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      anchor: String
+      section: String
+      locale: String
     }
   `)
 }
