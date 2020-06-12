@@ -28,6 +28,13 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       imageTitle: String
       showImageInArticle: Boolean
     }
+
+    type AuthorYaml @dontInfer {
+      id: String!
+      bio: String!
+      avatar: File
+      twitter: String
+    }
   `)
 }
 
