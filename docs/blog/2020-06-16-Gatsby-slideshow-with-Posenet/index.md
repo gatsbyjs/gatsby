@@ -2,7 +2,7 @@
 title: Presenting Without Sharing My Screen
 date: 2020-06-16
 author: Sam Larsen-Disney
-excerpt: “A Gatsby solution for crystal clear slides for everyone using minimal bandwidth + slide navigation using gestures.”
+excerpt: "A Gatsby solution for crystal clear slides for everyone, using minimal bandwidth and a cool bonus: slide navigation using gestures powered by Posenet.”
 tags:
   - community
   - themes
@@ -73,7 +73,7 @@ Another cool part to this is that your slides are hosted on a website. You can g
 
 _This was when I had a sudden idea: When I give a presentation, my slide decks are already hosted. Why don’t I just send people to the URL and let them “follow along” as I present?_
 
-This then takes the pressure of my bandwidth and instead pushes it off to each individual client. Yes, this means they have to download the slide assets but this load is far smaller than streaming video — everyone wins. It also gives me the ability to add far more interactive elements to my slides to keep interest from viewers.
+This takes the pressure off my bandwidth and instead pushes it off to each individual client. Yes, it means they have to download the slide assets, but this load is far smaller than streaming video — everyone wins. It also gives me the ability to add far more interactive elements to my slides to keep interest from viewers.
 
 ## Modifying `gatsby-theme-mdx-deck`
 
