@@ -9,7 +9,7 @@ import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
-import { Store } from "../.."
+import { Store, AnyAction } from "redux"
 import { Span } from "opentracing"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
@@ -25,6 +25,7 @@ import { ErrorMeta } from "gatsby-cli/lib/reporter/types"
 import { globalTracer } from "opentracing"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
+import { IGatsbyState } from "../redux/types"
 
 const tracer = globalTracer()
 
@@ -40,7 +41,11 @@ process.on(`unhandledRejection`, reason => {
 
 export async function initialize(
   context
-): Promise<{ store: Store; bootstrapSpan: Span; workerPool: JestWorker }> {
+): Promise<{
+  store: Store<IGatsbyState, AnyAction>
+  bootstrapSpan: Span
+  workerPool: JestWorker
+}> {
   const args = context.program
   const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)

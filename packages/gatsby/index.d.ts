@@ -2,6 +2,7 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
+import reporter from "gatsby-cli/lib/reporter"
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -22,10 +23,6 @@ export {
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
-
-import type reporter from "gatsby-cli/lib/reporter"
-
-export type Reporter = typeof reporter
 
 export const useStaticQuery: <TData = any>(query: any) => TData
 
@@ -1257,18 +1254,22 @@ export interface Actions {
   ): void
 }
 
-export type Store = ReduxStore<IGatsbyState>
+export interface Store {
+  dispatch: Function
+  subscribe: Function
+  getState: Function
+  replaceReducer: Function
+}
 
-type LogMessageType = (format: string) => void
-type LogErrorType = (errorMeta: string | Object, error?: Object) => void
+export type Reporter = typeof reporter
 
 export type ActivityTracker = {
   start(): () => void
   end(): () => void
   span: Object
   setStatus(status: string): void
-  panic: LogErrorType
-  panicOnBuild: LogErrorType
+  panic: (errorMeta: string | Object, error?: Object) => never
+  panicOnBuild: (errorMeta: string | Object, error?: Object) => void
 }
 
 export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {

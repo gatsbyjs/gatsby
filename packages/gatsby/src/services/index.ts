@@ -15,6 +15,8 @@ import { ServiceConfig } from "xstate"
 import { IBuildContext } from "./"
 import { writeOutRedirects } from "./write-out-redirects"
 import { postBootstrap } from "./post-bootstrap"
+import { startWebpackServer } from "./start-webpack-server"
+
 export * from "./types"
 export {
   customizeSchema,
@@ -32,6 +34,7 @@ export {
   waitUntilAllJobsComplete,
   postBootstrap,
   writeOutRedirects,
+  startWebpackServer,
 }
 
 export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
@@ -50,4 +53,5 @@ export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {
   waitUntilAllJobsComplete,
   postBootstrap,
   writeOutRedirects,
+  startWebpackServer,
 }

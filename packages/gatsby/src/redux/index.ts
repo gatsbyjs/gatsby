@@ -27,8 +27,9 @@ export const readState = (): IGatsbyState => {
         if (!state.nodesByType.has(type)) {
           state.nodesByType.set(type, new Map())
         }
-        // eslint-disable-next-line no-unused-expressions
-        state.nodesByType.get(type)?.set(node.id, node)
+        // The `.has` and `.set` calls above make this safe
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        state.nodesByType.get(type)!.set(node.id, node)
       })
     }
 
@@ -57,6 +58,8 @@ const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
+// We're using the inferred type here becauise manually typing it would be very complicated
+// and error-prone. Instead we'll make use of the createStore return value, and export that type.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const configureStore = (initialState: IGatsbyState) =>
   createStore(

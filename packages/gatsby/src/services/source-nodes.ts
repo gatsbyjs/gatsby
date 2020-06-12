@@ -2,6 +2,7 @@ import { IBuildContext } from "./"
 import sourceNodesAndGc from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
 import { findChangedPages } from "../utils/check-for-changed-pages"
+import { IGatsbyPage } from "../redux/types"
 
 export async function sourceNodes({
   parentSpan,
@@ -13,14 +14,13 @@ export async function sourceNodes({
 } | void> {
   if (!store) {
     reporter.panic(`No redux store`)
-    return void 0
   }
   const activity = reporter.activityTimer(`source and transform nodes`, {
     parentSpan,
   })
   console.log({ webhookBody })
   activity.start()
-  const currentPages = new Map(store.getState().pages)
+  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
   await sourceNodesAndGc({
     parentSpan: activity.span,
     deferNodeMutation: !!(webhookBody && Object.keys(webhookBody).length),

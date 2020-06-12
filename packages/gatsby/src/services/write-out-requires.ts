@@ -7,7 +7,7 @@ export async function writeOutRequires({
   parentSpan,
 }: Partial<IBuildContext>): Promise<void> {
   if (!store) {
-    throw new Error(`Missing store`)
+    reporter.panic(`No redux store`)
   }
   // Write out files.
   const activity = reporter.activityTimer(`write out requires`, {

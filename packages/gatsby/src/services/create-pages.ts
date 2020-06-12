@@ -41,7 +41,7 @@ export async function createPages({
     `Now have ${store.getState().nodes.size} nodes with ${
       store.getState().nodesByType.size
     } types, and ${
-      store.getState().nodesByType?.get(`SitePage`).size
+      store.getState().nodesByType?.get(`SitePage`)?.size
     } SitePage nodes`
   )
   activity.end()

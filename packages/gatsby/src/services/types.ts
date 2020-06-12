@@ -5,9 +5,10 @@ import { Span } from "opentracing"
 import { Express } from "express"
 import JestWorker from "jest-worker"
 import { IProgram } from "../commands/types"
-import { Store } from "../.."
 import { Runner } from "../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../query/graphql-runner"
+import { Store, AnyAction } from "redux"
+import { IGatsbyState } from "../redux/types"
 
 export interface IGroupedQueryIds {
   pageQueryIds: string[]
@@ -29,7 +30,7 @@ export interface IBuildContext {
   runningBatch: IMutationAction[]
   compiler?: Compiler
   websocketManager?: WebsocketManager
-  store?: Store
+  store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
   bootstrapGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
