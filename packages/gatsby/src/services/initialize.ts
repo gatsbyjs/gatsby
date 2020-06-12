@@ -26,6 +26,7 @@ import { globalTracer } from "opentracing"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
+import { IBuildContext } from "./types"
 
 const tracer = globalTracer()
 
@@ -40,14 +41,19 @@ process.on(`unhandledRejection`, reason => {
 // require(`../bootstrap/log-line-function`)
 
 export async function initialize(
-  context
+  context: IBuildContext
 ): Promise<{
   store: Store<IGatsbyState, AnyAction>
   bootstrapSpan: Span
   workerPool: JestWorker
 }> {
   const args = context.program
-  const spanArgs = args.parentSpan ? { childOf: args.parentSpan } : {}
+
+  if (!args) {
+    reporter.panic(`Missing program args`)
+  }
+
+  const spanArgs = context.parentSpan ? { childOf: context.parentSpan } : {}
   const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
   /* Time for a little story...
