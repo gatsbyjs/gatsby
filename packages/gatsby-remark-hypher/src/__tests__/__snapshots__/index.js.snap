@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-hypher applies hyphenation to text nodes 1`] = `"This is a ridicu­lously long word."`;
+
+exports[`gatsby-remark-hypher does not apply hyphenation to non text nodes 1`] = `"This is a "`;
+
+exports[`gatsby-remark-hypher does not apply hyphenation to non text nodes 2`] = `" long word."`;

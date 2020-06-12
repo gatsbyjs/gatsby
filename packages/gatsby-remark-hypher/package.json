@@ -1,0 +1,46 @@
+{
+  "name": "gatsby-remark-hypher",
+  "description": "Use hypher to add custom hyphenation behaviour to markdown",
+  "version": "1.0.0",
+  "author": "Lau Siaw Young <sy@siawyoung.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "hyphenation.en-us": "^0.2.1",
+    "hypher": "^0.2.5",
+    "unist-util-visit": "^1.4.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "babel-preset-gatsby-package": "^0.4.4",
+    "cross-env": "^5.2.1"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-hypher#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "hypher",
+    "hyphenation"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-remark-hypher"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  }
+}
