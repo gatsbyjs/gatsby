@@ -76,6 +76,14 @@ exports.onPreBootstrap = (
   })
 }
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Screenshot implements Node @dontInfer {
+      screenshotFile: File!
+    }
+  `)
+}
+
 exports.onCreateNode = async (
   { node, actions, store, cache, createNodeId, createContentDigest, getCache },
   pluginOptions
