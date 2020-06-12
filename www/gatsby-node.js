@@ -53,7 +53,6 @@ exports.onPostBuild = () => {
   )
 }
 
-// XXX this should probably be a plugin or something.
 exports.sourceNodes = async helpers => {
   for (const section of sections) {
     if (section.sourceNodes) {
@@ -66,16 +65,9 @@ exports.sourceNodes = async helpers => {
     createContentDigest,
   } = helpers
 
-  /*
-   * NOTE: This _only_ defines the schema we currently query for. If anything in
-   * the query at `src/pages/contributing/events.js` changes, we need to make
-   * sure these types are updated as well.
-   *
-   * But why?! Why would I do something this fragile?
-   *
-   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
-   * lazy to make upstream fixes...
-   */
+  // Explicitly define Airtable types so that queries still work
+  // when there are no events.
+  // TODO make upstream change to gatsby-source-airtable
   createTypes(/* GraphQL */ `
     type Airtable implements Node {
       id: ID!
