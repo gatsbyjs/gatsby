@@ -24,4 +24,36 @@ exports.createPages = async ({ actions }) => {
   }
 }
 
-exports.onCreateNode = () => {}
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type GatsbyJamstackSpecsCsv implements Node @dontInfer {
+      Category: String
+      Subcategory: String
+      Feature: String
+      Gatsby: String
+      Nextjs: String
+      Jekyll: String
+      Hugo: String
+      Nuxtjs: String
+      Description: String
+    }
+
+    type GatsbyCmsSpecsCsv implements Node @dontInfer {
+      Category: String
+      Subcategory: String
+      Feature: String
+      Gatsby: String
+      WordPress: String
+      Drupal: String
+      Description: String
+    }
+
+    type GatsbyFeaturesSpecsCsv implements Node @dontInfer {
+      Category: String
+      Gatsby: String
+      Jamstack: String
+      Cms: String
+      Description: String
+    }
+  `)
+}
