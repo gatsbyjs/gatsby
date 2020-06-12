@@ -4,7 +4,8 @@ import { Runner } from "../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
-
+import { Express } from "express"
+import JestWorker from "jest-worker"
 export interface IGroupedQueryIds {
   pageQueryIds: string[]
   staticQueryIds: string[]
@@ -23,4 +24,6 @@ export interface IBuildContext {
   queryIds?: IGroupedQueryIds
   webhookBody?: Record<string, unknown>
   refresh?: boolean
+  workerPool?: JestWorker
+  app?: Express
 }

@@ -10,14 +10,13 @@ import {
   createPagesStatefully,
   extractQueries,
 } from "../services"
-import { Runner } from "./create-graphql-runner"
 import { writeOutRedirects } from "../services/write-out-redirects"
 import { postBootstrap } from "../services/post-bootstrap"
 import { rebuildWithSitePage } from "../schema"
 
 export async function bootstrap(
   initialContext: IBuildContext
-): Promise<{ bootstrapGraphQLFunction: Runner }> {
+): Promise<IBuildContext> {
   const context: IBuildContext = {
     ...initialContext,
     ...(await initialize(initialContext)),
@@ -46,5 +45,5 @@ export async function bootstrap(
 
   await postBootstrap(context)
 
-  return { bootstrapGraphQLFunction }
+  return context
 }
