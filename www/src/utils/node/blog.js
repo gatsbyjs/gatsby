@@ -29,7 +29,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       showImageInArticle: Boolean
     }
 
-    type AuthorYaml implements Node @dontInfer {
+    type AuthorYaml implements Node {
       id: String!
       bio: String!
       avatar: File
