@@ -35,7 +35,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       description: String
       tags: [String!]
       features: [String!]
-      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+      childScreenshot: Screenshot # added by gatsby-transformer-screenshot
       fields: StartersYamlFields!
     }
 

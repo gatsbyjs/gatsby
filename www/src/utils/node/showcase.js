@@ -14,7 +14,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       built_by: String
       built_by_url: String
       description: String
-      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+      childScreenshot: Screenshot # added by gatsby-transformer-screenshot
       fields: SitesYamlFields!
     }
 
