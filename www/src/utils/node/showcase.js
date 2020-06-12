@@ -25,7 +25,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
 
     # TODO this should be in gatsby-transformer-screenshot
     type Screenshot implements Node @dontInfer {
-      screenshotFile: File!
+      screenshotFile: File
     }
   `)
 }
