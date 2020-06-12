@@ -2,7 +2,7 @@
 title: Presenting Without Sharing My Screen
 date: 2020-06-16
 author: Sam Larsen-Disney
-excerpt: "A Gatsby solution for crystal clear slides for everyone, using minimal bandwidth and a cool bonus: slide navigation using gestures powered by Posenet.”
+excerpt: A Gatsby solution for crystal clear slides for everyone, using minimal bandwidth and cool bonus slide navigation using gestures powered by Posenet.
 tags:
   - community
   - themes
