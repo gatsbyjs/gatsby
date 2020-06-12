@@ -59,7 +59,7 @@ export async function startWebpackServer({
       const urls = prepareUrls(
         program.ssl ? `https` : `http`,
         program.host,
-        program.port
+        program.proxyPort
       )
       const isSuccessful = !messages.errors.length
 
