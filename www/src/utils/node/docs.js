@@ -70,7 +70,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const docsTemplate = getTemplate(`template-docs-markdown`)
   const apiTemplate = getTemplate(`template-api-markdown`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allMdx(
         limit: 10000

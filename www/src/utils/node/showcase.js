@@ -35,7 +35,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const showcaseTemplate = getTemplate(`template-showcase-details`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allSitesYaml(filter: { main_url: { ne: null } }) {
         nodes {

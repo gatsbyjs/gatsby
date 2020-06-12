@@ -67,7 +67,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const starterTemplate = getTemplate(`template-starter-page`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allStartersYaml {
         nodes {
@@ -115,7 +115,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
   githubApiClient
     .request(
-      `
+      /* GraphQL */ `
     query {
       repository(owner:"${owner}", name:"${repo}") {
         name

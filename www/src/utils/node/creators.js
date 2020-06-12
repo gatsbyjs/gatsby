@@ -28,7 +28,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const creatorPageTemplate = getTemplate(`template-creator-details`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allCreatorsYaml {
         nodes {

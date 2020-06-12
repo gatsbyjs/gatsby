@@ -103,7 +103,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const tagTemplate = getTemplate(`tags`)
   const contributorPageTemplate = getTemplate(`template-contributor-page`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allAuthorYaml {
         nodes {
