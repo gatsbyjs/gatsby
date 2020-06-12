@@ -50,7 +50,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
       overview: Boolean
-      issue: Int
+      issue: String
       jsdoc: [String!]
       apiCalls: String
     }
