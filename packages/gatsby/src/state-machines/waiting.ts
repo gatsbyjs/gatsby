@@ -1,5 +1,5 @@
-import { MachineConfig, assign } from "xstate"
-import { IBuildContext } from "./develop"
+import { MachineConfig, assign, DoneInvokeEvent } from "xstate"
+import { IBuildContext } from "../services"
 import { callRealApi } from "./actions"
 
 const NODE_MUTATION_BATCH_SIZE = 100
@@ -55,7 +55,7 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
         id: `refreshing`,
         onDone: {
           target: `#initializingDataLayer`,
-          actions: assign<IBuildContext>({
+          actions: assign<IBuildContext, DoneInvokeEvent<any>>({
             refresh: true,
           }),
         },
@@ -120,10 +120,11 @@ export const idleStates: MachineConfig<IBuildContext, any, any> = {
           store,
         }: Partial<IBuildContext>): Promise<any> =>
           // Consume the entire batch and run actions
+          runningBatch &&
           Promise.all(runningBatch.map(payload => callRealApi(payload, store))),
         onDone: {
           target: `#initializingDataLayer.buildingSchema`,
-          actions: assign<IBuildContext>({
+          actions: assign<IBuildContext, DoneInvokeEvent<any>>({
             runningBatch: [],
           }),
         },

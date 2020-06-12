@@ -14,20 +14,25 @@ import { writeOutRedirects } from "../services/write-out-redirects"
 import { postBootstrap } from "../services/post-bootstrap"
 import { rebuildWithSitePage } from "../schema"
 
-export async function bootstrap(
-  initialContext: IBuildContext
-): Promise<IBuildContext> {
-  const context: IBuildContext = {
+export async function bootstrap<T extends Partial<IBuildContext>>(
+  initialContext: T
+): Promise<
+  T &
+    Required<
+      Pick<IBuildContext, "store" | "bootstrapGraphQLFunction" | "workerPool">
+    >
+> {
+  const bootstrapContext = {
     ...initialContext,
     ...(await initialize(initialContext)),
   }
 
-  await customizeSchema(context)
-  await sourceNodes(context)
+  await customizeSchema(bootstrapContext)
+  await sourceNodes(bootstrapContext)
 
-  const { bootstrapGraphQLFunction } = await buildSchema(context)
+  const { bootstrapGraphQLFunction } = await buildSchema(bootstrapContext)
 
-  context.bootstrapGraphQLFunction = bootstrapGraphQLFunction
+  const context = { ...bootstrapContext, bootstrapGraphQLFunction }
 
   await createPages(context)
 

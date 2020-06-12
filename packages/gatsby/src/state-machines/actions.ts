@@ -130,10 +130,12 @@ export const assignBootstrap: BuildMachineAction = assign<
 
 export const resetGraphQlRunner = assign<IBuildContext>({
   graphqlRunner: ({ store, program }) =>
-    new GraphQLRunner(store, {
-      collectStats: true,
-      graphqlTracing: program?.graphqlTracing,
-    }),
+    store
+      ? new GraphQLRunner(store, {
+          collectStats: true,
+          graphqlTracing: program?.graphqlTracing,
+        })
+      : undefined,
 })
 
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {

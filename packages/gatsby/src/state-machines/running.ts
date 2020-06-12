@@ -1,4 +1,4 @@
-import { IBuildContext } from "./develop"
+import { IBuildContext } from "../services"
 import { MachineConfig } from "xstate"
 
 import { dataLayerStates } from "./data-layer"

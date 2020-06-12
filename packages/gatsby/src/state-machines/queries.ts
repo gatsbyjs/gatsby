@@ -1,5 +1,5 @@
 import { MachineConfig, DoneInvokeEvent, assign } from "xstate"
-import { IBuildContext } from "./develop"
+import { IBuildContext } from "../services"
 import { runMutationAndMarkDirty, onError } from "./shared-transition-configs"
 import { log } from "xstate/lib/actions"
 

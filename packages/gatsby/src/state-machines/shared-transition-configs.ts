@@ -1,5 +1,5 @@
 import { TransitionConfig, AnyEventObject, DoneInvokeEvent } from "xstate"
-import { IBuildContext } from "./develop"
+import { IBuildContext } from "../services"
 
 type BuildTransition = TransitionConfig<IBuildContext, AnyEventObject>
 
