@@ -7,13 +7,13 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       name: String!
       type: String!
       description: String!
-      location: String!
-      website: String!
-      github: String!
+      location: String
+      website: String
+      github: String
       image: File!
-      for_hire: Boolean!
+      for_hire: Boolean
       hiring: Boolean
-      portfolio: Boolean!
+      portfolio: Boolean
     }
   `)
 }
