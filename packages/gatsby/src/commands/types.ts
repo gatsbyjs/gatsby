@@ -21,6 +21,7 @@ export interface IProgram {
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+  graphqlTracing?: boolean
 }
 
 // @deprecated

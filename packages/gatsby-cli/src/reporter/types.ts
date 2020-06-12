@@ -10,3 +10,4 @@ export type ErrorMeta =
     }
   | string
   | Error
+  | ErrorMeta[]

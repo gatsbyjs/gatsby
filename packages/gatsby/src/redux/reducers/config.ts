@@ -1,6 +1,6 @@
 import { IGatsbyConfig, ISetSiteConfig } from "../types"
 
-module.exports = (
+export const configReducer = (
   state: IGatsbyConfig = {},
   action: ISetSiteConfig
 ): IGatsbyConfig => {
