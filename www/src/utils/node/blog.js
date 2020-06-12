@@ -20,6 +20,8 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       tags: [String!]
       author: AuthorYaml @link
       twittercard: String
+      # TODO this was only used for one blog post; maybe it can be replaced with Image?
+      cover: File
       image: File
       imageAuthor: String
       imageAuthorLink: String
