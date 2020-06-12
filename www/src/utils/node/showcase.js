@@ -22,6 +22,11 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       slug: String!
       hasScreenshot: Boolean
     }
+
+    # TODO this should be in gatsby-transformer-screenshot
+    type Screenshot implements Node @dontInfer {
+      screenshotFile: File!
+    }
   `)
 }
 
