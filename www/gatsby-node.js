@@ -48,10 +48,17 @@ exports.onPostBuild = () => {
 }
 
 // XXX this should probably be a plugin or something.
-exports.sourceNodes = async ({
-  actions: { createTypes, createNode },
-  createContentDigest,
-}) => {
+exports.sourceNodes = async helpers => {
+  for (const section of sections) {
+    if (section.sourceNodes) {
+      section.sourceNodes(helpers)
+    }
+  }
+
+  const {
+    actions: { createTypes, createNode },
+    createContentDigest,
+  } = helpers
   /*
    * NOTE: This _only_ defines the schema we currently query for. If anything in
    * the query at `src/pages/contributing/events.js` changes, we need to make

@@ -5,6 +5,30 @@ const url = require(`url`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: Frontmatter
+    }
+
+    type Frontmatter @dontInfer {
+      title: String!
+      seoTitle: String
+      draft: Boolean
+      date: Date @dateformat
+      canonicalLink: String
+      tags: [String!]
+      author: AuthorYaml @link
+      twittercard: String
+      image: File
+      imageAuthor: String
+      imageAuthorLink: String
+      imageTitle: String
+      showImageInArticle: Boolean
+    }
+  `)
+}
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   if (node.internal.type === `AuthorYaml`) {

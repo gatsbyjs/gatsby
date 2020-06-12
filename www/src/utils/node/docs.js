@@ -35,6 +35,28 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: Frontmatter
+    }
+
+    type Frontmatter @dontInfer {
+      title: String!
+      description: String
+      contentsHeading: String
+      publishedAt: String
+      showTopLevelSignatures: Boolean
+      disableTableOfContents: Boolean
+      tableOfContentsDepth: Int
+      overview: Boolean
+      issue: Int
+      jsdoc: [String!]
+      apiCalls: String
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
