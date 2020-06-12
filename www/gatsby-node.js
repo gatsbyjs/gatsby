@@ -36,8 +36,14 @@ exports.createPages = async helpers => {
 }
 
 // Create slugs for files, set released status for blog posts.
-exports.onCreateNode = helpers => {
-  sections.forEach(section => section.onCreateNode(helpers))
+exports.onCreateNode = async helpers => {
+  await Promise.all(
+    sections.map(section => {
+      if (section.onCreateNode) {
+        section.onCreateNode(helpers)
+      }
+    })
+  )
 }
 
 exports.onPostBuild = () => {
