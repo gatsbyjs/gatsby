@@ -1,10 +1,10 @@
-const visit = require("unist-util-visit")
-const Hypher = require("hypher")
+const visit = require(`unist-util-visit`)
+const Hypher = require(`hypher`)
 
 module.exports = ({ markdownAST }, pluginOptions = {}) => {
   const lang = pluginOptions.language
     ? pluginOptions.language
-    : require("hyphenation.en-us")
+    : require(`hyphenation.en-us`)
   if (pluginOptions.leftMin) {
     lang.leftmin = pluginOptions.leftMin
   }
