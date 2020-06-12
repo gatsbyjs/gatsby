@@ -2,6 +2,23 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const { getTemplate } = require(`../get-template`)
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type SitesYaml implements Node @dontInfer {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 

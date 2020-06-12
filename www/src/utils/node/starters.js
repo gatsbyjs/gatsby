@@ -26,6 +26,18 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
       },
     })
   : null
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type StartersYaml implements Node @dontInfer {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
+    }
+  `)
+}
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions

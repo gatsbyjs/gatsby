@@ -1,6 +1,23 @@
 const slugify = require(`slugify`)
 const { getTemplate } = require(`../get-template`)
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type CreatorsYaml implements Node @dontInfer {
+      name: String!
+      type: String!
+      description: String!
+      location: String!
+      website: String!
+      github: String!
+      image: File!
+      for_hire: Boolean!
+      hiring: Boolean
+      portfolio: Boolean!
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
