@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
+import { Fragment } from "react"
 import { graphql } from "gatsby"
 import { MdCreate as EditIcon } from "react-icons/md"
 
 export default function MarkdownPageFooter(props) {
   return (
-    <>
+    <Fragment>
       {props.page && (
         <div
           sx={{
@@ -22,7 +22,7 @@ export default function MarkdownPageFooter(props) {
               props.packagePage ? `packages` : `docs`
             }/${props.page ? props.page.parent.relativePath : ``}`}
           >
-            <EditIcon sx={{ marginRight: 2 }} /> Edit this page on GitHub
+            <EditIcon sx={{ mr: 2 }} /> Edit this page on GitHub
           </a>
           {props.page?.parent?.fields?.gitLogLatestDate && (
             <span sx={{ color: `textMuted`, fontSize: 1 }}>
@@ -34,7 +34,7 @@ export default function MarkdownPageFooter(props) {
           )}
         </div>
       )}
-    </>
+    </Fragment>
   )
 }
 
