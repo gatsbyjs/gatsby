@@ -10934,7 +10934,7 @@
 - title: Personal Website of Suganthan Mohanadasan
   main_url: https://suganthan.com/
   description: >
-    Suganthan is  digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and TailwindCSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
+    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and TailwindCSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
   categories:
     - Blog
     - Business
