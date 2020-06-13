@@ -340,7 +340,7 @@ PoseNet uses a trained model to take an image and make an attempt at guessing th
 
 Being a magician! 🎩
 
-It can be implemented relatively easily (code borrowed from [Kirsten Lindsmith's "PoseNet for React" repo on Github](https://github.com/kirstenlindsmith/PoseNet_React/blob/master/client/components/Camera.js)):
+It can be implemented relatively easily (code borrowed from [Kirsten Lindsmith's "PoseNet for React" repo on GitHub](https://github.com/kirstenlindsmith/PoseNet_React/blob/master/client/components/Camera.js)):
 
 ```jsx
 class PoseNet extends Component {
