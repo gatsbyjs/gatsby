@@ -449,6 +449,6 @@ useEffect(() => {
 }, [poses])
 ```
 
-## That's All Folks!
+## That's all Folks!
 
 I hope you have enjoyed this little experiment. If you have questions or want to join me on some of my other adventures you can find me at [sld.codes](https://sld.codes/).
