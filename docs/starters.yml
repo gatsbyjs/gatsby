@@ -6660,3 +6660,13 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+ - url: http://gatsby-starter-dropbox-workflow.netlify.app/
+   repo: https://github.com/niklas-may/gatsby-starter-dropbox-workflow
+   description: Build your site from data hosted on Dropbox. Deploy new content with drag-and-drop, directly from your file system.
+   tags:
+    - Dropbox
+    - Netlify
+    - CMS
+   features:
+    - Deploy from local file system with drag-and-drop
+    - Clean slate with little extra code
