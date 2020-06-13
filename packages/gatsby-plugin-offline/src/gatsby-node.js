@@ -162,7 +162,9 @@ exports.onPostBuild = (
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
-  const idbKeyValVersioned = `idb-keyval-${require("idb-keyval/package.json").version}-iife.min.js`
+  const idbKeyValVersioned = `idb-keyval-${
+    require(`idb-keyval/package.json`).version
+  }-iife.min.js`
   const idbKeyvalDest = `public/${idbKeyValVersioned}`
   fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
 
@@ -181,16 +183,19 @@ exports.onPostBuild = (
           )
         fs.writeFileSync(swDest, swText)
       }
-      
-      const prependIdbKeyValVersionedImport = [
-        `/* global importScripts, workbox, idbKeyval */`,
-        `importScripts(\`${idbKeyValVersioned}\`)`,
-      ].join(`\n\n`) + `\n\n`
 
-      const swAppend = prependIdbKeyValVersionedImport + fs
-        .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
-        .replace(/%pathPrefix%/g, pathPrefix)
-        .replace(/%appFile%/g, appFile)
+      const prependIdbKeyValVersionedImport =
+        [
+          `/* global importScripts, workbox, idbKeyval */`,
+          `importScripts(\`${idbKeyValVersioned}\`)`,
+        ].join(`\n\n`) + `\n\n`
+
+      const swAppend =
+        prependIdbKeyValVersionedImport +
+        fs
+          .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
+          .replace(/%pathPrefix%/g, pathPrefix)
+          .replace(/%appFile%/g, appFile)
 
       fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
 
