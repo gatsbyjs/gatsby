@@ -140,6 +140,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-plugin-react-helmet.mdx`,
     },
     {
+      label: `Add Github Pages deployment with Travis`,
+      value: `travis-deploy-github-pages.mdx`,
+    },
+    {
       label: `Add Headless WordPress integration`,
       value: `wordpress.mdx`,
     },
@@ -158,6 +162,10 @@ const RecipesList = ({ setRecipe }) => {
     {
       label: `Add Preact`,
       value: `preact.mdx`,
+    },
+    {
+      label: `Add GitLab CI/CD`,
+      value: `gitlab-ci-cd.mdx`,
     },
   ]
 
