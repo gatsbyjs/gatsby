@@ -6662,7 +6662,7 @@
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
 - url: https://adityaketkar.netlify.app/
   repo: https://github.com/adityaketkar/circle-packing-personal-homepage
-  description:  A Customizable Personal-Website Template, Ready to Deploy in 10 mins! 
+  description: A Customizable Personal-Website Template, Ready to Deploy in 10 mins!
   tags:
     - Landing Page
     - Onepage
