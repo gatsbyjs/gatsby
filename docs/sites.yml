@@ -10931,11 +10931,11 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
-  - title: JAMstack Storefront
+- title: JAMstack Storefront
   main_url: https://jamstackstorefront.com/
   url: https://jamstackstorefront.com/
   description: >
-    Lightning Fast Shopify Storefronts at a fraction of the cost
+  Lightning Fast Shopify Storefronts at a fraction of the cost.
   categories:
     - E-commerce
     - Agency
