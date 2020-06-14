@@ -1449,7 +1449,6 @@ paintDrip
 Palantir
 parallelize
 parallelizing
-Parallelizing
 parallelUniversesSvg
 Params
 Pardot
@@ -1494,7 +1493,6 @@ podcasters
 pogo
 poject
 PokéAPI
-PokéAPI
 Pokémon
 polyfill
 polyfilling
@@ -1505,7 +1503,6 @@ popNodeQueries
 Porfírio
 PoseNet
 Posnick
-postcss
 PostCSS
 postcss-loader
 Postgres
@@ -1624,7 +1621,6 @@ Queryable
 querying-data-with-graphql
 quickstart
 Quickstart
-Raae
 Raae
 Rahić
 Rascia
@@ -1937,12 +1933,10 @@ terrabytes
 Terraform
 test-repo
 theatre
-Theme-UI
 themeable
 ThemeForest
 ThemeProvider
 themer
-ThemeUI
 theming
 Theming
 themself
@@ -2162,8 +2156,6 @@ with-navigation2
 Woah
 WooCommerce
 Woodworth
-Wordpress
-wordpressSiteMetadata
 Workbox
 workspaces
 wp-graphql
@@ -2189,7 +2181,6 @@ xyz
 YAML
 Yandex
 yay
-yet-another-SaaS
 Yotpo
 Youfit
 yourSite

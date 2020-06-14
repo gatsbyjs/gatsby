@@ -11,9 +11,9 @@ Recipes are run from the CLI and automate common tasks like creating pages and l
 
 Gatsby ships with a number of default recipes and it's easy to create your own for use on your sites. Recipes allow you to install NPM packages, add Gatsby plugins, generate pages and other code. Recipes are written using Markdown and React components.
 
-To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding TypeScript, ThemeUI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
+To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding TypeScript, Theme UI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
 
-**Watch me add [ThemeUI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
+**Watch me add [Theme UI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./gatsby-recipes-theme-ui.mp4" />
