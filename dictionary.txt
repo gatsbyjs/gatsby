@@ -215,7 +215,6 @@ baseGithub
 basepath
 baseUrl
 Başlangıç
-batchGet
 Bazaarvoice
 Bazel
 Behance
@@ -227,7 +226,7 @@ Benns
 Berners-Lee
 Berriman
 Besties
-better-sqlite's
+better-sqlite
 Bhagwat
 BigCommerce
 bigtime
