@@ -13,7 +13,7 @@ import EmailCaptureForm from "@components/email-capture-form"
 
 We’re kicking off this “100 Days” challenge on January 1st, so why not start the year with a Gatsby project?
 
-Udemy named Gatsby [the #1 emerging tech skill](https://www.cnbc.com/2019/12/02/10-hottest-tech-skills-that-could-pay-off-most-in-2020-says-new-report.html) for 2020. We think that's because using Gatsby doesn't just give you a highly performant website, but [learning the framework](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career/) can help you master [React](/docs/glossary/react/), [NodeJS](/docs/glossary/node/), [GraphQL](/docs/glossary/graphql/), and other modern web technologies.
+Udemy named Gatsby [the #1 emerging tech skill](https://www.cnbc.com/2019/12/02/10-hottest-tech-skills-that-could-pay-off-most-in-2020-says-new-report.html) for 2020. We think that's because using Gatsby doesn't just give you a highly performant website, but [learning the framework](/blog/2019-05-03-how-gatsby-helped-jump-start-my-engineering-career/) can help you master [React](/docs/glossary/react/), [Node.js](/docs/glossary/node/), [GraphQL](/docs/glossary/graphql/), and other modern web technologies.
 
 Register below to join the #100DaysOfGatsby coding challenge!
 

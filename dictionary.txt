@@ -1338,7 +1338,6 @@ no-brainer
 nodeId
 nodeID
 NodeID
-NodeJS
 nodemailer
 NodeSchool
 nodesPromise

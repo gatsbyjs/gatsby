@@ -1,22 +1,29 @@
+/**
+ * Updates `dictionary.txt` with new words that appear in the docs text.
+ * These new words can be checked for misspellings using the Git diffs.
+ */
 const { execSync } = require(`child_process`)
 const fs = require(`fs`)
 
-const oldWords = fs.readFileSync(`./dictionary.txt`, `utf-8`).split(`\n`)
+// Get our current list of words
+const words = new Set(fs.readFileSync(`./dictionary.txt`, `utf-8`).split(`\n`))
 
-let errors
+// Run remark and track all "spelling errors"
+let matches = []
 try {
   execSync(`yarn lint:docs`, { encoding: `utf-8` })
 } catch (e) {
-  errors = e.stderr
+  matches = (e.stderr || ``).matchAll(/`(.*)` is misspelt/g)
 }
-const matches = errors.matchAll(/`(.*)` is misspelt/g)
 
-const newWords = new Set()
+// Add all unknown words to our list of words
 for (const match of matches) {
-  newWords.add(match[1])
+  words.add(match[1])
 }
 
-const words = [...oldWords, ...newWords]
-words.sort((a, b) => a.localeCompare(b))
+const wordList = [...words]
+// Sort in alphabetical order for convenience
+wordList.sort((a, b) => a.localeCompare(b))
 
-fs.writeFileSync(`./dictionary.txt`, words.join(`\n`))
+// Write back to the dictionary file
+fs.writeFileSync(`./dictionary.txt`, wordList.join(`\n`))
