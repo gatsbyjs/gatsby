@@ -31,7 +31,7 @@ After having spent a couple weeks of evenings after work hammering away at this 
 
 ### Get started right away
 
-Because I know you might not be as obsessed with creating beautiful page transitions as myself, I created another component called AniLink which wraps around TransitionLink to provide some default transitions. This component offers four transitions; paintDrip, swipe, cover, and fade. Getting started is only a few steps: install TransitionLink, import AniLink to your pages, and set a prop or two to customize.
+Because I know you might not be as obsessed with creating beautiful page transitions as myself, I created another component called AniLink which wraps around TransitionLink to provide some default transitions. This component offers four transitions; `paintDrip`, `swipe`, `cover`, and `fade`. Getting started is only a few steps: install TransitionLink, import AniLink to your pages, and set a prop or two to customize.
 
 ```jsx
 <AniLink fade to="page-2">
@@ -126,7 +126,7 @@ Here's an example of a more complicated TransitionLink using [GSAP](https://gree
 </TransitionLink>
 ```
 
-The animation code for `this.createRipple` would be a bit much to copy here but you can check it out on the [TransitionLink GitHub](https://github.com/TylerBarnes/gatsby-plugin-transition-link/blob/master/src/AniLink/PaintDrip.js). If you'd like you can also try it out with AniLink's paintDrip transition (check the [AniLink docs](https://transitionlink.tylerbarnes.ca/docs/anilink/) for usage).
+The animation code for `this.createRipple` would be a bit much to copy here but you can check it out on the [TransitionLink GitHub](https://github.com/TylerBarnes/gatsby-plugin-transition-link/blob/master/src/AniLink/PaintDrip.js). If you'd like you can also try it out with AniLink's `paintDrip` transition (check the [AniLink docs](https://transitionlink.tylerbarnes.ca/docs/anilink/) for usage).
 
 As you can see, TransitionLink offers quite a wide variety of control for page transitions! You're able to set the length, delay, state, and a trigger function for both entering and exiting pages, allowing you to use both declarative and imperative animations and as many transitions as you need.
 
