@@ -179,7 +179,7 @@ Once you're ready to receive payments, connect your chosen payment processor to 
 
 The following quote is from the Snipcart [payment gateway page](https://app.snipcart.com/dashboard/account/gateway):
 
-> Please note that you can select only one payment gateway. However, you can also enable Paypal Express Checkout on top of any gateway you choose.
+> Please note that you can select only one payment gateway. However, you can also enable PayPal Express Checkout on top of any gateway you choose.
 >
 > Also, you can switch from a gateway to another whenever you want.
 

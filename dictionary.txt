@@ -1218,7 +1218,6 @@ LTS
 Luhr
 Lullabot
 macOS
-MacOS
 MacWright
 macwright.org
 Madalyn
@@ -1463,7 +1462,7 @@ pathPrefix
 pathToConfigModule
 Paulie
 Pavel
-Paypal
+PayPal
 PayPal-ers
 Payton
 paywalled
@@ -1513,7 +1512,6 @@ Postgres
 PostHog
 postprocessing
 Poumián
-powershell
 PowerShell
 pragma
 pragmas
