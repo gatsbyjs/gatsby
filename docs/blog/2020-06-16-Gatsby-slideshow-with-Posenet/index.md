@@ -2,7 +2,7 @@
 title: Presenting Without Sharing My Screen
 date: 2020-06-16
 author: Sam Larsen-Disney
-excerpt: A Gatsby solution for crystal clear slides for everyone, using minimal bandwidth and cool bonus slide navigation using gestures powered by Posenet.
+excerpt: A Gatsby solution for crystal clear slides for everyone, using minimal bandwidth and cool bonus slide navigation using gestures powered by PoseNet.
 tags:
   - community
   - themes
@@ -17,9 +17,9 @@ The UX designer in me thinks this is less than ideal. I spend considerable time 
 
 ## The Current Work Flow
 
-Powerpoint and me are not friends. My slide decks are normally minimalist. They feature a title, an image, some code or an emoji per slide and that's about it. Almost always these elements are centered in the middle of the slide and when working in Powerpoint, I would find myself spending most of my time scaling images to fit the slide.
+PowerPoint and me are not friends. My slide decks are normally minimalist. They feature a title, an image, some code or an emoji per slide and that's about it. Almost always these elements are centered in the middle of the slide and when working in PowerPoint, I would find myself spending most of my time scaling images to fit the slide.
 
-Whilst building out [my personal website](https://sld.codes/) last year in [Gatsby](https://www.gatsbyjs.org/), I came across [`gatsby-theme-mdx-deck`](https://www.npmjs.com/package/gatsby-theme-mdx-deck). As its name suggests, this theme takes MDX and turns it into slide decks — it was the Powerpoint alternative I was looking for.
+Whilst building out [my personal website](https://sld.codes/) last year in [Gatsby](https://www.gatsbyjs.org/), I came across [`gatsby-theme-mdx-deck`](https://www.npmjs.com/package/gatsby-theme-mdx-deck). As its name suggests, this theme takes MDX and turns it into slide decks — it was the PowerPoint alternative I was looking for.
 
 ### An Example Using `gatsby-theme-mdx-deck`
 
@@ -338,17 +338,17 @@ And just like that we can now control slide decks remotely!
 
 ## Extension: Gesture Controlling My Slides
 
-[I recently attended a conference called “Halfstack”](https://sld.codes/articles/My-learnings-from-HalfStack's-Conference). While I was there I saw a demo of [Posenet](https://www.npmjs.com/package/@tensorflow-models/posenet). An awesome library that uses a model to identify key body parts from an image or video. I thought it would be cool to use this library to create touch-free slide navigation for presenters using just their gestures.
+[I recently attended a conference called “Halfstack”](https://sld.codes/articles/My-learnings-from-HalfStack's-Conference). While I was there I saw a demo of [PoseNet](https://www.npmjs.com/package/@tensorflow-models/posenet). An awesome library that uses a model to identify key body parts from an image or video. I thought it would be cool to use this library to create touch-free slide navigation for presenters using just their gestures.
 
-### How Posenet Works
+### How PoseNet Works
 
-Posenet uses a trained model to take an image and make an attempt at guessing the location of key body parts in that photo. You can see how, in the preview below, the skeleton is very closely matching my actual position — I was super impressed with its accuracy.
+PoseNet uses a trained model to take an image and make an attempt at guessing the location of key body parts in that photo. You can see how, in the preview below, the skeleton is very closely matching my actual position — I was super impressed with its accuracy.
 
 ![Man gesturing with two hands to the right and left to move slides forward and backward respectively](./images/gesture-control.gif)
 
 Being a magician! 🎩
 
-It can be implemented relatively easily (code borrowed from [Kirsten Lindsmith's "PoseNet for React" repo on Github](https://github.com/kirstenlindsmith/PoseNet_React/blob/master/client/components/Camera.js)):
+It can be implemented relatively easily (code borrowed from [Kirsten Lindsmith's "PoseNet for React" repo on GitHub](https://github.com/kirstenlindsmith/PoseNet_React/blob/master/client/components/Camera.js)):
 
 ```js
 class PoseNet extends Component {
@@ -428,7 +428,7 @@ export default PoseNet
 
 ### Using This Data
 
-Now what this gives us access to is an array of keypoints. Each point represents a body part, posenet’s estimate of where that body part is and its confidence score.
+Now what this gives us access to is an array of keypoints. Each point represents a body part, PoseNet’s estimate of where that body part is and its confidence score.
 
 For my purposes, I focused on the wrists. When gesturing right or left, both wrists are close together and in a specific portion of the screen.
 

@@ -223,6 +223,7 @@ Bazaarvoice
 Bazel
 Behance
 BEM
+benchmarking
 Benedicte
 Benedikt
 Benns
@@ -284,10 +285,11 @@ Bulma
 bundler
 Burdette
 Burzyński
+ButcherBox
 ButterCMS
 Buytaert
-Buzzfeed
-Buzzfeed-esque
+BuzzFeed
+BuzzFeed-esque
 C'mon
 CaaS
 cache-dir
@@ -683,6 +685,7 @@ Flexbox
 Flickr
 Flipkart
 Florian
+Flotiq
 Flowtype
 focusable
 FOMO
@@ -792,6 +795,7 @@ gatsby-source-contentful
 gatsby-source-datocms
 gatsby-source-drupal
 gatsby-source-filesystem
+gatsby-source-flotiq
 gatsby-source-ghost
 gatsby-source-graphql
 gatsby-source-prismic
@@ -836,6 +840,7 @@ gatsbybot
 Gatsbybot
 gatsbygram
 Gatsbygram
+Gatsbyites
 gatsbyjs
 Gatsbyjs
 GatsbyJS
@@ -872,6 +877,7 @@ Glassdoor
 Glidewell
 globals
 Gmail
+Gnatek
 Goalrilla
 GoatCounter
 GoDaddy
@@ -1103,6 +1109,8 @@ Kemple
 Kentico
 Kenyő
 Kepford
+keypoint
+keypoints
 Khaled
 Khosla
 kickass
@@ -1173,6 +1181,7 @@ Lightbox
 Lightsail
 Lightstream
 Lingui
+Lindsmith
 Linkable
 linkedField
 LinkedIn
@@ -1395,6 +1404,8 @@ onRouteUpdate
 ONRR
 onwards
 OpenAI
+OpenAPI
+OpenCollective
 OpenGraph
 opentracing
 OpenTracing
@@ -1481,6 +1492,7 @@ Polypane
 Pooley
 popNodeQueries
 Porfírio
+PoseNet
 Posnick
 postcss
 PostCSS
@@ -1994,6 +2006,7 @@ Uloth
 Ultra-schnellen
 un-transpiled
 Unbundling
+uncached
 uncheck
 uncollapse
 uncomment

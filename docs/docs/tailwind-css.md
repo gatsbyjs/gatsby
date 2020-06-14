@@ -157,7 +157,7 @@ In case you need to create custom classes for elements for nested selectors, or 
 
 1. Create a new file and import your Tailwind directives.
 
-This will be your 'master' CSS file, which you will import all other css within.
+This will be your 'master' CSS file, which you will import all other CSS within.
 
 ```css:title=src/css/index.css
 @tailwind base;

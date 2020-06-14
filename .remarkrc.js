@@ -12,6 +12,7 @@ module.exports = {
         .use(require("retext-english"))
         .use(require("retext-syntax-urls"))
         .use(require("retext-syntax-mentions"))
+        .use(require("retext-emoji"))
         .use(require("retext-spell"), {
           dictionary: require("dictionary-en"),
           personal: dictionary,

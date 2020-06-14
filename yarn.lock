@@ -11147,6 +11147,11 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
+emoji-regex@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.0.0.tgz#48a2309cc8a1d2e9d23bc6a67c39b63032e76ea4"
+  integrity sha512-6p1NII1Vm62wni/VR/cUMauVQoxmLVb9csqQlvLz+hO2gk8U2UYDfXHQSUYIBKmZwAKz867IDqG7B+u0mj+M6w==
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -11155,6 +11160,11 @@ emojis-list@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
   integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
+
+emoticon@^3.0.0, emoticon@^3.1.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/emoticon/-/emoticon-3.2.0.tgz#c008ca7d7620fac742fe1bf4af8ff8fed154ae7f"
+  integrity sha512-SNujglcLTTg+lDAcApPNgEdudaqQFiAbJCqzjNxJkvN9vAwCGi0uu8IUVvx+f16h+V44KCY6Y2yboroc9pilHg==
 
 emotion@^10.0.27:
   version "10.0.27"
@@ -13150,6 +13160,11 @@ gcp-metadata@^3.4.0:
   dependencies:
     gaxios "^2.1.0"
     json-bigint "^0.3.0"
+
+gemoji@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/gemoji/-/gemoji-5.0.1.tgz#4cea541c735b74ec82edd56c2d46538cd54f355d"
+  integrity sha512-7yV9K8JdiK+h2M4YDnf/8bunJKYvs0t0p8eKh7zexVSuXddRG9Ue18ZViKOZljISk57DE64X19gvJfHZmhggGg==
 
 generic-names@^1.0.3:
   version "1.0.3"
@@ -19063,6 +19078,34 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
+nlcst-affix-emoticon-modifier@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/nlcst-affix-emoticon-modifier/-/nlcst-affix-emoticon-modifier-1.1.4.tgz#03a96075c847f0c56022b8c8490ed347e0b03748"
+  integrity sha512-GfjDXjd3pMm1M8CxDd/8arRKKI9Vw+pRXTdmLjCupawRY6cyKs8rveUVkIsqll9XlDb1CzmRJnJeQR8nZqZjVg==
+  dependencies:
+    unist-util-modify-children "^1.0.0"
+
+nlcst-emoji-modifier@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/nlcst-emoji-modifier/-/nlcst-emoji-modifier-4.1.0.tgz#52b20477821b62fa09b3ddf08c7a2befc51b085d"
+  integrity sha512-0x+tliy8xpoJmde8R4UNNPoLk0sgYucRSBDcm8U+nngj9r5S01mQ5bdLF24OjFWnRAi6EGcGHQgFFmEOQPCfxA==
+  dependencies:
+    emoji-regex "^9.0.0"
+    gemoji "^5.0.0"
+    nlcst-to-string "^2.0.0"
+    unist-util-generated "^1.0.0"
+    unist-util-position "^3.0.0"
+    unist-util-visit "^2.0.0"
+
+nlcst-emoticon-modifier@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/nlcst-emoticon-modifier/-/nlcst-emoticon-modifier-1.1.4.tgz#b6a9f17a5622f09b640cd88e97aee0306a59adcd"
+  integrity sha512-fk1iv3Vw3fVKWYDeFgvtK4cZKzu63/1+omPGPIIQ8McKInZsdlRY8E9DWRXperdtVRTSDD0BxVImoPjO1WNxOA==
+  dependencies:
+    emoticon "^3.0.0"
+    nlcst-to-string "^2.0.0"
+    unist-util-modify-children "^1.0.0"
+
 nlcst-is-literal@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/nlcst-is-literal/-/nlcst-is-literal-1.2.1.tgz#878b68a43b5fd77b85e45b1b1737ae11a25f1be3"
@@ -23721,6 +23764,19 @@ retext-diacritics@^3.0.0:
     nlcst-to-string "^2.0.0"
     quotation "^1.0.1"
     unist-util-position "^3.0.0"
+
+retext-emoji@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/retext-emoji/-/retext-emoji-7.0.1.tgz#ff36a558d28365a595e7337fe8dd46712c95c09c"
+  integrity sha512-oZxqCYO7ljD1CVMtX1b4Ph65VnskkR8vIPqb58Me0a6/ST5ZkiajIY7CpM1YUNlJ+KToYcZiZbMnyam0w8rGIQ==
+  dependencies:
+    emoticon "^3.1.0"
+    gemoji "^5.0.0"
+    nlcst-affix-emoticon-modifier "^1.0.0"
+    nlcst-emoji-modifier "^4.0.0"
+    nlcst-emoticon-modifier "^1.0.0"
+    nlcst-to-string "^2.0.0"
+    unist-util-visit "^2.0.0"
 
 retext-english@^3.0.4:
   version "3.0.4"
