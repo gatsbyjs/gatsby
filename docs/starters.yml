@@ -6660,3 +6660,21 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://gatsby-curriculum-vitae.netlify.app/
+  repo: https://github.com/karkranikhil/gatsby-curriculum-vitae
+  description: Build your own digital CV by changing the configuration. After updating your data deploy it to netlify on a single click. Digital CV has many advantages like Easily shared, Change Theme easily, You can link out to other social profiles and portfolios and so on.
+
+  # These correspond to the category filters in the library
+  # See docs/categories.yml for valid tags.
+  tags:
+    - Portfolio, CV, Resume, Bootstrap, curriculum-vitae 
+
+  # Add your site features
+  # These will be included on your starter's detail page.
+  features:
+    - Responsive
+    - Support Different Theme Colors
+    - Easy to deploy
+    - JSON configuration Based
+    - No extra dependency 
+    - Includes React Helmet to allow editing site meta tags
