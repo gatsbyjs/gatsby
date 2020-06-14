@@ -12,6 +12,7 @@
 .yaml
 .yml
 ½
+⅓
 1000px
 1000s
 1000x
@@ -96,6 +97,7 @@
 7x
 800ms
 800px
+8k
 9:00am
 9:00am-12:00pm
 90s
@@ -131,6 +133,7 @@ Airbnb
 Airtable
 Akamai
 akismet
+Akuoko
 al
 Alahmady
 Albright
@@ -162,6 +165,7 @@ Applingua
 approachability
 AppSync
 Appveyor
+Aravind
 ArchieML
 ArchieML.org
 architected
@@ -209,6 +213,7 @@ bads
 Bahl
 balancer
 balancers
+Balla
 Bam
 banoffee
 barebones
@@ -418,6 +423,7 @@ configurators
 connectiontype
 ConnectionType
 const
+Constraint-based
 Construye
 contentDigest
 contentDigests
@@ -429,7 +435,6 @@ Contentful-like
 Contentful-powered
 Contentstack
 contentType
-Constraint-based
 copiloting
 copywriting
 Coraline
@@ -820,12 +825,14 @@ gatsby-starter-prismic
 gatsby-starter-stripe
 gatsby-starter-terminal
 gatsby-theme
+gatsby-theme-andy
 gatsby-theme-blog
 gatsby-theme-catalyst-hydrogen
 gatsby-theme-examples
 gatsby-theme-firebase's
 gatsby-theme-gatstats
 gatsby-theme-notes
+gatsby-theme-shopify-manager
 gatsby-theme-starter
 gatsby-theme-terminal
 gatsby-transformer-cloudinary
@@ -980,6 +987,7 @@ hostname
 hotspot
 Housecall
 Hovlandsdal
+Howey
 Howley
 Hoyer
 HQ2
@@ -1068,9 +1076,11 @@ jank
 Jarmo
 JavaScripter
 Jeremey
+Jerod
 Jetson
 Jing
 JIRA
+Jnr
 Joomla
 Jörgens
 Jorgenson
@@ -1180,8 +1190,8 @@ lightbox
 Lightbox
 Lightsail
 Lightstream
-Lingui
 Lindsmith
+Lingui
 Linkable
 linkedField
 LinkedIn
@@ -1272,6 +1282,7 @@ Microfrontends
 microservices
 microsites
 middleware
+Millerchip
 mind-blowingly
 mindblown
 mini-css-extract-plugin
@@ -1280,6 +1291,7 @@ minified
 minifies
 minimalistic
 minimatch
+mins
 misconfigured
 Mistry
 mit
@@ -1743,6 +1755,8 @@ salesy
 Salsify
 SameSite
 sanitize-html
+Santo
+Sathyan
 scaffolded
 scalable
 Scanlon
@@ -1776,6 +1790,7 @@ service-centric
 SES
 setFieldsOnGraphQLNodeType
 setFileNodeRootType
+Sethu
 setState
 setTimeout
 Sewilio
