@@ -10,7 +10,7 @@ Issue labels are a tool in GitHub that are used to group issues into one or more
 
 ## Why label issues?
 
-Gatsby is a very active project with many new issues opened each day. Labelling issues helps by identifying:
+Gatsby is a very active project with many new issues opened each day. Labeling issues helps by identifying:
 
 - good issues for new contributors to work on
 - reported and confirmed bugs
@@ -32,7 +32,7 @@ Ideally, every issue should have a single `type:` label applied to it. Optionall
 
 Before continuing, get familiar with [Gatsby's issue labels and their descriptions](https://github.com/gatsbyjs/gatsby/issues/labels).
 
-The broad steps to labelling an issue are:
+The broad steps to labeling an issue are:
 
 - Read an issue
 - Choose the labels that apply to that issue
@@ -94,4 +94,4 @@ And you're done! You can call it a day or go back to the first step to label ano
 
 ## Conclusion
 
-Labelling issues is a great way to help out on the Gatsby project regardless of your experience level.
+Labeling issues is a great way to help out on the Gatsby project regardless of your experience level.

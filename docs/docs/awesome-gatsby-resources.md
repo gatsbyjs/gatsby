@@ -36,7 +36,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 - [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
 - [2018-04-17: Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
 - [2018-02-28: syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
-- [2017-09-21: Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
+- [2017-09-21: Kyle Mathews on JAMstack radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
 - [2017-07-21: Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
 - [2017-08-17: Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
 

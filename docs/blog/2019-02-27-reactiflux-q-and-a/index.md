@@ -35,7 +35,7 @@ Date of interview: December 13 2018
 
 ---
 
-**Q:** When would I choose gatsby over next js — f_youngblood
+**Q:** When would I choose gatsby over NextJS — f_youngblood
 
 **A:** Gatsby and Next are similar in many respects, but Gatsby is hyper-focused on baking performance in by default and in the ecosystem with approaches like the offline-plugin, etc. Personally I'd default to starting with gatsby and move to next only if I couldn't find a way to prerender my SEO critical applications.
 

@@ -29,7 +29,7 @@ Speaking of codex, here are original notes and sketches from February 2015, a no
 So I set out to create a framework that would be:
 
 - Configuration/Convention driven but easily overridable with code.
-- No reload page transitions. The initial HTML page would load followed quickly by a js bundle with the content for the rest of the site.
+- No reload page transitions. The initial HTML page would load followed quickly by a JS bundle with the content for the rest of the site.
 - Smart code splitting
 - Themes that are installable separately
 - Support for Markdown/Asciidoctor/other text formats

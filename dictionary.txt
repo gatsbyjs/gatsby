@@ -994,7 +994,6 @@ HQ2
 html-react-parser
 HTML5
 html5up
-http
 HTTPArchive
 HTTPS
 HubspotForm
@@ -1062,7 +1061,6 @@ IRL
 isEven
 ish
 Isotalo
-isPlaying
 iteratively
 J2EE
 Jaeger
@@ -1070,7 +1068,6 @@ jaeger-client
 Jamstack
 JAMstack
 JAMStack
-JAMSTACK
 jamstacked
 jank
 Jarmo
@@ -1087,8 +1084,6 @@ Jorgenson
 jpegs
 jQuery
 jQuery-like
-js
-Js
 JS
 js-search
 JS-Search
@@ -1096,7 +1091,6 @@ JSDoc
 JSDom
 JSHeroes
 JSON
-json-data-paths
 JSON-formatted
 JSON-LD
 JSON:API
@@ -1143,7 +1137,6 @@ Koppers
 Koranda
 Korey
 KPI
-KPI's
 KPIs
 Kristo
 KSS-node
@@ -1156,8 +1149,6 @@ KV
 l33t
 labelled
 labelledby
-labelling
-Labelling
 Laccadive
 Ladislav
 laggy
@@ -1208,9 +1199,7 @@ lo-fi
 localhost
 localStorage
 lockfile
-lodash
-lodash's
-Lodash's
+Lodash
 lookups
 lorem
 lowdb
@@ -1222,7 +1211,6 @@ MacWright
 macwright.org
 Madalyn
 Magento
-MagMutal
 MagMutual
 Mahmoud
 Mailchimp
@@ -1232,7 +1220,6 @@ Makenna
 Manjaro
 Mapbox
 Marcar
-marcy
 markdown-autocomplete
 markdownlint
 markdownRemark
@@ -1252,7 +1239,6 @@ MD5
 mdast
 mdast-util-to-string
 MDN
-mdx
 MDX
 MDX-embed
 MDXProvider
