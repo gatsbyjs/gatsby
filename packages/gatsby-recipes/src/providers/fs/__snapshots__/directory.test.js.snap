@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`directory resource e2e directory resource test: Directory create 1`] = `
+Object {
+  "_message": "Created directory \\"directory\\"",
+  "id": "directory",
+  "path": "directory",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory create plan 1`] = `
+Object {
+  "describe": "Create directory \\"directory\\"",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory destroy 1`] = `
+Object {
+  "_message": "Created directory \\"directory\\"",
+  "id": "directory",
+  "path": "directory",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory update 1`] = `
+Object {
+  "_message": "Created directory \\"directory\\"",
+  "id": "directory",
+  "path": "directory",
+}
+`;
+
+exports[`directory resource e2e directory resource test: Directory update plan 1`] = `
+Object {
+  "describe": "Create directory \\"directory1\\"",
+}
+`;

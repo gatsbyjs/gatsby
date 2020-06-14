@@ -134,6 +134,6 @@ Some links to interesting bits of code:
 - [CLI app](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/cli.js)
 - [File resource](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/providers/fs/file.js)
 - [Gatsby Plugin resource](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/providers/gatsby/plugin.js)
-- [XState Machine for running a recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/recipe-machine.js)
+- [XState Machine for running a recipe](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/recipe-machine/index.js)
 - [Code for generating the GraphQL schema](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/create-types.js)
 - [Recipe MDX parsing](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-recipes/src/parser/index.js)

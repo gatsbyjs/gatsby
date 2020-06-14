@@ -34,7 +34,7 @@ We’ve covered the basics, stick around as we dive into the details.
 
 ### The Landscape
 
-We’ve grown high expectations for web sites since their humble beginnings in the early 90s. Primarily, most websites are attached to diverse set data sources - a Content Management System (CMS) like WordPress or Shopify, a social feed from Instagram or Twitter, or high-resolution images hosted in a repository like Cloudinary.
+We’ve grown high expectations for websites since their humble beginnings in the early 90s. Primarily, most websites are attached to diverse set data sources - a Content Management System (CMS) like WordPress or Shopify, a social feed from Instagram or Twitter, or high-resolution images hosted in a repository like Cloudinary.
 
 This is fantastic, the CMS allows anyone to publish content to the web without having to continually hire a web developer. Pulling content from our social feeds means that we don’t have to duplicate content, and it promotes all the different mediums through which users can engage with our brand.
 

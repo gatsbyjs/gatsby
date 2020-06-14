@@ -126,7 +126,7 @@ To have comments on your site you can use a service like [Disqus](https://disqus
 ```javascript
 const Database = require("better-sqlite3")
 const fs = require("fs")
-const yourSite = "http://username.github.io/yoursite/"
+const yourSite = "https://username.github.io/yoursite/"
 
 if (process.argv.length < 3) {
   usage()

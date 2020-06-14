@@ -339,7 +339,7 @@ render={data => (
                   data-item-price={product.price}
                   data-item-image={product.image.url}
                   data-item-name={product.name}
-                  data-item-url={`https://determined-easley-e806d0.netlify.com/`}
+                  data-item-url={`https://determined-easley-e806d0.netlify.app/`}
                 >
                   Add to cart
                 </button>

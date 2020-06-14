@@ -103,4 +103,4 @@ You can use anything to style your Gatsby site; CSS, SCSS, Styled Components, CS
 
 I like Gatsby and I like the ideas that it promotes. The sites created with Gatsby are blazing fast, as promised. The development environment is one big party and GraphQL makes me rethink my life. I am really looking forward to develop more sites with Gatsby and I'm hoping to find an opportunity to replace a traditional WordPress install with a Gatsby site that pulls in the WP data. When that time comes, I'll report back of course.
 
-If you have any questions based on this post, don't hesitate to contact me on [Twitter](http://twitter.com/ardennl) or via [mail](mailto:a.de.raaij@gmail.com). Thanks for reading!
+If you have any questions based on this post, don't hesitate to contact me on [Twitter](https://twitter.com/ardennl) or via [mail](mailto:a.de.raaij@gmail.com). Thanks for reading!

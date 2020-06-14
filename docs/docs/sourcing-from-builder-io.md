@@ -2,7 +2,7 @@
 title: Sourcing from Builder.io
 ---
 
-[Builder.io](https://builder.io) has all the benefits of a modern headless CMS platform, plus the power of an easy to learn drag and drop editor that enables everyone to edit more than just content. Builder + Gatsby empowers your entire team to create performant and fully customizable pages quickly.
+[Builder.io](https://builder.io) has all the benefits of a modern headless CMS platform, plus the power of an easy to learn drag and drop editor that enables everyone to edit more than just content. Builder.io + Gatsby empowers your entire team to create performant and fully customizable pages quickly.
 
 <img src="https://imgur.com/HjBWIbv.gif" alt="Editor example" />
 

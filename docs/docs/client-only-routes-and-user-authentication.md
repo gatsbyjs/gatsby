@@ -157,5 +157,5 @@ One result of this method is that the client is completely unaware of the logic 
 ## Additional resources
 
 - [Gatsby repo "simple auth" example](https://github.com/gatsbyjs/gatsby/blob/master/examples/simple-auth/) - a demo implementing user authentication and restricted client-only routes
-- [Live version of the "simple auth" example](https://simple-auth.netlify.com/)
+- [Live version of the "simple auth" example](https://simple-auth.netlify.app/)
 - [The Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org) which also implements an authenticated flow

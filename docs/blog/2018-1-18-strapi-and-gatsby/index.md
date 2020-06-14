@@ -76,7 +76,7 @@ _Important links from Video:_
 - [Strapi Official Website](https://strapi.io/)
 - [Gatsby JS Official Website](/)
 - [Gatsby JS Starters](/starters/?v=2)
-- [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.com/)
+- [Gatsby JS Default Starter Demo](https://gatsby-starter-default-demo.netlify.app/)
 
 ### 2. Installation
 

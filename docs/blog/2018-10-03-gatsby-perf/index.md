@@ -63,7 +63,7 @@ WebPagetest allows you to collect performance measurements in running on a _real
 
 ![WebPagetest](./images/webpagetest.png)
 
-Running a test in WebPagetest will pull up the specified site on the browser/network specified, and then collect performance measurements that can be reviewed and analyzed. These tests can serve as a baseline that can be compared against after changes are made, e.g. like a change in comparing the Gatsby v1 site to the Gatsby v2 site 🤓 Additionally, it's helpful to run these tests fairly often after meaningful changes and features are added to your web site, to ensure that you're guarding against performance regressions! For your consideration, check out Gatsby v1's metrics in WebPagetest.
+Running a test in WebPagetest will pull up the specified site on the browser/network specified, and then collect performance measurements that can be reviewed and analyzed. These tests can serve as a baseline that can be compared against after changes are made, e.g. like a change in comparing the Gatsby v1 site to the Gatsby v2 site 🤓 Additionally, it's helpful to run these tests fairly often after meaningful changes and features are added to your website, to ensure that you're guarding against performance regressions! For your consideration, check out Gatsby v1's metrics in WebPagetest.
 
 [![WebPagetest v1](./images/webpagetest-v1.png)][webpagetestv1-results]
 
@@ -129,9 +129,9 @@ Gatsby v2 is an iterative approach to improving the solid foundational base that
 [speed-index]: https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index
 [lighthouse]: https://www.google.com/search?q=google+audit&ie=utf-8&oe=utf-8&client=firefox-b-1-ab
 [gatsby-v1-repo]: https://github.com/dschau/gatsby-v1
-[gatsby-v1-netlify]: https://gatsby-v1-perf.netlify.com/
+[gatsby-v1-netlify]: https://gatsby-v1-perf.netlify.app/
 [gatsby-v2-repo]: https://github.com/dschau/gatsby-v2
-[gatsby-v2-netlify]: https://gatsby-v2-perf.netlify.com/
+[gatsby-v2-netlify]: https://gatsby-v2-perf.netlify.app/
 [gatsby-source-wordpress]: /packages/gatsby-source-wordpress
 [gatsby-plugin-typescript]: /packages/gatsby-plugin-typescript
 [migration-guide]: /docs/migrating-from-v1-to-v2/

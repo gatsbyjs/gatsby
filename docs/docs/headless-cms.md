@@ -48,6 +48,7 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 | [Gentics Mesh](https://getmesh.io)            | [guide](/docs/sourcing-from-gentics-mesh)                                        |                                                      |                                                                    |
 | [Seams-CMS](https://seams-cms.com/)           | [guide](/docs/sourcing-from-seams-cms)                                           |                                                      |                                                                    |
 | [Builder.io](https://www.builder.io/)         | [guide](/docs/sourcing-from-builder-io/)                                         | [docs](/packages/@builder.io/gatsby/)                | [starter](https://github.com/BuilderIO/gatsby-starter-builder)     |
+| [Flotiq](https://flotiq.com/)                 | [guide](/docs/sourcing-from-flotiq/)                                             | [docs](/packages/gatsby-source-flotiq)               | [starter](https://github.com/flotiq/gatsby-starter-blog)           |
 
 ## How to add new guides to this section
 
