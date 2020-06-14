@@ -481,17 +481,17 @@ Lighthouse will provide scores from 0 - 100 for a variety of meaningful categori
 
 Lighthouse is a great _first_ step to asserting whether or not your application is actually fast. If you are scoring near 100s (if you're using Gatsby--you probably are!) you can feel assured with a reasonable degree of confidence that your application is actually fast. However--Lighthouse can sometimes vary between runs and results can sometimes vary depending on which machine is used to run the test. To gain a greater degree of _certainty_ that your application is fast I recommend another, complementary tool: Webpagetest.
 
-### Webpagetest
+### WebPagetest
 
-[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU-constrained. You can use a slower network to ensure that you get an accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
+[WebPagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU-constrained. You can use a slower network to ensure that you get an accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
 
-I liken the relationship between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
+I liken the relationship between Lighthouse and WebPagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (WebPagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
 
 Both are valuable--and both have their place!
 
 ### Trust, but validate
 
-As mentioned, performance is something that should be regularly monitored. Using tools like Webpagetest and Lighthouse are **great** techniques that should be used and help uncover performance problems (among other key concerns like accessibility improvements, SEO, etc.). However, the usage of these tools are oftentimes done in a reactionary, ad-hoc manner. Performing a Lighthouse test, discovering issues, and devoting a week or two to remediate is _all_ too common.
+As mentioned, performance is something that should be regularly monitored. Using tools like WebPagetest and Lighthouse are **great** techniques that should be used and help uncover performance problems (among other key concerns like accessibility improvements, SEO, etc.). However, the usage of these tools are oftentimes done in a reactionary, ad-hoc manner. Performing a Lighthouse test, discovering issues, and devoting a week or two to remediate is _all_ too common.
 
 Why react to something (!) with manual, ad-hoc spot checking? What if we could remediate and diagnose at pull request time?
 

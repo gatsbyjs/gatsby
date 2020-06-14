@@ -2023,7 +2023,6 @@ usecases
 user-impactful
 Userbase
 userland
-useState
 useStaticQuery
 using-gatsby-source-graphql
 Util
@@ -2046,7 +2045,6 @@ Valeriy
 validator
 Vasan
 ve
-vehiclePage
 Vercel
 Vieira
 ViennaJS
@@ -2097,8 +2095,6 @@ WebpackError
 webpacks
 webpage
 webpages
-webpagetest
-Webpagetest
 WebPagetest
 webpagetest.org
 webserver

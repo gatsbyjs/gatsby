@@ -63,8 +63,8 @@ The difference in Time to Interactivity (TTI) (measure of how long before the
 user can actually interact with the page e.g. click on a link) between the sites
 is just as dramatic. Gatsbygram's TTI is 6.1s vs 14.1s for Instagram.
 
-- [Gatsbygram's webpagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
-- [Instagram's webpagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
+- [Gatsbygram's WebPagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
+- [Instagram's WebPagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
 
 ### Gatsby is built for the next billion internet users
 
