@@ -61,7 +61,7 @@ Notice that you're loading `queries` from a file at `./src/utils/algolia.js` (yo
 
 For this, you will need to navigate to [the 'API Keys' section of your Algolia profile](https://www.algolia.com/api-keys). If you already have an account, you will find your API keys here. If not, you will need to sign up for one and then navigate to this link. It should look something like this screenshot, only with actual numbers instead of redacted ones:
 
-![algolia API key screenshot](./images/algolia-api-keys.png)
+![Algolia API key screenshot](./images/algolia-api-keys.png)
 
 Once you have your App ID, Search-Only API Key, and Admin API Key, place the following code into your `.env` file, replacing the placeholder keys with your keys:
 

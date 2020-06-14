@@ -268,7 +268,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** No concern of the additional request for the SVG??
 **Answer:** SVGs previews are inlined.
 
-**Question:** No concerns of excessive prefetching in the bg?
+**Question:** No concerns of excessive prefetching in the background?
 **Answer:** This is turned off on low-power devices.
 
 **Question:** Re content updates: But is a new build triggered on _every_ content change?
