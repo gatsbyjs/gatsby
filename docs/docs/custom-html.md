@@ -52,7 +52,7 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 
 ## Adding custom JavaScript
 
-You can add custom JavaScript to your HTML document by using React's [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) attribute.
+You can add custom JavaScript to your HTML document by using React's [`dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) attribute.
 
 ```jsx:title=src/html.js
 <script
