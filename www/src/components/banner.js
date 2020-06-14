@@ -30,8 +30,7 @@ const Content = ({ children }) => (
     sx={{
       color: t => t.colors.whiteFade[80],
       fontFamily: t => t.fonts.heading,
-      pl: t => t.space[6],
-      pr: t => t.space[6],
+      px: t => t.space[6],
       whiteSpace: `nowrap`,
       a: {
         color: t => t.colors.white,
