@@ -48,7 +48,7 @@ Gatsby 2.3.0 marked the release of telemetry in Gatsby. Built by [Jarmo Isotalo]
 
 #### [2019-05-02](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.3.36...gatsby@2.4.0)
 
-A widely requested feature, assetPrefix built by [Dustin Schau](https://twitter.com/SchauDustin) allows users to host their site's JavaScript and CSS assets on a separate url, a common pattern in enterprise apps.
+A widely requested feature, `assetPrefix` built by [Dustin Schau](https://twitter.com/SchauDustin) allows users to host their site's JavaScript and CSS assets on a separate url, a common pattern in enterprise apps.
 
 ### 2.5.0: Schema Inference Controls
 
