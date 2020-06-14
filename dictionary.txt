@@ -320,11 +320,9 @@ CDATA
 CDN
 CDN-backed
 CDNs
-centralised
 Cereda
 CFP
 changelog
-Changelog
 changelogs
 chatbots
 Chatterjee
