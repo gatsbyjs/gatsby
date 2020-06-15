@@ -2,7 +2,7 @@ const path = require(`path`)
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsbygram`,
+    title: `autojewelling`,
   },
   plugins: [
     /*

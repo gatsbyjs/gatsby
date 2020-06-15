@@ -11,34 +11,21 @@ class About extends React.Component {
             padding: rhythm(3 / 4),
           }}
         >
-          <h1 data-testid="about-title">About Gatsbygram</h1>
+          <h1 data-testid="about-title">About autojewelling</h1>
           <p>
-            Gatsbygram is an example website built with the JavaScript web
-            framework
+            Ghana's #1  vehicle paintwork correction/vehicle restoration.
             {` `}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/gatsbyjs/gatsby"
-            >
-              Gatsby
-            </a>
-            .
+
           </p>
           <p>
-            The code for the site lives at
+            We make cars look better than new
             {` `}
             <a
-              href="https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
+              href="tel:+2330201008888"
               rel="noopener noreferrer"
               target="_blank"
             >
-              https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram
-            </a>
-          </p>
-          <p>
-            <a href="https://www.gatsbyjs.org/blog/gatsbygram-case-study/">
-              Read a case study on how Gatsbygram was built
+              020 100 8888
             </a>
           </p>
         </div>
