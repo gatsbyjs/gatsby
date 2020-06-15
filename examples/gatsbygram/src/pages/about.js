@@ -13,7 +13,7 @@ class About extends React.Component {
         >
           <h1 data-testid="about-title">About autojewelling</h1>
           <p>
-            Ghana's #1  vehicle paintwork correction/vehicle restoration.
+            We are Ghana's #1  vehicle paintwork correction/vehicle restoration.
             {` `}
 
           </p>
