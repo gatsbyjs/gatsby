@@ -330,12 +330,7 @@ And just like that we can now control slide decks remotely!
 
 ## Extension: Gesture Controlling My Slides
 
-<<<<<<< HEAD
-[I recently attended a conference called “Halfstack”](https://sld.codes/articles/My-learnings-from-HalfStack's-Conference). While I was there I saw a demo of [PoseNet](https://www.npmjs.com/package/@tensorflow-models/posenet). An awesome library that uses a model to identify key body parts from an image or video. I thought it would be cool to use this library to create touch-free slide navigation for presenters using just their gestures.
-=======
 [I recently attended a conference called “HalfStack”](https://sld.codes/articles/My-learnings-from-HalfStacks-Conference). While I was there I saw a demo of [PoseNet](https://www.npmjs.com/package/@tensorflow-models/posenet). An awesome library that uses a model to identify key body parts from an image or video. I thought it would be cool to use this library to create touch-free slide navigation for presenters using just their gestures.
-
-> > > > > > > master
 
 ### How PoseNet Works
 
