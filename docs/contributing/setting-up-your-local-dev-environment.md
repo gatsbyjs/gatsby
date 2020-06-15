@@ -24,6 +24,7 @@ Yarn is a package manager for your code, similar to [NPM](https://www.npmjs.com/
 - Ensure you have the latest **LTS** version of Node installed (>= 10.16.0). `node --version`
 - [Install](https://yarnpkg.com/en/docs/install) the Yarn package manager.
 - Ensure you have the latest version of Yarn installed (>= 1.0.2). `yarn --version`
+- Install [nodemon](https://www.npmjs.com/package/nodemon). `yarn global add nodemon`
 
 ### Fork, clone, and branch the repository
 
