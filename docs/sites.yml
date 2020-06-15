@@ -10931,3 +10931,34 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+
+- title: Gatsby WordPress Theme Phoenix
+  main_url: https://codeytek.com/new-pwa-gatsby-wordpress-theme-in-react-using-acf-and-wp-graphql
+  url: https://codeytek.com/woo/wp-content/uploads/2020/06/Phoenix.jpg
+  source_url: https://github.com/imranhsayed/gatsby-wordpress-themes
+  description: >
+    A Gatsby WordPress PWA Theme that uses WordPress, ACF and wp-graphql in the backend. You get a custom editable Homepage. You can publish post pages, set up menus , widgets, social-icons from WordPress backend. Also has offline search.
+  categories:
+    - Blog
+    - Travel
+    - Education
+    - Portfolio
+    - Gallery
+    - CMS:Headless
+    - CMS:WordPress
+    - Landing Page
+    - Pagination
+    - PWA
+    - Search
+    - SEO
+    - Storybook
+    - Styling:SCSS
+    - Data
+    - JavaScript
+    - Open Source
+    - Nonprofit
+    - Programming
+    - WordPress
+  built_by: Imran Sayed
+  built_by_url: https://twitter.com/imranhsayed
+  featured: false
