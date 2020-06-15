@@ -6662,14 +6662,13 @@
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
 - url: https://gatsby-curriculum-vitae.netlify.app/
   repo: https://github.com/karkranikhil/gatsby-curriculum-vitae
-  description: Build your own digital CV by changing the configuration. After updating your data deploy it to netlify on a single click. Digital CV has many advantages like Easily shared, Change Theme easily, You can link out to other social profiles and portfolios and so on.
+  description: Build your own digital CV by changing the configuration. After updating your data deploy it to netlify on a single click.
   tags:
     - Landing Page
     - Onepage
-    - Portfolio 
+    - Portfolio
   features:
     - Responsive
-    - Landing Page
-    - themes
-    - Linting 
+    - Fully responsive
     - Includes React Helmet to allow editing site meta tags
+    - All landing page content can be customised through JSON files stored in DATA folder
