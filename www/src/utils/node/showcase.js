@@ -4,7 +4,7 @@ const { getTemplate } = require(`../get-template`)
 
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type SitesYaml implements Node @dontInfer {
+    type SitesYaml implements Node {
       title: String!
       main_url: String!
       url: String!

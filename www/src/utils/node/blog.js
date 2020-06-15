@@ -22,8 +22,9 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       author: AuthorYaml @link
       twittercard: String
       publishedAt: String
-      cover: File # TODO this was only used for one blog post; maybe it can be replaced with Image?
-      image: File
+      # TODO this was only used for one blog post; maybe it can be replaced with Image?
+      cover: File @fileByRelativePath
+      image: File @fileByRelativePath
       imageAuthor: String
       imageAuthorLink: String
       imageTitle: String

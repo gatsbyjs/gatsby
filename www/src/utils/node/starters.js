@@ -29,7 +29,7 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
 
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type StartersYaml implements Node @dontInfer {
+    type StartersYaml implements Node {
       url: String!
       repo: String!
       description: String
