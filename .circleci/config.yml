@@ -172,6 +172,9 @@ commands:
 
       - <<: *attach_to_bootstrap
       - run:
+          name: Build Admin
+          command: yarn workspace gatsby-admin build
+      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
