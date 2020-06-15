@@ -25,7 +25,7 @@ Whilst building out [my personal website](https://sld.codes/) last year in [Gats
 
 The first step is to add `gatsby-theme-mdx-deck` to your gatsby config:
 
-```javascript
+```javascript:title=gatsby-config.js
 {
   resolve: `gatsby-theme-mdx-deck`,
   options: {
@@ -37,9 +37,9 @@ The first step is to add `gatsby-theme-mdx-deck` to your gatsby config:
 
 The plugin expects a location where your MDX files are located and a basepath on where your decks should be found on your site.
 
-In the folder I specified as the content path, I create a new .mdx file and add the following:
+In the folder I specified as the content path, I create a new `.mdx` file and add the following:
 
-```mdx
+```mdx:title=MDX/Decks/SITEDESIGN/slides.mdx
 ---
 title: "Portfolio 101"
 desc: How I built this site and how you can design, build and host your own.
@@ -79,7 +79,7 @@ This takes the pressure off my bandwidth and instead pushes it off to each indiv
 
 In order to start working on this library I moved it from my `node-modules` folder into a folder called `plugins`. Gatsby knows that this folder contains any local versions of plugins that I am working on.
 
-### Improving the UX
+### Improving The UX
 
 The first thing I wanted to do was make the way in which you interact with the slide decks more obvious. When you navigate to a slide deck there are no instructions and no interact-able elements. I decided that I should add the following buttons:
 
@@ -89,7 +89,7 @@ Note that the toggle button will only be present when I am presenting a talk. Wh
 
 In the situations when I am not around to give you the tour of how these buttons work, I thought I would let [`react-joyride`](https://www.npmjs.com/package/react-joyride) do it for me. I decided to use a cookie to determine whether the user had seen the tour before. I would only trigger the tour if that cookie had not been set:
 
-```js
+```javascript:title=plugins/gatsby-theme-mdx-deck/src/components/tour.js
 export default () => {
   const [cookies, setCookie] = useCookies()
   const TourActive = !cookies.SLDPresTourCookie
@@ -119,17 +119,17 @@ The result:
 
 I tried to keep the instructions short and sharp. You can check it out by [checking out one of my presentations](https://sld.codes/decks/HOWTOGATSBY/slides/0).
 
-### Creating the “Follow Me” Feature
+### Creating The “Follow Me” Feature
 
 In order to get this to work I was going to need two new features — an internal state to monitor the position in the slides for viewers and a way of sending realtime updates from my machine. A Redux + Socket.IO combination would do nicely.
 
-Up to this point my personal website had been entirely static. I had had no need to introduce internal state on any other page so I consulted the [Gatsby docs](https://www.gatsbyjs.org/docs/adding-redux-store/) on the subject. That combined with this [awesome repo](https://github.com/itaylor/redux-socket.io) on Redux and Socket.IO combined, gave me all the pieces I needed to create the feature — I just had to bring them together.
+Up to this point my personal website had been entirely static. I had had no need to introduce internal state on any other page so I consulted the [Gatsby docs](/docs/adding-redux-store/) on the subject. That combined with this [awesome repo](https://github.com/itaylor/redux-socket.io) on Redux and Socket.IO combined, gave me all the pieces I needed to create the feature — I just had to bring them together.
 
-#### Creating the server
+#### Creating The Server
 
-I spun up a Node server on and added the following code:
+I spun up a Node.js server on and added the following code:
 
-```js
+```javascript:title=app.js
 io.on("connection", function (socket) {
   if (active) {
     //If there is a presentation already started, tell the user.
@@ -187,22 +187,18 @@ io.on("connection", function (socket) {
 })
 ```
 
-## Implementing Redux on the site
+## Implementing Redux On The Site
 
 First we need to add a custom wrapper around Gatsby:
 
-_gatsby-browser.js_
-
-```js
+```javascript:title=gatsby-browser.js
 import wrapWithProvider from "./src/state/wrapWithProvider"
 export const wrapRootElement = wrapWithProvider
 ```
 
 This wrapper needs to wrap our site content in a Redux provider.
 
-_src/state/wrapWithProvider.js_
-
-```js
+```jsx:title=src/state/wrapWithProvider.js
 import React from "react"
 import { Provider } from "react-redux"
 import createStore from "./createStore"
@@ -211,11 +207,9 @@ export default ({ element }) => {
 }
 ```
 
-In our store we add methods to handle any incoming actions from the server. Notice the `socketIoMiddleware` that catches any actions that start with ”/server” and emits them to our server
+In our store we add methods to handle any incoming actions from the server. Notice the `socketIoMiddleware` that catches any actions that start with `/server` and emits them to our server.
 
-_src/state/createStore.js_
-
-```js
+```javascript:title=src/state/createStore.js
 import { createStore, applyMiddleware } from "redux"
 import createSocketIoMiddleware from "redux-socket.io"
 import io from "socket.io-client"
@@ -265,9 +259,7 @@ export default store
 
 Now if we connect any component using Redux we will have access to these values.
 
-_Slides.js_
-
-```js
+```javascript:title=plugins/gatsby-theme-mdx-deck/src/components/deck.js
 const Deck = ({
   follow,
   presentation,
@@ -276,7 +268,7 @@ const Deck = ({
   verified,
 }) => {
   /* ... */
-  /* 
+  /*
   If their is a live presenter and:
   A. You ARE NOT the one presenting
   B, You are in the same deck as the one being presented
@@ -294,7 +286,7 @@ const Deck = ({
   ) {
     jump(slug, presentation.slide)
   }
-  /* 
+  /*
   If their is a live presenter and:
   A. You ARE the one presenting
   B. The slide you are on does not match the index on the server
@@ -330,7 +322,7 @@ And just like that we can now control slide decks remotely!
 
 ![A sample slide deck being presented and viewed in parallel](./images/remote-slides.gif)
 
-## Get the code:
+## Get The Code:
 
 [Personal Site Repo](https://github.com/slarsendisney/personal-site)
 
@@ -338,7 +330,12 @@ And just like that we can now control slide decks remotely!
 
 ## Extension: Gesture Controlling My Slides
 
+<<<<<<< HEAD
 [I recently attended a conference called “Halfstack”](https://sld.codes/articles/My-learnings-from-HalfStack's-Conference). While I was there I saw a demo of [PoseNet](https://www.npmjs.com/package/@tensorflow-models/posenet). An awesome library that uses a model to identify key body parts from an image or video. I thought it would be cool to use this library to create touch-free slide navigation for presenters using just their gestures.
+=======
+[I recently attended a conference called “HalfStack”](https://sld.codes/articles/My-learnings-from-HalfStacks-Conference). While I was there I saw a demo of [PoseNet](https://www.npmjs.com/package/@tensorflow-models/posenet). An awesome library that uses a model to identify key body parts from an image or video. I thought it would be cool to use this library to create touch-free slide navigation for presenters using just their gestures.
+
+> > > > > > > master
 
 ### How PoseNet Works
 
@@ -350,7 +347,7 @@ Being a magician! 🎩
 
 It can be implemented relatively easily (code borrowed from [Kirsten Lindsmith's "PoseNet for React" repo on GitHub](https://github.com/kirstenlindsmith/PoseNet_React/blob/master/client/components/Camera.js)):
 
-```js
+```jsx
 class PoseNet extends Component {
   async componentDidMount() {
     try {
@@ -384,7 +381,6 @@ class PoseNet extends Component {
         outputStride,
       })
       poses.push(pose)
-      break
       canvasContext.clearRect(0, 0, videoWidth, videoHeight)
       poses.forEach(({ score, keypoints }) => {
         if (score >= minPoseConfidence) {
@@ -438,7 +434,7 @@ When both wrists were in the same box, I knew I was gesturing for a slide change
 
 All that was left was to work out whether my poses array containing the positions of the left and right wrist had placed them both in the bounding box. I could then use my socket connection as above to change the slide.
 
-```js
+```javascript
 useEffect(() => {
   if (presentation && differenceInSeconds(new Date(), lastPunch) > 0.5) {
     const gesturingRight = poses.every(
