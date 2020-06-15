@@ -183,11 +183,11 @@
     "ipc.json",
     "cache-dir",
     "dist",
+    "gatsby-admin-public",
     "graphql.js",
     "index.d.ts",
     "scripts/postinstall.js",
-    "utils.js",
-    "gatsby-admin-public"
+    "utils.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
