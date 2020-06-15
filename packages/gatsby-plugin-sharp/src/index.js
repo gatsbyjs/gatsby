@@ -304,10 +304,10 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = pipeline.trim(options.trim)
   }
 
-  const forceBase64Format =
-    args.toFormatBase64 || pluginOptions.forceBase64Format
-  if (forceBase64Format) {
-    args.toFormat = forceBase64Format
+  const changedBase64Format =
+    options.toFormatBase64 || pluginOptions.forceBase64Format
+  if (changedBase64Format) {
+    options.toFormat = changedBase64Format
   }
 
   pipeline
@@ -321,16 +321,16 @@ async function generateBase64({ file, args = {}, reporter }) {
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: options.toFormat === `png`,
     })
     .jpeg({
       quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: options.toFormat === `jpg`,
     })
     .webp({
       quality: options.webpQuality || options.quality,
-      force: args.toFormat === `webp`,
+      force: options.toFormat === `webp`,
     })
 
   // grayscale
@@ -345,7 +345,7 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
+    pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
   const { data: buffer, info } = await pipeline.toBuffer({
     resolveWithObject: true,
