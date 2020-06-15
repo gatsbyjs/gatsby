@@ -2,7 +2,8 @@ const _ = require(`lodash`)
 
 /// Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
-  forceBase64Format: false,
+  base64Width: 20,
+  forceBase64Format: false, // valid formats: png,jpg,webp
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
   lazyImageGeneration: true,
