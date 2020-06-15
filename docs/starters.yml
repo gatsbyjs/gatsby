@@ -6664,7 +6664,9 @@
   repo: https://github.com/karkranikhil/gatsby-curriculum-vitae
   description: Build your own digital CV by changing the configuration. After updating your data deploy it to netlify on a single click. Digital CV has many advantages like Easily shared, Change Theme easily, You can link out to other social profiles and portfolios and so on.
   tags:
-    - Portfolio, CV, Resume, Bootstrap, curriculum-vitae 
+    - Landing Page
+    - Onepage
+    - Portfolio 
   features:
     - Responsive
     - Landing Page
