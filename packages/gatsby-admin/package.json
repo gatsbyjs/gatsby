@@ -10,7 +10,7 @@
     "directory": "packages/gatsby-admin"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
-  "dependencies": {
+  "devDependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
@@ -21,6 +21,7 @@
     "gatsby-interface": "0.0.167",
     "gatsby-plugin-typescript": "^2.4.6",
     "gatsby-source-graphql": "^2.5.4",
+    "ncp": "^2.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.0.0",
@@ -35,6 +36,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build --prefix-paths",
+    "postbuild": "ncp public ../gatsby/gatsby-admin-public",
     "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   }
 }
