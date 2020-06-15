@@ -6667,8 +6667,7 @@
     - Portfolio, CV, Resume, Bootstrap, curriculum-vitae 
   features:
     - Responsive
-    - Support Different Theme Colors
-    - Easy to deploy
-    - JSON configuration Based
-    - No extra dependency 
+    - Landing Page
+    - themes
+    - Linting 
     - Includes React Helmet to allow editing site meta tags
