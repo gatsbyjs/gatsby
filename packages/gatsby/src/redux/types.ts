@@ -134,8 +134,12 @@ type BabelStageKeys =
   | "build-html"
   | "build-javascript"
 
+export interface IStateProgram extends IProgram {
+  extensions: string[]
+}
+
 export interface IGatsbyState {
-  program: IProgram
+  program: IStateProgram
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
@@ -293,6 +297,8 @@ export type ActionsUnion =
   | ICreateJobAction
   | ISetJobAction
   | IEndJobAction
+  | ISetProgramAction
+  | ISetProgramExtensions
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -651,4 +657,14 @@ export interface IAddPageDataStatsAction {
 export interface ITouchNodeAction {
   type: `TOUCH_NODE`
   payload: Identifier
+}
+
+export interface ISetProgramAction {
+  type: `SET_PROGRAM`
+  payload: IStateProgram
+}
+
+export interface ISetProgramExtensions {
+  type: `SET_PROGRAM_EXTENSIONS`
+  payload: string[]
 }
