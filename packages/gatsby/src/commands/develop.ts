@@ -13,6 +13,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import getSslCert from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
+import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -110,7 +111,18 @@ module.exports = async (program: IProgram): Promise<void> => {
   const developProcessPath = slash(require.resolve(`./develop-process`))
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
-  const proxyPort = program.port
+  let proxyPort
+  try {
+    proxyPort = await detectPortInUseAndPrompt(program.port)
+    program.port = proxyPort
+  } catch (e) {
+    if (e.message === `USER_REJECTED`) {
+      process.exit(0)
+    }
+
+    throw e
+  }
+
   const [statusServerPort, developPort] = await Promise.all([
     getRandomPort(),
     getRandomPort(),

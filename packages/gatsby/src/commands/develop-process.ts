@@ -405,19 +405,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
-  const port =
-    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
-  try {
-    program.port = await detectPortInUseAndPrompt(port)
-  } catch (e) {
-    if (e.message === `USER_REJECTED`) {
-      process.exit(0)
-    }
-
-    throw e
-  }
-
   // Start bootstrap process.
   const { graphqlRunner } = await bootstrap(program)
 
