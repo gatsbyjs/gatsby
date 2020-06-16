@@ -34,7 +34,7 @@ Sometimes you need the absolute URL of the current page (including the host name
 
 In this case, you would first need to add configuration that describes where you site is deployed. You can for example add this as a `siteURL` entry in `siteMetadata` in the [Gatsby Config](/docs/gatsby-config/).
 
-Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenting it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
+Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenating it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
 
 ```js
 export const query = graphql`
