@@ -79,7 +79,7 @@ exports.onPreBootstrap = (
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type Screenshot implements Node {
-      screenshotFile: File
+      screenshotFile: File @link
     }
   `)
 }
