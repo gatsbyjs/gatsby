@@ -8,11 +8,11 @@ const { getTemplate } = require(`../get-template`)
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type Mdx implements Node {
-      frontmatter: Frontmatter
+      frontmatter: MdxFrontmatter
       fields: MdxFields
     }
 
-    type Frontmatter @dontInfer {
+    type MdxFrontmatter @dontInfer {
       title: String!
       seoTitle: String
       draft: Boolean
