@@ -78,7 +78,7 @@ exports.onPreBootstrap = (
 
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type Screenshot implements Node @dontInfer {
+    type Screenshot implements Node {
       screenshotFile: File
     }
   `)
