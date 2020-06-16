@@ -1,3 +1,6 @@
+/* global importScripts, workbox, idbKeyval */
+importScripts(`%idbKeyValVersioned%`)
+
 const { NavigationRoute } = workbox.routing
 
 let lastNavigationRequest = null
