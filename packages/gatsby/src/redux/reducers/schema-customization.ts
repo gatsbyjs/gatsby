@@ -1,8 +1,9 @@
 import { IGatsbyState, ActionsUnion } from "../types"
+import { createSchemaComposer } from "../../schema/schema-composer"
 
 const initialState = (): IGatsbyState["schemaCustomization"] => {
   return {
-    composer: null as any,
+    composer: createSchemaComposer(),
     context: {},
     fieldExtensions: {},
     printConfig: null,
@@ -12,7 +13,7 @@ const initialState = (): IGatsbyState["schemaCustomization"] => {
 }
 
 export const schemaCustomizationReducer = (
-  state = initialState(),
+  state: IGatsbyState["schemaCustomization"] = initialState(),
   action: ActionsUnion
 ): IGatsbyState["schemaCustomization"] => {
   switch (action.type) {
@@ -27,7 +28,7 @@ export const schemaCustomizationReducer = (
         composer: action.payload,
       }
     case `CREATE_TYPES`: {
-      let types
+      let types: IGatsbyState["schemaCustomization"]["types"]
       if (Array.isArray(action.payload)) {
         types = [
           ...state.types,

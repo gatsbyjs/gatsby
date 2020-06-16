@@ -221,7 +221,7 @@ export interface IGatsbyState {
       withFieldTypes?: boolean
     } | null
     thirdPartySchemas: GraphQLSchema[]
-    types: string[]
+    types: (string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin })[]
   }
   themes: any // TODO
   logs: IGatsbyCLIState
