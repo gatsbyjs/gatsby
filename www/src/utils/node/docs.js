@@ -79,20 +79,20 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       childMdx: Mdx
     }
 
-    type GatsbyAPICall implements Node {
+    type GatsbyAPICall implements Node @derivedTypes @dontInfer {
       name: String
       file: String
       group: String
       codeLocation: GatsbyAPICallCodeLocation
     }
 
-    type GatsbyAPICallCodeLocation {
+    type GatsbyAPICallCodeLocation @dontInfer {
       filename: Boolean
       end: GatsbyAPICallEndpoint
       start: GatsbyAPICallEndpoint
     }
 
-    type GatsbyAPICallEndpoint {
+    type GatsbyAPICallEndpoint @dontInfer {
       column: Int
       line: Int
     }
