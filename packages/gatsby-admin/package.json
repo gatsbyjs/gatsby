@@ -22,6 +22,7 @@
     "gatsby-plugin-typescript": "^2.4.6",
     "gatsby-source-graphql": "^2.5.5",
     "ncp": "^2.0.0",
+    "nodemon": "^2.0.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.0.0",
