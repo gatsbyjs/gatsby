@@ -7,7 +7,7 @@ Learn how to use Gatsby to build websites powered by the JAMStack, a modern arch
 
 ## What is the JAMStack?
 
-JAMStack is a modern architecture for building websites and applications. The _<abbr>JAM</abbr>_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup. Unlike websites built using WordPress or Drupal, JAMStack sites do not require a database. You can even skip the webserver, and opt to host your site using an object storage service and a content delivery network (or CDN).
+JAMStack is a modern architecture for building websites and applications. The _JAM_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup. Unlike websites built using WordPress or Drupal, JAMStack sites do not require a database. You can even skip the webserver, and opt to host your site using an object storage service and a content delivery network (or CDN).
 
 With more traditional websites, such as those built using WordPress or Drupal, content is stored in a database. There's also a presentation layer of template files that mix HTML markup with template tags. Template tags are placeholders for pieces of content, e.g. `{{ title }}` for the title of the page.
 
