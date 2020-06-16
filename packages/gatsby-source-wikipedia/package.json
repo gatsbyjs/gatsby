@@ -31,7 +31,7 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "node-fetch": "^2.6.0",
-    "query-string": "^6.12.1"
+    "query-string": "^6.13.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

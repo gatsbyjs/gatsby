@@ -60,7 +60,7 @@
     "@types/yargs": "^15.0.4",
     "babel-preset-gatsby-package": "^0.4.4",
     "cross-env": "^5.2.1",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.5"
   },
   "files": [
     "lib",

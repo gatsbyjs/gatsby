@@ -31,7 +31,7 @@
   "devDependencies": {
     "agadoo": "^1.1.0",
     "cross-env": "^5.2.1",
-    "microbundle": "^0.12.0",
+    "microbundle": "^0.12.1",
     "preval.macro": "^3.0.0"
   },
   "engines": {

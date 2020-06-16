@@ -30,8 +30,8 @@
     "strict-ui": "^0.1.3",
     "subscriptions-transport-ws": "^0.9.16",
     "theme-ui": "^0.4.0-alpha.3",
-    "typescript": "^3.9.3",
-    "urql": "^1.9.7",
+    "typescript": "^3.9.5",
+    "urql": "^1.9.8",
     "yup": "^0.29.1"
   },
   "scripts": {
