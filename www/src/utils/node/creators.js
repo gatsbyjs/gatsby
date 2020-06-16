@@ -10,7 +10,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       location: String
       website: String
       github: String
-      image: File!
+      image: File! @relativeFilePath
       for_hire: Boolean
       hiring: Boolean
       portfolio: Boolean
