@@ -61,6 +61,41 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       section: String
       locale: String
     }
+
+    type File implements Node {
+      childrenDocumentationJs: DocumentationJs
+      fields: FileFields
+    }
+
+    # Added by gatsby-transformer-gitinfo
+    # TODO add these back upstream
+    type FileFields {
+      gitLogLatestDate: Date @dateformat
+      gitLogLatestAuthorName: String
+      gitLogLatestAuthorEmail: String
+    }
+
+    type DocumentationJSComponentDescription implements Node {
+      childMdx: Mdx
+    }
+
+    type GatsbyAPICall implements Node {
+      name: String
+      file: String
+      group: String
+      codeLocation: GatsbyAPICallCodeLocation
+    }
+
+    type GatsbyAPICallCodeLocation {
+      filename: Boolean
+      end: GatsbyAPICallEndpoint
+      start: GatsbyAPICallEndpoint
+    }
+
+    type GatsbyAPICallEndpoint {
+      column: Int
+      line: Int
+    }
   `)
 }
 
