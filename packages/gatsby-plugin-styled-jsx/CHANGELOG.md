@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.3.4...gatsby-plugin-styled-jsx@3.3.5) (2020-06-15)
+
+### Bug Fixes
+
+- links zeit to vercel ([#24786](https://github.com/gatsbyjs/gatsby/issues/24786)) ([f14c99b](https://github.com/gatsbyjs/gatsby/commit/f14c99b))
+
 ## [3.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-jsx@3.3.3...gatsby-plugin-styled-jsx@3.3.4) (2020-06-09)
 
 **Note:** Version bump only for package gatsby-plugin-styled-jsx
