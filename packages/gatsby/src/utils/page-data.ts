@@ -17,10 +17,10 @@ interface IPageDataWithQueryResult extends IPageData {
 export const fixedPagePath = (pagePath: string): string =>
   pagePath === `/` ? `index` : pagePath
 
-const getFilePath = (publicDir: string, pagePath: string): string =>
+export const getFilePath = (publicDir: string, pagePath: string): string =>
   path.join(publicDir, `page-data`, fixedPagePath(pagePath), `page-data.json`)
 
-export const read = async (
+export const readPageData = async (
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> => {
@@ -30,7 +30,7 @@ export const read = async (
   return JSON.parse(rawPageData)
 }
 
-export const remove = async (
+export const removePageData = async (
   publicDir: string,
   pagePath: string
 ): Promise<void> => {
@@ -43,7 +43,7 @@ export const remove = async (
   return Promise.resolve()
 }
 
-export const write = async (
+export const writePageData = async (
   publicDir: string,
   { componentChunkName, matchPath, path }: IPageData,
   result: IPageDataWithQueryResult["result"]
