@@ -6660,3 +6660,15 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://cocky-williams-9d49bd.netlify.app/
+  repo: https://github.com/peterdurham/gatsby-starter-blog-boost
+  description: A Netlify CMS powered blog starter to jumpstart your personal or company's development.
+  tags:
+    - Blog
+    - Markdown
+    - Netlify CMS
+  features:
+    - Articles (Blog Post) CMS Model 
+    - Topics pages
+    - Tag Pages
+    - Mobile ready
