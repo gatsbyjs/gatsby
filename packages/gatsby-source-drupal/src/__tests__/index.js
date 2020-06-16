@@ -213,6 +213,13 @@ describe(`gatsby-source-drupal`, () => {
     )
   })
 
+  it(`Skips File Downloads`, async () => {
+    const skipFileDownloads = true
+    expect(createRemoteFileNode).toBeCalledTimes(8)
+    await sourceNodes(args, { baseUrl, skipFileDownloads })
+    expect(createRemoteFileNode).toBeCalledTimes(8)
+  })
+
   describe(`Update webhook`, () => {
     describe(`Update content`, () => {
       describe(`Before update`, () => {
