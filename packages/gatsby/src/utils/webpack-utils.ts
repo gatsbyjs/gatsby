@@ -223,24 +223,18 @@ export const createWebpackUtils = (
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
           plugins: (loader: Loader): postcss.Plugin<any>[] => {
-            const autoprefixerOptions = {
-              overrideBrowserslist,
-              flexbox: `no-2009`,
-            }
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
-            if (plugins && plugins.length) {
-              const autoprefixerOverride: autoprefixer.Autoprefixer = plugins.find(
+            const autoprefixerPlugin = autoprefixer({
+              overrideBrowserslist,
+              flexbox: `no-2009`,
+              ...((plugins.find(
                 plugin => plugin.postcssPlugin === `autoprefixer`
-              )
-              Object.assign(
-                autoprefixerOptions,
-                autoprefixerOverride.options || {}
-              )
-            }
+              ) as autoprefixer.Autoprefixer)?.options ?? {}),
+            })
 
-            return [flexbugs, autoprefixer(autoprefixerOptions), ...plugins]
+            return [flexbugs, autoprefixerPlugin, ...plugins]
           },
           ...postcssOpts,
         },
