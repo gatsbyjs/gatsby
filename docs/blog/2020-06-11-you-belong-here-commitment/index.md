@@ -39,7 +39,7 @@ So, where do we go from here? As we move forward we believe it is important to c
 
 - **We commit to making impactful changes** to our interviewing practices by experimenting with iterations of blind recruitment and the Rooney rule. We want to remove any and all obstacles to a fair and equitable recruitment process.
 
-- **We commit to refining our employer brand** to ensure that [our core values](https://www.gatsbyjs.org/docs/gatsby-core-philosophy/) are represented in every touchpoint in the recruitment process and that our approach is differentiated so that it speaks to the experiences of all identities. This will allow candidates to make the best decision for themselves when it comes to joining our team.
+- **We commit to refining our employer brand** to ensure that [our core values](/docs/gatsby-core-philosophy/) are represented in every touchpoint in the recruitment process and that our approach is differentiated so that it speaks to the experiences of all identities. This will allow candidates to make the best decision for themselves when it comes to joining our team.
 
 To make these intentions are made visible both inside and outside of Gatsby, **we commit to building measurable objectives** by which to assess our progress in both diversity and inclusion so that we may hold ourselves accountable. And, finally, **we commit to periodically publishing the results** of these objectives to show the community what we are doing and continue to invite further conversations.
 
