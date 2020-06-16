@@ -76,7 +76,7 @@ plugins: [
       // Available keys are: articles, blogs, collections, products, shopPolicies, and pages
       // Queries need to accept arguments for first and after
       // Defaults can be found in ./src/queries.js
-      queries: {
+      shopifyQueries: {
         products: `
           query GetProducts($first: Int!, $after: String) {
             products(first: $first, after: $after) {
