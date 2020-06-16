@@ -6,7 +6,7 @@ import { store } from "../redux"
 
 interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
-  matchPath: IGatsbyPage["matchPath"]
+  matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
 }
 
@@ -14,26 +14,33 @@ interface IPageDataWithQueryResult extends IPageData {
   result: ExecutionResult
 }
 
-export const fixedPagePath = (pagePath: string): string =>
-  pagePath === `/` ? `index` : pagePath
+export function fixedPagePath(pagePath: string): string {
+  return pagePath === `/` ? `index` : pagePath
+}
 
-export const getFilePath = (publicDir: string, pagePath: string): string =>
-  path.join(publicDir, `page-data`, fixedPagePath(pagePath), `page-data.json`)
+export function getFilePath(publicDir: string, pagePath: string): string {
+  return path.join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `page-data.json`
+  )
+}
 
-export const readPageData = async (
+export async function readPageData(
   publicDir: string,
   pagePath: string
-): Promise<IPageDataWithQueryResult> => {
+): Promise<IPageDataWithQueryResult> {
   const filePath = getFilePath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
 }
 
-export const removePageData = async (
+export async function removePageData(
   publicDir: string,
   pagePath: string
-): Promise<void> => {
+): Promise<void> {
   const filePath = getFilePath(publicDir, pagePath)
 
   if (fs.existsSync(filePath)) {
@@ -43,11 +50,11 @@ export const removePageData = async (
   return Promise.resolve()
 }
 
-export const writePageData = async (
+export async function writePageData(
   publicDir: string,
   { componentChunkName, matchPath, path }: IPageData,
   result: IPageDataWithQueryResult["result"]
-): Promise<void> => {
+): Promise<void> {
   const filePath = getFilePath(publicDir, path)
   const body = {
     componentChunkName,
