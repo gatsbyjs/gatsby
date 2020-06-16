@@ -17,12 +17,21 @@ export async function sourceNodes({
   })
   activity.start()
   // const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
-  await sourceNodesAndGc({
+  await sourceNodesAndRemoveStaleNodes({
     parentSpan: activity.span,
     // deferNodeMutation: !!(webhookBody && Object.keys(webhookBody).length), // Coming soon
     webhookBody,
   })
-  reporter.info(`Checking for deleted pages`)
+
+  reporter.verbose(
+    `Now have ${store.getState().nodes.size} nodes with ${
+      store.getState().nodesByType.size
+    } types: [${[...store.getState().nodesByType.entries()]
+      .map(([type, nodes]) => type + `:` + nodes.size)
+      .join(`, `)}]`
+  )
+
+  // reporter.info(`Checking for deleted pages`)
 
   // Add this back when we enable page creation outside of onCreatePages
   // const tim = reporter.activityTimer(`Checking for changed pages`)

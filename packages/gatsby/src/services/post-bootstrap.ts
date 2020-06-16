@@ -20,7 +20,4 @@ export async function postBootstrap({
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_FINISHED`
   )
-
-  // eslint-disable-next-line no-unused-expressions
-  parentSpan?.finish()
 }

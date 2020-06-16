@@ -10,7 +10,6 @@ import telemetry from "gatsby-telemetry"
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
-import { Span } from "opentracing"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
 import JestWorker from "jest-worker"
@@ -22,13 +21,10 @@ import reporter from "gatsby-cli/lib/reporter"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { ErrorMeta } from "gatsby-cli/lib/reporter/types"
-import { globalTracer } from "opentracing"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
-
-const tracer = globalTracer()
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, reason => {
@@ -44,17 +40,13 @@ export async function initialize(
   context: IBuildContext
 ): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  bootstrapSpan: Span
   workerPool: JestWorker
 }> {
   const args = context.program
-
+  const { parentSpan } = context
   if (!args) {
     reporter.panic(`Missing program args`)
   }
-
-  const spanArgs = context.parentSpan ? { childOf: context.parentSpan } : {}
-  const bootstrapSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
   /* Time for a little story...
    * When running `gatsby develop`, the globally installed gatsby-cli starts
@@ -111,7 +103,7 @@ export async function initialize(
 
   // Try opening the site's gatsby-config.js file.
   let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
   activity.start()
   const { configModule, configFilePath } = await getConfigFile(
@@ -170,7 +162,7 @@ export async function initialize(
   store.dispatch(removeStaleJobs(store.getState()))
 
   activity = reporter.activityTimer(`load plugins`, {
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
   activity.start()
   const flattenedPlugins = await loadPlugins(config, program.directory)
@@ -189,7 +181,7 @@ export async function initialize(
 
   // onPreInit
   activity = reporter.activityTimer(`onPreInit`, {
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
@@ -204,7 +196,7 @@ export async function initialize(
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
       {
-        parentSpan: bootstrapSpan,
+        parentSpan,
       }
     )
     activity.start()
@@ -218,7 +210,7 @@ export async function initialize(
   }
 
   activity = reporter.activityTimer(`initialize cache`, {
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
   activity.start()
   // Check if any plugins have been updated since our last run. If so
@@ -290,7 +282,7 @@ export async function initialize(
   activity.end()
 
   activity = reporter.activityTimer(`copy gatsby files`, {
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
   activity.start()
   const srcDir = `${__dirname}/../../cache-dir`
@@ -407,7 +399,7 @@ export async function initialize(
 
   // onPreBootstrap
   activity = reporter.activityTimer(`onPreBootstrap`, {
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
   activity.start()
   await apiRunnerNode(`onPreBootstrap`, {
@@ -421,7 +413,7 @@ export async function initialize(
   // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`, {
     traceId: `initial-resolvableExtensions`,
-    parentSpan: bootstrapSpan,
+    parentSpan,
   })
 
   store.dispatch({
@@ -433,7 +425,6 @@ export async function initialize(
 
   return {
     store,
-    bootstrapSpan,
     workerPool,
   }
 }

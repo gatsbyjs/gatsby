@@ -9,16 +9,25 @@ import {
   createPages,
   createPagesStatefully,
   extractQueries,
+  writeOutRedirects,
+  postBootstrap,
+  rebuildSchemaWithSitePage,
 } from "../services"
-import { Runner } from "./create-graphql-runner"
-import { writeOutRedirects } from "../services/write-out-redirects"
-import { postBootstrap } from "../services/post-bootstrap"
-import { rebuildWithSitePage } from "../schema"
+import { Runner, createGraphQLRunner } from "./create-graphql-runner"
+import reporter from "gatsby-cli/lib/reporter"
+import { globalTracer } from "opentracing"
+const tracer = globalTracer()
 
 export async function bootstrap(
   initialContext: IBuildContext
 ): Promise<{ bootstrapGraphQLFunction: Runner }> {
-  const context: IBuildContext = {
+  const spanArgs = initialContext.parentSpan
+    ? { childOf: initialContext.parentSpan }
+    : {}
+
+  initialContext.parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+
+  const context = {
     ...initialContext,
     ...(await initialize(initialContext)),
   }
@@ -26,15 +35,18 @@ export async function bootstrap(
   await customizeSchema(context)
   await sourceNodes(context)
 
-  const { bootstrapGraphQLFunction } = await buildSchema(context)
+  await buildSchema(context)
 
-  context.bootstrapGraphQLFunction = bootstrapGraphQLFunction
+  context.bootstrapGraphQLFunction = createGraphQLRunner(
+    context.store,
+    reporter
+  )
 
   await createPages(context)
 
   await createPagesStatefully(context)
 
-  await rebuildWithSitePage(context)
+  await rebuildSchemaWithSitePage(context)
 
   await extractQueries(context)
 
@@ -46,5 +58,7 @@ export async function bootstrap(
 
   await postBootstrap(context)
 
-  return { bootstrapGraphQLFunction }
+  initialContext.parentSpan.finish()
+
+  return { bootstrapGraphQLFunction: context.bootstrapGraphQLFunction }
 }
