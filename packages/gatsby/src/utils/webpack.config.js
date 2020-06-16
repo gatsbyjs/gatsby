@@ -51,7 +51,7 @@ module.exports = async (
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
     const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
-    // config env is dependant on the env that it's run, this can be anything from staging-production
+    // config env is dependent on the env that it's run, this can be anything from staging-production
     // this allows you to set use different .env environments or conditions in gatsby files
     const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
     const envFile = path.join(process.cwd(), `./.env.${configEnv}`)
@@ -403,6 +403,9 @@ module.exports = async (
         "create-react-context": directoryPath(`.cache/create-react-context.js`),
         "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
           require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        ),
+        "socket.io-client": path.dirname(
+          require.resolve(`socket.io-client/package.json`)
         ),
       },
       plugins: [

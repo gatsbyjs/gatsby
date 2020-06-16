@@ -16,7 +16,7 @@ import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { startPluginRunner } from "../redux/plugin-runner"
 const { store, emitter } = require(`../redux`)
 import { internalActions } from "../redux/actions"
-const loadPlugins = require(`./load-plugins`)
+const { loadPlugins } = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 import { getConfigFile } from "./get-config-file"
@@ -31,7 +31,7 @@ process.on(`unhandledRejection`, (reason, p) => {
 
 import { createGraphQLRunner } from "./create-graphql-runner"
 const { extractQueries } = require(`../query/query-watcher`)
-const requiresWriter = require(`./requires-writer`)
+import * as requiresWriter from "./requires-writer"
 import { writeRedirects, startRedirectListener } from "./redirects-writer"
 
 // Override console.log to add the source file + line number.
@@ -43,6 +43,7 @@ type BootstrapArgs = {
   directory: string,
   prefixPaths?: boolean,
   parentSpan: Object,
+  graphqlTracing: boolean,
 }
 
 module.exports = async (args: BootstrapArgs) => {
@@ -456,7 +457,10 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphQLRunner(store, reporter)
+  const graphqlRunner = createGraphQLRunner(store, reporter, {
+    graphqlTracing: args.graphqlTracing,
+    parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan,
+  })
 
   // Collect pages.
   activity = reporter.activityTimer(`createPages`, {

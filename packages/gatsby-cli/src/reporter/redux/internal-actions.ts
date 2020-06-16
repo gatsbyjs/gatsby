@@ -45,9 +45,10 @@ signalExit(() => {
 
 let cancelDelayedSetStatus: (() => void) | null
 // TODO: THIS IS NOT WORKING ATM
-export const setStatus = (status: string, force: boolean = false) => (
-  dispatch: Dispatch<ISetStatus>
-): void => {
+export const setStatus = (
+  status: ActivityStatuses | "",
+  force: boolean = false
+) => (dispatch: Dispatch<ISetStatus>): void => {
   const currentStatus = getStore().getState().logs.status
   if (cancelDelayedSetStatus) {
     cancelDelayedSetStatus()

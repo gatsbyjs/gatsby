@@ -22,6 +22,7 @@ export const getPageInfo = <TContext = any>({
       itemCount: `Int!`,
       pageCount: `Int!`,
       perPage: `Int`,
+      totalCount: `Int!`,
     })
   })
 
@@ -101,7 +102,7 @@ export const getPagination = <TContext = any>({
     typeComposer,
     inputTypeComposer,
   })
-  const fields = {
+  const fields: { [key: string]: any } = {
     distinct: {
       type: [`String!`],
       args: {

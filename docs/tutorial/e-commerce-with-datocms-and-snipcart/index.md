@@ -57,7 +57,7 @@ Authorize Gatsby to connect with your DatoCMS account and hit the "Start my site
 
 ## Exploring the DatoCMS Project
 
-After sucessfully linking the DatoCMS you can click on "Start my site" and
+After successfully linking the DatoCMS you can click on "Start my site" and
 follow the link in Gatsby Cloud to go straight to your project in DatoCMS.
 
 Click on "Enter project" and select "Products" from the secondary navigation menu. You'll see a number of products already defined for you. You can delete or edit these as you'd like.
@@ -339,7 +339,7 @@ render={data => (
                   data-item-price={product.price}
                   data-item-image={product.image.url}
                   data-item-name={product.name}
-                  data-item-url={`https://determined-easley-e806d0.netlify.com/`}
+                  data-item-url={`https://determined-easley-e806d0.netlify.app/`}
                 >
                   Add to cart
                 </button>
@@ -408,7 +408,7 @@ You've already done most of the work needed to launch your new online store. All
 - update the value of `data-item-url` in your product HTML
 - use your live Snipcart API key
 
-The `data-item-url` attribute needs to match the live page where the products can be bought, which Snipcart crawls to verify the the order. In testing, a slash is fine. To get your site ready to go live, you'll need to replace the slash with the actual URL.
+The `data-item-url` attribute needs to match the live page where the products can be bought, which Snipcart crawls to verify the order. In testing, a slash is fine. To get your site ready to go live, you'll need to replace the slash with the actual URL.
 
 ```jsx:title=index.js
 data-item-url={`URL of your live product page`}

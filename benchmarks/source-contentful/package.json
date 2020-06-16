@@ -5,9 +5,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "clean": "gatsby clean",
     "build": "gatsby build",
     "data-update": "cross-env NODE_ENV=production node bin/site.js data-update",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby serve",

@@ -55,7 +55,7 @@ Let's step back and discuss why we're building Gatsby and how our new Cloud plat
 
 For most of the history of the web, the dominant web architecture has been the LAMP stack e.g., applications like WordPress. But the last decade has seen the rise of two enormous trends—cloud computing and JavaScript-rich web apps (driven by component frameworks like React). Gatsby was founded around the idea that web architectures are converging on these two ideas and will be foundational for decades to come.
 
-Gatsby provides the building blocks for a modern web site:
+Gatsby provides the building blocks for a modern website:
 
 - **JavaScript Component Library**. Gatsby sites are React apps, so you can create high-quality, dynamic web apps, from blogs to e-commerce sites to user dashboards.
 - **Load Data From Anywhere**. Gatsby pulls in data from any data source, whether it's Markdown files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins to load your data, then develop using Gatsby's uniform GraphQL interface.
@@ -98,7 +98,7 @@ https://youtu.be/AmkI2iH6c40
 
 We'll soon be shipping a fast build service that will dramatically speed up your Gatsby builds. It will provide feedback while you develop and deploy your code and content changes to your hosting platform.
 
-Gatsby Cloud Builds works in similar ways to build services like Heroku, Netlify, Zeit, and others that integrate with GitHub and other services to automatically build and deploy your site when you make changes. We integrate with a number of different CDNs such as Netlify, Fastly, and Firebase as well as the major cloud providers so you can host your site wherever you'd like.
+Gatsby Cloud Builds works in similar ways to build services like Heroku, Netlify, Vercel, and others that integrate with GitHub and other services to automatically build and deploy your site when you make changes. We integrate with a number of different CDNs such as Netlify, Fastly, and Firebase as well as the major cloud providers so you can host your site wherever you'd like.
 
 We're tackling this problem in our Gatsby Cloud Builds service through two strategies that take advantage of the special nature of cloud computing.
 
