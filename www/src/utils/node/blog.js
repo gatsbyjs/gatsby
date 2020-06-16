@@ -39,10 +39,10 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       excerpt: String
     }
 
-    type AuthorYaml implements Node @dontInfer {
+    type AuthorYaml implements Node {
       id: String!
       bio: String!
-      avatar: File
+      avatar: File @fileByRelativePath
       twitter: String
       fields: AuthorYamlFields!
     }
