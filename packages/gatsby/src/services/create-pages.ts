@@ -5,7 +5,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 
 export async function createPages({
   parentSpan,
-  bootstrapGraphQLFunction,
+  gatsbyNodeGraphQLFunction,
   store,
 }: Partial<IBuildContext>): Promise<void> {
   if (!store) {
@@ -21,7 +21,7 @@ export async function createPages({
   await apiRunnerNode(
     `createPages`,
     {
-      graphql: bootstrapGraphQLFunction,
+      graphql: gatsbyNodeGraphQLFunction,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,

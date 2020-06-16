@@ -70,7 +70,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { bootstrapGraphQLFunction } = await bootstrap({
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({
     program,
     parentSpan: buildSpan,
   })
@@ -90,7 +90,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
 
   await apiRunnerNode(`onPreBuild`, {
-    graphql: bootstrapGraphQLFunction,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -255,7 +255,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: bootstrapGraphQLFunction,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()

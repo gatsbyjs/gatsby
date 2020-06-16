@@ -18,7 +18,7 @@ export interface IBuildContext {
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
-  bootstrapGraphQLFunction?: Runner
+  gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
   queryIds?: IGroupedQueryIds
   webhookBody?: Record<string, unknown>

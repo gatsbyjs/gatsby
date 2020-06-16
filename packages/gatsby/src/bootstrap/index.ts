@@ -20,7 +20,7 @@ const tracer = globalTracer()
 
 export async function bootstrap(
   initialContext: IBuildContext
-): Promise<{ bootstrapGraphQLFunction: Runner }> {
+): Promise<{ gatsbyNodeGraphQLFunction: Runner }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
     : {}
@@ -37,7 +37,7 @@ export async function bootstrap(
 
   await buildSchema(context)
 
-  context.bootstrapGraphQLFunction = createGraphQLRunner(
+  context.gatsbyNodeGraphQLFunction = createGraphQLRunner(
     context.store,
     reporter
   )
@@ -60,5 +60,5 @@ export async function bootstrap(
 
   initialContext.parentSpan.finish()
 
-  return { bootstrapGraphQLFunction: context.bootstrapGraphQLFunction }
+  return { gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction }
 }
