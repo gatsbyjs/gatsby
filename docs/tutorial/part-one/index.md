@@ -363,7 +363,7 @@ The Gatsby `<Link />` component is for linking between pages within your site. F
 
 Gatsby is a _modern site generator_, which means there are no servers to set up or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTML and JavaScript files which you can deploy to a static site hosting service.
 
-Try using [Surge](http://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which makes it possible to deploy Gatsby sites.
+Try using [Surge](https://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which makes it possible to deploy Gatsby sites.
 
 > Gatsby Cloud is another deployment option, built by the team behind Gatsby. In the next section, you'll find instructions for [deploying to Gatsby Cloud](/tutorial/part-one/#alternative-deploying-to-gatsby-cloud).
 

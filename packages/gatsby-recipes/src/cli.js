@@ -140,7 +140,7 @@ const RecipesList = ({ setRecipe }) => {
       value: `gatsby-plugin-react-helmet.mdx`,
     },
     {
-      label: `Add Github Pages deployment with Travis`,
+      label: `Add GitHub Pages deployment with Travis CI`,
       value: `travis-deploy-github-pages.mdx`,
     },
     {
