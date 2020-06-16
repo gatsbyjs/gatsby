@@ -58,10 +58,6 @@ module.exports = {
     description: `Blazing fast modern site generator for React`,
     twitter: `@gatsbyjs`,
   },
-  mapping: {
-    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
-    "Mdx.frontmatter.author": `AuthorYaml`,
-  },
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
