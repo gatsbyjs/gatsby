@@ -24,6 +24,26 @@ Note that you have to parse the `search` field (the [query string](https://devel
 
 Using `hash` in JavaScript is one way to update the browser URL and the DOM without having the browser do a full HTML page reload. HashHistory in `@reach/router` is used to track browser history with JavaScript when using [hashrouter](https://reacttraining.com/react-router/web/api/HashRouter) instead of [browserrouter](https://reacttraining.com/react-router/web/api/BrowserRouter) which uses the newer HTML5 `history` API.
 
+### Getting the absolute URL of a page
+
+The location properties generally do not include the domain of your site, since Gatsby does know where you will deploy it.
+
+This is different when the code is running [client side](/docs/glossary#client-side). In this case, all the information your browser exposes as `window.location` is available. This includes `href` for the absolute URL of the page including domain.
+
+Sometimes you need the absolute URL of the current page (including the host name) while using [server-side rendering](/docs/glossary/server-side-rendering/). This is for example the case if you want to add a canonical URL to the page header.
+
+In this case, you would first need to add configuration that describes where you site is deployed. You can for example add this as a `siteURL` entry in `siteMetadata` in the [Gatsby Config](/docs/gatsby-config/).
+
+Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenting it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
+
+```js
+const Page = ({ location, data }) => {
+  const canonicalUrl = data.site.siteMetadata.siteURL + location.pathname)
+
+  return <div>The URL of this page is {canonicalUrl}</div>
+}
+```
+
 ## Use cases
 
 Through client-side routing in Gatsby you can provide a location object instead of strings, which are helpful in a number of situations:
