@@ -41,6 +41,6 @@ So, where do we go from here? As we move forward we believe it is important to c
 
 - **We commit to refining our employer brand** to ensure that [our core values](/docs/gatsby-core-philosophy/) are represented in every touchpoint in the recruitment process and that our approach is differentiated so that it speaks to the experiences of all identities. This will allow candidates to make the best decision for themselves when it comes to joining our team.
 
-To make these intentions are made visible both inside and outside of Gatsby, **we commit to building measurable objectives** by which to assess our progress in both diversity and inclusion so that we may hold ourselves accountable. And, finally, **we commit to periodically publishing the results** of these objectives to show the community what we are doing and continue to invite further conversations.
+To make sure these intentions are made visible both inside and outside of Gatsby, **we commit to building measurable objectives** by which to assess our progress in both diversity and inclusion so that we may hold ourselves accountable. And, finally, **we commit to periodically publishing the results** of these objectives to show the community what we are doing and continue to invite further conversations.
 
 This is in no way a final or finished statement, but rather the foundation of all the work to come. An initial step taken humbly in the hope that you will hold us accountable as we learn and grow in this process. We hope you join us in the journey. Because you belong here.
