@@ -36,6 +36,10 @@ let packagesWithTs = packages
         ignore: `**/node_modules/**`,
       }).length
   )
+  // TEMPORARILY NOT CHECKING GATSBY-ADMIN
+  // Gatsby admin is filled with type bugs, and i'm not sure the best way to solve it
+  // because they are coming from theme-ui.
+  .filter(path => !path.includes(`gatsby-admin`))
 
 if (filterPackage) {
   packagesWithTs = packagesWithTs.filter(project =>

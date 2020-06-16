@@ -5,7 +5,7 @@ import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
 } from "../utils/page-html"
-import { remove as removePageDataFile, fixedPagePath } from "../utils/page-data"
+import { removePageData, fixedPagePath } from "../utils/page-data"
 import { IGatsbyState } from "../redux/types"
 
 const checkFolderIsEmpty = (path: string): boolean =>
@@ -82,11 +82,11 @@ export const removePageFiles = async (
     removePageHtmlFile({ publicDir }, pagePath)
   )
 
-  const removePageData = pageKeys.map(pagePath =>
-    removePageDataFile({ publicDir }, pagePath)
+  const removePageDataList = pageKeys.map(pagePath =>
+    removePageData(publicDir, pagePath)
   )
 
-  return Promise.all([...removePages, ...removePageData]).then(() => {
+  return Promise.all([...removePages, ...removePageDataList]).then(() => {
     // Sort removed pageKeys by nested directories and remove if empty.
     sortedPageKeysByNestedLevel(pageKeys).forEach(pagePath => {
       checkAndRemoveEmptyDir(publicDir, pagePath)
