@@ -1,9 +1,8 @@
 import { IGatsbyState, ActionsUnion } from "../types"
-import { createSchemaComposer } from "../../schema/schema-composer"
 
 const initialState = (): IGatsbyState["schemaCustomization"] => {
   return {
-    composer: createSchemaComposer(),
+    composer: null,
     context: {},
     fieldExtensions: {},
     printConfig: null,

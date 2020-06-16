@@ -201,6 +201,12 @@ async function startServer(program: IProgram): Promise<IServer> {
       (): graphqlHTTP.OptionsData => {
         const { schema, schemaCustomization } = store.getState()
 
+        if (!schemaCustomization.composer) {
+          throw new Error(
+            `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
+          )
+        }
+
         return {
           schema,
           graphiql: false,
