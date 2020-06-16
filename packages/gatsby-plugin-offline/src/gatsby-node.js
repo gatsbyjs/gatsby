@@ -141,12 +141,12 @@ exports.onPostBuild = (
       {
         // page-data.json files are not content hashed
         urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        handler: `NetworkFirst`,
+        handler: `StaleWhileRevalidate`,
       },
       {
         // app-data.json is not content hashed
         urlPattern: /^https?:.*\/page-data\/app-data\.json/,
-        handler: `NetworkFirst`,
+        handler: `StaleWhileRevalidate`,
       },
       {
         // Add runtime caching of various other page resources
