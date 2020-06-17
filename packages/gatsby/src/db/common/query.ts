@@ -50,7 +50,7 @@ export function createDbQueriesFromObject(filter: object): Array<DbQuery> {
 }
 
 function createDbQueriesFromObjectNested(
-  filter: object,
+  filter: Record<string, any>,
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
