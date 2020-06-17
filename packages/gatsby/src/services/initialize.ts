@@ -20,15 +20,15 @@ import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
-import { ErrorMeta } from "gatsby-cli/lib/reporter/types"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 
 // Show stack trace on unhandled promises.
-process.on(`unhandledRejection`, reason => {
-  reporter.panic({ id: ``, context: reason } as ErrorMeta)
+process.on(`unhandledRejection`, (reason: unknown) => {
+  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33636
+  reporter.panic((reason as Error) || `Unhandled rejection`)
 })
 
 // Override console.log to add the source file + line number.
