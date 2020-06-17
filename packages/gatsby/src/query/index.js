@@ -306,7 +306,7 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
   listenerQueue = new Queue((queryJobs, callback) => {
     const activity = createQueryRunningActivity(queryJobs.length)
 
-    const onFinish = async (...arg) => {
+    const onFinish = (...arg) => {
       pageDataUtil.enqueueFlush()
       activity.done()
       return callback(...arg)

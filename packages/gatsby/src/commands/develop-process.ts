@@ -636,7 +636,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, async function (
+  compiler.hooks.done.tapAsync(`print gatsby instructions`, function (
     stats,
     done
   ) {
