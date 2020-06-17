@@ -1,9 +1,6 @@
 import { Span } from "opentracing"
 import { IStructuredError } from "./structured-errors/types"
 
-// TODO: This needs to be implemented when redux/acitons is converted to TS
-export type CreateLogAction = any
-
 export type ErrorMeta =
   | {
       id: string

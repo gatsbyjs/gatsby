@@ -14,12 +14,12 @@ import { createPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter } from "./reporter-progress"
 import {
   ErrorMeta,
-  CreateLogAction,
   IActivityArgs,
   IPhantomReporter,
   IProgressReporter,
   ITimerReporter,
 } from "./types"
+import { ICreateLog } from "./redux/types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -166,13 +166,13 @@ export class Reporter {
     }
   }
 
-  success = (text?: string): CreateLogAction =>
+  success = (text?: string): ICreateLog =>
     reporterActions.createLog({ level: LogLevels.Success, text })
-  info = (text?: string): CreateLogAction =>
+  info = (text?: string): ICreateLog =>
     reporterActions.createLog({ level: LogLevels.Info, text })
-  warn = (text?: string): CreateLogAction =>
+  warn = (text?: string): ICreateLog =>
     reporterActions.createLog({ level: LogLevels.Warning, text })
-  log = (text?: string): CreateLogAction =>
+  log = (text?: string): ICreateLog =>
     reporterActions.createLog({ level: LogLevels.Log, text })
 
   pendingActivity = reporterActions.createPendingActivity
