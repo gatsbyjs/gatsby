@@ -114,11 +114,11 @@ const flush = async () => {
   return
 }
 
-async function enqueueFlush() {
+function enqueueFlush() {
   if (webpackStatus.isPending()) {
     isFlushEnqueued = true
   } else {
-    await flush()
+    flush()
   }
 }
 
