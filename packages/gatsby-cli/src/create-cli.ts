@@ -14,7 +14,7 @@ import { startGraphQLServer } from "gatsby-recipes"
 const handlerP = (fn: Function) => (...args: unknown[]): void => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
-    err => reporter.r.panic(err)
+    err => reporter.panic(err)
   )
 }
 
@@ -55,8 +55,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   function resolveLocalCommand(command: string): Function | never {
     if (!isLocalSite) {
       cli.showHelp()
-      reporter.r.verbose(`current directory: ${directory}`)
-      return reporter.r.panic(
+      reporter.verbose(`current directory: ${directory}`)
+      return reporter.panic(
         `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`

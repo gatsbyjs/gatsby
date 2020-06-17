@@ -106,7 +106,7 @@ module.exports = async (args: BootstrapArgs) => {
   emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
-  let activity = reporter.r.activityTimer(`open and validate gatsby-configs`, {
+  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -165,7 +165,7 @@ module.exports = async (args: BootstrapArgs) => {
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = reporter.r.activityTimer(`load plugins`, {
+  activity = reporter.activityTimer(`load plugins`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -426,7 +426,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   await require(`../utils/source-nodes`).default({ parentSpan: activity.span })
-  reporter.r.verbose(
+  reporter.verbose(
     `Now have ${store.getState().nodes.size} nodes with ${
       store.getState().nodesByType.size
     } types: [${[...store.getState().nodesByType.entries()]
@@ -533,7 +533,7 @@ module.exports = async (args: BootstrapArgs) => {
   try {
     await requiresWriter.writeAll(store.getState())
   } catch (err) {
-    reporter.r.panic(`Failed to write out requires`, err)
+    reporter.panic(`Failed to write out requires`, err)
   }
   activity.end()
 
@@ -552,9 +552,9 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
   activity.end()
 
-  reporter.r.log(``)
-  reporter.r.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
-  reporter.r.log(``)
+  reporter.log(``)
+  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
+  reporter.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_FINISHED`
