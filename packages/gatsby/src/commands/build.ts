@@ -14,7 +14,7 @@ import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
 import { store, readState } from "../redux"
 import * as appDataUtil from "../utils/app-data"
-import { flush } from "../utils/page-data"
+import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
@@ -31,7 +31,10 @@ import {
   runStaticQueries,
   runPageQueries,
 } from "../services"
-import * as webpackStatusUtil from "../utils/webpack-status"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -59,7 +62,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  webpackStatusUtil.markAsPending()
+  markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
@@ -148,8 +151,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     store,
   })
 
-  await flush()
-  webpackStatusUtil.markAsDone()
+  await flushPendingPageDataWrites()
+  markWebpackStatusAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()

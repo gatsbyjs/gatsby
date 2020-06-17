@@ -2,7 +2,7 @@ import fs from "fs-extra"
 import path from "path"
 import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
-import * as webpackStatus from "./webpack-status"
+import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 
 import { IExecutionResult } from "../query/types"
@@ -153,7 +153,7 @@ export async function flush(): Promise<void> {
 }
 
 export function enqueueFlush(): void {
-  if (webpackStatus.isPending()) {
+  if (isWebpackStatusPending()) {
     isFlushPending = true
   } else {
     flush()

@@ -2,15 +2,15 @@ import { flush, isFlushEnqueued } from "./page-data"
 
 let isPendingStatus = false
 
-export function isPending(): boolean {
+export function isWebpackStatusPending(): boolean {
   return isPendingStatus
 }
 
-export function markAsPending(): void {
+export function markWebpackStatusAsPending(): void {
   isPendingStatus = true
 }
 
-export function markAsDone(): void {
+export function markWebpackStatusAsDone(): void {
   isPendingStatus = false
   if (isFlushEnqueued()) {
     flush()
