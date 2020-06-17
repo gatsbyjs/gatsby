@@ -10,7 +10,7 @@ export async function calculateDirtyQueries({
   if (!store) {
     reporter.panic(`Cannot run service without a redux store`)
   }
-  const state = store.getState()
+  const state = store!.getState()
   // TODO: Check filesDirty from context
 
   const queryIds = calcInitialDirtyQueryIds(state)
