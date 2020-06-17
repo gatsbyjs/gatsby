@@ -7,7 +7,7 @@ Learn how to use Gatsby to build websites powered by the JAMStack, a modern arch
 
 ## What is the JAMStack?
 
-JAMStack is a modern architecture for building websites and applications. The _<abbr>JAM</abbr>_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup. Unlike websites built using WordPress or Drupal, JAMStack sites do not require a database. You can even skip the webserver, and opt to host your site using an object storage service and a content delivery network (or CDN).
+JAMStack is a modern architecture for building websites and applications. The _JAM_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup. Unlike websites built using WordPress or Drupal, JAMStack sites do not require a database. You can even skip the webserver, and opt to host your site using an object storage service and a content delivery network (or CDN).
 
 With more traditional websites, such as those built using WordPress or Drupal, content is stored in a database. There's also a presentation layer of template files that mix HTML markup with template tags. Template tags are placeholders for pieces of content, e.g. `{{ title }}` for the title of the page.
 
@@ -21,7 +21,7 @@ A JAMStack backend is a content API that returns JSON or XML. This API can be a 
 
 ### Advantages of a JAMStack architecture
 
-JAMStack sites, such as those created with Gatsby, offer four key advantages over other web site architectures.
+JAMStack sites, such as those created with Gatsby, offer four key advantages over other website architectures.
 
 - **Speed**: JAMStack sites lack the overhead caused by software and database layers. As a result, they render and load more quickly than sites that use monolithic architectures.
 - **Hosting flexibility**: Because they're static files, JAMStack sites can be hosted anywhere. You can use traditional web server software, such as Apache or Nginx. For the best performance and security, you can use an object storage service and content delivery network such as [Netlify](/docs/deploying-to-netlify), [Render](/docs/deploying-to-render), or Amazon Web Services' [S3 and Cloudfront](/docs/deploying-to-s3-cloudfront).
