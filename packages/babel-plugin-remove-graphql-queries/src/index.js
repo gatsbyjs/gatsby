@@ -155,7 +155,9 @@ function getGraphQLTag(path) {
   }
 
   const text = quasis[0].value.raw
-  const hash = murmurhash(text, `abc`)
+  const normalizedText = graphql.stripIgnoredCharacters(text)
+
+  const hash = murmurhash(normalizedText, `abc`)
 
   try {
     const ast = graphql.parse(text)
@@ -163,7 +165,7 @@ function getGraphQLTag(path) {
     if (ast.definitions.length === 0) {
       throw new EmptyGraphQLTagError(quasis[0].loc)
     }
-    return { ast, text, hash, isGlobal }
+    return { ast, text: normalizedText, hash, isGlobal }
   } catch (err) {
     throw new GraphQLSyntaxError(text, err, quasis[0].loc)
   }

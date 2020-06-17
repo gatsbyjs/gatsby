@@ -120,7 +120,7 @@ const Typography = ({ location }) => (
           organizations, and purposeful alignments that guide the user through
           content, product, and experience.
         </Intro>
-        <Badge my={3}>
+        <Badge>
           Work in Progress{` `}
           <MdWarning style={{ fontSize: 16, marginLeft: `0.25rem` }} />
         </Badge>
