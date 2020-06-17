@@ -205,7 +205,7 @@ const Stats = connectStateResults(
 const useClickOutside = (ref, handler, events) => {
   if (!events) events = [`mousedown`, `touchstart`]
   const detectClickOutside = event =>
-    !ref.current.contains(event.target) && handler()
+    ref.current && !ref.current.contains(event.target) && handler()
   useEffect(() => {
     for (const event of events)
       document.addEventListener(event, detectClickOutside)
@@ -226,28 +226,29 @@ export default function Search({ indices, collapse, hitsAsGrid }) {
   )
   useClickOutside(ref, () => setFocus(false))
   return (
-    <InstantSearch
-      searchClient={searchClient}
-      indexName={indices[0].name}
-      onSearchStateChange={({ query }) => setQuery(query)}
-      root={{ Root, props: { ref } }}
-    >
-      <Input onFocus={() => setFocus(true)} {...{ collapse, focus }} />
-      <HitsWrapper show={query.length > 0 && focus} asGrid={hitsAsGrid}>
-        {indices.map(({ name, title, hitComp }) => (
-          <Index key={name} indexName={name}>
-            <header>
-              <h3>{title}</h3>
-              <Stats />
-            </header>
-            <Results>
-              <Hits hitComponent={hitComps[hitComp](() => setFocus(false))} />
-            </Results>
-          </Index>
-        ))}
-        <PoweredBy />
-      </HitsWrapper>
-    </InstantSearch>
+    <Root ref={ref}>
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={indices[0].name}
+        onSearchStateChange={({ query }) => setQuery(query)}
+      >
+        <Input onFocus={() => setFocus(true)} {...{ collapse, focus }} />
+        <HitsWrapper show={query.length > 0 && focus} asGrid={hitsAsGrid}>
+          {indices.map(({ name, title, hitComp }) => (
+            <Index key={name} indexName={name}>
+              <header>
+                <h3>{title}</h3>
+                <Stats />
+              </header>
+              <Results>
+                <Hits hitComponent={hitComps[hitComp](() => setFocus(false))} />
+              </Results>
+            </Index>
+          ))}
+          <PoweredBy />
+        </HitsWrapper>
+      </InstantSearch>
+    </Root>
   )
 }
 ```
