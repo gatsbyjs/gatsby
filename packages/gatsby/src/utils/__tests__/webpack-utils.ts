@@ -185,8 +185,6 @@ describe(`webpack utils`, () => {
         postcss = config.loaders.postcss()
       })
       it(`initialises autoprefixer with defaults`, () => {
-        expect(postcss).toHaveProperty(`options`)
-        expect(postcss.options).toHaveProperty(`plugins`)
         postcss.options.plugins(postcss.loader)
         expect(autoprefixer).toBeCalled()
         expect(autoprefixer).toBeCalledWith({
@@ -208,8 +206,6 @@ describe(`webpack utils`, () => {
         })
       })
       it(`initialises autoprefixer with overrides`, () => {
-        expect(postcss).toHaveProperty(`options`)
-        expect(postcss.options).toHaveProperty(`plugins`)
         postcss.options.plugins(postcss.loader)
         expect(autoprefixer).toBeCalled()
         expect(autoprefixer).toBeCalledWith({
