@@ -1,45 +1,79 @@
-// @flow
-
-const { prepareRegex } = require(`../utils/prepare-regex`)
+import { IGatsbyNode } from "./types"
+import { GatsbyGraphQLType } from "../.."
+import { prepareRegex } from "../utils/prepare-regex"
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
 import _ from "lodash"
-const {
+import {
+  DbQuery,
+  IDbQueryQuery,
+  IDbQueryElemMatch,
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
-} = require(`../db/common/query`)
-const {
+} from "../db/common/query"
+import {
+  FilterOp,
+  FilterCacheKey,
+  FiltersCache,
+  FilterValueNullable,
   ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
   intersectNodesByCounter,
-} = require(`./nodes`)
+  IFilterCache,
+} from "./nodes"
+import { IGraphQLRunnerStats } from "../query/types"
+
+// The value is an object with arbitrary keys that are either filter values or,
+// recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
+interface IInputQuery {
+  [key: string]: FilterValueNullable | IInputQuery
+}
+// Similar to IInputQuery except the comparator leaf nodes will have their
+// key prefixed with `$` and their value, in some cases, normalized.
+interface IPreparedQueryArg {
+  [key: string]: FilterValueNullable | IPreparedQueryArg
+}
+
+interface IRunFilterArg {
+  gqlType: GatsbyGraphQLType
+  queryArgs: {
+    filter: Array<IInputQuery> | undefined
+    sort:
+      | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
+      | undefined
+  }
+  firstOnly: boolean
+  resolvedFields: Record<string, any>
+  nodeTypeNames: Array<string>
+  filtersCache: FiltersCache
+  stats: IGraphQLRunnerStats
+}
 
 /**
  * Creates a key for one filterCache inside FiltersCache
- *
- * @param {Array<string>} typeNames
- * @param {DbQuery | null} filter If null the key will have empty path/op parts
- * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
  */
-function createFilterCacheKey(typeNames, filter) {
+function createFilterCacheKey(
+  typeNames: Array<string>,
+  filter: DbQuery | null
+): FilterCacheKey {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
   // (This function is future proof for elemMatch support, won't receive it yet)
-  let f = filter
+  let filterStep = filter
   let comparator = ``
-  let paths /*: Array<string>*/ = []
-  while (f) {
-    paths.push(...f.path)
-    if (f.type === `elemMatch`) {
-      let q /*: IDbQueryElemMatch*/ = f
-      f = q.nestedQuery
+  const paths: Array<string> = []
+  while (filterStep) {
+    paths.push(...filterStep.path)
+    if (filterStep.type === `elemMatch`) {
+      const q: IDbQueryElemMatch = filterStep
+      filterStep = q.nestedQuery
       // Make distinction between filtering `a.elemMatch.b.eq` and `a.b.eq`
       // In practice this is unlikely to be an issue, but it might
       paths.push(`elemMatch`)
     } else {
-      let q /*: IDbQueryQuery*/ = f
+      const q: IDbQueryQuery = filterStep
       comparator = q.query.comparator
       break
     }
@@ -49,17 +83,24 @@ function createFilterCacheKey(typeNames, filter) {
   return typeNames.join(`,`) + `/` + paths.join(`,`) + `/` + comparator
 }
 
-function prepareQueryArgs(filterFields = {}) {
+function prepareQueryArgs(
+  filterFields: Array<IInputQuery> | IInputQuery = {}
+): IPreparedQueryArg {
   const filters = {}
   Object.keys(filterFields).forEach(key => {
     const value = filterFields[key]
     if (_.isPlainObject(value)) {
       filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
-        value
+        value as IInputQuery
       )
     } else {
       switch (key) {
         case `regex`:
+          if (typeof value !== `string`) {
+            throw new Error(
+              `The $regex comparator is expecting the regex as a string, not an actual regex or anything else`
+            )
+          }
           filters[`$regex`] = prepareRegex(value)
           break
         case `glob`:
@@ -78,19 +119,18 @@ function prepareQueryArgs(filterFields = {}) {
  * filter.
  * Only nodes of given node types will be considered
  * A fast index is created if one doesn't exist yet so cold call is slower.
- *
- * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
- * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
- * @returns {Array<IGatsbyNode> | null}
  */
-function applyFastFilters(filters, nodeTypeNames, filtersCache) {
+function applyFastFilters(
+  filters: Array<DbQuery>,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache
+): Array<IGatsbyNode> | null {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
     return null
   }
 
-  const nodesPerValueArrs /*: Array<Array<IGatsbyNode>> */ = getBucketsForFilters(
+  const nodesPerValueArrs = getBucketsForFilters(
     filters,
     nodeTypeNames,
     filtersCache
@@ -102,49 +142,47 @@ function applyFastFilters(filters, nodeTypeNames, filtersCache) {
 
   if (nodesPerValueArrs.length === 0) {
     return []
+  } else {
+    // Put smallest last (we'll pop it)
+    nodesPerValueArrs.sort((a, b) => b.length - a.length)
+
+    // All elements of nodesPerValueArrs should be sorted by counter and deduped
+    // So if there's only one bucket in this list the next loop is skipped
+
+    while (nodesPerValueArrs.length > 1) {
+      // TS limitation: cannot guard against .pop(), so we must double cast
+      const a = (nodesPerValueArrs.pop() as unknown) as Array<IGatsbyNode>
+      const b = (nodesPerValueArrs.pop() as unknown) as Array<IGatsbyNode>
+      nodesPerValueArrs.push(intersectNodesByCounter(a, b))
+    }
+
+    const result = nodesPerValueArrs[0]
+
+    if (result.length === 0) {
+      // Intersection came up empty. Not one node appeared in every bucket.
+      return null
+    }
+
+    return result
   }
-
-  // Put smallest last (we'll pop it)
-  nodesPerValueArrs.sort(
-    (a /*: Array<IGatsbyNode> */, b /*: Array<IGatsbyNode> */) =>
-      b.length - a.length
-  )
-
-  // All elements of nodesPerValueArrs should be sorted by counter and deduped
-  // So if there's only one bucket in this list the next loop is skipped
-
-  while (nodesPerValueArrs.length > 1) {
-    nodesPerValueArrs.push(
-      intersectNodesByCounter(nodesPerValueArrs.pop(), nodesPerValueArrs.pop())
-    )
-  }
-
-  const result = nodesPerValueArrs[0]
-
-  if (result.length === 0) {
-    // Intersection came up empty. Not one node appeared in every bucket.
-    return null
-  }
-
-  return result
 }
 
 /**
- * @param {Array<DbQuery>} filters
- * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
- * @returns {Array<Array<IGatsbyNode>> | undefined} Undefined means at least one
- *   cache was not found
+ * If this returns undefined it means at least one cache was not found
  */
-function getBucketsForFilters(filters, nodeTypeNames, filtersCache) {
-  const nodesPerValueArrs /*: Array<Array<IGatsbyNode>>*/ = []
+function getBucketsForFilters(
+  filters: Array<DbQuery>,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache
+): Array<Array<IGatsbyNode>> | undefined {
+  const nodesPerValueArrs: Array<Array<IGatsbyNode>> = []
 
   // Fail fast while trying to create and get the value-cache for each path
-  let every = filters.every((filter /*: DbQuery*/) => {
-    let filterCacheKey = createFilterCacheKey(nodeTypeNames, filter)
+  const every = filters.every(filter => {
+    const filterCacheKey = createFilterCacheKey(nodeTypeNames, filter)
     if (filter.type === `query`) {
       // (Let TS warn us if a new query type gets added)
-      const q /*: IDbQueryQuery */ = filter
+      const q: IDbQueryQuery = filter
       return getBucketsForQueryFilter(
         filterCacheKey,
         q,
@@ -154,7 +192,7 @@ function getBucketsForFilters(filters, nodeTypeNames, filtersCache) {
       )
     } else {
       // (Let TS warn us if a new query type gets added)
-      const q /*: IDbQueryElemMatch*/ = filter
+      const q: IDbQueryElemMatch = filter
       return collectBucketForElemMatch(
         filterCacheKey,
         q,
@@ -175,29 +213,23 @@ function getBucketsForFilters(filters, nodeTypeNames, filtersCache) {
 
 /**
  * Fetch all buckets for given query filter. That means it's not elemMatch.
- *
- * @param {FilterCacheKey} filterCacheKey
- * @param {IDbQueryQuery} filter
- * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
- * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs
- * @returns {boolean} false means no nodes matched
+ * Returns `false` if it found none.
  */
 function getBucketsForQueryFilter(
-  filterCacheKey,
-  filter,
-  nodeTypeNames,
-  filtersCache,
-  nodesPerValueArrs
-) {
-  let {
+  filterCacheKey: FilterCacheKey,
+  filter: IDbQueryQuery,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache,
+  nodesPerValueArrs: Array<Array<IGatsbyNode>>
+): boolean {
+  const {
     path: filterPath,
-    query: { comparator /*: as FilterOp*/, value: filterValue },
+    query: { comparator, value: filterValue },
   } = filter
 
   if (!filtersCache.has(filterCacheKey)) {
     ensureIndexByQuery(
-      comparator,
+      comparator as FilterOp,
       filterCacheKey,
       filterPath,
       nodeTypeNames,
@@ -205,9 +237,9 @@ function getBucketsForQueryFilter(
     )
   }
 
-  const nodesPerValue /*: Array<IGatsbyNode> | undefined */ = getNodesFromCacheByValue(
+  const nodesPerValue = getNodesFromCacheByValue(
     filterCacheKey,
-    filterValue,
+    filterValue as FilterValueNullable,
     filtersCache,
     false
   )
@@ -224,31 +256,27 @@ function getBucketsForQueryFilter(
 }
 
 /**
- * @param {FilterCacheKey} filterCacheKey
- * @param {IDbQueryElemMatch} filter
- * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
- * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs Matching node arrs are put in this array
+ * Matching node arrs are put in given array by reference
  */
 function collectBucketForElemMatch(
-  filterCacheKey,
-  filter,
-  nodeTypeNames,
-  filtersCache,
-  nodesPerValueArrs
-) {
+  filterCacheKey: FilterCacheKey,
+  filter: IDbQueryElemMatch,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache,
+  nodesPerValueArrs: Array<Array<IGatsbyNode>>
+): boolean {
   // Get comparator and target value for this elemMatch
-  let comparator = ``
-  let targetValue = null
-  let f /*: DbQuery*/ = filter
+  let comparator: FilterOp = `$eq` // (Must be overridden but TS requires init)
+  let targetValue: FilterValueNullable = null
+  let f: DbQuery = filter
   while (f) {
     if (f.type === `elemMatch`) {
-      const q /*: IDbQueryElemMatch */ = f
+      const q: IDbQueryElemMatch = f
       f = q.nestedQuery
     } else {
-      const q /*: IDbQueryQuery */ = f
-      comparator = q.query.comparator
-      targetValue = q.query.value
+      const q: IDbQueryQuery = f
+      comparator = q.query.comparator as FilterOp
+      targetValue = q.query.value as FilterValueNullable
       break
     }
   }
@@ -263,7 +291,7 @@ function collectBucketForElemMatch(
     )
   }
 
-  const nodesByValue /*: Array<IGatsbyNode> | undefined*/ = getNodesFromCacheByValue(
+  const nodesByValue = getNodesFromCacheByValue(
     filterCacheKey,
     targetValue,
     filtersCache,
@@ -295,9 +323,9 @@ function collectBucketForElemMatch(
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
-function runFastFiltersAndSort(args: Object) {
+function runFastFiltersAndSort(args: IRunFilterArg): Array<IGatsbyNode> | null {
   const {
-    queryArgs: { filter, sort } = { filter: {}, sort: {} },
+    queryArgs: { filter, sort } = {},
     resolvedFields = {},
     firstOnly = false,
     nodeTypeNames,
@@ -318,23 +346,17 @@ function runFastFiltersAndSort(args: Object) {
 }
 
 /**
- * @param {Array<DbQuery> | undefined} filterFields
- * @param {boolean} firstOnly
- * @param {Array<string>} nodeTypeNames
- * @param {FiltersCache} filtersCache
- * @param resolvedFields
- * @returns {Array<IGatsbyNode> | null} Collection of results. Collection
- *   will be limited to 1 if `firstOnly` is true
+ * Return a collection of results. Collection will be limited to 1 if `firstOnly` is true
  */
 function convertAndApplyFastFilters(
-  filterFields,
-  firstOnly,
-  nodeTypeNames,
-  filtersCache,
-  resolvedFields,
-  stats
-) {
-  const filters /*: Array<DbQuery>*/ = filterFields
+  filterFields: Array<IInputQuery> | undefined,
+  firstOnly: boolean,
+  nodeTypeNames: Array<string>,
+  filtersCache: FiltersCache,
+  resolvedFields: Record<string, any>,
+  stats: IGraphQLRunnerStats
+): Array<IGatsbyNode> | null {
+  const filters = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
         resolvedFields
@@ -342,7 +364,7 @@ function convertAndApplyFastFilters(
     : []
 
   if (stats) {
-    filters.forEach((filter /*: DbQuery*/) => {
+    filters.forEach(filter => {
       const filterStats = filterToStats(filter)
       const comparatorPath = filterStats.comparatorPath.join(`.`)
       stats.comparatorsUsed.set(
@@ -357,24 +379,24 @@ function convertAndApplyFastFilters(
   }
 
   if (filters.length === 0) {
-    let filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
+    const filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
     if (!filtersCache.has(filterCacheKey)) {
       ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
     }
 
-    const cache = filtersCache.get(filterCacheKey).meta.orderedByCounter
+    // If there's a filter, there (now) must be an entry for this cache key
+    const filterCache = filtersCache.get(filterCacheKey) as IFilterCache
+    // If there is no filter then the ensureCache step will populate this:
+    const cache = filterCache.meta.orderedByCounter as Array<IGatsbyNode>
 
     if (firstOnly || cache.length) {
       return cache.slice(0)
     }
+
     return null
   }
 
-  const result /*: Array<IGatsbyNode> | null */ = applyFastFilters(
-    filters,
-    nodeTypeNames,
-    filtersCache
-  )
+  const result = applyFastFilters(filters, nodeTypeNames, filtersCache)
 
   if (result) {
     if (stats) {
@@ -398,10 +420,13 @@ function convertAndApplyFastFilters(
 }
 
 function filterToStats(
-  filter /*: DbQuery*/,
-  filterPath = [],
-  comparatorPath = []
-) {
+  filter: DbQuery,
+  filterPath: Array<string> = [],
+  comparatorPath: Array<string> = []
+): {
+  filterPath: Array<string>
+  comparatorPath: Array<string>
+} {
   if (filter.type === `elemMatch`) {
     return filterToStats(
       filter.nestedQuery,
@@ -418,15 +443,17 @@ function filterToStats(
 
 /**
  * Given a list of filtered nodes and sorting parameters, sort the nodes
- *
- * @param {Array<IGatsbyNode> | null} nodes Pre-filtered list of nodes
- * @param {Object | undefined} sort Sorting arguments
- * @param resolvedFields
- * @returns {Array<IGatsbyNode> | undefined | null} Same as input, except sorted
+ * Returns same reference as input, sorted inline
  */
-function sortNodes(nodes, sort, resolvedFields, stats) {
-  // `undefined <= 1` and `undefined > 1` are both false so invert the result...
-  if (!sort || !(nodes?.length > 1)) {
+function sortNodes(
+  nodes: Array<IGatsbyNode> | null,
+  sort:
+    | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
+    | undefined,
+  resolvedFields: any,
+  stats: IGraphQLRunnerStats
+): Array<IGatsbyNode> | null {
+  if (!sort || !nodes || nodes.length === 0) {
     return nodes
   }
 
@@ -443,8 +470,12 @@ function sortNodes(nodes, sort, resolvedFields, stats) {
       return field
     }
   })
-  const sortFns = sortFields.map(field => v => getValueAt(v, field))
-  const sortOrder = sort.order.map(order => order.toLowerCase())
+  const sortFns = sortFields.map(field => (v): ((any) => any) =>
+    getValueAt(v, field)
+  )
+  const sortOrder = sort.order.map(order =>
+    typeof order === `boolean` ? order : order.toLowerCase()
+  ) as Array<boolean | "asc" | "desc">
 
   if (stats) {
     sortFields.forEach(sortField => {
