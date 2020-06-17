@@ -60,6 +60,7 @@
     "@types/yargs": "^15.0.4",
     "babel-preset-gatsby-package": "^0.4.4",
     "cross-env": "^5.2.1",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.3"
   },
   "files": [
@@ -80,7 +81,7 @@
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+    "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\"",
     "postinstall": "node scripts/postinstall.js"
   },
