@@ -55,15 +55,17 @@ const write = async ({ publicDir }, page) => {
   return body
 }
 
-let isFlushEnqueued = false
+let isFlushPending = false
 let isFlushing = false
+
+const isFlushEnqueued = () => isFlushPending
 
 const flush = async () => {
   if (isFlushing) {
     // We're already in the middle of a flush
     return
   }
-  isFlushEnqueued = false
+  isFlushPending = false
   isFlushing = true
   const { pendingPageDataWrites, components, pages, program } = store.getState()
 
@@ -117,7 +119,7 @@ const flush = async () => {
 
 function enqueueFlush() {
   if (webpackStatus.isPending()) {
-    isFlushEnqueued = true
+    isFlushPending = true
   } else {
     flush()
   }

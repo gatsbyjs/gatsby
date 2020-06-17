@@ -12,7 +12,7 @@ export function markAsPending(): void {
 
 export function markAsDone(): void {
   isPendingStatus = false
-  if (isFlushEnqueued) {
+  if (isFlushEnqueued()) {
     flush()
   }
 }
