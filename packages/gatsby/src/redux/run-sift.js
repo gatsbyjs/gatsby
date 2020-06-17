@@ -17,9 +17,6 @@ const {
   intersectNodesByCounter,
 } = require(`./nodes`)
 
-// More of a testing mechanic, to verify whether last runSift call used Sift
-let lastFilterUsedSift = false
-
 /**
  * Creates a key for one filterCache inside FiltersCache
  *
@@ -77,13 +74,10 @@ const prepareQueryArgs = (filterFields = {}) =>
  * filter.
  * Only nodes of given node types will be considered
  * A fast index is created if one doesn't exist yet so cold call is slower.
- * Returns undefined if an op was not supported for fast indexes or when no
- * nodes were found for given (query) value. In the zero nodes case, we have to
- * go through Sift to make sure we're not missing an edge case, for now.
  *
  * @param {Array<DbQuery>} filters Resolved. (Should be checked by caller to exist)
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | null | FiltersCache} filtersCache
+ * @param {FiltersCache} filtersCache
  * @returns {Array<IGatsbyNode> | null}
  */
 const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
@@ -139,7 +133,7 @@ exports.filterWithoutSift = filterWithoutSift
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
  * @returns {Array<Array<IGatsbyNode>> | undefined} Undefined means at least one
- *   cache was not found. Must fallback to sift.
+ *   cache was not found
  */
 const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
   const nodesPerValueArrs /*: Array<Array<IGatsbyNode>>*/ = []
@@ -186,7 +180,7 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
  * @param {Array<string>} nodeTypeNames
  * @param {FiltersCache} filtersCache
  * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs
- * @returns {boolean} false means soft fail, filter must go through Sift
+ * @returns {boolean} false means no nodes matched
  */
 const getBucketsForQueryFilter = (
   filterCacheKey,
@@ -217,9 +211,6 @@ const getBucketsForQueryFilter = (
     false
   )
 
-  // If we couldn't find the needle then maybe sift can, for example if the
-  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-  // There are also cases (and tests) where id exists with a different type
   if (!nodesPerValue) {
     return false
   }
@@ -278,9 +269,6 @@ const collectBucketForElemMatch = (
     true
   )
 
-  // If we couldn't find the needle then maybe sift can, for example if the
-  // schema contained a proxy; `slug: String @proxy(from: "slugInternal")`
-  // There are also cases (and tests) where id exists with a different type
   if (!nodesByValue) {
     return false
   }
@@ -299,12 +287,10 @@ const collectBucketForElemMatch = (
  * @property {boolean} args.firstOnly true if you want to return only the first
  *   result found. This will return a collection of size 1. Not a single element
  * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
- * @property {undefined | null | FiltersCache} args.filtersCache May be null or
- *   undefined. A cache of indexes where you can look up Nodes grouped by a
- *   FilterCacheKey, which yields a Map which holds an arr of Nodes for the value
- *   that the filter is trying to query against.
+ * @property {FiltersCache} args.filtersCache A cache of indexes where you can
+ *   look up Nodes grouped by a FilterCacheKey, which yields a Map which holds
+ *   an arr of Nodes for the value that the filter is trying to query against.
  *   This object lives in query/query-runner.js and is passed down runQuery.
- *   If it is undefined or null, do not consider to use a fast index at all.
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
@@ -332,19 +318,11 @@ const runFilterAndSort = (args: Object) => {
 
 exports.runSift = runFilterAndSort
 
-exports.didLastFilterUseSift = function _didLastFilterUseSift() {
-  return lastFilterUsedSift
-}
-
 /**
- * Applies filter. First through a simple approach, which is much faster than
- * running sift, but not as versatile and correct. If no nodes were found then
- * it falls back to filtering through sift.
- *
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
  * @param {Array<string>} nodeTypeNames
- * @param {undefined | null | FiltersCache} filtersCache
+ * @param {FiltersCache} filtersCache
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
@@ -379,15 +357,13 @@ const applyFilters = (
     }
   }
 
-  if (filtersCache && filters.length === 0) {
+  if (filters.length === 0) {
     let filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
     if (!filtersCache.has(filterCacheKey)) {
       ensureEmptyFilterCache(filterCacheKey, nodeTypeNames, filtersCache)
     }
 
     const cache = filtersCache.get(filterCacheKey).meta.orderedByCounter
-
-    lastFilterUsedSift = false
 
     if (firstOnly || cache.length) {
       return cache.slice(0)
@@ -401,7 +377,6 @@ const applyFilters = (
     filtersCache
   )
 
-  lastFilterUsedSift = false
   if (result) {
     if (stats) {
       stats.totalIndexHits++
@@ -411,7 +386,6 @@ const applyFilters = (
     }
     return result
   }
-  lastFilterUsedSift = true
 
   if (stats) {
     // to mean, "empty results"

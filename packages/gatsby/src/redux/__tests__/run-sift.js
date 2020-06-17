@@ -130,254 +130,248 @@ describe(`run-sift tests`, () => {
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
   })
-  ;[
-    { desc: `with cache`, cb: () /*:FiltersCache*/ => new Map() }, // Avoids sift for flat filters
-    // { desc: `no cache`, cb: () => null }, // Always goes through sift
-  ].forEach(({ desc, cb: createFiltersCache }) => {
-    describe(desc, () => {
-      describe(`filters by just id correctly`, () => {
-        it(`eq operator`, async () => {
-          const queryArgs = {
-            filter: {
-              id: { eq: `id_2` },
-            },
-          }
 
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
+  describe(`filters by just id correctly`, () => {
+    it(`eq operator`, async () => {
+      const queryArgs = {
+        filter: {
+          id: { eq: `id_2` },
+        },
+      }
 
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
-          expect(resultMany.map(o => o.id)).toEqual([mockNodes()[1].id])
-        })
-
-        it(`eq operator honors type`, async () => {
-          const queryArgs = {
-            filter: {
-              id: { eq: `id_1` },
-            },
-          }
-
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          // `id-1` node is not of queried type, so results should be empty
-          expect(resultSingular).toEqual([])
-          expect(resultMany).toEqual(null)
-        })
-
-        it(`non-eq operator`, async () => {
-          const queryArgs = {
-            filter: {
-              id: { ne: `id_2` },
-            },
-          }
-
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
-          expect(resultMany.map(o => o.id)).toEqual([
-            mockNodes()[2].id,
-            mockNodes()[3].id,
-          ])
-        })
-        it(`return empty array in case of empty nodes`, async () => {
-          const queryArgs = { filter: {}, sort: {} }
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [`NonExistentNodeType`],
-            filtersCache: createFiltersCache(),
-          })
-          expect(resultSingular).toEqual([])
-        })
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
       })
-      describe(`filters by arbitrary property correctly`, () => {
-        it(`eq operator flat single`, async () => {
-          const queryArgs = {
-            filter: {
-              slog: { eq: `def` },
-            },
-          }
 
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(Array.isArray(resultSingular)).toBe(true)
-          expect(resultSingular.length).toEqual(1)
-
-          resultSingular.map(node => {
-            expect(node.slog).toEqual(`def`)
-          })
-        })
-        it(`eq operator flat many`, async () => {
-          const queryArgs = {
-            filter: {
-              slog: { eq: `def` },
-            },
-          }
-
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(Array.isArray(resultMany)).toBe(true)
-          expect(resultMany.length).toEqual(2)
-
-          resultMany.map(node => {
-            expect(node.slog).toEqual(`def`)
-          })
-        })
-        it(`eq operator deep single`, async () => {
-          const queryArgs = {
-            filter: {
-              deep: { flat: { search: { chain: { eq: 300 } } } },
-            },
-          }
-
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(Array.isArray(resultSingular)).toBe(true)
-          expect(resultSingular.length).toEqual(1)
-
-          resultSingular.map(node => {
-            expect(node.deep.flat.search.chain).toEqual(300)
-          })
-        })
-        it(`eq operator deep many`, async () => {
-          const queryArgs = {
-            filter: {
-              deep: { flat: { search: { chain: { eq: 300 } } } },
-            },
-          }
-
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(Array.isArray(resultMany)).toBe(true)
-          expect(resultMany.length).toEqual(2)
-
-          resultMany.map(node => {
-            expect(node.deep.flat.search.chain).toEqual(300)
-          })
-        })
-        it(`eq operator deep miss single`, async () => {
-          const queryArgs = {
-            filter: {
-              deep: { flat: { search: { chain: { eq: 999 } } } },
-            },
-          }
-
-          const resultSingular = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: true,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(Array.isArray(resultSingular)).toBe(true)
-          expect(resultSingular.length).toEqual(0)
-        })
-        it(`eq operator deep miss many`, async () => {
-          const queryArgs = {
-            filter: {
-              deep: { flat: { search: { chain: { eq: 999 } } } },
-            },
-          }
-
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(resultMany).toBe(null)
-        })
-
-        it(`elemMatch on array of objects`, async () => {
-          const queryArgs = {
-            filter: {
-              elemList: {
-                elemMatch: { foo: { eq: `baz` } },
-              },
-            },
-          }
-
-          const resultMany = await runSift({
-            gqlType,
-            queryArgs,
-            firstOnly: false,
-            nodeTypeNames: [gqlType.name],
-            filtersCache: createFiltersCache(),
-          })
-
-          expect(Array.isArray(resultMany)).toBe(true)
-          expect(resultMany.map(({ id }) => id)).toEqual([`id_2`, `id_3`])
-        })
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
       })
+
+      expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
+      expect(resultMany.map(o => o.id)).toEqual([mockNodes()[1].id])
+    })
+
+    it(`eq operator honors type`, async () => {
+      const queryArgs = {
+        filter: {
+          id: { eq: `id_1` },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      // `id-1` node is not of queried type, so results should be empty
+      expect(resultSingular).toEqual([])
+      expect(resultMany).toEqual(null)
+    })
+
+    it(`non-eq operator`, async () => {
+      const queryArgs = {
+        filter: {
+          id: { ne: `id_2` },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[2].id])
+      expect(resultMany.map(o => o.id)).toEqual([
+        mockNodes()[2].id,
+        mockNodes()[3].id,
+      ])
+    })
+    it(`return empty array in case of empty nodes`, async () => {
+      const queryArgs = { filter: {}, sort: {} }
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [`NonExistentNodeType`],
+        filtersCache: new Map(),
+      })
+      expect(resultSingular).toEqual([])
+    })
+  })
+  describe(`filters by arbitrary property correctly`, () => {
+    it(`eq operator flat single`, async () => {
+      const queryArgs = {
+        filter: {
+          slog: { eq: `def` },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(Array.isArray(resultSingular)).toBe(true)
+      expect(resultSingular.length).toEqual(1)
+
+      resultSingular.map(node => {
+        expect(node.slog).toEqual(`def`)
+      })
+    })
+    it(`eq operator flat many`, async () => {
+      const queryArgs = {
+        filter: {
+          slog: { eq: `def` },
+        },
+      }
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(Array.isArray(resultMany)).toBe(true)
+      expect(resultMany.length).toEqual(2)
+
+      resultMany.map(node => {
+        expect(node.slog).toEqual(`def`)
+      })
+    })
+    it(`eq operator deep single`, async () => {
+      const queryArgs = {
+        filter: {
+          deep: { flat: { search: { chain: { eq: 300 } } } },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(Array.isArray(resultSingular)).toBe(true)
+      expect(resultSingular.length).toEqual(1)
+
+      resultSingular.map(node => {
+        expect(node.deep.flat.search.chain).toEqual(300)
+      })
+    })
+    it(`eq operator deep many`, async () => {
+      const queryArgs = {
+        filter: {
+          deep: { flat: { search: { chain: { eq: 300 } } } },
+        },
+      }
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(Array.isArray(resultMany)).toBe(true)
+      expect(resultMany.length).toEqual(2)
+
+      resultMany.map(node => {
+        expect(node.deep.flat.search.chain).toEqual(300)
+      })
+    })
+    it(`eq operator deep miss single`, async () => {
+      const queryArgs = {
+        filter: {
+          deep: { flat: { search: { chain: { eq: 999 } } } },
+        },
+      }
+
+      const resultSingular = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: true,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(Array.isArray(resultSingular)).toBe(true)
+      expect(resultSingular.length).toEqual(0)
+    })
+    it(`eq operator deep miss many`, async () => {
+      const queryArgs = {
+        filter: {
+          deep: { flat: { search: { chain: { eq: 999 } } } },
+        },
+      }
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(resultMany).toBe(null)
+    })
+
+    it(`elemMatch on array of objects`, async () => {
+      const queryArgs = {
+        filter: {
+          elemList: {
+            elemMatch: { foo: { eq: `baz` } },
+          },
+        },
+      }
+
+      const resultMany = await runSift({
+        gqlType,
+        queryArgs,
+        firstOnly: false,
+        nodeTypeNames: [gqlType.name],
+        filtersCache: new Map(),
+      })
+
+      expect(Array.isArray(resultMany)).toBe(true)
+      expect(resultMany.map(({ id }) => id)).toEqual([`id_2`, `id_3`])
     })
   })
 })
