@@ -31,6 +31,7 @@ exports.sourceNodes = async (
     createSchema,
     refetchInterval,
     batch = false,
+    transformSchema: customTransformSchema,
   } = options
 
   invariant(
@@ -94,21 +95,30 @@ exports.sourceNodes = async (
     return {}
   }
 
-  const schema = transformSchema(
-    {
-      schema: introspectionSchema,
-      link,
-    },
-    [
-      new StripNonQueryTransform(),
-      new RenameTypes(name => `${typeName}_${name}`),
-      new NamespaceUnderFieldTransform({
-        typeName,
-        fieldName,
+  const defaultTransforms = [
+    new StripNonQueryTransform(),
+    new RenameTypes(name => `${typeName}_${name}`),
+    new NamespaceUnderFieldTransform({
+      typeName,
+      fieldName,
+      resolver,
+    }),
+  ]
+
+  const schema = customTransformSchema
+    ? customTransformSchema({
+        schema: introspectionSchema,
+        link,
         resolver,
-      }),
-    ]
-  )
+        defaultTransforms,
+      })
+    : transformSchema(
+        {
+          schema: introspectionSchema,
+          link,
+        },
+        defaultTransforms
+      )
 
   addThirdPartySchema({ schema })
 
