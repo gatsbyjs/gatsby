@@ -1,3 +1,5 @@
+import { flush } from "./page-data"
+
 let isPendingStatus = false
 
 export function isPending(): boolean {
@@ -10,4 +12,5 @@ export function markAsPending(): void {
 
 export function markAsDone(): void {
   isPendingStatus = false
+  flush()
 }

@@ -681,7 +681,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       webpackActivity = null
     }
 
-    await pageDataUtil.flush()
+    await pageDataUtil.enqueueFlush()
     webpackStatusUtil.markAsDone()
 
     done()

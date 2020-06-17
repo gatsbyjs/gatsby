@@ -2,6 +2,7 @@ import { websocketManager } from "./websocket-manager"
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const { store } = require(`../redux`)
+const webpackStatus = require(`./webpack-status`)
 
 const fixedPagePath = pagePath => (pagePath === `/` ? `index` : pagePath)
 
@@ -54,7 +55,15 @@ const write = async ({ publicDir }, page) => {
   return body
 }
 
+let isFlushEnqueued = false
+let isFlushing = false
+
 const flush = async () => {
+  if (isFlushing) {
+    // We're already in the middle of a flush
+    return
+  }
+  isFlushing = true
   const { pendingPageDataWrites, components, pages, program } = store.getState()
 
   const { pagePaths, templatePaths } = pendingPageDataWrites
@@ -101,8 +110,16 @@ const flush = async () => {
   store.dispatch({
     type: `CLEAR_PENDING_PAGE_DATA_WRITES`,
   })
-
+  isFlushing = false
   return
+}
+
+async function enqueueFlush() {
+  if (webpackStatus.isPending()) {
+    isFlushEnqueued = true
+  } else {
+    await flush()
+  }
 }
 
 module.exports = {
@@ -110,6 +127,9 @@ module.exports = {
   write,
   remove,
   fixedPagePath,
+  enqueueFlush,
+  isFlushEnqueued,
+  isFlushing,
   flush,
   getFilePath,
 }
