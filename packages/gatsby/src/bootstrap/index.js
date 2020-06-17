@@ -18,7 +18,7 @@ const { store, emitter } = require(`../redux`)
 import { internalActions } from "../redux/actions"
 const { loadPlugins } = require(`./load-plugins`)
 const loadThemes = require(`./load-themes`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 import { getConfigFile } from "./get-config-file"
 const tracer = require(`opentracing`).globalTracer()
 import { preferDefault } from "./prefer-default"
@@ -56,7 +56,7 @@ module.exports = async (args: BootstrapArgs) => {
    * finds your project's locally installed gatsby-cli package in node_modules,
    * it switches over. This instance will have a separate redux store. We need to
    * ensure that the correct store is used which is why we call setStore
-   * (/packages/gatsby-cli/src/reporter/redux/index.js)
+   * (/packages/gatsby-reporter/src/redux/index.js)
    *
    * This function
    * - copies over the logs from the global gatsby-cli to the local one
@@ -106,7 +106,7 @@ module.exports = async (args: BootstrapArgs) => {
   emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
+  let activity = reporter.r.activityTimer(`open and validate gatsby-configs`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -165,7 +165,7 @@ module.exports = async (args: BootstrapArgs) => {
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = reporter.activityTimer(`load plugins`, {
+  activity = reporter.r.activityTimer(`load plugins`, {
     parentSpan: bootstrapSpan,
   })
   activity.start()
@@ -173,7 +173,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Multiple occurrences of the same name-version-pair can occur,
-  // so we report an array of unique pairs
+  // so we reporter.an array of unique pairs
   const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
     plugins: pluginsStr,
@@ -426,7 +426,7 @@ module.exports = async (args: BootstrapArgs) => {
   })
   activity.start()
   await require(`../utils/source-nodes`).default({ parentSpan: activity.span })
-  reporter.verbose(
+  reporter.r.verbose(
     `Now have ${store.getState().nodes.size} nodes with ${
       store.getState().nodesByType.size
     } types: [${[...store.getState().nodesByType.entries()]
@@ -457,7 +457,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphQLRunner(store, reporter, {
+  const graphqlRunner = createGraphQLRunner(store, reporter.r, {
     graphqlTracing: args.graphqlTracing,
     parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan,
   })
@@ -533,7 +533,7 @@ module.exports = async (args: BootstrapArgs) => {
   try {
     await requiresWriter.writeAll(store.getState())
   } catch (err) {
-    reporter.panic(`Failed to write out requires`, err)
+    reporter.r.panic(`Failed to write out requires`, err)
   }
   activity.end()
 
@@ -552,9 +552,9 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
   activity.end()
 
-  reporter.log(``)
-  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
-  reporter.log(``)
+  reporter.r.log(``)
+  reporter.r.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
+  reporter.r.log(``)
   emitter.emit(`BOOTSTRAP_FINISHED`)
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_FINISHED`

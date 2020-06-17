@@ -1,4 +1,4 @@
-jest.mock(`../reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     panic: jest.fn(),
     log: jest.fn(),
@@ -21,7 +21,7 @@ interface IGetCLI {
 const getCLI = (): IGetCLI => {
   jest.resetModules()
 
-  const reporter = require(`../reporter`)
+  const reporter = require(`gatsby-reporter`)
   const { createCli } = require(`../create-cli`)
 
   require(`../`)

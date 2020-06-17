@@ -1,6 +1,6 @@
 import { processStaticQueries } from "../query"
 import { IBuildContext } from "./"
-import reporter from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
 export async function runStaticQueries({
   parentSpan,

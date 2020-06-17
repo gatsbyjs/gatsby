@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
 const { GraphQLList } = require(`graphql`)
 const invariant = require(`invariant`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
@@ -72,7 +72,7 @@ const addInferredFieldsImpl = ({
       const possibleFieldsNames = possibleFields
         .map(field => `\`${field.unsanitizedKey}\``)
         .join(`, `)
-      report.warn(
+      reporter.warn(
         `Multiple node fields resolve to the same GraphQL field \`${prefix}.${field.key}\` - [${possibleFieldsNames}]. Gatsby will use \`${field.unsanitizedKey}\`.`
       )
       selectedField = field
@@ -123,7 +123,7 @@ const addInferredFieldsImpl = ({
               .forEach(name => {
                 if (!typeComposer.hasFieldExtension(key, name)) {
                   typeComposer.setFieldExtension(key, name, extensions[name])
-                  report.warn(
+                  reporter.warn(
                     `Deprecation warning - adding inferred resolver for field ` +
                       `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
                       `only fields with an explicit directive/extension will ` +

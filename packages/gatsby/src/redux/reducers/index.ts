@@ -1,5 +1,5 @@
 import { nodesReducer } from "./nodes"
-import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
+import { reduxLogReducer } from "gatsby-reporter"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
@@ -51,7 +51,7 @@ export {
   babelrcReducer as babelrc,
   schemaCustomizationReducer as schemaCustomization,
   themesReducer as themes,
-  logReducer as logs,
+  reduxLogReducer as logs,
   inferenceMetadataReducer as inferenceMetadata,
   pageDataStatsReducer as pageDataStats,
   pageDataReducer as pageData,

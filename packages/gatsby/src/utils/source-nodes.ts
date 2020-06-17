@@ -1,4 +1,4 @@
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
@@ -38,7 +38,7 @@ function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
 
   pluginsWithNoNodes.map(name =>
-    report.warn(
+    reporter.warn(
       `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
     )
   )

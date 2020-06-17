@@ -1,8 +1,7 @@
 import path from "path"
 import resolveCwd from "resolve-cwd"
 import yargs from "yargs"
-import report from "./reporter"
-import { setStore } from "./reporter/redux"
+import { reporter, setStore } from "gatsby-reporter"
 import { getLocalGatsbyVersion } from "./util/version"
 import envinfo from "envinfo"
 import { sync as existsSync } from "fs-exists-cached"
@@ -15,7 +14,7 @@ import { startGraphQLServer } from "gatsby-recipes"
 const handlerP = (fn: Function) => (...args: unknown[]): void => {
   Promise.resolve(fn(...args)).then(
     () => process.exit(0),
-    err => report.panic(err)
+    err => reporter.r.panic(err)
   )
 }
 
@@ -56,8 +55,8 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   function resolveLocalCommand(command: string): Function | never {
     if (!isLocalSite) {
       cli.showHelp()
-      report.verbose(`current directory: ${directory}`)
-      return report.panic(
+      reporter.r.verbose(`current directory: ${directory}`)
+      return reporter.r.panic(
         `gatsby <${command}> can only be run for a gatsby site.\n` +
           `Either the current working directory does not contain a valid package.json or ` +
           `'gatsby' is not specified as a dependency`
@@ -70,23 +69,23 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         // Old location of commands
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
-        return report.panic(
+        return reporter.panic(
           `There was a problem loading the local ${command} command. Gatsby may not be installed in your site's "node_modules" directory. Perhaps you need to run "npm install"? You might need to delete your "package-lock.json" as well.`
         )
 
-      report.verbose(`loading local command from: ${cmdPath}`)
+      reporter.verbose(`loading local command from: ${cmdPath}`)
 
       const cmd = require(cmdPath)
       if (cmd instanceof Function) {
         return cmd
       }
 
-      return report.panic(
+      return reporter.panic(
         `Handler for command "${command}" is not a function. Your Gatsby package might be corrupted, try reinstalling it and running the command again.`
       )
     } catch (err) {
       cli.showHelp()
-      return report.panic(
+      return reporter.panic(
         `There was a problem loading the local ${command} command. Gatsby may not be installed. Perhaps you need to run "npm install"?`,
         err
       )
@@ -98,20 +97,22 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     handler?: (args: yargs.Arguments, cmd: Function) => void
   ) {
     return (argv: yargs.Arguments): void => {
-      report.setVerbose(!!argv.verbose)
+      reporter.setVerbose(!!argv.verbose)
 
-      report.setNoColor(!!(argv.noColor || process.env.NO_COLOR))
+      reporter.setNoColor(!!(argv.noColor || process.env.NO_COLOR))
 
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
-      report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
+      reporter.verbose(
+        `set gatsby_log_level: "${process.env.gatsby_log_level}"`
+      )
 
       process.env.gatsby_executing_command = command
-      report.verbose(`set gatsby_executing_command: "${command}"`)
+      reporter.verbose(`set gatsby_executing_command: "${command}"`)
 
       const localCmd = resolveLocalCommand(command)
-      const args = { ...argv, ...siteInfo, report, useYarn, setStore }
+      const args = { ...argv, ...siteInfo, report: reporter, useYarn, setStore }
 
-      report.verbose(`running command: ${command}`)
+      reporter.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
     }
   }
@@ -271,7 +272,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
 
   cli.command({
     command: `info`,
-    describe: `Get environment information for debugging and issue reporting`,
+    describe: `Get environment information for debugging and issue reporter.ng`,
     builder: _ =>
       _.option(`C`, {
         alias: `clipboard`,
@@ -495,7 +496,7 @@ Creating a plugin:
       handler: handlerP(({ enable, disable }: yargs.Arguments) => {
         const enabled = enable || !disable
         setTelemetryEnabled(enabled)
-        report.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
+        reporter.log(`Telemetry collection ${enabled ? `enabled` : `disabled`}`)
       }),
     })
     .wrap(cli.terminalWidth())

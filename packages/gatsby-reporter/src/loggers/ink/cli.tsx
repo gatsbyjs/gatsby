@@ -1,6 +1,5 @@
 import React from "react"
 import { Box, Static } from "ink"
-import { isTTY } from "../../../util/is-tty"
 import { trackBuildError } from "gatsby-telemetry"
 import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
@@ -9,9 +8,13 @@ import { Error as ErrorComponent } from "./components/error"
 import Develop from "./components/develop"
 import { IGatsbyCLIState, IActivity } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
-import { IStructuredError } from "../../../structured-errors/types"
+import { IStructuredError } from "../../structured-errors/types"
+import { isCI } from "gatsby-core-utils"
 
-const showProgress = isTTY()
+// Some CI pipelines incorrectly report process.stdout.isTTY status,
+// which causes unwanted lines in the output. An additional check for isCI helps.
+// @see https://github.com/prettier/prettier/blob/36aeb4ce4f620023c8174e826d7208c0c64f1a0b/src/utils/is-tty.js
+const showProgress = process.stdout.isTTY && !isCI()
 
 interface ICLIProps {
   logs: IGatsbyCLIState

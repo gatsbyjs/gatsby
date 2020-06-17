@@ -17,7 +17,7 @@ const { slash } = require(`gatsby-core-utils`)
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const queryUtil = require(`./index`)
 const debug = require(`debug`)(`gatsby:query-watcher`)
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
@@ -129,7 +129,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
         // If it is and this is our first run during bootstrap,
         // show a warning about having a query in a non-page component.
       } else if (isFirstRun && !snapshot.components.has(component)) {
-        report.warn(
+        reporter.warn(
           `The GraphQL query in the non-page component "${component}" will not be run.`
         )
         queriesWillNotRun = true
@@ -137,7 +137,7 @@ const updateStateAndRunQueries = (isFirstRun, { parentSpan } = {}) => {
     })
 
     if (queriesWillNotRun) {
-      report.log(report.stripIndent`
+      reporter.log(reporter.stripIndent`
 
         Exported queries are only executed for Page components. It's possible you're
         trying to create pages in your gatsby-node.js and that's failing for some
@@ -240,7 +240,7 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
-      report.pendingActivity({ id: `query-extraction` })
+      reporter.pendingActivity({ id: `query-extraction` })
       debounceCompile()
     })
 

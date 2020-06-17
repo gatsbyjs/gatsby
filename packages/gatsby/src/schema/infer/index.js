@@ -1,4 +1,4 @@
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const { ObjectTypeComposer } = require(`graphql-compose`)
 const { hasNodes } = require(`./inference-metadata`)
 const { getExampleObject } = require(`./build-example-data`)
@@ -50,7 +50,7 @@ const addInferredTypes = ({
 
   if (noNodeInterfaceTypes.length > 0) {
     noNodeInterfaceTypes.forEach(typeName => {
-      report.warn(
+      reporter.warn(
         `Type \`${typeName}\` declared in \`createTypes\` looks like a node, ` +
           `but doesn't implement a \`Node\` interface. It's likely that you should ` +
           `add the \`Node\` interface to your type def:\n\n` +
@@ -61,7 +61,7 @@ const addInferredTypes = ({
           `\`type ${typeName} @dontInfer { ... }\``
       )
     })
-    report.panic(`Building schema failed`)
+    reporter.panic(`Building schema failed`)
   }
 
   return typesToInfer.map(typeComposer =>

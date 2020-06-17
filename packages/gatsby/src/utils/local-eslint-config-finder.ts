@@ -1,7 +1,7 @@
 import path from "path"
 import glob from "glob"
 import debug from "debug"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
 const log = debug(`gatsby:webpack-eslint-config`)
 
@@ -14,7 +14,7 @@ export const hasLocalEslint = (directory: string): boolean => {
       return true
     }
   } catch (err) {
-    report.error(`There was a problem processing the package.json file`, err)
+    reporter.error(`There was a problem processing the package.json file`, err)
   }
 
   log(`Checking for eslint config file`)

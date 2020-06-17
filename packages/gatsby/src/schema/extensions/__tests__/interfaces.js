@@ -10,13 +10,13 @@ const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
 const { createTypes, createFieldExtension } = actions
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.panic = jest.fn()
+import { reporter } from "gatsby-reporter"
+reporter.panic = jest.fn()
 afterEach(() => {
-  report.panic.mockClear()
+  reporter.panic.mockClear()
 })
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -141,7 +141,7 @@ describe(`Queryable Node interfaces`, () => {
       `)
     )
     await buildSchema()
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must only be implemented ` +
         `by types which also implement the \`Node\` interface. Check the type ` +
         `definition of \`Wrong\`, \`WrongAgain\`.`
@@ -354,8 +354,8 @@ describe(`Queryable Node interfaces`, () => {
       `)
     )
     await build({})
-    expect(report.panic).toBeCalledTimes(1)
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledTimes(1)
+    expect(reporter.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must have a field ` +
         `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
     )

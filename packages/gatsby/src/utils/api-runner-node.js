@@ -4,7 +4,7 @@ const chalk = require(`chalk`)
 const { bindActionCreators } = require(`redux`)
 
 const tracer = require(`opentracing`).globalTracer()
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const stackTrace = require(`stack-trace`)
 const { codeFrameColumns } = require(`@babel/code-frame`)
 const fs = require(`fs-extra`)

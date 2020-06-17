@@ -1,6 +1,6 @@
 import { getConfigStore } from "gatsby-core-utils"
 import prompts from "prompts"
-import report from "../reporter"
+import report from "gatsby-reporter"
 
 type PackageManager = "yarn" | "npm"
 

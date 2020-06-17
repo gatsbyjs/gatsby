@@ -1,4 +1,4 @@
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import { getConfigStore, getGatsbyVersion } from "gatsby-core-utils"
 import latestVersion from "latest-version"
 import getDayOfYear from "date-fns/getDayOfYear"
@@ -16,10 +16,10 @@ export function setFeedbackDisabledValue(enabled: boolean): void {
 // Print the feedback request to the user
 export function showFeedbackRequest(): void {
   getConfigStore().set(lastDateKey, Date.now())
-  report.log(
+  reporter.log(
     `\n\nHello! Will you help Gatsby improve by taking a four question survey?\nIt takes less than five minutes and your ideas and feedback will be very helpful.`
   )
-  report.log(`\nGive us your feedback here: https://gatsby.dev/feedback\n\n`)
+  reporter.log(`\nGive us your feedback here: https://gatsby.dev/feedback\n\n`)
 }
 
 const randomChanceToBeTrue = (): boolean => {

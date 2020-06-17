@@ -2,7 +2,7 @@ const { emitter, store } = require(`../redux`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { boundActionCreators } = require(`../redux/actions`)
 const { deletePage, deleteComponentsDependencies } = boundActionCreators
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 let pagesDirty = false
 let graphql
@@ -13,7 +13,7 @@ const runCreatePages = async () => {
   const timestamp = Date.now()
 
   // Collect pages.
-  let activity = report.activityTimer(`createPages`)
+  let activity = reporter.activityTimer(`createPages`)
   activity.start()
   await apiRunnerNode(
     `createPages`,

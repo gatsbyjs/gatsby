@@ -13,7 +13,7 @@ const {
   GraphQLSyntaxError,
 } = require(`babel-plugin-remove-graphql-queries`)
 
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 import type { DocumentNode } from "graphql"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
@@ -66,7 +66,7 @@ function isUseStaticQuery(path) {
 }
 
 const warnForUnknownQueryVariable = (varName, file, usageFunction) =>
-  report.warn(
+  reporter.warn(
     `\nWe were unable to find the declaration of variable "${varName}", which you passed as the "query" prop into the ${usageFunction} declaration in "${file}".
 
 Perhaps the variable name has a typo?
@@ -136,7 +136,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
 }
 
 const warnForGlobalTag = file =>
-  report.warn(
+  reporter.warn(
     `Using the global \`graphql\` tag is deprecated, and will not be supported in v3.\n` +
       `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
       file

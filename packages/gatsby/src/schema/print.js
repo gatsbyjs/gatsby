@@ -7,7 +7,7 @@ const {
   ScalarTypeComposer,
   UnionTypeComposer,
 } = require(`graphql-compose`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 const { internalExtensionNames } = require(`./extensions`)
 
@@ -17,14 +17,14 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   const { path, include = {}, exclude = {}, withFieldTypes } = config || {}
 
   if (!path) {
-    report.error(
+    reporter.error(
       `Printing type definitions aborted. Please provide a file path.`
     )
     return Promise.resolve()
   }
 
   if (fs.existsSync(path)) {
-    report.error(
+    reporter.error(
       `Printing type definitions aborted. The file \`${path}\` already exists.`
     )
     return Promise.resolve()
@@ -150,10 +150,10 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
 
   try {
     typeDefs.forEach(tc => printedTypeDefs.push(printType(tc)))
-    report.info(`Writing GraphQL type definitions to ${path}`)
+    reporter.info(`Writing GraphQL type definitions to ${path}`)
     return fs.writeFile(path, printedTypeDefs.join(`\n\n`))
   } catch (error) {
-    report.error(`Failed writing type definitions to \`${path}\`.`, error)
+    reporter.error(`Failed writing type definitions to \`${path}\`.`, error)
     return Promise.resolve()
   }
 }

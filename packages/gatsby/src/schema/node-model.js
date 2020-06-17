@@ -11,7 +11,7 @@ const {
   isCompositeType,
 } = require(`graphql`)
 const invariant = require(`invariant`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 type TypeOrTypeName = string | GraphQLOutputType
 

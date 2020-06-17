@@ -5,7 +5,7 @@ import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
 const levenshtein = require(`fast-levenshtein`)
 import _ from "lodash"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 const { locInGraphQlToLocInFile } = require(`./error-parser`)
 
 type RelayGraphQLError = Error & { validationErrors?: Object }
@@ -44,12 +44,12 @@ const handlers = [
 ]
 
 function formatFilePath(filePath: string) {
-  return `${report.format.bold(`file:`)} ${report.format.blue(filePath)}`
+  return `${reporter.format.bold(`file:`)} ${reporter.format.blue(filePath)}`
 }
 
 function formatError(message: string, filePath: string, codeFrame: string) {
   return (
-    report.stripIndent`
+    reporter.stripIndent`
     ${message}
 
       ${formatFilePath(filePath)}
@@ -148,7 +148,7 @@ export function multipleRootQueriesError(
       name,
       otherName,
       beforeCodeFrame: codeFrameColumns(
-        report.stripIndent`
+        reporter.stripIndent`
         query ${otherName} {
           ${field} {
             #...
@@ -173,7 +173,7 @@ export function multipleRootQueriesError(
         }
       ),
       afterCodeFrame: codeFrameColumns(
-        report.stripIndent`
+        reporter.stripIndent`
         query ${unifiedName} {
           ${field} {
             #...

@@ -5,7 +5,7 @@ jest.mock(`fs`, () => {
     readFileSync: jest.fn(file => `${file}::file`),
   }
 })
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     panic: jest.fn(),
     info: jest.fn(),
@@ -18,7 +18,7 @@ jest.mock(`devcert`, () => {
 })
 
 const getDevCert = require(`devcert`).certificateFor
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const getSslCert = require(`../get-ssl-cert`)
 
 describe(`gets ssl certs`, () => {

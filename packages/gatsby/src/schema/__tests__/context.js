@@ -7,7 +7,7 @@ const { dispatch } = store
 const { actions } = require(`../../redux/actions/restricted`)
 const { createTypes, createFieldExtension, createResolverContext } = actions
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -28,9 +28,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     },
   }
 })
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 afterEach(() => {
-  report.error.mockClear()
+  reporter.error.mockClear()
 })
 
 describe(`Resolver context`, () => {
@@ -206,7 +206,7 @@ describe(`Resolver context`, () => {
 
     it(`shows error when no context value passed`, () => {
       dispatch(createResolverContext())
-      expect(report.error).toBeCalledWith(
+      expect(reporter.error).toBeCalledWith(
         `Expected context value passed to \`createResolverContext\` to be an ` +
           `object. Received "undefined".`
       )
@@ -214,7 +214,7 @@ describe(`Resolver context`, () => {
 
     it(`shows error when context value is not an object`, () => {
       dispatch(createResolverContext(() => {}))
-      expect(report.error).toBeCalledWith(
+      expect(reporter.error).toBeCalledWith(
         `Expected context value passed to \`createResolverContext\` to be an ` +
           `object. Received "() => {}".`
       )

@@ -5,7 +5,7 @@ const withResolverContext = require(`../../context`)
 const { defaultResolver } = require(`../../resolvers`)
 const { isDate, looksLikeADate } = require(`../date`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),

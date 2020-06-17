@@ -1,4 +1,4 @@
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const fs = require(`fs`)
 const path = require(`path`)
 const os = require(`os`)
@@ -13,7 +13,7 @@ const absoluteOrDirectory = (directory, filePath) => {
 }
 
 const getWindowsEncryptionPassword = async () => {
-  report.info(
+  reporter.info(
     [
       `A password is required to access the secure certificate authority key`,
       `used for signing certificates.`,
@@ -37,7 +37,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
   // check that cert file and key file are both true or both false, if they are both
   // false, it defaults to the automatic ssl
   if (certFile ? !keyFile : keyFile) {
-    report.panic({
+    reporter.panic({
       id: `11521`,
       context: {},
     })
@@ -56,7 +56,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
     }
   }
 
-  report.info(
+  reporter.info(
     `setting up automatic SSL certificate (may require elevated permissions/sudo)\n`
   )
   try {
@@ -87,7 +87,7 @@ module.exports = async ({ name, certFile, keyFile, caFile, directory }) => {
       cert,
     }
   } catch (err) {
-    report.panic({
+    reporter.panic({
       id: `11522`,
       error: err,
       context: {

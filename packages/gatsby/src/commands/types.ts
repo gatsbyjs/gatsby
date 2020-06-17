@@ -1,5 +1,5 @@
 import { PackageJson } from "gatsby"
-import { reporter } from "gatsby-cli/src/reporter/reporter"
+import { reporter } from "gatsby-reporter"
 
 export interface ICert {
   key: string

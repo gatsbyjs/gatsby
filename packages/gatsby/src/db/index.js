@@ -1,5 +1,5 @@
 const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const redux = require(`../redux`)
 const { emitter } = redux
 
@@ -11,7 +11,7 @@ async function saveState() {
   try {
     await redux.saveState()
   } catch (err) {
-    report.warn(`Error persisting state: ${(err && err.message) || err}`)
+    reporter.warn(`Error persisting state: ${(err && err.message) || err}`)
   }
 
   saveInProgress = false

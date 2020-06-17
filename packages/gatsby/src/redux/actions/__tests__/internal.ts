@@ -1,7 +1,7 @@
 import { setSiteConfig } from "../internal"
-import reporter from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     panic: jest.fn(),
   }

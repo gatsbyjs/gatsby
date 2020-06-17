@@ -22,7 +22,7 @@ const withResolverContext = require(`../context`)
 
 const nodes = require(`./fixtures/node-model`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -44,8 +44,8 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
-const report = require(`gatsby-cli/lib/reporter`)
-afterEach(() => report.warn.mockClear())
+import { reporter } from "gatsby-reporter"
+afterEach(() => reporter.warn.mockClear())
 
 describe(`Built-in types`, () => {
   beforeEach(async () => {
@@ -712,12 +712,12 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(report.warn).toHaveBeenCalledWith(
+      expect(reporter.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`
       )
-      expect(report.warn).toHaveBeenCalledWith(
+      expect(reporter.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`
@@ -768,12 +768,12 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(report.warn).toHaveBeenCalledWith(
+      expect(reporter.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`
       )
-      expect(report.warn).toHaveBeenCalledWith(
+      expect(reporter.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`
@@ -816,12 +816,12 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(report.warn).toHaveBeenCalledWith(
+      expect(reporter.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefinedNested\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`
       )
-      expect(report.warn).toHaveBeenCalledWith(
+      expect(reporter.warn).toHaveBeenCalledWith(
         `Plugin \`some-other-gatsby-plugin\` tried to define the GraphQL type ` +
           `\`PluginDefined\`, which has already been defined by the plugin ` +
           `\`some-gatsby-plugin\`.`

@@ -1,6 +1,12 @@
 import React from "react"
 import { Box } from "ink"
-import { calcElapsedTime } from "../../../../util/calc-elapsed-time"
+import convertHrtime from "convert-hrtime"
+
+function calcElapsedTime(startTime: [number, number]): string {
+  const elapsed = process.hrtime(startTime)
+
+  return convertHrtime(elapsed)[`seconds`].toFixed(3)
+}
 
 const maxWidth = 30
 const minWidth = 10

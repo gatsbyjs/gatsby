@@ -3,7 +3,7 @@ import traverse from "@babel/traverse"
 import get from "lodash/get"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
 import { testRequireError } from "../utils/test-require-error"
 
@@ -37,7 +37,7 @@ const staticallyAnalyzeExports = (
         }
       )
 
-      report.panic(
+      reporter.panic(
         `Syntax error in "${absPath}":\n${err.message}\n${codeFrame}`
       )
     } else {
@@ -121,7 +121,7 @@ const staticallyAnalyzeExports = (
   })
 
   if (isES6 && isCommonJS && process.env.NODE_ENV !== `test`) {
-    report.panic(
+    reporter.panic(
       `This plugin file is using both CommonJS and ES6 module systems together which we don't support.
 You'll need to edit the file to use just one or the other.
 
@@ -160,7 +160,7 @@ export const resolveModuleExports = (
       if (!testRequireError(modulePath, e)) {
         // if module exists, but requiring it cause errors,
         // show the error to the user and terminate build
-        report.panic(`Error in "${absPath}":`, e)
+        reporter.panic(`Error in "${absPath}":`, e)
       }
     }
   } else {

@@ -10,9 +10,14 @@ import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
 
-import report from "./reporter"
+import report from "gatsby-reporter"
+import { isCI } from "gatsby-core-utils"
 import { getPackageManager, promptPackageManager } from "./util/package-manager"
-import { isTTY } from "./util/is-tty"
+
+// Some CI pipelines incorrectly report process.stdout.isTTY status,
+// which causes unwanted lines in the output. An additional check for isCI helps.
+// @see https://github.com/prettier/prettier/blob/36aeb4ce4f620023c8174e826d7208c0c64f1a0b/src/utils/is-tty.js
+const isTTY = process.stdout.isTTY && !isCI()
 
 const spawnWithArgs = (
   file: string,
@@ -40,7 +45,7 @@ const shouldUseYarn = async (): Promise<boolean> => {
       // if package manager is not set:
       //  - prompt user to pick package manager if in interactive console
       //  - default to yarn if not in interactive console
-      if (isTTY()) {
+      if (isTTY) {
         packageManager = (await promptPackageManager()) || `yarn`
       } else {
         packageManager = `yarn`

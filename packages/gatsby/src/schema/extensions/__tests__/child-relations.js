@@ -7,11 +7,11 @@ const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
 const { createTypes } = actions
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.error = jest.fn()
-report.panic = jest.fn()
-report.warn = jest.fn()
-report.activityTimer = jest.fn(() => {
+import { reporter } from "gatsby-reporter"
+reporter.error = jest.fn()
+reporter.panic = jest.fn()
+reporter.warn = jest.fn()
+reporter.activityTimer = jest.fn(() => {
   return {
     start: jest.fn(),
     setStatus: jest.fn(),
@@ -19,9 +19,9 @@ report.activityTimer = jest.fn(() => {
   }
 })
 afterEach(() => {
-  report.error.mockClear()
-  report.panic.mockClear()
-  report.warn.mockClear()
+  reporter.error.mockClear()
+  reporter.panic.mockClear()
+  reporter.warn.mockClear()
 })
 
 describe(`Define parent-child relationships with field extensions`, () => {
@@ -173,8 +173,8 @@ describe(`Define parent-child relationships with field extensions`, () => {
       `)
     )
     await buildSchema()
-    expect(report.warn).toBeCalledTimes(1)
-    expect(report.warn).toBeCalledWith(
+    expect(reporter.warn).toBeCalledTimes(1)
+    expect(reporter.warn).toBeCalledWith(
       `The type \`Parent\` does not explicitly define the field \`childChild\`.\n` +
         `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
         `extension set to \`false\`, automatically adding fields for ` +
@@ -223,7 +223,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
       `)
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
         `Check the type definition of \`Wrong\`.`
     )
@@ -831,7 +831,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
       `)
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `With the \`childOf\` extension, children fields can only be added to ` +
         `interfaces which have the \`@nodeInterface\` extension.\n` +
         `Check the type definition of \`Ancestors\`.`
@@ -854,7 +854,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
       `)
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `The \`childOf\` extension can only be used on interface types that have ` +
         `the \`@nodeInterface\` extension.\n` +
         `Check the type definition of \`NextGeneration\`.`

@@ -9,7 +9,7 @@ const { actions } = require(`../../redux/actions`)
 jest.mock(`../../redux/actions/add-page-dependency`)
 import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),

@@ -10,7 +10,7 @@ afterEach(() => {
   fs.writeFile.mockClear()
 })
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -31,9 +31,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     },
   }
 })
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 afterEach(() => {
-  report.error.mockClear()
+  reporter.error.mockClear()
 })
 
 jest.spyOn(global.Date.prototype, `toISOString`).mockReturnValue(`2019-01-01`)
@@ -126,8 +126,8 @@ describe(`Print type definitions`, () => {
     fs.existsSync.mockImplementation(() => true)
     store.dispatch(printTypeDefinitions({ path: `typedefs.gql` }))
     await build({})
-    expect(report.error).toHaveBeenCalledTimes(1)
-    expect(report.error).toHaveBeenCalledWith(
+    expect(reporter.error).toHaveBeenCalledTimes(1)
+    expect(reporter.error).toHaveBeenCalledWith(
       `Printing type definitions aborted. The file \`typedefs.gql\` already exists.`
     )
     fs.existsSync.mockReset()

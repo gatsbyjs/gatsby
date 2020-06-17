@@ -30,7 +30,7 @@ import {
   getElapsedTimeMS,
   getGlobalStatus,
 } from "./utils"
-import { IStructuredError } from "../../structured-errors/types"
+import { IStructuredError } from "../structured-errors/types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,

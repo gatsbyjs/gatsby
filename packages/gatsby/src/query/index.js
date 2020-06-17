@@ -5,7 +5,7 @@ const Queue = require(`better-queue`)
 // const convertHrtime = require(`convert-hrtime`)
 const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const queryQueue = require(`./queue`)
 const { GraphQLRunner } = require(`./graphql-runner`)
 
@@ -188,7 +188,7 @@ const createStaticQueryJob = (state, queryId) => {
  */
 const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   if (queryJobsCount) {
-    const activity = report.createProgress(`run queries`, queryJobsCount, 0, {
+    const activity = reporter.createProgress(`run queries`, queryJobsCount, 0, {
       id: `query-running`,
       parentSpan,
     })
@@ -197,7 +197,7 @@ const createQueryRunningActivity = (queryJobsCount, parentSpan) => {
   } else {
     return {
       done: () => {
-        report.completeActivity(`query-running`)
+        reporter.completeActivity(`query-running`)
       },
       tick: () => {},
     }
@@ -317,7 +317,7 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
   })
 
   emitter.on(`API_RUNNING_START`, () => {
-    report.pendingActivity({ id: `query-running` })
+    reporter.pendingActivity({ id: `query-running` })
   })
 
   emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)

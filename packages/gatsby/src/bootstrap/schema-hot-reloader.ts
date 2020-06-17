@@ -3,7 +3,7 @@ import { emitter, store } from "../redux"
 import { rebuild } from "../schema"
 import { haveEqualFields } from "../schema/infer/inference-metadata"
 import { updateStateAndRunQueries } from "../query/query-watcher"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import { IGatsbyState } from "../redux/types"
 
 type TypeMap = IGatsbyState["inferenceMetadata"]["typeMap"]
@@ -29,7 +29,7 @@ const maybeRebuildSchema = debounce(async (): Promise<void> => {
     return
   }
 
-  const activity = report.activityTimer(`rebuild schema`)
+  const activity = reporter.activityTimer(`rebuild schema`)
   activity.start()
   await rebuild({ parentSpan: activity })
   await updateStateAndRunQueries(false, { parentSpan: activity })

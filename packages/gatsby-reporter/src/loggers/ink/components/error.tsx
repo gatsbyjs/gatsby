@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
 import path from "path"
 import { Color, Box } from "ink"
-import { IStructuredError } from "../../../../structured-errors/types"
+import { IStructuredError } from "../../../structured-errors/types"
 
 interface IFileProps {
   filePath: string

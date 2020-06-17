@@ -8,7 +8,7 @@ jest.mock(`p-defer`, () =>
   jest.fn().mockImplementation(jest.requireActual(`p-defer`))
 )
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     phantomActivity: jest.fn(),
     warn: jest.fn(),
@@ -40,7 +40,7 @@ jest.mock(`uuid/v4`, () =>
 )
 
 const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)

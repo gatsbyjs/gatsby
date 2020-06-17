@@ -7,12 +7,12 @@ const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
 const { createFieldExtension, createTypes } = actions
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.error = jest.fn()
-report.panic = jest.fn()
-report.warn = jest.fn()
-report.log = jest.fn()
-report.activityTimer = jest.fn(() => {
+import { reporter } from "gatsby-reporter"
+reporter.error = jest.fn()
+reporter.panic = jest.fn()
+reporter.warn = jest.fn()
+reporter.log = jest.fn()
+reporter.activityTimer = jest.fn(() => {
   return {
     start: jest.fn(),
     setStatus: jest.fn(),
@@ -20,10 +20,10 @@ report.activityTimer = jest.fn(() => {
   }
 })
 afterEach(() => {
-  report.error.mockClear()
-  report.panic.mockClear()
-  report.warn.mockClear()
-  report.log.mockClear()
+  reporter.error.mockClear()
+  reporter.panic.mockClear()
+  reporter.warn.mockClear()
+  reporter.log.mockClear()
 })
 
 describe(`GraphQL field extensions`, () => {
@@ -681,7 +681,7 @@ describe(`GraphQL field extensions`, () => {
       })
     )
     const schema = await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `The field extension name \`dateformat\` is reserved for internal use.`
     )
     const directive = schema.getDirective(`dateformat`)
@@ -715,7 +715,7 @@ describe(`GraphQL field extensions`, () => {
       })
     )
     const schema = await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `A field extension with the name \`hello\` has already been registered.`
     )
     const directive = schema.getDirective(`hello`)
@@ -734,7 +734,7 @@ describe(`GraphQL field extensions`, () => {
         },
       })
     )
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `The provided field extension must have a \`name\` property.`
     )
   })
@@ -767,7 +767,7 @@ describe(`GraphQL field extensions`, () => {
       )
     )
     await buildSchema()
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
           `Argument "planet" has invalid value 2.`
@@ -811,7 +811,7 @@ describe(`GraphQL field extensions`, () => {
       )
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has argument \`planet\` with ` +
         `invalid value "2". String cannot represent a non string value: 2`
     )
@@ -855,19 +855,19 @@ describe(`GraphQL field extensions`, () => {
       ])
     )
     await buildSchema()
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
           `Argument "one" has invalid value "1".`
       )
     )
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
           `Argument "two" has invalid value ["1"].`
       )
     )
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       expect.stringContaining(
         `Encountered an error parsing the provided GraphQL type definitions:\n` +
           `Argument "three" has invalid value [null].`
@@ -986,15 +986,15 @@ describe(`GraphQL field extensions`, () => {
       ])
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`test\` on \`Test.second\` has argument \`one\` with ` +
         `invalid value "1". Int cannot represent non-integer value: "1"`
     )
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`test\` on \`Test.fourth\` has argument \`two\` with ` +
         `invalid value "1". Int cannot represent non-integer value: "1"`
     )
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`test\` on \`Test.seventh\` has argument \`three\` with ` +
         `invalid value "". Expected non-null field value.`
     )
@@ -1026,7 +1026,7 @@ describe(`GraphQL field extensions`, () => {
       )
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(`Some error message`)
+    expect(reporter.error).toBeCalledWith(`Some error message`)
   })
 
   // we get an extension option that has not been defined.
@@ -1065,7 +1065,7 @@ describe(`GraphQL field extensions`, () => {
       )
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`hello\` on \`Test.hi\` has invalid argument \`what\`.`
     )
   })
@@ -1080,7 +1080,7 @@ describe(`GraphQL field extensions`, () => {
       )
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
   })
@@ -1106,7 +1106,7 @@ describe(`GraphQL field extensions`, () => {
       )
     )
     await buildSchema()
-    expect(report.error).toBeCalledWith(
+    expect(reporter.error).toBeCalledWith(
       `Field extension \`what\` on \`Test.hi\` is not available.`
     )
   })

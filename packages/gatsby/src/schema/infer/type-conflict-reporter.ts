@@ -1,5 +1,5 @@
 import sortBy from "lodash/sortBy"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import typeOf from "type-of"
 import util from "util"
 
@@ -76,7 +76,7 @@ class TypeConflictEntry {
       ([typeName]) => typeName
     )
 
-    report.log(
+    reporter.log(
       `${this.selector}:${sortedByTypeName
         .map(
           ([typeName, { value, description }]) =>
@@ -127,7 +127,7 @@ class TypeConflictReporter {
 
   printConflicts(): void {
     if (this.entries.size > 0) {
-      report.warn(
+      reporter.warn(
         `There are conflicting field types in your data.\n\n` +
           `If you have explicitly defined a type for those fields, you can ` +
           `safely ignore this warning message.\n` +

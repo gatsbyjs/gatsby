@@ -2,7 +2,7 @@ import { camelCase } from "lodash"
 import { GraphQLSchema, GraphQLOutputType } from "graphql"
 import { ActionCreator } from "redux"
 import { ThunkAction } from "redux-thunk"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import { parseTypeDef } from "../../schema/types/type-defs"
 import {
   GraphQLFieldExtensionDefinition,
@@ -272,15 +272,15 @@ export const actions = {
     const { fieldExtensions } = getState().schemaCustomization
 
     if (!name) {
-      report.error(
+      reporter.error(
         `The provided field extension must have a \`name\` property.`
       )
     } else if (reservedExtensionNames.includes(name)) {
-      report.error(
+      reporter.error(
         `The field extension name \`${name}\` is reserved for internal use.`
       )
     } else if (fieldExtensions[name]) {
-      report.error(
+      reporter.error(
         `A field extension with the name \`${name}\` has already been registered.`
       )
     } else {
@@ -381,7 +381,7 @@ export const actions = {
     dispatch
   ): void => {
     if (!context || typeof context !== `object`) {
-      report.error(
+      reporter.error(
         `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
       )
     } else {
@@ -406,7 +406,7 @@ const withDeprecationWarning = (
   api: API,
   allowedIn: API[]
 ): SomeActionCreator => (...args: any[]): ReturnType<ActionCreator<any>> => {
-  report.warn(
+  reporter.warn(
     `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
       `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
   )
@@ -420,7 +420,7 @@ const withErrorMessage = (
 ) => () =>
   // return a thunk that does not dispatch anything
   (): void => {
-    report.error(
+    reporter.error(
       `\`${actionName}\` is not available in the \`${api}\` API. ` +
         `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
     )

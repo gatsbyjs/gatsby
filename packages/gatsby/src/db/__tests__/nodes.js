@@ -2,8 +2,8 @@ const { actions } = require(`../../redux/actions`)
 const { getNode, getNodes } = require(`../nodes`)
 const { store } = require(`../../redux`)
 
-const report = require(`gatsby-cli/lib/reporter`)
-jest.mock(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
+jest.mock(`gatsby-reporter`)
 
 describe(`nodes db tests`, () => {
   beforeEach(() => {
@@ -345,7 +345,7 @@ describe(`nodes db tests`, () => {
       `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
       `object containing a full node instead: deleteNode({ node }). ` +
       `"deleteNode" was called by tests`
-    expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
+    expect(reporter.warn).toHaveBeenCalledWith(deprecationNotice)
   })
 
   it(`throws an error when trying to delete a node of a type owned from another plugin`, () => {

@@ -39,7 +39,7 @@ const {
   duplicateFragmentError,
   unknownFragmentError,
 } = require(`./graphql-errors`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const {
   default: errorParser,
   locInGraphQlToLocInFile,
@@ -53,7 +53,7 @@ export default async function compile({ parentSpan } = {}): Promise<
   // TODO: swap plugins to themes
   const { program, schema, themes, flattenedPlugins } = store.getState()
 
-  const activity = report.activityTimer(`extract queries from components`, {
+  const activity = reporter.activityTimer(`extract queries from components`, {
     parentSpan,
     id: `query-extraction`,
   })
@@ -411,7 +411,7 @@ const processDefinitions = ({
       process.env.NODE_ENV === `production` &&
       typeof require(`react`).useContext !== `function`
     ) {
-      report.panicOnBuild(
+      reporter.panicOnBuild(
         `You're likely using a version of React that doesn't support Hooks\n` +
           `Please update React and ReactDOM to 16.8.0 or later to use the useStaticQuery hook.`
       )

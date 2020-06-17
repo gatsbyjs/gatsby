@@ -5,7 +5,7 @@ const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
 const _ = require(`lodash`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 const MESSAGE_TYPES = {
   JOB_CREATED: `JOB_CREATED`,

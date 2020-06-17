@@ -2,7 +2,7 @@ import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
-import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
+import { IGatsbyCLIState } from "gatsby-reporter"
 import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 

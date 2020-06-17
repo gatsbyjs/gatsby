@@ -6,3 +6,8 @@ export { getCIName, isCI } from "./ci"
 export { createRequireFromPath } from "./create-require-from-path"
 export { getConfigStore } from "./get-config-store"
 export { getGatsbyVersion } from "./get-gatsby-version"
+export {
+  sanitizeStructuredStackTrace,
+  getErrorFormatter,
+  createErrorFromString,
+} from "./errors"

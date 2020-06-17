@@ -2,7 +2,7 @@ const { build } = require(`../..`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),

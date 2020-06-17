@@ -1,4 +1,4 @@
-import reporter from "../"
+import { reporter } from "../"
 import * as reporterActions from "../redux/actions"
 
 // TODO: report.error now DOES return something. Get rid of this spying mocking stuff

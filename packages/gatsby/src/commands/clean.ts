@@ -8,17 +8,17 @@ import {
 import { IProgram } from "./types"
 
 module.exports = async function clean(program: IProgram): Promise<void> {
-  const { directory, report } = program
+  const { directory, report: reporter } = program
 
   const directories = [`.cache`, `public`]
 
-  report.info(`Deleting ${directories.join(`, `)}`)
+  reporter.info(`Deleting ${directories.join(`, `)}`)
 
   await Promise.all(
     directories.map(dir => fs.remove(path.join(directory, dir)))
   )
 
-  report.info(`Successfully deleted directories`)
+  reporter.info(`Successfully deleted directories`)
 
   if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()

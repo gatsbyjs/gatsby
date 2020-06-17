@@ -11,7 +11,7 @@ import {
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
 const getLegacyCacheFile = (): string =>
   // TODO: remove this legacy stuff in v3 (fairly benign change but still)
@@ -58,7 +58,7 @@ export function readFromCache(): ICachedReduxState {
   const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
 
   if (!chunks.length) {
-    report.info(
+    reporter.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
     // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
@@ -88,7 +88,7 @@ function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
 
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
   if (maxSize > 500000) {
-    report.warn(
+    reporter.warn(
       `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
     )
   }
@@ -176,7 +176,7 @@ export function writeToCache(contents: ICachedReduxState): void {
       removeSync(bakName)
     }
   } catch (e) {
-    report.warn(
+    reporter.warn(
       `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`
     )
   }

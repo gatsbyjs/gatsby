@@ -4,7 +4,7 @@ const { build } = require(`../..`)
 const { actions } = require(`../../../redux/actions`)
 const { defaultResolver } = require(`../../resolvers`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),

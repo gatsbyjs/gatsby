@@ -23,7 +23,7 @@ const { readFileSync } = require(`fs-extra`)
 const webpackConfig = require(`../webpack.config`)
 const { store } = require(`../../redux`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),

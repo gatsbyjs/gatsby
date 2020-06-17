@@ -1,5 +1,5 @@
 import path from "path"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
@@ -52,14 +52,14 @@ interface IBuildArgs extends IProgram {
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (program.profile) {
-    report.warn(
+    reporter.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
 
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
-  const buildActivity = report.phantomActivity(`build`)
+  const buildActivity = reporter.phantomActivity(`build`)
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
@@ -98,7 +98,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  const buildActivityTimer = report.activityTimer(
+  const buildActivityTimer = reporter.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
@@ -124,7 +124,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       payload: webpackCompilationHash,
     })
 
-    const rewriteActivityTimer = report.activityTimer(
+    const rewriteActivityTimer = reporter.activityTimer(
       `Rewriting compilation hashes`,
       {
         parentSpan: buildSpan,
@@ -195,7 +195,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  const buildHTMLActivityProgress = report.createProgress(
+  const buildHTMLActivityProgress = reporter.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
     0,
@@ -237,7 +237,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   let deletedPageKeys: string[] = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    const deletePageDataActivityTimer = report.activityTimer(
+    const deletePageDataActivityTimer = reporter.activityTimer(
       `Delete previous page data`
     )
     deletePageDataActivityTimer.start()
@@ -250,7 +250,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     deletePageDataActivityTimer.end()
   }
 
-  const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
+  const postBuildActivityTimer = reporter.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.start()
@@ -263,7 +263,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
 
-  report.info(`Done building in ${process.uptime()} sec`)
+  reporter.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()
   await stopTracer()
@@ -275,7 +275,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     process.argv.includes(`--log-pages`)
   ) {
     if (pagePaths.length) {
-      report.info(
+      reporter.info(
         `Built pages:\n${pagePaths
           .map(path => `Updated page: ${path}`)
           .join(`\n`)}`
@@ -283,7 +283,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
 
     if (deletedPageKeys.length) {
-      report.info(
+      reporter.info(
         `Deleted pages:\n${deletedPageKeys
           .map(path => `Deleted page: ${path}`)
           .join(`\n`)}`
@@ -306,7 +306,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
     if (pagePaths.length) {
       await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`.cache/newPages.txt created`)
+      reporter.info(`.cache/newPages.txt created`)
     }
     if (deletedPageKeys.length) {
       await fs.writeFile(
@@ -314,7 +314,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
         `${deletedPageKeys.join(`\n`)}\n`,
         `utf8`
       )
-      report.info(`.cache/deletedPages.txt created`)
+      reporter.info(`.cache/deletedPages.txt created`)
     }
   }
 

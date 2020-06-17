@@ -5,7 +5,7 @@ import os from "os"
 import semver from "semver"
 import util from "util"
 import { createCli } from "./create-cli"
-import report from "./reporter"
+import { reporter } from "gatsby-reporter"
 import pkg from "../package.json"
 import updateNotifier from "update-notifier"
 import { ensureWindowsDriveLetterIsUppercase } from "./util/ensure-windows-drive-letter-is-uppercase"
@@ -34,8 +34,8 @@ if (
     includePrerelease: true,
   })
 ) {
-  report.panic(
-    report.stripIndent(`
+  reporter.panic(
+    reporter.stripIndent(`
       Gatsby requires Node.js ${MIN_NODE_VERSION} or higher (you have ${version}).
       Upgrade Node to the latest stable release: https://gatsby.dev/upgrading-node-js
     `)
@@ -43,17 +43,17 @@ if (
 }
 
 if (semver.prerelease(version)) {
-  report.warn(
-    report.stripIndent(`
+  reporter.warn(
+    reporter.stripIndent(`
     You are currently using a prerelease version of Node (${version}), which is not supported.
     You can use this for testing, but we do not recommend it in production. 
-    Before reporting any bugs, please test with a supported version of Node (>=${MIN_NODE_VERSION}).`)
+    Before reporter.ng any bugs, please test with a supported version of Node (>=${MIN_NODE_VERSION}).`)
   )
 }
 
 // if (!semver.satisfies(version, `>=${NEXT_MIN_NODE_VERSION}`)) {
-//   report.warn(
-//     report.stripIndent(`
+//   reporter.warn(
+//     reporter.stripIndent(`
 //       Node.js ${version} has reached End of Life status on 31 December, 2019.
 //       Gatsby will only actively support ${NEXT_MIN_NODE_VERSION} or higher and drop support for Node 8 soon.
 //       Please upgrade Node.js to a currently active LTS release: https://gatsby.dev/upgrading-node-js
@@ -71,11 +71,11 @@ process.on(`unhandledRejection`, reason => {
     reason = new Error(util.format(reason))
   }
 
-  report.panic(`UNHANDLED REJECTION`, reason as Error)
+  reporter.panic(`UNHANDLED REJECTION`, reason as Error)
 })
 
 process.on(`uncaughtException`, error => {
-  report.panic(`UNHANDLED EXCEPTION`, error)
+  reporter.panic(`UNHANDLED EXCEPTION`, error)
 })
 
 createCli(process.argv)

@@ -1,7 +1,7 @@
 import { Span } from "opentracing"
 import _ from "lodash"
 import fs from "fs-extra"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import crypto from "crypto"
 
 import path from "path"
@@ -68,7 +68,7 @@ export const queryRunner = async (
           }
         }
 
-        report.warn(messageParts.join(`\n`))
+        reporter.warn(messageParts.join(`\n`))
       }
     }, 15000)
 
@@ -126,7 +126,7 @@ export const queryRunner = async (
       })
       .filter(Boolean)
 
-    report.panicOnBuild(structuredErrors)
+    reporter.panicOnBuild(structuredErrors)
   }
 
   // Add the page context onto the results.

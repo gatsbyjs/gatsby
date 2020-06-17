@@ -1,7 +1,7 @@
 import levenshtein from "fast-levenshtein"
 import fs from "fs-extra"
 import { testRequireError } from "../utils/test-require-error"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import path from "path"
 import { sync as existsSync } from "fs-exists-cached"
 
@@ -36,7 +36,7 @@ export async function getConfigFile(
       })
     )
     if (!testRequireError(configPath, err)) {
-      report.panic({
+      reporter.panic({
         id: `10123`,
         error: err,
         context: {
@@ -45,7 +45,7 @@ export async function getConfigFile(
         },
       })
     } else if (nearMatch) {
-      report.panic({
+      reporter.panic({
         id: `10124`,
         error: err,
         context: {
@@ -54,7 +54,7 @@ export async function getConfigFile(
         },
       })
     } else if (existsSync(path.join(rootDir, `src`, configName + `.js`))) {
-      report.panic({
+      reporter.panic({
         id: `10125`,
         context: {
           configName,

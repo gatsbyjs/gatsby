@@ -1,6 +1,6 @@
 import { calcInitialDirtyQueryIds, groupQueryIds } from "../query"
 import { IBuildContext, IGroupedQueryIds } from "./"
-import reporter from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
 export async function calculateDirtyQueries({
   store,

@@ -1,4 +1,4 @@
-import reporter from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import { Stats } from "webpack"
 import { IMatch } from "../types"
 

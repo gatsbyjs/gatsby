@@ -1,8 +1,6 @@
 import { Path } from "graphql/jsutils/Path"
 
-import report from "gatsby-cli/lib/reporter"
-import { IActivityArgs } from "gatsby-cli/src/reporter/reporter"
-import { IPhantomReporter } from "gatsby-cli/src/reporter/reporter-phantom"
+import { reporter, IActivityArgs, IPhantomReporter } from "gatsby-reporter"
 
 import { IGraphQLSpanTracer } from "../schema/type-definitions"
 import { pathToArray } from "./utils"
@@ -16,7 +14,7 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
   activities: Map<string, IPhantomReporter>
 
   constructor(name: string, activityArgs: IActivityArgs) {
-    this.parentActivity = report.phantomActivity(
+    this.parentActivity = reporter.phantomActivity(
       name,
       activityArgs
     ) as IPhantomReporter
@@ -44,7 +42,7 @@ export default class GraphQLSpanTracer implements IGraphQLSpanTracer {
       prev = prev.prev
     }
     const parentSpan = this.getActivity(prev).span
-    const activity = report.phantomActivity(`GraphQL Resolver`, {
+    const activity = reporter.phantomActivity(`GraphQL Resolver`, {
       parentSpan,
       tags: {
         field: name,

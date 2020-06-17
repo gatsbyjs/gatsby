@@ -1,5 +1,5 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
-import { IStructuredError } from "../../structured-errors/types"
+import { IStructuredError } from "../structured-errors/types"
 
 export interface IGatsbyCLIState {
   messages: ILog[]

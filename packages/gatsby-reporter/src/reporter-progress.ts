@@ -2,7 +2,7 @@ import * as reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
-import { IStructuredError } from "../structured-errors/types"
+import { IStructuredError } from "./structured-errors/types"
 import { ErrorMeta } from "./types"
 
 interface ICreateProgressReporterArguments {

@@ -1,5 +1,5 @@
 import { tmpdir } from "os"
-import report from "../reporter"
+import report from "gatsby-reporter"
 
 /**
  * This function ensures that the current working directory on Windows

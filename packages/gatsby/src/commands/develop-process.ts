@@ -20,7 +20,7 @@ import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import { buildHTML } from "./build-html"
 import { withBasePath } from "../utils/path"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 import launchEditor from "react-dev-utils/launchEditor"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
@@ -110,7 +110,7 @@ interface IServer {
 }
 
 async function startServer(program: IProgram): Promise<IServer> {
-  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
+  const indexHTMLActivity = reporter.phantomActivity(`building index.html`, {})
   indexHTMLActivity.start()
   const directory = program.directory
   const directoryPath = withBasePath(directory)
@@ -126,11 +126,11 @@ async function startServer(program: IProgram): Promise<IServer> {
       })
     } catch (err) {
       if (err.name !== `WebpackError`) {
-        report.panic(err)
+        reporter.panic(err)
         return
       }
-      report.panic(
-        report.stripIndent`
+      reporter.panic(
+        reporter.stripIndent`
           There was an error compiling the html.js component for the development server.
 
           See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
@@ -144,11 +144,14 @@ async function startServer(program: IProgram): Promise<IServer> {
 
   indexHTMLActivity.end()
 
-  // report.stateUpdate(`webpack`, `IN_PROGRESS`)
+  // reporter.stateUpdate(`webpack`, `IN_PROGRESS`)
 
-  const webpackActivity = report.activityTimer(`Building development bundle`, {
-    id: `webpack-develop`,
-  })
+  const webpackActivity = reporter.activityTimer(
+    `Building development bundle`,
+    {
+      id: `webpack-develop`,
+    }
+  )
   webpackActivity.start()
 
   const devConfig = await webpackConfig(
@@ -235,19 +238,19 @@ async function startServer(program: IProgram): Promise<IServer> {
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
     stopSchemaHotReloader()
-    let activity = report.activityTimer(`createSchemaCustomization`, {})
+    let activity = reporter.activityTimer(`createSchemaCustomization`, {})
     activity.start()
     await createSchemaCustomization({
       refresh: true,
     })
     activity.end()
-    activity = report.activityTimer(`Refreshing source data`, {})
+    activity = reporter.activityTimer(`Refreshing source data`, {})
     activity.start()
     await sourceNodes({
       webhookBody: req.body,
     })
     activity.end()
-    activity = report.activityTimer(`rebuild schema`)
+    activity = reporter.activityTimer(`rebuild schema`)
     activity.start()
     await rebuildSchema({ parentSpan: activity })
     activity.end()
@@ -320,7 +323,7 @@ async function startServer(program: IProgram): Promise<IServer> {
                 } else {
                   const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
 
-                  report.error(message, err)
+                  reporter.error(message, err)
                   res.sendStatus(500)
                 }
               })
@@ -388,7 +391,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    report.panic(
+    reporter.panic(
       `The flag ${chalk.yellow(
         `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
       )} is not available with ${chalk.cyan(
@@ -397,7 +400,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   }
   initTracer(program.openTracingConfigFile)
-  report.pendingActivity({ id: `webpack-develop` })
+  reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -618,7 +621,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     if (webpackActivity) {
       webpackActivity.end()
     }
-    webpackActivity = report.activityTimer(`Re-building development bundle`, {
+    webpackActivity = reporter.activityTimer(`Re-building development bundle`, {
       id: `webpack-develop`,
     })
     webpackActivity.start()

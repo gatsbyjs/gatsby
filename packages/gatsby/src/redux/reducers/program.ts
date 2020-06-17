@@ -1,5 +1,5 @@
 import { IStateProgram, ActionsUnion } from "../types"
-import { reporter } from "gatsby-cli/lib/reporter/reporter"
+import { reporter } from "gatsby-reporter"
 
 const initialState: IStateProgram = {
   directory: `/`,

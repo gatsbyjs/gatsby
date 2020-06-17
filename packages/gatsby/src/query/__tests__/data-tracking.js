@@ -26,6 +26,8 @@
  *     - it might report false positives in unforeseen scenarios after internal changes.
  */
 
+import { reporter } from "gatsby-reporter"
+
 jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
@@ -33,7 +35,7 @@ jest.mock(`fs-extra`, () => {
   }
 })
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -151,7 +153,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const queryUtil = require(`../`)
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
-  const reporter = require(`gatsby-cli/lib/reporter`)
   const { queryRunner } = require(`../query-runner`)
   const { boundActionCreators } = require(`../../redux/actions`)
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(

@@ -13,7 +13,7 @@ const { hasNodes } = require(`../inference-metadata`)
 const { TypeConflictReporter } = require(`../type-conflict-reporter`)
 const withResolverContext = require(`../../context`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -34,9 +34,9 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     },
   }
 })
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 afterEach(() => {
-  report.error.mockClear()
+  reporter.error.mockClear()
 })
 
 const makeNodes = () => [

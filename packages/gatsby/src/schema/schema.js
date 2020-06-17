@@ -20,7 +20,7 @@ const {
 } = require(`graphql-compose`)
 
 const apiRunner = require(`../utils/api-runner-node`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const {
@@ -131,14 +131,14 @@ const updateSchemaComposer = async ({
   inferenceMetadata,
   parentSpan,
 }) => {
-  let activity = report.phantomActivity(`Add explicit types`, {
+  let activity = reporter.phantomActivity(`Add explicit types`, {
     parentSpan: parentSpan,
   })
   activity.start()
   await addTypes({ schemaComposer, parentSpan: activity.span, types })
   activity.end()
 
-  activity = report.phantomActivity(`Add inferred types`, {
+  activity = reporter.phantomActivity(`Add inferred types`, {
     parentSpan: parentSpan,
   })
   activity.start()
@@ -152,7 +152,7 @@ const updateSchemaComposer = async ({
   })
   activity.end()
 
-  activity = report.phantomActivity(`Processing types`, {
+  activity = reporter.phantomActivity(`Processing types`, {
     parentSpan: parentSpan,
   })
   activity.start()
@@ -380,14 +380,14 @@ const mergeTypes = ({
 
     return true
   } else if (typeOwner) {
-    report.warn(
+    reporter.warn(
       `Plugin \`${plugin.name}\` tried to define the GraphQL type ` +
         `\`${typeComposer.getTypeName()}\`, which has already been defined ` +
         `by the plugin \`${typeOwner}\`.`
     )
     return false
   } else {
-    report.warn(
+    reporter.warn(
       `Plugin \`${plugin.name}\` tried to define built-in Gatsby GraphQL type ` +
         `\`${typeComposer.getTypeName()}\``
     )
@@ -455,7 +455,7 @@ const addExtensions = ({
               !typeComposer.hasField(`id`) ||
               typeComposer.getFieldType(`id`).toString() !== `ID!`
             ) {
-              report.panic(
+              reporter.panic(
                 `Interfaces with the \`nodeInterface\` extension must have a field ` +
                   `\`id\` of type \`ID!\`. Check the type definition of ` +
                   `\`${typeComposer.getTypeName()}\`.`
@@ -502,7 +502,7 @@ const addExtensions = ({
           const args = fieldExtensions[name]
 
           if (!args || typeof args !== `object`) {
-            report.error(
+            reporter.error(
               `Field extension arguments must be provided as an object. ` +
                 `Received "${args}" on \`${typeName}.${fieldName}\`.`
             )
@@ -524,7 +524,7 @@ const addExtensions = ({
                 ({ name }) => name === arg
               )
               if (!argumentDef) {
-                report.error(
+                reporter.error(
                   `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
                     `has invalid argument \`${arg}\`.`
                 )
@@ -534,7 +534,7 @@ const addExtensions = ({
               try {
                 validate(argumentDef.type, value)
               } catch (error) {
-                report.error(
+                reporter.error(
                   `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
                     `has argument \`${arg}\` with invalid value "${value}". ` +
                     error.message
@@ -542,7 +542,7 @@ const addExtensions = ({
               }
             })
           } catch (error) {
-            report.error(
+            reporter.error(
               `Field extension \`${name}\` on \`${typeName}.${fieldName}\` ` +
                 `is not available.`
             )
@@ -552,7 +552,7 @@ const addExtensions = ({
   }
 
   if (typeComposer.hasExtension(`addDefaultResolvers`)) {
-    report.warn(
+    reporter.warn(
       `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, ` +
         `defined fields won't get resolvers, unless explicitly added with a ` +
         `directive/extension.`
@@ -637,7 +637,7 @@ const createTypeComposerFromGatsbyType = ({
       return ScalarTypeComposer.createTemp(type.config, schemaComposer)
     }
     default: {
-      report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
+      reporter.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
       return null
     }
   }
@@ -814,7 +814,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                 )
               }
             } else if (fieldTypeName) {
-              report.warn(
+              reporter.warn(
                 `\`createResolvers\` passed resolvers for field ` +
                   `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
                   `Such a field with type \`${originalTypeName}\` already exists ` +
@@ -830,7 +830,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
           }
         })
       } else if (!ignoreNonexistentTypes) {
-        report.warn(
+        reporter.warn(
           `\`createResolvers\` passed resolvers for type \`${typeName}\` that ` +
             `doesn't exist in the schema. Use \`createTypes\` to add the type ` +
             `before adding resolvers.`
@@ -924,7 +924,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       type.hasExtension(`childOf`)
     ) {
       if (type instanceof ObjectTypeComposer && !type.hasInterface(`Node`)) {
-        report.error(
+        reporter.error(
           `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
             `Check the type definition of \`${type.getTypeName()}\`.`
         )
@@ -934,7 +934,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
         type instanceof InterfaceTypeComposer &&
         !type.hasExtension(`nodeInterface`)
       ) {
-        report.error(
+        reporter.error(
           `The \`childOf\` extension can only be used on interface types that ` +
             `have the \`@nodeInterface\` extension.\n` +
             `Check the type definition of \`${type.getTypeName()}\`.`
@@ -965,7 +965,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       typeComposer instanceof InterfaceTypeComposer &&
       !typeComposer.hasExtension(`nodeInterface`)
     ) {
-      report.error(
+      reporter.error(
         `With the \`childOf\` extension, children fields can only be added to ` +
           `interfaces which have the \`@nodeInterface\` extension.\n` +
           `Check the type definition of \`${typeComposer.getTypeName()}\`.`
@@ -989,7 +989,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
           typeComposer instanceof InterfaceTypeComposer &&
           !typeComposer.hasExtension(`nodeInterface`)
         ) {
-          report.error(
+          reporter.error(
             `With the \`childOf\` extension, children fields can only be added to ` +
               `interfaces which have the \`@nodeInterface\` extension.\n` +
               `Check the type definition of \`${typeComposer.getTypeName()}\`.`
@@ -1047,7 +1047,7 @@ const addImplicitConvenienceChildrenFields = ({
         const fieldName = many
           ? fieldNames.convenienceChildren(typeName)
           : fieldNames.convenienceChild(typeName)
-        report.warn(
+        reporter.warn(
           `The type \`${parentTypeName}\` does not explicitly define ` +
             `the field \`${fieldName}\`.\n` +
             `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
@@ -1248,7 +1248,7 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
     }
   })
   if (incorrectTypes.length) {
-    report.panic(
+    reporter.panic(
       `Interfaces with the \`nodeInterface\` extension must only be ` +
         `implemented by types which also implement the \`Node\` ` +
         `interface. Check the type definition of ` +

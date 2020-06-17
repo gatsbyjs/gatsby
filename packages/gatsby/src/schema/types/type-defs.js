@@ -1,7 +1,7 @@
 const { parse, Kind: GraphQLASTNodeKind } = require(`graphql`)
 const { isGatsbyType } = require(`./type-builders`)
 const { inferExtensionName, dontInferExtensionName } = require(`../extensions`)
-const report = require(`gatsby-cli/lib/reporter`)
+import { reporter } from "gatsby-reporter"
 
 const isASTDocument = typeOrTypeDef =>
   typeof typeOrTypeDef === `object` &&
@@ -34,7 +34,7 @@ const reportParsingError = error => {
       { start: locations[0] },
       { linesAbove: 5, linesBelow: 5 }
     )
-    report.panic(
+    reporter.panic(
       `Encountered an error parsing the provided GraphQL type definitions:\n` +
         message +
         `\n\n` +

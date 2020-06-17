@@ -6,7 +6,7 @@ import express from "express"
 import chalk from "chalk"
 import { match as reachMatch } from "@reach/router/lib/utils"
 import onExit from "signal-exit"
-import report from "gatsby-cli/lib/reporter"
+import { reporter } from "gatsby-reporter"
 
 import telemetry from "gatsby-telemetry"
 
@@ -37,13 +37,13 @@ const readMatchPaths = async (
   try {
     rawJSON = await fs.readFile(filePath, `utf8`)
   } catch (error) {
-    report.warn(error)
-    report.warn(
+    reporter.warn(error)
+    reporter.warn(
       `Could not read ${chalk.bold(
         `match-paths.json`
       )} from the .cache directory`
     )
-    report.warn(
+    reporter.warn(
       `Client-side routing will not work correctly. Maybe you need to re-run ${chalk.bold(
         `gatsby build`
       )}?`
@@ -158,9 +158,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         urls
       )
       if (open) {
-        report.info(`Opening browser...`)
+        reporter.info(`Opening browser...`)
         Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
-          report.warn(`Browser not opened because no browser was found`)
+          reporter.warn(`Browser not opened because no browser was found`)
         )
       }
     })
