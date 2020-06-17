@@ -45,12 +45,14 @@ export interface IDbFilterStatement {
  * structured representation of each distinct path of the query. We convert
  * nested objects with multiple keys to separate instances.
  */
-export function createDbQueriesFromObject(filter: object): Array<DbQuery> {
+export function createDbQueriesFromObject(
+  filter: Record<string, unknown>
+): Array<DbQuery> {
   return createDbQueriesFromObjectNested(filter)
 }
 
 function createDbQueriesFromObjectNested(
-  filter: Record<string, any>,
+  filter: Record<string, unknown>,
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)

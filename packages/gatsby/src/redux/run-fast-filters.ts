@@ -1,5 +1,5 @@
 import { IGatsbyNode } from "./types"
-import { GatsbyGraphQLType } from "../../index"
+import { GatsbyGraphQLType } from "../.."
 import { prepareRegex } from "../utils/prepare-regex"
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
@@ -26,11 +26,30 @@ import {
 } from "./nodes"
 import { IGraphQLRunnerStats } from "../query/types"
 
+// The value is an object with arbitrary keys that are either filter values or,
+// recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
 interface IInputQuery {
   [key: string]: FilterValueNullable | IInputQuery
 }
+// Similar to IInputQuery except the comparator leaf nodes will have their
+// key prefixed with `$` and their value, in some cases, normalized.
 interface IPreparedQueryArg {
   [key: string]: FilterValueNullable | IPreparedQueryArg
+}
+
+interface IRunFilterArg {
+  gqlType: GatsbyGraphQLType
+  queryArgs: {
+    filter: Array<IInputQuery> | undefined
+    sort:
+      | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
+      | undefined
+  }
+  firstOnly: boolean
+  resolvedFields: Record<string, any>
+  nodeTypeNames: Array<string>
+  filtersCache: FiltersCache
+  stats: IGraphQLRunnerStats
 }
 
 /**
@@ -42,19 +61,19 @@ function createFilterCacheKey(
 ): FilterCacheKey {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
   // (This function is future proof for elemMatch support, won't receive it yet)
-  let f = filter
+  let filterStep = filter
   let comparator = ``
   const paths: Array<string> = []
-  while (f) {
-    paths.push(...f.path)
-    if (f.type === `elemMatch`) {
-      const q: IDbQueryElemMatch = f
-      f = q.nestedQuery
+  while (filterStep) {
+    paths.push(...filterStep.path)
+    if (filterStep.type === `elemMatch`) {
+      const q: IDbQueryElemMatch = filterStep
+      filterStep = q.nestedQuery
       // Make distinction between filtering `a.elemMatch.b.eq` and `a.b.eq`
       // In practice this is unlikely to be an issue, but it might
       paths.push(`elemMatch`)
     } else {
-      const q: IDbQueryQuery = f
+      const q: IDbQueryQuery = filterStep
       comparator = q.query.comparator
       break
     }
@@ -305,20 +324,7 @@ function collectBucketForElemMatch(
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
-function runFastFiltersAndSort(args: {
-  gqlType: GatsbyGraphQLType
-  queryArgs: {
-    filter: Array<IInputQuery> | undefined
-    sort:
-      | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
-      | undefined
-  }
-  firstOnly: boolean
-  resolvedFields: Record<string, any>
-  nodeTypeNames: Array<string>
-  filtersCache: FiltersCache
-  stats: IGraphQLRunnerStats
-}): Array<IGatsbyNode> | null {
+function runFastFiltersAndSort(args: IRunFilterArg): Array<IGatsbyNode> | null {
   const {
     queryArgs: { filter, sort } = {},
     resolvedFields = {},
