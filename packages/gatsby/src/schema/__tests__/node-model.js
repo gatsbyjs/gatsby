@@ -454,12 +454,12 @@ describe(`NodeModel`, () => {
         expect(result.id).toEqual(`post2`)
       })
 
-      // FIXME: Filters on date instances are not supported yet
-      //  SIFT requires such filters to be expressed as Date instances but we
-      //  don't know if date is stored as `Date` instance or `string`
-      //  so can't really do that
-      //  See https://github.com/crcn/sift.js#date-comparison
-      it.skip(`queries date instances in nodes`, async () => {
+      // Since it _is_ possible for raw Dates to end up in a IGatsbyNode (when
+      // the user manually creates a node), the filters should support it.
+      // While GraphQL generated nodes wouldn't end up with Date objects (it
+      // will stringify the Date), the schema validator does allow it so we
+      // end up having to support it.
+      it(`queries date instances in nodes`, async () => {
         const type = `Post`
         const query = {
           filter: {
@@ -469,7 +469,7 @@ describe(`NodeModel`, () => {
           },
         }
         const firstOnly = false
-        nodeModel.replaceTypeKeyValueCache()
+        nodeModel.replaceFiltersCache()
         const result = await nodeModel.runQuery({
           query,
           firstOnly,

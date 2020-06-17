@@ -424,6 +424,7 @@ function addNodeToFilterCache(
     v = v[nextProp]
   }
 
+  let filterValue: FilterValueNullable = ``
   if (
     (typeof v !== `string` &&
       typeof v !== `number` &&
@@ -441,14 +442,23 @@ function addNodeToFilterCache(
       return
     }
 
-    // This means that either
-    // - The filter resolved to `undefined`, or
-    // - The filter resolved to something other than a primitive
-    // Set the value to `undefined` to mark "path does not (fully) exist"
-    v = undefined
+    if (v instanceof Date) {
+      // While GraphQL serializes Dates as strings, userland _can_ manually create
+      // nodes with actual Date objects. Schema allows this, so we should support
+      // that case, too.
+      filterValue = v.toISOString()
+    } else {
+      // This means that either
+      // - The filter resolved to `undefined`, or
+      // - The filter resolved to something other than a primitive
+      // Set the value to `undefined` to mark "path does not (fully) exist"
+      filterValue = undefined
+    }
+  } else {
+    filterValue = v
   }
 
-  markNodeForValue(filterCache, node, v)
+  markNodeForValue(filterCache, node, filterValue)
 }
 
 function markNodeForValue(
