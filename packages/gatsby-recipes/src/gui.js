@@ -6,8 +6,10 @@ const React = require(`react`)
 const { useState } = require(`react`)
 const MDX = require(`@mdx-js/runtime`).default
 const ansi2HTML = require(`ansi-html`)
+const remove = require('unist-util-remove')
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
+
 const {
   Button,
   ThemeProvider,
@@ -32,6 +34,41 @@ require(`normalize.css`)
 import { useInputByUuid, InputProvider } from "./renderer/input-provider"
 
 const theme = getTheme()
+
+class MDX2 extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log('ERRRRRRRORORORORORORO')
+    console.log({ error, errorInfo })
+  }
+
+  render(props) {
+    if (this.state.hasError) {
+      return (
+        <div>
+          <h1>Oh noes</h1>
+          <pre>{JSON.stringify({ ...this.state, props })}</pre>
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        <pre>{JSON.stringify({ ...this.state, props })}</pre>
+      
+        
+      </div>
+    )
+  }
+}
 
 ansi2HTML.setColors({
   red: theme.tones.DANGER.medium.slice(1),
@@ -279,6 +316,19 @@ log(
   `======================================= ${new Date().toJSON()}`
 )
 
+const removeJsx = () => tree => {
+  remove(tree, 'mdxBlockElement', node => {
+    return node.name === 'File'
+  })
+
+  remove(tree, 'export', node => {
+    console.log({ node })
+    return true
+  })
+  console.log({ tree })
+  return tree
+}
+
 const RecipeGui = ({
   recipe = `./test.mdx`,
   // recipe = `jest.mdx`,
@@ -496,8 +546,8 @@ const RecipeGui = ({
                   },
                 }}
               >
-                <MDX key="DOC" components={components} scope={{ sendEvent }}>
-                  {`# Hello, world!` || step}
+                <MDX key="DOC" components={components} scope={{ sendEvent }} remarkPlugins={[removeJsx]}>
+                  {step}
                 </MDX>
               </div>
             </div>
@@ -647,17 +697,6 @@ const RecipeGui = ({
         )
       }
 
-      const Error = ({ state }) => {
-        log(`errors`, state)
-        if (state && state.context && state.context.error) {
-          return (
-            <Color red>{JSON.stringify(state.context.error, null, 2)}</Color>
-          )
-        }
-
-        return null
-      }
-
       const staticMessages = {}
       for (let step = 0; step < state.context.currentStep; step++) {
         staticMessages[step] = [
@@ -798,8 +837,8 @@ const RecipeGui = ({
               }}
             >
               <div sx={{ "*:last-child": { mb: 0 } }}>
-                <MDX components={components} scope={{ sendEvent }}>
-                  {`# Hello, world!` || state.context.steps[0]}
+                <MDX components={components} scope={{ sendEvent }} remarkPlugins={[removeJsx]}>
+                  {state.context.steps[0]}
                 </MDX>
               </div>
               <Button

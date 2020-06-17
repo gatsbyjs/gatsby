@@ -74,13 +74,14 @@ const partitionSteps = ast => {
   return steps
 }
 
+// TODO: Don't need regex anymore
 const toMdx = nodes => {
   const stepAst = applyUuid(asRoot(nodes))
   const mdxSrc = u.stringify(stepAst)
   // const regex = new RegExp(`^[ \\t]`, "gm")
-  const regex = /^(\s*)export/gm
+  // const regex = /^(\s*)export/gm
 
-  return mdxSrc.replace(regex, `\nexport`)
+  return mdxSrc //.replace(regex, `\nexport`)
 }
 
 const parse = async src => {
