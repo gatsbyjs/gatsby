@@ -2,7 +2,7 @@
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const nodesDb: NodeStore = require(`../redux/nodes`)
-const runQuery = require(`../redux/run-sift`).runSift
+const { runFastFiltersAndSort } = require(`../redux/run-sift`)
 
 interface NodeStore {
   getNodes: () => Array<any>;
@@ -20,15 +20,13 @@ interface NodeStore {
   }) => any | undefined;
 }
 
-module.exports = { ...nodesDb, runQuery }
-
 /**
  * Get content for a node from the plugin that created it.
  *
  * @param {Object} node
  * @returns {promise}
  */
-module.exports.loadNodeContent = node => {
+function loadNodeContent(node) {
   if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
   } else {
@@ -50,4 +48,10 @@ module.exports.loadNodeContent = node => {
       })
     })
   }
+}
+
+module.exports = {
+  ...nodesDb,
+  runQuery: runFastFiltersAndSort,
+  loadNodeContent,
 }

@@ -24,7 +24,7 @@ const {
  * @param {DbQuery | null} filter If null the key will have empty path/op parts
  * @returns {FilterCacheKey} (a string: `types.join()/path.join()/operator` )
  */
-const createFilterCacheKey = (typeNames, filter) => {
+function createFilterCacheKey(typeNames, filter) {
   // Note: while `elemMatch` is a special case, in the key it's just `elemMatch`
   // (This function is future proof for elemMatch support, won't receive it yet)
   let f = filter
@@ -49,25 +49,29 @@ const createFilterCacheKey = (typeNames, filter) => {
   return typeNames.join(`,`) + `/` + paths.join(`,`) + `/` + comparator
 }
 
-const prepareQueryArgs = (filterFields = {}) =>
-  Object.keys(filterFields).reduce((acc, key) => {
+function prepareQueryArgs(filterFields = {}) {
+  const filters = {}
+  Object.keys(filterFields).forEach(key => {
     const value = filterFields[key]
     if (_.isPlainObject(value)) {
-      acc[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(value)
+      filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
+        value
+      )
     } else {
       switch (key) {
         case `regex`:
-          acc[`$regex`] = prepareRegex(value)
+          filters[`$regex`] = prepareRegex(value)
           break
         case `glob`:
-          acc[`$regex`] = makeRe(value)
+          filters[`$regex`] = makeRe(value)
           break
         default:
-          acc[`$${key}`] = value
+          filters[`$${key}`] = value
       }
     }
-    return acc
-  }, {})
+  })
+  return filters
+}
 
 /**
  * Given the path of a set of filters, return the sets of nodes that pass the
@@ -80,7 +84,7 @@ const prepareQueryArgs = (filterFields = {}) =>
  * @param {FiltersCache} filtersCache
  * @returns {Array<IGatsbyNode> | null}
  */
-const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
+function applyFastFilters(filters, nodeTypeNames, filtersCache) {
   if (!filtersCache) {
     // If no filter cache is passed on, explicitly don't use one
     return null
@@ -125,9 +129,6 @@ const filterWithoutSift = (filters, nodeTypeNames, filtersCache) => {
   return result
 }
 
-// Not a public API
-exports.filterWithoutSift = filterWithoutSift
-
 /**
  * @param {Array<DbQuery>} filters
  * @param {Array<string>} nodeTypeNames
@@ -135,7 +136,7 @@ exports.filterWithoutSift = filterWithoutSift
  * @returns {Array<Array<IGatsbyNode>> | undefined} Undefined means at least one
  *   cache was not found
  */
-const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
+function getBucketsForFilters(filters, nodeTypeNames, filtersCache) {
   const nodesPerValueArrs /*: Array<Array<IGatsbyNode>>*/ = []
 
   // Fail fast while trying to create and get the value-cache for each path
@@ -182,13 +183,13 @@ const getBucketsForFilters = (filters, nodeTypeNames, filtersCache) => {
  * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs
  * @returns {boolean} false means no nodes matched
  */
-const getBucketsForQueryFilter = (
+function getBucketsForQueryFilter(
   filterCacheKey,
   filter,
   nodeTypeNames,
   filtersCache,
   nodesPerValueArrs
-) => {
+) {
   let {
     path: filterPath,
     query: { comparator /*: as FilterOp*/, value: filterValue },
@@ -229,13 +230,13 @@ const getBucketsForQueryFilter = (
  * @param {FiltersCache} filtersCache
  * @param {Array<Array<IGatsbyNode>>} nodesPerValueArrs Matching node arrs are put in this array
  */
-const collectBucketForElemMatch = (
+function collectBucketForElemMatch(
   filterCacheKey,
   filter,
   nodeTypeNames,
   filtersCache,
   nodesPerValueArrs
-) => {
+) {
   // Get comparator and target value for this elemMatch
   let comparator = ``
   let targetValue = null
@@ -294,7 +295,7 @@ const collectBucketForElemMatch = (
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
-const runFilterAndSort = (args: Object) => {
+function runFastFiltersAndSort(args: Object) {
   const {
     queryArgs: { filter, sort } = { filter: {}, sort: {} },
     resolvedFields = {},
@@ -304,7 +305,7 @@ const runFilterAndSort = (args: Object) => {
     stats,
   } = args
 
-  const result = applyFilters(
+  const result = convertAndApplyFastFilters(
     filter,
     firstOnly,
     nodeTypeNames,
@@ -316,8 +317,6 @@ const runFilterAndSort = (args: Object) => {
   return sortNodes(result, sort, resolvedFields, stats)
 }
 
-exports.runSift = runFilterAndSort
-
 /**
  * @param {Array<DbQuery> | undefined} filterFields
  * @param {boolean} firstOnly
@@ -327,14 +326,14 @@ exports.runSift = runFilterAndSort
  * @returns {Array<IGatsbyNode> | null} Collection of results. Collection
  *   will be limited to 1 if `firstOnly` is true
  */
-const applyFilters = (
+function convertAndApplyFastFilters(
   filterFields,
   firstOnly,
   nodeTypeNames,
   filtersCache,
   resolvedFields,
   stats
-) => {
+) {
   const filters /*: Array<DbQuery>*/ = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
@@ -371,7 +370,7 @@ const applyFilters = (
     return null
   }
 
-  const result /*: Array<IGatsbyNode> | null */ = filterWithoutSift(
+  const result /*: Array<IGatsbyNode> | null */ = applyFastFilters(
     filters,
     nodeTypeNames,
     filtersCache
@@ -398,11 +397,11 @@ const applyFilters = (
   return null
 }
 
-const filterToStats = (
+function filterToStats(
   filter /*: DbQuery*/,
   filterPath = [],
   comparatorPath = []
-) => {
+) {
   if (filter.type === `elemMatch`) {
     return filterToStats(
       filter.nestedQuery,
@@ -425,7 +424,7 @@ const filterToStats = (
  * @param resolvedFields
  * @returns {Array<IGatsbyNode> | undefined | null} Same as input, except sorted
  */
-const sortNodes = (nodes, sort, resolvedFields, stats) => {
+function sortNodes(nodes, sort, resolvedFields, stats) {
   // `undefined <= 1` and `undefined > 1` are both false so invert the result...
   if (!sort || !(nodes?.length > 1)) {
     return nodes
@@ -454,4 +453,11 @@ const sortNodes = (nodes, sort, resolvedFields, stats) => {
   }
 
   return _.orderBy(nodes, sortFns, sortOrder)
+}
+
+module.exports = {
+  // Not a public API
+  applyFastFilters,
+  // Public API
+  runFastFiltersAndSort,
 }
