@@ -3,6 +3,7 @@ import _ from "lodash"
 import fs from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
 import crypto from "crypto"
+import { ExecutionResult } from "graphql"
 
 import path from "path"
 import { store } from "../redux"
@@ -11,11 +12,9 @@ import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
-import { ExecutionResult } from "graphql"
+import { IExecutionResult, PageContext } from "./types"
 
 const resultHashes = new Map()
-
-type PageContext = any
 
 interface IQueryJob {
   id: string
@@ -25,10 +24,6 @@ interface IQueryJob {
   context: PageContext
   isPage: boolean
   pluginCreatorId: string
-}
-
-interface IExecutionResult extends ExecutionResult {
-  pageContext?: PageContext
 }
 
 // Run query

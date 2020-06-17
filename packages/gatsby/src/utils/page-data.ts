@@ -1,42 +1,75 @@
+import fs from "fs-extra"
+import path from "path"
+import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const { store } = require(`../redux`)
-const webpackStatus = require(`./webpack-status`)
+import * as webpackStatus from "./webpack-status"
+import { store } from "../redux"
 
-const fixedPagePath = pagePath => (pagePath === `/` ? `index` : pagePath)
+import { IExecutionResult } from "../query/types"
 
-const getFilePath = ({ publicDir }, pagePath) =>
-  path.join(publicDir, `page-data`, fixedPagePath(pagePath), `page-data.json`)
+interface IPageData {
+  componentChunkName: IGatsbyPage["componentChunkName"]
+  matchPath?: IGatsbyPage["matchPath"]
+  path: IGatsbyPage["path"]
+}
 
-const read = async ({ publicDir }, pagePath) => {
-  const filePath = getFilePath({ publicDir }, pagePath)
+interface IPageDataWithQueryResult extends IPageData {
+  result: IExecutionResult
+}
+
+export function fixedPagePath(pagePath: string): string {
+  return pagePath === `/` ? `index` : pagePath
+}
+
+export function getFilePath(publicDir: string, pagePath: string): string {
+  return path.join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `page-data.json`
+  )
+}
+
+export async function readPageData(
+  publicDir: string,
+  pagePath: string
+): Promise<IPageDataWithQueryResult> {
+  const filePath = getFilePath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
+
   return JSON.parse(rawPageData)
 }
 
-const remove = async ({ publicDir }, pagePath) => {
-  const filePath = getFilePath({ publicDir }, pagePath)
+export async function removePageData(
+  publicDir: string,
+  pagePath: string
+): Promise<void> {
+  const filePath = getFilePath(publicDir, pagePath)
+
   if (fs.existsSync(filePath)) {
     return await fs.remove(filePath)
   }
+
   return Promise.resolve()
 }
 
-const write = async ({ publicDir }, page) => {
+export async function writePageData(
+  publicDir: string,
+  { componentChunkName, matchPath, path: pagePath }: IPageData
+): Promise<IPageDataWithQueryResult> {
   const inputFilePath = path.join(
     publicDir,
     `..`,
     `.cache`,
     `json`,
-    `${page.path.replace(/\//g, `_`)}.json`
+    `${pagePath.replace(/\//g, `_`)}.json`
   )
-  const outputFilePath = getFilePath({ publicDir }, page.path)
+  const outputFilePath = getFilePath(publicDir, pagePath)
   const result = await fs.readJSON(inputFilePath)
   const body = {
-    componentChunkName: page.componentChunkName,
-    path: page.path,
-    matchPath: page.matchPath,
+    componentChunkName,
+    path: pagePath,
+    matchPath,
     result,
   }
   const bodyStr = JSON.stringify(body)
@@ -58,9 +91,11 @@ const write = async ({ publicDir }, page) => {
 let isFlushPending = false
 let isFlushing = false
 
-const isFlushEnqueued = () => isFlushPending
+export function isFlushEnqueued(): boolean {
+  return isFlushPending
+}
 
-const flush = async () => {
+export async function flush(): Promise<void> {
   if (isFlushing) {
     // We're already in the middle of a flush
     return
@@ -73,9 +108,9 @@ const flush = async () => {
 
   const pagesToWrite = Array.from(templatePaths).reduce(
     (set, componentPath) => {
-      const { pages } = components.get(componentPath)
-      if (pages) {
-        pages.forEach(set.add.bind(set))
+      const templateComponent = components.get(componentPath)
+      if (templateComponent) {
+        templateComponent.pages.forEach(set.add.bind(set))
       }
       return set
     },
@@ -92,8 +127,8 @@ const flush = async () => {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      const body = await write(
-        { publicDir: path.join(program.directory, `public`) },
+      const body = await writePageData(
+        path.join(program.directory, `public`),
         page
       )
 
@@ -117,22 +152,10 @@ const flush = async () => {
   return
 }
 
-function enqueueFlush() {
+export function enqueueFlush(): void {
   if (webpackStatus.isPending()) {
     isFlushPending = true
   } else {
     flush()
   }
-}
-
-module.exports = {
-  read,
-  write,
-  remove,
-  fixedPagePath,
-  enqueueFlush,
-  isFlushEnqueued,
-  isFlushing,
-  flush,
-  getFilePath,
 }
