@@ -1,4 +1,4 @@
-import { flush } from "./page-data"
+import { flush, isFlushEnqueued } from "./page-data"
 
 let isPendingStatus = false
 
@@ -12,5 +12,7 @@ export function markAsPending(): void {
 
 export function markAsDone(): void {
   isPendingStatus = false
-  flush()
+  if (isFlushEnqueued) {
+    flush()
+  }
 }
