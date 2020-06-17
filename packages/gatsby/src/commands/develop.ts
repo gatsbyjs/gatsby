@@ -116,6 +116,14 @@ module.exports = async (program: IProgram): Promise<void> => {
     getRandomPort(),
   ])
 
+  // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
+  // codesandbox detects the right port to expose by default
+  const proxy = startDevelopProxy({
+    proxyPort: proxyPort,
+    targetPort: developPort,
+    program,
+  })
+
   const developProcess = new ControllableScript(`
     const cmd = require(${JSON.stringify(developProcessPath)});
     const args = ${JSON.stringify({
@@ -159,12 +167,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       directory: program.directory,
     })
   }
-
-  const proxy = startDevelopProxy({
-    proxyPort: proxyPort,
-    targetPort: developPort,
-    program,
-  })
 
   let unlock
   if (!isCI()) {

@@ -18,7 +18,7 @@ export default function withResolverContext<TSource, TArgs>({
   tracer,
 }: {
   schema: GraphQLSchema
-  schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>>
+  schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>> | null
   context?: Record<string, any>
   customContext?: Record<string, any>
   nodeModel?: any
