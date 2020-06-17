@@ -22,7 +22,7 @@ import programReducer from "./program"
 import { resolvedNodesCacheReducer } from "./resolved-nodes"
 import { nodesTouchedReducer } from "./nodes-touched"
 import { flattenedPluginsReducer } from "./flattened-plugins"
-import schemaCustomizationReducer from "./schema-customization"
+import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
 
 /**

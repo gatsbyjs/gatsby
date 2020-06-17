@@ -1,6 +1,5 @@
 // @flow
 
-const { default: sift } = require(`sift`)
 const { prepareRegex } = require(`../utils/prepare-regex`)
 const { makeRe } = require(`micromatch`)
 import { getValueAt } from "../utils/get-value-at"
@@ -9,15 +8,12 @@ const {
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
-  dbQueryToSiftQuery,
 } = require(`../db/common/query`)
 const {
   ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
   getNodesFromCacheByValue,
-  addResolvedNodes,
-  getNode: siftGetNode,
   intersectNodesByCounter,
 } = require(`./nodes`)
 
@@ -56,10 +52,6 @@ const createFilterCacheKey = (typeNames, filter) => {
   return typeNames.join(`,`) + `/` + paths.join(`,`) + `/` + comparator
 }
 
-/////////////////////////////////////////////////////////////////////
-// Parse filter
-/////////////////////////////////////////////////////////////////////
-
 const prepareQueryArgs = (filterFields = {}) =>
   Object.keys(filterFields).reduce((acc, key) => {
     const value = filterFields[key]
@@ -79,52 +71,6 @@ const prepareQueryArgs = (filterFields = {}) =>
     }
     return acc
   }, {})
-
-/////////////////////////////////////////////////////////////////////
-// Run Sift
-/////////////////////////////////////////////////////////////////////
-
-function isEqId(siftArgs) {
-  // The `id` of each node is invariably unique. So if a query is doing id $eq(string) it can find only one node tops
-  return (
-    siftArgs.length > 0 &&
-    siftArgs[0].id &&
-    Object.keys(siftArgs[0].id).length === 1 &&
-    Object.keys(siftArgs[0].id)[0] === `$eq`
-  )
-}
-
-function handleFirst(siftArgs, nodes) {
-  if (nodes.length === 0) {
-    return []
-  }
-
-  const index = _.isEmpty(siftArgs)
-    ? 0
-    : nodes.findIndex(
-        sift({
-          $and: siftArgs,
-        })
-      )
-
-  if (index !== -1) {
-    return [nodes[index]]
-  } else {
-    return []
-  }
-}
-
-function handleMany(siftArgs, nodes) {
-  let result = _.isEmpty(siftArgs)
-    ? nodes
-    : nodes.filter(
-        sift({
-          $and: siftArgs,
-        })
-      )
-
-  return result?.length ? result : null
-}
 
 /**
  * Given the path of a set of filters, return the sets of nodes that pass the
@@ -467,19 +413,6 @@ const applyFilters = (
   }
   lastFilterUsedSift = true
 
-  // const siftResult /*: Array<IGatsbyNode> | null */ = filterWithSift(
-  //   filters,
-  //   firstOnly,
-  //   nodeTypeNames,
-  //   resolvedFields
-  // )
-
-  // if (stats) {
-  //   if (!siftResult || siftResult.length === 0) {
-  //     stats.totalSiftHits++
-  //   }
-  // }
-
   if (stats) {
     // to mean, "empty results"
     stats.totalSiftHits++
@@ -507,77 +440,6 @@ const filterToStats = (
       filterPath: filterPath.concat(filter.path),
       comparatorPath: comparatorPath.concat(filter.query.comparator),
     }
-  }
-}
-
-/**
- * Use sift to apply filters
- *
- * @param {Array<DbQuery>} filters Resolved
- * @param {boolean} firstOnly
- * @param {Array<string>} nodeTypeNames
- * @param resolvedFields
- * @returns {Array<IGatsbyNode> | null} Collection of results.
- *   Collection will be limited to 1 if `firstOnly` is true
- */
-// TODO: we will drop this entirely when removing all Sift code
-// eslint-disable-next-line no-unused-vars
-const filterWithSift = (filters, firstOnly, nodeTypeNames, resolvedFields) => {
-  let nodes /*: IGatsbyNode[]*/ = []
-  nodeTypeNames.forEach(typeName => addResolvedNodes(typeName, nodes))
-
-  return runSiftOnNodes(
-    nodes,
-    filters.map(f => dbQueryToSiftQuery(f)),
-    firstOnly,
-    nodeTypeNames,
-    resolvedFields,
-    siftGetNode
-  )
-}
-
-/**
- * Given a list of filtered nodes and sorting parameters, sort the nodes
- *
- * @param {Array<IGatsbyNode>} nodes Should be all nodes of given type(s)
- * @param {Array<DbQuery>} filters Resolved
- * @param {boolean} firstOnly
- * @param {Array<string>} nodeTypeNames
- * @param resolvedFields
- * @param {function(id: string): IGatsbyNode | undefined} getNode
- * @returns {Array<IGatsbyNode> | null} Collection of results.
- *   Collection will be limited to 1 if `firstOnly` is true
- */
-const runSiftOnNodes = (
-  nodes,
-  filters,
-  firstOnly,
-  nodeTypeNames,
-  resolvedFields,
-  getNode
-) => {
-  // If the query for single node only has a filter for an "id"
-  // using "eq" operator, then we'll just grab that ID and return it.
-  if (isEqId(filters)) {
-    const node = getNode(filters[0].id.$eq)
-
-    if (
-      !node ||
-      (node.internal && !nodeTypeNames.includes(node.internal.type))
-    ) {
-      if (firstOnly) {
-        return []
-      }
-      return null
-    }
-
-    return [node]
-  }
-
-  if (firstOnly) {
-    return handleFirst(filters, nodes)
-  } else {
-    return handleMany(filters, nodes)
   }
 }
 
