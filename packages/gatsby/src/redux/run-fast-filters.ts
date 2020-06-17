@@ -84,21 +84,15 @@ function createFilterCacheKey(
 }
 
 function prepareQueryArgs(
-  filterFields: Array<IInputQuery>
+  filterFields: Array<IInputQuery> | IInputQuery = {}
 ): Array<IPreparedQueryArg> {
-  return filterFields.map(filterField => prepareQueryArgsNested(filterField))
-}
-
-function prepareQueryArgsNested(
-  filterFields: IInputQuery = {}
-): IPreparedQueryArg {
   const filters = {}
   Object.keys(filterFields).forEach(key => {
     const value = filterFields[key]
     if (_.isPlainObject(value)) {
-      filters[
-        key === `elemMatch` ? `$elemMatch` : key
-      ] = prepareQueryArgsNested(value as IInputQuery)
+      filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
+        value as IInputQuery
+      )
     } else {
       switch (key) {
         case `regex`:
