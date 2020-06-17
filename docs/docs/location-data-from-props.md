@@ -36,7 +36,7 @@ In this case, you would first need to add configuration that describes where you
 
 Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenating it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
 
-```js
+```jsx
 export const query = graphql`
   query PageQuery {
     site {
