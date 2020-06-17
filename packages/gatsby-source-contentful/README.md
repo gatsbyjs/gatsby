@@ -396,7 +396,7 @@ Check out the examples at [@contentful/rich-text-react-renderer](https://github.
 
 ### Using Gatsby Image With Contentful's Rich Text
 
-When you query for a rich text field that has an embedded asset or entry that contains an image, the json output does not contain the fluid or fixed props needed for GatsbyImage. What it returns is the assset with a data shape like this:
+When you query for a rich text field that has an embedded asset or entry that contains an image, the json output does not contain the fluid or fixed props needed for GatsbyImage. What it returns is the asset with a data shape like this:
 
 ```
 "fields": {
