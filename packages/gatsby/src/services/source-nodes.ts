@@ -1,7 +1,7 @@
 import { IBuildContext } from "./"
 import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
-import { findChangedPages } from "../utils/check-for-changed-pages"
+import { findChangedPages } from "../utils/changed-pages"
 import { IGatsbyPage } from "../redux/types"
 
 export async function sourceNodes({
