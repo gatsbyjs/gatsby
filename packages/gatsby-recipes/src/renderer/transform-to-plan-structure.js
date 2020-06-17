@@ -10,15 +10,15 @@ const extractPlan = node => {
     }
   }
 
-  const { _type, _props, ...plan } = text
+  const { _type: type, _props: props, ...plan } = text
 
-  if (!_type || !providedResources[_type]) {
+  if (!type || !providedResources[type]) {
     return null
   }
 
   return {
-    resourceName: _type,
-    resourceDefinitions: _props,
+    resourceName: type,
+    resourceDefinitions: props,
     ...plan,
   }
 }
@@ -39,7 +39,7 @@ const transform = (props = {}) => {
       } catch {}
     }
 
-    if (curr.type === `Input`) {
+    if (curr._type === `Input`) {
       currText.resourceName = `Input`
       return [...acc, currText]
     }
@@ -49,10 +49,10 @@ const transform = (props = {}) => {
     }
 
     const [rawResource, ...resourceChildren] = curr.children || []
-    const { _props, ...plan } = JSON.parse(rawResource.text)
+    const { _props, _type, ...plan } = JSON.parse(rawResource.text)
 
     const resourcePlan = {
-      resourceName: currText._type,
+      resourceName: _type,
       resourceDefinitions: _props,
       ...plan,
     }
@@ -68,7 +68,7 @@ const transform = (props = {}) => {
 }
 
 module.exports = renderTree => {
-  //console.log(require('circular-json').stringify(renderTree, null, 2))
+  console.log(JSON.stringify(renderTree, null, 2))
   const [doc] = renderTree.children
 
   return transform(doc)

@@ -47,7 +47,7 @@ const makeResourceId = res => {
 let sendEvent
 
 const PROJECT_ROOT =
-  `/Users/kylemathews/programs/recipes-test` ||
+  `/Users/kylemathews/programs/recipes-test` &&
   `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
@@ -497,7 +497,7 @@ const RecipeGui = ({
                 }}
               >
                 <MDX key="DOC" components={components} scope={{ sendEvent }}>
-                  {step}
+                  {`# Hello, world!` || step}
                 </MDX>
               </div>
             </div>
@@ -799,7 +799,7 @@ const RecipeGui = ({
             >
               <div sx={{ "*:last-child": { mb: 0 } }}>
                 <MDX components={components} scope={{ sendEvent }}>
-                  {state.context.steps[0]}
+                  {`# Hello, world!` || state.context.steps[0]}
                 </MDX>
               </div>
               <Button

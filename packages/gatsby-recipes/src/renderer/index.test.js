@@ -4,7 +4,11 @@ const { parse } = require(`../parser`)
 const mdxFixture = `
 # Hello, world!
 
-<File path="foo.js" content="/** foo */" />
+---
+
+export const fooContent = 'hiiiiii!'
+
+<File path="foo.js" content={fooContent} />
 <File path="foo2.js" content="/** foo2 */" />
 <NPMPackage name="gatsby" />
 `
