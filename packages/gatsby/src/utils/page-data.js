@@ -83,7 +83,7 @@ const flush = async () => {
         page
       )
 
-      if (program._ === `develop`) {
+      if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           ...body.result,
           id: pagePath,
