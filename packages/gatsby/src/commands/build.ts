@@ -148,7 +148,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     store,
   })
 
-  pageDataUtil.enqueueFlush()
+  await pageDataUtil.flush()
   webpackStatusUtil.markAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
