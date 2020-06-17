@@ -31,7 +31,7 @@ class IndexPage extends React.Component {
     return (
       <Fragment>
         <Helmet>
-          <title>Gatsby Styled Components</title>
+          <title>Using Styled Components</title>
           <meta
             name="description"
             content="Gatsby example site using Styled Components"
@@ -40,7 +40,7 @@ class IndexPage extends React.Component {
         </Helmet>
         <GlobalStyle />
         <Wrapper>
-          <Title>Hello World, this is my first styled component!</Title>
+          <Title>Hello World, this is my first styled component w/ Gatsby!</Title>
           <p>
             <ExternalLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-styled-components/">
               gatsby-plugin-styled-component docs
