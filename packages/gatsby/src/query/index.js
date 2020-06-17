@@ -9,7 +9,6 @@ const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
 const { GraphQLRunner } = require(`./graphql-runner`)
 const pageDataUtil = require(`../utils/page-data`)
-import * as webpackStatusUtil from "../utils/webpack-status"
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
