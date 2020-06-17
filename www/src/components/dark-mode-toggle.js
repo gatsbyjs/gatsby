@@ -113,14 +113,14 @@ const MoonMask = styled.div`
   background: ${p => p.theme.colors.white};
   border-radius: 50%;
   border: 0;
-  height: 24px;
+  height: 22px;
   opacity: ${p => (p.isDark ? 0 : 1)};
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 1px;
+  top: 1px;
   transform: translate(${p => (p.isDark ? `14px, -14px` : `0, 0`)});
   transition: background 0.25s ease, transform 0.45s ease;
-  width: 24px;
+  width: 22px;
 `
 
 export default function DarkModeToggle() {
