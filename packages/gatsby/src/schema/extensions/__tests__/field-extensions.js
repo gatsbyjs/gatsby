@@ -1,3 +1,4 @@
+import { reporter } from "gatsby-reporter"
 const { GraphQLString, graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
@@ -7,7 +8,6 @@ const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
 const { createFieldExtension, createTypes } = actions
 
-import { reporter } from "gatsby-reporter"
 reporter.error = jest.fn()
 reporter.panic = jest.fn()
 reporter.warn = jest.fn()

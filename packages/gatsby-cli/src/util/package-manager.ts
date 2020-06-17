@@ -1,6 +1,6 @@
 import { getConfigStore } from "gatsby-core-utils"
 import prompts from "prompts"
-import report from "gatsby-reporter"
+import { reporter } from "gatsby-reporter"
 
 type PackageManager = "yarn" | "npm"
 
@@ -9,7 +9,7 @@ export const getPackageManager = (): PackageManager =>
   getConfigStore().get(packageMangerConfigKey)
 export const setPackageManager = (packageManager: PackageManager): void => {
   getConfigStore().set(packageMangerConfigKey, packageManager)
-  report.info(`Preferred package manager set to "${packageManager}"`)
+  reporter.info(`Preferred package manager set to "${packageManager}"`)
 }
 
 export const promptPackageManager = async (): Promise<PackageManager> => {

@@ -1,3 +1,4 @@
+import { reporter } from "gatsby-reporter"
 const { build } = require(`..`)
 const { buildObjectType } = require(`../types/type-builders`)
 const { store } = require(`../../redux`)
@@ -31,7 +32,6 @@ jest.mock(`gatsby-reporter`, () => {
     },
   }
 })
-import { reporter } from "gatsby-reporter"
 afterEach(() => {
   reporter.error.mockClear()
 })

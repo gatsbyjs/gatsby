@@ -173,7 +173,7 @@ module.exports = async (args: BootstrapArgs) => {
   activity.end()
 
   // Multiple occurrences of the same name-version-pair can occur,
-  // so we reporter.an array of unique pairs
+  // so we report an array of unique pairs
   const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
   telemetry.decorateEvent(`BUILD_END`, {
     plugins: pluginsStr,
@@ -457,7 +457,7 @@ module.exports = async (args: BootstrapArgs) => {
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const graphqlRunner = createGraphQLRunner(store, reporter.r, {
+  const graphqlRunner = createGraphQLRunner(store, reporter, {
     graphqlTracing: args.graphqlTracing,
     parentSpan: args.parentSpan ? args.parentSpan : bootstrapSpan,
   })

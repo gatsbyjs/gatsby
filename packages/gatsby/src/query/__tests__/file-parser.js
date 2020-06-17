@@ -1,3 +1,5 @@
+import { reporter } from "gatsby-reporter"
+
 jest.mock(`fs-extra`, () => {
   const fs = jest.requireActual(`fs-extra`)
   return {
@@ -6,8 +8,7 @@ jest.mock(`fs-extra`, () => {
   }
 })
 jest.mock(`../../utils/api-runner-node`, () => () => [])
-jest.mock(`gatsby-reporter/index`)
-import { reporter } from "gatsby-reporter"
+jest.mock(`gatsby-reporter`)
 const fs = require(`fs-extra`)
 
 const FileParser = require(`../file-parser`).default

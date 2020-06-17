@@ -10,7 +10,7 @@ import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
 
-import report from "gatsby-reporter"
+import { reporter } from "gatsby-reporter"
 import { isCI } from "gatsby-core-utils"
 import { getPackageManager, promptPackageManager } from "./util/package-manager"
 
@@ -72,7 +72,7 @@ const isAlreadyGitRepository = async (): Promise<boolean> => {
 const gitInit = async (
   rootPath: string
 ): Promise<execa.ExecaReturnBase<string>> => {
-  report.info(`Initialising git in ${rootPath}`)
+  reporter.info(`Initialising git in ${rootPath}`)
 
   return await spawn(`git init`, { cwd: rootPath })
 }
@@ -83,7 +83,7 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
     return
   }
 
-  report.info(`Creating minimal .gitignore in ${rootPath}`)
+  reporter.info(`Creating minimal .gitignore in ${rootPath}`)
   await fs.writeFile(
     sysPath.join(rootPath, `.gitignore`),
     `.cache\nnode_modules\npublic\n`
@@ -95,7 +95,7 @@ const createInitialGitCommit = async (
   rootPath: string,
   starterUrl: string
 ): Promise<void> => {
-  report.info(`Create initial git commit in ${rootPath}`)
+  reporter.info(`Create initial git commit in ${rootPath}`)
 
   await spawn(`git add -A`, { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
@@ -106,7 +106,7 @@ const createInitialGitCommit = async (
     })
   } catch {
     // Remove git support if initial commit fails
-    report.info(`Initial git commit failed - removing git support\n`)
+    reporter.info(`Initial git commit failed - removing git support\n`)
     fs.removeSync(sysPath.join(rootPath, `.git`))
   }
 }
@@ -115,7 +115,7 @@ const createInitialGitCommit = async (
 const install = async (rootPath: string): Promise<void> => {
   const prevDir = process.cwd()
 
-  report.info(`Installing packages...`)
+  reporter.info(`Installing packages...`)
   process.chdir(rootPath)
 
   try {
@@ -156,13 +156,13 @@ const copy = async (
     )
   }
 
-  report.info(`Creating new site from local starter: ${starterPath}`)
+  reporter.info(`Creating new site from local starter: ${starterPath}`)
 
-  report.log(`Copying local starter to ${rootPath} ...`)
+  reporter.log(`Copying local starter to ${rootPath} ...`)
 
   await fs.copy(starterPath, rootPath, { filter: ignored })
 
-  report.success(`Created starter directory layout`)
+  reporter.success(`Created starter directory layout`)
 
   await install(rootPath)
 
@@ -185,7 +185,7 @@ const clone = async (
 
   const branch = hostInfo.committish ? [`-b`, hostInfo.committish] : []
 
-  report.info(`Creating new site from git: ${url}`)
+  reporter.info(`Creating new site from git: ${url}`)
 
   const args = [
     `clone`,
@@ -198,7 +198,7 @@ const clone = async (
 
   await spawnWithArgs(`git`, args)
 
-  report.success(`Created starter directory layout`)
+  reporter.success(`Created starter directory layout`)
 
   await fs.remove(sysPath.join(rootPath, `.git`))
 
@@ -266,7 +266,7 @@ const getPaths = async (
 }
 
 const successMessage = (path: string): void => {
-  report.info(`
+  reporter.info(`
 Your new Gatsby site has been successfully bootstrapped. Start developing it by running:
 
   cd ${path}
@@ -289,7 +289,7 @@ export async function initStarter(
   const urlObject = url.parse(rootPath)
 
   if (selectedOtherStarter) {
-    report.info(
+    reporter.info(
       `Opening the starter library at https://gatsby.dev/starters?v=2...\nThe starter library has a variety of options for starters you can browse\n\nYou can then use the gatsby new command with the link to a repository of a starter you'd like to use, for example:\ngatsby new ${rootPath} https://github.com/gatsbyjs/gatsby-starter-default`
     )
     opn(`https://gatsby.dev/starters?v=2`)
@@ -302,7 +302,7 @@ export async function initStarter(
       starter && !url.parse(starter).hostname && !url.parse(starter).protocol
 
     if (/gatsby-starter/gi.test(rootPath) && isStarterAUrl) {
-      report.panic({
+      reporter.panic({
         id: `11610`,
         context: {
           starter,
@@ -311,7 +311,7 @@ export async function initStarter(
       })
       return
     }
-    report.panic({
+    reporter.panic({
       id: `11611`,
       context: {
         rootPath,
@@ -321,7 +321,7 @@ export async function initStarter(
   }
 
   if (!isValid(rootPath)) {
-    report.panic({
+    reporter.panic({
       id: `11612`,
       context: {
         path: sysPath.resolve(rootPath),
@@ -332,7 +332,7 @@ export async function initStarter(
 
   if (existsSync(sysPath.join(rootPath, `package.json`))) {
     trackError(`NEW_PROJECT_IS_NPM_PROJECT`)
-    report.panic({
+    reporter.panic({
       id: `11613`,
       context: {
         rootPath,

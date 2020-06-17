@@ -1,4 +1,5 @@
 // NOTE: Previously `infer-graphql-type-test.js`
+import { reporter } from "gatsby-reporter"
 
 const { graphql } = require(`graphql`)
 const nodeStore = require(`../../../db/nodes`)
@@ -34,7 +35,6 @@ jest.mock(`gatsby-reporter`, () => {
     },
   }
 })
-import { reporter } from "gatsby-reporter"
 afterEach(() => {
   reporter.error.mockClear()
 })

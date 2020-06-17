@@ -7,25 +7,13 @@ import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
 import { IStructuredError } from "./structured-errors/types"
-import { ErrorMeta } from "./types"
+import { ErrorMeta, ITimerReporter } from "./types"
 
 interface ICreateTimerReporterArguments {
   text: string
   id: string
   span: Span
   reporter: typeof gatsbyReporter
-}
-
-export interface ITimerReporter {
-  start(): void
-  setStatus(statusText: string): void
-  panicOnBuild(
-    arg: any,
-    ...otherArgs: any[]
-  ): IStructuredError | IStructuredError[]
-  panic(arg: any, ...otherArgs: any[]): void
-  end(): void
-  span: Span
 }
 
 export const createTimerReporter = ({

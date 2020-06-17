@@ -1,3 +1,4 @@
+import { reporter } from "gatsby-reporter"
 const { graphql } = require(`graphql`)
 const { build } = require(`..`)
 const withResolverContext = require(`../context`)
@@ -28,7 +29,6 @@ jest.mock(`gatsby-reporter`, () => {
     },
   }
 })
-import { reporter } from "gatsby-reporter"
 afterEach(() => {
   reporter.error.mockClear()
 })

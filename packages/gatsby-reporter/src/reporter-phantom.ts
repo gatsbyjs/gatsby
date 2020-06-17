@@ -1,16 +1,11 @@
 import * as reporterActions from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
+import { IPhantomReporter } from "./types"
 
 interface ICreatePhantomReporterArguments {
   text: string
   id: string
-  span: Span
-}
-
-export interface IPhantomReporter {
-  start(): void
-  end(): void
   span: Span
 }
 

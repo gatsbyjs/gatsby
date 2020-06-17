@@ -1,3 +1,4 @@
+import { reporter } from "gatsby-reporter"
 const {
   graphql,
   printSchema,
@@ -35,7 +36,6 @@ jest.mock(`gatsby-reporter`, () => {
   }
 })
 
-import { reporter } from "gatsby-reporter"
 const typePrinter = schema => typeName => printType(schema.getType(typeName))
 
 const addNode = node => store.dispatch({ type: `CREATE_NODE`, payload: node })

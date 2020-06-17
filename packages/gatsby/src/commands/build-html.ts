@@ -1,7 +1,7 @@
 import Bluebird from "bluebird"
 import fs from "fs-extra"
 import { reporter } from "gatsby-reporter"
-import { createErrorFromString } from "gatsby-reporter"
+import { createErrorFromString } from "gatsby-core-utils"
 import telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"

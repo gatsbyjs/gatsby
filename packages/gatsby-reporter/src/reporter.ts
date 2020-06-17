@@ -1,7 +1,7 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
-import { globalTracer, Span } from "opentracing"
+import { globalTracer } from "opentracing"
 import { getErrorFormatter } from "./get-error-formater"
 
 import * as reporterActions from "./redux/actions"
@@ -9,19 +9,20 @@ import { LogLevels, ActivityStatuses } from "./constants"
 import constructError from "./structured-errors/construct-error"
 import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "./structured-errors/types"
-import { createTimerReporter, ITimerReporter } from "./reporter-timer"
-import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
-import { createProgressReporter, IProgressReporter } from "./reporter-progress"
-import { ErrorMeta, CreateLogAction } from "./types"
+import { createTimerReporter } from "./reporter-timer"
+import { createPhantomReporter } from "./reporter-phantom"
+import { createProgressReporter } from "./reporter-progress"
+import {
+  ErrorMeta,
+  CreateLogAction,
+  IActivityArgs,
+  IPhantomReporter,
+  IProgressReporter,
+  ITimerReporter,
+} from "./types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
-
-export interface IActivityArgs {
-  id?: string
-  parentSpan?: Span
-  tags?: { [key: string]: any }
-}
 
 let isVerbose = false
 
@@ -29,7 +30,7 @@ let isVerbose = false
  * Reporter module.
  * @module reporter
  */
-class Reporter {
+export class Reporter {
   /**
    * Strip initial indentation template function.
    */

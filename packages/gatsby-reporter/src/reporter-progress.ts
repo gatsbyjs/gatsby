@@ -3,7 +3,7 @@ import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
 import { IStructuredError } from "./structured-errors/types"
-import { ErrorMeta } from "./types"
+import { ErrorMeta, IProgressReporter } from "./types"
 
 interface ICreateProgressReporterArguments {
   id: string
@@ -12,21 +12,6 @@ interface ICreateProgressReporterArguments {
   total: number
   span: Span
   reporter: typeof gatsbyReporter
-}
-
-export interface IProgressReporter {
-  start(): void
-  setStatus(statusText: string): void
-  tick(increment?: number): void
-  panicOnBuild(
-    arg: any,
-    ...otherArgs: any[]
-  ): IStructuredError | IStructuredError[]
-  panic(arg: any, ...otherArgs: any[]): void
-  end(): void
-  done(): void
-  total: number
-  span: Span
 }
 
 export const createProgressReporter = ({

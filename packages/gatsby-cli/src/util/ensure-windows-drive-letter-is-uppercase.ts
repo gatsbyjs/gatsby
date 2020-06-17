@@ -1,5 +1,5 @@
 import { tmpdir } from "os"
-import report from "gatsby-reporter"
+import { reporter } from "gatsby-reporter"
 
 /**
  * This function ensures that the current working directory on Windows
@@ -36,8 +36,8 @@ export function ensureWindowsDriveLetterIsUppercase(): void {
     }
 
     if (normalizedCwd !== process.cwd()) {
-      report.warn(
-        report.stripIndent(`
+      reporter.warn(
+        reporter.stripIndent(`
           Your working directory has a lower case drive letter:
             "${cwd}".
           ---^
