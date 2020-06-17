@@ -10,22 +10,22 @@ exports.default = {
     twitter: `@gatsbyjs`,
   },
   plugins: [
-    `gatsby-site-theme`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/../docs/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `gatsby-core`,
-        path: `${__dirname}/../packages/gatsby/`,
-        ignore: [`**/dist/**`],
-      },
-    },
+    `gatsby-theme-gatsbyjs-website`,
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `docs`,
+    //     path: `${__dirname}/../docs/`,
+    //   },
+    // },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `gatsby-core`,
+    //     path: `${__dirname}/../packages/gatsby/`,
+    //     ignore: [`**/dist/**`],
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-perf-metrics`,
       options: {
