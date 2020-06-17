@@ -62,7 +62,9 @@ const flush = async () => {
   const pagesToWrite = Array.from(templatePaths).reduce(
     (set, componentPath) => {
       const { pages } = components.get(componentPath)
-      pages.forEach(set.add.bind(set))
+      if (pages) {
+        pages.forEach(set.add.bind(set))
+      }
       return set
     },
     new Set(pagePaths.values())
