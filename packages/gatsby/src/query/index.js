@@ -308,9 +308,7 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
     const activity = createQueryRunningActivity(queryJobs.length)
 
     const onFinish = async (...arg) => {
-      if (!webpackStatusUtil.isPending()) {
-        await pageDataUtil.flush()
-      }
+      await pageDataUtil.enqueueFlush()
       activity.done()
       return callback(...arg)
     }
