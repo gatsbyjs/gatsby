@@ -63,6 +63,7 @@ const flush = async () => {
     // We're already in the middle of a flush
     return
   }
+  isFlushEnqueued = false
   isFlushing = true
   const { pendingPageDataWrites, components, pages, program } = store.getState()
 
