@@ -502,7 +502,7 @@ export const defaultError = errorMap[``]
 
 export interface IErrorMapEntry {
   text: (context) => string
-  level: Level
-  type?: Type
+  level: ErrorLevel
+  type?: ErrorType
   docsUrl?: string
 }
