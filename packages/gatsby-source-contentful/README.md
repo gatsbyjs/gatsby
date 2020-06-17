@@ -394,6 +394,69 @@ documentToReactComponents(node.bodyRichText.json, options)
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
 
+### Using Gatsby Image With Contentful's Rich Text
+
+When you query for a rich text field that has an embedded asset or entry that contains an image, the json output does not contain the fluid or fixed props needed for GatsbyImage. What it returns is the assset with a data shape like this:
+
+```
+"fields": {
+    "title": "Playsam Streamliner",
+    "file": {
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "contentType": "image/jpg",
+      "details": {
+        "image": {
+          "width": 600,
+          "height": 446
+        },
+        "size": 27187
+      },
+      "url": "//images.ctfassets.net/yadj1kx9rmg0/wtrHxeu3zEoEce2MokCSi/cf6f68efdcf625fdc060607df0f3baef/quwowooybuqbl6ntboz3.jpg"
+    }
+  }
+```
+
+To turn this into fluid or fixed props, we can use the utility functions from `gatsby-source-contentful`
+
+```jsx
+import { resolveFluid, resolveFixed } from 'gatsby-source-contentful'
+import Img from 'gatsby-image'
+
+const options = {
+  renderNode: {
+    [BLOCKS.EMBEDDED_ASSET]: (node) => {
+      const { file, title } = node.data.target.fields
+      
+      // Note file, and title data are localized so we need to access it further.
+      const image = {
+        file: file['en-US']
+      }
+      
+      const fluidProps = resolveFluid(image, { maxWidth: 800 })
+      
+      return <Img fluid={fluidProps} alt={title['en-US']} />
+    }
+  },
+}
+```
+
+#### Utility functions
+resolveFluid(image, options) ->  {
+  aspectRatio,
+  baseUrl,
+  srcSet,
+  sizes
+} 
+
+resolveFixed(image, options) -> {
+  aspectRatio,
+  baseUrl,
+  width,
+  height,
+  src,
+  srcSet,
+}
+
 ## Sourcing From Multiple Contentful Spaces
 
 To source from multiple Contentful environments/spaces, add another configuration for `gatsby-source-contentful` in `gatsby-config.js`:
