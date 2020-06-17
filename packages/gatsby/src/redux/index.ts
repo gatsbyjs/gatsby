@@ -2,13 +2,12 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
-  Store,
   Middleware,
 } from "redux"
 import _ from "lodash"
 
 import { mett } from "../utils/mett"
-import thunk from "redux-thunk"
+import thunk, { ThunkMiddleware } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion } from "./types"
@@ -28,6 +27,8 @@ export const readState = (): IGatsbyState => {
         if (!state.nodesByType.has(type)) {
           state.nodesByType.set(type, new Map())
         }
+        // The `.has` and `.set` calls above make this safe
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         state.nodesByType.get(type)!.set(node.id, node)
       })
     }
@@ -45,24 +46,30 @@ export const readState = (): IGatsbyState => {
   return {} as IGatsbyState
 }
 
+export interface IMultiDispatch {
+  <T extends ActionsUnion>(action: T[]): T[]
+}
+
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware = ({ dispatch }) => next => (
+const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
   action: ActionsUnion
 ): ActionsUnion | ActionsUnion[] =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-export const configureStore = (
-  initialState: IGatsbyState
-): Store<IGatsbyState> =>
+// We're using the inferred type here becauise manually typing it would be very complicated
+// and error-prone. Instead we'll make use of the createStore return value, and export that type.
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const configureStore = (initialState: IGatsbyState) =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
-    applyMiddleware(thunk, multi)
+    applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
   )
 
-export const store: Store<IGatsbyState> = configureStore(readState())
+export type GatsbyReduxStore = ReturnType<typeof configureStore>
+export const store: GatsbyReduxStore = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {

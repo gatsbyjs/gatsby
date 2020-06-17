@@ -7,6 +7,7 @@ import crypto from "crypto"
 import path from "path"
 import { store } from "../redux"
 import { boundActionCreators } from "../redux/actions"
+import { writePageData } from "../utils/page-data"
 import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
