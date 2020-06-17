@@ -1,5 +1,5 @@
 import { IBuildContext } from "./"
-import sourceNodesAndGc from "../utils/source-nodes"
+import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
 import { findChangedPages } from "../utils/check-for-changed-pages"
 import { IGatsbyPage } from "../redux/types"
@@ -21,12 +21,22 @@ export async function sourceNodes({
   console.log({ webhookBody })
   activity.start()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
-  await sourceNodesAndGc({
+  // const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+  await sourceNodesAndRemoveStaleNodes({
     parentSpan: activity.span,
     deferNodeMutation: !!(webhookBody && Object.keys(webhookBody).length),
     webhookBody,
   })
-  reporter.info(`Checking for deleted pages`)
+
+  reporter.verbose(
+    `Now have ${store.getState().nodes.size} nodes with ${
+      store.getState().nodesByType.size
+    } types: [${[...store.getState().nodesByType.entries()]
+      .map(([type, nodes]) => type + `:` + nodes.size)
+      .join(`, `)}]`
+  )
+
+  // reporter.info(`Checking for deleted pages`)
 
   const tim = reporter.activityTimer(`Checking for changed pages`)
   tim.start()

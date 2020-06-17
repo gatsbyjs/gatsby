@@ -9,19 +9,28 @@ import {
   createPages,
   createPagesStatefully,
   extractQueries,
+  writeOutRedirects,
+  postBootstrap,
+  rebuildSchemaWithSitePage,
 } from "../services"
-import { writeOutRedirects } from "../services/write-out-redirects"
-import { postBootstrap } from "../services/post-bootstrap"
-import { rebuildWithSitePage } from "../schema"
+import { createGraphQLRunner } from "./create-graphql-runner"
+import reporter from "gatsby-cli/lib/reporter"
+import { globalTracer } from "opentracing"
+const tracer = globalTracer()
 
-export async function bootstrap<T extends Partial<IBuildContext>>(
-  initialContext: T
+export async function bootstrap(
+  initialContext: Partial<IBuildContext>
 ): Promise<
-  T &
-    Required<
-      Pick<IBuildContext, "store" | "bootstrapGraphQLFunction" | "workerPool">
-    >
+  Required<
+    Pick<IBuildContext, "store" | "gatsbyNodeGraphQLFunction" | "workerPool">
+  >
 > {
+  const spanArgs = initialContext.parentSpan
+    ? { childOf: initialContext.parentSpan }
+    : {}
+
+  initialContext.parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+
   const bootstrapContext = {
     ...initialContext,
     ...(await initialize(initialContext)),
@@ -30,15 +39,21 @@ export async function bootstrap<T extends Partial<IBuildContext>>(
   await customizeSchema(bootstrapContext)
   await sourceNodes(bootstrapContext)
 
-  const { bootstrapGraphQLFunction } = await buildSchema(bootstrapContext)
+  await buildSchema(bootstrapContext)
 
-  const context = { ...bootstrapContext, bootstrapGraphQLFunction }
+  const context = {
+    ...bootstrapContext,
+    gatsbyNodeGraphQLFunction: createGraphQLRunner(
+      bootstrapContext.store,
+      reporter
+    ),
+  }
 
   await createPages(context)
 
   await createPagesStatefully(context)
 
-  await rebuildWithSitePage(context)
+  await rebuildSchemaWithSitePage(context)
 
   await extractQueries(context)
 
@@ -49,6 +64,8 @@ export async function bootstrap<T extends Partial<IBuildContext>>(
   startRedirectListener()
 
   await postBootstrap(context)
+
+  initialContext.parentSpan.finish()
 
   return context
 }

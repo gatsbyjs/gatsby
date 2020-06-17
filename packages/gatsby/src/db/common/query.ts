@@ -104,24 +104,6 @@ export function prefixResolvedFields(
   return queries
 }
 
-export function dbQueryToSiftQuery(query: DbQuery): object {
-  const result = {}
-  if (query.type === `elemMatch`) {
-    result[query.path.join(`.`)] = {
-      $elemMatch: dbQueryToSiftQuery(query.nestedQuery),
-    }
-  } else if (query.path.length) {
-    result[query.path.join(`.`)] = {
-      [query.query.comparator]: query.query.value,
-    }
-  } else {
-    return {
-      [query.query.comparator]: query.query.value,
-    }
-  }
-  return result
-}
-
 // Converts a nested mongo args object into a dotted notation. acc
 // (accumulator) must be a reference to an empty object. The converted
 // fields will be added to it. E.g

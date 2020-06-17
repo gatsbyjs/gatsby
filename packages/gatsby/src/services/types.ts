@@ -32,7 +32,7 @@ export interface IBuildContext {
   websocketManager?: WebsocketManager
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
-  bootstrapGraphQLFunction?: Runner
+  gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
   refresh?: boolean
   webhookBody?: Record<string, unknown>

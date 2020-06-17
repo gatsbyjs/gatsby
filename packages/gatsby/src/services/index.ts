@@ -16,6 +16,7 @@ import { IBuildContext } from "./"
 import { writeOutRedirects } from "./write-out-redirects"
 import { postBootstrap } from "./post-bootstrap"
 import { startWebpackServer } from "./start-webpack-server"
+import { rebuildSchemaWithSitePage } from "./rebuild-schema-with-site-pages"
 
 export * from "./types"
 export {
@@ -35,6 +36,7 @@ export {
   postBootstrap,
   writeOutRedirects,
   startWebpackServer,
+  rebuildSchemaWithSitePage,
 }
 
 export const buildServices: Record<string, ServiceConfig<IBuildContext>> = {

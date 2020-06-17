@@ -192,7 +192,7 @@ actions.createPage = (
 
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
-  if (typeof page.context === `object`) {
+  if (page.context && typeof page.context === `object`) {
     const invalidFields = reservedFields.filter(field => field in page.context)
 
     if (invalidFields.length > 0) {

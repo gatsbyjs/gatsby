@@ -105,10 +105,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   // Start bootstrap process.
-  const { bootstrapGraphQLFunction, workerPool } = await bootstrap({ program })
+  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({ program })
 
   // Start the createPages hot reloader.
-  bootstrapPageHotReloader(bootstrapGraphQLFunction)
+  bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
 
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()

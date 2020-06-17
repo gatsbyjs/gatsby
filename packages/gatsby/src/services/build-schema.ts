@@ -2,14 +2,11 @@ import { IBuildContext } from "./"
 
 import { build } from "../schema"
 import reporter from "gatsby-cli/lib/reporter"
-import { createGraphQLRunner, Runner } from "../bootstrap/create-graphql-runner"
 
 export async function buildSchema({
   store,
   parentSpan,
-}: Partial<IBuildContext>): Promise<{
-  bootstrapGraphQLFunction: Runner
-}> {
+}: Partial<IBuildContext>): Promise<void> {
   if (!store) {
     reporter.panic(`Cannot build schema before store initialization`)
   }
@@ -19,8 +16,4 @@ export async function buildSchema({
   activity.start()
   await build({ parentSpan: activity.span })
   activity.end()
-  const bootstrapGraphQLFunction = createGraphQLRunner(store, reporter)
-  return {
-    bootstrapGraphQLFunction,
-  }
 }

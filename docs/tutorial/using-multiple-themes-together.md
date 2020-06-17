@@ -208,7 +208,7 @@ export default merge(defaultTheme, {
 
 ## Add another theme
 
-Themes can be big, like `gatsby-theme-blog`, but they can also be a small discrete set of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.com/) which adds the ability to embed social media content and videos directly into your MDX files.
+Themes can be big, like `gatsby-theme-blog`, but they can also be a small discrete set of components or functions. A great example of this is [gatsby-mdx-embed](https://gatsby-mdx-embed.netlify.app/) which adds the ability to embed social media content and videos directly into your MDX files.
 
 1. Install the theme:
 

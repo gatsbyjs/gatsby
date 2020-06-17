@@ -7,7 +7,7 @@ import crypto from "crypto"
 import path from "path"
 import { store } from "../redux"
 import { boundActionCreators } from "../redux/actions"
-import pageDataUtil from "../utils/page-data"
+import { writePageData } from "../utils/page-data"
 import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
@@ -160,7 +160,14 @@ export const queryRunner = async (
       const publicDir = path.join(program.directory, `public`)
       const { pages } = store.getState()
       const page = pages.get(queryJob.id)
-      await pageDataUtil.write({ publicDir }, page, result)
+
+      if (!page) {
+        throw new Error(
+          `A page was not found for the queryJob. This is likely an internal bug to Gatsby and you should create an issue to report it.`
+        )
+      }
+
+      await writePageData(publicDir, page, result)
     } else {
       // The babel plugin is hard-coded to load static queries from
       // public/static/d/
