@@ -9584,7 +9584,7 @@ gatsby@^2.21.37:
     xstate "^4.9.1"
     yaml-loader "^0.6.0"
 
-gatsby@^2.23.3:
+gatsby@^2.23.4:
   version "2.23.4"
   resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-2.23.4.tgz#dc24b2181e5ea0897a00bf2ace5dafdaf705d378"
   integrity sha512-0r9THULMi7ntWUxEG6LhkfQBjP1AqSUXSHABvvMazmuD7DI79xe3uu5DniOxAkAhY/JKRXixEYwoCUakc5DdVA==
@@ -16215,7 +16215,7 @@ react-dev-utils@^4.2.3:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-react-dom@^16.13.0:
+react-dom@^16.13.0, react-dom@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
   integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
@@ -16370,7 +16370,7 @@ react-typography@^1.0.0-alpha.4:
   resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-1.0.0-alpha.4.tgz#82cec55fab5156d71564fb78cc3103fcb9b64847"
   integrity sha512-0ZiM731ESdY62mtcqFO69LJMFum/jST/XoEX3CCj54iT4V0tYwLxh52CMwMaZzTK2+YBeJST5aKV0fzhTZ00Gw==
 
-react@^16.13.0, react@^16.8.0:
+react@^16.13.0, react@^16.13.1, react@^16.8.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
