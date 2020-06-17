@@ -62,7 +62,7 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
-import * as pageDataUtil from "../utils/page-data"
+import { enqueueFlush } from "../utils/page-data"
 import * as webpackStatusUtil from "../utils/webpack-status"
 
 import { Stage, IProgram } from "./types"
@@ -681,7 +681,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       webpackActivity = null
     }
 
-    pageDataUtil.enqueueFlush()
+    enqueueFlush()
     webpackStatusUtil.markAsDone()
 
     done()

@@ -14,7 +14,7 @@ import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
 import { store, readState } from "../redux"
 import * as appDataUtil from "../utils/app-data"
-import * as pageDataUtil from "../utils/page-data"
+import { flush } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
@@ -148,7 +148,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     store,
   })
 
-  await pageDataUtil.flush()
+  await flush()
   webpackStatusUtil.markAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
