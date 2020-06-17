@@ -59,7 +59,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  program.command = `build`
   webpackStatusUtil.markAsPending()
 
   const publicDir = path.join(program.directory, `public`)
