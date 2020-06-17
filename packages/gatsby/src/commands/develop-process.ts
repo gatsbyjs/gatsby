@@ -381,7 +381,6 @@ async function startServer(program: IProgram): Promise<IServer> {
 }
 
 module.exports = async (program: IProgram): Promise<void> => {
-  program.command = `develop`
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
