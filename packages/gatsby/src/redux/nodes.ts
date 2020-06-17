@@ -184,29 +184,6 @@ export const getResolvedNode = (
   return node
 }
 
-export const addResolvedNodes = (
-  typeName: string,
-  resolvedNodes: IGatsbyNode[] = []
-): IGatsbyNode[] => {
-  const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
-
-  if (!nodes) {
-    return []
-  }
-
-  const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
-
-  nodes.forEach(node => {
-    if (resolvedNodesFromCache) {
-      node.__gatsby_resolved = resolvedNodesFromCache.get(node.id)
-    }
-    resolvedNodes.push(node)
-  })
-
-  return resolvedNodes
-}
-
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
