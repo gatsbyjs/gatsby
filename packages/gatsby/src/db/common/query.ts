@@ -46,13 +46,13 @@ export interface IDbFilterStatement {
  * nested objects with multiple keys to separate instances.
  */
 export function createDbQueriesFromObject(
-  filter: Record<string, unknown>
+  filter: Record<string, any>
 ): Array<DbQuery> {
   return createDbQueriesFromObjectNested(filter)
 }
 
 function createDbQueriesFromObjectNested(
-  filter: Record<string, unknown>,
+  filter: Record<string, any>,
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
