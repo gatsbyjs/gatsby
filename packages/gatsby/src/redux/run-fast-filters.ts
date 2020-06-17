@@ -85,7 +85,7 @@ function createFilterCacheKey(
 
 function prepareQueryArgs(
   filterFields: Array<IInputQuery> | IInputQuery = {}
-): Array<IPreparedQueryArg> {
+): IPreparedQueryArg {
   const filters = {}
   Object.keys(filterFields).forEach(key => {
     const value = filterFields[key]
@@ -96,7 +96,12 @@ function prepareQueryArgs(
     } else {
       switch (key) {
         case `regex`:
-          filters[`$regex`] = prepareRegex(String(value))
+          if (typeof value !== `string`) {
+            throw new Error(
+              `The $regex comparator is expecting the regex as a string, not an actual regex or anything else`
+            )
+          }
+          filters[`$regex`] = prepareRegex(value)
           break
         case `glob`:
           filters[`$regex`] = makeRe(value)
