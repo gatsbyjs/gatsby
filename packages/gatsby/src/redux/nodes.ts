@@ -663,7 +663,7 @@ export const getNodesFromCacheByValue = (
   filtersCache: FiltersCache,
   wasElemMatch
 ): Array<IGatsbyNode> | undefined => {
-  const filterCache = filtersCache?.get(filterCacheKey)
+  const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
     return undefined
   }
