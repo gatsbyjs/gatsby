@@ -11,15 +11,7 @@ import {
   IndexedSourceMapConsumer,
   NullableMappedPosition,
 } from "source-map"
-
-export class ErrorWithCodeFrame extends Error {
-  codeFrame: string
-
-  constructor(...args) {
-    super(...args)
-    this.codeFrame = ``
-  }
-}
+import { ErrorWithCodeFrame } from "./errors"
 
 export async function prepareStackTrace(
   error: Error,

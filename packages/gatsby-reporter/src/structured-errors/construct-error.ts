@@ -1,7 +1,7 @@
 import stackTrace from "stack-trace"
 import { errorSchema } from "./error-schema"
 import { errorMap, defaultError, IErrorMapEntry } from "./error-map"
-import { sanitizeStructuredStackTrace } from "gatsby-core-utils"
+import { sanitizeStructuredStackTrace } from "./sanitize-structured-stack-trace"
 import { IConstructError, IStructuredError } from "./types"
 // Merge partial error details with information from the errorMap
 // Validate the constructed object against an error schema

@@ -2,7 +2,7 @@ import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
-import { getErrorFormatter } from "gatsby-core-utils"
+import { getErrorFormatter } from "./get-error-formater"
 
 import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"

@@ -44,14 +44,14 @@ export interface IOptionalGraphQLInfoContext {
   plugin?: string
 }
 
-export enum Level {
+export enum ErrorLevel {
   ERROR = `ERROR`,
   WARNING = `WARNING`,
   INFO = `INFO`,
   DEBUG = `DEBUG`,
 }
 
-export enum Type {
+export enum ErrorType {
   GRAPHQL = `GRAPHQL`,
   CONFIG = `CONFIG`,
   WEBPACK = `WEBPACK`,
