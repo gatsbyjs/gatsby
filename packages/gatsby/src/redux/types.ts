@@ -60,7 +60,7 @@ export interface IJobV2 {
 }
 
 export type IPageInput = Pick<IGatsbyPage, "path" | "context" | "matchPath"> & {
-  component?: IGatsbyPage["component"]
+  component: IGatsbyPage["component"]
 }
 
 export interface IActionOptions {
