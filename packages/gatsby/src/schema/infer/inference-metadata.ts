@@ -62,6 +62,7 @@ import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { looksLikeADate } from "../types/date"
 import { Node } from "../../../index"
 import { TypeConflictReporter } from "./type-conflict-reporter"
+import { IGatsbyNode } from "../../redux/types"
 
 export interface ITypeInfo {
   first?: string
@@ -419,13 +420,13 @@ const descriptorsAreEqual = (
   return isEqual(types, otherTypes) && types.every(childDescriptorsAreEqual)
 }
 
-const nodeFields = (node: Node, ignoredFields = new Set()): string[] =>
+const nodeFields = (node: IGatsbyNode, ignoredFields = new Set()): string[] =>
   Object.keys(node).filter(key => !ignoredFields.has(key))
 
 const updateTypeMetadata = (
   metadata = initialMetadata(),
   operation: Operation,
-  node: Node
+  node: IGatsbyNode
 ): ITypeMetadata => {
   if (metadata.disabled) {
     return metadata
@@ -468,13 +469,17 @@ const disable = (metadata = initialMetadata(), set = true): ITypeMetadata => {
   return metadata
 }
 
-const addNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
+const addNode = (metadata: ITypeMetadata, node: IGatsbyNode): ITypeMetadata =>
   updateTypeMetadata(metadata, `add`, node)
 
-const deleteNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
-  updateTypeMetadata(metadata, `del`, node)
-const addNodes = (metadata = initialMetadata(), nodes: Node[]): ITypeMetadata =>
-  nodes.reduce(addNode, metadata)
+const deleteNode = (
+  metadata: ITypeMetadata,
+  node: IGatsbyNode
+): ITypeMetadata => updateTypeMetadata(metadata, `del`, node)
+const addNodes = (
+  metadata = initialMetadata(),
+  nodes: IGatsbyNode[]
+): ITypeMetadata => nodes.reduce(addNode, metadata)
 
 const possibleTypes = (descriptor: IValueDescriptor = {}): ValueType[] =>
   Object.keys(descriptor).filter(
