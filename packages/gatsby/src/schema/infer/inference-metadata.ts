@@ -60,7 +60,6 @@ of fields in the node object (including nested fields)
 import { isEqual } from "lodash"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { looksLikeADate } from "../types/date"
-import { Node } from "../../../index"
 import { TypeConflictReporter } from "./type-conflict-reporter"
 import { IGatsbyNode } from "../../redux/types"
 
