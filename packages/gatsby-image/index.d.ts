@@ -62,7 +62,7 @@ interface GatsbyImageFixedProps extends GatsbyImageOptionalProps {
   fixed: FixedObject | FixedObject[]
 }
 
-type GatsbyImageProps = GatsbyImageFluidProps | GatsbyImageFixedProps
+export type GatsbyImageProps = GatsbyImageFluidProps | GatsbyImageFixedProps
 
 export default class GatsbyImage extends React.Component<
   GatsbyImageProps,
