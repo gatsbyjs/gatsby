@@ -144,6 +144,11 @@ exports.onPostBuild = (
         handler: `StaleWhileRevalidate`,
       },
       {
+        // app-data.json is not content hashed
+        urlPattern: /^https?:.*\/page-data\/app-data\.json/,
+        handler: `StaleWhileRevalidate`,
+      },
+      {
         // Add runtime caching of various other page resources
         urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `StaleWhileRevalidate`,
