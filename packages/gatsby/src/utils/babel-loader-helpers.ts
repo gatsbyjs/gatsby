@@ -7,6 +7,7 @@ import Babel, {
 } from "@babel/core"
 
 import { IBabelStage, BabelStageKeys } from "../redux/types"
+import { Stage } from "../commands/types"
 
 interface ILoadCachedConfigReturnType {
   stages: {
@@ -29,7 +30,7 @@ const loadCachedConfig = (): ILoadCachedConfigReturnType => {
   return pluginBabelConfig
 }
 
-export const getCustomOptions = (stage: string): IBabelStage["options"] => {
+export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
   const pluginBabelConfig = loadCachedConfig()
   return pluginBabelConfig.stages[stage].options
 }
@@ -141,14 +142,14 @@ export const mergeConfigItemOptions: mergeConfigItemOptionsType = ({
 }) => {
   const index = _.findIndex(
     items,
-    i => i.file!.resolved === itemToMerge.file!.resolved
+    i => i.file?.resolved === itemToMerge.file?.resolved
   )
 
   // If this exist, merge the options, otherwise, add it to the array
   if (index !== -1) {
     items[index] = babel.createConfigItem(
       [
-        itemToMerge.file!.resolved,
+        itemToMerge.file?.resolved,
         _.merge({}, items[index].options, itemToMerge.options),
       ],
       {
