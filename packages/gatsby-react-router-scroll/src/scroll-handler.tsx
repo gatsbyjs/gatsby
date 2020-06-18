@@ -61,10 +61,10 @@ export class ScrollHandler extends React.Component<
       scrollPosition = this._stateStorage.read(this.props.location, key)
     }
 
-    if (scrollPosition) {
-      this.windowScroll(scrollPosition, prevProps)
-    } else if (hash) {
+    if (hash && scrollPosition === 0) {
       this.scrollToHash(decodeURI(hash), prevProps)
+    } else {
+      this.windowScroll(scrollPosition, prevProps)
     }
   }
 
