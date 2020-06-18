@@ -136,8 +136,12 @@ type BabelStageKeys =
   | "build-html"
   | "build-javascript"
 
+export interface IStateProgram extends IProgram {
+  extensions: string[]
+}
+
 export interface IGatsbyState {
-  program: IProgram
+  program: IStateProgram
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
@@ -301,6 +305,8 @@ export type ActionsUnion =
   | IStartIncrementalInferenceAction
   | IBuildTypeMetadataAction
   | IDisableTypeInferenceAction
+  | ISetProgramAction
+  | ISetProgramExtensions
 
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
@@ -687,5 +693,15 @@ interface IBuildTypeMetadataAction {
 
 interface IDisableTypeInferenceAction {
   type: `DISABLE_TYPE_INFERENCE`
+  payload: string[]
+}
+
+interface ISetProgramAction {
+  type: `SET_PROGRAM`
+  payload: IStateProgram
+}
+
+interface ISetProgramExtensions {
+  type: `SET_PROGRAM_EXTENSIONS`
   payload: string[]
 }
