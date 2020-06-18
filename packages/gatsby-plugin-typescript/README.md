@@ -36,6 +36,7 @@ module.exports = {
 ```
 
 For more detailed documentation on the available options, visit https://babeljs.io/docs/en/babel-preset-typescript#options.
+To add TypeScript Babel plugins (e.g. `@babel/plugin-proposal-decorators`), use a [custom .babelrc file](/docs/babel/#how-to-use-a-custom-babelrc-file).
 
 ## Caveats
 
