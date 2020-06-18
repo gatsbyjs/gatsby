@@ -400,8 +400,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  */
 export const deleteNode = (
   options: IGatsbyNode["id"] | { node: IGatsbyNode },
-  plugin: IGatsbyPlugin,
-  args: IGatsbyPlugin
+  plugin?: IGatsbyPlugin,
+  args?: IGatsbyPlugin
 ): IDeleteNodeAction | IDeleteNodeAction[] => {
   let id
 
