@@ -6,9 +6,11 @@ title: Query Filters with GraphQL in Gatsby
 
 ## Summary
 
-Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is a subset of [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/).
+Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDb queries](https://docs.mongodb.com/manual/reference/operator/query/).
 
 When you write a GraphQL query, the `filter` parts will be processed and Gatsby will return all the nodes that match each of the given filters. GraphQL does the rest.
+
+Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). The GraphQL `filter` argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on GraphQL resolver level.
 
 ### History and Sift
 
@@ -32,7 +34,7 @@ When applying a filter, the path will be checked for each node and the resulting
 
 ## Example
 
-Let's say we have a filter and a set of nodes:
+Say we have a filter and a set of nodes:
 
 ```js
 filter = { post: { author: { name: { eq: "Alex" } } } }
@@ -56,7 +58,7 @@ A filter path can combine multiple paths, for example:
 
 ### Supported comparators
 
-Gatsby supports a subset of MongoDB comparators, namely, op matches every node where the result value;
+Gatsby supports a subset of MongoDB comparators. Here is the list of supported comparators and how they match node(s);
 
 - `eq`: is exactly the filter value.
 - `ne`: is anything except for the filter value.
@@ -75,7 +77,7 @@ Internally the `glob` comparator is converted to a regular expression by the [mi
 
 One additional feature that Gatsby supports is the `elemMatch` query. This query has a path where one or more steps are named `elemMatch` and while traversing a node these steps should resolve to arrays. Gatsby will then attempt to apply the remainder of the path to each element in that array.
 
-Simple contrived example:
+A contrived `elemMatch` example:
 
 ```js
 filter = {a: { elemMatch: { b: { eq: 5 } } }
@@ -143,7 +145,7 @@ Due to legacy support for MongoDB compatibility, there are edge cases for each c
 
 ## Performance
 
-The key metric that impacts the performance of your queries is the node count for your type of nodes. You can see a dump of these counts when using the `--verbose` flag while building (`gatsby build --verbose`). It tells you the node counts per type during bootstrap. There will be a separate message of the number of page nodes, since they are generated later.
+The key metric that impacts the performance of your queries is the node count for your type of nodes. You can see a dump of these counts when using the `--verbose` flag while building (`gatsby build --verbose`). It tells you the node counts per type during the bootstrap sequence. There will be a separate message of the number of page nodes, since they are generated later.
 
 While the number of pages is definitely a factor for the number of nodes, there can be other factors at play that cause many internal nodes even when the actual number of pages seems to be low.
 
@@ -151,7 +153,7 @@ The actual performance of filtering is a combination of the number of nodes you 
 
 For a low node count none of this matters. Roughly speaking, a site with fewer than 1000 - 10000 nodes should not have to worry too much about this.
 
-When scaling up these are some rules of thumb to keep in mind when filtering:
+When scaling up these are some guidelines to keep in mind when filtering:
 
 - the `eq` comparator is by far the fastest comparator
   - the `regex` and `glob` comparators are the slowest and do not scale
