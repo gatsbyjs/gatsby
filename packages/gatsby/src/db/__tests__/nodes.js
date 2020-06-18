@@ -12,6 +12,7 @@ jest.mock(`gatsby-reporter`, () => {
       return {}
     },
   }
+})
 
 describe(`nodes db tests`, () => {
   beforeEach(() => {
