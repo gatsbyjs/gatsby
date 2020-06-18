@@ -8,7 +8,16 @@ jest.mock(`fs-extra`, () => {
   }
 })
 jest.mock(`../../utils/api-runner-node`, () => () => [])
-jest.mock(`gatsby-reporter`)
+jest.mock(`gatsby-reporter`, () => {
+  return {
+    reporter: {
+      warn: jest.fn(),
+    },
+    reduxLogReducer: () => {
+      return {}
+    },
+  }
+})
 const fs = require(`fs-extra`)
 
 const FileParser = require(`../file-parser`).default
