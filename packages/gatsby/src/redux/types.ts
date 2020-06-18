@@ -120,17 +120,17 @@ export interface IPlugin {
   options: Record<string, any>
 }
 
-interface IBabelStage {
+export interface IBabelStage {
   plugins: IPlugin[]
   presets: IPlugin[]
-  options: {
+  options?: {
     cacheDirectory: boolean
     sourceType: string
     sourceMaps?: string
   }
 }
 
-type BabelStageKeys =
+export type BabelStageKeys =
   | "develop"
   | "develop-html"
   | "build-html"

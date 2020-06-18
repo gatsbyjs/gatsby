@@ -1,7 +1,20 @@
-const path = require(`path`)
-const _ = require(`lodash`)
+import path from "path"
+import _ from "lodash"
+import Babel, {
+  ConfigItem,
+  PluginItem,
+  CreateConfigItemOptions,
+} from "@babel/core"
 
-const loadCachedConfig = () => {
+import { IBabelStage, BabelStageKeys } from "../redux/types"
+
+interface ILoadCachedConfigReturnType {
+  stages: {
+    test: IBabelStage
+  }
+}
+
+const loadCachedConfig = (): ILoadCachedConfigReturnType => {
   let pluginBabelConfig = {
     stages: {
       test: { plugins: [], presets: [] },
@@ -16,13 +29,23 @@ const loadCachedConfig = () => {
   return pluginBabelConfig
 }
 
-const getCustomOptions = stage => {
+export const getCustomOptions = (stage: string): IBabelStage["options"] => {
   const pluginBabelConfig = loadCachedConfig()
   return pluginBabelConfig.stages[stage].options
 }
 
-const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
-  let pluginBabelConfig = loadCachedConfig()
+type prepareOptionsType = (
+  babel: typeof Babel,
+  options?: { stage?: BabelStageKeys },
+  resolve?: RequireResolve
+) => Array<PluginItem[]>
+
+export const prepareOptions: prepareOptionsType = (
+  babel,
+  options = {},
+  resolve = require.resolve
+) => {
+  const pluginBabelConfig = loadCachedConfig()
 
   const { stage } = options
 
@@ -32,7 +55,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
       type: `plugin`,
     }),
   ]
-  const requiredPresets = []
+  const requiredPresets: PluginItem[] = []
 
   // Stage specific plugins to add
   if (stage === `build-html` || stage === `develop-html`) {
@@ -53,7 +76,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   }
 
   // Fallback preset
-  const fallbackPresets = []
+  const fallbackPresets: ConfigItem[] = []
 
   fallbackPresets.push(
     babel.createConfigItem(
@@ -70,8 +93,8 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   )
 
   // Go through babel state and create config items for presets/plugins from.
-  const reduxPlugins = []
-  const reduxPresets = []
+  const reduxPlugins: PluginItem[] = []
+  const reduxPresets: PluginItem[] = []
   pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
     reduxPlugins.push(
       babel.createConfigItem([resolve(plugin.name), plugin.options], {
@@ -98,7 +121,24 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   ]
 }
 
-const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
+type mergeConfigItemOptionsType = ({
+  items,
+  itemToMerge,
+  type,
+  babel,
+}: {
+  items: ConfigItem[]
+  itemToMerge: ConfigItem
+  type: CreateConfigItemOptions["type"]
+  babel: typeof Babel
+}) => ConfigItem[]
+
+export const mergeConfigItemOptions: mergeConfigItemOptionsType = ({
+  items,
+  itemToMerge,
+  type,
+  babel,
+}) => {
   const index = _.findIndex(
     items,
     i => i.file.resolved === itemToMerge.file.resolved
@@ -121,9 +161,3 @@ const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
 
   return items
 }
-
-exports.getCustomOptions = getCustomOptions
-
-// Export helper functions for testing
-exports.prepareOptions = prepareOptions
-exports.mergeConfigItemOptions = mergeConfigItemOptions
