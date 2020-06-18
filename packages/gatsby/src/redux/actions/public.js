@@ -888,7 +888,7 @@ type CreateNodeInput = {
  * @param {string} $0.fieldName [deprecated] the name for the field
  * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
- * @param {string} $0.value the value for the field
+ * @param {any} $0.value the value for the field
  * @example
  * createNodeField({
  *   node,

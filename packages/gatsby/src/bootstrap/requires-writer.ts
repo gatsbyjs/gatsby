@@ -8,6 +8,7 @@ import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
+import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 interface IGatsbyPageComponent {
   component: string
@@ -248,6 +249,7 @@ const debouncedWriteAll = _.debounce(
     const didRequiresChange = await writeAll(store.getState())
     if (didRequiresChange) {
       reporter.pendingActivity({ id: `webpack-develop` })
+      markWebpackStatusAsPending()
     }
     activity.end()
   },

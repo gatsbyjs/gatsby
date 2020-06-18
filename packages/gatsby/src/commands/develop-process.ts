@@ -62,6 +62,12 @@ import {
   showFeedbackRequest,
 } from "../utils/feedback"
 
+import { enqueueFlush } from "../utils/page-data"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
+
 import { Stage, IProgram } from "./types"
 import {
   calculateDirtyQueries,
@@ -400,7 +406,12 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   }
   initTracer(program.openTracingConfigFile)
+<<<<<<< HEAD
   reporter.pendingActivity({ id: `webpack-develop` })
+=======
+  markWebpackStatusAsPending()
+  report.pendingActivity({ id: `webpack-develop` })
+>>>>>>> master
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -613,9 +624,9 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
-  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
-  //   console.log(`set invalid`, args, this)
-  // })
+  compiler.hooks.invalid.tap(`log compiling`, function () {
+    markWebpackStatusAsPending()
+  })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
@@ -679,6 +690,9 @@ module.exports = async (program: IProgram): Promise<void> => {
       webpackActivity.end()
       webpackActivity = null
     }
+
+    enqueueFlush()
+    markWebpackStatusAsDone()
 
     done()
   })

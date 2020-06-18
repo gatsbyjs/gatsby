@@ -22,6 +22,7 @@ import { programReducer } from "./program"
 import { resolvedNodesCacheReducer } from "./resolved-nodes"
 import { nodesTouchedReducer } from "./nodes-touched"
 import { flattenedPluginsReducer } from "./flattened-plugins"
+import { pendingPageDataWritesReducer } from "./pending-page-data-writes"
 import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
 
@@ -55,4 +56,5 @@ export {
   inferenceMetadataReducer as inferenceMetadata,
   pageDataStatsReducer as pageDataStats,
   pageDataReducer as pageData,
+  pendingPageDataWritesReducer as pendingPageDataWrites,
 }

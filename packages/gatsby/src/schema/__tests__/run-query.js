@@ -464,7 +464,7 @@ describe(`Filter fields`, () => {
         singleArray: { eq: needle },
       })
 
-      // Note: no coercion, so [8]=='8' is true but Sift ignores those
+      // Note: no coercion, so [8]=='8' is true but the comparison is strict
       expect(result).toEqual(null)
     })
   })
@@ -528,7 +528,7 @@ describe(`Filter fields`, () => {
           allNodes
         )
 
-        // Sift only returns id=6,7, where a.b.c===true/false.
+        // For legacy reasons, apply strict check; only return id=6,7, where a.b.c===true/false.
 
         expect(result?.length).toEqual(
           allNodes.filter(node => !(node?.a?.b?.c == null)).length
@@ -545,7 +545,7 @@ describe(`Filter fields`, () => {
           allNodes
         )
 
-        // Note: Sift only omits id=6, where a.b.c===true (contrary to searching for null)
+        // For legacy reasons, apply strict check; only omit id=6, where a.b.c===true (contrary to searching for null)
 
         expect(result?.length).toEqual(
           allNodes.filter(node => node?.a?.b?.c !== needle).length
@@ -562,7 +562,7 @@ describe(`Filter fields`, () => {
           allNodes
         )
 
-        // Note: Sift only omits id=7, where a.b.c===false (contrary to searching for null)
+        // For legacy reasons, apply strict check; only omit id=7, where a.b.c===false (contrary to searching for null)
 
         expect(result?.length).toEqual(
           allNodes.filter(node => node?.a?.b?.c !== needle).length
@@ -643,7 +643,7 @@ describe(`Filter fields`, () => {
         anArray: { ne: needle },
       })
 
-      // Sift returns only the node that doesn't have the property at all (the other two arrays contain 1)
+      // For legacy reasons; return only the node that doesn't have the property at all (the other two arrays contain 1)
 
       expect(result?.length).toEqual(
         allNodes.filter(node => !node.anArray?.includes(needle)).length
@@ -1338,7 +1338,7 @@ describe(`Filter fields`, () => {
       ).rejects.toThrow()
     })
 
-    // I'm convinced this only works in Sift because of a fluke
+    // I'm convinced this only worked in Sift because of a fluke
     it.skip(`refuses a non-arg string argument`, async () => {
       await expect(
         runFilter({

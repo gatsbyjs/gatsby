@@ -1,4 +1,7 @@
-const { runSift, filterWithoutSift } = require(`../run-sift`)
+const {
+  runFastFiltersAndSort,
+  applyFastFilters,
+} = require(`../run-fast-filters`)
 const { store } = require(`../index`)
 const { createDbQueriesFromObject } = require(`../../db/common/query`)
 const { actions } = require(`../actions`)
@@ -123,7 +126,7 @@ const gqlType = new GraphQLObjectType({
   },
 })
 
-describe(`run-sift tests`, () => {
+describe(`fast filter tests`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
     mockNodes().forEach(node =>
@@ -139,7 +142,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -147,7 +150,7 @@ describe(`run-sift tests`, () => {
         filtersCache: new Map(),
       })
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -166,7 +169,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -174,7 +177,7 @@ describe(`run-sift tests`, () => {
         filtersCache: new Map(),
       })
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -194,7 +197,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -202,7 +205,7 @@ describe(`run-sift tests`, () => {
         filtersCache: new Map(),
       })
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -218,7 +221,7 @@ describe(`run-sift tests`, () => {
     })
     it(`return empty array in case of empty nodes`, async () => {
       const queryArgs = { filter: {}, sort: {} }
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -236,7 +239,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -258,7 +261,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -280,7 +283,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -302,7 +305,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -324,7 +327,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultSingular = await runSift({
+      const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: true,
@@ -342,7 +345,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -362,7 +365,7 @@ describe(`run-sift tests`, () => {
         },
       }
 
-      const resultMany = await runSift({
+      const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
         firstOnly: false,
@@ -376,7 +379,7 @@ describe(`run-sift tests`, () => {
   })
 })
 
-describe(`filterWithoutSift`, () => {
+describe(`applyFastFilters`, () => {
   beforeAll(() => {
     store.dispatch({ type: `DELETE_CACHE` })
     mockNodes().forEach(node =>
@@ -389,7 +392,7 @@ describe(`filterWithoutSift`, () => {
       slog: { $eq: `def` },
     }
 
-    const result = filterWithoutSift(
+    const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
       new Map()
@@ -407,7 +410,7 @@ describe(`filterWithoutSift`, () => {
       deep: { flat: { search: { chain: { $eq: 300 } } } },
     }
 
-    const result = filterWithoutSift(
+    const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
       new Map()
@@ -426,7 +429,7 @@ describe(`filterWithoutSift`, () => {
       deep: { flat: { search: { chain: { $eq: 300 } } } },
     }
 
-    const results = filterWithoutSift(
+    const results = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
       new Map()
@@ -446,7 +449,7 @@ describe(`filterWithoutSift`, () => {
       },
     }
 
-    const result = filterWithoutSift(
+    const result = applyFastFilters(
       createDbQueriesFromObject(filter),
       [typeName],
       new Map()
