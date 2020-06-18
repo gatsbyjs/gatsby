@@ -1,9 +1,9 @@
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby-reporter`)
 jest.mock(`progress`)
 const {
   createGatsbyProgressOrFallbackToExternalProgressBar,
 } = require(`../utils`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+const { reporter } = require(`gatsby-reporter`)
 const progress = require(`progress`)
 
 describe(`createGatsbyProgressOrFallbackToExternalProgressBar`, () => {

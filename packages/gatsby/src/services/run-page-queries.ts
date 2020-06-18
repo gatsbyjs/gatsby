@@ -16,7 +16,7 @@ export async function runPageQueries({
     return
   }
   const { pageQueryIds } = queryIds
-  const state = store!.getState()
+  const state = store.getState()
   const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
     .length
 

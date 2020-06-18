@@ -32,7 +32,7 @@ let totalJobs = 0
 
 /**
  * @typedef {Reporter}
- * @see gatsby/packages/gatsby-cli/lib/reporter.js
+ * @see gatsby/packages/gatsby-reporter/lib/reporter.js
  */
 
 /**

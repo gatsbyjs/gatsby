@@ -78,7 +78,7 @@ export const createProgressReporter = ({
       return reporter.panicOnBuild(errorMeta, error)
     },
 
-    panic(errorMeta: ErrorMeta, error?: Error | Error[]): void {
+    panic(errorMeta: ErrorMeta, error?: Error | Error[]): never {
       span.finish()
 
       reporterActions.endActivity({

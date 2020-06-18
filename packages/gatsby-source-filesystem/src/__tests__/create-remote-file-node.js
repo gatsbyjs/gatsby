@@ -22,9 +22,11 @@ jest.mock(`got`, () => {
   }
 })
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
-    createProgress: jest.fn(),
+    reporter: {
+      createProgress: jest.fn(),
+    },
   }
 })
 jest.mock(`../create-file-node`, () => {
@@ -32,7 +34,7 @@ jest.mock(`../create-file-node`, () => {
     createFileNode: jest.fn(),
   }
 })
-const reporter = require(`gatsby-cli/lib/reporter`)
+const { reporter } = require(`gatsby-reporter`)
 const progressBar = {
   start: jest.fn(),
   total: 0,

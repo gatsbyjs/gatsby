@@ -32,7 +32,7 @@ export interface IProgressReporter {
     arg: any,
     ...otherArgs: any[]
   ): IStructuredError | IStructuredError[]
-  panic(arg: any, ...otherArgs: any[]): void
+  panic(arg: any, ...otherArgs: any[]): never
   end(): void
   done(): void
   total: number
@@ -46,7 +46,7 @@ export interface ITimerReporter {
     arg: any,
     ...otherArgs: any[]
   ): IStructuredError | IStructuredError[]
-  panic(arg: any, ...otherArgs: any[]): void
+  panic(arg: any, ...otherArgs: any[]): never
   end(): void
   span: Span
 }

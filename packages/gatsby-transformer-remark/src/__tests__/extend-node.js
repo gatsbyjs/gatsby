@@ -4,18 +4,20 @@ const extendNodeType = require(`../extend-node-type`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby-reporter`, () => {
   return {
-    log: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    activityTimer: () => {
-      return {
-        start: jest.fn(),
-        setStatus: jest.fn(),
-        end: jest.fn(),
-      }
+    reporter: {
+      log: jest.fn(),
+      info: jest.fn(),
+      warn: jest.fn(),
+      error: jest.fn(),
+      activityTimer: () => {
+        return {
+          start: jest.fn(),
+          setStatus: jest.fn(),
+          end: jest.fn(),
+        }
+      },
     },
   }
 })

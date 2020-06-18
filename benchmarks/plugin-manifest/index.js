@@ -1,5 +1,5 @@
 const { onPostBootstrap } = require(`gatsby-plugin-manifest/gatsby-node`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+const { reporter } = require(`gatsby-reporter`)
 const fs = require(`fs-extra`)
 
 //Config for executing onPostBootstrap

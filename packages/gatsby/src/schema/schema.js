@@ -21,7 +21,6 @@ const {
 
 const apiRunner = require(`../utils/api-runner-node`)
 import { reporter } from "gatsby-reporter"
-console.log(reporter)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { addInferredType, addInferredTypes } = require(`./infer`)
 const {

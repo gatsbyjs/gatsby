@@ -13,7 +13,8 @@
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "gatsby-plugin-manifest": "^2.2.38"
+    "gatsby-plugin-manifest": "^2.2.38",
+    "gatsby-reporter": "^1.0.0"
   },
   "devDependencies": {
     "gatsby-plugin-benchmark-reporting": "*"
