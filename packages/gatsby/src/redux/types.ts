@@ -363,6 +363,17 @@ export type ActionsUnion =
   | ISetBabelPluginAction
   | ICreateJobAction
   | ISetJobAction
+  | IAddPendingPageDataWriteAction
+  | IAddPendingTemplateDataWriteAction
+  | IClearPendingPageDataWritesAction
+  | ICreateResolverContext
+  | IClearSchemaCustomizationAction
+  | ISetSchemaComposerAction
+  | IStartIncrementalInferenceAction
+  | IBuildTypeMetadataAction
+  | IDisableTypeInferenceAction
+  | ISetProgramAction
+  | ISetProgramExtensions
 
 export interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
