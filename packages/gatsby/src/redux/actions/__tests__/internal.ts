@@ -3,7 +3,9 @@ import { reporter } from "gatsby-reporter"
 
 jest.mock(`gatsby-reporter`, () => {
   return {
-    panic: jest.fn(),
+    reporter: {
+      panic: jest.fn(),
+    },
   }
 })
 

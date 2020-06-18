@@ -7,7 +7,9 @@ jest.mock(`fs`, () => {
 })
 jest.mock(`gatsby-reporter`, () => {
   return {
-    panic: jest.fn(),
+    reporter: {
+      panic: jest.fn(),
+    },
   }
 })
 

@@ -10,8 +10,10 @@ jest.mock(`p-defer`, () =>
 
 jest.mock(`gatsby-reporter`, () => {
   return {
-    phantomActivity: jest.fn(),
-    warn: jest.fn(),
+    reporter: {
+      phantomActivity: jest.fn(),
+      warn: jest.fn(),
+    },
   }
 })
 

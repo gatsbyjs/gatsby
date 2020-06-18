@@ -7,8 +7,10 @@ jest.mock(`fs`, () => {
 })
 jest.mock(`gatsby-reporter`, () => {
   return {
-    panic: jest.fn(),
-    info: jest.fn(),
+    reporter: {
+      panic: jest.fn(),
+      info: jest.fn(),
+    },
   }
 })
 jest.mock(`devcert`, () => {

@@ -37,24 +37,26 @@ jest.mock(`fs-extra`, () => {
 
 jest.mock(`gatsby-reporter`, () => {
   return {
-    log: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    panicOnBuild: console.log,
-    activityTimer: () => {
-      return {
-        start: jest.fn(),
-        setStatus: jest.fn(),
-        end: jest.fn(),
-      }
-    },
-    phantomActivity: () => {
-      return {
-        start: jest.fn(),
-        setStatus: jest.fn(),
-        end: jest.fn(),
-      }
+    reporter: {
+      log: jest.fn(),
+      info: jest.fn(),
+      warn: jest.fn(),
+      error: jest.fn(),
+      panicOnBuild: console.log,
+      activityTimer: () => {
+        return {
+          start: jest.fn(),
+          setStatus: jest.fn(),
+          end: jest.fn(),
+        }
+      },
+      phantomActivity: () => {
+        return {
+          start: jest.fn(),
+          setStatus: jest.fn(),
+          end: jest.fn(),
+        }
+      },
     },
   }
 })

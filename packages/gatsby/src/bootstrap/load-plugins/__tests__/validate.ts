@@ -1,8 +1,10 @@
 jest.mock(`gatsby-reporter`, () => {
   return {
-    panicOnBuild: jest.fn(),
-    error: jest.fn(),
-    warn: jest.fn(),
+    reporter: {
+      panicOnBuild: jest.fn(),
+      error: jest.fn(),
+      warn: jest.fn(),
+    },
   }
 })
 jest.mock(`../../resolve-module-exports`)
