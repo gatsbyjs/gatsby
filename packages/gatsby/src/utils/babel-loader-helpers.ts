@@ -95,7 +95,7 @@ export const prepareOptions: prepareOptionsType = (
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins: PluginItem[] = []
   const reduxPresets: PluginItem[] = []
-  pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
+  pluginBabelConfig.stages[stage!].plugins.forEach(plugin => {
     reduxPlugins.push(
       babel.createConfigItem([resolve(plugin.name), plugin.options], {
         name: plugin.name,
@@ -103,7 +103,7 @@ export const prepareOptions: prepareOptionsType = (
       })
     )
   })
-  pluginBabelConfig.stages[stage].presets.forEach(preset => {
+  pluginBabelConfig.stages[stage!].presets.forEach(preset => {
     reduxPresets.push(
       babel.createConfigItem([resolve(preset.name), preset.options], {
         name: preset.name,
@@ -141,14 +141,14 @@ export const mergeConfigItemOptions: mergeConfigItemOptionsType = ({
 }) => {
   const index = _.findIndex(
     items,
-    i => i.file.resolved === itemToMerge.file.resolved
+    i => i.file!.resolved === itemToMerge.file!.resolved
   )
 
   // If this exist, merge the options, otherwise, add it to the array
   if (index !== -1) {
     items[index] = babel.createConfigItem(
       [
-        itemToMerge.file.resolved,
+        itemToMerge.file!.resolved,
         _.merge({}, items[index].options, itemToMerge.options),
       ],
       {
