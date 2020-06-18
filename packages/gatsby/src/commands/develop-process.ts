@@ -406,12 +406,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   }
   initTracer(program.openTracingConfigFile)
-<<<<<<< HEAD
-  reporter.pendingActivity({ id: `webpack-develop` })
-=======
   markWebpackStatusAsPending()
-  report.pendingActivity({ id: `webpack-develop` })
->>>>>>> master
+  reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
