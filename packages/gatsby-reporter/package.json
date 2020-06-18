@@ -34,7 +34,8 @@
     "typescript": "^3.9.3"
   },
   "files": [
-    "lib"
+    "lib",
+    "lib/index.d.ts"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-reporter#readme",
   "keywords": [
