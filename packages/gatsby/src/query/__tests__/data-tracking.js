@@ -78,23 +78,38 @@ const setPageQueries = queries => (pageQueries = queries)
 let staticQueries = {}
 const setStaticQueries = queries => (staticQueries = queries)
 
+const typedNodeCreator = (
+  type,
+  { createNode, createContentDigest }
+) => node => {
+  node.internal = {
+    type,
+    contentDigest: createContentDigest(node),
+  }
+  return createNode(node)
+}
+
 const getTypedNodeCreators = ({
   actions: { createNode },
   createContentDigest,
 }) => {
-  const typedNodeCreator = type => node => {
-    node.internal = {
-      type,
-      contentDigest: createContentDigest(node),
-    }
-    return createNode(node)
-  }
-
   return {
-    createSiteNode: typedNodeCreator(`Site`),
-    createTestNode: typedNodeCreator(`Test`),
-    createTestBNode: typedNodeCreator(`TestB`),
-    createNotUsedNode: typedNodeCreator(`NotUsed`),
+    createSiteNode: typedNodeCreator(`Site`, {
+      createNode,
+      createContentDigest,
+    }),
+    createTestNode: typedNodeCreator(`Test`, {
+      createNode,
+      createContentDigest,
+    }),
+    createTestBNode: typedNodeCreator(`TestB`, {
+      createNode,
+      createContentDigest,
+    }),
+    createNotUsedNode: typedNodeCreator(`NotUsed`, {
+      createNode,
+      createContentDigest,
+    }),
   }
 }
 
@@ -160,6 +175,10 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       directory: __dirname,
     },
   })
+
+  await require(`../../utils/create-schema-customization`).createSchemaCustomization(
+    {}
+  )
 
   await require(`../../utils/source-nodes`).default({})
   // trigger page-hot-reloader (if it was setup in previous test)
@@ -881,6 +900,293 @@ describe(`query caching between builds`, () => {
       // it should rerun query for page with changed context
       expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
     }, 999999)
+  })
+
+  /*
+    We need to make sure we clear data dependency when we (re)run queries to make
+    sure we don't accumulate stale dependencies over time. Having stale dependencies
+    wouldn't cause build artificats problems, but it would cause unneeded query running
+    in some scenarios
+   */
+  describe(`Clears data dependencies when query result is dirty`, () => {
+    let stage
+    beforeAll(() => {
+      setAPIhooks({
+        sourceNodes: ({ actions: { createNode }, createContentDigest }) => {
+          const dirtyNodeCreator = typedNodeCreator(`DirtyTest`, {
+            createNode,
+            createContentDigest,
+          })
+
+          dirtyNodeCreator({
+            id: `dirty`,
+            link___NODE: stage === `initial` ? `linked-dirty` : undefined,
+          })
+
+          dirtyNodeCreator({
+            id: `linked-dirty`,
+            stage,
+          })
+
+          // this node is not queried - just to ensure schema contains `link` field
+          dirtyNodeCreator({
+            id: `mock`,
+            link___NODE: `mock`,
+          })
+        },
+        createPages: ({ actions: { createPage } }, _pluginOptions) => {
+          createPage({
+            component: `/src/templates/details.js`,
+            path: `/`,
+          })
+        },
+      })
+      setPageQueries({
+        "/src/templates/details.js": `
+          {
+            dirtyTest(id: {eq: "dirty"}) {
+              id
+              stage
+              link {
+                id
+                stage
+              }
+            }
+          }
+        `,
+      })
+      setStaticQueries({
+        "dirty-test": `
+          {
+            dirtyTest(id: {eq: "dirty"}) {
+              id
+              stage
+              link {
+                id
+                stage
+              }
+            }
+          }
+        `,
+      })
+    })
+
+    const runDataDependencyClearingOnDirtyTest = ({ withRestarts }) => {
+      it(`Initial - adds linked node dependency`, async () => {
+        stage = `initial`
+        const {
+          staticQueriesThatRan,
+          pathsOfPagesWithQueriesThatRan,
+          pages,
+        } = await setup({
+          restart: true,
+          clearCache: true,
+        })
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // on initial we want all queries to run
+        expect(staticQueriesThatRan).toEqual([`dirty-test`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Removes linked data - query should be dirty`, async () => {
+        stage = `remove-link`
+        const {
+          staticQueriesThatRan,
+          pathsOfPagesWithQueriesThatRan,
+          pages,
+        } = await setup({ restart: withRestarts })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we changed node that we query directly (by removing link field)
+        // we should rerun all queries
+        expect(staticQueriesThatRan).toEqual([`dirty-test`])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`No change since last run, should not rerun any queries`, async () => {
+        stage = `unchanged`
+        const {
+          staticQueriesThatRan,
+          pathsOfPagesWithQueriesThatRan,
+          pages,
+        } = await setup({ restart: withRestarts })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we changed linked node, but last query run didn't use it
+        // so we shouldn't rerun any queries
+        expect(staticQueriesThatRan).toEqual([])
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([])
+      }, 999999)
+    }
+
+    describe(`No restarts`, () => {
+      runDataDependencyClearingOnDirtyTest({ withRestarts: false })
+    })
+
+    describe(`With restarts`, () => {
+      runDataDependencyClearingOnDirtyTest({ withRestarts: true })
+    })
+  })
+
+  describe(`Properly track connection when querying node interfaces`, () => {
+    let stage
+    beforeAll(() => {
+      setAPIhooks({
+        sourceNodes: ({ actions: { createNode }, createContentDigest }) => {
+          const typeACreator = typedNodeCreator(`TypeA`, {
+            createNode,
+            createContentDigest,
+          })
+
+          const typeBCreator = typedNodeCreator(`TypeB`, {
+            createNode,
+            createContentDigest,
+          })
+
+          const typeUnrelatedCreator = typedNodeCreator(`TypeUnrelated`, {
+            createNode,
+            createContentDigest,
+          })
+
+          // in every stage:
+          typeACreator({
+            id: `type-A-1`,
+            test: `Node A1`,
+          })
+
+          // in every stage other than initial
+          if (stage !== `initial`) {
+            typeACreator({
+              id: `type-A-2`,
+              test: `Node A2`,
+            })
+          }
+
+          if (stage === `add-type-b` || stage === `add-unrelated-node`) {
+            typeBCreator({
+              id: `type-B-1`,
+              test: `Node B1`,
+            })
+          }
+
+          if (stage === `add-unrelated-node`) {
+            typeUnrelatedCreator({
+              id: `type-Unrelated-1`,
+              test: `Node Unrelated1`,
+            })
+          }
+        },
+        createPages: ({ actions: { createPage } }, _pluginOptions) => {
+          createPage({
+            component: `/src/templates/details.js`,
+            path: `/`,
+          })
+        },
+        createSchemaCustomization: ({ actions: { createTypes } }) => {
+          createTypes(`
+            interface NodeInterface @nodeInterface {
+              id: ID!
+              test: String
+            }
+
+            type TypeA implements Node & NodeInterface {
+              id: ID!
+              test: String
+            }
+
+            type TypeB implements Node & NodeInterface {
+              id: ID!
+              test: String
+            }
+          `)
+        },
+      })
+      setPageQueries({
+        "/src/templates/details.js": `
+          {
+            allNodeInterface {
+              nodes {
+                id
+                test
+              }
+            }
+          }
+        `,
+      })
+      setStaticQueries({})
+    })
+
+    const runNodeInterfaceConnectionTrackingTest = ({ withRestarts }) => {
+      it(`Initial - adds linked node dependency`, async () => {
+        stage = `initial`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: true,
+          clearCache: true,
+        })
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // on initial we want query to run
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Adds another node of type that was already used - query should be dirty`, async () => {
+        stage = `add-another-type-a`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: withRestarts,
+        })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we add node of type that implements node interface we query
+        // we should rerun query
+
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Adds node of the other type implementing same node interface - query should be dirty`, async () => {
+        stage = `add-type-b`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: withRestarts,
+        })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we add node of type that implements node interface we query
+        // we should rerun query
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/`])
+      }, 999999)
+
+      it(`Adds node of type NOT implementing same node interface - query should NOT be dirty`, async () => {
+        stage = `add-unrelated-node`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: withRestarts,
+        })
+
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/`])
+
+        // we add node of type that implements node interface we query
+        // we should rerun query
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([])
+      }, 999999)
+    }
+
+    describe(`No restarts`, () => {
+      runNodeInterfaceConnectionTrackingTest({ withRestarts: false })
+    })
+
+    describe(`With restarts`, () => {
+      runNodeInterfaceConnectionTrackingTest({ withRestarts: true })
+    })
   })
 
   // this should be last test, it adds page that doesn't have queries (so it won't create any dependencies)

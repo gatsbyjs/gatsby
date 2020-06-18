@@ -130,7 +130,7 @@ The size of the monorepo has been considered a barrier to entry for some, for ex
 
 Adding more content, and moving content to the monorepo means that the RFC contribution workflow now has this initial sunk cost as its first step.
 
-I contend that this is worth work doing regardless. The likelihood of opening an RFC and not then needing to (eventually) open a PR implementing the RFC is slim. In any scenario -- Github's existing tools for this, e.g. in-app editing, mitigate this cost and ensure that there are still mechanisms to add an RFC without cloning the repo.
+I contend that this is worth work doing regardless. The likelihood of opening an RFC and not then needing to (eventually) open a PR implementing the RFC is slim. In any scenario -- GitHub's existing tools for this, e.g. in-app editing, mitigate this cost and ensure that there are still mechanisms to add an RFC without cloning the repo.
 
 ## Separation of concerns
 
