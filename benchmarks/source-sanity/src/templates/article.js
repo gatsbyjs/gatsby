@@ -23,8 +23,8 @@ const Article = ({ data }) => {
 export default Article
 
 export const query = graphql`
-  query($id: String!){
-    article: sanityPost(_id: {eq: $id}) {
+  query($id: String!) {
+    article: sanityPost(_id: { eq: $id }) {
       title
       content
       image {

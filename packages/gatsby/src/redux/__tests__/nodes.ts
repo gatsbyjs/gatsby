@@ -1,5 +1,5 @@
 import { actions } from "../actions"
-import { nodeReducer } from "../reducers/nodes"
+import { nodesReducer } from "../reducers/nodes"
 import { IGatsbyNode } from "../types"
 import { nodesTouchedReducer } from "../reducers/nodes-touched"
 
@@ -32,6 +32,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -43,7 +44,7 @@ describe(`Create and update nodes`, (): void => {
     expect(action).toMatchSnapshot({
       payload: { internal: { counter: expect.any(Number) } },
     })
-    expect(fromMapToObject(nodeReducer(undefined, action))).toMatchSnapshot({
+    expect(fromMapToObject(nodesReducer(undefined, action))).toMatchSnapshot({
       hi: { internal: { counter: expect.any(Number) } },
     })
   })
@@ -57,6 +58,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
         deep: {
@@ -83,6 +85,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: false,
         deep: {
@@ -98,8 +101,8 @@ describe(`Create and update nodes`, (): void => {
     )(dispatch)
     const updateAction = dispatch.mock.calls[1][0]
 
-    let state = nodeReducer(undefined, action)
-    state = nodeReducer(state, updateAction)
+    let state = nodesReducer(undefined, action)
+    state = nodesReducer(state, updateAction)
 
     expect(state.get(`hi`)!.pickle).toEqual(false)
     expect((state.get(`hi`)!.deep as any).array![0]).toEqual(1)
@@ -115,6 +118,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -140,6 +144,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -148,7 +153,7 @@ describe(`Create and update nodes`, (): void => {
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
-    let state = nodeReducer(undefined, action)
+    let state = nodesReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
       {
@@ -161,7 +166,7 @@ describe(`Create and update nodes`, (): void => {
       }
     )
 
-    state = nodeReducer(state, addFieldAction)
+    state = nodesReducer(state, addFieldAction)
     expect(fromMapToObject(state)).toMatchSnapshot({
       hi: { internal: { counter: expect.any(Number) } },
     })
@@ -176,6 +181,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -184,7 +190,7 @@ describe(`Create and update nodes`, (): void => {
       }
     )(dispatch)
     const action = dispatch.mock.calls[0][0]
-    let state = nodeReducer(undefined, action)
+    let state = nodesReducer(undefined, action)
 
     const addFieldAction = actions.createNodeField(
       {
@@ -196,7 +202,7 @@ describe(`Create and update nodes`, (): void => {
         name: `test`,
       }
     )
-    state = nodeReducer(state, addFieldAction)
+    state = nodesReducer(state, addFieldAction)
 
     function callActionCreator(): void {
       actions.createNodeField(
@@ -224,6 +230,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `mineOnly`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -241,6 +248,7 @@ describe(`Create and update nodes`, (): void => {
           internal: {
             contentDigest: `hasdfljds`,
             type: `mineOnly`,
+            counter: 1,
           },
           pickle: true,
         },
@@ -268,6 +276,7 @@ describe(`Create and update nodes`, (): void => {
           internal: {
             contentDigest: `hasdfljds`,
             type: `mineOnly`,
+            counter: 1,
           },
           pickle: true,
         },

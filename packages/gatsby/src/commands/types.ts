@@ -1,4 +1,5 @@
-import { PackageJson, Reporter } from "gatsby"
+import { PackageJson } from "gatsby"
+import { reporter } from "gatsby-cli/src/reporter/reporter"
 
 export interface ICert {
   key: string
@@ -14,13 +15,14 @@ export interface IProgram {
   port: number
   proxyPort: number
   host: string
-  report: Reporter
+  report: typeof reporter
   [`cert-file`]?: string
   [`key-file`]?: string
   directory: string
   https?: boolean
   sitePackageJson: PackageJson
   ssl?: ICert
+  graphqlTracing?: boolean
 }
 
 // @deprecated
