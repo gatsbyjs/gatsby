@@ -1,4 +1,4 @@
-import { IProgram } from "../commands/types"
+import { IProgram, Stage } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema } from "graphql"
 import { SchemaComposer } from "graphql-compose"
@@ -130,12 +130,6 @@ export interface IBabelStage {
   }
 }
 
-export type BabelStageKeys =
-  | "develop"
-  | "develop-html"
-  | "build-html"
-  | "build-javascript"
-
 export interface IStateProgram extends IProgram {
   extensions: string[]
 }
@@ -217,7 +211,7 @@ export interface IGatsbyState {
   redirects: IRedirect[]
   babelrc: {
     stages: {
-      [key in BabelStageKeys]: IBabelStage
+      [key in Stage]: IBabelStage
     }
   }
   schemaCustomization: {
@@ -319,7 +313,7 @@ export type ActionsUnion =
 interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -328,7 +322,7 @@ interface ISetBabelPluginAction {
 interface ISetBabelPresetAction {
   type: `SET_BABEL_PRESET`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }
@@ -337,7 +331,7 @@ interface ISetBabelPresetAction {
 interface ISetBabelOptionsAction {
   type: `SET_BABEL_OPTIONS`
   payload: {
-    stage: BabelStageKeys
+    stage: Stage
     name: IPlugin["name"]
     options: IPlugin["options"]
   }

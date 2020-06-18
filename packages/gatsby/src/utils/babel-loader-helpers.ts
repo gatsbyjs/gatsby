@@ -6,7 +6,7 @@ import Babel, {
   CreateConfigItemOptions,
 } from "@babel/core"
 
-import { IBabelStage, BabelStageKeys } from "../redux/types"
+import { IBabelStage } from "../redux/types"
 import { Stage } from "../commands/types"
 
 interface ILoadCachedConfigReturnType {
@@ -37,7 +37,7 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
 
 type prepareOptionsType = (
   babel: typeof Babel,
-  options?: { stage?: BabelStageKeys },
+  options?: { stage?: Stage },
   resolve?: RequireResolve
 ) => Array<PluginItem[]>
 
