@@ -596,7 +596,7 @@ export interface IQueryExtractionBabelErrorAction {
 
 export interface ISetProgramStatusAction {
   type: `SET_PROGRAM_STATUS`
-  plugin: IGatsbyPlugin
+  plugin?: IGatsbyPlugin
   traceId: string | undefined
   payload: ProgramStatus
 }
