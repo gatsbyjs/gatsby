@@ -6,7 +6,7 @@ import { Store } from "redux"
 import { GraphQLRunner } from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
 import { emitter } from "../redux"
-import { Reporter } from "../.."
+import { IGatsbyReporter } from "gatsby-reporter"
 import { ExecutionResult, Source } from "../../graphql"
 import { IGatsbyState } from "../redux/types"
 import { IMatch } from "../types"
@@ -18,7 +18,7 @@ export type Runner = (
 
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
-  reporter: Reporter,
+  reporter: IGatsbyReporter,
   {
     parentSpan,
     graphqlTracing,

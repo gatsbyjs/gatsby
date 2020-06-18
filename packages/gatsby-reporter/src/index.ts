@@ -17,4 +17,4 @@ export const reduxLogReducer = reducer
 
 // Types
 export { IActivityArgs, IPhantomReporter, IProgressReporter, IGatsbyCLIState }
-export type IReporter = typeof Reporter
+export type IGatsbyReporter = typeof Reporter

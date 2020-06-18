@@ -2,7 +2,7 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
-import reporter from "gatsby-cli/lib/reporter"
+import { IGatsbyReporter } from "gatsby-reporter"
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -1007,7 +1007,7 @@ export interface NodePluginArgs {
   /**
    * Set of utilities to output information to user
    */
-  reporter: Reporter
+  reporter: IGatsbyReporter
 
   /**
    * Get single node by given ID and create dependency for given path.
@@ -1261,7 +1261,7 @@ export interface Store {
   replaceReducer: Function
 }
 
-export type Reporter = typeof reporter
+export type Reporter = IGatsbyReporter
 
 export type ActivityTracker = {
   start(): () => void
