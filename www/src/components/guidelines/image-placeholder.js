@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
+
 import { Box } from "theme-ui"
 
 export default function ImagePlaceholder({ aspectRatio, ...props }) {
