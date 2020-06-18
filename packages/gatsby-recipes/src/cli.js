@@ -148,6 +148,10 @@ const RecipesList = ({ setRecipe }) => {
       value: `wordpress.mdx`,
     },
     {
+      label: `Add e-commerce powered by Snipcart`,
+      value: `snipcart.mdx`,
+    },
+    {
       label: `Add Storybook - JavaScript`,
       value: `storybook-js.mdx`,
     },
