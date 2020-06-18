@@ -57,7 +57,8 @@ Those who responded they would be "very disappointed" without Gatsby initially s
 - "fast site"
 - "stupid fast site"
 - "blazing fast site"
-  (Quotes taken from survey responses). There are still plenty of people who say they benefit from Gatsby's fast and easy setup and quick development workflow. That's just not the majority response anymore.
+
+(Quotes taken from survey responses). There are still plenty of people who say they benefit from Gatsby's fast and easy setup and quick development workflow. That's just not the majority response anymore.
   ![line graph showing responses to survey question what is the main benefit you receive from Gatsby](./image3.png)
 
 ## How can we improve Gatsby (for the somewhat disappointed crowd)
