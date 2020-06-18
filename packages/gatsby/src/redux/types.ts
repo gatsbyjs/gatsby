@@ -598,7 +598,7 @@ export interface ISetProgramStatusAction {
   type: `SET_PROGRAM_STATUS`
   plugin?: IGatsbyPlugin
   traceId: string | undefined
-  payload: ProgramStatus
+  payload: keyof typeof ProgramStatus
 }
 
 export interface IPageQueryRunAction {
