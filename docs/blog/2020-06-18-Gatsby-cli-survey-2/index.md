@@ -1,8 +1,8 @@
 ---
-title: "Gatsby CLI Survey 2 Results Are In!"
+title: Gatsby CLI Survey 2 Results Are In!
 date: 2020-06-18
 author: Shannon Soper
-excerpt: "Our second set of results from the Gatsby Command Line Survey have been compiled. And guess what? Responses are changing in interesting ways that both validate and clarify the community's priorities."
+excerpt: Our second set of results from the Gatsby Command Line Survey have been compiled. And guess what? Responses are changing in interesting ways that both validate and clarify the community's priorities.
 tags:
   - community
   - diversity-and-inclusion
