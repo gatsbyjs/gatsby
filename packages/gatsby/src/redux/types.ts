@@ -26,7 +26,7 @@ export enum ProgramStatus {
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
-  matchPath: undefined | string
+  matchPath: undefined | string | string[]
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean

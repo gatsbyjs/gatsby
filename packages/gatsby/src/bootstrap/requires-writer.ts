@@ -77,9 +77,12 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
     score: number
     matchPath: string
   }
+  interface IGatsbyPageWithoutMatchPathArray extends IGatsbyPage {
+    matchPath: Exclude<IGatsbyPage["matchPath"], string[]>
+  }
 
   const createMatchPathEntry = (
-    page: IGatsbyPage,
+    page: IGatsbyPageWithoutMatchPathArray,
     index: number
   ): IMatchPathEntry => {
     const { matchPath } = page
@@ -99,10 +102,24 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
   }
 
   const matchPathPages: IMatchPathEntry[] = []
+  let index = 0
 
-  pages.forEach((page: IGatsbyPage, index: number): void => {
+  pages.forEach((page: IGatsbyPage): void => {
     if (page.matchPath) {
-      matchPathPages.push(createMatchPathEntry(page, index))
+      if (_.isArray(page.matchPath)) {
+        page.matchPath.forEach(matchPath => {
+          matchPathPages.push(
+            createMatchPathEntry({ ...page, matchPath }, index++)
+          )
+        })
+      } else {
+        matchPathPages.push(
+          createMatchPathEntry(
+            page as IGatsbyPageWithoutMatchPathArray,
+            index++
+          )
+        )
+      }
     }
   })
 

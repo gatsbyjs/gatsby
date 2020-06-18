@@ -68,6 +68,40 @@ describe(`requires-writer`, () => {
         JSON.stringify([{ path: `/path1`, matchPath: `matchPath1` }], null, 4)
       )
     })
+    it(`matchPath could be an array of different matchPath patterns`, async () => {
+      const pages = generatePagesState([
+        {
+          component: `component1`,
+          componentChunkName: `chunkName1`,
+          matchPath: [`matchPath1`, `matchPath2`, `matchPath3`],
+          path: `/path1`,
+        },
+        {
+          component: `component2`,
+          componentChunkName: `chunkName2`,
+          path: `/path2`,
+        },
+      ])
+
+      const spy = jest.spyOn(mockFsExtra, `writeFile`)
+      await requiresWriter.writeAll({
+        pages,
+        program,
+      })
+
+      expect(spy).toBeCalledWith(
+        joinPath(`/dir`, `.cache`, `match-paths.json.${now}`),
+        JSON.stringify(
+          [
+            { path: `/path1`, matchPath: `matchPath1` },
+            { path: `/path1`, matchPath: `matchPath2` },
+            { path: `/path1`, matchPath: `matchPath3` },
+          ],
+          null,
+          4
+        )
+      )
+    })
   })
 
   describe(`matchPath`, () => {
