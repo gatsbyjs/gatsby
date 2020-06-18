@@ -17,7 +17,7 @@ const fs = require(`fs`)
 const nodePath = require(`path`)
 const readdir = require(`recursive-readdir`)
 
-const reporter = require(`gatsby-reporter`)
+const { reporter } = require(`gatsby-reporter`)
 
 const {
   OPTION_DEFAULT_REPL_DIRECTORY,

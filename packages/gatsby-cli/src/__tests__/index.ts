@@ -21,7 +21,7 @@ interface IGetCLI {
 const getCLI = (): IGetCLI => {
   jest.resetModules()
 
-  const reporter = require(`gatsby-reporter`)
+  const { reporter } = require(`gatsby-reporter`)
   const { createCli } = require(`../create-cli`)
 
   require(`../`)
