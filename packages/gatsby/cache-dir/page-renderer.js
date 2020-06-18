@@ -17,6 +17,10 @@ class PageRenderer extends React.Component {
       params[part] = this.props[part]
     })
 
+    if (this.props[`*`]) {
+      params[`*`] = this.props[`*`]
+    }
+
     return { ...params, ...this.props.pageResources.json.pageContext.__params }
   }
 
