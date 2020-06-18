@@ -1,6 +1,6 @@
 ---
-title: "Gatsby's First Survey Goes Command Line (And here is what users have to say so far)"
-date: 2020-04-14
+title: "Gatsby CLI Survey 2 Results Are In!"
+date: 2020-06-18
 author: Shannon Soper
 excerpt: "Our second set of results from the Gatsby Command Line Survey have been compiled. And guess what? Responses are changing in interesting ways that both validate and clarify the community's priorities."
 tags:
@@ -8,7 +8,6 @@ tags:
   - diversity-and-inclusion
   - gatsby-cloud
 ---
-
 Our second set of results from the Gatsby Command Line Survey have been collected and compiled. This creates the exciting opportunity to compare survey results gathered from from 2 April through 3 June with the initial results we collected 10 March through 1 April.
 
 ## What is this survey?
