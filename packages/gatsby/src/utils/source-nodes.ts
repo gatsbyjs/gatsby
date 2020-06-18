@@ -4,7 +4,7 @@ import apiRunner from "./api-runner-node"
 import { store } from "../redux"
 import { getNode, getNodes } from "../db/nodes"
 import { boundActionCreators } from "../redux/actions"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyState, IGatsbyNode } from "../redux/types"
 const { deleteNode } = boundActionCreators
 
 import { Node } from "../../index"
@@ -47,7 +47,10 @@ function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
 /**
  * Return the set of nodes for which its root node has not been touched
  */
-function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
+function getStaleNodes(
+  state: IGatsbyState,
+  nodes: IGatsbyNode[]
+): IGatsbyNode[] {
   return nodes.filter(node => {
     let rootNode = node
     let whileCount = 0
@@ -73,7 +76,7 @@ function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(state: IGatsbyState, nodes: Node[]): void {
+function deleteStaleNodes(state: IGatsbyState, nodes: IGatsbyNode[]): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
