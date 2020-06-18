@@ -4,9 +4,9 @@ date: 2020-06-18
 author: Shannon Soper
 excerpt: Our second set of results from the Gatsby Command Line Survey have been compiled. And guess what? Responses are changing in interesting ways that both validate and clarify the community's priorities.
 tags:
-  - community
-  - diversity-and-inclusion
-  - gatsby-cloud
+  - community
+  - diversity-and-inclusion
+  - gatsby-cloud
 ---
 Our second set of results from the Gatsby Command Line Survey have been collected and compiled. This creates the exciting opportunity to compare survey results gathered from from 2 April through 3 June with the initial results we collected 10 March through 1 April.
 
@@ -34,7 +34,7 @@ On April 1st, 68.33% respondents had said they would be "very disappointed" if t
 
 In answer to this question, we see a striking difference in the kind of responses we get from those who would be "very disappointed" without Gatsby vs. those who would only be "somewhat disappointed." The new results show that this difference is remaining consistent and perhaps even becoming more distinct over time. Those who would be "very disappointed" without Gatsby say that it's not just developers who benefit from Gatsby as a product: end users, marketers, and businesses also benefit from Gatsby. On the other hand, those who would be "somewhat disappointed" without Gatsby mainly state that only developers benefit from Gatsby.
 
-Boy, where do I start? Here is a list of everyone who benefits from a Gatsby sites
+Boy, where do I start? Here is a list of everyone who benefits from Gatsby sites:
 
 1. **Developers, frontend developers** - because of the rich ecosystem of Gatsby plugins, the speed of development is skyrocketing.
 2. **Marketers and Content Creators** - for having a pleasure to get their content published and distributed around the world thanks to static hosting and incremental builds (that's upcoming, I hope).
