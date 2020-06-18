@@ -8,6 +8,7 @@ tags:
   - diversity-and-inclusion
   - gatsby-cloud
 ---
+
 Our second set of results from the Gatsby Command Line Survey have been collected and compiled. This creates the exciting opportunity to compare survey results gathered from from 2 April through 3 June with the initial results we collected 10 March through 1 April.
 
 ## What is this survey?
