@@ -1,10 +1,10 @@
 const babelLoader = require(`babel-loader`)
 
-const {
+import {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
-} = require(`./babel-loader-helpers`)
+} from "./babel-loader-helpers"
 
 /**
  * Gatsby's custom loader for webpack & babel
