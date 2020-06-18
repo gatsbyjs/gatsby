@@ -29,7 +29,7 @@
     "react-icons": "^3.10.0",
     "strict-ui": "^0.1.3",
     "subscriptions-transport-ws": "^0.9.16",
-    "theme-ui": "^0.4.0-alpha.3",
+    "theme-ui": "^0.2.52",
     "typescript": "^3.9.3",
     "urql": "^1.9.7",
     "yup": "^0.29.1"
