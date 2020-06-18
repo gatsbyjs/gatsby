@@ -3,7 +3,15 @@ const { getNode, getNodes } = require(`../nodes`)
 const { store } = require(`../../redux`)
 
 import { reporter } from "gatsby-reporter"
-jest.mock(`gatsby-reporter`)
+jest.mock(`gatsby-reporter`, () => {
+  return {
+    reporter: {
+      warn: jest.fn(),
+    },
+    reduxLogReducer: () => {
+      return {}
+    },
+  }
 
 describe(`nodes db tests`, () => {
   beforeEach(() => {

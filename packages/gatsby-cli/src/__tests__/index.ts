@@ -1,9 +1,11 @@
 jest.mock(`gatsby-reporter`, () => {
   return {
-    panic: jest.fn(),
-    log: jest.fn(),
-    stripIndent: jest.fn(str => str),
-    warn: jest.fn(),
+    reporter: {
+      panic: jest.fn(),
+      log: jest.fn(),
+      stripIndent: jest.fn(str => str),
+      warn: jest.fn(),
+    },
   }
 })
 jest.mock(`../create-cli`)
