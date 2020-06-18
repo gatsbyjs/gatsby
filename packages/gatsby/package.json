@@ -128,7 +128,6 @@
     "redux-thunk": "^2.3.0",
     "semver": "^5.7.1",
     "shallow-compare": "^1.2.2",
-    "sift": "^5.1.0",
     "signal-exit": "^3.0.3",
     "slugify": "^1.4.0",
     "socket.io": "^2.3.0",
