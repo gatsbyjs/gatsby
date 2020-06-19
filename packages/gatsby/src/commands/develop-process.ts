@@ -2,7 +2,6 @@ import url from "url"
 import fs from "fs"
 import openurl from "better-opn"
 import chokidar from "chokidar"
-import { SchemaComposer } from "graphql-compose"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
@@ -13,7 +12,7 @@ import webpack from "webpack"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError, GraphQLSchema } from "graphql"
+import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
 import bootstrap from "../bootstrap"
@@ -62,6 +61,12 @@ import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
+
+import { enqueueFlush } from "../utils/page-data"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
 
 import { Stage, IProgram } from "./types"
 import {
@@ -200,16 +205,13 @@ async function startServer(program: IProgram): Promise<IServer> {
     graphqlEndpoint,
     graphqlHTTP(
       (): graphqlHTTP.OptionsData => {
-        const {
-          schema,
-          schemaCustomization,
-        }: {
-          schema: GraphQLSchema
-          schemaCustomization: {
-            composer: SchemaComposer<any>
-            context: any
-          }
-        } = store.getState()
+        const { schema, schemaCustomization } = store.getState()
+
+        if (!schemaCustomization.composer) {
+          throw new Error(
+            `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
+          )
+        }
 
         return {
           schema,
@@ -401,6 +403,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   }
   initTracer(program.openTracingConfigFile)
+  markWebpackStatusAsPending()
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
@@ -614,9 +617,9 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
-  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
-  //   console.log(`set invalid`, args, this)
-  // })
+  compiler.hooks.invalid.tap(`log compiling`, function () {
+    markWebpackStatusAsPending()
+  })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
@@ -680,6 +683,9 @@ module.exports = async (program: IProgram): Promise<void> => {
       webpackActivity.end()
       webpackActivity = null
     }
+
+    enqueueFlush()
+    markWebpackStatusAsDone()
 
     done()
   })
