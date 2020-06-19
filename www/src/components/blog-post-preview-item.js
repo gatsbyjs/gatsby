@@ -84,7 +84,7 @@ const BlogPostPreviewItem = ({ post, className }) => (
 )
 
 export const blogPostPreviewFragment = graphql`
-  fragment BlogPostPreview_item on Mdx {
+  fragment BlogPostPreview_item on BlogPost {
     slug
     excerpt
     title
