@@ -41,9 +41,10 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 // Otherwise leave commented out.
 // require(`../bootstrap/log-line-function`)
 
-export async function initialize(
-  { program: args, parentSpan }: IBuildContext
-): Promise<{
+export async function initialize({
+  program: args,
+  parentSpan,
+}: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {
