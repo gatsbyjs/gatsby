@@ -30,7 +30,7 @@ let isVerbose = false
  * Reporter module.
  * @module reporter
  */
-export class Reporter {
+class Reporter {
   /**
    * Strip initial indentation template function.
    */
