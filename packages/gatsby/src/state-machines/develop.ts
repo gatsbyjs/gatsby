@@ -35,6 +35,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     setup: {
       on: {
         "": {
+          // Empty string event runs every time
           actions: `spawnMutationListener`,
           cond: (context): boolean => !context.mutationListener,
         },
@@ -59,7 +60,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         },
         {
           target: `waiting`,
-          actions: (ctx): void => console.log(ctx.queryIds),
         },
       ],
     },
