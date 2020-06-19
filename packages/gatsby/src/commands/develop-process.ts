@@ -15,7 +15,7 @@ import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import { buildHTML } from "./build-html"
@@ -422,10 +422,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   // Start bootstrap process.
-  const { graphqlRunner } = await bootstrap(program)
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({ program })
 
   // Start the createPages hot reloader.
-  bootstrapPageHotReloader(graphqlRunner)
+  bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
 
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
