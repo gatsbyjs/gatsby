@@ -6,33 +6,25 @@ const url = require(`url`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
-exports.sourceNodes = ({ actions: { createTypes } }) => {
-  createTypes(/* GraphQL */ `
-    type BlogPost implements Node @dontInfer @childOf(types: ["Mdx"]) {
-      html: String
-      body: String
-      timeToRead: Int
-      slug: String!
-      released: Boolean
-      excerpt: String
-      title: String!
-      seoTitle: String
-      draft: Boolean
-      date: Date @dateformat
-      canonicalLink: String
-      publishedAt: String
-      tags: [String!]
-      author: AuthorYaml @link
-      twittercard: String
-      # TODO this was only used for one blog post; maybe it can be replaced with Image?
-      cover: File @fileByRelativePath
-      image: File @fileByRelativePath
-      imageAuthor: String
-      imageAuthorLink: String
-      imageTitle: String
-      showImageInArticle: Boolean
-    }
+const mdxResolverPassthrough = fieldName => async (
+  source,
+  args,
+  context,
+  info
+) => {
+  const type = info.schema.getType(`Mdx`)
+  const mdxNode = context.nodeModel.getNodeById({
+    id: source.parent,
+  })
+  const resolver = type.getFields()[fieldName].resolve
+  const result = await resolver(mdxNode, args, context, {
+    fieldName,
+  })
+  return result
+}
 
+exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
     type AuthorYaml implements Node @derivedTypes @dontInfer {
       id: String!
       bio: String
@@ -45,6 +37,43 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       slug: String!
     }
   `)
+  createTypes(
+    schema.buildObjectType({
+      name: `BlogPost`,
+      fields: {
+        id: { type: `ID!` },
+        html: { type: `String`, resolve: mdxResolverPassthrough(`html`) },
+        body: { type: `String`, resolve: mdxResolverPassthrough(`body`) },
+        timeToRead: {
+          type: `Int`,
+          resolve: mdxResolverPassthrough(`timeToRead`),
+        },
+        slug: { type: `String!` },
+        released: { type: `Boolean` },
+        excerpt: { type: `String` },
+        title: { type: `String!` },
+        seoTitle: { type: `String` },
+        draft: { type: `Boolean` },
+        date: { type: `Date`, extensions: { dateformat: {} } },
+        canonicalLink: { type: `String` },
+        publishedAt: { type: `String` },
+        tags: { type: `[String!]` },
+        author: { type: `AuthorYaml`, extensions: { link: {} } },
+        twittercard: { type: `String` },
+        cover: { type: `File`, extensions: { fileByRelativePath: {} } },
+        image: { type: `File`, extensions: { fileByRelativePath: {} } },
+        imageAuthor: { type: `String` },
+        imageAuthorLink: { type: `String` },
+        imageTitle: { type: `String` },
+        showImageInArticle: { type: `Boolean` },
+      },
+      interfaces: [`Node`],
+      extensions: {
+        infer: false,
+        childOf: { types: [`Mdx`] },
+      },
+    })
+  )
 }
 
 exports.onCreateNode = async ({ node, actions, getNode, createNodeId }) => {
