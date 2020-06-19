@@ -25,7 +25,7 @@ import { flattenedPluginsReducer } from "./flattened-plugins"
 import { pendingPageDataWritesReducer } from "./pending-page-data-writes"
 import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
-
+import { buildStatesReducer } from "./build-state"
 /**
  * @property exports.nodesTouched Set<string>
  */
@@ -37,6 +37,7 @@ export {
   nodesTouchedReducer as nodesTouched,
   lastActionReducer as lastAction,
   flattenedPluginsReducer as flattenedPlugins,
+  buildStatesReducer as currentBuildState,
   configReducer as config,
   schemaReducer as schema,
   pagesReducer as pages,

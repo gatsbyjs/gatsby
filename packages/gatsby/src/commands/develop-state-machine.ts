@@ -18,7 +18,6 @@ import { IProgram } from "./types"
 import { developMachine, INITIAL_CONTEXT } from "../state-machines/develop"
 import { interpret } from "xstate"
 import { saveState, startAutosave } from "../db"
-import { startStateMachineServer } from "../utils/state-machine-server"
 
 // checks if a string is a valid ip
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
@@ -138,21 +137,18 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   ).start()
 
-  developService.onTransition(async context => {
-    if (context.changed) {
-      console.log(`Transition to`, context.value)
+  let last = developService.state
+
+  developService.onTransition(async state => {
+    if (state.changed && !last.matches(state) && state.context.store) {
+      console.log(`Transitioning to`, state.value)
+      state.context.store.dispatch({
+        type: `SET_BUILD_STATE`,
+        payload: state.value,
+      })
+      last = state
     }
   })
-
-  if (process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE_VISUALIZER) {
-    const envVar = process.env.GATSBY_STATE_MACHINE_VISUALIZER_PORT
-    const xstatePort = envVar ? parseInt(envVar) : 8080
-    const port = await detectPortInUseAndPrompt(xstatePort)
-    if (port) {
-      startStateMachineServer(developService, port)
-      report.log(`Sending state machine updates from ws://localhost:${port}`)
-    }
-  }
 
   /**
    * Refresh external data sources.

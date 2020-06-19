@@ -5,6 +5,7 @@ import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { InternalJobInterface, JobResultInterface } from "../utils/jobs-manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
+import { StateValue } from "xstate"
 
 type SystemPath = string
 type Identifier = string
@@ -243,6 +244,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
+  currentBuildState: StateValue
 }
 
 export interface ICachedReduxState {
@@ -287,6 +289,7 @@ export type ActionsUnion =
   | ISetResolvedNodesAction
   | ISetSchemaAction
   | ISetSiteFlattenedPluginsAction
+  | ISetCurrentBuildStateAction
   | ISetWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | ITouchNodeAction
@@ -682,6 +685,11 @@ export interface IDeleteNodesAction {
 export interface ISetSiteFlattenedPluginsAction {
   type: `SET_SITE_FLATTENED_PLUGINS`
   payload: IGatsbyState["flattenedPlugins"]
+}
+
+export interface ISetCurrentBuildStateAction {
+  type: `SET_BUILD_STATE`
+  payload: IGatsbyState["currentBuildState"]
 }
 
 export interface ISetResolvedNodesAction {
