@@ -1,8 +1,11 @@
 import fs from "fs-extra"
-import { ExecutionResult } from "graphql"
 import path from "path"
 import { IGatsbyPage } from "../redux/types"
+import { websocketManager } from "./websocket-manager"
+import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
+
+import { IExecutionResult } from "../query/types"
 
 interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
@@ -11,7 +14,7 @@ interface IPageData {
 }
 
 interface IPageDataWithQueryResult extends IPageData {
-  result: ExecutionResult
+  result: IExecutionResult
 }
 
 export function fixedPagePath(pagePath: string): string {
@@ -52,13 +55,20 @@ export async function removePageData(
 
 export async function writePageData(
   publicDir: string,
-  { componentChunkName, matchPath, path }: IPageData,
-  result: IPageDataWithQueryResult["result"]
-): Promise<void> {
-  const filePath = getFilePath(publicDir, path)
+  { componentChunkName, matchPath, path: pagePath }: IPageData
+): Promise<IPageDataWithQueryResult> {
+  const inputFilePath = path.join(
+    publicDir,
+    `..`,
+    `.cache`,
+    `json`,
+    `${pagePath.replace(/\//g, `_`)}.json`
+  )
+  const outputFilePath = getFilePath(publicDir, pagePath)
+  const result = await fs.readJSON(inputFilePath)
   const body = {
     componentChunkName,
-    path,
+    path: pagePath,
     matchPath,
     result,
   }
@@ -69,10 +79,83 @@ export async function writePageData(
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
-      filePath,
+      filePath: outputFilePath,
       size: pageDataSize,
     },
   })
 
-  await fs.outputFile(filePath, bodyStr)
+  await fs.outputFile(outputFilePath, bodyStr)
+  return body
+}
+
+let isFlushPending = false
+let isFlushing = false
+
+export function isFlushEnqueued(): boolean {
+  return isFlushPending
+}
+
+export async function flush(): Promise<void> {
+  if (isFlushing) {
+    // We're already in the middle of a flush
+    return
+  }
+  isFlushPending = false
+  isFlushing = true
+  const { pendingPageDataWrites, components, pages, program } = store.getState()
+
+  const { pagePaths, templatePaths } = pendingPageDataWrites
+
+  const pagesToWrite = Array.from(templatePaths).reduce(
+    (set, componentPath) => {
+      const templateComponent = components.get(componentPath)
+      if (templateComponent) {
+        templateComponent.pages.forEach(set.add.bind(set))
+      }
+      return set
+    },
+    new Set(pagePaths.values())
+  )
+
+  for (const pagePath of pagesToWrite) {
+    const page = pages.get(pagePath)
+
+    // It's a gloomy day in Bombay, let me tell you a short story...
+    // Once upon a time, writing page-data.json files were atomic
+    // After this change (#24808), they are not and this means that
+    // between adding a pending write for a page and actually flushing
+    // them, a page might not exist anymore щ（ﾟДﾟщ）
+    // This is why we need this check
+    if (page) {
+      const body = await writePageData(
+        path.join(program.directory, `public`),
+        page
+      )
+
+      if (program?._?.[0] === `develop`) {
+        websocketManager.emitPageData({
+          ...body.result,
+          id: pagePath,
+          result: {
+            data: body.result.data,
+            pageContext: body.result.pageContext,
+          },
+        })
+      }
+    }
+  }
+
+  store.dispatch({
+    type: `CLEAR_PENDING_PAGE_DATA_WRITES`,
+  })
+  isFlushing = false
+  return
+}
+
+export function enqueueFlush(): void {
+  if (isWebpackStatusPending()) {
+    isFlushPending = true
+  } else {
+    flush()
+  }
 }
