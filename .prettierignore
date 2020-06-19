@@ -8,7 +8,6 @@ flow-typed
 # built sites
 benchmarks/**/public
 e2e-tests/**/public
-e2e-tests/path-prefix/assets
 examples/**/public
 integration-tests/**/public
 www/public
