@@ -10931,6 +10931,22 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Honeycomb Creative
+  main_url: https://www.honeycombcreative.com/
+  url: https://www.honeycombcreative.com/
+  description: >
+    Honeycomb Creative has been producing websites and other print and electronic communications material since 1991. Website built with Gatsby v2 and headless WordPress.
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - SEO
+    - Portfolio
+    - Marketing
+    - Blog
+    - WordPress
+  built_by: Honeycomb Creative
+  built_by_url: https://www.honeycombcreative.com/
 - title: Personal Website of Suganthan Mohanadasan
   main_url: https://suganthan.com/
   url: https://suganthan.com/
