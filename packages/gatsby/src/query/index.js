@@ -8,6 +8,7 @@ const { boundActionCreators } = require(`../redux/actions`)
 const report = require(`gatsby-cli/lib/reporter`)
 const queryQueue = require(`./queue`)
 const { GraphQLRunner } = require(`./graphql-runner`)
+const pageDataUtil = require(`../utils/page-data`)
 
 const seenIdsWithoutDataDependencies = new Set()
 let queuedDirtyActions = []
@@ -306,6 +307,7 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
     const activity = createQueryRunningActivity(queryJobs.length)
 
     const onFinish = (...arg) => {
+      pageDataUtil.enqueueFlush()
       activity.done()
       return callback(...arg)
     }

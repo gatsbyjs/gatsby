@@ -2,7 +2,7 @@
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
 const nodesDb: NodeStore = require(`../redux/nodes`)
-const { runFastFiltersAndSort } = require(`../redux/run-sift`)
+const { runFastFiltersAndSort } = require(`../redux/run-fast-filters`)
 
 interface NodeStore {
   getNodes: () => Array<any>;

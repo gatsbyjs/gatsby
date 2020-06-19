@@ -1,4 +1,7 @@
-const { runFastFiltersAndSort, applyFastFilters } = require(`../run-sift`)
+const {
+  runFastFiltersAndSort,
+  applyFastFilters,
+} = require(`../run-fast-filters`)
 const { store } = require(`../index`)
 const { createDbQueriesFromObject } = require(`../../db/common/query`)
 const { actions } = require(`../actions`)

@@ -4,7 +4,7 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp =
+export type FilterOp =  // TODO: merge with DbComparator ?
   | "$eq"
   | "$ne"
   | "$lt"
@@ -15,7 +15,7 @@ type FilterOp =
   | "$nin"
   | "$regex" // Note: this includes $glob
 // Note: `undefined` is an encoding for a property that does not exist
-type FilterValueNullable =
+export type FilterValueNullable =  // TODO: merge with DbComparatorValue
   | string
   | number
   | boolean

@@ -10931,3 +10931,12 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Bold.org
+  url: https://bold.org/
+  main_url: https://bold.org/
+  description: >
+    Fighting Student Debt. Create or apply to exclusive scholarships, fellowships, and grants, in minutes.
+  categories:
+    - Education
+  built_by: Bold.org
+  featured: false

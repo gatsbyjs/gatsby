@@ -43,12 +43,7 @@ const createDevelopQueue = getRunner => {
   const handler = ({ job: queryJob, activity }, callback) => {
     queryRunner(getRunner(), queryJob, activity?.span).then(
       result => {
-        if (queryJob.isPage) {
-          websocketManager.emitPageData({
-            result,
-            id: queryJob.id,
-          })
-        } else {
+        if (!queryJob.isPage) {
           websocketManager.emitStaticQueryData({
             result,
             id: queryJob.id,
