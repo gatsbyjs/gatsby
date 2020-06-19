@@ -5,6 +5,54 @@ const url = require(`url`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
+
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      seoTitle: String
+      draft: Boolean
+      date: Date @dateformat
+      canonicalLink: String
+      tags: [String!]
+      author: AuthorYaml @link
+      twittercard: String
+      publishedAt: String
+      # TODO this was only used for one blog post; maybe it can be replaced with Image?
+      cover: File @fileByRelativePath
+      image: File @fileByRelativePath
+      imageAuthor: String
+      imageAuthorLink: String
+      imageTitle: String
+      showImageInArticle: Boolean
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      section: String
+      released: Boolean
+      publishedAt: String
+      excerpt: String
+    }
+
+    type AuthorYaml implements Node @derivedTypes @dontInfer {
+      id: String!
+      bio: String
+      avatar: File @fileByRelativePath
+      twitter: String
+      fields: AuthorYamlFields!
+    }
+
+    type AuthorYamlFields @dontInfer {
+      slug: String!
+    }
+  `)
+}
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
   if (node.internal.type === `AuthorYaml`) {
@@ -56,7 +104,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const tagTemplate = getTemplate(`tags`)
   const contributorPageTemplate = getTemplate(`template-contributor-page`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allAuthorYaml {
         nodes {
