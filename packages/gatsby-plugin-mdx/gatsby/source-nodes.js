@@ -269,6 +269,9 @@ ${e}`
       },
     },
     interfaces: [`Node`],
+    extensions: {
+      mimeTypes: options.mediaTypes,
+    },
   })
   createTypes(MdxType)
 }
