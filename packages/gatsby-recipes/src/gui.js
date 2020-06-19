@@ -4,10 +4,10 @@ const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
-const remove = require('unist-util-remove')
+const remove = require("unist-util-remove")
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
-import MDX from './components/mdx'
+import MDX from "./components/mdx"
 
 const {
   Button,
@@ -47,9 +47,8 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT =
-  `/Users/kylemathews/programs/recipes-test` &&
-  `/Users/johno-mini/c/gatsby/starters/blog`
+const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test`
+// `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`
 const Spinner = () => <span>Loading...</span>
@@ -281,11 +280,11 @@ log(
 )
 
 const removeJsx = () => tree => {
-  remove(tree, 'mdxBlockElement', node => {
-    return node.name === 'File'
+  remove(tree, "mdxBlockElement", node => {
+    return node.name === "File"
   })
 
-  remove(tree, 'export', node => {
+  remove(tree, "export", node => {
     console.log({ node })
     return true
   })
@@ -510,8 +509,13 @@ const RecipeGui = ({
                   },
                 }}
               >
-                <MDX key="DOC" components={components} scope={{ sendEvent }} remarkPlugins={[removeJsx]}>
-                  {state.context.exports.join('\n') + '\n\n' + step}
+                <MDX
+                  key="DOC"
+                  components={components}
+                  scope={{ sendEvent }}
+                  remarkPlugins={[removeJsx]}
+                >
+                  {state.context.exports.join("\n") + "\n\n" + step}
                 </MDX>
               </div>
             </div>
@@ -723,8 +727,14 @@ const RecipeGui = ({
               }}
             >
               <div sx={{ "*:last-child": { mb: 0 } }}>
-                <MDX components={components} scope={{ sendEvent }} remarkPlugins={[removeJsx]}>
-                  {state.context.exports.join('\n') + '\n\n' + state.context.steps[0]}
+                <MDX
+                  components={components}
+                  scope={{ sendEvent }}
+                  remarkPlugins={[removeJsx]}
+                >
+                  {state.context.exports.join("\n") +
+                    "\n\n" +
+                    state.context.steps[0]}
                 </MDX>
               </div>
               <Button

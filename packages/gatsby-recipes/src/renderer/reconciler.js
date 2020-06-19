@@ -46,11 +46,7 @@ const reconciler = ReactReconciler({
 
     debug(
       `appending child to container at index ${index}`,
-      (require(`circular-json`) && JSON).stringify(
-        { container, child },
-        null,
-        2
-      )
+      (require(`flatted`) && JSON).stringify({ container, child }, null, 2)
     )
 
     if (index === -1) {
