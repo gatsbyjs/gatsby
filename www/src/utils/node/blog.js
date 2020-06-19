@@ -9,10 +9,10 @@ const { getTemplate } = require(`../get-template`)
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type BlogPost implements Node @dontInfer @childOf(types: ["Mdx"]) {
-      html: String
-      body: String
-      timeToRead: Int!
-      slug: String
+      html: String!
+      body: String!
+      timeToRead: Int
+      slug: String!
       released: Boolean
       excerpt: String
       title: String!
@@ -22,7 +22,7 @@ exports.sourceNodes = ({ actions: { createTypes } }) => {
       canonicalLink: String
       publishedAt: String
       tags: [String!]
-      author: AuthorYaml! @link
+      author: AuthorYaml @link
       twittercard: String
       # TODO this was only used for one blog post; maybe it can be replaced with Image?
       cover: File @fileByRelativePath
