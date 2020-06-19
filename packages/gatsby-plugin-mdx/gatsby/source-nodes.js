@@ -270,7 +270,9 @@ ${e}`
     },
     interfaces: [`Node`],
     extensions: {
-      mimeTypes: options.mediaTypes,
+      childOf: {
+        mimeTypes: options.mediaTypes,
+      },
     },
   })
   createTypes(MdxType)
