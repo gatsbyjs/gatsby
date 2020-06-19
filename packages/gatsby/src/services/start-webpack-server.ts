@@ -15,6 +15,11 @@ import { prepareUrls } from "../utils/prepare-urls"
 import { startServer } from "../utils/start-server"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IBuildContext } from "./"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
+import { enqueueFlush } from "../utils/page-data"
 
 export async function startWebpackServer({
   program,
@@ -32,6 +37,10 @@ export async function startWebpackServer({
     app,
     workerPool
   )
+
+  compiler.hooks.invalid.tap(`log compiling`, function () {
+    markWebpackStatusAsPending()
+  })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
@@ -97,7 +106,8 @@ export async function startWebpackServer({
         webpackActivity.end()
         webpackActivity = null
       }
-
+      enqueueFlush()
+      markWebpackStatusAsDone()
       done()
       resolve({ compiler, websocketManager })
     })
