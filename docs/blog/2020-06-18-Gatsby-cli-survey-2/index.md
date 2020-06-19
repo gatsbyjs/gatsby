@@ -48,7 +48,7 @@ So, literally _everyone_.
 
 ![line graph showing job roles of people who would be very disappointed if they could not use Gatsby](./image6.png)
 
-![Line graph showing job roles of people who would be somewhat disappointed if they could not use Gatsby ](./image2.png)
+![Line graph showing job roles of people who would be somewhat disappointed if they could not use Gatsby](./image2.png)
 
 ### What is the main benefit you receive from Gatsby?
 
