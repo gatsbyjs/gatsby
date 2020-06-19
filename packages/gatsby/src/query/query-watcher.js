@@ -7,7 +7,7 @@
  *   this is done
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
-
+const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
@@ -31,6 +31,8 @@ const getQueriesSnapshot = () => {
 
   return snapshot
 }
+
+const useStateMachine = !!process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE
 
 const handleComponentsWithRemovedQueries = (
   { components, staticQueryComponents },
@@ -218,9 +220,9 @@ const watchComponent = componentPath => {
   }
 }
 
-// const debounceCompile = _.debounce(() => {
-//   updateStateAndRunQueries()
-// }, 100)
+const debounceCompile = _.debounce(() => {
+  updateStateAndRunQueries()
+}, 100)
 
 const watch = async rootDir => {
   if (watcher) return
@@ -239,9 +241,12 @@ const watch = async rootDir => {
       ...packagePaths,
     ])
     .on(`change`, path => {
-      // report.pendingActivity({ id: `query-extraction` })
-      // debounceCompile()
-      emitter.emit(`SOURCE_FILE_CHANGED`, { path })
+      if (useStateMachine) {
+        emitter.emit(`SOURCE_FILE_CHANGED`, { path })
+      } else {
+        report.pendingActivity({ id: `query-extraction` })
+        debounceCompile()
+      }
     })
 
   filesToWatch.forEach(filePath => watcher.add(filePath))

@@ -317,26 +317,27 @@ const startListeningToDevelopQueue = ({ graphqlTracing } = {}) => {
       .then(() => onFinish(null))
       .catch(onFinish)
   })
+  if (!process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE) {
+    emitter.on(`API_RUNNING_START`, () => {
+      report.pendingActivity({ id: `query-running` })
+    })
 
-  // emitter.on(`API_RUNNING_START`, () => {
-  //   report.pendingActivity({ id: `query-running` })
-  // })
-
-  // emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
-  // ;[
-  //   `DELETE_CACHE`,
-  //   `CREATE_NODE`,
-  //   `DELETE_NODE`,
-  //   `DELETE_NODES`,
-  //   `SET_SCHEMA_COMPOSER`,
-  //   `SET_SCHEMA`,
-  //   `ADD_FIELD_TO_NODE`,
-  //   `ADD_CHILD_NODE_TO_PARENT_NODE`,
-  // ].forEach(eventType => {
-  //   emitter.on(eventType, event => {
-  //     graphqlRunner = null
-  //   })
-  // })
+    emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedQueries)
+    ;[
+      `DELETE_CACHE`,
+      `CREATE_NODE`,
+      `DELETE_NODE`,
+      `DELETE_NODES`,
+      `SET_SCHEMA_COMPOSER`,
+      `SET_SCHEMA`,
+      `ADD_FIELD_TO_NODE`,
+      `ADD_CHILD_NODE_TO_PARENT_NODE`,
+    ].forEach(eventType => {
+      emitter.on(eventType, event => {
+        graphqlRunner = null
+      })
+    })
+  }
 }
 
 const enqueueExtractedQueryId = pathname => {
