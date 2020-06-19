@@ -1,4 +1,4 @@
-import { Node, Store, Cache } from "gatsby"
+import { Node, Store, NodePluginArgs } from "gatsby"
 
 /**
  * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
@@ -29,7 +29,8 @@ export interface CreateFilePathArgs {
 export interface CreateRemoteFileNodeArgs {
   url: string
   store: Store
-  cache: Cache["cache"]
+  // TODO: use GatsbyCache type (requires gatsby@2.22.13)
+  cache: NodePluginArgs["cache"]
   createNode: Function
   createNodeId: Function
   parentNodeId?: string
@@ -46,7 +47,8 @@ export interface CreateRemoteFileNodeArgs {
 export interface CreateFileNodeFromBufferArgs {
   buffer: Buffer
   store: Store
-  cache: Cache["cache"]
+  // TODO: use GatsbyCache type (requires gatsby@2.22.13)
+  cache: NodePluginArgs["cache"]
   createNode: Function
   createNodeId: Function
   parentNodeId?: string

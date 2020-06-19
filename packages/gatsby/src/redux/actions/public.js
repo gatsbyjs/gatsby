@@ -192,7 +192,7 @@ actions.createPage = (
 
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
-  if (typeof page.context === `object`) {
+  if (page.context && typeof page.context === `object`) {
     const invalidFields = reservedFields.filter(field => field in page.context)
 
     if (invalidFields.length > 0) {
@@ -888,7 +888,7 @@ type CreateNodeInput = {
  * @param {string} $0.fieldName [deprecated] the name for the field
  * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
- * @param {string} $0.value the value for the field
+ * @param {any} $0.value the value for the field
  * @example
  * createNodeField({
  *   node,
