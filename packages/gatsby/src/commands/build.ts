@@ -6,7 +6,7 @@ import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
@@ -77,8 +77,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
-    ...program,
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+    program,
     parentSpan: buildSpan,
   })
 
@@ -97,7 +97,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
 
   await apiRunnerNode(`onPreBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -265,7 +265,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()
