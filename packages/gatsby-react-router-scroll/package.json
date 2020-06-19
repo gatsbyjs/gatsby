@@ -7,9 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.2",
-    "scroll-behavior": "^0.9.12",
-    "warning": "^3.0.0"
+    "@babel/runtime": "^7.10.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
@@ -35,9 +33,9 @@
     "directory": "packages/gatsby-react-router-scroll"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.tsx\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.tsx\""
   },
   "engines": {
     "node": ">=10.13.0"
