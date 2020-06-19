@@ -10931,6 +10931,20 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Personal Website of Suganthan Mohanadasan
+  main_url: https://suganthan.com/
+  url: https://suganthan.com/
+  description: >
+    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and TailwindCSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
+  categories:
+    - Blog
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Portfolio
+    - SEO
+  built_by: Shane Jones
+  built_by_url: https://shanejones.co.uk/
 - title: Bold.org
   url: https://bold.org/
   main_url: https://bold.org/
