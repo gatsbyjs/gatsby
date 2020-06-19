@@ -1,7 +1,10 @@
 import PrettyError from "pretty-error"
-import { ErrorWithCodeFrame } from "gatsby-core-utils"
 
-type PrettyRenderError = Error | ErrorWithCodeFrame
+interface IErrorWithCodeFrame extends Error {
+  codeFrame: string
+}
+
+type PrettyRenderError = Error | IErrorWithCodeFrame
 
 export function getErrorFormatter(): PrettyError {
   const prettyError = new PrettyError()
