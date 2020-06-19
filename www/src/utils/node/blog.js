@@ -9,8 +9,8 @@ const { getTemplate } = require(`../get-template`)
 exports.sourceNodes = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type BlogPost implements Node @dontInfer @childOf(types: ["Mdx"]) {
-      html: String!
-      body: String!
+      html: String
+      body: String
       timeToRead: Int
       slug: String!
       released: Boolean
