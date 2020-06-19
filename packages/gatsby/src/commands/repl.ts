@@ -1,6 +1,6 @@
 import repl from "repl"
 import { graphql } from "graphql"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import { trackCli } from "gatsby-telemetry"
 import { loadNodeContent, getNodes, getNode, getNodesByType } from "../db/nodes"
 import { store } from "../redux"
@@ -9,7 +9,7 @@ import { IProgram } from "./types"
 module.exports = async (program: IProgram): Promise<void> => {
   trackCli(`REPL_START`)
   // run bootstrap
-  await bootstrap(program)
+  await bootstrap({ program })
 
   // get all the goodies from the store
   const {

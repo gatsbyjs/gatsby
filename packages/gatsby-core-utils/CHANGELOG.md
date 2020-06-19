@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.5...gatsby-core-utils@1.3.6) (2020-06-19)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** fix hash for buffers ([#24614](https://github.com/gatsbyjs/gatsby/issues/24614)) ([4d70f1a](https://github.com/gatsbyjs/gatsby/commit/4d70f1a))
+
 ## [1.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.4...gatsby-core-utils@1.3.5) (2020-06-09)
 
 **Note:** Version bump only for package gatsby-core-utils

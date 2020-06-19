@@ -1,5 +1,6 @@
-import { PackageJson } from "gatsby"
-import { reporter } from "gatsby-cli/src/reporter/reporter"
+import { PackageJson, Reporter } from "gatsby"
+import { Store, AnyAction } from "redux"
+import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
   key: string
@@ -15,7 +16,7 @@ export interface IProgram {
   port: number
   proxyPort: number
   host: string
-  report: typeof reporter
+  report: Reporter
   [`cert-file`]?: string
   [`key-file`]?: string
   directory: string
@@ -23,6 +24,7 @@ export interface IProgram {
   sitePackageJson: PackageJson
   ssl?: ICert
   graphqlTracing?: boolean
+  setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 
 // @deprecated

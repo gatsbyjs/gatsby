@@ -35,6 +35,7 @@ export const ARTICLES_QUERY = `
           excerpt
           excerptHtml
           id
+          handle
           image {
             altText
             id
@@ -64,6 +65,7 @@ export const BLOGS_QUERY = `
         cursor
         node {
           id
+          handle
           title
           url
         }

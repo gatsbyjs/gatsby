@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.40...gatsby-recipes@0.1.41) (2020-06-19)
+
+### Bug Fixes
+
+- **recipe:** GitHub Pages - brand names ([#24982](https://github.com/gatsbyjs/gatsby/issues/24982)) ([21c396d](https://github.com/gatsbyjs/gatsby/commit/21c396d))
+
 ## [0.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.39...gatsby-recipes@0.1.40) (2020-06-15)
 
 ### Features
