@@ -19,7 +19,7 @@ class BlogPostTemplate extends React.Component {
   render() {
     const {
       pageContext: { prev, next },
-      data: { mdx: post },
+      data: { blogPost: post },
     } = this.props
     const BioLine = ({ children }) => (
       <p
@@ -62,19 +62,17 @@ class BlogPostTemplate extends React.Component {
               >
                 <div css={{ flex: `0 0 auto` }}>
                   <Link
-                    to={post.frontmatter.author.fields.slug}
+                    to={post.author.fields.slug}
                     css={{ "&&": { borderBottom: 0 } }}
                   >
                     <Avatar
-                      image={
-                        post.frontmatter.author.avatar.childImageSharp.fixed
-                      }
+                      image={post.author.avatar.childImageSharp.fixed}
                       overrideCSS={{ mr: 5 }}
                     />
                   </Link>
                 </div>
                 <div css={{ flex: `1 1 auto` }}>
-                  <Link to={post.frontmatter.author.fields.slug}>
+                  <Link to={post.author.fields.slug}>
                     <h4
                       sx={{
                         fontSize: 3,
@@ -91,22 +89,19 @@ class BlogPostTemplate extends React.Component {
                           "&:hover": { borderColor: `link.hoverBorder` },
                         }}
                       >
-                        {post.frontmatter.author.id}
+                        {post.author.id}
                       </span>
                     </h4>
                   </Link>
-                  <BioLine>{post.frontmatter.author.bio}</BioLine>
+                  <BioLine>{post.author.bio}</BioLine>
                   <BioLine>
-                    {post.timeToRead} min read · {post.frontmatter.date}
-                    {post.frontmatter.canonicalLink && (
+                    {post.timeToRead} min read · {post.date}
+                    {post.canonicalLink && (
                       <span>
                         {` `}
                         (originally published at
                         {` `}
-                        <a href={post.frontmatter.canonicalLink}>
-                          {post.fields.publishedAt}
-                        </a>
-                        )
+                        <a href={post.canonicalLink}>{post.publishedAt}</a>)
                       </span>
                     )}
                   </BioLine>
@@ -124,37 +119,33 @@ class BlogPostTemplate extends React.Component {
                   },
                 }}
               >
-                {post.frontmatter.title}
+                {post.title}
               </h1>
-              {post.frontmatter.image &&
-                post.frontmatter.showImageInArticle !== false && (
-                  <div
-                    sx={{
-                      mt: 8,
-                      mb: 12,
-                      [mediaQueries.lg]: {
-                        ml: `-8em`,
-                      },
-                    }}
-                  >
-                    <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
-                    {post.frontmatter.imageAuthor &&
-                      post.frontmatter.imageAuthorLink && (
-                        <em>
-                          Image by
-                          {` `}
-                          <a href={post.frontmatter.imageAuthorLink}>
-                            {post.frontmatter.imageAuthor}
-                          </a>
-                        </em>
-                      )}
-                  </div>
-                )}
+              {post.image && post.showImageInArticle && (
+                <div
+                  sx={{
+                    mt: 8,
+                    mb: 12,
+                    [mediaQueries.lg]: {
+                      ml: `-8em`,
+                    },
+                  }}
+                >
+                  <Img fluid={post.image.childImageSharp.fluid} />
+                  {post.imageAuthor && post.imageAuthorLink && (
+                    <em>
+                      Image by
+                      {` `}
+                      <a href={post.imageAuthorLink}>{post.imageAuthor}</a>
+                    </em>
+                  )}
+                </div>
+              )}
             </div>
             <section className="post-body">
               <MDXRenderer>{post.body}</MDXRenderer>
             </section>
-            <TagsSection tags={post.frontmatter.tags} />
+            <TagsSection tags={post.tags} />
             <EmailCaptureForm />
           </main>
         </Container>
@@ -180,58 +171,54 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    mdx(fields: { slug: { eq: $slug } }) {
+    blogPost(slug: { eq: $slug }) {
       body
       timeToRead
-      fields {
-        slug
-        excerpt
-        publishedAt
-      }
-      frontmatter {
-        title
-        seoTitle
-        date(formatString: "MMMM Do YYYY")
-        rawDate: date
-        canonicalLink
-        tags
-        image {
-          childImageSharp {
-            resize(width: 1500) {
-              src
-            }
-            fluid(maxWidth: 786) {
-              ...GatsbyImageSharpFluid
-            }
+      slug
+      excerpt
+      publishedAt
+      title
+      seoTitle
+      date(formatString: "MMMM Do YYYY")
+      rawDate: date
+      canonicalLink
+      tags
+      image {
+        childImageSharp {
+          resize(width: 1500) {
+            src
+          }
+          fluid(maxWidth: 786) {
+            ...GatsbyImageSharpFluid
           }
         }
-        imageAuthor
-        imageAuthorLink
-        imageTitle
-        showImageInArticle
-        twittercard
-        author {
-          id
-          bio
-          twitter
-          avatar {
-            childImageSharp {
-              fixed(
-                width: 64
-                height: 64
-                quality: 75
-                traceSVG: {
-                  turdSize: 10
-                  background: "#f6f2f8"
-                  color: "#e0d6eb"
-                }
-              ) {
-                ...GatsbyImageSharpFixed_tracedSVG
+      }
+      imageAuthor
+      imageAuthorLink
+      imageTitle
+      showImageInArticle
+      twittercard
+      author {
+        id
+        bio
+        twitter
+        fields {
+          slug
+        }
+        avatar {
+          childImageSharp {
+            fixed(
+              width: 64
+              height: 64
+              quality: 75
+              traceSVG: {
+                turdSize: 10
+                background: "#f6f2f8"
+                color: "#e0d6eb"
               }
+            ) {
+              ...GatsbyImageSharpFixed_tracedSVG
             }
-          }
-          fields {
-            slug
           }
         }
       }

@@ -17,7 +17,7 @@ import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 class BlogPostsIndex extends React.Component {
   render() {
-    const { allMdx } = this.props.data
+    const { allBlogPost } = this.props.data
 
     return (
       <main id={`reach-skip-nav`}>
@@ -48,16 +48,16 @@ class BlogPostsIndex extends React.Component {
               View all Tags <TagsIcon />
             </Button>
           </div>
-          {allMdx.nodes.map((node, index) => (
+          {allBlogPost.nodes.map((node, index) => (
             <BlogPostPreviewItem
               post={node}
-              key={node.fields.slug}
+              key={node.slug}
               sx={{
                 borderBottomWidth: `1px`,
                 borderBottomStyle: `solid`,
                 borderColor: `ui.border`,
                 pb: 8,
-                mb: index === allMdx.nodes.length - 1 ? 0 : 8,
+                mb: index === allBlogPost.nodes.length - 1 ? 0 : 8,
                 ...pullIntoGutter,
                 [breakpointGutter]: {
                   p: 9,
@@ -98,9 +98,9 @@ export default BlogPostsIndex
 
 export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
-    allMdx(
-      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
-      filter: { fields: { section: { eq: "blog" }, released: { eq: true } } }
+    allBlogPost(
+      sort: { order: DESC, fields: [date, slug] }
+      filter: { released: { eq: true } }
       limit: $limit
       skip: $skip
     ) {

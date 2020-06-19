@@ -272,28 +272,22 @@ module.exports = {
         feeds: [
           {
             title: `GatsbyJS`,
-            query: `
+            query: /* GraphQL */ `
               {
-                allMdx(
-                  sort: { order: DESC, fields: [frontmatter___date] }
-                  limit: 10,
-                  filter: {
-                    fields: { section: { eq: "blog" }, released: { eq: true } }
-                  }
+                allBlogPost(
+                  sort: { order: DESC, fields: [date] }
+                  limit: 10
+                  filter: { released: { eq: true } }
                 ) {
                   nodes {
                     html
-                    frontmatter {
-                      title
-                      date
-                      author {
-                        id
-                      }
+                    title
+                    date
+                    author {
+                      id
                     }
-                    fields {
-                      excerpt
-                      slug
-                    }
+                    excerpt
+                    slug
                   }
                 }
               }
@@ -312,16 +306,16 @@ module.exports = {
                 generator: `GatsbyJS`,
               }
             },
-            serialize: ({ query: { site, allMdx } }) =>
-              allMdx.nodes.map(node => {
+            serialize: ({ query: { site, allBlogPost } }) =>
+              allBlogPost.nodes.map(node => {
                 return {
-                  title: node.frontmatter.title,
-                  description: node.fields.excerpt,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
+                  title: node.title,
+                  description: node.excerpt,
+                  url: site.siteMetadata.siteUrl + node.slug,
+                  guid: site.siteMetadata.siteUrl + node.slug,
                   custom_elements: [{ "content:encoded": node.html }],
-                  author: node.frontmatter.author.id,
-                  date: node.frontmatter.date,
+                  author: node.author.id,
+                  date: node.date,
                 }
               }),
           },

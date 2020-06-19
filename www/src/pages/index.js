@@ -41,7 +41,7 @@ class IndexRoute extends React.Component {
   render() {
     const {
       data: {
-        allMdx: { nodes: postsData },
+        allBlogPost: { nodes: postsData },
         allStartersYaml: { nodes: startersData },
         allNpmPackage: { nodes: pluginsData },
       },
@@ -150,10 +150,10 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMdx(
-      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
+    allBlogPost(
+      sort: { order: DESC, fields: [date, slug] }
       limit: 4
-      filter: { fields: { section: { eq: "blog" }, released: { eq: true } } }
+      filter: { released: { eq: true } }
     ) {
       nodes {
         ...HomepageBlogPostData

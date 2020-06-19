@@ -18,13 +18,13 @@ export default function BlogPostMetadata({ post }) {
     author,
     rawDate,
     twittercard,
-  } = post.frontmatter
+  } = post
   const { siteUrl } = useSiteMetadata()
 
   return (
     <PageMetadata
       title={seoTitle || title}
-      description={post.fields.excerpt}
+      description={post.excerpt}
       type="article"
       timeToRead={post.timeToRead}
       image={image?.childImageSharp.resize}

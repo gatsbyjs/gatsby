@@ -10,7 +10,7 @@ import PageMetadata from "../components/page-metadata"
 
 function ContributorPageTemplate({ data }) {
   const contributor = data.authorYaml
-  const posts = data.allMdx.nodes
+  const posts = data.allBlogPost.nodes
 
   return (
     <main>
@@ -50,11 +50,7 @@ function ContributorPageTemplate({ data }) {
         </div>
         <div sx={{ py: 7, px: 6 }}>
           {posts.map(node => (
-            <BlogPostPreviewItem
-              post={node}
-              key={node.fields.slug}
-              sx={{ mb: 9 }}
-            />
+            <BlogPostPreviewItem post={node} key={node.slug} sx={{ mb: 9 }} />
           ))}
         </div>
       </Container>
@@ -87,12 +83,9 @@ export const pageQuery = graphql`
         slug
       }
     }
-    allMdx(
-      sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
-      filter: {
-        frontmatter: { author: { id: { eq: $authorId } } }
-        fields: { section: { eq: "blog" }, released: { eq: true } }
-      }
+    allBlogPost(
+      sort: { order: DESC, fields: [date, slug] }
+      filter: { author: { id: { eq: $authorId } }, released: { eq: true } }
     ) {
       nodes {
         ...BlogPostPreview_item

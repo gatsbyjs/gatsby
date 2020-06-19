@@ -55,7 +55,7 @@ let currentLetter = ``
 class TagsPage extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      allMdx: PropTypes.shape({
+      allBlogPost: PropTypes.shape({
         group: PropTypes.arrayOf(
           PropTypes.shape({
             fieldValue: PropTypes.string.isRequired,
@@ -81,7 +81,7 @@ class TagsPage extends React.Component {
   render() {
     const {
       data: {
-        allMdx: { group },
+        allBlogPost: { group },
       },
     } = this.props
     const { filterQuery } = this.state
@@ -216,11 +216,8 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query {
-    allMdx(
-      limit: 2000
-      filter: { fields: { released: { eq: true }, section: { eq: "blog" } } }
-    ) {
-      group(field: frontmatter___tags) {
+    allBlogPost(limit: 2000, filter: { released: { eq: true } }) {
+      group(field: tags) {
         fieldValue
         totalCount
       }

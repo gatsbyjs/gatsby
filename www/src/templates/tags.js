@@ -37,7 +37,7 @@ const ButtonWrapper = styled.div`
 
 const Tags = ({ pageContext, data }) => {
   const { tags } = pageContext
-  const { nodes, totalCount } = data.allMdx
+  const { nodes, totalCount } = data.allBlogPost
   const tagHeader = `${totalCount} post${
     totalCount === 1 ? `` : `s`
   } tagged with "${preferSpacedTag(tags)}"`
@@ -90,13 +90,10 @@ export default Tags
 
 export const pageQuery = graphql`
   query($tags: [String]) {
-    allMdx(
+    allBlogPost(
       limit: 2000
-      sort: { fields: [frontmatter___date, fields___slug], order: DESC }
-      filter: {
-        frontmatter: { tags: { in: $tags } }
-        fields: { section: { eq: "blog" }, released: { eq: true } }
-      }
+      sort: { fields: [date, slug], order: DESC }
+      filter: { tags: { in: $tags }, released: { eq: true } }
     ) {
       totalCount
       nodes {
