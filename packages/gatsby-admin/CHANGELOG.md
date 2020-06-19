@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.69](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.68...gatsby-admin@0.1.69) (2020-06-19)
+
+### Bug Fixes
+
+- **gatsby-admin:** add missing `nodemon` dependency ([#25014](https://github.com/gatsbyjs/gatsby/issues/25014)) ([68ca7da](https://github.com/gatsbyjs/gatsby/commit/68ca7da)), closes [#25007](https://github.com/gatsbyjs/gatsby/issues/25007)
+
 ## [0.1.68](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.67...gatsby-admin@0.1.68) (2020-06-15)
 
 **Note:** Version bump only for package gatsby-admin

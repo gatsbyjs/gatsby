@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.10...gatsby-plugin-offline@3.2.11) (2020-06-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** versioned import of idb-keyval ([#24938](https://github.com/gatsbyjs/gatsby/issues/24938)) ([13aaa16](https://github.com/gatsbyjs/gatsby/commit/13aaa16))
+- **sw:** use NetworkFirst strategy for page-data ([#24940](https://github.com/gatsbyjs/gatsby/issues/24940)) ([d427663](https://github.com/gatsbyjs/gatsby/commit/d427663)), closes [#24930](https://github.com/gatsbyjs/gatsby/issues/24930)
+
 ## [3.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.9...gatsby-plugin-offline@3.2.10) (2020-06-15)
 
 **Note:** Version bump only for package gatsby-plugin-offline

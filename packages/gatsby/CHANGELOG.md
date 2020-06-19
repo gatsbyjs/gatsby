@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.4...gatsby@2.23.5) (2020-06-19)
+
+### Bug Fixes
+
+- **gatsby:** allow amending autoprefixer options ([#24907](https://github.com/gatsbyjs/gatsby/issues/24907)) ([8e6e021](https://github.com/gatsbyjs/gatsby/commit/8e6e021))
+
+### Features
+
+- **gatsby:** allow serving of dotfiles from public folder ([#24958](https://github.com/gatsbyjs/gatsby/issues/24958)) ([2270c5a](https://github.com/gatsbyjs/gatsby/commit/2270c5a))
+- **gatsby:** Instrument partial writes to page data ([#24808](https://github.com/gatsbyjs/gatsby/issues/24808)) ([b2bf298](https://github.com/gatsbyjs/gatsby/commit/b2bf298))
+
+### Performance Improvements
+
+- **gatsby:** Lazily re-create GraphQL runner ([#25063](https://github.com/gatsbyjs/gatsby/issues/25063)) ([0407cc6](https://github.com/gatsbyjs/gatsby/commit/0407cc6))
+
 ## [2.23.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.3...gatsby@2.23.4) (2020-06-15)
 
 ### Bug Fixes
