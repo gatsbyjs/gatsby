@@ -37,13 +37,11 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 // require(`../bootstrap/log-line-function`)
 
 export async function initialize(
-  context: IBuildContext
+  { program: args, parentSpan }: IBuildContext
 ): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {
-  const args = context.program
-  const { parentSpan } = context
   if (!args) {
     reporter.panic(`Missing program args`)
   }
