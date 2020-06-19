@@ -35,17 +35,11 @@ export const getCustomOptions = (stage: Stage): IBabelStage["options"] => {
   return pluginBabelConfig.stages[stage].options
 }
 
-type prepareOptionsType = (
+export const prepareOptions = (
   babel: typeof Babel,
-  options?: { stage?: Stage },
-  resolve?: RequireResolve
-) => Array<PluginItem[]>
-
-export const prepareOptions: prepareOptionsType = (
-  babel,
-  options = {},
-  resolve = require.resolve
-) => {
+  options: { stage?: Stage } = {},
+  resolve: RequireResolve = require.resolve
+): Array<PluginItem[]> => {
   const pluginBabelConfig = loadCachedConfig()
 
   const { stage } = options
@@ -96,22 +90,25 @@ export const prepareOptions: prepareOptionsType = (
   // Go through babel state and create config items for presets/plugins from.
   const reduxPlugins: PluginItem[] = []
   const reduxPresets: PluginItem[] = []
-  pluginBabelConfig.stages[stage!].plugins.forEach(plugin => {
-    reduxPlugins.push(
-      babel.createConfigItem([resolve(plugin.name), plugin.options], {
-        name: plugin.name,
-        type: `plugin`,
-      })
-    )
-  })
-  pluginBabelConfig.stages[stage!].presets.forEach(preset => {
-    reduxPresets.push(
-      babel.createConfigItem([resolve(preset.name), preset.options], {
-        name: preset.name,
-        type: `preset`,
-      })
-    )
-  })
+
+  if (stage) {
+    pluginBabelConfig.stages[stage].plugins.forEach(plugin => {
+      reduxPlugins.push(
+        babel.createConfigItem([resolve(plugin.name), plugin.options], {
+          name: plugin.name,
+          type: `plugin`,
+        })
+      )
+    })
+    pluginBabelConfig.stages[stage].presets.forEach(preset => {
+      reduxPresets.push(
+        babel.createConfigItem([resolve(preset.name), preset.options], {
+          name: preset.name,
+          type: `preset`,
+        })
+      )
+    })
+  }
 
   return [
     reduxPresets,
@@ -122,7 +119,7 @@ export const prepareOptions: prepareOptionsType = (
   ]
 }
 
-type mergeConfigItemOptionsType = ({
+export const mergeConfigItemOptions = ({
   items,
   itemToMerge,
   type,
@@ -132,14 +129,7 @@ type mergeConfigItemOptionsType = ({
   itemToMerge: ConfigItem
   type: CreateConfigItemOptions["type"]
   babel: typeof Babel
-}) => ConfigItem[]
-
-export const mergeConfigItemOptions: mergeConfigItemOptionsType = ({
-  items,
-  itemToMerge,
-  type,
-  babel,
-}) => {
+}): ConfigItem[] => {
   const index = _.findIndex(
     items,
     i => i.file?.resolved === itemToMerge.file?.resolved
