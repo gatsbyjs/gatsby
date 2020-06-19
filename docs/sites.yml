@@ -10970,3 +10970,30 @@
     - Education
   built_by: Bold.org
   featured: false
+
+- title: Petite & Minimal
+  url: https://www.petiteandminimal.com/
+  main_url: https://www.petiteandminimal.com/
+  description: >-
+    Eco-friendly lifestyle website. Green, sustainable, minimal. Covering food,
+    style, travel, living and featuring several eco-friendly directories.
+  categories:
+    - Blog
+    - Food
+    - Travel
+    - Photography
+    - Directory
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
+  featured: false
+- title: Petite & Minimal Concept Store DEMO
+  url: https://petiteandminimalstore.netlify.app/
+  main_url: https://petiteandminimalstore.netlify.app/
+  source_url: https://github.com/AnnieTaylorCHEN/PetiteandMinimalStore
+  description: >-
+    A JAMstack e-commerce solution built with Gatsby, Contentful and
+    CommerceLayer.
+  categories:
+    - E-commerce
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
