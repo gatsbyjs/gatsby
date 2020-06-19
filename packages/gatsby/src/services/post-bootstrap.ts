@@ -13,9 +13,9 @@ export async function postBootstrap({
   await apiRunnerNode(`onPostBootstrap`, { parentSpan: activity.span })
   activity.end()
 
-  reporter.log(``)
-  reporter.info(`bootstrap finished - ${process.uptime().toFixed(3)}s`)
-  reporter.log(``)
+  reporter.info(reporter.stripIndent`
+    bootstrap finished - ${process.uptime().toFixed(3)}s
+  `)
   emitter.emit(`BOOTSTRAP_FINISHED`, {})
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_FINISHED`

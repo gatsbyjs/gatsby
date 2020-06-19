@@ -25,6 +25,11 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 
+interface IPluginResolution {
+  resolve: string
+  options: IPluginInfoOptions
+}
+
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason: unknown) => {
   // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33636
@@ -36,14 +41,13 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 // Otherwise leave commented out.
 // require(`../bootstrap/log-line-function`)
 
-export async function initialize(
-  context: Partial<IBuildContext>
-): Promise<{
+export async function initialize({
+  program: args,
+  parentSpan,
+}: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {
-  const args = context.program
-  const { parentSpan } = context
   if (!args) {
     reporter.panic(`Missing program args`)
   }
@@ -326,11 +330,6 @@ export async function initialize(
       return slash(path.join(plugin.resolve, `gatsby-${env}`))
     }
     return undefined
-  }
-
-  interface IPluginResolution {
-    resolve: string
-    options: IPluginInfoOptions
   }
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
