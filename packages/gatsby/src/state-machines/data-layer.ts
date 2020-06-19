@@ -1,5 +1,5 @@
 import { IBuildContext } from "../services"
-import { DoneInvokeEvent, assign, MachineConfig } from "xstate"
+import { MachineConfig } from "xstate"
 import { runMutationAndMarkDirty, onError } from "./shared-transition-configs"
 
 export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
@@ -32,14 +32,7 @@ export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
         src: `buildSchema`,
         onDone: {
           target: `creatingPages`,
-          actions: assign<IBuildContext, DoneInvokeEvent<any>>(
-            (_context, event) => {
-              const { graphqlRunner } = event.data
-              return {
-                graphqlRunner,
-              }
-            }
-          ),
+          actions: `assignGatsbyNodeGraphQl`,
         },
         onError,
       },

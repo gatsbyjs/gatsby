@@ -16,6 +16,8 @@ import { listenForMutations } from "../services/listen-for-mutations"
 import { Span } from "opentracing"
 import JestWorker from "jest-worker"
 import { GraphQLRunner } from "../query/graphql-runner"
+import { createGraphQLRunner } from "../bootstrap/create-graphql-runner"
+import reporter from "gatsby-cli/lib/reporter"
 
 const concatUnique = <T>(array1?: T[], array2?: T[]): T[] =>
   Array.from(new Set((array1 || []).concat(array2 || [])))
@@ -30,7 +32,7 @@ export const callRealApi = async (
   }
   const { type, payload } = event
   if (type in actions) {
-    return actions[type](...payload)(store.dispatch.bind(store))
+    store.dispatch(actions[type](...payload))
   }
   return null
 }
@@ -138,6 +140,13 @@ export const resetGraphQlRunner = assign<IBuildContext>({
       : undefined,
 })
 
+export const assignGatsbyNodeGraphQl: BuildMachineAction = assign<
+  IBuildContext
+>({
+  gatsbyNodeGraphQLFunction: ({ store }: IBuildContext) =>
+    store ? createGraphQLRunner(store, reporter) : undefined,
+})
+
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   callApi,
   addNodeMutation,
@@ -148,6 +157,7 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   assignChangedPages,
   assignBootstrap,
   resetGraphQlRunner,
+  assignGatsbyNodeGraphQl,
 }
 
 // export const dummyActions = {
