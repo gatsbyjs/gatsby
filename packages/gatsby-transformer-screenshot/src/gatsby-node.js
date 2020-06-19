@@ -76,12 +76,31 @@ exports.onPreBootstrap = (
   })
 }
 
-exports.sourceNodes = ({ actions: { createTypes } }) => {
-  createTypes(/* GraphQL */ `
-    type Screenshot implements Node @dontInfer {
-      screenshotFile: File!
-    }
-  `)
+exports.schemaCustomization = (
+  { actions: { createTypes }, schema },
+  pluginOptions
+) => {
+  const validNodeTypes = [`SitesYaml`].concat(pluginOptions.nodeTypes || [])
+
+  createTypes(
+    schema.buildObjectType({
+      name: `Screenshot`,
+      fields: {
+        screenshotFile: {
+          type: `File`,
+          extensions: {
+            link: {},
+          },
+        },
+      },
+      interfaces: [`Node`],
+      extensions: {
+        childOf: {
+          types: validNodeTypes,
+        },
+      },
+    })
+  )
 }
 
 exports.onCreateNode = async (
