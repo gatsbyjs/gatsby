@@ -38,9 +38,16 @@ const reconciler = ReactReconciler({
     return { text }
   },
   appendChildToContainer(container, child) {
-    debug(`appending child to container`, { container, child })
     container.children = container.children || []
-    const index = container.children.findIndex(c => c.key === child.key)
+    const propName = child.key ? `key` : `_uuid`
+    const index = container.children.findIndex(
+      c => c[propName] === child[propName]
+    )
+
+    debug(
+      `appending child to container at index ${index}`,
+      (require(`flatted`) && JSON).stringify({ container, child }, null, 2)
+    )
 
     if (index === -1) {
       container.children.push(child)
@@ -94,7 +101,7 @@ const RecipesRenderer = {
     let container = reconciler.createContainer(currState, false, false)
     reconciler.updateContainer(whatToRender, container, null, null)
 
-    debug(`render result`, JSON.stringify(currState, null, 2))
+    //debug(`render result`, require('circular-json').stringify(currState, null, 2))
 
     return currState
   },

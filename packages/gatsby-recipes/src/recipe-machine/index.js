@@ -18,10 +18,12 @@ const recipeMachine = Machine(
       projectRoot: null,
       currentStep: 0,
       steps: [],
+      exports: [],
       plan: [],
       commands: [],
       stepResources: [],
       stepsAsMdx: [],
+      exportsAsMdx: [],
       inputs: {},
     },
     states: {
@@ -72,6 +74,7 @@ const recipeMachine = Machine(
             target: `validateSteps`,
             actions: assign({
               steps: (context, event) => event.data.stepsAsMdx,
+              exports: (context, event) => event.data.exportsAsMdx
             }),
           },
         },

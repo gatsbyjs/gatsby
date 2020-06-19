@@ -47,6 +47,7 @@ const Wrapper = ({ children, inputs, isApply }) => (
 const ResourceComponent = ({
   _resourceName: Resource,
   _uuid,
+  _type,
   children,
   ...props
 }) => {
@@ -71,6 +72,7 @@ const ResourceComponent = ({
           _props: { ...userProps, ...inputProps },
           _stepMetadata: step,
           _uuid,
+          _type,
         })}
         {children}
       </Resource>
