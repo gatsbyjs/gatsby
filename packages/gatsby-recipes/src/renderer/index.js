@@ -26,7 +26,6 @@ const transformCodeForEval = code => {
   // Remove the trailing semicolons so we can turn the component
   // into a return statement.
   const newCode = code.replace(/;\n;$/, ``)
-  console.log({ code })
 
   return newCode
 }

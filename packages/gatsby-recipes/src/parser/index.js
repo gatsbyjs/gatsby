@@ -74,14 +74,11 @@ const partitionSteps = ast => {
   return steps
 }
 
-// TODO: Don't need regex anymore
 const toMdx = nodes => {
   const stepAst = applyUuid(asRoot(nodes))
   const mdxSrc = u.stringify(stepAst)
-  // const regex = new RegExp(`^[ \\t]`, "gm")
-  // const regex = /^(\s*)export/gm
 
-  return mdxSrc //.replace(regex, `\nexport`)
+  return mdxSrc
 }
 
 const parse = async src => {
@@ -117,12 +114,14 @@ const parse = async src => {
       }
     })
 
-    const steps = [...exportNodes, wrappedIntroStep, ...wrappedResourceSteps]
+    const steps = [wrappedIntroStep, ...wrappedResourceSteps]
     ast.children = [...exportNodes, ...ast.children]
 
     return {
       ast,
       steps,
+      exports: exportNodes,
+      exportsAsMdx: exportNodes.map(toMdx),
       stepsAsMdx: steps.map(toMdx),
     }
   } catch (e) {

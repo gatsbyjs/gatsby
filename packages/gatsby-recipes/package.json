@@ -11,7 +11,7 @@
     "@babel/generator": "^7.9.6",
     "@babel/helper-plugin-utils": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.9.4",
-    "@babel/standalone": "^7.9.6",
+    "@babel/standalone": "^7.10.2",
     "@babel/template": "^7.8.6",
     "@babel/types": "^7.9.6",
     "@emotion/core": "^10.0.14",

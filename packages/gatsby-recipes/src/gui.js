@@ -1,14 +1,13 @@
 /** @jsx jsx */
-import * as GatsbyComponents from "gatsby-interface"
 import { jsx, ThemeProvider as ThemeUIProvider, Styled } from "theme-ui"
 const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
-const MDX = require(`@mdx-js/runtime`).default
 const ansi2HTML = require(`ansi-html`)
 const remove = require('unist-util-remove')
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
+import MDX from './components/mdx'
 
 const {
   Button,
@@ -34,41 +33,6 @@ require(`normalize.css`)
 import { useInputByUuid, InputProvider } from "./renderer/input-provider"
 
 const theme = getTheme()
-
-class MDX2 extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { hasError: false }
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true }
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.log('ERRRRRRRORORORORORORO')
-    console.log({ error, errorInfo })
-  }
-
-  render(props) {
-    if (this.state.hasError) {
-      return (
-        <div>
-          <h1>Oh noes</h1>
-          <pre>{JSON.stringify({ ...this.state, props })}</pre>
-        </div>
-      )
-    }
-
-    return (
-      <div>
-        <pre>{JSON.stringify({ ...this.state, props })}</pre>
-      
-        
-      </div>
-    )
-  }
-}
 
 ansi2HTML.setColors({
   red: theme.tones.DANGER.medium.slice(1),
@@ -547,7 +511,7 @@ const RecipeGui = ({
                 }}
               >
                 <MDX key="DOC" components={components} scope={{ sendEvent }} remarkPlugins={[removeJsx]}>
-                  {step}
+                  {state.context.exports.join('\n') + '\n\n' + step}
                 </MDX>
               </div>
             </div>
@@ -617,84 +581,6 @@ const RecipeGui = ({
           event: `INPUT_ADDED`,
           input: event,
         })
-      }
-
-      const PresentStep = ({ step }) => {
-        // const isPlan = state.context.plan && state.context.plan.length > 0
-        // const isPresetPlanState = state.value === `presentPlan`
-        // const isRunningStep = state.value === `applyingPlan`
-        // console.log(`PresentStep`, { isRunningStep, isPlan, isPresetPlanState })
-        // if (isRunningStep) {
-        // console.log("running step")
-        // return null
-        // }
-        // if (!isPlan || !isPresetPlanState) {
-        // return (
-        // <div margin-top={1}>
-        // <button onClick={() => sendEvent({ event: `CONTINUE` })}>
-        // Go!
-        // </button>
-        // </div>
-        // )
-        // }
-        //
-        // {plan.map((p, i) => (
-        // <div margin-top={1} key={`${p.resourceName} plan ${i}`}>
-        // <Styled.p>{p.resourceName}:</Styled.p>
-        // <Styled.p> * {p.describe}</Styled.p>
-        // {p.diff && p.diff !== `` && (
-        // <>
-        // <Styled.p>---</Styled.p>
-        // <pre
-        // sx={{
-        // lineHeight: 0.7,
-        // background: `#f5f3f2`,
-        // padding: [3],
-        // "& > span": {
-        // display: `block`,
-        // },
-        // }}
-        // dangerouslySetInnerHTML={{ __html: ansi2HTML(p.diff) }}
-        // />
-        // <Styled.p>---</Styled.p>
-        // </>
-        // )}
-        // </div>
-        // ))}
-        // <div margin-top={1}>
-        // <button onClick={() => sendEvent({ event: "CONTINUE" })}>
-        // Go!
-        // </button>
-        // </div>
-      }
-
-      const RunningStep = ({ state }) => {
-        const isPlan = state.context.plan && state.context.plan.length > 0
-        const isRunningStep = state.value === `applyingPlan`
-
-        if (!isPlan || !isRunningStep) {
-          return null
-        }
-
-        return (
-          <div>
-            {state.context.plan.map((p, i) => (
-              <div key={`${p.resourceName}-${i}`}>
-                <Styled.p>{p.resourceName}:</Styled.p>
-                <Styled.p>
-                  {` `}
-                  <Spinner /> {p.describe}
-                  {` `}
-                  {state.context.elapsed > 0 && (
-                    <Styled.p>
-                      ({state.context.elapsed / 1000}s elapsed)
-                    </Styled.p>
-                  )}
-                </Styled.p>
-              </div>
-            ))}
-          </div>
-        )
       }
 
       const staticMessages = {}
@@ -838,7 +724,7 @@ const RecipeGui = ({
             >
               <div sx={{ "*:last-child": { mb: 0 } }}>
                 <MDX components={components} scope={{ sendEvent }} remarkPlugins={[removeJsx]}>
-                  {state.context.steps[0]}
+                  {state.context.exports.join('\n') + '\n\n' + state.context.steps[0]}
                 </MDX>
               </div>
               <Button
