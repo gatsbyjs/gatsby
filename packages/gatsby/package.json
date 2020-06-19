@@ -187,8 +187,8 @@
     "index.d.ts",
     "scripts/postinstall.js",
     "utils.js",
-    "machine.js",
-    "machine.d.ts"
+    "build.js",
+    "build.d.ts"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
   "keywords": [
