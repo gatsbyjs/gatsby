@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { SkipNavLink } from "@reach/skip-nav"
-import { Trans } from "@lingui/macro"
 
 import { visuallyHidden } from "../utils/styles"
 
@@ -28,7 +27,7 @@ const Link = () => (
       },
     }}
   >
-    <Trans>Skip to main content</Trans>
+    rans>Skip to main content
   </SkipNavLink>
 )
 

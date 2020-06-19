@@ -23,13 +23,9 @@ describe(`Production build tests`, () => {
   it(`should navigate back after a reload`, () => {
     cy.getTestElement(`page2`).click()
 
-    cy.waitForRouteChange()
-      .location(`pathname`)
-      .should(`equal`, `/page-2/`)
+    cy.waitForRouteChange().location(`pathname`).should(`equal`, `/page-2/`)
 
-    cy.reload()
-      .waitForRouteChange()
-      .go(`back`)
+    cy.reload().waitForRouteChange().go(`back`)
 
     cy.waitForRouteChange()
       .getTestElement(`page2`)
@@ -45,6 +41,44 @@ describe(`Production build tests`, () => {
       .should(`exist`)
       .location(`pathname`)
       .should(`equal`, `/page-2/`)
+  })
+
+  describe(`relative links`, () => {
+    it(`should navigate to a subdirectory`, () => {
+      cy.visit(`/`)
+        .waitForRouteChange()
+        .getTestElement(`subdir-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-1`)
+    })
+
+    it(`can navigate to a sibling page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+
+    it(`can navigate to a parent page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-parent-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory`)
+    })
+
+    it(`can navigate to a sibling page programatically`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-button-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
   })
 
   it(`should show 404 page when clicking a link to a non-existent page route`, () => {
@@ -64,9 +98,7 @@ describe(`Production build tests`, () => {
       failOnStatusCode: false,
     })
 
-    cy.waitForRouteChange()
-      .getTestElement(`404`)
-      .should(`exist`)
+    cy.waitForRouteChange().getTestElement(`404`).should(`exist`)
   })
 
   it(`should navigate back after a 404 from a direct link entry`, () => {
@@ -123,9 +155,7 @@ describe(`Production build tests`, () => {
 
     it(`Can navigate on client`, () => {
       cy.visit(`/`).waitForRouteChange()
-      cy.getTestElement(`page-with-unicode-path`)
-        .click()
-        .waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`).click().waitForRouteChange()
 
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)

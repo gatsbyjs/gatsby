@@ -15,7 +15,10 @@ exports.sourceNodes = async (
     createNodeId,
     createContentDigest,
     getCache,
+    getNode,
+    parentSpan,
     reporter,
+    webhookBody,
   },
   pluginOptions
 ) => {
@@ -28,8 +31,58 @@ exports.sourceNodes = async (
     params,
     concurrentFileRequests,
     disallowedLinkTypes,
+    skipFileDownloads,
   } = pluginOptions
   const { createNode } = actions
+
+  if (webhookBody && Object.keys(webhookBody).length) {
+    const changesActivity = reporter.activityTimer(
+      `loading Drupal content changes`,
+      {
+        parentSpan,
+      }
+    )
+    changesActivity.start()
+
+    const { secret, action, id, data } = webhookBody
+    if (pluginOptions.secret && pluginOptions.secret !== secret) {
+      reporter.warn(
+        `The secret in this request did not match your plugin options secret.`
+      )
+      return
+    }
+    if (action === `delete`) {
+      actions.deleteNode({ node: getNode(createNodeId(id)) })
+      reporter.log(`Deleted node: ${id}`)
+      return
+    }
+
+    let nodesToUpdate = data
+    if (!Array.isArray(data)) {
+      nodesToUpdate = [data]
+    }
+
+    for (const nodeToUpdate of nodesToUpdate) {
+      await handleWebhookUpdate(
+        {
+          nodeToUpdate,
+          actions,
+          cache,
+          createNodeId,
+          createContentDigest,
+          getCache,
+          getNode,
+          reporter,
+          store,
+        },
+        pluginOptions
+      )
+    }
+
+    changesActivity.end()
+    return
+  }
+
   const drupalFetchActivity = reporter.activityTimer(`Fetch data from Drupal`)
 
   // Default apiBase to `jsonapi`
@@ -40,6 +93,9 @@ exports.sourceNodes = async (
 
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
+
+  // Default skipFileDownloads to false.
+  skipFileDownloads = skipFileDownloads || false
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -153,22 +209,26 @@ exports.sourceNodes = async (
     })
   })
 
-  reporter.info(`Downloading remote files from Drupal`)
+  if (skipFileDownloads) {
+    reporter.info(`Skipping remote file download from Drupal`)
+  } else {
+    reporter.info(`Downloading remote files from Drupal`)
 
-  // Download all files (await for each pool to complete to fix concurrency issues)
-  const fileNodes = [...nodes.values()].filter(isFileNode)
-  if (fileNodes.length) {
-    const downloadingFilesActivity = reporter.activityTimer(
-      `Remote file download`
-    )
-    downloadingFilesActivity.start()
-    await asyncPool(concurrentFileRequests, fileNodes, async node => {
-      await downloadFile(
-        { node, store, cache, createNode, createNodeId, getCache, reporter },
-        pluginOptions
+    // Download all files (await for each pool to complete to fix concurrency issues)
+    const fileNodes = [...nodes.values()].filter(isFileNode)
+    if (fileNodes.length) {
+      const downloadingFilesActivity = reporter.activityTimer(
+        `Remote file download`
       )
-    })
-    downloadingFilesActivity.end()
+      downloadingFilesActivity.start()
+      await asyncPool(concurrentFileRequests, fileNodes, async node => {
+        await downloadFile(
+          { node, store, cache, createNode, createNodeId, getCache, reporter },
+          pluginOptions
+        )
+      })
+      downloadingFilesActivity.end()
+    }
   }
 
   // Create each node
@@ -176,8 +236,11 @@ exports.sourceNodes = async (
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
+
+  return
 }
 
+// This is maintained for legacy reasons and will eventually be removed.
 exports.onCreateDevServer = (
   {
     app,
@@ -198,6 +261,9 @@ exports.onCreateDevServer = (
       type: `application/json`,
     }),
     async (req, res) => {
+      console.warn(
+        `The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.`
+      )
       if (!_.isEmpty(req.body)) {
         const requestBody = JSON.parse(JSON.parse(req.body))
         const { secret, action, id } = requestBody

@@ -1,0 +1,45 @@
+{
+  "name": "gatsby-starter-hello-world",
+  "private": true,
+  "description": "A simplified bare-bones starter for Gatsby",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "clean": "gatsby clean",
+    "data-update": "ts-node scripts/data-update.ts",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "serve": "gatsby serve",
+    "start": "npm run develop"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.0",
+    "datocms-client": "^3.0.15",
+    "dotenv": "^8.2.0",
+    "faker": "^4.1.0",
+    "gatsby": "^2.19.7",
+    "gatsby-image": "^2.2.40",
+    "gatsby-plugin-benchmark-reporting": "*",
+    "gatsby-plugin-sharp": "^2.4.5",
+    "gatsby-source-datocms": "^2.1.27",
+    "gatsby-source-filesystem": "^2.1.48",
+    "gatsby-transformer-sharp": "^2.3.14",
+    "lodash.kebabcase": "^4.1.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "prettier": "2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

@@ -268,7 +268,7 @@ A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util
 
 At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
 
-![Output](./images/remark-ast-output.png)
+![Output](../docs/images/remark-ast-output.png)
 
 ## Publishing the plugin
 
@@ -280,4 +280,4 @@ You just wrote a local Gatsby plugin that is a sub-plugin for `gatsby-transforme
 
 ## What's next?
 
-If you wish to see other plugins that manipulate the Remark AST, search for `gatsby-remark-` in the [plugin library](/plugins).
+If you wish to see other plugins that manipulate the Remark AST, you can find them in the [plugin library](/plugins/?=gatsby-remark-).

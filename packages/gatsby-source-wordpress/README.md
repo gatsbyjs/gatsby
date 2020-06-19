@@ -145,7 +145,7 @@ module.exports = {
         // Defaults to false
         keepMediaSizes: false,
         // use a custom normalizer which is applied after the built-in ones.
-        normalizer: function({ entities }) {
+        normalizer: function ({ entities }) {
           return entities
         },
         // The normalizers option allows you to manipulate the array of internal
@@ -161,7 +161,7 @@ module.exports = {
           ...normalizers,
           {
             name: "nameOfTheFunction",
-            normalizer: function({ entities }) {
+            normalizer: function ({ entities }) {
               // manipulate entities here
               return entities
             },
@@ -227,9 +227,9 @@ You will need to provide an [API Key](https://en.support.wordpress.com/api-keys/
 
 Note : The WordPress.com API does not have all of the features of the WordPress.org API, specifically with respect to pagination. See ~TypeError - Cannot read property 'id' of undefined with WordPress.com~ in the troubleshooting section for more.
 
-### For Business, and eCommerce Plans
+### For Business, and E-commerce Plans
 
-Business and eCommerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
+Business and e-commerce plans will run the WordPress.org version, so it is recommended to set `hostingWPCOM: false`.
 
 ## Test your WordPress API
 
@@ -239,7 +239,7 @@ If you see a page on your site, rather than the JSON output, check if your perma
 
 ## Fetching Data: WordPress REST API Route Selection
 
-By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](http://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
+By default `gatsby-source-wordpress` plugin will fetch data from all endpoints provided by introspection `/wp-json` response. To customize the routes fetched, two configuration options are available: `includeRoutes` for whitelisting and `excludeRoutes` for blacklisting. Both options expect an array of glob patterns. Glob matching is done by [minimatch](https://github.com/isaacs/minimatch). To test your glob patterns, [use this tool](https://pthrasher.github.io/minimatch-test/). You can inspect discovered routes by using `verboseOutput: true` configuration option.
 
 If an endpoint is whitelisted and not blacklisted, it will be fetched. Otherwise, it will be ignored.
 
@@ -825,12 +825,12 @@ module.exports = {
 Next to the entities, the object passed to the custom normalizer function also contains other helpful Gatsby functions
 and also your `wordpress-source-plugin` options from `gatsby-config.js`. To learn more about the passed object see the [source code](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress/src/gatsby-node.js).
 
-### Example with modyfing gatsby-source-wordpress normalizers
+### Example with modifying gatsby-source-wordpress normalizers
 
 ```javascript
 const dropUnusedMediaNormalizer = {
   name: "dropUnusedMediaNormalizer",
-  normalizer: function({ entities }) {
+  normalizer: function ({ entities }) {
     return entities.filter(
       e => !(e.__type === "wordpress__wp_media" && !e.post)
     )

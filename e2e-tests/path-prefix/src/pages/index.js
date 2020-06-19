@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link, navigate } from 'gatsby'
+import * as React from "react"
+import { Link, navigate } from "gatsby"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const IndexPage = () => (
   <Layout>
@@ -22,6 +22,9 @@ const IndexPage = () => (
     </button>
     <Link data-testid="404-link" to="/not-existing-page">
       Go to not existing page
+    </Link>
+    <Link data-testid="subdir-link" to="subdirectory/page-1">
+      Go to subdirectory
     </Link>
   </Layout>
 )

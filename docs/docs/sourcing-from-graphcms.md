@@ -35,7 +35,7 @@ You can install this component with:
 
 ### Configure the plugin
 
-The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a fieldName that makes the most sense to your project. [Here's more information on working with GraphCMS APIs.](https://docs.graphcms.com/developers/api)
+The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a fieldName that makes the most sense to your project. [Here's more information on working with GraphCMS APIs.](https://docs.graphcms.com/docs/api)
 
 ```js
 {

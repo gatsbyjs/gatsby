@@ -1,8 +1,6 @@
-const path = require(`path`)
 require(`dotenv`).config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-const { langCodes } = require(`./src/utils/i18n`)
 
 const GA = {
   identifier: `UA-93349937-5`,
@@ -53,29 +51,24 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
-// true if `env.LOCALES` has a defined list of languages
-if (langCodes.length > 0) {
-  const naughtyFiles = [
-    `docs/docs/graphql-api.md`,
-    `docs/docs/data-fetching.md`,
-  ]
-  dynamicPlugins.push(
-    ...langCodes.map(code => ({
-      resolve: `gatsby-source-git`,
-      options: {
-        name: `docs-${code}`,
-        remote: `https://github.com/gatsbyjs/gatsby-${code}.git`,
-        branch: `master`,
-        patterns: [`docs/**`, ...naughtyFiles.map(file => `!${file}`)],
-      },
-    })),
-    {
-      resolve: `gatsby-plugin-i18n`, // local plugin
-      options: {
-        languages: langCodes,
-      },
-    }
-  )
+if (!process.env.DISABLE_SOURCE_DOCS) {
+  dynamicPlugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `docs`,
+      path: `${__dirname}/../docs/`,
+    },
+  })
+  // The `packages` directory is only used for API definitions,
+  // which are part of the docs.
+  dynamicPlugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `gatsby-core`,
+      path: `${__dirname}/../packages/gatsby/`,
+      ignore: [`**/dist/**`],
+    },
+  })
 }
 
 module.exports = {
@@ -85,12 +78,19 @@ module.exports = {
     description: `Blazing fast modern site generator for React`,
     twitter: `@gatsbyjs`,
   },
-  mapping: {
-    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
-    "Mdx.frontmatter.author": `AuthorYaml`,
-  },
   plugins: [
     `gatsby-plugin-theme-ui`,
+    {
+      resolve: `gatsby-alias-imports`,
+      options: {
+        aliases: {
+          // Relative paths when importing components from MDX break translations of the docs,
+          // so use an alias instead inside MDX:
+          // https://www.gatsbyjs.org/contributing/docs-and-blog-components/#importing-other-components
+          "@components": `${__dirname}/src/components`,
+        },
+      },
+    },
     {
       resolve: `gatsby-transformer-gitinfo`,
       options: {
@@ -100,22 +100,12 @@ module.exports = {
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
-        keywords: [`gatsby-plugin`, `gatsby-component`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/../docs/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `packages`,
-        path: `${__dirname}/../packages/`,
-        ignore: [`**/dist/**`],
+        // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword
+        // that returns a lot fewer packages
+        // (In this case, stuff that Lennart has published)
+        keywords: process.env.DISABLE_NPM_SEARCH
+          ? [`lekoarts`]
+          : [`gatsby-plugin`, `gatsby-component`],
       },
     },
     {
@@ -125,11 +115,10 @@ module.exports = {
         path: `${__dirname}/src/data/guidelines/`,
       },
     },
-    `gatsby-transformer-gatsby-api-calls`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: `src/utils/typography`,
+        pathToConfigModule: `${__dirname}/src/utils/typography`,
       },
     },
     `gatsby-transformer-documentationjs`,
@@ -154,7 +143,7 @@ module.exports = {
           return (
             [`NPMPackage`, `NPMPackageReadme`].includes(node.internal.type) ||
             (node.internal.type === `File` &&
-              path.parse(node.dir).dir.endsWith(`packages`))
+              node.sourceInstanceName === `gatsby-core`)
           )
         },
         gatsbyRemarkPlugins: [
@@ -255,7 +244,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/gatsby-icon.png`,
+        icon: `${__dirname}/src/assets/gatsby-icon.png`,
       },
     },
     `gatsby-plugin-offline`,
@@ -289,8 +278,7 @@ module.exports = {
                   sort: { order: DESC, fields: [frontmatter___date] }
                   limit: 10,
                   filter: {
-                    frontmatter: { draft: { ne: true } }
-                    fileAbsolutePath: { regex: "/docs.blog/" }
+                    fields: { section: { eq: "blog" }, released: { eq: true } }
                   }
                 ) {
                   nodes {

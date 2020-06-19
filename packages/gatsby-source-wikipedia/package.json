@@ -1,11 +1,11 @@
 {
   "name": "gatsby-source-wikipedia",
-  "version": "2.2.1",
+  "version": "2.3.5",
   "description": "Gatsby source plugin for pulling articles from Wikipedia",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
@@ -29,13 +29,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.8.7",
-    "axios": "^0.19.2"
+    "bluebird": "^3.7.2",
+    "node-fetch": "^2.6.0",
+    "query-string": "^6.12.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "babel-preset-gatsby-package": "^0.3.1",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "babel-preset-gatsby-package": "^0.4.4",
     "cross-env": "^5.2.1"
   },
   "engines": {

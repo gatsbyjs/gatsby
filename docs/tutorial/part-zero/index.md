@@ -207,8 +207,8 @@ gatsby --help
 
 Now you are ready to use the Gatsby CLI tool to create your first Gatsby site. Using the tool, you can download “starters” (partially built sites with some default configuration) to help you get moving faster on creating a certain type of site. The “Hello World” starter you’ll be using here is a starter with the bare essentials needed for a Gatsby site.
 
-1.  Open up your terminal.
-2.  Create a new site from a starter:
+1. Open up your terminal.
+2. Create a new site from a starter:
 
 ```shell
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -222,7 +222,7 @@ gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 
 > 💡 Depending on your download speed, the amount of time this takes will vary. For brevity's sake, the gif below was paused during part of the install
 
-3.  Change into the working directory:
+3. Change into the working directory:
 
 ```shell
 cd hello-world
@@ -230,7 +230,7 @@ cd hello-world
 
 > 💡 This says _'I want to change directories (`cd`) to the “hello-world” subfolder'_. Whenever you want to run any commands for your site, you need to be in the context for that site (aka, your terminal needs to be pointed at the directory where your site code lives).
 
-4.  Start the development mode:
+4. Start the development mode:
 
 ```shell
 gatsby develop
@@ -269,9 +269,9 @@ We also recommend using [Prettier](https://github.com/prettier/prettier), a tool
 
 You can use Prettier directly in your editor using the [Prettier VS Code plugin](https://github.com/prettier/prettier-vscode):
 
-1.  Open the extensions view on VS Code (View => Extensions).
-2.  Search for "Prettier - Code formatter".
-3.  Click "Install". (After installation, you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
+1. Open the extensions view on VS Code (View => Extensions).
+2. Search for "Prettier - Code formatter".
+3. Click "Install". (After installation, you'll be prompted to restart VS Code to enable the extension. Newer versions of VS Code will automatically enable the extension after download.)
 
 > 💡 If you're not using VS Code, check out the Prettier docs for [install instructions](https://prettier.io/docs/en/install.html) or [other editor integrations](https://prettier.io/docs/en/editors.html).
 

@@ -102,8 +102,6 @@ When I build a Gatsby website, I like to use Netlify to handle the deployment of
 
 Netlify has the ability to create webhooks that you can grab to say, "Hey, there's new content so you need to rebuild". I built [WP Trigger Netlify Build](https://github.com/iamtimsmith/wp-trigger-netlify-build) to make this super easy to integrate with WordPress. Simply drop in the necessary information and it will tell Netlify to rebuild when changes are made. It even shows a badge with the status of the build on the dashboard.
 
-https://giphy.com/gifs/qyX9oq2ZmsPwk
-
 ## You have themes and plugins, now what?
 
 Not to be too anti-climactic, but there's really not a ton more to do on the WordPress side other than create content. These plugins and theme will pretty much expose everything you need to build your Gatsby.js blog.

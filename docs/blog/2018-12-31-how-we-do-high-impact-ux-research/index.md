@@ -56,9 +56,9 @@ We had 90,000 new visitors to gatsbyjs.org homepage in October out of 100,000 to
 _Question:_ Can you tell which number from the list below describes our scenario?
 A few ways of thinking about risk-based testing:
 
-1.  we need to test the functionality that probably won’t break but would be very bad if it did (high impact, low probability of failure)
-2.  we need to test the functionality (and come up with contingency plans!) that probably will break and will be very bad when they do (high impact, high probability of failure)
-3.  we don’t test the functionality of things that probably won’t break and it doesn’t matter if they break (low impact, low probability of failure)
+1. we need to test the functionality that probably won’t break but would be very bad if it did (high impact, low probability of failure)
+2. we need to test the functionality (and come up with contingency plans!) that probably will break and will be very bad when they do (high impact, high probability of failure)
+3. we don’t test the functionality of things that probably won’t break and it doesn’t matter if they break (low impact, low probability of failure)
 
 _Answer:_
 Because of the high number of visitors to the homepage, the homepage can make a large impact (positive or negative) and because we didn’t have data on how frequently the homepage succeeds or fails to meet user needs, we had an unknown probability of failure. So that matches number one and two (1 & 2) most closely, though we needed to do more research to calculate the probability of the homepage failing to reach its goals.

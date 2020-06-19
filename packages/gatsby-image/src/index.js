@@ -81,8 +81,8 @@ const getImageSrcKey = ({ fluid, fixed }) => {
 
 /**
  * Returns the current src - Preferably with art-direction support.
- * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
- * @return {{src: string, media?: string}}
+ * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
+ * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
 const getCurrentSrcData = currentData => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
@@ -262,14 +262,12 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({
-  src,
-  imageVariants,
-  generateSources,
-  spreadProps,
-  ariaHidden,
-}) => {
-  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
+const Placeholder = React.forwardRef((props, ref) => {
+  const { src, imageVariants, generateSources, spreadProps, ariaHidden } = props
+
+  const baseImage = (
+    <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
+  )
 
   return imageVariants.length > 1 ? (
     <picture>
@@ -279,7 +277,7 @@ const Placeholder = ({
   ) : (
     baseImage
   )
-}
+})
 
 const Img = React.forwardRef((props, ref) => {
   const {
@@ -357,6 +355,7 @@ class Image extends React.Component {
     }
 
     this.imageRef = React.createRef()
+    this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
   }
@@ -481,6 +480,8 @@ class Image extends React.Component {
           style={{
             position: `relative`,
             overflow: `hidden`,
+            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
+            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
             ...style,
           }}
           ref={this.handleRef}
@@ -517,6 +518,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -528,6 +530,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -618,6 +621,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -629,6 +633,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -714,6 +719,8 @@ const fluidObject = PropTypes.shape({
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
   media: PropTypes.string,
+  maxWidth: PropTypes.number,
+  maxHeight: PropTypes.number,
 })
 
 // If you modify these propTypes, please don't forget to update following files as well:

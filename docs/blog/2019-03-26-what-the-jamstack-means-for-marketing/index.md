@@ -28,7 +28,7 @@ In terms of what this means to you as a marketer – it's essentially a modern w
 
 Put simply, a JAMstack website has an unlimited ecosystem of all of the tools and services you need in the background, but the actual site itself on the frontend is just HTML.
 
-Building your marketing site on the JAMstack is an efficient and reliable way to combine all of your content and channels and serve it up as a lightning-fast website that your visitors will love. If you need to add ecommerce, paywalls, a podcast or some other content to your site in the future, your team won't have to figure out how to get everything to play ball with your CMS or build a new site from scratch. Instead they'll be able to connect new APIs or services to your existing site.
+Building your marketing site on the JAMstack is an efficient and reliable way to combine all of your content and channels and serve it up as a lightning-fast website that your visitors will love. If you need to add e-commerce, paywalls, a podcast or some other content to your site in the future, your team won't have to figure out how to get everything to play ball with your CMS or build a new site from scratch. Instead they'll be able to connect new APIs or services to your existing site.
 
 **The past vs the future**
 Using a traditional CMS is more restrictive and opinionated than this. You're constrained to the platform you choose from the get-go and forced to accept additional "features" that you might not even need. While these platforms have provided us with an excellent way to publish websites in the past, it's changing for the future.

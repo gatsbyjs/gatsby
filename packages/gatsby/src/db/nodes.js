@@ -1,6 +1,8 @@
 /* @flow */
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
+const nodesDb: NodeStore = require(`../redux/nodes`)
+const { runFastFiltersAndSort } = require(`../redux/run-fast-filters`)
 
 interface NodeStore {
   getNodes: () => Array<any>;
@@ -18,33 +20,13 @@ interface NodeStore {
   }) => any | undefined;
 }
 
-const backend = process.env.GATSBY_DB_NODES || `redux`
-let nodesDb: NodeStore
-let runQuery
-switch (backend) {
-  case `redux`:
-    nodesDb = require(`../redux/nodes`)
-    runQuery = require(`../redux/run-sift`).runSift
-    break
-  case `loki`:
-    nodesDb = require(`./loki/nodes`)
-    runQuery = require(`./loki/nodes-query`)
-    break
-  default:
-    throw new Error(
-      `Unsupported DB nodes backend (value of env var GATSBY_DB_NODES)`
-    )
-}
-
-module.exports = { ...nodesDb, runQuery, backend }
-
 /**
  * Get content for a node from the plugin that created it.
  *
  * @param {Object} node
  * @returns {promise}
  */
-module.exports.loadNodeContent = node => {
+function loadNodeContent(node) {
   if (_.isString(node.internal.content)) {
     return Promise.resolve(node.internal.content)
   } else {
@@ -66,4 +48,10 @@ module.exports.loadNodeContent = node => {
       })
     })
   }
+}
+
+module.exports = {
+  ...nodesDb,
+  runQuery: runFastFiltersAndSort,
+  loadNodeContent,
 }

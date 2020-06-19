@@ -36,9 +36,9 @@ More detailed information about react-intl's [APIs](https://github.com/formatjs/
 
 React-i18next is an internationalization library built on the i18next framework. It uses components to make sure translations render correctly or to re-render your content when the user language changes.
 
-React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with Webpack.
+React-i18next is more extensible than other options with a variety of plugins, utilities, and configurations. Common plugins allow for detecting a user's language or adding an additional layer of local caching. Other options include caching, a backend plugin to load translations from your server, or bundling translations with webpack.
 
-This framework also has experimental support for the React suspense API and React hooks.
+This framework also has experimental support for the React suspense API and it supports a stable version of React hooks.
 
 ## Other resources
 
@@ -49,4 +49,5 @@ This framework also has experimental support for the React suspense API and Reac
 - [Gatsby i18n packages](https://www.gatsbyjs.org/packages/gatsby-plugin-i18n/?=i18)
 
 - [Gatsby i18n articles](https://www.gatsbyjs.org/blog/tags/i-18-n/)
-- [W3C's i18n resources](http://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)
+
+- [W3C's i18n resources](https://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)

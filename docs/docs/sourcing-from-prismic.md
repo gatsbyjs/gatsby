@@ -58,6 +58,8 @@ _Note: If you want to locally build your project you'll also have to create a `.
 
 Now you need to configure the plugin (See all [available options](https://www.npmjs.com/package/gatsby-source-prismic#how-to-use)). The `repositoryName` is the name you have entered at the creation of the repository (you'll also find it as the subdomain in the URL). The `linkResolver` function is used to process links in your content. Fields with rich text formatting or links to internal content use this function to generate the correct link URL. The document node, field key (i.e. API ID), and field value are provided to the function. This allows you to use different [link resolver logic](https://prismic.io/docs/javascript/query-the-api/link-resolving) for each field if necessary.
 
+Remember also to add an object of Prismic custom type JSON schemas. You can copy it from Prismic's JSON editor tab in your custom type page. It's important to keep the name of JSON file **the same** as your custom type's API ID. More information can be found in the [Prismic documentation](https://user-guides.prismic.io/en/articles/380227-introduction-to-custom-type-building) and [Source Plugin README](/packages/gatsby-source-prismic/#providing-json-schemas).
+
 Add the following to register the plugin:
 
 ```javascript:title=gatsby-config.js
@@ -73,6 +75,7 @@ module.exports = {
         repositoryName: `your-repository-name`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
+        page: require("./src/schemas/page.json"),
       },
     },
   ],
@@ -159,7 +162,7 @@ Earlier you defined an `API_KEY` environment variable for the source plugin. Net
 
 Netlify is able to automatically start builds on pushes to a repository and accepts [webhooks](https://www.netlify.com/docs/webhooks/) to do so. Fortunately, Prismic can [trigger webhook](https://user-guides.prismic.io/webhooks/webhooks) URLs when publishing content. With those features set up, new content will automatically appear on your Netlify site.
 
-Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format <https://api.netlify.com/build_hooks/-randomstring-> after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
+Setup your Netlify project and afterwards go to the `Build hooks` setting at `Settings → Build & deploy`. You'll receive a URL of the format https://api.netlify.com/build_hooks/-randomstring- after clicking `Add build hook`. On your Prismic project, visit the `Webhooks` setting and insert the copied URL into the respective field. Confirm with `Add this webhook`. Every time you publish a new document, Netlify will re-build your site.
 
 ## Adding more features
 

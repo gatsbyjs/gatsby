@@ -28,6 +28,7 @@ build/Release
 node_modules
 examples/biz-website/public/
 examples/blog/public/
+integration-tests/gatsby-cli/execution-folder/*
 *.un~
 dist
 bin/published.js
@@ -38,6 +39,7 @@ test/**/public
 .DS_Store
 public/
 node_modules/
+e2e-tests/gatsby-pnp/
 .cache/
 .netlify
 

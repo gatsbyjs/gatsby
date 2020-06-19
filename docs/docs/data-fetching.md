@@ -2,8 +2,8 @@
 title: Build Time and Client Runtime Data Fetching
 ---
 
-import BuildDataExample from "../../www/src/components/build-data-example.js"
-import ClientDataExample from "../../www/src/components/client-data-example.js"
+import BuildDataExample from "@components/build-data-example"
+import ClientDataExample from "@components/client-data-example"
 
 This guide demonstrates how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime) in Gatsby. Most of the techniques outlined are for custom data handling. Be sure to check out Gatsby's [plugin library](/plugins/) to see if there's an off-the-shelf solution for your data requirements, such as [sourcing from a CMS](/docs/headless-cms/) or other third-party integration.
 
@@ -19,7 +19,7 @@ Compiling pages at build time is useful when your website content won't change o
 
 ## Combining build time and client runtime data
 
-To illustrate a combination of build time and client runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.com). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
+To illustrate a combination of build time and client runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.app). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
 Reasons to fetch certain data at build time vs. client runtime will vary, but in this example the repo's name and URL are much less likely to change between builds of the site. The repo's star counts, on the other hand, are likely to change often and would benefit from a client-side request to the GitHub API to stay current between static site builds.
 
 > Check out the code from the [full example here](https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching).
@@ -74,6 +74,7 @@ exports.sourceNodes = async ({
   const resultData = await result.json()
   // create node for build time data example in the docs
   createNode({
+    // nameWithOwner and url are arbitrary fields from the data
     nameWithOwner: resultData.full_name,
     url: resultData.html_url,
     // required fields
@@ -87,6 +88,8 @@ exports.sourceNodes = async ({
   })
 }
 ```
+
+It is important to note that node fields can indeed be arbitrary. The `nameWithOwner` and `url` fields from above are examples of this.
 
 This node created manually could be retrieved with a query like this:
 
@@ -213,7 +216,7 @@ The repo's star count is fetched at runtime; if you refresh the page, this numbe
 
 You may be interested in other projects (both used in production and proof-of-concepts) that illustrate this usage:
 
-- [Live example](https://gatsby-data-fetching.netlify.com) of the code used in this guide
-- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for ecommerce features
+- [Live example](https://gatsby-data-fetching.netlify.app) of the code used in this guide
+- [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for e-commerce features
 - [Gatsby mail](https://github.com/DSchau/gatsby-mail): a client-side email application
 - [Example repo fetching data using Apollo](https://github.com/jlengstorf/gatsby-with-apollo)

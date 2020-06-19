@@ -1,11 +1,12 @@
 const log4js = require(`log4js`)
 const shell = require(`shelljs`)
-const { graphql } = require(`@octokit/graphql`)
+const { graphql: baseGraphql } = require(`@octokit/graphql`)
 let logger = log4js.getLogger(`sync`)
 
 require(`dotenv`).config()
 
-const host = `https://github.com`
+const token = process.env.GITHUB_API_TOKEN
+const host = `https://${token}@github.com`
 const cacheDir = `.cache`
 const owner = `gatsbyjs`
 const repoBase = `gatsby`
@@ -14,6 +15,7 @@ const sourceRepo = `gatsby-i18n-source`
 
 const sourceRepoUrl = `${host}/${owner}/${sourceRepo}`
 const sourceRepoGitUrl = `${sourceRepoUrl}.git`
+const syncLabelName = `sync`
 
 // get the git short hash
 function getShortHash(hash) {
@@ -33,25 +35,68 @@ function cloneOrUpdateRepo(repoName, repoUrl) {
   }
 }
 
+// Run the query and exit if there are errors
+async function graphql(query, params) {
+  const graphqlWithAuth = baseGraphql.defaults({
+    headers: {
+      authorization: `token ${token}`,
+    },
+  })
+  try {
+    return await graphqlWithAuth(query, params)
+  } catch (error) {
+    logger.error(error.message)
+    return process.exit(1)
+  }
+}
+
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
-      query($owner: String!, $name: String!) {
+      query($owner: String!, $name: String!, $syncLabel: String!) {
         repository(owner: $owner, name: $name) {
           id
+          syncPullRequests: pullRequests(labels: [$syncLabel], first: 1) {
+            nodes {
+              id
+            }
+          }
+          syncLabel: label(name: $syncLabel) {
+            id
+          }
+        }
+      }
+    `,
+    {
+      owner,
+      name,
+      syncLabel: syncLabelName,
+    }
+  )
+  return repository
+}
+
+async function createLabel(input) {
+  const { createLabel } = await graphql(
+    `
+      mutation($input: CreateLabelInput!) {
+        createLabel(input: $input) {
+          label {
+            id
+          }
         }
       }
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_ADMIN_AUTH_TOKEN}`,
+        accept: `application/vnd.github.bane-preview+json`,
       },
-      owner,
-      name,
+      input,
     }
   )
-  return repository
+  return createLabel.label
 }
+
 async function createPullRequest(input) {
   const { createPullRequest } = await graphql(
     `
@@ -66,13 +111,33 @@ async function createPullRequest(input) {
     `,
     {
       headers: {
-        authorization: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
         accept: `application/vnd.github.shadow-cat-preview+json`,
       },
       input,
     }
   )
   return createPullRequest.pullRequest
+}
+
+async function addLabelToPullRequest(pullRequest, label) {
+  await graphql(
+    `
+      mutation($input: AddLabelsToLabelableInput!) {
+        addLabelsToLabelable(input: $input) {
+          clientMutationId
+        }
+      }
+    `,
+    {
+      headers: {
+        accept: `application/vnd.github.bane-preview+json`,
+      },
+      input: {
+        labelableId: pullRequest.id,
+        labelIds: [label.id],
+      },
+    }
+  )
 }
 
 function conflictPRBody(conflictFiles, comparisonUrl, prNumber) {
@@ -126,7 +191,32 @@ async function syncTranslationRepo(code) {
   shell.exec(`git remote add source ${sourceRepoGitUrl}`)
   shell.exec(`git fetch source master`)
 
-  // TODO don't run the sync script if there is a current PR from the bot
+  const repository = await getRepository(owner, transRepoName)
+
+  if (repository.syncPullRequests.nodes.length > 0) {
+    logger.info(
+      `There are currently open sync pull requests. Please ask the language maintainers to merge the existing PR(s) in before opening another one. Exiting...`
+    )
+    process.exit(0)
+  }
+
+  logger.info(`No currently open sync pull requests.`)
+
+  let syncLabel
+  if (!repository.syncLabel) {
+    logger.info(
+      `Repository does not have a "${syncLabelName}" label. Creating one...`
+    )
+    syncLabel = await createLabel({
+      repositoryId: repository.id,
+      name: syncLabelName,
+      description: `Sync with translation source. Used by @gatsbybot to track open sync pull requests.`,
+      color: `fbca04`,
+    })
+  } else {
+    logger.info(`Repository has an existing ${syncLabelName} label.`)
+    syncLabel = repository.syncLabel
+  }
 
   // TODO exit early if this fails
   // Compare these changes
@@ -152,15 +242,13 @@ async function syncTranslationRepo(code) {
   // Remove files that are deleted by upstream
   // https://stackoverflow.com/a/54232519
   shell.exec(`git diff --name-only --diff-filter=U | xargs git rm`)
-  shell.exec(`git ci --no-edit`)
+  shell.exec(`git commit --no-edit`)
 
   shell.exec(`git push -u origin ${syncBranch}`)
 
-  const repository = await getRepository(owner, transRepoName)
-
   logger.info(`Creating sync pull request`)
   // TODO if there is already an existing PR, don't create a new one and exit early
-  const { number: syncPRNumber } = await createPullRequest({
+  const syncPR = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: syncBranch,
@@ -168,6 +256,7 @@ async function syncTranslationRepo(code) {
     body: syncPRBody(),
     maintainerCanModify: true,
   })
+  await addLabelToPullRequest(syncPR, syncLabel)
 
   // if we successfully publish the PR, pull again and create a new PR --
   shell.exec(`git checkout master`)
@@ -235,15 +324,16 @@ async function syncTranslationRepo(code) {
 
   logger.info(`Creating conflicts pull request`)
   // TODO assign codeowners as reviewers
-  await createPullRequest({
+  const conflictsPR = await createPullRequest({
     repositoryId: repository.id,
     baseRefName: `master`,
     headRefName: conflictBranch,
     title: `(sync) Resolve conflicts with ${sourceRepo} @ ${shortHash}`,
-    body: conflictPRBody(conflictFiles, comparisonUrl, syncPRNumber),
+    body: conflictPRBody(conflictFiles, comparisonUrl, syncPR.number),
     maintainerCanModify: true,
     draft: true,
   })
+  await addLabelToPullRequest(conflictsPR, syncLabel)
 }
 
 const [langCode] = process.argv.slice(2)

@@ -5,6 +5,8 @@ author: "Sam Bhagwat"
 tags: ["content-mesh"]
 ---
 
+import DateChart from "@components/chart"
+
 _This is Part 3 of a series. Part 1 is_ [The Journey to a Content Mesh](/blog/2018-10-04-journey-to-the-content-mesh) _and Part 2 is_ [Unbundling of the CMS](/blog/2018-10-10-unbundling-of-the-cms).
 
 Developing for the web is _hard_. With millions of properties on the Internet, website developers have to create experiences that are compelling enough to engage audiences when new destinations are only a few keystrokes away.

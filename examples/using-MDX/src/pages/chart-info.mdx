@@ -5,7 +5,7 @@ import Form from "../components/form.js"
 
 This file is written in MDX and has a live React component you can interact with; try hovering over the data to get more granular information.
 
-### Data represented in BarChart 
+### Data represented in BarChart
 
 <figure style={{ height: 300 }}>
   <Chart
@@ -19,7 +19,7 @@ This file is written in MDX and has a live React component you can interact with
   />
 </figure>
 
-### Data represented in ColumnChart 
+### Data represented in ColumnChart
 
 <figure style={{ height: 300 }}>
   <Chart
@@ -27,29 +27,29 @@ This file is written in MDX and has a live React component you can interact with
     series={{ type: "bar" }}
     axes={[
       { primary: true, type: "ordinal", position: "bottom" },
-      { position: "left", type: "linear", stacked: false},
+      { position: "left", type: "linear", stacked: false },
     ]}
     tooltip
   />
 </figure>
 
-### Data represented in AreaChart 
+### Data represented in AreaChart
+
 <figure style={{ height: 300 }}>
   <Chart
     data={data}
     series={{ type: "bar" }}
     axes={[
-      { primary: true, position: 'bottom', type: 'time'},
-      { position: 'left', type: 'linear', stacked: true},
+      { primary: true, position: "bottom", type: "time" },
+      { position: "left", type: "linear", stacked: true },
     ]}
     tooltip
   />
 </figure>
 
-Want to be informed about updates to this data? Sign up here: 
+Want to be informed about updates to this data? Sign up here:
 
 <Form />
-
 
 export const data = [
   {
@@ -67,7 +67,7 @@ export const data = [
   {
     label: "Advertising Income",
     datums: [
-      { x: "2020", y: 4},
+      { x: "2020", y: 4 },
       { x: "2019", y: 3 },
       { x: "2018", y: 12 },
       { x: "2017", y: 14 },

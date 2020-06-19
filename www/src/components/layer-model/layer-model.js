@@ -5,16 +5,9 @@ import hex2rgba from "hex2rgba"
 
 import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import LayerIcon from "../../assets/icons/layer-icon"
-import {
-  ContentLayerContent,
-  BuildLayerContent,
-  DataLayerContent,
-  ViewLayerContent,
-  AppLayerContent,
-} from "./layer-content-sections"
 
 const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
-  const { baseColor, title } = layer
+  const { baseColor, title, icon } = layer
 
   return (
     <button
@@ -37,7 +30,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         fontWeight: selected ? `bold` : `body`,
         p: 2,
         ":focus": {
-          boxShadow: t => `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
+          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
           outline: 0,
         },
         ":hover": {
@@ -54,7 +47,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       >
         <span css={{ height: 40 }}>
           <LayerIcon
-            name={title}
+            name={icon}
             fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
           />
         </span>
@@ -64,35 +57,11 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   )
 }
 
-const layers = [
-  {
-    title: `Content`,
-    baseColor: `orange`,
-    component: ContentLayerContent,
-  },
-  {
-    title: `Build`,
-    baseColor: `purple`,
-    component: BuildLayerContent,
-  },
-  {
-    title: `Data`,
-    baseColor: `magenta`,
-    component: DataLayerContent,
-  },
-  {
-    title: `View`,
-    baseColor: `blue`,
-    component: ViewLayerContent,
-  },
-  {
-    title: `App`,
-    baseColor: `yellow`,
-    component: AppLayerContent,
-  },
-]
-
-const LayerModel = ({ initialLayer = `Content` }) => {
+const LayerModel = ({
+  layers,
+  displayCodeFullWidth = false,
+  initialLayer = `Content`,
+}) => {
   const [selected, setSelected] = useState(initialLayer)
   const [sourceIndex, setSourceIndex] = useState(0)
   const refs = useRef(layers.map(() => React.createRef()))
@@ -116,7 +85,14 @@ const LayerModel = ({ initialLayer = `Content` }) => {
     }
   }, [selected])
   return (
-    <>
+    <div
+      sx={{
+        borderRadius: 3,
+        border: t => `1px solid ${t.colors.ui.border}`,
+        padding: 2,
+        marginBottom: 6,
+      }}
+    >
       <div
         sx={{
           borderRadius: 3,
@@ -127,7 +103,7 @@ const LayerModel = ({ initialLayer = `Content` }) => {
           role="tablist"
           sx={{
             display: `grid`,
-            gridTemplateColumns: `repeat(5, 1fr)`,
+            gridTemplateColumns: `repeat(${layers.length}, 1fr)`,
             gridGap: 1,
             textAlign: `center`,
           }}
@@ -149,9 +125,14 @@ const LayerModel = ({ initialLayer = `Content` }) => {
       {layers.map(
         (layer, index) =>
           selected === layer.title &&
-          layer.component({ sourceIndex, setSourceIndex, index })
+          layer.component({
+            sourceIndex,
+            setSourceIndex,
+            index,
+            displayCodeFullWidth,
+          })
       )}
-    </>
+    </div>
   )
 }
 

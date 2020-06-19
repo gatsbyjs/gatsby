@@ -18,7 +18,7 @@ With Gatsby, we’re reinventing website technology so people can create sites t
 
 Gatsby strips away much of the complexity that plagues website development. Teams tell us that they can build stunning sites 3-5x faster with Gatsby—and have a lot more fun in the process.
 
-The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create web sites and apps that stand out](https://www.gatsbyjs.org/blog/tags/case-studies)[.](https://www.gatsbyjs.org/blog/tags/case-studies)
+The web is an incredible medium. Anyone, anywhere can produce a site and ship their ideas to the world. [Individuals, teams, and organizations are turning to Gatsby to create websites and apps that stand out](https://www.gatsbyjs.org/blog/tags/case-studies)[.](https://www.gatsbyjs.org/blog/tags/case-studies)
 
 ## From the CMS to the content mesh
 
@@ -55,7 +55,7 @@ With the latest funding, we’re now investing more than \$3 million every year 
 
 We’re also investing heavily in building cloud services which complement our open source product. Modern software development work relies heavily on services from cloud vendors. Our cloud services help people quickly setup & run sites, and enable website teams, including both technical and nontechnical people, to collaborate easily together. The services will be free for personal sites and must-haves for organizations.
 
-We’re in open beta for our initial CMS Preview service—please check it out at [https://www.gatsbyjs.com/preview](https://www.gatsbyjs.com/preview)
+We’re in open beta for our initial CMS Preview service—please check it out at https://www.gatsbyjs.com/preview
 
 Lots more announcements to share in the coming weeks and months 🚀
 
@@ -63,7 +63,7 @@ Lots more announcements to share in the coming weeks and months 🚀
 
 Gatsby is a distributed team with members around the world. There’s now 35 Gatsby Inkteam members, and with this new investment, we’ll be hiring more people to work on open source, write docs and tutorials, build cloud products, and create next-generation site design & building tools.
 
-We’ll be hiring for dozens of remote positions in the coming months. Check back at [https://www.gatsbyjs.com/careers/](https://www.gatsbyjs.com/careers/) for openings (and feel free to propose your own job idea by applying to the “dream job” position).
+We’ll be hiring for dozens of remote positions in the coming months. Check back at https://www.gatsbyjs.com/careers/ for openings (and feel free to propose your own job idea by applying to the “dream job” position).
 
 ## We’re just getting started
 

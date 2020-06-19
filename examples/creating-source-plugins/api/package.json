@@ -1,0 +1,43 @@
+{
+  "name": "api",
+  "description": "A simple GraphQL server example with in-memory data",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://general-repair.glitch.me",
+  "author": {
+    "name": "Risan Bagja Pradana",
+    "email": "risanbagja@gmail.com",
+    "url": "https://risan.io"
+  },
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/risan/simple-graphql-server-example.git"
+  },
+  "bugs": {
+    "url": "https://github.com/risan/simple-graphql-server-example/issues"
+  },
+  "keywords": [
+    "graphql",
+    "graphql-server",
+    "graphql-yoga"
+  ],
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint *.js src",
+    "lint-fix": "eslint *.js src --fix"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "graphql-yoga": "^1.18.3",
+    "uniqid": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "2.0.5"
+  }
+}

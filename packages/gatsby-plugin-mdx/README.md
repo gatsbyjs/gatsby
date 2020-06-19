@@ -52,7 +52,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 Install with npm:
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
@@ -335,6 +335,7 @@ images can be optimized by Gatsby and you should continue using it.
 // gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -357,6 +358,8 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 ```js
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
+
+> Note that in the case of `gatsby-remark-images` the plugin needs to be included as both a sub-plugin of gatsby-plugin-mdx and a string entry in the plugins array.
 
 #### Remark plugins
 
@@ -557,6 +560,22 @@ export const pageQuery = graphql`
     }
   }
 `
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
 ```
 
 ## License
