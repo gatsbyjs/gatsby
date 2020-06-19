@@ -25,6 +25,11 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 
+interface IPluginResolution {
+  resolve: string
+  options: IPluginInfoOptions
+}
+
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason: unknown) => {
   // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33636
@@ -326,11 +331,6 @@ export async function initialize(
       return slash(path.join(plugin.resolve, `gatsby-${env}`))
     }
     return undefined
-  }
-
-  interface IPluginResolution {
-    resolve: string
-    options: IPluginInfoOptions
   }
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
