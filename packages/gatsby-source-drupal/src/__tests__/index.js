@@ -213,6 +213,32 @@ describe(`gatsby-source-drupal`, () => {
     )
   })
 
+  it(`Skips File Downloads on initial build`, async () => {
+    const skipFileDownloads = true
+    expect(createRemoteFileNode).toBeCalledTimes(8)
+    await sourceNodes(args, { baseUrl, skipFileDownloads })
+    expect(createRemoteFileNode).toBeCalledTimes(8)
+  })
+
+  it(`Skips File Downloads on webhook update`, async () => {
+    const skipFileDownloads = true
+    expect(createRemoteFileNode).toBeCalledTimes(8)
+    const nodeToUpdate = require(`./fixtures/webhook-file-update.json`).data
+
+    await handleWebhookUpdate(
+      {
+        nodeToUpdate,
+        ...args,
+      },
+      {
+        baseUrl,
+        skipFileDownloads,
+      }
+    )
+
+    expect(createRemoteFileNode).toBeCalledTimes(8)
+  })
+
   describe(`Update webhook`, () => {
     describe(`Update content`, () => {
       describe(`Before update`, () => {
