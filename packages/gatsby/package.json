@@ -4,7 +4,7 @@
   "version": "2.23.6",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "./dist/bin/gatsby.js"
+    "gatsby": "./cli.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -181,6 +181,7 @@
     "apis.json",
     "ipc.json",
     "cache-dir",
+    "cli.js",
     "dist",
     "gatsby-admin-public",
     "graphql.js",

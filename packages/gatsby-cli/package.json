@@ -4,7 +4,7 @@
   "version": "2.12.47",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "lib/index.js"
+    "gatsby": "cli.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -65,7 +65,8 @@
   },
   "files": [
     "lib",
-    "scripts"
+    "scripts",
+    "cli.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
