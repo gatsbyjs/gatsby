@@ -15,7 +15,7 @@ import graphiqlExplorer from "gatsby-graphiql-explorer"
 import { formatError } from "graphql"
 
 import webpackConfig from "../utils/webpack.config"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import { buildHTML } from "./build-html"
@@ -61,6 +61,12 @@ import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
+
+import { enqueueFlush } from "../utils/page-data"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
 
 import { Stage, IProgram } from "./types"
 import {
@@ -397,6 +403,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   }
   initTracer(program.openTracingConfigFile)
+  markWebpackStatusAsPending()
   report.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
@@ -415,10 +422,10 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   // Start bootstrap process.
-  const { graphqlRunner } = await bootstrap(program)
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({ program })
 
   // Start the createPages hot reloader.
-  bootstrapPageHotReloader(graphqlRunner)
+  bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
 
   // Start the schema hot reloader.
   bootstrapSchemaHotReloader()
@@ -610,9 +617,9 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
-  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
-  //   console.log(`set invalid`, args, this)
-  // })
+  compiler.hooks.invalid.tap(`log compiling`, function () {
+    markWebpackStatusAsPending()
+  })
 
   compiler.hooks.watchRun.tapAsync(`log compiling`, function (_, done) {
     if (webpackActivity) {
@@ -676,6 +683,9 @@ module.exports = async (program: IProgram): Promise<void> => {
       webpackActivity.end()
       webpackActivity = null
     }
+
+    enqueueFlush()
+    markWebpackStatusAsDone()
 
     done()
   })
