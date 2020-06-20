@@ -63,7 +63,7 @@ slug: "/first-page"
 Someone really should write a page about this.
 ```
 
-Note that the three frontmatter fields `title`, `excerpt` and `path` will be referenced later when configuring the Algolia query. If you call them something else, the query needs to be modified.
+Note that the three frontmatter fields `title`, `excerpt` and `slug` will be referenced later when configuring the Algolia query. If you call them something else, the query needs to be modified.
 
 ## Indexing
 
