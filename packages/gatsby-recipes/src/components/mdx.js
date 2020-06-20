@@ -21,13 +21,14 @@ const transformJsx = jsx => {
   return code
 }
 
-const transformCodeForEval = jsx => {
-  return `${jsx}
+const transformCodeForEval = jsx => `${jsx}
 
   return React.createElement(MDXProvider, { components },
     React.createElement(MDXContent, props)
   );`
-}
+
+const mdxCache = new Map()
+const jsxCache = new Map()
 
 export default ({ children: mdxSrc, scope, components, ...props }) => {
   const fullScope = {
@@ -42,8 +43,21 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
   const scopeKeys = Object.keys(fullScope)
   const scopeValues = Object.values(fullScope)
 
-  const jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
-  const srcCode = transformJsx(jsxFromMdx)
+  let jsxFromMdx
+  if (mdxCache.has(mdxSrc)) {
+    jsxFromMdx = mdxCache.get(mdxSrc)
+  } else {
+    jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
+    mdxCache.set(mdxSrc, jsxFromMdx)
+  }
+
+  let srcCode
+  if (jsxCache.has(jsxFromMdx)) {
+    srcCode = jsxCache.get(jsxFromMdx)
+  } else {
+    srcCode = transformJsx(jsxFromMdx)
+    jsxCache.set(jsxFromMdx, srcCode)
+  }
 
   const fn = new Function(...scopeKeys, transformCodeForEval(srcCode))
 

@@ -4,7 +4,7 @@ const lodash = require(`lodash`)
 const React = require(`react`)
 const { useState } = require(`react`)
 const ansi2HTML = require(`ansi-html`)
-const remove = require("unist-util-remove")
+const remove = require(`unist-util-remove`)
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
 import { keyframes } from "@emotion/core"
 import MDX from "./components/mdx"
@@ -42,7 +42,6 @@ ansi2HTML.setColors({
 })
 
 const makeResourceId = res => {
-  console.log(`makeResourceId`, { res })
   if (!res.describe) {
     res.describe = ``
   }
@@ -285,15 +284,11 @@ log(
 )
 
 const removeJsx = () => tree => {
-  remove(tree, "mdxBlockElement", node => {
-    return node.name === "File"
-  })
+  remove(tree, `mdxBlockElement`, node => node.name === `File`)
 
-  remove(tree, "export", node => {
-    console.log({ node })
+  remove(tree, `export`, node => {
     return true
   })
-  console.log({ tree })
   return tree
 }
 
@@ -416,7 +411,7 @@ const Step = ({ state, step, i }) => {
             scope={{ sendEvent }}
             remarkPlugins={[removeJsx]}
           >
-            {state.context.exports.join("\n") + "\n\n" + step}
+            {state.context.exports.join(`\n`) + `\n\n` + step}
           </MDX>
         </div>
       </div>
@@ -431,7 +426,16 @@ const Step = ({ state, step, i }) => {
                       <div>
                         <label>{res.label}</label>
                       </div>
-                      <textarea sx={{ border: `1px solid` }} />
+                      <textarea
+                        sx={{ border: `1px solid` }}
+                        onInput={e => {
+                          sendInputEvent({
+                            uuid: res._uuid,
+                            key: res._key,
+                            value: e.target.value,
+                          })
+                        }}
+                      />
                     </div>
                   )
                 }
@@ -443,16 +447,12 @@ const Step = ({ state, step, i }) => {
                     <input
                       sx={{ border: `1px solid` }}
                       type={res.type}
-                      onChange={e => {
-                        console.log(e.target.value)
-                        console.log({ res })
-                        if (e.target.value !== ``) {
-                          sendInputEvent({
-                            uuid: res._uuid,
-                            key: res._key,
-                            value: e.target.value,
-                          })
-                        }
+                      onInput={e => {
+                        sendInputEvent({
+                          uuid: res._uuid,
+                          key: res._key,
+                          value: e.target.value,
+                        })
                       }}
                     />
                   </div>
@@ -629,17 +629,10 @@ const RecipeInterpreter = () => {
     }
   }
 
-  console.log(`in RecipeInterpreter`, { subscriptionClient })
   subscriptionClient.connectionCallback = async () => {
-    console.log(`connectionCallback`, {
-      showRecipesList,
-      localRecipe,
-      projectRoot,
-    })
     if (!showRecipesList) {
       log(`createOperation`)
       try {
-        console.log(`creating operation`)
         await createOperation({ recipePath: localRecipe, projectRoot })
       } catch (e) {
         log(`error creating operation`, e)
@@ -647,12 +640,9 @@ const RecipeInterpreter = () => {
     }
   }
 
-  log(`subscriptionResponse`, subscriptionResponse)
   const state =
     subscriptionResponse.data &&
     JSON.parse(subscriptionResponse.data.operation.state)
-
-  log(`subscriptionResponse.data`, subscriptionResponse.data)
 
   if (showRecipesList) {
     return (
@@ -675,7 +665,6 @@ const RecipeInterpreter = () => {
       </Wrapper>
     )
   }
-  console.log({ state })
 
   if (!state) {
     return (
@@ -714,6 +703,7 @@ const RecipeInterpreter = () => {
   })
 
   log(`staticMessages`, staticMessages)
+  log(`renderTime`, new Date())
 
   if (isDone) {
     process.nextTick(() => {
@@ -730,7 +720,6 @@ const RecipeInterpreter = () => {
   )
 
   const groupedPlans = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
-  console.log({ groupedPlans })
 
   return (
     <>
@@ -752,8 +741,8 @@ const RecipeInterpreter = () => {
                 scope={{ sendEvent }}
                 remarkPlugins={[removeJsx]}
               >
-                {state.context.exports.join("\n") +
-                  "\n\n" +
+                {state.context.exports.join(`\n`) +
+                  `\n\n` +
                   state.context.steps[0]}
               </MDX>
             </div>

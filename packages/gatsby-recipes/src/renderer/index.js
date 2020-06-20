@@ -1,7 +1,7 @@
 const React = require(`react`)
 const mdx = require(`@mdx-js/mdx`)
 const { transform } = require(`@babel/standalone`)
-const template = require("@babel/template").default
+const template = require(`@babel/template`).default
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 const babelPluginRemoveExportKeywords = require(`babel-plugin-remove-export-keywords`)
 
@@ -55,12 +55,28 @@ const transformJsx = jsx => {
   return code
 }
 
+const mdxCache = new Map()
+const jsxCache = new Map()
+
 module.exports = (mdxSrc, cb, context, isApply) => {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 
-  let jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
-  const srcCode = transformJsx(jsxFromMdx)
+  let jsxFromMdx
+  if (mdxCache.has(mdxSrc)) {
+    jsxFromMdx = mdxCache.get(mdxSrc)
+  } else {
+    jsxFromMdx = mdx.sync(mdxSrc, { skipExport: true })
+    mdxCache.set(mdxSrc, jsxFromMdx)
+  }
+
+  let srcCode
+  if (jsxCache.has(jsxFromMdx)) {
+    srcCode = jsxCache.get(jsxFromMdx)
+  } else {
+    srcCode = transformJsx(jsxFromMdx)
+    jsxCache.set(jsxFromMdx, srcCode)
+  }
 
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 

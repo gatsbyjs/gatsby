@@ -37,7 +37,7 @@ module.exports = api => {
             e => e.declarations[0].id.name
           )
           exportsToMove.forEach(node =>
-            path.get("body").unshiftContainer("body", node)
+            path.get(`body`).unshiftContainer(`body`, node)
           )
         }
       },
