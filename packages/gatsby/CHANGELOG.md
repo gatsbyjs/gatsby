@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.6...gatsby@2.23.7) (2020-06-20)
+
+### Bug Fixes
+
+- **bin:** point bin to always existing files ([#25121](https://github.com/gatsbyjs/gatsby/issues/25121)) ([eba033e](https://github.com/gatsbyjs/gatsby/commit/eba033e))
+- **gatsby:** remove page-date from jest-worker ([#25135](https://github.com/gatsbyjs/gatsby/issues/25135)) ([bed5dc4](https://github.com/gatsbyjs/gatsby/commit/bed5dc4))
+
 ## [2.23.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.5...gatsby@2.23.6) (2020-06-19)
 
 **Note:** Version bump only for package gatsby
