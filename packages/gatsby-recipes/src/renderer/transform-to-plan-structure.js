@@ -1,4 +1,5 @@
 const providedResources = require(`../resources`)
+const flatted = require(`flatted`)
 
 const extractPlan = node => {
   let text = {}
@@ -11,6 +12,14 @@ const extractPlan = node => {
   }
 
   const { _type: type, _props: props, ...plan } = text
+
+  if (type === `Input`) {
+    return {
+      resourceName: type,
+      resourceDefinitions: props,
+      ...plan,
+    }
+  }
 
   if (!type || !providedResources[type]) {
     return null
@@ -68,7 +77,7 @@ const transform = (props = {}) => {
 }
 
 module.exports = renderTree => {
-  console.log(JSON.stringify(renderTree, null, 2))
+  // console.log(flatted.stringify(renderTree, null, 2))
   const [doc] = renderTree.children
 
   return transform(doc)

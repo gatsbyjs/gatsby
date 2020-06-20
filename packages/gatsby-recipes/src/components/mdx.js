@@ -1,14 +1,19 @@
-import React from 'react'
-import { transform } from '@babel/standalone'
-import mdx from '@mdx-js/mdx'
-import { mdx as createElement, MDXProvider } from '@mdx-js/react'
-import babelPluginTransformReactJsx from '@babel/plugin-transform-react-jsx'
-import babelPluginRemoveExportKeywords from 'babel-plugin-remove-export-keywords'
+import React from "react"
+import { transform } from "@babel/standalone"
+import mdx from "@mdx-js/mdx"
+import { mdx as createElement, MDXProvider } from "@mdx-js/react"
+import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
+import babelPluginRemoveExportKeywords from "babel-plugin-remove-export-keywords"
+const babelPluginCopyKeyProp = require(`../renderer/babel-plugin-copy-key-prop`)
+const babelPluginMoveExportKeywords = require(`../renderer/babel-plugin-move-export-keywords`)
+const { useInputByUuid } = require(`../renderer/input-provider`)
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
     plugins: [
-      babelPluginRemoveExportKeywords,
+      // babelPluginRemoveExportKeywords,
+      babelPluginCopyKeyProp,
+      babelPluginMoveExportKeywords,
       [babelPluginTransformReactJsx, { useBuiltIns: true }],
     ],
   })
@@ -31,7 +36,8 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
     React,
     components,
     props,
-    ...scope
+    useInputByUuid,
+    ...scope,
   }
   const scopeKeys = Object.keys(fullScope)
   const scopeValues = Object.values(fullScope)

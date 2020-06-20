@@ -1,4 +1,5 @@
 const { Machine, assign, send } = require(`xstate`)
+const _ = require(`lodash`)
 
 const debug = require(`debug`)(`recipes-machine`)
 
@@ -74,7 +75,7 @@ const recipeMachine = Machine(
             target: `validateSteps`,
             actions: assign({
               steps: (context, event) => event.data.stepsAsMdx,
-              exports: (context, event) => event.data.exportsAsMdx
+              exports: (context, event) => event.data.exportsAsMdx,
             }),
           },
         },
@@ -143,9 +144,13 @@ const recipeMachine = Machine(
             onReceive(async e => {
               console.log(`onReceive`, e, setInput)
               // const result = await setInput(e.data)
-              context.inputs = { ...context.inputs, ...e.data }
+              // console.log({ contextInputs: context.inputs })
+              context.inputs = context.inputs || {}
+              context.inputs[e.data.key] = e.data
+              // console.log(context.inputs)
               const result = await createPlan(context, cb)
               console.log({ result })
+              cb({ type: `onUpdatePlan`, data: result })
             })
 
             cb(`yo`)
@@ -161,6 +166,11 @@ const recipeMachine = Machine(
           // },
           INPUT_ADDED: {
             actions: send((context, event) => event, { to: `presentingPlan` }),
+          },
+          onUpdatePlan: {
+            actions: assign({
+              plan: (context, event) => event.data,
+            }),
           },
         },
       },

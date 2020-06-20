@@ -26,6 +26,7 @@ const {
   defaultExchanges,
   subscriptionExchange,
 } = require(`urql`)
+const UrqlProvider = Provider
 const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
@@ -41,6 +42,10 @@ ansi2HTML.setColors({
 })
 
 const makeResourceId = res => {
+  console.log(`makeResourceId`, { res })
+  if (!res.describe) {
+    res.describe = ``
+  }
   const id = encodeURIComponent(`${res.resourceName}-${slugify(res.describe)}`)
   return id
 }
@@ -292,348 +297,217 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const RecipeGui = ({
-  recipe = `./test.mdx`,
-  // recipe = `jest.mdx`,
-  // recipe,
-  graphqlPort = 4000,
-  projectRoot = PROJECT_ROOT,
-}) => {
-  try {
-    const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
+const recipe = `./test.mdx`
+// recipe = `jest.mdx`,
+// recipe,
+const graphqlPort = 4000
+const projectRoot = PROJECT_ROOT
 
-    const subscriptionClient = new SubscriptionClient(
-      `ws://localhost:${graphqlPort}/graphql`,
-      {
-        reconnect: true,
-      }
-    )
+const GRAPHQL_ENDPOINT = `http://localhost:${graphqlPort}/graphql`
 
-    let showRecipesList = false
+const subscriptionClient = new SubscriptionClient(
+  `ws://localhost:${graphqlPort}/graphql`,
+  {
+    reconnect: true,
+  }
+)
 
-    if (!recipe) {
-      showRecipesList = true
-    }
+let showRecipesList = false
 
-    const client = createClient({
-      fetch,
-      url: GRAPHQL_ENDPOINT,
-      exchanges: [
-        ...defaultExchanges,
-        subscriptionExchange({
-          forwardSubscription(operation) {
-            return subscriptionClient.request(operation)
+if (!recipe) {
+  showRecipesList = true
+}
+
+const client = createClient({
+  fetch,
+  url: GRAPHQL_ENDPOINT,
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription(operation) {
+        return subscriptionClient.request(operation)
+      },
+    }),
+  ],
+})
+
+const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
+  <div id={makeResourceId(resourcePlan)} sx={{}}>
+    <div>
+      <Styled.p sx={{ mb: resourcePlan.diff ? 6 : 0 }}>
+        <Styled.em>{resourcePlan.resourceName}</Styled.em>
+        {` `}—{` `}
+        {resourcePlan.describe}
+      </Styled.p>
+    </div>
+    {resourcePlan.diff && (
+      <Styled.pre
+        sx={{
+          background: theme => theme.tones.BRAND.superLight,
+          border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
+          padding: 4,
+          mb: isLastPlan ? 0 : 6,
+        }}
+        dangerouslySetInnerHTML={{
+          __html: ansi2HTML(resourcePlan.diff),
+        }}
+      />
+    )}
+    {resourcePlan.resourceChildren
+      ? resourcePlan.resourceChildren.map(resource => (
+          <ResourcePlan key={resource._uuid} resourcePlan={resource} />
+        ))
+      : null}
+  </div>
+)
+
+const Step = ({ state, step, i }) => {
+  const [output, setOutput] = useState({
+    title: ``,
+    body: ``,
+    date: new Date(),
+  })
+
+  const stepResources = state.context?.plan?.filter(
+    p => parseInt(p._stepMetadata.step, 10) === i + 1
+  )
+
+  const [complete, setComplete] = useState(false)
+  if (output.title !== `` && output.body !== ``) {
+    setTimeout(() => {
+      setComplete(true)
+    }, 0)
+  } else {
+    setTimeout(() => {
+      setComplete(false)
+    }, 0)
+  }
+
+  return (
+    <div
+      key={`step-${i}`}
+      sx={{
+        border: theme => `1px solid ${theme.tones.BRAND.light}`,
+        marginBottom: 7,
+      }}
+    >
+      <div
+        sx={{
+          display: `flex`,
+          // justifyContent: `space-between`,
+          "& > *": {
+            marginY: 0,
           },
-        }),
-      ],
-    })
-
-    const RecipeInterpreter = () => {
-      // eslint-disable-next-line
-      const [localRecipe, setRecipe] = useState(recipe)
-
-      const [subscriptionResponse] = useSubscription(
-        {
-          query: `
-          subscription {
-            operation {
-              state
-            }
-          }
-        `,
-        },
-        (_prev, now) => now
-      )
-
-      // eslint-disable-next-line
-      const [_, createOperation] = useMutation(`
-        mutation ($recipePath: String!, $projectRoot: String!) {
-          createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
-        }
-      `)
-      // eslint-disable-next-line
-      const [__, _sendEvent] = useMutation(`
-        mutation($event: String!, $input: String) {
-          sendEvent(event: $event, input: $input)
-        }
-      `)
-
-      sendEvent = ({ event, input }) => {
-        if (input) {
-          _sendEvent({ event, input: JSON.stringify(input) })
-        } else {
-          _sendEvent({ event })
-        }
-      }
-
-      subscriptionClient.connectionCallback = async () => {
-        if (!showRecipesList) {
-          log(`createOperation`)
-          try {
-            await createOperation({ recipePath: localRecipe, projectRoot })
-          } catch (e) {
-            log(`error creating operation`, e)
-          }
-        }
-      }
-
-      log(`subscriptionResponse`, subscriptionResponse)
-      const state =
-        subscriptionResponse.data &&
-        JSON.parse(subscriptionResponse.data.operation.state)
-
-      log(`subscriptionResponse.data`, subscriptionResponse.data)
-
-      function Wrapper({ children }) {
-        return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
-      }
-
-      if (showRecipesList) {
-        return (
-          <Wrapper>
-            <WelcomeMessage />
-            <Styled.p>Select a recipe to run</Styled.p>
-            <RecipesList
-              setRecipe={async recipeItem => {
-                showRecipesList = false
-                try {
-                  await createOperation({
-                    recipePath: recipeItem,
-                    projectRoot,
-                  })
-                } catch (e) {
-                  log(`error creating operation`, e)
-                }
-              }}
-            />
-          </Wrapper>
-        )
-      }
-
-      if (!state) {
-        return (
-          <Wrapper>
-            <Spinner /> Loading recipe
-          </Wrapper>
-        )
-      }
-
-      console.log(state)
-
-      const isDone = state.value === `done`
-
-      if (state.value === `doneError`) {
-        console.log(`doneError state`, state)
-      }
-
-      log(`state`, state)
-      log(`plan`, state.context.plan)
-      log(`stepResources`, state.context.stepResources)
-
-      const ResourcePlan = ({ resourcePlan, isLastPlan }) => (
-        <div id={makeResourceId(resourcePlan)} sx={{}}>
-          <div>
-            <Styled.p sx={{ mb: resourcePlan.diff ? 6 : 0 }}>
-              <Styled.em>{resourcePlan.resourceName}</Styled.em>
-              {` `}—{` `}
-              {resourcePlan.describe}
-            </Styled.p>
-          </div>
-          {resourcePlan.diff && (
-            <Styled.pre
-              sx={{
-                background: theme => theme.tones.BRAND.superLight,
-                border: theme => `1px solid ${theme.tones.BRAND.lighter}`,
-                padding: 4,
-                mb: isLastPlan ? 0 : 6,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: ansi2HTML(resourcePlan.diff),
-              }}
-            />
-          )}
-          {resourcePlan.resourceChildren
-            ? resourcePlan.resourceChildren.map(resource => (
-                <ResourcePlan key={resource._uuid} resourcePlan={resource} />
-              ))
-            : null}
-        </div>
-      )
-
-      const Step = ({ state, step, i }) => {
-        const [output, setOutput] = useState({
-          title: ``,
-          body: ``,
-          date: new Date(),
-        })
-
-        const stepResources = state.context?.plan?.filter(
-          p => parseInt(p._stepMetadata.step, 10) === i + 1
-        )
-
-        const [complete, setComplete] = useState(false)
-        if (output.title !== `` && output.body !== ``) {
-          setTimeout(() => {
-            setComplete(true)
-          }, 0)
-        } else {
-          setTimeout(() => {
-            setComplete(false)
-          }, 0)
-        }
-
-        return (
-          <div
-            key={`step-${i}`}
-            sx={{
-              border: theme => `1px solid ${theme.tones.BRAND.light}`,
-              marginBottom: 7,
-            }}
+          background: theme => theme.tones.BRAND.lighter,
+          padding: 4,
+        }}
+      >
+        <div
+          sx={{
+            // marginTop: 2,
+            "p:last-child": {
+              margin: 0,
+            },
+          }}
+        >
+          <MDX
+            key="DOC"
+            components={components}
+            scope={{ sendEvent }}
+            remarkPlugins={[removeJsx]}
           >
-            <div
-              sx={{
-                display: `flex`,
-                // justifyContent: `space-between`,
-                "& > *": {
-                  marginY: 0,
-                },
-                background: theme => theme.tones.BRAND.lighter,
-                padding: 4,
-              }}
-            >
-              <div
-                sx={{
-                  // marginTop: 2,
-                  "p:last-child": {
-                    margin: 0,
-                  },
-                }}
-              >
-                <MDX
-                  key="DOC"
-                  components={components}
-                  scope={{ sendEvent }}
-                  remarkPlugins={[removeJsx]}
-                >
-                  {state.context.exports.join("\n") + "\n\n" + step}
-                </MDX>
-              </div>
-            </div>
-            {stepResources?.length > 0 && (
-              <div sx={{ padding: 6 }}>
-                <Heading
-                  sx={{
-                    marginBottom: 4,
-                    color: theme => theme.tones.NEUTRAL.darker,
-                    fontWeight: 500,
-                  }}
-                  as={`h3`}
-                >
-                  Proposed changes
-                </Heading>
-                {stepResources?.map((res, i) => {
-                  if (res.resourceName === `Input`) {
-                    if (res.type === `textarea`) {
-                      return (
-                        <div>
-                          <div>
-                            <label>{res.label}</label>
-                          </div>
-                          <textarea sx={{ border: `1px solid` }} />
-                        </div>
-                      )
-                    }
-                    return (
-                      <div>
-                        <div>
-                          <label>{res.label}</label>
-                        </div>
-                        <input
-                          sx={{ border: `1px solid` }}
-                          type={res.type}
-                          onChange={e => {
-                            console.log(e.target.value)
-                            console.log({ res })
-                            if (e.target.value !== ``) {
-                              sendInputEvent({
-                                uuid: res._uuid,
-                                value: e.target.value,
-                              })
-                            }
-                          }}
-                        />
-                      </div>
-                    )
-                  }
-
+            {state.context.exports.join("\n") + "\n\n" + step}
+          </MDX>
+        </div>
+      </div>
+      {stepResources?.length > 0 && (
+        <div>
+          <div sx={{ padding: 6 }}>
+            {stepResources?.map((res, i) => {
+              if (res.resourceName === `Input`) {
+                if (res.type === `textarea`) {
                   return (
-                    <ResourcePlan
-                      key={`res-plan-${i}`}
-                      resourcePlan={res}
-                      isLastPlan={i === stepResources.length - 1}
-                    />
+                    <div>
+                      <div>
+                        <label>{res.label}</label>
+                      </div>
+                      <textarea sx={{ border: `1px solid` }} />
+                    </div>
                   )
-                })}
-              </div>
-            )}
+                }
+                return (
+                  <div>
+                    <div>
+                      <label>{res.label}</label>
+                    </div>
+                    <input
+                      sx={{ border: `1px solid` }}
+                      type={res.type}
+                      onChange={e => {
+                        console.log(e.target.value)
+                        console.log({ res })
+                        if (e.target.value !== ``) {
+                          sendInputEvent({
+                            uuid: res._uuid,
+                            key: res._key,
+                            value: e.target.value,
+                          })
+                        }
+                      }}
+                    />
+                  </div>
+                )
+              }
+            })}
           </div>
-        )
-      }
+          <div sx={{ padding: 6 }}>
+            <Heading
+              sx={{
+                marginBottom: 4,
+                color: theme => theme.tones.NEUTRAL.darker,
+                fontWeight: 500,
+              }}
+              as={`h3`}
+            >
+              Proposed changes
+            </Heading>
+            {stepResources?.map((res, i) => {
+              if (res.resourceName !== `Input`) {
+                return (
+                  <ResourcePlan
+                    key={`res-plan-${i}`}
+                    resourcePlan={res}
+                    isLastPlan={i === stepResources.length - 1}
+                  />
+                )
+              }
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
-      const sendInputEvent = event => {
-        sendEvent({
-          event: `INPUT_ADDED`,
-          input: event,
-        })
-      }
+const sendInputEvent = event => {
+  sendEvent({
+    event: `INPUT_ADDED`,
+    input: event,
+  })
+}
 
-      const staticMessages = {}
-      for (let step = 0; step < state.context.currentStep; step++) {
-        staticMessages[step] = [
-          {
-            type: `mdx`,
-            key: `mdx-${step}`,
-            value: state.context.steps[step],
-          },
-        ]
-      }
-      lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-        staticMessages[res._currentStep].push({
-          type: `resource`,
-          key: `finished-stuff-${i}`,
-          value: res._message,
-        })
-      })
+const ResourceMessage = ({ state, resource }) => {
+  let icon = (
+    <MdBrightness1
+      sx={{ height: `10px`, width: `15px`, display: `inline-block` }}
+    />
+  )
+  let message = resource.describe
 
-      log(`staticMessages`, staticMessages)
-
-      if (isDone) {
-        process.nextTick(() => {
-          subscriptionClient.close()
-          log(`The recipe finished successfully`)
-          lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
-            log(`✅ ${res._message}\n`)
-          })
-        })
-      }
-
-      const groupedPlans = lodash.groupBy(
-        state.context.plan,
-        p => p.resourceName
-      )
-
-      const ResourceMessage = ({ resource }) => {
-        let icon = (
-          <MdBrightness1
-            sx={{ height: `10px`, width: `15px`, display: `inline-block` }}
-          />
-        )
-        let message = resource.describe
-
-        if (state.value === `applyingPlan` && resource.isDone) {
-          icon = <SuccessIcon />
-        } else if (state.value === `applyingPlan`) {
-          const keyframe = keyframes`
+  if (state.value === `applyingPlan` && resource.isDone) {
+    icon = <SuccessIcon />
+  } else if (state.value === `applyingPlan`) {
+    const keyframe = keyframes`
   0% {
     transform: rotate(0);
   }
@@ -641,173 +515,306 @@ const RecipeGui = ({
     transform: rotate(360deg);
   }
 `
-          icon = (
-            <MdRefresh
-              sx={{
-                display: `inline-block`,
-                animation: `${keyframe} 1s linear infinite`,
-                height: `15px`,
-                width: `15px`,
-                top: `3px`,
-                position: `relative`,
-              }}
-            />
-          )
-          message = resource.describe
-        } else if (state.value === `done`) {
-          icon = <SuccessIcon height="15px" width="15px" />
-          message = resource._message
-        }
-
-        return (
-          <>
-            {icon}
-            {` `}
-            <BaseAnchor
-              href={`#${makeResourceId(resource)}`}
-              onClick={e => {
-                e.preventDefault()
-                const target = document.getElementById(
-                  e.currentTarget.hash.slice(1)
-                )
-                target.scrollIntoView({
-                  behavior: `smooth`, // smooth scroll
-                  block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
-                })
-              }}
-            >
-              {message}
-            </BaseAnchor>
-          </>
-        )
-      }
-
-      const ButtonText = () => {
-        if (state.value === `done`) {
-          return `Refresh State`
-        }
-
-        return `Install Recipe`
-      }
-
-      const ResourceChildren = ({ resourceChildren }) => {
-        if (!resourceChildren || !resourceChildren.length) {
-          return null
-        }
-
-        return (
-          <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
-            {resourceChildren.map(resource => (
-              <Styled.li
-                sx={{
-                  listStyleType: `none`,
-                }}
-                key={resource._uuid}
-              >
-                <ResourceMessage resource={resource} />
-                <ResourceChildren
-                  resourceChildren={resource.resourceChildren}
-                />
-              </Styled.li>
-            ))}
-          </Styled.ul>
-        )
-      }
-
-      return (
-        <InputProvider value={state.context.inputs || {}}>
-          <Wrapper>
-            <WelcomeMessage />
-            <div
-              sx={{
-                mb: 8,
-                display: `flex`,
-                alignItems: `flex-start`,
-                justifyContent: `space-between`,
-              }}
-            >
-              <div sx={{ "*:last-child": { mb: 0 } }}>
-                <MDX
-                  components={components}
-                  scope={{ sendEvent }}
-                  remarkPlugins={[removeJsx]}
-                >
-                  {state.context.exports.join("\n") +
-                    "\n\n" +
-                    state.context.steps[0]}
-                </MDX>
-              </div>
-              <Button
-                onClick={() => sendEvent({ event: `CONTINUE` })}
-                loading={state.value === `applyingPlan` ? true : false}
-                loadingLabel={`Installing`}
-                sx={{ width: `140px`, ml: 6 }}
-              >
-                <ButtonText />
-              </Button>
-            </div>
-            <div sx={{ marginBottom: 8 }}>
-              <Heading sx={{ marginBottom: 6 }}>
-                Changes
-                {` `}
-                {state.context.plan &&
-                  `(${state.context.plan.filter(p => p.isDone).length}/${
-                    state.context.plan?.length
-                  })`}
-              </Heading>
-              {Object.entries(groupedPlans).map(([resourceName, plans]) => (
-                <div key={`key-${resourceName}`}>
-                  <Heading
-                    as="h4"
-                    sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
-                  >
-                    {resourceName}
-                  </Heading>
-                  <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
-                    {plans
-                      .filter(p => p.resourceName !== `Input`)
-                      .map((p, i) => (
-                        <Styled.li
-                          sx={{
-                            listStyleType: `none`,
-                          }}
-                          key={`${resourceName}-plan-${i}`}
-                        >
-                          <ResourceMessage resource={p} />
-                          <ResourceChildren
-                            resourceChildren={p.resourceChildren}
-                          />
-                        </Styled.li>
-                      ))}
-                  </Styled.ul>
-                </div>
-              ))}
-            </div>
-
-            <Heading sx={{ mb: 6 }}>
-              Steps ({state.context.steps.length - 1})
-            </Heading>
-            {state.context.steps.slice(1).map((step, i) => (
-              <Step state={state} step={step} key={`step-${i}`} i={i} />
-            ))}
-          </Wrapper>
-        </InputProvider>
-      )
-    }
-
-    const Wrapper = () => (
-      <Provider value={client}>
-        <Styled.p>{` `}</Styled.p>
-        <RecipeInterpreter />
-      </Provider>
+    icon = (
+      <MdRefresh
+        sx={{
+          display: `inline-block`,
+          animation: `${keyframe} 1s linear infinite`,
+          height: `15px`,
+          width: `15px`,
+          top: `3px`,
+          position: `relative`,
+        }}
+      />
     )
-
-    const Recipe = () => <Wrapper />
-
-    return <Recipe />
-  } catch (e) {
-    log(e)
+    message = resource.describe
+  } else if (state.value === `done`) {
+    icon = <SuccessIcon height="15px" width="15px" />
+    message = resource._message
   }
+
+  return (
+    <>
+      {icon}
+      {` `}
+      <BaseAnchor
+        href={`#${makeResourceId(resource)}`}
+        onClick={e => {
+          e.preventDefault()
+          const target = document.getElementById(e.currentTarget.hash.slice(1))
+          target.scrollIntoView({
+            behavior: `smooth`, // smooth scroll
+            block: `start`, // the upper border of the element will be aligned at the top of the visible part of the window of the scrollable area.
+          })
+        }}
+      >
+        {message}
+      </BaseAnchor>
+    </>
+  )
+}
+
+const ButtonText = state => {
+  if (state.value === `done`) {
+    return `Refresh State`
+  }
+
+  return `Install Recipe`
+}
+
+const ResourceChildren = ({ resourceChildren }) => {
+  if (!resourceChildren || !resourceChildren.length) {
+    return null
+  }
+
+  return (
+    <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+      {resourceChildren.map(resource => (
+        <Styled.li
+          sx={{
+            listStyleType: `none`,
+          }}
+          key={resource._uuid}
+        >
+          <ResourceMessage state={state} resource={resource} />
+          <ResourceChildren
+            state={state}
+            resourceChildren={resource.resourceChildren}
+          />
+        </Styled.li>
+      ))}
+    </Styled.ul>
+  )
+}
+
+function Wrapper({ children }) {
+  return <div sx={{ maxWidth: 1000, margin: `0 auto` }}>{children}</div>
+}
+
+const RecipeInterpreter = () => {
+  // eslint-disable-next-line
+  const [localRecipe, setRecipe] = useState(recipe)
+
+  const [subscriptionResponse] = useSubscription(
+    {
+      query: `
+          subscription {
+            operation {
+              state
+            }
+          }
+        `,
+    },
+    (_prev, now) => now
+  )
+
+  // eslint-disable-next-line
+  const [_, createOperation] = useMutation(`
+        mutation ($recipePath: String!, $projectRoot: String!) {
+          createOperation(recipePath: $recipePath, projectRoot: $projectRoot)
+        }
+      `)
+  // eslint-disable-next-line
+  const [__, _sendEvent] = useMutation(`
+        mutation($event: String!, $input: String) {
+          sendEvent(event: $event, input: $input)
+        }
+      `)
+
+  sendEvent = ({ event, input }) => {
+    if (input) {
+      _sendEvent({ event, input: JSON.stringify(input) })
+    } else {
+      _sendEvent({ event })
+    }
+  }
+
+  console.log(`in RecipeInterpreter`, { subscriptionClient })
+  subscriptionClient.connectionCallback = async () => {
+    console.log(`connectionCallback`, {
+      showRecipesList,
+      localRecipe,
+      projectRoot,
+    })
+    if (!showRecipesList) {
+      log(`createOperation`)
+      try {
+        console.log(`creating operation`)
+        await createOperation({ recipePath: localRecipe, projectRoot })
+      } catch (e) {
+        log(`error creating operation`, e)
+      }
+    }
+  }
+
+  log(`subscriptionResponse`, subscriptionResponse)
+  const state =
+    subscriptionResponse.data &&
+    JSON.parse(subscriptionResponse.data.operation.state)
+
+  log(`subscriptionResponse.data`, subscriptionResponse.data)
+
+  if (showRecipesList) {
+    return (
+      <Wrapper>
+        <WelcomeMessage />
+        <Styled.p>Select a recipe to run</Styled.p>
+        <RecipesList
+          setRecipe={async recipeItem => {
+            showRecipesList = false
+            try {
+              await createOperation({
+                recipePath: recipeItem,
+                projectRoot,
+              })
+            } catch (e) {
+              log(`error creating operation`, e)
+            }
+          }}
+        />
+      </Wrapper>
+    )
+  }
+  console.log({ state })
+
+  if (!state) {
+    return (
+      <Wrapper>
+        <Spinner /> Loading recipe
+      </Wrapper>
+    )
+  }
+
+  const isDone = state.value === `done`
+
+  if (state.value === `doneError`) {
+    console.log(`doneError state`, state)
+  }
+
+  log(`state`, state)
+  log(`plan`, state.context.plan)
+  log(`stepResources`, state.context.stepResources)
+
+  const staticMessages = {}
+  for (let step = 0; step < state.context.currentStep; step++) {
+    staticMessages[step] = [
+      {
+        type: `mdx`,
+        key: `mdx-${step}`,
+        value: state.context.steps[step],
+      },
+    ]
+  }
+  lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
+    staticMessages[res._currentStep].push({
+      type: `resource`,
+      key: `finished-stuff-${i}`,
+      value: res._message,
+    })
+  })
+
+  log(`staticMessages`, staticMessages)
+
+  if (isDone) {
+    process.nextTick(() => {
+      subscriptionClient.close()
+      log(`The recipe finished successfully`)
+      lodash.flattenDeep(state.context.stepResources).forEach((res, i) => {
+        log(`✅ ${res._message}\n`)
+      })
+    })
+  }
+
+  const plansWithoutInputs = state.context.plan?.filter(
+    p => p.resourceName !== `Input`
+  )
+
+  const groupedPlans = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
+  console.log({ groupedPlans })
+
+  return (
+    <>
+      <Styled.p>{` `}</Styled.p>
+      <InputProvider value={state.context.inputs || {}}>
+        <Wrapper>
+          <WelcomeMessage />
+          <div
+            sx={{
+              mb: 8,
+              display: `flex`,
+              alignItems: `flex-start`,
+              justifyContent: `space-between`,
+            }}
+          >
+            <div sx={{ "*:last-child": { mb: 0 } }}>
+              <MDX
+                components={components}
+                scope={{ sendEvent }}
+                remarkPlugins={[removeJsx]}
+              >
+                {state.context.exports.join("\n") +
+                  "\n\n" +
+                  state.context.steps[0]}
+              </MDX>
+            </div>
+            <Button
+              onClick={() => sendEvent({ event: `CONTINUE` })}
+              loading={state.value === `applyingPlan` ? true : false}
+              loadingLabel={`Installing`}
+              sx={{ width: `140px`, ml: 6 }}
+            >
+              <ButtonText state={state} />
+            </Button>
+          </div>
+          <div sx={{ marginBottom: 8 }}>
+            <Heading sx={{ marginBottom: 6 }}>
+              Changes
+              {` `}
+              {plansWithoutInputs &&
+                `(${plansWithoutInputs.filter(p => p.isDone).length}/${
+                  plansWithoutInputs?.length
+                })`}
+            </Heading>
+            {Object.entries(groupedPlans).map(([resourceName, plans]) => (
+              <div key={`key-${resourceName}`}>
+                <Heading
+                  as="h4"
+                  sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
+                >
+                  {resourceName}
+                </Heading>
+                <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+                  {plans
+                    .filter(p => p.resourceName !== `Input`)
+                    .map((p, i) => (
+                      <Styled.li
+                        sx={{
+                          listStyleType: `none`,
+                        }}
+                        key={`${resourceName}-plan-${i}`}
+                      >
+                        <ResourceMessage state={state} resource={p} />
+                        <ResourceChildren
+                          state={state}
+                          resourceChildren={p.resourceChildren}
+                        />
+                      </Styled.li>
+                    ))}
+                </Styled.ul>
+              </div>
+            ))}
+          </div>
+
+          <Heading sx={{ mb: 6 }}>
+            Steps ({state.context.steps.length - 1})
+          </Heading>
+          {state.context.steps.slice(1).map((step, i) => (
+            <Step state={state} step={step} key={`step-${i}`} i={i} />
+          ))}
+        </Wrapper>
+      </InputProvider>
+    </>
+  )
 }
 
 const WithProviders = ({ children }) => {
@@ -878,14 +885,16 @@ const WithProviders = ({ children }) => {
     },
   }
   return (
-    <ThemeUIProvider theme={theme}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
-    </ThemeUIProvider>
+    <UrqlProvider value={client}>
+      <ThemeUIProvider theme={theme}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </ThemeUIProvider>
+    </UrqlProvider>
   )
 }
 
 export default () => (
   <WithProviders>
-    <RecipeGui />
+    <RecipeInterpreter />
   </WithProviders>
 )

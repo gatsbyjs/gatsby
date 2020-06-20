@@ -1,4 +1,5 @@
 const ReactReconciler = require(`react-reconciler`)
+const flatted = require(`flatted`)
 
 const debug = require(`debug`)(`recipes-reconciler`)
 
@@ -44,10 +45,7 @@ const reconciler = ReactReconciler({
       c => c[propName] === child[propName]
     )
 
-    debug(
-      `appending child to container at index ${index}`,
-      (require(`flatted`) && JSON).stringify({ container, child }, null, 2)
-    )
+    debug(`appending child to container at index ${index}`)
 
     if (index === -1) {
       container.children.push(child)

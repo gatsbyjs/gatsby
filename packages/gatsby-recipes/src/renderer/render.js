@@ -64,6 +64,15 @@ const ResourceComponent = ({
     allProps
   )
 
+  console.log(`ResourceComponent`, {
+    _uuid,
+    props,
+    inputProps,
+    userProps,
+    allProps,
+    resourceData,
+  })
+
   return (
     <ResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>

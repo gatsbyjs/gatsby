@@ -44,11 +44,11 @@ module.exports = api => {
           return
         }
 
-        path.traverse({
-          ReturnStatement(innerPath) {
-            path.replaceWith(innerPath.node)
-          },
-        })
+        // path.traverse({
+        // ReturnStatement(innerPath) {
+        // path.replaceWith(innerPath.node)
+        // },
+        // })
       },
 
       // MDXLayout => doc
