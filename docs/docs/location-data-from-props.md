@@ -26,7 +26,7 @@ Using `hash` in JavaScript is one way to update the browser URL and the DOM with
 
 ### Getting the absolute URL of a page
 
-The location properties generally do not include the domain of your site, since Gatsby does know where you will deploy it.
+The `location` object's properties generally do not include the domain of your site, since Gatsby doesn't know where you will deploy it.
 
 This is different when the code is running [client side](/docs/glossary#client-side). In this case, all the information your browser exposes as `window.location` is available. This includes `href` for the absolute URL of the page including domain.
 
