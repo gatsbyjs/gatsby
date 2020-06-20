@@ -475,3 +475,30 @@ npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-cont
 ```
 
 If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
+
+### APACHE: Error while trying to use the following icon from the Manifest
+If you are on an Apache webserver and utilising the automatic solution, you may receive an error when attempting to access an icon listed in the Manifest as residing in the /icons folder. This is because Apache restricts access to all /icons folders by default. You can fix this by switching to the hybrid solution and changing the foldername from 'icons' to something like 'favicons'. 
+
+Example:
+```js
+// In the gatsby-plugin-manifest section of your gatsby-config.js
+  icon: `src/images/icon.png`, // This path is relative to the root of the site.
+  icons: [
+    {
+        "src": "favicons/icon-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    },  // Add or remove icon sizes as desired
+  ]
+```
+
+Alternatively, if you have access to modify apache, you can resolve this issue by removing the restriction on /icons folders.
+
+Create a backup of /etc/httpd/conf.d/autoindex.conf:
+`cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back`
+
+Comment out "Alias /icons/" in /etc/httpd/conf.d/autoindex.conf:
+`cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"`
+
+Reload Apache/or restart server:
+`service httpd reload`
