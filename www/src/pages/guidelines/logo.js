@@ -94,7 +94,7 @@ const Guidance = ({ children, image }) => (
     }}
   >
     {image && (
-      <BoxWithBorder withBorder width="100%">
+      <BoxWithBorder withBorder>
         <Img fluid={image.childImageSharp.fluid} />
       </BoxWithBorder>
     )}
@@ -162,15 +162,7 @@ const GatsbyLogoContainered = ({
 )
 
 const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
-  <BoxWithBorder
-    bg={bg}
-    height={0}
-    p={3}
-    pb="56.25%"
-    width="100%"
-    withBorder={withBorder}
-    {...rest}
-  >
+  <BoxWithBorder bg={bg} p={3} pb="56.25%" withBorder={withBorder} {...rest}>
     <Flex
       sx={{
         alignItems: `center`,
