@@ -543,7 +543,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
 
     if (options.maxWidth !== undefined && options.maxHeight !== undefined) {
-      arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
+      arrrgs.height = Math.round(size * (maxHeight / maxWidth))
     }
 
     return arrrgs
