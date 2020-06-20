@@ -32,6 +32,10 @@ const slugify = require(`slugify`)
 require(`normalize.css`)
 
 import { useInputByKey, InputProvider } from "./renderer/input-provider"
+import {
+  useResourceByKey,
+  ResourceProvider,
+} from "./renderer/resource-provider"
 
 const theme = getTheme()
 
@@ -722,84 +726,92 @@ const RecipeInterpreter = () => {
   return (
     <>
       <Styled.p>{` `}</Styled.p>
-      <InputProvider value={state.context.inputs || {}}>
-        <Wrapper>
-          <WelcomeMessage />
-          <div
-            sx={{
-              mb: 8,
-              display: `flex`,
-              alignItems: `flex-start`,
-              justifyContent: `space-between`,
-            }}
-          >
-            <div sx={{ "*:last-child": { mb: 0 } }}>
-              <MDX
-                components={components}
-                scope={{ sendEvent }}
-                remarkPlugins={[removeJsx]}
-              >
-                {state.context.exports.join(`\n`) +
-                  `\n\n` +
-                  state.context.steps[0]}
-              </MDX>
-            </div>
-            <Button
-              onClick={() => sendEvent({ event: `CONTINUE` })}
-              loading={state.value === `applyingPlan` ? true : false}
-              loadingLabel={`Installing`}
-              sx={{ width: `140px`, ml: 6 }}
+      <ResourceProvider
+        value={
+          state.context.plan?.filter(
+            p => p.resourceName !== `Input` && p.resourceDefinitions?._key
+          ) || []
+        }
+      >
+        <InputProvider value={state.context.inputs || {}}>
+          <Wrapper>
+            <WelcomeMessage />
+            <div
+              sx={{
+                mb: 8,
+                display: `flex`,
+                alignItems: `flex-start`,
+                justifyContent: `space-between`,
+              }}
             >
-              <ButtonText state={state} />
-            </Button>
-          </div>
-          <div sx={{ marginBottom: 8 }}>
-            <Heading sx={{ marginBottom: 6 }}>
-              Changes
-              {` `}
-              {plansWithoutInputs &&
-                `(${plansWithoutInputs.filter(p => p.isDone).length}/${
-                  plansWithoutInputs?.length
-                })`}
-            </Heading>
-            {Object.entries(groupedPlans).map(([resourceName, plans]) => (
-              <div key={`key-${resourceName}`}>
-                <Heading
-                  as="h4"
-                  sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
+              <div sx={{ "*:last-child": { mb: 0 } }}>
+                <MDX
+                  components={components}
+                  scope={{ sendEvent }}
+                  remarkPlugins={[removeJsx]}
                 >
-                  {resourceName}
-                </Heading>
-                <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
-                  {plans
-                    .filter(p => p.resourceName !== `Input`)
-                    .map((p, i) => (
-                      <Styled.li
-                        sx={{
-                          listStyleType: `none`,
-                        }}
-                        key={`${resourceName}-plan-${i}`}
-                      >
-                        <ResourceMessage state={state} resource={p} />
-                        <ResourceChildren
-                          state={state}
-                          resourceChildren={p.resourceChildren}
-                        />
-                      </Styled.li>
-                    ))}
-                </Styled.ul>
+                  {state.context.exports.join(`\n`) +
+                    `\n\n` +
+                    state.context.steps[0]}
+                </MDX>
               </div>
-            ))}
-          </div>
+              <Button
+                onClick={() => sendEvent({ event: `CONTINUE` })}
+                loading={state.value === `applyingPlan` ? true : false}
+                loadingLabel={`Installing`}
+                sx={{ width: `140px`, ml: 6 }}
+              >
+                <ButtonText state={state} />
+              </Button>
+            </div>
+            <div sx={{ marginBottom: 8 }}>
+              <Heading sx={{ marginBottom: 6 }}>
+                Changes
+                {` `}
+                {plansWithoutInputs &&
+                  `(${plansWithoutInputs.filter(p => p.isDone).length}/${
+                    plansWithoutInputs?.length
+                  })`}
+              </Heading>
+              {Object.entries(groupedPlans).map(([resourceName, plans]) => (
+                <div key={`key-${resourceName}`}>
+                  <Heading
+                    as="h4"
+                    sx={{ mb: 3, fontWeight: 400, fontStyle: `italic` }}
+                  >
+                    {resourceName}
+                  </Heading>
+                  <Styled.ul sx={{ pl: 3, marginTop: 0, mb: 5 }}>
+                    {plans
+                      .filter(p => p.resourceName !== `Input`)
+                      .map((p, i) => (
+                        <Styled.li
+                          sx={{
+                            listStyleType: `none`,
+                          }}
+                          key={`${resourceName}-plan-${i}`}
+                        >
+                          <ResourceMessage state={state} resource={p} />
+                          <ResourceChildren
+                            state={state}
+                            resourceChildren={p.resourceChildren}
+                          />
+                        </Styled.li>
+                      ))}
+                  </Styled.ul>
+                </div>
+              ))}
+            </div>
 
-          <Heading sx={{ mb: 6 }}>
-            Steps ({state.context.steps.length - 1})
-          </Heading>
-          {state.context.steps.slice(1).map((step, i) => (
-            <Step state={state} step={step} key={`step-${i}`} i={i} />
-          ))}
-        </Wrapper>
-      </InputProvider>
+            <Heading sx={{ mb: 6 }}>
+              Steps ({state.context.steps.length - 1})
+            </Heading>
+            {state.context.steps.slice(1).map((step, i) => (
+              <Step state={state} step={step} key={`step-${i}`} i={i} />
+            ))}
+          </Wrapper>
+        </InputProvider>
+      </ResourceProvider>
     </>
   )
 }

@@ -38,6 +38,10 @@ const reconciler = ReactReconciler({
     debug(`creating text instance`, text)
     return { text }
   },
+  commitTextUpdate(textInstance, oldText, newText) {
+    textInstance.text = newText
+    return textInstance
+  },
   appendChildToContainer(container, child) {
     container.children = container.children || []
     const propName = child.key ? `key` : `_uuid`

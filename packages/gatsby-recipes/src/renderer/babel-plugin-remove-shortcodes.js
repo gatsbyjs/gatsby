@@ -1,5 +1,5 @@
 const isShortcode = declaration =>
-  declaration.init.callee && declaration.init.callee.name === `makeShortcode`
+  declaration.init?.callee?.name === `makeShortcode`
 const isShortcodeFunction = declaration =>
   declaration.id.name === `makeShortcode`
 const isMDXLayout = element => element.name && element.name.name === `MDXLayout`

@@ -4,12 +4,14 @@ const { transform } = require(`@babel/standalone`)
 const template = require(`@babel/template`).default
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 const babelPluginRemoveExportKeywords = require(`babel-plugin-remove-export-keywords`)
+const babelChainingPlugin = require("@babel/plugin-proposal-optional-chaining")
 
 const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
 const { RecipeStep, RecipeIntroduction } = require(`./step-component`)
 const Input = require(`./input`).default
 const { useInputByKey } = require(`./input-provider`)
+const { useResourceByKey } = require(`./resource-provider`)
 const babelPluginRemoveShortcodes = require(`./babel-plugin-remove-shortcodes`)
 const babelPluginCopyKeyProp = require(`./babel-plugin-copy-key-prop`)
 const babelPluginMoveExportKeywords = require(`./babel-plugin-move-export-keywords`)
@@ -20,6 +22,7 @@ const scope = {
   RecipeIntroduction,
   Input,
   useInputByKey,
+  useResourceByKey,
   Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
   mdx: React.createElement,
@@ -48,6 +51,8 @@ const transformJsx = jsx => {
       babelPluginMoveExportKeywords,
       // babelPluginRemoveExportKeywords,
       babelPluginRemoveShortcodes,
+      // TODO figure out how to use preset-env
+      babelChainingPlugin,
       [babelPluginTransformReactJsx, { useBuiltIns: true }],
     ],
   })

@@ -1,5 +1,6 @@
-import React, { Suspense, useContext } from "react"
+import React, { Suspense, useContext, useState } from "react"
 import Queue from "p-queue"
+import lodash from "lodash"
 
 import resources from "../resources"
 
@@ -12,6 +13,11 @@ import {
 } from "./parent-resource-provider"
 import { useRecipeStep } from "./step-component"
 import { InputProvider, useInputByKey } from "./input-provider"
+import {
+  ResourceProvider,
+  setResources,
+  useResourceContext,
+} from "./resource-provider"
 
 const queue = new Queue({ concurrency: 1, autoStart: false })
 
@@ -37,15 +43,30 @@ const getUserProps = props => {
   return userProps
 }
 
-const Wrapper = ({ children, inputs, isApply }) => (
-  <ErrorBoundary>
-    <ModeProvider value={{ mode: isApply ? `apply` : `plan` }}>
-      <InputProvider value={inputs}>
-        <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
-      </InputProvider>
-    </ModeProvider>
-  </ErrorBoundary>
-)
+const SetResourcesProvider = React.createContext()
+
+let resourcesCache
+
+const Wrapper = ({ children, inputs, isApply }) => {
+  const [resourcesList, setResources] = useState(resourcesCache || [])
+  resourcesCache = resourcesList
+
+  return (
+    <ErrorBoundary>
+      <ModeProvider value={{ mode: isApply ? `apply` : `plan` }}>
+        <SetResourcesProvider.Provider value={setResources}>
+          <ResourceProvider value={resourcesList}>
+            <InputProvider value={inputs}>
+              <Suspense fallback={<p>Loading recipe...</p>}>
+                {children}
+              </Suspense>
+            </InputProvider>
+          </ResourceProvider>
+        </SetResourcesProvider.Provider>
+      </ModeProvider>
+    </ErrorBoundary>
+  )
+}
 
 const ResourceComponent = ({
   _resourceName: Resource,
@@ -58,31 +79,25 @@ const ResourceComponent = ({
   const step = useRecipeStep()
   const inputProps = useInputByKey(_uuid)
   const parentResourceContext = useParentResourceContext()
-  console.log({ parentResourceContext })
+  const allResources = useResourceContext()
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 
+  const setResources = useContext(SetResourcesProvider)
   const resourceData = handleResource(
     Resource,
     { ...parentResourceContext, root: process.cwd(), _uuid, mode },
-    allProps
-  )
-
-  console.log(`ResourceComponent`, {
-    _uuid,
-    props,
-    inputProps,
-    userProps,
     allProps,
-    resourceData,
-  })
+    allResources,
+    setResources
+  )
 
   return (
     <ParentResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>
         {JSON.stringify({
           ...resourceData,
-          _props: { ...userProps, ...inputProps },
+          _props: allProps,
           _stepMetadata: step,
           _uuid,
           _type,
@@ -102,7 +117,13 @@ const validateResource = (resourceName, context, props) => {
   return error
 }
 
-const handleResource = (resourceName, context, props) => {
+const handleResource = (
+  resourceName,
+  context,
+  props,
+  allResources,
+  setResources
+) => {
   const error = validateResource(resourceName, context, props)
   if (error) {
     errors.push(error)
@@ -133,6 +154,22 @@ const handleResource = (resourceName, context, props) => {
       }
 
       resources[resourceName][fn](context, props)
+        .then(result => {
+          allResources = allResources.filter(a => a.resourceDefinitions._key)
+          const newResources = lodash.uniqBy(
+            [
+              {
+                resourceName,
+                resourceDefinitions: props,
+                ...result,
+              },
+              ...allResources,
+            ],
+            r => r.resourceDefinitions._key
+          )
+          setResources(newResources)
+          return result
+        })
         .then(result => cache.set(key, result))
         .then(resolve)
         .catch(e => {
