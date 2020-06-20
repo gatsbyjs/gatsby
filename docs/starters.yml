@@ -6660,3 +6660,19 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://gatsby-starter.larico.net/
+  repo: https://github.com/netlarico/gatsby-starter-larico
+  description: Gatsby Starter Theme with Netlify CMS to manage content
+  tags:
+    - Gatsby Starter
+    - Netlify CMS
+  features:
+    - Responsive
+    - Easy Configuration using config.js file
+    - Page examples
+    - Contact form
+    - Blog
+    - Carousel slide
+    - Pagination (Prev / Next Page)
+    - Elastic-Lunr Search
+    - Ant Design React UI library
