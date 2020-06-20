@@ -1,7 +1,9 @@
 import { Span } from "opentracing"
 import { IProgram } from "../commands/types"
-import { Store } from "../.."
+import { Runner } from "../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../query/graphql-runner"
+import { Store, AnyAction } from "redux"
+import { IGatsbyState } from "../redux/types"
 
 export interface IGroupedQueryIds {
   pageQueryIds: string[]
@@ -14,8 +16,11 @@ export interface IMutationAction {
 }
 export interface IBuildContext {
   program?: IProgram
-  store?: Store
+  store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
+  gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
   queryIds?: IGroupedQueryIds
+  webhookBody?: Record<string, unknown>
+  refresh?: boolean
 }

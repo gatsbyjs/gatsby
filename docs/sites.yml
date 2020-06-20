@@ -10931,6 +10931,36 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Honeycomb Creative
+  main_url: https://www.honeycombcreative.com/
+  url: https://www.honeycombcreative.com/
+  description: >
+    Honeycomb Creative has been producing websites and other print and electronic communications material since 1991. Website built with Gatsby v2 and headless WordPress.
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - SEO
+    - Portfolio
+    - Marketing
+    - Blog
+    - WordPress
+  built_by: Honeycomb Creative
+  built_by_url: https://www.honeycombcreative.com/
+- title: Personal Website of Suganthan Mohanadasan
+  main_url: https://suganthan.com/
+  url: https://suganthan.com/
+  description: >
+    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and TailwindCSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
+  categories:
+    - Blog
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Portfolio
+    - SEO
+  built_by: Shane Jones
+  built_by_url: https://shanejones.co.uk/
 - title: Bold.org
   url: https://bold.org/
   main_url: https://bold.org/
@@ -10940,3 +10970,30 @@
     - Education
   built_by: Bold.org
   featured: false
+
+- title: Petite & Minimal
+  url: https://www.petiteandminimal.com/
+  main_url: https://www.petiteandminimal.com/
+  description: >-
+    Eco-friendly lifestyle website. Green, sustainable, minimal. Covering food,
+    style, travel, living and featuring several eco-friendly directories.
+  categories:
+    - Blog
+    - Food
+    - Travel
+    - Photography
+    - Directory
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
+  featured: false
+- title: Petite & Minimal Concept Store DEMO
+  url: https://petiteandminimalstore.netlify.app/
+  main_url: https://petiteandminimalstore.netlify.app/
+  source_url: https://github.com/AnnieTaylorCHEN/PetiteandMinimalStore
+  description: >-
+    A JAMstack e-commerce solution built with Gatsby, Contentful and
+    CommerceLayer.
+  categories:
+    - E-commerce
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
