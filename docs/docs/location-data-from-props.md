@@ -32,7 +32,7 @@ This is different when the code is running [client side](/docs/glossary#client-s
 
 Sometimes you need the absolute URL of the current page (including the host name) while using [server-side rendering](/docs/glossary/server-side-rendering/). For example, you may want to add a canonical URL to the page header.
 
-In this case, you would first need to add configuration that describes where you site is deployed. You can for example add this as a `siteURL` entry in `siteMetadata` in the [Gatsby Config](/docs/gatsby-config/).
+In this case, you would first need to add configuration that describes where your site is deployed. You can add this as a `siteURL` property on `siteMetadata` in [`gatsby-config`](/docs/gatsby-config/).
 
 Once you have added `siteURL`, you can form the absolute URL of the current page by retrieving `siteURL` and concatenating it with the current path from `location`. Note that the path starts with a slash; `siteURL` must therefore not end in one.
 
