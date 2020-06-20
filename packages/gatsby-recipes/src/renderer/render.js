@@ -6,7 +6,10 @@ import resources from "../resources"
 import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"
 import transformToPlan from "./transform-to-plan-structure"
-import { ResourceProvider, useResourceContext } from "./resource-provider"
+import {
+  ParentResourceProvider,
+  useParentResourceContext,
+} from "./parent-resource-provider"
 import { useRecipeStep } from "./step-component"
 import { InputProvider, useInputByKey } from "./input-provider"
 
@@ -54,13 +57,14 @@ const ResourceComponent = ({
   const { mode } = useMode()
   const step = useRecipeStep()
   const inputProps = useInputByKey(_uuid)
-  const resourceContext = useResourceContext()
+  const parentResourceContext = useParentResourceContext()
+  console.log({ parentResourceContext })
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }
 
   const resourceData = handleResource(
     Resource,
-    { ...resourceContext, root: process.cwd(), _uuid, mode },
+    { ...parentResourceContext, root: process.cwd(), _uuid, mode },
     allProps
   )
 
@@ -74,7 +78,7 @@ const ResourceComponent = ({
   })
 
   return (
-    <ResourceProvider data={{ [Resource]: resourceData }}>
+    <ParentResourceProvider data={{ [Resource]: resourceData }}>
       <Resource>
         {JSON.stringify({
           ...resourceData,
@@ -85,7 +89,7 @@ const ResourceComponent = ({
         })}
         {children}
       </Resource>
-    </ResourceProvider>
+    </ParentResourceProvider>
   )
 }
 
