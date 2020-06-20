@@ -85,7 +85,7 @@ Then, go to [the 'API Keys' section of your Algolia profile](https://www.algolia
 
 ![The API Keys section of the Algolia profile](./images/algolia-api-keys.png)
 
-Copy out the Application ID, Search-Only API Key, and Admin API Key and create a file called `.env` with the following content, replacing the placeholders with the copied values:
+Copy out the Application ID, Search-Only API Key, and Admin API Key and create a file called `.env` in the root of the project (`gatsby-algolia-tutorial` if created as described above). Replace the placeholders with the copied values:
 
 ```text:title=.env
 GATSBY_ALGOLIA_APP_ID=<App ID>
@@ -124,7 +124,7 @@ Then add the configuration for `gatsby-plugin-algolia` to the list of `plugin`s 
 
 ### Query the pages for indexing
 
-You still need to supply `queries` configuration. Queries tell the Algolia plugin what data is to be indexed. They perform GraphQL queries for the relevant pages and convert the response into a set of Algolia documents containing key/value pairs of the data that is to be indexed.
+You still need to supply `queries` configuration. Queries tell the Algolia plugin what data is to be indexed. They perform GraphQL queries for the relevant pages and convert the response into a set of Algolia records. These contain key/value pairs with the data to be indexed.
 
 This could have been entered straight into the `gatsby-config.js`, but to avoid clutter the configuration above loads it from the file `src/utils/algolia-queries.js`.
 
