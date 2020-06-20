@@ -1,3 +1,15 @@
+- name: Annie Taylor Chen
+  type: individual
+  description: >-
+    Full-stack developer | Photographer - enriching your digital products with
+    amazing UI/UX through clean code
+  location: Stockholm, Sweden | Worldwide (remote)
+  website: https://www.annietaylorchen.com/
+  github: https://github.com/AnnieTaylorCHEN
+  image: images/annie-taylor-chen.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
 - name: Fabian Schultz
   type: individual
   description: >-

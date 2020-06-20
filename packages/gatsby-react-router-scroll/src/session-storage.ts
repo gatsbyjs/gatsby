@@ -1,13 +1,14 @@
+import { Location } from "history"
 const STATE_KEY_PREFIX = `@@scroll|`
 const GATSBY_ROUTER_SCROLL_STATE = `___GATSBY_REACT_ROUTER_SCROLL`
 
-export default class SessionStorage {
-  read(location, key) {
+export class SessionStorage {
+  read(location: Location, key: string): number {
     const stateKey = this.getStateKey(location, key)
 
     try {
       const value = window.sessionStorage.getItem(stateKey)
-      return JSON.parse(value)
+      return value ? JSON.parse(value) : 0
     } catch (e) {
       if (process.env.NODE_ENV !== `production`) {
         console.warn(
@@ -23,11 +24,11 @@ export default class SessionStorage {
         return window[GATSBY_ROUTER_SCROLL_STATE][stateKey]
       }
 
-      return {}
+      return 0
     }
   }
 
-  save(location, key, value) {
+  save(location: Location, key: string, value: number): void {
     const stateKey = this.getStateKey(location, key)
     const storedValue = JSON.stringify(value)
 
@@ -49,7 +50,7 @@ export default class SessionStorage {
     }
   }
 
-  getStateKey(location, key) {
+  getStateKey(location: Location, key: string): string {
     const locationKey = location.key || location.pathname
     const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
     return key === null || typeof key === `undefined`

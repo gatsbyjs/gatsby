@@ -21,7 +21,7 @@ export function fixedPagePath(pagePath: string): string {
   return pagePath === `/` ? `index` : pagePath
 }
 
-export function getFilePath(publicDir: string, pagePath: string): string {
+function getFilePath(publicDir: string, pagePath: string): string {
   return path.join(
     publicDir,
     `page-data`,
