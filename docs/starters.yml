@@ -28,9 +28,7 @@
     - Styling:SCSS
     - Styling:CSS-in-JS
     - Markdown
-    - SEO
     - Portfolio
-    - Categories
     - Accessibility
   features:
     - Eslint/Prettier configured
