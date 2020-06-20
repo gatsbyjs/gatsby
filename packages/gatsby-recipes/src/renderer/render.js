@@ -8,7 +8,7 @@ import ErrorBoundary from "./error-boundary"
 import transformToPlan from "./transform-to-plan-structure"
 import { ResourceProvider, useResourceContext } from "./resource-provider"
 import { useRecipeStep } from "./step-component"
-import { InputProvider, useInputByUuid } from "./input-provider"
+import { InputProvider, useInputByKey } from "./input-provider"
 
 const queue = new Queue({ concurrency: 1, autoStart: false })
 
@@ -53,7 +53,7 @@ const ResourceComponent = ({
 }) => {
   const { mode } = useMode()
   const step = useRecipeStep()
-  const inputProps = useInputByUuid(_uuid)
+  const inputProps = useInputByKey(_uuid)
   const resourceContext = useResourceContext()
   const userProps = getUserProps(props)
   const allProps = { ...props, ...inputProps }

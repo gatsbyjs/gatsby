@@ -31,7 +31,7 @@ const { SubscriptionClient } = require(`subscriptions-transport-ws`)
 const slugify = require(`slugify`)
 require(`normalize.css`)
 
-import { useInputByUuid, InputProvider } from "./renderer/input-provider"
+import { useInputByKey, InputProvider } from "./renderer/input-provider"
 
 const theme = getTheme()
 
@@ -169,7 +169,7 @@ const RecipesList = ({ setRecipe }) => {
 }
 
 const ContentfulSpace = ({ _uuid, ...props }) => {
-  const inputProps = useInputByUuid(_uuid)
+  const inputProps = useInputByKey(_uuid)
   const [inputState, setInputState] = useState({
     resourceUuid: _uuid,
     props: {
@@ -214,7 +214,7 @@ const ContentfulSpace = ({ _uuid, ...props }) => {
 }
 
 const File = ({ _uuid, ...props }) => {
-  const inputProps = useInputByUuid(_uuid)
+  const inputProps = useInputByKey(_uuid)
   const [inputState, setInputState] = useState({
     resourceUuid: _uuid,
     props: {
@@ -286,9 +286,7 @@ log(
 const removeJsx = () => tree => {
   remove(tree, `mdxBlockElement`, node => node.name === `File`)
 
-  remove(tree, `export`, node => {
-    return true
-  })
+  remove(tree, `export`, node => true)
   return tree
 }
 

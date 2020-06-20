@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 
 const InputContext = React.createContext({})
 
-export const useInputByUuid = key => {
+export const useInputByKey = key => {
   const context = useContext(InputContext) || {}
   const result = context[key]
   return result?.value

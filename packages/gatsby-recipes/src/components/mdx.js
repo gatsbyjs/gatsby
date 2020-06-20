@@ -6,7 +6,7 @@ import babelPluginTransformReactJsx from "@babel/plugin-transform-react-jsx"
 import babelPluginRemoveExportKeywords from "babel-plugin-remove-export-keywords"
 const babelPluginCopyKeyProp = require(`../renderer/babel-plugin-copy-key-prop`)
 const babelPluginMoveExportKeywords = require(`../renderer/babel-plugin-move-export-keywords`)
-const { useInputByUuid } = require(`../renderer/input-provider`)
+const { useInputByKey } = require(`../renderer/input-provider`)
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
@@ -37,7 +37,7 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
     React,
     components,
     props,
-    useInputByUuid,
+    useInputByKey,
     ...scope,
   }
   const scopeKeys = Object.keys(fullScope)
