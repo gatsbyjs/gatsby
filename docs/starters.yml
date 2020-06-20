@@ -29,7 +29,6 @@
     - Styling:CSS-in-JS
     - Markdown
     - Portfolio
-    - Accessibility
   features:
     - Eslint/Prettier configured
     - Easy to customize
