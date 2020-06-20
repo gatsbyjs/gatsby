@@ -30,7 +30,7 @@ The `location` object's properties generally do not include the domain of your s
 
 This is different when the code is running [client side](/docs/glossary#client-side). In this case, all the information your browser exposes as `window.location` is available. This includes `href` for the absolute URL of the page including domain.
 
-Sometimes you need the absolute URL of the current page (including the host name) while using [server-side rendering](/docs/glossary/server-side-rendering/). This is for example the case if you want to add a canonical URL to the page header.
+Sometimes you need the absolute URL of the current page (including the host name) while using [server-side rendering](/docs/glossary/server-side-rendering/). For example, you may want to add a canonical URL to the page header.
 
 In this case, you would first need to add configuration that describes where you site is deployed. You can for example add this as a `siteURL` entry in `siteMetadata` in the [Gatsby Config](/docs/gatsby-config/).
 
