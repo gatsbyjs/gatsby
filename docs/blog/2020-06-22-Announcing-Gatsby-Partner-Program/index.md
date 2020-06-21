@@ -18,10 +18,10 @@ It's important to Gatsby that we support agencies as you work with clients to cr
 Agencies are challenged to meet the needs of diverse clients while trying to optimize for web performance, SEO, security, and many other business objectives. Gatsby has been helping solve these challenges with performance improvements, efficiencies, scalability, and security all built right into the framework. We’re now adding a human support component by introducing a strong partner program to provide technical support, marketing and sales materials, and a path to submit referrals, plus a certification program.
 
 ### Benefits for Agency Partners 
-- Growth: Tap into the vast and varied Gatsby ecosystem by connecting with one of the most exciting website frameworks around. 
-- Visibility: Get exclusive access to what’s in development at Gatsby and become a beta tester for new products and features.
-- Training: Have confidence that you’re getting the most out of Gatsby by accessing training materials and a connection with the Gatsby team. 
-- Certification: Leverage Gatsby’s brand to elevate your business and give clients confidence they’re working with a Gatsby certified agency. 
+- __Growth:__ Tap into the vast and varied Gatsby ecosystem by connecting with one of the most exciting website frameworks around. 
+- __Visibility:__ Get exclusive access to what’s in development at Gatsby and become a beta tester for new products and features.
+- __Training:__ Have confidence that you’re getting the most out of Gatsby by accessing training materials and a connection with the Gatsby team. 
+- __Certification:__ Leverage Gatsby’s brand to elevate your business and give clients confidence they’re working with a Gatsby certified agency. 
 
 > “Partnering with Gatsby has been a strong driver for growth. Our clients love the performance benefits and our developers are happy to use tools they already love.” 
 -- __Dennis Brotzky, Founding Partner, [Narative](https://www.narative.co/)__
@@ -45,55 +45,48 @@ We hope you'll join us in building the web of the future! Interested partners ca
 
 ## FAQs
 __What are the types of Gatsby partners?__
+
 Gatsby has two categories of partners: agency and technology partners. Agencies build websites and apps for clients. Technology partners are part of Gatsby's ecosystem such as CMS and hosting integrations.
 
 __What is the [Gatsby Partner Portal](https://gatsby.channeltivity.com/BecomeAPartner)?__
+
 The Gatsby Partner Portal is a section on gatsbyjs.com where agencies and technology partners can apply to become a partner, submit a referral lead, access sales guides and marketing materials, and connect with the Gatsby team. It is the one stop shop for agency partners to get all the resources they need to position and sell Gatsby, as well as providing technology partners the guide on how to become a first-class integration partner.
 
 __Will Technology partners have access to the partner portal?__
+
 Yes! There are separate sections for agency and technology partners on the portal. Technology partners will have access to the 'Technology Partner Playbook' and will be able to connect with the Gatsby team to answer support questions.
 
 __How can someone become a partner?__
+
 Any interested agencies or technology companies should apply to be a partner via the [partner portal](https://gatsby.channeltivity.com/BecomeAPartner). Each application will be reviewed and the partnerships team will follow up with next steps and approvals. Any questions, reach out to partners@gatsbyjs.com.
 
 __Can a one-person agency be a partner?__
+
 Absolutely! Agency size is not important. Quality of work is what counts.
 
 __What benefit do partners get by registering and accessing the partner portal?__
+
 Partners get access to refer leads, download sales and marketing materials, download a certified partner badge, and connect with Gatsby support. More benefits will be coming soon!
 
 __What are all the benefits of partnership?__
+
 See the [Gatsby Partner Program landing page](https://www.gatsbyjs.com/partner) for more details.
 
 __Will Gatsby pass leads to partners?__
+
 Not as of yet, but we're working on a plan for that!
 
 __Will there be more development of the partner program after this launch?__
+
 Yes. Additional benefits, features, and functionality will be added in the future -- stay tuned!
 
 __What are the different partner tiers?__
+
 Details on Agency Partner tiers can be found on the [Agency Partner Program page]. There are no tiers for Technology partners.
 
 __Will the partner program include a revenue share?__
+
 Yes. Agency partners will be able to earn a % of revenue from unique referrals they submit that are successfully won. Referred leads will be managed in the partner portal. Technology partners interested in joint sales should reach out to <partners@gatsbyjs.com>.
 
-__Can a one-person agency be a partner?__
-Absolutely! Agency size is not important. Quality of work is what counts.
 
-__What benefit do partners get by registering and accessing the partner portal?__
-Partners get access to refer leads, download sales and marketing materials, download a certified partner badge, and connect with Gatsby support. More benefits will be coming soon!
 
-__What are all the benefits of partnership?__
-See the [Gatsby Partner Program landing page](https://www.gatsbyjs.com/partner) for more details. 
-
-__Will Gatsby pass leads to partners?__
-Not as of yet, but we’re working on a plan for that!
-
-__Will there be more development of the partner program after this launch?__
-Yes. Additional benefits, features, and functionality will be added in the future -- stay tuned!
-
-__What are the different partner tiers?__
-Details on Agency Partner tiers can be found on the [Agency Partner Program page](https://www.gatsbyjs.com/partner-agency). There are no tiers for Technology partners.
-
-__Will the partner program include a revenue share?__
-Yes. Agency partners will be able to earn a % of revenue from unique referrals they submit that are successfully won. Referred leads will be managed in the partner portal. Technology partners interested in joint sales should reach out to partners@gatsbyjs.com. 
