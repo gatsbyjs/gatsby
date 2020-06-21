@@ -1,25 +1,11 @@
 /** @jsx jsx */
-import { useEffect } from "react"
 import { jsx } from "theme-ui"
 import { useStaticQuery, graphql } from "gatsby"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
-import {
-  breakpoints,
-  mediaQueries,
-} from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import { Name } from "./homepage-section"
-import {
-  HorizontalScrollerContent,
-  HorizontalScrollerItem,
-} from "../shared/horizontal-scroller"
-
-import { SCROLLER_CLASSNAME } from "../../utils/scrollers-observer"
-
-const HorizontalScrollerContentAsDiv = HorizontalScrollerContent.withComponent(
-  `div`
-)
 
 const Section = styled(`section`)`
   border-bottom: 1px solid ${p => p.theme.colors.ui.border};
@@ -77,37 +63,7 @@ const LogoGroup = styled(`div`)`
   }
 `
 
-const Logo = styled(`div`)`
-  padding-left: ${p => p.theme.space[3]};
-  padding-right: ${p => p.theme.space[3]};
-  :focus,
-  :hover {
-    z-index: 1;
-  }
-`
-
-const LogoScrollable = styled(HorizontalScrollerItem.withComponent(Logo))`
-  width: auto;
-  margin: auto;
-  box-shadow: none;
-`
-
 const HomepageLogoBanner = () => {
-  let desktopMediaQuery = false
-  let desktopViewport = false
-
-  const updateViewPortState = () => {
-    desktopViewport = desktopMediaQuery.matches
-  }
-
-  useEffect(() => {
-    desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
-    desktopMediaQuery.addListener(updateViewPortState)
-    return () => {
-      desktopMediaQuery.addListener(updateViewPortState)
-    }
-  }, [])
-
   const data = useStaticQuery(graphql`
     query {
       allFile(
@@ -134,33 +90,15 @@ const HomepageLogoBanner = () => {
       <Title>
         <Name>Trusted by</Name>
       </Title>
-      {desktopViewport ? (
-        <LogoGroup className={SCROLLER_CLASSNAME}>
-          <div tabIndex={0}>
-            {data.allFile.nodes.map(image => (
-              <Logo key={image.base}>
-                <Img
-                  alt={`${image.base.split(`.`)[0]}`}
-                  fixed={image.childImageSharp.fixed}
-                />
-              </Logo>
-            ))}
-          </div>
-        </LogoGroup>
-      ) : (
-        <LogoGroup className={SCROLLER_CLASSNAME}>
-          <HorizontalScrollerContentAsDiv tabIndex={0}>
-            {data.allFile.nodes.map(image => (
-              <LogoScrollable key={image.base}>
-                <Img
-                  alt={`${image.base.split(`.`)[0]}`}
-                  fixed={image.childImageSharp.fixed}
-                />
-              </LogoScrollable>
-            ))}
-          </HorizontalScrollerContentAsDiv>
-        </LogoGroup>
-      )}
+      <LogoGroup tabIndex={0}>
+        {data.allFile.nodes.map(image => (
+          <Img
+            alt={`${image.base.split(`.`)[0]}`}
+            fixed={image.childImageSharp.fixed}
+            key={image.base}
+          />
+        ))}
+      </LogoGroup>
     </Section>
   )
 }
