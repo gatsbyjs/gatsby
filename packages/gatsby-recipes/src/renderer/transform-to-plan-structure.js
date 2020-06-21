@@ -61,7 +61,8 @@ const transform = (props = {}) => {
     const { _props, _type, ...plan } = JSON.parse(rawResource.text)
 
     const resourcePlan = {
-      resourceName: _type,
+      // TODO figure out why do we have to use the mdxType for child components?
+      resourceName: _type || _props?.mdxType,
       resourceDefinitions: _props,
       ...plan,
     }
