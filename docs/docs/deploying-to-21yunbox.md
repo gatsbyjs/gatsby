@@ -40,7 +40,7 @@ Now that 21YunBox is connected to your repo, it will **automatically build and p
 
 ## 21YunBox CDN and cache invalidation
 
-21YunBox hosts your site on a Chinese, blazing fast CDN which ensures the fastest possible download times for all your users across in China.
+21YunBox hosts your site on a Chinese, blazing fast CDN which ensures the fastest possible download times for all your users across China.
 
 Every deploy automatically and instantly invalidates the CDN cache, so your users can always access the latest content on your site.
 
