@@ -85,6 +85,7 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
+    envObject.GATSBY_HOT_LOADER = JSON.stringify(process.env.GATSBY_HOT_LOADER)
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
