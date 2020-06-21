@@ -27,12 +27,47 @@ const githubApiClient = process.env.GITHUB_API_TOKEN
     })
   : null
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type StartersYaml implements Node {
+      url: String!
+      repo: String!
+      description: String
+      tags: [String!]
+      features: [String!]
+      childScreenshot: Screenshot # added by gatsby-transformer-screenshot
+      fields: StartersYamlFields!
+    }
+
+    type StartersYamlFields @dontInfer {
+      featured: Boolean
+      hasScreenshot: Boolean
+      starterShowcase: StartersYamlFieldsStarterShowcase
+    }
+
+    type StartersYamlFieldsStarterShowcase @dontInfer {
+      slug: String!
+      stub: String
+      name: String
+      description: String
+      stars: Int
+      lastUpdated: String
+      owner: String
+      githubFullName: String
+      gatsbyMajorVersion: [[String]]
+      allDependencies: [[String]]
+      gatsbyDependencies: [[String]]
+      miscDependencies: [[String]]
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const starterTemplate = getTemplate(`template-starter-page`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allStartersYaml {
         nodes {
@@ -80,7 +115,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
   githubApiClient
     .request(
-      `
+      /* GraphQL */ `
     query {
       repository(owner:"${owner}", name:"${repo}") {
         name
@@ -118,7 +153,7 @@ const fetchGithubData = async ({ owner, repo, reporter }, retry = 0) =>
     })
 
 exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
-  const { createNodeField } = actions
+  const { createNodeField, deleteNode } = actions
   if (node.internal.type === `StartersYaml` && node.repo) {
     // To develop on the starter showcase, you'll need a GitHub
     // personal access token. Check the `www` README for details.
@@ -183,7 +218,7 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           const gatsbyMajorVersion = allDependencies
             .filter(([key]) => key === `gatsby`)
             .map(version => {
-              let [gatsby, versionNum] = version
+              const [gatsby, versionNum] = version
               if (versionNum === `latest` || versionNum === `next`) {
                 return [gatsby, `2`]
               }
@@ -219,10 +254,11 @@ exports.onCreateNode = ({ node, actions, getNode, reporter }) => {
           })
         })
         .catch(err => {
-          reporter.panicOnBuild(
+          reporter.warn(
             `Error getting repo data for starter "${repoStub}":\n
             ${err.message}`
           )
+          deleteNode(node)
         })
     }
   }

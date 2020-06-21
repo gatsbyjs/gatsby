@@ -1,4 +1,6 @@
 import { PackageJson, Reporter } from "gatsby"
+import { Store, AnyAction } from "redux"
+import { IGatsbyState } from "../redux/types"
 
 export interface ICert {
   key: string
@@ -28,6 +30,8 @@ export interface IProgram {
   ssl?: ICert
   inspect?: number
   inspectBrk?: number
+  graphqlTracing?: boolean
+  setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 
 // @deprecated
