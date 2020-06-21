@@ -2,12 +2,40 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const { getTemplate } = require(`../get-template`)
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type SitesYaml implements Node {
+      title: String!
+      main_url: String!
+      url: String!
+      source_url: String
+      featured: Boolean
+      categories: [String]!
+      built_by: String
+      built_by_url: String
+      description: String
+      childScreenshot: Screenshot # added by gatsby-transformer-screenshot
+      fields: SitesYamlFields!
+    }
+
+    type SitesYamlFields @dontInfer {
+      slug: String!
+      hasScreenshot: Boolean
+    }
+
+    # TODO this should be in gatsby-transformer-screenshot
+    type Screenshot implements Node {
+      screenshotFile: File
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
   const showcaseTemplate = getTemplate(`template-showcase-details`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allSitesYaml(filter: { main_url: { ne: null } }) {
         nodes {

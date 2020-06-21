@@ -121,7 +121,7 @@ export interface ITypeMetadata {
   dirty?: boolean
   total?: number
   ignoredFields?: Set<string>
-  fieldMap: Record<string, IValueDescriptor>
+  fieldMap?: Record<string, IValueDescriptor>
   typeConflictReporter?: TypeConflictReporter
   [key: string]: unknown
 }

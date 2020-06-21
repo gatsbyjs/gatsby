@@ -60,7 +60,7 @@ exports.handler = async (event, context, callback) => {
 }
 ```
 
-When using Netlify for CI _and_ deployments, you can pop this code in a `/functions` directory and the functions will get built and shipped whenever you push to Github. No manual steps needed 💯.
+When using Netlify for CI _and_ deployments, you can pop this code in a `/functions` directory and the functions will get built and shipped whenever you push to GitHub. No manual steps needed 💯.
 
 Learn more about Netlify Functions in [their documentation](https://docs.netlify.com/functions/overview/).
 
@@ -156,7 +156,7 @@ Why might the directory already exist? Gatsby Cloud maintains a cache, to speed 
 
 ## In conclusion
 
-With a little bit of Node.js configuration, we're able to do some post-processing after the build, packaging up our functions and moving them to the spot Netlify expects to find them. When we push code to Github, Gatsby Cloud will run a new build, and then upload the resulting files to Netlify.
+With a little bit of Node.js configuration, we're able to do some post-processing after the build, packaging up our functions and moving them to the spot Netlify expects to find them. When we push code to GitHub, Gatsby Cloud will run a new build, and then upload the resulting files to Netlify.
 
 If you already have a Gatsby Cloud site, and you're considering using serverless functions, I can say unequivocally that Netlify makes the experience seamless and painless, and their generous pricing model means that you can experiment with them for free.
 

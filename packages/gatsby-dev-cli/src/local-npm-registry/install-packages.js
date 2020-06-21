@@ -29,7 +29,56 @@ const installPackages = async ({
       { stdio: `pipe` },
     ])
 
-    const workspacesLayout = JSON.parse(JSON.parse(stdout).data)
+    let workspacesLayout
+    try {
+      workspacesLayout = JSON.parse(JSON.parse(stdout).data)
+    } catch (e) {
+      /*
+      Yarn 1.22 doesn't output pure json - it has leading and trailing text:
+      ```
+      $ yarn workspaces info --json
+      yarn workspaces v1.22.0
+      {
+        "z": {
+          "location": "z",
+          "workspaceDependencies": [],
+          "mismatchedWorkspaceDependencies": []
+        },
+        "y": {
+          "location": "y",
+          "workspaceDependencies": [],
+          "mismatchedWorkspaceDependencies": []
+        }
+      }
+      Done in 0.48s.
+      ```
+      So we need to do some sanitization. We find JSON by matching substring
+      that starts with `{` and ends with `}`
+    */
+
+      const regex = /^[^{]*({.*})[^}]*$/gs
+      const sanitizedStdOut = regex.exec(stdout)
+      if (sanitizedStdOut?.length >= 2) {
+        // pick content of first (and only) capturing group
+        const jsonString = sanitizedStdOut[1]
+        try {
+          workspacesLayout = JSON.parse(jsonString)
+        } catch (e) {
+          console.error(
+            `Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`
+          )
+          // not exitting here, because we have general check for `workspacesLayout` being set below
+        }
+      }
+    }
+
+    if (!workspacesLayout) {
+      console.error(
+        `Couldn't parse output of "yarn workspaces info" command`,
+        stdout
+      )
+      process.exit(1)
+    }
 
     const handleDeps = deps => {
       if (!deps) {

@@ -1,6 +1,6 @@
 import { ActionsUnion, IGatsbyState } from "../types"
 
-export const nodeReducer = (
+export const nodesReducer = (
   state: IGatsbyState["nodes"] = new Map(),
   action: ActionsUnion
 ): IGatsbyState["nodes"] => {

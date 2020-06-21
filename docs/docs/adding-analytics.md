@@ -71,3 +71,4 @@ Once this is configured you can deploy your site to test! If you navigate to the
 - [Parse.ly Analytics](/packages/gatsby-plugin-parsely-analytics/)
 - [GoatCounter](/packages/gatsby-plugin-goatcounter/)
 - [PostHog](/packages/gatsby-plugin-posthog-analytics/)
+- [Plausible Analytics](/packages/gatsby-plugin-plausible/)

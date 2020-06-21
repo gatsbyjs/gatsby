@@ -37,6 +37,21 @@ export const Section = ({ children, ...rest }) => (
   </section>
 )
 
+export const SectionNoRightPadding = ({ children }) => (
+  <section
+    sx={{
+      ...container,
+      py: [4, null, 5, 8],
+      pr: 0,
+      [mediaQueries.md]: {
+        pl: 10,
+      },
+    }}
+  >
+    {children}
+  </section>
+)
+
 export const copyColumnWidth = `20rem`
 export const copyColumnGutter = 10
 
@@ -64,11 +79,6 @@ export const CopyColumn = ({
   ...rest
 }) => (
   <div
-    css={{
-      "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
-    }}
     sx={{
       ...rest,
       fontSize: 2,
@@ -84,6 +94,9 @@ export const CopyColumn = ({
         mb: 0,
         maxWidth: `none`,
         width: narrow ? copyColumnWidth : `30rem`,
+      },
+      "p, ul, ol": {
+        maxWidth: `40rem`,
       },
     }}
   >
@@ -104,21 +117,26 @@ export const CopyColumn = ({
   </div>
 )
 
-export const ContentColumn = ({ children, fullWidth, ...rest }) => (
+export const ContentColumn = ({
+  children,
+  fullWidth,
+  overflowXMobile,
+  ...rest
+}) => (
   <div
-    css={{
-      "p, ul, ol": {
-        maxWidth: `40rem`,
-      },
-    }}
     sx={{
       ...rest,
       width: `100%`,
       overflow: `hidden`,
+      overflowX: overflowXMobile ? `auto` : `hidden`,
       position: `relative`,
       [mediaQueries.lg]: {
         width: fullWidth ? `100%` : `50rem`,
         maxWidth: fullWidth ? `none` : false,
+        overflowX: `hidden`,
+      },
+      "p, ul, ol": {
+        maxWidth: `40rem`,
       },
     }}
   >
