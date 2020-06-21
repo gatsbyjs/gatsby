@@ -7343,7 +7343,7 @@
   main_url: https://www.philtietjen.dev/
   source_url: https://github.com/Phizzard/phil-portfolio
   description: >
-    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+    Portfolio of Phil Tietjen using Gatsby, Tailwind CSS, and Emotion/styled
   categories:
     - Portfolio
     - Open Source
@@ -10951,7 +10951,7 @@
   main_url: https://suganthan.com/
   url: https://suganthan.com/
   description: >
-    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and TailwindCSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
+    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and Tailwind CSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
   categories:
     - Blog
     - Business
@@ -10970,7 +10970,6 @@
     - Education
   built_by: Bold.org
   featured: false
-
 - title: Petite & Minimal
   url: https://www.petiteandminimal.com/
   main_url: https://www.petiteandminimal.com/
