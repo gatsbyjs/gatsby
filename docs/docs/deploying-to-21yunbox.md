@@ -36,7 +36,7 @@ That's it! Your site will be live on your 21YunBox URL (which looks like `yoursi
 
 ## Continuous deploys
 
-Now that 21YunBox is connected to your repo, it will **automatically build and publish your site** any time you push to GitHub.
+Now that 21YunBox is connected to your repo, it will automatically build and publish your site any time you push to GitHub.
 
 ## 21YunBox CDN and cache invalidation
 
