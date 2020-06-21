@@ -70,7 +70,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 1. Press `Ctrl + ,` or `⌘ + ,` to open your preferences. Type `node debug` into the search bar. Make sure the `Auto Attach` option is set to `on`.
    ![Search for on debug and set attach to enable](./images/set-node-attach-to-on.png)
 
-2. Using VS Code's integrated terminal run `node --nolazy --inspect-brk node_modules/gatsby/dist/bin/gatsby develop` instead of `gatsby develop`
+2. Using VS Code's integrated terminal run `node --nolazy node_modules/gatsby/dist/bin/gatsby develop --inspect-brk` instead of `gatsby develop`
 
 3. Set breakpoints and debug!
 
@@ -93,7 +93,7 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "request": "launch",
       "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
-      "args": ["develop"],
+      "args": ["develop", "--inspect-brk"],
       "stopOnEntry": false,
       "runtimeArgs": ["--nolazy"],
       "sourceMaps": false
@@ -104,7 +104,7 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "request": "launch",
       "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
-      "args": ["build"],
+      "args": ["build", "--inspect-brk"],
       "stopOnEntry": false,
       "runtimeArgs": ["--nolazy"],
       "sourceMaps": false
