@@ -134,9 +134,30 @@ const handleResource = (
 
   const key = JSON.stringify({ resourceName, ...props, mode })
 
+  const updateResource = result => {
+    allResources = allResources.filter(a => a.resourceDefinitions._key)
+    const resourceMap = new Map()
+
+    allResources.forEach(r => resourceMap.set(r.resourceDefinitions._key, r))
+    const newResource = {
+      resourceName,
+      resourceDefinitions: props,
+      ...result,
+    }
+
+    if (
+      props._key &&
+      !lodash.isEqual(newResource, resourceMap.get(props._key))
+    ) {
+      resourceMap.set(props._key, newResource)
+      setResources([...resourceMap.values()])
+    }
+  }
+
   const cachedResult = cache.get(key)
 
   if (cachedResult) {
+    updateResource(cachedResult)
     return cachedResult
   }
 
@@ -151,31 +172,20 @@ const handleResource = (
       const cachedValue = cache.get(key)
       if (cachedValue) {
         resolve(cachedValue)
+        updateResource(cachedValue)
+      } else {
+        resources[resourceName][fn](context, props)
+          .then(result => {
+            updateResource(result)
+            return result
+          })
+          .then(result => cache.set(key, result))
+          .then(resolve)
+          .catch(e => {
+            console.log(e)
+            reject(e)
+          })
       }
-
-      resources[resourceName][fn](context, props)
-        .then(result => {
-          allResources = allResources.filter(a => a.resourceDefinitions._key)
-          const newResources = lodash.uniqBy(
-            [
-              {
-                resourceName,
-                resourceDefinitions: props,
-                ...result,
-              },
-              ...allResources,
-            ],
-            r => r.resourceDefinitions._key
-          )
-          setResources(newResources)
-          return result
-        })
-        .then(result => cache.set(key, result))
-        .then(resolve)
-        .catch(e => {
-          console.log(e)
-          reject(e)
-        })
     })
   } catch (e) {
     throw e

@@ -4,7 +4,7 @@ const { transform } = require(`@babel/standalone`)
 const template = require(`@babel/template`).default
 const babelPluginTransformReactJsx = require(`@babel/plugin-transform-react-jsx`)
 const babelPluginRemoveExportKeywords = require(`babel-plugin-remove-export-keywords`)
-const babelChainingPlugin = require("@babel/plugin-proposal-optional-chaining")
+const babelChainingPlugin = require(`@babel/plugin-proposal-optional-chaining`)
 
 const { render } = require(`./render`)
 const { resourceComponents } = require(`./resource-components`)
