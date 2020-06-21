@@ -4,8 +4,11 @@ import { findPath } from "./find-path"
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
     const loadComponent = (chunkName, key = `components`) =>
-      Promise.resolve(syncRequires[key][chunkName])
+      Promise.resolve(this.syncRequires[key][chunkName])
+
     super(loadComponent, matchPaths)
+
+    this.syncRequires = syncRequires
   }
 
   loadPage(pagePath) {
@@ -39,6 +42,10 @@ class DevLoader extends BaseLoader {
 
   doPrefetch(pagePath) {
     return Promise.resolve(require(`./socketIo`).getPageData(pagePath))
+  }
+
+  updateSyncRequires(syncRequires) {
+    this.syncRequires = syncRequires
   }
 }
 
