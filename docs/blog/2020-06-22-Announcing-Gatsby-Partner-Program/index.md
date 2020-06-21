@@ -1,3 +1,13 @@
+---
+title: Grow with Gatsby: Introducing the Gatsby Partner Program
+date: 2020-06-22
+author: Linda Watkins
+excerpt: At Gatsby, supporting agencies as you work with clients to create compelling sites and apps that delight users is important to us. Equally important is supporting those building the overall ecosystem of CMS, infrastructure tools, and other technologies that form the foundations of today’s emerging modern web. Today we are inviting Agency Partners and Technology Partners to join our new Gatsby Partner Program, designed with both of these priorities firmly in mind.
+tags:
+  - announcements
+  - agencies
+  - partner-program
+---
 I'm pleased to announce a brand new [Gatsby Partner Program](https://www.gatsbyjs.com/partner) for digital agencies and website technology companies!
 
 Gatsby just celebrated our fifth birthday. During that time, we've seen massive growth with 2000+ open source plugins, 3300 contributors, 200K public sites, the launch of Gatsby Cloud, and strong adoption among developers and agencies. One thing has become completely clear in our half decade thus far: the web is changing in a fundamental way. We're in the midst of a true paradigm shift as the long-standing monolithic CMS -- the way the web has been built for the past twenty years -- is getting disrupted. Developers are finding new tools that help them optimize for performance without compromising on user experience. And digital agencies, more than anyone, are on the forefront of this website revolution.
