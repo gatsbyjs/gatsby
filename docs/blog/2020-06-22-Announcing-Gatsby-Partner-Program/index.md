@@ -47,7 +47,7 @@ We hope you'll join us in building the web of the future! Interested partners ca
 __What are the types of Gatsby partners?__
 Gatsby has two categories of partners: agency and technology partners. Agencies build websites and apps for clients. Technology partners are part of Gatsby's ecosystem such as CMS and hosting integrations.
 
-__What is the [Gatsby Partner Portal](https://gatsby.channeltivity.com/BecomeAPartner)(https://gatsby.channeltivity.com/BecomeAPartner)?__
+__What is the [Gatsby Partner Portal](https://gatsby.channeltivity.com/BecomeAPartner)?__
 The Gatsby Partner Portal is a section on gatsbyjs.com where agencies and technology partners can apply to become a partner, submit a referral lead, access sales guides and marketing materials, and connect with the Gatsby team. It is the one stop shop for agency partners to get all the resources they need to position and sell Gatsby, as well as providing technology partners the guide on how to become a first-class integration partner.
 
 __Will Technology partners have access to the partner portal?__
