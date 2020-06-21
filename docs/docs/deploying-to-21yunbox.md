@@ -6,14 +6,14 @@ title: Deploying to 21YunBox
 
 21YunBox includes the following features:
 
-- Continuous, automatic builds & deploys from GitHub and Gitee.
-- Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org).
-- Instant cache invalidation with a blazing fast, Chinese CDN.
-- Unlimited [custom domains](https://www.21yunbox.com/docs/v2/custom-domains.html).
-- Automatic [Brotli compression](https://en.wikipedia.org/wiki/Brotli) for faster sites.
-- Native HTTP/2 support.
-- Automatic HTTP → HTTPS redirects.
-- Custom URL redirects and rewrites.
+- Continuous, automatic builds & deploys from GitHub and Gitee
+- Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org)
+- Instant cache invalidation with a blazing fast, Chinese CDN
+- Unlimited [custom domains](https://www.21yunbox.com/docs/v2/custom-domains.html)
+- Automatic [Brotli compression](https://en.wikipedia.org/wiki/Brotli) for faster sites
+- Native HTTP/2 support
+- Automatic HTTP → HTTPS redirects
+- Custom URL redirects and rewrites
 
 ## Prerequisites
 
