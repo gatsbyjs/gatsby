@@ -53,6 +53,14 @@ exports.onPostBuild = () => {
   )
 }
 
+exports.createSchemaCustomization = helpers => {
+  for (const section of sections) {
+    if (section.createSchemaCustomization) {
+      section.createSchemaCustomization(helpers)
+    }
+  }
+}
+
 exports.sourceNodes = async helpers => {
   for (const section of sections) {
     if (section.sourceNodes) {
