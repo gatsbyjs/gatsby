@@ -29,7 +29,7 @@ module.exports = {
 Theme UI uses a `theme` configuration object to provide color, typography, layout, and other shared stylistic values through [React context][].
 This allows components within your site to add styles based on a predefined set of values.
 
-There are two ways to add a theme to your site.
+There are two ways to add a theme to your site: using configuration options in `gatsby-plugin-theme-ui`, or local shadowing.
 
 ### `gatsby-plugin-theme-ui` configuration
 
@@ -56,7 +56,7 @@ module.exports = {
 }
 ```
 
-Alternatively, you could do the same thing and require the package yourself.
+Alternatively, you could do the same thing and require the package yourself. This is necessary if you're referencing a local package that isn't available publicly.
 
 ```shell
 npm install @theme-ui/preset-funk
@@ -79,7 +79,7 @@ module.exports = {
 
 ### Local shadowing
 
-The Theme UI plugin uses the [component shadowing API][] to add the theme object context to your site.
+The Theme UI plugin uses the [component shadowing API][] to add the theme object context to your site. Shadowing is the ability to create a file in the same location as the theme you're leveraging and override the original file's content.
 Create a `src/gatsby-plugin-theme-ui` directory in your project, and add an `index.js` file to export a theme object.
 
 ```shell
@@ -208,7 +208,7 @@ When using Theme UI in a Gatsby theme, it's important to understand how the `gat
 
 If multiple themes are installed in the same site, the one defined last in your `gatsby-config.js` file's `plugins` array will take precedence.
 
-To extend an existing Theme UI configuration from a theme it's necessary to know how the base theme is passing styles. If it's using a `preset`, as the `gatsby-theme-blog`, any shadowed files are merged automatically.
+To extend an existing Theme UI configuration from a theme you'll need to find out how the base theme is passing styles. If it's using a `preset`, as the `gatsby-theme-blog`, any shadowed files are merged automatically. This can be discovered by looking at the theme source code in `node_modules` or on GitHub.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
@@ -276,5 +276,5 @@ To learn more about using Theme UI in your project, see the official [Theme UI][
 [mdx]: /docs/mdx
 [typography.js]: /docs/typography-js
 [react context]: https://reactjs.org/docs/context.html
-[component shadowing api]: /docs/themes/api-reference#component-shadowing
+[component shadowing api]: /docs/theme-api/#shadowing
 [`sx` prop]: https://theme-ui.com/sx-prop

@@ -14,7 +14,7 @@ If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio
 
 You can inspect `gatsby-theme-blog`'s file structure to determine the file path for the file you want to shadow.
 
-```text:title="tree gatsby-theme-blog"
+```text:title=gatsby-theme-blog
 ├── gatsby-browser.js
 ├── gatsby-config.js
 ├── gatsby-node.js
