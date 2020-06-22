@@ -161,9 +161,7 @@ class HomepageBlogPosts extends Component {
             {postsInColumns.map((column, colIdx) => (
               <PostsColumn key={`col${colIdx}`}>
                 {column.map((post, postIdx) => {
-                  const {
-                    fields: { slug },
-                  } = post
+                  const { slug } = post
 
                   const firstPost = !colIdx && !postIdx
                   const lastPost = colIdx & postIdx
@@ -200,9 +198,7 @@ class HomepageBlogPosts extends Component {
           <HomepageBlogPostsRootMobile className={SCROLLER_CLASSNAME}>
             <HorizontalScrollerContentAsDiv>
               {posts.map((post, idx) => {
-                const {
-                  fields: { slug },
-                } = post
+                const { slug } = post
                 return <HomepageBlogPost index={idx} key={slug} post={post} />
               })}
               <ViewAll />

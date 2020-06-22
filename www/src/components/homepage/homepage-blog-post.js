@@ -189,19 +189,18 @@ const HomepageBlogPost = ({
   desktopViewport = false,
 }) => {
   const {
-    fields: { slug, excerpt },
-    frontmatter: {
-      author: {
-        id: authorName,
-        avatar: {
-          childImageSharp: { fixed: authorFixed },
-        },
-        fields: { slug: authorSlug },
+    slug,
+    excerpt,
+    author: {
+      id: authorName,
+      avatar: {
+        childImageSharp: { fixed: authorFixed },
       },
-      date,
-      title,
-      cover,
+      fields: { slug: authorSlug },
     },
+    date,
+    title,
+    cover,
   } = post
 
   return (
