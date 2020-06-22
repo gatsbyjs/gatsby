@@ -25,13 +25,13 @@ However, in his current class _nobody has dropped out_. And every single one of 
 
 [Melany Dierks](http://mywetpaintstudio.com/) ([source](https://github.com/reguv760/mmd-site2))
 
-[![Image of graphic designer's site](graphic-design-2.png)](http://myceevee.netlify.com/)
+[![Image of graphic designer's site](graphic-design-2.png)](https://myceevee.netlify.app/)
 
-[Khabarovsk](http://myceevee.netlify.com/) ([source](https://github.com/msergushova/myceevee))
+[Khabarovsk](https://myceevee.netlify.app/) ([source](https://github.com/msergushova/myceevee))
 
-[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.com/)
+[![Image of graphic designer's site](graphic-design-3.png)](https://trudesignsongatsby.netlify.app/)
 
-[TruDesigns](https://trudesignsongatsby.netlify.com/) ([source](https://github.com/trudesigns/newStuff))
+[TruDesigns](https://trudesignsongatsby.netlify.app/) ([source](https://github.com/trudesigns/newStuff))
 
 After our initial phone conversation, Phil responded to a series of interview questions via email.
 

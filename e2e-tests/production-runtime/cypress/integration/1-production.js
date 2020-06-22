@@ -43,6 +43,44 @@ describe(`Production build tests`, () => {
       .should(`equal`, `/page-2/`)
   })
 
+  describe(`relative links`, () => {
+    it(`should navigate to a subdirectory`, () => {
+      cy.visit(`/`)
+        .waitForRouteChange()
+        .getTestElement(`subdir-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-1`)
+    })
+
+    it(`can navigate to a sibling page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+
+    it(`can navigate to a parent page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-parent-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory`)
+    })
+
+    it(`can navigate to a sibling page programatically`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-button-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+  })
+
   it(`should show 404 page when clicking a link to a non-existent page route`, () => {
     cy.visit(`/`).waitForRouteChange()
 
