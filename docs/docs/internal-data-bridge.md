@@ -31,15 +31,17 @@ This is a node that contains fields from your site's `gatsby-config.js`, as well
 A very commonly used field on this node is the `siteMetadata` field. This field provides access to any arbitrary data that's added to your site's `gatsby-config.js` under the `siteMetadata` property.
 
 In `gatsby-config.js`:
+
 ```js
 module.exports = {
   siteMetadata: {
     title: `My beautiful Gatsby site title`,
   },
- }
+}
 ```
 
 In a page or static query:
+
 ```graphql
 query {
   site {
