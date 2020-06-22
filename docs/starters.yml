@@ -6660,7 +6660,6 @@
   tags:
     - MDX
     - Styling:Tailwind
-    - Offline
   features:
     - Based on Gatsby Starter Theme
     - Google Analytics
