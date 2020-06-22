@@ -35,13 +35,77 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
+
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      description: String
+      contentsHeading: String
+      showTopLevelSignatures: Boolean
+      disableTableOfContents: Boolean
+      tableOfContentsDepth: Int
+      overview: Boolean
+      issue: String
+      jsdoc: [String!]
+      apiCalls: String
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      anchor: String
+      section: String
+      locale: String
+    }
+
+    type File implements Node {
+      childrenDocumentationJs: DocumentationJs
+      fields: FileFields
+    }
+
+    # Added by gatsby-transformer-gitinfo
+    # TODO add these back upstream
+    type FileFields {
+      gitLogLatestDate: Date @dateformat
+      gitLogLatestAuthorName: String
+      gitLogLatestAuthorEmail: String
+    }
+
+    type DocumentationJSComponentDescription implements Node {
+      childMdx: Mdx
+    }
+
+    type GatsbyAPICall implements Node @derivedTypes @dontInfer {
+      name: String
+      file: String
+      group: String
+      codeLocation: GatsbyAPICallCodeLocation
+    }
+
+    type GatsbyAPICallCodeLocation @dontInfer {
+      filename: Boolean
+      end: GatsbyAPICallEndpoint
+      start: GatsbyAPICallEndpoint
+    }
+
+    type GatsbyAPICallEndpoint @dontInfer {
+      column: Int
+      line: Int
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const docsTemplate = getTemplate(`template-docs-markdown`)
   const apiTemplate = getTemplate(`template-api-markdown`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allMdx(
         limit: 10000

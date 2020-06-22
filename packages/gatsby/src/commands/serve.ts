@@ -106,7 +106,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(telemetry.expressMiddleware(`SERVE`))
 
   router.use(compression())
-  router.use(express.static(`public`))
+  router.use(express.static(`public`, { dotfiles: `allow` }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
   router.use((req, res, next) => {
