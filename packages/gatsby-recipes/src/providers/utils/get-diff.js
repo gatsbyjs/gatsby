@@ -2,7 +2,7 @@ const diff = require(`jest-diff`).default
 const chalk = require(`chalk`)
 const stripAnsi = require(`strip-ansi`)
 
-module.exports = async (oldVal, newVal) => {
+module.exports = (oldVal, newVal) => {
   const options = {
     aAnnotation: `Original`,
     bAnnotation: `Modified`,

@@ -15,6 +15,7 @@ const create = async (_context, { name }) => {
 
 const read = async (_context, name) => {
   const spaces = await all()
+  console.log(`all spaces`, spaces)
 
   if (!spaces) {
     return null
@@ -60,8 +61,10 @@ const plan = async (context, { id, name }) => {
 
   if (!currentResource) {
     return {
+      name,
+      id: `(Known after install)`,
       currentState: ``,
-      describe: `Create Contentful space ${name}`,
+      describe: `Create Contentful space "${name}"`,
       diffExists: true,
       skipDiff: true,
     }

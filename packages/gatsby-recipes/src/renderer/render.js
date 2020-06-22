@@ -172,8 +172,8 @@ const handleResource = (
       const cachedValue = cache.get(key)
       if (cachedValue) {
         resolve(cachedValue)
-        updateResource(cachedValue)
       } else {
+        console.log(fn, { resourceName, context, props })
         resources[resourceName][fn](context, props)
           .then(result => {
             updateResource(result)

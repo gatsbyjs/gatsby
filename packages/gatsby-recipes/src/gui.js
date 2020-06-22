@@ -169,94 +169,6 @@ const RecipesList = ({ setRecipe }) => {
   )
 }
 
-const ContentfulSpace = ({ _uuid, ...props }) => {
-  const inputProps = useInputByKey(_uuid)
-  const [inputState, setInputState] = useState({
-    resourceUuid: _uuid,
-    props: {
-      ...props,
-      ...inputProps,
-    },
-  })
-
-  const { children, ...editableProps } = props
-
-  const setProp = key => e => {
-    const newState = {
-      ...inputState,
-      props: {
-        ...inputState.props,
-        [key]: e.target.value,
-      },
-    }
-
-    setInputState(newState)
-
-    sendEvent({
-      event: `INPUT_ADDED`,
-      input: newState,
-    })
-  }
-
-  return (
-    <form key={_uuid}>
-      {Object.entries(editableProps).map(([key, value]) => (
-        <label key={key}>
-          {key} <br />
-          <input
-            value={inputState.props[key] || value}
-            onChange={setProp(key)}
-          />
-          <br />
-        </label>
-      ))}
-    </form>
-  )
-}
-
-const File = ({ _uuid, ...props }) => {
-  const inputProps = useInputByKey(_uuid)
-  const [inputState, setInputState] = useState({
-    resourceUuid: _uuid,
-    props: {
-      ...props,
-      ...inputProps,
-    },
-  })
-
-  const setProp = key => e => {
-    const newState = {
-      ...inputState,
-      props: {
-        ...inputState.props,
-        [key]: e.target.value,
-      },
-    }
-
-    setInputState(newState)
-
-    sendEvent({
-      event: `INPUT_ADDED`,
-      input: newState,
-    })
-  }
-
-  return (
-    <form key={_uuid}>
-      {Object.entries(props).map(([key, value]) => (
-        <label key={key}>
-          {key} <br />
-          <input
-            value={inputState.props[key] || value}
-            onChange={setProp(key)}
-          />
-          <br />
-        </label>
-      ))}
-    </form>
-  )
-}
-
 const components = {
   inlineCode: props => <code {...props} />,
   Config: () => null,
@@ -270,7 +182,7 @@ const components = {
   NPMScript: () => null,
   RecipeIntroduction: props => <div>{props.children}</div>,
   RecipeStep: props => <div>{props.children}</div>,
-  ContentfulSpace,
+  ContentfulSpace: () => null,
   ContentfulEnvironment: () => null,
   ContentfulType: () => null,
 }
@@ -291,7 +203,7 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `./test2.mdx`
+const recipe = `./testing-contentful.mdx`
 // recipe = `jest.mdx`,
 // recipe,
 const graphqlPort = 4000
@@ -561,7 +473,7 @@ const ButtonText = state => {
   return `Install Recipe`
 }
 
-const ResourceChildren = ({ resourceChildren }) => {
+const ResourceChildren = ({ resourceChildren, state }) => {
   if (!resourceChildren || !resourceChildren.length) {
     return null
   }
@@ -591,7 +503,6 @@ function Wrapper({ children }) {
 }
 
 const RecipeInterpreter = () => {
-  console.time(`before-component`)
   // eslint-disable-next-line
   const [localRecipe, setRecipe] = useState(recipe)
 
@@ -720,7 +631,6 @@ const RecipeInterpreter = () => {
   )
 
   const groupedPlans = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
-  console.timeEnd(`before-component`)
 
   return (
     <>
@@ -767,10 +677,7 @@ const RecipeInterpreter = () => {
               <Heading sx={{ marginBottom: 6 }}>
                 Changes
                 {` `}
-                {plansWithoutInputs &&
-                  `(${plansWithoutInputs.filter(p => p.isDone).length}/${
-                    plansWithoutInputs?.length
-                  })`}
+                {plansWithoutInputs && `(${plansWithoutInputs?.length})`}
               </Heading>
               {Object.entries(groupedPlans).map(([resourceName, plans]) => (
                 <div key={`key-${resourceName}`}>

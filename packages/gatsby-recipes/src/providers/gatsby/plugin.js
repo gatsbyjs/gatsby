@@ -136,13 +136,7 @@ const getPluginsFromConfig = src => {
 
 const getConfigPath = root => path.join(root, `gatsby-config.js`)
 
-const readConfigFile = async root => {
-  let src
-  try {
-    src = await fs.readFile(getConfigPath(root), `utf8`)
-  } catch (e) {
-    if (e.code === `ENOENT`) {
-      src = `/**
+const defaultConfig = `/**
  * Configure your Gatsby site with this file.
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
@@ -151,9 +145,22 @@ const readConfigFile = async root => {
 module.exports = {
   plugins: [],
 }`
+
+const readConfigFile = async root => {
+  let src
+  try {
+    src = await fs.readFile(getConfigPath(root), `utf8`)
+  } catch (e) {
+    console.log(e)
+    if (e.code === `ENOENT`) {
+      src = defaultConfig
     } else {
       throw e
     }
+  }
+
+  if (src === ``) {
+    src = defaultConfig
   }
 
   return src
