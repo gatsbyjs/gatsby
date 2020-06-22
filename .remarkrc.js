@@ -24,7 +24,6 @@ module.exports = {
     // We would like these rules to be enabled, but they require significant content changes
     // and need additional PRs to be implemented
     ["remark-lint-emphasis-marker", false],
-    ["remark-lint-heading-increment", false],
     ["remark-lint-no-heading-punctuation", false],
     ["remark-lint-list-item-spacing", false],
 

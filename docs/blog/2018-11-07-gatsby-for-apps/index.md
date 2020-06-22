@@ -245,6 +245,6 @@ We can't wait to see what you build.
 [gatsby-source-wordpress]: /packages/gatsby-source-wordpress/
 [gatsby-transformer-yaml]: /packages/gatsby-transformer-yaml/
 [gatsby-plugins]: /plugins
-[gatsby-mail-app]: https://gatsby-mail.netlify.com
+[gatsby-mail-app]: https://gatsby-mail.netlify.app
 [gatsby-mail-repo]: https://github.com/dschau/gatsby-mail
 [apollo-boost]: https://github.com/apollographql/apollo-client/tree/master/packages/apollo-boost

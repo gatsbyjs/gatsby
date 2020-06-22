@@ -95,15 +95,15 @@ This bundle is produced from [production-app.js](https://github.com/gatsbyjs/gat
 
 This contains the small [webpack-runtime](https://webpack.js.org/concepts/manifest/#runtime) as a separate bundle (configured in `optimization` section). In practice, the app and webpack-runtime are always needed together.
 
-##### framework-[contenthash].js
+### framework-[contenthash].js
 
 The framework bundle contains the React framework. Based on user behavior, React hardly gets upgraded to a newer version. Creating a separate bundle improves users' browser cache hit rate as this bundle is likely not going to be updated often.
 
-##### commons-[contenthash].js
+### commons-[contenthash].js
 
 Libraries used on every Gatsby page are bundled into the commons javascript file. By bundling these together, you can make sure your users only need to download this bundle once.
 
-##### component---[name]-[contenthash].js
+### component---[name]-[contenthash].js
 
 This is a separate bundle for each page. The mechanics for how these are split off from the main production app are covered in [Code Splitting](/docs/how-code-splitting-works/).
 

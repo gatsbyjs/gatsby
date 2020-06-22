@@ -54,6 +54,10 @@ Object {
   },
   "pageData": Map {},
   "pageDataStats": Map {},
+  "pendingPageDataWrites": Object {
+    "pagePaths": Set {},
+    "templatePaths": Set {},
+  },
   "staticQueryComponents": Map {},
   "status": Object {
     "PLUGINS_HASH": "",
