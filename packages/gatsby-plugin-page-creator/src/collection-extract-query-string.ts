@@ -5,12 +5,18 @@ import traverse, { NodePath } from "@babel/traverse"
 import generate from "@babel/generator"
 import * as t from "@babel/types"
 
+// TODO: Ive tried to make TS happy here, but any changes I make to get TS
+// to work actually make the code fail. This code works. So maybe we can figure
+// this out later.
 function isCreatePagesFromData(path: NodePath<t.CallExpression>): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `createPagesFromData` &&
+      // @ts-ignore
       path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
+    // @ts-ignore
     (path.node.callee.name === `createPagesFromData` &&
+      // @ts-ignore
       path.get(`callee`).referencesImport(`gatsby`))
   )
 }
