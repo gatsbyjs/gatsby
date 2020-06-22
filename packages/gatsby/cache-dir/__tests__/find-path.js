@@ -86,7 +86,7 @@ describe(`find-path`, () => {
       jest.mock(`@reach/router/lib/utils`)
       const findPath = require(`../find-path`).findPath
       const setMatchPaths = require(`../find-path`).setMatchPaths
-      const match = require(`@reach/router/lib/utils`).match
+      const pick = require(`@reach/router/lib/utils`).pick
 
       setMatchPaths([
         {
@@ -103,7 +103,7 @@ describe(`find-path`, () => {
       )
       expect(findPath(`/notanapp/my-page`)).toBe(`/notanapp/my-page`)
 
-      expect(match).toHaveBeenCalledTimes(1)
+      expect(pick).toHaveBeenCalledTimes(1)
     })
   })
 })
