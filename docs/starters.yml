@@ -6654,6 +6654,16 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
+- url: http://gatsby-tailwind-starter.kosvrouvas.com/
+  repo: https://github.com/kosvrouvas/gatsby-tailwindcss-starter
+  description: The default Gatsby starter bundled with the latest TailwindCSS for DRY situations
+  tags:
+    - MDX
+    - Styling:Tailwind
+  features:
+    - Based on Gatsby Starter Theme
+    - Google Analytics
+    - Sentry
 - url: https://simple.rickkln.com
   repo: https://github.com/rickkln/gatsby-starter-simple
   description: Simple Gatsby starter for a small static site. Replaces Prettier with ESLint (AirBnB style), and adds TypeScript and Firebase hosting.
