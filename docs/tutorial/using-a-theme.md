@@ -36,7 +36,7 @@ module.exports = {
 }
 ```
 
-> Note: If you already have a landing page set up for your site you may want to make use of the `basePath` option that will put your blog listing page at a path other than `/`.
+> Note: If you already have a landing page set up for your site you may want to make use of the `basePath` option that will put your blog listing page at a path other than `/`, such as `/blog`.
 
 ## Update your site metadata
 
