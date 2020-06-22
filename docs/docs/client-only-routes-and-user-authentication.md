@@ -150,7 +150,7 @@ In this example with a router and a single route for `/app/why-gatsby-is-awesome
 
 A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
 
-In this example, when making a `GET` request to `/app/why-gatsby-is-awesome`, the server should respond with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect).
+In this example, when making a `GET` request to `/app/why-gatsby-is-awesome`, the server should respond with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect). This can be done with NGINX using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options), or an [equivalent directive](https://serverfault.com/questions/290784/what-is-apaches-equivalent-of-nginxs-try-files) if using Apache.
 
 One result of this method is that the client is completely unaware of the logic on the server, decoupling it from Gatsby.
 

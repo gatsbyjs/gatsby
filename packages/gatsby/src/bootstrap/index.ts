@@ -5,7 +5,6 @@ import {
   customizeSchema,
   sourceNodes,
   buildSchema,
-  writeOutRequires,
   createPages,
   createPagesStatefully,
   extractQueries,
@@ -53,8 +52,6 @@ export async function bootstrap(
   await rebuildSchemaWithSitePage(context)
 
   await extractQueries(context)
-
-  await writeOutRequires(context)
 
   await writeOutRedirects(context)
 

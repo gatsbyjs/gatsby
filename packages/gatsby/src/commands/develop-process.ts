@@ -28,6 +28,7 @@ import {
   runStaticQueries,
   runPageQueries,
   startWebpackServer,
+  writeOutRequires,
 } from "../services"
 import { boundActionCreators } from "../redux/actions"
 import { ProgramStatus } from "../redux/types"
@@ -120,7 +121,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   await runStaticQueries({ queryIds, store, program })
   await runPageQueries({ queryIds, store, program })
-
+  await writeOutRequires({ store })
   boundActionCreators.setProgramStatus(
     ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
   )
