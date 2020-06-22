@@ -6497,6 +6497,17 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-jest-enzyme-eslint.netlify.app
+  repo: https://github.com/markbello/gatsby-starter-jest-enzyme-eslint
+  description: gatsby-starter-default with Jest, Enzyme, and ESLint
+  tags:
+    - Testing
+    - Linting
+  features:
+    - Jest testing set up
+    - Enzyme for shallow rendering and snapshot testing
+    - ESLint for linting
+    - No frills, minimally opinionated
 - url: https://foundation.stackrole.com/
   repo: https://github.com/stackrole/gatsby-starter-foundation
   description: A starter to launch your blazing fast personal website and a blog, Built with Gatsby and Netlify CMS. Made with ❤ by Stackrole
