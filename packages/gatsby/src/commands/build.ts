@@ -14,6 +14,7 @@ import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
 import { store, readState } from "../redux"
 import * as appDataUtil from "../utils/app-data"
+import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
@@ -30,6 +31,10 @@ import {
   runStaticQueries,
   runPageQueries,
 } from "../services"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -56,6 +61,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
+
+  markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
@@ -143,6 +150,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
     store,
   })
+
+  await flushPendingPageDataWrites()
+  markWebpackStatusAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()

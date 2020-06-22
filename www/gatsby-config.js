@@ -51,6 +51,26 @@ if (process.env.AIRTABLE_API_KEY) {
   })
 }
 
+if (!process.env.DISABLE_SOURCE_DOCS) {
+  dynamicPlugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `docs`,
+      path: `${__dirname}/../docs/`,
+    },
+  })
+  // The `packages` directory is only used for API definitions,
+  // which are part of the docs.
+  dynamicPlugins.push({
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `gatsby-core`,
+      path: `${__dirname}/../packages/gatsby/`,
+      ignore: [`**/dist/**`],
+    },
+  })
+}
+
 module.exports = {
   siteMetadata: {
     title: `GatsbyJS`,
@@ -80,22 +100,12 @@ module.exports = {
     {
       resolve: `gatsby-source-npm-package-search`,
       options: {
-        keywords: [`gatsby-plugin`, `gatsby-component`],
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `docs`,
-        path: `${__dirname}/../docs/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `gatsby-core`,
-        path: `${__dirname}/../packages/gatsby/`,
-        ignore: [`**/dist/**`],
+        // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword
+        // that returns a lot fewer packages
+        // (In this case, stuff that Lennart has published)
+        keywords: process.env.DISABLE_NPM_SEARCH
+          ? [`lekoarts`]
+          : [`gatsby-plugin`, `gatsby-component`],
       },
     },
     {
