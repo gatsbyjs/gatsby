@@ -80,7 +80,8 @@ module.exports = {
 ### Local shadowing
 
 The Theme UI plugin uses the [component shadowing API][] to add the theme object context to your site. Shadowing is the ability to create a file in the same location as the theme you're leveraging and override the original file's content.
-Create a `src/gatsby-plugin-theme-ui` directory in your project, and add an `index.js` file to export a theme object.
+
+In this case, that location is `src/gatsby-plugin-theme-ui`. So, create that directory in your project and add an `index.js` file to export a theme object.
 
 ```shell
 mkdir src/gatsby-plugin-theme-ui
