@@ -44,7 +44,7 @@ async function loadNodeContent(node) {
     )
   }
 
-  const content = loadNodeContent(node)
+  const content = await loadNodeContent(node)
 
   node.internal.content = content
 
