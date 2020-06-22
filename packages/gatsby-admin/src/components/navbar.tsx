@@ -16,6 +16,7 @@ const Navbar: React.FC<{}> = () => {
 
   return (
     <Flex
+      as="nav"
       justifyContent="space-between"
       alignItems="center"
       sx={{

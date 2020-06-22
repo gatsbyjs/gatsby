@@ -15,7 +15,7 @@ This [Babel](https://babeljs.io/) preset is used for our internal packages. If y
 
 Install `babel-preset-gatsby-package` and add a `.babelrc` file with the following content to the root of your project:
 
-```bash
+```shell
 npm install --dev babel-preset-gatsby-package
 ```
 

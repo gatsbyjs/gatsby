@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.41...gatsby-recipes@0.1.42) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.40...gatsby-recipes@0.1.41) (2020-06-19)
+
+### Bug Fixes
+
+- **recipe:** GitHub Pages - brand names ([#24982](https://github.com/gatsbyjs/gatsby/issues/24982)) ([21c396d](https://github.com/gatsbyjs/gatsby/commit/21c396d))
+
+## [0.1.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.39...gatsby-recipes@0.1.40) (2020-06-15)
+
+### Features
+
+- **recipes:** add github pages deployement with travis ([#23669](https://github.com/gatsbyjs/gatsby/issues/23669)) ([9b2a804](https://github.com/gatsbyjs/gatsby/commit/9b2a804))
+- **recipes:** add gitlab-ci-cd recipe to cli list ([#24501](https://github.com/gatsbyjs/gatsby/issues/24501)) ([99da774](https://github.com/gatsbyjs/gatsby/commit/99da774))
+
+## [0.1.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.38...gatsby-recipes@0.1.39) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.37...gatsby-recipes@0.1.38) (2020-06-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
+## [0.1.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.36...gatsby-recipes@0.1.37) (2020-06-03)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## [0.1.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.35...gatsby-recipes@0.1.36) (2020-06-02)
 
 **Note:** Version bump only for package gatsby-recipes
@@ -61,7 +90,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **recipes:** add recipe for Gitlab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
+- **recipes:** add recipe for GitLab CI/CD ([#24275](https://github.com/gatsbyjs/gatsby/issues/24275)) ([0da2f01](https://github.com/gatsbyjs/gatsby/commit/0da2f01))
 
 ## [0.1.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.1.27...gatsby-recipes@0.1.28) (2020-05-22)
 

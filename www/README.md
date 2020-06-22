@@ -52,7 +52,39 @@ The list of possible locales can be found at [i18n.json](/www/i18n.json).
 
 The default locale, English, is always on. There is currently no UI to link to the localizations, so you'll have to type in the name of the file you want to go to using the language code (e.g. /es/tutorial/part-one).
 
-## Running slow build? (Screenshots placeholder)
+## Running slow build?
+
+### Disabling sourcing docs
+
+You can disable sourcing from the `docs/` and `packages/` directory by setting the following variable to `.env.development`:
+
+```shell
+DISABLE_SOURCE_DOCS=true
+```
+
+This will mean that the following URLs won't be generated:
+
+- docs/
+- tutorial/
+- blog/
+- features/
+- starters/
+- showcase/
+- creators/
+
+Use this option when you just want to test that the site builds or when working on a component that is not part of these sections (such as the homepage or the navigation).
+
+### Disabling NPM search (plugins/packages)
+
+If you are not working with plugins/packages, you can add the following variable to `.env.development`:
+
+```shell
+DISABLE_NPM_SEARCH=true
+```
+
+This will tell the plugin `gatsby-transformer-npm-package-search` to not search gatsby-related packages, and instead only search for a placeholder keyword.
+
+### Screenshots placeholder
 
 If you are not working on a starter or site showcase, it might be beneficial to use a placeholder image instead of actual screenshots. It will skip downloading screenshots and generating responsive images for all screenshots and replace them with a placeholder image.
 
