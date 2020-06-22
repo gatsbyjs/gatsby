@@ -475,6 +475,17 @@ workflows:
     jobs:
       - sync_translation_repo
 
+  weekly-node-14:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - unit_tests_node14
+
   nightly-react-next:
     triggers:
       - schedule:
@@ -544,11 +555,6 @@ workflows:
           requires:
             - lint
             - typecheck
-            - bootstrap
-      - unit_tests_node14:
-          <<: *ignore_docs
-          requires:
-            - lint
             - bootstrap
       - unit_tests_www:
           requires:
