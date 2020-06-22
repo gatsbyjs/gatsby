@@ -73,7 +73,7 @@ module.exports = {
 
 ## Add some content
 
-Before you can see anything, you'll want to add some content so there is something to see.
+Before you can see anything, you'll want to add some content so there is something to show.
 
 By default, the posts are expected in the `/content/posts` directory, so create those folders and add a `my-post.md` file. Your file structure should look something like this.
 
