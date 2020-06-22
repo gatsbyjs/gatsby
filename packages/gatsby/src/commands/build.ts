@@ -6,15 +6,15 @@ import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
 import { store, readState } from "../redux"
-import queryUtil from "../query"
 import * as appDataUtil from "../utils/app-data"
+import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
@@ -26,6 +26,15 @@ import { boundActionCreators } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
+import {
+  calculateDirtyQueries,
+  runStaticQueries,
+  runPageQueries,
+} from "../services"
+import {
+  markWebpackStatusAsPending,
+  markWebpackStatusAsDone,
+} from "../utils/webpack-status"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -53,6 +62,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
+  markWebpackStatusAsPending()
+
   const publicDir = path.join(program.directory, `public`)
   initTracer(program.openTracingConfigFile)
   const buildActivity = report.phantomActivity(`build`)
@@ -66,8 +77,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
-    ...program,
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+    program,
     parentSpan: buildSpan,
   })
 
@@ -76,18 +87,17 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlTracing: program.graphqlTracing,
   })
 
-  const {
-    processPageQueries,
-    processStaticQueries,
-  } = queryUtil.getInitialQueryProcessors({
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  await runStaticQueries({
+    queryIds,
     parentSpan: buildSpan,
+    store,
     graphqlRunner,
   })
 
-  await processStaticQueries()
-
   await apiRunnerNode(`onPreBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -134,7 +144,15 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await processPageQueries()
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
+  await flushPendingPageDataWrites()
+  markWebpackStatusAsDone()
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const { pages } = store.getState()
@@ -247,7 +265,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()
