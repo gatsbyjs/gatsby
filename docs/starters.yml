@@ -6659,7 +6659,7 @@
   description: The default Gatsby starter bundled with the latest TailwindCSS for DRY situations
   tags:
     - MDX
-    - Styling:TailwindCSS
+    - Styling:Tailwind
     - Offline
   features:
     - Based on Gatsby Starter Theme
