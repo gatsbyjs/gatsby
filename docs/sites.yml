@@ -1299,16 +1299,16 @@
   built_by: Jonas Tebbe
   built_by_url: https://twitter.com/jonastebbe
   featured: false
-- title: Parker Sarsfield Portfolio
+- title: Parker Sarsfield
   description: |
-    I'm Parker, a software engineer and sneakerhead.
-  main_url: https://parkersarsfield.com
-  url: https://parkersarsfield.com
+    I'm Parker, a software engineer.
+  main_url: https://sarsfield.io
+  url: https://sarsfield.io
   categories:
     - Blog
     - Portfolio
   built_by: Parker Sarsfield
-  built_by_url: https://parkersarsfield.com
+  built_by_url: https://sarsfield.io
 - title: Frontend web development with Greg
   description: |
     JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
