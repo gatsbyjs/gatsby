@@ -530,7 +530,7 @@ It's easy to create your own "Gatsbygram" site from an Instagram account.
 
 ### Instructions on setting up your own Gatsbygram site
 
-```bash
+```shell
 # Clone the Gatsby repo.
 git clone -b 1.0 git@github.com:gatsbyjs/gatsby.git
 cd gatsby/examples/gatsbygram

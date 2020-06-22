@@ -119,8 +119,10 @@ function prepareQueryArgs(
  * filter.
  * Only nodes of given node types will be considered
  * A fast index is created if one doesn't exist yet so cold call is slower.
+ *
+ * Note: Not a public API. Exported for tests.
  */
-function applyFastFilters(
+export function applyFastFilters(
   filters: Array<DbQuery>,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
@@ -323,7 +325,9 @@ function collectBucketForElemMatch(
  * @returns Collection of results. Collection will be limited to 1
  *   if `firstOnly` is true
  */
-function runFastFiltersAndSort(args: IRunFilterArg): Array<IGatsbyNode> | null {
+export function runFastFiltersAndSort(
+  args: IRunFilterArg
+): Array<IGatsbyNode> | null {
   const {
     queryArgs: { filter, sort } = {},
     resolvedFields = {},
@@ -484,11 +488,4 @@ function sortNodes(
   }
 
   return _.orderBy(nodes, sortFns, sortOrder)
-}
-
-module.exports = {
-  // Not a public API
-  applyFastFilters,
-  // Public API
-  runFastFiltersAndSort,
 }

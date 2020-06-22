@@ -68,13 +68,7 @@ To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documen
 
 These steps assume you have a CSS-in-JS library already installed, and the examples are based on Emotion.
 
-1. Install Tailwind Babel Macro
-
-**Note**: `tailwind.macro` isn't currently compatible with Tailwind 1.0.0+. However, a new forked project can be found at `twin.macro` that supports Tailwind CSS v1.2 classes. It's currently in pre-release so not all plugins are supported at the time of writing. Alternatively, you can revert to Tailwind 0.7.4.
-
-**Option A**: Install `twin.macro` and use Tailwind 1.2.0+
-
-1. Install Twin and Emotion
+1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction)
 
 ```shell
 npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
@@ -83,7 +77,7 @@ npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
 2. Import the Tailwind base styles
 
 ```javascript:title=gatsby-browser.js
-import "tailwindcss/dist/base.css"
+import "tailwindcss/dist/base.min.css"
 ```
 
 3. Enable the Gatsby emotion plugin
@@ -94,33 +88,33 @@ module.exports = {
 }
 ```
 
-**Option B**: Install stable `tailwind.macro` and use Tailwind 0.7.4
+4. Use twin.macro to create your styled component
 
-```bash
-// Remove tailwind 1.0.0+ if you've already installed it
-npm uninstall tailwindcss
+```jsx:title=src/pages/index.js
+import React from "react"
+import tw, { styled } from "twin.macro" //highlight-line
 
-// Install tailwind 0.7.4 and stable tailwind.macro
-npm install tailwindcss@0.7.4
-npm install tailwind.macro
-```
-
-2. Use the Babel Macro (`tailwind.macro`) in your styled component
-
-```javascript
-import styled from "@emotion/styled"
-import tw from "tailwind.macro"
-
-// All versions
 const Button = styled.button`
-  ${tw`bg-blue hover:bg-blue-dark text-white p-2 rounded`};
+  ${tw`bg-blue-500 hover:bg-blue-800 text-white p-2 rounded`}
 `
 
-// tailwind.macro@next
+// or use the shorthand version
+
 const Button = tw.button`
-  bg-blue hover:bg-blue-dark text-white p-2 rounded
+  bg-blue-500 hover:bg-blue-800 text-white p-2 rounded
 `
+
+const IndexPage = () => (
+  <div>
+    <h1>Hi people</h1>
+    <Button>Activate</Button> // highlight-line
+  </div>
+)
+
+export default IndexPage
 ```
+
+See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/emotion/gatsby.md) for more information.
 
 #### Option #3: SCSS
 
