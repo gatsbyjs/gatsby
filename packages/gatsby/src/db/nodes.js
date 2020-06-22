@@ -28,7 +28,7 @@ interface NodeStore {
  */
 async function loadNodeContent(node) {
   if (_.isString(node.internal.content)) {
-    return Promise.resolve(node.internal.content)
+    return node.internal.content
   }
 
   // Load plugin's loader function
@@ -46,7 +46,7 @@ async function loadNodeContent(node) {
 
   const content = loadNodeContent(node)
 
-  node.internal.context = content
+  node.internal.content = content
 
   return content
 }
