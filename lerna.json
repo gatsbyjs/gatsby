@@ -25,7 +25,8 @@
   "useWorkspaces": true,
   "ignoreChanges": [
     "CHANGELOG.md",
-    "README.md",
+    "packages/babel-preset-gatsby/README.md",
+    "packages/babel-preset-gatsby-package/README.md",
     "**/__tests__/**",
     "**/__mocks__/**",
     "**/__testfixtures__/**"
