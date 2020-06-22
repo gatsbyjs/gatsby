@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.7...gatsby@2.23.8) (2020-06-22)
+
+### Bug Fixes
+
+- **gatsby:** convert module.exports to es6 in redux/filters ([#25191](https://github.com/gatsbyjs/gatsby/issues/25191)) ([3934c37](https://github.com/gatsbyjs/gatsby/commit/3934c37))
+- **gatsby:** show error message instead of [Object object](<[#25182](https://github.com/gatsbyjs/gatsby/issues/25182)>) ([445e315](https://github.com/gatsbyjs/gatsby/commit/445e315))
+
 ## [2.23.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.6...gatsby@2.23.7) (2020-06-20)
 
 ### Bug Fixes
