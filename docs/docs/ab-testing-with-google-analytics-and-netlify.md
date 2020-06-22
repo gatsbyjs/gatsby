@@ -6,7 +6,7 @@ Learn how to create an A/B test (otherwise known as a split test) with Google An
 
 ## Creating an A/B test with Netlify
 
-An A/B test compares changes on a web page. If you are creating an A/B test with Netlify, you can [use multiple Git branches containing variations of your site](https://docs.netlify.com/site-deploys/split-testing/#run-a-branch-based-test). If you are not familiar with Git branches, visit the [Git Guide](http://rogerdudler.github.io/git-guide/), which explains Git in detail.
+An A/B test compares changes on a web page. If you are creating an A/B test with Netlify, you can [use multiple Git branches containing variations of your site](https://docs.netlify.com/site-deploys/split-testing/#run-a-branch-based-test). If you are not familiar with Git branches, visit the [Git Guide](https://rogerdudler.github.io/git-guide/), which explains Git in detail.
 
 Let’s say you read on Twitter that users spend more time on webpages with blue headers. You have a hunch that this might be correct, but you want some data to verify this claim.
 

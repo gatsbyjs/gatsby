@@ -293,13 +293,13 @@ At this point, we have the freedom to organize our commits however we want. We c
 
 No flow is without tradeoffs, and this one has a couple:
 
-##### 1. It rewrites history
+### 1. It rewrites history
 
 This flow relies heavily on rebasing, which rewrites history. This means that pushing to GitHub requires a force-push, which can be scary, especially for folks newer to using Git.
 
 This also makes it harder to collaborate on a feature; you need to communicate clearly before rebasing, to make sure everyone's work is in beforehand.
 
-##### 2. It involves some branch juggling
+### 2. It involves some branch juggling
 
 With 3-4 incremental branches, developers have to bounce between them and make sure they're kept in sync. This can be tedious.
 

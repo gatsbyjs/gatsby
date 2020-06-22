@@ -178,7 +178,7 @@ By default, Gatsby will return excerpts as plain text. This might be useful for 
 }
 ```
 
-It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose an excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
+It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
 
 ```graphql
 {
