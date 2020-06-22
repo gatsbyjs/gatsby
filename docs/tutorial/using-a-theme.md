@@ -87,7 +87,7 @@ my-blog
 └── package.json
 ```
 
-Inside that markdown file, add content. The top section is called frontmatter and `title` and `date` are required fields.
+Inside that Markdown file, add content. The top section is called [frontmatter](/docs/mdx/writing-pages/#using-frontmatter-in-mdx) and `title` and `date` are required fields.
 
 ````markdown:title=/content/posts/my-post.md
 ---
