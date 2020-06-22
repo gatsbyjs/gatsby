@@ -10,10 +10,14 @@
       "message": "chore(release): Publish"
     },
     "bootstrap": {
-      "ignore": ["**/gatsby-admin"]
+      "ignore": [
+        "**/gatsby-admin"
+      ]
     }
   },
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "loglevel": "success",
   "version": "independent",
   "npmClient": "yarn",
@@ -21,6 +25,7 @@
   "useWorkspaces": true,
   "ignoreChanges": [
     "CHANGELOG.md",
+    "README.md",
     "**/__tests__/**",
     "**/__mocks__/**",
     "**/__testfixtures__/**"
