@@ -1,33 +1,14 @@
-/* @flow */
-const _ = require(`lodash`)
-const { store } = require(`../redux`)
-const nodesDb: NodeStore = require(`../redux/nodes`)
-const { runFastFiltersAndSort } = require(`../redux/run-fast-filters`)
+import { IGatsbyNode } from "../redux/types"
+import { store } from "../redux"
 
-interface NodeStore {
-  getNodes: () => Array<any>;
-  getNode: (id: string) => any | undefined;
-  getNodesByType: (type: string) => Array<any>;
-  getTypes: () => Array<string>;
-  hasNodeChanged: (id: string, digest: string) => boolean;
-  getNodeAndSavePathDependency: (id: string, path: string) => any | undefined;
-  runQuery: (args: {
-    gqlType: GraphQLType,
-    queryArgs: Object,
-    firstOnly: boolean,
-    resolvedFields: Object,
-    nodeTypeNames: Array<string>,
-  }) => any | undefined;
-}
+export * from "../redux/nodes"
+export { runFastFiltersAndSort as runQuery } from "../redux/run-fast-filters"
 
 /**
  * Get content for a node from the plugin that created it.
- *
- * @param {IGatsbyNode} node
- * @returns {Promise<string>}
  */
-async function loadNodeContent(node) {
-  if (_.isString(node.internal.content)) {
+export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
+  if (typeof node.internal.content === `string`) {
     return node.internal.content
   }
 
@@ -35,6 +16,12 @@ async function loadNodeContent(node) {
   const plugin = store
     .getState()
     .flattenedPlugins.find(plug => plug.name === node.internal.owner)
+
+  if (!plugin) {
+    throw new Error(
+      `Could not find owner plugin of node for loadNodeContent with owner \`${node.internal.owner}\``
+    )
+  }
 
   const { loadNodeContent } = require(plugin.resolve)
 
@@ -49,10 +36,4 @@ async function loadNodeContent(node) {
   node.internal.content = content
 
   return content
-}
-
-module.exports = {
-  ...nodesDb,
-  runQuery: runFastFiltersAndSort,
-  loadNodeContent,
 }
