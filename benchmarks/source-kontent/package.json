@@ -18,7 +18,7 @@
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.7",
     "gatsby-image": "^2.2.40",
-    "gatsby-plugin-benchmark-reporting": "^0.0.2",
+    "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-transformer-sharp": "^2.3.14",
     "react": "^16.12.0",

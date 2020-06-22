@@ -1,56 +1,73 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import styled from "@emotion/styled"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-const InnerContainer = styled(`div`)`
-  align-items: center;
-  display: flex;
-  height: ${p => p.theme.sizes.bannerHeight};
-  overflow-x: auto;
-  mask-image: ${props =>
-    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${props.theme.space[6]}, ${props.theme.colors.purple[90]} 96%, transparent)`};
-`
+import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const Content = styled(`div`)`
-  color: ${p => p.theme.colors.whiteFade[80]};
-  font-family: ${p => p.theme.fonts.heading};
-  padding-left: ${p => p.theme.space[6]};
-  padding-right: ${p => p.theme.space[6]};
-  white-space: nowrap;
-
-  a {
-    color: ${p => p.theme.colors.white};
-    border-bottom: 1px solid ${p => p.theme.colors.white};
-  }
-
-  a:hover {
-    color: ${p => p.theme.colors.white};
-    border-bottom-color: ${p => p.theme.colors.white}a0;
-  }
-`
-
-const Banner = () => (
-  <aside
-    className="banner"
+const InnerContainer = ({ children }) => (
+  <div
     sx={{
-      backgroundColor: `banner`,
-      height: `bannerHeight`,
-      position: `fixed`,
-      width: `100%`,
-      zIndex: `banner`,
-      px: `env(safe-area-inset-left)`,
+      display: `flex`,
+      alignItems: `center`,
+      justifyContent: `center`,
+      height: `100%`,
+      overflowX: `auto`,
+      maskImage: t =>
+        `linear-gradient(to right, transparent, ${t.colors.purple[`90`]} ${
+          t.space[`6`]
+        }, ${t.colors.purple[`90`]} 96%, transparent)`,
+      [mediaQueries.md]: {
+        justifyContent: `flex-start`,
+      },
     }}
   >
-    <InnerContainer>
-      <Content>
-        {`New! Try Incremental Builds with `}
-        <OutboundLink href="https://www.gatsbyjs.com">
-          Gatsby Cloud!
-        </OutboundLink>
-      </Content>
-    </InnerContainer>
-  </aside>
+    {children}
+  </div>
 )
 
-export default Banner
+const Content = ({ children }) => (
+  <div
+    sx={{
+      color: t => t.colors.whiteFade[80],
+      fontFamily: t => t.fonts.heading,
+      px: t => t.space[6],
+      whiteSpace: `nowrap`,
+      a: {
+        color: t => t.colors.white,
+        borderBottom: t => `1px solid ${t.colors.white}`,
+
+        "&:hover": {
+          color: t => t.colors.white,
+          borderBottom: t => `1px solid ${t.colors.white}`,
+        },
+      },
+    }}
+  >
+    {children}
+  </div>
+)
+
+export default function Banner() {
+  return (
+    <aside
+      className="banner"
+      sx={{
+        position: `fixed`,
+        zIndex: `banner`,
+        backgroundColor: `banner`,
+        height: `bannerHeight`,
+        width: `100%`,
+        px: `env(safe-area-inset-left)`,
+      }}
+    >
+      <InnerContainer>
+        <Content>
+          {`New! Try Incremental Builds with `}
+          <OutboundLink href="https://www.gatsbyjs.com">
+            Gatsby Cloud!
+          </OutboundLink>
+        </Content>
+      </InnerContainer>
+    </aside>
+  )
+}

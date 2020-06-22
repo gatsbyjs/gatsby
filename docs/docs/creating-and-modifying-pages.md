@@ -259,7 +259,7 @@ const Page = ({ pageContext }) => {
 export default Page
 ```
 
-Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.
+Page context is serialized before being passed to pages. This means it can't be used to pass functions into components and `Date` objects will be serialized into strings.
 
 ## Creating Client-only routes
 
