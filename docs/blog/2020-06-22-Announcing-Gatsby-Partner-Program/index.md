@@ -92,4 +92,4 @@ Details on Agency Partner tiers can be found on the [Agency Partner Program page
 
 **Will the partner program include a revenue share?**
 
-Yes. Agency partners will be able to earn a % of revenue from unique referrals they submit that are successfully won. Referred leads will be managed in the partner portal. Technology partners interested in joint sales should reach out to <partners@gatsbyjs.com>.
+Yes. Agency partners will be able to earn a % of revenue from unique referrals they submit that are successfully won. Referred leads will be managed in the partner portal. Technology partners interested in joint sales should reach out to [partners@gatsbyjs.com](partners@gatsbyjs.com).
