@@ -8,7 +8,7 @@ In this tutorial, you'll learn how to use Gatsby themes by creating a new site u
 
 - A Gatsby site
 
-> Note: This tutorial assumes you already have a Gatsby site to install your theme in. If you'd prefer to start with an entirely new site you can run `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme` to install a theme that comes with the starter.
+> Note: This tutorial assumes you already have a Gatsby site to install your theme in. If you'd prefer to start with an entirely new site you can run `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme` to set up a starter with the blog theme already installed.
 
 ## Installing the blog theme
 
