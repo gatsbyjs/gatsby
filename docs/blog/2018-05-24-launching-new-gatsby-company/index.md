@@ -55,7 +55,7 @@ I was hooked on being able to ship production code so quickly. Life was good.
 
 Then in 2013, React.js was released.
 
-I first heard about React from [David Nolen’s blog post introducing his ClojureScript wrapper of React Om](http://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs). I was completely fascinated by his analysis; his identification of DOM manipulation code as a major contributor to application complexity and slowdowns resonated with me. I started reading everything I could find on React and soon became a huge fan.
+I first heard about React from [David Nolen’s blog post introducing his ClojureScript wrapper of React Om](https://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs). I was completely fascinated by his analysis; his identification of DOM manipulation code as a major contributor to application complexity and slowdowns resonated with me. I started reading everything I could find on React and soon became a huge fan.
 
 Early in 2014, I left Pantheon to explore new opportunities. I dove deeper into React and built a number of sample applications and was astounded at how productive I was. Problems that used to take me weeks to solve in Backbone.js took me hours in React.js. Not only was I productive; my code felt remarkably simple. With Backbone.js, I always felt I was one or two slip-ups from the whole application spiraling out of control. With React, elegant and simple solutions seemed to come naturally from using the library. Again, I could feel things in web land were changing in a very big way.
 
