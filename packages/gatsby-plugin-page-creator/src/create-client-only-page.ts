@@ -2,21 +2,21 @@ import { Actions } from "gatsby"
 import { createPath } from "gatsby-page-utils"
 import { getMatchPath } from "./get-match-path"
 
+// Create a client side page with a matchPath
+// based on the `[]` existing in it's file path.
+// e.g., a file named `src/pages/foo/[bar].js`
+// gets created at the url: `foo/:bar`
 export function createClientOnlyPage(
   filePath: string,
   absolutePath: string,
   actions: Actions
 ): void {
-  // Create page object
-  const createdPath = createPath(filePath)
+  const path = createPath(filePath)
 
-  const page = {
-    path: createdPath,
-    ...getMatchPath(createdPath),
+  actions.createPage({
+    path,
+    ...getMatchPath(path),
     component: absolutePath,
     context: {},
-  }
-
-  // Add page
-  actions.createPage(page)
+  })
 }

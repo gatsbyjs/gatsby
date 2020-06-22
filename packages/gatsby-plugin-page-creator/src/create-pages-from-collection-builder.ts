@@ -1,25 +1,12 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
-import { generateQueryFromString, reverseLookupParams } from "./extract-query"
+import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "./get-match-path"
 import { createPath } from "gatsby-page-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
-import { babelParseToAst } from "gatsby/dist/utils/babel-parse-to-ast"
 import { derivePath } from "./derive-path"
-import fs from "fs-extra"
-import traverse, { NodePath } from "@babel/traverse"
-import generate from "@babel/generator"
-import * as t from "@babel/types"
-
-function isCreatePagesFromData(path: NodePath<t.CallExpression>): boolean {
-  return (
-    (path.node.callee.type === `MemberExpression` &&
-      path.node.callee.property.name === `createPagesFromData` &&
-      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
-    (path.node.callee.name === `createPagesFromData` &&
-      path.get(`callee`).referencesImport(`gatsby`))
-  )
-}
+import { watchCollectionBuilder } from "./watch-collection-builder"
+import { collectionExtractQueryString } from "./collection-extract-query-string"
 
 // TODO: Do we need the ignore argument?
 export async function createPagesFromCollectionBuilder(
@@ -28,64 +15,36 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"]
 ): Promise<void> {
-  const ast = babelParseToAst(
-    fs.readFileSync(absolutePath).toString(),
-    absolutePath
-  ) as t.Node
+  // 1. Query for the data for the collection to generate pages
+  const queryString = collectionExtractQueryString(absolutePath)
 
-  let queryString
-  let callsiteExpression
-
-  traverse(ast, {
-    // TODO: Throw an error if this is not the export default ? just to encourage default habits
-    CallExpression(path) {
-      if (!isCreatePagesFromData(path)) return
-      if (!t.isCallExpression(path)) return // this might not be needed...
-
-      callsiteExpression = generate(path.node).code
-      const [, queryAst] = path.node.arguments
-      let string = ``
-
-      if (t.isTemplateLiteral(queryAst)) {
-        string = queryAst.quasis[0].value.raw
-      }
-      if (t.isStringLiteral(queryAst)) {
-        string = queryAst.value
-      }
-
-      queryString = generateQueryFromString(string, absolutePath)
-    },
-  })
-
-  if (!queryString) {
-    throw new Error(
-      `CollectionBuilder: There was an error generating pages from your collection.
-
-FilePath: ${filePath}
-Function: ${callsiteExpression}
-    `
+  // 1.a  If the query string is not findable, we can't move on. So we stop and watch
+  if (queryString === null) {
+    watchCollectionBuilder(absolutePath, ``, [], actions, () =>
+      createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
     )
+    return
   }
 
   const { data, errors } = await graphql<{ nodes: Record<string, unknown> }>(
     queryString
   )
 
+  // 1.a If it fails, we need to inform the user and exit early
   if (!data || errors) {
     console.warn(`Tried to create pages from the collection builder found at ${filePath}.
 Unfortunately, the query came back empty. There may be an error in your query.`)
     console.error(errors)
+
+    watchCollectionBuilder(absolutePath, queryString, [], actions, () =>
+      createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+    )
+
     return
   }
 
-  const rootKey = /^\{([a-zA-Z]+)/.exec(queryString)
-
-  if (!rootKey || !rootKey[1]) {
-    throw new Error(
-      `An internal error occured, if you experience this please an open an issue. Problem: Couldn't resolve the graphql keys in collection builder`
-    )
-  }
-
+  // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
+  //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
   const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
     Record<string, unknown>
   >
@@ -95,12 +54,18 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
     console.info(`   Creating ${nodes.length} pages from ${filePath}`)
   }
 
-  nodes.forEach((node: Record<string, unknown>) => {
-    const path = createPath(derivePath(absolutePath, node))
+  // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
+  //    the watcher will use this data to delete the pages if the query changes significantly.
+  const paths = nodes.map((node: Record<string, unknown>) => {
+    // URL path for the component and node
+    const path = createPath(derivePath(filePath, node))
+    // Params is supplied to the FE compoent on props.params
     const params = getCollectionRouteParams(createPath(filePath), path)
-
+    // nodeParams is fed to the graphql query for the component
     const nodeParams = reverseLookupParams(node, absolutePath)
+    // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
     const matchPath = getMatchPath(path)
+
     console.info(`   ${matchPath.matchPath || path}`)
 
     actions.createPage({
@@ -112,5 +77,11 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
         __params: params,
       },
     })
+
+    return path
   })
+
+  watchCollectionBuilder(absolutePath, queryString, paths, actions, () =>
+    createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
+  )
 }

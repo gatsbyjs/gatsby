@@ -5,7 +5,7 @@ import { createPagesFromCollectionBuilder } from "./create-pages-from-collection
 import systemPath from "path"
 import fs from "fs-extra"
 
-function pathIsCCollectionBuilder(path: string): boolean {
+function pathIsCollectionBuilder(path: string): boolean {
   if (fs.existsSync(path) === false) return false
   const js = fs.readFileSync(path).toString()
   return js.includes(`createPagesFromData`)
@@ -25,31 +25,27 @@ export function createPage(
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {
-    // console.log(1, filePath)
     return
   }
 
   // Filter out anything matching the given ignore patterns and options
   if (ignorePath(filePath, ignore)) {
-    // console.log(2, filePath)
     return
   }
 
   const absolutePath = systemPath.join(pagesDirectory, filePath)
 
-  if (pathIsCCollectionBuilder(absolutePath)) {
-    // console.log(3, absolutePath)
+  // If the page has a function call to createPagesFromData markers in it, then we create it as a collection builder
+  if (pathIsCollectionBuilder(absolutePath)) {
     createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
     return
   }
 
+  // If the path includes a `[]` in it, then we create it as a client only route
   if (pathIsClientOnlyRoute(absolutePath)) {
-    // console.log(4, absolutePath)
     createClientOnlyPage(filePath, absolutePath, actions)
     return
   }
-
-  // console.log(5, filePath)
 
   // Create page object
   const createdPath = createPath(filePath)
