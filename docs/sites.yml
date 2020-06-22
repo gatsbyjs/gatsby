@@ -572,14 +572,6 @@
   url: https://housemanager.calstate.aaa.com/
   categories:
     - Marketing
-- title: The freeCodeCamp Guide
-  main_url: https://guide.freecodecamp.org/
-  url: https://guide.freecodecamp.org/
-  source_url: https://github.com/freeCodeCamp/guide
-  featured: false
-  categories:
-    - Web Development
-    - Documentation
 - title: Hapticmedia
   main_url: https://hapticmedia.fr/en/
   url: https://hapticmedia.fr/en/
@@ -2834,16 +2826,6 @@
   built_by: Crispin Porter Bogusky
   built_by_url: http://www.cpbgroup.com/
   featured: false
-- title: Domino's Paving for Pizza
-  url: https://www.pavingforpizza.com/
-  main_url: https://www.pavingforpizza.com/
-  description: >
-    Nominate your town for a chance to have your rough drive home from Domino's fixed to pizza perfection.
-  categories:
-    - Marketing
-  built_by: Crispin Porter Bogusky
-  built_by_url: http://www.cpbgroup.com/
-  featured: false
 - title: Propapanda
   url: https://propapanda.eu/
   main_url: https://propapanda.eu/
@@ -4422,18 +4404,6 @@
   built_by: Arctica
   built_by_url: https://arctica.io
   featured: false
-- title: Shard Ventures
-  url: https://shard.vc
-  main_url: https://shard.vc
-  description: >
-    Shard is building new online companies from scratch, partnering with other like-minded founders to start and invest in technology companies.
-  categories:
-    - Finance
-    - Technology
-    - Portfolio
-  built_by: Arctica
-  built_by_url: https://arctica.io
-  featured: false
 - title: David Brookes
   url: https://davidbrookes.me
   main_url: https://davidbrookes.me
@@ -5222,19 +5192,6 @@
   built_by: Camilo Holguin
   built_by_url: https://camiloholguin.me
   featured: false
-- title: Bennett Hardwick
-  url: https://bennetthardwick.com
-  main_url: https://bennetthardwick.com
-  description: >
-    The personal website and blog of Bennett Hardwick, an Australian software developer and human being.
-  categories:
-    - Blog
-    - Programming
-    - Technology
-  source_url: https://github.com/bennetthardwick/website
-  built_by: Bennett Hardwick
-  built_by_url: https://bennetthardwick.com
-  featured: false
 - title: Kodingnesia
   url: https://kodingnesia.com/
   main_url: https://kodingnesia.com/
@@ -5928,18 +5885,6 @@
     - Documentation
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one
-- title: Arnondora
-  main_url: https://arnondora.in.th/
-  url: https://arnondora.in.th/
-  source_url: https://github.com/arnondora/arnondoraBlog
-  description: Arnondora is a personal blog by Arnon Puitrakul
-  categories:
-    - Blog
-    - Programming
-    - Technology
-  built_by: Arnon Puitrakul
-  built_by_url: https://arnondora.in.th/
-  featured: false
 - title: KingsDesign
   url: https://www.kingsdesign.com.au/
   main_url: https://www.kingsdesign.com.au/
@@ -8618,8 +8563,8 @@
     - Blog
     - Web Development
 - title: Rumaan Khalander - Portfolio
-  url: https://www.rumaan.me/
-  main_url: https://www.rumaan.me/
+  url: https://rumaan.tech/
+  main_url: https://rumaan.tech/
   description: >
     Rumaan Khalander is a Full-Stack Dev from Bengaluru who loves to develop for mobile and web.
   categories:
