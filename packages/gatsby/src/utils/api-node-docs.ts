@@ -287,8 +287,8 @@ export const createSchemaCustomization = true
  * @param {GraphQLSchema} $0.intermediateSchema Current GraphQL schema
  * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs
  * @param {object} $1
- * @param {object} $1.resolvers An object map of GraphQL type names to custom resolver functions.
- * @param {object} $1.options Optional createResolvers options.
+ * @param {object} $1.resolvers An object map of GraphQL type names to custom resolver functions
+ * @param {object} $1.options Optional createResolvers options
  * @param {object} $1.options.ignoreNonexistentTypes Silences the warning when trying to add resolvers for types that don't exist. Useful for optional extensions.
  * @example
  * exports.createResolvers = ({ createResolvers }) => {
@@ -332,9 +332,21 @@ export const preprocessSource = true
 export const generateSideEffects = true
 
 /**
- * Let plugins extend/mutate the site's Babel configuration.
- * This API will change before 2.0 as it needs still to be converted to use
- * Redux actions.
+ * Let plugins extend/mutate the site's Babel configuration by calling
+ * [`setBabelPlugin`](/docs/actions/#setBabelPlugin) or
+ * [`setBabelPreset`](/docs/actions/#setBabelPreset).
+ * @param {object} $0
+ * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
+ * 'build-javascript', or 'build-html'
+ * @param {object} $0.actions
+ * @param {object} options The Babel configuration
+ * @example
+ * exports.onCreateBabelConfig = ({ actions }) => {
+ *   actions.setBabelPlugin({
+ *     name: `babel-plugin-that-i-like`,
+ *     options: {}
+ *   })
+ * }
  */
 export const onCreateBabelConfig = true
 
@@ -404,8 +416,8 @@ export const onPostBuild = true
 export const onPreExtractQueries = true
 
 /**
- * Run when gatsby develop server is started, its useful to add proxy and middleware
- * to the dev server app
+ * Run when the `gatsby develop` server is started. It can be used for adding proxies and Express middleware
+ * to the server.
  * @param {object} $0
  * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
  * @example
