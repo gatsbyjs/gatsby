@@ -48,22 +48,26 @@ Some examples using react-helmet:
 
 Google uses structured data that it finds on the web to understand the content of the page, as well as to gather information about the web and the world in general.
 
-For example, here is a structured data snippet in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data) that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
+For example, here is a structured data snippet (added with `react-helmet`) in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data), that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
 
 ```html
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "url": "http://www.spookytech.com",
-    "name": "Spooky technologies",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+5-601-785-8543",
-      "contactType": "Customer Support"
-    }
-  }
-</script>
+<Helmet>
+  <script type="application/ld+json">
+    {`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "url": "https://www.spookytech.com",
+          "name": "Spooky technologies",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+5-601-785-8543",
+            "contactType": "Customer Support"
+          }
+        }
+      `}
+  </script>
+</Helmet>
 ```
 
 When using structured data, you'll need to test during development and the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool) from Google is one recommended method.
