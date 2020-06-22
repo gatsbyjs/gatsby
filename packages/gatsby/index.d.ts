@@ -40,15 +40,16 @@ export const prefetchPathname: (path: string) => void
  * export default (props: PageProps) => {
  *
  * @example
- * // When adding types for both pageContext and GraphQL query data
+ * // When adding types for both pageContext (represended by LocaleLookUpInfo) 
+ * // and GraphQL query data (represented by IndexQueryProps)
  *
  * import {PageProps} from "gatsby"
  *
  * type IndexQueryProps = { downloadCount: number }
  * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
- * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+ * type IndexPageProps = PageProps<IndexQueryProps, LocaleLookUpInfo>
  *
- * export default (props: IndexProps) => {
+ * export default (props: IndexPageProps) => {
  *   ..
  */
 export type PageProps<
