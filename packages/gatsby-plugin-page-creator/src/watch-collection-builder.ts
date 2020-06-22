@@ -13,7 +13,7 @@ export function watchCollectionBuilder(
   paths: string[],
   actions: Actions,
   rerunCollectionBuilder: () => void
-) {
+): void {
   const watcher = chokidar.watch(absolutePath).on(`change`, () => {
     const queryString = collectionExtractQueryString(absolutePath)
 

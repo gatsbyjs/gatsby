@@ -16,6 +16,7 @@ export function pullNodesPathFromQuery(queryString: string): string {
       grabNameAndDrillDown(selection.selectionSet.selections[0])
     }
   }
+  console.log(parsedQueryAst.definitions[0])
   grabNameAndDrillDown(parsedQueryAst.definitions[0].selectionSet.selections[0])
 
   return path.join(`.`)

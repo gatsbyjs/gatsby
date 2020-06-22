@@ -46,7 +46,7 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
   // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
   //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
   const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
-    Record<string, unknown>
+    Record<string, object>
   >
 
   if (nodes) {
@@ -56,7 +56,7 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
 
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
-  const paths = nodes.map((node: Record<string, unknown>) => {
+  const paths = nodes.map((node: Record<string, object>) => {
     // URL path for the component and node
     const path = createPath(derivePath(filePath, node))
     // Params is supplied to the FE compoent on props.params
