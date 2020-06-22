@@ -6600,6 +6600,17 @@
     - Azure
   features:
     - CI/CD using github actions
+- url: https://minimal-blog-starter.netlify.app/
+  repo: https://github.com/imjamesku/gatsby-minimal-blog-starter
+  description: A minimal NetlifyCMS starter based on the default starter with no additional styling
+  tags:
+    - CMS:Netlify
+    - Styling:None
+    - Blog
+  features:
+    - NetlifyCMS
+    - Blog post list
+    - SEO
 - url: https://gatsbyfire.netlify.app/
   repo: https://github.com/GeorgeSteel/gatsby-fire-starter
   description: A Gatsby Starter to build a complete webapp with Gatsby & Firebase by using the library reactfire
