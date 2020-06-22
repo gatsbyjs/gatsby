@@ -73,6 +73,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  writeOutRequires,
 } from "../services"
 
 // const isInteractive = process.stdout.isTTY
@@ -434,6 +435,8 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   await runStaticQueries({ queryIds, store, program })
   await runPageQueries({ queryIds, store, program })
+
+  await writeOutRequires({ store })
 
   require(`../redux/actions`).boundActionCreators.setProgramStatus(
     `BOOTSTRAP_QUERY_RUNNING_FINISHED`
