@@ -10965,3 +10965,15 @@
     - E-commerce
   built_by: Annie Taylor Chen
   built_by_url: https://www.annietaylorchen.com/
+  - title: Inbound Latino
+  url: https://inboundlatino.com/
+  main_url: https://inboundlatino.com/
+  source_url: https://github.com/AnnieTaylorCHEN/PetiteandMinimalStore
+  description: >-
+    A portfolio website built with Gatsby, featuring websites and WordPress plugins.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: José Sotelo
+  built_by_url: https://inboundlatino.com/
+  featured: false
