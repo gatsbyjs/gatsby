@@ -119,7 +119,8 @@
   main_url: https://theodorawarre.eu
   url: https://theodorawarre.eu
   description: >-
-    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + 
+    + Prismic + Matter.js
   categories:
     - E-commerce
     - Marketing
@@ -10864,6 +10865,18 @@
     - WordPress
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
+  featured: false
+- title: SANDALBOYZ
+  main_url: https://sandalboyz.com
+  url: https://sandalboyz.com
+  description: >
+    The official website of SANDALBOYZ – home to coziness and comfort. Built in conjunction with https://planetary.co/.
+  categories:
+    - Retail
+    - E-commerce
+    - Blog
+  built_by: SANDALBOYZ
+  built_by_url: https://sandalboyz.com
   featured: false
 - title: Tim Phillips
   url: https://www.tim-phillips.com/
