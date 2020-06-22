@@ -9,19 +9,15 @@ import BlogPostMetadata from "../blog-post-metadata"
 
 const basePost = {
   timeToRead: 2,
-  fields: {
-    excerpt: `This is the very first Gatsby blog post.`,
-  },
-  frontmatter: {
-    title: `My first Gatsby blog post!`,
-    seoTitle: `How to write a Gatsby blog post`,
-    rawDate: 12345,
-    author: {
-      id: `Kyle Mathews`,
-      twitter: `@kylemathews`,
-      fields: {
-        slug: `/contributors/kyle-mathews/`,
-      },
+  excerpt: `This is the very first Gatsby blog post.`,
+  title: `My first Gatsby blog post!`,
+  seoTitle: `How to write a Gatsby blog post`,
+  rawDate: 12345,
+  author: {
+    id: `Kyle Mathews`,
+    twitter: `@kylemathews`,
+    fields: {
+      slug: `/contributors/kyle-mathews/`,
     },
   },
 }
@@ -29,10 +25,7 @@ const basePost = {
 it(`generates an alternate url the post has a canonicalLink in frontmatter`, () => {
   const post = {
     ...basePost,
-    frontmatter: {
-      ...basePost.frontmatter,
-      canonicalLink: `https://reactjs.org/`,
-    },
+    canonicalLink: `https://reactjs.org/`,
   }
   render(<BlogPostMetadata post={post} />)
   const content = Helmet.peek()
@@ -94,10 +87,7 @@ it(`uses the seoTitle when available`, () => {
 it(`uses the default title when seoTitle is not available`, () => {
   const basePostWithoutSeoTitle = {
     ...basePost,
-    frontmatter: {
-      ...basePost.frontmatter,
-      seoTitle: undefined,
-    },
+    seoTitle: undefined,
   }
 
   render(<BlogPostMetadata post={basePostWithoutSeoTitle} />)
