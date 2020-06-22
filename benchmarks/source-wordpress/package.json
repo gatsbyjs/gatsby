@@ -7,6 +7,7 @@
   "scripts": {
     "build": "gatsby build",
     "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "clean": "gatsby clean",
     "data-update": "node scripts/data-update.js",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",

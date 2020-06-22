@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetches a recipe from unpkg when official short form 1`] = `
+Array [
+  "# Setup Theme UI
+
+This recipe helps you start developing with the [Theme UI](https://theme-ui.com) styling library.
+
+<Config name=\\"gatsbyjs/add-theme-ui\\" />
+",
+  "Install packages.
+
+<NPMPackage name=\\"theme-ui\\" />
+<NPMPackage name=\\"gatsby-plugin-theme-ui\\" />
+<NPMPackage name=\\"@theme-ui/presets\\" />
+",
+  "Add the plugin \`gatsby-plugin-theme-ui\` to your \`gatsby-config.js\`.
+
+<GatsbyPlugin name=\\"gatsby-plugin-theme-ui\\" />
+",
+  "Write out Theme UI configuration files.
+
+<File
+  path=\\"src/gatsby-plugin-theme-ui/index.js\\"
+  content=\\"https://gist.github.com/KyleAMathews/ab59e200e4f8a1b4109dddb51b2140f9/raw/209a2e7c589766869522b12f7f6cecaf3f7a6f81/index.js\\"
+/>
+
+<File
+  content=\\"export default {}\\"
+  path=\\"src/gatsby-plugin-theme-ui/components.js\\"
+/>
+",
+  "**Success**!
+
+You're ready to get started!
+
+-   Read the docs: <https://theme-ui.com>
+-   Learn about the theme specification: <https://system-ui.com>
+
+_note:_ if you're running this recipe on the default starter (or any other starter with
+base css), you'll need to remove the require to \`layout.css\` in the \`components/layout.js\` file
+as otherwise they'll override some theme-ui styles.
+",
+]
+`;
+
+exports[`partitions the MDX into steps 1`] = `
+Array [
+  "# Automatically run Prettier on Git commits
+
+Make sure all of your code is run through Prettier when you commit it to git.
+We achieve this by configuring prettier to run on git hooks using husky and
+lint-staged.
+",
+  "Install packages.
+
+<NPMPackage name=\\"husky\\" />
+<NPMPackage name=\\"prettier\\" />
+<NPMPackage name=\\"lint-staged\\" />
+",
+  "Implement git hooks for prettier.
+
+<NPMPackageJson
+  name=\\"husky\\"
+  value={{
+    \\"hooks\\": {
+      \\"pre-commit\\": \\"lint-staged\\"
+    }
+  }}
+/>
+<NPMPackageJson
+  name=\\"lint-staged\\"
+  value={{
+    \\"*.{js,md,mdx,json}\\": [
+      \\"prettier --write\\"
+    ]
+  }}
+/>
+",
+  "Write prettier config files.
+
+<File
+  path=\\".prettierrc\\"
+  content={\`{
+  \\"semi\\": false,
+  \\"singleQuote\\": true,
+  \\"trailingComma\\": \\"none\\"
+}\`}
+/>
+<File
+  path=\\".prettierignore\\"
+  content={\`.cache
+public
+node_modules
+\`}
+/>
+",
+  "Prettier, husky, and lint-staged are now installed! You can edit your \`.prettierrc\`
+if you'd like to change your prettier configuration.
+",
+]
+`;

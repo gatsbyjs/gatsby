@@ -3,6 +3,7 @@ starter:
   - AMP
   - Authentication
   - AWS
+  - Azure
   - Blog
   - Client-side App
   - CMS:Agility CMS
@@ -21,6 +22,7 @@ starter:
   - CMS:Other
   - Disqus
   - Documentation
+  - Donations
   - E-commerce
   - Firebase
   - Gallery
@@ -70,6 +72,7 @@ site:
   - Agency
   - App
   - Blog
+  - Books
   - Business
   - Community
   - Conference

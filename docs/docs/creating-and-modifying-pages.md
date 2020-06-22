@@ -159,11 +159,12 @@ Your template file would look like this:
 
 ```javascript:title=src/templates/product.js
 function Product({ pageContext }) {
+  const { product } = pageContext
   return (
     <div>
-      Name: {pageContext.name}
-      Price: {pageContext.price}
-      Description: {pageContext.description}
+      Name: {product.name}
+      Price: {product.price}
+      Description: {product.description}
     </div>
   )
 }
@@ -258,7 +259,7 @@ const Page = ({ pageContext }) => {
 export default Page
 ```
 
-Page context is serialized before being passed to pages: This means it can't be used to pass functions into components.
+Page context is serialized before being passed to pages. This means it can't be used to pass functions into components and `Date` objects will be serialized into strings.
 
 ## Creating Client-only routes
 

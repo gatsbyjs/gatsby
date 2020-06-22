@@ -1,19 +1,19 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
-const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
-const yaml = require(`js-yaml`)
-const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-const { i18nEnabled } = require(`./src/utils/i18n`)
+
+const { loadYaml } = require(`./src/utils/load-yaml`)
+const redirects = loadYaml(`./redirects.yaml`)
 
 const docs = require(`./src/utils/node/docs.js`)
+const blog = require(`./src/utils/node/blog.js`)
 const showcase = require(`./src/utils/node/showcase.js`)
 const starters = require(`./src/utils/node/starters.js`)
 const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
-const sections = [docs, showcase, starters, creators, packages, features]
+const sections = [docs, blog, showcase, starters, creators, packages, features]
 
 exports.createPages = async helpers => {
   const { actions } = helpers
@@ -36,15 +36,14 @@ exports.createPages = async helpers => {
 }
 
 // Create slugs for files, set released status for blog posts.
-exports.onCreateNode = helpers => {
-  sections.forEach(section => section.onCreateNode(helpers))
-}
-
-exports.onPostBootstrap = () => {
-  // Compile language strings if locales are enabled
-  if (i18nEnabled) {
-    child_process.execSync(`yarn lingui:build`)
-  }
+exports.onCreateNode = async helpers => {
+  await Promise.all(
+    sections.map(section => {
+      if (section.onCreateNode) {
+        section.onCreateNode(helpers)
+      }
+    })
+  )
 }
 
 exports.onPostBuild = () => {
@@ -54,48 +53,25 @@ exports.onPostBuild = () => {
   )
 }
 
-// XXX this should probably be a plugin or something.
-exports.sourceNodes = async ({
-  actions: { createTypes, createNode },
-  createContentDigest,
-  schema,
-}) => {
-  /*
-   * NOTE: This _only_ defines the schema we currently query for. If anything in
-   * the query at `src/pages/contributing/events.js` changes, we need to make
-   * sure these types are updated as well.
-   *
-   * But why?! Why would I do something this fragile?
-   *
-   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
-   * lazy to make upstream fixes...
-   */
-  const typeDefs = `
+exports.sourceNodes = async helpers => {
+  for (const section of sections) {
+    if (section.sourceNodes) {
+      section.sourceNodes(helpers)
+    }
+  }
+
+  const {
+    actions: { createTypes, createNode },
+    createContentDigest,
+  } = helpers
+
+  // Explicitly define Airtable types so that queries still work
+  // when there are no events.
+  // TODO make upstream change to gatsby-source-airtable
+  createTypes(/* GraphQL */ `
     type Airtable implements Node {
       id: ID!
       data: AirtableData
-    }
-
-    type SitesYaml implements Node {
-      title: String!
-      main_url: String!
-      url: String!
-      source_url: String
-      featured: Boolean
-      categories: [String]!
-      built_by: String
-      built_by_url: String
-      description: String
-      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
-    }
-
-    type StartersYaml implements Node {
-      url: String!
-      repo: String!
-      description: String
-      tags: [String!]
-      features: [String!]
-      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
     }
 
     type AirtableData @dontInfer {
@@ -109,9 +85,7 @@ exports.sourceNodes = async ({
       hasGatsbyTeamSpeaker: Boolean @proxy(from: "Gatsby_Speaker_Approved")
       approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
     }
-  `
-
-  createTypes(typeDefs)
+  `)
 
   // get data from GitHub API at build time
   const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
