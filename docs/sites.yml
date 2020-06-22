@@ -10920,6 +10920,17 @@
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
   featured: false
+- title: Tim Phillips
+  url: https://www.tim-phillips.com/
+  main_url: https://www.tim-phillips.com/
+  source_url: https://github.com/timphillips/tim-phillips.com
+  description: >
+    Personal website for Tim Phillips, a software engineer and web developer.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+  featured: false
 - title: Nagarjun Palavalli
   main_url: https://nagarjun.co/
   url: https://nagarjun.co/
