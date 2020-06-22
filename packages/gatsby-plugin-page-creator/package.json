@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-page-creator",
-  "version": "2.2.3-unifiedroutes.31+a3b781790",
+  "version": "2.3.8",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
   "scripts": {
@@ -43,6 +43,5 @@
   },
   "engines": {
     "node": ">=10.13.0"
-  },
-  "gitHead": "a3b7817908801143fe658f1f8c73254d10b248aa"
+  }
 }

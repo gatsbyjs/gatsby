@@ -17,7 +17,7 @@
     "@typescript-eslint/parser": "^2.28.0",
     "csstype": "^2.6.10",
     "formik": "^2.1.4",
-    "gatsby": "2.20.24-unifiedroutes.31+a3b781790",
+    "gatsby": "^2.22.17",
     "gatsby-interface": "0.0.167",
     "gatsby-plugin-typescript": "^2.4.4",
     "gatsby-source-graphql": "^2.5.3",
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "develop": "gatsby develop",
-    "build": "echo \"hi\"",
-    "watch": "echo \"hi\""
+    "build": "gatsby build --prefix-paths",
+    "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   }
 }

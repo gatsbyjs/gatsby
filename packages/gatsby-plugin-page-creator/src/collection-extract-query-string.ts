@@ -69,7 +69,7 @@ export function collectionExtractQueryString(
   if (isExportedAsDefault === false) {
     console.error(`CollectionBuilderError:
   The createPagesFromData call in ${
-    absolutePath.split("src/pages")[1]
+    absolutePath.split(`src/pages`)[1]
   } needs to be exported as default like this:
 
 export default ${callsiteExpression};
@@ -81,7 +81,7 @@ export default ${callsiteExpression};
     console.error(
       `CollectionBuilder: There was an error generating pages from your collection.
 
-FilePath: ${absolutePath.split("src/pages")[1]}
+FilePath: ${absolutePath.split(`src/pages`)[1]}
 Function: ${callsiteExpression}
     `
     )

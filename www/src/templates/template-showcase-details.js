@@ -1,13 +1,13 @@
 import React from "react"
-import { graphql, createPagesFromData } from "gatsby"
-import ShowcaseDetails from "../../components/showcase-details"
+import { graphql } from "gatsby"
 
-function Showcase(props) {
-  const { location, data } = props
+import ShowcaseDetails from "../components/showcase-details"
+
+export default function ShowcaseTemplate({ data, location }) {
   const isModal =
     location.state && location.state.isModal && window.innerWidth > 750
 
-  const categories = data.categories || []
+  const categories = data.sitesYaml.categories || []
 
   /*
    * This shouldn't ever happen due to filtering on hasScreenshot field
@@ -33,19 +33,9 @@ function Showcase(props) {
   )
 }
 
-export default createPagesFromData(
-  Showcase,
-  `allSitesYaml(filter: { main_url: { nin: [] }, fields: { slug: { nin: [] }, hasScreenshot: { nin: [] } } })`
-)
-
-export const query = graphql`
-  query Showcase($fields__cleanedHost: String!) {
-    fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
-      childImageSharp {
-        ...ScreenshotDetails
-      }
-    }
-    sitesYaml(fields: { cleanedHost: { eq: $fields__cleanedHost } }) {
+export const pageQuery = graphql`
+  query($slug: String!) {
+    sitesYaml(fields: { slug: { eq: $slug } }) {
       id
       title
       main_url
@@ -58,6 +48,9 @@ export const query = graphql`
       childScreenshot {
         screenshotFile {
           childImageSharp {
+            fluid(maxWidth: 700) {
+              ...GatsbyImageSharpFluid_noBase64
+            }
             resize(width: 1200, height: 627, cropFocus: NORTH, toFormat: JPG) {
               src
               height
@@ -67,9 +60,13 @@ export const query = graphql`
         }
       }
       fields {
-        cleanedHost
         slug
-        hasScreenshot
+      }
+    }
+
+    fallback: file(relativePath: { eq: "screenshot-fallback.png" }) {
+      childImageSharp {
+        ...ScreenshotDetails
       }
     }
   }

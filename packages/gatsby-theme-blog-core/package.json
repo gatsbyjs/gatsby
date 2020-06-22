@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-blog-core",
-  "version": "1.3.25-unifiedroutes.31+a3b781790",
+  "version": "1.5.33",
   "main": "index.js",
   "author": "christopherbiscardi <chris@christopherbiscardi.com> (@chrisbiscardi)",
   "license": "MIT",
@@ -30,13 +30,12 @@
   },
   "devDependencies": {
     "@mdx-js/react": "^1.6.5",
-    "gatsby": "2.20.24-unifiedroutes.31+a3b781790",
+    "gatsby": "^2.22.17",
     "prettier": "2.0.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "engines": {
     "node": ">=10.13.0"
-  },
-  "gitHead": "a3b7817908801143fe658f1f8c73254d10b248aa"
+  }
 }
