@@ -252,6 +252,10 @@ async function startServer(program: IProgram): Promise<IServer> {
     activity.start()
     await sourceNodes({
       webhookBody: req.body,
+      webhookRequest: {
+        body: req.body,
+        headers: req.headers,
+      },
     })
     activity.end()
     activity = report.activityTimer(`rebuild schema`)
