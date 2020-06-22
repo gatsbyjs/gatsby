@@ -28,4 +28,4 @@ Your site will now deploy, and you will receive a link similar to the following:
 
 ## References:
 
-- [Example Project](https://github.com/zeit/now/tree/master/examples/gatsby)
+- [Example Project](https://github.com/vercel/vercel/tree/master/examples/gatsby)

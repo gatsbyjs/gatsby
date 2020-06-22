@@ -8,7 +8,7 @@ tags:
   - gatsby-image
 ---
 
-I recently prototyped an [Acroyoga](https://en.wikipedia.org/wiki/Acroyoga)-focused side project, called ['AcroTags'](https://acrotagsgatsbyblog.netlify.com), using Gatsby and the Google Sheets API. The site was as fun to build and populate with data as it is to use for discovering Acroyoga videos. This post will explore why and how I made this site and cover the specific code I used to get Gatsby and Google Sheets to work nicely together. I hope this tutorial and the code samples allow you to quickly prototype your next idea using this very simple and powerful stack.
+I recently prototyped an [Acroyoga](https://en.wikipedia.org/wiki/Acroyoga)-focused side project, called ['AcroTags'](https://acrotagsgatsbyblog.netlify.app), using Gatsby and the Google Sheets API. The site was as fun to build and populate with data as it is to use for discovering Acroyoga videos. This post will explore why and how I made this site and cover the specific code I used to get Gatsby and Google Sheets to work nicely together. I hope this tutorial and the code samples allow you to quickly prototype your next idea using this very simple and powerful stack.
 
 ## Background on an Acroyoga obsession and the Need for a Video Explorer Site
 
@@ -20,7 +20,7 @@ I've long found it challenging to find just the right video to work on. Sometime
 
 My requirements for this Acroyoga videos site is that it be simple to add data to, load fast on mobile, and be generally intuitive to use. For this reason, I'm using Gatsby (and of course, React) and the Google Sheets API for this site. This simple stack will allow me to build a fast loading application that consumes data from a Google Sheet.
 
-As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: https://github.com/kpennell/acrotagsgatsbyblog. Finally, if you want to check out the demo app, that can be found here: https://acrotagsgatsbyblog.netlify.com.
+As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: https://github.com/kpennell/acrotagsgatsbyblog. Finally, if you want to check out the demo app, that can be found here: https://acrotagsgatsbyblog.netlify.app.
 
 ## Creating a Basic Gatsby Setup with Material-UI
 

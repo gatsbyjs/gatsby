@@ -1,6 +1,6 @@
 # Using i18n
 
-https://using-i18n.netlify.com/
+https://using-i18n.netlify.app/
 
 Example site that demonstrates how to build Gatsby sites with multiple languages (Internationalization / i18n) without any third-party plugins or packages. Per language a dedicated page is built (so no client-side translations) which is among other things important for SEO.
 

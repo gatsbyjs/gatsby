@@ -11,8 +11,8 @@ tags:
 
 The web is an incredible place. I’m so happy I get to help build it. I’ve been building websites and web apps for a long time now, and I spent a lot of that time thinking about and experimenting with what a perfect toolset for building for the web would look like. Five years ago those thoughts coalesced into the unveiling of a nascent framework I had decided to call Gatsby:
 
-> There's a lot of static site generators out there and I've played with several and written my own for my blog. They're all pretty much the same and not particularly interesting. I think a React.js based SSG can push the state of the art in three ways — easy no-page transitions, react.js style components, and leveraging the growing react.js ecosystem of tools and components.
-> Most stuff on the web are sites, not apps. And react.js components are just as powerful for sites as they are for apps so a kickass tool for building react.js sites would be very valuable.
+> There's a lot of static site generators out there and I've played with several and written my own for my blog. They're all pretty much the same and not particularly interesting. I think a React based SSG can push the state of the art in three ways — easy no-page transitions, React style components, and leveraging the growing React ecosystem of tools and components.
+> Most stuff on the web are sites, not apps. And React components are just as powerful for sites as they are for apps so a kickass tool for building React sites would be very valuable.
 
 -- Opened as Issue #1, “Braindump of ideas,” by @KyleAMathews on the brand new Gatsbyjs/Gatsby GitHub repo, May 22, 2015.
 
@@ -32,7 +32,7 @@ So I set out to create a framework that would be:
 - No reload page transitions. The initial html page would load followed quickly by a js bundle with the content for the rest of the site.
 - Smart code splitting
 - Themes that are installable separately
-- Support for markdown/Asciidoctor/other text formats
+- Support for Markdown/Asciidoctor/other text formats
 - Plugins support
 - Hot reloading built in
 - A Docker image that autobuilds/server site.
@@ -42,17 +42,17 @@ Some of these things, ok lots of these things, are well known and appreciated pa
 
 ## Contemplating composable websites
 
-A couple months after that Issue #1 braindump I was messing around with an issue in the Reduxjs/redux repo -- discussing the possibility of using a static site generator to spin up a site to host Redux documentation on GH pages. The conversation led to another turning point moment in Gatsby’s evolution:
+A couple months after that Issue #1 braindump I was messing around with an issue in the `reduxjs/redux` repo -- discussing the possibility of using a static site generator to spin up a site to host Redux documentation on GitHub Pages. The conversation led to another turning point moment in Gatsby’s evolution:
 
 > Woah. Just had an idea. What do you think about the idea of "composable" websites? Gatsby is already doing this to some extent as it has fallbacks for most critical files you need, though you can override them easily. But we could extend that concept further to something like Object.assign(Gatsby, website_base, actual_website).
 
-> So in practice how this would work is there'd be a base documentation site hosted on github. When you want a new docs site you'd just set the github url for the base site and then start adding markdown files. Anything else you'd want to modify could be set in the site config file.
+> So in practice how this would work is there'd be a base documentation site hosted on GitHub. When you want a new docs site you'd just set the GitHub url for the base site and then start adding Markdown files. Anything else you'd want to modify could be set in the site config file.
 
-This idea of “composable” websites eventually resulted in Gatsby Themes, plugins that include a gatsby-config.js file and add pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Essentially, modules that can be put together to form a single, holistic Gatsby site. Which in turn led to Gatsby Recipes as a way to address the challenge of translating an idea -- “I want to do x” -- to how “x” is done in Gatsby. Recipes help users take the literally thousands of plugins and themes that the Gatsby open source ecosystem now offers, and apply them to accomplishing desired tasks in the CLI while also enabling them to automate the process.
+This idea of “composable” websites eventually resulted in Gatsby Themes, plugins that include a `gatsby-config.js` file and add pre-configured functionality, data sourcing, and/or UI code to Gatsby sites. Essentially, modules that can be put together to form a single, holistic Gatsby site. Which in turn led to Gatsby Recipes as a way to address the challenge of translating an idea -- “I want to do x” -- to how “x” is done in Gatsby. Recipes help users take the literally thousands of plugins and themes that the Gatsby open source ecosystem now offers, and apply them to accomplishing desired tasks in the CLI while also enabling them to automate the process.
 
 Gatsby is a great tool for so very many diverse and creative projects and it has been a genuine thrill over the past five years to see what's been built with it. And how many people have been busy building: as of now, our repo shows there are 200k public Gatsby sites on GitHub. 200k / ( 365 days \* 5 years old) = 110 sites a day 🎉!
 
-![screen shot of user count on gatsby github repository](https://lh6.googleusercontent.com/m_BAZRYXtxDgy4f4oxrtxMgtbGnIxlCpfXJUHS6oCoE_c1kTOslsjJFvJ1wKWkYjvWkwbIJuNBnNng78Z5je9se6KDleT5YEatR7N-0-NTB-VFLvfu3s-4CN7RTcIRMVZ6GOM55P)
+![Screen shot of user count on Gatsby GitHub repository](https://lh6.googleusercontent.com/m_BAZRYXtxDgy4f4oxrtxMgtbGnIxlCpfXJUHS6oCoE_c1kTOslsjJFvJ1wKWkYjvWkwbIJuNBnNng78Z5je9se6KDleT5YEatR7N-0-NTB-VFLvfu3s-4CN7RTcIRMVZ6GOM55P)
 
 ## Many hands
 
@@ -71,4 +71,4 @@ It’s truly exciting to look back to see how far we have come in the last five 
 
 So no matter what happens over the next five years, there are things that will not alter. Gatsby the open source framework is always going to be open source. Always going to be free, always going to be supported, and always with the community as co-pilot.
 
-_Ready to dive in for even more Gatsby goodness? Join us at our first-ever virtual Gatsby Days, two half days of speakers, demos, and All Things Gatsby coming up on June 2 & 3rd. Register now: https://www.gatsbyjs.com/virtual-gatsby-days-registration/_
+_Ready to dive in for even more Gatsby goodness? Join us at our first-ever Virtual Gatsby Days, two half days of speakers, demos, and All Things Gatsby coming up on June 2 & 3rd. Register now: https://www.gatsbyjs.com/virtual-gatsby-days-registration/_
