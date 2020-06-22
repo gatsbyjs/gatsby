@@ -32,10 +32,7 @@ const slugify = require(`slugify`)
 require(`normalize.css`)
 
 import { useInputByKey, InputProvider } from "./renderer/input-provider"
-import {
-  useResourceByKey,
-  ResourceProvider,
-} from "./renderer/resource-provider"
+import { useResource, ResourceProvider } from "./renderer/resource-provider"
 
 const theme = getTheme()
 
@@ -294,7 +291,7 @@ const removeJsx = () => tree => {
   return tree
 }
 
-const recipe = `./test.mdx`
+const recipe = `./test2.mdx`
 // recipe = `jest.mdx`,
 // recipe,
 const graphqlPort = 4000
@@ -594,6 +591,7 @@ function Wrapper({ children }) {
 }
 
 const RecipeInterpreter = () => {
+  console.time(`before-component`)
   // eslint-disable-next-line
   const [localRecipe, setRecipe] = useState(recipe)
 
@@ -722,6 +720,7 @@ const RecipeInterpreter = () => {
   )
 
   const groupedPlans = lodash.groupBy(plansWithoutInputs, p => p.resourceName)
+  console.timeEnd(`before-component`)
 
   return (
     <>

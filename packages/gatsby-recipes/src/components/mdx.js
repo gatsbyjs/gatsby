@@ -7,7 +7,7 @@ import babelPluginRemoveExportKeywords from "babel-plugin-remove-export-keywords
 const babelPluginCopyKeyProp = require(`../renderer/babel-plugin-copy-key-prop`)
 const babelPluginMoveExportKeywords = require(`../renderer/babel-plugin-move-export-keywords`)
 const { useInputByKey } = require(`../renderer/input-provider`)
-const { useResourceByKey } = require(`../renderer/resource-provider`)
+const { useResource } = require(`../renderer/resource-provider`)
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
@@ -39,7 +39,7 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
     components,
     props,
     useInputByKey,
-    useResourceByKey,
+    useResource,
     ...scope,
   }
   const scopeKeys = Object.keys(fullScope)

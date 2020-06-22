@@ -11,7 +11,7 @@ const { resourceComponents } = require(`./resource-components`)
 const { RecipeStep, RecipeIntroduction } = require(`./step-component`)
 const Input = require(`./input`).default
 const { useInputByKey } = require(`./input-provider`)
-const { useResourceByKey } = require(`./resource-provider`)
+const { useResource } = require(`./resource-provider`)
 const babelPluginRemoveShortcodes = require(`./babel-plugin-remove-shortcodes`)
 const babelPluginCopyKeyProp = require(`./babel-plugin-copy-key-prop`)
 const babelPluginMoveExportKeywords = require(`./babel-plugin-move-export-keywords`)
@@ -22,7 +22,7 @@ const scope = {
   RecipeIntroduction,
   Input,
   useInputByKey,
-  useResourceByKey,
+  useResource,
   Config: `div`, // Keep this as a noop for now
   ...resourceComponents,
   mdx: React.createElement,

@@ -7,7 +7,7 @@ export const useResourceContext = () => {
   return context
 }
 
-export const useResourceByKey = key => {
+export const useResource = key => {
   const context = useContext(ResourceContext)
   const result = context.find(c => c.resourceDefinitions._key === key)
   return result
