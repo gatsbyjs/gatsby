@@ -15,14 +15,6 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
       plugins: [`graphql`],
       rules: {
         "import/no-webpack-loader-syntax": [0],
-        "graphql/template-strings": [
-          `error`,
-          {
-            env: `relay`,
-            schemaString: printSchema(schema, { commentDescriptions: true }),
-            tagName: `graphql`,
-          },
-        ],
         "react/jsx-pascal-case": `off`, // Prevents errors with Theme-UI and Styled component
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
