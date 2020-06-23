@@ -30,3 +30,8 @@ Headless WordPress lets your content team use an interface they're familiar with
 - [REST API Resources](https://developer.wordpress.com/docs/api/) from WordPress.com
 - [WordPress REST API](https://developer.wordpress.org/rest-api/) for self-hosted WordPress
 - [<q>How To Build A Blog with WordPress and Gatsby.js</q>](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/) from the Gatsby blog
+
+## Managed Hosting Options
+
+- [TreacleWP](https://www.treaclewp.com/)
+- [Shifter](https://www.getshifter.io/)
