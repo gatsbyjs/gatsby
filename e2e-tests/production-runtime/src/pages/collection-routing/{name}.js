@@ -19,7 +19,7 @@ export default createPagesFromData(BlogPost, `Product`)
 
 export const blogPostQuery = graphql`
   query GetBlogPostBySlugCollection($name: String!) {
-    product: product(fields: { name: { eq: $name } }) {
+    product: Product(fields: { name: { eq: $name } }) {
       id
       name
     }
