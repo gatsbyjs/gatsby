@@ -119,7 +119,8 @@
   main_url: https://theodorawarre.eu
   url: https://theodorawarre.eu
   description: >-
-    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + Shopify + Prismic + Matter.js
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + 
+    + Prismic + Matter.js
   categories:
     - E-commerce
     - Marketing
@@ -572,14 +573,6 @@
   url: https://housemanager.calstate.aaa.com/
   categories:
     - Marketing
-- title: The freeCodeCamp Guide
-  main_url: https://guide.freecodecamp.org/
-  url: https://guide.freecodecamp.org/
-  source_url: https://github.com/freeCodeCamp/guide
-  featured: false
-  categories:
-    - Web Development
-    - Documentation
 - title: Hapticmedia
   main_url: https://hapticmedia.fr/en/
   url: https://hapticmedia.fr/en/
@@ -1307,16 +1300,16 @@
   built_by: Jonas Tebbe
   built_by_url: https://twitter.com/jonastebbe
   featured: false
-- title: Parker Sarsfield Portfolio
+- title: Parker Sarsfield
   description: |
-    I'm Parker, a software engineer and sneakerhead.
-  main_url: https://parkersarsfield.com
-  url: https://parkersarsfield.com
+    I'm Parker, a software engineer.
+  main_url: https://sarsfield.io
+  url: https://sarsfield.io
   categories:
     - Blog
     - Portfolio
   built_by: Parker Sarsfield
-  built_by_url: https://parkersarsfield.com
+  built_by_url: https://sarsfield.io
 - title: Frontend web development with Greg
   description: |
     JavaScript, GatsbyJS, ReactJS, CSS in JS... Let's learn some stuff together.
@@ -2829,16 +2822,6 @@
   main_url: https://coop.com/
   description: >
     COOP is a platform that connects fleet managers that have idle vehicles to businesses that are looking to rent vehicles. COOP simplifies the process and paperwork required to safely share vehicles between business owners.
-  categories:
-    - Marketing
-  built_by: Crispin Porter Bogusky
-  built_by_url: http://www.cpbgroup.com/
-  featured: false
-- title: Domino's Paving for Pizza
-  url: https://www.pavingforpizza.com/
-  main_url: https://www.pavingforpizza.com/
-  description: >
-    Nominate your town for a chance to have your rough drive home from Domino's fixed to pizza perfection.
   categories:
     - Marketing
   built_by: Crispin Porter Bogusky
@@ -4422,18 +4405,6 @@
   built_by: Arctica
   built_by_url: https://arctica.io
   featured: false
-- title: Shard Ventures
-  url: https://shard.vc
-  main_url: https://shard.vc
-  description: >
-    Shard is building new online companies from scratch, partnering with other like-minded founders to start and invest in technology companies.
-  categories:
-    - Finance
-    - Technology
-    - Portfolio
-  built_by: Arctica
-  built_by_url: https://arctica.io
-  featured: false
 - title: David Brookes
   url: https://davidbrookes.me
   main_url: https://davidbrookes.me
@@ -5222,19 +5193,6 @@
   built_by: Camilo Holguin
   built_by_url: https://camiloholguin.me
   featured: false
-- title: Bennett Hardwick
-  url: https://bennetthardwick.com
-  main_url: https://bennetthardwick.com
-  description: >
-    The personal website and blog of Bennett Hardwick, an Australian software developer and human being.
-  categories:
-    - Blog
-    - Programming
-    - Technology
-  source_url: https://github.com/bennetthardwick/website
-  built_by: Bennett Hardwick
-  built_by_url: https://bennetthardwick.com
-  featured: false
 - title: Kodingnesia
   url: https://kodingnesia.com/
   main_url: https://kodingnesia.com/
@@ -5928,18 +5886,6 @@
     - Documentation
   built_by: Sankarsan Kampa
   built_by_url: https://traction.one
-- title: Arnondora
-  main_url: https://arnondora.in.th/
-  url: https://arnondora.in.th/
-  source_url: https://github.com/arnondora/arnondoraBlog
-  description: Arnondora is a personal blog by Arnon Puitrakul
-  categories:
-    - Blog
-    - Programming
-    - Technology
-  built_by: Arnon Puitrakul
-  built_by_url: https://arnondora.in.th/
-  featured: false
 - title: KingsDesign
   url: https://www.kingsdesign.com.au/
   main_url: https://www.kingsdesign.com.au/
@@ -7343,7 +7289,7 @@
   main_url: https://www.philtietjen.dev/
   source_url: https://github.com/Phizzard/phil-portfolio
   description: >
-    Portfolio of Phil Tietjen using Gatsby, TailwindCSS, and Emotion/styled
+    Portfolio of Phil Tietjen using Gatsby, Tailwind CSS, and Emotion/styled
   categories:
     - Portfolio
     - Open Source
@@ -8618,8 +8564,8 @@
     - Blog
     - Web Development
 - title: Rumaan Khalander - Portfolio
-  url: https://www.rumaan.me/
-  main_url: https://www.rumaan.me/
+  url: https://rumaan.tech/
+  main_url: https://rumaan.tech/
   description: >
     Rumaan Khalander is a Full-Stack Dev from Bengaluru who loves to develop for mobile and web.
   categories:
@@ -10920,6 +10866,29 @@
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
   featured: false
+- title: SANDALBOYZ
+  main_url: https://sandalboyz.com
+  url: https://sandalboyz.com
+  description: >
+    The official website of SANDALBOYZ – home to coziness and comfort. Built in conjunction with https://planetary.co/.
+  categories:
+    - Retail
+    - E-commerce
+    - Blog
+  built_by: SANDALBOYZ
+  built_by_url: https://sandalboyz.com
+  featured: false
+- title: Tim Phillips
+  url: https://www.tim-phillips.com/
+  main_url: https://www.tim-phillips.com/
+  source_url: https://github.com/timphillips/tim-phillips.com
+  description: >
+    Personal website for Tim Phillips, a software engineer and web developer.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+  featured: false
 - title: Nagarjun Palavalli
   main_url: https://nagarjun.co/
   url: https://nagarjun.co/
@@ -10931,3 +10900,68 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Honeycomb Creative
+  main_url: https://www.honeycombcreative.com/
+  url: https://www.honeycombcreative.com/
+  description: >
+    Honeycomb Creative has been producing websites and other print and electronic communications material since 1991. Website built with Gatsby v2 and headless WordPress.
+  categories:
+    - Agency
+    - Web Development
+    - Design
+    - SEO
+    - Portfolio
+    - Marketing
+    - Blog
+    - WordPress
+  built_by: Honeycomb Creative
+  built_by_url: https://www.honeycombcreative.com/
+- title: Personal Website of Suganthan Mohanadasan
+  main_url: https://suganthan.com/
+  url: https://suganthan.com/
+  description: >
+    Suganthan is a digital marketing consultant who works with medium and large businesses. This Gatsby site uses Contentful as the CMS and Tailwind CSS for the styling. It also uses i18n plugins to provide a site for Suganthan's Norwegian visitors.
+  categories:
+    - Blog
+    - Business
+    - Consulting
+    - Entrepreneurship
+    - Portfolio
+    - SEO
+  built_by: Shane Jones
+  built_by_url: https://shanejones.co.uk/
+- title: Bold.org
+  url: https://bold.org/
+  main_url: https://bold.org/
+  description: >
+    Fighting Student Debt. Create or apply to exclusive scholarships, fellowships, and grants, in minutes.
+  categories:
+    - Education
+  built_by: Bold.org
+  featured: false
+- title: Petite & Minimal
+  url: https://www.petiteandminimal.com/
+  main_url: https://www.petiteandminimal.com/
+  description: >-
+    Eco-friendly lifestyle website. Green, sustainable, minimal. Covering food,
+    style, travel, living and featuring several eco-friendly directories.
+  categories:
+    - Blog
+    - Food
+    - Travel
+    - Photography
+    - Directory
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/
+  featured: false
+- title: Petite & Minimal Concept Store DEMO
+  url: https://petiteandminimalstore.netlify.app/
+  main_url: https://petiteandminimalstore.netlify.app/
+  source_url: https://github.com/AnnieTaylorCHEN/PetiteandMinimalStore
+  description: >-
+    A JAMstack e-commerce solution built with Gatsby, Contentful and
+    CommerceLayer.
+  categories:
+    - E-commerce
+  built_by: Annie Taylor Chen
+  built_by_url: https://www.annietaylorchen.com/

@@ -1,72 +1,31 @@
 // Tracking structure of nodes to utilize this metadata for schema inference
 // Type descriptors stay relevant at any point in time making incremental inference trivial
-const { omit } = require(`lodash`)
-const {
+import { omit } from "lodash"
+import {
   addNode,
   addNodes,
   deleteNode,
   ignore,
   disable,
-} = require(`../../schema/infer/inference-metadata`)
-const { NodeInterfaceFields } = require(`../../schema/types/node-interface`)
-const { typesWithoutInference } = require(`../../schema/types/type-defs`)
+} from "../../schema/infer/inference-metadata"
+import { NodeInterfaceFields } from "../../schema/types/node-interface"
+import { typesWithoutInference } from "../../schema/types/type-defs"
 
-const StepsEnum = {
-  initialBuild: `initialBuild`,
-  incrementalBuild: `incrementalBuild`,
-}
+import { IGatsbyState, ActionsUnion } from "../types"
 
-const initialState = () => {
-  return {
-    step: StepsEnum.initialBuild, // `initialBuild` | `incrementalBuild`
-    typeMap: {},
-  }
-}
+const ignoredFields: Set<string> = new Set([
+  ...NodeInterfaceFields,
+  `__gatsby_resolved`,
+])
 
-module.exports = (state = initialState(), action) => {
-  switch (action.type) {
-    case `CREATE_NODE`:
-    case `DELETE_NODE`:
-    case `DELETE_NODES`:
-    case `ADD_CHILD_NODE_TO_PARENT_NODE`:
-    case `ADD_FIELD_TO_NODE`: {
-      // Perf: disable incremental inference until the first schema build.
-      // There are plugins which create and delete lots of nodes during bootstrap,
-      // which makes this reducer to do a lot of unnecessary work.
-      // Instead we defer the initial metadata creation until the first schema build
-      // and then enable incremental updates explicitly
-      if (state.step === StepsEnum.initialBuild) {
-        return state
-      }
-      state.typeMap = incrementalReducer(state.typeMap, action)
-      return state
-    }
-
-    case `START_INCREMENTAL_INFERENCE`: {
-      return {
-        ...state,
-        step: StepsEnum.incrementalBuild,
-      }
-    }
-
-    case `DELETE_CACHE`: {
-      return initialState()
-    }
-
-    default: {
-      state.typeMap = incrementalReducer(state.typeMap, action)
-      return state
-    }
-  }
-}
-
-const ignoredFields = new Set([...NodeInterfaceFields, `__gatsby_resolved`])
-
-const initialTypeMetadata = () => {
+const initialTypeMetadata = (): { ignoredFields: Set<string> } => {
   return { ignoredFields }
 }
 
-const incrementalReducer = (state = {}, action) => {
+const incrementalReducer = (
+  state: IGatsbyState["inferenceMetadata"]["typeMap"] = {},
+  action: ActionsUnion
+): IGatsbyState["inferenceMetadata"]["typeMap"] => {
   switch (action.type) {
     case `CREATE_TYPES`: {
       const typeDefs = Array.isArray(action.payload)
@@ -123,8 +82,8 @@ const incrementalReducer = (state = {}, action) => {
       // Can't simply add { fields: { [addedField]: node.fields[addedField] } }
       // because it will count `fields` key twice for the same node
       const previousFields = omit(node.fields, [addedField])
-      state[type] = deleteNode(state[type], { fields: previousFields })
-      state[type] = addNode(state[type], { fields: node.fields })
+      state[type] = deleteNode(state[type], { ...node, fields: previousFields })
+      state[type] = addNode(state[type], { ...node, fields: node.fields })
 
       // TODO: there might be an edge case when the same field is "added" twice.
       //   Then we'll count it twice in metadata. The only way to avoid it as I see it
@@ -159,5 +118,57 @@ const incrementalReducer = (state = {}, action) => {
 
     default:
       return state
+  }
+}
+
+enum StepsEnum {
+  initialBuild = `initialBuild`,
+  incrementalBuild = `incrementalBuild`,
+}
+
+const initialState = (): IGatsbyState["inferenceMetadata"] => {
+  return {
+    step: StepsEnum.initialBuild, // `initialBuild` | `incrementalBuild`
+    typeMap: {},
+  }
+}
+
+export const inferenceMetadataReducer = (
+  state: IGatsbyState["inferenceMetadata"] = initialState(),
+  action: ActionsUnion
+): IGatsbyState["inferenceMetadata"] => {
+  switch (action.type) {
+    case `CREATE_NODE`:
+    case `DELETE_NODE`:
+    case `DELETE_NODES`:
+    case `ADD_CHILD_NODE_TO_PARENT_NODE`:
+    case `ADD_FIELD_TO_NODE`: {
+      // Perf: disable incremental inference until the first schema build.
+      // There are plugins which create and delete lots of nodes during bootstrap,
+      // which makes this reducer to do a lot of unnecessary work.
+      // Instead we defer the initial metadata creation until the first schema build
+      // and then enable incremental updates explicitly
+      if (state.step === StepsEnum.initialBuild) {
+        return state
+      }
+      state.typeMap = incrementalReducer(state.typeMap, action)
+      return state
+    }
+
+    case `START_INCREMENTAL_INFERENCE`: {
+      return {
+        ...state,
+        step: StepsEnum.incrementalBuild,
+      }
+    }
+
+    case `DELETE_CACHE`: {
+      return initialState()
+    }
+
+    default: {
+      state.typeMap = incrementalReducer(state.typeMap, action)
+      return state
+    }
   }
 }

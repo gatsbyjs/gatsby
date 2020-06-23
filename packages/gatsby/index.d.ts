@@ -2,6 +2,7 @@ import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn } from "@reach/router"
+import reporter from "gatsby-cli/lib/reporter"
 import {
   ComposeEnumTypeConfig,
   ComposeInputObjectTypeConfig,
@@ -93,9 +94,9 @@ export type PageProps<
    * import {PageProps} from "gatsby"
    *
    * type IndexQueryProps = { downloadCount: number }
-   * type IndexPageProps = PageProps<IndexPageProps>
+   * type IndexPageProps = PageProps<IndexQueryProps>
    *
-   * export default (props: IndexProps) => {
+   * export default (props: IndexPageProps) => {
    *   ..
    *
    */
@@ -110,9 +111,9 @@ export type PageProps<
    *
    * type IndexQueryProps = { downloadCount: number }
    * type LocaleLookUpInfo = { translationStrings: any } & { langKey: string, slug: string }
-   * type IndexPageProps = PageProps<IndexPageProps, LocaleLookUpInfo>
+   * type IndexPageProps = PageProps<IndexQueryProps, LocaleLookUpInfo>
    *
-   * export default (props: IndexProps) => {
+   * export default (props: IndexPageProps) => {
    *   ..
    */
   pageContext: PageContextType
@@ -1261,16 +1262,15 @@ export interface Store {
   replaceReducer: Function
 }
 
-type LogMessageType = (format: string) => void
-type LogErrorType = (errorMeta: string | Object, error?: Object) => void
+export type Reporter = typeof reporter
 
 export type ActivityTracker = {
   start(): () => void
   end(): () => void
   span: Object
   setStatus(status: string): void
-  panic: LogErrorType
-  panicOnBuild: LogErrorType
+  panic: (errorMeta: string | Object, error?: Object) => never
+  panicOnBuild: (errorMeta: string | Object, error?: Object) => void
 }
 
 export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
@@ -1282,29 +1282,6 @@ export type ProgressActivityTracker = Omit<ActivityTracker, "end"> & {
 export type ActivityArgs = {
   parentSpan?: Object
   id?: string
-}
-
-export interface Reporter {
-  stripIndent: (input: string) => string
-  format: object
-  setVerbose(isVerbose?: boolean): void
-  setNoColor(isNoColor?: boolean): void
-  panic: LogErrorType
-  panicOnBuild: LogErrorType
-  error: LogErrorType
-  uptime(prefix: string): void
-  success: LogMessageType
-  verbose: LogMessageType
-  info: LogMessageType
-  warn: LogMessageType
-  log: LogMessageType
-  activityTimer(name: string, activityArgs?: ActivityArgs): ActivityTracker
-  createProgress(
-    text: string,
-    total?: number,
-    start?: number,
-    activityArgs?: ActivityArgs
-  ): ProgressActivityTracker
 }
 
 /**
