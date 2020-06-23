@@ -11207,3 +11207,16 @@
     - E-commerce
   built_by: Annie Taylor Chen
   built_by_url: https://www.annietaylorchen.com/
+- title: Hippocampus's Garden
+  url: https://hippocampus-garden.com/
+  main_url: https://hippocampus-garden.com/
+  source_url: https://github.com/shionhonda/hippocampus-garden
+  description: >-
+    A blog by Shion Honda. Posts on what I learn about machine learning, statistics, and programming.
+  categories:
+    - Blog
+    - Science
+    - Technology
+  built_by: Shion Honda
+  built_by_url: https://twitter.com/shion_honda
+  featured: false
