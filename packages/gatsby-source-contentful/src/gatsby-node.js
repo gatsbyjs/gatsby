@@ -121,12 +121,17 @@ exports.sourceNodes = async (
   // are "updated" so will get the now deleted reference removed.
 
   function deleteContentfulNode(node) {
+    const normalizedType = node.sys.type.startsWith(`Deleted`)
+      ? node.sys.type.substring(`Deleted`.length)
+      : node.sys.type
+
     const localizedNodes = locales
       .map(locale => {
         const nodeId = createNodeId(
           normalize.makeId({
             spaceId: space.sys.id,
             id: node.sys.id,
+            type: normalizedType,
             currentLocale: locale.code,
             defaultLocale,
           })
@@ -191,28 +196,30 @@ exports.sourceNodes = async (
   const newOrUpdatedEntries = []
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.push(entry.sys.id)
+      newOrUpdatedEntries.push(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => _.includes(newOrUpdatedEntries, n.id))
+    .filter(n => _.includes(newOrUpdatedEntries, `${n.id}___${n.sys.type}`))
     .forEach(n => {
-      if (foreignReferenceMap[n.id]) {
-        foreignReferenceMap[n.id].forEach(foreignReference => {
-          // Add reverse links
-          if (n[foreignReference.name]) {
-            n[foreignReference.name].push(foreignReference.id)
-            // It might already be there so we'll uniquify after pushing.
-            n[foreignReference.name] = _.uniq(n[foreignReference.name])
-          } else {
-            // If is one foreign reference, there can always be many.
-            // Best to be safe and put it in an array to start with.
-            n[foreignReference.name] = [foreignReference.id]
+      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
+        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
+          foreignReference => {
+            // Add reverse links
+            if (n[foreignReference.name]) {
+              n[foreignReference.name].push(foreignReference.id)
+              // It might already be there so we'll uniquify after pushing.
+              n[foreignReference.name] = _.uniq(n[foreignReference.name])
+            } else {
+              // If is one foreign reference, there can always be many.
+              // Best to be safe and put it in an array to start with.
+              n[foreignReference.name] = [foreignReference.id]
+            }
           }
-        })
+        )
       }
     })
 

@@ -2195,131 +2195,150 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
 
 exports[`Process contentful data (by id) builds foreignReferenceMap 1`] = `
 Object {
-  "JrePkDVYomE8AwcuCUyMi": Array [
+  "JrePkDVYomE8AwcuCUyMi___Entry": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "KTRF62Q4gg60q6WCsWKw8": Array [
+  "KTRF62Q4gg60q6WCsWKw8___Asset": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "Xc0ny7GWsMEMCeASWO2um": Array [
+  "Xc0ny7GWsMEMCeASWO2um___Asset": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c10TkaLheGeQG6qQGqWYqUI": Array [
+  "c10TkaLheGeQG6qQGqWYqUI___Asset": Array [
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c24DPGBDeGEaYy8ms4Y8QMQ": Array [
+  "c24DPGBDeGEaYy8ms4Y8QMQ___Entry": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c2Y8LhXLnYAYqKCGEWG4EKI": Array [
+  "c2Y8LhXLnYAYqKCGEWG4EKI___Asset": Array [
     Object {
       "id": "c4LgMotpNF6W20YKmuemW0a",
       "name": "sfztzbsum8coewygeuyes___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c3wtvPBbBjiMKqKKga8I2Cu": Array [
+  "c3wtvPBbBjiMKqKKga8I2Cu___Asset": Array [
     Object {
       "id": "c651CQ8rLoIYCeY6G0QG22q",
       "name": "sfztzbsum8coewygeuyes___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c4LgMotpNF6W20YKmuemW0a": Array [
+  "c4LgMotpNF6W20YKmuemW0a___Entry": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c4zj1ZOfHgQ8oqgaSKm4Qo2": Array [
+  "c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset": Array [
     Object {
       "id": "JrePkDVYomE8AwcuCUyMi",
       "name": "sfztzbsum8coewygeuyes___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c5U1Lm7y197ZCNUI9USWPUV": Array [
+  "c5U1Lm7y197ZCNUI9USWPUV___Entry": Array [
     Object {
       "id": "qYfB1lzHTNpofY3Oqvjpk",
       "name": "author___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c651CQ8rLoIYCeY6G0QG22q": Array [
+  "c651CQ8rLoIYCeY6G0QG22q___Entry": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c6m5AJ9vMPKc8OUoQeoCS4o": Array [
+  "c6m5AJ9vMPKc8OUoQeoCS4o___Asset": Array [
     Object {
       "id": "c7LAnCobuuWYSqks6wAwY2a",
       "name": "c6xwptasiii2ak2ww0oi6qa___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c6t4HKjytPi0mYgs240wkG": Array [
+  "c6t4HKjytPi0mYgs240wkG___Asset": Array [
     Object {
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "name": "c6xwptasiii2ak2ww0oi6qa___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c7LAnCobuuWYSqks6wAwY2a": Array [
+  "c7LAnCobuuWYSqks6wAwY2a___Entry": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "qYfB1lzHTNpofY3Oqvjpk": Array [
+  "qYfB1lzHTNpofY3Oqvjpk___Entry": Array [
     Object {
       "id": "c5U1Lm7y197ZCNUI9USWPUV",
       "name": "blogpost___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "wtrHxeu3zEoEce2MokCSi": Array [
+  "wtrHxeu3zEoEce2MokCSi___Asset": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "c2pqfxujwe8qsykum0u6w8m___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
 }
@@ -2327,30 +2346,30 @@ Object {
 
 exports[`Process contentful data (by id) builds list of resolvable data 1`] = `
 Set {
-  "c7LAnCobuuWYSqks6wAwY2a",
-  "c24DPGBDeGEaYy8ms4Y8QMQ",
-  "c651CQ8rLoIYCeY6G0QG22q",
-  "c4LgMotpNF6W20YKmuemW0a",
-  "JrePkDVYomE8AwcuCUyMi",
-  "c5KsDBWseXY6QegucYAoacS",
-  "c3DVqIYj4dOwwcKu6sgqOgg",
-  "c6dbjWqNd9SqccegcqYq224",
-  "c4BqrajvA8E6qwgkieoqmqO",
-  "c71mfnH4QKsSsQmgoaQuq6O",
-  "c4L2GhTsJtCseMYM8Wia64i",
-  "c5U1Lm7y197ZCNUI9USWPUV",
-  "qYfB1lzHTNpofY3Oqvjpk",
-  "c3wtvPBbBjiMKqKKga8I2Cu",
-  "KTRF62Q4gg60q6WCsWKw8",
-  "Xc0ny7GWsMEMCeASWO2um",
-  "c2Y8LhXLnYAYqKCGEWG4EKI",
-  "c6t4HKjytPi0mYgs240wkG",
-  "c1MgbdJNTsMWKI0W68oYqkU",
-  "c6m5AJ9vMPKc8OUoQeoCS4o",
-  "c4zj1ZOfHgQ8oqgaSKm4Qo2",
-  "wtrHxeu3zEoEce2MokCSi",
-  "c10TkaLheGeQG6qQGqWYqUI",
-  "c6s3iG2OVmoUcosmA8ocqsG",
+  "c7LAnCobuuWYSqks6wAwY2a___Entry",
+  "c24DPGBDeGEaYy8ms4Y8QMQ___Entry",
+  "c651CQ8rLoIYCeY6G0QG22q___Entry",
+  "c4LgMotpNF6W20YKmuemW0a___Entry",
+  "JrePkDVYomE8AwcuCUyMi___Entry",
+  "c5KsDBWseXY6QegucYAoacS___Entry",
+  "c3DVqIYj4dOwwcKu6sgqOgg___Entry",
+  "c6dbjWqNd9SqccegcqYq224___Entry",
+  "c4BqrajvA8E6qwgkieoqmqO___Entry",
+  "c71mfnH4QKsSsQmgoaQuq6O___Entry",
+  "c4L2GhTsJtCseMYM8Wia64i___Entry",
+  "c5U1Lm7y197ZCNUI9USWPUV___Entry",
+  "qYfB1lzHTNpofY3Oqvjpk___Entry",
+  "c3wtvPBbBjiMKqKKga8I2Cu___Asset",
+  "KTRF62Q4gg60q6WCsWKw8___Asset",
+  "Xc0ny7GWsMEMCeASWO2um___Asset",
+  "c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
+  "c6t4HKjytPi0mYgs240wkG___Asset",
+  "c1MgbdJNTsMWKI0W68oYqkU___Asset",
+  "c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
+  "c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
+  "wtrHxeu3zEoEce2MokCSi___Asset",
+  "c10TkaLheGeQG6qQGqWYqUI___Asset",
+  "c6s3iG2OVmoUcosmA8ocqsG___Asset",
 }
 `;
 
@@ -2375,11 +2394,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "bbf9ba4506cb99492f0b07ea3a28f737",
+        "contentDigest": "e08905c4055bff98df9884881b9a7bf1",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Normann Copenhagen",
     },
   ],
@@ -2402,11 +2424,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "11c01df3a61387333cf9f7ac613af20b",
+        "contentDigest": "cc48e18fb4f19e46934deb62b29e2d2a",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Normann Copenhagen",
     },
   ],
@@ -2429,11 +2454,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "a2addf44f7879e90d6b3058001a5880e",
+        "contentDigest": "313d4d481f26d09f6745ae84088b0870",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "SoSo Wall Clock",
     },
   ],
@@ -2456,11 +2484,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "625a2b2257595edbe4efcfc5ae336dc3",
+        "contentDigest": "c4b534d4888559b878e04830ca649cdf",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "SoSo Wall Clock",
     },
   ],
@@ -2483,11 +2514,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "b54c3564fc75efb39c3759efee64b7f3",
+        "contentDigest": "2ac90118c94bd2beb52000a79433b140",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Hudson Wall Cup ",
     },
   ],
@@ -2510,11 +2544,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "262af8b162da9de405bf6499467768fd",
+        "contentDigest": "6a91112f45dffde96f52520c16aece17",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Hudson Wall Cup ",
     },
   ],
@@ -2537,11 +2574,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "944b01fdfe82c76ed3e3e7bd1c462975",
+        "contentDigest": "d9f4b931f455e1dd5bdb6fae6f3265f9",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Lemnos",
     },
   ],
@@ -2564,11 +2604,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "188a448b2b9c92aa20e4f2b921daff6f",
+        "contentDigest": "b9ed42acdbb8e9b8c22908d5ec1ce7a3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Lemnos",
     },
   ],
@@ -2591,11 +2634,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ccc48a348551b17fddce1efb97bf820b",
+        "contentDigest": "e3cfb0bafa4eb4d8caee4b8d5899dffe",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Toys",
     },
   ],
@@ -2618,11 +2664,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "cae9c5d552a6fcb3df4dea804c031845",
+        "contentDigest": "dd663a233798d6e205c65b552f5cf56d",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Toys",
     },
   ],
@@ -2645,11 +2694,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "df2e57e86b4fe17655ed0889ffa243a6",
+        "contentDigest": "e3b1ee4df3912ff00ad61e1fc50b4b58",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Chive logo",
     },
   ],
@@ -2672,11 +2724,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "75e059f146658d383ce03f57ae2b7ffd",
+        "contentDigest": "1130d06b463f0891f4b1bbabb2f2e363",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Chive logo",
     },
   ],
@@ -2699,11 +2754,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5062a26112b3dbb531d472b8903d46e9",
+        "contentDigest": "0e4b4dd1d814e7983a876f2aa90f949a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Home and Kitchen",
     },
   ],
@@ -2726,11 +2784,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "dd9c762ab326ced17232e9c96ea7a5d3",
+        "contentDigest": "3820b53c095d0f77e97bf7506247871c",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Home and Kitchen",
     },
   ],
@@ -2753,11 +2814,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "88c4ef0ed49551a82a33cccd09171d8e",
+        "contentDigest": "1073faf17334a0f2e53b9f7c72529958",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam",
     },
   ],
@@ -2780,11 +2844,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "891168271aa495c6afed1ba1014fa918",
+        "contentDigest": "9213521b6e5f44c4782719a72e026030",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam",
     },
   ],
@@ -2807,11 +2874,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "dfdac1f5a977d38a8ece0762c6ff1ed1",
+        "contentDigest": "a63ce7c34b50c1f7f051ae02e7fb183a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam Streamliner",
     },
   ],
@@ -2834,11 +2904,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "3e873879f0cc2622be2c1199a8f9d0d8",
+        "contentDigest": "23acd46feaca05460726eab2381755fb",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam Streamliner",
     },
   ],
@@ -2861,11 +2934,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4c42ff152ccfc22a7a8ad3fdb728d300",
+        "contentDigest": "b9c80441d14508ccd2f642f10003d7d7",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Whisk beaters",
     },
   ],
@@ -2888,11 +2964,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ac654073536701214d653f3df7e31eca",
+        "contentDigest": "b9123152da40946b1957e6e918521013",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Whisk beaters",
     },
   ],
@@ -2915,11 +2994,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "827ff632f8631d9317517068e0485c2d",
+        "contentDigest": "b4f26cee7f686b204820d25bad24e005",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "House icon",
     },
   ],
@@ -2942,11 +3024,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5f38ab0214338d7b18e434a4a0509945",
+        "contentDigest": "714fb73ab74d8c0e35318edc939163f3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "House icon",
     },
   ],
@@ -2962,11 +3047,14 @@ Array [
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6020d82d8bb5bd6b1de8a97f6f419053",
+        "contentDigest": "c8e208026ffc65fd0e4a03ed208759b2",
         "type": "ContentfulContentType",
       },
       "name": "Category",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -2986,7 +3074,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "12417e6f494308abf73ff50747ac4fc1",
+        "contentDigest": "4b57b8c964ddc7cd7c760998a9803cf5",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -3002,6 +3090,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:55:54.077Z",
@@ -3022,7 +3111,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c290bd7b85b7c3fac4315191a7682a5a",
+        "contentDigest": "e489c086930297c5f5f3300e1e83cea6",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -3038,6 +3127,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:46:43.477Z",
@@ -3054,6 +3144,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Home & Kitchen",
     },
   ],
@@ -3069,6 +3162,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3082,6 +3178,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Toys",
     },
   ],
@@ -3097,6 +3196,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3106,11 +3208,14 @@ Array [
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6020d82d8bb5bd6b1de8a97f6f419053",
+        "contentDigest": "c8e208026ffc65fd0e4a03ed208759b2",
         "type": "ContentfulContentType",
       },
       "name": "Category",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -3130,7 +3235,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "8d9d129087a8a0f8ce47c4e2e2f75ab0",
+        "contentDigest": "cadc87edd2d6c475e8a254e9f5743475",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -3146,6 +3251,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:55:54.077Z",
@@ -3166,7 +3272,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "eecd9ce7ac4f23853eced4562de97ffd",
+        "contentDigest": "c435291ae53c30548c43438fe2365f08",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -3182,6 +3288,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:46:43.477Z",
@@ -3198,6 +3305,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Haus & Küche",
     },
   ],
@@ -3213,6 +3323,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3226,6 +3339,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Spielzeug",
     },
   ],
@@ -3241,6 +3357,9 @@ Array [
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3250,11 +3369,14 @@ Array [
       "displayField": "companyName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "523655fd0d90116babdcba9c139672a3",
+        "contentDigest": "7864ffd02277a690b07dedeb09a84c0d",
         "type": "ContentfulContentType",
       },
       "name": "Brand",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -3274,7 +3396,7 @@ Array [
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9a12c336d1d442a8d029d3f46c210ce9",
+        "contentDigest": "cff2f4ce652db404bad00df3057b1424",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3294,6 +3416,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "twitter": "https://twitter.com/NormannCPH",
       "updatedAt": "2017-06-27T09:55:16.820Z",
@@ -3316,7 +3439,7 @@ Array [
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4828ce6aa9c5c1d7d06c0fd90d67e690",
+        "contentDigest": "fda40429cecdcf4fa47acd221b0bee6e",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3334,6 +3457,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:51:15.647Z",
       "website": "http://www.lemnos.jp/en/",
@@ -3354,7 +3478,7 @@ Array [
       "createdAt": "2017-06-27T09:35:44.988Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "73d372419e6a6409d114fd82923e7a80",
+        "contentDigest": "42a4719eeab2f418c0ce1aac54ff45b3",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3371,6 +3495,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:50:36.937Z",
       "website": "http://playsam.com/",
@@ -3388,6 +3513,9 @@ Array [
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3402,6 +3530,9 @@ Array [
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3416,6 +3547,9 @@ Array [
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3450,6 +3584,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3464,6 +3601,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3478,6 +3618,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3487,11 +3630,14 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "displayField": "companyName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "523655fd0d90116babdcba9c139672a3",
+        "contentDigest": "7864ffd02277a690b07dedeb09a84c0d",
         "type": "ContentfulContentType",
       },
       "name": "Brand",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -3511,7 +3657,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4f008dd359a054eb647a75f9b27c1134",
+        "contentDigest": "3f5205d8a1b0d5e5018a4574cae00203",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3531,6 +3677,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "twitter": "https://twitter.com/NormannCPH",
       "updatedAt": "2017-06-27T09:55:16.820Z",
@@ -3553,7 +3700,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "bea6399774f4fe2ff73fcc1a708e6dd5",
+        "contentDigest": "86d9b12d4ec8f65d83f3fa97249270d5",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3571,6 +3718,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:51:15.647Z",
       "website": "http://www.lemnos.jp/en/",
@@ -3591,7 +3739,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "createdAt": "2017-06-27T09:35:44.988Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ab8f2209e22f316188fb00c4b2a4bf17",
+        "contentDigest": "5161ddaa391de957f86b97bb83dfab8c",
         "type": "ContentfulSFzTZbSuM8CoEwygeUYes",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -3608,6 +3756,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:50:36.937Z",
       "website": "http://playsam.com/",
@@ -3625,6 +3774,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3639,6 +3791,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3653,6 +3808,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3687,6 +3845,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3701,6 +3862,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3715,6 +3879,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulSFzTZbSuM8CoEwygeUYesCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3724,11 +3891,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "productName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "043cf76e7aedca253d7f91e366d103d5",
+        "contentDigest": "13220a3fc0c001a964b43b0ec70cc430",
         "type": "ContentfulContentType",
       },
       "name": "Product",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -3748,7 +3918,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "603718d6bc6a368183958015650b734d",
+        "contentDigest": "6365098e73b05f879c821edd28a463e0",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3771,6 +3941,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "wood",
@@ -3800,7 +3971,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "73cac8563f8a27a1cd5bc5ffdf8de23c",
+        "contentDigest": "38741c8c8971bb879dd724e6ed7bcdb7",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3823,6 +3994,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "vase",
@@ -3850,7 +4022,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "3baa1d3218598f206bed643466eebe7f",
+        "contentDigest": "ff37da1183f89799d29d915d43b43c14",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3873,6 +4045,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "kitchen",
@@ -3902,7 +4075,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "657f54f67770387eafbfe0a4e621f313",
+        "contentDigest": "62d85d898849dbfa6e54d39e050433d1",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "en-US",
@@ -3925,6 +4098,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "home décor",
@@ -3949,6 +4123,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Playsam Streamliner Classic Car, Espresso",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3963,6 +4140,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "A classic Playsam design, the Streamliner Classic Car has been selected as Swedish Design Classic by the Swedish National Museum for its inventive style and sleek surface. It's no wonder that this wooden car has also been a long-standing favorite for children both big and small!",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3977,6 +4157,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Hudson Wall Cup",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -3991,6 +4174,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Wall Hanging Glass Flower Vase and Terrarium",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4005,6 +4191,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Whisk Beater",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4019,6 +4208,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4033,6 +4225,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "SoSo Wall Clock",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4047,6 +4242,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4056,11 +4254,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "productName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "043cf76e7aedca253d7f91e366d103d5",
+        "contentDigest": "13220a3fc0c001a964b43b0ec70cc430",
         "type": "ContentfulContentType",
       },
       "name": "Product",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4080,7 +4281,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "f29a363c6e7e38d829b8d1ba01d4bbdc",
+        "contentDigest": "d9202de91278ec608c889dbb3a563cd8",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4103,6 +4304,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "wood",
@@ -4132,7 +4334,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "6af87b6b5615d1640d20c30cc2b79b48",
+        "contentDigest": "03778c8dffcd5bcce6a7ef9cbb7d3d93",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4155,6 +4357,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "vase",
@@ -4182,7 +4385,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "17f3e036c7b336714ee52712ec55105d",
+        "contentDigest": "2f7f585f7e4787ec2838ff5d3f0e4c86",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4205,6 +4408,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "kitchen",
@@ -4234,7 +4438,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "121384fecda462f3c1b6be675ca73215",
+        "contentDigest": "e7f7e57575d3c112011d6d3f45b4b032",
         "type": "ContentfulC2PqfXuJwE8QSyKuM0U6W8M",
       },
       "node_locale": "de",
@@ -4257,6 +4461,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "home décor",
@@ -4281,6 +4486,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Playsam Streamliner Klassisches Auto, Espresso",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4295,6 +4503,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4309,6 +4520,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Becher",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4323,6 +4537,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4337,6 +4554,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Schneebesen",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4351,6 +4571,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4365,6 +4588,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "SoSo wanduhr",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4379,6 +4605,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4388,11 +4617,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "contentDigest": "848d886851adbb1ac6429dbafe7e2e5b",
         "type": "ContentfulContentType",
       },
       "name": "StTest",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4402,11 +4634,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "contentDigest": "848d886851adbb1ac6429dbafe7e2e5b",
         "type": "ContentfulContentType",
       },
       "name": "StTest",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4416,11 +4651,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": null,
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9d44539046f153bcd9f3d110e20c428c",
+        "contentDigest": "fa64d1d00fb3c69e9bdd973a18358d02",
         "type": "ContentfulContentType",
       },
       "name": "JSON-test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4432,7 +4670,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9e5debf1a2680bd48389be83001fe63c",
+        "contentDigest": "fbce039c714a67abd0c3a96c3dc46b13",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -4449,6 +4687,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 3,
+        "type": "Entry",
       },
       "updatedAt": "2018-06-11T14:18:54.392Z",
     },
@@ -4532,6 +4771,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
         "watch": "lerna run watch --no-sort --stream --concurrency 999",
       },
+      "sys": Object {
+        "type": "Entry",
+      },
       "workspaces": Array [
         "packages/*",
       ],
@@ -4544,11 +4786,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": null,
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9d44539046f153bcd9f3d110e20c428c",
+        "contentDigest": "fa64d1d00fb3c69e9bdd973a18358d02",
         "type": "ContentfulContentType",
       },
       "name": "JSON-test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4560,7 +4805,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ebd88d160c13b2cc815ed84de2390160",
+        "contentDigest": "d0df1f5b7baff504d2e22d11fbd6049c",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -4577,6 +4822,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 3,
+        "type": "Entry",
       },
       "updatedAt": "2018-06-11T14:18:54.392Z",
     },
@@ -4660,6 +4906,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
         "watch": "lerna run watch --no-sort --stream --concurrency 999",
       },
+      "sys": Object {
+        "type": "Entry",
+      },
       "workspaces": Array [
         "packages/*",
       ],
@@ -4672,11 +4921,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "contentDigest": "4d5b1a8d2011b54c987c79c758072a68",
         "type": "ContentfulContentType",
       },
       "name": "Remark Test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4689,7 +4941,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d57d58e97f4e26d5bff6f2305e884562",
+        "contentDigest": "eb7be9b83da3293e2eefef6c30bb2eeb",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "en-US",
@@ -4705,6 +4957,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 1,
+        "type": "Entry",
       },
       "title": "Contentful images inlined in Markdown",
       "updatedAt": "2018-05-28T08:49:06.230Z",
@@ -4766,6 +5019,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulRemarkTestContentTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4775,11 +5031,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "contentDigest": "4d5b1a8d2011b54c987c79c758072a68",
         "type": "ContentfulContentType",
       },
       "name": "Remark Test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4792,7 +5051,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "21b9b9b3269fd711d94118aed5efac82",
+        "contentDigest": "f9008c9d5faff49ff5e4adaf3a88075c",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "de",
@@ -4808,6 +5067,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 1,
+        "type": "Entry",
       },
       "title": "Contentful images inlined in Markdown",
       "updatedAt": "2018-05-28T08:49:06.230Z",
@@ -4869,6 +5129,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulRemarkTestContentTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -4878,11 +5141,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6ea09658e67ecfc838a195ab96bd8ef9",
+        "contentDigest": "7d867a56fd16afbd92d325ed1b63de0c",
         "type": "ContentfulContentType",
       },
       "name": "Blog Post",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4893,7 +5159,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d332db23c16a02df21cd8c07942e799c",
+        "contentDigest": "06e9c2255583cf72ae467b8f4807233b",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "en-US",
@@ -4909,6 +5175,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "title": "Post one",
       "updatedAt": "2019-09-09T06:58:04.316Z",
@@ -4921,11 +5188,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6ea09658e67ecfc838a195ab96bd8ef9",
+        "contentDigest": "7d867a56fd16afbd92d325ed1b63de0c",
         "type": "ContentfulContentType",
       },
       "name": "Blog Post",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4936,7 +5206,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "32286133e7b1522b212182cc11b3e6ec",
+        "contentDigest": "d8187e970e4581693a354ac5be871a20",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "de",
@@ -4952,6 +5222,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "title": "Post one",
       "updatedAt": "2019-09-09T06:58:04.316Z",
@@ -4964,11 +5235,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "feb97892424b0df5c4d78a7a36e6bb6c",
+        "contentDigest": "fee08e5f45e47b9f070772e8e7db99dc",
         "type": "ContentfulContentType",
       },
       "name": "Author",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -4982,7 +5256,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "favouritePost___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "55f8e0b8a2bfa0b1f321293c77fb93db",
+        "contentDigest": "cf1128820c52e7c91be162a248844af7",
         "type": "ContentfulAuthor",
       },
       "name": "Fred",
@@ -4998,6 +5272,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "updatedAt": "2019-09-09T06:54:38.816Z",
     },
@@ -5009,11 +5284,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "feb97892424b0df5c4d78a7a36e6bb6c",
+        "contentDigest": "fee08e5f45e47b9f070772e8e7db99dc",
         "type": "ContentfulContentType",
       },
       "name": "Author",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -5027,7 +5305,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "favouritePost___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "bd1c2dc77bac3ec6f5f3c4f8af0bee11",
+        "contentDigest": "a80331760407aad2d9265f5ba7c38f3c",
         "type": "ContentfulAuthor",
       },
       "name": "Fred",
@@ -5043,6 +5321,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "updatedAt": "2019-09-09T06:54:38.816Z",
     },
@@ -7115,131 +7394,150 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
 
 exports[`Process contentful data (by name) builds foreignReferenceMap 1`] = `
 Object {
-  "JrePkDVYomE8AwcuCUyMi": Array [
+  "JrePkDVYomE8AwcuCUyMi___Entry": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "KTRF62Q4gg60q6WCsWKw8": Array [
+  "KTRF62Q4gg60q6WCsWKw8___Asset": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "Xc0ny7GWsMEMCeASWO2um": Array [
+  "Xc0ny7GWsMEMCeASWO2um___Asset": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c10TkaLheGeQG6qQGqWYqUI": Array [
+  "c10TkaLheGeQG6qQGqWYqUI___Asset": Array [
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c24DPGBDeGEaYy8ms4Y8QMQ": Array [
+  "c24DPGBDeGEaYy8ms4Y8QMQ___Entry": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c2Y8LhXLnYAYqKCGEWG4EKI": Array [
+  "c2Y8LhXLnYAYqKCGEWG4EKI___Asset": Array [
     Object {
       "id": "c4LgMotpNF6W20YKmuemW0a",
       "name": "brand___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c3wtvPBbBjiMKqKKga8I2Cu": Array [
+  "c3wtvPBbBjiMKqKKga8I2Cu___Asset": Array [
     Object {
       "id": "c651CQ8rLoIYCeY6G0QG22q",
       "name": "brand___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c4LgMotpNF6W20YKmuemW0a": Array [
+  "c4LgMotpNF6W20YKmuemW0a___Entry": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c4zj1ZOfHgQ8oqgaSKm4Qo2": Array [
+  "c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset": Array [
     Object {
       "id": "JrePkDVYomE8AwcuCUyMi",
       "name": "brand___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c5U1Lm7y197ZCNUI9USWPUV": Array [
+  "c5U1Lm7y197ZCNUI9USWPUV___Entry": Array [
     Object {
       "id": "qYfB1lzHTNpofY3Oqvjpk",
       "name": "author___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c651CQ8rLoIYCeY6G0QG22q": Array [
+  "c651CQ8rLoIYCeY6G0QG22q___Entry": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c6m5AJ9vMPKc8OUoQeoCS4o": Array [
+  "c6m5AJ9vMPKc8OUoQeoCS4o___Asset": Array [
     Object {
       "id": "c7LAnCobuuWYSqks6wAwY2a",
       "name": "category___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c6t4HKjytPi0mYgs240wkG": Array [
+  "c6t4HKjytPi0mYgs240wkG___Asset": Array [
     Object {
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "name": "category___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "c7LAnCobuuWYSqks6wAwY2a": Array [
+  "c7LAnCobuuWYSqks6wAwY2a___Entry": Array [
     Object {
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "qYfB1lzHTNpofY3Oqvjpk": Array [
+  "qYfB1lzHTNpofY3Oqvjpk___Entry": Array [
     Object {
       "id": "c5U1Lm7y197ZCNUI9USWPUV",
       "name": "blog post___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
-  "wtrHxeu3zEoEce2MokCSi": Array [
+  "wtrHxeu3zEoEce2MokCSi___Asset": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "product___NODE",
       "spaceId": "x2t9il8x6p",
+      "type": "Entry",
     },
   ],
 }
@@ -7247,30 +7545,30 @@ Object {
 
 exports[`Process contentful data (by name) builds list of resolvable data 1`] = `
 Set {
-  "c7LAnCobuuWYSqks6wAwY2a",
-  "c24DPGBDeGEaYy8ms4Y8QMQ",
-  "c651CQ8rLoIYCeY6G0QG22q",
-  "c4LgMotpNF6W20YKmuemW0a",
-  "JrePkDVYomE8AwcuCUyMi",
-  "c5KsDBWseXY6QegucYAoacS",
-  "c3DVqIYj4dOwwcKu6sgqOgg",
-  "c6dbjWqNd9SqccegcqYq224",
-  "c4BqrajvA8E6qwgkieoqmqO",
-  "c71mfnH4QKsSsQmgoaQuq6O",
-  "c4L2GhTsJtCseMYM8Wia64i",
-  "c5U1Lm7y197ZCNUI9USWPUV",
-  "qYfB1lzHTNpofY3Oqvjpk",
-  "c3wtvPBbBjiMKqKKga8I2Cu",
-  "KTRF62Q4gg60q6WCsWKw8",
-  "Xc0ny7GWsMEMCeASWO2um",
-  "c2Y8LhXLnYAYqKCGEWG4EKI",
-  "c6t4HKjytPi0mYgs240wkG",
-  "c1MgbdJNTsMWKI0W68oYqkU",
-  "c6m5AJ9vMPKc8OUoQeoCS4o",
-  "c4zj1ZOfHgQ8oqgaSKm4Qo2",
-  "wtrHxeu3zEoEce2MokCSi",
-  "c10TkaLheGeQG6qQGqWYqUI",
-  "c6s3iG2OVmoUcosmA8ocqsG",
+  "c7LAnCobuuWYSqks6wAwY2a___Entry",
+  "c24DPGBDeGEaYy8ms4Y8QMQ___Entry",
+  "c651CQ8rLoIYCeY6G0QG22q___Entry",
+  "c4LgMotpNF6W20YKmuemW0a___Entry",
+  "JrePkDVYomE8AwcuCUyMi___Entry",
+  "c5KsDBWseXY6QegucYAoacS___Entry",
+  "c3DVqIYj4dOwwcKu6sgqOgg___Entry",
+  "c6dbjWqNd9SqccegcqYq224___Entry",
+  "c4BqrajvA8E6qwgkieoqmqO___Entry",
+  "c71mfnH4QKsSsQmgoaQuq6O___Entry",
+  "c4L2GhTsJtCseMYM8Wia64i___Entry",
+  "c5U1Lm7y197ZCNUI9USWPUV___Entry",
+  "qYfB1lzHTNpofY3Oqvjpk___Entry",
+  "c3wtvPBbBjiMKqKKga8I2Cu___Asset",
+  "KTRF62Q4gg60q6WCsWKw8___Asset",
+  "Xc0ny7GWsMEMCeASWO2um___Asset",
+  "c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
+  "c6t4HKjytPi0mYgs240wkG___Asset",
+  "c1MgbdJNTsMWKI0W68oYqkU___Asset",
+  "c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
+  "c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
+  "wtrHxeu3zEoEce2MokCSi___Asset",
+  "c10TkaLheGeQG6qQGqWYqUI___Asset",
+  "c6s3iG2OVmoUcosmA8ocqsG___Asset",
 }
 `;
 
@@ -7295,11 +7593,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "bbf9ba4506cb99492f0b07ea3a28f737",
+        "contentDigest": "e08905c4055bff98df9884881b9a7bf1",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Normann Copenhagen",
     },
   ],
@@ -7322,11 +7623,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "11c01df3a61387333cf9f7ac613af20b",
+        "contentDigest": "cc48e18fb4f19e46934deb62b29e2d2a",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Normann Copenhagen",
     },
   ],
@@ -7349,11 +7653,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "a2addf44f7879e90d6b3058001a5880e",
+        "contentDigest": "313d4d481f26d09f6745ae84088b0870",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "SoSo Wall Clock",
     },
   ],
@@ -7376,11 +7683,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "625a2b2257595edbe4efcfc5ae336dc3",
+        "contentDigest": "c4b534d4888559b878e04830ca649cdf",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "SoSo Wall Clock",
     },
   ],
@@ -7403,11 +7713,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "b54c3564fc75efb39c3759efee64b7f3",
+        "contentDigest": "2ac90118c94bd2beb52000a79433b140",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Hudson Wall Cup ",
     },
   ],
@@ -7430,11 +7743,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "262af8b162da9de405bf6499467768fd",
+        "contentDigest": "6a91112f45dffde96f52520c16aece17",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Hudson Wall Cup ",
     },
   ],
@@ -7457,11 +7773,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "944b01fdfe82c76ed3e3e7bd1c462975",
+        "contentDigest": "d9f4b931f455e1dd5bdb6fae6f3265f9",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Lemnos",
     },
   ],
@@ -7484,11 +7803,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "188a448b2b9c92aa20e4f2b921daff6f",
+        "contentDigest": "b9ed42acdbb8e9b8c22908d5ec1ce7a3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Lemnos",
     },
   ],
@@ -7511,11 +7833,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ccc48a348551b17fddce1efb97bf820b",
+        "contentDigest": "e3cfb0bafa4eb4d8caee4b8d5899dffe",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Toys",
     },
   ],
@@ -7538,11 +7863,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "cae9c5d552a6fcb3df4dea804c031845",
+        "contentDigest": "dd663a233798d6e205c65b552f5cf56d",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Toys",
     },
   ],
@@ -7565,11 +7893,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "df2e57e86b4fe17655ed0889ffa243a6",
+        "contentDigest": "e3b1ee4df3912ff00ad61e1fc50b4b58",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Chive logo",
     },
   ],
@@ -7592,11 +7923,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "75e059f146658d383ce03f57ae2b7ffd",
+        "contentDigest": "1130d06b463f0891f4b1bbabb2f2e363",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Chive logo",
     },
   ],
@@ -7619,11 +7953,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5062a26112b3dbb531d472b8903d46e9",
+        "contentDigest": "0e4b4dd1d814e7983a876f2aa90f949a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Home and Kitchen",
     },
   ],
@@ -7646,11 +7983,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "dd9c762ab326ced17232e9c96ea7a5d3",
+        "contentDigest": "3820b53c095d0f77e97bf7506247871c",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Home and Kitchen",
     },
   ],
@@ -7673,11 +8013,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "88c4ef0ed49551a82a33cccd09171d8e",
+        "contentDigest": "1073faf17334a0f2e53b9f7c72529958",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam",
     },
   ],
@@ -7700,11 +8043,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "891168271aa495c6afed1ba1014fa918",
+        "contentDigest": "9213521b6e5f44c4782719a72e026030",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam",
     },
   ],
@@ -7727,11 +8073,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "dfdac1f5a977d38a8ece0762c6ff1ed1",
+        "contentDigest": "a63ce7c34b50c1f7f051ae02e7fb183a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam Streamliner",
     },
   ],
@@ -7754,11 +8103,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "3e873879f0cc2622be2c1199a8f9d0d8",
+        "contentDigest": "23acd46feaca05460726eab2381755fb",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Playsam Streamliner",
     },
   ],
@@ -7781,11 +8133,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4c42ff152ccfc22a7a8ad3fdb728d300",
+        "contentDigest": "b9c80441d14508ccd2f642f10003d7d7",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Whisk beaters",
     },
   ],
@@ -7808,11 +8163,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "ac654073536701214d653f3df7e31eca",
+        "contentDigest": "b9123152da40946b1957e6e918521013",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "Whisk beaters",
     },
   ],
@@ -7835,11 +8193,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "827ff632f8631d9317517068e0485c2d",
+        "contentDigest": "b4f26cee7f686b204820d25bad24e005",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "House icon",
     },
   ],
@@ -7862,11 +8223,14 @@ Array [
       },
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "5f38ab0214338d7b18e434a4a0509945",
+        "contentDigest": "714fb73ab74d8c0e35318edc939163f3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "sys": Object {
+        "type": "Asset",
+      },
       "title": "House icon",
     },
   ],
@@ -7882,11 +8246,14 @@ Array [
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6020d82d8bb5bd6b1de8a97f6f419053",
+        "contentDigest": "c8e208026ffc65fd0e4a03ed208759b2",
         "type": "ContentfulContentType",
       },
       "name": "Category",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -7901,7 +8268,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "46efe516307baaf0d7772a18ea36ca05",
+        "contentDigest": "1802d83dec680f1db591af371dc452f3",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -7922,6 +8289,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:55:54.077Z",
@@ -7939,7 +8307,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "3abdddde1c8ed8c20f4b0185bbef6af0",
+        "contentDigest": "5951a532846c1cb26753c8adbe1fac03",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -7958,6 +8326,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:46:43.477Z",
@@ -7974,6 +8343,9 @@ Array [
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Home & Kitchen",
     },
   ],
@@ -7989,6 +8361,9 @@ Array [
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8002,6 +8377,9 @@ Array [
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Toys",
     },
   ],
@@ -8017,6 +8395,9 @@ Array [
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8026,11 +8407,14 @@ Array [
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6020d82d8bb5bd6b1de8a97f6f419053",
+        "contentDigest": "c8e208026ffc65fd0e4a03ed208759b2",
         "type": "ContentfulContentType",
       },
       "name": "Category",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -8045,7 +8429,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "e0beb5d9936c9ef61a090cd496eb0f09",
+        "contentDigest": "c030151644636c52dad7a0b383d33a58",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -8066,6 +8450,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:55:54.077Z",
@@ -8083,7 +8468,7 @@ Array [
       "icon___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "c06f053f970ea120f4388b189c3c5860",
+        "contentDigest": "9fe99f1fb3ea6e6c64014b58b5a0720a",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -8102,6 +8487,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "title___NODE": "uuid-from-gatsby",
       "updatedAt": "2017-06-27T09:46:43.477Z",
@@ -8118,6 +8504,9 @@ Array [
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Haus & Küche",
     },
   ],
@@ -8133,6 +8522,9 @@ Array [
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8146,6 +8538,9 @@ Array [
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
       "title": "Spielzeug",
     },
   ],
@@ -8161,6 +8556,9 @@ Array [
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8170,11 +8568,14 @@ Array [
       "displayField": "companyName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "523655fd0d90116babdcba9c139672a3",
+        "contentDigest": "7864ffd02277a690b07dedeb09a84c0d",
         "type": "ContentfulContentType",
       },
       "name": "Brand",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -8190,7 +8591,7 @@ Array [
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "52063314118126faaaa927a446e4c3b2",
+        "contentDigest": "a77e11afdb7de463fc52486700f75c88",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8214,6 +8615,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "twitter": "https://twitter.com/NormannCPH",
       "updatedAt": "2017-06-27T09:55:16.820Z",
@@ -8233,7 +8635,7 @@ Array [
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9ff55cfd9953f6423897110b63dd691e",
+        "contentDigest": "b022036bc79855f0f293a0a5598fc626",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8254,6 +8656,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:51:15.647Z",
       "website": "http://www.lemnos.jp/en/",
@@ -8271,7 +8674,7 @@ Array [
       "createdAt": "2017-06-27T09:35:44.988Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "65fa97d4153a5d6a1d0d202a1964b7e5",
+        "contentDigest": "711555ccb6097a64b19f217e57dc6e10",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8291,6 +8694,7 @@ Array [
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:50:36.937Z",
       "website": "http://playsam.com/",
@@ -8308,6 +8712,9 @@ Array [
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8322,6 +8729,9 @@ Array [
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8336,6 +8746,9 @@ Array [
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8370,6 +8783,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8384,6 +8800,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8398,6 +8817,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8407,11 +8829,14 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "displayField": "companyName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "523655fd0d90116babdcba9c139672a3",
+        "contentDigest": "7864ffd02277a690b07dedeb09a84c0d",
         "type": "ContentfulContentType",
       },
       "name": "Brand",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -8427,7 +8852,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "normann@normann-copenhagen.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "07fc9f609bd467985c815bba53a55df5",
+        "contentDigest": "20be1aecf5d5ab48c48b7ce71c9a7f3c",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8451,6 +8876,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "twitter": "https://twitter.com/NormannCPH",
       "updatedAt": "2017-06-27T09:55:16.820Z",
@@ -8470,7 +8896,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "a376b123f951550806209e47abaebc04",
+        "contentDigest": "c614734e7dba5da563bdd9e60283c3a1",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8491,6 +8917,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:51:15.647Z",
       "website": "http://www.lemnos.jp/en/",
@@ -8508,7 +8935,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "createdAt": "2017-06-27T09:35:44.988Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "977998b5cdbb0e714fd65bdeee0eed17",
+        "contentDigest": "1386d7cc65a2ebc83cb89b43e6d59808",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "uuid-from-gatsby",
@@ -8528,6 +8955,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "updatedAt": "2017-06-27T09:50:36.937Z",
       "website": "http://playsam.com/",
@@ -8545,6 +8973,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8559,6 +8990,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8573,6 +9007,9 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8607,6 +9044,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8621,6 +9061,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8635,6 +9078,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8644,11 +9090,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "productName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "043cf76e7aedca253d7f91e366d103d5",
+        "contentDigest": "13220a3fc0c001a964b43b0ec70cc430",
         "type": "ContentfulContentType",
       },
       "name": "Product",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -8668,7 +9117,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "90faf7a42abf75a8f7fe37436d1e0367",
+        "contentDigest": "b275b58831c548a67c39757e9e73aafd",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8691,6 +9140,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "wood",
@@ -8720,7 +9170,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "1bcd10fb27ae44ab0ba3f544064a5e6c",
+        "contentDigest": "8bb7825e79616e333a6e5945b054f696",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8743,6 +9193,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "vase",
@@ -8770,7 +9221,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "0d7f32dbf24270f79fbf870d27696d5a",
+        "contentDigest": "95316b313c8a17c71dc5f006bc7e0821",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8793,6 +9244,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "kitchen",
@@ -8822,7 +9274,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "148e07132aaac6d709e56f84b447eafd",
+        "contentDigest": "84ed33923c26f31232723c21aad6337d",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -8845,6 +9297,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "home décor",
@@ -8869,6 +9322,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Playsam Streamliner Classic Car, Espresso",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8883,6 +9339,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "A classic Playsam design, the Streamliner Classic Car has been selected as Swedish Design Classic by the Swedish National Museum for its inventive style and sleek surface. It's no wonder that this wooden car has also been a long-standing favorite for children both big and small!",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8897,6 +9356,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Hudson Wall Cup",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8911,6 +9373,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Wall Hanging Glass Flower Vase and Terrarium",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8925,6 +9390,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Whisk Beater",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8939,6 +9407,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8953,6 +9424,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "SoSo Wall Clock",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8967,6 +9441,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -8976,11 +9453,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "productName",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "043cf76e7aedca253d7f91e366d103d5",
+        "contentDigest": "13220a3fc0c001a964b43b0ec70cc430",
         "type": "ContentfulContentType",
       },
       "name": "Product",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9000,7 +9480,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "8b514a23fd2d2239b6b7b749e7dc1b92",
+        "contentDigest": "9a92e6b7d775d2466633389323370833",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9023,6 +9503,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "wood",
@@ -9052,7 +9533,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "d0e0661ae1ed61d2fbe0f5f251673c02",
+        "contentDigest": "2469ddb2872f5a1e6038e29c81807b70",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9075,6 +9556,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "vase",
@@ -9102,7 +9584,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "3235603106e7770d30a222a8d6884419",
+        "contentDigest": "a774607f9cf9ad5461e0bc7aae665a6d",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9125,6 +9607,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "kitchen",
@@ -9154,7 +9637,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "uuid-from-gatsby",
       ],
       "internal": Object {
-        "contentDigest": "ede187df0a81a80643c8d0b507814b98",
+        "contentDigest": "2891835190b5e81205508baa722f8254",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -9177,6 +9660,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 2,
+        "type": "Entry",
       },
       "tags": Array [
         "home décor",
@@ -9201,6 +9685,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Playsam Streamliner Klassisches Auto, Espresso",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9215,6 +9702,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9229,6 +9719,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Becher",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9243,6 +9736,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9257,6 +9753,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "Schneebesen",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9271,6 +9770,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9285,6 +9787,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productName": "SoSo wanduhr",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9299,6 +9804,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       },
       "parent": "uuid-from-gatsby",
       "productDescription": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9308,11 +9816,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "contentDigest": "848d886851adbb1ac6429dbafe7e2e5b",
         "type": "ContentfulContentType",
       },
       "name": "StTest",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9322,11 +9833,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "36295a10b54f67251a163b00c188b02e",
+        "contentDigest": "848d886851adbb1ac6429dbafe7e2e5b",
         "type": "ContentfulContentType",
       },
       "name": "StTest",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9336,11 +9850,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": null,
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9d44539046f153bcd9f3d110e20c428c",
+        "contentDigest": "fa64d1d00fb3c69e9bdd973a18358d02",
         "type": "ContentfulContentType",
       },
       "name": "JSON-test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9352,7 +9869,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "f1215f4c5b68dc08ffc0404bdb4e9b69",
+        "contentDigest": "b32e78c657628b0349dac300be018357",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -9369,6 +9886,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 3,
+        "type": "Entry",
       },
       "updatedAt": "2018-06-11T14:18:54.392Z",
     },
@@ -9452,6 +9970,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
         "watch": "lerna run watch --no-sort --stream --concurrency 999",
       },
+      "sys": Object {
+        "type": "Entry",
+      },
       "workspaces": Array [
         "packages/*",
       ],
@@ -9464,11 +9985,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": null,
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "9d44539046f153bcd9f3d110e20c428c",
+        "contentDigest": "fa64d1d00fb3c69e9bdd973a18358d02",
         "type": "ContentfulContentType",
       },
       "name": "JSON-test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9480,7 +10004,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2017-11-28T02:16:10.604Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "3a57e7b8bf657b0d263fdf1bfcdc0d50",
+        "contentDigest": "a23ddc8b93afe1fec6b0fce819ac4356",
         "type": "ContentfulJsonTest",
       },
       "jsonTest___NODE": "uuid-from-gatsby",
@@ -9497,6 +10021,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 3,
+        "type": "Entry",
       },
       "updatedAt": "2018-06-11T14:18:54.392Z",
     },
@@ -9580,6 +10105,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
         "watch": "lerna run watch --no-sort --stream --concurrency 999",
       },
+      "sys": Object {
+        "type": "Entry",
+      },
       "workspaces": Array [
         "packages/*",
       ],
@@ -9592,11 +10120,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "contentDigest": "4d5b1a8d2011b54c987c79c758072a68",
         "type": "ContentfulContentType",
       },
       "name": "Remark Test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9609,7 +10140,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "189c3b481f9ddbe73e8024f8e8619ecf",
+        "contentDigest": "30d20e3988dd80fc1089c774ec28660b",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "en-US",
@@ -9625,6 +10156,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 1,
+        "type": "Entry",
       },
       "title": "Contentful images inlined in Markdown",
       "updatedAt": "2018-05-28T08:49:06.230Z",
@@ -9686,6 +10218,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulRemarkTestContentTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9695,11 +10230,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "2a9e145ee8bb6530af09e010f31a397c",
+        "contentDigest": "4d5b1a8d2011b54c987c79c758072a68",
         "type": "ContentfulContentType",
       },
       "name": "Remark Test",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9712,7 +10250,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2018-05-28T08:49:06.230Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "4c069c79589fc84ebd38cc638e985766",
+        "contentDigest": "dd23e99215f354707feacf112cde30c6",
         "type": "ContentfulRemarkTest",
       },
       "node_locale": "de",
@@ -9728,6 +10266,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
           },
         },
         "revision": 1,
+        "type": "Entry",
       },
       "title": "Contentful images inlined in Markdown",
       "updatedAt": "2018-05-28T08:49:06.230Z",
@@ -9789,6 +10328,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "type": "contentfulRemarkTestContentTextNode",
       },
       "parent": "uuid-from-gatsby",
+      "sys": Object {
+        "type": "Entry",
+      },
     },
   ],
   Array [
@@ -9798,11 +10340,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6ea09658e67ecfc838a195ab96bd8ef9",
+        "contentDigest": "7d867a56fd16afbd92d325ed1b63de0c",
         "type": "ContentfulContentType",
       },
       "name": "Blog Post",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9813,7 +10358,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "07de0f8061f6b3795851cf58d4990a30",
+        "contentDigest": "5ea0acaeadc8594497a1b33de57dcd2f",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "en-US",
@@ -9829,6 +10374,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "title": "Post one",
       "updatedAt": "2019-09-09T06:58:04.316Z",
@@ -9841,11 +10387,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "title",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "6ea09658e67ecfc838a195ab96bd8ef9",
+        "contentDigest": "7d867a56fd16afbd92d325ed1b63de0c",
         "type": "ContentfulContentType",
       },
       "name": "Blog Post",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9856,7 +10405,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "createdAt": "2019-09-09T06:54:07.673Z",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "1550e7716a7f01d59c323314c9aa7966",
+        "contentDigest": "7fc69508aa29e42ab5041f71685e154c",
         "type": "ContentfulBlogPost",
       },
       "node_locale": "de",
@@ -9872,6 +10421,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "title": "Post one",
       "updatedAt": "2019-09-09T06:58:04.316Z",
@@ -9884,11 +10434,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "feb97892424b0df5c4d78a7a36e6bb6c",
+        "contentDigest": "fee08e5f45e47b9f070772e8e7db99dc",
         "type": "ContentfulContentType",
       },
       "name": "Author",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9902,7 +10455,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "favouritePost___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "d0384357b57c5eb07e31a914524a3323",
+        "contentDigest": "6d1df6266d613f5c23726f1b359214a9",
         "type": "ContentfulAuthor",
       },
       "name": "Fred",
@@ -9918,6 +10471,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "updatedAt": "2019-09-09T06:54:38.816Z",
     },
@@ -9929,11 +10483,14 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "name",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "feb97892424b0df5c4d78a7a36e6bb6c",
+        "contentDigest": "fee08e5f45e47b9f070772e8e7db99dc",
         "type": "ContentfulContentType",
       },
       "name": "Author",
       "parent": null,
+      "sys": Object {
+        "type": "ContentType",
+      },
     },
   ],
   Array [
@@ -9947,7 +10504,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "favouritePost___NODE": "uuid-from-gatsby",
       "id": "uuid-from-gatsby",
       "internal": Object {
-        "contentDigest": "138f38b4996ae91f59e06b4346fd801f",
+        "contentDigest": "1db2ebc4fb4bebf7900df361c89cef79",
         "type": "ContentfulAuthor",
       },
       "name": "Fred",
@@ -9963,6 +10520,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
             "type": "Link",
           },
         },
+        "type": "Entry",
       },
       "updatedAt": "2019-09-09T06:54:38.816Z",
     },
