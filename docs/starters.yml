@@ -4565,7 +4565,7 @@
   features:
     - React Helmet <head> Management
     - SVG Icon
-- url: https://gatsby-lam.vaporwavy.io
+- url: https://lam.aesthetic.codes/
   repo: https://github.com/vaporwavy/gatsby-london-after-midnight
   description: A custom, image-centric theme for Gatsby. Advanced from the Gatsby starter London.
   tags:
@@ -6714,6 +6714,20 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://vapor.aesthetic.codes/
+  repo: https://github.com/vaporwavy/gatsby-vapor
+  description: A custom, simple theme for Gatsby. Made for minimalist. Completely free and fully responsive.
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - HTML5UP
+    - Pagination
+    - CMS:Netlify
+  features:
+    - Support tags
+    - Post Search
+    - Toggle Dark themes
 - url: https://www.stefanseegerer.de/gatsby-starter-paper-css-landing-page/
   repo: https://github.com/manzanillo/gatsby-starter-paper-css-landing-page
   description: Single page starter with PaperCSS for workshop, educational material, or other minimal landing pages
