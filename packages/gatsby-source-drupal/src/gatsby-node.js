@@ -31,6 +31,7 @@ exports.sourceNodes = async (
     params,
     concurrentFileRequests,
     disallowedLinkTypes,
+    skipFileDownloads,
   } = pluginOptions
   const { createNode } = actions
 
@@ -92,6 +93,9 @@ exports.sourceNodes = async (
 
   // Default concurrentFileRequests to `20`
   concurrentFileRequests = concurrentFileRequests || 20
+
+  // Default skipFileDownloads to false.
+  skipFileDownloads = skipFileDownloads || false
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -205,22 +209,26 @@ exports.sourceNodes = async (
     })
   })
 
-  reporter.info(`Downloading remote files from Drupal`)
+  if (skipFileDownloads) {
+    reporter.info(`Skipping remote file download from Drupal`)
+  } else {
+    reporter.info(`Downloading remote files from Drupal`)
 
-  // Download all files (await for each pool to complete to fix concurrency issues)
-  const fileNodes = [...nodes.values()].filter(isFileNode)
-  if (fileNodes.length) {
-    const downloadingFilesActivity = reporter.activityTimer(
-      `Remote file download`
-    )
-    downloadingFilesActivity.start()
-    await asyncPool(concurrentFileRequests, fileNodes, async node => {
-      await downloadFile(
-        { node, store, cache, createNode, createNodeId, getCache, reporter },
-        pluginOptions
+    // Download all files (await for each pool to complete to fix concurrency issues)
+    const fileNodes = [...nodes.values()].filter(isFileNode)
+    if (fileNodes.length) {
+      const downloadingFilesActivity = reporter.activityTimer(
+        `Remote file download`
       )
-    })
-    downloadingFilesActivity.end()
+      downloadingFilesActivity.start()
+      await asyncPool(concurrentFileRequests, fileNodes, async node => {
+        await downloadFile(
+          { node, store, cache, createNode, createNodeId, getCache, reporter },
+          pluginOptions
+        )
+      })
+      downloadingFilesActivity.end()
+    }
   }
 
   // Create each node
