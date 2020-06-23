@@ -7,8 +7,9 @@ const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
 /**
- * Create a resolver for the given fieldName that resolves to the
- * field of the parent MDX
+ * Create a resolver for the given fieldName that resolves to
+ * the field of the parent MDX.
+ * (Taken from gatsby-theme-blog-core)
  */
 function mdxResolverPassthrough(fieldName) {
   return async (source, args, context, info) => {
