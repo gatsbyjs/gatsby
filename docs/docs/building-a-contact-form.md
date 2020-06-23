@@ -78,8 +78,9 @@ Setting this up only involves adding a few form attributes:
 
 ```diff:title=src/pages/contact.js
 - <form method="post" action="#">
-+ <form method="post" netlify-honeypot="bot-field" data-netlify="true">
++ <form method="post" netlify-honeypot="bot-field" data-netlify="true" name="contact">
 +   <input type="hidden" name="bot-field" />
++   <input type="hidden" name="form-name" value="contact" />
   ...
 ```
 

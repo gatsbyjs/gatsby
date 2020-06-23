@@ -649,7 +649,7 @@
                   "httpStatus": 200
                 },
                 {
-                  "url": "https://webpack-workshop.netlify.com/",
+                  "url": "https://webpack-workshop.netlify.app/",
                   "alts": [],
                   "httpStatus": 200
                 },

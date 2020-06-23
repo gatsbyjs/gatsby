@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.4.4...babel-preset-gatsby-package@0.4.5) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
+## [0.4.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.4.3...babel-preset-gatsby-package@0.4.4) (2020-06-09)
+
+### Bug Fixes
+
+- **babel-preset-gatsby-package:** remove explicit `@babel/plugin-proposal-class-properties` and let `@babel/preset-env` add it ([#24640](https://github.com/gatsbyjs/gatsby/issues/24640)) ([272ba4f](https://github.com/gatsbyjs/gatsby/commit/272ba4f))
+
+## [0.4.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.4.2...babel-preset-gatsby-package@0.4.3) (2020-06-02)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
 ## [0.4.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.4.1...babel-preset-gatsby-package@0.4.2) (2020-05-20)
 
 **Note:** Version bump only for package babel-preset-gatsby-package

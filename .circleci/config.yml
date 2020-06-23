@@ -309,7 +309,7 @@ jobs:
           command: yarn build
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
-          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep ''ERROR #''"'
+          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: ~/project/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
