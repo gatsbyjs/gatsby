@@ -9,7 +9,7 @@ tags:
   - community
 ---
 
-Events over this past month have been truly momentous. While many of us struggle to recognize and address the damage caused by systemic racial injustice and oppression in the US, at Gatsby we are doing our best to meaningfully support the Black Lives Matter movement. This is why we made the decision to reconfigure Gatsby Days from the live online event originally planned for today and tomorrow.
+Events over this past month have been truly momentous. While many of us struggle to recognize and address the damage caused by systemic racial injustice and oppression in the US, at Gatsby we are doing our best to meaningfully support the Black Lives Matter movement. This is why we made the decision to reconfigure Gatsby Days from the live online event that was originally planned.
 
 We feel now is simply not the time to take attention and space away from the Black Lives Matter movement. Transforming Gatsby Days from an event into a video and blog content series allows us to share all the amazing speakers and learning opportunities of the live event in a way that the community can access as the time is right for each of us.
 
