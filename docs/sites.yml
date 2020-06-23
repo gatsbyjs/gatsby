@@ -10734,6 +10734,17 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Vim Training
+  description: >
+    Bite sized video tutorials for Vim
+  main_url: https://vimtraining.com
+  url: https://vimtraining.com
+  featured: false
+  categories:
+    - Education
+    - Programming
+  built_by: Nishant Dania
+  built_by_url: https://nishantdania.com
 - title: CodeTisans
   url: https://codetisans.com
   main_url: https://codetisans.com
