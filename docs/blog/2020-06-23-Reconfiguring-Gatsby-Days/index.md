@@ -8,7 +8,6 @@ tags:
   - gatsby-days
   - community
 ---
-
 Events over this past month have been truly momentous. While many of us struggle to recognize and address the damage caused by systemic racial injustice and oppression in the US, at Gatsby we are doing our best to meaningfully support the Black Lives Matter movement. This is why we made the decision to reconfigure Gatsby Days from the live online event originally planned for today and tomorrow. 
 
 We feel now is simply not the time to take attention and space away from the Black Lives Matter movement. Transforming Gatsby Days from an event into a video and blog content series allows us to share all the amazing speakers and learning opportunities of the live event in a way that the community can access as the time is right for each of us.
@@ -19,7 +18,6 @@ Today’s blog post is going to be a long one, because this is where we are shar
 - [Gatsby Partner Program](#Gatsby-Partner-Program)
 - [Gatsby Admin](#Gatsby-Admin)
 - [First-class Drupal Integration](#First-class-Drupal-Integration)
-
 
 **[Coming soon](#Coming-soon)**
 - [Gatsby Blog Theme 2.0](#Gatsby-Blog-Theme-2.0)
@@ -66,8 +64,8 @@ Content editors, not developers, spend more time on finished sites than anyone e
 [![Shane Thomas introducing the Gatsby Drupal Module](https://res.cloudinary.com/marcomontalbano/image/upload/v1592856909/video_to_markdown/images/youtube--Mm6wrDr2DBE-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Mm6wrDr2DBE&feature=youtu.be "Shane Thomas introducing the Gatsby Drupal Module")
 
 
-## Other cool stuff coming soon
-For many of our attendees a favorite part of previous Gatsby Days events has been the lightning talks, quick peeks at in-process projects given by various Gatsby team members. This time around, we have pre-recorded these five minute flash presentations for your viewing pleasure. 
+## Coming soon
+For many of our attendees a favorite part of previous Gatsby Days events has been the lightning talks, quick peeks at in-process projects given by various Gatsby team members. This time around, we have pre-recorded these five minute flash presentations of cool stuff coming soon for your viewing pleasure. 
 
 ### Gatsby Blog Theme 2.0
 __Laurie Barth, Staff Software Engineer, Gatsby Themes team__
@@ -80,7 +78,6 @@ Laurie’s lightning talk introduces the exciting new features of blog theme 2.0
 ### The Path to Instant Builds
 __Matt Kane, Staff Software Engineer, Gatsby Core team__
 
-
 In the olden days, like last year, there was a price for fast static site runtimes: slow build times. Incremental Builds on Gatsby Cloud changes everything by achieving builds under 5 seconds for data changes, even for sites with hundreds of pages. After all, the fastest way to build is to not build at all! Watch Matt explain the path to instant builds: how we achieved our goal of all data changes taking under 10 seconds to build, and how we’re working on making even more builds, like code changes, incremental as well. The changes we are implementing in the open source project will benefit all Gatsby users. Soon we’ll be able to support super fast incremental building of massive sites, code changes, filesystem data changes, and hybrid content formats like MDX.
 
 [![Matt Kane on Gatsby Incremental Builds and beyond](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858441/video_to_markdown/images/youtube--z6-MPZrC98g-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=z6-MPZrC98g&feature=youtu.be "Matt Kane on Gatsby Incremental Builds and beyond") 
@@ -91,7 +88,6 @@ __Blaine Kasten, Staff Software Engineer, Gatsby Core team__
 Got routes? A crucial part of building any website is the routing structure: which pages exist and how they’re built. We believe website creators shouldn’t have to delve into Gatsby Node APIs to accomplish key goals. Gatsby v1 introduced the low-level `createPage` API to accomplish this task. While this API is pretty powerful and flexible, we've long wanted a higher-level API that helps developers create sites even faster. In this lightning talk, Blaine introduces Unified Routes, a suite of new APIs and conventions to make the file system the primary way of building pages. Want to see at a glance what routes your site has? Blaine shows you how with his video demonstration of  creating routes that take parameters while unifying routing within the pages directory. (Spoiler alert: there’s also a new conversion tool that automates converting your site from using `createPages` to the new API).
 
 [![Blaine Kasten on Gatsby Unified Routes](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858581/video_to_markdown/images/youtube--tAcAkqOcs3c-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=tAcAkqOcs3c&feature=youtu.be "Blaine Kasten on Gatsby Unified Routes")
-
 
 ### Gatsby Ambassador Program
 __Caitlin Cashin, Community Manager at Gatsby__
@@ -121,7 +117,6 @@ Another traditional feature of Gatsby Days: insight from Gatsby team members on 
 __Shannon Soper, Product Designer at Gatsby__ 
 
 Shannon’s lightning talk takes a quick tour of error messages and Recipes through the lens of a Usability Test Session. These sessions are live calls between a volunteer user, Shannon, and a Gatsby engineer, where you share your screen working through a task while they take notes and ask questions. Although encountering and debugging errors often feels painful, Shannon uses this process to emphasize that it’s never your fault. The mindset within Gatsby’s UX team is that the product is at fault, and it’s our job to uncover issues and identify areas for improvement. Watch as Shannon walks through a recent usability test to show how they work -- and encourage more community members to try doing one! If you’re ready to sign up for a usability test, [book a time on Shannon’s calendar](https://calendly.com/shannon-soper). You can also share screen recordings by sending them to [design-team@gatsbyjs.com](mailto:design-team@gatsbyjs.com) 
-
 
 [![Shannon Soper on Usability Testing, error messages and recipes](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858251/video_to_markdown/images/youtube--Hp_cJGwT1Jc-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Hp_cJGwT1Jc&feature=youtu.be "Shannon Soper on Usability Testing, error messages and recipes")
 
