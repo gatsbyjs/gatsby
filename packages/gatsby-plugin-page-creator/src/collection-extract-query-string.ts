@@ -1,14 +1,14 @@
 import { babelParseToAst } from "gatsby/dist/utils/babel-parse-to-ast"
 import { generateQueryFromString } from "./extract-query"
 import fs from "fs-extra"
-import traverse, { NodePath } from "@babel/traverse"
+import traverse from "@babel/traverse"
 import generate from "@babel/generator"
 import * as t from "@babel/types"
 
 // TODO: Ive tried to make TS happy here, but any changes I make to get TS
 // to work actually make the code fail. This code works. So maybe we can figure
 // this out later.
-function isCreatePagesFromData(path: NodePath<t.CallExpression>): boolean {
+function isCreatePagesFromData(path): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
       path.node.callee.property.name === `createPagesFromData` &&
@@ -34,7 +34,7 @@ export function collectionExtractQueryString(
   const ast = babelParseToAst(
     fs.readFileSync(absolutePath).toString(),
     absolutePath
-  ) as t.Node
+  )
 
   // 2.  Traverse the AST to find the createPagesFromData macro
   traverse(ast, {

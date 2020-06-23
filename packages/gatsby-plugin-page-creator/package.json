@@ -25,6 +25,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
     "@babel/types": "^7.10.2",
+    "@babel/traverse": "^7.10.2",
     "@babel/generator": "^7.10.2",
     "@babel/runtime": "^7.10.2",
     "bluebird": "^3.7.2",
