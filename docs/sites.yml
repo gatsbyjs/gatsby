@@ -1340,12 +1340,32 @@
     - Portfolio
   built_by: Aman Mittal
   built_by_url: https://amanhimself.dev/
+- title: janosh.dev
+  description: >
+    Janosh Riebesell's blog. Writes about physics, machine learning, sustainability
+    and web development. Site is fully responsive and has fluid typography. Built with
+    MDX (for interactive content), styled-components (for design), KaTeX (for math),
+    gatsby-remark-vscode (for syntax highlighting), Disqus (for reader comments),
+    Algolia (for search), react-spring (for animations).
+  main_url: https://janosh.dev
+  url: https://janosh.dev
+  source_url: https://github.com/janosh/blog
+  categories:
+    - Portfolio
+    - Blog
+    - Science
+    - Photography
+    - Travel
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.dev
+  featured: false
 - title: Ocean artUp
   description: >
-    Science outreach site built using styled-components and Contentful. It
-    presents the research project "Ocean artUp" funded by an Advanced Grant of
-    the European Research Council to explore the possible benefits of artificial
-    uplift of nutrient-rich deep water to the ocean’s sunlit surface layer.
+    Science outreach site built using styled-components and Contentful. Ocean artUp
+    is a research project funded by an Advanced Grant of the European Research
+    Council (ERC) to explore the possible benefits of artificial upwelling, i.e.
+    pumping nutrient-rich deep water to the ocean’s sunlit surface layer. Potential
+    benefits include increased bioactivity and CO2 sequestration.
   main_url: https://ocean-artup.eu
   url: https://ocean-artup.eu
   source_url: https://github.com/janosh/ocean-artup
@@ -1354,7 +1374,23 @@
     - Education
     - Blog
   built_by: Janosh Riebesell
-  built_by_url: https://janosh.io
+  built_by_url: https://janosh.dev
+  featured: false
+- title: Studenten bilden Schüler
+  description: >
+    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
+    contribute to more equal educational opportunities by providing free tutoring to refugees
+    and children from underprivileged families. The site is built with styled-components,
+    Contentful, CSS grid, fluid typography, Algolia search.
+  main_url: https://studenten-bilden-schueler.de
+  url: https://studenten-bilden-schueler.de
+  source_url: https://github.com/StudentenBildenSchueler/homepage
+  categories:
+    - Education
+    - Nonprofit
+    - Blog
+  built_by: Janosh Riebesell
+  built_by_url: https://janosh.dev
   featured: false
 - title: Ryan Fitzgerald
   description: |
@@ -1943,22 +1979,6 @@
     - Portfolio
     - Freelance
   featured: false
-- title: Studenten bilden Schüler
-  description: >
-    Studenten bilden Schüler e.V. is a German student-run nonprofit initiative that aims to
-    contribute to more equal educational opportunities by providing free tutoring to refugees
-    and children from underprivileged families. The site is built on Gatsby v2, styled-components
-    and Contentful. It supports Google Analytics, fluid typography and Algolia search.
-  main_url: https://studenten-bilden-schueler.de
-  url: https://studenten-bilden-schueler.de
-  source_url: https://github.com/StudentenBildenSchueler/homepage
-  categories:
-    - Education
-    - Nonprofit
-    - Blog
-  built_by: Janosh Riebesell
-  built_by_url: https://janosh.io
-  featured: false
 - title: Mike's Remote List
   main_url: https://www.mikesremotelist.com
   url: https://www.mikesremotelist.com
@@ -2155,23 +2175,6 @@
     - Web Development
   built_by: Coletiv
   built_by_url: https://coletiv.com
-  featured: false
-- title: janosh.io
-  description: >
-    Personal blog and portfolio of Janosh Riebesell. The site is built with Gatsby v2 and designed
-    entirely with styled-components v4. Much of the layout was achieved with CSS grid. It supports
-    Google Analytics, fluid typography and Algolia search.
-  main_url: https://janosh.io
-  url: https://janosh.io
-  source_url: https://github.com/janosh/janosh.io
-  categories:
-    - Portfolio
-    - Blog
-    - Science
-    - Photography
-    - Travel
-  built_by: Janosh Riebesell
-  built_by_url: https://janosh.io
   featured: false
 - title: Gold Edge Training
   url: https://www.goldedgetraining.co.uk
