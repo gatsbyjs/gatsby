@@ -6714,3 +6714,14 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://www.stefanseegerer.de/gatsby-starter-paper-css-landing-page/
+  repo: https://github.com/manzanillo/gatsby-starter-paper-css-landing-page
+  description: Single page starter with PaperCSS for workshop, educational material, or other minimal landing pages
+  tags:
+    - Onepage
+    - Landing Page
+    - Education
+  features:
+    - Landing Page
+    - Google Analytics
+    - PaperCSS style
