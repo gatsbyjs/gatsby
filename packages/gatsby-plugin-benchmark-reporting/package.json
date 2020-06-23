@@ -14,12 +14,12 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting#readme",
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
-    "@babel/core": "^7.10.2",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
     "babel-preset-gatsby-package": "^0.4.5"
   },
   "dependencies": {
-    "fast-glob": "^3.2.2",
+    "fast-glob": "^3.2.4",
     "node-fetch": "^2.6.0",
     "uuid": "^3.4.0"
   },
