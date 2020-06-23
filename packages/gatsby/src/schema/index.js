@@ -2,7 +2,6 @@
 
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
-const nodeStore = require(`../db/nodes`)
 const { getNodesByType, getTypes } = require(`../redux/nodes`)
 const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
@@ -105,7 +104,6 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   const schemaComposer = createSchemaComposer({ fieldExtensions })
   const schema = await buildSchema({
     schemaComposer,
-    nodeStore,
     types: getAllTypeDefinitions(),
     fieldExtensions,
     thirdPartySchemas,
@@ -157,7 +155,6 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
 
   const schema = await rebuildSchemaWithSitePage({
     schemaComposer,
-    nodeStore,
     fieldExtensions: getAllFieldExtensions(),
     typeMapping,
     typeConflictReporter,
