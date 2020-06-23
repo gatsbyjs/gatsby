@@ -6,21 +6,22 @@ const url = require(`url`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
-const mdxResolverPassthrough = fieldName => async (
-  source,
-  args,
-  context,
-  info
-) => {
-  const type = info.schema.getType(`Mdx`)
-  const mdxNode = context.nodeModel.getNodeById({
-    id: source.parent,
-  })
-  const resolver = type.getFields()[fieldName].resolve
-  const result = await resolver(mdxNode, args, context, {
-    fieldName,
-  })
-  return result
+/**
+ * Create a resolver for the given fieldName that resolves to the
+ * field of the parent MDX
+ */
+function mdxResolverPassthrough(fieldName) {
+  return async (source, args, context, info) => {
+    const type = info.schema.getType(`Mdx`)
+    const mdxNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    })
+    const resolver = type.getFields()[fieldName].resolve
+    const result = await resolver(mdxNode, args, context, {
+      fieldName,
+    })
+    return result
+  }
 }
 
 exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
@@ -37,6 +38,7 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
       slug: String!
     }
   `)
+
   createTypes(
     schema.buildObjectType({
       name: `BlogPost`,
