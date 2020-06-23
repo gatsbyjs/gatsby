@@ -124,7 +124,7 @@ See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-roge
 npm install --save node-sass gatsby-plugin-sass
 ```
 
-2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCSSPlugins` parameter in your `gatsby-config.js`.
+2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCssPlugins` parameter in your `gatsby-config.js`.
 
 ```javascript:title=gatsby-config.js
 plugins: [
