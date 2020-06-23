@@ -1,9 +1,6 @@
 import { IGatsbyNode } from "../redux/types"
 import { store } from "../redux"
 
-export * from "../redux/nodes"
-export { runFastFiltersAndSort as runQuery } from "../redux/run-fast-filters"
-
 /**
  * Get content for a node from the plugin that created it.
  */
