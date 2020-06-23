@@ -28,7 +28,9 @@ export const createGraphQLRunner = (
   }
 ): Runner => {
   // TODO: Move tracking of changed state inside GraphQLRunner itself. https://github.com/gatsbyjs/gatsby/issues/20941
-  let runner = new GraphQLRunner(store, { graphqlTracing })
+  let runner: GraphQLRunner | undefined = new GraphQLRunner(store, {
+    graphqlTracing,
+  })
 
   const eventTypes: string[] = [
     `DELETE_CACHE`,
@@ -43,12 +45,17 @@ export const createGraphQLRunner = (
 
   eventTypes.forEach(type => {
     emitter.on(type, () => {
-      runner = new GraphQLRunner(store)
+      runner = undefined
     })
   })
 
-  return (query, context): ReturnType<Runner> =>
-    runner
+  return (query, context): ReturnType<Runner> => {
+    if (!runner) {
+      runner = new GraphQLRunner(store, {
+        graphqlTracing,
+      })
+    }
+    return runner
       .query(query, context, {
         queryName: `gatsby-node query`,
         parentSpan,
@@ -92,4 +99,5 @@ export const createGraphQLRunner = (
 
         return result
       })
+  }
 }

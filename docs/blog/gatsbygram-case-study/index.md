@@ -530,7 +530,7 @@ It's easy to create your own "Gatsbygram" site from an Instagram account.
 
 ### Instructions on setting up your own Gatsbygram site
 
-```bash
+```shell
 # Clone the Gatsby repo.
 git clone -b 1.0 git@github.com:gatsbyjs/gatsby.git
 cd gatsby/examples/gatsbygram
@@ -553,8 +553,8 @@ npm run develop
 While writing this post I scraped a few accounts and published their resulting
 "Gatsbygram" sites:
 
-- https://iceland-gatsbygram.netlify.com
-- https://tinyhouses-gatsbygram.netlify.com
+- https://iceland-gatsbygram.netlify.app
+- https://tinyhouses-gatsbygram.netlify.app
 
 _With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
 and Addy Osmani for their reviews._

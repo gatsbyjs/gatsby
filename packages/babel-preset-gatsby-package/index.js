@@ -4,7 +4,7 @@ function preset(context, options = {}) {
   const { browser = false, debug = false, nodeVersion = `10.13.0` } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
-  const IS_TEST  = (BABEL_ENV || NODE_ENV) === `test`
+  const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
 
   const browserConfig = {
     useBuiltIns: false,
@@ -39,12 +39,11 @@ function preset(context, options = {}) {
       r(`@babel/preset-flow`),
     ],
     plugins: [
-      r(`@babel/plugin-proposal-class-properties`),
       r(`@babel/plugin-proposal-nullish-coalescing-operator`),
       r(`@babel/plugin-proposal-optional-chaining`),
       r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
-      IS_TEST && r(`babel-plugin-dynamic-import-node`)
+      IS_TEST && r(`babel-plugin-dynamic-import-node`),
     ].filter(Boolean),
     overrides: [
       {
