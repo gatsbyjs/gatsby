@@ -59,18 +59,9 @@ exports.createSchemaCustomization = helpers => {
       section.createSchemaCustomization(helpers)
     }
   }
-}
-
-exports.sourceNodes = async helpers => {
-  for (const section of sections) {
-    if (section.sourceNodes) {
-      section.sourceNodes(helpers)
-    }
-  }
 
   const {
-    actions: { createTypes, createNode },
-    createContentDigest,
+    actions: { createTypes },
   } = helpers
 
   // Explicitly define Airtable types so that queries still work
@@ -94,7 +85,12 @@ exports.sourceNodes = async helpers => {
       approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
     }
   `)
+}
 
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createContentDigest,
+}) => {
   // get data from GitHub API at build time
   const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
   const resultData = await result.json()

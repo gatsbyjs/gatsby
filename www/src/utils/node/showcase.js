@@ -2,7 +2,7 @@ const slugify = require(`slugify`)
 const url = require(`url`)
 const { getTemplate } = require(`../get-template`)
 
-exports.sourceNodes = ({ actions: { createTypes } }) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type SitesYaml implements Node {
       title: String!
