@@ -17,6 +17,11 @@ export interface IMutationAction {
 }
 export interface IBuildContext {
   program?: IProgram
+  nodesMutatedDuringQueryRun: boolean
+  firstRun: boolean
+  nodeMutationBatch: IMutationAction[]
+  filesDirty?: boolean
+  runningBatch: IMutationAction[]
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
   gatsbyNodeGraphQLFunction?: Runner
@@ -26,4 +31,6 @@ export interface IBuildContext {
   refresh?: boolean
   workerPool?: JestWorker
   app?: Express
+  pagesToBuild?: string[]
+  pagesToDelete?: string[]
 }
