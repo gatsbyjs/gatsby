@@ -1,4 +1,6 @@
-const { runQuery: nodesQuery } = require(`../../db/nodes`)
+const {
+  runFastFiltersAndSort: nodesQuery,
+} = require(`../../redux/run-fast-filters`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
