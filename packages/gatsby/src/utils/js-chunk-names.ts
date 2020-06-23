@@ -19,7 +19,7 @@ function replaceUnifiedRoutesKeys(
 ): string {
   let newString = kebabedName
 
-  filePath.split(`/`).forEach(part => {
+  filePath.split(path.sep).forEach(part => {
     if (part[0] === `[` || part[0] === `{`) {
       const match = /(\[(.*)\]|\{(.*)\})/.exec(part)
       newString = newString.replace(
