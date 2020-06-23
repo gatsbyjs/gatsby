@@ -20,7 +20,7 @@ Today’s blog post is going to be a long one, because this is where we are shar
 - [First-class Drupal Integration](#First-class-Drupal-Integration)
 
 **[Coming soon](#Coming-soon)**
-- [Gatsby Blog Theme 2.0](#Gatsby-Blog-Theme-2.0)
+- [Gatsby Blog Theme v2](#Gatsby-Blog-Theme-v2)
 - [The Path to Instant Builds](#The-Path-to-Instant-Builds)
 - [Unified Routes](#Unified-Routes)
 - [Gatsby Ambassador Program](#Gatsby-Ambassador-Program)
@@ -31,7 +31,7 @@ Today’s blog post is going to be a long one, because this is where we are shar
 - [Tasty Bits of Design Research](#Tasty-Bits-of-Design-Research)
 - [Making Gatsby Faster](#Making-Gatsby-Faster)
 
-## New from Gatsby: Partner Program, Admin alpha, Drupal & WordPress
+## New from Gatsby
 
 ### Gatsby Partner Program
 __Linda Watkins, VP of Partnerships at Gatsby__
@@ -67,10 +67,10 @@ Content editors, not developers, spend more time on finished sites than anyone e
 ## Coming soon
 For many of our attendees a favorite part of previous Gatsby Days events has been the lightning talks, quick peeks at in-process projects given by various Gatsby team members. This time around, we have pre-recorded these five minute flash presentations of cool stuff coming soon for your viewing pleasure. 
 
-### Gatsby Blog Theme 2.0
+### Gatsby Blog Theme v2
 __Laurie Barth, Staff Software Engineer, Gatsby Themes team__
 
-Laurie’s lightning talk introduces the exciting new features of blog theme 2.0, which will be available soon. Previously, sharing blog posts on social media would result in blank social cards. Now, with improved SEO, you can set featured images and social sharing images on your posts. We’ve also increased the features available in Theme UI, allowing you to highlight lines of code snippets with Prism. The blog theme is overall more customizable too. You can set base styles without any shadowing (though shadowing is still available). See Laurie’s demo of how to completely alter a theme’s appearance in just a few seconds by setting base styles to the community-made `theme-ui-sketchy-preset`, changing the `prismPreset` option, and adding a font using `webFontURL`. We’re excited to see what you build with Gatsby Blog Theme 2.0!
+Laurie’s lightning talk introduces the exciting new features of Blog Theme 1.6/2.0, which will be available soon. Previously, sharing blog posts on social media would result in blank social cards. Now, with improved SEO, you can set featured images and social sharing images on your posts. We’ve also increased the features available in Theme UI, allowing you to highlight lines of code snippets with Prism. The blog theme is overall more customizable too. You can set base styles without any shadowing (though shadowing is still available). See Laurie’s demo of how to completely alter a theme’s appearance in just a few seconds by setting base styles to the community-made `theme-ui-sketchy-preset`, changing the `prismPreset` option, and adding a font using `webFontURL`. We’re excited to see what you build with Gatsby Blog Theme 2.0!
 
 [![Laurie Barth introducing the Gatsby Blog Theme 2.0](https://res.cloudinary.com/marcomontalbano/image/upload/v1592857614/video_to_markdown/images/youtube--4PNvVCzEFeI-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=4PNvVCzEFeI&feature=youtu.be "Laurie Barth introducing the Gatsby Blog Theme 2.0")
 
