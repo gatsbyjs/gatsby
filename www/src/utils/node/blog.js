@@ -54,7 +54,7 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
         slug: { type: `String!` },
         released: { type: `Boolean` },
         excerpt: {
-          type: `String`,
+          type: `String!`,
           args: {
             pruneLength: {
               type: `Int`,

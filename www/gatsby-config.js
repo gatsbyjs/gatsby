@@ -272,7 +272,7 @@ module.exports = {
         feeds: [
           {
             title: `GatsbyJS`,
-            query: /* GraphQL */ `
+            query: `
               {
                 allBlogPost(
                   sort: { order: DESC, fields: [date] }
