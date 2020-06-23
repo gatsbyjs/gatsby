@@ -11,6 +11,7 @@ describe(`collection-routing`, () => {
       .then(slug => {
         // should navigate us to an actual collection builder route.
         cy.getTestElement(`collection-routing-blog`)
+          .first()
           .click()
           .waitForRouteChange()
 

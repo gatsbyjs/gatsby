@@ -1,5 +1,6 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 exports.onPreBootstrap = () => {
   fs.copyFileSync(
