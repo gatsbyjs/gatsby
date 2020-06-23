@@ -16,11 +16,8 @@ We feel now is simply not the time to take attention and space away from the Bla
 Today’s blog post is going to be a long one, because this is where we are sharing the new programs and products we had planned to announce at this week’s Gatsby Days. We are following up with individual posts featuring recorded presentations from the Gatsby community members who were scheduled to speak.  We are sorry to miss gathering, even virtually, and we thank everyone for understanding -- and supporting -- the change. Until we can meet again, please enjoy the recorded presentations and demos from Gatsby Days Reconfigured. 
 
 **[New from Gatsby](#New-from-Gatsby)**
-
 	     [Gatsby Partner Program](#Gatsby-Partner-Program)
-
 	     [Gatsby Admin](#Gatsby-Admin)
-
 	     [First-class Drupal Integration](#First-class-Drupal-Integration)
 
 
