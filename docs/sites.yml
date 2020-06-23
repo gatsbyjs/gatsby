@@ -10966,6 +10966,37 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Diogo Rodrigues
+  url: https://www.diogorodrigues.dev/
+  main_url: https://www.diogorodrigues.dev/
+  description: >
+    As a front-end developer with UI/UX design skills, I create digital experiences through design & code.
+  categories:
+    - Freelance
+    - Portfolio
+    - Blog
+    - Mobile Development
+    - Web Development
+    - User Experience
+  built_by: Diogo Rodrigues
+  built_by_url: https://www.diogorodrigues.dev/
+- title: Jamstack Storefront
+  main_url: https://jamstackstorefront.com/
+  url: https://jamstackstorefront.com/
+  categories:
+    - E-commerce
+    - Agency
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+  featured: false
+- title: Support Black Business
+  main_url: https://support-black.business
+  url: https://support-black.business
+  categories:
+    - Directory
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+  featured: false
 - title: Nyxo
   url: https://www.nyxo.app
   main_url: https://www.nyxo.app
@@ -11131,6 +11162,25 @@
   built_by: Dovetail
   built_by_url: https://dovetailstudios.com
   featured: false
+- title: Brad Garropy
+  url: https://dailytexascountry.com
+  main_url: https://dailytexascountry.com
+  source_url: https://github.com/bradgarropy/dailytexascountry.com
+  description: >
+    She tries to tell me that Oklahoma's better, but I ain't got time for that.
+  categories:
+    - Blog
+    - Community
+    - E-commerce
+    - Entertainment
+    - Marketing
+    - Media
+    - Music
+    - Podcast
+    - SEO
+    - Video
+  built_by: Brad Garropy
+  built_by_url: https://bradgarropy.com
 - title: Petite & Minimal
   url: https://www.petiteandminimal.com/
   main_url: https://www.petiteandminimal.com/
