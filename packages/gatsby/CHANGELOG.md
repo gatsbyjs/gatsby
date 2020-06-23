@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.9...gatsby@2.23.10) (2020-06-23)
+
+### Bug Fixes
+
+- **gatsby:** Typo in the code example of the PageProps inline docs ([#25200](https://github.com/gatsbyjs/gatsby/issues/25200)) ([a72caa6](https://github.com/gatsbyjs/gatsby/commit/a72caa6))
+
 ## [2.23.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.8...gatsby@2.23.9) (2020-06-22)
 
 **Note:** Version bump only for package gatsby

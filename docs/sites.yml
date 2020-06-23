@@ -10734,6 +10734,27 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: Vim Training
+  description: >
+    Bite sized video tutorials for Vim
+  main_url: https://vimtraining.com
+  url: https://vimtraining.com
+  featured: false
+  categories:
+    - Education
+    - Programming
+  built_by: Nishant Dania
+  built_by_url: https://nishantdania.com
+- title: CodeTisans
+  url: https://codetisans.com
+  main_url: https://codetisans.com
+  description: >-
+    Website of an agency specialized in creating Laravel and Vue apps
+  categories:
+    - Agency
+  built_by: Przemysław Przyłucki
+  built_by_url: https://twitter.com/przylucki_p
+  featured: false
 - title: Mox Bank
   main_url: https://mox.com/
   url: https://mox.com/
@@ -10849,6 +10870,21 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+- title: CodeWithLinda
+  url: https://www.codewithlinda.com/
+  main_url: https://www.codewithlinda.com/
+  source_url: https://github.com/Linda-Ikechukwu/Personal-Site
+  description: >
+    CodeWithLinda is the personal portfolio and blog site of Linda Ikechukwu, a Frontend developer based in Lagos, Nigeria.
+  categories:
+    - Portfolio
+    - Blog
+    - Technology
+    - Programming
+    - Web Development
+  built_by: Linda Ikechukwu
+  built_by_url: https://twitter.com/_MsLinda
+  featured: false
 - title: Headless WordPress Blog and Portfolio by Simon Halimonov
   url: https://simonhalimonov.com/
   main_url: https://simonhalimonov.com/
@@ -10865,6 +10901,33 @@
     - WordPress
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
+  featured: false
+- title: Clarke Harris
+  url: https://www.clarkeharris.com/
+  main_url: https://www.clarkeharris.com/
+  description: >
+    Brooklyn based designer portfolio. Uses pretty advance animations. Content is pulled from the contentful.
+  categories:
+    - Portfolio
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Husar
+  built_by_url: https://www.danielhusar.sk/
+  featured: false
+- title: Daniel Husar
+  url: https://www.danielhusar.sk/
+  main_url: https://www.danielhusar.sk/
+  source_url: https://github.com/danielhusar/danielhusar.sk
+  description: >
+    An open source portfolio and blog.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Open Source
+  built_by: Daniel Husar
+  built_by_url: https://www.danielhusar.sk/
   featured: false
 - title: SANDALBOYZ
   main_url: https://sandalboyz.com
@@ -10900,7 +10963,6 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
-diogorodrigues-patch-1
 - title: Diogo Rodrigues
   url: https://www.diogorodrigues.dev/
   main_url: https://www.diogorodrigues.dev/
@@ -10915,6 +10977,42 @@ diogorodrigues-patch-1
     - User Experience
   built_by: Diogo Rodrigues
   built_by_url: https://www.diogorodrigues.dev/
+- title: DUDOS
+  main_url: https://dudos.co.uk
+  url: https://dudos.co.uk
+  description: >
+    UK based web design agency building premium bespoke websites with light-speed performance and rock-solid security
+  categories:
+    - Agency
+    - Web development
+    - Design
+    - SEO
+    - Portfolio
+    - Blog
+    - JavaScript
+    - Mobile Development
+    - Marketing
+    - Photography
+    - User Experience
+  built_by: Mark A Hext
+  built_by_url: https://dudos.co.uk/about
+  featured: false
+- title: Impuls-e
+  main_url: https://impuls-e.works/
+  url: https://impuls-e.works/
+  description: >
+    Digital Agency focused on helping our clients build their online digital presence. Located in Santa Catarina, Brazil
+  categories:
+    - Web Development
+    - E-commerce
+    - Mobile Development
+    - Landing Page
+    - Blog
+    - Programming
+    - Agency
+  built_by: Impuls-e
+  built_by_url: https://www.instagram.com/impulse.works/
+  featured: false
 - title: Honeycomb Creative
   main_url: https://www.honeycombcreative.com/
   url: https://www.honeycombcreative.com/
