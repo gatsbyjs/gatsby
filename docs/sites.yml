@@ -10870,6 +10870,21 @@
   built_by: Aparna Joshi
   built_by_url: https://github.com/AparnaJoshi007/explained/
   featured: false
+- title: CodeWithLinda
+  url: https://www.codewithlinda.com/
+  main_url: https://www.codewithlinda.com/
+  source_url: https://github.com/Linda-Ikechukwu/Personal-Site
+  description: >
+    CodeWithLinda is the personal portfolio and blog site of Linda Ikechukwu, a Frontend developer based in Lagos, Nigeria.
+  categories:
+    - Portfolio
+    - Blog
+    - Technology
+    - Programming
+    - Web Development
+  built_by: Linda Ikechukwu
+  built_by_url: https://twitter.com/_MsLinda
+  featured: false
 - title: Headless WordPress Blog and Portfolio by Simon Halimonov
   url: https://simonhalimonov.com/
   main_url: https://simonhalimonov.com/
