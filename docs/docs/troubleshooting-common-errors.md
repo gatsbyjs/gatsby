@@ -67,7 +67,7 @@ Or replace `@emotion/core` with the name of the library that is missing. Install
 
 You may see this error because you're attempting to use `fs` inside a React component. Additionally, it often shows up when working with `@mdx-js/runtime`.
 
-This error may be a top level `Cannot resolve module 'fs'` or part of a Webpack error like `Can't resolve 'fs'`.
+This error may be a top level `Cannot resolve module 'fs'` or part of a webpack error like `Can't resolve 'fs'`.
 
 `fs` stands for filesystem and it's a Node.js library that's used to access files on your computer. However, when your packaged Gatsby code runs, your computer is but a distant memory.
 
@@ -77,7 +77,7 @@ Some packages, like Babel, bring `fs` along for the ride anyway. In order to pre
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     node: {
-      fs: 'empty'
+      fs: 'empty' // highlight-line
     }
 ```
 
