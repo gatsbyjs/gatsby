@@ -234,7 +234,7 @@ Array [
             Object {
               "alts": Array [],
               "httpStatus": 200,
-              "url": "https://webpack-workshop.netlify.com/",
+              "url": "https://webpack-workshop.netlify.app/",
             },
             Object {
               "alts": Array [],

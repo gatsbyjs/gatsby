@@ -32,13 +32,13 @@ Once this starts, you can now view your site at `http://localhost:9000`.
 
 Now run your first Lighthouse test.
 
-1. Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools.
+1. Open the site in Chrome (if you didn't already do so) and then open up the Chrome DevTools. (Lighthouse is also available for Firefox from [Firefox Add-ons](https://addons.mozilla.org/en-GB/firefox/addon/google-lighthouse/). )
 
-2. Click on the "Audits" tab where you'll see a screen that looks like:
+2. Click on the "Audits" tab, this may be a "Lighthouse" tab depending on which version you are using. You should see a screen that looks like:
 
 ![Lighthouse audit start](./images/lighthouse-audit.png)
 
-3. Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
+3. Choose whether to audit on Mobile or Desktop and then click "Generate Report". You will also see a list of all available audits that you can choose to run for this report. Once the audit starts it'll take around a minute depending on the site speed and which audits were selected. When that is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./images/lighthouse-audit-results.png)
 

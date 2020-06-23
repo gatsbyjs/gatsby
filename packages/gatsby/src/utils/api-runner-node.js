@@ -20,10 +20,18 @@ const {
   buildScalarType,
 } = require(`../schema/types/type-builders`)
 const { emitter, store } = require(`../redux`)
+const {
+  getNodes,
+  getNode,
+  getNodesByType,
+  hasNodeChanged,
+  getNodeAndSavePathDependency,
+} = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
+const { loadNodeContent } = require(`../db/nodes`)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -87,14 +95,6 @@ const runAPI = (plugin, api, args, activity) => {
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
 
-    const {
-      loadNodeContent,
-      getNodes,
-      getNode,
-      getNodesByType,
-      hasNodeChanged,
-      getNodeAndSavePathDependency,
-    } = require(`../db/nodes`)
     const {
       publicActions,
       restrictedActionsAvailableInAPI,

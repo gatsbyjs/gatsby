@@ -110,7 +110,7 @@ should have a file structure that looks something like this:
 
 Now run the Gatsby dev server to make sure everything works:
 
-```bash
+```shell
 npm run develop
 ```
 
@@ -180,7 +180,7 @@ If you play around with GraphiQL you'll notice there's not that much there.
 Let's fix that. We need to teach Gatsby how to query the file system. Luckily
 this is so common it's been done for you. Install the file system source plugin:
 
-```bash
+```shell
 npm i --save gatsby-source-filesystem
 ```
 
@@ -229,7 +229,7 @@ Being able to query files is a big win, and if you have a directory of HTML
 files this is all you will need. But if you want to render markdown files as
 HTML you will need another plugin. Let's add that now:
 
-```bash
+```shell
 npm i --save gatsby-transformer-remark
 ```
 

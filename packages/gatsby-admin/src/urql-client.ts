@@ -1,24 +1,37 @@
-const { createClient, defaultExchanges, subscriptionExchange } = require(`urql`)
-const { SubscriptionClient } = require(`subscriptions-transport-ws`)
+import {
+  Client,
+  createClient,
+  defaultExchanges,
+  subscriptionExchange,
+} from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
 
-const subscriptionClient = new SubscriptionClient(
-  `ws://localhost:4000/graphql`,
-  {
-    reconnect: true,
-  }
-)
+interface ICreateUrqlClientOptions {
+  port: number
+}
 
-const client = createClient({
-  fetch,
-  url: `http://localhost:4000/graphql`,
-  exchanges: [
-    ...defaultExchanges,
-    subscriptionExchange({
-      forwardSubscription(operation) {
-        return subscriptionClient.request(operation)
-      },
-    }),
-  ],
-})
+export const createUrqlClient = ({
+  port,
+}: ICreateUrqlClientOptions): Client => {
+  const subscriptionClient = new SubscriptionClient(
+    `ws://localhost:${port}/graphql`,
+    {
+      reconnect: true,
+    }
+  )
 
-export default client
+  const client = createClient({
+    fetch,
+    url: `http://localhost:${port}/graphql`,
+    exchanges: [
+      ...defaultExchanges,
+      subscriptionExchange({
+        forwardSubscription(operation) {
+          return subscriptionClient.request(operation)
+        },
+      }),
+    ],
+  })
+
+  return client
+}
