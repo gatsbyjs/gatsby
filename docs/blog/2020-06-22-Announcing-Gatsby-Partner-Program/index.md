@@ -27,7 +27,9 @@ Agencies are challenged to meet the needs of diverse clients while trying to opt
 - **Certification:** Leverage Gatsby’s brand to elevate your business and give clients confidence they’re working with a Gatsby certified agency.
 
 <Pullquote citation="Dennis Brotzky, Founding Partner, [Narative](https://www.narative.co/)">
-“Partnering with Gatsby has been a strong driver for growth. Our clients love the performance benefits and our developers are happy to use tools they already love.”
+  “Partnering with Gatsby has been a strong driver for growth. Our clients love
+  the performance benefits and our developers are happy to use tools they
+  already love.”
 </Pullquote>
 
 ## Gatsby Technology Partners
@@ -42,7 +44,12 @@ In this API-driven world, developers want to use the best tool for the job and t
 - **Grow with Gatsby:** Tap into the extensive and evolving Gatsby ecosystem by connecting with one of the most exciting and popular website frameworks around.
 - **Increase usage and sales:** Build a first-class experience for developers to increase usage and sales.
 
-<Pullquote citation="Kevin Zellmer, VP of Partnerships, [Contentful](https://www.contentful.com/)">"Partnering with Gatsby as a first-class integration partner has been a huge benefit to Contentful’s customers. This partnership helps our customers seamlessly improve site speed and SEO performance, leading to a better customer experience and increased conversions. We’re proud to support the rapidly growing Gatsby community and build the ecosystem."
+<Pullquote citation="Kevin Zellmer, VP of Partnerships, [Contentful](https://www.contentful.com/)">
+  "Partnering with Gatsby as a first-class integration partner has been a huge
+  benefit to Contentful’s customers. This partnership helps our customers
+  seamlessly improve site speed and SEO performance, leading to a better
+  customer experience and increased conversions. We’re proud to support the
+  rapidly growing Gatsby community and build the ecosystem."
 </Pullquote>
 
 ## How to Get Started
