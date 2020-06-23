@@ -27,7 +27,7 @@ Image optimization in Gatsby is provided by a plugin called `gatsby-image` which
 
 Start by using npm to install the `gatsby-image` plugin and its associated dependencies.
 
-```bash
+```shell
 npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
@@ -53,7 +53,7 @@ If you haven't already, make sure that your project is set up to see content ins
 
 1. Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
 
-```bash
+```shell
 npm install gatsby-source-filesystem
 ```
 

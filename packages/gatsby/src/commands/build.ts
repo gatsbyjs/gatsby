@@ -30,6 +30,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  writeOutRequires,
 } from "../services"
 import {
   markWebpackStatusAsPending,
@@ -96,6 +97,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
   })
 
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
+  })
+
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
@@ -143,13 +156,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
     rewriteActivityTimer.end()
   }
-
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
 
   await flushPendingPageDataWrites()
   markWebpackStatusAsDone()

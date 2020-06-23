@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.11...gatsby-plugin-offline@3.2.12) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
 ## [3.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.2.10...gatsby-plugin-offline@3.2.11) (2020-06-19)
 
 ### Bug Fixes
