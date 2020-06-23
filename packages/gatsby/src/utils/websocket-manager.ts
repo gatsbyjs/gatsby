@@ -4,7 +4,7 @@ import { store } from "../redux"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
 import fs from "fs"
-import { readPageData } from "../utils/page-data"
+import { readPageData, IPageDataWithQueryResult } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
@@ -13,7 +13,7 @@ import socketIO from "socket.io"
 
 export interface IPageQueryResult {
   id: string
-  result: unknown // TODO: Improve this once we understand what the type is
+  result?: IPageDataWithQueryResult
 }
 
 export interface IStaticQueryResult {
@@ -35,10 +35,13 @@ const getCachedPageData = async (
   const publicDir = path.join(program.directory, `public`)
   if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
     try {
-      const pageData = await readPageData(publicDir, pagePath)
+      const pageData: IPageDataWithQueryResult = await readPageData(
+        publicDir,
+        pagePath
+      )
 
       return {
-        result: pageData.result,
+        result: pageData,
         id: pagePath,
       }
     } catch (err) {
