@@ -27,6 +27,11 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
+        <Link to="/long-page#áccentuated" data-testid="long-page-id">
+          To long page (at id)
+        </Link>
+      </li>
+      <li>
         <Link to="/duplicated/" data-testid="duplicated">
           Another page using Index template
         </Link>

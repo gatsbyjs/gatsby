@@ -8,9 +8,11 @@ This example will show you how to leverage the [@reach/skip-nav](https://reacttr
 
 ## Using @reach/skip-nav
 
-### Add SkipNavLink and SkipNavContent to your Layout
+### Add `SkipNavLink` and `SkipNavContent` to your Layout
 
-```javascript:layout.js
+```javascript:title=src/components/layout.js
+// src/components/layout.js
+
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav"
 import "@reach/skip-nav/styles.css" //this will show/hide the link on focus
 
@@ -29,9 +31,11 @@ export default Layout
 
 ### Focus your link on page navigation
 
-Hooking into Gatsby's onRouteUpdate API method will allow you to focus automatically on a skip link on page change, putting a user in a more appropriate spot to take action. More information about this method can be found the [browser API docs](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate).
+Hooking into Gatsby's `onRouteUpdate` API method will allow you to focus automatically on a skip link on page change, putting a user in a more appropriate spot to take action. More information about this method can be found the [browser API docs](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate).
 
-```javascript:gatsby-browser.js
+```javascript:title=gatsby-browser.js
+// gatsby-browser.js
+
 export const onRouteUpdate = ({ location, prevLocation }) => {
   if (prevLocation !== null) {
     const skipLink = document.querySelector("[data-reach-skip-link]") //this is the query selector that comes with the <SkipNavLink> component
@@ -48,6 +52,7 @@ export const onRouteUpdate = ({ location, prevLocation }) => {
 
 A quick look at the relevant files and directories you'll see in this example:
 
+```text
     .
     ├── cypress/
     │   ├── integration/
@@ -60,6 +65,7 @@ A quick look at the relevant files and directories you'll see in this example:
     │   │   └── seo.js
     │   └── pages/
     ├── gatsby-browser.js
+```
 
 1.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site. It has pages and components to be used in those pages.
 1.  **`/components`**: This directory will contain all of the code related to what you will see on the front-end of your site. It has pages and components to be used in those pages.
@@ -71,7 +77,7 @@ A quick look at the relevant files and directories you'll see in this example:
 
 1.  **`/pages`**: This directory contains pages that will be automatically built and served by Gatsby. This example includes three pages to demonstrate navigation between them and how your skip nav link behaves. All of these pages use the `Layout` component.
 1.  **`gatsby-browser.js`**: This file is where you tell the Gatsby to focus the skip navigation when users navigate to a new page.
-1.  **`/cypress**: This directory is where tests and [Cypress](https://www.cypress.io/) configuration live. You're going to focus on the test. If you want to learn more about using Cypress, check out the [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress).
+1.  **`/cypress`**: This directory is where tests and [Cypress](https://www.cypress.io/) configuration live. You're going to focus on the test. If you want to learn more about using Cypress, check out the [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress).
 1.  **`/integrations/skip-nav.test.js`**: runs two tests to ensure that you have a skip link and that the skip link is focused on page navigation.
 
 ### Running the example
@@ -88,7 +94,7 @@ A quick look at the relevant files and directories you'll see in this example:
 
 ### Running tests
 
-1. Use the CLI to run cypress tests
+1. Use the CLI to run Cypress tests
    ```shell
    npm run test:e2e
    ```

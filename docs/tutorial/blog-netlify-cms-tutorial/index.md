@@ -64,7 +64,7 @@ git remote add origin https://github.com/[your-username]/[your-repo-name].git
 git push -u origin master
 ```
 
-Then, open [app.netlify.com](http://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site" with the default deployment settings.
+Then, open [app.netlify.com](https://app.netlify.com) and add a "New site from Git". Choose your newly created repo and click on "Deploy site" with the default deployment settings.
 
 > _Note: if you don't see the correct repo listed, you may need to install or reconfigure the Netlify app on GitHub._
 

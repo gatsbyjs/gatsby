@@ -16,10 +16,7 @@ interface IProxyControls {
 
 const noop = (): void => {}
 
-const adminFolder = path.join(
-  path.dirname(require.resolve(`gatsby-admin`)),
-  `public`
-)
+const adminFolder = path.join(__dirname, `..`, `..`, `gatsby-admin-public`)
 
 const serveAdmin = st({
   path: adminFolder,
@@ -89,7 +86,7 @@ export const startDevelopProxy = (input: {
     proxy.ws(req, socket, head)
   })
 
-  server.listen(input.proxyPort)
+  server.listen(input.proxyPort, input.program.host)
 
   return {
     server,

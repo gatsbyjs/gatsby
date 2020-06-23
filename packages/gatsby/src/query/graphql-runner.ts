@@ -11,7 +11,6 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -50,7 +49,6 @@ export class GraphQLRunner {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
-      nodeStore,
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
