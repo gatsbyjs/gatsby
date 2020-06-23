@@ -1,7 +1,6 @@
 // NOTE: Previously `infer-graphql-type-test.js`
 
 const { graphql } = require(`graphql`)
-const nodeStore = require(`../../../db/nodes`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const { store } = require(`../../../redux`)
@@ -246,7 +245,6 @@ describe(`GraphQL type inference`, () => {
     const schemaComposer = createSchemaComposer({ fieldExtensions })
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: typeDefs || [],
       fieldExtensions,
       thirdPartySchemas: [],

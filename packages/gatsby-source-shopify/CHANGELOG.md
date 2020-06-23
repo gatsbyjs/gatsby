@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.12...gatsby-source-shopify@3.2.13) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.11...gatsby-source-shopify@3.2.12) (2020-06-19)
+
+### Features
+
+- **gatsby-source-shopify:** Add handle field to blog + article queries ([#24766](https://github.com/gatsbyjs/gatsby/issues/24766)) ([a9e0290](https://github.com/gatsbyjs/gatsby/commit/a9e0290))
+
+## [3.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.10...gatsby-source-shopify@3.2.11) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.9...gatsby-source-shopify@3.2.10) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+## [3.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.8...gatsby-source-shopify@3.2.9) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [3.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.2.7...gatsby-source-shopify@3.2.8) (2020-05-22)
 
 **Note:** Version bump only for package gatsby-source-shopify

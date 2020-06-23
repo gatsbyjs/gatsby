@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.5...gatsby-react-router-scroll@3.0.6) (2020-06-23)
+
+### Bug Fixes
+
+- **gatsby-react-router-scroll:** replace querySelector with getElementById ([#25161](https://github.com/gatsbyjs/gatsby/issues/25161)) ([40724e8](https://github.com/gatsbyjs/gatsby/commit/40724e8))
+
+## [3.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.4...gatsby-react-router-scroll@3.0.5) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.3...gatsby-react-router-scroll@3.0.4) (2020-06-19)
+
+### Bug Fixes
+
+- Several Fixes for Scroll Handling and Restoration ([#24306](https://github.com/gatsbyjs/gatsby/issues/24306)) ([4c0916b](https://github.com/gatsbyjs/gatsby/commit/4c0916b))
+
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.2...gatsby-react-router-scroll@3.0.3) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.1...gatsby-react-router-scroll@3.0.2) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
 ## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.0...gatsby-react-router-scroll@3.0.1) (2020-05-20)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
