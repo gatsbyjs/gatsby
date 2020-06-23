@@ -79,13 +79,9 @@ class TagsPage extends React.Component {
   }
 
   render() {
-    const {
-      data: {
-        allBlogPost: { group },
-      },
-    } = this.props
+    const { data } = this.props
     const { filterQuery } = this.state
-    const uniqGroup = group
+    const uniqGroup = data.allBlogPost.group
       .filter(x => TAGS_AND_DOCS.has(x.fieldValue))
       .reduce((lookup, tag) => {
         const key = kebabCase(tag.fieldValue.toLowerCase())
