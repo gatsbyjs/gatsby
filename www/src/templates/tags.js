@@ -75,11 +75,7 @@ const Tags = ({ pageContext, data }) => {
         ) : null}
       </ButtonWrapper>
       {nodes.map(node => (
-        <BlogPostPreviewItem
-          post={node}
-          key={node.fields.slug}
-          sx={{ my: 9 }}
-        />
+        <BlogPostPreviewItem post={node} key={node.slug} sx={{ my: 9 }} />
       ))}
       <FooterLinks />
     </Container>
