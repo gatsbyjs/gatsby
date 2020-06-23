@@ -15,7 +15,7 @@ For larger teams or larger projects, you may want to use a continuous deployment
 
 Gatsby Cloud, for example, integrates with [GitHub](https://github.com/), and a number of hosted [content management systems](/docs/glossary#cms). Gatsby Cloud creates a new build after every commit or content change, although you can also trigger a build manually.
 
-### Using Gatsby <abbr>CLI</abbr>
+### Using Gatsby CLI
 
 For smaller teams and projects, use `gatsby build`. The `gatsby build` command is part of the Gatsby command line interface (or CLI). You'll need to install the CLI interface to create a site with Gatsby. Install it globally using [npm](/docs/glossary/#npm).
 

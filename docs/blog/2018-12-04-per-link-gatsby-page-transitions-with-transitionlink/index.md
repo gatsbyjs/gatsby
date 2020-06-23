@@ -15,7 +15,7 @@ TransitionLink is a simple way of declaring a page transition via props on a Lin
 
 TransitionLink is compatible with declarative react animation libraries like [react-pose](https://popmotion.io/pose/) and [react-spring](https://react-spring.surge.sh/). It's also compatible with imperative animation libraries like [gsap](https://greensock.com) and [anime.js](http://animejs.com/)
 
-Check it out [in use](https://gatsby-plugin-transition-link.netlify.com/).
+Check it out [in use](https://gatsby-plugin-transition-link.netlify.app/).
 
 ## The story
 

@@ -23,7 +23,7 @@ gatsby new {your-project-name}
 
 ```shell
 cd {your-project-name}
-yarn develop
+gatsby develop
 ```
 
 3. Stop your development server (`Ctrl + C` on your command line in most cases)

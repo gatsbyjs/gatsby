@@ -2,12 +2,12 @@ import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
-import { getNode, getNodes } from "../db/nodes"
+import { getNode, getNodes } from "../redux/nodes"
 import { boundActionCreators } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 const { deleteNode } = boundActionCreators
-
 import { Node } from "../../index"
+
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
  * may create nodes, but which have not actually created any nodes.
@@ -50,20 +50,21 @@ function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
 function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
   return nodes.filter(node => {
     let rootNode = node
+    let next: Node | undefined = undefined
+
     let whileCount = 0
-    while (
-      rootNode.parent &&
-      getNode(rootNode.parent) !== undefined &&
-      whileCount < 101
-    ) {
-      rootNode = getNode(rootNode.parent)
-      whileCount += 1
-      if (whileCount > 100) {
-        console.log(
-          `It looks like you have a node that's set its parent as itself`,
-          rootNode
-        )
+    do {
+      next = rootNode.parent ? getNode(rootNode.parent) : undefined
+      if (next) {
+        rootNode = next
       }
+    } while (next && ++whileCount < 101)
+
+    if (whileCount > 100) {
+      console.log(
+        `It looks like you have a node that's set its parent as itself`,
+        rootNode
+      )
     }
 
     return !state.nodesTouched.has(rootNode.id)
