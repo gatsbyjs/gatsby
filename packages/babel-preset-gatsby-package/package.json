@@ -18,7 +18,7 @@
     "@babel/preset-flow": "^7.10.1",
     "@babel/preset-react": "^7.10.1",
     "babel-plugin-dynamic-import-node": "^2.3.3",
-    "core-js": "^2.6.11"
+    "core-js": "^3.6.5"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
