@@ -88,7 +88,7 @@ module.exports = {
 }
 ```
 
-4. Use twin.macro to create your styled component
+4. Use `twin.macro` to create your styled component
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -145,7 +145,7 @@ If you are adding a custom configuration, you will need to load it after `tailwi
 
 ### 4. Add custom CSS/SCSS files
 
-**Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and @apply rules directly from your .js files.
+**Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and `@apply` rules directly from your `.js` files.
 
 In case you need to create custom classes for elements for nested selectors, or for overriding external packages, you can create your own CSS/SCSS files.
 
