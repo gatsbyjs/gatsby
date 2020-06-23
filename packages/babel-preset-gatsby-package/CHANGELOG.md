@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.4.4...babel-preset-gatsby-package@0.4.5) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
 ## [0.4.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.4.3...babel-preset-gatsby-package@0.4.4) (2020-06-09)
 
 ### Bug Fixes
