@@ -10902,6 +10902,33 @@
   built_by: Simon Halimonov
   built_by_url: https://simonhalimonov.com/
   featured: false
+- title: Clarke Harris
+  url: https://www.clarkeharris.com/
+  main_url: https://www.clarkeharris.com/
+  description: >
+    Brooklyn based designer portfolio. Uses pretty advance animations. Content is pulled from the contentful.
+  categories:
+    - Portfolio
+    - Design
+    - Freelance
+    - Web Development
+  built_by: Daniel Husar
+  built_by_url: https://www.danielhusar.sk/
+  featured: false
+- title: Daniel Husar
+  url: https://www.danielhusar.sk/
+  main_url: https://www.danielhusar.sk/
+  source_url: https://github.com/danielhusar/danielhusar.sk
+  description: >
+    An open source portfolio and blog.
+  categories:
+    - Blog
+    - Portfolio
+    - JavaScript
+    - Open Source
+  built_by: Daniel Husar
+  built_by_url: https://www.danielhusar.sk/
+  featured: false
 - title: SANDALBOYZ
   main_url: https://sandalboyz.com
   url: https://sandalboyz.com
