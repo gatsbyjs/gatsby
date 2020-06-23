@@ -104,8 +104,7 @@ exports.onCreateNode = async ({ node, actions, getNode, createNodeId }) => {
       html: node.html,
       body: node.body,
       timeToRead: node.timeToRead,
-      released:
-        !draft && !!date && moment.utc().isSameOrAfter(moment.utc(date)),
+      released: !draft && moment.utc().isSameOrAfter(moment.utc(date)),
       publishedAt: canonicalLink
         ? publishedAt || url.parse(canonicalLink).hostname
         : null,
