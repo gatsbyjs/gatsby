@@ -1,3 +1,25 @@
+- url: https://gatsby-pod6.netlify.app/
+  repo: https://github.com/zag/gatsby-starter-pod6
+  description: A minimal, lightweight and mobile-first starter for creating blogs with pod6 markup language.
+  tags:
+    - Blog
+    - CMS:Netlify
+    - Pagination
+    - RSS
+    - Linting
+    - Styling:PostCSS
+    - Styling:SCSS
+  features:
+    - Lost Grid
+    - Jest testing
+    - Beautiful typography inspired by matejlatin/Gutenberg
+    - Mobile-First approach in development
+    - Sidebar menu built using a configuration block
+    - Pagination support
+    - Sitemap Generation
+    - Offline support
+    - Google Analytics support
+    - Create pages and posts in pod6 markup language
 - url: https://ghost-balsa-preview.draftbox.co/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
