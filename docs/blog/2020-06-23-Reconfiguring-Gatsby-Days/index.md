@@ -22,24 +22,16 @@ Today’s blog post is going to be a long one, because this is where we are shar
 
 
 **[Coming soon](#Coming-soon)**
-
-	     [Gatsby Blog Theme 2.0](#Gatsby-Blog-Theme-2.0)
-
-	     [The Path to Instant Builds](#The-Path-to-Instant-Builds)
-
-       [Unified Routes](#Unified-Routes) 
-       
-       [Gatsby Ambassador Program](#Gatsby-Ambassador-Program)
-       
-       [i18n Theme](#i18n-Theme)
-       
-       [New WordPress Source Plugin](#New-WordPress-Source-Plugin) 
+- [Gatsby Blog Theme 2.0](#Gatsby-Blog-Theme-2.0)
+- [The Path to Instant Builds](#The-Path-to-Instant-Builds)
+- [Unified Routes](#Unified-Routes)
+- [Gatsby Ambassador Program](#Gatsby-Ambassador-Program)
+- [i18n Theme](#i18n-Theme)
+- [New WordPress Source Plugin](#New-WordPress-Source-Plugin) 
 
 **[Behind the Scenes](#Behind-the-Scenes)**
-
-       [Tasty Bits of Design Research](#Tasty-Bits-of-Design-Research)
-       
-       [Making Gatsby Faster](#Making-Gatsby-Faster)
+- [Tasty Bits of Design Research](#Tasty-Bits-of-Design-Research)
+- [Making Gatsby Faster](#Making-Gatsby-Faster)
 
 ## New from Gatsby: Partner Program, Admin alpha, Drupal & WordPress
 
