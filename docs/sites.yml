@@ -10966,6 +10966,17 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Amamos Vivir Cada Día
+  main_url: https://www.amvi.org.mx/
+  url: https://www.amvi.org.mx/
+  description: >
+    AMVI, Amamos Vivir Cada Día A.C. is a Mexican non-profit organisation helping children with degenerative illnesses by fulfilling their dreams and helping their families financially, but also with personal support. During the Covid-19 crisis, their donations have plummeted since they did not have a website, so I decided to help by building this site for them using Gatsby, TypeScript and Styled-Components, proudly hosted on Netlify who helped the cause with a free pro plan.
+  featured: false
+  categories:
+    - Nonprofit
+    - Healthcare
+  built_by: Jacob Herper
+  built_by_url: https://herper.io/
 - title: Digital4Better
   url: https://digital4better.com
   main_url: https://digital4better.com
