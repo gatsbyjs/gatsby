@@ -125,6 +125,7 @@
     "react-refresh": "^0.7.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.13.5",
     "semver": "^5.7.1",
     "shallow-compare": "^1.2.2",
     "signal-exit": "^3.0.3",
