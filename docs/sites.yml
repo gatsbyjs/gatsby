@@ -10734,6 +10734,16 @@
     - Food
   built_by: Ramón Chancay
   built_by_url: https://ramonchancay.me/
+- title: CodeTisans
+  url: https://codetisans.com
+  main_url: https://codetisans.com
+  description: >-
+    Website of an agency specialized in creating Laravel and Vue apps
+  categories:
+    - Agency
+  built_by: Przemysław Przyłucki
+  built_by_url: https://twitter.com/przylucki_p
+  featured: false
 - title: Mox Bank
   main_url: https://mox.com/
   url: https://mox.com/
