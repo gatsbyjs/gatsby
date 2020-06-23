@@ -154,7 +154,6 @@ async function queryResult(nodes, query) {
     nodeModel: new LocalNodeModel({
       schemaComposer,
       schema,
-      nodeStore,
       createPageDependency: jest.fn(),
     }),
   })

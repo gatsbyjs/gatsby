@@ -85,7 +85,6 @@ describe(`build-node-connections`, () => {
       nodeModel: new LocalNodeModel({
         schemaComposer,
         schema,
-        nodeStore,
         createPageDependency,
       }),
     })

@@ -13,6 +13,10 @@ const {
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
+import * as reduxStore from "../redux/nodes"
+import { loadNodeContent } from "../db/nodes"
+import { runFastFiltersAndSort } from "../redux/run-fast-filters"
+
 type TypeOrTypeName = string | GraphQLOutputType
 
 /**
@@ -60,10 +64,14 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, nodeStore, createPageDependency }) {
+  constructor({ schema, schemaComposer, createPageDependency }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
-    this.nodeStore = nodeStore
+    this.nodeStore = {
+      ...reduxStore,
+      loadNodeContent,
+      runQuery: runFastFiltersAndSort,
+    }
     this.createPageDependencyActionCreator = createPageDependency
 
     this._rootNodeMap = new WeakMap()

@@ -52,7 +52,6 @@ const queryResult = async (nodes, query) => {
   return graphql(schema, query, undefined, {
     nodeModel: new LocalNodeModel({
       schema,
-      nodeStore,
       createPageDependency,
       schemaComposer,
     }),
