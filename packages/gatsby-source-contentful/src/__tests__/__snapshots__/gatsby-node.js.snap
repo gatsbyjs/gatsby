@@ -2,17 +2,17 @@
 
 exports[`gatsby-node should add a new blogpost and update linkedNodes 1`] = `
 Object {
-  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m",
-  "body___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrORbodyTextNode",
+  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
+  "body___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrybodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrORdescriptionTextNode",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrORbodyTextNode",
+    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrydescriptionTextNode",
+    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrybodyTextNode",
   ],
   "contentful_id": "2XTZRrfbMRcfdyFSo4mrOR",
   "createdAt": "2020-04-09T10:59:16.604Z",
-  "description___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrORdescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c21xFOvxOk9guLHTakpnezz",
-  "id": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR",
+  "description___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrydescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c21xFOvxOk9guLHTakpnezz___Asset",
+  "id": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -33,6 +33,7 @@ Object {
       },
     },
     "revision": 1,
+    "type": "Entry",
   },
   "title": "Integration tests",
   "updatedAt": "2020-04-09T10:59:16.604Z",
@@ -42,13 +43,13 @@ Object {
 exports[`gatsby-node should add a new blogpost and update linkedNodes 2`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
-    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
+    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry",
+    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry",
   ],
   "children": Array [
-    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0mshortBioTextNode",
+    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
@@ -56,8 +57,8 @@ Object {
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
-  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m",
-  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U",
+  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
+  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___Asset",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -67,7 +68,7 @@ Object {
   "node_locale": "en-US",
   "parent": "Person",
   "phone": "0176 / 1234567",
-  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0mshortBioTextNode",
+  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -79,6 +80,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
@@ -88,17 +90,17 @@ Object {
 
 exports[`gatsby-node should add a new blogpost and update linkedNodes 3`] = `
 Object {
-  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nl",
-  "body___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nlbodyTextNode",
+  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
+  "body___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nlbodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nldescriptionTextNode",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nlbodyTextNode",
+    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nldescriptionTextNode",
+    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nlbodyTextNode",
   ],
   "contentful_id": "2XTZRrfbMRcfdyFSo4mrOR",
   "createdAt": "2020-04-09T10:59:16.604Z",
-  "description___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nldescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c21xFOvxOk9guLHTakpnezz___nl",
-  "id": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nl",
+  "description___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nldescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c21xFOvxOk9guLHTakpnezz___Asset___nl",
+  "id": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -119,6 +121,7 @@ Object {
       },
     },
     "revision": 1,
+    "type": "Entry",
   },
   "title": "Integration tests",
   "updatedAt": "2020-04-09T10:59:16.604Z",
@@ -128,13 +131,13 @@ Object {
 exports[`gatsby-node should add a new blogpost and update linkedNodes 4`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
-    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___nl",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___nl",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry___nl",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
+    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
+    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nl",
   ],
   "children": Array [
-    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nlshortBioTextNode",
+    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
@@ -142,8 +145,8 @@ Object {
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
-  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nl",
-  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___nl",
+  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
+  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___Asset___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -153,7 +156,7 @@ Object {
   "node_locale": "nl",
   "parent": "Person",
   "phone": "0176 / 1234567",
-  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nlshortBioTextNode",
+  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -165,6 +168,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "title": "Web developer",
   "twitter": "johndoe",
@@ -175,12 +179,12 @@ Object {
 exports[`gatsby-node should remove a blogpost and update linkedNodes 1`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
-    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
+    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry",
   ],
   "children": Array [
-    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0mshortBioTextNode",
+    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
@@ -188,8 +192,8 @@ Object {
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
-  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m",
-  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U",
+  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
+  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___Asset",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -199,7 +203,7 @@ Object {
   "node_locale": "en-US",
   "parent": "Person",
   "phone": "0176 / 1234567",
-  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0mshortBioTextNode",
+  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -211,6 +215,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
@@ -221,12 +226,12 @@ Object {
 exports[`gatsby-node should remove a blogpost and update linkedNodes 2`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
-    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___nl",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry___nl",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
+    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
   ],
   "children": Array [
-    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nlshortBioTextNode",
+    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
@@ -234,8 +239,8 @@ Object {
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
-  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nl",
-  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___nl",
+  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
+  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___Asset___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -245,7 +250,7 @@ Object {
   "node_locale": "nl",
   "parent": "Person",
   "phone": "0176 / 1234567",
-  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nlshortBioTextNode",
+  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -257,6 +262,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "title": "Web developer",
   "twitter": "johndoe",
@@ -266,17 +272,17 @@ Object {
 
 exports[`gatsby-node should update a blogpost 1`] = `
 Object {
-  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m",
-  "body___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6KebodyTextNode",
+  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
+  "body___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrybodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6KedescriptionTextNode",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6KebodyTextNode",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrydescriptionTextNode",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrybodyTextNode",
   ],
   "contentful_id": "3K9b0esdy0q0yGqgW2g6Ke",
   "createdAt": "2020-04-09T10:53:01.485Z",
-  "description___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6KedescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c6Od9v3wzLOysiMum0Wkmme",
-  "id": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
+  "description___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrydescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c6Od9v3wzLOysiMum0Wkmme___Asset",
+  "id": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -297,6 +303,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "tags": Array [
     "general",
@@ -309,13 +316,13 @@ Object {
 exports[`gatsby-node should update a blogpost 2`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
-    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
+    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
   ],
   "children": Array [
-    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0mshortBioTextNode",
+    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
@@ -323,8 +330,8 @@ Object {
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
-  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m",
-  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U",
+  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
+  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___Asset",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -334,7 +341,7 @@ Object {
   "node_locale": "en-US",
   "parent": "Person",
   "phone": "0176 / 1234567",
-  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0mshortBioTextNode",
+  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -346,6 +353,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
@@ -355,17 +363,17 @@ Object {
 
 exports[`gatsby-node should update a blogpost 3`] = `
 Object {
-  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nl",
-  "body___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nlbodyTextNode",
+  "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
+  "body___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nlbodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nldescriptionTextNode",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nlbodyTextNode",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nldescriptionTextNode",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nlbodyTextNode",
   ],
   "contentful_id": "3K9b0esdy0q0yGqgW2g6Ke",
   "createdAt": "2020-04-09T10:53:01.485Z",
-  "description___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nldescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c6Od9v3wzLOysiMum0Wkmme___nl",
-  "id": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
+  "description___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nldescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c6Od9v3wzLOysiMum0Wkmme___Asset___nl",
+  "id": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -386,6 +394,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "tags": Array [
     "general",
@@ -398,13 +407,13 @@ Object {
 exports[`gatsby-node should update a blogpost 4`] = `
 Object {
   "blog post___NODE": Array [
-    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___nl",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
-    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___nl",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___nl",
+    "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry___nl",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
+    "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
+    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
   ],
   "children": Array [
-    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nlshortBioTextNode",
+    "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
@@ -412,8 +421,8 @@ Object {
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
-  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nl",
-  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___nl",
+  "id": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
+  "image___NODE": "uzfinxahlog0___c7orLdboQQowIUs22KAW4U___Asset___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -423,7 +432,7 @@ Object {
   "node_locale": "nl",
   "parent": "Person",
   "phone": "0176 / 1234567",
-  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___nlshortBioTextNode",
+  "shortBio___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -435,6 +444,7 @@ Object {
       },
     },
     "revision": 2,
+    "type": "Entry",
   },
   "title": "Web developer",
   "twitter": "johndoe",
