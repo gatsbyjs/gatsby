@@ -61,12 +61,15 @@ export async function startWebpackServer({
       stats,
       done
     ) {
+      // "done" event fires when Webpack has finished recompiling the bundle.
+      // Whether or not you have warnings or errors, you will get this event.
+
       // We have switched off the default Webpack output in WebpackDevServer
       // options so we are going to "massage" the warnings and errors and present
       // them in a readable focused way.
       const messages = formatWebpackMessages(stats.toJson({}, true))
       const urls = prepareUrls(
-        program.ssl ? `https` : `http`,
+        program.https ? `https` : `http`,
         program.host,
         program.proxyPort
       )
@@ -112,6 +115,4 @@ export async function startWebpackServer({
       resolve({ compiler, websocketManager })
     })
   })
-  // "done" event fires when Webpack has finished recompiling the bundle.
-  // Whether or not you have warnings or errors, you will get this event.
 }

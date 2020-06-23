@@ -44,7 +44,7 @@ process.on(`unhandledRejection`, (reason: unknown) => {
 export async function initialize({
   program: args,
   parentSpan,
-}: IBuildContext): Promise<{
+}: Partial<IBuildContext>): Promise<{
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {

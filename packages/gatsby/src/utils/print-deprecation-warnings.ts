@@ -3,11 +3,7 @@ import glob from "glob"
 import chalk from "chalk"
 
 export function printDeprecationWarnings(): void {
-  type DeprecatedAPIList = ["boundActionCreators", "pathContext"] // eslint-disable-line
-  const deprecatedApis: DeprecatedAPIList = [
-    `boundActionCreators`,
-    `pathContext`,
-  ]
+  const deprecatedApis = [`boundActionCreators`, `pathContext`]
   const fixMap = {
     boundActionCreators: {
       newName: `actions`,
@@ -18,9 +14,9 @@ export function printDeprecationWarnings(): void {
       docsLink: `https://gatsby.dev/pathContext`,
     },
   }
-  const deprecatedLocations = {
-    boundActionCreators: [] as string[],
-    pathContext: [] as string[],
+  const deprecatedLocations: Record<string, string[]> = {
+    boundActionCreators: [],
+    pathContext: [],
   }
 
   glob
