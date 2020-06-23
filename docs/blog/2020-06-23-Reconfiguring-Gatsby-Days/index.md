@@ -16,20 +16,32 @@ We feel now is simply not the time to take attention and space away from the Bla
 Today’s blog post is going to be a long one, because this is where we are sharing the new programs and products we had planned to announce at this week’s Gatsby Days. We are following up with individual posts featuring recorded presentations from the Gatsby community members who were scheduled to speak.  We are sorry to miss gathering, even virtually, and we thank everyone for understanding -- and supporting -- the change. Until we can meet again, please enjoy the recorded presentations and demos from Gatsby Days Reconfigured. 
 
 **[New from Gatsby](#New-from-Gatsby)**
+
 	     [Gatsby Partner Program](#Gatsby-Partner-Program)
+
 	     [Gatsby Admin](#Gatsby-Admin)
+
 	     [First-class Drupal Integration](#First-class-Drupal-Integration)
 
+
 **[Coming soon](#Coming-soon)**
-	     [Blog Theme 2.0](#Blog-Theme-2.0)
-	     [Instant Builds](#Instant-Builds)
+
+	     [Gatsby Blog Theme 2.0](#Gatsby-Blog-Theme-2.0)
+
+	     [The Path to Instant Builds](#The-Path-to-Instant-Builds)
+
        [Unified Routes](#Unified-Routes) 
+       
        [Gatsby Ambassador Program](#Gatsby-Ambassador-Program)
+       
        [i18n Theme](#i18n-Theme)
+       
        [New WordPress Source Plugin](#New-WordPress-Source-Plugin) 
 
 **[Behind the Scenes](#Behind-the-Scenes)**
+
        [Tasty Bits of Design Research](#Tasty-Bits-of-Design-Research)
+       
        [Making Gatsby Faster](#Making-Gatsby-Faster)
 
 ## New from Gatsby: Partner Program, Admin alpha, Drupal & WordPress
@@ -68,7 +80,7 @@ Content editors, not developers, spend more time on finished sites than anyone e
 ## Other cool stuff coming soon
 For many of our attendees a favorite part of previous Gatsby Days events has been the lightning talks, quick peeks at in-process projects given by various Gatsby team members. This time around, we have pre-recorded these five minute flash presentations for your viewing pleasure. 
 
-### Gatsby Blog Theme 1.6/2.0
+### Gatsby Blog Theme 2.0
 __Laurie Barth, Staff Software Engineer, Gatsby Themes team__
 
 Laurie’s lightning talk introduces the exciting new features of blog theme 2.0, which will be available soon. Previously, sharing blog posts on social media would result in blank social cards. Now, with improved SEO, you can set featured images and social sharing images on your posts. We’ve also increased the features available in Theme UI, allowing you to highlight lines of code snippets with Prism. The blog theme is overall more customizable too. You can set base styles without any shadowing (though shadowing is still available). See Laurie’s demo of how to completely alter a theme’s appearance in just a few seconds by setting base styles to the community-made `theme-ui-sketchy-preset`, changing the `prismPreset` option, and adding a font using `webFontURL`. We’re excited to see what you build with Gatsby Blog Theme 2.0!
@@ -76,11 +88,11 @@ Laurie’s lightning talk introduces the exciting new features of blog theme 2.0
 [![Laurie Barth introducing the Gatsby Blog Theme 2.0](https://res.cloudinary.com/marcomontalbano/image/upload/v1592857614/video_to_markdown/images/youtube--4PNvVCzEFeI-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=4PNvVCzEFeI&feature=youtu.be "Laurie Barth introducing the Gatsby Blog Theme 2.0")
 
 
-### Incremental and beyond: The path to instant builds
+### The Path to Instant Builds
 __Matt Kane, Staff Software Engineer, Gatsby Core team__
 
 
-In the olden days, like last year, there was a price for fast static site runtimes: slow build times. Incremental Builds on Gatsby Cloud changes everything by achieving builds under 5 seconds for data changes, even for sites with hundreds of pages. After all, the fastest way to build is to not build at all! Watch Matt explain how we achieved our goal of all data changes taking under 10 seconds to build, and how we’re working on making even more builds, like code changes, incremental as well. The changes we are implementing in the open source project will benefit all Gatsby users. Soon we’ll be able to support super fast incremental building of massive sites, code changes, filesystem data changes, and hybrid content formats like MDX.
+In the olden days, like last year, there was a price for fast static site runtimes: slow build times. Incremental Builds on Gatsby Cloud changes everything by achieving builds under 5 seconds for data changes, even for sites with hundreds of pages. After all, the fastest way to build is to not build at all! Watch Matt explain the path to instant builds: how we achieved our goal of all data changes taking under 10 seconds to build, and how we’re working on making even more builds, like code changes, incremental as well. The changes we are implementing in the open source project will benefit all Gatsby users. Soon we’ll be able to support super fast incremental building of massive sites, code changes, filesystem data changes, and hybrid content formats like MDX.
 
 [![Matt Kane on Gatsby Incremental Builds and beyond](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858441/video_to_markdown/images/youtube--z6-MPZrC98g-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=z6-MPZrC98g&feature=youtu.be "Matt Kane on Gatsby Incremental Builds and beyond") 
 
