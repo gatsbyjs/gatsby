@@ -10966,6 +10966,39 @@
   built_by: Nagarjun Palavalli
   built_by_url: https://twitter.com/palavalli
   featured: false
+- title: Nyxo
+  url: https://www.nyxo.app
+  main_url: https://www.nyxo.app
+  description: >
+    Nyxo is the best aid for improving your sleep quality. We combine leading sleep research techniques with your sleep tracker’s data to provide you with personalized and actionable coaching, to improve your sleep.
+  categories:
+    - Healthcare
+    - Blog
+    - Science
+    - Technology
+    - Data
+    - Mobile Development
+  built_by: Kayla Gordon
+  built_by_url: https://www.kayla-gordon.com/
+  featured: false
+- title: Earner
+  url: https://www.earner.ai/
+  main_url: https://www.earner.ai/
+  source_url: https://github.com/Earner-ai/earner-website
+  description: >
+    Earner is here to keep you informed of services you are entitled to from the Finnish government to entrepreneurship. We are here to help you succeed.
+  categories:
+    - Blog
+    - Open Source
+    - Education
+    - Technology
+    - Community
+    - Data
+    - Entrepreneurship
+    - Human Resources
+  built_by: Kayla Gordon
+  built_by_url: https://www.kayla-gordon.com/
+  featured: false
 - title: Amamos Vivir Cada Día
   main_url: https://www.amvi.org.mx/
   url: https://www.amvi.org.mx/
