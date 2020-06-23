@@ -670,9 +670,7 @@ exports.createAssetNodes = ({
     })
 
     const assetNode = {
-      contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
-        ? assetItem.sys.id
-        : assetItem.sys.contentful_id,
+      contentful_id: assetItem.sys.contentful_id,
       id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
       parent: null,
       children: [],

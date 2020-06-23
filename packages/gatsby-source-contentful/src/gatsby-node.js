@@ -173,13 +173,17 @@ exports.sourceNodes = async (
   // are "updated" so will get the now deleted reference removed.
 
   function deleteContentfulNode(node) {
+    const normalizedType = node.sys.type.startsWith(`Deleted`)
+      ? node.sys.type.substring(`Deleted`.length)
+      : node.sys.type
+
     const localizedNodes = locales
       .map(locale => {
         const nodeId = createNodeId(
           normalize.makeId({
             spaceId: space.sys.id,
             id: node.sys.id,
-            type: node.sys.type,
+            type: normalizedType,
             currentLocale: locale.code,
             defaultLocale,
           })
