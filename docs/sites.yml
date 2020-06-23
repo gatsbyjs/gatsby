@@ -119,7 +119,7 @@
   main_url: https://theodorawarre.eu
   url: https://theodorawarre.eu
   description: >-
-    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + 
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby +
     + Prismic + Matter.js
   categories:
     - E-commerce
@@ -11076,3 +11076,12 @@
     - E-commerce
   built_by: Annie Taylor Chen
   built_by_url: https://www.annietaylorchen.com/
+- title: Tatjana Volbeke Portfolio
+  url: https://tatjanavolbeke.com/
+  main_url: https://tatjanavolbeke.com/
+  categories:
+    - Design
+    - Portfolio
+    - User Experience
+  built_by: Outer Studio
+  built_by_url: https://outer.studio
