@@ -1,28 +1,65 @@
-// @flow
-const Joi = require(`@hapi/joi`)
-const chalk = require(`chalk`)
-const _ = require(`lodash`)
-const { stripIndent } = require(`common-tags`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { platform } = require(`os`)
-const path = require(`path`)
-const { trueCasePathSync } = require(`true-case-path`)
-const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../db/nodes`)
-const sanitizeNode = require(`../../db/sanitize-node`)
-const { store } = require(`..`)
-const { validatePageComponent } = require(`../../utils/validate-page-component`)
+import Joi from "@hapi/joi"
+import chalk from "chalk"
+import _ from "lodash"
+import { stripIndent } from "common-tags"
+import report from "gatsby-cli/lib/reporter"
+import { platform } from "os"
+import path from "path"
+import { trueCasePathSync } from "true-case-path"
+import url from "url"
+import { slash } from "gatsby-core-utils"
+import { hasNodeChanged, getNode } from "../../db/nodes"
+import sanitizeNode from "../../db/sanitize-node"
+import { store } from ".."
+import { validatePageComponent } from "../../utils/validate-page-component"
+import { generateComponentChunkName } from "../../utils/js-chunk-names"
 import { nodeSchema } from "../../joi-schemas/joi"
-const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const {
+import {
   getCommonDir,
   truncatePath,
   tooLongSegmentsInPath,
-} = require(`../../utils/path`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
-const { trackCli } = require(`gatsby-telemetry`)
-const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+} from "../../utils/path"
+import apiRunnerNode from "../../utils/api-runner-node"
+import { trackCli } from "gatsby-telemetry"
+import { getNonGatsbyCodeFrame } from "../../utils/stack-trace-utils"
+import {
+  IGatsbyPlugin,
+  IPageInput,
+  IGatsbyPage,
+  IJobV2,
+  IPageDataRemove,
+  IPageData,
+  IGatsbyError,
+  IActionOptions,
+  ICreatePageAction,
+  IDeletePageAction,
+  IDeleteNodeAction,
+  IDeleteNodesAction,
+  ICreateNodeAction,
+  IValidationErrorAction,
+  ITouchNodeAction,
+  ICreateNodeFieldAction,
+  ICreateParentChildLinkAction,
+  ISetWebpackConfigAction,
+  IReplaceWebpackConfigAction,
+  ISetBabelOptionsAction,
+  ISetBabelPluginAction,
+  ISetBabelPresetAction,
+  ICreateJobAction,
+  ICreateJobV2Action,
+  ISetJobAction,
+  IEndJobAction,
+  ISetPluginStatusAction,
+  ICreateRedirectAction,
+  ICreatePageDependencyAction,
+  ISetPageDataAction,
+  IRemovePageDataAction,
+  IGatsbyNode,
+  BabelStageKeys,
+  IGatsbyIncompleteJob,
+  Optional,
+} from "../types"
+import webpack from "webpack"
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -40,17 +77,18 @@ const {
   getInProcessJobPromise,
 } = require(`../../utils/jobs-manager`)
 
-const actions = {}
 const isWindows = platform() === `win32`
 
-const ensureWindowsDriveIsUppercase = filePath => {
+const ensureWindowsDriveIsUppercase = (filePath: string): string => {
   const segments = filePath.split(`:`).filter(s => s !== ``)
   return segments.length > 0
-    ? segments.shift().toUpperCase() + `:` + segments.join(`:`)
+    ? segments.shift()!.toUpperCase() + `:` + segments.join(`:`)
     : filePath
 }
 
-const findChildren = initialChildren => {
+const findChildren = (
+  initialChildren: IGatsbyNode["id"][]
+): IGatsbyNode["id"][] => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
   const traversedNodes = new Set()
@@ -70,59 +108,10 @@ const findChildren = initialChildren => {
   return children
 }
 
-import type { Plugin } from "./types"
-
-type Job = {
-  id: string,
-}
-
-type JobV2 = {
-  name: string,
-  inputPaths: string[],
-  outputDir: string,
-  args: Object,
-}
-
-type PageInput = {
-  path: string,
-  component: string,
-  context?: Object,
-}
-
-type Page = {
-  path: string,
-  matchPath: ?string,
-  component: string,
-  context: Object,
-  internalComponentName: string,
-  componentChunkName: string,
-  updatedAt: number,
-}
-
-type ActionOptions = {
-  traceId: ?string,
-  parentSpan: ?Object,
-  followsSpan: ?Object,
-}
-
-type PageData = {
-  id: string,
-  resultHash: string,
-}
-
-type PageDataRemove = {
-  id: string,
-}
-
 /**
  * Delete a page
- * @param {Object} page a page object
- * @param {string} page.path The path of the page
- * @param {string} page.component The absolute path to the page component
- * @example
- * deletePage(page)
  */
-actions.deletePage = (page: PageInput) => {
+export const deletePage = (page: IPageInput): IDeletePageAction => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -145,34 +134,17 @@ const reservedFields = [
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
- * @param {Object} page a page object
- * @param {string} page.path Any valid URL. Must start with a forward slash
- * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
- * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.component The absolute path to the component for this page
- * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pageContext` as well as to the graphql query
- * as graphql arguments.
- * @example
- * createPage({
- *   path: `/my-sweet-new-page/`,
- *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
- *   // The context is passed as props to the component as well
- *   // as into the component's GraphQL query.
- *   context: {
- *     id: `123456`,
- *   },
- * })
  */
-actions.createPage = (
-  page: PageInput,
-  plugin?: Plugin,
-  actionOptions?: ActionOptions
-) => {
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
+export const createPage = (
+  page: IPageInput,
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">,
+  actionOptions?: IActionOptions
+): ICreatePageAction | string | undefined => {
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
@@ -193,7 +165,7 @@ actions.createPage = (
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
   if (page.context && typeof page.context === `object`) {
-    const invalidFields = reservedFields.filter(field => field in page.context)
+    const invalidFields = reservedFields.filter(field => field in page.context!)
 
     if (invalidFields.length > 0) {
       const error = `${
@@ -228,7 +200,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
         // the path to context for it to be available in GraphQL
-      } else if (invalidFields.some(f => page.context[f] !== page[f])) {
+      } else if (invalidFields.some(f => page.context![f] !== page[f])) {
         report.panic({
           id: `11324`,
           context: {
@@ -266,7 +238,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   const { error, message, panicOnBuild } = validatePageComponent(
-    page,
+    page as IGatsbyPage,
     store.getState().program.directory,
     name
   )
@@ -288,13 +260,13 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   //
   // Skip during testing as the paths don't exist on disk.
   if (process.env.NODE_ENV !== `test`) {
-    if (pageComponentCache[page.component]) {
-      page.component = pageComponentCache[page.component]
+    if (pageComponentCache[page.component!]) {
+      page.component = pageComponentCache[page.component!]
     } else {
       const originalPageComponent = page.component
 
       // normalize component path
-      page.component = slash(page.component)
+      page.component = slash(page.component!)
       // check if path uses correct casing - incorrect casing will
       // cause issues in query compiler and inconsistencies when
       // developing on Mac or Windows and trying to deploy from
@@ -349,7 +321,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
-      pageComponentCache[originalPageComponent] = page.component
+      pageComponentCache[originalPageComponent!] = page.component
     }
   }
 
@@ -378,12 +350,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.path = truncatedPath
   }
 
-  const internalPage: Page = {
+  const internalPage: IGatsbyPage = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: page.component,
-    componentChunkName: generateComponentChunkName(page.component),
+    component: page.component!,
+    componentChunkName: generateComponentChunkName(page.component!),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
@@ -396,7 +368,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalPage.path = `/${internalPage.path}`
   }
 
-  const oldPage: Page = store.getState().pages.get(internalPage.path)
+  const oldPage = store.getState().pages.get(internalPage.path)
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
@@ -425,12 +397,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
- * @example
- * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+export const deleteNode = (
+  options: IGatsbyNode["id"] | { node: IGatsbyNode },
+  plugin?: IGatsbyPlugin,
+  args?: IGatsbyPlugin
+): IDeleteNodeAction | IDeleteNodeAction[] => {
   let id
 
   // Check if using old method signature. Warn about incorrect usage but get
@@ -453,10 +425,11 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const node = getNode(id)
+  const node = getNode(id) as IGatsbyNode
   if (plugin) {
     const pluginName = plugin.name
 
+    /* eslint-disable @typescript-eslint/no-use-before-define */
     if (node && typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
@@ -473,9 +446,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
 
           ${JSON.stringify(plugin, null, 4)}
         `)
+    /* eslint-enable @typescript-eslint/no-use-before-define */
   }
 
-  const createDeleteAction = node => {
+  const createDeleteAction = (node: IGatsbyNode): IDeleteNodeAction => {
     return {
       type: `DELETE_NODE`,
       plugin,
@@ -488,7 +462,10 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node && findChildren(node.children).map(getNode).map(createDeleteAction)
+    node &&
+    findChildren(node.children)
+      .map<IGatsbyNode>(getNode)
+      .map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
@@ -497,15 +474,13 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was suppressed in documentation pages.
 /**
  * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
  */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
+export const deleteNodes = (
+  nodes: string[],
+  plugin: IGatsbyPlugin
+): IDeleteNodesAction => {
   let msg =
     `The "deleteNodes" action is now deprecated and will be removed in ` +
     `Gatsby v3. Please use "deleteNode" instead.`
@@ -521,14 +496,13 @@ actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
 
   const nodeIds = [...nodes, ...descendantNodes]
 
-  const deleteNodesAction = {
+  return {
     type: `DELETE_NODES`,
     plugin,
     // Payload contains node IDs but inference-metadata requires full node instances
     payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
+    fullNodes: nodeIds.map(getNode) as IGatsbyNode[],
   }
-  return deleteNodesAction
 }
 
 // We add a counter to internal to make sure we maintain insertion order for
@@ -537,90 +511,22 @@ let NODE_COUNTER = 0
 
 const typeOwners = {}
 
-// memberof notation is added so this code can be referenced instead of the wrapper.
 /**
  * Create a new node.
- * @memberof actions
- * @param {Object} node a node object
- * @param {string} node.id The node's ID. Must be globally unique.
- * @param {string} node.parent The ID of the parent's node. If the node is
- * derived from another node, set that node as the parent. Otherwise it can
- * just be `null`.
- * @param {Array} node.children An array of children node IDs. If you're
- * creating the children nodes while creating the parent node, add the
- * children node IDs here directly. If you're adding a child node to a
- * parent node created by a plugin, you can't mutate this value directly
- * to add your node id, instead use the action creator `createParentChildLink`.
- * @param {Object} node.internal node fields that aren't generally
- * interesting to consumers of node data but are very useful for plugin writers
- * and Gatsby core. Only fields described below are allowed in `internal` object.
- * Using any type of custom fields will result in validation errors.
- * @param {string} node.internal.mediaType An optional field to indicate to
- * transformer plugins that your node has raw content they can transform.
- * Use either an official media type (we use mime-db as our source
- * (https://www.npmjs.com/package/mime-db) or a made-up one if your data
- * doesn't fit in any existing bucket. Transformer plugins use node media types
- * for deciding if they should transform a node into a new one. E.g.
- * markdown transformers look for media types of
- * `text/markdown`.
- * @param {string} node.internal.type An arbitrary globally unique type
- * chosen by the plugin creating the node. Should be descriptive of the
- * node as the type is used in forming GraphQL types so users will query
- * for nodes based on the type chosen here. Nodes of a given type can
- * only be created by one plugin.
- * @param {string} node.internal.content An optional field. This is rarely
- * used. It is used when a source plugin sources data it doesn't know how
- * to transform e.g. a markdown string pulled from an API. The source plugin
- * can defer the transformation to a specialized transformer plugin like
- * gatsby-transformer-remark. This `content` field holds the raw content
- * (so for the markdown case, the markdown string).
- *
- * Data that's already structured should be added to the top-level of the node
- * object and _not_ added here. You should not `JSON.stringify` your node's
- * data here.
- *
- * If the content is very large and can be lazy-loaded, e.g. a file on disk,
- * you can define a `loadNodeContent` function for this node and the node
- * content will be lazy loaded when it's needed.
- * @param {string} node.internal.contentDigest the digest for the content
- * of this node. Helps Gatsby avoid doing extra work on data that hasn't
- * changed.
- * @param {string} node.internal.description An optional field. Human
- * readable description of what this node represent / its source. It will
- * be displayed when type conflicts are found, making it easier to find
- * and correct type conflicts.
- * @returns {Promise} The returned Promise resolves when all cascading
- * `onCreateNode` API calls triggered by `createNode` have finished.
- * @example
- * createNode({
- *   // Data for the node.
- *   field1: `a string`,
- *   field2: 10,
- *   field3: true,
- *   ...arbitraryOtherData,
- *
- *   // Required fields.
- *   id: `a-node-id`,
- *   parent: `the-id-of-the-parent-node`, // or null if it's a source node without a parent
- *   children: [],
- *   internal: {
- *     type: `CoolServiceMarkdownField`,
- *     contentDigest: crypto
- *       .createHash(`md5`)
- *       .update(JSON.stringify(fieldData))
- *       .digest(`hex`),
- *     mediaType: `text/markdown`, // optional
- *     content: JSON.stringify(fieldData), // optional
- *     description: `Cool Service: "Title of entry"`, // optional
- *   }
- * })
  */
-const createNode = (
-  node: any,
-  plugin?: Plugin,
-  actionOptions?: ActionOptions = {}
-) => {
-  if (!_.isObject(node)) {
+type CreateNode = (
+  node: IGatsbyNode,
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">,
+  actionOptions?: IActionOptions
+) =>
+  | ICreateNodeAction
+  | ITouchNodeAction
+  | IValidationErrorAction
+  | (ICreateNodeAction | IDeleteNodeAction)[]
+  | void
+
+const _createNode: CreateNode = (node, plugin, actionOptions) => {
+  if (typeof node !== `object`) {
     return console.log(
       chalk.bold.red(
         `The node passed to the "createNode" action creator must be an object`
@@ -630,7 +536,7 @@ const createNode = (
 
   // Ensure the new node has an internals object.
   if (!node.internal) {
-    node.internal = {}
+    node.internal = {} as IGatsbyNode["internal"]
   }
 
   NODE_COUNTER++
@@ -665,10 +571,10 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, nodeSchema)
+  const result = (Joi as any).validate(node, nodeSchema)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
-      const errorObj = {
+      const errorObj: IGatsbyError = {
         id: `11467`,
         context: {
           validationErrorMessage: result.error.message,
@@ -718,7 +624,7 @@ const createNode = (
 
   node = sanitizeNode(node)
 
-  const oldNode = getNode(node.id)
+  const oldNode = getNode(node.id) as IGatsbyNode
 
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
@@ -761,13 +667,15 @@ const createNode = (
     }
   }
 
+  actionOptions = actionOptions || {}
+
   if (actionOptions.parentSpan) {
     actionOptions.parentSpan.setTag(`nodeId`, node.id)
     actionOptions.parentSpan.setTag(`nodeType`, node.id)
   }
 
   let deleteActions
-  let updateNodeAction
+  let updateNodeAction: ICreateNodeAction | ITouchNodeAction
   // Check if the node has already been processed.
   if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     updateNodeAction = {
@@ -780,7 +688,7 @@ const createNode = (
     // Remove any previously created descendant nodes as they're all due
     // to be recreated.
     if (oldNode) {
-      const createDeleteAction = node => {
+      const createDeleteAction = (node): IDeleteNodeAction => {
         return {
           ...actionOptions,
           type: `DELETE_NODE`,
@@ -809,13 +717,19 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
-  const actions = createNode(...args)
+export const createNode = (...args: Parameters<CreateNode>) => (
+  dispatch
+): Promise<any> | undefined => {
+  const actions = _createNode(...args) as (
+    | ICreateNodeAction
+    | IDeleteNodeAction
+    | ITouchNodeAction
+  )[]
 
   dispatch(actions)
   const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
     action => action.type === `CREATE_NODE`
-  )
+  ) as ICreateNodeAction | undefined
 
   if (!createNodeAction) {
     return undefined
@@ -836,12 +750,11 @@ actions.createNode = (...args) => dispatch => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
- * @example
- * touchNode({ nodeId: `a-node-id` })
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
+export const touchNode = (
+  options: string | { nodeId: IGatsbyNode["id"] },
+  plugin?: IGatsbyPlugin
+): ITouchNodeAction => {
   let nodeId = _.get(options, `nodeId`)
 
   // Check if using old method signature. Warn about incorrect usage
@@ -857,7 +770,7 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
     nodeId = options
   }
 
-  const node = getNode(nodeId)
+  const node = getNode(nodeId) as IGatsbyNode
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -869,13 +782,14 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   }
 }
 
-type CreateNodeInput = {
-  node: Object,
-  fieldName?: string,
-  fieldValue?: string,
-  name?: string,
-  value: any,
+interface ICreateNodeInput {
+  node: IGatsbyNode
+  fieldName?: string
+  fieldValue?: string
+  name?: string
+  value: any
 }
+
 /**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
@@ -883,26 +797,12 @@ type CreateNodeInput = {
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
- * @param {Object} $0
- * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
- * @param {string} $0.name the name for the field
- * @param {any} $0.value the value for the field
- * @example
- * createNodeField({
- *   node,
- *   name: `happiness`,
- *   value: `is sweet graphql queries`
- * })
- *
- * // The field value is now accessible at node.fields.happiness
  */
-actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
-  plugin: Plugin,
-  actionOptions?: ActionOptions
-) => {
+export const createNodeField = (
+  { node, name, value, fieldName, fieldValue }: ICreateNodeInput,
+  plugin: Optional<IGatsbyPlugin, "id" | "version">,
+  actionOptions?: IActionOptions
+): ICreateNodeFieldAction => {
   if (fieldName) {
     console.warn(
       `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
@@ -926,6 +826,8 @@ actions.createNodeField = (
   if (!node.fields) {
     node.fields = {}
   }
+
+  name = name || ``
 
   // Normalized name of the field that will be used in schema
   const schemaFieldName = _.includes(name, `___NODE`)
@@ -967,16 +869,11 @@ actions.createNodeField = (
  * this new child node to the `children` array of the parent but since you
  * don't have direct access to the immutable parent node, use this action
  * instead.
- * @param {Object} $0
- * @param {Object} $0.parent the parent node object
- * @param {Object} $0.child the child node object
- * @example
- * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = (
-  { parent, child }: { parent: any, child: any },
-  plugin?: Plugin
-) => {
+export const createParentChildLink = (
+  { parent, child }: { parent: IGatsbyNode; child: IGatsbyNode },
+  plugin?: IGatsbyPlugin
+): ICreateParentChildLinkAction => {
   if (!parent.children.includes(child.id)) {
     parent.children.push(child.id)
   }
@@ -994,10 +891,11 @@ actions.createParentChildLink = (
  * Specifically, any change to `entry`, `output`, `target`, or `resolveLoaders` will be ignored.
  *
  * For full control over the webpack config, use `replaceWebpackConfig()`.
- *
- * @param {Object} config partial webpack config, to be merged into the current one
  */
-actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+export const setWebpackConfig = (
+  config: webpack.Configuration,
+  plugin: IGatsbyPlugin | null = null
+): ISetWebpackConfigAction => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -1011,10 +909,11 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  *
  * Generally only useful for cases where you need to handle config merging logic
  * yourself, in which case consider using `webpack-merge`.
- *
- * @param {Object} config complete webpack config
  */
-actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+export const replaceWebpackConfig = (
+  config: webpack.Configuration,
+  plugin: IGatsbyPlugin | null = null
+): IReplaceWebpackConfigAction => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -1025,21 +924,18 @@ actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Set top-level Babel options. Plugins and presets will be ignored. Use
  * setBabelPlugin and setBabelPreset for this.
- * @param {Object} config An options object in the shape of a normal babelrc JavaScript object
- * @example
- * setBabelOptions({
- *   options: {
- *     sourceMaps: `inline`,
- *   }
- * })
  */
-actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
+export const setBabelOptions = (
+  options: ISetBabelOptionsAction["payload"],
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
+): ISetBabelOptionsAction => {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
-  if (!_.isObject(options)) {
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
+  if (typeof options !== `object`) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
     if (process.env.NODE_ENV !== `test`) {
@@ -1047,7 +943,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
     }
   }
 
-  if (!_.isObject(options.options)) {
+  if (typeof options.options !== `object`) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
     if (process.env.NODE_ENV !== `test`) {
@@ -1064,23 +960,19 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
 
 /**
  * Add new plugins or merge options into existing Babel plugins.
- * @param {Object} config A config object describing the Babel plugin to be added.
- * @param {string} config.name The name of the Babel plugin
- * @param {Object} config.options Options to pass to the Babel plugin.
- * @example
- * setBabelPlugin({
- *   name:  `babel-plugin-emotion`,
- *   options: {
- *     sourceMap: true,
- *   },
- * })
  */
-actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
+export const setBabelPlugin = (
+  config: Optional<babel.ConfigItem, "value" | "dirname"> & {
+    stage?: BabelStageKeys
+  },
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
+): ISetBabelPluginAction | never => {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
   if (!config.name) {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
@@ -1094,29 +986,25 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_PLUGIN`,
     plugin,
-    payload: config,
+    payload: config as ISetBabelPluginAction["payload"], // Safe because we check for name and options
   }
 }
 
 /**
  * Add new presets or merge options into existing Babel presets.
- * @param {Object} config A config object describing the Babel plugin to be added.
- * @param {string} config.name The name of the Babel preset.
- * @param {Object} config.options Options to pass to the Babel preset.
- * @example
- * setBabelPreset({
- *   name: `@babel/preset-react`,
- *   options: {
- *     pragma: `Glamor.createElement`,
- *   },
- * })
  */
-actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
+export const setBabelPreset = (
+  config: Optional<babel.ConfigItem, "value" | "dirname"> & {
+    stage?: BabelStageKeys
+  },
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
+): ISetBabelPresetAction => {
   // Validate
-  let name = `The plugin "${plugin.name}"`
-  if (plugin.name === `default-site-plugin`) {
-    name = `Your site's "gatsby-node.js"`
-  }
+  const pluginPlaceholder = `Your site's "gatsby-node.js"`
+  const hasNoPluginName = !plugin || plugin.name === `default-site-plugin`
+  const name = `The plugin "${
+    hasNoPluginName ? pluginPlaceholder : plugin!.name
+  }"`
   if (!config.name) {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
@@ -1130,7 +1018,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   return {
     type: `SET_BABEL_PRESET`,
     plugin,
-    payload: config,
+    payload: config as ISetBabelPresetAction["payload"], // Safe because we check for name and options
   }
 }
 
@@ -1141,12 +1029,11 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job A job object with at least an id set
- * @param {id} job.id The id of the job
- * @example
- * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+export const createJob = (
+  job: IGatsbyIncompleteJob["job"],
+  plugin: IGatsbyPlugin | null = null
+): ICreateJobAction => {
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1161,16 +1048,12 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job A job object with name, inputPaths, outputDir and args
- * @param {string} job.name The name of the job you want to execute
- * @param {string[]} job.inputPaths The inputPaths that are needed to run
- * @param {string} job.outputDir The directory where all files are being saved to
- * @param {Object} job.args The arguments the job needs to execute
- * @returns {Promise<object>} Promise to see if the job is done executing
- * @example
- * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+export const createJobV2 = (job: IJobV2, plugin: IGatsbyPlugin) => (
+  dispatch,
+  getState
+): ICreateJobV2Action | Promise<any> => {
+  // TODO: Remove any
   const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
   const jobContentDigest = internalJob.contentDigest
@@ -1224,13 +1107,11 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 /**
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
- *
- * @param {Object} job A job object with at least an id set
- * @param {id} job.id The id of the job
- * @example
- * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+export const setJob = (
+  job: IGatsbyIncompleteJob["job"],
+  plugin?: IGatsbyPlugin
+): ISetJobAction => {
   return {
     type: `SET_JOB`,
     plugin,
@@ -1242,12 +1123,11 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
- * @param {Object} job  A job object with at least an id set
- * @param {id} job.id The id of the job
- * @example
- * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+export const endJob = (
+  job: IGatsbyIncompleteJob["job"],
+  plugin: Optional<IGatsbyPlugin, "id" | "version"> | null = null
+): IEndJobAction => {
   return {
     type: `END_JOB`,
     plugin,
@@ -1258,15 +1138,11 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * Set plugin status. A plugin can use this to save status keys e.g. the last
  * it fetched something. These values are persisted between runs of Gatsby.
- *
- * @param {Object} status  An object with arbitrary values set
- * @example
- * setPluginStatus({ lastFetched: Date.now() })
  */
-actions.setPluginStatus = (
-  status: { [key: string]: mixed },
-  plugin: Plugin
-) => {
+export const setPluginStatus = (
+  status: Record<string, string>,
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+): ISetPluginStatusAction => {
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,
@@ -1275,7 +1151,7 @@ actions.setPluginStatus = (
 }
 
 // Check if path is absolute and add pathPrefix in front if it's not
-const maybeAddPathPrefix = (path, pathPrefix) => {
+const maybeAddPathPrefix = (path: string, pathPrefix: string): string => {
   const parsed = url.parse(path)
   const isRelativeProtocol = path.startsWith(`//`)
   return `${
@@ -1291,34 +1167,17 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * plugin](/packages/gatsby-plugin-s3/). Alternatively, you can use
  * [this plugin](/packages/gatsby-plugin-meta-redirect/) to generate meta redirect
  * html files for redirecting on any static file host.
- *
- * @param {Object} redirect Redirect data
- * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
- * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
- * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
- * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
- * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
- * @example
- * // Generally you create redirects while creating pages.
- * exports.createPages = ({ graphql, actions }) => {
- *   const { createRedirect } = actions
- *   createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
- *   createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
- *   createRedirect({ fromPath: '/not_so-pretty_url', toPath: '/pretty/url', statusCode: 200 })
- *   // Create pages here
- * }
  */
-actions.createRedirect = ({
+export const createRedirect = ({
   fromPath,
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
   ...rest
-}) => {
+}): ICreateRedirectAction => {
   let pathPrefix = ``
-  if (store.getState().program.prefixPaths) {
-    pathPrefix = store.getState().config.pathPrefix
+  if (`prefixPaths` in store.getState().program) {
+    pathPrefix = store.getState().config.pathPrefix || ``
   }
 
   return {
@@ -1335,21 +1194,15 @@ actions.createRedirect = ({
 
 /**
  * Create a dependency between a page and data.
- *
- * @param {Object} $0
- * @param {string} $0.path the path to the page
- * @param {string} $0.nodeId A node ID
- * @param {string} $0.connection A connection type
- * @private
  */
-actions.createPageDependency = (
+export const createPageDependency = (
   {
     path,
     nodeId,
     connection,
-  }: { path: string, nodeId: string, connection: string },
-  plugin: string = ``
-) => {
+  }: { path: string; nodeId: string; connection: string },
+  plugin = ``
+): ICreatePageDependencyAction => {
   console.warn(
     `Calling "createPageDependency" directly from actions in deprecated. Use "createPageDependency" from "gatsby/dist/redux/actions/add-page-dependency".`
   )
@@ -1366,12 +1219,8 @@ actions.createPageDependency = (
 
 /**
  * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
  */
-actions.setPageData = (pageData: PageData) => {
+export const setPageData = (pageData: IPageData): ISetPageDataAction => {
   return {
     type: `SET_PAGE_DATA`,
     payload: pageData,
@@ -1380,15 +1229,10 @@ actions.setPageData = (pageData: PageData) => {
 
 /**
  * Remove page data from the store.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
  */
-actions.removePageData = (id: PageDataRemove) => {
+export const removePageData = (id: IPageDataRemove): IRemovePageDataAction => {
   return {
     type: `REMOVE_PAGE_DATA`,
     payload: id,
   }
 }
-
-module.exports = { actions }

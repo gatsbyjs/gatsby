@@ -9,6 +9,17 @@ import { ITypeMetadata } from "../schema/infer/inference-metadata"
 type SystemPath = string
 type Identifier = string
 
+export type Optional<T extends object, K extends keyof T = keyof T> = Omit<
+  T,
+  K
+> &
+  Partial<Pick<T, K>>
+
+export interface IGatsbyPlugin {
+  name: string
+  version: string
+}
+
 export interface IRedirect {
   fromPath: string
   toPath: string
@@ -26,15 +37,45 @@ export enum ProgramStatus {
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
-  matchPath: undefined | string
+  matchPath?: string
   component: SystemPath
+  context?: Record<string, any>
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
-  context: {}
   updatedAt: number
-  pluginCreator___NODE: Identifier
-  pluginCreatorId: Identifier
-  componentPath: SystemPath
+  pluginCreator___NODE?: Identifier
+  pluginCreatorId?: Identifier
+  componentPath?: SystemPath
+}
+
+export interface IJob {
+  id: string
+}
+
+export interface IJobV2 {
+  name: string
+  inputPaths: string[]
+  outputDir: string
+  args: Record<string, any> // TODO
+}
+
+export type IPageInput = Pick<IGatsbyPage, "path" | "context" | "matchPath"> & {
+  component: IGatsbyPage["component"]
+}
+
+export interface IActionOptions {
+  traceId?: string
+  parentSpan?: Record<string, any> | null // TODO
+  followsSpan?: Record<string, any> | null // TODO
+}
+
+export interface IPageData {
+  id: string
+  resultHash: string
+}
+
+export interface IPageDataRemove {
+  id: string
 }
 
 export interface IGatsbyConfig {
@@ -63,20 +104,33 @@ export interface IGatsbyConfig {
 
 export interface IGatsbyNode {
   id: Identifier
-  parent: Identifier
+  parent: Identifier | null
   children: Identifier[]
+  array?: any[]
   internal: {
+    fieldOwners?: any // TODO
     type: string
     counter: number
-    owner: string
+    owner?: string
     contentDigest: string
     mediaType?: string
     content?: string
     description?: string
   }
-  __gatsby_resolved: any // TODO
+  __gatsby_resolved?: any // TODO
   [key: string]: unknown
-  fields: string[]
+  fields?: any
+}
+
+export interface IGatsbyError {
+  id: string
+  context: {
+    codeFrame?: any // TODO
+    validationErrorMessage: string
+    node: any // TODO
+  }
+  filePath?: any // TODO
+  location?: any // TODO
 }
 
 export interface IGatsbyPlugin {
@@ -107,7 +161,7 @@ export interface IGatsbyIncompleteJobV2 {
 
 export interface IGatsbyIncompleteJob {
   job: InternalJobInterface
-  plugin: IGatsbyPlugin
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
 }
 
 export interface IGatsbyCompleteJobV2 {
@@ -120,7 +174,7 @@ export interface IPlugin {
   options: Record<string, any>
 }
 
-interface IBabelStage {
+export interface IBabelStage {
   plugins: IPlugin[]
   presets: IPlugin[]
   options: {
@@ -130,7 +184,7 @@ interface IBabelStage {
   }
 }
 
-type BabelStageKeys =
+export type BabelStageKeys =
   | "develop"
   | "develop-html"
   | "build-html"
@@ -259,19 +313,30 @@ export interface ICachedReduxState {
 }
 
 export type ActionsUnion =
+  | ICreateNodeAction
+  | IDeletePageAction
+  | ICreateNodeFieldAction
+  | ICreateParentChildLinkAction
+  | ISetWebpackConfigAction
+  | ISetBabelOptionsAction
+  | ISetBabelPresetAction
+  | IEndJobAction
+  | ICreateRedirectAction
+  | ITouchNodeAction
+  | IValidationErrorAction
+  | IDeleteNodesAction
+  | ISetPageDataAction
+  | IRemovePageDataAction
   | IAddChildNodeToParentNodeAction
   | IAddFieldToNodeAction
   | IAddThirdPartySchema
   | ICreateFieldExtension
-  | ICreateNodeAction
   | ICreatePageAction
   | ICreatePageDependencyAction
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
-  | IDeleteNodesAction
   | IDeleteComponentDependenciesAction
-  | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
   | IQueryExtractedAction
@@ -288,22 +353,16 @@ export type ActionsUnion =
   | ISetSchemaAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
-  | ISetWebpackConfigAction
-  | ITouchNodeAction
   | IUpdatePluginsHashAction
   | IRemovePageDataAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
   | IAddPageDataStatsAction
   | IRemoveTemplateComponentAction
   | ISetBabelPluginAction
-  | ISetBabelPresetAction
-  | ISetBabelOptionsAction
   | ICreateJobAction
   | ISetJobAction
-  | IEndJobAction
   | IAddPendingPageDataWriteAction
   | IAddPendingTemplateDataWriteAction
   | IClearPendingPageDataWritesAction
@@ -316,8 +375,9 @@ export type ActionsUnion =
   | ISetProgramAction
   | ISetProgramExtensions
 
-interface ISetBabelPluginAction {
+export interface ISetBabelPluginAction {
   type: `SET_BABEL_PLUGIN`
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: {
     stage: BabelStageKeys
     name: IPlugin["name"]
@@ -325,8 +385,9 @@ interface ISetBabelPluginAction {
   }
 }
 
-interface ISetBabelPresetAction {
+export interface ISetBabelPresetAction {
   type: `SET_BABEL_PRESET`
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: {
     stage: BabelStageKeys
     name: IPlugin["name"]
@@ -334,11 +395,12 @@ interface ISetBabelPresetAction {
   }
 }
 
-interface ISetBabelOptionsAction {
+export interface ISetBabelOptionsAction {
   type: `SET_BABEL_OPTIONS`
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
   payload: {
-    stage: BabelStageKeys
-    name: IPlugin["name"]
+    stage?: BabelStageKeys
+    name?: IPlugin["name"]
     options: IPlugin["options"]
   }
 }
@@ -366,31 +428,114 @@ export interface IRemoveStaleJobV2Action {
   }
 }
 
-interface ICreateJobAction {
+export interface ICreateJobAction {
   type: `CREATE_JOB`
   payload: {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"]
+  plugin: IGatsbyIncompleteJob["plugin"] | null
 }
 
-interface ISetJobAction {
+export interface ISetJobAction {
   type: `SET_JOB`
   payload: {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"]
+  plugin?: IGatsbyIncompleteJob["plugin"]
 }
 
-interface IEndJobAction {
+export interface IEndJobAction {
   type: `END_JOB`
   payload: {
     id: string
     job: IGatsbyIncompleteJob["job"]
   }
-  plugin: IGatsbyIncompleteJob["plugin"]
+  plugin: IGatsbyIncompleteJob["plugin"] | null
+}
+
+export interface ICreatePageAction extends IActionOptions {
+  type: `CREATE_PAGE`
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+  contextModified: boolean
+  payload: IGatsbyPage
+}
+
+export interface ICreateNodeAction extends IActionOptions {
+  type: `CREATE_NODE`
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+  oldNode: IGatsbyNode
+  payload: IGatsbyNode
+}
+
+export interface ICreateNodeFieldAction extends IActionOptions {
+  type: `ADD_FIELD_TO_NODE`
+  plugin: Optional<IGatsbyPlugin, "id" | "version">
+  payload: IGatsbyNode
+  addedField: string
+}
+
+export interface ICreateParentChildLinkAction {
+  type: `ADD_CHILD_NODE_TO_PARENT_NODE`
+  plugin?: IGatsbyPlugin
+  payload: IGatsbyNode
+}
+
+export interface IReplaceWebpackConfigAction {
+  type: `REPLACE_WEBPACK_CONFIG`
+  plugin: IGatsbyPlugin | null
+  payload: any // TODO
+}
+
+export interface ICreateRedirectAction {
+  type: `CREATE_REDIRECT`
+  payload: IRedirect
+}
+
+export interface ISetPluginStatusAction {
+  type: `SET_PLUGIN_STATUS`
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+  payload: Record<string, any> // TODO
+}
+
+export interface ITouchNodeAction extends IActionOptions {
+  type: `TOUCH_NODE`
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+  payload: IGatsbyNode["id"]
+}
+
+export interface IValidationErrorAction {
+  type: `VALIDATION_ERROR`
+  error: boolean
+}
+
+export interface IDeletePageAction {
+  type: `DELETE_PAGE`
+  payload: IPageInput
+}
+
+export interface IDeleteNodeAction extends IActionOptions {
+  type: `DELETE_NODE`
+  plugin?: Optional<IGatsbyPlugin, "id" | "version">
+  payload: IGatsbyNode // TODO
+}
+
+export interface IDeleteNodesAction {
+  type: `DELETE_NODES`
+  plugin: IGatsbyPlugin
+  fullNodes: IGatsbyNode[]
+  payload: Identifier[]
+}
+
+export interface ISetPageDataAction {
+  type: `SET_PAGE_DATA`
+  payload: IPageData
+}
+
+export interface IRemovePageDataAction {
+  type: `REMOVE_PAGE_DATA`
+  payload: IPageDataRemove
 }
 
 export interface ICreatePageDependencyAction {
@@ -415,18 +560,6 @@ export interface IReplaceComponentQueryAction {
   payload: {
     query: string
     componentPath: string
-  }
-}
-
-export interface IReplaceStaticQueryAction {
-  type: `REPLACE_STATIC_QUERY`
-  plugin: IGatsbyPlugin | null | undefined
-  payload: {
-    name: string
-    componentPath: string
-    id: string
-    query: string
-    hash: string
   }
 }
 
@@ -463,9 +596,9 @@ export interface IQueryExtractionBabelErrorAction {
 
 export interface ISetProgramStatusAction {
   type: `SET_PROGRAM_STATUS`
-  plugin: IGatsbyPlugin
+  plugin?: IGatsbyPlugin
   traceId: string | undefined
-  payload: ProgramStatus
+  payload: keyof typeof ProgramStatus
 }
 
 export interface IPageQueryRunAction {
@@ -536,13 +669,6 @@ interface ISetSchemaComposerAction {
   payload: SchemaComposer<any>
 }
 
-export interface ICreatePageAction {
-  type: `CREATE_PAGE`
-  payload: IGatsbyPage
-  plugin?: IGatsbyPlugin
-  contextModified?: boolean
-}
-
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
@@ -555,21 +681,6 @@ export interface ISetResolvedThemesAction {
 
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
-}
-
-export interface IRemovePageDataAction {
-  type: `REMOVE_PAGE_DATA`
-  payload: {
-    id: Identifier
-  }
-}
-
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
 }
 
 export interface IRemoveTemplateComponentAction {
@@ -597,13 +708,9 @@ export interface IClearPendingPageDataWritesAction {
   type: `CLEAR_PENDING_PAGE_DATA_WRITES`
 }
 
-export interface IDeletePageAction {
-  type: `DELETE_PAGE`
-  payload: IGatsbyPage
-}
-
 export interface IReplaceStaticQueryAction {
   type: `REPLACE_STATIC_QUERY`
+  plugin: IGatsbyPlugin | null | undefined
   payload: IGatsbyStaticQueryComponents
 }
 
@@ -622,15 +729,6 @@ export interface IUpdatePluginsHashAction {
   payload: Identifier
 }
 
-export interface ISetPluginStatusAction {
-  type: `SET_PLUGIN_STATUS`
-  plugin: IGatsbyPlugin
-  payload: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any
-  }
-}
-
 export interface IReplaceWebpackConfigAction {
   type: `REPLACE_WEBPACK_CONFIG`
   payload: IGatsbyState["webpack"]
@@ -638,6 +736,7 @@ export interface IReplaceWebpackConfigAction {
 
 export interface ISetWebpackConfigAction {
   type: `SET_WEBPACK_CONFIG`
+  plugin: IGatsbyPlugin | null
   payload: Partial<IGatsbyState["webpack"]>
 }
 
@@ -649,12 +748,6 @@ export interface ISetSchemaAction {
 export interface ISetSiteConfig {
   type: `SET_SITE_CONFIG`
   payload: IGatsbyState["config"]
-}
-
-export interface ICreateNodeAction {
-  type: `CREATE_NODE`
-  payload: IGatsbyNode
-  oldNode?: IGatsbyNode
 }
 
 export interface IAddFieldToNodeAction {

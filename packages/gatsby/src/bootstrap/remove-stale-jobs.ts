@@ -8,10 +8,12 @@ import {
 import { isJobStale } from "../utils/jobs-manager"
 import { publicActions, internalActions } from "../redux/actions"
 
+const createJobV2 = publicActions.createJobV2
+
 export const removeStaleJobs = (
   state: IGatsbyState
-): IRemoveStaleJobAction[] => {
-  const actions: IRemoveStaleJobAction[] = []
+): (IRemoveStaleJobAction | ReturnType<typeof createJobV2>)[] => {
+  const actions: (IRemoveStaleJobAction | ReturnType<typeof createJobV2>)[] = []
 
   // If any of our finished jobs are stale we remove them to keep our cache small
   state.jobsV2.complete.forEach(
@@ -29,7 +31,7 @@ export const removeStaleJobs = (
       if (isJobStale(job)) {
         actions.push(internalActions.removeStaleJob(job.contentDigest))
       } else {
-        actions.push(publicActions.createJobV2(job, plugin))
+        actions.push(createJobV2(job, plugin))
       }
     }
   )

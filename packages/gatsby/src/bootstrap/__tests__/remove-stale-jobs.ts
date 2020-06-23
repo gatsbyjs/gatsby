@@ -17,8 +17,7 @@ describe(`remove-stale-jobs`, () => {
         incomplete: new Map(),
       },
     }
-
-    publicActions.createJobV2 = jest.fn()
+    ;(publicActions as any).createJobV2 = jest.fn()
     ;(internalActions.removeStaleJob as jest.Mock).mockClear()
   })
 

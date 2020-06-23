@@ -11,7 +11,7 @@ import {
 import { NodeInterfaceFields } from "../../schema/types/node-interface"
 import { typesWithoutInference } from "../../schema/types/type-defs"
 
-import { IGatsbyState, ActionsUnion } from "../types"
+import { IGatsbyState, IGatsbyNode, ActionsUnion } from "../types"
 
 const ignoredFields: Set<string> = new Set([
   ...NodeInterfaceFields,

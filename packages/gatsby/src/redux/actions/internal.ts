@@ -177,8 +177,8 @@ export const queryExtractionBabelError = (
  * @private
  */
 export const setProgramStatus = (
-  status: ProgramStatus,
-  plugin: IGatsbyPlugin,
+  status: keyof typeof ProgramStatus,
+  plugin?: IGatsbyPlugin,
   traceId?: string
 ): ISetProgramStatusAction => {
   return {

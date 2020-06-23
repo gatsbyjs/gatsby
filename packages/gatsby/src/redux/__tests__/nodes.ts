@@ -32,6 +32,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -57,6 +58,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
         deep: {
@@ -83,6 +85,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: false,
         deep: {
@@ -115,6 +118,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -140,6 +144,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -152,7 +157,7 @@ describe(`Create and update nodes`, (): void => {
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state.get(`hi`),
+        node: state.get(`hi`)!,
         name: `joy`,
         value: `soul's delight`,
       },
@@ -176,6 +181,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `Test`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -188,7 +194,7 @@ describe(`Create and update nodes`, (): void => {
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state.get(`hi`),
+        node: state.get(`hi`)!,
         name: `joy`,
         value: `soul's delight`,
       },
@@ -201,7 +207,7 @@ describe(`Create and update nodes`, (): void => {
     function callActionCreator(): void {
       actions.createNodeField(
         {
-          node: state.get(`hi`),
+          node: state.get(`hi`)!,
           name: `joy`,
           value: `soul's delight`,
         },
@@ -224,6 +230,7 @@ describe(`Create and update nodes`, (): void => {
         internal: {
           contentDigest: `hasdfljds`,
           type: `mineOnly`,
+          counter: 1,
         },
         pickle: true,
       },
@@ -241,6 +248,7 @@ describe(`Create and update nodes`, (): void => {
           internal: {
             contentDigest: `hasdfljds`,
             type: `mineOnly`,
+            counter: 1,
           },
           pickle: true,
         },
@@ -268,6 +276,7 @@ describe(`Create and update nodes`, (): void => {
           internal: {
             contentDigest: `hasdfljds`,
             type: `mineOnly`,
+            counter: 1,
           },
           pickle: true,
         },
