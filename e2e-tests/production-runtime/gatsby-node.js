@@ -8,6 +8,36 @@ exports.onPreBootstrap = () => {
   )
 }
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+      type Product implements Node {
+          name: String
+      }
+    `
+  createTypes(typeDefs)
+}
+
+const products = [
+  { id: 0, name: "Burger" },
+  { id: 1, name: "Chicken" },
+]
+
+exports.sourceNodes = ({ actions, createNodeId }) => {
+  products.forEach(product => {
+    actions.createNode({
+      id: createNodeId(product.id),
+      children: [],
+      parent: null,
+      internal: {
+        type: `Product`,
+        contentDigest: createContentDigest(product.name),
+      },
+      name: product.name,
+    })
+  })
+}
+
 exports.createPages = ({ actions: { createPage } }) => {
   createPage({
     path: `/안녕`,

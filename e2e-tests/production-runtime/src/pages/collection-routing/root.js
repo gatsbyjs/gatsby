@@ -5,14 +5,14 @@ import Layout from "../../components/layout"
 export default function Root(props) {
   return (
     <Layout>
-      {props.data.allMarkdownRemark.nodes.map(node => {
+      {props.data.allProduct.nodes.map(node => {
         return (
           <Link
-            to={`/collection-routing/${node.fields.slug}`}
+            to={`/collection-routing/${node.name}`}
             data-testid="collection-routing-blog"
-            data-testslug={node.fields.slug}
+            data-testproductname={node.name}
           >
-            {node.frontmatter.title}
+            {node.name}
           </Link>
         )
       })}
@@ -21,15 +21,10 @@ export default function Root(props) {
 }
 
 export const query = graphql`
-  query AllMarkdown {
-    allMarkdownRemark {
+  query AllProducts {
+    allProduct {
       nodes {
-        frontmatter {
-          title
-        }
-        fields {
-          slug
-        }
+        name
       }
     }
   }

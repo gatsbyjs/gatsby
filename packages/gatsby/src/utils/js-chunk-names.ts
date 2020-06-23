@@ -10,9 +10,9 @@ import { store } from "../redux"
 // src/pages/products/{id}.js (collection route)
 // src/pages/products/[...id].js (should render when a non-matched id is passed in)
 //
-// without this function, what happens is that all visits to /products/__ resolve to one of these
-// because the componentChunkName ends up being duplicate. This function ensures that the
-// {} and [] are kept in the componentChunkName. Also there are tests for this.
+// without this function, what happens is that all visits to /products/__ resolve to only one
+// of these because the componentChunkName ends up being duplicate. This function ensures that
+// the {} and [] are kept in the componentChunkName. Also there are tests for this.
 function replaceUnifiedRoutesKeys(
   kebabedName: string,
   filePath: string
@@ -32,12 +32,10 @@ function replaceUnifiedRoutesKeys(
   return newString
 }
 
-export const generateComponentChunkName = (componentPath: string): string => {
-  const program = store.getState().program
-  let directory = `/`
-  if (program && program.directory) {
-    directory = program.directory
-  }
+export function generateComponentChunkName(componentPath: string): string {
+  const { program } = store.getState()
+  const directory = program?.directory || `/`
   const name = path.relative(directory, componentPath)
+
   return `component---${replaceUnifiedRoutesKeys(kebabCase(name), name)}`
 }

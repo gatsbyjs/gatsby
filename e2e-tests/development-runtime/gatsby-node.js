@@ -62,7 +62,7 @@ exports.createPages = async function createPages({
       path: `/${slug}`,
       component: blogPostTemplate,
       context: {
-        slug: `/${slug}`,
+        slug: slug,
       },
     })
   })

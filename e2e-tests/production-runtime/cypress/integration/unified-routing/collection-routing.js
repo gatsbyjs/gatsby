@@ -7,14 +7,14 @@ describe(`collection-routing`, () => {
     cy.visit(`/collection-routing/root`).waitForRouteChange()
 
     cy.getTestElement(`collection-routing-blog`)
-      .invoke(`attr`, `data-testslug`)
-      .then(slug => {
+      .invoke(`attr`, `data-testproductname`)
+      .then(name => {
         // should navigate us to an actual collection builder route.
         cy.getTestElement(`collection-routing-blog`)
           .click()
           .waitForRouteChange()
 
-        cy.getTestElement(`slug`).invoke(`text`).should(`equal`, slug)
+        cy.getTestElement(`name`).invoke(`text`).should(`equal`, name)
       })
   })
 })
