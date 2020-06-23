@@ -52,7 +52,26 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
         },
         slug: { type: `String!` },
         released: { type: `Boolean` },
-        excerpt: { type: `String` }, // FIXME needs passthrough resolver
+        excerpt: {
+          type: `String`,
+          args: {
+            pruneLength: {
+              type: `Int`,
+              defaultValue: 140,
+            },
+          },
+          resolve: async (source, args, context, info) => {
+            const type = info.schema.getType(`Mdx`)
+            const mdxNode = context.nodeModel.getNodeById({
+              id: source.parent,
+            })
+            const resolver = type.getFields().excerpt.resolve
+            const result = await resolver(mdxNode, args, context, {
+              fieldName: `excerpt`,
+            })
+            return mdxNode.frontmatter.excerpt || result
+          },
+        },
         title: { type: `String!` },
         seoTitle: { type: `String` },
         draft: { type: `Boolean` },
@@ -103,8 +122,6 @@ exports.onCreateNode = async ({ node, actions, getNode, createNodeId }) => {
     const fieldData = {
       ...node.frontmatter,
       slug,
-      html: node.html,
-      body: node.body,
       timeToRead: node.timeToRead,
       released: !draft && moment.utc().isSameOrAfter(moment.utc(date)),
       publishedAt: canonicalLink
