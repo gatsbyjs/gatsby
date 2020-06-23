@@ -19,10 +19,11 @@ import {
   useResourceContext,
 } from "./resource-provider"
 
-const queue = new Queue({ concurrency: 1, autoStart: false })
+const queue = new Queue({ concurrency: 5, autoStart: false })
 
 let errors = []
-const cache = new Map()
+const resultCache = new Map()
+const inFlightCache = new Map()
 
 const ModeContext = React.createContext({})
 const useMode = () => useContext(ModeContext)
@@ -84,9 +85,15 @@ const ResourceComponent = ({
   const allProps = { ...props, ...inputProps }
 
   const setResources = useContext(SetResourcesProvider)
+  // TODO add provider onto context
   const resourceData = handleResource(
     Resource,
-    { ...parentResourceContext, root: process.cwd(), _uuid, mode },
+    {
+      ...parentResourceContext,
+      root: process.cwd(),
+      _uuid,
+      mode,
+    },
     allProps,
     allResources,
     setResources
@@ -132,7 +139,13 @@ const handleResource = (
 
   const { mode } = context
 
-  const key = JSON.stringify({ resourceName, ...props, mode })
+  let key
+  // Only run apply once per resource
+  if (mode === `apply`) {
+    key = mode + ` ` + resourceName + ` ` + props._key
+  } else {
+    key = JSON.stringify({ resourceName, ...props, mode })
+  }
 
   const updateResource = result => {
     allResources = allResources.filter(a => a.resourceDefinitions._key)
@@ -154,11 +167,17 @@ const handleResource = (
     }
   }
 
-  const cachedResult = cache.get(key)
+  const cachedResult = resultCache.get(key)
+  const inFlightPromise = inFlightCache.get(key)
 
   if (cachedResult) {
     updateResource(cachedResult)
     return cachedResult
+  }
+
+  if (inFlightPromise) {
+    console.log(`already in flight`, key)
+    throw inFlightPromise
   }
 
   const fn = mode === `apply` ? `create` : `plan`
@@ -169,20 +188,25 @@ const handleResource = (
       // Multiple of the same promises can be queued due to re-rendering
       // so this first checks for the cached result again before executing
       // the request.
-      const cachedValue = cache.get(key)
+      const cachedValue = resultCache.get(key)
       if (cachedValue) {
         resolve(cachedValue)
+        updateResource(cachedValue)
       } else {
-        console.log(fn, { resourceName, context, props })
+        console.log(fn, { key, resourceName, context, props })
         resources[resourceName][fn](context, props)
           .then(result => {
             updateResource(result)
+            inFlightCache.set(key, false)
             return result
           })
-          .then(result => cache.set(key, result))
+          .then(result => resultCache.set(key, result))
           .then(resolve)
           .catch(e => {
             console.log(e)
+            if (e.name === `MissingInfoError`) {
+              inFlightCache.delete(key)
+            }
             reject(e)
           })
       }
@@ -190,6 +214,8 @@ const handleResource = (
   } catch (e) {
     throw e
   }
+
+  inFlightCache.set(key, promise)
 
   queue.add(() => promise)
 
@@ -220,11 +246,14 @@ const render = async (recipe, cb, inputs = {}, isApply) => {
       }
     }
 
+    console.log(`before check queue`, { size: queue.size })
+
     // If there aren't any new resources that need to be fetched, or errors, we're done!
     if (!queue.size && !errors.length) {
       return undefined
     }
 
+    console.log(`queue`, { size: queue.size })
     queue.start()
     await queue.onIdle()
     return await renderResources()

@@ -5,10 +5,14 @@ import resourceSchema from "../resource-schema"
 
 const create = async (_context, { name }) => {
   const space = await client.createSpace({ name })
+  const deliveryAccessToken = await space.createApiKey({
+    name: `gatsby`,
+  })
 
   return {
     name: space.name,
     id: space.sys.id,
+    deliveryAccessToken: deliveryAccessToken.accessToken,
     _message: message(space),
   }
 }
@@ -63,6 +67,7 @@ const plan = async (context, { id, name }) => {
     return {
       name,
       id: `(Known after install)`,
+      deliveryAccessToken: `(Known after install)`,
       currentState: ``,
       describe: `Create Contentful space "${name}"`,
       diffExists: true,

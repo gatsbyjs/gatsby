@@ -8,6 +8,7 @@ const babelPluginCopyKeyProp = require(`../renderer/babel-plugin-copy-key-prop`)
 const babelPluginMoveExportKeywords = require(`../renderer/babel-plugin-move-export-keywords`)
 const { useInputByKey } = require(`../renderer/input-provider`)
 const { useResource } = require(`../renderer/resource-provider`)
+const { useProvider } = require(`../renderer/provider-provider`)
 
 const transformJsx = jsx => {
   const { code } = transform(jsx, {
@@ -40,6 +41,7 @@ export default ({ children: mdxSrc, scope, components, ...props }) => {
     props,
     useInputByKey,
     useResource,
+    useProvider,
     ...scope,
   }
   const scopeKeys = Object.keys(fullScope)

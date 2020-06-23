@@ -52,7 +52,7 @@ const makeResourceId = res => {
 
 let sendEvent
 
-const PROJECT_ROOT = `/Users/kylemathews/programs/recipes-test`
+const PROJECT_ROOT = `/Users/kylemathews/programs/gatsby-contentful-blog`
 // `/Users/johno-mini/c/gatsby/starters/blog`
 
 const Color = `span`

@@ -9,7 +9,7 @@ const create = async (context, { fields }) => {
   const contentTypeId = context.ContentfulType.id
   const space = await client.getSpace(spaceId)
 
-  const entry = await space.createEntryWithId(contentTypeId, "pizza-face", {
+  const entry = await space.createEntryWithId(contentTypeId, `pizza-face`, {
     fields: {
       title: {
         "en-US": fields.title,
