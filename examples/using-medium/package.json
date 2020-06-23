@@ -7,8 +7,8 @@
   "author": "Robert Vogt <robert@smartive.ch>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.23.3",
-    "gatsby-source-medium": "^2.3.4",
+    "gatsby": "^2.23.10",
+    "gatsby-source-medium": "^2.3.5",
     "react": "^16.4.0",
     "react-dom": "^16.4.0"
   },
