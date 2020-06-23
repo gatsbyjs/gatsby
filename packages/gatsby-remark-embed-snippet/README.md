@@ -190,6 +190,23 @@ You can specify specific lines for Prism to highlight using
 
 **JavaScript example**:
 
+````no-highlight
+```jsx
+import React from "react"
+import ReactDOM from "react-dom"
+
+const name = "Brian" // highlight-line
+
+ReactDOM.render(
+  <div>
+    {/* highlight-range{1-3} */}
+    <h1>Hello, ${name}!</h1>
+  </div>,
+  document.getElementById("root")
+)
+```
+````
+
 ```jsx
 import React from "react"
 import ReactDOM from "react-dom"
@@ -207,6 +224,20 @@ ReactDOM.render(
 
 **CSS example**:
 
+````no-highlight
+```css
+html {
+  /* highlight-range{1-2} */
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box; /* highlight-line */
+}
+```
+````
+
 ```css
 html {
   /* highlight-range{1-2} */
@@ -222,6 +253,20 @@ html {
 **HTML example**:
 
 <!-- prettier-ignore-start -->
+````no-highlight
+```html
+<html>
+  <body>
+    <h1>highlight me</h1> <!-- highlight-line -->
+    <p>
+      <!-- highlight-next-line -->
+      And me
+    </p>
+  </body>
+</html>
+```
+````
+
 ```html
 <html>
   <body>
@@ -236,6 +281,16 @@ html {
 <!-- prettier-ignore-end -->
 
 **YAML example**:
+
+````no-highlight
+```yaml
+foo: "highlighted" # highlight-line
+bar: "not highlighted"
+# highlight-range{1-2}
+baz: "highlighted"
+quz: "highlighted"
+```
+````
 
 ```yaml
 foo: "highlighted" # highlight-line

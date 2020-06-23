@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.7...gatsby-image@2.4.8) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
 ## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.6...gatsby-image@2.4.7) (2020-06-09)
 
 **Note:** Version bump only for package gatsby-image
