@@ -23,6 +23,9 @@ const IndexPage = () => (
     <Link data-testid="404-link" to="/not-existing-page">
       Go to not existing page
     </Link>
+    <Link data-testid="subdir-link" to="subdirectory/page-1">
+      Go to subdirectory
+    </Link>
   </Layout>
 )
 

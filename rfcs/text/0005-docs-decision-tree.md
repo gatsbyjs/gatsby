@@ -39,7 +39,7 @@ I can't see another way to accomplish the goal of becoming a unified, unbiased (
 
 Test it during Hacktoberfest. For the time being, that's good enough because @amberley and I are already getting tagged as @docsteam, so we can test the decision tree anytime we get tagged.
 
-If/when there are more @gatsbyjs/docs team members, we can drive adoption through onboarding and then prizes or something when someone refers to the decision tree in their Github PR or issue comments as a reason for a docs decision. Finally, regularly meeting to revise the decision tree will help everyone have a voice in revising it and own the decision-making process.
+If/when there are more @gatsbyjs/docs team members, we can drive adoption through onboarding and then prizes or something when someone refers to the decision tree in their GitHub PR or issue comments as a reason for a docs decision. Finally, regularly meeting to revise the decision tree will help everyone have a voice in revising it and own the decision-making process.
 
 ## What questions still need to be answered about this idea?
 
