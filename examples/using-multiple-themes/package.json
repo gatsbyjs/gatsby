@@ -14,10 +14,10 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@pauliescanlon/gatsby-mdx-embed": "0.0.19",
-    "gatsby": "^2.22.15",
-    "gatsby-theme-blog": "^1.6.31",
-    "gatsby-theme-notes": "^1.3.57",
+    "@pauliescanlon/gatsby-mdx-embed": "0.0.21",
+    "gatsby": "^2.23.3",
+    "gatsby-theme-blog": "^1.6.42",
+    "gatsby-theme-notes": "^1.3.68",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
