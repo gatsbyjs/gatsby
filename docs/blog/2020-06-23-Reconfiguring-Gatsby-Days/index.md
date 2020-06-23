@@ -15,25 +15,25 @@ We feel now is simply not the time to take attention and space away from the Bla
 
 Today’s blog post is going to be a long one, because this is where we are sharing the new programs and products we had planned to announce at this week’s Gatsby Days. We are following up with individual posts featuring recorded presentations from the Gatsby community members who were scheduled to speak. We are sorry to miss gathering, even virtually, and we thank everyone for understanding -- and supporting -- the change. Until we can meet again, please enjoy the recorded presentations and demos from Gatsby Days Reconfigured.
 
-**[New from Gatsby](#New-from-Gatsby)**
+**[New from Gatsby](#new-from-gatsby)**
 
-- [Gatsby Partner Program](#Gatsby-Partner-Program)
-- [Gatsby Admin](#Gatsby-Admin)
-- [First-class Drupal Integration](#First-class-Drupal-Integration)
+- [Gatsby Partner Program](#gatsby-partner-program)
+- [Gatsby Admin](#gatsby-admin)
+- [First-class Drupal Integration](#first-class-drupal-integration)
 
-**[Coming soon](#Coming-soon)**
+**[Coming soon](#coming-soon)**
 
-- [Gatsby Blog Theme v2](#Gatsby-Blog-Theme-v2)
-- [The Path to Instant Builds](#The-Path-to-Instant-Builds)
-- [Unified Routes](#Unified-Routes)
-- [Gatsby Ambassador Program](#Gatsby-Ambassador-Program)
-- [i18n Theme](#i18n-Theme)
-- [New WordPress Source Plugin](#New-WordPress-Source-Plugin)
+- [Gatsby Blog Theme v2](#gatsby-blog-theme-v2)
+- [The Path to Instant Builds](#the-path-to-instant-builds)
+- [Unified Routes](#unified-routes)
+- [Gatsby Ambassador Program](#gatsby-ambassador-program)
+- [i18n Theme](#i18n-theme)
+- [New WordPress Source Plugin](#new-wordpress-source-plugin)
 
-**[Behind the Scenes](#Behind-the-Scenes)**
+**[Behind the Scenes](#behind-the-scenes)**
 
-- [Tasty Bits of Design Research](#Tasty-Bits-of-Design-Research)
-- [Making Gatsby Faster](#Making-Gatsby-Faster)
+- [Tasty Bits of Design Research](#tasty-bits-of-design-research)
+- [Making Gatsby Faster](#making-gatsby-faster)
 
 ## New from Gatsby
 
