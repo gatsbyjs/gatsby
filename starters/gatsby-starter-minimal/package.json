@@ -7,6 +7,12 @@
   "keywords": [
     "gatsby"
   ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "clean": "gatsby clean"
+  },
   "license": "MIT",
   "dependencies": {
     "gatsby": "^2.22.12",
