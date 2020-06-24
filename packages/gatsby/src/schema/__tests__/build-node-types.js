@@ -3,7 +3,6 @@ const { graphql, GraphQLString } = require(`graphql`)
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -82,7 +81,6 @@ describe(`build-node-types`, () => {
     const schemaComposer = createSchemaComposer()
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
@@ -96,7 +94,6 @@ describe(`build-node-types`, () => {
       nodeModel: new LocalNodeModel({
         schemaComposer,
         schema,
-        nodeStore,
         createPageDependency,
       }),
     })

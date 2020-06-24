@@ -60,7 +60,7 @@ I started by reviewing the [code for the plugin's demo site](https://github.com/
 
 ## Configure the plugin to pull your data
 
-In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
+In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](https://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
 ```javascript
 module.exports = {
