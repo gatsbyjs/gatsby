@@ -1,12 +1,34 @@
 const slugify = require(`slugify`)
 const { getTemplate } = require(`../get-template`)
 
+exports.sourceNodes = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type CreatorsYaml implements Node {
+      name: String!
+      type: String!
+      description: String!
+      location: String
+      website: String
+      github: String
+      image: File @fileByRelativePath
+      for_hire: Boolean
+      hiring: Boolean
+      portfolio: Boolean
+      fields: CreatorsYamlFields!
+    }
+
+    type CreatorsYamlFields @dontInfer {
+      slug: String!
+    }
+  `)
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const creatorPageTemplate = getTemplate(`template-creator-details`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allCreatorsYaml {
         nodes {
