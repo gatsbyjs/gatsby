@@ -300,6 +300,7 @@ Capozzi
 captioner
 Carmin
 carte
+Cashin
 casper
 Cassini
 catalogue
@@ -312,6 +313,7 @@ CDN-backed
 CDNs
 Cereda
 CFP
+Chakra
 changelog
 changelogs
 chatbots
@@ -463,6 +465,7 @@ Critchlow
 CRM
 cron
 cross-env
+Crowdin
 CRV
 CSP
 CSRF
@@ -1231,6 +1234,7 @@ MDX-embed
 MDXProvider
 Mediacurrent
 Meenan
+Meeshkan
 Meetfabric
 Megazord
 Melany
@@ -1545,6 +1549,7 @@ prerender
 prerendering
 presentational
 Prima
+Printful
 Prisma
 Prismic
 Prismic-Powered

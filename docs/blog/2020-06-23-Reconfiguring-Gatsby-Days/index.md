@@ -113,7 +113,7 @@ https://www.youtube.com/watch?v=m-4J62bC5tI
 
 Internationalization (i18n) can be time-consuming, cumbersome, and require significant domain knowledge. For Gatsby projects, it also currently requires lots of manual work. In his lightning talk, Lennart introduces the alpha version of `gatsby-theme-i18n`, a Gatsby theme to make the process of internationalizing sites easier. The alpha version of `gatsby-theme-i18n` will be released soon and, once stable, will become an official i18n solution for Gatsby websites.
 
-The alpha version of the theme will be agnostic to any i18n library and include support for MDX and local pages. The theme will use a JSON configuration file to generate pages such as `index.de.mdx` from `index.mdx`. The theme also ships with React components such as LocalizedLink, which handles adding prefixes, like `/de/`, to URLs as needed. Future ideas include supporting any data source, platforms like Crowdin, building both a single site and multiple sites, and more. Discussions are welcome on the [Gatsby Discord server](https://gatsby.dev/discord).
+The alpha version of the theme will be agnostic to any i18n library and include support for MDX and local pages. The theme will use a JSON configuration file to generate pages such as `index.de.mdx` from `index.mdx`. The theme also ships with React components such as `LocalizedLink`, which handles adding prefixes, like `/de/`, to URLs as needed. Future ideas include supporting any data source, platforms like Crowdin, building both a single site and multiple sites, and more. Discussions are welcome on the [Gatsby Discord server](https://gatsby.dev/discord).
 
 https://www.youtube.com/watch?v=p-TyigucHcU
 
