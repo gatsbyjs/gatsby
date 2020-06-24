@@ -8,6 +8,7 @@ tags:
   - gatsby-days
   - community
 ---
+
 _After much thought and discussion, the Gatsby team has decided not to hold Virtual Gatsby Days in the way we originally planned. While we were very much looking forward to our first digital community gathering, we feel now is not the time to take attention and space away from the Black Lives Matter movement._
 
 _Transforming Gatsby Days from a live event into a content series keeps the focus on more important events while sharing the amazing speakers and learning opportunities in a way the community can access when the time is right for each of us. All of the product and program announcements planned for Gatsby Days have been rolled up into [an initial blog post](https://www.gatsbyjs.org/blog/2020-06-23-Reconfiguring-Gatsby-Days/), and now we are following with a video series to present the speakers who had been scheduled to share their knowledge during the event. We hope you enjoy._ 💜
