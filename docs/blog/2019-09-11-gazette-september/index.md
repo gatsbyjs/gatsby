@@ -66,7 +66,7 @@ It's been a pretty busy month on the monorepo. We've merged in a _lot_ of your c
 
 ### GraphiQL Code Exporter
 
-Back in June, [Michal](https://twitter.com/mipiechowiak) from the Gatsby core team worked on adding [GraphiQL Explorer](https://github.com/OneGraph/graphiql-explorer) to GraphiQL in Gatsby. One of the next steps he mentioned was the addition of code snippet generation using graphiql-code-exporter.
+Back in June, [Michał](https://twitter.com/mipiechowiak) from the Gatsby core team worked on adding [GraphiQL Explorer](https://github.com/OneGraph/graphiql-explorer) to GraphiQL in Gatsby. One of the next steps he mentioned was the addition of code snippet generation using graphiql-code-exporter.
 
 Gatsby now includes Code Exporter in GraphiQL out of the box starting from v2.15.3, thanks to [Dan Kirkham](https://twitter.com/herecydev).
 
@@ -76,7 +76,7 @@ When you write a query in GraphiQL, this will automatically generate code for yo
 
 ### Notable PRs
 
-It's _really_ hard to pick out favourites from all the incredible contributions you folks make so apologies in advance if I missed anything (let [us](https://twitter.com/gatsbyjs) know on Twitter). Here are my favourites from the past month:
+It's _really_ hard to pick out favorites from all the incredible contributions you folks make so apologies in advance if I missed anything (let [us](https://twitter.com/gatsbyjs) know on Twitter). Here are my favorites from the past month:
 
 - [Jeremy Albright](https://github.com/Js-Brecht) did some really solid work and fixed an issue where Gatsby CLI would leave your terminal in an inconsistent state in [#16714](https://github.com/gatsbyjs/gatsby/pull/16714)
 - [Nicolas Goutay](https://github.com/phacks) fixed a memory leak in IntersectionObservers (with help from [atomiks](https://github.com/atomiks)) in [#17056](https://github.com/gatsbyjs/gatsby/pull/17056)

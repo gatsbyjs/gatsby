@@ -10672,6 +10672,11 @@ diacritics-map@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/diacritics-map/-/diacritics-map-0.1.0.tgz#6dfc0ff9d01000a2edf2865371cac316e94977af"
 
+dictionary-en@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/dictionary-en/-/dictionary-en-3.0.0.tgz#c6cdb8cabbde09bd6a4a9349586548e58afff042"
+  integrity sha512-GHD7vLcjd3oB878zQ86iDhJLgrylt8U5H0+s8IBIMDW7EXQ+uRoDh27NawU/HMyc5amYaaoLQawwhAJX+TDQaw==
+
 diff-sequences@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-24.9.0.tgz#5715d6244e2aa65f48bba0bc972db0b0b11e95b5"
@@ -11132,6 +11137,11 @@ emojis-list@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
   integrity sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==
+
+emoticon@^3.0.0, emoticon@^3.1.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/emoticon/-/emoticon-3.2.0.tgz#c008ca7d7620fac742fe1bf4af8ff8fed154ae7f"
+  integrity sha512-SNujglcLTTg+lDAcApPNgEdudaqQFiAbJCqzjNxJkvN9vAwCGi0uu8IUVvx+f16h+V44KCY6Y2yboroc9pilHg==
 
 emotion@^10.0.27:
   version "10.0.27"
@@ -13080,6 +13090,11 @@ gcp-metadata@^3.4.0:
   dependencies:
     gaxios "^2.1.0"
     json-bigint "^0.3.0"
+
+gemoji@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/gemoji/-/gemoji-5.0.1.tgz#4cea541c735b74ec82edd56c2d46538cd54f355d"
+  integrity sha512-7yV9K8JdiK+h2M4YDnf/8bunJKYvs0t0p8eKh7zexVSuXddRG9Ue18ZViKOZljISk57DE64X19gvJfHZmhggGg==
 
 generic-names@^1.0.3:
   version "1.0.3"
@@ -18966,6 +18981,34 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
+nlcst-affix-emoticon-modifier@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/nlcst-affix-emoticon-modifier/-/nlcst-affix-emoticon-modifier-1.1.4.tgz#03a96075c847f0c56022b8c8490ed347e0b03748"
+  integrity sha512-GfjDXjd3pMm1M8CxDd/8arRKKI9Vw+pRXTdmLjCupawRY6cyKs8rveUVkIsqll9XlDb1CzmRJnJeQR8nZqZjVg==
+  dependencies:
+    unist-util-modify-children "^1.0.0"
+
+nlcst-emoji-modifier@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/nlcst-emoji-modifier/-/nlcst-emoji-modifier-4.1.0.tgz#52b20477821b62fa09b3ddf08c7a2befc51b085d"
+  integrity sha512-0x+tliy8xpoJmde8R4UNNPoLk0sgYucRSBDcm8U+nngj9r5S01mQ5bdLF24OjFWnRAi6EGcGHQgFFmEOQPCfxA==
+  dependencies:
+    emoji-regex "^9.0.0"
+    gemoji "^5.0.0"
+    nlcst-to-string "^2.0.0"
+    unist-util-generated "^1.0.0"
+    unist-util-position "^3.0.0"
+    unist-util-visit "^2.0.0"
+
+nlcst-emoticon-modifier@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/nlcst-emoticon-modifier/-/nlcst-emoticon-modifier-1.1.4.tgz#b6a9f17a5622f09b640cd88e97aee0306a59adcd"
+  integrity sha512-fk1iv3Vw3fVKWYDeFgvtK4cZKzu63/1+omPGPIIQ8McKInZsdlRY8E9DWRXperdtVRTSDD0BxVImoPjO1WNxOA==
+  dependencies:
+    emoticon "^3.0.0"
+    nlcst-to-string "^2.0.0"
+    unist-util-modify-children "^1.0.0"
+
 nlcst-is-literal@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/nlcst-is-literal/-/nlcst-is-literal-1.2.1.tgz#878b68a43b5fd77b85e45b1b1737ae11a25f1be3"
@@ -19427,6 +19470,13 @@ npm-which@^3.0.1:
 nprogress@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+
+nspell@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/nspell/-/nspell-2.1.2.tgz#429a1bcd4288e93bd0989e8fa5d4ab2c3950e00a"
+  integrity sha512-j79L4A5aJSiswMUJ/6BW8+7ytgBUVce5BJX6xq8LtvKQpU96CMB340/yMeREH9U+gB/8dk4ctTn62DLiPMAXsA==
+  dependencies:
+    is-buffer "^2.0.0"
 
 nth-check@^1.0.1, nth-check@~1.0.1:
   version "1.0.1"
@@ -21560,7 +21610,7 @@ quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
 
-quotation@^1.0.0, quotation@^1.0.1:
+quotation@^1.0.0, quotation@^1.0.1, quotation@^1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/quotation/-/quotation-1.1.3.tgz#2a4d11f70105ad398b577883f310469367f53351"
   integrity sha512-45gUgmX/RtQOQV1kwM06boP49OYXcKCPrYwdmAvs5YqkpiobhNKKwo524JM6Ma0ko3oN9tXNcWs9+ABq3Ry7YA==
@@ -23628,6 +23678,19 @@ retext-diacritics@^3.0.0:
     quotation "^1.0.1"
     unist-util-position "^3.0.0"
 
+retext-emoji@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/retext-emoji/-/retext-emoji-7.0.1.tgz#ff36a558d28365a595e7337fe8dd46712c95c09c"
+  integrity sha512-oZxqCYO7ljD1CVMtX1b4Ph65VnskkR8vIPqb58Me0a6/ST5ZkiajIY7CpM1YUNlJ+KToYcZiZbMnyam0w8rGIQ==
+  dependencies:
+    emoticon "^3.1.0"
+    gemoji "^5.0.0"
+    nlcst-affix-emoticon-modifier "^1.0.0"
+    nlcst-emoji-modifier "^4.0.0"
+    nlcst-emoticon-modifier "^1.0.0"
+    nlcst-to-string "^2.0.0"
+    unist-util-visit "^2.0.0"
+
 retext-english@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/retext-english/-/retext-english-3.0.4.tgz#f978828d51fbcee842bc3807a45b7f709822ea8d"
@@ -23684,11 +23747,41 @@ retext-smartypants@^3.0.3:
     nlcst-to-string "^2.0.0"
     unist-util-visit "^1.0.0"
 
+retext-spell@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/retext-spell/-/retext-spell-4.0.0.tgz#ff8391c7d6eda0beeeb3db1420483a5b04ed25d7"
+  integrity sha512-sEyVkWfiuljLGD7qCvpvmrk1yNlnpOG9otMJ4uWiIvKGKIHbFn+NknqL1DbInvQd3VAmnOaWFNRynrpAv/zw8g==
+  dependencies:
+    nlcst-is-literal "^1.0.0"
+    nlcst-to-string "^2.0.0"
+    nspell "^2.0.0"
+    quotation "^1.1.0"
+    unist-util-visit "^2.0.0"
+
 retext-stringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/retext-stringify/-/retext-stringify-2.0.0.tgz#00238facc5491f5bcdc589703a4658db2e54415b"
   dependencies:
     nlcst-to-string "^2.0.0"
+
+retext-syntax-mentions@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/retext-syntax-mentions/-/retext-syntax-mentions-2.1.0.tgz#02aaedea61ea8e0eb4075301493a1766957cba0d"
+  integrity sha512-cH2E5csc1X/QoTW4fOQBtlDZ5uk+IKjvhWyx+ltB0kcaNqarEcAJQfx+siRHD5v2R5b2bq+yRByyi9zNajTFVA==
+  dependencies:
+    nlcst-to-string "^2.0.0"
+    unist-util-position "^3.0.0"
+    unist-util-visit "^2.0.0"
+
+retext-syntax-urls@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/retext-syntax-urls/-/retext-syntax-urls-2.0.0.tgz#fe08161d08bf8d64c52ecdda55add5c31ff7e810"
+  integrity sha512-HHm32sKKXFwlqz5yNSpSwNQZJxCfekXwtCHAoLM8b6snn/S5pNotZMJSKCUO0XCvUOgq/x0wBUTTfYBwB0vGpg==
+  dependencies:
+    nlcst-to-string "^2.0.0"
+    unist-util-is "^4.0.0"
+    unist-util-modify-children "^1.1.1"
+    unist-util-position "^3.0.0"
 
 retext@^5.0.0:
   version "5.0.0"
@@ -26747,6 +26840,13 @@ unist-util-map@^1.0.5:
 unist-util-modify-children@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/unist-util-modify-children/-/unist-util-modify-children-1.1.2.tgz#c7f1b91712554ee59c47a05b551ed3e052a4e2d1"
+  dependencies:
+    array-iterate "^1.0.0"
+
+unist-util-modify-children@^1.1.1:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/unist-util-modify-children/-/unist-util-modify-children-1.1.6.tgz#1587130ca0ab5c56155fa60837ff524c3fbfbfaa"
+  integrity sha512-TOA6W9QLil+BrHqIZNR4o6IA5QwGOveMbnQxnWYq+7EFORx9vz/CHrtzF36zWrW61E2UKw7sM1KPtIgeceVwXw==
   dependencies:
     array-iterate "^1.0.0"
 
