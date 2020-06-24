@@ -26,14 +26,7 @@ Agencies are challenged to meet the needs of diverse clients while trying to opt
 - **Training:** Have confidence that you’re getting the most out of Gatsby by accessing training materials and a connection with the Gatsby team.
 - **Certification:** Leverage Gatsby’s brand to elevate your business and give clients confidence they’re working with a Gatsby certified agency.
 
-<Pullquote
-  citation={
-    <span>
-      Dennis Brotzky, Founding Partner,{" "}
-      <a href="https://www.narative.co/">Narative</a>
-    </span>
-  }
->
+<Pullquote citation="Dennis Brotzky, Founding Partner, Narative">
   “Partnering with Gatsby has been a strong driver for growth. Our clients love
   the performance benefits and our developers are happy to use tools they
   already love.”
@@ -51,14 +44,7 @@ In this API-driven world, developers want to use the best tool for the job and t
 - **Grow with Gatsby:** Tap into the extensive and evolving Gatsby ecosystem by connecting with one of the most exciting and popular website frameworks around.
 - **Increase usage and sales:** Build a first-class experience for developers to increase usage and sales.
 
-<Pullquote
-  citation={
-    <span>
-      Kevin Zellmer, VP of Partnerships,{" "}
-      <a href="https://www.contentful.com/">Contentful</a>
-    </span>
-  }
->
+<Pullquote citation="Kevin Zellmer, VP of Partnerships, Contentful">
   "Partnering with Gatsby as a first-class integration partner has been a huge
   benefit to Contentful’s customers. This partnership helps our customers
   seamlessly improve site speed and SEO performance, leading to a better
