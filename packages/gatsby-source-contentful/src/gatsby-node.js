@@ -2,13 +2,15 @@ const path = require(`path`)
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
-
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, validateOptions } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
-
+const { createClient } = require(`contentful`)
 const conflictFieldPrefix = `contentful`
+
+const CACHE_SYNC_KEY = `previousSyncData`
+const CACHE_SYNC_TOKEN = `syncToken`
 
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [
@@ -47,8 +49,11 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode, setPluginStatus } = actions
-
+  const { createNode, deleteNode, touchNode } = actions
+  const client = createClient({
+    space: `none`,
+    accessToken: `fake-access-token`,
+  })
   const online = await isOnline()
 
   // If the user knows they are offline, serve them cached result
@@ -79,27 +84,28 @@ exports.sourceNodes = async (
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
-  const createSyncToken = () =>
-    `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
-      `environment`
-    )}-${pluginConfig.get(`host`)}`
+  /*
+   * Subsequent calls of Contentfuls sync API return only changed data.
+   *
+   * In some cases, especially when using rich-text fields, there can be data
+   * missing from referenced entries. This breaks the reference matching.
+   *
+   * To workround this, we cache the initial sync data and merge it
+   * with all data from subsequent syncs. Afterwards the references get
+   * resolved via the Contentful JS SDK.
+   */
+  let syncToken = await cache.get(CACHE_SYNC_TOKEN)
+  let previousSyncData = {
+    assets: [],
+    entries: [],
+  }
+  let cachedData = await cache.get(CACHE_SYNC_KEY)
 
-  // Get sync token if it exists.
-  let syncToken
-  if (
-    !pluginConfig.get(`forceFullSync`) &&
-    store.getState().status.plugins &&
-    store.getState().status.plugins[`gatsby-source-contentful`] &&
-    store.getState().status.plugins[`gatsby-source-contentful`][
-      createSyncToken()
-    ]
-  ) {
-    syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
-      createSyncToken()
-    ]
+  if (cachedData) {
+    previousSyncData = cachedData
   }
 
-  const {
+  let {
     currentSyncData,
     contentTypeItems,
     defaultLocale,
@@ -111,6 +117,51 @@ exports.sourceNodes = async (
     pluginConfig,
   })
 
+  console.time(`Process Contentful data`)
+
+  // Remove deleted entries and assets from cached sync data set
+  previousSyncData.entries = previousSyncData.entries.filter(
+    entry =>
+      _.findIndex(
+        currentSyncData.deletedEntries,
+        o => o.sys.id === entry.sys.id
+      ) !== -1
+  )
+
+  previousSyncData.assets = previousSyncData.assets.filter(
+    asset =>
+      _.findIndex(
+        currentSyncData.deletedAssets,
+        o => o.sys.id === asset.sys.id
+      ) !== -1
+  )
+
+  // Merge cached data with new sync data
+  // order is important here, fresh data first
+  currentSyncData.entries = _.uniqBy(
+    currentSyncData.entries.concat(previousSyncData.entries),
+    `sys.id`
+  )
+
+  currentSyncData.assets = _.uniqBy(
+    currentSyncData.assets.concat(previousSyncData.assets),
+    `sys.id`
+  )
+
+  // Store a raw and unresolved copy of the data for caching
+  const currentSyncDataRaw = _.cloneDeep(currentSyncData)
+
+  // Use the JS-SDK to resolve the entries and assets
+  const res = client.parseEntries({
+    items: currentSyncData.entries,
+    includes: {
+      assets: currentSyncData.assets,
+      entries: currentSyncData.entries,
+    },
+  })
+
+  currentSyncData.entries = res.items
+
   const entryList = normalize.buildEntryList({
     currentSyncData,
     contentTypeItems,
@@ -121,17 +172,13 @@ exports.sourceNodes = async (
   // are "updated" so will get the now deleted reference removed.
 
   function deleteContentfulNode(node) {
-    const normalizedType = node.sys.type.startsWith(`Deleted`)
-      ? node.sys.type.substring(`Deleted`.length)
-      : node.sys.type
-
     const localizedNodes = locales
       .map(locale => {
         const nodeId = createNodeId(
           normalize.makeId({
             spaceId: space.sys.id,
             id: node.sys.id,
-            type: normalizedType,
+            type: node.sys.type,
             currentLocale: locale.code,
             defaultLocale,
           })
@@ -161,15 +208,16 @@ exports.sourceNodes = async (
   reporter.info(`Deleted entries ${currentSyncData.deletedEntries.length}`)
   reporter.info(`Updated assets ${currentSyncData.assets.length}`)
   reporter.info(`Deleted assets ${currentSyncData.deletedAssets.length}`)
-  console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
-  // Store our sync state for the next sync.
-  const newState = {}
-  newState[createSyncToken()] = nextSyncToken
-  setPluginStatus(newState)
+  await Promise.all([
+    cache.set(CACHE_SYNC_KEY, currentSyncDataRaw),
+    cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
+  ])
+
+  reporter.info(`Building Contentful reference map`)
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
@@ -192,6 +240,8 @@ exports.sourceNodes = async (
     space,
     useNameForId: pluginConfig.get(`useNameForId`),
   })
+
+  reporter.info(`Resolving Contentful references`)
 
   const newOrUpdatedEntries = []
   entryList.forEach(entries => {
@@ -223,8 +273,17 @@ exports.sourceNodes = async (
       }
     })
 
+  console.timeEnd(`Process Contentful data`)
+  console.time(`Create Contentful nodes`)
+
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
+
+    if (entryList[i].length) {
+      reporter.info(
+        `Creating ${entryList[i].length} Contentful ${contentTypeItem.name} nodes`
+      )
+    }
 
     // A contentType can hold lots of entries which create nodes
     // We wait until all nodes are created and processed until we handle the next one
@@ -249,6 +308,10 @@ exports.sourceNodes = async (
     )
   }
 
+  if (assets.length) {
+    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
+  }
+
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
     await Promise.all(
@@ -263,7 +326,11 @@ exports.sourceNodes = async (
     )
   }
 
+  console.timeEnd(`Create Contentful nodes`)
+
   if (pluginConfig.get(`downloadLocal`)) {
+    reporter.info(`Download Contentful asset files`)
+
     await downloadContentfulAssets({
       actions,
       createNodeId,

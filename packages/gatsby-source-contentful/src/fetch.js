@@ -44,7 +44,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
         )}' were found but were filtered down to none.`
       )
     }
-    reporter.info(`default locale is: ${defaultLocale}`)
+    reporter.info(`Default locale is: ${defaultLocale}`)
   } catch (e) {
     let details
     let errors
@@ -85,10 +85,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   }
 
   let currentSyncData
+  const basicSyncConfig = {
+    limit: pageLimit,
+    resolveLinks: false,
+  }
   try {
     let query = syncToken
-      ? { nextSyncToken: syncToken }
-      : { initial: true, limit: pageLimit }
+      ? { nextSyncToken: syncToken, ...basicSyncConfig }
+      : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
     reporter.panic(`Fetching contentful data failed`, e)
@@ -100,9 +104,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(`error fetching content types`, e)
+    reporter.panic(`Error fetching content types`, e)
   }
-  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
+  reporter.info(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
 
@@ -120,6 +124,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
     locales,
     space,
   }
+
+  console.timeEnd(`Fetch Contentful data`)
 
   return result
 }
