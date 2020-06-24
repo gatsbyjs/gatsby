@@ -3,16 +3,16 @@
 exports[`gatsby-node should add a new blogpost and update linkedNodes 1`] = `
 Object {
   "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
-  "body___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrybodyTextNode",
+  "body___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrydescriptionTextNode",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrybodyTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
   ],
-  "contentful_id": "2XTZRrfbMRcfdyFSo4mrOR",
-  "createdAt": "2020-04-09T10:59:16.604Z",
-  "description___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___EntrydescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c21xFOvxOk9guLHTakpnezz___Asset",
-  "id": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry",
+  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
+  "createdAt": "2020-06-03T14:22:37.720Z",
+  "description___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c1aaRo2sQbdfWnG8iNvnkH3___Asset",
+  "id": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -20,7 +20,7 @@ Object {
   },
   "node_locale": "en-US",
   "parent": "Blog Post",
-  "publishDate": "2020-04-01T00:00+00:00",
+  "publishDate": "2020-04-01T00:00+02:00",
   "slug": "integration-tests",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
@@ -36,7 +36,7 @@ Object {
     "type": "Entry",
   },
   "title": "Integration tests",
-  "updatedAt": "2020-04-09T10:59:16.604Z",
+  "updatedAt": "2020-06-03T14:22:37.720Z",
 }
 `;
 
@@ -46,14 +46,14 @@ Object {
     "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry",
   ],
   "children": Array [
     "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-04-09T10:53:01.487Z",
+  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -79,28 +79,28 @@ Object {
         "type": "Link",
       },
     },
-    "revision": 2,
+    "revision": 1,
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-04-09T10:55:54.432Z",
+  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
 exports[`gatsby-node should add a new blogpost and update linkedNodes 3`] = `
 Object {
   "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
-  "body___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nlbodyTextNode",
+  "body___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nldescriptionTextNode",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nlbodyTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
   ],
-  "contentful_id": "2XTZRrfbMRcfdyFSo4mrOR",
-  "createdAt": "2020-04-09T10:59:16.604Z",
-  "description___NODE": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nldescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c21xFOvxOk9guLHTakpnezz___Asset___nl",
-  "id": "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nl",
+  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
+  "createdAt": "2020-06-03T14:22:37.720Z",
+  "description___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c1aaRo2sQbdfWnG8iNvnkH3___Asset___nl",
+  "id": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -108,7 +108,7 @@ Object {
   },
   "node_locale": "nl",
   "parent": "Blog Post",
-  "publishDate": "2020-04-01T00:00+00:00",
+  "publishDate": "2020-04-01T00:00+02:00",
   "slug": "integration-tests",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
@@ -124,7 +124,7 @@ Object {
     "type": "Entry",
   },
   "title": "Integration tests",
-  "updatedAt": "2020-04-09T10:59:16.604Z",
+  "updatedAt": "2020-06-03T14:22:37.720Z",
 }
 `;
 
@@ -134,14 +134,14 @@ Object {
     "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry___nl",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
-    "uzfinxahlog0___c2XTZRrfbMRcfdyFSo4mrOR___Entry___nl",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
   ],
   "children": Array [
     "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-04-09T10:53:01.487Z",
+  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -167,12 +167,12 @@ Object {
         "type": "Link",
       },
     },
-    "revision": 2,
+    "revision": 1,
     "type": "Entry",
   },
-  "title": "Web developer",
+  "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-04-09T10:55:54.432Z",
+  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -188,7 +188,7 @@ Object {
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-04-09T10:53:01.487Z",
+  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -214,12 +214,12 @@ Object {
         "type": "Link",
       },
     },
-    "revision": 2,
+    "revision": 1,
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-04-09T10:55:54.432Z",
+  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -235,7 +235,7 @@ Object {
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-04-09T10:53:01.487Z",
+  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -261,28 +261,28 @@ Object {
         "type": "Link",
       },
     },
-    "revision": 2,
+    "revision": 1,
     "type": "Entry",
   },
-  "title": "Web developer",
+  "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-04-09T10:55:54.432Z",
+  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
 exports[`gatsby-node should update a blogpost 1`] = `
 Object {
   "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry",
-  "body___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrybodyTextNode",
+  "body___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrydescriptionTextNode",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrybodyTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
   ],
-  "contentful_id": "3K9b0esdy0q0yGqgW2g6Ke",
-  "createdAt": "2020-04-09T10:53:01.485Z",
-  "description___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___EntrydescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c6Od9v3wzLOysiMum0Wkmme___Asset",
-  "id": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
+  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
+  "createdAt": "2020-06-03T14:22:37.720Z",
+  "description___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c1aaRo2sQbdfWnG8iNvnkH3___Asset",
+  "id": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -290,8 +290,8 @@ Object {
   },
   "node_locale": "en-US",
   "parent": "Blog Post",
-  "publishDate": "2017-05-15T00:00+02:00",
-  "slug": "hello-world",
+  "publishDate": "2020-05-15T00:00+02:00",
+  "slug": "hello-world-1234",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -305,11 +305,8 @@ Object {
     "revision": 2,
     "type": "Entry",
   },
-  "tags": Array [
-    "general",
-  ],
   "title": "Hello world 1234",
-  "updatedAt": "2020-04-09T11:01:27.357Z",
+  "updatedAt": "2020-06-03T14:27:24.359Z",
 }
 `;
 
@@ -319,14 +316,14 @@ Object {
     "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry",
   ],
   "children": Array [
     "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-04-09T10:53:01.487Z",
+  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -352,28 +349,28 @@ Object {
         "type": "Link",
       },
     },
-    "revision": 2,
+    "revision": 1,
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-04-09T10:55:54.432Z",
+  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
 exports[`gatsby-node should update a blogpost 3`] = `
 Object {
   "author___NODE": "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
-  "body___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nlbodyTextNode",
+  "body___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
   "children": Array [
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nldescriptionTextNode",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nlbodyTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
   ],
-  "contentful_id": "3K9b0esdy0q0yGqgW2g6Ke",
-  "createdAt": "2020-04-09T10:53:01.485Z",
-  "description___NODE": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nldescriptionTextNode",
-  "heroImage___NODE": "uzfinxahlog0___c6Od9v3wzLOysiMum0Wkmme___Asset___nl",
-  "id": "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
+  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
+  "createdAt": "2020-06-03T14:22:37.720Z",
+  "description___NODE": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
+  "heroImage___NODE": "uzfinxahlog0___c1aaRo2sQbdfWnG8iNvnkH3___Asset___nl",
+  "id": "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
   "internal": Object {
     "contentDigest": "contentDigest",
     "owner": "gatsby-source-contentful",
@@ -381,8 +378,8 @@ Object {
   },
   "node_locale": "nl",
   "parent": "Blog Post",
-  "publishDate": "2017-05-15T00:00+02:00",
-  "slug": "hello-world",
+  "publishDate": "2020-05-15T00:00+02:00",
+  "slug": "hello-world-1234",
   "spaceId": "uzfinxahlog0",
   "sys": Object {
     "contentType": Object {
@@ -396,11 +393,8 @@ Object {
     "revision": 2,
     "type": "Entry",
   },
-  "tags": Array [
-    "general",
-  ],
   "title": "Hello world 1234",
-  "updatedAt": "2020-04-09T11:01:27.357Z",
+  "updatedAt": "2020-06-03T14:27:24.359Z",
 }
 `;
 
@@ -410,14 +404,14 @@ Object {
     "uzfinxahlog0___c31TNnjHlfaGUoMOwU0M2og___Entry___nl",
     "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
     "uzfinxahlog0___c2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
-    "uzfinxahlog0___c3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
+    "uzfinxahlog0___c1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
   ],
   "children": Array [
     "uzfinxahlog0___c15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
   ],
   "company": "ACME",
   "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-04-09T10:53:01.487Z",
+  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -443,11 +437,11 @@ Object {
         "type": "Link",
       },
     },
-    "revision": 2,
+    "revision": 1,
     "type": "Entry",
   },
-  "title": "Web developer",
+  "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-04-09T10:55:54.432Z",
+  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
