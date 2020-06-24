@@ -43,7 +43,7 @@ Today’s blog post is going to be a long one, because this is where we are shar
 
 First up, we are excited to [formally announce the Gatsby Partner Program](/blog/2020-06-22-Announcing-Gatsby-Partner-Program/) this week. It's important to Gatsby that we support agencies in their work with clients in the most robust and effective ways possible. Equally important is supporting everyone building the overall ecosystem of CMS, infrastructure tools, and other technologies that are foundations of the modern web. We designed the Gatsby Partner Program to further extend this support and provide new avenues for collaboration and engagement between Gatsby and official Agency Partners and Technology Partners. Listen as Linda Watkins, VP of Partnerships at Gatsby, describes the features and benefits of both kinds of partnerships and then visit our new [Gatsby Partner Program landing page](https://www.gatsbyjs.com/partner) for details on how to join.
 
-[![Linda Watkins introducing the Gatsby Partner Program](https://res.cloudinary.com/marcomontalbano/image/upload/v1592856097/video_to_markdown/images/youtube--iKSLYpFEKZc-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=iKSLYpFEKZc&feature=youtu.be "Linda Watkins introducing the Gatsby Partner Program")
+https://www.youtube.com/watch?v=iKSLYpFEKZc
 
 ### Gatsby Admin
 
@@ -51,7 +51,7 @@ First up, we are excited to [formally announce the Gatsby Partner Program](/blog
 
 Today we are introducing another new addition to the Gatsby ecosystem: Gatsby Admin. Currently in alpha, Admin is a new interface for managing your Gatsby site’s configuration. Admin aims to be the hub for utilizing and managing features like Themes, Blocks, Recipes, and GraphiQL. Alpha is a core piece of our ambition to make Gatsby fully accessible for all kinds of users, not just coders. Our vision: everything that’s possible in `gatsby-config.js` should eventually be possible through the Admin. This first alpha release includes plugin and theme management, as well as a theme file shadowing interface. After watching Max introduce and demo Admin in his presentation, you can go sign up for the Admin alpha at [gatsbyjs.com/admin-alpha](https://gatsbyjs.com/admin-alpha).
 
-[![Max Stoiber introduces Gatsby Admin](https://res.cloudinary.com/marcomontalbano/image/upload/v1592855925/video_to_markdown/images/youtube--B7D_B2HTbko-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=B7D_B2HTbko&feature=youtu.be)
+https://www.youtube.com/watch?v=B7D_B2HTbko
 
 ### Demo: Create a Contentful Blog in under 2 minutes with no coding or configuration using Gatsby Recipes for Admin
 
@@ -61,7 +61,7 @@ Let’s take a look at the coming Admin version of Gatsby Recipes and how we can
 
 Second, hit the “install Recipe” button. A few seconds to install the plugins and create the spaces, and there you go! Head over to Contentful and you will find the blog space that we just created. Click on the “Content model” tab and there’s your brand new blog and your first example blog post. Click on that to start writing/editing (Hello, World!) and view your brand new site. Yes, this took less than two minutes. Yes, it’s that easy.
 
-[![Kyle Mathews demonstrates creating a blog site in less than two minutes with Gatsby Admin](https://res.cloudinary.com/marcomontalbano/image/upload/v1592921674/video_to_markdown/images/youtube--0ZrhTTxfHyc-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=0ZrhTTxfHyc&feature=youtu.be "Kyle Mathews demonstrates creating a blog site in less than two minutes with Gatsby Admin")
+https://www.youtube.com/watch?v=0ZrhTTxfHyc
 
 ### First-class Drupal Integration
 
@@ -69,7 +69,7 @@ Second, hit the “install Recipe” button. A few seconds to install the plugin
 
 Content editors, not developers, spend more time on finished sites than anyone else. For an ideal experience, they must be able to preview published content, have a workflow that suits their editing needs, and to know when content will go live. Shane Thomas, Staff Software Engineer at Gatsby, presents the Gatsby Drupal Module. Check out Shane’s video demonstration of how draft blog posts immediately appear in preview -- but without triggering a build. When ready, pressing “publish” triggers a new build that takes advantage of Incremental Builds on Gatsby Cloud for lightning-fast rebuilds up to 1000x faster than standard solutions.
 
-[![Shane Thomas introducing the Gatsby Drupal Module](https://res.cloudinary.com/marcomontalbano/image/upload/v1592856909/video_to_markdown/images/youtube--Mm6wrDr2DBE-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Mm6wrDr2DBE&feature=youtu.be "Shane Thomas introducing the Gatsby Drupal Module")
+https://www.youtube.com/watch?v=Mm6wrDr2DBE
 
 ## Coming soon
 
@@ -81,7 +81,7 @@ For many of our attendees a favorite part of previous Gatsby Days events has bee
 
 Laurie’s lightning talk introduces the exciting new features of Blog Theme 1.6/2.0, which will be available soon. Previously, sharing blog posts on social media would result in blank social cards. Now, with improved SEO, you can set featured images and social sharing images on your posts. We’ve also increased the features available in Theme UI, allowing you to highlight lines of code snippets with Prism. The blog theme is overall more customizable too. You can set base styles without any shadowing (though shadowing is still available). See Laurie’s demo of how to completely alter a theme’s appearance in just a few seconds by setting base styles to the community-made `theme-ui-sketchy-preset`, changing the `prismPreset` option, and adding a font using `webFontURL`. We’re excited to see what you build with Gatsby Blog Theme 2.0!
 
-[![Laurie Barth introducing the Gatsby Blog Theme 2.0](https://res.cloudinary.com/marcomontalbano/image/upload/v1592857614/video_to_markdown/images/youtube--4PNvVCzEFeI-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=4PNvVCzEFeI&feature=youtu.be "Laurie Barth introducing the Gatsby Blog Theme 2.0")
+https://www.youtube.com/watch?v=4PNvVCzEFeI
 
 ### The Path to Instant Builds
 
@@ -89,7 +89,7 @@ Laurie’s lightning talk introduces the exciting new features of Blog Theme 1.6
 
 In the olden days, like last year, there was a price for fast static site runtimes: slow build times. Incremental Builds on Gatsby Cloud changes everything by achieving builds under 5 seconds for data changes, even for sites with hundreds of pages. After all, the fastest way to build is to not build at all! Watch Matt explain the path to instant builds: how we achieved our goal of all data changes taking under 10 seconds to build, and how we’re working on making even more builds, like code changes, incremental as well. The changes we are implementing in the open source project will benefit all Gatsby users. Soon we’ll be able to support super fast incremental building of massive sites, code changes, filesystem data changes, and hybrid content formats like MDX.
 
-[![Matt Kane on Gatsby Incremental Builds and beyond](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858441/video_to_markdown/images/youtube--z6-MPZrC98g-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=z6-MPZrC98g&feature=youtu.be "Matt Kane on Gatsby Incremental Builds and beyond")
+https://www.youtube.com/watch?v=z6-MPZrC98g
 
 ### Unified Routes
 
@@ -97,7 +97,7 @@ In the olden days, like last year, there was a price for fast static site runtim
 
 Got routes? A crucial part of building any website is the routing structure: which pages exist and how they’re built. We believe website creators shouldn’t have to delve into Gatsby Node APIs to accomplish key goals. Gatsby v1 introduced the low-level `createPage` API to accomplish this task. While this API is pretty powerful and flexible, we've long wanted a higher-level API that helps developers create sites even faster. In this lightning talk, Blaine introduces Unified Routes, a suite of new APIs and conventions to make the file system the primary way of building pages. Want to see at a glance what routes your site has? Blaine shows you how with his video demonstration of creating routes that take parameters while unifying routing within the pages directory. (Spoiler alert: there’s also a new conversion tool that automates converting your site from using `createPages` to the new API).
 
-[![Blaine Kasten on Gatsby Unified Routes](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858581/video_to_markdown/images/youtube--tAcAkqOcs3c-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=tAcAkqOcs3c&feature=youtu.be "Blaine Kasten on Gatsby Unified Routes")
+https://www.youtube.com/watch?v=tAcAkqOcs3c
 
 ### Gatsby Ambassador Program
 
@@ -105,7 +105,7 @@ Got routes? A crucial part of building any website is the routing structure: whi
 
 Interested in taking your involvement in the future of Gatsby a step further? Caitlin tells you how in her lightning talk by introducing the Gatsby Ambassador Program (working title). Ambassadors will act as representatives of Gatsby in community activities like public speaking, teaching, organizing events, and more. Our Developer Relations team will work with them to define and support projects. Right now we are gearing up for a pilot project with a few community members to figure out their needs and how we can best support them. We are also looking to build resources for people who want to become Gatsby Ambassadors but haven’t yet reached the experience level we’re looking for. Eventually, once fully built out, the program will open up to the public.
 
-[![Caitlin Cashin on Gatsby Ambassadors pilot program](https://res.cloudinary.com/marcomontalbano/image/upload/v1592859090/video_to_markdown/images/youtube--m-4J62bC5tI-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=m-4J62bC5tI&feature=youtu.be "Caitlin Cashin on Gatsby Ambassadors pilot program")
+https://www.youtube.com/watch?v=m-4J62bC5tI
 
 ### i18n Theme
 
@@ -115,7 +115,7 @@ Internationalization (i18n) can be time-consuming, cumbersome, and require signi
 
 The alpha version of the theme will be agnostic to any i18n library and include support for MDX and local pages. The theme will use a JSON configuration file to generate pages such as `index.de.mdx` from `index.mdx`. The theme also ships with React components such as LocalizedLink, which handles adding prefixes, like `/de/`, to URLs as needed. Future ideas include supporting any data source, platforms like Crowdin, building both a single site and multiple sites, and more. Discussions are welcome on the [Gatsby Discord server](https://gatsby.dev/discord).
 
-[![Lennart Jörgens on Internationalization with Gatsby](https://res.cloudinary.com/marcomontalbano/image/upload/v1592859196/video_to_markdown/images/youtube--p-TyigucHcU-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=p-TyigucHcU&feature=youtu.be "Lennart Jörgens on Internationalization with Gatsby")
+https://www.youtube.com/watch?v=p-TyigucHcU
 
 ### New WordPress Source Plugin
 
@@ -131,7 +131,7 @@ Another traditional feature of Gatsby Days: insight from Gatsby team members on 
 
 Shannon’s lightning talk takes a quick tour of error messages and Recipes through the lens of a Usability Test Session. These sessions are live calls between a volunteer user, Shannon, and a Gatsby engineer, where you share your screen working through a task while they take notes and ask questions. Although encountering and debugging errors often feels painful, Shannon uses this process to emphasize that it’s never your fault. The mindset within Gatsby’s UX team is that the product is at fault, and it’s our job to uncover issues and identify areas for improvement. Watch as Shannon walks through a recent usability test to show how they work -- and encourage more community members to try doing one! If you’re ready to sign up for a usability test, [book a time on Shannon’s calendar](https://calendly.com/shannon-soper). You can also share screen recordings by sending them to [design-team@gatsbyjs.com](mailto:design-team@gatsbyjs.com)
 
-[![Shannon Soper on Usability Testing, error messages and recipes](https://res.cloudinary.com/marcomontalbano/image/upload/v1592858251/video_to_markdown/images/youtube--Hp_cJGwT1Jc-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=Hp_cJGwT1Jc&feature=youtu.be "Shannon Soper on Usability Testing, error messages and recipes")
+https://www.youtube.com/watch?v=Hp_cJGwT1Jc
 
 ### Making Gatsby Faster
 
@@ -139,7 +139,7 @@ Shannon’s lightning talk takes a quick tour of error messages and Recipes thro
 
 Gatsby is already pretty fast by default. We do a lot of things under the hood to make it that way, and we are always looking for every possible way to capture even split-second speed gains. Ward Peeters, Gatsby’s resident runtime performance expert, shares a few easy things users can do to speed up their sites, like replacing React with Preact (using a Gatsby Recipe to make building it faster, too!). After a certain point, though, there’s only so much a user can or should do, and Ward’s lightning talk takes a look at initiatives currently on Gatsby’s roadmap for achieving further runtime reductions.
 
-[![Ward Peeters demonstrates ways to speed up Gatsby runtime performance](https://res.cloudinary.com/marcomontalbano/image/upload/v1592917834/video_to_markdown/images/youtube--4nEGpFtOj-M-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=4nEGpFtOj-M&feature=youtu.be "Ward Peters demonstrates ways to speed up Gatsby runtime performance")
+https://www.youtube.com/watch?v=4nEGpFtOj-M
 
 ## More to come
 
