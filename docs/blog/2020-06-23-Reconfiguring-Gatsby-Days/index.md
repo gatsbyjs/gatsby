@@ -135,11 +135,11 @@ Shannon’s lightning talk takes a quick tour of error messages and Recipes thro
 
 ### Making Gatsby Faster
 
-**Ward Peters, Software Engineer at Gatsby**
+**Ward Peeters, Software Engineer at Gatsby**
 
-Gatsby is already pretty fast by default. We do a lot of things under the hood to make it that way, and we are always looking for every possible way to capture even split-second speed gains. Ward Peters, Gatsby’s resident runtime performance expert, shares a few easy things users can do to speed up their sites, like replacing React with Preact (using a Gatsby Recipe to make building it faster, too!). After a certain point, though, there’s only so much a user can or should do, and Ward’s lightning talk takes a look at initiatives currently on Gatsby’s roadmap for achieving further runtime reductions.
+Gatsby is already pretty fast by default. We do a lot of things under the hood to make it that way, and we are always looking for every possible way to capture even split-second speed gains. Ward Peeters, Gatsby’s resident runtime performance expert, shares a few easy things users can do to speed up their sites, like replacing React with Preact (using a Gatsby Recipe to make building it faster, too!). After a certain point, though, there’s only so much a user can or should do, and Ward’s lightning talk takes a look at initiatives currently on Gatsby’s roadmap for achieving further runtime reductions.
 
-[![Ward Peters demonstrates ways to speed up Gatsby runtime performance](https://res.cloudinary.com/marcomontalbano/image/upload/v1592917834/video_to_markdown/images/youtube--4nEGpFtOj-M-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=4nEGpFtOj-M&feature=youtu.be "Ward Peters demonstrates ways to speed up Gatsby runtime performance")
+[![Ward Peeters demonstrates ways to speed up Gatsby runtime performance](https://res.cloudinary.com/marcomontalbano/image/upload/v1592917834/video_to_markdown/images/youtube--4nEGpFtOj-M-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=4nEGpFtOj-M&feature=youtu.be "Ward Peters demonstrates ways to speed up Gatsby runtime performance")
 
 ## More to come
 
