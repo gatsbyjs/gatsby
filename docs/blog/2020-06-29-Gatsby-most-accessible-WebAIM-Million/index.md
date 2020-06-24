@@ -17,7 +17,7 @@ Jared Smith, Associate Director of WebAIM, noted, “It's clear that Gatsby has 
 
 __At Gatsby, we strive to make sites accessible and performant by default.__ Our community has largely joined us in customizing their Gatsby sites to remain accessible, and we’re thrilled to share this recognition from WebAIM with them.
 
-![Jared Smith of WebAIM presenting on the WebAIM Million](/image1.jpg)
+![Jared Smith of WebAIM presenting on the WebAIM Million](./image1.jpg)
 
   What are some of the things we have done that contributed to these results? We’ve made improvements to our [official starters](https://www.gatsbyjs.org/docs/starters/#official-starters) and [themes](https://www.gatsbyjs.org/blog/2019-07-03-customizing-styles-in-gatsby-themes-with-theme-ui/#say-hello-to-our-official-gatsby-themes). We have worked continuously to [research client-side routing](https://www.gatsbyjs.org/blog/2019-07-11-user-testing-accessible-client-routing/) and [improve it](https://www.gatsbyjs.org/blog/2020-02-10-accessible-client-side-routing-improvements/).
 
