@@ -4,7 +4,7 @@ import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
 
 // Only list supported ops here. "CacheableFilterOp"
-type FilterOp =
+export type FilterOp =  // TODO: merge with DbComparator ?
   | "$eq"
   | "$ne"
   | "$lt"
@@ -15,7 +15,7 @@ type FilterOp =
   | "$nin"
   | "$regex" // Note: this includes $glob
 // Note: `undefined` is an encoding for a property that does not exist
-type FilterValueNullable =
+export type FilterValueNullable =  // TODO: merge with DbComparatorValue
   | string
   | number
   | boolean
@@ -184,49 +184,27 @@ export const getResolvedNode = (
   return node
 }
 
-export const addResolvedNodes = (
-  typeName: string,
-  resolvedNodes: IGatsbyNode[] = []
-): IGatsbyNode[] => {
-  const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
-
-  if (!nodes) {
-    return []
-  }
-
-  const resolvedNodesFromCache = resolvedNodesCache.get(typeName)
-
-  nodes.forEach(node => {
-    if (resolvedNodesFromCache) {
-      node.__gatsby_resolved = resolvedNodesFromCache.get(node.id)
-    }
-    resolvedNodes.push(node)
-  })
-
-  return resolvedNodes
-}
-
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
   op: FilterOp
 ): void {
+  // Loop through byValue and make sure the buckets are sorted by counter
+  // Since we don't do insertion sort, we have to do it afterwards
+  for (const bucket of filterCache.byValue) {
+    bucket[1].sort((a, b) => a.internal.counter - b.internal.counter)
+  }
+
   if (op === `$ne` || op === `$nin`) {
     postIndexingMetaSetupNeNin(filterCache)
   } else if ([`$lt`, `$lte`, `$gt`, `$gte`].includes(op)) {
     postIndexingMetaSetupLtLteGtGte(filterCache, op)
-  } else {
-    // Loop through byValue and make sure the buckets are sorted by counter
-    for (const bucket of filterCache.byValue) {
-      bucket[1].sort((a, b) => a.internal.counter - b.internal.counter)
-    }
   }
 }
 
 function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   // Note: edge cases regarding `null` and `undefined`. Here `undefined` signals
-  // that the property did not exist as sift does not support actual `undefined`
-  // values.
+  // that the property did not exist as the filters do not support actual
+  // `undefined` values.
   // For $ne, `null` only returns nodes that actually have the property
   // and in that case the property cannot be `null` either. For any other value,
   // $ne will return all nodes where the value is not actually the needle,
@@ -240,8 +218,6 @@ function postIndexingMetaSetupNeNin(filterCache: IFilterCache): void {
   const arr: Array<IGatsbyNode> = []
   filterCache.meta.nodesUnordered = arr
   filterCache.byValue.forEach(v => {
-    v.sort((a, b) => a.internal.counter - b.internal.counter)
-
     v.forEach(node => {
       arr.push(node)
     })
@@ -295,7 +271,6 @@ function postIndexingMetaSetupLtLteGtGte(
   const orderedValues: Array<FilterValue> = []
   const offsets: Map<FilterValue, [number, number]> = new Map()
   entries.forEach(([v, bucket]: [FilterValue, Array<IGatsbyNode>]) => {
-    bucket.sort((a, b) => a.internal.counter - b.internal.counter)
     // Record the range containing all nodes with as filter value v
     // The last value of the range should be the offset of the next value
     // (So you should be able to do `nodes.slice(start, stop)` to get them)
@@ -421,6 +396,8 @@ export function ensureEmptyFilterCache(
     })
   }
 
+  // Since each node can only have one type, we shouldn't have to be concerned
+  // about duplicates in this array. Just make sure they're sorted.
   orderedByCounter.sort((a, b) => a.internal.counter - b.internal.counter)
 }
 
@@ -561,7 +538,7 @@ function addNodeToBucketWithElemMatch(
   }
 
   if (path.length !== i) {
-    // Found undefined before the end of the path, so let Sift take over
+    // Found undefined before the end of the path
     return
   }
 
@@ -629,7 +606,7 @@ const binarySearchAsc = (
     pivot = min + Math.floor((max - min) / 2)
   }
 
-  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  // Shouldn't be reachable
   return undefined
 }
 const binarySearchDesc = (
@@ -664,7 +641,7 @@ const binarySearchDesc = (
     pivot = min + Math.floor((max - min) / 2)
   }
 
-  // Shouldn't be reachable, but just in case, fall back to Sift if so.
+  // Shouldn't be reachable
   return undefined
 }
 
@@ -676,13 +653,17 @@ const binarySearchDesc = (
  * Basically if the filter was {a: {b: {slug: {eq: "foo/bar"}}}} then it will
  * return all the nodes that have `node.slug === "foo/bar"`. That usually (but
  * not always) at most one node for slug, but this filter can apply to anything.
+ *
+ * Arrays returned by this function must be ordered by internal.counter and
+ * not contain duplicate nodes (!)
  */
 export const getNodesFromCacheByValue = (
   filterCacheKey: FilterCacheKey,
   filterValue: FilterValueNullable,
-  filtersCache: FiltersCache
+  filtersCache: FiltersCache,
+  wasElemMatch
 ): Array<IGatsbyNode> | undefined => {
-  const filterCache = filtersCache?.get(filterCacheKey)
+  const filterCache = filtersCache.get(filterCacheKey)
   if (!filterCache) {
     return undefined
   }
@@ -693,12 +674,16 @@ export const getNodesFromCacheByValue = (
     // Arrays in byValue are assumed to be ordered by counter
 
     if (filterValue == null) {
-      // Edge case; fetch all nodes for `null` and `undefined` because `$eq`
-      // also returns nodes without the path when searching for `null`. Not
-      // ops do so, so we map non-existing paths to `undefined`.
-      return (filterCache.byValue.get(null) ?? []).concat(
-        filterCache.byValue.get(undefined) ?? []
-      )
+      // Edge case for null; fetch all nodes for `null` and `undefined` because
+      // `$eq` also returns nodes without the path when searching for `null`.
+      // Not all ops do so, so we map non-existing paths to `undefined`.
+
+      const arrNull = filterCache.byValue.get(null) ?? []
+      const arrUndef = filterCache.byValue.get(undefined) ?? []
+
+      // Merge the two (ordered) arrays and return an ordered deduped array
+      // TODO: is there a reason left why we cant just cache this merged list?
+      return unionNodesByCounter(arrNull, arrUndef)
     }
 
     return filterCache.byValue.get(filterValue)
@@ -706,23 +691,11 @@ export const getNodesFromCacheByValue = (
 
   if (op === `$in`) {
     if (!Array.isArray(filterValue)) {
-      // Sift assumes the value has an `indexOf` property. By this fluke,
-      // string args would work, but I don't think that's intentional/expected.
       throw new Error("The argument to the `in` comparator should be an array")
     }
     const filterValueArr: Array<FilterValueNullable> = filterValue
 
     const arr: Array<IGatsbyNode> = []
-
-    // Note: it's very unlikely that the list of filter values is big so .includes should be fine here
-    if (filterValueArr.includes(null)) {
-      // Like all other ops, `in: [null]` behaves weirdly, allowing all nodes
-      // that do not actually have a (complete) path (v=undefined)
-      const nodes = filterCache.byValue.get(undefined)
-      if (nodes) {
-        nodes.forEach(v => arr.push(v))
-      }
-    }
 
     // TODO: we can also mergeSort for every step. this may perform worse because of how memory in js works.
     // For every value in the needle array, find the bucket of nodes for
@@ -731,7 +704,25 @@ export const getNodesFromCacheByValue = (
       filterCache.byValue.get(v)?.forEach(v => arr.push(v))
     )
 
-    return arr.sort((A, B) => A.internal.counter - B.internal.counter)
+    arr.sort((A, B) => A.internal.counter - B.internal.counter)
+
+    // Note: it's very unlikely that the list of filter values is big so .includes should be fine here
+    if (filterValueArr.includes(null)) {
+      // Like all other ops, `in: [null]` behaves weirdly, allowing all nodes
+      // that do not actually have a (complete) path (v=undefined)
+      const nodes = filterCache.byValue.get(undefined)
+      if (nodes) {
+        // This will also dedupe so don't do that immediately
+        return unionNodesByCounter(nodes, arr)
+      }
+    }
+
+    // elemMatch can cause a node to appear in multiple buckets so we must dedupe first
+    if (wasElemMatch) {
+      expensiveDedupeInline(arr)
+    }
+
+    return arr
   }
 
   if (op === `$nin`) {
@@ -751,7 +742,7 @@ export const getNodesFromCacheByValue = (
     })
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to resort here
+    //       subtraction in such a way that we dont have to re-sort
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
@@ -779,18 +770,26 @@ export const getNodesFromCacheByValue = (
     }
     const regex = filterValue
 
-    const result: Array<IGatsbyNode> = []
+    const arr: Array<IGatsbyNode> = []
     filterCache.byValue.forEach((nodes, value) => {
       // TODO: does the value have to be a string for $regex? Can we auto-ignore any non-strings? Or does it coerce.
-      // Note: partial paths should also be included for regex (matching Sift behavior)
+      // Note: for legacy reasons partial paths should also be included for regex
       if (value !== undefined && regex.test(String(value))) {
-        nodes.forEach(node => result.push(node))
+        nodes.forEach(node => arr.push(node))
       }
     })
 
     // TODO: we _can_ cache this list as well. Might make sense if it turns out that $regex is mostly used with literals
     // TODO: it may make sense to first collect all buckets and then to .concat them, or merge sort them
-    return result.sort((A, B) => A.internal.counter - B.internal.counter)
+
+    arr.sort((A, B) => A.internal.counter - B.internal.counter)
+
+    // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+    if (wasElemMatch) {
+      expensiveDedupeInline(arr)
+    }
+
+    return arr
   }
 
   if (filterValue == null) {
@@ -827,9 +826,13 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!
-        .slice(0, range[0])
-        .sort((A, B) => A.internal.counter - B.internal.counter)
+      const arr = nodes!.slice(0, range[0])
+      arr.sort((A, B) => A.internal.counter - B.internal.counter)
+      // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+      if (wasElemMatch) {
+        expensiveDedupeInline(arr)
+      }
+      return arr
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -863,9 +866,13 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue < filterValue ? inclPivot : exclPivot
-    return nodes!
-      .slice(0, until)
-      .sort((A, B) => A.internal.counter - B.internal.counter)
+    const arr = nodes!.slice(0, until)
+    arr.sort((A, B) => A.internal.counter - B.internal.counter)
+    // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+    if (wasElemMatch) {
+      expensiveDedupeInline(arr)
+    }
+    return arr
   }
 
   if (op === `$lte`) {
@@ -877,9 +884,13 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!
-        .slice(0, range[1])
-        .sort((A, B) => A.internal.counter - B.internal.counter)
+      const arr = nodes!.slice(0, range[1])
+      arr.sort((A, B) => A.internal.counter - B.internal.counter)
+      // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+      if (wasElemMatch) {
+        expensiveDedupeInline(arr)
+      }
+      return arr
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -913,9 +924,13 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 <= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue <= filterValue ? inclPivot : exclPivot
-    return nodes!
-      .slice(0, until)
-      .sort((A, B) => A.internal.counter - B.internal.counter)
+    const arr = nodes!.slice(0, until)
+    arr.sort((A, B) => A.internal.counter - B.internal.counter)
+    // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+    if (wasElemMatch) {
+      expensiveDedupeInline(arr)
+    }
+    return arr
   }
 
   if (op === `$gt`) {
@@ -927,10 +942,13 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!
-        .slice(0, range[0])
-        .reverse()
-        .sort((A, B) => A.internal.counter - B.internal.counter)
+      const arr = nodes!.slice(0, range[0]).reverse()
+      arr.sort((A, B) => A.internal.counter - B.internal.counter)
+      // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+      if (wasElemMatch) {
+        expensiveDedupeInline(arr)
+      }
+      return arr
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -964,10 +982,13 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue > filterValue ? inclPivot : exclPivot
-    return nodes!
-      .slice(0, until)
-      .reverse()
-      .sort((A, B) => A.internal.counter - B.internal.counter)
+    const arr = nodes!.slice(0, until).reverse()
+    arr.sort((A, B) => A.internal.counter - B.internal.counter)
+    // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+    if (wasElemMatch) {
+      expensiveDedupeInline(arr)
+    }
+    return arr
   }
 
   if (op === `$gte`) {
@@ -979,10 +1000,13 @@ export const getNodesFromCacheByValue = (
 
     const range = ranges!.get(filterValue)
     if (range) {
-      return nodes!
-        .slice(0, range[1])
-        .reverse()
-        .sort((A, B) => A.internal.counter - B.internal.counter)
+      const arr = nodes!.slice(0, range[1]).reverse()
+      arr.sort((A, B) => A.internal.counter - B.internal.counter)
+      // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+      if (wasElemMatch) {
+        expensiveDedupeInline(arr)
+      }
+      return arr
     }
 
     // Query may ask for a value that doesn't appear in the list, like if the
@@ -1016,10 +1040,13 @@ export const getNodesFromCacheByValue = (
     // Note: technically, `5 >= "5" === true` but `5` would not be cached.
     // So we have to consider weak comparison and may have to include the pivot
     const until = pivotValue >= filterValue ? inclPivot : exclPivot
-    return nodes!
-      .slice(0, until)
-      .reverse()
-      .sort((A, B) => A.internal.counter - B.internal.counter)
+    const arr = nodes!.slice(0, until).reverse()
+    arr.sort((A, B) => A.internal.counter - B.internal.counter)
+    // elemMatch can cause a node to appear in multiple buckets so we must dedupe
+    if (wasElemMatch) {
+      expensiveDedupeInline(arr)
+    }
+    return arr
   }
 
   // Unreachable because we checked all values of FilterOp (which op is)
@@ -1090,4 +1117,96 @@ export function intersectNodesByCounter(
   }
 
   return result
+}
+
+/**
+ * Merge two lists of nodes.
+ * The returned set should not contain duplicate nodes.
+ *
+ * The input should be ordered by node.internal.counter and it will return a
+ * list that is also ordered by node.internal.counter
+ */
+export function unionNodesByCounter(
+  a: Array<IGatsbyNode>,
+  b: Array<IGatsbyNode>
+): Array<IGatsbyNode> {
+  // TODO: perf check: is it helpful to init the array to max(maxA,maxB) items?
+  const arr: Array<IGatsbyNode> = []
+  let lastAdded: IGatsbyNode | undefined = undefined // Used to dedupe the list
+
+  let pointerA = 0
+  let pointerB = 0
+  const maxA = a.length
+  const maxB = b.length
+
+  while (pointerA < maxA && pointerB < maxB) {
+    const nodeA = a[pointerA]
+    const nodeB = b[pointerB]
+    const counterA = nodeA.internal.counter
+    const counterB = nodeB.internal.counter
+
+    if (counterA < counterB) {
+      if (lastAdded !== nodeA) {
+        arr.push(nodeA)
+        lastAdded = nodeA
+      }
+      pointerA++
+    } else if (counterA > counterB) {
+      if (lastAdded !== nodeB) {
+        arr.push(nodeB)
+        lastAdded = nodeB
+      }
+      pointerB++
+    } else {
+      if (lastAdded !== nodeA) {
+        arr.push(nodeA)
+        lastAdded = nodeA
+      }
+      pointerA++
+      pointerB++
+    }
+  }
+
+  while (pointerA < maxA) {
+    const nodeA = a[pointerA]
+    if (lastAdded !== nodeA) {
+      arr.push(nodeA)
+      lastAdded = nodeA
+    }
+    pointerA++
+  }
+
+  while (pointerB < maxB) {
+    const nodeB = b[pointerB]
+    if (lastAdded !== nodeB) {
+      arr.push(nodeB)
+      lastAdded = nodeB
+    }
+    pointerB++
+  }
+
+  return arr
+}
+
+function expensiveDedupeInline(arr: Array<IGatsbyNode>): void {
+  // An elemMatch filter may cause duplicates to appear in a bucket.
+  // Since the bucket is sorted those should now be back to back
+  // Worst case this is a fast O(n) loop that does nothing.
+  let prev: IGatsbyNode | undefined = undefined
+
+  // We copy-on-find because a splice is expensive and we can't use Sets
+
+  let j = 0
+  for (let i = 0; i < arr.length; ++i) {
+    const node = arr[i]
+    if (node !== prev) {
+      // Only start copying the remainder of the list once a dupe is found
+      if (i !== j) {
+        arr[j] = node
+      }
+      ++j
+      prev = node
+    }
+  }
+  arr.length = j
 }

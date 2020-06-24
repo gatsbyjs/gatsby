@@ -2,17 +2,36 @@
 
 A visual interface to configure your Gatsby site.
 
-We have not packaged this nicely yet, so it is not installable.
+## Development
 
-## How to develop it
+The Admin app itself is a standard Gatsby site. It fetches its data from the Recipes GraphQL server, which exposes all the information we need about the Gatsby site.
 
-However, you can do some manual set up in order to work with it locally. Follow these steps:
+It uses [theme-ui](https://theme-ui.com) (with the [strict-ui](https://github.com/system-ui/theme-ui/pull/719) experiment) and [gatsby-interface](https://github.com/gatsby-inc/gatsby-interface) to style the app and [urql](https://github.com/FormidableLabs/urql) to fetch the data from the GraphQL server.
 
-1. Navigate to the monorepo and open the `packages/gatsby-admin` directory.
-2. In that directory, run `yarn develop`.
-   > If you see eslint errors you'll need to temporarily replace all references to `___loader` with `window.___loader` inside of `gatsby-link/index.js`.
-3. In a new tab, navigate to a Gatsby site of your choice (or create one) that runs the latest version of Gatsby (recipes are a requirement).
-4. From the `packages/gatsby-recipes/src` directory in the monorepo copy the `create-types.js` and `graphql.js` files. Use these files to replace those currently in your site's `node_modules/gatsby-recipes/src` directory.
-5. Run `node ./node_modules/gatsby-recipes/src/graphql.js` to start the Recipes GraphQL server for that site.
+### Running it locally
 
-You should now be able to visit `localhost:8000` to see Gatsby Admin for that site!
+The easiest way to work on Admin locally is to develop Admin itself.
+
+1. Make sure to have the dependencies installed by running `yarn` in the root folder
+2. Start the develop process for the Admin site by running `yarn workspace gatsby-admin run develop`
+
+> If you see eslint errors you'll need to temporarily replace all references to `___loader` with `window.___loader` in `packages/gatsby-link/index.js`.
+
+### Running it on a local site
+
+To try Admin with one of your sites locally, use the `gatsby-dev-cli` to copy the local versions of `gatsby`, `gatsby-cli`, `gatsby-recipes`, `gatsby-core-utils` and `gatsby-admin` into your project:
+
+```sh
+# Make sure to build the latest local versions of all packages
+~/gatsby
+yarn run watch
+
+~/my-gatsby-site
+$ gatsby-dev --packages gatsby gatsby-cli gatsby-recipes gatsby-core-utils gatsby-admin
+
+# In another tab, start your site with the Admin feature flag set
+~/my-gatsby-site
+$ GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
+```
+
+Then visit `localhost:8000/\_\_\_admin` and you should see Gatsby Admin for your site!
