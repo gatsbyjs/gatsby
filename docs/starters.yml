@@ -6537,7 +6537,7 @@
     - Box shadows by box-shadows.co
     - Spring transition easing
     - Tailwind forms plugin
-    
+
 - url: https://gatsby-starter-jest-enzyme-eslint.netlify.app
   repo: https://github.com/markbello/gatsby-starter-jest-enzyme-eslint
   description: gatsby-starter-default with Jest, Enzyme, and ESLint
