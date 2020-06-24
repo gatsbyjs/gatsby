@@ -3,7 +3,7 @@ title: webpack
 disableTableOfContents: true
 ---
 
-Learn what webpack is, how it works, and how Gatsby uses it to accelerate web site development.
+Learn what webpack is, how it works, and how Gatsby uses it to accelerate website development.
 
 ## What is webpack?
 

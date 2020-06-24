@@ -8,12 +8,12 @@ const { isFile } = require(`./is-file`)
 const { isDate } = require(`../types/date`)
 const { addDerivedType } = require(`../types/derived-types`)
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
+const { getNode, getNodes } = require(`../../redux/nodes`)
 
 const addInferredFields = ({
   schemaComposer,
   typeComposer,
   exampleValue,
-  nodeStore,
   typeMapping,
   parentSpan,
 }) => {
@@ -29,7 +29,6 @@ const addInferredFields = ({
   addInferredFieldsImpl({
     schemaComposer,
     typeComposer,
-    nodeStore,
     exampleObject: exampleValue,
     prefix: typeComposer.getTypeName(),
     unsanitizedFieldPath: [typeComposer.getTypeName()],
@@ -45,7 +44,6 @@ module.exports = {
 const addInferredFieldsImpl = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   exampleObject,
   typeMapping,
   prefix,
@@ -84,7 +82,6 @@ const addInferredFieldsImpl = ({
       ...selectedField,
       schemaComposer,
       typeComposer,
-      nodeStore,
       prefix,
       unsanitizedFieldPath,
       typeMapping,
@@ -143,7 +140,6 @@ const addInferredFieldsImpl = ({
 const getFieldConfig = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   prefix,
   exampleValue,
   key,
@@ -170,7 +166,6 @@ const getFieldConfig = ({
   } else if (unsanitizedKey.includes(`___NODE`)) {
     fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
-      nodeStore,
       value: exampleValue,
       key: unsanitizedKey,
     })
@@ -179,7 +174,6 @@ const getFieldConfig = ({
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
       typeComposer,
-      nodeStore,
       key,
       value,
       selector,
@@ -250,7 +244,6 @@ const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
 // probably should be in example value
 const getFieldConfigFromFieldNameConvention = ({
   schemaComposer,
-  nodeStore,
   value,
   key,
 }) => {
@@ -260,8 +253,8 @@ const getFieldConfigFromFieldNameConvention = ({
 
   const getNodeBy = value =>
     foreignKey
-      ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
-      : nodeStore.getNode(value)
+      ? getNodes().find(node => _.get(node, foreignKey) === value)
+      : getNode(value)
 
   const linkedNodes = value.linkedNodes.map(getNodeBy)
 
@@ -302,7 +295,6 @@ const getFieldConfigFromFieldNameConvention = ({
 const getSimpleFieldConfig = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   key,
   value,
   selector,
@@ -320,7 +312,7 @@ const getSimpleFieldConfig = ({
       if (isDate(value)) {
         return { type: `Date`, extensions: { dateformat: {} } }
       }
-      if (isFile(nodeStore, unsanitizedFieldPath, value)) {
+      if (isFile(unsanitizedFieldPath, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
@@ -391,7 +383,6 @@ const getSimpleFieldConfig = ({
           type: addInferredFieldsImpl({
             schemaComposer,
             typeComposer: fieldTypeComposer,
-            nodeStore,
             exampleObject: value,
             typeMapping,
             prefix: selector,

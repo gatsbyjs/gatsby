@@ -38,7 +38,7 @@ import TransitionLink from "gatsby-plugin-transition-link"
 
 ## Predefined transitions
 
-You can use the `AniLink` component to add page transitions without having to define your own custom transitions. It's a wrapper around `TransitionLink` that provides 4 predefined transitions: `fade`, `swipe`, `cover`, and `paintDrip`. You can preview them at [this demo site](https://gatsby-plugin-transition-link.netlify.com/).
+You can use the `AniLink` component to add page transitions without having to define your own custom transitions. It's a wrapper around `TransitionLink` that provides 4 predefined transitions: `fade`, `swipe`, `cover`, and `paintDrip`. You can preview them at [this demo site](https://gatsby-plugin-transition-link.netlify.app/).
 
 To use AniLink, you will need to install the `gsap` animation library:
 
@@ -165,6 +165,6 @@ As always, check out [the installation docs](https://transitionlink.tylerbarnes.
 
 - [Official documentation](https://transitionlink.tylerbarnes.ca/docs/)
 - [Source code for plugin](https://github.com/TylerBarnes/gatsby-plugin-transition-link)
-- [Demo site](https://gatsby-plugin-transition-link.netlify.com/)
+- [Demo site](https://gatsby-plugin-transition-link.netlify.app/)
 - [Blog post: 'Per-Link Gatsby page transitions with TransitionLink'](/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)
 - [Using transition-link with react-spring](https://github.com/TylerBarnes/gatsby-plugin-transition-link/issues/34)

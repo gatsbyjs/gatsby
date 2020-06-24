@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.50...gatsby-cli@2.12.51) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.50](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.49...gatsby-cli@2.12.50) (2020-06-23)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.49](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.48...gatsby-cli@2.12.49) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
+## [2.12.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.47...gatsby-cli@2.12.48) (2020-06-20)
+
+### Bug Fixes
+
+- **bin:** point bin to always existing files ([#25121](https://github.com/gatsbyjs/gatsby/issues/25121)) ([eba033e](https://github.com/gatsbyjs/gatsby/commit/eba033e))
+
+## [2.12.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.46...gatsby-cli@2.12.47) (2020-06-19)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.45...gatsby-cli@2.12.46) (2020-06-15)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.44...gatsby-cli@2.12.45) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.43...gatsby-cli@2.12.44) (2020-06-05)
+
+**Note:** Version bump only for package gatsby-cli
+
 ## [2.12.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.42...gatsby-cli@2.12.43) (2020-06-03)
 
 **Note:** Version bump only for package gatsby-cli
