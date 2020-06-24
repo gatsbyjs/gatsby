@@ -6519,6 +6519,25 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-tailwind-opinionated.netlify.app/
+  repo: https://github.com/mjsarfatti/gatsby-starter-tailwind-opinionated
+  description: Based on the official Gatsby starter, with an opinionated Tailwind setup. Uses Purgecss to remove unused CSS.
+  tags:
+    - Styling:Tailwind
+  features:
+    - Based on gatsby-starter-default
+    - Tailwind CSS Framework
+    - Removes unused CSS with Purgecss
+    - Works great with VS Code
+    - Create React App ESLint default
+    - Run Prettier through ESLint
+    - Sensible Tailwind CSS configuration, great for most sites
+    - Absolute imports (no more ../../../../some/components.js)
+    - Typescript-ready
+    - Box shadows by box-shadows.co
+    - Spring transition easing
+    - Tailwind forms plugin
+
 - url: https://gatsby-starter-jest-enzyme-eslint.netlify.app
   repo: https://github.com/markbello/gatsby-starter-jest-enzyme-eslint
   description: gatsby-starter-default with Jest, Enzyme, and ESLint
