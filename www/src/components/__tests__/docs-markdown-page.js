@@ -3,7 +3,6 @@ import { render } from "@testing-library/react"
 import { Helmet } from "react-helmet"
 import DocsMarkdownPage from "../docs-markdown-page"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "@lingui/react"
 import { MDXProvider } from "@mdx-js/react"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
@@ -82,13 +81,11 @@ const setup = (setupProps = {}) => {
   }
 
   return render(
-    <I18nProvider>
-      <ThemeProvider theme={theme}>
-        <MDXProvider>
-          <DocsMarkdownPage {...props} />
-        </MDXProvider>
-      </ThemeProvider>
-    </I18nProvider>
+    <ThemeProvider theme={theme}>
+      <MDXProvider>
+        <DocsMarkdownPage {...props} />
+      </MDXProvider>
+    </ThemeProvider>
   )
 }
 

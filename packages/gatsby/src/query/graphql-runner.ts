@@ -1,5 +1,4 @@
 import crypto from "crypto"
-import v8 from "v8"
 import { Span } from "opentracing"
 import {
   parse,
@@ -12,7 +11,6 @@ import {
   ExecutionResult,
 } from "graphql"
 import { debounce } from "lodash"
-import * as nodeStore from "../db/nodes"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -51,7 +49,6 @@ export class GraphQLRunner {
     const { schema, schemaCustomization } = this.store.getState()
 
     this.nodeModel = new LocalNodeModel({
-      nodeStore,
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
@@ -156,13 +153,6 @@ export class GraphQLRunner {
       if (typeof statsQuery !== `string`) {
         statsQuery = statsQuery.body
       }
-      this.stats.uniqueOperations.add(
-        crypto
-          .createHash(`sha1`)
-          .update(statsQuery)
-          .update(v8.serialize(context))
-          .digest(`hex`)
-      )
 
       this.stats.uniqueQueries.add(
         crypto.createHash(`sha1`).update(statsQuery).digest(`hex`)

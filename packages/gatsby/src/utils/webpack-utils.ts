@@ -1,5 +1,7 @@
+import * as path from "path"
 import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
+import postcss from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
@@ -44,7 +46,9 @@ interface ILoaderUtils {
   postcss: LoaderResolver<{
     browsers?: string[]
     overrideBrowserslist?: string[]
-    plugins?: Plugin[] | ((loader: Loader) => Plugin[])
+    plugins?:
+      | postcss.Plugin<any>[]
+      | ((loader: Loader) => postcss.Plugin<any>[])
   }>
 
   file: LoaderResolver
@@ -219,15 +223,19 @@ export const createWebpackUtils = (
         options: {
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): Plugin[] => {
+          plugins: (loader: Loader): postcss.Plugin<any>[] => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
-            return [
-              flexbugs,
-              autoprefixer({ overrideBrowserslist, flexbox: `no-2009` }),
-              ...plugins,
-            ]
+            const autoprefixerPlugin = autoprefixer({
+              overrideBrowserslist,
+              flexbox: `no-2009`,
+              ...((plugins.find(
+                plugin => plugin.postcssPlugin === `autoprefixer`
+              ) as autoprefixer.Autoprefixer)?.options ?? {}),
+            })
+
+            return [flexbugs, autoprefixerPlugin, ...plugins]
           },
           ...postcssOpts,
         },
@@ -250,6 +258,7 @@ export const createWebpackUtils = (
         options: {
           limit: 10000,
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          fallback: require.resolve(`file-loader`),
           ...options,
         },
       }
@@ -259,6 +268,13 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
           ...options,
         },
         loader: require.resolve(`./babel-loader`),
@@ -267,7 +283,16 @@ export const createWebpackUtils = (
 
     dependencies: options => {
       return {
-        options,
+        options: {
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
+          ...options,
+        },
         loader: require.resolve(`babel-loader`),
       }
     },
@@ -533,7 +558,8 @@ export const createWebpackUtils = (
     ...options
   }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
-      cache: true,
+      // TODO add proper cache keys
+      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
       // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
       parallel: !isWsl,

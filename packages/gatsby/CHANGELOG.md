@@ -3,6 +3,168 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.10...gatsby@2.23.11) (2020-06-24)
+
+### Bug Fixes
+
+- **gatsby:** Fix SSL for develop ([#25230](https://github.com/gatsbyjs/gatsby/issues/25230)) ([432c4f7](https://github.com/gatsbyjs/gatsby/commit/432c4f7))
+
+## [2.23.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.9...gatsby@2.23.10) (2020-06-23)
+
+### Bug Fixes
+
+- **gatsby:** Typo in the code example of the PageProps inline docs ([#25200](https://github.com/gatsbyjs/gatsby/issues/25200)) ([a72caa6](https://github.com/gatsbyjs/gatsby/commit/a72caa6))
+
+## [2.23.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.8...gatsby@2.23.9) (2020-06-22)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.7...gatsby@2.23.8) (2020-06-22)
+
+### Bug Fixes
+
+- **gatsby:** convert module.exports to es6 in redux/filters ([#25191](https://github.com/gatsbyjs/gatsby/issues/25191)) ([3934c37](https://github.com/gatsbyjs/gatsby/commit/3934c37))
+- **gatsby:** show error message instead of [Object object](<[#25182](https://github.com/gatsbyjs/gatsby/issues/25182)>) ([445e315](https://github.com/gatsbyjs/gatsby/commit/445e315))
+
+## [2.23.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.6...gatsby@2.23.7) (2020-06-20)
+
+### Bug Fixes
+
+- **bin:** point bin to always existing files ([#25121](https://github.com/gatsbyjs/gatsby/issues/25121)) ([eba033e](https://github.com/gatsbyjs/gatsby/commit/eba033e))
+- **gatsby:** remove page-date from jest-worker ([#25135](https://github.com/gatsbyjs/gatsby/issues/25135)) ([bed5dc4](https://github.com/gatsbyjs/gatsby/commit/bed5dc4))
+
+## [2.23.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.5...gatsby@2.23.6) (2020-06-19)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.4...gatsby@2.23.5) (2020-06-19)
+
+### Bug Fixes
+
+- **gatsby:** allow amending autoprefixer options ([#24907](https://github.com/gatsbyjs/gatsby/issues/24907)) ([8e6e021](https://github.com/gatsbyjs/gatsby/commit/8e6e021))
+
+### Features
+
+- **gatsby:** allow serving of dotfiles from public folder ([#24958](https://github.com/gatsbyjs/gatsby/issues/24958)) ([2270c5a](https://github.com/gatsbyjs/gatsby/commit/2270c5a))
+- **gatsby:** Instrument partial writes to page data ([#24808](https://github.com/gatsbyjs/gatsby/issues/24808)) ([b2bf298](https://github.com/gatsbyjs/gatsby/commit/b2bf298))
+
+### Performance Improvements
+
+- **gatsby:** Lazily re-create GraphQL runner ([#25063](https://github.com/gatsbyjs/gatsby/issues/25063)) ([0407cc6](https://github.com/gatsbyjs/gatsby/commit/0407cc6))
+
+## [2.23.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.3...gatsby@2.23.4) (2020-06-15)
+
+### Bug Fixes
+
+- **gatsby:** Add null context check ([#24904](https://github.com/gatsbyjs/gatsby/issues/24904)) ([b554bd5](https://github.com/gatsbyjs/gatsby/commit/b554bd5))
+
+## [2.23.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.2...gatsby@2.23.3) (2020-06-09)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.1...gatsby@2.23.2) (2020-06-09)
+
+### Bug Fixes
+
+- **babel-plugin-remove-graphql-queries:** Strip ignored characters from query text for better caching and deduping ([#24807](https://github.com/gatsbyjs/gatsby/issues/24807)) ([752f5ff](https://github.com/gatsbyjs/gatsby/commit/752f5ff))
+- **gatsby:** Fix issue where inline static query in page gets added to page data ([#24805](https://github.com/gatsbyjs/gatsby/issues/24805)) ([7c9711b](https://github.com/gatsbyjs/gatsby/commit/7c9711b))
+
+## [2.23.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.0...gatsby@2.23.1) (2020-06-05)
+
+**Note:** Version bump only for package gatsby
+
+# [2.23.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.22...gatsby@2.23.0) (2020-06-04)
+
+### Performance Improvements
+
+- **gatsby:** stop using Sift as fallback ([#24743](https://github.com/gatsbyjs/gatsby/issues/24743)) ([6ee4a35](https://github.com/gatsbyjs/gatsby/commit/6ee4a35))
+
+## [2.22.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.21...gatsby@2.22.22) (2020-06-04)
+
+### Bug Fixes
+
+- **gatsby:** add connection data dependency on concrete types when abstract type is queried ([#24754](https://github.com/gatsbyjs/gatsby/issues/24754)) ([54d0cf9](https://github.com/gatsbyjs/gatsby/commit/54d0cf9))
+
+## [2.22.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.20...gatsby@2.22.21) (2020-06-04)
+
+**Note:** Version bump only for package gatsby
+
+## [2.22.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.19...gatsby@2.22.20) (2020-06-03)
+
+### Bug Fixes
+
+- **gatsby:** bind develop-proxy server to host specified by user ([#24761](https://github.com/gatsbyjs/gatsby/issues/24761)) ([8750898](https://github.com/gatsbyjs/gatsby/commit/8750898))
+
+## [2.22.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.18...gatsby@2.22.19) (2020-06-03)
+
+### Bug Fixes
+
+- **gatsby:** Fix develop SSL by moving the SSL setup to the proxy ([#24335](https://github.com/gatsbyjs/gatsby/issues/24335)) ([7180b26](https://github.com/gatsbyjs/gatsby/commit/7180b26))
+
+## [2.22.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.17...gatsby@2.22.18) (2020-06-03)
+
+### Performance Improvements
+
+- **gatsby:** be more conservative in when to sort ([#24609](https://github.com/gatsbyjs/gatsby/issues/24609)) ([2b578e8](https://github.com/gatsbyjs/gatsby/commit/2b578e8))
+- **gatsby:** drop severe scaling regression caused by analytics ([#24709](https://github.com/gatsbyjs/gatsby/issues/24709)) ([2528a85](https://github.com/gatsbyjs/gatsby/commit/2528a85))
+
+## [2.22.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.16...gatsby@2.22.17) (2020-06-02)
+
+### Bug Fixes
+
+- **data-dependency-tracking:** clear data dependencies when rerunning dirty queries ([#24378](https://github.com/gatsbyjs/gatsby/issues/24378)) ([a56012c](https://github.com/gatsbyjs/gatsby/commit/a56012c))
+
+### Features
+
+- **gatsby:** Add support for relative links ([#24054](https://github.com/gatsbyjs/gatsby/issues/24054)) ([e2c6cf2](https://github.com/gatsbyjs/gatsby/commit/e2c6cf2))
+
+## [2.22.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.15...gatsby@2.22.16) (2020-06-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.22.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.14...gatsby@2.22.15) (2020-05-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.22.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.13...gatsby@2.22.14) (2020-05-31)
+
+**Note:** Version bump only for package gatsby
+
+## [2.22.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.12...gatsby@2.22.13) (2020-05-30)
+
+### Bug Fixes
+
+- **gatsby:** show correct `serve` info when running on another port ([#24591](https://github.com/gatsbyjs/gatsby/issues/24591)) ([3717ad6](https://github.com/gatsbyjs/gatsby/commit/3717ad6))
+- **gatsby:** Turn off react/jsx-pascal-case in ESLint to fix Theme-UI warnings ([#24560](https://github.com/gatsbyjs/gatsby/issues/24560)) ([ee00a6f](https://github.com/gatsbyjs/gatsby/commit/ee00a6f))
+
+### Features
+
+- **gatsby:** serve Admin from develop parent process ([#23734](https://github.com/gatsbyjs/gatsby/issues/23734)) ([a6eb21b](https://github.com/gatsbyjs/gatsby/commit/a6eb21b))
+
+## [2.22.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.11...gatsby@2.22.12) (2020-05-28)
+
+### Bug Fixes
+
+- **code:** redux types - sireUrl -> siteUrl ([#24488](https://github.com/gatsbyjs/gatsby/issues/24488)) ([2beab4b](https://github.com/gatsbyjs/gatsby/commit/2beab4b))
+
+### Performance Improvements
+
+- **gatsby:** stop using sets and use ordered arrays instead ([#24486](https://github.com/gatsbyjs/gatsby/issues/24486)) ([928fd05](https://github.com/gatsbyjs/gatsby/commit/928fd05))
+
+## [2.22.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.10...gatsby@2.22.11) (2020-05-26)
+
+### Bug Fixes
+
+- **gatsby:** add explicit dependency on `socket.io-client` and explicitly set `url-loader` fallback ([#24465](https://github.com/gatsbyjs/gatsby/issues/24465)) ([36357ab](https://github.com/gatsbyjs/gatsby/commit/36357ab))
+- **gatsby:** Also traverse `FunctionDeclaration` ([#24472](https://github.com/gatsbyjs/gatsby/issues/24472)) ([6eb7290](https://github.com/gatsbyjs/gatsby/commit/6eb7290))
+
+## [2.22.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.9...gatsby@2.22.10) (2020-05-25)
+
+### Bug Fixes
+
+- **docs:** brand name Webpack to webpack ([#22906](https://github.com/gatsbyjs/gatsby/issues/22906)) ([44cbb14](https://github.com/gatsbyjs/gatsby/commit/44cbb14))
+- **gatsby:** Pass through ws in proxy ([#24352](https://github.com/gatsbyjs/gatsby/issues/24352)) ([5389bfd](https://github.com/gatsbyjs/gatsby/commit/5389bfd))
+
 ## [2.22.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.22.8...gatsby@2.22.9) (2020-05-22)
 
 ### Performance Improvements
@@ -5233,7 +5395,7 @@ export const pageQuery = graphql`
 - Did the intitial build of the new gatsbyjs.org! It's in the `www` subdirectory
   on the 1.0 branch and is built on each push! That's my kind of integration
   testing :-) You can see the early version of the site at
-  https://gatsbyjs.netlify.com/. PRs welcome!
+  https://gatsbyjs.netlify.app/. PRs welcome!
 - Added <link preload> for page scripts. This speeds up loading scripts slightly
   by telling the browser to start downloading the scripts when the HTML first
   starts being parsed instead of when the browser reaches the end. This is

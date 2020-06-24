@@ -181,11 +181,130 @@ The resulting HTML generated from the markdown file above would look something l
 </div>
 ```
 
-## Including portions of a file as a snippet
+## Code snippet syntax highlighting
 
-### Specifying line ranges
+### Highlighting Lines
 
-You can specify that you only want to include specific ranges of line numbers in the embed using the syntax:
+You can specify specific lines for Prism to highlight using
+`highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
+
+**JavaScript example**:
+
+````no-highlight
+```jsx
+import React from "react"
+import ReactDOM from "react-dom"
+
+const name = "Brian" // highlight-line
+
+ReactDOM.render(
+  <div>
+    {/* highlight-range{1-3} */}
+    <h1>Hello, ${name}!</h1>
+  </div>,
+  document.getElementById("root")
+)
+```
+````
+
+```jsx
+import React from "react"
+import ReactDOM from "react-dom"
+
+const name = "Brian" // highlight-line
+
+ReactDOM.render(
+  <div>
+    {/* highlight-range{1-3} */}
+    <h1>Hello, ${name}!</h1>
+  </div>,
+  document.getElementById("root")
+)
+```
+
+**CSS example**:
+
+````no-highlight
+```css
+html {
+  /* highlight-range{1-2} */
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box; /* highlight-line */
+}
+```
+````
+
+```css
+html {
+  /* highlight-range{1-2} */
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box; /* highlight-line */
+}
+```
+
+**HTML example**:
+
+<!-- prettier-ignore-start -->
+````no-highlight
+```html
+<html>
+  <body>
+    <h1>highlight me</h1> <!-- highlight-line -->
+    <p>
+      <!-- highlight-next-line -->
+      And me
+    </p>
+  </body>
+</html>
+```
+````
+
+```html
+<html>
+  <body>
+    <h1>highlight me</h1> <!-- highlight-line -->
+    <p>
+      <!-- highlight-next-line -->
+      And me
+    </p>
+  </body>
+</html>
+```
+<!-- prettier-ignore-end -->
+
+**YAML example**:
+
+````no-highlight
+```yaml
+foo: "highlighted" # highlight-line
+bar: "not highlighted"
+# highlight-range{1-2}
+baz: "highlighted"
+quz: "highlighted"
+```
+````
+
+```yaml
+foo: "highlighted" # highlight-line
+bar: "not highlighted"
+# highlight-range{1-2}
+baz: "highlighted"
+quz: "highlighted"
+```
+
+### Hide Lines
+
+It's also possible to specify a range of lines to be hidden.
+
+You can either specify line ranges in the embed using the syntax:
 
 - #Lx - Embed one line from a file
 - #Lx-y - Embed a range of lines from a file
@@ -230,7 +349,7 @@ It's also possible to specify ranges of lines to be hidden from an embedded file
 
 **JavaScript example**:
 
-```jsx
+```no-highlight
 // hide-range{1-2}
 import React from "react"
 import ReactDOM from "react-dom"
