@@ -85,7 +85,7 @@ Then, go to [the 'API Keys' section of your Algolia profile](https://www.algolia
 
 ![The API Keys section of the Algolia profile](./images/algolia-api-keys.png)
 
-Copy out the Application ID, Search-Only API Key, and Admin API Key and create a file called `.env` in the root of the project (`gatsby-algolia-tutorial` if created as described above). Replace the placeholders with the copied values:
+Copy out the Application ID, Search-Only API Key, and Admin API Key and create a file called `.env` in the root of the project (`gatsby-algolia-tutorial` if created as described above). This file contains your [project environment variables](/docs/environment-variables). Replace the placeholders with the copied values:
 
 ```text:title=.env
 GATSBY_ALGOLIA_APP_ID=<App ID>
@@ -605,9 +605,9 @@ If you try to deploy the project to Netlify, the deployment will fail with the e
 
 You therefore need to declare the same environment variables you put in `.env` in Netlify. Go to your Netlify site dashboard under **Settings > Build & deploy > Environment > Environment variables** and enter the keys `GATSBY_ALGOLIA_APP_ID`, `GATSBY_ALGOLIA_SEARCH_KEY` and `ALGOLIA_ADMIN_KEY` with the same values as you used in the `.env` file. After a redeploy, the search should now work!
 
-The Netlify documentation has more information about [how to configure environment variables in Netlify](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables).
-
 ![Netlify environment variable configuration](./images/algolia-netlify-env.png)
+
+The Netlify documentation has more information on [how to configure environment variables in Netlify](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables). Also see the chapter [Environment Variables](/docs/environment-variables) for an overview of environment variables in Gatsby.
 
 ## Additional Resources
 
