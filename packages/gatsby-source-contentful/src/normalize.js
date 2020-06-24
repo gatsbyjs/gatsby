@@ -97,10 +97,14 @@ const fixIds = object => {
 }
 exports.fixIds = fixIds
 
-const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) =>
-  currentLocale === defaultLocale
-    ? `${spaceId}___${id}___${type}`
-    : `${spaceId}___${id}___${type}___${currentLocale}`
+const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+  const normalizedType = type.startsWith(`Deleted`)
+    ? type.substring(`Deleted`.length)
+    : type
+  return currentLocale === defaultLocale
+    ? `${spaceId}___${id}___${normalizedType}`
+    : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
+}
 
 exports.makeId = makeId
 
