@@ -2,7 +2,7 @@
 title: "Gatsby Days Video: A Booster Rocket for Junior Developers"
 date: 2020-06-29
 author: Marcy Sutton
-excerpt: "For new front end developers, the sheer number of technologies available can be overwhelming. After Derek Murr graduated from coding bootcamp he found that Gatsby helped him get right to work building projects to help jump start his career -- instead of configuring tools."
+excerpt: "The 2020 WebAIM Million collected data on up to 1200 different technologies used in home pages and examined the results to see if common accessibility errors corresponded with usage of different technologies. One repeatedly stood out as aligning with significantly fewer accessibility issues: Gatsby. Home pages built with Gatsby had 44% fewer detectable errors than the average."
 tags:
   - accessibility
   - community
