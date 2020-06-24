@@ -153,6 +153,7 @@
     "test:integration": "jest --config=integration-tests/jest.config.js",
     "test:peril": "cd peril && yarn test",
     "typecheck": "node ./scripts/check-ts",
+    "update-dictionary": "node ./scripts/update-dictionary.js",
     "version": "prettier --write \"**/CHANGELOG.md\"",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
