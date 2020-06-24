@@ -229,7 +229,7 @@ the base theme to meet their specific requirements.
 Themes (like plugins) will be published on NPM. So soon, starting a new Gatsby
 blog will be as simple as:
 
-```bash
+```shell
 npm install --save gatsby-super-cool-theme
 gatsby build --theme gatsby-super-cool-theme
 ```

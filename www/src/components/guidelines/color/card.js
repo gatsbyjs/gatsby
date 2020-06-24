@@ -3,13 +3,21 @@ import { jsx } from "theme-ui"
 import React from "react"
 import { MdLaunch } from "react-icons/md"
 
-import { Box, Flex, Link, Text } from "../system"
+import { Box, Flex } from "theme-ui"
+import { Link, Text } from "../system"
 import BoxWithBorder from "../box-with-border"
 import { getTextColor } from "../../../utils/guidelines/color"
 import { SrOnly } from "../typography"
 
 const ColorValue = ({ label, inverted, value, href }) => (
-  <Box mt={4} px={2} css={{ flexShrink: 0, flexBase: `50%` }}>
+  <Box
+    sx={{
+      mt: 4,
+      px: 3,
+      flexShrink: 0,
+      flexBasis: `50%`,
+    }}
+  >
     <Text
       color={inverted ? `whiteFade.70` : `blackFade.70`}
       fontFamily="heading"
@@ -17,7 +25,11 @@ const ColorValue = ({ label, inverted, value, href }) => (
     >
       {label}
     </Text>
-    <Flex alignItems="center">
+    <Flex
+      sx={{
+        alignItems: `center`,
+      }}
+    >
       <Text
         fontSize={1}
         css={{ whiteSpace: `nowrap` }}
@@ -55,9 +67,9 @@ const ColorSwatch = ({ color, ...rest }) => {
       width={{ md: 1 / 3 }}
       py={4}
       px={2}
-      {...rest}
       bg={color.hex}
       withBorder={!inverted}
+      {...rest}
     >
       <Text
         fontFamily="heading"
@@ -68,7 +80,11 @@ const ColorSwatch = ({ color, ...rest }) => {
       >
         {color.name}
       </Text>
-      <Flex flexWrap="wrap">
+      <Flex
+        sx={{
+          flexWrap: `wrap`,
+        }}
+      >
         <ColorValue value={color.hex} label="HEX" inverted={inverted} />
         <ColorValue
           label="RGB"
