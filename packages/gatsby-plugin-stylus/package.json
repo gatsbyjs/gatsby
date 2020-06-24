@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.4.5",
+    "babel-preset-gatsby-package": "^0.4.6",
     "cross-env": "^5.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-stylus#readme",

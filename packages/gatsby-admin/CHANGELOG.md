@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.75](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.74...gatsby-admin@0.1.75) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-admin
+
 ## [0.1.74](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.1.73...gatsby-admin@0.1.74) (2020-06-23)
 
 **Note:** Version bump only for package gatsby-admin
