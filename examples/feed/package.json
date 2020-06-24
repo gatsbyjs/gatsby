@@ -5,10 +5,10 @@
   "version": "1.0.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "dependencies": {
-    "gatsby": "^2.23.3",
-    "gatsby-plugin-feed": "^2.5.5",
-    "gatsby-source-filesystem": "^2.3.11",
-    "gatsby-transformer-remark": "^2.8.15",
+    "gatsby": "^2.23.10",
+    "gatsby-plugin-feed": "^2.5.6",
+    "gatsby-source-filesystem": "^2.3.13",
+    "gatsby-transformer-remark": "^2.8.18",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
