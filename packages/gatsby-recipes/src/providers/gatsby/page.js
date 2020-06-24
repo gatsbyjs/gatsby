@@ -11,7 +11,7 @@ module.exports.destroy = () => {}
 module.exports.config = {}
 
 module.exports.all = async ({ root }) => {
-  const pages = store.getState().pages
+  const pages = store.getState().pages.values()
   console.log(pages)
   return pages
 }
