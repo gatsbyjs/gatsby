@@ -159,10 +159,3 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   resetGraphQlRunner,
   assignGatsbyNodeGraphQl,
 }
-
-// export const dummyActions = {
-//     callApi,
-//     addNodeMutation,
-//     markFilesDirty,
-//     markNodesDirty,
-//   }
