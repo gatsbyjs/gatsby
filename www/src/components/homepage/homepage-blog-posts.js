@@ -114,6 +114,20 @@ const ViewAll = () => (
   </ViewAllStyle>
 )
 
+const splitPostsToColumns = posts =>
+  posts.reduce(
+    (merge, post, idx) => {
+      if (idx % 2) {
+        merge[1].push(post)
+      } else {
+        merge[0].push(post)
+      }
+
+      return merge
+    },
+    [[], []]
+  )
+
 export default function HomepageBlogPosts({ posts }) {
   const [desktopViewport, setDesktopViewport] = useState(false)
   let desktopMediaQuery = null
@@ -128,20 +142,6 @@ export default function HomepageBlogPosts({ posts }) {
   const updateViewPortState = () => {
     setDesktopViewport(desktopMediaQuery.matches)
   }
-
-  const splitPostsToColumns = posts =>
-    posts.reduce(
-      (merge, post, idx) => {
-        if (idx % 2) {
-          merge[1].push(post)
-        } else {
-          merge[0].push(post)
-        }
-
-        return merge
-      },
-      [[], []]
-    )
 
   const postsInColumns = splitPostsToColumns(posts)
 
