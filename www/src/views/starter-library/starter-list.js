@@ -12,7 +12,7 @@ import {
 } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import V2Icon from "../../assets/icons/v2icon.svg"
+import { V2Icon } from "../../assets/icons"
 import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count }) => {
