@@ -7,7 +7,27 @@ const resourceSchema = require(`../resource-schema`)
 
 module.exports.create = () => {}
 module.exports.update = () => {}
-module.exports.read = () => {}
+module.exports.read = async ({ root }, id) => {
+  const result = await queryDevelopAPI(
+    { root },
+    `
+  {
+    sitePage(id: { eq: "${id}" }) {
+        path
+        component
+        internalComponentName
+        componentChunkName
+        matchPath
+        id
+        componentPath
+        isCreatedByStatefulCreatePages
+  }
+  }
+  `
+  )
+
+  return result.data.sitePage
+}
 module.exports.destroy = () => {}
 module.exports.config = {}
 
