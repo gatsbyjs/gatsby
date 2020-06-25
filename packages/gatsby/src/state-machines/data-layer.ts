@@ -32,7 +32,7 @@ export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
         src: `buildSchema`,
         onDone: {
           target: `creatingPages`,
-          actions: `assignGatsbyNodeGraphQl`,
+          actions: `assignGatsbyNodeGraphQL`,
         },
         onError,
       },
@@ -58,8 +58,10 @@ export const dataLayerStates: MachineConfig<IBuildContext, any, any> = {
     },
     creatingPagesStatefully: {
       on: {
+        //  Empty string means run on every transition
         "": [
           {
+            // If files have changed we need to extract queries again
             cond: (ctx): boolean => !!ctx.filesDirty,
             target: `#extracting-queries`,
           },

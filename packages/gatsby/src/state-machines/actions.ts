@@ -140,7 +140,7 @@ export const resetGraphQlRunner = assign<IBuildContext>({
       : undefined,
 })
 
-export const assignGatsbyNodeGraphQl: BuildMachineAction = assign<
+export const assignGatsbyNodeGraphQL: BuildMachineAction = assign<
   IBuildContext
 >({
   gatsbyNodeGraphQLFunction: ({ store }: IBuildContext) =>
@@ -157,5 +157,5 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   assignChangedPages,
   assignBootstrap,
   resetGraphQlRunner,
-  assignGatsbyNodeGraphQl,
+  assignGatsbyNodeGraphQL,
 }

@@ -21,7 +21,6 @@ export interface IMutationAction {
 }
 export interface IBuildContext {
   program?: IProgram
-  app?: Express
   recursionCount: number
   nodesMutatedDuringQueryRun: boolean
   firstRun: boolean
@@ -38,7 +37,8 @@ export interface IBuildContext {
   webhookBody?: Record<string, unknown>
   queryIds?: IGroupedQueryIds
   workerPool?: JestWorker
+  mutationListener?: Actor<any, AnyEventObject>
+  app?: Express
   pagesToBuild?: string[]
   pagesToDelete?: string[]
-  mutationListener?: Actor<any, AnyEventObject>
 }
