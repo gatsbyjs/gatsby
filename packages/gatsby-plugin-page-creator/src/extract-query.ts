@@ -30,7 +30,7 @@ export function reverseLookupParams(
 ): Record<string, string> {
   const reversedParams = {}
 
-  absolutePath.split(`/`).forEach(part => {
+  absolutePath.split(path.sep).forEach(part => {
     const regex = /^\{([a-zA-Z_]+)\}/.exec(part)
 
     if (regex === null) return
