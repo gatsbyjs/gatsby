@@ -437,6 +437,7 @@ class Image extends React.Component {
       itemProp,
       loading,
       draggable,
+      ...customProps
     } = convertProps(this.props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
@@ -486,6 +487,7 @@ class Image extends React.Component {
           }}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
+          {...customProps}
         >
           {/* Preserve the aspect ratio. */}
           <Tag
