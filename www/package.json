@@ -42,6 +42,7 @@
     "gatsby-plugin-nprogress": "^2.3.5",
     "gatsby-plugin-offline": "^3.2.12",
     "gatsby-plugin-react-helmet": "^3.3.5",
+    "gatsby-plugin-react-svg": "^3.0.0",
     "gatsby-plugin-sharp": "^2.6.13",
     "gatsby-plugin-sitemap": "^2.4.6",
     "gatsby-plugin-theme-ui": "^0.3.0",

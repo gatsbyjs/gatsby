@@ -68,10 +68,12 @@ const Icon = styled(`span`)`
   ${svgStyles.default}
 `
 
-const PageHeading = ({ title, icon }) => (
+const PageHeading = ({ title, icon: IconSvg }) => (
   <PageHeadingContainer>
     <H1 data-title={title}>
-      <Icon dangerouslySetInnerHTML={{ __html: icon }} />
+      <Icon>
+        <IconSvg />
+      </Icon>
       {title}
     </H1>
   </PageHeadingContainer>

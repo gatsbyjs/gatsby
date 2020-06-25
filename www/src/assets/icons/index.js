@@ -1,9 +1,9 @@
-import BlogIcon from "!raw-loader!./blog.svg"
-import DocsIcon from "!raw-loader!./docs.svg"
-import EcosystemIcon from "!raw-loader!./ecosystem.svg"
-import PluginsIcon from "!raw-loader!./plugins.svg"
-import ShowcaseIcon from "!raw-loader!./showcase.svg"
-import TutorialIcon from "!raw-loader!./tutorial.svg"
+import BlogIcon from "./blog.svg"
+import DocsIcon from "./docs.svg"
+import EcosystemIcon from "./ecosystem.svg"
+import PluginsIcon from "./plugins.svg"
+import ShowcaseIcon from "./showcase.svg"
+import TutorialIcon from "./tutorial.svg"
 
 export {
   BlogIcon,

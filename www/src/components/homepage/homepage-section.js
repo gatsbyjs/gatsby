@@ -81,7 +81,7 @@ const Actions = styled(`div`)`
 const HomepageSection = ({
   children,
   sectionName,
-  sectionIcon,
+  sectionIcon: IconSvg,
   title,
   introduction,
   links,
@@ -110,8 +110,10 @@ const HomepageSection = ({
     {sectionName && (
       <Header>
         <Name>
-          {sectionIcon && (
-            <Icon dangerouslySetInnerHTML={{ __html: sectionIcon }} />
+          {IconSvg && (
+            <Icon>
+              <IconSvg />
+            </Icon>
           )}
           {sectionName}
         </Name>

@@ -22,7 +22,7 @@ const getProps = ({ isPartiallyCurrent }) => {
   }
 }
 
-const MobileNavItem = ({ linkTo, label, icon }) => (
+const MobileNavItem = ({ linkTo, label, icon: IconSvg }) => (
   <Link
     sx={{
       ...styles.link.default,
@@ -35,7 +35,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     getProps={getProps}
     to={linkTo}
   >
-    <span dangerouslySetInnerHTML={{ __html: icon }} />
+    <IconSvg />
     <div>{label}</div>
   </Link>
 )
