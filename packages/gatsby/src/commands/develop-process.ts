@@ -1,5 +1,3 @@
-import { bootstrap } from "../bootstrap"
-import { store } from "../redux"
 import { syncStaticDir } from "../utils/get-static-dir"
 import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
@@ -29,9 +27,21 @@ import {
   runPageQueries,
   startWebpackServer,
   writeOutRequires,
+  IBuildContext,
+  initialize,
 } from "../services"
 import { boundActionCreators } from "../redux/actions"
 import { ProgramStatus } from "../redux/types"
+import {
+  MachineConfig,
+  AnyEventObject,
+  assign,
+  Machine,
+  DoneEventObject,
+  interpret,
+} from "xstate"
+import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
+import { IDataLayerContext } from "../state-machines/data-layer/types"
 
 // const isInteractive = process.stdout.isTTY
 
@@ -108,34 +118,98 @@ module.exports = async (program: IProgram): Promise<void> => {
     throw e
   }
 
-  // Start bootstrap process.
-  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({ program })
+  const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
+    id: `build`,
+    initial: `initializing`,
+    states: {
+      initializing: {
+        invoke: {
+          src: `initialize`,
+          onDone: {
+            target: `initializingDataLayer`,
+            actions: `assignStoreAndWorkerPool`,
+          },
+        },
+      },
+      initializingDataLayer: {
+        invoke: {
+          src: `initializeDataLayer`,
+          data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
+            return { parentSpan, store, firstRun: true }
+          },
+          onDone: {
+            actions: `assignDataLayer`,
+            target: `doingEverythingElse`,
+          },
+        },
+      },
+      doingEverythingElse: {
+        invoke: {
+          src: async ({
+            gatsbyNodeGraphQLFunction,
+            workerPool,
+            store,
+          }): Promise<void> => {
+            // All the stuff that's not in the state machine yet
+            // Start the createPages hot reloader.
+            bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
 
-  // Start the createPages hot reloader.
-  bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
+            // Start the schema hot reloader.
+            bootstrapSchemaHotReloader()
 
-  // Start the schema hot reloader.
-  bootstrapSchemaHotReloader()
+            const { queryIds } = await calculateDirtyQueries({ store })
 
-  const { queryIds } = await calculateDirtyQueries({ store })
+            await runStaticQueries({ queryIds, store, program })
+            await runPageQueries({ queryIds, store, program })
+            await writeOutRequires({ store })
+            boundActionCreators.setProgramStatus(
+              ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
+            )
 
-  await runStaticQueries({ queryIds, store, program })
-  await runPageQueries({ queryIds, store, program })
-  await writeOutRequires({ store })
-  boundActionCreators.setProgramStatus(
-    ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
+            await db.saveState()
+
+            await waitUntilAllJobsComplete()
+            requiresWriter.startListener()
+            db.startAutosave()
+            queryUtil.startListeningToDevelopQueue({
+              graphqlTracing: program.graphqlTracing,
+            })
+            queryWatcher.startWatchDeletePage()
+            const app = express()
+
+            await startWebpackServer({ program, app, workerPool })
+          },
+        },
+      },
+    },
+  }
+
+  const service = interpret(
+    // eslint-disable-next-line new-cap
+    Machine(developConfig, {
+      services: {
+        initializeDataLayer: dataLayerMachine,
+        initialize,
+      },
+      actions: {
+        assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(
+          (_context, event) => {
+            console.log({ event })
+            const { store, workerPool } = event.data
+            return {
+              store,
+              workerPool,
+            }
+          }
+        ),
+        assignDataLayer: assign<IBuildContext, DoneEventObject>(
+          (_, { data }): DataLayerResult => data
+        ),
+      },
+    }).withContext({ program })
   )
-
-  await db.saveState()
-
-  await waitUntilAllJobsComplete()
-  requiresWriter.startListener()
-  db.startAutosave()
-  queryUtil.startListeningToDevelopQueue({
-    graphqlTracing: program.graphqlTracing,
+  service.onTransition(state => {
+    console.log(`transition to`, state.value)
   })
-  queryWatcher.startWatchDeletePage()
-  const app = express()
-
-  await startWebpackServer({ program, app, workerPool })
+  service.start()
 }
