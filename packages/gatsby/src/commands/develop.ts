@@ -107,7 +107,12 @@ let isRestarting
 const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
-  const developProcessPath = slash(require.resolve(`./develop-process`))
+  const useStateMachine = !!process.env.GATSBY_EXPERIMENTAL_STATE_MACHINE
+  const developProcessPath = slash(
+    useStateMachine
+      ? require.resolve(`./develop-state-machine`)
+      : require.resolve(`./develop-process`)
+  )
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
