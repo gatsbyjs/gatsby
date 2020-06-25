@@ -92,8 +92,11 @@ describe(`the data layer state machine`, () => {
       service?.onEvent(handler)
     })
 
-  it(`runs through the happy path`, async () => {
+  beforeEach(() => {
     service = interpret(machine.withContext(INITIAL_CONTEXT))
+  })
+
+  it(`runs through the happy path`, async () => {
     service?.start()
 
     // customizingSchema
@@ -171,5 +174,24 @@ describe(`the data layer state machine`, () => {
     expect(service?.state.value).toMatchObject({
       running: { extractingAndRunningQueries: `extractingQueries` },
     })
+  })
+
+  it(`handles mutation events when not queuing`, async () => {
+    service?.start({
+      running: { initializingDataLayer: `creatingPages` },
+    })
+    actions.callApi.mockClear()
+    actions.markNodesDirty.mockClear()
+    service?.send(`ADD_NODE_MUTATION`, { payload: { hello: `gatsby` } })
+
+    expect(actions.markNodesDirty).toHaveBeenCalled()
+    expect(actions.callApi).toHaveBeenCalledWith(
+      INITIAL_CONTEXT,
+      expect.objectContaining({
+        payload: { hello: `gatsby` },
+        type: `ADD_NODE_MUTATION`,
+      }),
+      expect.anything()
+    )
   })
 })
