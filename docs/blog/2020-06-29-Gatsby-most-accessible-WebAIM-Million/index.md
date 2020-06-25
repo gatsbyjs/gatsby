@@ -16,7 +16,7 @@ The 2020 WebAIM Million collected data on up to 1200 different technologies used
 
 Jared Smith, Associate Director of WebAIM, noted, “It's clear that Gatsby has made a commitment to accessibility and has nurtured a culture that supports inclusion. We believe that Gatsby can serve as a model for other frameworks, libraries, and technologies to follow in prioritizing accessibility. When technologies, like Gatsby, embrace accessibility, the broad impact on the lives of users with disabilities is tremendous.”
 
-**At Gatsby, we strive to make sites accessible and performant by default.** Our community has largely joined us in customizing their Gatsby sites to remain accessible, and we’re thrilled to share this recognition from WebAIM with them.
+**At Gatsby, we strive to make sites accessible and performant by default.** Our community has largely joined us in customizing their Gatsby sites to optimize accessibility, and we’re thrilled to share this recognition from WebAIM with them.
 
 ![Jared Smith of WebAIM presenting on the WebAIM Million](./image1.jpg)
 
