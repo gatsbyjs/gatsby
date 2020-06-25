@@ -9,8 +9,10 @@ export default function BoxWithBorder({ withBorder, children, ...rest }) {
         position: `relative`,
         ":after": withBorder && {
           content: `" "`,
-          border: `1px solid ${t.colors.blackFade[10]}`,
-          borderRadius: t => t.radii[1],
+          borderWidth: `1px`,
+          borderStyle: `solid`,
+          borderColor: `blackFade.10`,
+          borderRadius: 1,
           position: `absolute`,
           top: 0,
           right: 0,
