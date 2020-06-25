@@ -396,6 +396,8 @@ otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
 In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
 
+Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/schema-customization/#createresolvers-api).
+
 > Note that when using `createTypes` to fix type inference for a foreign-key field
 > created by a plugin, the underlying data will probably live on a field with
 > a `___NODE` suffix. Use the `from` argument to point the `link` extension to
@@ -560,7 +562,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 This approach becomes a lot more powerful when plugins provide custom field
 extensions. A _very_ basic markdown transformer plugin could for example provide
-an extension to convert markdown strings into html:
+an extension to convert markdown strings into HTML:
 
 ```js:title=gatsby-transformer-basic-md/src/gatsby-node.js
 const remark = require(`remark`)
@@ -648,7 +650,7 @@ If multiple field extensions are added to a field, resolvers are processed in th
 first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
 extension resolvers execute from left to right.
 
-Finally, note that in order to get the current fieldValue, you use `context.defaultFieldResolver`.
+Finally, note that in order to get the current `fieldValue`, you use `context.defaultFieldResolver`.
 
 ## createResolvers API
 

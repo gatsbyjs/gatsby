@@ -56,7 +56,7 @@ Because Netlify CMS is tied to third party authentication and git services, it�
 
 ## Option #3. Headless Ghost
 
-Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and CloudFlare - so you’ll be in good company if you choose it.
+Ghost is a Node-based, robust CMS that recently [added features](https://ghost.org/blog/jamstack/) to make the software easier to use within a headless CMS architecture. Ghost is used by Apple, Sky News, DuckDuckGo, Mozilla, Square, and Cloudflare - so you’ll be in good company if you choose it.
 
 ### How “free” is it?
 
