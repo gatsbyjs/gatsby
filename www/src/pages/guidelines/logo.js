@@ -24,11 +24,13 @@ import {
 
 import GatsbyLogo from "../../components/guidelines/logo"
 import GatsbyMonogram from "../../components/guidelines/logo/monogram"
-import Wordmark from "../../assets/guidelines/wordmark.svg"
-import Clearspace from "../../assets/guidelines/clearspace.svg"
-import ClearspaceMonogram from "../../assets/guidelines/clearspace-monogram.svg"
-import ManuallyTracked from "../../assets/guidelines/manually-tracked.svg"
-import PartnershipLockups from "../../assets/guidelines/partnership-lockups.svg"
+import {
+  Wordmark,
+  Clearspace,
+  ClearspaceMonogram,
+  ManuallyTracked,
+  PartnershipLockups,
+} from "../../assets/guidelines"
 
 import ColorSwatch from "../../components/guidelines/color/card"
 
