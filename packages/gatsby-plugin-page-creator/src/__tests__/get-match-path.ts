@@ -16,4 +16,10 @@ describe(`getMatchPath`, () => {
   it(`returns a match for splats`, () => {
     expect(getMatchPath(`baz/123/[...]`).matchPath).toEqual(`baz/123/*`)
   })
+
+  it(`handles multiple matches`, () => {
+    expect(getMatchPath(`/products/[id]/[...page]`).matchPath).toEqual(
+      `/products/:id/*page`
+    )
+  })
 })

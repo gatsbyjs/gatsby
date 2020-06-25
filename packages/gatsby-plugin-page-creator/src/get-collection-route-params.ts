@@ -1,3 +1,5 @@
+import path from "path"
+
 // This extracts params from its filePath counerpart
 // and returns an object of it's matches.
 // e.g.,
@@ -8,8 +10,8 @@ export function getCollectionRouteParams(
 ): Record<string, string> {
   const params = {}
   // remove the starting path to simplify the loop
-  const fileParts = filePath.split(`/`)
-  const urlParts = urlPath.split(`/`)
+  const fileParts = filePath.split(path.sep)
+  const urlParts = urlPath.split(path.sep)
 
   fileParts.forEach((part, i) => {
     if (!part.startsWith(`{`)) return

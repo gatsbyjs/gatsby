@@ -8,12 +8,15 @@ interface IOptionalMatchPath {
 //   `/foo/[...]/` => `/foo/*`
 export function getMatchPath(srcPagesPath: string): IOptionalMatchPath {
   if (srcPagesPath.includes(`[`) === false) return {}
+  const startRegex = /\[/g
+  const endRegex = /\]/g
+  const splatRegex = /\[\.\.\./g
 
   return {
     matchPath: srcPagesPath
-      .replace(`[...`, `*`)
-      .replace(`[`, `:`)
-      .replace(`]`, ``)
+      .replace(splatRegex, `*`)
+      .replace(startRegex, `:`)
+      .replace(endRegex, ``)
       .replace(/\/$/, ``),
   }
 }

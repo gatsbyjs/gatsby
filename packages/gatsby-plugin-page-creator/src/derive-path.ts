@@ -5,7 +5,7 @@ import _ from "lodash"
 // src/pages/product/{sku__en} => product/:sku__en pulls from nodes.sku.en
 export function derivePath(path: string, node: Record<string, any>): string {
   // 1.  Remove the extension
-  const pathWithoutExtension = path.replace(/\.[a-z]+$/, ``)
+  let pathWithoutExtension = path.replace(/\.[a-z]+$/, ``)
 
   // 2.  Pull out the slug parts that are within { } brackets.
   const slugParts = /(\{.*\})/g.exec(pathWithoutExtension)
@@ -36,8 +36,8 @@ export function derivePath(path: string, node: Record<string, any>): string {
     }
 
     // 3.d  replace the part of the slug with the actual value
-    path = path.replace(slugPart, value)
+    pathWithoutExtension = pathWithoutExtension.replace(slugPart, value)
   })
 
-  return path
+  return pathWithoutExtension
 }

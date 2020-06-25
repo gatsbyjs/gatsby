@@ -1,4 +1,5 @@
 import _ from "lodash"
+import path from "path"
 
 // Input queryStringParent could be:
 //   Product
@@ -50,7 +51,7 @@ export function reverseLookupParams(
 // to
 //   `id,baz`
 function extractUrlParamsForQuery(createdPath: string): string {
-  const parts = createdPath.split(`/`)
+  const parts = createdPath.split(path.sep)
   return parts
     .reduce<string[]>((queryParts: string[], part: string): string[] => {
       if (part.startsWith(`{`)) {
