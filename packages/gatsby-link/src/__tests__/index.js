@@ -383,3 +383,25 @@ describe(`state`, () => {
     )
   })
 })
+
+describe(`onPreload`, () => {
+  it(`calls onPreload when path enqueued`, () => {
+    global.___loader = {
+      enqueue: jest.fn(() => true),
+    }
+    const linkProps = { onPreload: jest.fn() }
+    setup({ linkProps })
+
+    expect(linkProps.onPreload).toHaveBeenCalledTimes(1)
+  })
+
+  it(`doesn't call onPreload when path not enqueued`, () => {
+    global.___loader = {
+      enqueue: jest.fn(() => false),
+    }
+    const linkProps = { onPreload: jest.fn() }
+    setup({ linkProps })
+
+    expect(linkProps.onPreload).toHaveBeenCalledTimes(0)
+  })
+})

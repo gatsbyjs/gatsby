@@ -88,25 +88,20 @@ class GatsbyLink extends React.Component {
       IOSupported,
     }
     this.handleRef = this.handleRef.bind(this)
+    this.preload = this.preload.bind(this)
   }
 
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(
-        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-          .pathname
-      )
+      this.preload()
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(
-        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-          .pathname
-      )
+      this.preload()
     }
   }
 
@@ -129,12 +124,18 @@ class GatsbyLink extends React.Component {
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
-      this.io = createIntersectionObserver(ref, () => {
-        ___loader.enqueue(
-          parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-            .pathname
-        )
-      })
+      this.io = createIntersectionObserver(ref, this.preload)
+    }
+  }
+
+  preload() {
+    const preloaded = ___loader.enqueue(
+      parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
+        .pathname
+    )
+    const { onPreload } = this.props
+    if (onPreload && preloaded) {
+      onPreload()
     }
   }
 
@@ -163,6 +164,7 @@ class GatsbyLink extends React.Component {
       partiallyActive,
       state,
       replace,
+      onPreload,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
@@ -234,6 +236,7 @@ class GatsbyLink extends React.Component {
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
   onClick: PropTypes.func,
+  onPreload: PropTypes.func,
   to: PropTypes.string.isRequired,
   replace: PropTypes.bool,
   state: PropTypes.object,

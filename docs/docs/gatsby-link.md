@@ -178,6 +178,30 @@ const AreYouSureLink = () => (
 )
 ```
 
+### Listen for the preloading event with `onPreload`
+
+Adding an `onPreload` handler, you can get notified when the page preload is triggered.
+
+```jsx
+import React from "react"
+// highlight-next-line
+import { Link } from "gatsby"
+
+const Page = () => (
+  <div>
+    <p>
+      Check out my <Link
+        to="/blog"
+        {/* highlight-next-line */}
+        onPreload={() => console.log(`/blog page preload triggered`)}
+      >
+        blog
+      </Link>!
+    </p>
+  </div>
+)
+```
+
 ## How to use the `navigate` helper function
 
 <EggheadEmbed
