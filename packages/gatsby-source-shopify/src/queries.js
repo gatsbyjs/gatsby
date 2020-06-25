@@ -196,6 +196,7 @@ export const PRODUCTS_QUERY = `
                   amount
                   currencyCode
                 }
+                quantityAvailable
                 requiresShipping
                 selectedOptions {
                   name
