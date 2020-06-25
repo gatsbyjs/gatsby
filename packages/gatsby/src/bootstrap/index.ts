@@ -19,7 +19,7 @@ import JestWorker from "jest-worker"
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: IBuildContext
+  initialContext: Partial<IBuildContext>
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: JestWorker
