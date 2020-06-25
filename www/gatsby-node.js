@@ -53,7 +53,10 @@ exports.onPostBuild = () => {
   )
 }
 
-exports.sourceNodes = ({ actions: { createNode }, createContentDigest }) => {
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createContentDigest,
+}) => {
   // get data from GitHub API at build time
   const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
   const resultData = await result.json()
@@ -79,7 +82,9 @@ exports.createSchemaCustomization = async helpers => {
     }
   }
 
-  const { actions: { createTypes } } = helpers
+  const {
+    actions: { createTypes },
+  } = helpers
 
   // Explicitly define Airtable types so that queries still work
   // when there are no events.
@@ -102,7 +107,6 @@ exports.createSchemaCustomization = async helpers => {
       approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
     }
   `)
-
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
