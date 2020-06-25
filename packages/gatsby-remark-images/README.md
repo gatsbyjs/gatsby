@@ -42,6 +42,14 @@ plugins: [
 ]
 ```
 
+## Usage in Markdown
+
+You can reference an image using the relative path. Where that path is relative to the location of the markdown file you're typing in.
+
+```md
+![Alt text here](./image.jpg)
+```
+
 ## Options
 
 | Name                    | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
