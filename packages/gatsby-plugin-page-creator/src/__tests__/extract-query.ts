@@ -5,7 +5,7 @@ import path from "path"
 // file systems, but the underlying code uses `path.sep`. So when running tests
 // on windows, they would fail without us swapping the seperators.
 const compatiblePath = (filepath: string): string =>
-  filepath.replace(`/`, path.sep)
+  filepath.replace(/\//g, path.sep)
 
 describe(`extract query`, () => {
   describe(`root query string`, () => {

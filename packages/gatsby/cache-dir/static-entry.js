@@ -228,7 +228,7 @@ export default (pagePath, callback) => {
           pageData.result ? pageData.result.pageContext : {}
         ),
         // pathContext was deprecated in v2. Renamed to pageContext
-        pathContext: pageData.result ? pageData.result.pathContext : undefined,
+        pathContext: pageData.result ? pageData.result.pageContext : undefined,
       }
 
       const pageElement = createElement(
