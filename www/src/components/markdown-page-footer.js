@@ -4,10 +4,10 @@ import { Fragment } from "react"
 import { graphql } from "gatsby"
 import { MdCreate as EditIcon } from "react-icons/md"
 
-export default function MarkdownPageFooter(props) {
+export default function MarkdownPageFooter({ page, packagePage }) {
   return (
     <Fragment>
-      {props.page && (
+      {page && (
         <div
           sx={{
             display: `flex`,
@@ -19,17 +19,16 @@ export default function MarkdownPageFooter(props) {
           <a
             sx={{ variant: `links.muted` }}
             href={`https://github.com/gatsbyjs/gatsby/blob/master/${
-              props.packagePage ? `packages` : `docs`
-            }/${props.page ? props.page.parent.relativePath : ``}`}
+              packagePage ? `packages` : `docs`
+            }/${page ? page.parent.relativePath : ``}`}
           >
+            {/* FIXME relative path probably won't work */}
             <EditIcon sx={{ mr: 2 }} /> Edit this page on GitHub
           </a>
-          {props.page?.parent?.fields?.gitLogLatestDate && (
+          {page?.latestUpdate && (
             <span sx={{ color: `textMuted`, fontSize: 1 }}>
               Last updated:{` `}
-              <time dateTime={props.page.parent.fields.gitLogLatestDate}>
-                {props.page.parent.fields.gitLogLatestDate}
-              </time>
+              <time dateTime={page.latestUpdate}>{page.latestUpdate}</time>
             </span>
           )}
         </div>
@@ -39,23 +38,11 @@ export default function MarkdownPageFooter(props) {
 }
 
 export const fragment = graphql`
-  fragment MarkdownPageFooterMdx on Mdx {
+  fragment MarkdownPageFooterMdx on DocPage {
+    latestUpdate(formatString: "MMMM D, YYYY")
     parent {
       ... on File {
         relativePath
-        fields {
-          gitLogLatestDate(formatString: "MMMM D, YYYY")
-        }
-      }
-    }
-  }
-  fragment MarkdownPageFooter on MarkdownRemark {
-    parent {
-      ... on File {
-        relativePath
-        fields {
-          gitLogLatestDate(formatString: "MMMM D, YYYY")
-        }
       }
     }
   }

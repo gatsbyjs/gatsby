@@ -28,6 +28,20 @@ function isCodeFile(node) {
   )
 }
 
+function mdxResolverPassthrough(fieldName) {
+  return async (source, args, context, info) => {
+    const type = info.schema.getType(`Mdx`)
+    const mdxNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    })
+    const resolver = type.getFields()[fieldName].resolve
+    const result = await resolver(mdxNode, args, context, {
+      fieldName,
+    })
+    return result
+  }
+}
+
 // convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
 const slugToAnchor = slug =>
   slug
@@ -35,45 +49,87 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
+  createTypes(
+    schema.buildObjectType({
+      name: `DocPage`,
+      interfaces: [`Node`],
+      extensions: {
+        infer: false,
+        childOf: { types: `Mdx` },
+      },
+      fields: {
+        // Fields from MDX
+        body: { type: `String!`, resolver: mdxResolverPassthrough(`body`) },
+        timeToRead: {
+          type: `Int`,
+          resolver: mdxResolverPassthrough(`timeToRead`),
+        },
+        tableOfContents: {
+          type: `JSON`,
+          resolver: mdxResolverPassthrough(`tableOfContents`),
+        },
+        excerpt: {
+          type: `String!`,
+          resolver: mdxResolverPassthrough(`excerpt`),
+        },
+        slug: { type: `String!` },
+        anchor: { type: `String` },
+        title: { type: `String!` },
+        // FIXME resolve this with `excerpt`
+        description: { type: `String` },
+        disableTableOfContents: { type: `Boolean` },
+        tableOfContentsDepth: { type: `Int` },
+        overview: { type: `Boolean` },
+        issue: { type: `String` },
+        latestUpdate: { type: `Date`, extensions: { dateformat: {} } },
+        // API file fields
+        jsdoc: { type: `[String!]` },
+        apiCalls: { type: `String` },
+        contentsHeading: { type: `String` },
+        showTopLevelSignatures: { type: `Boolean` },
+      },
+    })
+  )
+
   createTypes(/* GraphQL */ `
-    type Mdx implements Node {
-      frontmatter: MdxFrontmatter
-      fields: MdxFields
-    }
+    # type Mdx implements Node {
+    #   frontmatter: MdxFrontmatter
+    #   fields: MdxFields
+    # }
 
-    type MdxFrontmatter @dontInfer {
-      title: String!
-      description: String
-      contentsHeading: String
-      showTopLevelSignatures: Boolean
-      disableTableOfContents: Boolean
-      tableOfContentsDepth: Int
-      overview: Boolean
-      issue: String
-      jsdoc: [String!]
-      apiCalls: String
-    }
+    # type MdxFrontmatter @dontInfer {
+    #   title: String!
+    #   description: String
+    #   contentsHeading: String
+    #   showTopLevelSignatures: Boolean
+    #   disableTableOfContents: Boolean
+    #   tableOfContentsDepth: Int
+    #   overview: Boolean
+    #   issue: String
+    #   jsdoc: [String!]
+    #   apiCalls: String
+    # }
 
-    type MdxFields @dontInfer {
-      slug: String
-      anchor: String
-      section: String
-      locale: String
-    }
+    # type MdxFields @dontInfer {
+    #   slug: String
+    #   anchor: String
+    #   section: String
+    #   locale: String
+    # }
 
     type File implements Node {
       childrenDocumentationJs: DocumentationJs
-      fields: FileFields
+      # fields: FileFields
     }
 
     # Added by gatsby-transformer-gitinfo
     # TODO add these back upstream
-    type FileFields {
-      gitLogLatestDate: Date @dateformat
-      gitLogLatestAuthorName: String
-      gitLogLatestAuthorEmail: String
-    }
+    # type FileFields {
+    #   gitLogLatestDate: Date @dateformat
+    #   gitLogLatestAuthorName: String
+    #   gitLogLatestAuthorEmail: String
+    # }
 
     type DocumentationJSComponentDescription implements Node {
       childMdx: Mdx
@@ -107,23 +163,12 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { data, errors } = await graphql(/* GraphQL */ `
     query {
-      allMdx(
-        limit: 10000
-        filter: {
-          fileAbsolutePath: { ne: null }
-          fields: { locale: { eq: "en" }, section: { ne: "blog" } }
-        }
-      ) {
+      allDocPage(limit: 10000) {
         nodes {
-          fields {
-            slug
-            locale
-          }
-          frontmatter {
-            title
-            jsdoc
-            apiCalls
-          }
+          slug
+          title
+          jsdoc
+          apiCalls
         }
       }
     }
@@ -131,31 +176,29 @@ exports.createPages = async ({ graphql, actions }) => {
   if (errors) throw errors
 
   // Create docs pages.
-  data.allMdx.nodes.forEach(node => {
-    const slug = _.get(node, `fields.slug`)
-    const locale = _.get(node, `fields.locale`)
-    if (!slug) return
+  data.allDocPage.nodes.forEach(node => {
+    if (!node.slug) return
 
-    const prevAndNext = getPrevAndNext(node.fields.slug)
-    if (node.frontmatter.jsdoc) {
+    const prevAndNext = getPrevAndNext(node.slug)
+    if (node.jsdoc) {
       // API template
       createPage({
-        path: `${node.fields.slug}`,
+        path: `${node.slug}`,
         component: apiTemplate,
         context: {
-          slug: node.fields.slug,
-          jsdoc: node.frontmatter.jsdoc,
-          apiCalls: node.frontmatter.apiCalls,
+          slug: node.slug,
+          jsdoc: node.jsdoc,
+          apiCalls: node.apiCalls,
           ...prevAndNext,
         },
       })
     } else {
       // Docs template
       createPage({
-        path: `${node.fields.slug}`,
+        path: `${node.slug}`,
         component: docsTemplate,
         context: {
-          slug: node.fields.slug,
+          slug: node.slug,
           locale,
           ...prevAndNext,
         },
@@ -172,7 +215,7 @@ exports.onCreateNode = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  const { createNode, createParentChildLink, createNodeField } = actions
+  const { createNode, createParentChildLink } = actions
 
   if (isCodeFile(node)) {
     const calls = await findApiCalls({ node, loadNodeContent })
@@ -199,18 +242,41 @@ exports.onCreateNode = async ({
   const slug = getMdxContentSlug(node, getNode(node.parent))
   if (!slug) return
 
-  const locale = `en`
+  // const locale = `en`
   const section = slug.split(`/`)[1]
   // fields for blog pages are handled in `utils/node/blog.js`
   if (section === `blog`) return
 
+  const fieldData = {
+    ...node.frontmatter,
+    slug,
+    anchor: slugToAnchor(slug),
+    latestUpdate: getNode(node.parent).fields.gitLogLatestUpdate,
+  }
+
+  const docPageId = createNodeId(`${node.id} >>> DocPage`)
+  await createNode({
+    ...fieldData,
+    // Required fields.
+    id: docPageId,
+    parent: node.id,
+    children: [],
+    internal: {
+      type: `DocPage`,
+      contentDigest: createContentDigest(fieldData),
+      content: JSON.stringify(fieldData),
+      description: `A documentation page`,
+    },
+  })
+  createParentChildLink({ parent: node, child: getNode(docPageId) })
+
   // Add slugs and other fields for docs pages
-  if (slug) {
-    createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-    createNodeField({ node, name: `slug`, value: slug })
-    createNodeField({ node, name: `section`, value: section })
-  }
-  if (locale) {
-    createNodeField({ node, name: `locale`, value: locale })
-  }
+  // if (slug) {
+  //   createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
+  //   createNodeField({ node, name: `slug`, value: slug })
+  //   createNodeField({ node, name: `section`, value: section })
+  // }
+  // if (locale) {
+  //   createNodeField({ node, name: `locale`, value: locale })
+  // }
 }

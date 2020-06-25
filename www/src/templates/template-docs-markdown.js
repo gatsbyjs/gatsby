@@ -6,17 +6,12 @@ import { graphql } from "gatsby"
 import DocsMarkdownPage from "../components/docs-markdown-page"
 
 function DocsTemplate({ data, location, pageContext: { next, prev } }) {
-  const page = data.mdx
-  const { frontmatter } = page
+  const page = data.docPage
 
   return (
     <DocsMarkdownPage page={page} location={location} prev={prev} next={next}>
-      {frontmatter.issue && (
-        <a
-          href={page.frontmatter.issue}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      {page.issue && (
+        <a href={page.issue} target="_blank" rel="noopener noreferrer">
           See the issue relating to this stub on GitHub
         </a>
       )}
@@ -27,25 +22,20 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query($slug: String!, $locale: String!) {
-    mdx(fields: { slug: { eq: $slug }, locale: { eq: $locale } }) {
+  query($slug: String!) {
+    docPage(slug: { eq: $slug }) {
+      slug
       body
       excerpt
       timeToRead
       tableOfContents
-      fields {
-        slug
-        locale
-        anchor
-      }
-      frontmatter {
-        title
-        description
-        overview
-        issue
-        disableTableOfContents
-        tableOfContentsDepth
-      }
+      anchor
+      title
+      description
+      overview
+      issue
+      disableTableOfContents
+      tableOfContentsDepth
       ...MarkdownPageFooterMdx
     }
   }
