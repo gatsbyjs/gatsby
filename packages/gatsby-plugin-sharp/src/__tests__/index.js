@@ -1,5 +1,4 @@
 const path = require(`path`)
-const sharp = require(`sharp`)
 const fs = require(`fs-extra`)
 jest.mock(`../scheduler`)
 
@@ -16,6 +15,7 @@ jest.mock(`gatsby/dist/redux/actions`, () => {
   }
 })
 
+const sharp = require(`sharp`)
 const { scheduleJob } = require(`../scheduler`)
 scheduleJob.mockReturnValue(Promise.resolve())
 fs.ensureDirSync = jest.fn()
@@ -483,6 +483,31 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result).toMatchSnapshot()
     })
+
+    it(`should cache same image`, async () => {
+      const file1 = getFileObject(absolutePath)
+      const file2 = getFileObject(absolutePath)
+      const file3 = getFileObject(absolutePath, `test`, `new-image`)
+      // change file of file3
+      file3.base = path.join(__dirname, `images/144-density.png`)
+
+      const result = await base64({
+        file: file1,
+        args,
+      })
+      const result2 = await base64({
+        file: file2,
+        args,
+      })
+      const result3 = await base64({
+        file: file3,
+        args,
+      })
+
+      // I would like to test sharp being executed but I don't really know how to mock that beast :p
+      expect(result).toEqual(result2)
+      expect(result).not.toEqual(result3)
+    })
   })
 
   describe(`image quirks`, () => {
@@ -578,7 +603,7 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 })
 
-function getFileObject(absolutePath, name = `test`) {
+function getFileObject(absolutePath, name = `test`, contentDigest = `1234`) {
   const parsedPath = path.parse(absolutePath)
   return {
     id: `${absolutePath} absPath of file`,
@@ -587,7 +612,7 @@ function getFileObject(absolutePath, name = `test`) {
     absolutePath,
     extension: `png`,
     internal: {
-      contentDigest: `1234`,
+      contentDigest,
     },
   }
 }
