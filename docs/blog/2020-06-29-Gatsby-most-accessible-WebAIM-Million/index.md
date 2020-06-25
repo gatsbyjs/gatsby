@@ -1,8 +1,8 @@
 ---
-title: "Gatsby Days Video: A Booster Rocket for Junior Developers"
+title: "Gatsby Sites Most Reliably Accessible in WebAIM Million"
 date: 2020-06-29
 author: Marcy Sutton
-excerpt: "The 2020 WebAIM Million collected data on up to 1200 different technologies used in home pages and examined the results to see if common accessibility errors corresponded with usage of different technologies. One repeatedly stood out as aligning with significantly fewer accessibility issues: Gatsby. Home pages built with Gatsby had 44% fewer detectable errors than the average."
+excerpt: "The 2020 WebAIM Million survey collected data on up to 1200 different technologies used in home pages and examined the results to see if common accessibility errors corresponded with usage of different technologies. One repeatedly stood out as aligning with significantly fewer accessibility issues: Gatsby. Home pages built with Gatsby had 44% fewer detectable errors than the average."
 tags:
   - accessibility
   - community
