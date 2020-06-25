@@ -13,50 +13,49 @@ export default function StickyResponsiveSidebar(props) {
   const { enableScrollSync } = props
   const SidebarComponent = enableScrollSync ? ScrollSyncSidebar : Sidebar
   const iconOffset = isOpen ? 5 : -5
-  const menuOpacity = isOpen ? 1 : 0
 
   return (
     <Fragment>
       <div
+        aria-hidden={!isOpen}
         sx={{
           border: 0,
           bottom: 0,
           display: `block`,
-          height: `100vh`,
+          zIndex: `sidebar`,
           position: `fixed`,
           top: 0,
-          transition: t =>
-            `opacity ${t.transition.speed.default} ${t.transition.curve.default}`,
+          height: `100vh`,
+          left: isOpen ? 0 : t => `-${t.sizes.sidebarWidth.mobile}`,
           width: `sidebarWidth.mobile`,
-          zIndex: `sidebar`,
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? `auto` : `none`,
+          transition: t => {
+            const speedAndCurve = `${t.transition.speed.default} ${t.transition.curve.default}`
+
+            return `opacity ${speedAndCurve}, left ${speedAndCurve}`
+          },
           [mediaQueries.md]: {
+            top: t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
             height: t =>
               `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight})`,
-            maxWidth: `none`,
-            opacity: `1 !important`,
-            pointerEvents: `auto`,
-            top: t => `calc(${t.sizes.headerHeight} + ${t.sizes.bannerHeight})`,
+            left: `initial`,
             width: `sidebarWidth.default`,
+            opacity: `1`,
+            pointerEvents: `auto`,
+            transition: `none`,
           },
           [mediaQueries.lg]: {
             width: `sidebarWidth.large`,
           },
-          opacity: menuOpacity,
-          pointerEvents: isOpen ? `auto` : `none`,
         }}
       >
         <div
           sx={{
             boxShadow: `dialog`,
             height: `100%`,
-            transform: isOpen
-              ? `translateX(0)`
-              : t => `translateX(-${t.sizes.sidebarWidth.mobile})`,
-            transition: t =>
-              `transform ${t.transition.speed.default} ${t.transition.curve.default}`,
             [mediaQueries.md]: {
               boxShadow: `none`,
-              transform: `none !important`,
             },
           }}
         >
