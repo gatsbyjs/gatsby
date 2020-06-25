@@ -1,6 +1,5 @@
 ---
 title: What is a Headless CMS and How to Source Content from One
-overview: true
 ---
 
 A _headless CMS_ is content management software that enables writers to produce and organize content, while providing developers with structured data that can be displayed using a separate system on the frontend of a website or app.
