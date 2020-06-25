@@ -59,18 +59,18 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
       },
       fields: {
         // Fields from MDX
-        body: { type: `String!`, resolver: mdxResolverPassthrough(`body`) },
+        body: { type: `String!`, resolve: mdxResolverPassthrough(`body`) },
         timeToRead: {
           type: `Int`,
-          resolver: mdxResolverPassthrough(`timeToRead`),
+          resolve: mdxResolverPassthrough(`timeToRead`),
         },
         tableOfContents: {
           type: `JSON`,
-          resolver: mdxResolverPassthrough(`tableOfContents`),
+          resolve: mdxResolverPassthrough(`tableOfContents`),
         },
         excerpt: {
           type: `String!`,
-          resolver: mdxResolverPassthrough(`excerpt`),
+          resolve: mdxResolverPassthrough(`excerpt`),
         },
         slug: { type: `String!` },
         anchor: { type: `String` },
