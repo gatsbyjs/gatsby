@@ -8,7 +8,7 @@ Pages can be created in three ways:
 
 - In your site's gatsby-node.js by implementing the API
   [`createPages`](/docs/node-apis/#createPages)
-- Gatsby core automatically turns React components exported `default` in `src/pages/*` into pages
+- Gatsby core automatically turns React components in `src/pages/*` into pages. Note that you must make the component the default export
 - Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
