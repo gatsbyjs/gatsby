@@ -92,43 +92,9 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
   )
 
   createTypes(/* GraphQL */ `
-    # type Mdx implements Node {
-    #   frontmatter: MdxFrontmatter
-    #   fields: MdxFields
-    # }
-
-    # type MdxFrontmatter @dontInfer {
-    #   title: String!
-    #   description: String
-    #   contentsHeading: String
-    #   showTopLevelSignatures: Boolean
-    #   disableTableOfContents: Boolean
-    #   tableOfContentsDepth: Int
-    #   overview: Boolean
-    #   issue: String
-    #   jsdoc: [String!]
-    #   apiCalls: String
-    # }
-
-    # type MdxFields @dontInfer {
-    #   slug: String
-    #   anchor: String
-    #   section: String
-    #   locale: String
-    # }
-
     type File implements Node {
       childrenDocumentationJs: DocumentationJs
-      # fields: FileFields
     }
-
-    # Added by gatsby-transformer-gitinfo
-    # TODO add these back upstream
-    # type FileFields {
-    #   gitLogLatestDate: Date @dateformat
-    #   gitLogLatestAuthorName: String
-    #   gitLogLatestAuthorEmail: String
-    # }
 
     type DocumentationJSComponentDescription implements Node {
       childMdx: Mdx
@@ -267,14 +233,4 @@ exports.onCreateNode = async ({
     },
   })
   createParentChildLink({ parent: node, child: getNode(docPageId) })
-
-  // Add slugs and other fields for docs pages
-  // if (slug) {
-  //   createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-  //   createNodeField({ node, name: `slug`, value: slug })
-  //   createNodeField({ node, name: `section`, value: section })
-  // }
-  // if (locale) {
-  //   createNodeField({ node, name: `locale`, value: locale })
-  // }
 }
