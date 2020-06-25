@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { dataLayerStates } from "./../data-layer"
-import { Machine, interpret, Interpreter, State, EventObject } from "xstate"
+import { Machine, interpret, Interpreter, EventObject } from "xstate"
 import { IBuildContext } from "../../services"
 jest.useFakeTimers()
 
