@@ -19,22 +19,19 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs)
 }
 
-const products = [
-  { id: 0, name: "Burger" },
-  { id: 1, name: "Chicken" },
-]
+const products = ["Burger", "Chicken"]
 
 exports.sourceNodes = ({ actions, createNodeId }) => {
-  products.forEach(product => {
+  products.forEach((product, i) => {
     actions.createNode({
-      id: createNodeId(product.id),
+      id: createNodeId(i),
       children: [],
       parent: null,
       internal: {
         type: `Product`,
-        contentDigest: createContentDigest(product.name),
+        contentDigest: createContentDigest(product),
       },
-      name: product.name,
+      name: product,
     })
   })
 }
