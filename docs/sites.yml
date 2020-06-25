@@ -11234,3 +11234,14 @@
   built_by: Shion Honda
   built_by_url: https://twitter.com/shion_honda
   featured: false
+  - title: Content concepts - Affordable Editing Service
+  main_url: https://content-concepts-web.netlify.app/
+  url: https://content-concepts-web.netlify.app/
+  description: >
+    ContentConcepts is a new-age content solutions provider that works in two major content categories - 1) Editing, and 2) Content Development.
+  categories:
+    - Education
+    - Portfolio
+  built_by: Prasanth
+  built_by_url: https://prasanthlalapeta.com/
+  featured: false
