@@ -36,7 +36,7 @@ The following parts of `options` are passed down to Remark as options:
 - `options.pedantic`
 - `options.gfm`
 
-The details of the Remark options above could be found in [`remark-parse`'s documentation](https://github.com/remarkjs/remark/tree/master/packages/remark-parse#processoruseparse-options)
+The details of the Remark options above could be found in [`remark-parse`'s documentation](https://github.com/remarkjs/remark/tree/main/packages/remark-parse#processoruseparse-options)
 
 A full explanation of how to use markdown in Gatsby can be found here:
 [Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)

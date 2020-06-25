@@ -122,7 +122,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 [x] NO WordPress - similarly, I don’t want to deal with updates, themes, hacks...etc
 ```
 
-When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
+When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no-brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
 
 With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
