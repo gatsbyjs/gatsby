@@ -53,17 +53,33 @@ exports.onPostBuild = () => {
   )
 }
 
-exports.sourceNodes = async helpers => {
+exports.sourceNodes = ({ actions: { createNode }, createContentDigest }) => {
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
+}
+
+exports.createSchemaCustomization = async helpers => {
   for (const section of sections) {
-    if (section.sourceNodes) {
-      section.sourceNodes(helpers)
+    if (section.createSchemaCustomization) {
+      section.createSchemaCustomization(helpers)
     }
   }
 
-  const {
-    actions: { createTypes, createNode },
-    createContentDigest,
-  } = helpers
+  const { actions: { createTypes } } = helpers
 
   // Explicitly define Airtable types so that queries still work
   // when there are no events.
@@ -87,22 +103,6 @@ exports.sourceNodes = async helpers => {
     }
   `)
 
-  // get data from GitHub API at build time
-  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
-  const resultData = await result.json()
-  // create node for build time data example in the docs
-  createNode({
-    nameWithOwner: resultData.full_name,
-    url: resultData.html_url,
-    // required fields
-    id: `example-build-time-data`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
-  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {

@@ -35,7 +35,7 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.sourceNodes = ({ actions: { createTypes } }) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type Mdx implements Node {
       frontmatter: MdxFrontmatter
