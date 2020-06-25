@@ -291,7 +291,7 @@ is using Gatsby to build both their marketing site _and_ SaaS app within the
 _same Gatsby codebase_.
 
 The marketing pages of their site are built using markdown and React components
-along with a modern css-in-js library
+along with a modern CSS-in-JS library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
 uses [Redux](http://redux.js.org/) to communicate with their Django API.
 

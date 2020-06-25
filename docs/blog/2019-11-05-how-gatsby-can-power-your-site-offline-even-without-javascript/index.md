@@ -9,7 +9,7 @@ tags:
   - accessibility
 ---
 
-You know the feeling: you saw a cool website or read an interesting article the other day, and you'd like to check back on it, or maybe you’re with some people that you’d like to share it with. But what’s this? You don’t have any phone signal, and the wi-fi connection is spotty at best – if there is one at all! You attempt to open the page, but try as you might, the loading spinner just keeps on spinning...
+You know the feeling: you saw a cool website or read an interesting article the other day, and you'd like to check back on it, or maybe you’re with some people that you’d like to share it with. But what’s this? You don’t have any phone signal, and the WiFi connection is spotty at best – if there is one at all! You attempt to open the page, but try as you might, the loading spinner just keeps on spinning...
 
 With `gatsby-plugin-offline`, that's a thing of the past. Install the plugin in an existing Gatsby site using npm or Yarn, add it to your `gatsby-config.js`, and your site will instantly gain offline support without any additional configuration needed. (Read full instructions on how to [add offline support with a service worker
 ](/docs/add-offline-support-with-a-service-worker/).) Now, whenever someone visits a page on your site, that page will be available later without an internet connection, along with any other pages which have been preloaded in the background.

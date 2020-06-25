@@ -26,8 +26,11 @@ Agencies are challenged to meet the needs of diverse clients while trying to opt
 - **Training:** Have confidence that you’re getting the most out of Gatsby by accessing training materials and a connection with the Gatsby team.
 - **Certification:** Leverage Gatsby’s brand to elevate your business and give clients confidence they’re working with a Gatsby certified agency.
 
-> “Partnering with Gatsby has been a strong driver for growth. Our clients love the performance benefits and our developers are happy to use tools they already love.”
-> -- **Dennis Brotzky, Founding Partner, [Narative](https://www.narative.co/)**
+<Pullquote citation="Dennis Brotzky, Founding Partner, Narative">
+  “Partnering with Gatsby has been a strong driver for growth. Our clients love
+  the performance benefits and our developers are happy to use tools they
+  already love.”
+</Pullquote>
 
 ## Gatsby Technology Partners
 
@@ -41,8 +44,13 @@ In this API-driven world, developers want to use the best tool for the job and t
 - **Grow with Gatsby:** Tap into the extensive and evolving Gatsby ecosystem by connecting with one of the most exciting and popular website frameworks around.
 - **Increase usage and sales:** Build a first-class experience for developers to increase usage and sales.
 
-> "Partnering with Gatsby as a first-class integration partner has been a huge benefit to Contentful’s customers. This partnership helps our customers seamlessly improve site speed and SEO performance, leading to a better customer experience and increased conversions. We’re proud to support the rapidly growing Gatsby community and build the ecosystem."
-> **-- Kevin Zellmer, VP of Partnerships, [Contentful](https://www.contentful.com/)**
+<Pullquote citation="Kevin Zellmer, VP of Partnerships, Contentful">
+  "Partnering with Gatsby as a first-class integration partner has been a huge
+  benefit to Contentful’s customers. This partnership helps our customers
+  seamlessly improve site speed and SEO performance, leading to a better
+  customer experience and increased conversions. We’re proud to support the
+  rapidly growing Gatsby community and build the ecosystem."
+</Pullquote>
 
 ## How to Get Started
 
@@ -88,7 +96,7 @@ Yes. Additional benefits, features, and functionality will be added in the futur
 
 **What are the different partner tiers?**
 
-Details on Agency Partner tiers can be found on the [Agency Partner Program page]. There are no tiers for Technology partners.
+Details on Agency Partner tiers can be found on the [Agency Partner Program page](https://www.gatsbyjs.com/partner-agency). There are no tiers for Technology partners.
 
 **Will the partner program include a revenue share?**
 
