@@ -100,7 +100,7 @@ const EcosystemSection = ({
   title,
   description,
   subTitle,
-  icon: IconSvg,
+  icon,
   links,
   featuredItems,
   className,
@@ -108,11 +108,7 @@ const EcosystemSection = ({
   <EcosystemSectionRoot className={className}>
     <Header>
       <Title>
-        {IconSvg && (
-          <Icon>
-            <IconSvg />
-          </Icon>
-        )}
+        {icon && <Icon>{icon}</Icon>}
         <span>{title}</span>
       </Title>
       <Description>{description}</Description>
@@ -144,7 +140,7 @@ EcosystemSection.propTypes = {
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
   subTitle: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.element,
   links: PropTypes.array,
   featuredItems: PropTypes.array,
 }

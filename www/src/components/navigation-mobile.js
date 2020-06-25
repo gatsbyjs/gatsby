@@ -22,7 +22,7 @@ const getProps = ({ isPartiallyCurrent }) => {
   }
 }
 
-const MobileNavItem = ({ linkTo, label, icon: IconSvg }) => (
+const MobileNavItem = ({ linkTo, label, icon }) => (
   <Link
     sx={{
       ...styles.link.default,
@@ -35,16 +35,16 @@ const MobileNavItem = ({ linkTo, label, icon: IconSvg }) => (
     getProps={getProps}
     to={linkTo}
   >
-    <IconSvg />
+    {icon}
     <div>{label}</div>
   </Link>
 )
 const navItems = [
-  { id: `docs`, text: `Docs`, icon: DocsIcon },
-  { id: `tutorial`, text: `Tutorials`, icon: TutorialIcon },
-  { id: `plugins`, text: `Plugins`, icon: PluginsIcon },
-  { id: `blog`, text: `Blog`, icon: BlogIcon },
-  { id: `showcase`, text: `Showcase`, icon: ShowcaseIcon },
+  { id: `docs`, text: `Docs`, icon: <DocsIcon /> },
+  { id: `tutorial`, text: `Tutorials`, icon: <TutorialIcon /> },
+  { id: `plugins`, text: `Plugins`, icon: <PluginsIcon /> },
+  { id: `blog`, text: `Blog`, icon: <BlogIcon /> },
+  { id: `showcase`, text: `Showcase`, icon: <ShowcaseIcon /> },
 ]
 
 const MobileNavigation = () => (
