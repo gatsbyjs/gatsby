@@ -6763,7 +6763,7 @@
     - Blog
     - Carousel slide
     - Pagination (Prev / Next Page)
-    - Elastic-Lunr Search
+    - Elasticlunr.js Search
     - Ant Design React UI library
 - url: https://vapor.aesthetic.codes/
   repo: https://github.com/vaporwavy/gatsby-vapor
