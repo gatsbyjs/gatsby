@@ -1,5 +1,6 @@
 const Joi = require(`@hapi/joi`)
-const { store } = require(`gatsby/dist/redux`)
+const { getService } = require(`gatsby-core-utils/dist/service-lock`)
+const fetch = require(`node-fetch`)
 
 const { REQUIRES_KEYS } = require(`./utils/constants`)
 const resourceSchema = require(`../resource-schema`)
@@ -10,10 +11,43 @@ module.exports.read = () => {}
 module.exports.destroy = () => {}
 module.exports.config = {}
 
+const queryDevelopAPI = async ({ root }, query) => {
+  const { port } = await getService(root, `developproxy`)
+
+  return fetch(`http://localhost:${port}/___graphql`, {
+    method: `POST`,
+    body: JSON.stringify({
+      query,
+    }),
+    headers: {
+      Accept: `application/json`,
+      "Content-Type": `application/json`,
+    },
+  }).then(res => res.json())
+}
+
 module.exports.all = async ({ root }) => {
-  const pages = store.getState().pages.values()
-  console.log(pages)
-  return pages
+  const result = await queryDevelopAPI(
+    { root },
+    `
+  {
+    allSitePage {
+      nodes {
+        path
+        component
+        internalComponentName
+        componentChunkName
+        matchPath
+        id
+        componentPath
+        isCreatedByStatefulCreatePages
+      }
+    }
+  }
+  `
+  )
+
+  return result.data.allSitePage.nodes
 }
 const schema = {
   internalComponentName: Joi.string(),
@@ -22,7 +56,6 @@ const schema = {
   component: Joi.string(),
   componentChunkName: Joi.string(),
   isCreatedByStatefulCreatePages: Joi.boolean(),
-  updatedAt: Joi.number(),
   pluginCreatorId: Joi.string(),
   componentPath: Joi.string(),
   ...resourceSchema,
