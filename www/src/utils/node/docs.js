@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const minimatch = require(`minimatch`)
 
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
@@ -199,7 +198,6 @@ exports.createPages = async ({ graphql, actions }) => {
         component: docsTemplate,
         context: {
           slug: node.slug,
-          locale,
           ...prevAndNext,
         },
       })
