@@ -185,4 +185,4 @@ module.exports = {
 
 ### Additional resources
 
-- [adding-analytics](/docs/adding-analytics/)
+- [Adding Analytics](/docs/adding-analytics/)

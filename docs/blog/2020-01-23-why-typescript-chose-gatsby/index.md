@@ -156,7 +156,7 @@ His long term vision is to think of Gatsby as a compiler which takes a set of in
 
 ### Ecosystem Wins
 
-Gatsby has a massive community, and a lot of the time I'm able to just re-use someone elses work. The TypeScript team only has a few [unique](https://github.com/microsoft/TypeScript-Website/blob/v2/packages/gatsby-remark-shiki/README.md) [needs](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/typescript-vfs) in [our code samples](http://www.typescriptlang.org/v2/dev/twoslash/) but other than that, it's a pretty vanilla website.
+Gatsby has a massive community, and a lot of the time I'm able to just re-use someone else's work. The TypeScript team only has a few [unique](https://github.com/microsoft/TypeScript-Website/blob/v2/packages/gatsby-remark-shiki/README.md) [needs](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/typescript-vfs) in [our code samples](http://www.typescriptlang.org/v2/dev/twoslash/) but other than that, it's a pretty vanilla website.
 
 It's been great to just add a single line into the [`gatsby-config.js`](https://github.com/microsoft/TypeScript-Website/blob/v2/packages/typescriptlang-org/gatsby-config.js), run `yarn add gatsby-plugin-something` and suddenly a whole new set of features are set up. Plugins tend to be small and easy to audit, I've used a few.
 
@@ -171,7 +171,7 @@ While not "out-of-the-box", with a little elbow grease (as of early 2020) to get
   require("ts-node").register({ files: true })
   ```
   From these files, you can import `.ts` or .`tsx` files.
-- To generate types for your GraphQL queries, use the plugin [gatsby-plugin-codegen](https://www.npmjs.com/package/gatsby-plugin-codegen) (I [.gitignored](https://github.com/microsoft/TypeScript-website/blob/0df8f249d812acb37541c9f0aa39f4c35dafe8b6/packages/typescriptlang-org/.gitignore#L71-L74) some of its output)
+- To generate types for your GraphQL queries, use the plugin [gatsby-plugin-codegen](https://www.npmjs.com/package/gatsby-plugin-codegen) (I [`.gitignore`d](https://github.com/microsoft/TypeScript-website/blob/0df8f249d812acb37541c9f0aa39f4c35dafe8b6/packages/typescriptlang-org/.gitignore#L71-L74) some of its output)
 
 If you're not gonna go all-in on TypeScript, (which is totally reasonable!) you can get a lot of tooling wins in VS Code by using JSDoc to annotate functions in your `gatsby-node.js`:
 

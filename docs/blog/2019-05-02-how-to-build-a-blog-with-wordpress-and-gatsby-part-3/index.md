@@ -487,7 +487,7 @@ If you look at the code above, you'll notice you have added two new routes to th
 
 ![GraphiQL query to get menu items from WordPress](./images/gatsby6.png)
 
-The final step is to add this query into your static query and create the menu itself in the header component. You can just drop this in under the wordpressSiteMetadata piece. Once you have it added into the query, you can just use a `map()` function to iterate over the menu items and create it dynamically, allowing the user to update it through WordPress. Doing it this way does require us to specify which menu you want, so you need the name of the menu which is set in WordPress. In this case, your menu is called Main Menu so you will use that in your query.
+The final step is to add this query into your static query and create the menu itself in the header component. You can just drop this in under the `wordpressSiteMetadata` piece. Once you have it added into the query, you can just use a `map()` function to iterate over the menu items and create it dynamically, allowing the user to update it through WordPress. Doing it this way does require us to specify which menu you want, so you need the name of the menu which is set in WordPress. In this case, your menu is called Main Menu so you will use that in your query.
 
 ```jsx:title=src/components/header.js
 import { StaticQuery, graphql, Link } from "gatsby"

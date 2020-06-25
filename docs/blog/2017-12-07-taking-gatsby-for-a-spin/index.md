@@ -45,7 +45,7 @@ Some other thoughts I had while working with Gatsby:
 
 ### It's fast
 
-Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work miracles. I tried browsing the [list of sites made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) with network throttling set to 'slow 3g' in Google Chrome and the performance of these sites is still impressive.
+Gatsby definitely delivers on speed. The whole PRPL pattern thing seems to work miracles. I tried browsing the [list of sites made with Gatsby](https://github.com/gatsbyjs/gatsby#showcase) with network throttling set to 'slow 3G' in Google Chrome and the performance of these sites is still impressive.
 
 ### GraphQL is amazing
 

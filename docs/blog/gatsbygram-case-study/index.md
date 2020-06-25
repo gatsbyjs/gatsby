@@ -63,8 +63,8 @@ The difference in Time to Interactivity (TTI) (measure of how long before the
 user can actually interact with the page e.g. click on a link) between the sites
 is just as dramatic. Gatsbygram's TTI is 6.1s vs 14.1s for Instagram.
 
-- [Gatsbygram's webpagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
-- [Instagram's webpagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
+- [Gatsbygram's WebPagetest results](http://www.webpagetest.org/result/170310_XP_11AS/)
+- [Instagram's WebPagetest results](http://www.webpagetest.org/result/170310_PC_11AZ/)
 
 ### Gatsby is built for the next billion internet users
 
@@ -420,7 +420,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     // This plugin transforms JSON file nodes.
     `gatsby-transformer-json`,
-    // This plugin sets up the popular css-in-js library
+    // This plugin sets up the popular CSS-in-JS library
     // Glamor. It handles adding a Babel plugin and webpack
     // configuration as well as setting up optimized server
     // rendering and client re-hydration.
@@ -457,7 +457,7 @@ module.exports = {
 
 ## Styles
 
-Gatsbygram uses two popular and complementary css-in-js libraries,
+Gatsbygram uses two popular and complementary CSS-in-JS libraries,
 [Typography.js](https://github.com/KyleAMathews/typography.js) and
 [Glamor](https://github.com/threepointone/glamor).
 
@@ -556,7 +556,7 @@ While writing this post I scraped a few accounts and published their resulting
 - https://iceland-gatsbygram.netlify.app
 - https://tinyhouses-gatsbygram.netlify.app
 
-_With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
+_With thanks to Sam Bhagwat, Sunil Pai, Nolan Lawson, Nik Graf, Jeff Posnick,
 and Addy Osmani for their reviews._
 
 _And a special thanks to Kristo Jorgenson for his
