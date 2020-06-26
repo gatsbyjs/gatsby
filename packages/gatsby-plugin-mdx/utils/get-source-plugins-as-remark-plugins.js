@@ -20,66 +20,56 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   ...helpers
 }) {
   debug(`getSourcePluginsAsRemarkPlugins`)
-  let pathPlugin = undefined
+
+  let userPlugins = []
+
   if (pathPrefix) {
-    pathPlugin = () =>
-      async function transformer(markdownAST) {
-        // Ensure relative links include `pathPrefix`
-        visit(markdownAST, `link`, node => {
-          if (
-            node.url &&
-            node.url.startsWith(`/`) &&
-            !node.url.startsWith(`//`)
-          ) {
-            // TODO: where does withPathPrefix
-            node.url = withPathPrefix(node.url, pathPrefix)
-          }
-        })
-        return markdownAST
-      }
+    userPlugins.push(async function withPathPrefixTransformer(markdownAST) {
+      // Ensure relative links include `pathPrefix`
+      visit(markdownAST, `link`, node => {
+        if (
+          node.url &&
+          node.url.startsWith(`/`) &&
+          !node.url.startsWith(`//`)
+        ) {
+          node.url = withPathPrefix(node.url, pathPrefix)
+        }
+      })
+      return markdownAST
+    })
   }
 
   fileNodes = getNodesByType(`File`)
 
   // return list of remarkPlugins
-  const userPlugins = gatsbyRemarkPlugins
-    .filter(plugin => {
-      if (_.isFunction(interopDefault(require(plugin.resolve)))) {
-        return true
-      } else {
-        debug(`userPlugins: filtering out`, plugin)
-        return false
-      }
+  gatsbyRemarkPlugins.forEach(plugin => {
+    const importedPlugin = interopDefault(require(plugin.resolve))
+    if (!_.isFunction(importedPlugin)) {
+      debug(`userPlugins: filtering out`, plugin)
+      return
+    }
+
+    debug(`userPlugins: constructing remark plugin for `, plugin)
+    userPlugins.push(async function pluginTransformer(markdownAST) {
+      await importedPlugin(
+        {
+          markdownAST,
+          markdownNode: mdxNode,
+          getNode,
+          getNodesByType,
+          files: fileNodes,
+          pathPrefix,
+          reporter,
+          cache,
+          ...helpers,
+        },
+        plugin.options || {}
+      )
+
+      return markdownAST
     })
-    .map(plugin => {
-      debug(`userPlugins: constructing remark plugin for `, plugin)
-      const requiredPlugin = interopDefault(require(plugin.resolve))
-      const wrappedPlugin = () =>
-        async function transformer(markdownAST) {
-          await requiredPlugin(
-            {
-              markdownAST,
-              markdownNode: mdxNode,
-              getNode,
-              getNodesByType,
-              files: fileNodes,
-              pathPrefix,
-              reporter,
-              cache,
-              ...helpers,
-            },
-            plugin.options || {}
-          )
+  })
 
-          return markdownAST
-        }
-
-      return [wrappedPlugin, {}]
-    })
-
-  if (pathPlugin) {
-    return [pathPlugin, ...userPlugins]
-  } else {
-    return [...userPlugins]
-  }
+  // Note: I'm not sure if the object is even required, but at the time of writing these plugins had no other options
+  return userPlugins.map(plugin => [plugin, {}])
 }
