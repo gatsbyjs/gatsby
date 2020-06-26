@@ -4,11 +4,8 @@ import mime from "mime"
 import isRelative from "is-relative"
 import isRelativeUrl from "is-relative-url"
 import { getValueAt } from "../../utils/get-value-at"
+import { getNode, getNodesByType } from "../../redux/nodes"
 import { IGatsbyNode } from "../../redux/types"
-
-import * as NodeStore from "../../redux/nodes"
-
-type INodeStore = typeof NodeStore
 
 const getFirstValueAt = (
   node: IGatsbyNode,
@@ -25,7 +22,6 @@ const withBaseDir = (dir: string) => (p: string): string =>
   path.posix.join(dir, slash(p))
 
 const findAncestorNode = (
-  nodeStore: INodeStore,
   childNode: IGatsbyNode,
   predicate: (n: IGatsbyNode) => boolean
 ): IGatsbyNode | null => {
@@ -34,33 +30,27 @@ const findAncestorNode = (
     if (predicate(node)) {
       return node
     }
-    node = nodeStore.getNode(node.parent)
+    node = getNode(node.parent)
   } while (node !== undefined)
   return null
 }
 
-const getBaseDir = (
-  nodeStore: INodeStore,
-  node: IGatsbyNode
-): string | null => {
+const getBaseDir = (node: IGatsbyNode): string | null => {
   if (node) {
     const { dir } = findAncestorNode(
-      nodeStore,
       node,
       node => node.internal.type === `File`
     ) || { dir: `` }
-
     return typeof dir === `string` ? dir : null
   }
   return null
 }
 
 const getAbsolutePath = (
-  nodeStore: INodeStore,
   node: IGatsbyNode,
   relativePath: string
 ): string | string[] | null => {
-  const dir = getBaseDir(nodeStore, node)
+  const dir = getBaseDir(node)
   const withDir = withBaseDir(dir ?? ``)
   return dir
     ? Array.isArray(relativePath)
@@ -70,7 +60,6 @@ const getAbsolutePath = (
 }
 
 const getFilePath = (
-  nodeStore: INodeStore,
   fieldPath: string,
   relativePath: string
 ): string | string[] | null => {
@@ -91,24 +80,18 @@ const getFilePath = (
   if (!looksLikeFile) return null
 
   const normalizedPath = slash(relativePath)
-  const node = nodeStore
-    .getNodesByType(typeName)
-    .find(
-      (node: IGatsbyNode) => getFirstValueAt(node, selector) === normalizedPath
-    )
+  const node = getNodesByType(typeName).find(
+    node => getFirstValueAt(node, selector) === normalizedPath
+  )
 
-  return node ? getAbsolutePath(nodeStore, node, normalizedPath) : null
+  return node ? getAbsolutePath(node, normalizedPath) : null
 }
 
-export const isFile = (
-  nodeStore: INodeStore,
-  fieldPath: string,
-  relativePath: string
-): boolean => {
-  const filePath = getFilePath(nodeStore, fieldPath, relativePath)
+export const isFile = (fieldPath: string, relativePath: string): boolean => {
+  const filePath = getFilePath(fieldPath, relativePath)
   if (!filePath) return false
-  const filePathExists = nodeStore
-    .getNodesByType(`File`)
-    .some(node => node.absolutePath === filePath)
+  const filePathExists = getNodesByType(`File`).some(
+    node => node.absolutePath === filePath
+  )
   return filePathExists
 }
