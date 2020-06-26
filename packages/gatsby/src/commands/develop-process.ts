@@ -46,6 +46,7 @@ import {
 import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { globalTracer } from "opentracing"
+import reporter from "gatsby-cli/lib/reporter"
 
 const tracer = globalTracer()
 
@@ -216,7 +217,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       actions: {
         assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(
           (_context, event) => {
-            console.log({ event })
             const { store, workerPool } = event.data
             return {
               store,
@@ -231,7 +231,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     }).withContext({ program, parentSpan: bootstrapSpan, app })
   )
   service.onTransition(state => {
-    console.log(`transition to`, state.value)
+    reporter.verbose(`transition to ${JSON.stringify(state.value)}`)
   })
   service.start()
 }

@@ -24,7 +24,6 @@ export const assignChangedPages: BuildMachineAction = assign<
     deletedPages: string[]
   }>
 >((context, event) => {
-  console.log({ event })
   return {
     pagesToBuild: concatUnique(context.pagesToBuild, event.data.changedPages),
     pagesToDelete: concatUnique(context.pagesToDelete, event.data.deletedPages),
