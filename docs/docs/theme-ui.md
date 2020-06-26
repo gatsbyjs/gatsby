@@ -93,7 +93,7 @@ export default {}
 
 ## Creating a theme object
 
-Create a `src/gatsby-plugin-theme-ui` directory in your project, and add an `index.js` file to export a theme object. Add a `colors` object to the file to store the color palette for your site.
+Create a `src/gatsby-plugin-theme-ui` directory in your project and add an `index.js` file to export a theme object. Add a `colors` object to the file to store the color palette for your site.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
