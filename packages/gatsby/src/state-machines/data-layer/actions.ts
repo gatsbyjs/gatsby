@@ -10,8 +10,8 @@ import { createGraphQLRunner } from "../../bootstrap/create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { IDataLayerContext } from "./types"
 
-const concatUnique = <T>(array1?: T[], array2?: T[]): T[] =>
-  Array.from(new Set((array1 || []).concat(array2 || [])))
+const concatUnique = <T>(array1: T[] = [], array2: T[] = []): T[] =>
+  Array.from(new Set(array1.concat(array2)))
 
 type BuildMachineAction =
   | ActionFunction<IDataLayerContext, any>
