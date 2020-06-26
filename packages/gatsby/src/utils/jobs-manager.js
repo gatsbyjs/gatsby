@@ -290,10 +290,6 @@ exports.enqueueJob = async job => {
     }
     deferred.resolve(result)
   } catch (err) {
-    if (err instanceof Error) {
-      deferred.reject(new WorkerError(err.message))
-    }
-
     deferred.reject(new WorkerError(err))
   } finally {
     // when all jobs are done we end the activity
@@ -354,8 +350,17 @@ exports.isJobStale = job => {
 }
 
 export class WorkerError extends Error {
-  constructor(message) {
-    super(message)
+  /**
+   * @param {Error|string} error
+   */
+  constructor(error) {
+    if (typeof error === `string`) {
+      super(error)
+    } else {
+      // use error.message or else stringiyf the object so we don't get [Object object]
+      super(error.message ?? JSON.stringify(error))
+    }
+
     this.name = `WorkerError`
 
     Error.captureStackTrace(this, WorkerError)

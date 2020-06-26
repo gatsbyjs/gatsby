@@ -24,7 +24,7 @@ Want to see a more advanced example of TinaCMS integrated with a Gatsby website?
 
 First we need to get a local development environment set up for the site. Please reference the Gatsby Starter Blog [README](https://github.com/gatsbyjs/gatsby-starter-blog/#readme) for extra notes on this.
 
-```bash
+```shell
 gatsby new tina-tutorial https://github.com/gatsbyjs/gatsby-starter-blog
 cd tina-tutorial
 ```
@@ -33,7 +33,7 @@ cd tina-tutorial
 
 As usual when setting up a new tool, we need to install a few packages. We will install `gatsby-plugin-tinacms`, which sets up the core Tina functionality. Along with that, we'll need the peer-dependency, `styled-components`, to keep the sidebar pretty. Since this site uses markdown, we'll install `gatsby-tinacms-remark`. And `gatsby-tinacms-git` will setup our Git API.
 
-```bash
+```shell
 yarn add gatsby-plugin-tinacms gatsby-tinacms-remark gatsby-tinacms-git styled-components
 ```
 

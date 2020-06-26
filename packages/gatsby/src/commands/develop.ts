@@ -116,24 +116,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     getRandomPort(),
   ])
 
-  // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
-  // codesandbox detects the right port to expose by default
-  const proxy = startDevelopProxy({
-    proxyPort: proxyPort,
-    targetPort: developPort,
-    program,
-  })
-
-  const developProcess = new ControllableScript(`
-    const cmd = require(${JSON.stringify(developProcessPath)});
-    const args = ${JSON.stringify({
-      ...program,
-      port: developPort,
-      proxyPort,
-    })};
-    cmd(args);
-  `)
-
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
   if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
@@ -167,6 +149,26 @@ module.exports = async (program: IProgram): Promise<void> => {
       directory: program.directory,
     })
   }
+
+  // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
+  // codesandbox detects the right port to expose by default
+  const proxy = startDevelopProxy({
+    proxyPort: proxyPort,
+    targetPort: developPort,
+    program,
+  })
+
+  const developProcess = new ControllableScript(`
+    const cmd = require(${JSON.stringify(developProcessPath)});
+    const args = ${JSON.stringify({
+      ...program,
+      port: developPort,
+      proxyPort,
+      // Don't pass SSL options down to the develop process, it should always use HTTP
+      ssl: null,
+    })};
+    cmd(args);
+  `)
 
   let unlock
   if (!isCI()) {

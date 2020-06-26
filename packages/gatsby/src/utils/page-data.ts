@@ -13,7 +13,7 @@ interface IPageData {
   path: IGatsbyPage["path"]
 }
 
-interface IPageDataWithQueryResult extends IPageData {
+export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
 }
 
@@ -127,19 +127,15 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      const body = await writePageData(
+      const result = await writePageData(
         path.join(program.directory, `public`),
         page
       )
 
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
-          ...body.result,
           id: pagePath,
-          result: {
-            data: body.result.data,
-            pageContext: body.result.pageContext,
-          },
+          result,
         })
       }
     }

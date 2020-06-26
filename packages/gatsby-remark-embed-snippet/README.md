@@ -343,9 +343,11 @@ This is the JSX of my app:
     </div>
 ```
 
-**JavaScript example**:
+### Omitting lines
 
-You can also add `// hide-range` comments to your files.
+It's also possible to specify ranges of lines to be hidden from an embedded file by adding `// hide-range` comments to your files.
+
+**JavaScript example**:
 
 ```no-highlight
 // hide-range{1-2}
@@ -386,4 +388,120 @@ function App() {
     </div>
   )
 }
+```
+
+### Specifying snippets by name
+
+As an alternative to selecting a range of lines from a file, you can add `start-snippet{snippet-name}` and `end-snippet{snippet-name}` in comments in your files. The inclusion of a name for a snippet allows you to create an example file that contains multiple snippets that you reference from different places.
+
+You can specify that you want to only include a named snippet from the embed by using the syntax `{snippet: "snippet-name"}`.
+
+**Javascript example**:
+
+```markdown
+The function to use is:
+
+`embed:api.js{snippet: "funcA"}`
+
+And it is invoked via:
+
+`embed:api.js{snippet: "invokeA"}`
+```
+
+With this example file `api.js`:
+
+```javascript
+// start-snippet{funcA}
+function factorial(x) {
+    if (x <= 1) return 1
+    else return x * factorial(x - 1)
+}
+// end-snippet{funcA}
+
+function display() {
+    let x = 5
+    // start-snippet{invokeA}
+    let xfact = factorial(x)
+    // end-snippet{invokeA}
+    println!(`{} factorial is {}`, x, xfact)
+}
+```
+
+Will produce something like this:
+
+```markdown
+The function to use is:
+
+function factorial(x) {
+if (x <= 1) return 1
+else return x \* factorial(x - 1)
+}
+
+And it is invoked via:
+
+let xfact = factorial(x)
+```
+
+## Code snippet syntax highlighting
+
+### Highlighting Lines
+
+You can specify specific lines for Prism to highlight using
+`highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
+
+**JavaScript example**:
+
+```jsx
+import React from "react"
+import ReactDOM from "react-dom"
+
+const name = "Brian" // highlight-line
+
+ReactDOM.render(
+  <div>
+    {/* highlight-range{1-3} */}
+    <h1>Hello, ${name}!</h1>
+  </div>,
+  document.getElementById("root")
+)
+```
+
+**CSS example**:
+
+```css
+html {
+  /* highlight-range{1-2} */
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box; /* highlight-line */
+}
+```
+
+**HTML example**:
+
+<!-- prettier-ignore-start -->
+```html
+<html>
+  <body>
+    <h1>highlight me</h1> <!-- highlight-line -->
+    <p>
+      <!-- highlight-next-line -->
+      And me
+    </p>
+  </body>
+</html>
+```
+<!-- prettier-ignore-end -->
+
+**YAML example**:
+
+```yaml
+foo: "highlighted" # highlight-line
+bar: "not highlighted"
+# highlight-range{1-2}
+baz: "highlighted"
+quz: "highlighted"
 ```
