@@ -20,7 +20,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
 }) {
   debug(`getSourcePluginsAsRemarkPlugins`)
 
-  let userPlugins = []
+  const userPlugins = []
 
   if (pathPrefix) {
     userPlugins.push(async function withPathPrefixTransformer(markdownAST) {
@@ -44,7 +44,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins.forEach(plugin => {
     const importedPlugin = interopDefault(require(plugin.resolve))
     if (typeof importedPlugin !== `function`) {
-      debug(`userPlugins: filtering out`, plugin)
+      debug(`userPlugins: not a valid plugin: \`${plugin}\``)
       return
     }
 
