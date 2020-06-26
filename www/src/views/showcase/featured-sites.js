@@ -47,10 +47,10 @@ const GradientOverlay = () => {
             gradientColor,
             1
           )} 100%)`,
-        bottom: t => t.space[6],
+        bottom: 6,
         pointerEvents: `none`,
         position: `absolute`,
-        right: t => `-${t.space[6]}`,
+        right: -6,
         top: 0,
         width: 60,
       }}
@@ -161,9 +161,10 @@ class FeaturedSites extends Component {
               borderBottom: t => `1px solid ${t.colors.ui.border}`,
               display: `flex`,
               flexShrink: 0,
-              margin: t => `0 -${t.space[6]}`,
+              mx: -6,
               overflowX: `scroll`,
-              padding: t => `${t.space[6]} ${t.space[6]} 0`,
+              pt: 6,
+              px: 6,
             }}
           >
             {featured.slice(0, 9).map(node => (
