@@ -29,6 +29,8 @@ import {
   writeOutRequires,
   IBuildContext,
   initialize,
+  postBootstrap,
+  extractQueries,
 } from "../services"
 import { boundActionCreators } from "../redux/actions"
 import { ProgramStatus } from "../redux/types"
@@ -42,6 +44,9 @@ import {
 } from "xstate"
 import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { globalTracer } from "opentracing"
+
+const tracer = globalTracer()
 
 // const isInteractive = process.stdout.isTTY
 
@@ -75,6 +80,8 @@ process.on(`message`, msg => {
     process.exit(msg.action.payload)
   }
 })
+
+const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
 module.exports = async (program: IProgram): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
@@ -151,6 +158,15 @@ module.exports = async (program: IProgram): Promise<void> => {
             store,
           }): Promise<void> => {
             // All the stuff that's not in the state machine yet
+
+            // These were previously in `bootstrap()` but are now
+            // in part of the state machine that hasn't been added yet
+            await postBootstrap({ parentSpan: bootstrapSpan })
+            await extractQueries({ parentSpan: bootstrapSpan })
+            bootstrapSpan.finish()
+
+            // These are the parts that weren't in bootstrap
+
             // Start the createPages hot reloader.
             bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
 
@@ -206,7 +222,7 @@ module.exports = async (program: IProgram): Promise<void> => {
           (_, { data }): DataLayerResult => data
         ),
       },
-    }).withContext({ program })
+    }).withContext({ program, parentSpan: bootstrapSpan })
   )
   service.onTransition(state => {
     console.log(`transition to`, state.value)
