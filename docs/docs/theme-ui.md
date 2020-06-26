@@ -220,7 +220,7 @@ export default {
 }
 ```
 
-If the theme is shadowing styles itself without a preset, you'll want to merge those styles with your local ones. Here's an example using Theme UI's `merge` API:
+If the theme itself is shadowing styles without a preset, you'll want to merge those styles with your local ones. Here's an example using Theme UI's `merge` API:
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 import baseTheme from "gatsby-theme-unknown/src/gatsby-plugin-theme-ui"
