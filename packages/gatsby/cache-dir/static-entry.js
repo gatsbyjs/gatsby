@@ -19,6 +19,7 @@ const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
 const syncRequires = require(`./sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
+const { grabMatchParams } = require(`./find-path`)
 
 const stats = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
@@ -204,29 +205,14 @@ export default (pagePath, callback) => {
   const { componentChunkName } = pageData
 
   class RouteHandler extends React.Component {
-    getParams(pageContext) {
-      const parts = /:[a-z]+/g.exec(this.props.path) || []
-      const params = {}
-
-      // only supports keys that are [adjfiasjf].js (which by now is translated into :asdfajsdif)
-      parts.forEach(colonPart => {
-        // strips off the starting `:` in something like `:id`
-        const [, ...part] = colonPart
-        params[part] = this.props[part]
-      })
-
-      return {
-        ...params,
-        ...(pageContext.__params || {}),
-      }
-    }
     render() {
       const props = {
         ...this.props,
         ...pageData.result,
-        params: this.getParams(
-          pageData.result ? pageData.result.pageContext : {}
-        ),
+        params: {
+          ...(grabMatchParams(this.props.location.pathname))
+          ...(pageData.result?.pageContext?.__params || {})
+        },
         // pathContext was deprecated in v2. Renamed to pageContext
         pathContext: pageData.result ? pageData.result.pageContext : undefined,
       }

@@ -2,32 +2,17 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import { publicLoader } from "./loader"
 import { apiRunner } from "./api-runner-browser"
+import { grabMatchParams } from "./find-path"
 
 // Renders page
 class PageRenderer extends React.Component {
-  // would be nice to not have to write this code ourselves..
-  getParams() {
-    const parts = /:[a-z]+/g.exec(this.props.path) || []
-    const params = {}
-
-    // only supports keys that are [adjfiasjf].js (which by now is translated into :asdfajsdif)
-    parts.forEach(colonPart => {
-      // strips off the starting `:` in something like `:id`
-      const [, ...part] = colonPart
-      params[part] = this.props[part]
-    })
-
-    if (this.props[`*`]) {
-      params[`*`] = this.props[`*`]
-    }
-
-    return { ...params, ...this.props.pageResources.json.pageContext.__params }
-  }
-
   render() {
     const props = {
       ...this.props,
-      params: this.getParams(),
+      params: {
+        ...grabMatchParams(this.props.location.pathname),
+        ...this.props.pageResources.json.pageContext.__params,
+      },
       pathContext: this.props.pageContext,
     }
 
