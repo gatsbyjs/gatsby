@@ -1017,7 +1017,6 @@ incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromFieldName
 inferFromMapping
 inferGraphQLType
 InfluxData
