@@ -75,7 +75,7 @@ module.exports = {
 }
 ```
 
-`preset` operates as your base theme and any local shadowed styles with automatically merge with it. Local styles are considered more specific and will override base styles where necessary.
+`preset` operates as your base theme and any local shadowed styles will automatically merge with it. Local styles are considered more specific and will override base styles where necessary.
 
 ### Local shadowing
 
