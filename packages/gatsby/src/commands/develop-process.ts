@@ -17,7 +17,7 @@ import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
 } from "../utils/feedback"
-
+import { startRedirectListener } from "../bootstrap/redirects-writer"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram } from "./types"
@@ -32,6 +32,7 @@ import {
   postBootstrap,
   extractQueries,
   rebuildSchemaWithSitePage,
+  writeOutRedirects,
 } from "../services"
 import { boundActionCreators } from "../redux/actions"
 import { ProgramStatus } from "../redux/types"
@@ -171,6 +172,9 @@ module.exports = async (program: IProgram): Promise<void> => {
             await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
 
             await extractQueries({ parentSpan: bootstrapSpan })
+            await writeOutRedirects({ parentSpan: bootstrapSpan })
+
+            startRedirectListener()
             bootstrapSpan.finish()
 
             // These are the parts that weren't in bootstrap
