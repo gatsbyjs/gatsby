@@ -126,6 +126,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     throw e
   }
 
+  const app = express()
+
   const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     id: `build`,
     initial: `initializing`,
@@ -155,8 +157,10 @@ module.exports = async (program: IProgram): Promise<void> => {
         invoke: {
           src: async ({
             gatsbyNodeGraphQLFunction,
+            graphqlRunner,
             workerPool,
             store,
+            app,
           }): Promise<void> => {
             // All the stuff that's not in the state machine yet
 
@@ -178,8 +182,8 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             const { queryIds } = await calculateDirtyQueries({ store })
 
-            await runStaticQueries({ queryIds, store, program })
-            await runPageQueries({ queryIds, store, program })
+            await runStaticQueries({ queryIds, store, program, graphqlRunner })
+            await runPageQueries({ queryIds, store, program, graphqlRunner })
             await writeOutRequires({ store })
             boundActionCreators.setProgramStatus(
               ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
@@ -194,7 +198,6 @@ module.exports = async (program: IProgram): Promise<void> => {
               graphqlTracing: program.graphqlTracing,
             })
             queryWatcher.startWatchDeletePage()
-            const app = express()
 
             await startWebpackServer({ program, app, workerPool })
           },
@@ -225,7 +228,7 @@ module.exports = async (program: IProgram): Promise<void> => {
           (_, { data }): DataLayerResult => data
         ),
       },
-    }).withContext({ program, parentSpan: bootstrapSpan })
+    }).withContext({ program, parentSpan: bootstrapSpan, app })
   )
   service.onTransition(state => {
     console.log(`transition to`, state.value)
