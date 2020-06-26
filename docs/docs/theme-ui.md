@@ -68,7 +68,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-theme-ui`,
       options: {
-        preset: require("@theme-ui/preset-funk"),
+        preset: require("my-local-preset"),
       },
     },
   ],

@@ -36,9 +36,10 @@ You can inspect `gatsby-theme-blog`'s file structure to determine the file path 
     │   └── seo.js
     ├── gatsby-plugin-theme-ui
     │   └── components.js
-    └── templates
-        ├── post.js
-        └── posts.js
+    └── gatsby-theme-blog-core
+       └── components
+          ├── post.js
+          └── posts.js
 ```
 
 ### Customizing the `Bio` component
@@ -68,9 +69,9 @@ user-site
             └── bio.js // highlight-line
 ```
 
-## Shadowing other themes
+## Shadowing other files
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` with the `gatsby-theme-ui-preset` preset. One way to customize the styling of a theme is with shadowing.
+Some themes, including `gatsby-theme-blog`, install additional plugins. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` with the `gatsby-theme-ui-preset` preset. Shadowing is one way to customize the styling of a theme.
 
 For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`.
 
