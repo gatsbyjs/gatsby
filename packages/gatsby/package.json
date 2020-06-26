@@ -162,6 +162,7 @@
     "@types/socket.io": "^2.1.4",
     "@types/string-similarity": "^3.0.0",
     "@types/tmp": "^0.2.0",
+    "@types/webpack-dev-middleware": "^3.7.1",
     "babel-preset-gatsby-package": "^0.4.6",
     "cross-env": "^5.2.1",
     "documentation": "^12.3.0",
