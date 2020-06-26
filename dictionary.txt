@@ -1,6 +1,5 @@
 .babelrc
 .env
-.htaccess
 .html
 .jpg
 .js
