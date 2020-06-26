@@ -6773,3 +6773,18 @@
     - Landing Page
     - Google Analytics
     - PaperCSS style
+- url: https://gatsby-arcadia.netlify.app/
+  repo: https://github.com/danielkvist/gatsby-arcadia-starter
+  description: Modern, fast and customizable single page starter for Gatsby.
+  tags:
+    - Onepage
+    - Landing Page
+    - Portfolio
+  features:
+    - Landing Page
+    - Three.js support
+    - MDX sections
+    - Google Analytics
+    - Offline support
+    - PWA
+    - GitHub API
