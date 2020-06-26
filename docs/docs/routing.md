@@ -10,9 +10,8 @@ Alternatively, your application may include functionality that cannot be handled
 
 Gatsby makes it easy to programmatically control your pages. Pages can be created in three ways:
 
-- In your site's gatsby-node.js by implementing the API
-  [`createPages`](/docs/node-apis/#createPages)
 - Gatsby core automatically turns React components in `src/pages` into pages
+- In your site's gatsby-node.js by implementing the API [`createPages`](/docs/node-apis/#createPages) (This is an advanced feature)
 - Plugins can also implement `createPages` and create pages for you
 
 See the [Creating and Modifying Pages](/docs/creating-and-modifying-pages) for more detail.
@@ -29,9 +28,36 @@ The exception to this rule is any file named `index.js`. Files with this name ar
 
 Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
+To create several pages from some data, you can use the `createPagesFromData` macro with the collection builder route. For example, if you have a graphql model for products called `Product`. To create a page for each product, create a file inside `src/pages` at whatever route you would like (e.g., `/products/{name}.js` or `/products/{id}.js`). Inside of the file, the primary export must use the gatsby `createPagesFromData` macro. Here is an example:
+
+```js:title=/src/pages/products{name}.js
+import { createPagesFromData, graphql } from "gatsby"
+
+function ProductComponent() {
+  /* ... */
+}
+
+export default createPagesFromData(ProductComponent, `Product`)
+
+export const ProductPageQuery = graphql`
+  query ($name: String) {
+    Product(name: { $eq: $name }) {
+      id
+      name
+    }
+  }
+`
+```
+
+See the documentation [Collection Page Builder]() for more detail.
+
+To create a client side only route, you can use `[]` as interpolation keys as a file path inside `src/pages` (e.g., `users/[id].js`). See the documentation for [client-only routes](/docs/client-only-routes-and-user-authentication) for more detail.
+
 ### Pages created with `createPage` action
 
 Another way to create pages is in your `gatsby-node.js` file using the `createPage` action, a JavaScript function. When pages are defined this way, the path is explicitly set. For example:
+
+_Note: This is an advanced feature and most use-case can be handled by creating pages in the `src/pages` directory_
 
 ```js:title=gatsby-node.js
 createPage({
