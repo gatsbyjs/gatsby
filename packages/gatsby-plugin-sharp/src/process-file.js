@@ -116,10 +116,6 @@ exports.processFile = (file, transforms, options = {}) => {
           adaptiveFiltering: false,
           force: transformArgs.toFormat === `png`,
         })
-        .webp({
-          quality: transformArgs.webpQuality || transformArgs.quality,
-          force: transformArgs.toFormat === `webp`,
-        })
         .tiff({
           quality: transformArgs.quality,
           force: transformArgs.toFormat === `tiff`,
