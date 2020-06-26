@@ -89,7 +89,6 @@ export const eslintConfig = (schema: GraphQLSchema): CLIEngine.Options => {
             ],
           },
         ],
-        "jsx-a11y/label-has-for": `warn`,
         "jsx-a11y/label-has-associated-control": `warn`,
         "jsx-a11y/lang": `warn`,
         "jsx-a11y/media-has-caption": `warn`,
