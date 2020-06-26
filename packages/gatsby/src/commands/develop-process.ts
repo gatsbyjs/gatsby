@@ -43,6 +43,8 @@ import {
   Machine,
   DoneEventObject,
   interpret,
+  Actor,
+  Interpreter,
 } from "xstate"
 import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
@@ -234,8 +236,27 @@ module.exports = async (program: IProgram): Promise<void> => {
       },
     }).withContext({ program, parentSpan: bootstrapSpan, app })
   )
+
+  const isInterpreter = <T>(
+    actor: Actor<T> | Interpreter<T>
+  ): actor is Interpreter<T> => `machine` in actor
+
+  const listeners = new WeakSet()
   service.onTransition(state => {
-    reporter.verbose(`transition to ${JSON.stringify(state.value)}`)
+    console.log(`Transition to ${JSON.stringify(state.value)}`)
+    // eslint-disable-next-line no-unused-expressions
+    service.children?.forEach(child => {
+      // We want to ensure we don't attach a listener to the same
+      // actor. We don't need to worry about detaching the listener
+      // because xstate handles that for us when the actor is stopped.
+
+      if (isInterpreter(child) && !listeners.has(child)) {
+        child.onTransition(substate => {
+          console.log(`Transition to`, state.value, `>`, substate.value)
+        })
+        listeners.add(child)
+      }
+    })
   })
   service.start()
 }
