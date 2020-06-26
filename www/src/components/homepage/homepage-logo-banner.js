@@ -90,7 +90,7 @@ const HomepageLogoBanner = () => {
       <Title>
         <Name>Trusted by</Name>
       </Title>
-      <LogoGroup>
+      <LogoGroup tabIndex={0}>
         {data.allFile.nodes.map(image => (
           <Img
             alt={`${image.base.split(`.`)[0]}`}

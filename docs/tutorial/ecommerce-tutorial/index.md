@@ -144,7 +144,7 @@ export default Checkout
 
 #### If you are using the deprecated Stripe Orders API
 
-Replace the invokation of `redirectToCheckout` with the following snippet and it will allow you to accept SKU type products.
+Replace the invocation of `redirectToCheckout` with the following snippet and it will allow you to accept SKU type products.
 
 ```jsx:title=src/components/checkout.js
 const { error } = await stripe.redirectToCheckout({

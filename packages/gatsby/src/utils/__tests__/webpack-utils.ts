@@ -1,3 +1,4 @@
+import * as os from "os"
 import { createWebpackUtils } from "../webpack-utils"
 import { Stage, IProgram } from "../../commands/types"
 
@@ -27,7 +28,9 @@ jest.mock(`autoprefixer`, () =>
 let config
 
 beforeAll(() => {
-  config = createWebpackUtils(Stage.Develop, {} as IProgram)
+  config = createWebpackUtils(Stage.Develop, {
+    directory: `${os.tmpdir()}/test`,
+  } as IProgram)
 })
 
 describe(`webpack utils`, () => {

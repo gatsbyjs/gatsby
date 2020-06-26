@@ -5,7 +5,6 @@ import {
   customizeSchema,
   sourceNodes,
   buildSchema,
-  writeOutRequires,
   createPages,
   createPagesStatefully,
   extractQueries,
@@ -16,11 +15,15 @@ import {
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
+import JestWorker from "jest-worker"
 const tracer = globalTracer()
 
 export async function bootstrap(
   initialContext: IBuildContext
-): Promise<{ gatsbyNodeGraphQLFunction: Runner }> {
+): Promise<{
+  gatsbyNodeGraphQLFunction: Runner
+  workerPool: JestWorker
+}> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
     : {}
@@ -50,8 +53,6 @@ export async function bootstrap(
 
   await extractQueries(context)
 
-  await writeOutRequires(context)
-
   await writeOutRedirects(context)
 
   startRedirectListener()
@@ -60,5 +61,8 @@ export async function bootstrap(
 
   initialContext.parentSpan.finish()
 
-  return { gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction }
+  return {
+    gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
+    workerPool: context.workerPool,
+  }
 }
