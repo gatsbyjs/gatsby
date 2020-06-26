@@ -209,7 +209,7 @@ When using Theme UI in a Gatsby theme, it's important to understand how the `gat
 
 If multiple themes are installed in the same site, the one defined last in your `gatsby-config.js` file's `plugins` array will take precedence.
 
-To extend an existing Theme UI configuration from a theme you'll need to find out how the base theme is passing styles. If it's using a `preset`, as the `gatsby-theme-blog`, any shadowed files are merged automatically. This can be discovered by looking at the theme source code in `node_modules` or on GitHub.
+To extend an existing Theme UI configuration from a theme you'll need to find out how the base theme is passing styles. If it's using a `preset`, as the `gatsby-theme-blog` package does, any shadowed files are merged automatically. This can be discovered by looking at the theme source code in `node_modules` or on GitHub.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
 export default {
