@@ -1,5 +1,4 @@
 const visit = require(`unist-util-visit`)
-const _ = require(`lodash`)
 const debug = require(`debug`)(`get-source-plugins-as-remark-plugins`)
 const { interopDefault } = require(`./interop-default`)
 
@@ -44,7 +43,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   // return list of remarkPlugins
   gatsbyRemarkPlugins.forEach(plugin => {
     const importedPlugin = interopDefault(require(plugin.resolve))
-    if (!_.isFunction(importedPlugin)) {
+    if (typeof importedPlugin !== `function`) {
       debug(`userPlugins: filtering out`, plugin)
       return
     }
