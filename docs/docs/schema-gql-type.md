@@ -116,7 +116,7 @@ If the foreign key value is an array of IDs, then instead of returning a Field d
 
 #### Plain object or value field
 
-If the field was not handled as a mapping or foreign key reference, then it must be a normal every day field. E.g. a scalar, string, or plain object. These cases are handled by [inferGraphQLType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L38).
+If the field was not handled as a mapping or foreign key reference, then it must be a normal every day field. E.g. a scalar, string, or plain object. These cases are handled by [`inferGraphQLType`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L38).
 
 The core of this step creates a GraphQL Field object, where the type is inferred directly via the result of `typeof`. E.g. `typeof(value) === 'boolean'` would result in type `GraphQLBoolean`. Since these are simple values, resolvers are not defined (graphql-js takes care of that for us).
 
