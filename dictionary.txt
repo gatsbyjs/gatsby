@@ -1017,7 +1017,6 @@ incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromMapping
 inferGraphQLType
 InfluxData
 infrastructure-centric
