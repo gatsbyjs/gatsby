@@ -24,7 +24,7 @@ To build the user interface for searching, this tutorial will use [React Instant
 
 ## Setting up the project
 
-This guide will show you how to set up a search based on the [Gatsby starter](https://www.gatsbyjs.org/starters/gatsbyjs/gatsby-starter-default/). You can of course base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
+This guide will show you how to set up a search based on the [Gatsby starter](/starters/gatsbyjs/gatsby-starter-default/). You can of course base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
 
 Create a new site using
 
