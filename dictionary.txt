@@ -1020,7 +1020,6 @@ IndexedDB
 inferFromFieldName
 inferFromMapping
 inferGraphQLType
-inferInputObjectStrctureFromNodes
 inferInputObjectStructureFromFields
 inferObjectStructureFromNodes
 InfluxData
