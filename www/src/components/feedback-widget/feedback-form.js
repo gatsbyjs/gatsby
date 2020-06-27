@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
-import styled from "@emotion/styled"
 import WidgetWrapper from "./widget-wrapper"
 import { SubmitButton, CloseButton } from "./buttons"
 import { themedInput, themedInputFocus } from "../../utils/styles"
@@ -15,23 +14,39 @@ import {
   MdRefresh,
 } from "react-icons/md"
 
-const Form = styled(`form`)`
-  margin-bottom: 0;
-`
+const Form = ({ children }) => (
+  <form
+    sx={{
+      mb: 0,
+    }}
+  >
+    {children}
+  </form>
+)
 
-const Fieldset = styled(`fieldset`)`
-  border: 0;
-  margin: 0 0 ${p => p.theme.space[4]};
-  padding: 0;
-`
+const Fieldset = ({ children }) => (
+  <fieldset
+    sx={{
+      border: 0,
+      p: 0,
+      mb: 4,
+    }}
+  >
+    {children}
+  </fieldset>
+)
 
-const Legend = styled(`legend`)`
-  display: inline-block;
-  font-size: ${p => p.theme.fontSizes[1]};
-  margin-bottom: ${p => p.theme.space[4]};
-  padding: 0 ${p => p.theme.space[2]};
-  text-align: center;
-`
+const Legend = ({ children }) = (
+  <legend
+    sx={{
+      textAlign: `center`,
+      fontSize: 1,
+      mb: 4,
+    }}
+  >
+    {children}
+  </legend>
+))
 
 const Rating = ({ children }) => (
   <div
@@ -59,14 +74,19 @@ const Rating = ({ children }) => (
   </div>
 )
 
-const TextareaLabel = styled(`label`)`
-  font-size: ${p => p.theme.fontSizes[1]};
-  font-weight: bold;
-
-  span {
-    font-weight: normal;
-  }
-`
+const TextareaLabel = ({ children }) => (
+  <label
+    sx={{
+      fontSize: 1,
+      fontWeight: `bold`,
+      span: {
+        fontWeight: `normal`,
+      },
+    }}
+  >
+    {children}
+  </label>
+)
 
 const textareaStyles = {
   ...themedInput,
@@ -79,7 +99,7 @@ const textareaStyles = {
   overflowY: `scroll`,
 }
 
-const FeedbackForm = ({
+export default function FeedbackForm({
   handleSubmit,
   handleClose,
   handleChange,
@@ -88,77 +108,81 @@ const FeedbackForm = ({
   rating,
   comment,
   submitting,
-}) => (
-  <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
-    <Form
-      onSubmit={handleSubmit}
-      className={`${submitting ? `submitting` : ``}`}
-    >
-      <Title ref={titleRef} tabIndex="-1">
-        Was this doc helpful to you?
-      </Title>
-      <Fieldset className="ratings" disabled={submitting}>
-        <Legend>Rate your experience</Legend>
-        <Rating>
-          <RatingOption
-            iconLabel="frowning face"
-            icon={MdSentimentDissatisfied}
-            ratingText="poor"
-            ratingValue="1"
-            checked={rating === 1}
-            handleChange={handleChange}
+}) {
+  return (
+    <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
+      <Form
+        onSubmit={handleSubmit}
+        className={`${submitting ? `submitting` : ``}`}
+      >
+        <Title ref={titleRef} tabIndex="-1">
+          Was this doc helpful to you?
+        </Title>
+        <Fieldset className="ratings" disabled={submitting}>
+          <Legend>Rate your experience</Legend>
+          <Rating>
+            <RatingOption
+              iconLabel="frowning face"
+              icon={MdSentimentDissatisfied}
+              ratingText="poor"
+              ratingValue="1"
+              checked={rating === 1}
+              handleChange={handleChange}
+            />
+            <RatingOption
+              iconLabel="neutral face"
+              icon={MdSentimentNeutral}
+              ratingText="fine"
+              ratingValue="2"
+              checked={rating === 2}
+              handleChange={handleChange}
+            />
+            <RatingOption
+              iconLabel="smiling face"
+              icon={MdSentimentVerySatisfied}
+              ratingText="great"
+              ratingValue="3"
+              checked={rating === 3}
+              handleChange={handleChange}
+            />
+          </Rating>
+        </Fieldset>
+        <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
+          Your comments <span>(optional):</span>
+          <textarea
+            sx={textareaStyles}
+            value={comment}
+            onChange={handleCommentChange}
+            disabled={submitting}
           />
-          <RatingOption
-            iconLabel="neutral face"
-            icon={MdSentimentNeutral}
-            ratingText="fine"
-            ratingValue="2"
-            checked={rating === 2}
-            handleChange={handleChange}
-          />
-          <RatingOption
-            iconLabel="smiling face"
-            icon={MdSentimentVerySatisfied}
-            ratingText="great"
-            ratingValue="3"
-            checked={rating === 3}
-            handleChange={handleChange}
-          />
-        </Rating>
-      </Fieldset>
-      <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
-        Your comments <span>(optional):</span>
-        <textarea
-          sx={textareaStyles}
-          value={comment}
-          onChange={handleCommentChange}
-          disabled={submitting}
-        />
-      </TextareaLabel>
-      <Actions>
-        <CloseButton onClick={handleClose} disabled={submitting} type="button">
-          Cancel{` `}
-          <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
-        </CloseButton>
-        <SubmitButton
-          type="submit"
-          className={submitting && `submitting`}
-          disabled={submitting}
-        >
-          {submitting ? (
-            <Fragment>
-              Sending, wait <MdRefresh />
-            </Fragment>
-          ) : (
-            <Fragment>
-              Send feedback
-              <MdSend />
-            </Fragment>
-          )}
-        </SubmitButton>
-      </Actions>
-    </Form>
-  </WidgetWrapper>
-)
-
-export default FeedbackForm
+        </TextareaLabel>
+        <Actions>
+          <CloseButton
+            onClick={handleClose}
+            disabled={submitting}
+            type="button"
+          >
+            Cancel{` `}
+            <ScreenReaderText className="sr-only">this widget</ScreenReaderText>
+          </CloseButton>
+          <SubmitButton
+            type="submit"
+            className={submitting && `submitting`}
+            disabled={submitting}
+          >
+            {submitting ? (
+              <Fragment>
+                Sending, wait <MdRefresh />
+              </Fragment>
+            ) : (
+              <Fragment>
+                Send feedback
+                <MdSend />
+              </Fragment>
+            )}
+          </SubmitButton>
+        </Actions>
+      </Form>
+    </WidgetWrapper>
+  )
+}
