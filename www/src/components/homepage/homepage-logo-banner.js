@@ -11,8 +11,8 @@ const Section = props => (
     sx={{
       borderBottom: t => `1px solid ${t.colors.ui.border}`,
       overflow: `hidden`,
-      py: [5, null, null, null, null, null, 7]
-      my: [null, null, null, null, null, "-1px"],
+      py: [5, null, null, null, null, null, 7],
+      my: [null, null, null, null, null, `-1px`],
       width: `100%`,
     }}
   />
