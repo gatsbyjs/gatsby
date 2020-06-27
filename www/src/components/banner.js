@@ -28,17 +28,15 @@ const InnerContainer = ({ children }) => (
 const Content = ({ children }) => (
   <div
     sx={{
-      color: t => t.colors.whiteFade[80],
-      fontFamily: t => t.fonts.heading,
-      px: t => t.space[6],
+      color: `whiteFade.80`,
+      fontFamily: `heading`,
+      px: 6,
       whiteSpace: `nowrap`,
       a: {
-        color: t => t.colors.white,
+        color: `white`,
         borderBottom: t => `1px solid ${t.colors.white}`,
-
         "&:hover": {
-          color: t => t.colors.white,
-          borderBottom: t => `1px solid ${t.colors.white}`,
+          borderBottom: 0,
         },
       },
     }}
