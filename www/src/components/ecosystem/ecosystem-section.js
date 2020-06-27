@@ -115,7 +115,7 @@ const EcosystemSection = ({
         })}
       </Flex>
       {subTitle && <h2 sx={subtitleStyles}>{subTitle}</h2>}
-    </header sx={{ alignItems: `flex-start` }}>
+    </header>
 
     {featuredItems && featuredItems.length > 0 && (
       <EcosystemFeaturedItems
