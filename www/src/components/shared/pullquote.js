@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import React from "react"
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
@@ -25,29 +27,29 @@ function QuotationMark() {
         position: `absolute`,
         left: [8, null, null, 9],
         top: [7, null, null, `2.8rem`],
-
-        svg: {
-          fill: `purple.80`,
-          transform: [null, null, null, `scale(1.1)`],
-        },
       }}
     >
-      <QuotationMarkOrnament />
+      <QuotationMarkOrnament
+        sx={{
+          fill: `purple.80`,
+          transform: [null, null, null, `scale(1.1)`],
+        }}
+      />
     </span>
   )
 }
 
 const starColorStyle = {
-  yellow: { size: [5, null, null, `27px`], fill: `yellow.40` },
+  yellow: { size: [`20px`, null, null, `27px`], fill: `yellow.40` },
   teal: { size: `14px`, fill: `teal.40` },
-  red: { size: 3, fill: `red.60` },
+  red: { size: `12px`, fill: `red.60` },
 }
 
 const starPositionStyle = {
   yellow: [
     { left: 0, top: `1.8rem`, transform: `translateX(-50%)` },
     { right: 0, top: 7, transform: `translate(50%, 0)` },
-    { bottom: 0, right: 3, transform: `translate(0, 50%)` },
+    { bottom: 0, right: `12rem`, transform: `translate(0, 50%)` },
   ],
   teal: [
     { left: `5rem`, top: 0, transform: `translateY(-50%)` },
@@ -55,7 +57,7 @@ const starPositionStyle = {
     { right: `9rem`, top: 0, transform: `translate(0, -50%)` },
   ],
   red: [
-    { bottom: 0, right: 1, transform: `translateY(50%)` },
+    { bottom: 0, right: 11, transform: `translateY(50%)` },
     { right: `7rem`, top: 0, transform: `translate(0%, -50%)` },
     { top: 9, left: 0, transform: `translate(-50%, 0)` },
   ],
@@ -72,16 +74,16 @@ function Star({ color, order }) {
         position: `absolute`,
         width: size,
         height: size,
-
-        svg: {
-          height: `100%`,
-          width: `100%`,
-          fill,
-        },
         ...positionStyle,
       }}
     >
-      <StarOrnament />
+      <StarOrnament
+        sx={{
+          height: `100%`,
+          width: `100%`,
+          fill,
+        }}
+      />
     </span>
   )
 }
@@ -116,6 +118,7 @@ export default function Pullquote({ citation, narrow = false, children }) {
         px: [9, null, null, 10],
         position: `relative`,
         textIndent: [t => t.space[7], null, null, `1.8rem`],
+        lineHeight: [null, null, null, `loose`],
         my: 8,
         mx: [null, null, null, narrow ? 0 : `-3.5rem`],
         // Needed for overriding typography.js style "p *:last-child {"""
@@ -123,7 +126,6 @@ export default function Pullquote({ citation, narrow = false, children }) {
           my: 8,
           mx: [null, null, null, narrow ? 0 : `-3.5rem`],
         },
-        lineHeight: [null, null, null, `loose`],
       }}
     >
       {children}
