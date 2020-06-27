@@ -38,7 +38,7 @@ function QuotationMark() {
   )
 }
 
-const starColorStyle = {
+const starStyle = {
   yellow: { size: [`20px`, null, null, `27px`], fill: `yellow.40` },
   teal: { size: `14px`, fill: `teal.40` },
   red: { size: `12px`, fill: `red.60` },
@@ -62,13 +62,18 @@ const starPositionStyles = [
   },
 ]
 
-const starTransforms = {
-  left: [-0.5, 0],
-  right: [0.5, 0],
-  top: [0, -0.5],
-  bottom: [0, 0.5],
+// [X, Y] amount to translate the star for each side (in %)
+const starTranslate = {
+  left: [-50, 0],
+  right: [50, 0],
+  top: [0, -50],
+  bottom: [0, 50],
 }
 
+// Get the cross axis of the side the star is on to calculate the offset.
+// For example, is a star is on the left side, the star should be offset from the top.
+// If `fromEnd` is true, the star will be aligned according to the end instead of the start.
+// For example, if `side === left`, then the star is offset from the bottom instead of the top.
 function crossAxis(side, fromEnd) {
   if ([`left`, `right`].includes(side)) {
     return fromEnd ? `bottom` : `top`
@@ -78,9 +83,9 @@ function crossAxis(side, fromEnd) {
 }
 
 function Star({ color, order }) {
-  const { size, fill } = starColorStyle[color]
+  const { size, fill } = starStyle[color]
   const { side, offset, fromEnd } = starPositionStyles[order][color]
-  const transform = starTransforms[side]
+  const translate = starTranslate[side]
 
   return (
     <span
@@ -91,7 +96,7 @@ function Star({ color, order }) {
         height: size,
         [side]: 0,
         [crossAxis(side, fromEnd)]: offset,
-        transform: `translate(${transform[0] * 100}%,${transform[1] * 100}%)`,
+        transform: `translate(${translate[0]}%,${translate[1]}%)`,
       }}
     >
       <StarOrnament sx={{ height: `100%`, width: `100%`, fill }} />
@@ -102,8 +107,10 @@ function Star({ color, order }) {
 let instancesCounter = -1
 
 function Stars() {
+  // We want to vary the placement of the stars so consecutive pullquotes
+  // have stars in different positions.
   instancesCounter += 1
-  const order = instancesCounter % 3
+  const order = instancesCounter % starPositionStyles.length
   return (
     <div>
       {[`yellow`, `red`, `teal`].map(color => (
@@ -113,6 +120,16 @@ function Stars() {
   )
 }
 
+/**
+ * A component used to call out a quote in the blog.
+ * It applies borders and styles that make a section of the content pop out to readers.
+ *
+ * @param citation the reference of the person or entity that made the quoted statement
+ * @param children the content to be quoted
+ * @param narrow
+ * Keep the pullquote inside the parent container.
+ * Should be used if using the pullquote in the docs to make sure it stays inside its container.
+ */
 export default function Pullquote({ citation, narrow = false, children }) {
   return (
     <blockquote
