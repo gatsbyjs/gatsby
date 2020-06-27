@@ -40,10 +40,6 @@ const ecosystemSectionRootStyles = {
   },
 }
 
-export const Header = props => (
-  <header {...props} sx={{ alignItems: `flex-start` }} />
-)
-
 const titleStyles = {
   alignItems: `center`,
   color: `heading`,
@@ -101,7 +97,7 @@ const EcosystemSection = ({
   ...rest
 }) => (
   <section sx={ecosystemSectionRootStyles} {...rest}>
-    <Header>
+    <header sx={{ alignItems: `flex-start` }}>
       <h1 sx={titleStyles}>
         {icon && <span sx={iconStyles}>{icon}</span>}
         <span>{title}</span>
@@ -119,7 +115,7 @@ const EcosystemSection = ({
         })}
       </Flex>
       {subTitle && <h2 sx={subtitleStyles}>{subTitle}</h2>}
-    </Header>
+    </header sx={{ alignItems: `flex-start` }}>
 
     {featuredItems && featuredItems.length > 0 && (
       <EcosystemFeaturedItems
