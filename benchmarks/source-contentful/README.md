@@ -32,3 +32,10 @@ Use following approach to fix those:
 1. Copy `.env.example` to `.env.production`
 2. Set `BENCHMARK_CONTENTFUL_SPACE_ID` and `BENCHMARK_CONTENTFUL_ACCESS_TOKEN` variables
 3. Run `yarn build`
+
+## Update data
+
+1. Copy `.env.example` to `.env.production`
+2. Set `BENCHMARK_CONTENTFUL_SPACE_ID` and `BENCHMARK_CONTENTFUL_MANAGEMENT_TOKEN`
+   variables
+3. Run `yarn data-update`

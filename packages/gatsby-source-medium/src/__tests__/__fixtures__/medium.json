@@ -1,0 +1,1889 @@
+{
+  "success": true,
+  "payload": {
+    "user": {
+      "userId": "960fcb3074bd",
+      "name": "Antoine Caron",
+      "username": "Slashgear_",
+      "createdAt": 1498119347986,
+      "imageId": "0*go4EskWOrll345ED.jpg",
+      "backgroundImageId": "",
+      "bio": "Web Maker at #Bedrock and teacher in engineering school.",
+      "twitterScreenName": "Slashgear_",
+      "allowNotes": 1,
+      "mediumMemberAt": 0,
+      "isWriterProgramEnrolled": true,
+      "isSuspended": false,
+      "isMembershipTrialEligible": true,
+      "optOutOfIceland": false,
+      "type": "User"
+    },
+    "streamItems": [
+      {
+        "createdAt": 1589265262761,
+        "heading": {
+          "text": "Latest",
+          "heading": {
+            "fallbackTitle": "Latest",
+            "headingBasic": {
+              "title": "Latest"
+            },
+            "headingType": "headingBasic"
+          }
+        },
+        "randomId": "85173f8477e0",
+        "itemType": "heading",
+        "type": "StreamItem"
+      },
+      {
+        "createdAt": 1589265262761,
+        "postPreview": {
+          "postId": "3b7ee86fb4e4",
+          "postSuggestionReasons": [
+            {
+              "reason": 28
+            }
+          ]
+        },
+        "randomId": "e8c0e05d7a9e",
+        "itemType": "postPreview",
+        "type": "StreamItem"
+      },
+      {
+        "createdAt": 1589265262761,
+        "postPreview": {
+          "postId": "9bccb38fb7ae",
+          "postSuggestionReasons": [
+            {
+              "reason": 28
+            }
+          ]
+        },
+        "randomId": "e39cbc73cba0",
+        "itemType": "postPreview",
+        "type": "StreamItem"
+      },
+      {
+        "createdAt": 1589265262761,
+        "postPreview": {
+          "postId": "5f9a0794a746",
+          "postSuggestionReasons": [
+            {
+              "reason": 28
+            }
+          ]
+        },
+        "randomId": "40581b339456",
+        "itemType": "postPreview",
+        "type": "StreamItem"
+      }
+    ],
+    "userMeta": {
+      "numberOfPostsPublished": 8,
+      "userId": "960fcb3074bd",
+      "userSuggestionReason": {
+        "followeesWhoFollow": {
+          "users": []
+        },
+        "reason": "followeesWhoFollow"
+      },
+      "collectionIds": [
+        "5d9d5fd3ea4d"
+      ],
+      "authorTags": [
+        {
+          "slug": "javascript",
+          "name": "JavaScript",
+          "postCount": 129350,
+          "metadata": {
+            "postCount": 129350,
+            "coverImage": {
+              "id": "0*WLmz8VGk7Vm5NjbW",
+              "originalWidth": 1000,
+              "originalHeight": 750,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "agile",
+          "name": "Agile",
+          "postCount": 41278,
+          "metadata": {
+            "postCount": 41278,
+            "coverImage": {
+              "id": "1*Nmj8t3ZWU2extgINBtEqag.jpeg",
+              "originalWidth": 1200,
+              "originalHeight": 628,
+              "isFeatured": true,
+              "alt": "Photograph by theceomagazine.com"
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "react",
+          "name": "React",
+          "postCount": 38274,
+          "metadata": {
+            "postCount": 38274,
+            "coverImage": {
+              "id": "1*PXEGRfrXgM0-MJ7aXafx9A.png",
+              "originalWidth": 2708,
+              "originalHeight": 1523,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "schools",
+          "name": "Schools",
+          "postCount": 26544,
+          "metadata": {
+            "postCount": 26544,
+            "coverImage": {
+              "id": "1*roEt7LoX83qmWk6S9yt9yg.jpeg",
+              "originalWidth": 5616,
+              "originalHeight": 3744,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "open-source",
+          "name": "Open Source",
+          "postCount": 23991,
+          "metadata": {
+            "postCount": 23991,
+            "coverImage": {
+              "id": "1*mSE6ialQ-9TcGUz5ts_FMA.png",
+              "originalWidth": 1600,
+              "originalHeight": 666,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "testing",
+          "name": "Testing",
+          "postCount": 16734,
+          "metadata": {
+            "postCount": 16734,
+            "coverImage": {
+              "id": "1*YDPT0phA8A7LhGDT7p2zkg.png",
+              "originalWidth": 1920,
+              "originalHeight": 1080,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "conference",
+          "name": "Conference",
+          "postCount": 15995,
+          "metadata": {
+            "postCount": 15995,
+            "coverImage": {
+              "id": "1*XjZWoQcFwJ3dX8Mfhn6gYw.jpeg",
+              "originalWidth": 2604,
+              "originalHeight": 3299,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "performance",
+          "name": "Performance",
+          "postCount": 11712,
+          "metadata": {
+            "postCount": 11712,
+            "coverImage": {
+              "id": "0*66bsG8YlJm_rw7Bb",
+              "originalWidth": 2400,
+              "originalHeight": 1658,
+              "isFeatured": true,
+              "alt": "A woman has her feet up in a hammock.",
+              "unsplashPhotoId": "Hcmgz1OQa_I"
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "web",
+          "name": "Web",
+          "postCount": 10781,
+          "metadata": {
+            "postCount": 10781,
+            "coverImage": {
+              "id": "1*8yz3hkO3ynHV2qYGARynJg.jpeg",
+              "originalWidth": 5472,
+              "originalHeight": 3648,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "teachers",
+          "name": "Teachers",
+          "postCount": 8123,
+          "metadata": {
+            "postCount": 8123,
+            "coverImage": {
+              "id": "0*4e5p4ffVnzZVpv64",
+              "originalWidth": 4898,
+              "originalHeight": 3265,
+              "isFeatured": true,
+              "unsplashPhotoId": "LndcUO8Z-IM"
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "redux",
+          "name": "Redux",
+          "postCount": 5849,
+          "metadata": {
+            "postCount": 5849,
+            "coverImage": {
+              "id": "0*D2DhhUiXrcvAFNwt.jpg",
+              "originalWidth": 1920,
+              "originalHeight": 1284,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "optimization",
+          "name": "Optimization",
+          "postCount": 4171,
+          "metadata": {
+            "postCount": 4171,
+            "coverImage": {
+              "id": "1*K6GST4_K5matVCgPC9tbGA.png",
+              "originalWidth": 1024,
+              "originalHeight": 576,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "webpack",
+          "name": "Webpack",
+          "postCount": 3198,
+          "metadata": {
+            "postCount": 3198,
+            "coverImage": {
+              "id": "1*eG_VOQ5_rWSGFwdaR47tyQ.png",
+              "originalWidth": 500,
+              "originalHeight": 281,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "learn",
+          "name": "Learn",
+          "postCount": 2165,
+          "metadata": {
+            "postCount": 2165,
+            "coverImage": {
+              "id": "1*ZlSdpN-c5AiLT5YmwEH5oA.jpeg",
+              "originalWidth": 1280,
+              "originalHeight": 720,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "javascript-tips",
+          "name": "Javascript Tips",
+          "postCount": 2053,
+          "metadata": {
+            "postCount": 2053,
+            "coverImage": {
+              "id": "0*kWKzMGOOJT_mxLSo",
+              "originalWidth": 5184,
+              "originalHeight": 3456,
+              "isFeatured": true,
+              "unsplashPhotoId": "MSN8TFhJ0is"
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "dev",
+          "name": "Dev",
+          "postCount": 1451,
+          "metadata": {
+            "postCount": 1451,
+            "coverImage": {
+              "id": "0*hNFAcvu1KEcr6c7D",
+              "originalWidth": 4032,
+              "originalHeight": 3024,
+              "isFeatured": true,
+              "unsplashPhotoId": "Vy2cHqm0mCs"
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "tribute",
+          "name": "Tribute",
+          "postCount": 1180,
+          "metadata": {
+            "postCount": 1180,
+            "coverImage": {
+              "id": "1*SFuo1OJ8QRY5FzR7Zv7wMw@2x.jpeg",
+              "originalWidth": 4032,
+              "originalHeight": 3024,
+              "backgroundSize": "",
+              "filter": "",
+              "isFeatured": false,
+              "externalSrc": "",
+              "focusPercentX": -1,
+              "focusPercentY": -1,
+              "alt": "",
+              "repairedAt": 0,
+              "unsplashPhotoId": ""
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "a11y",
+          "name": "A11y",
+          "postCount": 556,
+          "metadata": {
+            "postCount": 556,
+            "coverImage": {
+              "id": "1*YpZvy_XLgpPe2GTfYC-xUg.png",
+              "originalWidth": 1296,
+              "originalHeight": 962,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "lyon",
+          "name": "Lyon",
+          "postCount": 504,
+          "metadata": {
+            "postCount": 504,
+            "coverImage": {
+              "id": "1*zj_9rfs2-NOQUpOkySY9aw.jpeg",
+              "originalWidth": 4000,
+              "originalHeight": 6000,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "teacher-voice",
+          "name": "Teacher Voice",
+          "postCount": 353,
+          "metadata": {
+            "postCount": 353,
+            "coverImage": {
+              "id": "1*QHpmiEH3QaZsFQOlu9h1ng.jpeg",
+              "originalWidth": 330,
+              "originalHeight": 649,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "teach",
+          "name": "Teach",
+          "postCount": 224,
+          "metadata": {
+            "postCount": 224,
+            "coverImage": {
+              "id": "0*4sdXvJQGDjJPZ5wA",
+              "originalWidth": 2304,
+              "originalHeight": 3456,
+              "isFeatured": true,
+              "unsplashPhotoId": "D1aHq2D42UQ"
+            }
+          },
+          "type": "Tag"
+        },
+        {
+          "slug": "lotr",
+          "name": "Lotr",
+          "postCount": 35,
+          "metadata": {
+            "postCount": 35,
+            "coverImage": {
+              "id": "1*46seKbwA_Ty_4mMlqIlNzw.jpeg",
+              "originalWidth": 297,
+              "originalHeight": 482,
+              "isFeatured": true
+            }
+          },
+          "type": "Tag"
+        }
+      ],
+      "featuredPostId": "",
+      "topWriterInTags": [],
+      "type": "UserMeta"
+    },
+    "userNavItemList": {
+      "userNavItems": [
+        {
+          "title": "Profile",
+          "url": "https://medium.com/@Slashgear_",
+          "systemItem": {
+            "systemType": 1
+          },
+          "navType": "systemItem"
+        },
+        {
+          "title": "Claps",
+          "url": "https://medium.com/@Slashgear_/has-recommended",
+          "systemItem": {
+            "systemType": 4
+          },
+          "navType": "systemItem"
+        },
+        {
+          "title": "Highlights",
+          "url": "https://medium.com/@Slashgear_/highlights",
+          "systemItem": {
+            "systemType": 5
+          },
+          "navType": "systemItem"
+        },
+        {
+          "title": "Responses",
+          "url": "https://medium.com/@Slashgear_/responses",
+          "systemItem": {
+            "systemType": 3
+          },
+          "navType": "systemItem"
+        }
+      ]
+    },
+    "userNavActiveIndex": 0,
+    "profileTypeName": "overview",
+    "isStandaloneEditPage": false,
+    "references": {
+      "User": {
+        "960fcb3074bd": {
+          "userId": "960fcb3074bd",
+          "name": "Antoine Caron",
+          "username": "Slashgear_",
+          "createdAt": 1498119347986,
+          "imageId": "0*go4EskWOrll345ED.jpg",
+          "backgroundImageId": "",
+          "bio": "Web Maker at #Bedrock and teacher in engineering school.",
+          "twitterScreenName": "Slashgear_",
+          "allowNotes": 1,
+          "mediumMemberAt": 0,
+          "isWriterProgramEnrolled": true,
+          "isSuspended": false,
+          "isMembershipTrialEligible": true,
+          "optOutOfIceland": false,
+          "type": "User"
+        }
+      },
+      "Post": {
+        "3b7ee86fb4e4": {
+          "id": "3b7ee86fb4e4",
+          "versionId": "de4e30839a86",
+          "creatorId": "960fcb3074bd",
+          "homeCollectionId": "",
+          "title": "How to boost the speed of your webpack build?",
+          "detectedLanguage": "en",
+          "latestVersion": "de4e30839a86",
+          "latestPublishedVersion": "de4e30839a86",
+          "hasUnpublishedEdits": false,
+          "latestRev": 90,
+          "createdAt": 1589118434270,
+          "updatedAt": 1589118565013,
+          "acceptedAt": 0,
+          "firstPublishedAt": 1589118564834,
+          "latestPublishedAt": 1589118564834,
+          "vote": false,
+          "experimentalCss": "",
+          "displayAuthor": "",
+          "content": {
+            "subtitle": "How did I cut in half my project’s webpack build time ?",
+            "postDisplay": {
+              "coverless": true
+            }
+          },
+          "virtuals": {
+            "allowNotes": true,
+            "previewImage": {
+              "imageId": "0*7QRoKeOFmFUza1Y1.jpg",
+              "filter": "",
+              "backgroundSize": "",
+              "originalWidth": 1000,
+              "originalHeight": 667,
+              "strategy": "resample",
+              "height": 0,
+              "width": 0
+            },
+            "wordCount": 1137,
+            "imageCount": 2,
+            "readingTime": 4.673899371069183,
+            "subtitle": "How did I cut in half my project’s webpack build time ?",
+            "userPostRelation": {
+              "userId": "960fcb3074bd",
+              "postId": "3b7ee86fb4e4",
+              "readAt": 1589118564894,
+              "readLaterAddedAt": 0,
+              "votedAt": 0,
+              "collaboratorAddedAt": 0,
+              "notesAddedAt": 0,
+              "subscribedAt": 0,
+              "lastReadSectionName": "",
+              "lastReadVersionId": "",
+              "lastReadAt": 0,
+              "lastReadParagraphName": "",
+              "lastReadPercentage": 0,
+              "viewedAt": 1589118571527,
+              "presentedCountInResponseManagement": 0,
+              "clapCount": 0,
+              "seriesUpdateNotifsOptedInAt": 0,
+              "queuedAt": 0,
+              "seriesFirstViewedAt": 0,
+              "presentedCountInStream": 3,
+              "seriesLastViewedAt": 0,
+              "audioProgressSec": 0
+            },
+            "usersBySocialRecommends": [],
+            "noIndex": false,
+            "recommends": 0,
+            "isBookmarked": false,
+            "tags": [
+              {
+                "slug": "webpack",
+                "name": "Webpack",
+                "postCount": 3198,
+                "metadata": {
+                  "postCount": 3198,
+                  "coverImage": {
+                    "id": "1*eG_VOQ5_rWSGFwdaR47tyQ.png",
+                    "originalWidth": 500,
+                    "originalHeight": 281,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "optimization",
+                "name": "Optimization",
+                "postCount": 4171,
+                "metadata": {
+                  "postCount": 4171,
+                  "coverImage": {
+                    "id": "1*K6GST4_K5matVCgPC9tbGA.png",
+                    "originalWidth": 1024,
+                    "originalHeight": 576,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "performance",
+                "name": "Performance",
+                "postCount": 11712,
+                "metadata": {
+                  "postCount": 11712,
+                  "coverImage": {
+                    "id": "0*66bsG8YlJm_rw7Bb",
+                    "originalWidth": 2400,
+                    "originalHeight": 1658,
+                    "isFeatured": true,
+                    "alt": "A woman has her feet up in a hammock.",
+                    "unsplashPhotoId": "Hcmgz1OQa_I"
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "web",
+                "name": "Web",
+                "postCount": 10781,
+                "metadata": {
+                  "postCount": 10781,
+                  "coverImage": {
+                    "id": "1*8yz3hkO3ynHV2qYGARynJg.jpeg",
+                    "originalWidth": 5472,
+                    "originalHeight": 3648,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              }
+            ],
+            "socialRecommendsCount": 0,
+            "responsesCreatedCount": 0,
+            "links": {
+              "entries": [
+                {
+                  "url": "https://en.wikipedia.org/wiki/Pareto_principle",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://webpack.js.org/guides/build-performance/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://webpack-workshop.netlify.app/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://tech.m6web.fr/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://www.npmjs.com/package/speed-measure-webpack-plugin",
+                  "alts": [],
+                  "httpStatus": 200
+                }
+              ],
+              "version": "0.3",
+              "generatedAt": 1589118566064
+            },
+            "isLockedPreviewOnly": false,
+            "metaDescription": "",
+            "totalClapCount": 0,
+            "sectionCount": 1,
+            "readingList": 0,
+            "topics": [
+              {
+                "topicId": "63c6f1f93ee",
+                "slug": "javascript",
+                "createdAt": 1493945704961,
+                "deletedAt": 0,
+                "image": {
+                  "id": "1*5UyyDJ1ESD11yQNd1UVAaQ@2x.jpeg",
+                  "originalWidth": 5472,
+                  "originalHeight": 3648
+                },
+                "name": "Javascript",
+                "description": "An ode to code.",
+                "relatedTopics": [],
+                "visibility": 1,
+                "relatedTags": [],
+                "relatedTopicIds": [],
+                "type": "Topic"
+              },
+              {
+                "topicId": "decb52b64abf",
+                "slug": "programming",
+                "createdAt": 1493934116328,
+                "deletedAt": 0,
+                "image": {
+                  "id": "1*iPa136b1cGEO7lvoXg6uHQ@2x.jpeg",
+                  "originalWidth": 6016,
+                  "originalHeight": 4016
+                },
+                "name": "Programming",
+                "description": "The good, the bad, the buggy.",
+                "relatedTopics": [],
+                "visibility": 1,
+                "relatedTags": [],
+                "relatedTopicIds": [],
+                "type": "Topic"
+              }
+            ]
+          },
+          "coverless": true,
+          "slug": "how-to-boost-the-speed-of-your-webpack-build",
+          "translationSourcePostId": "",
+          "translationSourceCreatorId": "",
+          "isApprovedTranslation": false,
+          "inResponseToPostId": "",
+          "inResponseToRemovedAt": 0,
+          "isTitleSynthesized": false,
+          "allowResponses": true,
+          "importedUrl": "",
+          "importedPublishedAt": 0,
+          "visibility": 0,
+          "uniqueSlug": "how-to-boost-the-speed-of-your-webpack-build-3b7ee86fb4e4",
+          "previewContent": {
+            "bodyModel": {
+              "paragraphs": [
+                {
+                  "name": "previewImage",
+                  "type": 4,
+                  "text": "",
+                  "layout": 10,
+                  "metadata": {
+                    "id": "0*7QRoKeOFmFUza1Y1.jpg",
+                    "originalWidth": 1000,
+                    "originalHeight": 667,
+                    "isFeatured": true
+                  }
+                },
+                {
+                  "name": "6c35",
+                  "type": 3,
+                  "text": "How to boost the speed of your webpack build?",
+                  "markups": [],
+                  "alignment": 1
+                },
+                {
+                  "name": "c708",
+                  "type": 3,
+                  "text": "How did I cut in half my project’s webpack build time ?",
+                  "markups": [],
+                  "alignment": 1
+                }
+              ],
+              "sections": [
+                {
+                  "startIndex": 0
+                }
+              ]
+            },
+            "isFullContent": false,
+            "subtitle": "How did I cut in half my project’s webpack build time ?"
+          },
+          "license": 0,
+          "inResponseToMediaResourceId": "",
+          "canonicalUrl": "",
+          "approvedHomeCollectionId": "",
+          "newsletterId": "",
+          "webCanonicalUrl": "https://slashgear.github.io/hunting-webpack-performances/",
+          "mediumUrl": "",
+          "migrationId": "",
+          "notifyFollowers": true,
+          "notifyTwitter": false,
+          "notifyFacebook": false,
+          "responseHiddenOnParentPostAt": 0,
+          "isSeries": false,
+          "isSubscriptionLocked": false,
+          "seriesLastAppendedAt": 0,
+          "audioVersionDurationSec": 0,
+          "sequenceId": "",
+          "isEligibleForRevenue": false,
+          "isBlockedFromHightower": false,
+          "deletedAt": 0,
+          "lockedPostSource": 0,
+          "hightowerMinimumGuaranteeStartsAt": 0,
+          "hightowerMinimumGuaranteeEndsAt": 0,
+          "featureLockRequestAcceptedAt": 0,
+          "mongerRequestType": 1,
+          "layerCake": 0,
+          "socialTitle": "",
+          "socialDek": "",
+          "editorialPreviewTitle": "",
+          "editorialPreviewDek": "",
+          "curationEligibleAt": 1589118563898,
+          "isProxyPost": false,
+          "proxyPostFaviconUrl": "",
+          "proxyPostProviderName": "",
+          "proxyPostType": 0,
+          "isSuspended": false,
+          "isLimitedState": false,
+          "seoTitle": "",
+          "previewContent2": {
+            "bodyModel": {
+              "paragraphs": [
+                {
+                  "name": "6c35",
+                  "type": 3,
+                  "text": "How to boost the speed of your webpack build?",
+                  "markups": []
+                },
+                {
+                  "name": "1bf7",
+                  "type": 4,
+                  "text": "",
+                  "markups": [],
+                  "layout": 1,
+                  "metadata": {
+                    "id": "0*7QRoKeOFmFUza1Y1.jpg",
+                    "originalWidth": 1000,
+                    "originalHeight": 667,
+                    "isFeatured": true
+                  }
+                },
+                {
+                  "name": "c708",
+                  "type": 3,
+                  "text": "How did I cut in half my project’s webpack build time ?",
+                  "markups": []
+                },
+                {
+                  "name": "c771",
+                  "type": 1,
+                  "text": "Who never complained about the infinite duration of a webpack build on a project ? I’m currently working on a big web application coded in React/Redux with server side…",
+                  "markups": [
+                    {
+                      "type": 3,
+                      "start": 250,
+                      "end": 265,
+                      "href": "https://tech.m6web.fr/",
+                      "title": "",
+                      "rel": "",
+                      "anchorType": 0
+                    }
+                  ]
+                }
+              ],
+              "sections": [
+                {
+                  "startIndex": 0
+                }
+              ]
+            },
+            "isFullContent": false,
+            "subtitle": "How did I cut in half my project’s webpack build time ?"
+          },
+          "cardType": 0,
+          "isDistributionAlertDismissed": false,
+          "isShortform": false,
+          "shortformType": 0,
+          "type": "Post"
+        },
+        "9bccb38fb7ae": {
+          "id": "9bccb38fb7ae",
+          "versionId": "c5ea6d4dcbfb",
+          "creatorId": "960fcb3074bd",
+          "homeCollectionId": "",
+          "title": "Personal tribute to “Game of Life”",
+          "detectedLanguage": "en",
+          "latestVersion": "c5ea6d4dcbfb",
+          "latestPublishedVersion": "c5ea6d4dcbfb",
+          "hasUnpublishedEdits": false,
+          "latestRev": 46,
+          "createdAt": 1589118231627,
+          "updatedAt": 1589118362632,
+          "acceptedAt": 0,
+          "firstPublishedAt": 1589118362338,
+          "latestPublishedAt": 1589118362338,
+          "vote": false,
+          "experimentalCss": "",
+          "displayAuthor": "",
+          "content": {
+            "subtitle": "This end of the school year as a college professor is not very usual. In a few days, I’m about to give my first courses to distance…",
+            "postDisplay": {
+              "coverless": true
+            }
+          },
+          "virtuals": {
+            "allowNotes": true,
+            "previewImage": {
+              "imageId": "0*d6Y5uIaW3jaJ0mcd.jpg",
+              "filter": "",
+              "backgroundSize": "",
+              "originalWidth": 1000,
+              "originalHeight": 563,
+              "strategy": "resample",
+              "height": 0,
+              "width": 0
+            },
+            "wordCount": 350,
+            "imageCount": 2,
+            "readingTime": 1.7040880503144653,
+            "subtitle": "This end of the school year as a college professor is not very usual. In a few days, I’m about to give my first courses to distance…",
+            "userPostRelation": {
+              "userId": "960fcb3074bd",
+              "postId": "9bccb38fb7ae",
+              "readAt": 1589118407830,
+              "readLaterAddedAt": 0,
+              "votedAt": 0,
+              "collaboratorAddedAt": 0,
+              "notesAddedAt": 0,
+              "subscribedAt": 0,
+              "lastReadSectionName": "",
+              "lastReadVersionId": "",
+              "lastReadAt": 0,
+              "lastReadParagraphName": "",
+              "lastReadPercentage": 0,
+              "viewedAt": 1589118369012,
+              "presentedCountInResponseManagement": 0,
+              "clapCount": 0,
+              "seriesUpdateNotifsOptedInAt": 0,
+              "queuedAt": 0,
+              "seriesFirstViewedAt": 0,
+              "presentedCountInStream": 3,
+              "seriesLastViewedAt": 0,
+              "audioProgressSec": 0
+            },
+            "usersBySocialRecommends": [],
+            "noIndex": false,
+            "recommends": 0,
+            "isBookmarked": false,
+            "tags": [
+              {
+                "slug": "teach",
+                "name": "Teach",
+                "postCount": 224,
+                "metadata": {
+                  "postCount": 224,
+                  "coverImage": {
+                    "id": "0*4sdXvJQGDjJPZ5wA",
+                    "originalWidth": 2304,
+                    "originalHeight": 3456,
+                    "isFeatured": true,
+                    "unsplashPhotoId": "D1aHq2D42UQ"
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "tribute",
+                "name": "Tribute",
+                "postCount": 1180,
+                "metadata": {
+                  "postCount": 1180,
+                  "coverImage": {
+                    "id": "1*SFuo1OJ8QRY5FzR7Zv7wMw@2x.jpeg",
+                    "originalWidth": 4032,
+                    "originalHeight": 3024,
+                    "backgroundSize": "",
+                    "filter": "",
+                    "isFeatured": false,
+                    "externalSrc": "",
+                    "focusPercentX": -1,
+                    "focusPercentY": -1,
+                    "alt": "",
+                    "repairedAt": 0,
+                    "unsplashPhotoId": ""
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "learn",
+                "name": "Learn",
+                "postCount": 2165,
+                "metadata": {
+                  "postCount": 2165,
+                  "coverImage": {
+                    "id": "1*ZlSdpN-c5AiLT5YmwEH5oA.jpeg",
+                    "originalWidth": 1280,
+                    "originalHeight": 720,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              }
+            ],
+            "socialRecommendsCount": 0,
+            "responsesCreatedCount": 0,
+            "links": {
+              "entries": [
+                {
+                  "url": "https://xkcd.com/2293/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://en.wikipedia.org/wiki/Coronavirus_disease_2019",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://wikipedia.org/wiki/John_Horton_Conway",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://game-of-life-demo.now.sh/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://github.com/PolytechLyon/isi3-mvc-gol",
+                  "alts": [],
+                  "httpStatus": 200
+                }
+              ],
+              "version": "0.3",
+              "generatedAt": 1589118362871
+            },
+            "isLockedPreviewOnly": false,
+            "metaDescription": "",
+            "totalClapCount": 0,
+            "sectionCount": 1,
+            "readingList": 0,
+            "topics": [
+              {
+                "topicId": "decb52b64abf",
+                "slug": "programming",
+                "createdAt": 1493934116328,
+                "deletedAt": 0,
+                "image": {
+                  "id": "1*iPa136b1cGEO7lvoXg6uHQ@2x.jpeg",
+                  "originalWidth": 6016,
+                  "originalHeight": 4016
+                },
+                "name": "Programming",
+                "description": "The good, the bad, the buggy.",
+                "relatedTopics": [],
+                "visibility": 1,
+                "relatedTags": [],
+                "relatedTopicIds": [],
+                "type": "Topic"
+              }
+            ]
+          },
+          "coverless": true,
+          "slug": "personal-tribute-to-game-of-life",
+          "translationSourcePostId": "",
+          "translationSourceCreatorId": "",
+          "isApprovedTranslation": false,
+          "inResponseToPostId": "",
+          "inResponseToRemovedAt": 0,
+          "isTitleSynthesized": false,
+          "allowResponses": true,
+          "importedUrl": "",
+          "importedPublishedAt": 0,
+          "visibility": 0,
+          "uniqueSlug": "personal-tribute-to-game-of-life-9bccb38fb7ae",
+          "previewContent": {
+            "bodyModel": {
+              "paragraphs": [
+                {
+                  "name": "previewImage",
+                  "type": 4,
+                  "text": "",
+                  "layout": 10,
+                  "metadata": {
+                    "id": "0*d6Y5uIaW3jaJ0mcd.jpg",
+                    "originalWidth": 1000,
+                    "originalHeight": 563,
+                    "isFeatured": true
+                  }
+                },
+                {
+                  "name": "506c",
+                  "type": 3,
+                  "text": "Personal tribute to “Game of Life”",
+                  "markups": [],
+                  "alignment": 1
+                },
+                {
+                  "name": "7855",
+                  "type": 1,
+                  "text": "This end of the school year as a college professor is not very usual. In a few days, I’m about to…",
+                  "markups": [],
+                  "alignment": 1
+                }
+              ],
+              "sections": [
+                {
+                  "startIndex": 0
+                }
+              ]
+            },
+            "isFullContent": false,
+            "subtitle": "This end of the school year as a college professor is not very usual. In a few days, I’m about to give my first courses to distance…"
+          },
+          "license": 0,
+          "inResponseToMediaResourceId": "",
+          "canonicalUrl": "",
+          "approvedHomeCollectionId": "",
+          "newsletterId": "",
+          "webCanonicalUrl": "https://slashgear.github.io/gol-tribute/",
+          "mediumUrl": "",
+          "migrationId": "",
+          "notifyFollowers": true,
+          "notifyTwitter": false,
+          "notifyFacebook": false,
+          "responseHiddenOnParentPostAt": 0,
+          "isSeries": false,
+          "isSubscriptionLocked": false,
+          "seriesLastAppendedAt": 0,
+          "audioVersionDurationSec": 0,
+          "sequenceId": "",
+          "isEligibleForRevenue": false,
+          "isBlockedFromHightower": false,
+          "deletedAt": 0,
+          "lockedPostSource": 0,
+          "hightowerMinimumGuaranteeStartsAt": 0,
+          "hightowerMinimumGuaranteeEndsAt": 0,
+          "featureLockRequestAcceptedAt": 0,
+          "mongerRequestType": 1,
+          "layerCake": 0,
+          "socialTitle": "",
+          "socialDek": "",
+          "editorialPreviewTitle": "",
+          "editorialPreviewDek": "",
+          "curationEligibleAt": 1589118361099,
+          "isProxyPost": false,
+          "proxyPostFaviconUrl": "",
+          "proxyPostProviderName": "",
+          "proxyPostType": 0,
+          "isSuspended": false,
+          "isLimitedState": false,
+          "seoTitle": "",
+          "previewContent2": {
+            "bodyModel": {
+              "paragraphs": [
+                {
+                  "name": "506c",
+                  "type": 3,
+                  "text": "Personal tribute to “Game of Life”",
+                  "markups": []
+                },
+                {
+                  "name": "1062",
+                  "type": 4,
+                  "text": "",
+                  "markups": [],
+                  "layout": 1,
+                  "metadata": {
+                    "id": "0*d6Y5uIaW3jaJ0mcd.jpg",
+                    "originalWidth": 1000,
+                    "originalHeight": 563,
+                    "isFeatured": true
+                  }
+                },
+                {
+                  "name": "7855",
+                  "type": 1,
+                  "text": "This end of the school year as a college professor is not very usual. In a few days, I’m about to give my first courses to distance students through Discord.",
+                  "markups": []
+                },
+                {
+                  "name": "ba01",
+                  "type": 1,
+                  "text": "I don’t yet know in detail how it will work. But I’ve tried to…",
+                  "markups": []
+                }
+              ],
+              "sections": [
+                {
+                  "startIndex": 0
+                }
+              ]
+            },
+            "isFullContent": false,
+            "subtitle": "This end of the school year as a college professor is not very usual. In a few days, I’m about to give my first courses to distance…"
+          },
+          "cardType": 0,
+          "isDistributionAlertDismissed": false,
+          "isShortform": false,
+          "shortformType": 0,
+          "type": "Post"
+        },
+        "5f9a0794a746": {
+          "id": "5f9a0794a746",
+          "versionId": "ddba73887fa6",
+          "creatorId": "960fcb3074bd",
+          "homeCollectionId": "",
+          "title": "Announcing use-reduced-motion",
+          "detectedLanguage": "en",
+          "latestVersion": "ddba73887fa6",
+          "latestPublishedVersion": "ddba73887fa6",
+          "hasUnpublishedEdits": false,
+          "latestRev": 99,
+          "createdAt": 1589117927895,
+          "updatedAt": 1589118180358,
+          "acceptedAt": 0,
+          "firstPublishedAt": 1589118180111,
+          "latestPublishedAt": 1589118180111,
+          "vote": false,
+          "experimentalCss": "",
+          "displayAuthor": "",
+          "content": {
+            "subtitle": "Everything always starts with an idea",
+            "postDisplay": {
+              "coverless": true
+            }
+          },
+          "virtuals": {
+            "allowNotes": true,
+            "previewImage": {
+              "imageId": "0*56PIoPn-hyj-yIEG.jpg",
+              "filter": "",
+              "backgroundSize": "",
+              "originalWidth": 1000,
+              "originalHeight": 563,
+              "strategy": "resample",
+              "height": 0,
+              "width": 0
+            },
+            "wordCount": 531,
+            "imageCount": 2,
+            "readingTime": 2.387106918238994,
+            "subtitle": "Everything always starts with an idea",
+            "userPostRelation": {
+              "userId": "960fcb3074bd",
+              "postId": "5f9a0794a746",
+              "readAt": 1589118187416,
+              "readLaterAddedAt": 0,
+              "votedAt": 0,
+              "collaboratorAddedAt": 0,
+              "notesAddedAt": 0,
+              "subscribedAt": 0,
+              "lastReadSectionName": "",
+              "lastReadVersionId": "",
+              "lastReadAt": 0,
+              "lastReadParagraphName": "",
+              "lastReadPercentage": 0,
+              "viewedAt": 1589118187414,
+              "presentedCountInResponseManagement": 0,
+              "clapCount": 0,
+              "seriesUpdateNotifsOptedInAt": 0,
+              "queuedAt": 0,
+              "seriesFirstViewedAt": 0,
+              "presentedCountInStream": 1,
+              "seriesLastViewedAt": 0,
+              "audioProgressSec": 0
+            },
+            "usersBySocialRecommends": [],
+            "noIndex": false,
+            "recommends": 0,
+            "isBookmarked": false,
+            "tags": [
+              {
+                "slug": "react",
+                "name": "React",
+                "postCount": 38274,
+                "metadata": {
+                  "postCount": 38274,
+                  "coverImage": {
+                    "id": "1*PXEGRfrXgM0-MJ7aXafx9A.png",
+                    "originalWidth": 2708,
+                    "originalHeight": 1523,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "javascript",
+                "name": "JavaScript",
+                "postCount": 129350,
+                "metadata": {
+                  "postCount": 129350,
+                  "coverImage": {
+                    "id": "0*WLmz8VGk7Vm5NjbW",
+                    "originalWidth": 1000,
+                    "originalHeight": 750,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "a11y",
+                "name": "A11y",
+                "postCount": 556,
+                "metadata": {
+                  "postCount": 556,
+                  "coverImage": {
+                    "id": "1*YpZvy_XLgpPe2GTfYC-xUg.png",
+                    "originalWidth": 1296,
+                    "originalHeight": 962,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              },
+              {
+                "slug": "open-source",
+                "name": "Open Source",
+                "postCount": 23991,
+                "metadata": {
+                  "postCount": 23991,
+                  "coverImage": {
+                    "id": "1*mSE6ialQ-9TcGUz5ts_FMA.png",
+                    "originalWidth": 1600,
+                    "originalHeight": 666,
+                    "isFeatured": true
+                  }
+                },
+                "type": "Tag"
+              }
+            ],
+            "socialRecommendsCount": 0,
+            "responsesCreatedCount": 0,
+            "links": {
+              "entries": [
+                {
+                  "url": "https://slashgear.github.io/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://web.dev/prefers-reduced-motion/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://undraw.co/",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://github.com/donavon/use-dark-mode",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://en.reactjs.org/docs/hooks-intro.html",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://storage.googleapis.com/web-dev-assets/prefers-reduced-motion/prefers-reduced-motion.mp4",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://caniuse.com/#feat=prefers-reduced-motion",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://github.com/Slashgear/use-reduced-motion",
+                  "alts": [],
+                  "httpStatus": 200
+                },
+                {
+                  "url": "https://www.npmjs.com/package/use-reduced-motion",
+                  "alts": [],
+                  "httpStatus": 200
+                }
+              ],
+              "version": "0.3",
+              "generatedAt": 1589118181349
+            },
+            "isLockedPreviewOnly": false,
+            "metaDescription": "",
+            "totalClapCount": 0,
+            "sectionCount": 1,
+            "readingList": 0,
+            "topics": [
+              {
+                "topicId": "63c6f1f93ee",
+                "slug": "javascript",
+                "createdAt": 1493945704961,
+                "deletedAt": 0,
+                "image": {
+                  "id": "1*5UyyDJ1ESD11yQNd1UVAaQ@2x.jpeg",
+                  "originalWidth": 5472,
+                  "originalHeight": 3648
+                },
+                "name": "Javascript",
+                "description": "An ode to code.",
+                "relatedTopics": [],
+                "visibility": 1,
+                "relatedTags": [],
+                "relatedTopicIds": [],
+                "type": "Topic"
+              }
+            ]
+          },
+          "coverless": true,
+          "slug": "announcing-use-reduced-motion",
+          "translationSourcePostId": "",
+          "translationSourceCreatorId": "",
+          "isApprovedTranslation": false,
+          "inResponseToPostId": "",
+          "inResponseToRemovedAt": 0,
+          "isTitleSynthesized": false,
+          "allowResponses": true,
+          "importedUrl": "",
+          "importedPublishedAt": 0,
+          "visibility": 0,
+          "uniqueSlug": "announcing-use-reduced-motion-5f9a0794a746",
+          "previewContent": {
+            "bodyModel": {
+              "paragraphs": [
+                {
+                  "name": "previewImage",
+                  "type": 4,
+                  "text": "",
+                  "layout": 10,
+                  "metadata": {
+                    "id": "0*56PIoPn-hyj-yIEG.jpg",
+                    "originalWidth": 1000,
+                    "originalHeight": 563,
+                    "isFeatured": true
+                  }
+                },
+                {
+                  "name": "a06d",
+                  "type": 3,
+                  "text": "Announcing use-reduced-motion",
+                  "markups": [],
+                  "alignment": 1
+                },
+                {
+                  "name": "1f8b",
+                  "type": 3,
+                  "text": "Everything always starts with an idea",
+                  "markups": [],
+                  "alignment": 1
+                }
+              ],
+              "sections": [
+                {
+                  "startIndex": 0
+                }
+              ]
+            },
+            "isFullContent": false,
+            "subtitle": "Everything always starts with an idea"
+          },
+          "license": 0,
+          "inResponseToMediaResourceId": "",
+          "canonicalUrl": "",
+          "approvedHomeCollectionId": "",
+          "newsletterId": "",
+          "webCanonicalUrl": "https://slashgear.github.io/use-reduced-motion/",
+          "mediumUrl": "",
+          "migrationId": "",
+          "notifyFollowers": true,
+          "notifyTwitter": false,
+          "notifyFacebook": false,
+          "responseHiddenOnParentPostAt": 0,
+          "isSeries": false,
+          "isSubscriptionLocked": false,
+          "seriesLastAppendedAt": 0,
+          "audioVersionDurationSec": 0,
+          "sequenceId": "",
+          "isEligibleForRevenue": false,
+          "isBlockedFromHightower": false,
+          "deletedAt": 0,
+          "lockedPostSource": 0,
+          "hightowerMinimumGuaranteeStartsAt": 0,
+          "hightowerMinimumGuaranteeEndsAt": 0,
+          "featureLockRequestAcceptedAt": 0,
+          "mongerRequestType": 1,
+          "layerCake": 0,
+          "socialTitle": "",
+          "socialDek": "",
+          "editorialPreviewTitle": "",
+          "editorialPreviewDek": "",
+          "curationEligibleAt": 1589118176951,
+          "isProxyPost": false,
+          "proxyPostFaviconUrl": "",
+          "proxyPostProviderName": "",
+          "proxyPostType": 0,
+          "isSuspended": false,
+          "isLimitedState": false,
+          "seoTitle": "",
+          "previewContent2": {
+            "bodyModel": {
+              "paragraphs": [
+                {
+                  "name": "a06d",
+                  "type": 3,
+                  "text": "Announcing use-reduced-motion",
+                  "markups": []
+                },
+                {
+                  "name": "e137",
+                  "type": 4,
+                  "text": "",
+                  "markups": [],
+                  "layout": 1,
+                  "metadata": {
+                    "id": "0*56PIoPn-hyj-yIEG.jpg",
+                    "originalWidth": 1000,
+                    "originalHeight": 563,
+                    "isFeatured": true
+                  }
+                },
+                {
+                  "name": "1f8b",
+                  "type": 3,
+                  "text": "Everything always starts with an idea",
+                  "markups": []
+                },
+                {
+                  "name": "b49f",
+                  "type": 1,
+                  "text": "Last week, as I was setting up the dark mode on my personal website, I got motivated to work on a new package for the React community.",
+                  "markups": [
+                    {
+                      "type": 3,
+                      "start": 48,
+                      "end": 67,
+                      "href": "https://slashgear.github.io/",
+                      "title": "",
+                      "rel": "",
+                      "anchorType": 0
+                    }
+                  ]
+                },
+                {
+                  "name": "dbf4",
+                  "type": 6,
+                  "text": "” Well, somebody shared a hook to handle the `prefers-color-scheme’ feature in browsers, that’s super…",
+                  "markups": []
+                }
+              ],
+              "sections": [
+                {
+                  "startIndex": 0
+                }
+              ]
+            },
+            "isFullContent": false,
+            "subtitle": "Everything always starts with an idea"
+          },
+          "cardType": 0,
+          "isDistributionAlertDismissed": false,
+          "isShortform": false,
+          "shortformType": 0,
+          "type": "Post"
+        }
+      },
+      "Social": {
+        "960fcb3074bd": {
+          "userId": "960fcb3074bd",
+          "targetUserId": "960fcb3074bd",
+          "type": "Social"
+        }
+      },
+      "SocialStats": {
+        "960fcb3074bd": {
+          "userId": "960fcb3074bd",
+          "usersFollowedCount": 5,
+          "usersFollowedByCount": 27,
+          "type": "SocialStats"
+        }
+      },
+      "Collection": {
+        "5d9d5fd3ea4d": {
+          "id": "5d9d5fd3ea4d",
+          "name": "Zenika",
+          "slug": "zenika",
+          "tags": [],
+          "creatorId": "6bf5912cd628",
+          "description": "Zenika is a firm specialized in computer architecture and Agile methods with a threefold expertise in consulting, realization and training.",
+          "shortDescription": "Zenika is a firm specialized in computer architecture and…",
+          "image": {
+            "imageId": "1*PW8TSM7w5sMICGBx8vu33w.png",
+            "filter": "",
+            "backgroundSize": "",
+            "originalWidth": 717,
+            "originalHeight": 717,
+            "strategy": "resample",
+            "height": 0,
+            "width": 0
+          },
+          "metadata": {
+            "followerCount": 1049,
+            "activeAt": 1589181948589
+          },
+          "virtuals": {
+            "permissions": {
+              "canPublish": true,
+              "canPublishAll": true,
+              "canRepublish": true,
+              "canRemove": true,
+              "canManageAll": true,
+              "canSubmit": true,
+              "canEditPosts": true,
+              "canAddWriters": true,
+              "canViewStats": true,
+              "canSendNewsletter": true,
+              "canViewLockedPosts": true,
+              "canViewCloaked": true,
+              "canEditOwnPosts": true,
+              "canBeAssignedAuthor": true,
+              "canEnrollInHightower": false,
+              "canLockPostsForMediumMembers": false,
+              "canLockOwnPostsForMediumMembers": false,
+              "canViewNewsletterV2Stats": true,
+              "canCreateNewsletterV3": true
+            },
+            "isSubscribed": true,
+            "isEnrolledInHightower": false,
+            "isEligibleForHightower": false,
+            "isSubscribedToCollectionEmails": false,
+            "isMuted": false,
+            "canToggleEmail": true
+          },
+          "logo": {
+            "imageId": "1*hj8VjivwJ6Ei1kRzfVIn-w.png",
+            "filter": "",
+            "backgroundSize": "",
+            "originalWidth": 1635,
+            "originalHeight": 300,
+            "strategy": "resample",
+            "height": 0,
+            "width": 0
+          },
+          "twitterUsername": "ZenikaIT",
+          "facebookPageName": "ZenikaIT",
+          "publicEmail": "info@zenika.com",
+          "domain": "medium.zenika.com",
+          "sections": [
+            {
+              "type": 2,
+              "collectionHeaderMetadata": {
+                "title": "Zenika",
+                "description": "Led by passion",
+                "backgroundImage": {
+                  "id": "1*5LZJsHGcwUPC-ssP-crx6A.jpeg",
+                  "originalWidth": 2736,
+                  "originalHeight": 1924,
+                  "focusPercentX": 51.07142857142857,
+                  "focusPercentY": 52.79187817258883
+                },
+                "logoImage": {
+                  "id": "1*PW8TSM7w5sMICGBx8vu33w@2x.png",
+                  "originalWidth": 717,
+                  "originalHeight": 717,
+                  "alt": "Zenika"
+                },
+                "alignment": 1,
+                "layout": 6
+              }
+            },
+            {
+              "type": 1,
+              "postListMetadata": {
+                "source": 1,
+                "layout": 6,
+                "number": 10,
+                "postIds": []
+              }
+            }
+          ],
+          "tintColor": "#FFB31835",
+          "lightText": true,
+          "favicon": {
+            "imageId": "1*CesurP9i-OrOATP2mL3nyQ.png",
+            "filter": "",
+            "backgroundSize": "",
+            "originalWidth": 32,
+            "originalHeight": 32,
+            "strategy": "resample",
+            "height": 0,
+            "width": 0
+          },
+          "colorPalette": {
+            "defaultBackgroundSpectrum": {
+              "colorPoints": [
+                {
+                  "color": "#FFE13E52",
+                  "point": 0
+                },
+                {
+                  "color": "#FFD03D4E",
+                  "point": 0.1
+                },
+                {
+                  "color": "#FFBF3B49",
+                  "point": 0.2
+                },
+                {
+                  "color": "#FFAD3844",
+                  "point": 0.3
+                },
+                {
+                  "color": "#FF9C353E",
+                  "point": 0.4
+                },
+                {
+                  "color": "#FF8A3138",
+                  "point": 0.5
+                },
+                {
+                  "color": "#FF782C32",
+                  "point": 0.6
+                },
+                {
+                  "color": "#FF65272B",
+                  "point": 0.7
+                },
+                {
+                  "color": "#FF532024",
+                  "point": 0.8
+                },
+                {
+                  "color": "#FF3F191B",
+                  "point": 0.9
+                },
+                {
+                  "color": "#FF2B1011",
+                  "point": 1
+                }
+              ],
+              "backgroundColor": "#FFFFFFFF"
+            },
+            "tintBackgroundSpectrum": {
+              "colorPoints": [
+                {
+                  "color": "#FFB31835",
+                  "point": 0
+                },
+                {
+                  "color": "#FFC73648",
+                  "point": 0.1
+                },
+                {
+                  "color": "#FFD84E5B",
+                  "point": 0.2
+                },
+                {
+                  "color": "#FFE8656D",
+                  "point": 0.3
+                },
+                {
+                  "color": "#FFF57A80",
+                  "point": 0.4
+                },
+                {
+                  "color": "#FFFF8E93",
+                  "point": 0.5
+                },
+                {
+                  "color": "#FFFFA2A5",
+                  "point": 0.6
+                },
+                {
+                  "color": "#FFFFB6B8",
+                  "point": 0.7
+                },
+                {
+                  "color": "#FFFFC9CB",
+                  "point": 0.8
+                },
+                {
+                  "color": "#FFFFDDDD",
+                  "point": 0.9
+                },
+                {
+                  "color": "#FFFFF0F0",
+                  "point": 1
+                }
+              ],
+              "backgroundColor": "#FFB31835"
+            },
+            "highlightSpectrum": {
+              "colorPoints": [
+                {
+                  "color": "#FFFFE0E0",
+                  "point": 0
+                },
+                {
+                  "color": "#FFFFDBDB",
+                  "point": 0.1
+                },
+                {
+                  "color": "#FFFFD5D6",
+                  "point": 0.2
+                },
+                {
+                  "color": "#FFFFD0D2",
+                  "point": 0.3
+                },
+                {
+                  "color": "#FFFFCBCD",
+                  "point": 0.4
+                },
+                {
+                  "color": "#FFFFC5C8",
+                  "point": 0.5
+                },
+                {
+                  "color": "#FFFFBFC3",
+                  "point": 0.6
+                },
+                {
+                  "color": "#FFFFBABE",
+                  "point": 0.7
+                },
+                {
+                  "color": "#FFFFB4B9",
+                  "point": 0.8
+                },
+                {
+                  "color": "#FFFFAEB4",
+                  "point": 0.9
+                },
+                {
+                  "color": "#FFFFA8B0",
+                  "point": 1
+                }
+              ],
+              "backgroundColor": "#FFFFFFFF"
+            }
+          },
+          "navItems": [],
+          "colorBehavior": 2,
+          "instantArticlesState": 0,
+          "acceleratedMobilePagesState": 0,
+          "ampLogo": {
+            "imageId": "",
+            "filter": "",
+            "backgroundSize": "",
+            "originalWidth": 0,
+            "originalHeight": 0,
+            "strategy": "resample",
+            "height": 0,
+            "width": 0
+          },
+          "header": {
+            "title": "Zenika",
+            "description": "Led by passion",
+            "backgroundImage": {
+              "id": "1*5LZJsHGcwUPC-ssP-crx6A.jpeg",
+              "originalWidth": 2736,
+              "originalHeight": 1924,
+              "focusPercentX": 51.07142857142857,
+              "focusPercentY": 52.79187817258883
+            },
+            "logoImage": {
+              "id": "1*PW8TSM7w5sMICGBx8vu33w@2x.png",
+              "originalWidth": 717,
+              "originalHeight": 717,
+              "alt": "Zenika"
+            },
+            "alignment": 1,
+            "layout": 6
+          },
+          "paidForDomainAt": 1499156846027,
+          "subscriberCount": 1049,
+          "tagline": "Zenika is a firm specialized in computer architecture and…",
+          "isOptedIntoAurora": false,
+          "type": "Collection"
+        }
+      }
+    },
+    "paging": {
+      "path": "https://medium.com/_/api/users/960fcb3074bd/profile/stream",
+      "next": {
+        "limit": 5,
+        "to": "1589118180111",
+        "source": "overview",
+        "ignoredIds": [],
+        "page": 2
+      }
+    }
+  },
+  "v": 3,
+  "b": "40984-320842d"
+}

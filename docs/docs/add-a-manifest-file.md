@@ -18,7 +18,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 ## Using `gatsby-plugin-manifest`
 
-1.  Install the plugin:
+1. Install the plugin:
 
 ```shell
 npm install --save gatsby-plugin-manifest

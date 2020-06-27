@@ -6,6 +6,8 @@ const declare = require(`@babel/helper-plugin-utils`).declare
 const Joi = require(`@hapi/joi`)
 const glob = require(`glob`)
 const prettier = require(`prettier`)
+const resolveCwd = require(`resolve-cwd`)
+const { slash } = require(`gatsby-core-utils`)
 
 const getDiff = require(`../utils/get-diff`)
 const resourceSchema = require(`../resource-schema`)
@@ -16,17 +18,20 @@ const getObjectFromNode = require(`./utils/get-object-from-node`)
 const { getValueFromNode } = require(`./utils/get-object-from-node`)
 const { REQUIRES_KEYS } = require(`./utils/constants`)
 
+const { read: readPackageJSON } = require(`../npm/package`)
+
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const fullThemePath = path.join(directory, `node_modules`, theme, `src`)
-  const shadowableThemeFiles = glob.sync(fullThemePath + `/**/*.*`, {
+  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
+  const themeSrcPath = path.join(themePath, `src`)
+  const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
   })
 
   const toShadowPath = filePath => {
-    const themePath = filePath.replace(fullThemePath, ``)
-    return path.join(`src`, theme, themePath)
+    const relativeFilePath = slash(filePath).replace(slash(themeSrcPath), ``)
+    return path.join(`src`, theme, relativeFilePath)
   }
 
   const shadowPaths = shadowableThemeFiles.map(toShadowPath)
@@ -92,12 +97,33 @@ const getNameForPlugin = node => {
   return null
 }
 
+const getDescriptionForPlugin = async name => {
+  const pkg = await readPackageJSON({}, name)
+
+  return pkg ? pkg.description : null
+}
+
 const addPluginToConfig = (src, { name, options, key }) => {
   const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
     pluginOrThemeName: name,
     options,
     shouldAdd: true,
     key,
+  })
+
+  const { code } = babel.transform(src, {
+    plugins: [addPlugins.plugin],
+    configFile: false,
+  })
+
+  return code
+}
+
+const removePluginFromConfig = (src, { id, name, key }) => {
+  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
+    pluginOrThemeName: name || id,
+    key,
+    shouldAdd: false,
   })
 
   const { code } = babel.transform(src, {
@@ -119,31 +145,66 @@ const getPluginsFromConfig = src => {
   return getPlugins.state
 }
 
-const create = async ({ root }, { name, options, key }) => {
-  const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = await fs.readFile(configPath, `utf8`)
+const getConfigPath = root => path.join(root, `gatsby-config.js`)
 
+const readConfigFile = async root => {
+  let src
+  try {
+    src = await fs.readFile(getConfigPath(root), `utf8`)
+  } catch (e) {
+    if (e.code === `ENOENT`) {
+      src = `/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ */
+
+module.exports = {
+  plugins: [],
+}`
+    } else {
+      throw e
+    }
+  }
+
+  return src
+}
+
+const create = async ({ root }, { name, options, key }) => {
+  const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
   let code = addPluginToConfig(configSrc, { name, options, key })
   code = prettier.format(code, { ...prettierConfig, parser: `babel` })
 
-  await fs.writeFile(configPath, code)
+  await fs.writeFile(getConfigPath(root), code)
 
   return await read({ root }, key || name)
 }
 
 const read = async ({ root }, id) => {
   try {
-    const configPath = path.join(root, `gatsby-config.js`)
-    const configSrc = await fs.readFile(configPath, `utf8`)
+    const configSrc = await readConfigFile(root)
 
     const plugin = getPluginsFromConfig(configSrc).find(
       plugin => plugin.key === id || plugin.name === id
     )
 
     if (plugin) {
-      return { id, ...plugin, _message: `Installed ${id} in gatsby-config.js` }
+      const description = await getDescriptionForPlugin(id)
+      const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
+        root,
+        plugin.name
+      )
+
+      return {
+        id,
+        description: description || null,
+        ...plugin,
+        shadowedFiles,
+        shadowableFiles,
+        _message: `Installed ${id} in gatsby-config.js`,
+      }
     } else {
       return undefined
     }
@@ -153,22 +214,12 @@ const read = async ({ root }, id) => {
   }
 }
 
-const destroy = async ({ root }, { id, name }) => {
-  const configPath = path.join(root, `gatsby-config.js`)
-  const configSrc = await fs.readFile(configPath, `utf8`)
+const destroy = async ({ root }, resource) => {
+  const configSrc = await readConfigFile(root)
 
-  const addPlugins = new BabelPluginAddPluginsToGatsbyConfig({
-    pluginOrThemeName: name,
-    key: id,
-    shouldAdd: false,
-  })
+  const newSrc = removePluginFromConfig(configSrc, resource)
 
-  const { code } = babel.transform(configSrc, {
-    plugins: [addPlugins.plugin],
-    configFile: false,
-  })
-
-  await fs.writeFile(configPath, code)
+  await fs.writeFile(getConfigPath(root), newSrc)
 }
 
 class BabelPluginAddPluginsToGatsbyConfig {
@@ -233,11 +284,12 @@ class BabelPluginAddPluginsToGatsbyConfig {
               pluginNodes.value.elements = pluginNodes.value.elements.filter(
                 node => {
                   const plugin = getPlugin(node)
+
                   if (key) {
-                    return plugin.key === key
+                    return plugin.key !== key
                   }
 
-                  return plugin.name === pluginOrThemeName
+                  return plugin.name !== pluginOrThemeName
                 }
               )
             }
@@ -281,6 +333,7 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
 module.exports.addPluginToConfig = addPluginToConfig
 module.exports.getPluginsFromConfig = getPluginsFromConfig
+module.exports.removePluginFromConfig = removePluginFromConfig
 
 module.exports.create = create
 module.exports.update = create
@@ -289,28 +342,15 @@ module.exports.destroy = destroy
 module.exports.config = {}
 
 module.exports.all = async ({ root }) => {
-  const configPath = path.join(root, `gatsby-config.js`)
-  const src = await fs.readFile(configPath, `utf8`)
-  const plugins = getPluginsFromConfig(src)
+  const configSrc = await readConfigFile(root)
+  const plugins = getPluginsFromConfig(configSrc)
 
-  // TODO: Consider mapping to read function
-  return plugins.map(name => {
-    const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
-      root,
-      name
-    )
-
-    return {
-      id: name,
-      name,
-      shadowedFiles,
-      shadowableFiles,
-    }
-  })
+  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
 }
 
 const schema = {
   name: Joi.string(),
+  description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
@@ -338,15 +378,14 @@ exports.validate = validate
 
 module.exports.plan = async ({ root }, { id, key, name, options }) => {
   const fullName = id || name
-  const configPath = path.join(root, `gatsby-config.js`)
   const prettierConfig = await prettier.resolveConfig(root)
-  let src = await fs.readFile(configPath, `utf8`)
-  src = prettier.format(src, {
+  let configSrc = await readConfigFile(root)
+  configSrc = prettier.format(configSrc, {
     ...prettierConfig,
     parser: `babel`,
   })
 
-  let newContents = addPluginToConfig(src, {
+  let newContents = addPluginToConfig(configSrc, {
     id,
     key: id || key,
     name: fullName,
@@ -356,13 +395,13 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     ...prettierConfig,
     parser: `babel`,
   })
-  const diff = await getDiff(src, newContents)
+  const diff = await getDiff(configSrc, newContents)
 
   return {
     id: fullName,
     name,
     diff,
-    currentState: src,
+    currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
   }

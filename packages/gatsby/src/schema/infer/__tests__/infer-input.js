@@ -4,11 +4,9 @@ const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../../schema-composer`)
 const { buildSchema } = require(`../../schema`)
 const { LocalNodeModel } = require(`../../node-model`)
-const nodeStore = require(`../../../db/nodes`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 import { createPageDependency } from "../../../redux/actions/add-page-dependency"
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -41,7 +39,6 @@ const buildTestSchema = async nodes => {
   const schemaComposer = createSchemaComposer()
   const schema = await buildSchema({
     schemaComposer,
-    nodeStore,
     types: [],
     thirdPartySchemas: [],
     inferenceMetadata: store.getState().inferenceMetadata,
@@ -53,7 +50,6 @@ const queryResult = async (nodes, query) => {
   return graphql(schema, query, undefined, {
     nodeModel: new LocalNodeModel({
       schema,
-      nodeStore,
       createPageDependency,
       schemaComposer,
     }),

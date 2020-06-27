@@ -4,13 +4,14 @@ const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
 import { getValueAt } from "../../utils/get-value-at"
+const { getNode, getNodesByType } = require(`../../redux/nodes`)
 
-const isFile = (nodeStore, fieldPath, relativePath) => {
-  const filePath = getFilePath(nodeStore, fieldPath, relativePath)
+const isFile = (fieldPath, relativePath) => {
+  const filePath = getFilePath(fieldPath, relativePath)
   if (!filePath) return false
-  const filePathExists = nodeStore
-    .getNodesByType(`File`)
-    .some(node => node.absolutePath === filePath)
+  const filePathExists = getNodesByType(`File`).some(
+    node => node.absolutePath === filePath
+  )
   return filePathExists
 }
 
@@ -26,7 +27,7 @@ const getFirstValueAt = (node, selector) => {
   return value
 }
 
-const getFilePath = (nodeStore, fieldPath, relativePath) => {
+const getFilePath = (fieldPath, relativePath) => {
   const [typeName, ...selector] = Array.isArray(fieldPath)
     ? fieldPath
     : fieldPath.split(`.`)
@@ -44,15 +45,15 @@ const getFilePath = (nodeStore, fieldPath, relativePath) => {
   if (!looksLikeFile) return null
 
   const normalizedPath = slash(relativePath)
-  const node = nodeStore
-    .getNodesByType(typeName)
-    .find(node => getFirstValueAt(node, selector) === normalizedPath)
+  const node = getNodesByType(typeName).find(
+    node => getFirstValueAt(node, selector) === normalizedPath
+  )
 
-  return node ? getAbsolutePath(nodeStore, node, normalizedPath) : null
+  return node ? getAbsolutePath(node, normalizedPath) : null
 }
 
-const getAbsolutePath = (nodeStore, node, relativePath) => {
-  const dir = getBaseDir(nodeStore, node)
+const getAbsolutePath = (node, relativePath) => {
+  const dir = getBaseDir(node)
   const withDir = withBaseDir(dir)
   return dir
     ? Array.isArray(relativePath)
@@ -61,14 +62,10 @@ const getAbsolutePath = (nodeStore, node, relativePath) => {
     : null
 }
 
-const getBaseDir = (nodeStore, node) => {
+const getBaseDir = node => {
   if (node) {
     const { dir } =
-      findAncestorNode(
-        nodeStore,
-        node,
-        node => node.internal.type === `File`
-      ) || {}
+      findAncestorNode(node, node => node.internal.type === `File`) || {}
     return dir
   }
   return null
@@ -76,12 +73,12 @@ const getBaseDir = (nodeStore, node) => {
 
 const withBaseDir = dir => p => path.posix.join(dir, slash(p))
 
-const findAncestorNode = (nodeStore, childNode, predicate) => {
+const findAncestorNode = (childNode, predicate) => {
   let node = childNode
   do {
     if (predicate(node)) {
       return node
     }
-  } while ((node = node.parent && nodeStore.getNode(node.parent)))
+  } while ((node = node.parent && getNode(node.parent)))
   return null
 }

@@ -8,7 +8,7 @@ tags:
   - gatsby-image
 ---
 
-I recently prototyped an [Acroyoga](https://en.wikipedia.org/wiki/Acroyoga)-focused side project, called ['AcroTags'](https://acrotagsgatsbyblog.netlify.com), using Gatsby and the Google Sheets API. The site was as fun to build and populate with data as it is to use for discovering Acroyoga videos. This post will explore why and how I made this site and cover the specific code I used to get Gatsby and Google Sheets to work nicely together. I hope this tutorial and the code samples allow you to quickly prototype your next idea using this very simple and powerful stack.
+I recently prototyped an [Acroyoga](https://en.wikipedia.org/wiki/Acroyoga)-focused side project, called ['AcroTags'](https://acrotagsgatsbyblog.netlify.app), using Gatsby and the Google Sheets API. The site was as fun to build and populate with data as it is to use for discovering Acroyoga videos. This post will explore why and how I made this site and cover the specific code I used to get Gatsby and Google Sheets to work nicely together. I hope this tutorial and the code samples allow you to quickly prototype your next idea using this very simple and powerful stack.
 
 ## Background on an Acroyoga obsession and the Need for a Video Explorer Site
 
@@ -20,7 +20,7 @@ I've long found it challenging to find just the right video to work on. Sometime
 
 My requirements for this Acroyoga videos site is that it be simple to add data to, load fast on mobile, and be generally intuitive to use. For this reason, I'm using Gatsby (and of course, React) and the Google Sheets API for this site. This simple stack will allow me to build a fast loading application that consumes data from a Google Sheet.
 
-As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: [https://github.com/kpennell/acrotagsgatsbyblog](https://github.com/kpennell/acrotagsgatsbyblog). Finally, if you want to check out the demo app, that can be found here: [https://acrotagsgatsbyblog.netlify.com](https://acrotagsgatsbyblog.netlify.com/).
+As such, this article will show how I built this site. I'll show only the code samples that are Gatsby and Google Sheets specific but you can see all of the code in this repo: https://github.com/kpennell/acrotagsgatsbyblog. Finally, if you want to check out the demo app, that can be found here: https://acrotagsgatsbyblog.netlify.app.
 
 ## Creating a Basic Gatsby Setup with Material-UI
 
@@ -56,7 +56,7 @@ Google sheets are pretty amazing if you think about it. While they might never b
 
 This is a list of Acroyoga videos from Youtube. I tagged these videos in column I (e.g. beginner, flow). The 'thumbnail' column is the Youtube video thumbnail while instructor_image are some dummy images I saved in a Google cloud storage bucket. The instructor_image column is not [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) here and I could find a way to store this separately in another sheet. This occasional lack of 'DRYness' is one potential downside of using a spreadsheet as a web application database.
 
-To access this data, I first must 'publish to the web' (under the file menu). This makes it available for consuming via API. Next I needed to register for an API key with Google. Finally, I can GET this data using a Google Sheets API method called [batchGet](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchGet). My API call [outputs my spreadsheet data as JSON](https://gist.github.com/kpennell/82484a220c0e56f40f98c4bcaec87d9c), which I'll now consume in my Gatsby app.
+To access this data, I first must 'publish to the web' (under the file menu). This makes it available for consuming via API. Next I needed to register for an API key with Google. Finally, I can GET this data using a Google Sheets API method called [`batchGet`](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchGet). My API call [outputs my spreadsheet data as JSON](https://gist.github.com/kpennell/82484a220c0e56f40f98c4bcaec87d9c), which I'll now consume in my Gatsby app.
 
 ## Making Gatsby Pages for Each Google Sheet Row
 
@@ -255,7 +255,7 @@ If you'd like to dive into the single-tag or single-instructor templates more, t
 
 When I first learned Gatsby, I found the folder structure, node and page creation methods really byzantine and confusing. I struggled to understand why there was no App.js and familiar parent-child component tree. I dug through the files looking for the React-router setup and was at a loss when I didn't find one. But once I got the hang of the Gatsby way of doing things, I began to love how easy it was to not only create prebuilt fast-loading pages (made up of React components) but also to link these pages together.
 
-This video explorer site allows users to easily filter videos by clicking/tapping on the tags or instructors. This links them to a new page with only the matching videos. Thanks to Gatsby's Link component, coding this functionality is very easy. Here is a card for one of the videos (ie rows in the Google Sheet).
+This video explorer site allows users to easily filter videos by clicking/tapping on the tags or instructors. This links them to a new page with only the matching videos. Thanks to Gatsby's Link component, coding this functionality is very easy. Here is a card for one of the videos (i.e. rows in the Google Sheet).
 
 ![Video Card showing Acroyoga](./images/word-image-2.png)
 

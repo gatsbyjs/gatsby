@@ -27,7 +27,7 @@ Image optimization in Gatsby is provided by a plugin called `gatsby-image` which
 
 Start by using npm to install the `gatsby-image` plugin and its associated dependencies.
 
-```bash
+```shell
 npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
@@ -51,9 +51,9 @@ Determine where your image files are located. In this example they're in `src/da
 
 If you haven't already, make sure that your project is set up to see content inside that directory. That means doing two things:
 
-1.  Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
+1. Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
 
-```bash
+```shell
 npm install gatsby-source-filesystem
 ```
 
@@ -226,7 +226,7 @@ Since the images are stored as part of an array, they can be accessed using the 
 If your query is part of a reusable component you may want to use a Static Query hook. The code necessary to do this is almost the same as the single image use case above.
 
 ```jsx:title=src/components/header-image.js
-export default () => {
+export default function HeaderImage() {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "headers/default.jpg" }) {

@@ -128,7 +128,7 @@ import Layout from "../components/layout"
 import Img from "gatsby-image"
 // highlight-end
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   let post = data.markdownRemark
 
   // highlight-start

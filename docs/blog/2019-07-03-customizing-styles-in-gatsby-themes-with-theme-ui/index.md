@@ -16,7 +16,7 @@ The styles used in our official themes are no exception.
 
 ## Say hello to our official Gatsby themes
 
-Today, we're releasing two official themes: a blog theme inspired by Dan Abromov's [overreacted.io][], and our notes theme,
+Today, we're releasing two official themes: a blog theme inspired by Dan Abramov's [overreacted.io][], and our notes theme,
 which is intended for freeform, non-linear content and inspired by Tom Critchlow's concept of a _[Digital Garden][]_.
 Both themes include their own styles so that you can build and publish a blog without starting from scratch.
 In order to make these themes truly _themeable_, the values used for typography, color, layout, and other design tokens
@@ -31,9 +31,6 @@ The styles provided by each theme are only applied to the pages it generates,
 giving you complete control of your site's styles.
 
 Huge thanks to our own [Amberley Romo][] & [John Otander][] for their incredible work on these themes.
-
-[amberley romo]: https://mobile.twitter.com/amber1ey
-[john otander]: https://mobile.twitter.com/4lpine
 
 ## Theme UI
 
@@ -135,4 +132,5 @@ and to learn more about using the official Gatsby themes, see our [documentation
 [digital garden]: https://tomcritchlow.com/2019/02/17/building-digital-garden/
 [styled system]: https://styled-system.com
 [theme specification]: https://github.com/system-ui/theme-specification
-[emotion]: https://emotion.sh/
+[amberley romo]: https://mobile.twitter.com/amber1ey
+[john otander]: https://mobile.twitter.com/4lpine

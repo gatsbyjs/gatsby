@@ -71,11 +71,11 @@ static React sites are useful.
 But in many conversations among community members building Gatsby sites, two
 more questions kept coming up.
 
-1.  How could we _query_ data from _anywhere_ and have that data show up in our
-    pages **without** any custom scripting?
-2.  How should a website framework work for an _internet dominated by smartphones
-    on unreliable networks_ — an internet vastly different and larger than the
-    one frameworks were designed for a decade ago?
+1. How could we _query_ data from _anywhere_ and have that data show up in our
+   pages **without** any custom scripting?
+2. How should a website framework work for an _internet dominated by smartphones
+   on unreliable networks_ — an internet vastly different and larger than the
+   one frameworks were designed for a decade ago?
 
 ## Plugin system
 
@@ -291,7 +291,7 @@ is using Gatsby to build both their marketing site _and_ SaaS app within the
 _same Gatsby codebase_.
 
 The marketing pages of their site are built using markdown and React components
-along with a modern css-in-js library
+along with a modern CSS-in-JS library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
 uses [Redux](http://redux.js.org/) to communicate with their Django API.
 

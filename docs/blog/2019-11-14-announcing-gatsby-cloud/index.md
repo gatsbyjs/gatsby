@@ -30,11 +30,11 @@ We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a f
 Jay Hostan, a senior product developer at global coffeehouse chain [Costa Coffee](https://www.costacoffee.com/), told us:
 
 <Pullquote>
-  Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no
-  brainer and has added a lot of value to our workflow. Before, we were building
-  staging pipelines by hand. Preview allows our team to see content changes
-  immediately, creating a tighter feedback loop so we can launch faster. It's
-  enabled us to shift a lot of our focus to strategic projects and feature
+  Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a
+  no-brainer and has added a lot of value to our workflow. Before, we were
+  building staging pipelines by hand. Preview allows our team to see content
+  changes immediately, creating a tighter feedback loop so we can launch faster.
+  It's enabled us to shift a lot of our focus to strategic projects and feature
   development.
 </Pullquote>
 
@@ -55,7 +55,7 @@ Let's step back and discuss why we're building Gatsby and how our new Cloud plat
 
 For most of the history of the web, the dominant web architecture has been the LAMP stack e.g., applications like WordPress. But the last decade has seen the rise of two enormous trends—cloud computing and JavaScript-rich web apps (driven by component frameworks like React). Gatsby was founded around the idea that web architectures are converging on these two ideas and will be foundational for decades to come.
 
-Gatsby provides the building blocks for a modern web site:
+Gatsby provides the building blocks for a modern website:
 
 - **JavaScript Component Library**. Gatsby sites are React apps, so you can create high-quality, dynamic web apps, from blogs to e-commerce sites to user dashboards.
 - **Load Data From Anywhere**. Gatsby pulls in data from any data source, whether it's Markdown files, a headless CMS like Contentful or WordPress, or a REST or GraphQL API. Use source plugins to load your data, then develop using Gatsby's uniform GraphQL interface.
@@ -70,9 +70,9 @@ Gatsby meets the needs of the modern web and has become wildly popular with hund
 
 In our many conversations with Gatsby users & customers over the years, there are three common problems Gatsby users bring up:
 
-1. **Starting complex projects. **People love the flexibility of being able to bring your own backends, but choosing the right backends and configuring everything can be difficult.
+1. **Starting complex projects.** People love the flexibility of being able to bring your own backends, but choosing the right backends and configuring everything can be difficult.
 2. **Consistent & reliable workflows.** Delivering great websites requires collaboration between many stakeholders. People keep telling us about friction in workflows on their Gatsby projects compared to traditional CMSs.
-3. **Fast builds. **Gatsby sites have a build process to deploy new changes, and people wish incremental builds were faster. Ideally, there'd be no builds at all as they're confusing for non-technical collaborators who are used to seeing their changes go live immediately when they save with traditional CMSs.
+3. **Fast builds.** Gatsby sites have a build process to deploy new changes, and people wish incremental builds were faster. Ideally, there'd be no builds at all as they're confusing for non-technical collaborators who are used to seeing their changes go live immediately when they save with traditional CMSs.
 
 Today's launch of Gatsby Cloud addresses these concerns and lays the foundation for many exciting things to come.
 
@@ -88,7 +88,7 @@ We'll be adding many more of these starters in the future.
 
 ## Gatsby Real-Time Preview
 
-Preview offers a private playground for developers, designers, marketers, and content creators. You can view changes to your site immediately and in context with instant updates triggered by a CMS or webhooks. It's basically a _shareable_, hot-reloading preview. Preview is compatible with a growing number of CMSs, including Drupal, Contentful, Contentstack, Sanity, DatoCMS, and CosmicJS, with WordPress coming soon.
+Preview offers a private playground for developers, designers, marketers, and content creators. You can view changes to your site immediately and in context with instant updates triggered by a CMS or webhooks. It's basically a _shareable_, hot-reloading preview. Preview is compatible with a growing number of CMSs, including Drupal, Contentful, Contentstack, Sanity, DatoCMS, and Cosmic, with WordPress coming soon.
 
 Preview has been in beta since May, and we've welcomed over 1000 beta testers and are near our 100th customer. Thank you to everyone who's helped test and support Preview! We've learned a lot from our beta users and customers.
 
@@ -98,7 +98,7 @@ https://youtu.be/AmkI2iH6c40
 
 We'll soon be shipping a fast build service that will dramatically speed up your Gatsby builds. It will provide feedback while you develop and deploy your code and content changes to your hosting platform.
 
-Gatsby Cloud Builds works in similar ways to build services like Heroku, Netlify, Zeit, and others that integrate with GitHub and other services to automatically build and deploy your site when you make changes. We integrate with a number of different CDNs such as Netlify, Fastly, and Firebase as well as the major cloud providers so you can host your site wherever you'd like.
+Gatsby Cloud Builds works in similar ways to build services like Heroku, Netlify, Vercel, and others that integrate with GitHub and other services to automatically build and deploy your site when you make changes. We integrate with a number of different CDNs such as Netlify, Fastly, and Firebase as well as the major cloud providers so you can host your site wherever you'd like.
 
 We're tackling this problem in our Gatsby Cloud Builds service through two strategies that take advantage of the special nature of cloud computing.
 

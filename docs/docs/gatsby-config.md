@@ -10,13 +10,13 @@ _Note: There are many sample configs which may be helpful to reference in the di
 
 Options available to set within `gatsby-config.js` include:
 
-1.  [siteMetadata](#sitemetadata) (object)
-2.  [plugins](#plugins) (array)
-3.  [pathPrefix](#pathprefix) (string)
-4.  [polyfill](#polyfill) (boolean)
-5.  [mapping](#mapping-node-types) (object)
-6.  [proxy](#proxy) (object)
-7.  [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+1. [siteMetadata](#sitemetadata) (object)
+2. [plugins](#plugins) (array)
+3. [pathPrefix](#pathprefix) (string)
+4. [polyfill](#polyfill) (boolean)
+5. [mapping](#mapping-node-types) (object)
+6. [proxy](#proxy) (object)
+7. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
 
 ## siteMetadata
 
@@ -89,7 +89,7 @@ Gatsby includes an advanced feature that lets you create "mappings" between node
 
 > Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/schema-customization/#foreign-key-fields).
 
-For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a yaml file named `author.yaml`:
+For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a YAML file named `author.yaml`:
 
 ```markdown
 ---

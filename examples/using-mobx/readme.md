@@ -1,6 +1,6 @@
 # MOBX
 
-[Using mobx with gatsby](https://dazzling-meninsky-6f4ac3.netlify.com/)
+[Using mobx with gatsby](https://dazzling-meninsky-6f4ac3.netlify.app/)
 
 Gatsby example site that shows use of mobx.
 

@@ -142,17 +142,11 @@ const prepareConflictExamples = (
   }
   const reportedValueMapper = (typeName: ValueType): unknown => {
     if (typeName === `relatedNode`) {
-      // See FIXME in ./inference-metadata.ts
-      // eslint-disable-next-line
-      // @ts-ignore
-      const { nodes } = descriptor.relatedNode
+      const { nodes } = descriptor.relatedNode ?? { nodes: {} }
       return Object.keys(nodes).find(key => nodes[key] > 0)
     }
     if (typeName === `relatedNodeList`) {
-      // See FIXME in ./inference-metadata.ts
-      // eslint-disable-next-line
-      // @ts-ignore
-      const { nodes } = descriptor.relatedNodeList
+      const { nodes } = descriptor.relatedNodeList ?? { nodes: {} }
       return Object.keys(nodes).filter(key => nodes[key] > 0)
     }
     if (typeName === `object`) {
@@ -174,7 +168,7 @@ const prepareConflictExamples = (
 
   if (isArrayItem) {
     // Differentiate conflict examples by node they were first seen in.
-    // See Caveats section in the header of this file
+    // See Caveats section in the header of the ./inference-metadata.ts
     const groups = groupBy(
       conflictingTypes,
       type => descriptor[type]?.first || ``
