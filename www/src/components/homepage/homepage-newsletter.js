@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Flex, Heading } from "theme-ui"
+import { Flex } from "theme-ui"
 
 import HomepageSection from "./homepage-section"
 import EmailCaptureForm from "../email-capture-form"
