@@ -21,23 +21,6 @@
     - Google Analytics support
     - Create pages and posts in pod6 markup language
 - url: https://ghost-balsa-preview.draftbox.co/
-- url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
-  repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
-  description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
-  tags:
-    - Styling:CSS-in-JS
-    - Layout
-    - Material-UI
-  features:
-    - Gatsby v2
-    - Material-UI
-    - MuiTreasury Layout
-    - Dynamic configurable
-    - Offline support
-    - PWA ready
-    - SEO
-    - Responsive design
-- url: https://gatsby-ghost-balsa-starter.now.sh/
   repo: https://github.com/draftbox-co/gatsby-ghost-balsa-starter
   description: A Gatsby starter for creating blogs from headless Ghost CMS.
   tags:
@@ -6798,3 +6781,19 @@
     - Landing Page
     - Google Analytics
     - PaperCSS style
+- url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
+  repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
+  description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
+  tags:
+    - Layout
+    - Styling:CSS-in-JS
+    - Styling:Material-UI
+  features:
+    - Gatsby v2
+    - Material-UI
+    - MuiTreasury Layout
+    - Dynamic configurable
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
