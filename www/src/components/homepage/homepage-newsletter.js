@@ -22,7 +22,8 @@ const containerStyles = {
   position: `relative`,
 
   ":after": {
-    borderRadius: t => `0 0 ${t.radii[2]} ${t.radii[2]}`,
+    borderBottomLeftRadius: 2,
+    borderBottomRightRadius: 2,
     background: t => `${t.colors.newsletter.background}
       repeating-linear-gradient(
         135deg,
