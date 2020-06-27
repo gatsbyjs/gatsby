@@ -7,61 +7,74 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import { Name } from "./homepage-section"
 
-const Section = styled(`section`)`
-  border-bottom: 1px solid ${p => p.theme.colors.ui.border};
-  overflow: hidden;
-  padding: ${p => p.theme.space[5]} 0;
-  width: 100%;
+const Section = props => (
+  <section
+    {...props}
+    sx={{
+      borderBottom: t => `1px solid ${t.colors.ui.border}`,
+      overflow: `hidden`,
+      py: 5,
+      width: `100%`,
 
-  ${mediaQueries.xl} {
-    margin-top: -1px;
-    margin-bottom: -1px;
-  }
+      [mediaQueries.xl]: {
+        marginTop: `-1px`,
+        marginBottom: `-1px`,
+      },
 
-  ${mediaQueries.xxl} {
-    padding: ${p => p.theme.space[7]} 0;
-  }
-`
+      [mediaQueries.xxl]: {
+        py: 7,
+      },
+    }}
+  />
+)
 
-const Title = styled(`header`)`
-  padding-right: ${p => p.theme.space[6]};
-  padding-left: ${p => p.theme.space[6]};
-  ${mediaQueries.md} {
-    max-width: 30rem;
-  }
+const Title = props => (
+  <header
+    {...props}
+    sx={{
+      px: 6,
 
-  ${mediaQueries.lg} {
-    margin-left: ${p => p.theme.space[9]};
-  }
+      [mediaQueries.md]: {
+        maxWidth: `30rem`,
+      },
 
-  ${mediaQueries.xl} {
-    padding-right: 5%;
-    padding-left: 5%;
-  }
+      [mediaQueries.lg]: {
+        ml: 9,
+      },
 
-  ${mediaQueries.xxl} {
-    padding-right: 8%;
-    padding-left: 8%;
-  }
-`
+      [mediaQueries.xl]: {
+        px: `5%`,
+      },
 
-const LogoGroup = styled(`div`)`
-  position: relative;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
-  grid-gap: ${p => p.theme.space[8]};
-  align-items: center;
-  overflow-x: scroll;
-  padding-left: ${p => p.theme.space[3]};
-  padding-bottom: ${p => p.theme.space[4]};
-  ${mediaQueries.xxl} {
-    padding-bottom: ${p => p.theme.space[6]};
-  }
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`
+      [mediaQueries.xxl]: {
+        px: `8%`,
+      },
+    }}
+  />
+)
+
+const LogoGroup = props => (
+  <div
+    {...props}
+    sx={{
+      position: `relative`,
+      display: `grid`,
+      gridAutoFlow: `column`,
+      gridAutoColumns: `auto`,
+      gridGap: t => t.space[8],
+      alignItems: `center`,
+      overflowX: `scroll`,
+      pl: 3,
+      pb: 4,
+      [mediaQueries.xxl]: {
+        padding: 6,
+      },
+      "&::-webkit-scrollbar": {
+        display: `none`,
+      },
+    }}
+  />
+)
 
 const HomepageLogoBanner = () => {
   const data = useStaticQuery(graphql`
