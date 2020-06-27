@@ -7,7 +7,6 @@ import EmailCaptureForm from "../email-capture-form"
 
 import { NewsletterFormOrnament } from "../../assets/ornaments"
 
-import { rhythm } from "../../utils/typography"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 const stripedBorderHeight = 1
@@ -18,9 +17,8 @@ const containerStyles = {
   borderRadius: 2,
   flexDirection: `column`,
   mb: 8,
-  p: t => `calc(${t.space[8]} * 1.2)`,
-  pb: t =>
-    `calc(${rhythm(t.space[8] * 1.2)} + ${t.space[stripedBorderHeight]})`,
+  p: 9,
+  pb: t => `calc(${t.space[9]} + ${t.space[stripedBorderHeight]})`,
   position: `relative`,
 
   ":after": {
