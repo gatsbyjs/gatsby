@@ -36,7 +36,7 @@ const Fieldset = ({ children }) => (
   </fieldset>
 )
 
-const Legend = ({ children }) = (
+const Legend = ({ children }) => (
   <legend
     sx={{
       textAlign: `center`,
@@ -46,7 +46,7 @@ const Legend = ({ children }) = (
   >
     {children}
   </legend>
-))
+)
 
 const Rating = ({ children }) => (
   <div
