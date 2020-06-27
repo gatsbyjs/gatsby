@@ -1,194 +1,135 @@
 import React from "react"
-import PropTypes from "prop-types"
-import styled from "@emotion/styled"
-
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const PullquoteRoot = styled(`blockquote`)`
-  border: 1px solid ${p => p.theme.colors.pullquote.borderColor};
-  border-radius: ${p => p.theme.radii[2]};
-  color: ${p => p.theme.colors.pullquote.color};
-  font-family: ${p => p.theme.fonts.heading};
-  font-size: ${p => p.theme.fontSizes[3]};
-  font-weight: bold;
-  padding: ${p => p.theme.space[7]} 3rem;
-  position: relative;
-  text-indent: ${p => p.theme.space[7]};
-  margin: ${p => p.theme.space[8]} 0;
-
-  /* needed for overriding typography.js style "p *:last-child {"" */
-  p > & {
-    margin: ${p => p.theme.space[8]} 0;
-  }
-
-  ${mediaQueries.lg} {
-    line-height: ${p => p.theme.lineHeights.loose};
-    margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
-    padding: 2.8rem 3.5rem;
-    text-indent: 1.8rem;
-
-    p > & {
-      margin: ${p => p.theme.space[8]} ${p => (p.narrow ? 0 : `-3.5rem`)};
-    }
-  }
-`
-
-const Citation = styled(`cite`)`
-  display: block;
-  font-style: italic;
-  font-weight: normal;
-  margin-top: ${p => p.theme.space[4]};
-  text-align: right;
-`
-
-const QuotationMark = styled(`span`)`
-  display: flex;
-  left: ${p => p.theme.space[8]};
-  position: absolute;
-  top: ${p => p.theme.space[7]};
-
-  svg {
-    fill: ${p => p.theme.colors.purple[80]};
-  }
-
-  ${mediaQueries.lg} {
-    left: 3rem;
-    top: 2.8rem;
-
-    svg {
-      fill: ${p => p.theme.colors.purple[80]};
-      transform: scale(1.1);
-    }
-  }
-`
-
-const Star = styled(`span`)`
-  display: flex;
-  position: absolute;
-
-  svg {
-    height: 100%;
-    width: 100%;
-  }
-
-  :nth-of-type(1) {
-    height: 20px;
-    left: 0;
-    top: 1.8rem;
-    transform: translateX(-50%);
-    width: 20px;
-
-    svg {
-      fill: ${p => p.theme.colors.yellow[40]};
-    }
-
-    ${mediaQueries.lg} {
-      height: 27px;
-      width: 27px;
-    }
-
-    .variantB & {
-      left: auto;
-      right: 0;
-      top: ${p => p.theme.space[7]};
-      transform: translate(50%, 0);
-    }
-
-    .variantC & {
-      bottom: 0;
-      left: auto;
-      right: 12rem;
-      top: auto;
-      transform: translate(0, 50%);
-    }
-  }
-
-  :nth-of-type(2) {
-    left: 5rem;
-    height: 14px;
-    top: 0;
-    transform: translateY(-50%);
-    width: 14px;
-
-    svg {
-      fill: ${p => p.theme.colors.teal[40]};
-    }
-    .variantB & {
-      bottom: 0;
-      left: auto;
-      right: 3rem;
-      top: auto;
-      transform: translate(0, 50%);
-    }
-
-    .variantC & {
-      left: auto;
-      right: 9rem;
-      top: 0;
-      transform: translate(0, -50%);
-    }
-  }
-
-  :nth-of-type(3) {
-    bottom: 0;
-    height: ${p => p.theme.space[3]};
-    right: 4rem;
-    transform: translateY(50%);
-    width: ${p => p.theme.space[3]};
-
-    svg {
-      fill: ${p => p.theme.colors.red[60]};
-    }
-
-    .variantB & {
-      bottom: auto;
-      left: auto;
-      right: 7rem;
-      top: 0;
-      transform: translate(0%, -50%);
-    }
-
-    .variantC & {
-      top: 3rem;
-      left: 0;
-      transform: translate(-50%, 0);
-    }
-  }
-`
-
-const variants = [`A`, `B`, `C`]
-let instancesCounter = -1
-
-const Pullquote = ({ citation, narrow = false, children }) => {
-  instancesCounter += 1
-  const className = `variant${variants[instancesCounter % variants.length]}`
-
+function Citation({ author }) {
   return (
-    <PullquoteRoot narrow={narrow} className={className}>
-      {children}
-      {citation && <Citation>&mdash; {citation}</Citation>}
-      <QuotationMark>
-        <QuotationMarkOrnament />
-      </QuotationMark>
-      <div>
-        <Star>
-          <StarOrnament />
-        </Star>
-        <Star>
-          <StarOrnament />
-        </Star>
-        <Star>
-          <StarOrnament />
-        </Star>
-      </div>
-    </PullquoteRoot>
+    <cite
+      sx={{
+        display: `block`,
+        fontStyle: `italic`,
+        fontWeight: `normal`,
+        mt: 4,
+        textAlign: `right`,
+      }}
+    >
+      &mdash; {author}
+    </cite>
   )
 }
 
-Pullquote.propTypes = {
-  children: PropTypes.node.isRequired,
-  narrow: PropTypes.bool,
+function QuotationMark() {
+  return (
+    <span
+      sx={{
+        display: `flex`,
+        position: `absolute`,
+        left: [8, null, null, 9],
+        top: [7, null, null, `2.8rem`],
+
+        svg: {
+          fill: `purple.80`,
+          transform: [null, null, null, `scale(1.1)`],
+        },
+      }}
+    >
+      <QuotationMarkOrnament />
+    </span>
+  )
 }
 
-export default Pullquote
+const starColorStyle = {
+  yellow: { size: [5, null, null, `27px`], fill: `yellow.40` },
+  teal: { size: `14px`, fill: `teal.40` },
+  red: { size: 3, fill: `red.60` },
+}
+
+const starPositionStyle = {
+  yellow: [
+    { left: 0, top: `1.8rem`, transform: `translateX(-50%)` },
+    { right: 0, top: 7, transform: `translate(50%, 0)` },
+    { bottom: 0, right: 3, transform: `translate(0, 50%)` },
+  ],
+  teal: [
+    { left: `5rem`, top: 0, transform: `translateY(-50%)` },
+    { bottom: 0, right: 9, transform: `translate(0, 50%)` },
+    { right: `9rem`, top: 0, transform: `translate(0, -50%)` },
+  ],
+  red: [
+    { bottom: 0, right: 1, transform: `translateY(50%)` },
+    { right: `7rem`, top: 0, transform: `translate(0%, -50%)` },
+    { top: 9, left: 0, transform: `translate(-50%, 0)` },
+  ],
+}
+
+function Star({ color, order }) {
+  const { size, fill } = starColorStyle[color]
+  const positionStyle = starPositionStyle[color][order]
+
+  return (
+    <span
+      sx={{
+        display: `flex`,
+        position: `absolute`,
+        width: size,
+        height: size,
+
+        svg: {
+          height: `100%`,
+          width: `100%`,
+          fill,
+        },
+        ...positionStyle,
+      }}
+    >
+      <StarOrnament />
+    </span>
+  )
+}
+
+let instancesCounter = -1
+
+function Stars() {
+  instancesCounter += 1
+  const order = instancesCounter % 3
+  return (
+    <div>
+      {[`yellow`, `red`, `teal`].map(color => (
+        <Star key={color} color={color} order={order} />
+      ))}
+    </div>
+  )
+}
+
+export default function Pullquote({ citation, narrow = false, children }) {
+  return (
+    <blockquote
+      sx={{
+        borderWidth: `1px`,
+        borderStyle: `solid`,
+        borderColor: `pullquote.borderColor`,
+        borderRadius: 2,
+        color: `pullquote.color`,
+        fontFamily: `heading`,
+        fontSize: 3,
+        fontWeight: `bold`,
+        py: [7, null, null, `2.8rem`],
+        px: [9, null, null, 10],
+        position: `relative`,
+        textIndent: [t => t.space[7], null, null, `1.8rem`],
+        my: 8,
+        mx: [null, null, null, narrow ? 0 : `-3.5rem`],
+        // Needed for overriding typography.js style "p *:last-child {"""
+        "p > &": {
+          my: 8,
+          mx: [null, null, null, narrow ? 0 : `-3.5rem`],
+        },
+        lineHeight: [null, null, null, `loose`],
+      }}
+    >
+      {children}
+      {citation && <Citation author={citation} />}
+      <QuotationMark />
+      <Stars />
+    </blockquote>
+  )
+}
