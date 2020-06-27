@@ -14,12 +14,9 @@ const Section = props => (
       overflow: `hidden`,
       py: 5,
       width: `100%`,
-
       [mediaQueries.xl]: {
-        marginTop: `-1px`,
-        marginBottom: `-1px`,
+        my: `-1px`,
       },
-
       [mediaQueries.xxl]: {
         py: 7,
       },
@@ -32,19 +29,15 @@ const Title = props => (
     {...props}
     sx={{
       px: 6,
-
       [mediaQueries.md]: {
         maxWidth: `30rem`,
       },
-
       [mediaQueries.lg]: {
         ml: 9,
       },
-
       [mediaQueries.xl]: {
         px: `5%`,
       },
-
       [mediaQueries.xxl]: {
         px: `8%`,
       },
@@ -66,7 +59,7 @@ const LogoGroup = props => (
       pl: 3,
       pb: 4,
       [mediaQueries.xxl]: {
-        padding: 6,
+        pb: 6,
       },
       "&::-webkit-scrollbar": {
         display: `none`,
