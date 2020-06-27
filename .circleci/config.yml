@@ -227,6 +227,12 @@ jobs:
       image: "12"
     <<: *test_template
 
+  unit_tests_node14:
+    executor:
+      name: node
+      image: "14"
+    <<: *test_template
+
   unit_tests_www:
     executor: node
     steps:
@@ -463,6 +469,17 @@ workflows:
                 - master
     jobs:
       - sync_translation_repo
+
+  weekly-node-14:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - unit_tests_node14
 
   nightly-react-next:
     triggers:

@@ -24,7 +24,7 @@ For those curious as to how it all works, we have open sourced [the example benc
   possible on Gatsby Cloud{" "}
 </Pullquote>
 
-![screen shot of contentful benchmark build times for 8000 page website](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
+![screen shot of Contentful benchmark build times for 8000 page website](https://lh3.googleusercontent.com/9bzilTs1JiTr_VGOuDktdNZ4G-GxBKxot1nX4fdXngUo-CDVrQMSmdaUMnJM7w_Loj6-ncxuv71ebaC5h0_g56tSL6tP6P8P2OxWyA_SbczAFMnc0LLgQkdw35ffuEFvfYUAfk3p)
 
 ## Three types of builds (fast, faster, fastest)
 
@@ -34,6 +34,6 @@ It's also a nifty way to demonstrate the three different types of builds that ha
 
 2. **Cached code changes:** These are changes that make use of an available cache and don't require the full rebuild. Much faster!
 
-3. **Data change from CMS (a.k.a Incremental Builds):** A data change is a tweak made through the CMS (eg. Contentful). For example when a content editor publishes a new article or fixes a typo, this represents a data change because the codebase itself hasn't changed. Since the initial build is already established, subsequent incremental builds can run a comparison against it to determine what has changed. These builds are the fastest of all and only available on Gatsby Cloud.
+3. **Data change from CMS (a.k.a Incremental Builds):** A data change is a tweak made through the CMS (e.g. Contentful). For example when a content editor publishes a new article or fixes a typo, this represents a data change because the codebase itself hasn't changed. Since the initial build is already established, subsequent incremental builds can run a comparison against it to determine what has changed. These builds are the fastest of all and only available on Gatsby Cloud.
 
 What are you still doing here? Get on over to [Willit.build](https://willit.build/) and try it out for yourself!

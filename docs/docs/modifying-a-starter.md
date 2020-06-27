@@ -239,7 +239,7 @@ Here, some inline styles are being applied to a `<div>` element. This option wil
 
 You may even choose a specific starter _because_ of its approach to styling. Search the [Gatsby Starter Library](/starters/) using category filters prefixed with "Styling:" and choose the option(s) that best fit your project.
 
-![Starter Library with Styling:SCSS filter selected](./images/starter-library-scss-filter.png)
+![Starter Library with Styling: SCSS filter selected](./images/starter-library-scss-filter.png)
 
 ## Other resources
 

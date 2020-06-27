@@ -7,7 +7,6 @@ import PageMetadata from "../components/page-metadata"
 import FooterLinks from "../components/shared/footer-links"
 
 import { EcosystemIcon } from "../assets/icons"
-import { PluginsIcon, StartersIcon } from "../assets/icons/ecosystem-icons"
 
 class EcosystemPage extends Component {
   render() {
@@ -43,20 +42,15 @@ class EcosystemPage extends Component {
     const plugins = pluginsData
 
     const pageTitle = `Ecosystem`
-    const boardIcons = { plugins: PluginsIcon, starters: StartersIcon }
 
     return (
       <Layout
         location={location}
         pageTitle={pageTitle}
-        pageIcon={EcosystemIcon}
+        pageIcon={<EcosystemIcon />}
       >
         <PageMetadata title="Ecosystem" />
-        <EcosystemBoard
-          icons={boardIcons}
-          starters={starters}
-          plugins={plugins}
-        />
+        <EcosystemBoard starters={starters} plugins={plugins} />
         <FooterLinks />
       </Layout>
     )

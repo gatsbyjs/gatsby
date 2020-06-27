@@ -16,17 +16,17 @@ This tutorial will take about two hours to complete. If you're unfamiliar with L
 
 If you work alone or in a small team, you’re likely to have started working on small programs that slowly grow complex and convoluted. Shit happens and you’ll soon find that your perfectly balanced lasagna evolves into a heaped bowlful of spaghetti.
 
-The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of css style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be a headache to keep track of. These are some of the problems monorepos solve.
+The same goes for those who have worked as part of a large company/team. Branding guidelines come in the form of CSS style-guides or reusable components. Separating the discrete packages from what’s shared becomes a hassle if everything’s stored together. You may even have to deal with several similar projects thrown about in different repos, which can be a headache to keep track of. These are some of the problems monorepos solve.
 
 ![Monorepo Diagram](./images/monorepo-diagram.jpeg)
 
 A monorepo is an architectural design pattern that allows us to maintain several packages within a single repo. This reduces the complexity when dealing with packages that share in-house and third-party dependencies.
 
-Think of monorepos like a well-organised supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free/)).
+Think of monorepos like a well-organized supermarket. Each aisle contains a particular kind of food, making it easy to navigate and find the item of food you want. Supermarkets also contain a variety of different foods so you don’t need to go to a series of specific shops to find your gluten-free, dairy-free banoffee pie (which is very much a [thing](https://glutenfreecuppatea.co.uk/2016/02/14/recipe-healthy-banoffee-pie-gluten-free-vegan-refined-sugar-free-dairy-free/)).
 
 With monorepos the code is split into specific packages (aisles). Meaning you can easily navigate the project to find the component or module you want to work on. It also means not needing to maintain separate repos when making changes that affect multiple parts of your stack (the single shop).
 
-Everything is accessible from a single place, while still being organised enough to navigate painlessly.
+Everything is accessible from a single place, while still being organized enough to navigate painlessly.
 Enough with the theory, let’s move on to the tutorial, which is split into 2 sections: development and deployment.
 
 *Development* — We’ll configure an existing application, built with [Gatsby](/), into a monorepo. I won’t delve too much into its implementation details because it’s beyond the scope of this article. We’ll attend the lavish party that the great Gatsby throws for us and we won’t ask why or how they did it.
@@ -66,7 +66,7 @@ Navigate inside of the `lerna-monorepo-starter` directory and install the packag
 
 Open Chrome, and navigate to `http://localhost:8000`. You’ll find a simple application with a mock blog and a mock shop. Imagine this is a fleshed out application, we can make the assumption that the underlying logic behind the blog and the shop are different and that there are similarities with the styling and components.
 
-Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of json files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these json files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
+Go back to your IDE and you’ll see that we’re not pulling data from an external source. The data is being served locally via a couple of JSON files in the `data` directory. When we run the `develop` command Gatsby pulls the data from these JSON files and creates pages for them. You can take a look at how this being done by peeking inside of the `gatsby-node.js` file. This is because Gatsby builds the code and outputs a static site.
 
 So imagine our application is starting to grow, the shop and the blog start intertwining with each other. You may not notice the lack of separation until its too late and your code is tangled tighter than the ivy across the side of your grandma’s cottage.
 
@@ -117,7 +117,7 @@ The Layout component behaves as the entry point of each Gatsby application, whic
 
 We’ll avoid code duplication by abstracting the parts of the layout that won’t need to change based on the page, like the use of the Header component. We’ll keep each package’s individual logic, like the `graphql` query.
 
-In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`. Create an `index.js` file and move over the contents of the `src/layouts/index.js` file here. Once that’s done get rid of the `graphql` query. Move over the css file so the imports don’t break.
+In `packages/shared-ui`, create a new directory called `layouts/PrimaryLayouts`. Create an `index.js` file and move over the contents of the `src/layouts/index.js` file here. Once that’s done get rid of the `graphql` query. Move over the CSS file so the imports don’t break.
 
 Back in the `src/layouts` file we can get rid of everything and replace it with this:
 
@@ -359,7 +359,7 @@ This will allow us to transition between our two sites. Do the same for the shop
 
 Congratulations, the site now behaves in exactly the same way as when we started. This might make it seem like monorepos have little use, but you’ll find that using a monorepo is a way of keeping packages independent from each other while easily reusing assets.
 
-You can stop the tutorial now and you’ll have a working knowedge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
+You can stop the tutorial now and you’ll have a working knowledge of when, how and why to use monorepos, but the latter half of this tutorial will show us how we can take things a step further. We’ll get a CI pipeline set up for our application and deploy it on success.
 
 ### Part Two
 
@@ -547,7 +547,7 @@ I'm also running a [Gatsby workshop](https://www.eventbrite.com/e/gatsbyjs-works
 
 I’ll be adding to this section as I get feedback or stumble across issues myself.
 
-If you get an error that says ‘lerna: command not found’ after installing it globally, then install it locally as a project dependency and run it using `yarn lerna <command>`.
+If you get an error that says `lerna: command not found` after installing it globally, then install it locally as a project dependency and run it using `yarn lerna <command>`.
 
 Running your application:
 

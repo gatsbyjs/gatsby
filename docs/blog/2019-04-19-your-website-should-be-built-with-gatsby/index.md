@@ -66,7 +66,7 @@ With Gatsby, the architecture of our website simplifies a great deal.
 
 This is the section of the post that business owners and marketing directors have been patiently waiting for. History and architecture aside, there’s a lot of hard, tangible, measurable results Gatsby can deliver to your business. Here’s some of them.
 
-### Search Engine Optimisation (SEO)
+### Search Engine Optimization (SEO)
 
 A higher organic search ranking ensures pages on your site appear closer to the top of your audience’s search results, and increases the chances of them visiting your site and engaging with your business. It plays a big part in bringing traffic to your site.
 
@@ -88,7 +88,7 @@ Every second counts. Mobile websites that take [more than 3 seconds to load have
 
 ### Developer Experience and User Experience
 
-Simply put, Gatsby makes it very easy to make sites beautiful, snappy and satisfying for users. The performance optimizations make page transitions seem instantaneous. It also comes with out-of-the-box functionality for creating very satisfying interactive behaviours.
+Simply put, Gatsby makes it very easy to make sites beautiful, snappy and satisfying for users. The performance optimizations make page transitions seem instantaneous. It also comes with out-of-the-box functionality for creating very satisfying interactive behaviors.
 
 Gatsby has an excellent dedicated product team, supported by a booming open-source developer community. The technology is incredible, and it’s continuing to grow, with updated revisions of the core product, and with an ecosystem of code libraries that can be plugged in for quick access to impressive functionality.
 

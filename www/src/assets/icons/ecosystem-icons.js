@@ -1,4 +1,4 @@
-import PluginsIcon from "!raw-loader!./plugins-ecosystem.svg"
-import StartersIcon from "!raw-loader!./starters.svg"
+import PluginsIcon from "./plugins-ecosystem.svg"
+import StartersIcon from "./starters.svg"
 
 export { PluginsIcon, StartersIcon }

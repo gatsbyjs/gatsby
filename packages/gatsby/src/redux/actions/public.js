@@ -9,7 +9,7 @@ const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../db/nodes`)
+const { hasNodeChanged, getNode } = require(`../../redux/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
@@ -888,7 +888,7 @@ type CreateNodeInput = {
  * @param {string} $0.fieldName [deprecated] the name for the field
  * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
- * @param {string} $0.value the value for the field
+ * @param {any} $0.value the value for the field
  * @example
  * createNodeField({
  *   node,

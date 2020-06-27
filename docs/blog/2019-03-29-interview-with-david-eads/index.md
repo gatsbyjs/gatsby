@@ -70,9 +70,9 @@ After reading a blog post by Tom MacWright, I realized that a lot of the stuff I
 https://macwright.org/2016/10/11/d3-and-react.html
 macwright.org
 
-Mixing d3 and React. Use JSX instead of the d3 selection API and keep everything else.
+Mixing D3 and React. Use JSX instead of the D3 selection API and keep everything else.
 
-![mixing d3 and React](./images/d3react.jpg)
+![mixing D3 and React](./images/d3react.jpg)
 
 This is pure HTML and CSS -- no extra libraries.
 
