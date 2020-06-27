@@ -8,31 +8,25 @@ import {
   MdSentimentVerySatisfied,
 } from "react-icons/md"
 
-const Rating = ({ children }) => (
-  <div
-    sx={{
-      ...themedInput,
-      px: 0,
-      alignContent: `stretch`,
-      display: `flex`,
-      flex: `1 1 auto`,
-      justifyContent: `stretch`,
-      overflow: `hidden`,
-      transition: `0.5s`,
-      width: `99.99%`,
+const ratingStyles = {
+  ...themedInput,
+  px: 0,
+  alignContent: `stretch`,
+  display: `flex`,
+  flex: `1 1 auto`,
+  justifyContent: `stretch`,
+  overflow: `hidden`,
+  transition: `0.5s`,
+  width: `99.99%`,
 
-      "&:focus-within": {
-        ...themedInputFocus,
-      },
+  "&:focus-within": {
+    ...themedInputFocus,
+  },
 
-      "[disabled] &": {
-        opacity: `0.5`,
-      },
-    }}
-  >
-    {children}
-  </div>
-)
+  "[disabled] &": {
+    opacity: `0.5`,
+  },
+}
 
 const fieldsetStyles = {
   border: 0,
@@ -40,7 +34,7 @@ const fieldsetStyles = {
   mb: 4,
 }
 
-const lengedStyles = {
+const legendStyles = {
   textAlign: `center`,
   fontSize: 1,
   mb: 4,
@@ -49,8 +43,8 @@ const lengedStyles = {
 export default function Ratings({ rating, submitting, handleChange }) {
   return (
     <fieldset sx={fieldsetStyles} className="ratings" disabled={submitting}>
-      <legend sx={lengedStyles}>Rate your experience</legend>
-      <Rating>
+      <legend sx={legendStyles}>Rate your experience</legend>
+      <div sx={ratingStyles}>
         <RatingOption
           iconLabel="frowning face"
           icon={MdSentimentDissatisfied}
@@ -75,7 +69,7 @@ export default function Ratings({ rating, submitting, handleChange }) {
           checked={rating === 3}
           handleChange={handleChange}
         />
-      </Rating>
+      </div>
     </fieldset>
   )
 }
