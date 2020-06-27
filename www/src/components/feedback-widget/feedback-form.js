@@ -2,91 +2,19 @@
 import { jsx } from "theme-ui"
 import { Fragment } from "react"
 import WidgetWrapper from "./widget-wrapper"
+import Ratings from "./ratings"
 import { SubmitButton, CloseButton } from "./buttons"
-import { themedInput, themedInputFocus } from "../../utils/styles"
+import { themedInput } from "../../utils/styles"
 import { Actions, Title, ScreenReaderText } from "./styled-elements"
-import RatingOption from "./rating-option"
-import {
-  MdSentimentDissatisfied,
-  MdSentimentNeutral,
-  MdSentimentVerySatisfied,
-  MdSend,
-  MdRefresh,
-} from "react-icons/md"
+import { MdSend, MdRefresh } from "react-icons/md"
 
-const Form = ({ children }) => (
-  <form
-    sx={{
-      mb: 0,
-    }}
-  >
-    {children}
-  </form>
-)
-
-const Fieldset = ({ children }) => (
-  <fieldset
-    sx={{
-      border: 0,
-      p: 0,
-      mb: 4,
-    }}
-  >
-    {children}
-  </fieldset>
-)
-
-const Legend = ({ children }) => (
-  <legend
-    sx={{
-      textAlign: `center`,
-      fontSize: 1,
-      mb: 4,
-    }}
-  >
-    {children}
-  </legend>
-)
-
-const Rating = ({ children }) => (
-  <div
-    sx={{
-      ...themedInput,
-      px: 0,
-      alignContent: `stretch`,
-      display: `flex`,
-      flex: `1 1 auto`,
-      justifyContent: `stretch`,
-      overflow: `hidden`,
-      transition: `0.5s`,
-      width: `99.99%`,
-
-      "&:focus-within": {
-        ...themedInputFocus,
-      },
-
-      "[disabled] &": {
-        opacity: `0.5`,
-      },
-    }}
-  >
-    {children}
-  </div>
-)
-
-const TextareaLabel = ({ children }) => (
-  <label
-    sx={{
-      fontSize: 1,
-      fontWeight: `bold`,
-      span: {
-        fontWeight: `normal`,
-      },
-    }}
-  >
-    {children}
-  </label>
-)
+const textareaLabelStyles = {
+  fontSize: 1,
+  fontWeight: `bold`,
+  span: {
+    fontWeight: `normal`,
+  },
+}
 
 const textareaStyles = {
   ...themedInput,
@@ -111,43 +39,25 @@ export default function FeedbackForm({
 }) {
   return (
     <WidgetWrapper id="feedback-widget" handleClose={handleClose}>
-      <Form
+      <form
+        sx={{
+          mb: 0,
+        }}
         onSubmit={handleSubmit}
         className={`${submitting ? `submitting` : ``}`}
       >
         <Title ref={titleRef} tabIndex="-1">
           Was this doc helpful to you?
         </Title>
-        <Fieldset className="ratings" disabled={submitting}>
-          <Legend>Rate your experience</Legend>
-          <Rating>
-            <RatingOption
-              iconLabel="frowning face"
-              icon={MdSentimentDissatisfied}
-              ratingText="poor"
-              ratingValue="1"
-              checked={rating === 1}
-              handleChange={handleChange}
-            />
-            <RatingOption
-              iconLabel="neutral face"
-              icon={MdSentimentNeutral}
-              ratingText="fine"
-              ratingValue="2"
-              checked={rating === 2}
-              handleChange={handleChange}
-            />
-            <RatingOption
-              iconLabel="smiling face"
-              icon={MdSentimentVerySatisfied}
-              ratingText="great"
-              ratingValue="3"
-              checked={rating === 3}
-              handleChange={handleChange}
-            />
-          </Rating>
-        </Fieldset>
-        <TextareaLabel className={`textarea ${submitting ? `disabled` : ``}`}>
+        <Ratings
+          rating={rating}
+          handleChange={handleChange}
+          submitting={submitting}
+        />
+        <label
+          sx={textareaLabelStyles}
+          className={`textarea ${submitting ? `disabled` : ``}`}
+        >
           Your comments <span>(optional):</span>
           <textarea
             sx={textareaStyles}
@@ -155,7 +65,7 @@ export default function FeedbackForm({
             onChange={handleCommentChange}
             disabled={submitting}
           />
-        </TextareaLabel>
+        </label>
         <Actions>
           <CloseButton
             onClick={handleClose}
@@ -182,7 +92,7 @@ export default function FeedbackForm({
             )}
           </SubmitButton>
         </Actions>
-      </Form>
+      </form>
     </WidgetWrapper>
   )
 }
