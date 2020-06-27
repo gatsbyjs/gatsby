@@ -6737,6 +6737,14 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-capacitor.netlify.app/
+  repo: https://github.com/flogy/gatsby-starter-capacitor
+  description: Build blazing fast mobile apps with Gatsby and Capacitor.
+  tags:
+    - Styling:None
+  features:
+    - Basic setup for hybrid mobile apps for Android and iOS
+    - Demonstration on how to access Native APIs of mobile devices
 - url: https://gatsby-starter-woo.surge.sh/
   repo: https://github.com/desmukh/gatsby-starter-woo
   description: Simple, clean and responsive landing page for your product or service. This is a GatsbyJS port of StyleShout's Woo template.
