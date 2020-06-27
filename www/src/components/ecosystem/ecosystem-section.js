@@ -53,7 +53,8 @@ const titleStyles = {
   lineHeight: `solid`,
   m: 0,
   mb: 1,
-  minHeight: t => t.space[7],
+  // TODO add common icon sizes to theme `sizes`
+  minHeight: `2rem`,
   span: {
     mr: 1,
   },
@@ -61,8 +62,9 @@ const titleStyles = {
 
 const iconStyles = {
   display: `block`,
-  height: t => t.space[7],
-  width: t => t.space[7],
+  // TODO add common icon sizes to theme `sizes`
+  height: `2rem`,
+  width: `2rem`,
 }
 
 const subtitleStyles = {
