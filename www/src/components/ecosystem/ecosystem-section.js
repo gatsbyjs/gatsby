@@ -96,9 +96,9 @@ const EcosystemSection = ({
   icon,
   links,
   featuredItems,
-  className,
+  ...rest
 }) => (
-  <section sx={ecosystemSectionRootStyles} className={className}>
+  <section sx={ecosystemSectionRootStyles} {...rest}>
     <Header>
       <h1 sx={titleStyles}>
         {icon && <span sx={iconStyles}>{icon}</span>}
@@ -131,7 +131,6 @@ const EcosystemSection = ({
 EcosystemSection.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  className: PropTypes.string,
   subTitle: PropTypes.string,
   icon: PropTypes.element,
   links: PropTypes.array,
