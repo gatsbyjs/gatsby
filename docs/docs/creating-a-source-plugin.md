@@ -432,7 +432,7 @@ If possible, the proactive listener approach creates the best experience if exis
 The code to support this behavior looks like this:
 
 ```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async ({ actions }, pluginOptions) => {
+exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
   const { createNode, touchNode, deleteNode } = actions
 
   // highlight-start
