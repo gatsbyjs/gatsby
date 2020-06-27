@@ -54,12 +54,6 @@ const containerStyles = {
   },
 }
 
-const ornamentStyles = {
-  left: -1,
-  position: `absolute`,
-  top: -2,
-}
-
 const nameStyles = {
   color: `textMuted`,
   fontFamily: `heading`,
@@ -82,9 +76,13 @@ const titleStyles = {
 const HomepageNewsletter = () => (
   <HomepageSection>
     <Flex sx={containerStyles}>
-      <span sx={ornamentStyles}>
-        <NewsletterFormOrnament />
-      </span>
+      <NewsletterFormOrnament
+        sx={{
+          left: -1,
+          position: `absolute`,
+          top: -2,
+        }}
+      />
       <header>
         <h3 sx={nameStyles}>The Gatsby Newsletter</h3>
         <h1 sx={titleStyles}>Keep up with the latest things Gatsby!</h1>
