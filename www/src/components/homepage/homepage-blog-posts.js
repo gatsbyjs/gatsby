@@ -130,18 +130,15 @@ const splitPostsToColumns = posts =>
 
 export default function HomepageBlogPosts({ posts }) {
   const [desktopViewport, setDesktopViewport] = useState(false)
-  let desktopMediaQuery = null
 
   useEffect(() => {
-    desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
+    const updateViewPortState = () =>
+      setDesktopViewport(desktopMediaQuery.matches)
+    const desktopMediaQuery = window.matchMedia(`(min-width: ${breakpoints[3]}`)
     desktopMediaQuery.addListener(updateViewPortState)
-    setDesktopViewport(desktopMediaQuery.matches)
+    updateViewPortState()
     return () => desktopMediaQuery.removeListener(updateViewPortState)
   }, [])
-
-  const updateViewPortState = () => {
-    setDesktopViewport(desktopMediaQuery.matches)
-  }
 
   const postsInColumns = splitPostsToColumns(posts)
 
