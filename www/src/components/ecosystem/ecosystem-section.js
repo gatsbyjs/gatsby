@@ -108,7 +108,7 @@ const EcosystemSection = ({
   <EcosystemSectionRoot className={className}>
     <Header>
       <Title>
-        {icon && <Icon dangerouslySetInnerHTML={{ __html: icon }} />}
+        {icon && <Icon>{icon}</Icon>}
         <span>{title}</span>
       </Title>
       <Description>{description}</Description>
@@ -140,7 +140,7 @@ EcosystemSection.propTypes = {
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
   subTitle: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.element,
   links: PropTypes.array,
   featuredItems: PropTypes.array,
 }

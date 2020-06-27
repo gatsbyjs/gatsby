@@ -168,13 +168,19 @@ const Pullquote = ({ citation, narrow = false, children }) => {
     <PullquoteRoot narrow={narrow} className={className}>
       {children}
       {citation && <Citation>&mdash; {citation}</Citation>}
-      <QuotationMark
-        dangerouslySetInnerHTML={{ __html: QuotationMarkOrnament }}
-      />
+      <QuotationMark>
+        <QuotationMarkOrnament />
+      </QuotationMark>
       <div>
-        <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
-        <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
-        <Star dangerouslySetInnerHTML={{ __html: StarOrnament }} />
+        <Star>
+          <StarOrnament />
+        </Star>
+        <Star>
+          <StarOrnament />
+        </Star>
+        <Star>
+          <StarOrnament />
+        </Star>
       </div>
     </PullquoteRoot>
   )

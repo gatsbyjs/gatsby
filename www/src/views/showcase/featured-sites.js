@@ -282,9 +282,7 @@ class FeaturedSites extends Component {
                         },
                       }}
                     >
-                      <span
-                        dangerouslySetInnerHTML={{ __html: ShowcaseIcon }}
-                      />
+                      <ShowcaseIcon />
                     </span>
                     View all Featured Sites
                   </span>

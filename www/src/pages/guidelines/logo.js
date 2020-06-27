@@ -24,11 +24,13 @@ import {
 
 import GatsbyLogo from "../../components/guidelines/logo"
 import GatsbyMonogram from "../../components/guidelines/logo/monogram"
-import Wordmark from "!raw-loader!../../assets/guidelines/wordmark.svg"
-import Clearspace from "!raw-loader!../../assets/guidelines/clearspace.svg"
-import ClearspaceMonogram from "!raw-loader!../../assets/guidelines/clearspace-monogram.svg"
-import ManuallyTracked from "!raw-loader!../../assets/guidelines/manually-tracked.svg"
-import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-lockups.svg"
+import {
+  Wordmark,
+  Clearspace,
+  ClearspaceMonogram,
+  ManuallyTracked,
+  PartnershipLockups,
+} from "../../assets/guidelines"
 
 import ColorSwatch from "../../components/guidelines/color/card"
 
@@ -422,10 +424,9 @@ const Logo = ({ data, location }) => {
                   mb: 4,
                   svg: { display: `block`, width: `100%` },
                 }}
-                dangerouslySetInnerHTML={{
-                  __html: PartnershipLockups,
-                }}
-              />
+              >
+                <PartnershipLockups />
+              </Box>
             </Flex>
           </ContentColumn>
         </Columns>
@@ -464,20 +465,18 @@ const Logo = ({ data, location }) => {
                 svg: { display: `block`, width: `100%` },
                 color: isDark ? `white` : `black`,
               }}
-              dangerouslySetInnerHTML={{
-                __html: Wordmark,
-              }}
-            />
+            >
+              <Wordmark />
+            </Box>
             <Box
               sx={{
                 maxWidth: `257px`,
                 mb: 3,
                 svg: { display: `block`, width: `100%` },
               }}
-              dangerouslySetInnerHTML={{
-                __html: ManuallyTracked,
-              }}
-            />
+            >
+              <ManuallyTracked />
+            </Box>
             <Text as="span" color="blue.70">
               Manual kerning and custom “G”
             </Text>
@@ -607,10 +606,9 @@ const Logo = ({ data, location }) => {
                 mb: 4,
                 svg: { display: `block`, maxWidth: 506 },
               }}
-              dangerouslySetInnerHTML={{
-                __html: Clearspace,
-              }}
-            />
+            >
+              <Clearspace />
+            </Box>
             <Text as="p" mb={7} fontSize={1} color="grey.50">
               <Text as="span" color="magenta.50">
                 Clearspace
@@ -623,10 +621,9 @@ const Logo = ({ data, location }) => {
                 mb: 4,
                 svg: { display: `block`, maxWidth: 122 },
               }}
-              dangerouslySetInnerHTML={{
-                __html: ClearspaceMonogram,
-              }}
-            />
+            >
+              <ClearspaceMonogram />
+            </Box>
             <Text as="p" mb={0} fontSize={1} color="grey.50">
               <Text as="span" color="magenta.50">
                 Clearspace
