@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
 import { StarOrnament, QuotationMarkOrnament } from "../../assets/ornaments"
 
 function Citation({ author }) {
@@ -45,27 +44,43 @@ const starColorStyle = {
   red: { size: `12px`, fill: `red.60` },
 }
 
-const starPositionStyle = {
-  yellow: [
-    { left: 0, top: `1.8rem`, transform: `translateX(-50%)` },
-    { right: 0, top: 7, transform: `translate(50%, 0)` },
-    { bottom: 0, right: `12rem`, transform: `translate(0, 50%)` },
-  ],
-  teal: [
-    { left: `5rem`, top: 0, transform: `translateY(-50%)` },
-    { bottom: 0, right: 9, transform: `translate(0, 50%)` },
-    { right: `9rem`, top: 0, transform: `translate(0, -50%)` },
-  ],
-  red: [
-    { bottom: 0, right: 11, transform: `translateY(50%)` },
-    { right: `7rem`, top: 0, transform: `translate(0%, -50%)` },
-    { top: 9, left: 0, transform: `translate(-50%, 0)` },
-  ],
+const starPositionStyles = [
+  {
+    yellow: { side: `left`, offset: `1.8rem` },
+    teal: { side: `top`, offset: `5rem` },
+    red: { side: `bottom`, offset: `4rem`, fromEnd: true },
+  },
+  {
+    yellow: { side: `right`, offset: `2rem` },
+    teal: { side: `bottom`, offset: `3rem`, fromEnd: true },
+    red: { side: `top`, offset: `7rem`, fromEnd: true },
+  },
+  {
+    yellow: { side: `bottom`, offset: `12rem`, fromEnd: true },
+    teal: { side: `top`, offset: `9rem`, fromEnd: true },
+    red: { side: `left`, offset: `3rem` },
+  },
+]
+
+const starTransforms = {
+  left: [-0.5, 0],
+  right: [0.5, 0],
+  top: [0, -0.5],
+  bottom: [0, 0.5],
+}
+
+function crossAxis(side, fromEnd) {
+  if ([`left`, `right`].includes(side)) {
+    return fromEnd ? `bottom` : `top`
+  } else {
+    return fromEnd ? `right` : `left`
+  }
 }
 
 function Star({ color, order }) {
   const { size, fill } = starColorStyle[color]
-  const positionStyle = starPositionStyle[color][order]
+  const { side, offset, fromEnd } = starPositionStyles[order][color]
+  const transform = starTransforms[side]
 
   return (
     <span
@@ -74,16 +89,12 @@ function Star({ color, order }) {
         position: `absolute`,
         width: size,
         height: size,
-        ...positionStyle,
+        [side]: 0,
+        [crossAxis(side, fromEnd)]: offset,
+        transform: `translate(${transform[0] * 100}%,${transform[1] * 100}%)`,
       }}
     >
-      <StarOrnament
-        sx={{
-          height: `100%`,
-          width: `100%`,
-          fill,
-        }}
-      />
+      <StarOrnament sx={{ height: `100%`, width: `100%`, fill }} />
     </span>
   )
 }
