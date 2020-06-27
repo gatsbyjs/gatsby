@@ -23,7 +23,7 @@ const Title = props => (
     {...props}
     sx={{
       px: [6, null, null, null, null, `5%`, `8%`],
-      maxWidth: [null, null, null, `30rem`, null, null, 6],
+      maxWidth: [null, null, null, `30rem`],
       ml: [null, null, null, null, 9],
     }}
   />
