@@ -91,7 +91,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Answer:** We don't really have an official opinion--we want you to build apps however you prefer! That being said, I quite like CSS in JS (particularly emotion). I did a little podcast with Chris Coyier if you're interested--[CSS-in-JS Podcast on CSS Tricks](https://css-tricks.com/video-screencasts/168-css-in-js/)
 
 **Question:** How about best practices with Styles and Web Fonts?
-**Answer:** Re: Styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default! As far as web fonts, depends! You could use gatsby-plugin-typography and load google fonts if that's your thing. [Typefaces](https://github.com/kyleamathews/typefaces) lets you add open source fonts from NPM packages.
+**Answer:** Re: Styles, I'd recommend using something like CSS Modules (enabled by default!) or a CSS in JS solution if you're into that. We're not opinionated and want to enable everyone to build performant sites, by default! As far as web fonts, depends! You could use gatsby-plugin-typography and load google fonts if that's your thing. [Typefaces](https://github.com/kyleamathews/typefaces) lets you add open source fonts from npm packages.
 
 ### Content Management Systems (CMS)
 

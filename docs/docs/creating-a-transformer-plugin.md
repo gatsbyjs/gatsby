@@ -25,7 +25,7 @@ This loose coupling between the data source and transformer plugins allow Gatsby
 
 ## How do you create a transformer plugin?
 
-Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
+Just like a source plugin, a transformer plugin is a normal npm package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
 
 `gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/YAML (e.g. a `.yaml` file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 

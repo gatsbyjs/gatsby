@@ -1348,7 +1348,7 @@ Novela
 Novia
 Novikov
 npm
-NPM
+*NPM
 npm-check
 npm-force-resolutions
 npx
