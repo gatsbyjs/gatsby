@@ -15,7 +15,6 @@ const EcosystemSectionRoot = props => (
       bg: `card.background`,
       p: 6,
       mb: 3,
-
       [mediaQueries.md]: {
         boxShadow: `raised`,
         borderRadius: 2,
@@ -28,22 +27,18 @@ const EcosystemSectionRoot = props => (
         mb: 6,
         maxHeight: `60vh`,
         pb: 0,
-
         ":last-child": {
           flexGrow: 1,
         },
       },
-
       [mediaQueries.lg]: {
         flexBasis: t => `calc(33.33% - ${t.space[5]})`,
         maxHeight: `100%`,
-
         ":last-child": {
           alignSelf: `flex-start`,
           pb: 6,
         },
       },
-
       a: {
         textDecoration: `none`,
       },
@@ -69,7 +64,6 @@ const Title = props => (
       m: 0,
       mb: 1,
       minHeight: t => t.space[7],
-
       span: {
         mr: 1,
       },
@@ -119,7 +113,6 @@ const Actions = props => (
     sx={{
       flexWrap: `wrap`,
       mt: -1,
-
       "> a": {
         my: 1,
         mr: 2,
