@@ -1,7 +1,6 @@
 /** @jsx jsx */
-import { jsx } from "theme-ui"
+import { jsx, Flex } from "theme-ui"
 import PropTypes from "prop-types"
-import { Flex } from "theme-ui"
 
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
