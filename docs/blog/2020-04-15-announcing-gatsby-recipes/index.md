@@ -11,9 +11,9 @@ Recipes are run from the CLI and automate common tasks like creating pages and l
 
 Gatsby ships with a number of default recipes and it's easy to create your own for use on your sites. Recipes allow you to install NPM packages, add Gatsby plugins, generate pages and other code. Recipes are written using Markdown and React components.
 
-To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding TypeScript, ThemeUI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
+To kickstart the new era of Gatsby Recipes, we’ve created 11 official recipes with more on the way! These include recipes for adding TypeScript, Theme UI, Sass, Cypress, and setting up useful techniques like animated page transitions, and persistent layout components.
 
-**Watch me add [ThemeUI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
+**Watch me add [Theme UI](https://theme-ui.com/) to a Gatsby site in under 45 seconds**
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="./gatsby-recipes-theme-ui.mp4" />
@@ -30,7 +30,7 @@ We want there to be 10s of thousands of recipes you can search, run, and remix p
 
 ## Human-friendly automation
 
-Recipes are written in [MDX](https://mdxjs.com/)—a combination of Markdown and React components—readable by both humans and machines. (Other “infrastructure as code” automations, like AWS CloudFormation, use kinda-sorta legible yaml templates that favor the machines). We picked MDX to make Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to _declare_ to Gatsby Recipes the desired state of the world. This means Gatsby Recipes read like actual little recipes. Writing and using them could be...dare we say it..._fun_.
+Recipes are written in [MDX](https://mdxjs.com/)—a combination of Markdown and React components—readable by both humans and machines. (Other “infrastructure as code” automations, like AWS CloudFormation, use kinda-sorta legible YAML templates that favor the machines). We picked MDX to make Gatsby Recipes instructions and explanations easily readable for humans while using React components syntax to _declare_ to Gatsby Recipes the desired state of the world. This means Gatsby Recipes read like actual little recipes. Writing and using them could be...dare we say it..._fun_.
 
 We take a lot of inspiration from literate programming tools like [Eve](http://witheve.com/deepdives/literate.html) and [HyperCard](https://en.wikipedia.org/wiki/HyperCard).
 

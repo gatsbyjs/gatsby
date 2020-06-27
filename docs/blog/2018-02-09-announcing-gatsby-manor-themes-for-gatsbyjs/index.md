@@ -60,7 +60,7 @@ inspiration from [html5up](https://html5up.net/) templates. However I did not
 want to discard my work so far.
 
 I decided to make a new directory to store my outdated work, like a true digital
-hoarder. A few more hours passed and I found myself yarning for
+hoarder. A few more hours passed and I found myself yearning for
 my original design choice because the new design was too complex. I knew this
 situation would occur again (sometimes I can be indecisive 😅) so I decided to build
 a small cli tool to switch between themes easily. But first I needed a name, and

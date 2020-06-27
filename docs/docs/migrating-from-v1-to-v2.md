@@ -1019,7 +1019,7 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 ### Only allow defined keys on the node internal object
 
-The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behaviour we now validate against it for v2. Node data should be added as fields on the top-level node object.
+The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behavior we now validate against it for v2. Node data should be added as fields on the top-level node object.
 
 [Check the Node interface docs](https://www.gatsbyjs.org/docs/node-interface/) for allowed fields.
 
@@ -1046,7 +1046,7 @@ _Start from scratch:_ If you're a _start from scratch_ kind of person, you can i
 
 _Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
 
-_Starters:_ If you'd rather use one of the official starters, install your favourite one with the Gatsby CLI.
+_Starters:_ If you'd rather use one of the official starters, install your favorite one with the Gatsby CLI.
 
 `gatsby-starter-default` with v2:
 

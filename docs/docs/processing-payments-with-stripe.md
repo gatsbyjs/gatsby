@@ -4,7 +4,7 @@ title: Processing Payments with Stripe
 
 ## Why Stripe and Gatsby?
 
-Gatsby is an excellent choice for an e-commerce website because static sites are secure and incredibly fast. Whether you're running an online store, accepting donations for a charity, or billing based on usage, you'll need a way to accept payments. Payment processing platforms like Paypal and Stripe are ideal solutions for these use cases.
+Gatsby is an excellent choice for an e-commerce website because static sites are secure and incredibly fast. Whether you're running an online store, accepting donations for a charity, or billing based on usage, you'll need a way to accept payments. Payment processing platforms like PayPal and Stripe are ideal solutions for these use cases.
 
 ## Prerequisites
 
