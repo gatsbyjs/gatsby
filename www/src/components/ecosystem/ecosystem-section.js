@@ -13,7 +13,7 @@ const EcosystemSectionRoot = props => (
     {...props}
     sx={{
       bg: `card.background`,
-      p: 6,
+      px: 6,
       mb: 3,
       [mediaQueries.md]: {
         boxShadow: `raised`,
@@ -22,10 +22,10 @@ const EcosystemSectionRoot = props => (
         flexBasis: t => `calc(50% - ${t.space[5]})`,
         flexDirection: `column`,
         flexGrow: 0,
-        mt: 0,
         mx: 2,
         mb: 6,
         maxHeight: `60vh`,
+        p: 6,
         pb: 0,
         ":last-child": {
           flexGrow: 1,
