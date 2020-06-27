@@ -151,3 +151,7 @@ If an author hasn’t responded to a comment for a week or two, it might be nice
 > What do I do if an issue relates to something upstream?
 
 It’s a good practice to open an issue in the upstream repository in cases like this but isn’t strictly necessary. "Upstream" in this case refers to repositories that house dependencies for Gatsby.
+
+> How long should I leave an issue open when awaiting more information from the issue filer?
+
+If a request is made of the issue filer for a reproduction or more information, and eight or more business days passes without a response, the issue should be closed. Leave a polite message that indicates the issue is being closed until there is an actionable response, and that it could be re-opened if said information is supplied.
