@@ -5,6 +5,8 @@ import logo from "../../assets/monogram.svg"
 import logoDictionary from "./logo-dictionary"
 
 const tdStyles = {
+  background: t => t.colors.background,
+  borderColor: t => t.colors.ui.light,
   display: `table-cell`,
   fontFamily: `heading`,
   lineHeight: `dense`,
@@ -21,26 +23,25 @@ const subHeaderTitleStyles = {
   mb: 0,
 }
 
-export default function headerBottom({ display, category, options }) {
+const Td = ({ children }) => <td sx={tdStyles}>{children}</td>
+
+export default function HeaderBottom({ display, category, options }) {
   return (
     <tr
-      key="subhead"
       sx={{
         display: !display ? `none` : `table-row`,
       }}
     >
-      <td sx={tdStyles}>{category}</td>
-      <td sx={tdStyles}>
-        <img src={logo} sx={subHeaderTitleStyles} alt="Gatsby logo" />
-      </td>
+      <Td>{category}</Td>
+      <Td>{<img src={logo} sx={subHeaderTitleStyles} alt="Gatsby logo" />}</Td>
       {options.map((option, i) => (
-        <td sx={tdStyles} key={i}>
+        <Td key={i}>
           <img
             src={logoDictionary[option.key]}
             sx={subHeaderTitleStyles}
             alt={`${option.display} Logo`}
           />
-        </td>
+        </Td>
       ))}
     </tr>
   )

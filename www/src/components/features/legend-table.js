@@ -5,9 +5,8 @@ import EvaluationCell from "./evaluation-cell"
 
 const legendBallStyle = {
   float: `none`,
-  ml: 0,
-  mr: 0,
   display: `inline-block`,
+  mx: 0,
 }
 
 const baseCellStyle = {
@@ -18,25 +17,24 @@ const baseCellStyle = {
 }
 
 const legendTableContainerStyle = {
-  border: t => `1px solid ${t.colors.ui.border}`,
+  border: 1,
   borderLeft: 0,
+  borderColor: `ui.border`,
   fontFamily: `heading`,
 }
 
-const legendBallCellStyle = t => {
-  return {
-    ...baseCellStyle,
-    borderLeft: `1px solid ${t.colors.ui.border}`,
-    borderBottom: `1px solid ${t.colors.ui.border}`,
-  }
+const legendBallCellStyle = {
+  ...baseCellStyle,
+  borderLeft: 1,
+  borderBottom: 1,
+  borderColor: `ui.border`,
 }
 
-const legendExplanationCellStyle = t => {
-  return {
-    ...baseCellStyle,
-    borderLeft: `1px solid ${t.colors.ui.border}`,
-    borderBottom: [`1px solid ${t.colors.ui.border}`, null, 0],
-  }
+const legendExplanationCellStyle = {
+  ...baseCellStyle,
+  borderLeft: 1,
+  borderBottom: [1, null, 0],
+  borderColor: `ui.border`,
 }
 
 const balls = [
@@ -80,8 +78,8 @@ export default function LegendTable() {
     <div>
       <div
         sx={{
-          ...legendTableContainerStyle,
           display: [`none`, null, `table`],
+          ...legendTableContainerStyle,
           width: `100%`,
         }}
       >
@@ -90,8 +88,8 @@ export default function LegendTable() {
       </div>
       <div
         sx={{
-          ...legendTableContainerStyle,
           display: [`table`, null, `none`],
+          ...legendTableContainerStyle,
         }}
       >
         {[0, 1, 2, 3, 4].map(i => (

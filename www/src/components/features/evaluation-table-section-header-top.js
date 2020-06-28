@@ -16,6 +16,10 @@ const tdStyles = {
   "&:last-child": {
     borderTopRightRadius: 2,
   },
+  width: [`inherit`, 125, 150, 175],
+  "&:first-of-type": {
+    width: [120, 125, 150, 175],
+  },
   span: {
     WebkitHyphens: `auto`,
     MsHyphens: `auto`,
@@ -28,14 +32,13 @@ const tdStyles = {
   },
 }
 
-export default function headerTop({ columnHeaders }) {
+export default function HeaderTop({ columnHeaders }) {
   return (
     <tr>
       {columnHeaders.map((header, i) => (
         <td
           key={i}
           sx={{
-            width: [i === 0 ? 120 : `inherit`, 125, 150, 175],
             ...tdStyles,
           }}
         >

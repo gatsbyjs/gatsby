@@ -55,7 +55,7 @@ export default function SimpleEvaluationTable(props) {
               </tr>,
               // table row containing details of each feature
               <tr
-                style={{
+                sx={{
                   display: showTooltip(idx) ? `table-row` : `none`,
                 }}
                 key={`feature-second-row-${idx}`}

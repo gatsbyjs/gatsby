@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-export default function featuresFooter() {
+export default function FeaturesFooter() {
   return (
     <p sx={{ fontSize: 1, mt: 8 }}>
       Want to help keep this information complete, accurate, and up-to-date?
