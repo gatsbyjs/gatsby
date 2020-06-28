@@ -74,9 +74,9 @@ const matchesMedia = ({ media }) =>
  * @return {string}
  */
 const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = fluid ? getCurrentSrcData(fluid) : getCurrentSrcData(fixed)
+  const currentData = fluid || fixed
 
-  return data.src
+  return currentData && getCurrentSrcData(currentData).src
 }
 
 /**

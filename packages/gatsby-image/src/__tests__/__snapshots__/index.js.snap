@@ -49,6 +49,8 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
 </div>
 `;
 
+exports[`<Image /> should not not render anything if called without parameters 1`] = `<div />`;
+
 exports[`<Image /> should render fixed size images 1`] = `
 <div>
   <div

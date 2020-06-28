@@ -220,6 +220,12 @@ describe(`<Image />`, () => {
     expect(console.warn).toBeCalled()
   })
 
+  it(`should not not render anything if called without parameters`, () => {
+    const { container } = render(<Image />)
+
+    expect(container).toMatchSnapshot()
+  })
+
   it(`should select the correct mocked image of fluid variants provided.`, () => {
     const tripleFluidImageShapeMock = fluidImagesShapeMock.concat({
       aspectRatio: 5,
