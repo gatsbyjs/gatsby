@@ -72,27 +72,27 @@ const titleStyles = {
   mt: 1,
 }
 
-const HomepageNewsletter = () => (
-  <HomepageSection>
-    <Flex sx={containerStyles}>
-      <NewsletterFormOrnament
-        sx={{
-          left: -1,
-          position: `absolute`,
-          top: -2,
-        }}
-      />
-      <header>
-        <h3 sx={nameStyles}>The Gatsby Newsletter</h3>
-        <h1 sx={titleStyles}>Keep up with the latest things Gatsby!</h1>
-      </header>
-      <EmailCaptureForm
-        isHomepage={true}
-        confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
-        sx={{ mt: [5, null, null, null, 0] }}
-      />
-    </Flex>
-  </HomepageSection>
-)
-
-export default HomepageNewsletter
+export default function HomepageNewsletter() {
+  return (
+    <HomepageSection>
+      <Flex sx={containerStyles}>
+        <NewsletterFormOrnament
+          sx={{
+            left: -1,
+            position: `absolute`,
+            top: -2,
+          }}
+        />
+        <header>
+          <h3 sx={nameStyles}>The Gatsby Newsletter</h3>
+          <h1 sx={titleStyles}>Keep up with the latest things Gatsby!</h1>
+        </header>
+        <EmailCaptureForm
+          isHomepage={true}
+          confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
+          sx={{ mt: [5, null, null, null, 0] }}
+        />
+      </Flex>
+    </HomepageSection>
+  )
+}
