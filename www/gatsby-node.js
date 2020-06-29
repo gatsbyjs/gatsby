@@ -15,63 +15,19 @@ const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
 const sections = [docs, blog, showcase, starters, creators, packages, features]
 
-exports.createPages = async helpers => {
-  const { actions } = helpers
-  const { createRedirect } = actions
-
-  redirects.forEach(redirect => {
-    createRedirect({ isPermanent: true, ...redirect, force: true })
-  })
-
-  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
-    createRedirect({
-      fromPath: `/starters${fromSlug}`,
-      toPath: `/starters${toSlug}`,
-      isPermanent: true,
-      force: true,
+exports.onCreateWebpackConfig = ({ actions, plugins }) => {
+  const currentCommitSHA = require(`child_process`)
+    .execSync(`git rev-parse HEAD`, {
+      encoding: `utf-8`,
     })
-  })
+    .trim()
 
-  await Promise.all(sections.map(section => section.createPages(helpers)))
-}
-
-// Create slugs for files, set released status for blog posts.
-exports.onCreateNode = async helpers => {
-  await Promise.all(
-    sections.map(section => {
-      if (section.onCreateNode) {
-        section.onCreateNode(helpers)
-      }
-    })
-  )
-}
-
-exports.onPostBuild = () => {
-  fs.copySync(
-    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-    `./public/gatsbygram.mp4`
-  )
-}
-
-exports.sourceNodes = async ({
-  actions: { createNode },
-  createContentDigest,
-}) => {
-  // get data from GitHub API at build time
-  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
-  const resultData = await result.json()
-  // create node for build time data example in the docs
-  createNode({
-    nameWithOwner: resultData.full_name,
-    url: resultData.html_url,
-    // required fields
-    id: `example-build-time-data`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
+      }),
+    ],
   })
 }
 
@@ -109,22 +65,6 @@ exports.createSchemaCustomization = async helpers => {
   `)
 }
 
-exports.onCreateWebpackConfig = ({ actions, plugins }) => {
-  const currentCommitSHA = require(`child_process`)
-    .execSync(`git rev-parse HEAD`, {
-      encoding: `utf-8`,
-    })
-    .trim()
-
-  actions.setWebpackConfig({
-    plugins: [
-      plugins.define({
-        "process.env.COMMIT_SHA": JSON.stringify(currentCommitSHA),
-      }),
-    ],
-  })
-}
-
 // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
 exports.createResolvers = ({ createResolvers }) => {
   createResolvers({
@@ -151,4 +91,63 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
   })
+}
+
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createContentDigest,
+}) => {
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
+}
+
+exports.onCreateNode = async helpers => {
+  await Promise.all(
+    sections.map(section => {
+      if (section.onCreateNode) {
+        section.onCreateNode(helpers)
+      }
+    })
+  )
+}
+
+exports.createPages = async helpers => {
+  const { actions } = helpers
+  const { createRedirect } = actions
+
+  redirects.forEach(redirect => {
+    createRedirect({ isPermanent: true, ...redirect, force: true })
+  })
+
+  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
+    createRedirect({
+      fromPath: `/starters${fromSlug}`,
+      toPath: `/starters${toSlug}`,
+      isPermanent: true,
+      force: true,
+    })
+  })
+
+  await Promise.all(sections.map(section => section.createPages(helpers)))
+}
+
+exports.onPostBuild = () => {
+  fs.copySync(
+    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
+    `./public/gatsbygram.mp4`
+  )
 }
