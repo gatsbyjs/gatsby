@@ -15,7 +15,7 @@ import {
 export class ErrorWithCodeFrame extends Error {
   codeFrame = ``
 
-  constructor(error) {
+  constructor(error: Error) {
     super(error)
 
     Object.getOwnPropertyNames(error).forEach(key => {
