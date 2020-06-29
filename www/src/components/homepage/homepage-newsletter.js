@@ -12,7 +12,9 @@ const stripedBorderHeight = 1
 
 const containerStyles = {
   bg: `newsletter.background`,
-  border: t => `1px solid ${t.colors.newsletter.border}`,
+  borderColor: `newsletter.border`,
+  borderStyle: `solid`,
+  borderWidth: 1,
   borderRadius: 2,
   flexDirection: `column`,
   mb: 8,
