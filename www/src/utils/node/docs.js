@@ -64,15 +64,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
 
     type File implements Node {
       childrenDocumentationJs: DocumentationJs
-      fields: FileFields
-    }
-
-    # Added by gatsby-transformer-gitinfo
-    # TODO add these back upstream
-    type FileFields {
-      gitLogLatestDate: Date @dateformat
-      gitLogLatestAuthorName: String
-      gitLogLatestAuthorEmail: String
     }
 
     type DocumentationJSComponentDescription implements Node {
