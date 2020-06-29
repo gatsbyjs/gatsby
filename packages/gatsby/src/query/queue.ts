@@ -47,7 +47,7 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
       }
     },
     merge: (
-      oldTask: Task,
+      _oldTask: Task,
       newTask: Task,
       cb: (err?: unknown, newTask?: Task) => void
     ): void => {
