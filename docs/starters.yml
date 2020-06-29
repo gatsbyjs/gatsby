@@ -6781,6 +6781,21 @@
     - Landing Page
     - Google Analytics
     - PaperCSS style
+- url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
+  repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
+  description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
+  tags:
+    - Styling:CSS-in-JS
+    - Styling:Material
+  features:
+    - Gatsby v2
+    - Material-UI
+    - MuiTreasury Layout
+    - Dynamic configurable
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
 - url: https://7sferry-gatsby-contentful-starters.netlify.app/
   repo: https://github.com/7sferry/Gatsbyan1.0
   description: Blog template for Contentful CMS with some features like comment, tags, archives, pagination, prism, tags, share and many others.
