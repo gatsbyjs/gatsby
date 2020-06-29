@@ -1,25 +1,12 @@
-type UnknownCallback = (err?: unknown, value?: unknown) => void
-type NumberCallback = (err?: unknown, value?: number) => void
-type EmptyCallback = () => void
+import { Store } from "better-queue"
 
-interface IMemoryStore {
-  connect(cb: NumberCallback): void
-  getTask(taskId: string, cb: UnknownCallback): void
-  deleteTask(taskId: string, cb: EmptyCallback): void
-  putTask(
-    taskId: string,
-    task: unknown,
-    priority: number,
-    cb: EmptyCallback
-  ): void
-  takeFirstN(n: number, cb: NumberCallback): void
-  takeLastN(n: number, cb: NumberCallback): void
-  getRunningTasks(cb: UnknownCallback): void
-  getLock(lockId: string, cb: UnknownCallback): void
-  releaseLock(lockId: string, cb: EmptyCallback): void
+// getRunningTasks is an extension to the interface, and is used in the tests
+interface IGatsbyBetterStore<T> extends Store<T> {
+  getRunningTasks(cb: (error: any, runningTasks: any) => void): void
 }
 
-export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
+export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
+  type RunningTasks = Record<string, T>
   let uuid = 0
 
   /**
@@ -30,7 +17,7 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
   /**
    * Task id to task lookup
    */
-  const tasks = new Map<string, unknown>()
+  const tasks = new Map<string, T>()
 
   /**
    * Task id to priority lookup
@@ -40,7 +27,7 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
   /**
    * Lock to running tasks object
    */
-  const running: Record<number, unknown> = {}
+  const running: Record<string, RunningTasks> = {}
 
   let priorityKeys: number[] = []
   const updatePriorityKeys = (): void => {
@@ -66,6 +53,7 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
       cb(null, tasks.size)
     },
     getTask: function (taskId, cb): void {
+      // @ts-ignore
       cb(null, tasks.get(taskId))
     },
     deleteTask: function (taskId, cb): void {
@@ -105,14 +93,14 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
       if (needToUpdatePriorityKeys) {
         updatePriorityKeys()
       }
-      cb()
+      cb(null)
     },
     takeFirstN: function (n, cb): void {
-      const lockId = uuid++
+      const lockId = `` + uuid++
       let remainingTasks = n
       let needToUpdatePriorityKeys = false
       let haveSomeTasks = false
-      const tasksToRun = {}
+      const tasksToRun: RunningTasks = {}
 
       for (const priority of priorityKeys) {
         const tasksWithSamePriority = queueMap.get(priority)
@@ -121,10 +109,13 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
         grabbedTaskIds.forEach(taskId => {
           // add task to task that will run
           // and remove it from waiting list
-          tasksToRun[taskId] = tasks.get(taskId)
-          tasks.delete(taskId)
-          taskIdToPriority.delete(taskId)
-          haveSomeTasks = true
+          const task = tasks.get(taskId)
+          if (task) {
+            tasksToRun[taskId] = task
+            tasks.delete(taskId)
+            taskIdToPriority.delete(taskId)
+            haveSomeTasks = true
+          }
         })
 
         remainingTasks -= grabbedTaskIds.length
@@ -153,7 +144,7 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
       // Mostly done so generic test suite used by other stores passes.
       // This is mostly C&P from takeFirstN, with array reversal and different
       // splice args
-      const lockId = uuid++
+      const lockId = `` + uuid++
       let remainingTasks = n
       let needToUpdatePriorityKeys = false
       let haveSomeTasks = false
@@ -206,7 +197,7 @@ export function MemoryStoreWithPriorityBuckets(): IMemoryStore {
     },
     releaseLock: function (lockId, cb): void {
       delete running[lockId]
-      cb()
+      cb(null)
     },
   }
 }
