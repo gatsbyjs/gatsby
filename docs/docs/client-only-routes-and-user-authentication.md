@@ -2,19 +2,17 @@
 title: Client-only Routes
 ---
 
-Most Gatsby pages exist as static HTML that is generated during build time. At run time, components on the page are then [hydrated](/docs/react-hydration/) to add interactivity. This makes pages load fast and makes them visible to search engines.
-
-There are, however, situations when server-side, static HTML is not needed or possible:
+Most Gatsby pages exist as static HTML that is generated during build time. Components on the page are [hydrated](/docs/react-hydration/) at runtime to add interactivity. This makes pages load fast and makes them visible to search engines. There are, however, situations when server-side, static HTML is not needed or possible:
 
 - You may have pages that require the user to log in and do not want them visible to search engines. An example might be a list of the user's latest purchases.
-- The set of available pages might not be known at build time. For example, your site may be loading a list of newly signed up users on the client side. Offering a profile page for each user on the server side is not possible because the set of users is not known when building.
+- The set of available pages might not be known at build time. For example, your site might be loading a list of newly signed up users on the client side. Offering a profile page for each user on the server side is not possible because the set of users is not known when building.
 
 These use cases are handled by _client-only routes_. Client-only routes do not each have a generated HTML file. They exist only on client side, in the same way that single-page applications (SPAs) work.
 
 Setting up client-only routes involves two steps:
 
-- Creating a page that routes requests to the right component
-- Making sure the router page is invoked for when the user visits the address of any of the routes
+- Creating a router page that routes requests to the right component
+- Making sure the router page is invoked when the user visits the address of any of the routes
 
 ## Example
 
@@ -108,7 +106,7 @@ In this case you would set up rewrite rules that make sure that when e.g. `/app/
 Note that this is not the same as a redirect. If you redirect to `/app/index.html` the user will not see the profile page.
 The response code should be a 200 ("OK"), not a 301 ("moved").
 
-Most webservers and reverse proxies offer facilities for such rewrites but the exact configuration depends on the server. If you are using NGINX you can achieve the rewrite using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options). On Apache, you would use [mod_rewrite](https://httpd.apache.org/docs/current/mod/mod_rewrite.html).
+Most web servers and reverse proxies offer facilities for such rewrites but the exact configuration depends on the server. If you are using NGINX you can achieve the rewrite using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options). On Apache, you would use [mod_rewrite](https://httpd.apache.org/docs/current/mod/mod_rewrite.html).
 
 ## Additional resources
 
