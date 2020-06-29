@@ -437,13 +437,8 @@ class Image extends React.Component {
       itemProp,
       loading,
       draggable,
-      ...props
+      tagProps = {},
     } = convertProps(this.props)
-    // filter out props not used in render
-    const customProps = [`placeholderRef`, `innerRef`, `fadeIn`].reduce((propObject, prop) => {
-      const { [prop]: _, ...withoutProp } = propObject
-      return withoutProp
-    }, props)
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
@@ -492,7 +487,7 @@ class Image extends React.Component {
           }}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
-          {...customProps}
+          {...tagProps}
         >
           {/* Preserve the aspect ratio. */}
           <Tag
@@ -608,7 +603,7 @@ class Image extends React.Component {
           style={divStyle}
           ref={this.handleRef}
           key={`fixed-${JSON.stringify(image.srcSet)}`}
-          {...customProps}
+          {...tagProps}
         >
           {/* Show a solid background color. */}
           {bgColor && (
