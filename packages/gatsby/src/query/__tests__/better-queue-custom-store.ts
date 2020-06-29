@@ -1,5 +1,5 @@
-const MemoryStoreWithPriorityBuckets = require(`../better-queue-custom-store`)
-const pify = require(`pify`)
+import { MemoryStoreWithPriorityBuckets } from "../better-queue-custom-store"
+import pify from "pify"
 
 // those are tests copied from https://github.com/diamondio/better-queue-store-test/blob/master/tester.js
 // and converted from mocha to jest + used pify to make it nicer to read than callback chain
@@ -18,6 +18,7 @@ describe(`Custom better-queue memory store`, () => {
     `releaseLock`,
   ]
   beforeEach(() => {
+    // eslint-disable-next-line new-cap
     store = MemoryStoreWithPriorityBuckets()
     functions.forEach(fnName => {
       if (store[fnName]) {
@@ -51,7 +52,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task2`, { value: `secret 2` }, 1)
     await store.putTask(`task3`, { value: `secret 3` }, 1)
 
-    let lockId, tasks
+    let lockId: number
+    let tasks: any
 
     lockId = await store.takeLastN(2)
     tasks = await store.getLock(lockId)
@@ -80,7 +82,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task2`, { value: `secret 2` }, 1)
     await store.putTask(`task3`, { value: `secret 3` }, 1)
 
-    let lockId, tasks
+    let lockId
+    let tasks
 
     lockId = await store.takeFirstN(2)
     tasks = await store.getLock(lockId)
@@ -173,7 +176,8 @@ describe(`Custom better-queue memory store`, () => {
     await store.putTask(`task4`, { value: `secret 4` }, 2)
 
     // take first 2
-    let lockId, tasks
+    let lockId
+    let tasks
     lockId = await store.takeFirstN(2)
     tasks = await store.getLock(lockId)
 
