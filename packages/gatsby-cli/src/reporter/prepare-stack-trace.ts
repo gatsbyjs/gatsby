@@ -13,11 +13,14 @@ import {
 } from "source-map"
 
 export class ErrorWithCodeFrame extends Error {
-  codeFrame: string
+  codeFrame = ``
 
-  constructor(...args) {
-    super(...args)
-    this.codeFrame = ``
+  constructor(error) {
+    super(error)
+
+    Object.getOwnPropertyNames(error).forEach(key => {
+      this[key] = error[key]
+    })
   }
 }
 
