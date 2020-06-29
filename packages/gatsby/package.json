@@ -148,6 +148,7 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
     "webpack-stats-plugin": "^0.3.1",
+    "webpack-virtual-modules": "^0.2.2",
     "xstate": "^4.11.0",
     "yaml-loader": "^0.6.0"
   },
@@ -162,6 +163,7 @@
     "@types/string-similarity": "^3.0.0",
     "@types/tmp": "^0.2.0",
     "@types/webpack-dev-middleware": "^3.7.1",
+    "@types/webpack-virtual-modules": "^0.1.0",
     "babel-preset-gatsby-package": "^0.5.1",
     "cross-env": "^5.2.1",
     "documentation": "^12.3.0",
