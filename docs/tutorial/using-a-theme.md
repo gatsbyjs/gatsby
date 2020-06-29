@@ -8,7 +8,7 @@ In this tutorial, you'll learn how to use Gatsby themes by creating a new site u
 
 - A Gatsby site
 
-> Note: This tutorial assumes you already have a Gatsby site to install your theme in. If you'd prefer to start with an entirely new site you can run `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme` to install a theme that comes with the starter.
+> Note: This tutorial assumes you already have a Gatsby site to install your theme in. If you'd prefer to start with an entirely new site you can run `gatsby new my-blog https://github.com/gatsbyjs/gatsby-starter-blog-theme` to set up a starter with the blog theme already installed.
 
 ## Installing the blog theme
 
@@ -20,7 +20,7 @@ Navigate to the root of your project inside your terminal and install the theme 
 
 ## Configure the theme
 
-In your `gatsby-config.js` file, add `gatsby-theme-blog`. Note that this theme takes optional dependencies that you can find in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#theme-options). However, you won't need to use them here.
+In your `gatsby-config.js` file, add `gatsby-theme-blog`. This theme takes optional dependencies that you can find in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#theme-options). However, you won't need to use them here.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
 }
 ```
 
-> Note: If you already have a landing page set up for your site you may want to make use of the `basePath` option that will put your blog listing page at a path other than `/`.
+> Note: If you already have a landing page set up for your site you may want to make use of the `basePath` option that will put your blog listing page at a path other than `/`, such as `/blog`.
 
 ## Update your site metadata
 
@@ -73,7 +73,7 @@ module.exports = {
 
 ## Add some content
 
-Before you can see anything, you'll want to add some content so there is something to see.
+Before you can see anything, you'll want to add some content so there is something to show.
 
 By default, the posts are expected in the `/content/posts` directory, so create those folders and add a `my-post.md` file. Your file structure should look something like this.
 
@@ -87,7 +87,7 @@ my-blog
 └── package.json
 ```
 
-Inside that markdown file, add content. The top section is called frontmatter and `title` and `date` are required fields.
+Inside that Markdown file, add content. The top section is called [frontmatter](/docs/mdx/writing-pages/#using-frontmatter-in-mdx) and `title` and `date` are required fields.
 
 ````markdown:title=/content/posts/my-post.md
 ---
