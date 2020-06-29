@@ -119,7 +119,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           .map(({ themeDir }) => path.join(themeDir, `src`, theme))
       )
       .map(dir => path.join(dir, component))
-      .find(possibleComponentPath => {
+      .map(possibleComponentPath => {
         debug(`possibleComponentPath`, possibleComponentPath)
         let dir
         try {
@@ -129,23 +129,14 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         } catch (e) {
           return false
         }
-        const existsDir = dir.map(filepath => path.basename(filepath))
-        const exists =
-          // has extension, will match styles.css;
-
-          // import Thing from 'whatever.tsx'
-          // extensions: [.js, .tsx]
-          // site/src/whatever.tsx site/src/whatever.js.
-
-          //exact matches
-          existsDir.includes(path.basename(possibleComponentPath)) ||
-          // .js matches
-          // styles.css.js
-          // whatever.tsx.js
-          this.extensions.find(ext =>
-            existsDir.includes(path.basename(possibleComponentPath) + ext)
-          )
-        return exists
+        const existsDir = dir.map(filepath => path.basename(filepath)) // find if there is an exact path match
+        
+        if(!isExactPath) {
+          const matchingExtension = this.extensions.find(ext => existsDir.includes(path.basename(possibleComponentPath) + ext)) // find extension
+          return matchingExtension ? (possibleComponentPath + matchingExtension) : false // if extension matches, create path
+        } else {
+          return possibleComponentPath
+        }.find(path => path != false) // if full path matched, return it
       })
   }
 
