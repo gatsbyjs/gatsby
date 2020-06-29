@@ -88,7 +88,7 @@ export default function HomepageNewsletter() {
           <h1 sx={titleStyles}>Keep up with the latest things Gatsby!</h1>
         </header>
         <EmailCaptureForm
-          isHomepage={true}
+          isHomepage
           confirmMessage="Success! You have been subscribed to the Gatsby newsletter. Expect to see a newsletter in your inbox each Wednesday (or the equivalent of US Wednesday in your time zone)!"
           sx={{ mt: [5, null, null, null, 0] }}
         />
