@@ -1,26 +1,38 @@
 ---
-title: Client-only Routes & User Authentication
+title: Client-only Routes
 ---
 
-Often you want to create a site with client-only portions, which allows you to gate them by authentication or load different content based on URL parameters.
+Most Gatsby pages exist as static HTML that is generated during build time. At run time, compents on the page are then [hydrated](https://www.gatsbyjs.org/docs/react-hydration/) to add interactivity. This makes pages load fast and makes them visibile to search engines.
 
-## Understanding client-only routes
+There are, however, situations when server-side, static HTML is not needed or possible:
 
-A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs in. So it makes sense to make this portion of your site client-only.
+- You may have pages that require the user to log in and do not want them visible to search engines. An example might be a list of the user's latest purchases.
+- The set of available pages might not be known at build time. For example, your site may be loading a list of newly signed up users on the client side. Offering a profile page for each user on the server side is not possible because the set of users is not known when building.
 
-Client-only routes will exist on the client only and will not correspond to `index.html` files in an app's built assets. If you'd like site users to be able to visit client routes directly, you need to [set up your site to handle those routes](#handling-client-only-routes-with-gatsby) appropriately. Or, if you have control over the configuration of the file server yourself (instead of using another static file host like Netlify), you can [set up the server](#configuring-and-handling-client-only-routes-on-a-server) to handle these routes.
+These use cases are handled by _client-only routes_. Client-only routes do not each have a generated HTML file. They exist only on client side, in the same way that single-page applications (SPAs) work.
 
-A sample site might be set up like this:
+Setting up client-only routes involves two steps:
+
+- Creating a page that routes requests to the right component
+- Making sure the router page is invoked for when the user visits the address of any of the routes
+
+## Example
+
+Consider the following site. It consists of a home page accessible to all users as well as profile and detail pages that are only accessible to logged in users.
+
+The profile and detail pages are the client-side routes. These are handled by a component called `App`. There is a single `app/index.html` that handles both the profile and detail pages.
 
 ![Site with a static homepage and client-only routes](./images/client-only-routes.png)
 
-Gatsby converts components in the `pages` folder into static HTML files for the Home page and the App page. A `<Router />` is added to the App page so that the profile and details components can be rendered from the App page; they don't have static assets built for them because they exist only on the client. The profile page can `POST` data about a user back to an API, and the details page can dynamically load data about a user with a specific id from an API.
+The profile and detail pages use an API to retrieve and update data about the current user. This API requires authentication.
 
-## Handling client-only routes with Gatsby
+Since the user needs to log in, there is also a login page (that is not part of the diagram).
 
-Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. This means you don't need to install it separately and it is the recommended approach to create client-only routes.
+## Adding a routing page
 
-You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/app.js` in the code example below:
+First, create `App`, the page that performs routing to `Profile` and `Details`.
+
+The following code sets up the routing:
 
 ```jsx:title=src/pages/app.js
 import React from "react"
@@ -29,130 +41,74 @@ import Layout from "../components/Layout"
 import Profile from "../components/Profile"
 import Details from "../components/Details"
 import Login from "../components/Login"
-import Default from "../components/Default"
 
-const App = () => {
-  return (
-    <Layout>
-      // highlight-start
-      <Router basepath="/app">
-        <Profile path="/profile" />
-        <Details path="/details" />
-        <Login path="/login" />
-        <Default path="/" />
-      </Router>
-      // highlight-end
-    </Layout>
-  )
-}
+const App = () => (
+  <Layout>
+    // highlight-start
+    <Router basepath="/app">
+      <Profile path="/profile" />
+      <Details path="/details" />
+      <Login path="/login" />
+    </Router>
+    // highlight-end
+  </Layout>
+)
 
 export default App
 ```
 
-Briefly, when a page loads, Reach Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router)). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
+Gatsby uses [@reach/router](https://reach.tech/router/) for routing internally. You can use another routing solution but it is sensible to only have a single one throughout the system.
 
-### Adjusting routes to account for authenticated users
+When the page loads, Reach Router looks at the `path` property of each component under `<Router />` and renders the first one to match the current address. You can also use wildcards in the `path`. For details, see [@reach/router documentation](https://reach.tech/router/api/Router).
 
-With [authentication set up](/docs/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
+In the case of the `/app/profile` path, the `Profile` component will be rendered, as it matches the base path (`/app`) followed by the child's path (`/profile`).
 
-```jsx:title=src/pages/app.js
-import React from "react"
-import { Router } from "@reach/router"
-import Layout from "../components/Layout"
-import Profile from "../components/Profile"
-import Details from "../components/Details"
-import Login from "../components/Login"
-import Default from "../components/Default"
-import PrivateRoute from "../components/PrivateRoute" // highlight-line
+Note that the `basepath` must match the URL of the router page.
 
-const App = () => {
-  return (
-    <Layout>
-      <Router basepath="/app">
-        // highlight-start
-        <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/details" component={Details} />
-        // highlight-end
-        <Login path="/login" />
-        <Default path="/" />
-      </Router>
-    </Layout>
-  )
-}
+If your client-only routes require authentication, you will also need to redirect unauthenticated users to the login page. [Building a Site with Authentication](/docs/building-a-site-with-authentication) describes how to do this.
 
-export default App
-```
+## Mapping URLs to the router page
 
-The `<PrivateRoute />` component would look something like this one (taken from the [Authentication Tutorial](/tutorial/authentication-tutorial/#controlling-private-routes), which implements this behavior):
+With the above code the user can navigate from `Home` to `Profile`. But if the user manually enters the URL `/app/profile` they get a 404 page. This is because the server does not know how to resolve this URL.
 
-```jsx:title=src/components/PrivateRoute.js
-// import ...
-import React, { Component } from "react"
-import { navigate } from "gatsby"
-import { isLoggedIn } from "../services/auth"
-
-const PrivateRoute = ({ component: Component, location, ...rest }) => {
-  if (!isLoggedIn() && location.pathname !== `/app/login`) {
-    navigate("/app/login")
-    return null
-  }
-
-  return <Component {...rest} />
-}
-
-export default PrivateRoute
-```
+There are two ways of addressing this:
 
 ### Configuring pages with `matchPath`
 
-To ensure that users can navigate to client-only routes directly, pages in your site need to have the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) set. Add the following code to your site’s `gatsby-node.js` file:
+You can use the [`matchPath` parameter](/docs/gatsby-internals-terminology/#matchpath) on the router page to specify a URL pattern it should map to.
+
+This is done using the following code in your site’s `gatsby-node.js` file:
 
 ```javascript:title=gatsby-node.js
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions
 
-  // Only update the `/app` page.
+  // The page `/app`...
   if (page.path.match(/^\/app/)) {
-    // page.matchPath is a special key that's used for matching pages
-    // with corresponding routes only on the client.
+    // ... should be invoked any time there is a URL starting with `/app/`
     page.matchPath = "/app/*"
 
-    // Update the page.
     createPage(page)
   }
 }
 ```
 
-> 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
-> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
+This configures the `/app` page, setting `matchPath` to the pattern `/app/*`. Thereby, `/app/profile`, `/app/details` etc will all render using the `/app` page.
 
-The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router.
+> 💡 Note: You can alternatively use the plugin [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/) to simplify this configuration.
 
-_Without_ this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
+Note that when you use `matchPath` the user will reach the 404 page before the client-side router kicks in. This solution therefore requires you to have a working 404 page.
 
-> Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
+### Performing address rewrites on the server
 
-## Configuring and handling client-only routes on a server
+An alternative to using `matchPath` is to configure address rewriting on your web server. This is generally only possible if you host the webserver yourself and have complete control over it.
 
-If you are hosting on your own server, you can opt to configure the server to handle client-only routes instead of using the `matchPath` method explained above.
+In this case you would set up rewrite rules that make sure that when e.g. `/app/profile` is loaded, the server actually returns `/app/index.html`.
 
-Consider the following router and route to serve as an example:
+Note that this is not the same as a redirect. If you redirect to `/app/index.html` the user will not see the profile page.
+The response code should be a 200 ("OK"), not a 301 ("moved").
 
-```jsx:title=src/pages/app.js
-<Router basepath="/app">
-  <Route path="/why-gatsby-is-awesome" />
-</Router>
-```
-
-In this example with a router and a single route for `/app/why-gatsby-is-awesome/`, the server would not be able to complete this request as `why-gatsby-is-awesome` is a client-side route. It does not have a corresponding HTML file on the server. The file found at `/app/index.html` on the server contains all the code to handle the page paths after `/app`.
-
-A pattern to follow, agnostic of server technology, is to watch for these specific routes and return the appropriate HTML file.
-
-In this example, when making a `GET` request to `/app/why-gatsby-is-awesome`, the server should respond with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect). This can be done with NGINX using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options), or an [equivalent directive](https://serverfault.com/questions/290784/what-is-apaches-equivalent-of-nginxs-try-files) if using Apache.
-
-One result of this method is that the client is completely unaware of the logic on the server, decoupling it from Gatsby.
+Most webservers and reverse proxies offer facilities for such rewrites but the exact configuration depends on the server. If you are using NGINX you can achieve the rewrite using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options). On Apache, you would use [mod_rewrite](https://httpd.apache.org/docs/current/mod/mod_rewrite.html).
 
 ## Additional resources
 
