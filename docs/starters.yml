@@ -6781,3 +6781,20 @@
     - Landing Page
     - Google Analytics
     - PaperCSS style
+- url: https://7sferry-gatsby-contentful-starters.netlify.app/
+  repo: https://github.com/7sferry/Gatsbyan1.0
+  description: Blog template for Contentful CMS with some features like comment, tags, archives, pagination, prism, tags, share and many others.
+  tags:
+    - Blog
+    - SEO
+    - CMS:Contentful
+    - Pagination
+  features:
+    - Blog template
+    - Contentful CMS
+    - Facebook Comment
+    - Tags
+    - Archives by date
+    - Pagination
+    - Share Button
+    - Prism for code preview
