@@ -102,17 +102,15 @@ const test = "this is a theme"
 ```
 ````
 
-````
-
 ## Test run your site
 
-To make sure everything is working, run your site. This command should be run in your terminal in your  project's root directory.
+To make sure everything is working, run your site. This command should be run in your terminal in your project's root directory.
 
 ```shell
 gatsby develop
-````
+```
 
-Navigate to `localhost:8000` to see the landing page of your site.
+Navigate to `http://localhost:8000` to see the landing page of your site.
 
 ## Replace your avatar
 
@@ -234,7 +232,7 @@ When you restart your development server you'll see new syntax highlighting in y
 
 ## Take a look
 
-Fire up your development server by running `gatsby develop` again in your terminal. Navigate to `localhost:8000` and take a look at your blog listing page.
+Fire up your development server by running `gatsby develop` again in your terminal. Navigate to `http://localhost:8000` and take a look at your blog listing page.
 
 ## Wrapping up
 
