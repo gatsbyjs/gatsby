@@ -2,7 +2,7 @@
 title: Client-only Routes
 ---
 
-Most Gatsby pages exist as static HTML that is generated during build time. At run time, compents on the page are then [hydrated](https://www.gatsbyjs.org/docs/react-hydration/) to add interactivity. This makes pages load fast and makes them visibile to search engines.
+Most Gatsby pages exist as static HTML that is generated during build time. At run time, compents on the page are then [hydrated](/docs/react-hydration/) to add interactivity. This makes pages load fast and makes them visibile to search engines.
 
 There are, however, situations when server-side, static HTML is not needed or possible:
 
