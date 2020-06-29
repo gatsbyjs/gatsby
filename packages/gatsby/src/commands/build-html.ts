@@ -101,7 +101,7 @@ class BuildHTMLError extends Error {
   constructor(error: Error) {
     super(error.message)
 
-    Object.keys(error).forEach(key => {
+    Object.getOwnPropertyNames(error).forEach(key => {
       this[key] = error[key]
     })
   }
