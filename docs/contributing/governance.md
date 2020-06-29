@@ -15,7 +15,7 @@ It’s important to note that Gatsby’s governance model is a work in progress 
 The following groups are the primary categories of Gatsby OSS contributors.
 
 * [Maintainers](https://github.com/orgs/gatsbyjs/teams/maintainers) - The outstanding community of contributors who help make Gatsby awesome. These are people who’ve had a Gatsby pull request merged and adhere to the [Gatsby Code of Conduct](https://www.gatsbyjs.org/contributing/code-of-conduct/). 
-* [Admins](https://github.com/orgs/gatsbyjs/teams/admin/members) - The official team members of Gatsby, Inc. including the Gatsby Core Team who maintain Gatsby OSS.
+* [Admins](https://github.com/orgs/gatsbyjs/teams/admin/members) - The official team members of Gatsby, Inc. (sometimes referred to as the "inkteam" including the Gatsby Core Team who maintain Gatsby OSS.
 
 ### Decision-Making Process
 Decisions about Gatsby open-source software are ultimately made by Gatsby, Inc. leadership and the Core Team. We believe that founding organizations built around open source software have a responsibility to build strong businesses to sustain those open source tools and the community that depends on them, which will sometimes require us to reserve high-demand tools and features for Gatsby commercial products. That said, we take our responsibility to the community very seriously and carefully consider community needs and concerns when determining our product roadmaps. 
