@@ -136,8 +136,8 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           return matchingExtension ? (possibleComponentPath + matchingExtension) : false // if extension matches, create path
         } else {
           return possibleComponentPath
-        }.find(path => path != false) // if full path matched, return it
-      })
+        }
+      }).find(path => path != false) // if full path matched, return it
   }
 
   getMatchingThemesForPath(filepath) {

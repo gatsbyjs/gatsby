@@ -4,8 +4,7 @@ const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
 const { store } = require(`../../redux`)
 
 const pathWithoutExtension = fullPath => {
-  const parsed = path.parse(fullPath);
-  ext = parsed.ext
+  const parsed = path.parse(fullPath)
   return path.join(parsed.dir, parsed.name)
 }
 
@@ -33,7 +32,9 @@ module.exports = function (pageComponent) {
     const [theme] = matchingThemes
 
     const pageComponentWithoutExtension = pathWithoutExtension(pageComponent)
-    const [, component] = pageComponentWithoutExtension.split(path.join(theme.themeDir, `src`))
+    const [, component] = pageComponentWithoutExtension.split(
+      path.join(theme.themeDir, `src`)
+    )
     const componentPath = shadowingPlugin.resolveComponentPath({
       matchingTheme: theme.themeName,
       themes: shadowingPlugin.themes,
