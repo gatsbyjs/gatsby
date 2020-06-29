@@ -117,20 +117,6 @@ aliases:
       - notify-status:
           condition: << parameters.nightly >>
 
-  e2e_tests_development_refresh_endpoint_alias:
-    &e2e_tests_development_refresh_endpoint_alias
-    <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/development-refresh-endpoint
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
-
   e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
     <<: *e2e-executor
     parameters:
@@ -334,9 +320,6 @@ jobs:
 
   e2e_tests_gatsby-image_with_next_react:
     <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_development_refresh_endpoint:
-    <<: *e2e_tests_development_refresh_endpoint_alias
 
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias

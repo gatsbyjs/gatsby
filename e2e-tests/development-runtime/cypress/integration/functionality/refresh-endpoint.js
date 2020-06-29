@@ -1,5 +1,7 @@
 describe(`When the refresh endpoint is hit multiple times`, () => {
-  
+  afterEach(() => {
+    waitUntilServerRespondsSucessfully()
+  });
   it(`should put new requests with unique body in a queue`, () => {
     cy.request(`POST`, `/__refresh`).then(response => {
       expect(response.body).to.be.equal(``)
@@ -20,3 +22,11 @@ describe(`When the refresh endpoint is hit multiple times`, () => {
 
 })
 
+function waitUntilServerRespondsSucessfully() {
+  cy.waitUntil(() => cy.request("/").then((response) => {
+      return response.status == 200
+  }), {
+      timeout: 20000,
+      interval: 1000
+  })
+}
