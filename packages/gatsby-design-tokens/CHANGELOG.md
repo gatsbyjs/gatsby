@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.8...gatsby-design-tokens@2.0.9) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-design-tokens:** yarn run watch broken ([#25369](https://github.com/gatsbyjs/gatsby/issues/25369)) ([e563a2e](https://github.com/gatsbyjs/gatsby/commit/e563a2e))
+
 ## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.7...gatsby-design-tokens@2.0.8) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-design-tokens
