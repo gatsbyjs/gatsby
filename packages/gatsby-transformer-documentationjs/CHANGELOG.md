@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.6...gatsby-transformer-documentationjs@4.3.7) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-transformer-documentationjs:** Add childOf, mimeTypes and fill in other schema typings ([#25113](https://github.com/gatsbyjs/gatsby/issues/25113)) ([48f7878](https://github.com/gatsbyjs/gatsby/commit/48f7878))
+
 ## [4.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.5...gatsby-transformer-documentationjs@4.3.6) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

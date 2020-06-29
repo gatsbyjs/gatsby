@@ -45,7 +45,8 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
 exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
-    type DocumentationJs implements Node {
+    type DocumentationJs implements Node
+      @childOf(types: ["File", "DocumentationJs"]) {
       name: String
       kind: String
       memberof: String
@@ -82,6 +83,11 @@ exports.sourceNodes = ({ actions }) => {
       members: DocumentationJsMembers
       codeLocation: DocumenationJSLocationRange
       docsLocation: DocumenationJSLocationRange
+    }
+
+    type DocumentationJSComponentDescription implements Node
+      @mimeTypes(types: ["text/markdown"]) {
+      id: ID! # empty type
     }
 
     type DocumentationJSLocation {
