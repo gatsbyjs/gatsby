@@ -6785,9 +6785,8 @@
   repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
   description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
   tags:
-    - Layout
     - Styling:CSS-in-JS
-    - Styling:Material-UI
+    - Styling:Material
   features:
     - Gatsby v2
     - Material-UI
