@@ -63,7 +63,7 @@ When the page loads, Reach Router looks at the `path` property of each component
 
 In the case of the `/app/profile` path, the `Profile` component will be rendered, as it matches the base path (`/app`) followed by the child's path (`/profile`).
 
-Note that the `basepath` must match the URL of the router page.
+Note that the `basepath` must match the URL of the router page. If your site is not hosted on `/` but rather uses a [path prefix](/docs/path-prefix/), you should also include the path prefix, e.g. `` <Router basepath={`${__PATH_PREFIX__}/app`> `` (`__PATH_PREFIX__` is a global variable containing the configured path prefix).
 
 If your client-only routes require authentication, you will also need to redirect unauthenticated users to the login page. [Building a Site with Authentication](/docs/building-a-site-with-authentication) describes how to do this.
 
