@@ -91,6 +91,9 @@ export const query = graphql`
 `
 ```
 
+_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gastby-image` docs for more details](https://www.gatsbyjs.org/packages/gatsby-image/#fragments)._
+
+
 There are a couple of things to note here.
 
 ### Relative image paths and `gatsby-config.js`
