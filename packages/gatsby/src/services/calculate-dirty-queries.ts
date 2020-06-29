@@ -1,10 +1,11 @@
 import { calcInitialDirtyQueryIds, groupQueryIds } from "../query"
-import { IBuildContext, IGroupedQueryIds } from "./"
+import { IGroupedQueryIds } from "./"
 import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
 
 export async function calculateDirtyQueries({
   store,
-}: Partial<IBuildContext>): Promise<{
+}: Partial<IQueryRunningContext>): Promise<{
   queryIds: IGroupedQueryIds
 }> {
   if (!store) {

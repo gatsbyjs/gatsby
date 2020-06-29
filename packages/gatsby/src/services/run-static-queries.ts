@@ -1,6 +1,6 @@
 import { processStaticQueries } from "../query"
-import { IBuildContext } from "./"
 import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
 
 export async function runStaticQueries({
   parentSpan,
@@ -8,7 +8,7 @@ export async function runStaticQueries({
   store,
   program,
   graphqlRunner,
-}: Partial<IBuildContext>): Promise<void> {
+}: Partial<IQueryRunningContext>): Promise<void> {
   if (!store) {
     reporter.panic(`Cannot run service without a redux store`)
   }

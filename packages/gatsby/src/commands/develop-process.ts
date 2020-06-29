@@ -22,15 +22,11 @@ import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram } from "./types"
 import {
-  calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
   startWebpackServer,
   writeOutRequires,
   IBuildContext,
   initialize,
   postBootstrap,
-  extractQueries,
   rebuildSchemaWithSitePage,
   writeOutRedirects,
 } from "../services"
@@ -49,7 +45,8 @@ import {
 import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { globalTracer } from "opentracing"
-import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
+import { queryRunningMachine } from "../state-machines/query-running"
 
 const tracer = globalTracer()
 
@@ -153,27 +150,20 @@ module.exports = async (program: IProgram): Promise<void> => {
           },
           onDone: {
             actions: `assignDataLayer`,
-            target: `doingEverythingElse`,
+            target: `finishingBootstrap`,
           },
         },
       },
-      doingEverythingElse: {
+      finishingBootstrap: {
         invoke: {
           src: async ({
             gatsbyNodeGraphQLFunction,
-            graphqlRunner,
-            workerPool,
-            store,
-            app,
-          }): Promise<void> => {
-            // All the stuff that's not in the state machine yet
-
+          }: IBuildContext): Promise<void> => {
             // These were previously in `bootstrap()` but are now
             // in part of the state machine that hasn't been added yet
             await postBootstrap({ parentSpan: bootstrapSpan })
             await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
 
-            await extractQueries({ parentSpan: bootstrapSpan })
             await writeOutRedirects({ parentSpan: bootstrapSpan })
 
             startRedirectListener()
@@ -186,11 +176,41 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             // Start the schema hot reloader.
             bootstrapSchemaHotReloader()
+          },
+          onDone: {
+            target: `runningQueries`,
+          },
+        },
+      },
+      runningQueries: {
+        invoke: {
+          src: `runQueries`,
+          data: ({
+            program,
+            store,
+            parentSpan,
+            gatsbyNodeGraphQLFunction,
+            graphqlRunner,
+          }: IBuildContext): IQueryRunningContext => {
+            return {
+              firstRun: true,
+              program,
+              store,
+              parentSpan,
+              gatsbyNodeGraphQLFunction,
+              graphqlRunner,
+            }
+          },
+          onDone: {
+            target: `doingEverythingElse`,
+          },
+        },
+      },
+      doingEverythingElse: {
+        invoke: {
+          src: async ({ workerPool, store, app }): Promise<void> => {
+            // All the stuff that's not in the state machine yet
 
-            const { queryIds } = await calculateDirtyQueries({ store })
-
-            await runStaticQueries({ queryIds, store, program, graphqlRunner })
-            await runPageQueries({ queryIds, store, program, graphqlRunner })
             await writeOutRequires({ store })
             boundActionCreators.setProgramStatus(
               ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
@@ -219,6 +239,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       services: {
         initializeDataLayer: dataLayerMachine,
         initialize,
+        runQueries: queryRunningMachine,
       },
       actions: {
         assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(

@@ -1,11 +1,11 @@
-import { IBuildContext } from "./"
 import reporter from "gatsby-cli/lib/reporter"
 import { writeAll } from "../bootstrap/requires-writer"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
 
 export async function writeOutRequires({
   store,
   parentSpan,
-}: Partial<IBuildContext>): Promise<void> {
+}: Partial<IQueryRunningContext>): Promise<void> {
   if (!store) {
     reporter.panic(`No redux store`)
   }
