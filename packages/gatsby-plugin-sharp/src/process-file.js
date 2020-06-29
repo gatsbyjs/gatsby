@@ -116,6 +116,10 @@ exports.processFile = (file, transforms, options = {}) => {
           adaptiveFiltering: false,
           force: transformArgs.toFormat === `png`,
         })
+        .webp({
+          quality: transformArgs.webpQuality || transformArgs.quality,
+          force: transformArgs.toFormat === `webp`,
+        })
         .tiff({
           quality: transformArgs.quality,
           force: transformArgs.toFormat === `tiff`,
@@ -225,8 +229,11 @@ const compressJpg = (pipeline, outputPath, options) =>
   )
 
 const compressWebP = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
-    imagemin
+  pipeline.toBuffer().then(sharpBuffer => {
+    if (process.platform === `win32`) {
+      return fs.writeFile(outputPath, sharpBuffer)
+    }
+    return imagemin
       .buffer(sharpBuffer, {
         plugins: [
           imageminWebp({
@@ -236,7 +243,7 @@ const compressWebP = (pipeline, outputPath, options) =>
         ],
       })
       .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
-  )
+  })
 
 exports.createArgsDigest = args => {
   const argsDigest = createContentDigest(args)
