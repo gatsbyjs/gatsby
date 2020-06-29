@@ -40,8 +40,8 @@ const MetaSection = ({ children, background, last, first }) => (
   <div
     sx={{
       background: background ? background : `ui.background`,
-      mx: t => `-${t.space[5]}`,
-      p: 5,
+      mx: -6,
+      p: 6,
       borderTop: t => (first ? `1px solid ${t.colors.ui.border}` : null),
       borderBottom: t => (last ? null : `1px solid ${t.colors.ui.border}`),
       [breakpoint2Columns]: {

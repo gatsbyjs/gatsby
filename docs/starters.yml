@@ -6737,6 +6737,14 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-capacitor.netlify.app/
+  repo: https://github.com/flogy/gatsby-starter-capacitor
+  description: Build blazing fast mobile apps with Gatsby and Capacitor.
+  tags:
+    - Styling:None
+  features:
+    - Basic setup for hybrid mobile apps for Android and iOS
+    - Demonstration on how to access Native APIs of mobile devices
 - url: https://gatsby-starter-woo.surge.sh/
   repo: https://github.com/desmukh/gatsby-starter-woo
   description: Simple, clean and responsive landing page for your product or service. This is a GatsbyJS port of StyleShout's Woo template.
@@ -6787,3 +6795,35 @@
     - Tailwind CSS Framework
     - Includes React Helmet to allow editing site meta tags
     - Desktop and mobile responsive layout
+- url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
+  repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
+  description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
+  tags:
+    - Styling:CSS-in-JS
+    - Styling:Material
+  features:
+    - Gatsby v2
+    - Material-UI
+    - MuiTreasury Layout
+    - Dynamic configurable
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
+- url: https://7sferry-gatsby-contentful-starters.netlify.app/
+  repo: https://github.com/7sferry/Gatsbyan1.0
+  description: Blog template for Contentful CMS with some features like comment, tags, archives, pagination, prism, tags, share and many others.
+  tags:
+    - Blog
+    - SEO
+    - CMS:Contentful
+    - Pagination
+  features:
+    - Blog template
+    - Contentful CMS
+    - Facebook Comment
+    - Tags
+    - Archives by date
+    - Pagination
+    - Share Button
+    - Prism for code preview
