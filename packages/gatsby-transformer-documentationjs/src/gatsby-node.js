@@ -86,7 +86,7 @@ exports.sourceNodes = ({ actions }) => {
     }
 
     type DocumentationJSComponentDescription implements Node
-      @mimeTypes(types: ["text/markdown", "text/x-markdown"]) {
+      @mimeTypes(types: ["text/markdown"]) {
       id: ID! # empty type
     }
 
