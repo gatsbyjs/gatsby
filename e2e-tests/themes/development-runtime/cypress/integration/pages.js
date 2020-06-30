@@ -31,6 +31,6 @@ describe(`Pages`, () => {
   })
   it(`can use different extensions to shadow`, () => {
     cy.visit(`/bio`).waitForRouteChange()
-    cy.getTestElement(`bio`).contains(`Shadow this bio.`)
+    cy.getTestElement(`bio`).contains(`A bio all about me.`)
   })
 })
