@@ -55,23 +55,26 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
     }
 
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
-      body: String!
-      timeToRead: Int
-      tableOfContents: JSON
-      excerpt: String!
       slug: String!
-      anchor: String
+      anchor: String!
+      # Frontmatter-derived fields
       title: String!
       description: String
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
-      overview: Boolean
       issue: String
-      latestUpdate: Date @dateformat
+      overview: Boolean # TODO delete this, it's useless
+      latestUpdate: Date @dateformat # TODO delete this
+      # Frontmatter fields for API docs
       jsdoc: [String!]
       apiCalls: String
       contentsHeading: String
       showTopLevelSignatures: Boolean
+      # Fields derived from Mdx
+      body: String!
+      timeToRead: Int
+      tableOfContents: JSON
+      excerpt: String!
     }
 
     type DocumentationJSComponentDescription implements Node {
