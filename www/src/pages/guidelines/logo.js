@@ -24,11 +24,13 @@ import {
 
 import GatsbyLogo from "../../components/guidelines/logo"
 import GatsbyMonogram from "../../components/guidelines/logo/monogram"
-import Wordmark from "!raw-loader!../../assets/guidelines/wordmark.svg"
-import Clearspace from "!raw-loader!../../assets/guidelines/clearspace.svg"
-import ClearspaceMonogram from "!raw-loader!../../assets/guidelines/clearspace-monogram.svg"
-import ManuallyTracked from "!raw-loader!../../assets/guidelines/manually-tracked.svg"
-import PartnershipLockups from "!raw-loader!../../assets/guidelines/partnership-lockups.svg"
+import {
+  Wordmark,
+  Clearspace,
+  ClearspaceMonogram,
+  ManuallyTracked,
+  PartnershipLockups,
+} from "../../assets/guidelines"
 
 import ColorSwatch from "../../components/guidelines/color/card"
 
@@ -40,8 +42,8 @@ import palette from "../../utils/guidelines/extend-palette-info"
 const List = ({ children }) => (
   <ul
     sx={{
-      marginLeft: 0,
-      padding: 0,
+      ml: 0,
+      p: 0,
       listStyle: `none`,
     }}
   >
@@ -53,17 +55,18 @@ const listItemStyle = {
   backgroundPosition: `0 0.25em`,
   backgroundRepeat: `no-repeat`,
   backgroundSize: `1em`,
-  paddingLeft: `1.5em`,
-  marginBottom: `1em`,
+  pl: `1.5em`,
+  mb: `1em`,
 }
 
 const ListItem = ({ children }) => (
   <li
     sx={{
       ...listItemStyle,
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
-        theme.colors.green[`50`]
-      )}' d='M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z' /%3E%3C/svg%3E")`,
+      backgroundImage: theme =>
+        `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
+          theme.colors.green[`50`]
+        )}' d='M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z' /%3E%3C/svg%3E")`,
     }}
   >
     {children}
@@ -74,9 +77,10 @@ const DontListItem = ({ children }) => (
   <li
     sx={{
       ...listItemStyle,
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
-        theme.colors.red[`50`]
-      )}' d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /%3E%3C/svg%3E")`,
+      backgroundImage: theme =>
+        `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='${encodeURIComponent(
+          theme.colors.red[`50`]
+        )}' d='M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z' /%3E%3C/svg%3E")`,
     }}
   >
     {children}
@@ -88,11 +92,11 @@ const Guidance = ({ children, image }) => (
     sx={{
       mb: 5,
       mr: 5,
-      width: `calc(50% - 1.25rem)`,
+      width: theme => `calc(50% - ${theme.space[5]})`,
     }}
   >
     {image && (
-      <BoxWithBorder withBorder width="100%">
+      <BoxWithBorder withBorder>
         <Img fluid={image.childImageSharp.fluid} />
       </BoxWithBorder>
     )}
@@ -109,12 +113,10 @@ const Monogram = ({ size, isLast }) => (
       flexShrink: 0,
       alignItems: `center`,
       flexDirection: `column`,
-      mt: 0,
-      mr: 4,
+      mt: [0, null, null, 6],
+      mr: [4, null, null, 6],
       [mediaQueries.md]: {
         display: isLast ? `block` : `flex`,
-        mt: 6,
-        mr: 6,
       },
     }}
   >
@@ -122,8 +124,6 @@ const Monogram = ({ size, isLast }) => (
       sx={{
         width: size,
         mb: 4,
-      }}
-      css={{
         svg: {
           display: `block`,
           height: `100%`,
@@ -152,8 +152,6 @@ const GatsbyLogoContainered = ({
       height: height,
       maxWidth: `400px`,
       opacity: opacity || 1,
-    }}
-    css={{
       svg: {
         display: `block`,
         width: height ? `auto` : `100%`,
@@ -166,15 +164,7 @@ const GatsbyLogoContainered = ({
 )
 
 const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
-  <BoxWithBorder
-    bg={bg}
-    height={0}
-    p={3}
-    pb="56.25%"
-    width="100%"
-    withBorder={withBorder}
-    {...rest}
-  >
+  <BoxWithBorder bg={bg} p={3} pb="56.25%" withBorder={withBorder} {...rest}>
     <Flex
       sx={{
         alignItems: `center`,
@@ -194,8 +184,6 @@ const LogoContainer = ({ bg, color, inverted, withBorder, ...rest }) => (
           [mediaQueries.lg]: {
             height: `48px`,
           },
-        }}
-        css={{
           svg: {
             display: `block`,
             height: `100%`,
@@ -426,12 +414,11 @@ const Logo = ({ data, location }) => {
                 sx={{
                   maxWidth: `542px`,
                   mb: 4,
+                  svg: { display: `block`, width: `100%` },
                 }}
-                dangerouslySetInnerHTML={{
-                  __html: PartnershipLockups,
-                }}
-                css={{ svg: { display: `block`, width: `100%` } }}
-              />
+              >
+                <PartnershipLockups />
+              </Box>
             </Flex>
           </ContentColumn>
         </Columns>
@@ -467,25 +454,21 @@ const Logo = ({ data, location }) => {
               sx={{
                 maxWidth: `257px`,
                 mb: 4,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: Wordmark,
-              }}
-              css={{
                 svg: { display: `block`, width: `100%` },
                 color: isDark ? `white` : `black`,
               }}
-            />
+            >
+              <Wordmark />
+            </Box>
             <Box
               sx={{
                 maxWidth: `257px`,
                 mb: 3,
+                svg: { display: `block`, width: `100%` },
               }}
-              dangerouslySetInnerHTML={{
-                __html: ManuallyTracked,
-              }}
-              css={{ svg: { display: `block`, width: `100%` } }}
-            />
+            >
+              <ManuallyTracked />
+            </Box>
             <Text as="span" color="blue.70">
               Manual kerning and custom “G”
             </Text>
@@ -522,36 +505,25 @@ const Logo = ({ data, location }) => {
               <ColorSwatch
                 color={palette.purple.colors[`60`]}
                 sx={{
-                  mr: 0,
-                  mb: 4,
+                  mr: [0, null, null, 4],
+                  mb: [4, null, null, 0],
                   width: `100%`,
-                  [mediaQueries.md]: {
-                    mr: 4,
-                    mb: 0,
-                  },
                 }}
               />
               <ColorSwatch
                 color={palette.black.color}
                 sx={{
-                  mr: 0,
-                  mb: 4,
+                  mr: [0, null, null, 4],
+                  mb: [4, null, null, 0],
                   width: `100%`,
-                  [mediaQueries.md]: {
-                    mr: 4,
-                    mb: 0,
-                  },
                 }}
               />
               <ColorSwatch
                 color={palette.white.color}
                 sx={{
                   mr: 0,
-                  mb: 4,
+                  mb: [4, null, null, 0],
                   width: `100%`,
-                  [mediaQueries.md]: {
-                    mb: 0,
-                  },
                 }}
               />
             </Box>
@@ -624,12 +596,11 @@ const Logo = ({ data, location }) => {
             <Box
               sx={{
                 mb: 4,
+                svg: { display: `block`, maxWidth: 506 },
               }}
-              dangerouslySetInnerHTML={{
-                __html: Clearspace,
-              }}
-              css={{ svg: { display: `block`, maxWidth: 506 } }}
-            />
+            >
+              <Clearspace />
+            </Box>
             <Text as="p" mb={7} fontSize={1} color="grey.50">
               <Text as="span" color="magenta.50">
                 Clearspace
@@ -638,12 +609,13 @@ const Logo = ({ data, location }) => {
               around the logo is equal to the wordmark x-height.
             </Text>
             <Box
-              mb={4}
-              dangerouslySetInnerHTML={{
-                __html: ClearspaceMonogram,
+              sx={{
+                mb: 4,
+                svg: { display: `block`, maxWidth: 122 },
               }}
-              css={{ svg: { display: `block`, maxWidth: 122 } }}
-            />
+            >
+              <ClearspaceMonogram />
+            </Box>
             <Text as="p" mb={0} fontSize={1} color="grey.50">
               <Text as="span" color="magenta.50">
                 Clearspace
@@ -744,7 +716,7 @@ const Logo = ({ data, location }) => {
                   {node.description}:<br />
                   <a
                     sx={{
-                      color: theme.colors.purple[`50`],
+                      color: `purple.50`,
                       textDecoration: `none`,
                     }}
                     href={node.href}

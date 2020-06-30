@@ -139,8 +139,9 @@ const publishPackage = async ({
     console.log(
       `Published ${packageName}@${newPackageVersion} to local registry`
     )
-  } catch {
-    console.error(`Failed to publish ${packageName}@${newPackageVersion}`)
+  } catch (e) {
+    console.error(`Failed to publish ${packageName}@${newPackageVersion}`, e)
+    process.exit(1)
   }
 
   uncreateTemporaryNPMRC()

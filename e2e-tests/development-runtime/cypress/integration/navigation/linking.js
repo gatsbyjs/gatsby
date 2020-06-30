@@ -33,6 +33,42 @@ describe(`navigation`, () => {
     cy.location(`pathname`).should(`equal`, `/`)
   })
 
+  describe(`relative links`, () => {
+    it(`can navigate to a subdirectory`, () => {
+      cy.getTestElement(`subdir-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-1`)
+    })
+
+    it(`can navigate to a sibling page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+
+    it(`can navigate to a parent page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-parent-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory`)
+    })
+
+    it(`can navigate to a sibling page programatically`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-button-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+  })
+
   describe(`non-existent route`, () => {
     beforeEach(() => {
       cy.getTestElement(`broken-link`).click().waitForRouteChange()
