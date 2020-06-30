@@ -509,7 +509,7 @@ const initialMetadata = (state?: object): ITypeMetadata => {
     total: 0,
     ignoredFields: undefined,
     fieldMap: {},
-    ...state
+    ...state,
   }
 }
 
@@ -522,5 +522,5 @@ export {
   isEmpty,
   hasNodes,
   haveEqualFields,
-  initialMetadata
+  initialMetadata,
 }
