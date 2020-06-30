@@ -117,57 +117,6 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
-
-  const docsTemplate = getTemplate(`template-docs-markdown`)
-  const apiTemplate = getTemplate(`template-api-markdown`)
-
-  const { data, errors } = await graphql(/* GraphQL */ `
-    query {
-      allDocPage(limit: 10000) {
-        nodes {
-          slug
-          title
-          jsdoc
-          apiCalls
-        }
-      }
-    }
-  `)
-  if (errors) throw errors
-
-  // Create docs pages.
-  data.allDocPage.nodes.forEach(node => {
-    if (!node.slug) return
-
-    const prevAndNext = getPrevAndNext(node.slug)
-    if (node.jsdoc) {
-      // API template
-      createPage({
-        path: `${node.slug}`,
-        component: apiTemplate,
-        context: {
-          slug: node.slug,
-          jsdoc: node.jsdoc,
-          apiCalls: node.apiCalls,
-          ...prevAndNext,
-        },
-      })
-    } else {
-      // Docs template
-      createPage({
-        path: `${node.slug}`,
-        component: docsTemplate,
-        context: {
-          slug: node.slug,
-          ...prevAndNext,
-        },
-      })
-    }
-  })
-}
-
 exports.onCreateNode = async ({
   node,
   actions,
@@ -230,4 +179,55 @@ exports.onCreateNode = async ({
     },
   })
   createParentChildLink({ parent: node, child: getNode(docPageId) })
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const docsTemplate = getTemplate(`template-docs-markdown`)
+  const apiTemplate = getTemplate(`template-api-markdown`)
+
+  const { data, errors } = await graphql(/* GraphQL */ `
+    query {
+      allDocPage(limit: 10000) {
+        nodes {
+          slug
+          title
+          jsdoc
+          apiCalls
+        }
+      }
+    }
+  `)
+  if (errors) throw errors
+
+  // Create docs pages.
+  data.allDocPage.nodes.forEach(node => {
+    if (!node.slug) return
+
+    const prevAndNext = getPrevAndNext(node.slug)
+    if (node.jsdoc) {
+      // API template
+      createPage({
+        path: `${node.slug}`,
+        component: apiTemplate,
+        context: {
+          slug: node.slug,
+          jsdoc: node.jsdoc,
+          apiCalls: node.apiCalls,
+          ...prevAndNext,
+        },
+      })
+    } else {
+      // Docs template
+      createPage({
+        path: `${node.slug}`,
+        component: docsTemplate,
+        context: {
+          slug: node.slug,
+          ...prevAndNext,
+        },
+      })
+    }
+  })
 }
