@@ -367,6 +367,8 @@
               link: /docs/mdx/programmatically-creating-pages/
             - title: Using MDX Plugins
               link: /docs/mdx/plugins/
+            - title: Migrating Remark to MDX
+              link: /docs/mdx/migrate-remark-to-mdx/
             - title: Markdown Syntax
               link: /docs/mdx/markdown-syntax/
         - title: Adding Testing

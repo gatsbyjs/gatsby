@@ -25,7 +25,7 @@ The following example changes the color of the header for a site using [Gatsby's
 
 Once you're finished with your first variation, commit your changes to `master`, [create a new remote repository on GitHub](https://help.github.com/en/github/getting-started-with-github/create-a-repo) if you don't have one already, and push your changes.
 
-```bash
+```shell
 git add src/components/header.js
 git commit -m "Change header background color"
 git remote add origin [your remote repo URL]
@@ -34,7 +34,7 @@ git push -u origin master
 
 To create your second variation, create a new branch.
 
-```bash
+```shell
 git checkout -b heading-variation
 ```
 
@@ -57,7 +57,7 @@ When you have created your two variations, it's time to [deploy your site to Net
 
 After you have deployed your website, set up a [split test on Netlify](https://docs.netlify.com/site-deploys/split-testing/).
 
-When you are setting up your split test on Netlify, navigate to the homepage of your project. Scroll down to 'Active Split Test'. Choose 'Start a Split Test'. On the next page, pick which branches you would like to include in the split testand start the test.
+When you are setting up your split test on Netlify, navigate to the homepage of your project. Scroll down to 'Active Split Test'. Choose 'Start a Split Test'. On the next page, pick which branches you would like to include in the split test and start the test.
 
 ![Activate split test feature in Netlify](./images/start-split-test.gif)
 
