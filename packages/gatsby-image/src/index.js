@@ -330,12 +330,22 @@ Img.propTypes = {
   onLoad: PropTypes.func,
 }
 
+// Intentionally not an instance method because webpack is not able to
+// three-shake it away in production
+function validateImageProps({ fluid, fixed }) {
+  if (!fluid && !fixed) {
+    console.warn(
+      `gatsby-image expects a 'fixed' or a 'fluid' prop; neither was present.`
+    )
+  }
+}
+
 class Image extends React.Component {
   constructor(props) {
     super(props)
 
     if (process.env.NODE_ENV !== `production`) {
-      this.validateProps(props)
+      validateImageProps(props)
     }
 
     // If this image has already been loaded before then we can assume it's
@@ -366,14 +376,6 @@ class Image extends React.Component {
     this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
-  }
-
-  validateProps({ fluid, fixed }) {
-    if (!fluid && !fixed) {
-      console.warn(
-        `gatsby-image expects a 'fixed' or a 'fluid' prop; neither was present.`
-      )
-    }
   }
 
   componentDidMount() {
