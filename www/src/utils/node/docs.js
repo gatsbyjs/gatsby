@@ -49,51 +49,29 @@ const slugToAnchor = slug =>
     .pop() // take last item
 
 exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
-  createTypes(
-    schema.buildObjectType({
-      name: `DocPage`,
-      interfaces: [`Node`],
-      extensions: {
-        infer: false,
-        childOf: { types: `Mdx` },
-      },
-      fields: {
-        // Fields from MDX
-        body: { type: `String!`, resolve: mdxResolverPassthrough(`body`) },
-        timeToRead: {
-          type: `Int`,
-          resolve: mdxResolverPassthrough(`timeToRead`),
-        },
-        tableOfContents: {
-          type: `JSON`,
-          resolve: mdxResolverPassthrough(`tableOfContents`),
-        },
-        excerpt: {
-          type: `String!`,
-          resolve: mdxResolverPassthrough(`excerpt`),
-        },
-        slug: { type: `String!` },
-        anchor: { type: `String` },
-        title: { type: `String!` },
-        // FIXME resolve this with `excerpt`
-        description: { type: `String` },
-        disableTableOfContents: { type: `Boolean` },
-        tableOfContentsDepth: { type: `Int` },
-        overview: { type: `Boolean` },
-        issue: { type: `String` },
-        latestUpdate: { type: `Date`, extensions: { dateformat: {} } },
-        // API file fields
-        jsdoc: { type: `[String!]` },
-        apiCalls: { type: `String` },
-        contentsHeading: { type: `String` },
-        showTopLevelSignatures: { type: `Boolean` },
-      },
-    })
-  )
-
   createTypes(/* GraphQL */ `
     type File implements Node {
       childrenDocumentationJs: DocumentationJs
+    }
+
+    type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
+      body: String!
+      timeToRead: Int
+      tableOfContents: JSON
+      excerpt: String!
+      slug: String!
+      anchor: String
+      title: String!
+      description: String
+      disableTableOfContents: Boolean
+      tableOfContentsDepth: Int
+      overview: Boolean
+      issue: String
+      latestUpdate: Date @dateformat
+      jsdoc: [String!]
+      apiCalls: String
+      contentsHeading: String
+      showTopLevelSignatures: Boolean
     }
 
     type DocumentationJSComponentDescription implements Node {
@@ -118,6 +96,25 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
       line: Int
     }
   `)
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    DocPage: {
+      body: {
+        resolve: mdxResolverPassthrough(`body`),
+      },
+      timeToRead: {
+        resolve: mdxResolverPassthrough(`timeToRead`),
+      },
+      tableOfContents: {
+        resolve: mdxResolverPassthrough(`tableOfContents`),
+      },
+      excerpt: {
+        resolve: mdxResolverPassthrough(`excerpt`),
+      },
+    },
+  })
 }
 
 exports.createPages = async ({ graphql, actions }) => {

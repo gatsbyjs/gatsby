@@ -126,7 +126,15 @@ exports.onCreateWebpackConfig = ({ actions, plugins }) => {
 }
 
 // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
-exports.createResolvers = ({ createResolvers }) => {
+exports.createResolvers = helpers => {
+  sections.forEach(section => {
+    if (section.createResolvers) {
+      section.createResolvers(helpers)
+    }
+  })
+
+  const { createResolvers } = helpers
+
   createResolvers({
     DocumentationJs: {
       availableIn: {
