@@ -14,7 +14,7 @@
           "id": "c7LAnCobuuWYSqks6wAwY2a",
           "type": "Entry",
           "createdAt": "2017-06-27T09:35:44.000Z",
-          "updatedAt": "2020-03-12T16:54:10.360Z",
+          "updatedAt": "2020-06-30T11:22:54.201Z",
           "environment": {
             "sys": {
               "id": "master",
@@ -23,7 +23,7 @@
               "contentful_id": "master"
             }
           },
-          "revision": 3,
+          "revision": 4,
           "contentType": {
             "sys": {
               "type": "Link",
@@ -35,7 +35,7 @@
           "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
         },
         "fields": {
-          "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen Test" },
+          "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
           "icon": {
             "en-US": {
               "sys": {
@@ -694,7 +694,7 @@
                   "id": "c7LAnCobuuWYSqks6wAwY2a",
                   "type": "Entry",
                   "createdAt": "2017-06-27T09:35:44.000Z",
-                  "updatedAt": "2020-03-12T16:54:10.360Z",
+                  "updatedAt": "2020-06-30T11:22:54.201Z",
                   "environment": {
                     "sys": {
                       "id": "master",
@@ -703,7 +703,7 @@
                       "contentful_id": "master"
                     }
                   },
-                  "revision": 3,
+                  "revision": 4,
                   "contentType": {
                     "sys": {
                       "type": "Link",
@@ -715,10 +715,7 @@
                   "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
                 },
                 "fields": {
-                  "title": {
-                    "de": "Haus & Küche",
-                    "en-US": "Home & Kitchen Test"
-                  },
+                  "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
                   "icon": {
                     "en-US": {
                       "sys": {
@@ -976,7 +973,7 @@
                   "id": "c7LAnCobuuWYSqks6wAwY2a",
                   "type": "Entry",
                   "createdAt": "2017-06-27T09:35:44.000Z",
-                  "updatedAt": "2020-03-12T16:54:10.360Z",
+                  "updatedAt": "2020-06-30T11:22:54.201Z",
                   "environment": {
                     "sys": {
                       "id": "master",
@@ -985,7 +982,7 @@
                       "contentful_id": "master"
                     }
                   },
-                  "revision": 3,
+                  "revision": 4,
                   "contentType": {
                     "sys": {
                       "type": "Link",
@@ -997,10 +994,7 @@
                   "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
                 },
                 "fields": {
-                  "title": {
-                    "de": "Haus & Küche",
-                    "en-US": "Home & Kitchen Test"
-                  },
+                  "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
                   "icon": {
                     "en-US": {
                       "sys": {
@@ -1258,7 +1252,7 @@
                   "id": "c7LAnCobuuWYSqks6wAwY2a",
                   "type": "Entry",
                   "createdAt": "2017-06-27T09:35:44.000Z",
-                  "updatedAt": "2020-03-12T16:54:10.360Z",
+                  "updatedAt": "2020-06-30T11:22:54.201Z",
                   "environment": {
                     "sys": {
                       "id": "master",
@@ -1267,7 +1261,7 @@
                       "contentful_id": "master"
                     }
                   },
-                  "revision": 3,
+                  "revision": 4,
                   "contentType": {
                     "sys": {
                       "type": "Link",
@@ -1279,10 +1273,7 @@
                   "contentful_id": "7LAnCobuuWYSqks6wAwY2a"
                 },
                 "fields": {
-                  "title": {
-                    "de": "Haus & Küche",
-                    "en-US": "Home & Kitchen Test"
-                  },
+                  "title": { "de": "Haus & Küche", "en-US": "Home & Kitchen" },
                   "icon": {
                     "en-US": {
                       "sys": {
@@ -2141,7 +2132,7 @@
     ],
     "deletedEntries": [],
     "deletedAssets": [],
-    "nextSyncToken": "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw04asOzCDDDi0fCo8KJworDo33CkWpbVMOkTcOfwrrDuxLCkE_Dv8KqC8ONwp7DpsOWVsO-wozDqRk7IisFZMOsLsOOwqhOUcKC"
+    "nextSyncToken": "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORIyLDrGbDtgozw6xreMKCwpjCtlxATw0gwoHCigbDssKxwq8FwqljTmnDhkzDgiIVbSnDkHfDnHBEwpfChcK8TcKsMjNlagJ9S8KXwpLDkcKrwrPCl2wlGcOlC8KI"
   },
   "contentTypeItems": [
     {

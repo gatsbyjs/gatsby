@@ -61,7 +61,7 @@ Array [
         },
         "title": Object {
           "de": "Haus & Küche",
-          "en-US": "Home & Kitchen Test",
+          "en-US": "Home & Kitchen",
         },
       },
       "sys": Object {
@@ -84,7 +84,7 @@ Array [
           },
         },
         "id": "c7LAnCobuuWYSqks6wAwY2a",
-        "revision": 3,
+        "revision": 4,
         "space": Object {
           "sys": Object {
             "contentful_id": "rocybtov1ozk",
@@ -94,7 +94,7 @@ Array [
           },
         },
         "type": "Entry",
-        "updatedAt": "2020-03-12T16:54:10.360Z",
+        "updatedAt": "2020-06-30T11:22:54.201Z",
       },
     },
     Object {
@@ -1013,7 +1013,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
                 "title": Object {
                   "de": "Haus & Küche",
-                  "en-US": "Home & Kitchen Test",
+                  "en-US": "Home & Kitchen",
                 },
               },
               "sys": Object {
@@ -1036,7 +1036,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
-                "revision": 3,
+                "revision": 4,
                 "space": Object {
                   "sys": Object {
                     "contentful_id": "rocybtov1ozk",
@@ -1046,7 +1046,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "type": "Entry",
-                "updatedAt": "2020-03-12T16:54:10.360Z",
+                "updatedAt": "2020-06-30T11:22:54.201Z",
               },
             },
           ],
@@ -1342,7 +1342,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
                 "title": Object {
                   "de": "Haus & Küche",
-                  "en-US": "Home & Kitchen Test",
+                  "en-US": "Home & Kitchen",
                 },
               },
               "sys": Object {
@@ -1365,7 +1365,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
-                "revision": 3,
+                "revision": 4,
                 "space": Object {
                   "sys": Object {
                     "contentful_id": "rocybtov1ozk",
@@ -1375,7 +1375,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "type": "Entry",
-                "updatedAt": "2020-03-12T16:54:10.360Z",
+                "updatedAt": "2020-06-30T11:22:54.201Z",
               },
             },
           ],
@@ -1690,7 +1690,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
                 "title": Object {
                   "de": "Haus & Küche",
-                  "en-US": "Home & Kitchen Test",
+                  "en-US": "Home & Kitchen",
                 },
               },
               "sys": Object {
@@ -1713,7 +1713,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
-                "revision": 3,
+                "revision": 4,
                 "space": Object {
                   "sys": Object {
                     "contentful_id": "rocybtov1ozk",
@@ -1723,7 +1723,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "type": "Entry",
-                "updatedAt": "2020-03-12T16:54:10.360Z",
+                "updatedAt": "2020-06-30T11:22:54.201Z",
               },
             },
           ],
@@ -2816,7 +2816,7 @@ Array [
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a",
       "internal": Object {
-        "contentDigest": "ceefe93afd5bfc60d80650023456dde9",
+        "contentDigest": "e47f3c6073f31c8f9a6c04e401678b48",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "en-US",
@@ -2831,10 +2831,10 @@ Array [
             "type": "Link",
           },
         },
-        "revision": 3,
+        "revision": 4,
       },
       "title___NODE": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2atitleTextNode",
-      "updatedAt": "2020-03-12T16:54:10.360Z",
+      "updatedAt": "2020-06-30T11:22:54.201Z",
     },
   ],
   Array [
@@ -2878,13 +2878,13 @@ Array [
       "children": Array [],
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2atitleTextNode",
       "internal": Object {
-        "content": "Home & Kitchen Test",
-        "contentDigest": "e2cfab4e525389ae924608721793d2cb",
+        "content": "Home & Kitchen",
+        "contentDigest": "71520a45fe8b5ecded737e074a6b30a0",
         "mediaType": "text/markdown",
         "type": "contentfulC6XwpTaSiiI2Ak2Ww0Oi6QaTitleTextNode",
       },
       "parent": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a",
-      "title": "Home & Kitchen Test",
+      "title": "Home & Kitchen",
     },
   ],
   Array [
@@ -2960,7 +2960,7 @@ Array [
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___de",
       "internal": Object {
-        "contentDigest": "ad607b76e3a9ff5550e2eb283585b1b5",
+        "contentDigest": "0efd375056f4393650d87577303e210e",
         "type": "ContentfulC6XwpTaSiiI2Ak2Ww0Oi6Qa",
       },
       "node_locale": "de",
@@ -2975,10 +2975,10 @@ Array [
             "type": "Link",
           },
         },
-        "revision": 3,
+        "revision": 4,
       },
       "title___NODE": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___detitleTextNode",
-      "updatedAt": "2020-03-12T16:54:10.360Z",
+      "updatedAt": "2020-06-30T11:22:54.201Z",
     },
   ],
   Array [
@@ -4779,7 +4779,7 @@ Array [
         },
         "title": Object {
           "de": "Haus & Küche",
-          "en-US": "Home & Kitchen Test",
+          "en-US": "Home & Kitchen",
         },
       },
       "sys": Object {
@@ -4802,7 +4802,7 @@ Array [
           },
         },
         "id": "c7LAnCobuuWYSqks6wAwY2a",
-        "revision": 3,
+        "revision": 4,
         "space": Object {
           "sys": Object {
             "contentful_id": "rocybtov1ozk",
@@ -4812,7 +4812,7 @@ Array [
           },
         },
         "type": "Entry",
-        "updatedAt": "2020-03-12T16:54:10.360Z",
+        "updatedAt": "2020-06-30T11:22:54.201Z",
       },
     },
     Object {
@@ -5731,7 +5731,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
                 "title": Object {
                   "de": "Haus & Küche",
-                  "en-US": "Home & Kitchen Test",
+                  "en-US": "Home & Kitchen",
                 },
               },
               "sys": Object {
@@ -5754,7 +5754,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
-                "revision": 3,
+                "revision": 4,
                 "space": Object {
                   "sys": Object {
                     "contentful_id": "rocybtov1ozk",
@@ -5764,7 +5764,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "type": "Entry",
-                "updatedAt": "2020-03-12T16:54:10.360Z",
+                "updatedAt": "2020-06-30T11:22:54.201Z",
               },
             },
           ],
@@ -6060,7 +6060,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
                 "title": Object {
                   "de": "Haus & Küche",
-                  "en-US": "Home & Kitchen Test",
+                  "en-US": "Home & Kitchen",
                 },
               },
               "sys": Object {
@@ -6083,7 +6083,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
-                "revision": 3,
+                "revision": 4,
                 "space": Object {
                   "sys": Object {
                     "contentful_id": "rocybtov1ozk",
@@ -6093,7 +6093,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "type": "Entry",
-                "updatedAt": "2020-03-12T16:54:10.360Z",
+                "updatedAt": "2020-06-30T11:22:54.201Z",
               },
             },
           ],
@@ -6408,7 +6408,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                 },
                 "title": Object {
                   "de": "Haus & Küche",
-                  "en-US": "Home & Kitchen Test",
+                  "en-US": "Home & Kitchen",
                 },
               },
               "sys": Object {
@@ -6431,7 +6431,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "id": "c7LAnCobuuWYSqks6wAwY2a",
-                "revision": 3,
+                "revision": 4,
                 "space": Object {
                   "sys": Object {
                     "contentful_id": "rocybtov1ozk",
@@ -6441,7 +6441,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
                   },
                 },
                 "type": "Entry",
-                "updatedAt": "2020-03-12T16:54:10.360Z",
+                "updatedAt": "2020-06-30T11:22:54.201Z",
               },
             },
           ],
@@ -7529,7 +7529,7 @@ Array [
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a",
       "internal": Object {
-        "contentDigest": "b37c7ed69a06cfc7d17a4930ad69bd06",
+        "contentDigest": "7e065d154b5657fe1ca348ee8d5af107",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -7549,10 +7549,10 @@ Array [
             "type": "Link",
           },
         },
-        "revision": 3,
+        "revision": 4,
       },
       "title___NODE": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2atitleTextNode",
-      "updatedAt": "2020-03-12T16:54:10.360Z",
+      "updatedAt": "2020-06-30T11:22:54.201Z",
     },
   ],
   Array [
@@ -7596,13 +7596,13 @@ Array [
       "children": Array [],
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2atitleTextNode",
       "internal": Object {
-        "content": "Home & Kitchen Test",
-        "contentDigest": "e2cfab4e525389ae924608721793d2cb",
+        "content": "Home & Kitchen",
+        "contentDigest": "71520a45fe8b5ecded737e074a6b30a0",
         "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a",
-      "title": "Home & Kitchen Test",
+      "title": "Home & Kitchen",
     },
   ],
   Array [
@@ -7673,7 +7673,7 @@ Array [
       "icon___NODE": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "id": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___de",
       "internal": Object {
-        "contentDigest": "94b92533c7815fe9db6f615511ae2429",
+        "contentDigest": "fcfeb1acb9cbfd3bca1ba21fb8e407b5",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -7693,10 +7693,10 @@ Array [
             "type": "Link",
           },
         },
-        "revision": 3,
+        "revision": 4,
       },
       "title___NODE": "rocybtov1ozk___c7LAnCobuuWYSqks6wAwY2a___detitleTextNode",
-      "updatedAt": "2020-03-12T16:54:10.360Z",
+      "updatedAt": "2020-06-30T11:22:54.201Z",
     },
   ],
   Array [
