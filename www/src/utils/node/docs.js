@@ -63,7 +63,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
     }
 
     type File implements Node {
-      childrenDocumentationJs: DocumentationJs
       fields: FileFields
     }
 
@@ -73,10 +72,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       gitLogLatestDate: Date @dateformat
       gitLogLatestAuthorName: String
       gitLogLatestAuthorEmail: String
-    }
-
-    type DocumentationJSComponentDescription implements Node {
-      childMdx: Mdx
     }
 
     type GatsbyAPICall implements Node @derivedTypes @dontInfer {
