@@ -42,7 +42,6 @@ class PageRenderer extends React.Component {
 }
 
 PageRenderer.propTypes = {
-  params: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   pageResources: PropTypes.object.isRequired,
   data: PropTypes.object,
