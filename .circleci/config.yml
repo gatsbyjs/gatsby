@@ -212,7 +212,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      ## We should always assert on master
+      # We should always assert on master
       - when:
           condition:
             - not:
