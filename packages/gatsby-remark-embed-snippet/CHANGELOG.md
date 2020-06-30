@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.8...gatsby-remark-embed-snippet@4.3.9) (2020-06-29)
+
+### Features
+
+- **gatsby-remark-embed-snippet:** Add the ability to embed named snippets ([#24512](https://github.com/gatsbyjs/gatsby/issues/24512)) ([2b68c84](https://github.com/gatsbyjs/gatsby/commit/2b68c84))
+
 ## [4.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.7...gatsby-remark-embed-snippet@4.3.8) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-remark-embed-snippet

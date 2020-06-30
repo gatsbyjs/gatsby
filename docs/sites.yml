@@ -11247,3 +11247,20 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Gabriel Giordano Portfolio
+  main_url: https://gabrielgiordano.com
+  url: https://gabrielgiordano.com
+  source_url: https://github.com/gabrielgiordan/gabrielgiordano.com
+  description: >
+    Personal website for Gabriel Giordano, a Senior Software Engineer and also an open-source contributor.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+    - SEO
+    - Technology
+    - Programming
+    - Freelance
+  built_by: Gabriel Giordano
+  built_by_url: https://gabrielgiordano.com
+  featured: false

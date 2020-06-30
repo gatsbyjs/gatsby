@@ -1,100 +1,91 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx, Flex } from "theme-ui"
 import PropTypes from "prop-types"
-import styled from "@emotion/styled"
 
 import Button from "../button"
 import EcosystemFeaturedItems from "./ecosystem-featured-items"
 import EcosystemFeaturedItem from "./ecosystem-featured-item"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const EcosystemSectionRoot = styled(`section`)`
-  background: ${p => p.theme.colors.card.background};
-  padding: 0 ${p => p.theme.space[6]};
-  margin-bottom: ${p => p.theme.space[3]};
+const ecosystemSectionRootStyles = {
+  bg: `card.background`,
+  px: 6,
+  mb: 3,
+  [mediaQueries.md]: {
+    boxShadow: `raised`,
+    borderRadius: 2,
+    display: `flex`,
+    flexBasis: t => `calc(50% - ${t.space[5]})`,
+    flexDirection: `column`,
+    flexGrow: 0,
+    mx: 2,
+    mb: 6,
+    maxHeight: `60vh`,
+    p: 6,
+    pb: 0,
+    ":last-child": {
+      flexGrow: 1,
+    },
+  },
+  [mediaQueries.lg]: {
+    flexBasis: t => `calc(33.33% - ${t.space[5]})`,
+    maxHeight: `100%`,
+    ":last-child": {
+      alignSelf: `flex-start`,
+      pb: 6,
+    },
+  },
+  a: {
+    textDecoration: `none`,
+  },
+}
 
-  ${mediaQueries.md} {
-    box-shadow: ${p => p.theme.shadows.raised};
-    border-radius: ${p => p.theme.radii[2]};
-    display: flex;
-    flex-basis: calc(50% - ${p => p.theme.space[5]});
-    flex-direction: column;
-    flex-grow: 0;
-    margin: 0 ${p => p.theme.space[2]} ${p => p.theme.space[6]};
-    max-height: 60vh;
-    padding: ${p => p.theme.space[6]};
-    padding-bottom: 0;
+const titleStyles = {
+  alignItems: `center`,
+  color: `heading`,
+  display: `flex`,
+  fontSize: 4,
+  fontWeight: `heading`,
+  lineHeight: `solid`,
+  m: 0,
+  mb: 1,
+  // TODO add common icon sizes to theme `sizes`
+  minHeight: `2rem`,
+  span: {
+    mr: 1,
+  },
+}
 
-    :last-child {
-      flex-grow: 1;
-    }
-  }
+const iconStyles = {
+  display: `block`,
+  // TODO add common icon sizes to theme `sizes`
+  height: `2rem`,
+  width: `2rem`,
+}
 
-  ${mediaQueries.lg} {
-    flex-basis: calc(33.33% - ${p => p.theme.space[5]});
-    max-height: 100%;
+const subtitleStyles = {
+  color: `lilac`,
+  fontSize: 1,
+  fontWeight: `normal`,
+  letterSpacing: `tracked`,
+  m: 0,
+  mt: 5,
+  textTransform: `uppercase`,
+}
 
-    :last-child {
-      align-self: flex-start;
-      padding-bottom: ${p => p.theme.space[6]};
-    }
-  }
+const descriptionStyles = {
+  color: `text`,
+  fontSize: 2,
+}
 
-  a {
-    text-decoration: none;
-  }
-`
-
-export const Header = styled(`header`)`
-  align-items: flex-start;
-`
-
-const Title = styled(`h1`)`
-  align-items: center;
-  color: ${p => p.theme.colors.heading};
-  display: flex;
-  font-size: ${p => p.theme.fontSizes[4]};
-  font-weight: ${p => p.theme.fontWeights.heading};
-  line-height: ${p => p.theme.lineHeights.solid};
-  margin: 0;
-  margin-bottom: ${p => p.theme.space[1]};
-  min-height: ${p => p.theme.space[7]};
-
-  span {
-    margin: 0 ${p => p.theme.space[1]} 0 0;
-  }
-`
-
-const Icon = styled(`span`)`
-  display: block;
-  height: ${p => p.theme.space[7]};
-  width: ${p => p.theme.space[7]};
-`
-
-const SubTitle = styled(`h2`)`
-  color: ${p => p.theme.colors.lilac};
-  font-size: ${p => p.theme.fontSizes[1]};
-  font-weight: normal;
-  letter-spacing: ${p => p.theme.letterSpacings.tracked};
-  margin: 0;
-  margin-top: ${p => p.theme.space[5]};
-  text-transform: uppercase;
-`
-
-const Description = styled(`p`)`
-  color: ${p => p.theme.colors.text};
-  font-size: ${p => p.theme.fontSizes[2]};
-`
-
-const Actions = styled(`div`)`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: -${p => p.theme.space[1]};
-
-  > a {
-    margin: ${p => p.theme.space[1]} ${p => p.theme.space[2]}
-      ${p => p.theme.space[1]} 0;
-  }
-`
+const actionsStyles = {
+  flexWrap: `wrap`,
+  mt: -1,
+  "> a": {
+    my: 1,
+    mr: 2,
+  },
+}
 
 const EcosystemSection = ({
   title,
@@ -103,16 +94,16 @@ const EcosystemSection = ({
   icon,
   links,
   featuredItems,
-  className,
+  ...rest
 }) => (
-  <EcosystemSectionRoot className={className}>
-    <Header>
-      <Title>
-        {icon && <Icon>{icon}</Icon>}
+  <section sx={ecosystemSectionRootStyles} {...rest}>
+    <header sx={{ alignItems: `flex-start` }}>
+      <h1 sx={titleStyles}>
+        {icon && <span sx={iconStyles}>{icon}</span>}
         <span>{title}</span>
-      </Title>
-      <Description>{description}</Description>
-      <Actions>
+      </h1>
+      <p sx={descriptionStyles}>{description}</p>
+      <Flex sx={actionsStyles}>
         {links.map(item => {
           const { to, label, secondary } = item
 
@@ -122,9 +113,9 @@ const EcosystemSection = ({
             </Button>
           )
         })}
-      </Actions>
-      {subTitle && <SubTitle>{subTitle}</SubTitle>}
-    </Header>
+      </Flex>
+      {subTitle && <h2 sx={subtitleStyles}>{subTitle}</h2>}
+    </header>
 
     {featuredItems && featuredItems.length > 0 && (
       <EcosystemFeaturedItems
@@ -132,13 +123,12 @@ const EcosystemSection = ({
         itemComponent={EcosystemFeaturedItem}
       />
     )}
-  </EcosystemSectionRoot>
+  </section>
 )
 
 EcosystemSection.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  className: PropTypes.string,
   subTitle: PropTypes.string,
   icon: PropTypes.element,
   links: PropTypes.array,
