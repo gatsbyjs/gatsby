@@ -6813,3 +6813,13 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-starter-emotion-theme.netlify.app/
+  repo: https://github.com/jackoliver/gatsby-starter-emotion-theme
+  description: Gatsby+Emotion+Theming, made to get up and running quicker with standard marketing microsites.
+  tags:
+    - Styling:CSS-in-JS
+  features:
+    - Alias imports for quicker development
+    - Emotion theming out of the box
+    - Easy to change global parameters
+    - BYOD (Bring your own data sources)
