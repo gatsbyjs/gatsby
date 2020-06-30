@@ -146,7 +146,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
           return possibleComponentPath
         }
       })
-      .find(path => path != false) // if full path matched, return it
+      .find(Boolean) // if full path matched, return it
   }
 
   getMatchingThemesForPath(filepath) {
