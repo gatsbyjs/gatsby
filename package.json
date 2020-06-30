@@ -49,6 +49,7 @@
     "glob": "^7.1.6",
     "husky": "3.1.0",
     "ignore": "^5.1.8",
+    "is-ci": "^2.0.0",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
@@ -170,6 +171,7 @@
     "retext-emoji": "^7.0.1",
     "retext-spell": "^4.0.0",
     "retext-syntax-mentions": "^2.1.0",
-    "retext-syntax-urls": "^2.0.0"
+    "retext-syntax-urls": "^2.0.0",
+    "yarn-deduplicate": "^2.0.0"
   }
 }
