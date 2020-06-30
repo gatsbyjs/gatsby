@@ -34,7 +34,7 @@ module.exports.config = {}
 const queryDevelopAPI = async ({ root }, query) => {
   const { port } = await getService(root, `developproxy`)
 
-  return fetch(`http://localhost:${port}/___graphql`, {
+  const res = await fetch(`http://localhost:${port}/___graphql`, {
     method: `POST`,
     body: JSON.stringify({
       query,
@@ -43,7 +43,10 @@ const queryDevelopAPI = async ({ root }, query) => {
       Accept: `application/json`,
       "Content-Type": `application/json`,
     },
-  }).then(res => res.json())
+  })
+  const body = await res.json()
+
+  return body
 }
 
 module.exports.all = async ({ root }) => {
