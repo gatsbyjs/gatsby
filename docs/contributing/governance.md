@@ -31,6 +31,14 @@ _If you’d like to learn more about how we approach the relationship between ou
 
 If you’d like to request or propose a Gatsby feature (or a change to an existing feature), the best way to start is to submit it as an issue via GitHub. The Core Team will then review your submission and decide whether or not to put it through our formal “Request for Comment” process.
 
+### Community PR and Issue Review Process
+
+Issues submitted by the community go through our Triage Process. You can learn more about this process in our [Triaging GitHub Issues doc](https://www.gatsbyjs.org/contributing/triaging-github-issues/).
+
+Our pull request review process is outlined in our [Managing Pull Requests doc](https://www.gatsbyjs.org/contributing/managing-pull-requests/).
+
+If you have any questions about an issue or PR, you can add a comment to the issue/PR on GitHub or reach out to us via one of the options in the "Engage with the Gatsby Team" section below.
+
 ## Code of Conduct
 
 In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
