@@ -225,7 +225,9 @@ describe(`<Image />`, () => {
 
     render(<Image fixed={null} />)
 
-    expect(console.warn).toBeCalled()
+    expect(console.warn).toBeCalledWith(
+      expect.stringContaining(`expects a 'fixed'`)
+    )
   })
 
   it(`should select the correct mocked image of fluid variants provided.`, () => {

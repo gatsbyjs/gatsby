@@ -334,7 +334,7 @@ class Image extends React.Component {
   constructor(props) {
     super(props)
 
-    if (process.env.NODE_ENV === `production`) {
+    if (process.env.NODE_ENV !== `production`) {
       this.validateProps(props)
     }
 
