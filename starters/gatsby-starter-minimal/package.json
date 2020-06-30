@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.22.12",
+    "gatsby": "^2.23.12",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
