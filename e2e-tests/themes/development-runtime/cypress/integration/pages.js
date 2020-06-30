@@ -29,7 +29,7 @@ describe(`Pages`, () => {
     cy.visit(`/about`).waitForRouteChange()
     cy.getTestElement(`author`).contains(`Sidhartha Chatterjee`)
   })
-  it(`can use different extension to shadow`, () => {
+  it(`can use different extensions to shadow`, () => {
     cy.visit(`/bio`).waitForRouteChange()
     cy.getTestElement(`bio`).contains(`A bio all about me.`)
   })
