@@ -168,9 +168,14 @@ exports.onPostBuild = (
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
   const idbKeyvalPackageJson = require(`idb-keyval/package.json`)
-  const idbKeyValVersioned = `idb-keyval-${idbKeyvalPackageJson.version}-iife.min.js`
+  let idbKeyValVersioned = `idb-keyval-${idbKeyvalPackageJson.version}-iife.min.js`
   const idbKeyvalDest = `public/${idbKeyValVersioned}`
-  fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
+  
+  if (combinedOptions.importWorkboxFrom === `cdn`) {
+    idbKeyValVersioned = `https://cdn.jsdelivr.net/npm/idb-keyval@${idbKeyvalPackageJson}/dist/${idbKeyvalFile}`
+  } else {
+    fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
+  }
 
   const swDest = `public/sw.js`
   return workboxBuild
