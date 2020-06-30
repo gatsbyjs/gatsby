@@ -56,8 +56,7 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNodeId = jest.fn(id => id)
     contentTypeItems.forEach((contentTypeItem, i) => {
       entryList[i].forEach(normalize.fixIds)
       normalize.createNodesForContentType({
@@ -80,8 +79,7 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
@@ -135,8 +133,7 @@ describe(`Process contentful data (by id)`, () => {
 
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNodeId = jest.fn(id => id)
     contentTypeItems.forEach((contentTypeItem, i) => {
       entryList[i].forEach(normalize.fixIds)
       normalize.createNodesForContentType({
@@ -159,8 +156,7 @@ describe(`Process contentful data (by id)`, () => {
 
   it(`creates nodes for each asset`, () => {
     const createNode = jest.fn()
-    const createNodeId = jest.fn()
-    createNodeId.mockReturnValue(`uuid-from-gatsby`)
+    const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
       normalize.createAssetNodes({
