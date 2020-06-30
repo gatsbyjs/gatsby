@@ -233,7 +233,7 @@ describe(`Resolve module exports`, () => {
     const result = resolveModuleExports(`/export/default/function/name`, {
       resolver,
     })
-    expect(result).toEqual([`export default`])
+    expect(result).toEqual([`export default foo`])
   })
 
   it(`Resolves function declaration`, () => {

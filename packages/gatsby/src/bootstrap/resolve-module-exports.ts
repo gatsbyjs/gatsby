@@ -105,6 +105,8 @@ const staticallyAnalyzeExports = (
       let name = ``
       if (t.isIdentifier(declaration)) {
         name = declaration.name
+      } else if (t.isFunctionDeclaration(declaration) && declaration.id) {
+        name = declaration.id.name
       }
 
       const exportName = `export default${name ? ` ${name}` : ``}`
