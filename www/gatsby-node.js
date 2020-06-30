@@ -6,6 +6,8 @@ const startersRedirects = require(`./starter-redirects.json`)
 const { loadYaml } = require(`./src/utils/load-yaml`)
 const redirects = loadYaml(`./redirects.yaml`)
 
+// Split the logic into files based on the section of the website.
+// The eventual goal is to split www into different themes per section.
 const docs = require(`./src/utils/node/docs.js`)
 const blog = require(`./src/utils/node/blog.js`)
 const showcase = require(`./src/utils/node/showcase.js`)
@@ -14,6 +16,17 @@ const creators = require(`./src/utils/node/creators.js`)
 const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
 const sections = [docs, blog, showcase, starters, creators, packages, features]
+
+// Run the provided API on all defined sections of the site
+async function runApiForSections(api, helpers) {
+  await Promise.all(
+    sections.map(section => {
+      if (section[api]) {
+        section[api](helpers)
+      }
+    })
+  )
+}
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
   const currentCommitSHA = require(`child_process`)
@@ -32,11 +45,7 @@ exports.onCreateWebpackConfig = ({ actions, plugins }) => {
 }
 
 exports.createSchemaCustomization = async helpers => {
-  for (const section of sections) {
-    if (section.createSchemaCustomization) {
-      section.createSchemaCustomization(helpers)
-    }
-  }
+  await runApiForSections(`createSchemaCustomization`, helpers)
 
   const {
     actions: { createTypes },
@@ -116,16 +125,12 @@ exports.sourceNodes = async ({
 }
 
 exports.onCreateNode = async helpers => {
-  await Promise.all(
-    sections.map(section => {
-      if (section.onCreateNode) {
-        section.onCreateNode(helpers)
-      }
-    })
-  )
+  await runApiForSections(`onCreateNode`, helpers)
 }
 
 exports.createPages = async helpers => {
+  await runApiForSections(`createPages`, helpers)
+
   const { actions } = helpers
   const { createRedirect } = actions
 
@@ -141,8 +146,6 @@ exports.createPages = async helpers => {
       force: true,
     })
   })
-
-  await Promise.all(sections.map(section => section.createPages(helpers)))
 }
 
 exports.onPostBuild = () => {
