@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { SkipNavLink } from "@reach/skip-nav"
-import { Trans } from "@lingui/macro"
 
 import { visuallyHidden } from "../utils/styles"
 
@@ -20,15 +19,15 @@ const Link = () => (
       ":focus": {
         clip: `auto`,
         height: `auto`,
-        left: t => t.space[6],
-        padding: t => t.space[4],
+        left: 6,
+        padding: 4,
         position: `fixed`,
         top: 6,
         width: `auto`,
       },
     }}
   >
-    <Trans>Skip to main content</Trans>
+    Skip to main content
   </SkipNavLink>
 )
 

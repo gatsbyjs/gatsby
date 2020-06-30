@@ -1,12 +1,13 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
-const child_process = require(`child_process`)
 const startersRedirects = require(`./starter-redirects.json`)
-const yaml = require(`js-yaml`)
-const redirects = yaml.load(fs.readFileSync(`./redirects.yaml`))
-const { i18nEnabled } = require(`./src/utils/i18n`)
 
+const { loadYaml } = require(`./src/utils/load-yaml`)
+const redirects = loadYaml(`./redirects.yaml`)
+
+// Split the logic into files based on the section of the website.
+// The eventual goal is to split www into different themes per section.
 const docs = require(`./src/utils/node/docs.js`)
 const blog = require(`./src/utils/node/blog.js`)
 const showcase = require(`./src/utils/node/showcase.js`)
@@ -16,119 +17,15 @@ const packages = require(`./src/utils/node/packages.js`)
 const features = require(`./src/utils/node/features.js`)
 const sections = [docs, blog, showcase, starters, creators, packages, features]
 
-exports.createPages = async helpers => {
-  const { actions } = helpers
-  const { createRedirect } = actions
-
-  redirects.forEach(redirect => {
-    createRedirect({ isPermanent: true, ...redirect, force: true })
-  })
-
-  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
-    createRedirect({
-      fromPath: `/starters${fromSlug}`,
-      toPath: `/starters${toSlug}`,
-      isPermanent: true,
-      force: true,
+// Run the provided API on all defined sections of the site
+async function runApiForSections(api, helpers) {
+  await Promise.all(
+    sections.map(section => {
+      if (section[api]) {
+        section[api](helpers)
+      }
     })
-  })
-
-  await Promise.all(sections.map(section => section.createPages(helpers)))
-}
-
-// Create slugs for files, set released status for blog posts.
-exports.onCreateNode = helpers => {
-  sections.forEach(section => section.onCreateNode(helpers))
-}
-
-exports.onPostBootstrap = () => {
-  // Compile language strings if locales are enabled
-  if (i18nEnabled) {
-    child_process.execSync(`yarn lingui:build`)
-  }
-}
-
-exports.onPostBuild = () => {
-  fs.copySync(
-    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-    `./public/gatsbygram.mp4`
   )
-}
-
-// XXX this should probably be a plugin or something.
-exports.sourceNodes = async ({
-  actions: { createTypes, createNode },
-  createContentDigest,
-}) => {
-  /*
-   * NOTE: This _only_ defines the schema we currently query for. If anything in
-   * the query at `src/pages/contributing/events.js` changes, we need to make
-   * sure these types are updated as well.
-   *
-   * But why?! Why would I do something this fragile?
-   *
-   * Gather round, children, and I’ll tell you the tale of @jlengstorf being too
-   * lazy to make upstream fixes...
-   */
-  const typeDefs = `
-    type Airtable implements Node {
-      id: ID!
-      data: AirtableData
-    }
-
-    type SitesYaml implements Node {
-      title: String!
-      main_url: String!
-      url: String!
-      source_url: String
-      featured: Boolean
-      categories: [String]!
-      built_by: String
-      built_by_url: String
-      description: String
-      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
-    }
-
-    type StartersYaml implements Node {
-      url: String!
-      repo: String!
-      description: String
-      tags: [String!]
-      features: [String!]
-      screenshotFile: Screenshot # added by gatsby-transformer-screenshot
-    }
-
-    type AirtableData @dontInfer {
-      name: String @proxy(from: "Name_of_Event")
-      organizerFirstName: String @proxy(from: "Organizer_Name")
-      organizerLastName: String @proxy(from: "Organizer's_Last_Name")
-      date: Date @dateformat @proxy(from: "Date_of_Event")
-      location: String @proxy(from: "Location_of_Event")
-      url: String @proxy(from: "Event_URL_(if_applicable)")
-      type: String @proxy(from: "What_type_of_event_is_this?")
-      hasGatsbyTeamSpeaker: Boolean @proxy(from: "Gatsby_Speaker_Approved")
-      approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
-    }
-  `
-
-  createTypes(typeDefs)
-
-  // get data from GitHub API at build time
-  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
-  const resultData = await result.json()
-  // create node for build time data example in the docs
-  createNode({
-    nameWithOwner: resultData.full_name,
-    url: resultData.html_url,
-    // required fields
-    id: `example-build-time-data`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `Example`,
-      contentDigest: createContentDigest(resultData),
-    },
-  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, plugins }) => {
@@ -145,6 +42,36 @@ exports.onCreateWebpackConfig = ({ actions, plugins }) => {
       }),
     ],
   })
+}
+
+exports.createSchemaCustomization = async helpers => {
+  await runApiForSections(`createSchemaCustomization`, helpers)
+
+  const {
+    actions: { createTypes },
+  } = helpers
+
+  // Explicitly define Airtable types so that queries still work
+  // when there are no events.
+  // TODO make upstream change to gatsby-source-airtable
+  createTypes(/* GraphQL */ `
+    type Airtable implements Node {
+      id: ID!
+      data: AirtableData
+    }
+
+    type AirtableData @dontInfer {
+      name: String @proxy(from: "Name_of_Event")
+      organizerFirstName: String @proxy(from: "Organizer_Name")
+      organizerLastName: String @proxy(from: "Organizer's_Last_Name")
+      date: Date @dateformat @proxy(from: "Date_of_Event")
+      location: String @proxy(from: "Location_of_Event")
+      url: String @proxy(from: "Event_URL_(if_applicable)")
+      type: String @proxy(from: "What_type_of_event_is_this?")
+      hasGatsbyTeamSpeaker: Boolean @proxy(from: "Gatsby_Speaker_Approved")
+      approved: Boolean @proxy(from: "Approved_for_posting_on_event_page")
+    }
+  `)
 }
 
 // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
@@ -173,4 +100,57 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
   })
+}
+
+exports.sourceNodes = async ({
+  actions: { createNode },
+  createContentDigest,
+}) => {
+  // get data from GitHub API at build time
+  const result = await fetch(`https://api.github.com/repos/gatsbyjs/gatsby`)
+  const resultData = await result.json()
+  // create node for build time data example in the docs
+  createNode({
+    nameWithOwner: resultData.full_name,
+    url: resultData.html_url,
+    // required fields
+    id: `example-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Example`,
+      contentDigest: createContentDigest(resultData),
+    },
+  })
+}
+
+exports.onCreateNode = async helpers => {
+  await runApiForSections(`onCreateNode`, helpers)
+}
+
+exports.createPages = async helpers => {
+  await runApiForSections(`createPages`, helpers)
+
+  const { actions } = helpers
+  const { createRedirect } = actions
+
+  redirects.forEach(redirect => {
+    createRedirect({ isPermanent: true, ...redirect, force: true })
+  })
+
+  Object.entries(startersRedirects).forEach(([fromSlug, toSlug]) => {
+    createRedirect({
+      fromPath: `/starters${fromSlug}`,
+      toPath: `/starters${toSlug}`,
+      isPermanent: true,
+      force: true,
+    })
+  })
+}
+
+exports.onPostBuild = () => {
+  fs.copySync(
+    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
+    `./public/gatsbygram.mp4`
+  )
 }

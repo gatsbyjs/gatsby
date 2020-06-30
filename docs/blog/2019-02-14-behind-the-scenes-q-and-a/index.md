@@ -26,7 +26,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 
 ### Functional Questions (How do I do X with Gatsby?)
 
-**Question:** Can I serialize an api to be stored and accessed client-side only?
+**Question:** Can I serialize an API to be stored and accessed client-side only?
 **Answer:** Yup (with a source plugin!). If it's a GraphQL API you can even use [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) to invoke that API at _build time_
 
 **Question:** How would you recommend handling Gatsby pointing to environment specific endpoints? For example, we're required to deploy the same artifact to dev - uat - prod, so for pointing our app at the appropriate endpoint, we're looking at location.href and using if/else to determine the endpoint. Is there a better way?
@@ -35,7 +35,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it possible to have the gatsby-\*.js files be rewritten in TypeScript?
 **Answer:** gatsby-browser.js and gatsby-ssr.js work just fine if you add gatsby-plugin-typescript. We don't have an out-of-the-box solution for gatsby-node.js but you could require the TypeScript interpreter and then require another TypeScript file and re-export its code from gatsby-node.js.
 
-**Question:** Gatsby transformers support Markdown and asciidoc. Possible support for Sphinx reStructuredText?
+**Question:** Gatsby transformers support Markdown and AsciiDoc. Possible support for Sphinx reStructuredText?
 **Answer:** Certainly! Gatsby is super pluggable, so whatever content you want to bring to Gatsby, just write a plugin! Check out [Creating a Source Plugin](/docs/creating-a-source-plugin/).
 
 **Question:** How did you implement the GitHub PR test for lighthouse scoring?
@@ -44,7 +44,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Is it possible to dictate code splitting manually, e.g. component level code splitting?
 **Answer:** Yup! React. Lazy is great + standard async imports.
 
-**Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our ssr generated html to match the final rendered DOM.
+**Question:** How can I expose global variables during the build process? We are looking to use JSDom during the build process. We currently have the async loading of the Interweave module, but we want our SSR generated HTML to match the final rendered DOM.
 **Answer:** Check out [Environment Variables](/docs/environment-variables/).
 
 **Question:** Is there a way to enable SSR on run time to things like a post preview?
@@ -59,7 +59,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Can I use Gatsby Image with images from external sources like Cloudinary or an AWS bucket? And if it's indeed possible, will this impact my build time if I have thousands of images?
 **Answer:** Yes, build-times do go up with image processing as it's very CPU intensive.
 
-**Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin javascript should not include in Frontend and vice versa?
+**Question:** I have an app which has Frontend and Admin Panel so how do I do code splitting based on Module so the admin JavaScript should not include in Frontend and vice versa?
 **Answer:** Gatsby splits code automatically by route so code only used on the admin panel will only be loaded there. Check out [Building Apps with Gatsby](/docs/adding-app-and-website-functionality/) for details about how to build the admin section.
 
 ### GraphQL / Data Layer
@@ -160,7 +160,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** Would it makes sense to still use Gatsby for a more "dynamic" type of app?
 **Answer:** Yes! You can learn more about what types of dynamic apps you can build with Gatsby here: [Dynamic Apps Webinar](https://www.gatsbyjs.com/build-web-apps-webinar).
 
-**Question:** What is the recommended approach for sites that have integrations like an oauth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?
+**Question:** What is the recommended approach for sites that have integrations like an OAuth authentication or web mapping that need code to be run only in the browser (not SSR)? I have read about checking for module or browser and using babel dynamic import. Is there a way to have a separate bundle lazy loaded only when loaded in the browser?
 **Answer:** Check out [Building a site with authentication](/docs/building-a-site-with-authentication/).
 
 **Question:** Dustin mentioned a recording on building dynamic apps with Gatsby. Is that available?
@@ -268,7 +268,7 @@ To watch the full recorded webinar, [register here](https://www.gatsbyjs.com/beh
 **Question:** No concern of the additional request for the SVG??
 **Answer:** SVGs previews are inlined.
 
-**Question:** No concerns of excessive prefetching in the bg?
+**Question:** No concerns of excessive prefetching in the background?
 **Answer:** This is turned off on low-power devices.
 
 **Question:** Re content updates: But is a new build triggered on _every_ content change?

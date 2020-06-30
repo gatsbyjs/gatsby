@@ -227,6 +227,12 @@ jobs:
       image: "12"
     <<: *test_template
 
+  unit_tests_node14:
+    executor:
+      name: node
+      image: "14"
+    <<: *test_template
+
   unit_tests_www:
     executor: node
     steps:
@@ -309,7 +315,7 @@ jobs:
           command: yarn build
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run:
-          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep ''ERROR #''"'
+          command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: ~/project/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
@@ -463,6 +469,17 @@ workflows:
                 - master
     jobs:
       - sync_translation_repo
+
+  weekly-node-14:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - unit_tests_node14
 
   nightly-react-next:
     triggers:

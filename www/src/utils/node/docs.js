@@ -1,10 +1,9 @@
 const _ = require(`lodash`)
-const path = require(`path`)
-const { slash } = require(`gatsby-core-utils`)
 const minimatch = require(`minimatch`)
 
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
+const { getTemplate } = require(`../get-template`)
 const findApiCalls = require(`../find-api-calls`)
 
 const ignorePatterns = [
@@ -36,69 +35,63 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
 
-  const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
-  const apiTemplate = path.resolve(`src/templates/template-api-markdown.js`)
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      description: String
+      contentsHeading: String
+      showTopLevelSignatures: Boolean
+      disableTableOfContents: Boolean
+      tableOfContentsDepth: Int
+      overview: Boolean
+      issue: String
+      jsdoc: [String!]
+      apiCalls: String
+    }
 
-  const { data, errors } = await graphql(`
-    query {
-      allMdx(
-        limit: 10000
-        filter: {
-          fileAbsolutePath: { ne: null }
-          fields: { locale: { eq: "en" }, section: { ne: "blog" } }
-        }
-      ) {
-        nodes {
-          fields {
-            slug
-            locale
-          }
-          frontmatter {
-            title
-            jsdoc
-            apiCalls
-          }
-        }
-      }
+    type MdxFields @dontInfer {
+      slug: String
+      anchor: String
+      section: String
+      locale: String
+    }
+
+    type File implements Node {
+      fields: FileFields
+    }
+
+    # Added by gatsby-transformer-gitinfo
+    # TODO add these back upstream
+    type FileFields {
+      gitLogLatestDate: Date @dateformat
+      gitLogLatestAuthorName: String
+      gitLogLatestAuthorEmail: String
+    }
+
+    type GatsbyAPICall implements Node @derivedTypes @dontInfer {
+      name: String
+      file: String
+      group: String
+      codeLocation: GatsbyAPICallCodeLocation
+    }
+
+    type GatsbyAPICallCodeLocation @dontInfer {
+      filename: Boolean
+      end: GatsbyAPICallEndpoint
+      start: GatsbyAPICallEndpoint
+    }
+
+    type GatsbyAPICallEndpoint @dontInfer {
+      column: Int
+      line: Int
     }
   `)
-  if (errors) throw errors
-
-  // Create docs pages.
-  data.allMdx.nodes.forEach(node => {
-    const slug = _.get(node, `fields.slug`)
-    const locale = _.get(node, `fields.locale`)
-    if (!slug) return
-
-    const prevAndNext = getPrevAndNext(node.fields.slug)
-    if (node.frontmatter.jsdoc) {
-      // API template
-      createPage({
-        path: `${node.fields.slug}`,
-        component: slash(apiTemplate),
-        context: {
-          slug: node.fields.slug,
-          jsdoc: node.frontmatter.jsdoc,
-          apiCalls: node.frontmatter.apiCalls,
-          ...prevAndNext,
-        },
-      })
-    } else {
-      // Docs template
-      createPage({
-        path: `${node.fields.slug}`,
-        component: slash(docsTemplate),
-        context: {
-          slug: node.fields.slug,
-          locale,
-          ...prevAndNext,
-        },
-      })
-    }
-  })
 }
 
 exports.onCreateNode = async ({
@@ -150,4 +143,69 @@ exports.onCreateNode = async ({
   if (locale) {
     createNodeField({ node, name: `locale`, value: locale })
   }
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  const docsTemplate = getTemplate(`template-docs-markdown`)
+  const apiTemplate = getTemplate(`template-api-markdown`)
+
+  const { data, errors } = await graphql(/* GraphQL */ `
+    query {
+      allMdx(
+        limit: 10000
+        filter: {
+          fileAbsolutePath: { ne: null }
+          fields: { locale: { eq: "en" }, section: { ne: "blog" } }
+        }
+      ) {
+        nodes {
+          fields {
+            slug
+            locale
+          }
+          frontmatter {
+            title
+            jsdoc
+            apiCalls
+          }
+        }
+      }
+    }
+  `)
+  if (errors) throw errors
+
+  // Create docs pages.
+  data.allMdx.nodes.forEach(node => {
+    const slug = _.get(node, `fields.slug`)
+    const locale = _.get(node, `fields.locale`)
+    if (!slug) return
+
+    const prevAndNext = getPrevAndNext(node.fields.slug)
+    if (node.frontmatter.jsdoc) {
+      // API template
+      createPage({
+        path: `${node.fields.slug}`,
+        component: apiTemplate,
+        context: {
+          slug: node.fields.slug,
+          jsdoc: node.frontmatter.jsdoc,
+          apiCalls: node.frontmatter.apiCalls,
+          ...prevAndNext,
+        },
+      })
+    } else {
+      // Docs template
+      createPage({
+        path: `${node.fields.slug}`,
+        component: docsTemplate,
+        context: {
+          slug: node.fields.slug,
+          locale,
+          ...prevAndNext,
+        },
+      })
+    }
+  })
 }
