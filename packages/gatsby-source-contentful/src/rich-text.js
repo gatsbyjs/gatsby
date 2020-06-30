@@ -1,4 +1,3 @@
-// import { fixId } from "./normalize"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import resolveResponse from "contentful-resolve-response"
 
