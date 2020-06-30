@@ -4565,7 +4565,7 @@
   features:
     - React Helmet <head> Management
     - SVG Icon
-- url: https://gatsby-lam.vaporwavy.io
+- url: https://lam.aesthetic.codes/
   repo: https://github.com/vaporwavy/gatsby-london-after-midnight
   description: A custom, image-centric theme for Gatsby. Advanced from the Gatsby starter London.
   tags:
@@ -6519,6 +6519,25 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://gatsby-starter-tailwind-opinionated.netlify.app/
+  repo: https://github.com/mjsarfatti/gatsby-starter-tailwind-opinionated
+  description: Based on the official Gatsby starter, with an opinionated Tailwind setup. Uses Purgecss to remove unused CSS.
+  tags:
+    - Styling:Tailwind
+  features:
+    - Based on gatsby-starter-default
+    - Tailwind CSS Framework
+    - Removes unused CSS with Purgecss
+    - Works great with VS Code
+    - Create React App ESLint default
+    - Run Prettier through ESLint
+    - Sensible Tailwind CSS configuration, great for most sites
+    - Absolute imports (no more ../../../../some/components.js)
+    - Typescript-ready
+    - Box shadows by box-shadows.co
+    - Spring transition easing
+    - Tailwind forms plugin
+
 - url: https://gatsby-starter-jest-enzyme-eslint.netlify.app
   repo: https://github.com/markbello/gatsby-starter-jest-enzyme-eslint
   description: gatsby-starter-default with Jest, Enzyme, and ESLint
@@ -6676,6 +6695,22 @@
     - SEO optimized to include social media images and Twitter handles.
     - React Scroll for one page, anchor based navigation is available.
     - Code highlighting via Prism.
+- url: https://headless.us
+  repo: https://github.com/ecomloop/headless-starter
+  description: the shopify + gatsby starter theme for digital commerce
+  tags:
+    - E-commerce
+    - Shopify
+    - CMS:Netlify
+    - Blog
+  features:
+    - Integrated with Shopify for pulling products
+    - Checkout handled via Shopify
+    - Includes variants for products
+    - XML sitemap
+    - Blog with Netlify CMS
+    - RSS feed
+    - Designed to bring headless commerce to Shopify merchants and shops
 - url: http://gatsby-tailwind-starter.kosvrouvas.com/
   repo: https://github.com/kosvrouvas/gatsby-tailwindcss-starter
   description: The default Gatsby starter bundled with the latest TailwindCSS for DRY situations
@@ -6702,6 +6737,14 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-capacitor.netlify.app/
+  repo: https://github.com/flogy/gatsby-starter-capacitor
+  description: Build blazing fast mobile apps with Gatsby and Capacitor.
+  tags:
+    - Styling:None
+  features:
+    - Basic setup for hybrid mobile apps for Android and iOS
+    - Demonstration on how to access Native APIs of mobile devices
 - url: https://gatsby-starter-woo.surge.sh/
   repo: https://github.com/desmukh/gatsby-starter-woo
   description: Simple, clean and responsive landing page for your product or service. This is a GatsbyJS port of StyleShout's Woo template.
@@ -6714,3 +6757,59 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://vapor.aesthetic.codes/
+  repo: https://github.com/vaporwavy/gatsby-vapor
+  description: A custom, simple theme for Gatsby. Made for minimalist. Completely free and fully responsive.
+  tags:
+    - Blog
+    - SEO
+    - Markdown
+    - HTML5UP
+    - Pagination
+    - CMS:Netlify
+  features:
+    - Support tags
+    - Post Search
+    - Toggle Dark themes
+- url: https://www.stefanseegerer.de/gatsby-starter-paper-css-landing-page/
+  repo: https://github.com/manzanillo/gatsby-starter-paper-css-landing-page
+  description: Single page starter with PaperCSS for workshop, educational material, or other minimal landing pages
+  tags:
+    - Onepage
+    - Landing Page
+  features:
+    - Landing Page
+    - Google Analytics
+    - PaperCSS style
+- url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
+  repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
+  description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
+  tags:
+    - Styling:CSS-in-JS
+    - Styling:Material
+  features:
+    - Gatsby v2
+    - Material-UI
+    - MuiTreasury Layout
+    - Dynamic configurable
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
+- url: https://7sferry-gatsby-contentful-starters.netlify.app/
+  repo: https://github.com/7sferry/Gatsbyan1.0
+  description: Blog template for Contentful CMS with some features like comment, tags, archives, pagination, prism, tags, share and many others.
+  tags:
+    - Blog
+    - SEO
+    - CMS:Contentful
+    - Pagination
+  features:
+    - Blog template
+    - Contentful CMS
+    - Facebook Comment
+    - Tags
+    - Archives by date
+    - Pagination
+    - Share Button
+    - Prism for code preview

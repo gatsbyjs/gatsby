@@ -7,7 +7,7 @@ tags:
   - large-sites
 ---
 
-Gatsby has always been, and will always be, focused on performance. All of the best practices and patterns relating to performance are internalized and we enable these performance optimizations _by default_ for every Gatsby application. However, there is always more we can do and we are always striving to make incremental improvements that impact _every_ Gatsby user. From this basis, we're happy to announce a new performance improvement: splitting the page manifest into individual files for each page. Prior to this change, for large Gatsby applications (e.g. more than 5,000 pages), the page manifest could grow to 200Kb or more, and loading this manifest could take several seconds on 3g connections, which is certainly non-ideal!
+Gatsby has always been, and will always be, focused on performance. All of the best practices and patterns relating to performance are internalized and we enable these performance optimizations _by default_ for every Gatsby application. However, there is always more we can do and we are always striving to make incremental improvements that impact _every_ Gatsby user. From this basis, we're happy to announce a new performance improvement: splitting the page manifest into individual files for each page. Prior to this change, for large Gatsby applications (e.g. more than 5,000 pages), the page manifest could grow to 200Kb or more, and loading this manifest could take several seconds on 3G connections, which is certainly non-ideal!
 
 Over the past few months, I've been gradually changing Gatsby's architecture so that the size of the site has absolutely no impact on real-world performance. This change [has been merged](https://github.com/gatsbyjs/gatsby/pull/14359#event-2402986461) and is available, for free, in [Gatsby v2.9.0](https://www.npmjs.com/package/gatsby/v/2.9.0). From this point forward, your application manifest will no longer grow proportionally to the number of pages in your Gatsby application.
 
@@ -62,7 +62,7 @@ Prefetching FTW! Gatsby already prefetches any links on the page so that when th
 
 ### Gatsby sites are now more "live"
 
-Previously in Gatsby, all resources are content-hashed (except the html files). This includes the pages-manifest. So once a Gatsby site is loaded in the browser, the user will only ever see the resources generated during that build. If they stay on the site for days, they'll never see new content until they refresh.
+Previously in Gatsby, all resources are content-hashed (except the HTML files). This includes the pages-manifest. So once a Gatsby site is loaded in the browser, the user will only ever see the resources generated during that build. If they stay on the site for days, they'll never see new content until they refresh.
 
 The new `page-data.json` resources are **not** content-hashed. This means that if a user is on the site and a rebuild occurs resulting in changed `page-data.json`, the user will then see that new information when they navigate to that page.
 

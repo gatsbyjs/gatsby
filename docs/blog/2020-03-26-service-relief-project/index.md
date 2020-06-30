@@ -12,7 +12,7 @@ tags:
 
 There is no doubt in my mind that we are living in unprecedented times. People, businesses, countries and world economies are all reeling from the fallout of the coronavirus pandemic sweeping the globe.
 
-We woke up and the world was utterly changed. It's easy to be overwhelmed. I sat in my chair for an hour consuming story after story about how people were having their lives uprooted by something they could not control and I wanted desparately to help. But how?
+We woke up and the world was utterly changed. It's easy to be overwhelmed. I sat in my chair for an hour consuming story after story about how people were having their lives uprooted by something they could not control and I wanted desperately to help. But how?
 
 State-mandated social distancing shutdowns are being rolled out across the country, closing down bars, entertainment venues, and restaurants - taking the livelihoods of countless service workers with them. "Shelter in place" orders also prevent independent workers like pet sitters and house cleaners from being able to do their jobs. And as independent small businesses classified as "nonessential," like bookstores and art galleries, are forced to close they also find themselves in the same increasingly dire situation.
 
@@ -63,7 +63,7 @@ Here are a few of the sites that have already launched using this project:
 
 On Monday, March 16th, Gatsby made the decision to close down for two days. Even though we're a completely remote company, we chose to do this to give our team members the time they needed to care for their families and adjust to the new world we found ourselves in.
 
-These are unprecedented times, and from my small home office in Omaha, Nebraska we didn't feel the ripples of what was to come. That eventing my phone vibrated, alerting me to a message from a close friend from Seattle, Washington. Things there were worse than I had imagined.
+These are unprecedented times, and from my small home office in Omaha, Nebraska we didn't feel the ripples of what was to come. That evening my phone vibrated, alerting me to a message from a close friend from Seattle, Washington. Things there were worse than I had imagined.
 
 ![Text message conversation with Drew where we discussed a new site for seattleservicerelief.com](./images/conversation-drew.png)
 
@@ -81,7 +81,7 @@ I am grateful to be surrounded by coworkers that are deeply passionate about hel
 
 ![Slack messages from that thread](./images/conversation-slack-random.png)
 
-The response I recieved was incredible. Folks from every team at Gatsby chimed in with their support and stepping up to contribute. Within ten minutes team members purchased a half-dozen domain names for their own local areas and a dedicated Slack channel was created to house our internal discussion.
+The response I received was incredible. Folks from every team at Gatsby chimed in with their support and stepping up to contribute. Within ten minutes team members purchased a half-dozen domain names for their own local areas and a dedicated Slack channel was created to house our internal discussion.
 
 > "BTW - It's this stuff that makes me proud to work here!" - Jim Ettig, VP Sales
 
