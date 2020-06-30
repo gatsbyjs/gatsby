@@ -4,7 +4,7 @@ title: Client-only Routes
 
 Most Gatsby pages exist as static HTML that is generated during build time. Components on the page are [hydrated](/docs/react-hydration/) at runtime to add interactivity. This makes pages load fast and makes them visible to search engines. There are, however, situations when server-side, static HTML is not needed or possible:
 
-- You may have pages that require the user to log in and do not want them visible to search engines. An example might be a list of the user's latest purchases.
+- You may have pages that require the user to log in. These pages should not be visible to search engines. An example might be a list of the user's latest purchases.
 - The set of available pages might not be known at build time. For example, your site might be loading a list of newly signed up users on the client side. Offering a profile page for each user on the server side is not possible because the set of users is not known when building.
 
 These use cases are handled by _client-only routes_. Client-only routes do not each have a generated HTML file. They exist only on client side, in the same way that single-page applications (SPAs) work.
@@ -93,9 +93,9 @@ exports.onCreatePage = async ({ page, actions }) => {
 
 This configures the `/app` page, setting `matchPath` to the pattern `/app/*`. Thereby, `/app/profile`, `/app/details` etc will all render using the `/app` page.
 
-> 💡 Note: You can alternatively use the plugin [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/) to simplify this configuration.
+When you use `matchPath` the user will reach the 404 page before the client-side router kicks in. This solution therefore requires you to have a working 404 page.
 
-Note that when you use `matchPath` the user will reach the 404 page before the client-side router kicks in. This solution therefore requires you to have a working 404 page.
+> 💡 Note: You can alternatively use the plugin [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/) to simplify this configuration.
 
 ### Performing address rewrites on the server
 
