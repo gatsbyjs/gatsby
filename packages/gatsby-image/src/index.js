@@ -368,9 +368,7 @@ class Image extends React.Component {
     this.handleRef = this.handleRef.bind(this)
   }
 
-  validateProps(props) {
-    const { fluid, fixed } = props
-
+  validateProps({ fluid, fixed }) {
     if (!fluid && !fixed) {
       console.warn(
         `gatsby-image expects a 'fixed' or a 'fluid' prop; neither was present.`
