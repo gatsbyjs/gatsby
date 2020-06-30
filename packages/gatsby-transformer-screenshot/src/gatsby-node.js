@@ -76,7 +76,7 @@ exports.onPreBootstrap = (
   })
 }
 
-exports.schemaCustomization = (
+exports.createSchemaCustomization = (
   { actions: { createTypes }, schema },
   pluginOptions
 ) => {
