@@ -69,6 +69,7 @@ class BlogPostTemplate extends React.Component {
                       image={
                         post.frontmatter.author.avatar.childImageSharp.fixed
                       }
+                      alt={post.frontmatter.author.id}
                       overrideCSS={{ mr: 5 }}
                     />
                   </Link>

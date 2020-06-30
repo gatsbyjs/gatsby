@@ -79,8 +79,7 @@ class BlogPostsIndex extends React.Component {
                   },
                 },
                 [mediaQueries.md]: {
-                  marginLeft: t => `-${t.space[9]}`,
-                  marginRight: t => `-${t.space[9]}`,
+                  mx: -9,
                 },
               }}
             />
