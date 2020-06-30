@@ -89,6 +89,8 @@ const staticallyAnalyzeExports = (
     },
 
     // export default () => {}
+    // export default function() {}
+    // export default function foo() {}
     // const foo = () => {}; export default foo
     ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
       const declaration = astPath.node.declaration
