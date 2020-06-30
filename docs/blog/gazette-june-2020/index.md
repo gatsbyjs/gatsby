@@ -1,10 +1,11 @@
+---
 title: Gatsby Gazette for June 2020: "The Black Lives Matter Edition"
 date: 2020-06-30
 author: Hashim Warren
 excerpt: "Learn about June's product, community, and ecosystem updates. This includes improvements to Incremental Builds and TypeScript support"
 seoTitle: Gatsby Product Updates for June 2020
 tags: ["gatsby-gazette"]
-
+---
 
 In June Gatsby decided to be intentional and quieter in our social media channels to make room for conversations around systemic racism. 
 
@@ -23,6 +24,7 @@ And speaking of comparing build times…
 ### New Build Benchmarks in “Will It Build”
 
 Thank you to the team at Sanity for adding their CMS to Will It Build, Gatsby benchmarking site. Sanity has one of the fastest _uncached code change_ build times of any CMS we track. But get this - in June their team also released an update to their source plugin that cut _data / content_ build times [in half](https://willit.build/details/type/blog/source/sanity/page-count/8192)!
+![Sanity screenshot](./will-it-build-sanity-screenshot.png)
 
 ### Configure Your Gatsby Site Without Code
 Gatsby Admin launched an alpha! This early release includes plugin and theme management, as well as a theme file shadowing interface. [Register here](https://www.gatsbyjs.com/admin-alpha/) to try out Gatsby Admin for your own project.
