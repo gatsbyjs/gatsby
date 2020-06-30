@@ -1,6 +1,5 @@
 const Promise = require(`bluebird`)
 const fetch = require(`node-fetch`)
-const fs = require(`fs-extra`)
 const startersRedirects = require(`./starter-redirects.json`)
 
 const { loadYaml } = require(`./src/utils/load-yaml`)
@@ -146,11 +145,4 @@ exports.createPages = async helpers => {
       force: true,
     })
   })
-}
-
-exports.onPostBuild = () => {
-  fs.copySync(
-    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-    `./public/gatsbygram.mp4`
-  )
 }
