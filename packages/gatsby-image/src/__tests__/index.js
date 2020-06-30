@@ -220,10 +220,12 @@ describe(`<Image />`, () => {
     expect(console.warn).toBeCalled()
   })
 
-  it(`should not not render anything if called without parameters`, () => {
-    const { container } = render(<Image />)
+  it(`should warn if missing both fixed and fluid props`, () => {
+    jest.spyOn(global.console, `warn`)
 
-    expect(container).toMatchSnapshot()
+    render(<Image fixed={null} />)
+
+    expect(console.warn).toBeCalled()
   })
 
   it(`should select the correct mocked image of fluid variants provided.`, () => {

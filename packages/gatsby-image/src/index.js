@@ -71,12 +71,12 @@ const matchesMedia = ({ media }) =>
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
  * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string}
+ * @return {string} or null if not cacheable
  */
-const getImageSrcKey = ({ fluid, fixed }) => {
-  const currentData = fluid || fixed
+const getImageCacheKey = ({ fluid, fixed }) => {
+  const srcData = getCurrentSrcData(fluid || fixed || [])
 
-  return currentData && getCurrentSrcData(currentData).src
+  return srcData && srcData.src
 }
 
 /**
@@ -109,16 +109,20 @@ const getCurrentSrcData = currentData => {
 const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  return imageCache[src] || false
+
+  const cacheKey = getImageCacheKey(convertedProps)
+
+  return imageCache[cacheKey] || false
 }
 
 const activateCacheForImage = props => {
   const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  imageCache[src] = true
+
+  const cacheKey = getImageCacheKey(convertedProps)
+
+  if (cacheKey) {
+    imageCache[cacheKey] = true
+  }
 }
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -330,6 +334,10 @@ class Image extends React.Component {
   constructor(props) {
     super(props)
 
+    if (process.env.NODE_ENV === `production`) {
+      this.validateProps(props)
+    }
+
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
     this.seenBefore = isBrowser && inImageCache(props)
@@ -358,6 +366,16 @@ class Image extends React.Component {
     this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
+  }
+
+  validateProps(props) {
+    const { fluid, fixed } = props
+
+    if (!fluid && !fixed) {
+      console.warn(
+        `gatsby-image expects a 'fixed' or a 'fluid' prop; neither was present.`
+      )
+    }
   }
 
   componentDidMount() {
