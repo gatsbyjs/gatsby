@@ -48,7 +48,7 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
-exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type File implements Node {
       childrenDocumentationJs: DocumentationJs
