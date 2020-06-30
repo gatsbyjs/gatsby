@@ -1,23 +1,22 @@
 import Queue from "better-queue"
 import { store } from "../redux"
-import { MemoryStoreWithPriorityBuckets } from "../query/better-queue-custom-store"
+import { memoryStoreWithPriorityBuckets } from "../query/better-queue-custom-store"
 import { queryRunner } from "../query/query-runner"
 import { websocketManager } from "../utils/websocket-manager"
 import { GraphQLRunner } from "./graphql-runner"
 import BetterQueue from "better-queue"
-import { IExecutionResult } from "./types"
 import { ProgressActivityTracker } from "../.."
 
 export type Task = any
 type TaskResult = any
 
-const createBaseOptions = (): Partial<
-  BetterQueue.QueueOptions<Task, TaskResult>
+const createBaseOptions = (): Pick<
+  BetterQueue.QueueOptions<Task, TaskResult>,
+  "concurrent" | "store"
 > => {
   return {
     concurrent: Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4,
-    // eslint-disable-next-line new-cap
-    store: MemoryStoreWithPriorityBuckets<Task>(),
+    store: memoryStoreWithPriorityBuckets<Task>(),
   }
 }
 
@@ -28,16 +27,20 @@ const createBuildQueue = (
   if (!graphqlRunner) {
     graphqlRunner = new GraphQLRunner(store, runnerOptions)
   }
-  const handler = ({ job, activity }, callback): Promise<IExecutionResult> =>
-    queryRunner(graphqlRunner, job, activity?.span)
-      .then(result => callback(null, result))
-      .catch(callback)
-  const queue = new Queue(handler, createBaseOptions())
-  return queue
+
+  const queueOptions: BetterQueue.QueueOptions<Task, TaskResult> = {
+    ...createBaseOptions(),
+    process: ({ job, activity }, callback): void => {
+      queryRunner(graphqlRunner, job, activity?.span)
+        .then(result => callback(null, result))
+        .catch(callback)
+    },
+  }
+  return new Queue(queueOptions)
 }
 
 const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
-  const queueOptions = {
+  const queueOptions: BetterQueue.QueueOptions<Task, TaskResult> = {
     ...createBaseOptions(),
     priority: ({ job }, cb): void => {
       if (job.id && websocketManager.activePaths.has(job.id)) {
@@ -53,25 +56,24 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
     ): void => {
       cb(null, newTask)
     },
+    process: ({ job: queryJob, activity }, callback): void => {
+      queryRunner(getRunner(), queryJob, activity?.span).then(
+        result => {
+          if (!queryJob.isPage) {
+            websocketManager.emitStaticQueryData({
+              result,
+              id: queryJob.id,
+            })
+          }
+
+          callback(null, result)
+        },
+        error => callback(error)
+      )
+    },
   }
 
-  const handler = ({ job: queryJob, activity }, callback): void => {
-    queryRunner(getRunner(), queryJob, activity?.span).then(
-      result => {
-        if (!queryJob.isPage) {
-          websocketManager.emitStaticQueryData({
-            result,
-            id: queryJob.id,
-          })
-        }
-
-        callback(null, result)
-      },
-      error => callback(error)
-    )
-  }
-
-  return new Queue(handler, queueOptions)
+  return new Queue(queueOptions)
 }
 
 /**
@@ -111,7 +113,7 @@ const processBatch = async (
       queue.on(`task_finish`, taskFinishCallback)
     }
 
-    const taskFailedCallback = (...err: unknown[]): void => {
+    const taskFailedCallback = (...err: Array<unknown>): void => {
       gc()
       reject(err)
     }

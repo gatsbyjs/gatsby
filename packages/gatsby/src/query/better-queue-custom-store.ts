@@ -5,14 +5,14 @@ interface IGatsbyBetterStore<T> extends Store<T> {
   getRunningTasks(cb: (error: any, runningTasks: any) => void): void
 }
 
-export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
+export function memoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
   type RunningTasks = Record<string, T>
   let uuid = 0
 
   /**
    * Task ids grouped by priority
    */
-  const queueMap = new Map<number, string[]>()
+  const queueMap = new Map<number, Array<string>>()
 
   /**
    * Task id to task lookup
@@ -29,7 +29,7 @@ export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
    */
   const running: Record<string, RunningTasks> = {}
 
-  let priorityKeys: number[] = []
+  let priorityKeys: Array<number> = []
   const updatePriorityKeys = (): void => {
     priorityKeys = Array.from(queueMap.keys()).sort((a, b) => b - a)
   }
@@ -61,7 +61,7 @@ export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
         tasks.delete(taskId)
         const priority = taskIdToPriority.get(taskId)
         if (priority) {
-          const priorityTasks = queueMap.get(priority) || []
+          const priorityTasks = queueMap.get(priority) ?? []
           priorityTasks.splice(priorityTasks.indexOf(taskId), 1)
           taskIdToPriority.delete(taskId)
         }
@@ -76,7 +76,7 @@ export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
         const oldPriority = taskIdToPriority.get(taskId)
 
         if (oldPriority && oldPriority !== priority) {
-          const oldPriorityTasks = queueMap.get(oldPriority) || []
+          const oldPriorityTasks = queueMap.get(oldPriority) ?? []
           oldPriorityTasks.splice(oldPriorityTasks.indexOf(taskId), 1)
 
           if (
@@ -96,7 +96,7 @@ export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
       cb(null)
     },
     takeFirstN: function (n, cb): void {
-      const lockId = `` + uuid++
+      const lockId = String(uuid++)
       let remainingTasks = n
       let needToUpdatePriorityKeys = false
       let haveSomeTasks = false
@@ -144,14 +144,14 @@ export function MemoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
       // Mostly done so generic test suite used by other stores passes.
       // This is mostly C&P from takeFirstN, with array reversal and different
       // splice args
-      const lockId = `` + uuid++
+      const lockId = String(uuid++)
       let remainingTasks = n
       let needToUpdatePriorityKeys = false
       let haveSomeTasks = false
       const tasksToRun = {}
 
       for (const priority of priorityKeys.reverse()) {
-        const tasksWithSamePriority = queueMap.get(priority) || []
+        const tasksWithSamePriority = queueMap.get(priority) ?? []
         const deleteCount = Math.min(
           remainingTasks,
           tasksWithSamePriority.length

@@ -1,4 +1,4 @@
-import { MemoryStoreWithPriorityBuckets } from "../better-queue-custom-store"
+import { memoryStoreWithPriorityBuckets } from "../better-queue-custom-store"
 import pify from "pify"
 
 // those are tests copied from https://github.com/diamondio/better-queue-store-test/blob/master/tester.js
@@ -18,8 +18,7 @@ describe(`Custom better-queue memory store`, () => {
     `releaseLock`,
   ]
   beforeEach(() => {
-    // eslint-disable-next-line new-cap
-    store = MemoryStoreWithPriorityBuckets()
+    store = memoryStoreWithPriorityBuckets()
     functions.forEach(fnName => {
       if (store[fnName]) {
         store[fnName] = pify(store[fnName])
