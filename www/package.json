@@ -64,7 +64,7 @@
     "gatsby-source-git": "^1.1.0",
     "gatsby-source-npm-package-search": "^2.3.8",
     "gatsby-transformer-csv": "^2.3.6",
-    "gatsby-transformer-documentationjs": "^4.3.7",
+    "gatsby-transformer-documentationjs": "^4.3.8",
     "gatsby-transformer-gitinfo": "^1.1.0",
     "gatsby-transformer-remark": "^2.8.20",
     "gatsby-transformer-screenshot": "^2.3.12",
