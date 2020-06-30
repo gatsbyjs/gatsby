@@ -111,6 +111,10 @@
     "*.svg": [
       "svgo --pretty --indent=2 --config=svgo.yml --multipass",
       "git add"
+    ],
+    "yarn.lock": [
+      "yarn-deduplicate yarn.lock",
+      "git add"
     ]
   },
   "husky": {
@@ -133,12 +137,14 @@
     "jest:inspect-brk": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
-    "lint": "npm-run-all --continue-on-error -p lint:code lint:docs lint:other",
+    "lint": "npm-run-all --continue-on-error -p lint:code lint:docs lint:other lint:yarn",
     "lint:code": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
     "lint:docs": "remark --quiet --frail \"./docs/\"",
     "lint:scripts": "sh scripts/lint-shell-scripts.sh",
     "lint:other": "npm run prettier -- --check",
+    "lint:yarn": "yarn-deduplicate --fail --list yarn.lock",
     "markdown": "md-magic --path \"starters/**/*.md\"",
+    "postinstall": "is-ci || yarn-deduplicate --fail yarn.lock || yarn install",
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
     "plop": "plop",
     "prebootstrap": "yarn",
