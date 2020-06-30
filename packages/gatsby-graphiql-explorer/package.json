@@ -52,7 +52,7 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
-    "whatwg-fetch": "^3.0.0"
+    "whatwg-fetch": "^3.1.0"
   },
   "engines": {
     "node": ">=10.13.0"

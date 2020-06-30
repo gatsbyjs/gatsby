@@ -14,7 +14,7 @@ import Button from "./button"
 import Screenshot from "../views/shared/screenshot"
 import PageMetadata from "../components/site-metadata"
 
-import FeaturedIcon from "../assets/icons/featured-sites-icons"
+import { FeaturedSitesIcon } from "../assets/icons"
 import { MdArrowUpward, MdLink } from "react-icons/md"
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import { filterByCategories } from "../views/showcase/filtered-showcase"
@@ -66,7 +66,7 @@ const Featured = () => (
         width: t => t.space[5],
       }}
     >
-      <FeaturedIcon />
+      <FeaturedSitesIcon />
     </span>
     {` `}
     Featured
