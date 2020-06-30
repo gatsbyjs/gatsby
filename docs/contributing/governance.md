@@ -54,6 +54,6 @@ Here are some other ways to communicate with us:
 
 - [@askgatsbyjs Twitter](https://twitter.com/AskGatsbyJS) - specifically for your questions and feedback
 - [@gatsbyjs Twitter](https://twitter.com/gatsbyjs) - for Gatsby news, updates, and community engagement
-- [Gatsby on Github](https://github.com/gatsbyjs)
+- [Gatsby on GitHub](https://github.com/gatsbyjs)
 - [Gatsby Discord channel](https://gatsby.dev/discord)
 - [Contact Us on Gatsbyjs.com](https://www.gatsbyjs.com/contact-us/)
