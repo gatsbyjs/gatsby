@@ -146,7 +146,7 @@ const FeaturedItem = styled(EcosystemFeaturedItem)`
 const HomepageEcosystem = ({ featuredItems }) => (
   <HomepageSection
     sectionName="Ecosystem"
-    sectionIcon={EcosystemIcon}
+    sectionIcon={<EcosystemIcon />}
     title="Plugins & Starters"
     introduction="We have the tools to help you build for the web."
     links={[

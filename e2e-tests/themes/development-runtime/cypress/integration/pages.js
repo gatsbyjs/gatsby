@@ -23,9 +23,14 @@ describe(`Pages`, () => {
       cy.visit(`/page-from-local-overwrite`).waitForRouteChange()
       cy.getTestElement(`title`).contains(`Overwritten page from local theme`)
     })
+
   })
   it(`page queries can be shadowed`, () => {
     cy.visit(`/about`).waitForRouteChange()
     cy.getTestElement(`author`).contains(`Sidhartha Chatterjee`)
+  })
+  it(`can use different extensions to shadow`, () => {
+    cy.visit(`/bio`).waitForRouteChange()
+    cy.getTestElement(`bio`).contains(`A bio all about me.`)
   })
 })
