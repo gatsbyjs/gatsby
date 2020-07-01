@@ -1,14 +1,16 @@
-import { IBuildContext } from "./"
-
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunnerNode from "../utils/api-runner-node"
+import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
   store,
-}: Partial<IBuildContext>): Promise<void> {
+}: Partial<IDataLayerContext>): Promise<{
+  deletedPages: string[]
+  changedPages: string[]
+}> {
   assertStore(store)
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
@@ -59,8 +61,8 @@ export async function createPages({
   // )
   // tim.end()
 
-  // return {
-  //   changedPages,
-  //   deletedPages,
-  // }
+  return {
+    changedPages: [],
+    deletedPages: [],
+  }
 }
