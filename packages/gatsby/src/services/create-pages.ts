@@ -2,15 +2,14 @@ import { IBuildContext } from "./"
 
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunnerNode from "../utils/api-runner-node"
+import { assertStore } from "../utils/assert-store"
 
 export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
   store,
 }: Partial<IBuildContext>): Promise<void> {
-  if (!store) {
-    reporter.panic(`store not initialized`)
-  }
+  assertStore(store)
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })
