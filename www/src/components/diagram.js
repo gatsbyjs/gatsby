@@ -34,7 +34,7 @@ const SegmentTitle = ({ children }) => (
     sx={{
       bg: `accent`,
       borderRadius: 1,
-      bottom: t => `-${t.space[2]}`,
+      bottom: -2,
       color: `black`,
       display: `inline`,
       fontSize: 1,

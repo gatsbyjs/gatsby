@@ -1,6 +1,7 @@
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunnerNode from "../utils/api-runner-node"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
+import { assertStore } from "../utils/assert-store"
 
 export async function createPages({
   parentSpan,
@@ -10,9 +11,7 @@ export async function createPages({
   deletedPages: string[]
   changedPages: string[]
 }> {
-  if (!store) {
-    reporter.panic(`store not initialized`)
-  }
+  assertStore(store)
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })

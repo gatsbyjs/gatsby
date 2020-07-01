@@ -1,6 +1,7 @@
 import { processPageQueries } from "../query"
 import reporter from "gatsby-cli/lib/reporter"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
+import { assertStore } from "../utils/assert-store"
 
 export async function runPageQueries({
   parentSpan,
@@ -9,9 +10,8 @@ export async function runPageQueries({
   program,
   graphqlRunner,
 }: Partial<IQueryRunningContext>): Promise<void> {
-  if (!store) {
-    reporter.panic(`Cannot run service without a redux store`)
-  }
+  assertStore(store)
+
   if (!queryIds) {
     return
   }
