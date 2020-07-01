@@ -11,6 +11,7 @@ The main reasons Gatsby uses `@reach/router` are:
 1. Preloading. You can read more about preloading in the docs for the [Gatsby Link API](https://www.gatsbyjs.org/docs/gatsby-link/).
 2. The [routing accessibility](https://reach.tech/router/accessibility) it provides.
 3. It supports [server rendering](https://reach.tech/router/server-rendering) which helps Gatsby build routed files at build time.
+4. Scroll restoration.
 
 With Gatsby, you will mostly be using the `<Link />` component provided by the `gatsby` package. The [`<Link />` API docs](https://www.gatsbyjs.org/docs/gatsby-link/) explain the relationship between `gatsby` `<Link />` and `@reach/router` `<Link />` very nicely:
 
@@ -19,6 +20,46 @@ With Gatsby, you will mostly be using the `<Link />` component provided by the `
 ## Client and Server Routing 🤝
 
 Besides using the [`<Link />` API](https://www.gatsbyjs.org/docs/gatsby-link/) for linking between pages Gatsby generates, you can define your own client-side routes. See the [client only paths example](https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths) on how to use `<Router />` from `@reach/router` to make client routes work seamlessly together with your server routes.
+
+## Scroll Restoration
+
+Gatsby will handle scroll restoration for you in most cases. However, when you render containers that have their own scroll values, those scroll positions are typically lost between page transitions. To solve that, users can use the (deprecated) `ScrollContainer` component or `useScrollRestoration` hook in their code to tell Gatsby about scroll containers that we should track and restore.
+
+This is an example of using the ScrollContainer component to render a list of countries in an overflow `ul` element.
+
+```jsx
+import { ScrollContainer } from "gatsby-react-router-scroll";
+import countryList from "../utils/country-list";
+
+export default class PageComponent extends React.Component {
+    render() {
+        return (
+            <ScrollContainer key="page-component-ul-list">
+                <ul style={{ height: 200, overflow: `auto` }}>
+                    {countryList.map(country => <li>{country}</li>)
+                </ul>
+            </ScrollContainer>
+        );
+    }
+}
+```
+
+Here is an example of using the `useScrollRestoration` hook with the same code.
+
+```jsx
+import { useScrollRestoration } from "gatsby-react-router-scroll";
+import countryList from "../utils/country-list";
+
+export default function PageComponent() {
+    const ulScrollRestoration = useScrollRestoration(`page-component-ul-list`)
+
+    return (
+        <ul style={{ height: 200, overflow: `auto` }} {...ulScrollRestoration}>
+            {countryList.map(country => <li>{country}</li>)
+        </ul>
+    );
+}
+```
 
 ## Other resources
 
