@@ -3,11 +3,6 @@ import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
 
-const extractQueriesIfDirty = {
-  cond: (ctx: IQueryRunningContext): boolean => !!ctx.filesDirty,
-  target: `extractingQueries`,
-}
-
 export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   initial: `extractingQueries`,
   states: {
@@ -50,9 +45,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     runningStaticQueries: {
-      on: {
-        "": extractQueriesIfDirty,
-      },
+      // on: {
+      //   "": extractQueriesIfDirty,
+      // },
       invoke: {
         src: `runStaticQueries`,
         id: `running-static-queries`,
