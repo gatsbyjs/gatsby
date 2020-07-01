@@ -1,15 +1,14 @@
 import { calcInitialDirtyQueryIds, groupQueryIds } from "../query"
 import { IBuildContext, IGroupedQueryIds } from "./"
-import reporter from "gatsby-cli/lib/reporter"
+import { assertStore } from "../utils/assert-store"
 
 export async function calculateDirtyQueries({
   store,
 }: Partial<IBuildContext>): Promise<{
   queryIds: IGroupedQueryIds
 }> {
-  if (!store) {
-    reporter.panic(`Cannot run service without a redux store`)
-  }
+  assertStore(store)
+
   const state = store.getState()
   // TODO: Check filesDirty from context
 
