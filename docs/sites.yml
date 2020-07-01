@@ -11257,6 +11257,17 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Fidisys Playbook
+  main_url: https://playbook.fidisys.com/
+  url: https://playbook.fidisys.com/
+  description: >
+    Fidisys playbook is the process we follow in Fidisys to build awesome products. It shows engineering, hiring and operation process.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+  built_by: Fidisys Technologies
+  built_by_url: https://www.fidisys.com/
 - title: Gabriel Giordano Portfolio
   main_url: https://gabrielgiordano.com
   url: https://gabrielgiordano.com
