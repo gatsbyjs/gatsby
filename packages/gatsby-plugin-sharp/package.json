@@ -16,7 +16,6 @@
     "imagemin": "^6.1.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^6.0.1",
-    "imagemin-webp": "^5.1.0",
     "lodash": "^4.17.15",
     "mini-svg-data-uri": "^1.2.3",
     "potrace": "^2.1.6",
