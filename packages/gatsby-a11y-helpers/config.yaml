@@ -1,0 +1,5 @@
+packages:
+  "**":
+    access: $anonymous
+    publish: $anonymous
+    proxy: npmjs

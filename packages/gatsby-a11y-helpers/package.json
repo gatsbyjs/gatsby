@@ -1,0 +1,24 @@
+{
+  "name": "@localGatsby/gatsby-a11y-helpers",
+  "version": "1.0.4",
+  "description": "a collection of helpers to make Gatsby more accessible",
+  "main": "index.js",
+  "keywords": [
+    "gatsby"
+  ],
+  "devDependencies": {
+    "babel-preset-gatsby-package": "^0.4.6",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "cross-env": "^5.2.1"
+  },
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "author": "@madalynrose",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://localhost:4874"
+  }
+}

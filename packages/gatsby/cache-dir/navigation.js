@@ -109,7 +109,25 @@ const navigate = (to, options = {}) => {
         window.location = pathname
       }
     }
-    reachNavigate(to, options)
+    reachNavigate(to, options).then(() => {
+      if (document.activeElement.id !== `gatsby-focus-wrapper`) {
+        //focus is set in userland
+      } else {
+        //look for RouteFocus
+        const focusWrapper = document.querySelectorAll(
+          `#gatsby-csr-focus-wrapper`
+        )
+        console.log(focusWrapper, focusWrapper[0])
+        if (focusWrapper && focusWrapper.length) {
+          if (focusWrapper[0].children && focusWrapper[0].children.length) {
+            focusWrapper[0].children[0].focus()
+          } else {
+            focusWrapper[0].focus()
+          }
+        }
+      }
+      console.log(document.activeElement.id)
+    })
     clearTimeout(timeoutId)
   })
 }
@@ -166,14 +184,23 @@ class RouteAnnouncer extends React.Component {
   componentDidUpdate(prevProps, nextProps) {
     requestAnimationFrame(() => {
       let pageName = `new page at ${this.props.location.pathname}`
+      let announcementText
       if (document.title) {
         pageName = document.title
       }
       const pageHeadings = document.querySelectorAll(`#gatsby-focus-wrapper h1`)
       if (pageHeadings && pageHeadings.length) {
-        pageName = pageHeadings[0].textContent
+        pageName = pageHeadings[0].innerText
       }
-      const newAnnouncement = `Navigated to ${pageName}`
+      const routeAnnouncement = document.querySelectorAll(
+        `#gatsby-route-announcement`
+      )
+      if (routeAnnouncement && routeAnnouncement.length) {
+        announcementText = routeAnnouncement[0].innerText
+      }
+      const newAnnouncement = announcementText
+        ? announcementText
+        : `Navigated to ${pageName}`
       if (this.announcementRef.current) {
         const oldAnnouncement = this.announcementRef.current.innerText
         if (oldAnnouncement !== newAnnouncement) {
