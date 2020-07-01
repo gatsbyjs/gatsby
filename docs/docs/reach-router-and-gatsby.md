@@ -23,9 +23,26 @@ Besides using the [`<Link />` API](https://www.gatsbyjs.org/docs/gatsby-link/) f
 
 ## Scroll Restoration
 
-Gatsby will handle scroll restoration for you in most cases. However, when you render containers that have their own scroll values, those scroll positions are typically lost between page transitions. To solve that, users can use the (deprecated) `ScrollContainer` component or `useScrollRestoration` hook in their code to tell Gatsby about scroll containers that we should track and restore.
+Gatsby will handle scroll restoration for you in most cases. However, when you render containers that have their own scroll values, those scroll positions are typically lost between page transitions. To solve that, users can use the `useScrollRestoration` hook or the (deprecated) `ScrollContainer` component in their code to tell Gatsby about scroll containers that we should track and restore.
 
-This is an example of using the ScrollContainer component to render a list of countries in an overflow `ul` element.
+Here is an example of using the `useScrollRestoration` hook to render a list of countries in an overflow `ul` element.
+
+```jsx
+import { useScrollRestoration } from "gatsby";
+import countryList from "../utils/country-list";
+
+export default function PageComponent() {
+    const ulScrollRestoration = useScrollRestoration(`page-component-ul-list`)
+
+    return (
+        <ul style={{ height: 200, overflow: `auto` }} {...ulScrollRestoration}>
+            {countryList.map(country => <li>{country}</li>)
+        </ul>
+    );
+}
+```
+
+This is an example of using the (deprecated) ScrollContainer component with the same code.
 
 ```jsx
 import { ScrollContainer } from "gatsby-react-router-scroll";
@@ -41,23 +58,6 @@ export default class PageComponent extends React.Component {
             </ScrollContainer>
         );
     }
-}
-```
-
-Here is an example of using the `useScrollRestoration` hook with the same code.
-
-```jsx
-import { useScrollRestoration } from "gatsby";
-import countryList from "../utils/country-list";
-
-export default function PageComponent() {
-    const ulScrollRestoration = useScrollRestoration(`page-component-ul-list`)
-
-    return (
-        <ul style={{ height: 200, overflow: `auto` }} {...ulScrollRestoration}>
-            {countryList.map(country => <li>{country}</li>)
-        </ul>
-    );
 }
 ```
 
