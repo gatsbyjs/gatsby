@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.12...gatsby@2.23.13) (2020-07-01)
+
+### Bug Fixes
+
+- update packages ([#25381](https://github.com/gatsbyjs/gatsby/issues/25381)) ([622e3c1](https://github.com/gatsbyjs/gatsby/commit/622e3c1))
+- **gatsby:** fix typings in resolve-module-exports ([#25401](https://github.com/gatsbyjs/gatsby/issues/25401)) ([fdd71f4](https://github.com/gatsbyjs/gatsby/commit/fdd71f4))
+
+### Features
+
+- **gatsby:** Use state machine for bootstrap in develop ([#25305](https://github.com/gatsbyjs/gatsby/issues/25305)) ([ed9771b](https://github.com/gatsbyjs/gatsby/commit/ed9771b))
+
 ## [2.23.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.11...gatsby@2.23.12) (2020-06-29)
 
 ### Bug Fixes

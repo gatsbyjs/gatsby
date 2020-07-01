@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.4.7...gatsby-graphiql-explorer@0.4.8) (2020-07-01)
+
+### Bug Fixes
+
+- update packages ([#25381](https://github.com/gatsbyjs/gatsby/issues/25381)) ([622e3c1](https://github.com/gatsbyjs/gatsby/commit/622e3c1))
+
 ## [0.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.4.6...gatsby-graphiql-explorer@0.4.7) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-graphiql-explorer
