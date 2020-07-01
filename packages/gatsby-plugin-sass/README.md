@@ -1,6 +1,6 @@
 # gatsby-plugin-sass
 
-Provides drop-in support for SASS/SCSS stylesheets
+Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
@@ -80,9 +80,9 @@ plugins: [
 ]
 ```
 
-### SASS Precision
+### Sass Precision
 
-SASS defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
+Sass defaults to [10 digits of precision](https://github.com/sass/sass/pull/2297). If you want some other level of precision (e.g. if you use Bootstrap), you may configure it as follows:
 
 #### Bootstrap 4
 
@@ -123,7 +123,7 @@ Any file with the `module` extension will use CSS Modules.
 
 ## SASS & CSS Modules file Regexes
 
-To override the file regex for SASS or CSS modules,
+To override the file regex for Sass or CSS modules,
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -188,7 +188,7 @@ plugins: [
 ]
 ```
 
-NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for sass files in the plugin:
+NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for Sass files in the plugin:
 
 ```javascript:title=gatsby-config.js
 plugins: [
