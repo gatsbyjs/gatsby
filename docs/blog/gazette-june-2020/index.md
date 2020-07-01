@@ -29,7 +29,7 @@ We've made it easier to use [Gatsby Cloud](https://gatsbyjs.com) with three amaz
 2. [Flotiq](https://www.gatsbyjs.com/guides/flotiq/)
 3. [AgilityCMS](https://www.gatsbyjs.com/guides/agility-cms/).
 
-Plus - Gatsby Cloud also has [an improved Drupal integration](https://youtu.be/Mm6wrDr2DBE) (Check it out [here](https://www.drupal.org/project/gatsby).
+Plus - Gatsby Cloud also has [an improved Drupal integration](https://youtu.be/Mm6wrDr2DBE) (Check it out [here](https://www.drupal.org/project/gatsby).)
 
 So, which [headless CMS](/docs/glossary/headless-cms/) should you choose? Why not try all three? With Gatsby you can swap the data provider for your project and build each site with the same Gatsby Cloud account. Then you can compare the developer experience, content editing experience, and build times for each platform.
 
