@@ -8,6 +8,7 @@ starter:
   - Client-side App
   - CMS:Agility CMS
   - CMS:Cosmic
+  - CMS:Ghost
   - CMS:Headless
   - CMS:Contentful
   - CMS:DatoCMS

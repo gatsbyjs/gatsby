@@ -6,6 +6,7 @@ excerpt: "The 2020 WebAIM Million survey collected data on up to 1200 different 
 tags:
   - accessibility
   - community
+  - lighthouse
 ---
 
 The [WebAIM Million](https://webaim.org/projects/million/) is an annual accessibility analysis of the home pages for the top one million sites on the web. Each year, results reveal significant accessibility issues across the web — an average of 61 detectable accessibility errors per page, and a failure rate for the [Web Content Accessibility Guidelines](https://www.w3.org/TR/WCAG21/) of at least 98%.

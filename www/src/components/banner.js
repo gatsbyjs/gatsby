@@ -2,48 +2,44 @@
 import { jsx } from "theme-ui"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
+function BannerContent() {
+  return (
+    <div
+      sx={{
+        color: `whiteFade.80`,
+        fontFamily: `heading`,
+        px: 6,
+        whiteSpace: `nowrap`,
+      }}
+    >
+      {`New! Try Incremental Builds with `}
+      <OutboundLink
+        href="https://www.gatsbyjs.com"
+        sx={{
+          color: `white`,
+          borderBottom: t => `1px solid ${t.colors.white}`,
+          "&:hover": {
+            borderBottom: 0,
+          },
+        }}
+      >
+        Gatsby Cloud!
+      </OutboundLink>
+    </div>
+  )
+}
 
-const InnerContainer = ({ children }) => (
-  <div
-    sx={{
-      display: `flex`,
-      alignItems: `center`,
-      justifyContent: `center`,
-      height: `100%`,
-      overflowX: `auto`,
-      maskImage: t =>
-        `linear-gradient(to right, transparent, ${t.colors.purple[`90`]} ${
-          t.space[`6`]
-        }, ${t.colors.purple[`90`]} 96%, transparent)`,
-      [mediaQueries.md]: {
-        justifyContent: `flex-start`,
-      },
-    }}
-  >
-    {children}
-  </div>
-)
-
-const Content = ({ children }) => (
-  <div
-    sx={{
-      color: `whiteFade.80`,
-      fontFamily: `heading`,
-      px: 6,
-      whiteSpace: `nowrap`,
-      a: {
-        color: `white`,
-        borderBottom: t => `1px solid ${t.colors.white}`,
-        "&:hover": {
-          borderBottom: 0,
-        },
-      },
-    }}
-  >
-    {children}
-  </div>
-)
+const innerContainerStyles = {
+  display: `flex`,
+  alignItems: `center`,
+  justifyContent: [`center`, null, `flex-start`],
+  height: `100%`,
+  overflowX: `auto`,
+  maskImage: t =>
+    `linear-gradient(to right, transparent, ${t.colors.purple[`90`]} ${
+      t.space[`6`]
+    }, ${t.colors.purple[`90`]} 96%, transparent)`,
+}
 
 export default function Banner() {
   return (
@@ -58,14 +54,9 @@ export default function Banner() {
         px: `env(safe-area-inset-left)`,
       }}
     >
-      <InnerContainer>
-        <Content>
-          {`New! Try Incremental Builds with `}
-          <OutboundLink href="https://www.gatsbyjs.com">
-            Gatsby Cloud!
-          </OutboundLink>
-        </Content>
-      </InnerContainer>
+      <div sx={innerContainerStyles}>
+        <BannerContent />
+      </div>
     </aside>
   )
 }
