@@ -1,5 +1,7 @@
 import { IQueryRunningContext } from "./types"
 import { DoneInvokeEvent, assign, ActionFunctionMap } from "xstate"
+import { GraphQLRunner } from "../../query/graphql-runner"
+import { assertStore } from "../../utils/assert-store"
 
 export const emitStaticQueryDataToWebsocket = (
   { websocketManager }: IQueryRunningContext,
@@ -40,10 +42,24 @@ export const assignDirtyQueries = assign<
   }
 })
 
+export const resetGraphQLRunner = assign<
+  IQueryRunningContext,
+  DoneInvokeEvent<any>
+>({
+  graphqlRunner: ({ store, program }) => {
+    assertStore(store)
+    return new GraphQLRunner(store, {
+      collectStats: true,
+      graphqlTracing: program?.graphqlTracing,
+    })
+  },
+})
+
 export const queryActions: ActionFunctionMap<
   IQueryRunningContext,
   DoneInvokeEvent<any>
 > = {
+  resetGraphQLRunner,
   assignDirtyQueries,
   emitPageDataToWebsocket,
   emitStaticQueryDataToWebsocket,
