@@ -1,11 +1,6 @@
 import { Store } from "better-queue"
 
-// getRunningTasks is an extension to the interface, and is used in the tests
-interface IGatsbyBetterStore<T> extends Store<T> {
-  getRunningTasks(cb: (error: any, runningTasks: any) => void): void
-}
-
-export function memoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
+export function memoryStoreWithPriorityBuckets<T>(): Store<T> {
   type RunningTasks = Record<string, T>
   let uuid = 0
 
@@ -80,8 +75,8 @@ export function memoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
           oldPriorityTasks.splice(oldPriorityTasks.indexOf(taskId), 1)
 
           if (
-            addTaskWithPriority(taskId, priority) ||
-            oldPriorityTasks.length === 0
+            addTaskWithPriority(taskId, priority) // ||
+            // oldPriorityTasks.length === 0
           ) {
             needToUpdatePriorityKeys = true
           }
@@ -189,7 +184,11 @@ export function memoryStoreWithPriorityBuckets<T>(): IGatsbyBetterStore<T> {
 
       cb(null, lockId)
     },
-    getRunningTasks: function (cb): void {
+    // @ts-ignore
+    // getRunningTasks is an extension to the interface, and is only used in the tests
+    getRunningTasks: function (
+      cb: (err?: any, value?: Record<string, RunningTasks>) => void
+    ): void {
       cb(null, running)
     },
     getLock: function (lockId, cb): void {
