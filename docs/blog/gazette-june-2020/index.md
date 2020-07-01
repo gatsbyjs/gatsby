@@ -53,7 +53,7 @@ If you have an agency that wants to specialize on Gatsby, or you are building to
 
 ## 👩🏽‍🚀 New from the Gatsby Team
 
-**Kyle Mathews** sat with Shardul Sha of Index Ventures and [talked about how Gatsby came to be](https://youtu.be/pzyX9cH0yHM).
+**Kyle Mathews** sat with Shardul Shah of Index Ventures and [talked about how Gatsby came to be](https://youtu.be/pzyX9cH0yHM).
 
 **Laurie Barth** was interviewed on the OpenHive.JS podcast, and talked about [her work maintaining Gatsby](https://anchor.fm/openhivejs/episodes/Laurie-Barth-on-Maintaining-Gatsby-ef6p8i/a-a2e0v24)
 
@@ -73,12 +73,12 @@ Reflex launched as [a collection of Gatsby themes and plugins](https://reflexjs.
 
 Ecommerce service, Snipcart dived into [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/) and showed [how to integrate a shopping cart into your site](https://snipcart.com/blog/gatsby-recipes-ecommerce) in just a few steps.
 
-WPGrahphQL announced [it's path to 1.0](https://github.com/wp-graphql/wp-graphql/issues/1357)! If you're new to this plugin for WordPress, that turns your installation into a GraphQL server, then the GitHub issue linked above does a nice job of getting you up-to-speed on the project's history and rapid growth.
+WPGraphQL announced [it's path to 1.0](https://github.com/wp-graphql/wp-graphql/issues/1357)! If you're new to this plugin for WordPress, that turns your installation into a GraphQL server, then the GitHub issue linked above does a nice job of getting you up-to-speed on the project's history and rapid growth.
 
 ## 💫 Next from Gatsby
 
 Be on the lookout for [gatsby-theme-blog 2.0](https://github.com/gatsbyjs/gatsby/issues/23910), our brand new [new routing API](https://www.youtube.com/watch?v=tAcAkqOcs3c) and best practices, and updates to how [headless WordPress](/docs/glossary/headless-wordpress) projects can work with Gatsby Cloud.
 
-Want to help us build this stuff? Apply to our new position for [Senior Product Manager](https://www.gatsbyjs.com/careers/senior-product-manager--marketing---content-collaboration--4027422003) Or drop your resume in our evergreen ["Dream Job" posting](https://www.gatsbyjs.com/careers/dream-job-4011361003).
+Want to help us build this stuff? Apply to our new position for [Senior Product Manager](https://www.gatsbyjs.com/careers/senior-product-manager--marketing---content-collaboration--4027422003) Or drop your résumé in our evergreen ["Dream Job" posting](https://www.gatsbyjs.com/careers/dream-job-4011361003).
 
 Read more about our exciting in-flight work on the [Gatsby Days mega-roundup](/blog/2020-06-23-Reconfiguring-Gatsby-Days/#coming-soon). And signup for our newsletter below so you don’t miss a thing.
