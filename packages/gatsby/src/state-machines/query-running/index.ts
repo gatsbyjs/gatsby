@@ -29,12 +29,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     calculatingDirtyQueries: {
-      // Disabled because we're not watching for node mutations
-      // at the moment
-      // on: {
-      //   "": extractQueriesIfDirty,
-      //   SOURCE_FILE_CHANGED,
-      // },
       invoke: {
         id: `calculating-dirty-queries`,
         src: `calculateDirtyQueries`,
@@ -45,9 +39,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     runningStaticQueries: {
-      // on: {
-      //   "": extractQueriesIfDirty,
-      // },
       invoke: {
         src: `runStaticQueries`,
         id: `running-static-queries`,
@@ -67,9 +58,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     runningPageQueries: {
-      // on: {
-      //   "": extractQueriesIfDirty,
-      // },
       invoke: {
         src: `runPageQueries`,
         id: `running-page-queries`,
