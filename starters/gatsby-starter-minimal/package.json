@@ -13,7 +13,7 @@
     "build": "gatsby build",
     "clean": "gatsby clean"
   },
-  "license": "MIT",
+  "license": "0BSD",
   "dependencies": {
     "gatsby": "^2.23.12",
     "react": "^16.13.1",
