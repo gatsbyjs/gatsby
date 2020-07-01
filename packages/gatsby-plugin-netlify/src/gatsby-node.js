@@ -33,22 +33,32 @@ exports.onPostBuild = async (
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
   const { redirects } = store.getState()
-
+  const NOT_FOUND_REGEXP = /\/404\/?$/
+  const localizedNotFound = []
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
     const { pages } = store.getState()
-    rewrites = Array.from(pages.values())
+    Array.from(pages.values())
       .filter(page => page.matchPath && page.matchPath !== page.path)
-      .map(page => {
-        return {
-          fromPath: page.matchPath,
-          toPath: page.path,
+      .forEach(page => {
+        const isNotFoundPage = NOT_FOUND_REGEXP.test(page.path)
+        if (isNotFoundPage) {
+          localizedNotFound.push({
+            fromPath: page.matchPath,
+            status: 404,
+            toPath: page.path,
+          })
+        } else {
+          rewrites.push({
+            fromPath: page.matchPath,
+            toPath: page.path,
+            status: 200,
+          })
         }
       })
   }
-
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
-    createRedirects(pluginData, redirects, rewrites),
+    createRedirects(pluginData, redirects, rewrites.concat(localizedNotFound)),
   ])
 }

@@ -51,7 +51,7 @@ export default async function writeRedirectsFile(
   })
 
   rewrites = rewrites.map(
-    ({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`
+    ({ fromPath, toPath, status }) => `${fromPath}  ${toPath}  ${status}`
   )
 
   let commentFound = false
