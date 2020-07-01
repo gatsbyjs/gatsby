@@ -80,7 +80,6 @@
     "minimatch": "^3.0.4",
     "mitt": "^1.2.0",
     "mousetrap": "^1.6.5",
-    "node-fetch": "^2.6.0",
     "parse-github-url": "^1.0.2",
     "prism-react-renderer": "^0.2.0",
     "prismjs": "^1.20.0",
