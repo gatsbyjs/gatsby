@@ -47,7 +47,7 @@ export default class PageComponent extends React.Component {
 Here is an example of using the `useScrollRestoration` hook with the same code.
 
 ```jsx
-import { useScrollRestoration } from "gatsby-react-router-scroll";
+import { useScrollRestoration } from "gatsby";
 import countryList from "../utils/country-list";
 
 export default function PageComponent() {
