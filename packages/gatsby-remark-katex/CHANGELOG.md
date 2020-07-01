@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@3.3.6...gatsby-remark-katex@3.3.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-katex
+
 ## [3.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@3.3.5...gatsby-remark-katex@3.3.6) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-remark-katex
