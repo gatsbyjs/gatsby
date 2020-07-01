@@ -168,7 +168,6 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             // These were previously in `bootstrap()` but are now
             // in part of the state machine that hasn't been added yet
-            await postBootstrap({ parentSpan: bootstrapSpan })
             await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
 
             await extractQueries({ parentSpan: bootstrapSpan })
@@ -176,6 +175,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             startRedirectListener()
             bootstrapSpan.finish()
+            await postBootstrap({ parentSpan: bootstrapSpan })
 
             // These are the parts that weren't in bootstrap
 
