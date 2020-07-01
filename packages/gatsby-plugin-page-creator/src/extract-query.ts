@@ -28,17 +28,24 @@ export function reverseLookupParams(
   queryResults: Record<string, object | string>,
   absolutePath: string
 ): Record<string, string> {
-  const reversedParams = {}
+  const reversedParams = {
+    // We always include id
+    id: (queryResults.nodes ? queryResults.nodes[0] : queryResults).id,
+  }
 
   absolutePath.split(path.sep).forEach(part => {
-    const regex = /^\{([a-zA-Z_]+)\}/.exec(part)
+    const regex = /^\{([a-zA-Z_\(\)]+)\}/.exec(part)
 
     if (regex === null) return
     const extracted = regex[1]
 
     const results = _.get(
       queryResults.nodes ? queryResults.nodes[0] : queryResults,
-      extracted.replace(/__/g, `.`)
+      extracted
+        // ignore union syntax for value lookup (unions does not show up in queryResults)
+        .replace(/\(.*\)__/g, ``)
+        // replace __ with accessors '.'
+        .replace(/__/g, `.`)
     )
     reversedParams[extracted] = results
   })
@@ -52,6 +59,8 @@ export function reverseLookupParams(
 //   `id,baz`
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(path.sep)
+  // always add `id` to queries
+  parts.push(`{id}`)
   return parts
     .reduce<string[]>((queryParts: string[], part: string): string[] => {
       if (part.startsWith(`{`)) {
@@ -69,12 +78,16 @@ function extractUrlParamsForQuery(createdPath: string): string {
 
 // pulls out nesting from file names with the special __ syntax
 // src/pages/{fields__baz}.js => `fields{baz}`
+// src/pages/{fields__(File)__baz}.js => `fields{... on File {baz}}`
 function deriveNesting(part: string): string {
   if (part.includes(`__`)) {
     return part
       .split(`__`)
       .reverse()
       .reduce((path: string, part: string): string => {
+        // This adds support for Unions
+        path = path.replace(`(`, `... on `).replace(`)`, ``)
+
         if (path) {
           return `${part}{${path}}`
         }

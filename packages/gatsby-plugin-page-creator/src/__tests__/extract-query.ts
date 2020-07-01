@@ -81,6 +81,15 @@ describe(`extract query`, () => {
         )
       ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
     })
+
+    it(`supports graphql unions`, () => {
+      expect(
+        generateQueryFromString(
+          `UnionQuery`,
+          compatiblePath(`/foo/bar/{id}/{parent__(File)__relativePath}.js`)
+        )
+      ).toBe(`{allUnionQuery{nodes{id,parent{... on File{relativePath}}}}}`)
+    })
   })
 })
 
@@ -104,6 +113,18 @@ describe(`reverseLookupParams`, () => {
       )
     ).toEqual({
       fields__name: `foo`,
+    })
+  })
+
+  it(`handles graphql unions`, () => {
+    expect(
+      reverseLookupParams(
+        // Unions are not present in the resulting structure
+        { parent: { relativePath: `foo` } },
+        compatiblePath(`/{parent__(File)__relativePath}.js`)
+      )
+    ).toEqual({
+      "parent__(File)__relativePath": `foo`,
     })
   })
 })
