@@ -11264,3 +11264,13 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Raleigh Bikes
+  url: https://www.raleigh.co.uk/gb/en/
+  main_url: https://raleigh.co.uk/
+  description: >
+    Chances are that you rode a Raleigh when you were younger - and maybe you still do now.
+  categories:
+    - E-commerce
+  built_by: Oberon (for Accell Group)
+  built_by_url: https://oberon.nl
+  featured: false
