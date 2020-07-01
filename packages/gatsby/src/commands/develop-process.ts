@@ -234,7 +234,6 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
 
   const service = interpret(
-    // eslint-disable-next-line new-cap
     Machine(developConfig, {
       services: {
         initializeDataLayer: dataLayerMachine,
@@ -264,7 +263,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const listeners = new WeakSet()
   service.onTransition(state => {
-    console.log(`Transition to ${JSON.stringify(state.value)}`)
+    report.verbose(`Transition to ${JSON.stringify(state.value)}`)
     // eslint-disable-next-line no-unused-expressions
     service.children?.forEach(child => {
       // We want to ensure we don't attach a listener to the same
@@ -273,7 +272,11 @@ module.exports = async (program: IProgram): Promise<void> => {
 
       if (isInterpreter(child) && !listeners.has(child)) {
         child.onTransition(substate => {
-          console.log(`Transition to`, state.value, `>`, substate.value)
+          report.verbose(
+            `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
+              substate.value
+            )}`
+          )
         })
         listeners.add(child)
       }

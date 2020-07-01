@@ -108,7 +108,6 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     },
   },
 }
-// eslint-disable-next-line new-cap
 export const queryRunningMachine = Machine(queryStates, {
   actions: queryActions,
   services: queryRunningServices,
