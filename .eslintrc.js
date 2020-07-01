@@ -57,6 +57,7 @@ module.exports = {
     "react/prop-types": "off",
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
+    "new-cap": ["error", { capIsNewExceptions: ["Machine"] }],
   },
   overrides: [
     {
