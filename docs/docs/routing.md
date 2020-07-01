@@ -28,7 +28,7 @@ The exception to this rule is any file named `index.js`. Files with this name ar
 
 Note that if no `index.js` file exists in a particular directory that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
-To create several pages from some data, you can use the `createPagesFromData` macro with the collection builder route. For example, if you have a graphql model for products called `Product`. To create a page for each product, create a file inside `src/pages` at whatever route you would like (e.g., `/products/{name}.js` or `/products/{id}.js`). Inside of the file, the primary export must use the gatsby `createPagesFromData` macro. Here is an example:
+To create several pages from a data model, you can use the `createPagesFromData` macro with the collection builder route. For example, if you have a graphql model for products called `Product`. To create a page for each product, create a file inside `src/pages` at whatever route you would like (e.g., `/products/{name}.js` or `/products/{id}.js`). Inside of the file, the default export must use the gatsby `createPagesFromData` macro. Here is an example:
 
 ```js:title=/src/pages/products{name}.js
 import { createPagesFromData, graphql } from "gatsby"
