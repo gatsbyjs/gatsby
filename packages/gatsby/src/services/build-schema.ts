@@ -1,11 +1,10 @@
-import { IBuildContext } from "./"
-
 import { build } from "../schema"
 import reporter from "gatsby-cli/lib/reporter"
+import { IDataLayerContext } from "../state-machines/data-layer/types"
 
 export async function buildSchema({
   parentSpan,
-}: Partial<IBuildContext>): Promise<void> {
+}: Partial<IDataLayerContext>): Promise<void> {
   const activity = reporter.activityTimer(`building schema`, {
     parentSpan,
   })
