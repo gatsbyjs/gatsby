@@ -17,7 +17,7 @@ The efforts above are just the beginning of the work were doing to ensure Black 
 
 ### Improved Site Workflow in Gatsby Cloud
 
-You can now create multiple sites from the same repository in Gatsby Cloud. This new feature enables you to set up multiple configurations for the same repo!
+You can now create multiple sites from the same repository in Gatsby Cloud. This new feature enables you to set up multiple configurations for the same GitHub repo (for example, to set up a long-lived staging branch or to independently build multiple sites in the same repo.)
 
 Ready to try it out? If you’re an existing [Gatsby Cloud](https://www.gatsbyjs.com/) user, you’ll need to update your GitHub permissions to access these new improvements. 
 
