@@ -1,7 +1,7 @@
 /* global cy */
 
 describe(`Pages`, () => {
-      it(`can be created with MDX`, () => {
+    it(`can be created with MDX`, () => {
         cy.visit(`/`).waitForRouteChange()
         cy.get(`h2`).invoke(`text`).should(`eq`, `Do you work`)
     })
@@ -15,5 +15,4 @@ describe(`Pages`, () => {
         cy.visit(`/`).waitForRouteChange()
         cy.getTestElement(`external`).contains(`Now an external import`)
     })
-  })
-  
+})
