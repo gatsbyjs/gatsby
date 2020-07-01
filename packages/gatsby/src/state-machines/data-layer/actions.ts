@@ -9,6 +9,7 @@ import {
 import { createGraphQLRunner } from "../../bootstrap/create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { IDataLayerContext } from "./types"
+import { assertStore } from "../../utils/assert-store"
 
 const concatUnique = <T>(array1: T[] = [], array2: T[] = []): T[] =>
   Array.from(new Set(array1.concat(array2)))
@@ -34,9 +35,7 @@ export const assignGatsbyNodeGraphQL: BuildMachineAction = assign<
   IDataLayerContext
 >({
   gatsbyNodeGraphQLFunction: ({ store }: IDataLayerContext) => {
-    if (!store) {
-      reporter.panic(`Missing redux store`)
-    }
+    assertStore(store)
     return createGraphQLRunner(store, reporter)
   },
 })
