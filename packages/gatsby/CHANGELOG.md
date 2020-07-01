@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.11...gatsby@2.23.12) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby:** fix build-html error stacktrace ([#25385](https://github.com/gatsbyjs/gatsby/issues/25385)) ([eac89cb](https://github.com/gatsbyjs/gatsby/commit/eac89cb))
+
 ## [2.23.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.10...gatsby@2.23.11) (2020-06-24)
 
 ### Bug Fixes
