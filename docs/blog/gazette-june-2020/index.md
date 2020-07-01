@@ -1,6 +1,6 @@
 ---
 title: Gatsby Gazette for June 2020 - The Black Lives Matter Edition
-date: 2020-06-30
+date: 2020-07-01
 author: Hashim Warren
 excerpt: "Learn about June's product, community, and ecosystem updates. This includes improvements to Incremental Builds and TypeScript support"
 seoTitle: Gatsby Product Updates for June 2020
