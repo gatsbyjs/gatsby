@@ -285,10 +285,6 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
 
-```text
-src/fonts/fontname.woff2
-```
-
 2. Import the font asset into a CSS file to bundle it into your Gatsby site:
 
 ```css:title=src/css/typography.css
