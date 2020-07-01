@@ -11,7 +11,7 @@ export type DataLayerResult = Pick<
   | "pagesToDelete"
 >
 
-export const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
+const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
   initial: `customizingSchema`,
   states: {
     customizingSchema: {
@@ -88,7 +88,6 @@ export const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
   },
 }
 
-// eslint-disable-next-line new-cap
 export const dataLayerMachine = Machine(dataLayerStates, {
   actions: dataLayerActions,
   services: dataLayerServices,

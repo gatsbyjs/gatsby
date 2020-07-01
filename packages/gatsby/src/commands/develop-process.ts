@@ -84,9 +84,9 @@ process.on(`message`, msg => {
   }
 })
 
-const bootstrapSpan = tracer.startSpan(`bootstrap`)
-
 module.exports = async (program: IProgram): Promise<void> => {
+  const bootstrapSpan = tracer.startSpan(`bootstrap`)
+
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.

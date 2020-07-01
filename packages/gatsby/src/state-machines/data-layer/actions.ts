@@ -33,8 +33,12 @@ export const assignChangedPages: BuildMachineAction = assign<
 export const assignGatsbyNodeGraphQL: BuildMachineAction = assign<
   IDataLayerContext
 >({
-  gatsbyNodeGraphQLFunction: ({ store }: IDataLayerContext) =>
-    store ? createGraphQLRunner(store, reporter) : undefined,
+  gatsbyNodeGraphQLFunction: ({ store }: IDataLayerContext) => {
+    if (!store) {
+      reporter.panic(`Missing redux store`)
+    }
+    return createGraphQLRunner(store, reporter)
+  },
 })
 
 export const dataLayerActions: ActionFunctionMap<
