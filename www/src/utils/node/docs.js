@@ -57,9 +57,10 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
       slug: String!
       anchor: String!
+      relativePath: String!
       # Frontmatter-derived fields
       title: String!
-      description: String # TODO this should default to `excerpt`
+      description: String # TODO this should default to excerpt
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
       issue: String
@@ -158,6 +159,7 @@ exports.onCreateNode = async ({
     ...node.frontmatter,
     slug,
     anchor: slugToAnchor(slug),
+    relativePath: getNode(node.parent).relativePath,
   }
 
   const docPageId = createNodeId(`${node.id} >>> DocPage`)

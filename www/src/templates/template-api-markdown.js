@@ -110,6 +110,7 @@ export default function APITemplate({ data, location, pageContext }) {
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
     docPage(slug: { eq: $path }) {
+      relativePath
       slug
       body
       excerpt

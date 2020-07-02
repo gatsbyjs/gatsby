@@ -24,6 +24,7 @@ export default DocsTemplate
 export const pageQuery = graphql`
   query($slug: String!) {
     docPage(slug: { eq: $slug }) {
+      relativePath
       slug
       body
       excerpt
@@ -35,7 +36,6 @@ export const pageQuery = graphql`
       issue
       disableTableOfContents
       tableOfContentsDepth
-      ...MarkdownPageFooterMdx
     }
   }
 `

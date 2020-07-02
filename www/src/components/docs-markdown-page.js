@@ -115,7 +115,7 @@ function DocsMarkdownPage({
             <div>
               <MDXRenderer slug={page.slug}>{page.body}</MDXRenderer>
               {children}
-              <MarkdownPageFooter page={page} />
+              <MarkdownPageFooter path={page.relativePath} />
               <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
             </div>
           </div>
