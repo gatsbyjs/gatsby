@@ -85,8 +85,8 @@ class BlogPostTemplate extends React.Component {
                     >
                       <span
                         sx={{
-                          borderBottom: t =>
-                            `1px solid ${t.colors.link.border}`,
+                          borderBottom: 1,
+                          borderColor: `link.border`,
                           transition: t =>
                             `all ${t.transition.speed.fast} ${t.transition.curve.default}`,
                           "&:hover": { borderColor: `link.hoverBorder` },
@@ -161,7 +161,8 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           sx={{
-            borderTop: t => `1px solid ${t.colors.ui.border}`,
+            borderColor: `ui.border`,
+            borderTop: 1,
             mt: 9,
             [mediaQueries.md]: { pt: 5 },
             [mediaQueries.lg]: { pt: 7 },

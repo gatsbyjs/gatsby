@@ -27,10 +27,8 @@ export default function SimpleEvaluationTable(props) {
                       "&:hover": {
                         cursor: `pointer`,
                       },
-                      borderBottom: t =>
-                        !showTooltip(idx)
-                          ? `1px solid ${t.colors.ui.border}`
-                          : `none`,
+                      borderColor: `ui.border`,
+                      borderBottom: !showTooltip(idx) ? 1 : `none`
                       minWidth: 40,
                       px: 0,
                       textAlign: `left`,

@@ -113,8 +113,9 @@ class Rotator extends Component {
     return (
       <div
         sx={{
-          borderTop: t => `1px solid ${t.colors.ui.border}`,
-          borderBottom: t => `1px solid ${t.colors.ui.border}`,
+          borderColor: `ui.border`,
+          borderTop: 1,
+          borderBottom: 1,
           py: 4,
           px: 9,
           my: 6,

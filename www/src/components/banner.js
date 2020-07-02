@@ -17,7 +17,8 @@ function BannerContent() {
         href="https://www.gatsbyjs.com"
         sx={{
           color: `white`,
-          borderBottom: t => `1px solid ${t.colors.white}`,
+          borderBottom: 1,
+          borderColor: `white`,
           "&:hover": {
             borderBottom: 0,
           },

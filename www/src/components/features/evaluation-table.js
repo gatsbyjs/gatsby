@@ -62,10 +62,8 @@ export default function EvaluationTable(props) {
                             "&:hover": {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
-                            borderBottom: t =>
-                              !showTooltip(s, i)
-                                ? `1px solid ${t.colors.ui.border}`
-                                : `none`,
+                            borderColor: `ui.border`,
+                            borderBottom: !showTooltip(s, i) ? 1 : `none`
                             minWidth: 40,
                             px: 0,
                             textAlign: `left`,

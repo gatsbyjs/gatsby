@@ -103,10 +103,9 @@ export default function ItemLink({ item, overrideCSS, isSteps }) {
           <span
             sx={{
               bg: `ui.border`,
+              border: 1,
               borderColor: `ui.border`,
               borderRadius: 6,
-              borderStyle: `solid`,
-              borderWidth: `1px`,
               display: `block`,
               fontWeight: `body`,
               height: bulletSize,

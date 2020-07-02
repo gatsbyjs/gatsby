@@ -30,7 +30,8 @@ class BlogPostsIndex extends React.Component {
               ...pullIntoGutter,
               display: `flex`,
               justifyContent: `space-between`,
-              borderBottom: t => `1px solid ${t.colors.ui.border}`,
+              borderColor: `ui.border`,
+              borderBottom: 1,
               mb: 6,
               pb: 6,
               [breakpointGutter]: {

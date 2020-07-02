@@ -134,8 +134,7 @@ export default function Pullquote({ citation, narrow = false, children }) {
   return (
     <blockquote
       sx={{
-        borderWidth: `1px`,
-        borderStyle: `solid`,
+        border: 1,
         borderColor: `pullquote.borderColor`,
         borderRadius: 2,
         color: `pullquote.color`,

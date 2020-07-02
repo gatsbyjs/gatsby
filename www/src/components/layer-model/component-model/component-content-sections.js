@@ -154,7 +154,8 @@ const AppLayerContent = ({ index }) => (
     <ExampleWrapper>
       <div
         sx={{
-          border: t => `1px solid ${t.colors.ui.border}`,
+          borderColor: `ui.border`,
+          border: 1,
           borderRadius: 2,
           display: `flex`,
           flexDirection: `column`,
@@ -165,7 +166,8 @@ const AppLayerContent = ({ index }) => (
         <div
           sx={{
             p: 3,
-            borderBottom: t => `1px solid ${t.colors.ui.border}`,
+            borderColor: `ui.border`,
+            borderBottom: 1,
           }}
         >
           Home

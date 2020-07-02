@@ -73,7 +73,8 @@ const LegendTable = () => {
     <div>
       <div
         sx={{
-          border: t => `1px solid ${t.colors.ui.border}`,
+          borderColor: `ui.border`,
+          border: 1,
           borderLeft: 0,
           fontFamily: `heading`,
           display: [`none`, null, `table`],
@@ -85,7 +86,8 @@ const LegendTable = () => {
       <div
         sx={{
           display: [`table`, null, `none`],
-          border: t => `1px solid ${t.colors.ui.border}`,
+          borderColor: `ui.border`,
+          border: 1,
           borderLeft: 0,
           fontFamily: `heading`,
         }}

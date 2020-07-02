@@ -63,7 +63,7 @@ const VerticalLine = () => (
     <path
       d="M10 40 L10 -10"
       sx={{
-        stroke: t => t.colors.lilac,
+        stroke: `lilac`,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -74,10 +74,9 @@ const VerticalLine = () => (
 )
 
 const box = {
+  border: 1,
   borderColor: `ui.border`,
   borderRadius: 2,
-  borderStyle: `solid`,
-  borderWidth: `1px`,
   px: 7,
   py: 5,
 }

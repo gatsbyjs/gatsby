@@ -108,9 +108,7 @@ const Palette = ({ color, handler }) => {
             mb={0}
             fontSize={4}
             color="link.color"
-            sx={{
-              borderBottom: t => `1px solid ${t.colors.link.border}`,
-            }}
+            sx={{ borderColor: `link.border`, borderBottom: 1 }}
             title={`Open “${name}” color modal`}
           >
             {name}

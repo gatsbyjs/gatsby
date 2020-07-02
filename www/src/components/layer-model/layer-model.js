@@ -21,9 +21,8 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
       onClick={onClick}
       sx={{
         bg: `ui.background`,
-        border: selected
-          ? t => `2px ${t.colors[baseColor][60]} solid`
-          : `2px transparent solid`,
+        border: 2,
+        borderColor: selected ? `${baseColor}.60` : `transparent`,
         borderRadius: 3,
         color: `textMuted`,
         cursor: `pointer`,
@@ -34,7 +33,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
           outline: 0,
         },
         ":hover": {
-          borderColor: t => t.colors[baseColor][60],
+          borderColor: `${baseColor}.60`,
         },
       }}
     >
@@ -88,7 +87,8 @@ const LayerModel = ({
     <div
       sx={{
         borderRadius: 3,
-        border: t => `1px solid ${t.colors.ui.border}`,
+        borderColor: `ui.border`,
+        border: 1,
         padding: 2,
         marginBottom: 6,
       }}
