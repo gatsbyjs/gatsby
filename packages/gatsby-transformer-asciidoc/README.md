@@ -87,6 +87,10 @@ In the asciidoc file you can insert your image just by using:
 
 ## How to query
 
+**IMPORTANT**
+
+- If there are no valid asciidoc files in your project, the `allAsciidoc` query will not be available.
+
 A sample GraphQL query to get AsciiDoc nodes:
 
 ```graphql
