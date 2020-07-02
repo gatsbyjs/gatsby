@@ -1,4 +1,8 @@
-import { ISchemaCustomizationContext, ISourcingConfig } from "../types"
+import {
+  ISchemaCustomizationContext,
+  ISourcingConfig,
+  RemoteTypeName,
+} from "../types"
 import { buildTypeDefinition } from "./build-types"
 import { GatsbyGraphQLType } from "gatsby"
 import { buildSourcingPlan } from "./analyze/build-sourcing-plan"
@@ -10,7 +14,9 @@ import { defaultGatsbyFieldAliases } from "../config/default-gatsby-field-aliase
  * Uses sourcing config to define Gatsby types explicitly
  * (using Gatsby schema customization API).
  */
-export async function createSchemaCustomization(config: ISourcingConfig) {
+export async function createSchemaCustomization(
+  config: ISourcingConfig
+): Promise<void> {
   const context = createSchemaCustomizationContext(config)
 
   // FIXME:
@@ -25,7 +31,9 @@ export async function createSchemaCustomization(config: ISourcingConfig) {
   context.gatsbyApi.actions.createTypes(typeDefs)
 }
 
-function collectTypesToCustomize(context: ISchemaCustomizationContext) {
+function collectTypesToCustomize(
+  context: ISchemaCustomizationContext
+): Set<RemoteTypeName> {
   return new Set([
     ...context.sourcingPlan.fetchedTypeMap.keys(),
     ...context.gatsbyNodeDefs.keys(),

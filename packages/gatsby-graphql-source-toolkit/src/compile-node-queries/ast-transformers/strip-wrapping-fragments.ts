@@ -8,12 +8,12 @@ import { SelectionSetNode, Visitor, ASTKindToNode } from "graphql"
 export function stripWrappingFragments(): Visitor<ASTKindToNode> {
   return {
     SelectionSet: {
-      leave: (node: SelectionSetNode) => {
+      leave: (node: SelectionSetNode): SelectionSetNode | void => {
         if (
           node.selections.length !== 1 ||
           node.selections[0].kind !== `InlineFragment`
         ) {
-          return
+          return undefined
         }
         const inlineFragment = node.selections[0]
         const isWrapper = inlineFragment.selectionSet.selections.every(

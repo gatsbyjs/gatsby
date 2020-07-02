@@ -20,7 +20,7 @@ import { createSourcingContext } from "./sourcing-context"
 export async function sourceNodeChanges(
   config: ISourcingConfig,
   delta: ISourceChanges
-) {
+): Promise<void> {
   const context = createSourcingContext(config)
   const { updates, deletes } = groupChanges(delta)
   const promises: Promise<void>[] = []

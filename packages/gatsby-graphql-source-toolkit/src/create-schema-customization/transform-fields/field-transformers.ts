@@ -9,6 +9,7 @@ import {
   GraphQLType,
   getNamedType,
 } from "graphql"
+import { ComposeFieldConfig } from "graphql-compose"
 import { resolveRemoteType } from "../utils/resolve-remote-type"
 import {
   IGatsbyFieldTransform,
@@ -22,9 +23,10 @@ import {
 export const fieldTransformers: IGatsbyFieldTransform[] = [
   {
     // Scalars (with any wrappers, i.e. lists, non-null)
-    test: ({ remoteField }) => isScalarType(getNamedType(remoteField.type)),
+    test: ({ remoteField }): boolean =>
+      isScalarType(getNamedType(remoteField.type)),
 
-    transform: ({ remoteField }) => {
+    transform: ({ remoteField }): ComposeFieldConfig<any, any> => {
       const namedType = getNamedType(remoteField.type)
       const typeName = isSpecifiedScalarType(namedType)
         ? String(namedType)
@@ -38,13 +40,13 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
 
   {
     // Non-gatsby-node objects (with any wrappers, i.e. lists, non-null)
-    test: ({ remoteField, context }) => {
+    test: ({ remoteField, context }): boolean => {
       const namedType = getNamedType(remoteField.type)
       return (
         isObjectType(namedType) && !context.gatsbyNodeDefs.has(namedType.name)
       )
     },
-    transform: ({ remoteField, context }) => {
+    transform: ({ remoteField, context }): ComposeFieldConfig<any, any> => {
       return {
         type: toGatsbyType(context, remoteField.type),
       }
@@ -53,16 +55,20 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
 
   {
     // Singular unions and interfaces
-    test: ({ remoteField }) =>
+    test: ({ remoteField }): boolean =>
       isAbstractType(
         isNonNullType(remoteField.type)
           ? remoteField.type.ofType
           : remoteField.type
       ),
-    transform: ({ remoteField, fieldInfo, context }) => {
+    transform: ({
+      remoteField,
+      fieldInfo,
+      context,
+    }): ComposeFieldConfig<any, any> => {
       return {
         type: toGatsbyType(context, remoteField.type),
-        resolve: (source, _, resolverContext) => {
+        resolve: (source, _, resolverContext): any => {
           const value = source[fieldInfo.gatsbyFieldName]
           return resolveNode(context, value, resolverContext) ?? value
         },
@@ -72,14 +78,18 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
 
   {
     // Lists of unions and interfaces
-    test: ({ remoteField }) =>
+    test: ({ remoteField }): boolean =>
       isListType(remoteField.type) &&
       isAbstractType(getNamedType(remoteField.type.ofType)),
 
-    transform: ({ remoteField, fieldInfo, context }) => {
+    transform: ({
+      remoteField,
+      fieldInfo,
+      context,
+    }): ComposeFieldConfig<any, any> => {
       return {
         type: toGatsbyType(context, remoteField.type),
-        resolve: (source, _, resolverContext) =>
+        resolve: (source, _, resolverContext): any =>
           mapListOfNodes(
             context,
             source[fieldInfo.gatsbyFieldName] ?? [],
@@ -91,7 +101,7 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
 
   {
     // Singular gatsby node objects (with any wrappers, i.e. list, non-null)
-    test: ({ remoteField, context }) => {
+    test: ({ remoteField, context }): boolean => {
       const namedType = getNamedType(remoteField.type)
       return (
         !isListType(remoteField.type) &&
@@ -100,10 +110,14 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
       )
     },
 
-    transform: ({ remoteField, fieldInfo, context }) => {
+    transform: ({
+      remoteField,
+      fieldInfo,
+      context,
+    }): ComposeFieldConfig<any, any> => {
       return {
         type: toGatsbyType(context, remoteField.type),
-        resolve: (source, _, resolverContext) =>
+        resolve: (source, _, resolverContext): any =>
           resolveNode(
             context,
             source[fieldInfo.gatsbyFieldName],
@@ -115,7 +129,7 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
 
   {
     // List of gatsby nodes
-    test: ({ remoteField, context }) => {
+    test: ({ remoteField, context }): boolean => {
       const namedType = getNamedType(remoteField.type)
       return (
         isListType(remoteField.type) &&
@@ -123,10 +137,14 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
         context.gatsbyNodeDefs.has(namedType.name)
       )
     },
-    transform: ({ remoteField, fieldInfo, context }) => {
+    transform: ({
+      remoteField,
+      fieldInfo,
+      context,
+    }): ComposeFieldConfig<any, any> => {
       return {
         type: toGatsbyType(context, remoteField.type),
-        resolve: (source, _, resolverContext) =>
+        resolve: (source, _, resolverContext): any =>
           mapListOfNodes(
             context,
             source[fieldInfo.gatsbyFieldName] ?? [],
@@ -146,7 +164,7 @@ export const fieldTransformers: IGatsbyFieldTransform[] = [
 function toGatsbyType(
   context: ISchemaCustomizationContext,
   remoteType: GraphQLType
-) {
+): string {
   const namedType = getNamedType(remoteType)
   const gatsbyTypeName = context.typeNameTransform.toGatsbyTypeName(
     namedType.name
@@ -192,11 +210,11 @@ function resolveNode(
 ): any {
   const remoteTypeName = resolveRemoteType(context, source)
   if (!source || !remoteTypeName) {
-    return
+    return undefined
   }
   const def = context.gatsbyNodeDefs.get(remoteTypeName)
   if (!def) {
-    return
+    return undefined
   }
   const id = context.idTransform.remoteNodeToGatsbyId(source, def)
   const type = context.typeNameTransform.toGatsbyTypeName(remoteTypeName)

@@ -1,4 +1,4 @@
-import { GatsbyGraphQLType, Node } from "gatsby"
+import { GatsbyGraphQLObjectType, GatsbyGraphQLType, Node } from "gatsby"
 import {
   isInterfaceType,
   isObjectType,
@@ -10,6 +10,7 @@ import {
 import { ISchemaCustomizationContext } from "../types"
 import { buildFields } from "./build-fields"
 import { resolveRemoteType } from "./utils/resolve-remote-type"
+import { ComposeInterfaceTypeConfig } from "graphql-compose"
 
 // TODO: Pass only the very necessary args to builders as custom resolvers will stay in memory forever
 //   and we don't want to capture too much scope
@@ -17,7 +18,7 @@ import { resolveRemoteType } from "./utils/resolve-remote-type"
 function unionType(
   context: ISchemaCustomizationContext,
   type: GraphQLUnionType
-) {
+): any {
   const {
     gatsbyApi: { schema },
     sourcingPlan: { fetchedTypeMap },
@@ -30,7 +31,7 @@ function unionType(
     .map(type => typeNameTransform.toGatsbyTypeName(type.name))
 
   if (!types.length) {
-    return
+    return undefined
   }
 
   return schema.buildUnionType({
@@ -56,16 +57,16 @@ function isGatsbyNode(source: any): source is Node {
 function interfaceType(
   context: ISchemaCustomizationContext,
   type: GraphQLInterfaceType
-) {
+): any {
   const {
     gatsbyApi: { schema },
     typeNameTransform,
   } = context
 
-  const typeConfig = {
+  const typeConfig: ComposeInterfaceTypeConfig<any, any> = {
     name: typeNameTransform.toGatsbyTypeName(type.name),
     fields: buildFields(context, type),
-    resolveType: (source: any) => {
+    resolveType: (source: any): string | null => {
       if (isGatsbyNode(source)) {
         return source.internal.type
       }
@@ -84,7 +85,7 @@ function interfaceType(
 function objectType(
   context: ISchemaCustomizationContext,
   type: GraphQLObjectType
-) {
+): GatsbyGraphQLObjectType {
   const {
     gatsbyApi: { schema },
     typeNameTransform,
@@ -103,7 +104,7 @@ function objectType(
 function collectGatsbyTypeInterfaces(
   context: ISchemaCustomizationContext,
   remoteType: GraphQLObjectType
-) {
+): string[] {
   const {
     sourcingPlan: { fetchedTypeMap },
     typeNameTransform,

@@ -20,7 +20,9 @@ interface ICompileNodeDocumentArgs {
   fragments: FragmentDefinitionNode[]
 }
 
-export function compileNodeDocument(args: ICompileNodeDocumentArgs) {
+export function compileNodeDocument(
+  args: ICompileNodeDocumentArgs
+): DocumentNode {
   const fullDocument: DocumentNode = {
     ...args.queries,
     definitions: args.queries.definitions.concat(args.fragments),
@@ -44,12 +46,12 @@ export function compileNodeDocument(args: ICompileNodeDocumentArgs) {
       typeInfo,
       visitInParallel([
         {
-          FragmentDefinition: () => false, // skip fragments
-          OperationDefinition: () => {
+          FragmentDefinition: (): boolean => false, // skip fragments
+          OperationDefinition: (): void => {
             didSpread = false
           },
           Field: {
-            leave: node => {
+            leave(node: FieldNode): FieldNode | boolean {
               if (didSpread) {
                 return false // skip visiting this node
               }

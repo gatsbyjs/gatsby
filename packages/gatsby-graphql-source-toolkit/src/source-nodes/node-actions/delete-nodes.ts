@@ -3,7 +3,7 @@ import { INodeDeleteEvent, ISourcingContext } from "../../types"
 export function deleteNodes(
   context: ISourcingContext,
   deleteEvents: INodeDeleteEvent[]
-) {
+): void {
   for (const deleteEvent of deleteEvents) {
     const def = context.gatsbyNodeDefs.get(deleteEvent.remoteTypeName)
     if (!def) {

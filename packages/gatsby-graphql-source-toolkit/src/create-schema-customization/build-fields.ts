@@ -10,7 +10,7 @@ import { fieldTransformers } from "./transform-fields/field-transformers"
 export function buildFields(
   context: ISchemaCustomizationContext,
   remoteType: GraphQLInterfaceType | GraphQLObjectType
-) {
+): any {
   const fields = collectGatsbyTypeFields(context, remoteType)
   return fields.reduce((fieldsConfig: object, field: IGatsbyFieldInfo) => {
     const config = buildFieldConfig(context, field, remoteType)
@@ -18,7 +18,7 @@ export function buildFields(
       fieldsConfig[field.gatsbyFieldName] = config
     }
     return fieldsConfig
-  }, {})
+  }, Object.create(null))
 }
 
 /**
@@ -83,4 +83,5 @@ function buildFieldConfig(
   if (fieldTransformer) {
     return fieldTransformer.transform(transformArgs)
   }
+  return undefined
 }

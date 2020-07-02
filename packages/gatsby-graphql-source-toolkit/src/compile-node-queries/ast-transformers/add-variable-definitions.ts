@@ -7,6 +7,9 @@ import {
   GraphQLInputType,
   DocumentNode,
   parseType,
+  FragmentDefinitionNode,
+  FragmentSpreadNode,
+  ArgumentNode,
 } from "graphql"
 import * as GraphQLAST from "../../utils/ast-nodes"
 
@@ -16,7 +19,7 @@ interface IAddVariableDefinitionsArgs {
 
 type VariableMap = Map<string, GraphQLInputType>
 
-interface DefinitionInfo {
+interface IDefinitionInfo {
   usedFragments: Set<string>
   variables: VariableMap
 }
@@ -24,14 +27,14 @@ interface DefinitionInfo {
 export function addVariableDefinitions({
   typeInfo,
 }: IAddVariableDefinitionsArgs): Visitor<ASTKindToNode> {
-  const fragmentInfo = new Map<string, DefinitionInfo>()
-  const operationInfo = new Map<string, DefinitionInfo>()
+  const fragmentInfo = new Map<string, IDefinitionInfo>()
+  const operationInfo = new Map<string, IDefinitionInfo>()
 
-  let currentDefinition: DefinitionInfo
+  let currentDefinition: IDefinitionInfo
 
   return {
     Document: {
-      leave: node => {
+      leave(node: DocumentNode): DocumentNode {
         const result: DocumentNode = {
           ...node,
           definitions: node.definitions.map(def =>
@@ -44,31 +47,31 @@ export function addVariableDefinitions({
       },
     },
     OperationDefinition: {
-      enter: () => {
+      enter(): void {
         currentDefinition = {
           usedFragments: new Set(),
           variables: new Map(),
         }
       },
-      leave: node => {
+      leave(node: OperationDefinitionNode): void {
         operationInfo.set(node.name?.value ?? ``, currentDefinition)
       },
     },
     FragmentDefinition: {
-      enter: () => {
+      enter(): void {
         currentDefinition = {
           usedFragments: new Set(),
           variables: new Map(),
         }
       },
-      leave: node => {
+      leave(node: FragmentDefinitionNode): void {
         fragmentInfo.set(node.name.value, currentDefinition)
       },
     },
-    FragmentSpread: node => {
+    FragmentSpread(node: FragmentSpreadNode): void {
       currentDefinition.usedFragments.add(node.name.value)
     },
-    Argument: node => {
+    Argument(node: ArgumentNode): void {
       const inputType = typeInfo.getInputType()
       if (node.value.kind === `Variable` && inputType) {
         currentDefinition.variables.set(node.name.value, inputType)
@@ -79,9 +82,9 @@ export function addVariableDefinitions({
 
 function ensureVariableDefinitions(
   node: OperationDefinitionNode,
-  operationInfo: Map<string, DefinitionInfo>,
-  fragmentsInfo: Map<string, DefinitionInfo>
-) {
+  operationInfo: Map<string, IDefinitionInfo>,
+  fragmentsInfo: Map<string, IDefinitionInfo>
+): OperationDefinitionNode {
   const name = node.name?.value ?? ``
   const variables = collectVariables(operationInfo.get(name), fragmentsInfo)
   if (!variables.size) {
@@ -105,9 +108,9 @@ function ensureVariableDefinitions(
 }
 
 function collectVariables(
-  definitionInfo: DefinitionInfo | void,
-  fragmentsInfo: Map<string, DefinitionInfo>,
-  visited: Set<DefinitionInfo> = new Set()
+  definitionInfo: IDefinitionInfo | void,
+  fragmentsInfo: Map<string, IDefinitionInfo>,
+  visited: Set<IDefinitionInfo> = new Set()
 ): VariableMap {
   if (!definitionInfo || visited.has(definitionInfo)) {
     return new Map()

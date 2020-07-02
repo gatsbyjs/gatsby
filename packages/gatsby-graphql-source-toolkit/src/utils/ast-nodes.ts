@@ -115,7 +115,7 @@ export function directive(
   }
 }
 
-export function skipDirective(condition: boolean = true) {
+export function skipDirective(condition: boolean = true): DirectiveNode {
   return directive(`skip`, [arg(`if`, boolValue(condition))])
 }
 

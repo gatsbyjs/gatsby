@@ -19,6 +19,7 @@ import {
   Visitor,
   ASTKindToNode,
   FragmentSpreadNode,
+  InlineFragmentNode,
 } from "graphql"
 import * as GraphQLAST from "../utils/ast-nodes"
 import {
@@ -112,7 +113,7 @@ export function inlineNamedFragments(
 ): Visitor<ASTKindToNode> {
   const typeStack: string[] = []
   return {
-    FragmentSpread: (node: FragmentSpreadNode, _, __) => {
+    FragmentSpread(node: FragmentSpreadNode, _, __): InlineFragmentNode | null {
       const typeName = node.name.value // Assuming fragment name matches type name
 
       if (typeStack.includes(typeName)) {
@@ -134,7 +135,7 @@ export function inlineNamedFragments(
       )
     },
     InlineFragment: {
-      leave() {
+      leave(): void {
         // Corresponding enter is actually in the FragmentSpread above
         // (FragmentSpread has no "leave" because we replace it with inline fragment or remove)
         typeStack.pop()
@@ -213,7 +214,7 @@ function buildTypeFragment(
 function buildAbstractTypeFragment(
   context: IDefaultFragmentsConfig,
   type: GraphQLInterfaceType | GraphQLUnionType
-) {
+): FragmentDefinitionNode {
   const fragmentName = getTypeFragmentName(type.name)
   const selections = context.schema
     .getPossibleTypes(type)
@@ -227,7 +228,7 @@ function buildAbstractTypeFragment(
 function buildObjectTypeFragment(
   context: IDefaultFragmentsConfig,
   type: GraphQLObjectType
-) {
+): FragmentDefinitionNode {
   const fragmentName = getTypeFragmentName(type.name)
   const selections = Object.keys(type.getFields())
     .map(fieldName => buildFieldNode(context, type, fieldName))
@@ -243,14 +244,14 @@ function buildFieldNode(
 ): FieldNode | void {
   const field = parentType.getFields()[fieldName]
   if (!field) {
-    return
+    return undefined
   }
   const type = getNamedType(field.type)
   const args = resolveFieldArguments(context, parentType, field)
 
   // Make sure all nonNull args are resolved
   if (someNonNullArgMissing(field, args)) {
-    return
+    return undefined
   }
   const selections = isCompositeType(type)
     ? [GraphQLAST.fragmentSpread(getTypeFragmentName(type.name))]
@@ -287,7 +288,7 @@ function resolveFieldArguments(
 function someNonNullArgMissing(
   field: GraphQLField<any, any>,
   argNodes: ArgumentNode[]
-) {
+): boolean {
   return field.args.some(
     arg =>
       isNonNullType(arg.type) &&

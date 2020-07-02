@@ -10,7 +10,7 @@ export async function processRemoteNode(
   // @ts-ignore
   def: IGatsbyNodeDefinition,
   remoteNode: IRemoteNode
-) {
+): Promise<IRemoteNode> {
   // TODO: handle https://github.com/graphql/graphql-js/issues/522
   return remoteNode
 }

@@ -69,23 +69,23 @@ export function buildTypeUsagesMap(
     fullDocument,
     visitWithTypeInfo(typeInfo, {
       FragmentDefinition: {
-        enter(node) {
+        enter(node): void {
           typeUsagePath.push(node.name.value)
         },
-        leave() {
+        leave(): void {
           typeUsagePath.pop()
         },
       },
       InlineFragment: {
-        enter(_, key) {
+        enter(_, key): void {
           typeUsagePath.push(String(key))
         },
-        leave() {
+        leave(): void {
           typeUsagePath.pop()
         },
       },
       Field: {
-        enter: node => {
+        enter(node: FieldNode): void {
           const parentType = typeInfo.getParentType()
           if (!parentType) {
             throw new Error(`Visited field is expected to have parent type`)
@@ -105,7 +105,7 @@ export function buildTypeUsagesMap(
           const alias = node.alias ? node.alias.value : node.name.value
           typeUsagePath.push(alias)
         },
-        leave: () => {
+        leave(): void {
           typeUsagePath.pop()
         },
       },

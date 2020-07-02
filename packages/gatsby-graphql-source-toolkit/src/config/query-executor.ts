@@ -1,12 +1,13 @@
 import PQueue, { Options as PQueueOptions } from "p-queue"
 import fetch, { RequestInit as FetchOptions } from "node-fetch"
 import { IQueryExecutionArgs, IQueryExecutor } from "../types"
+import { ExecutionResult } from "graphql"
 
 export function createNetworkQueryExecutor(
   uri: string,
   fetchOptions: FetchOptions = {}
 ): IQueryExecutor {
-  return async function execute(args) {
+  return async function execute(args): Promise<ExecutionResult> {
     const { query, variables, operationName } = args
 
     return fetch(uri, {
@@ -33,7 +34,9 @@ export function wrapQueryExecutorWithQueue(
 ): IQueryExecutor {
   const queryQueue = new PQueue(queueOptions)
 
-  return async function executeQueued(args: IQueryExecutionArgs) {
+  return async function executeQueued(
+    args: IQueryExecutionArgs
+  ): Promise<ExecutionResult> {
     return await queryQueue.add(() => executor(args))
   }
 }

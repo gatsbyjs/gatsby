@@ -2,7 +2,9 @@ import { ITypeNameTransform } from "../types"
 
 export function createTypeNameTransform(prefix: string): ITypeNameTransform {
   return {
-    toGatsbyTypeName: remoteTypeName => `${prefix}${remoteTypeName}`,
-    toRemoteTypeName: gatsbyTypeName => gatsbyTypeName.substr(prefix.length),
+    toGatsbyTypeName: (remoteTypeName: string): string =>
+      `${prefix}${remoteTypeName}`,
+    toRemoteTypeName: (gatsbyTypeName: string): string =>
+      gatsbyTypeName.substr(prefix.length),
   }
 }

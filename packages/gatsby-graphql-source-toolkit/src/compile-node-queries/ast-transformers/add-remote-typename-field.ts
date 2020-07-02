@@ -18,7 +18,7 @@ export function addRemoteTypeNameField({
   gatsbyFieldAliases,
 }: IAddTypeNameArgs): Visitor<ASTKindToNode> {
   return {
-    SelectionSet: node => {
+    SelectionSet(node: SelectionSetNode): SelectionSetNode | void {
       if (
         isCompositeType(typeInfo.getParentType()) &&
         !hasRemoteTypeNameField(node, gatsbyFieldAliases)
@@ -29,7 +29,7 @@ export function addRemoteTypeNameField({
         )
         return { ...node, selections: [field, ...node.selections] }
       }
-      return
+      return undefined
     },
   }
 }
@@ -37,7 +37,7 @@ export function addRemoteTypeNameField({
 function hasRemoteTypeNameField(
   node: SelectionSetNode,
   aliases: IGatsbyFieldAliases
-) {
+): boolean {
   return node.selections.some(node =>
     node.kind === `Field`
       ? node.name.value === `__typename` &&

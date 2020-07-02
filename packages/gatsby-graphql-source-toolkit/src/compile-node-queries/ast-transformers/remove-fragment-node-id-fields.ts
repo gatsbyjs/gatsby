@@ -1,4 +1,9 @@
-import { Visitor, ASTKindToNode, SelectionNode } from "graphql"
+import {
+  Visitor,
+  ASTKindToNode,
+  SelectionNode,
+  FragmentDefinitionNode,
+} from "graphql"
 import { IGatsbyFieldAliases, IGatsbyNodeConfig } from "../../types"
 
 interface IRemoveNodeIdFieldsArgs {
@@ -17,7 +22,7 @@ export function removeFragmentNodeIdFields({
   )
   return {
     FragmentDefinition: {
-      leave: node => {
+      leave(node: FragmentDefinitionNode): FragmentDefinitionNode | void {
         const selections = node.selectionSet.selections.filter(
           (selection: SelectionNode) => {
             if (selection.kind !== `Field`) {
@@ -39,7 +44,7 @@ export function removeFragmentNodeIdFields({
             },
           }
         }
-        return
+        return undefined
       },
     },
   }

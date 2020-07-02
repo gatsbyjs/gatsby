@@ -33,7 +33,7 @@ export function findPaginatedFieldPath(
 
   if (!expectedVars.length) {
     // TODO: consider to always use this instead of isPaginatedField
-    const hasTypeNameField = (field: FieldNode) =>
+    const hasTypeNameField = (field: FieldNode): boolean =>
       field.selectionSet
         ? field.selectionSet.selections.some(
             s => s.kind === `Field` && s.name.value === `__typename`
@@ -42,7 +42,7 @@ export function findPaginatedFieldPath(
     return findFieldPath(document, operationName, hasTypeNameField)
   }
 
-  const isPaginatedField = (node: FieldNode) => {
+  const isPaginatedField = (node: FieldNode): boolean => {
     const variables = (node.arguments ?? [])
       .map(arg => arg.value)
       .filter((value): value is VariableNode => value.kind === `Variable`)
@@ -64,8 +64,9 @@ export function findNodeFieldPath(
   operationName: string
 ): string[] {
   // For now simply assuming the first field with a variable
-  const hasVariableArgument = (node: FieldNode) =>
+  const hasVariableArgument = (node: FieldNode): boolean =>
     (node.arguments ?? []).some(arg => arg.value.kind === `Variable`)
+
   return findFieldPath(document, operationName, hasVariableArgument)
 }
 
@@ -73,7 +74,7 @@ export function findFieldPath(
   document: DocumentNode,
   operationName: string,
   predicate: (field: FieldNode) => boolean
-) {
+): string[] {
   const operation = document.definitions.find(
     def =>
       def.kind === `OperationDefinition` && def.name?.value === operationName
@@ -84,7 +85,7 @@ export function findFieldPath(
   const fieldPath: string[] = []
   visit(operation, {
     Field: {
-      enter: (node: FieldNode) => {
+      enter: (node: FieldNode): any => {
         if (fieldPath.length > 10) {
           throw new Error(
             `findFieldPath could not find matching field: reached maximum nesting level`
@@ -94,8 +95,9 @@ export function findFieldPath(
         if (predicate(node)) {
           return BREAK
         }
+        return undefined
       },
-      leave: () => {
+      leave: (): void => {
         fieldPath.pop()
       },
     },
@@ -118,7 +120,7 @@ export function findFieldPath(
   return fieldPath
 }
 
-export function getFirstValueByPath(item: unknown, path: string[]) {
+export function getFirstValueByPath(item: unknown, path: string[]): any {
   if (path.length === 0) {
     return item
   }
@@ -136,10 +138,10 @@ export function updateFirstValueByPath(
   item: object | object[],
   path: string[],
   newValue: unknown
-) {
+): void {
   if (path.length === 1 && typeof item === `object` && item !== null) {
     item[path[0]] = newValue
-    return
+    return undefined
   }
   if (Array.isArray(item)) {
     return updateFirstValueByPath(item[0], path, newValue)
@@ -148,4 +150,5 @@ export function updateFirstValueByPath(
     const [key, ...nestedPath] = path
     return updateFirstValueByPath(item[key], nestedPath, newValue)
   }
+  return undefined
 }

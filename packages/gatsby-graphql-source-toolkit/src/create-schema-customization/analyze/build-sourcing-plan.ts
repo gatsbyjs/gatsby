@@ -30,7 +30,9 @@ export function buildSourcingPlan(args: IBuildSourcingPlanArgs): ISourcingPlan {
   }
 }
 
-function buildFetchedTypeMap(args: IBuildSourcingPlanArgs) {
+function buildFetchedTypeMap(
+  args: IBuildSourcingPlanArgs
+): Map<RemoteTypeName, Map<RemoteFieldAlias, IRemoteFieldUsage>> {
   const schema = args.schema
   const fetchedTypesMap: ISourcingPlan["fetchedTypeMap"] = new Map()
   const typeInfo = new TypeInfo(schema)
@@ -40,13 +42,13 @@ function buildFetchedTypeMap(args: IBuildSourcingPlanArgs) {
     addUnionTypes: Visitor<ASTKindToNode>
   } = {
     collectTypeFields: {
-      Field: (node: FieldNode) => {
+      Field(node: FieldNode): void {
         const parentTypeName = typeInfo.getParentType()?.name ?? ``
         if (
           parentTypeName === schema.getQueryType()?.name ||
           parentTypeName === schema.getMutationType()?.name
         ) {
-          return
+          return undefined
         }
         const aliasNode = node.alias ?? node.name
 
@@ -61,23 +63,25 @@ function buildFetchedTypeMap(args: IBuildSourcingPlanArgs) {
           alias: aliasNode.value,
           name: node.name.value,
         })
+        return undefined
       },
     },
     addUnionTypes: {
-      Field: () => {
+      Field(): void {
         // Union types must be added separately because they don't have fields
         //  by themselves and as such won't be added by `collectTypeFields`
         const type = typeInfo.getType()
         if (!type) {
-          return
+          return undefined
         }
         const unionType = getNamedType(type)
         if (!isUnionType(unionType)) {
-          return
+          return undefined
         }
         if (!fetchedTypesMap.has(unionType.name)) {
           fetchedTypesMap.set(unionType.name, new Map())
         }
+        return undefined
       },
     },
   }

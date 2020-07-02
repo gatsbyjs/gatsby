@@ -40,10 +40,10 @@ export function replaceNodeSelectionWithReference(
   args: ITransformArgs
 ): Visitor<ASTKindToNode> {
   return {
-    Field: node => {
+    Field(node: FieldNode): FieldNode | void {
       const type = args.typeInfo.getType()
       if (!type || !node.selectionSet?.selections.length) {
-        return
+        return undefined
       }
       const namedType = getNamedType(type)
       const fragment = args.nodeReferenceFragmentMap.get(namedType.name)
@@ -53,7 +53,7 @@ export function replaceNodeSelectionWithReference(
       if (isInterfaceType(namedType)) {
         return transformInterfaceField(args, node, namedType)
       }
-      return
+      return undefined
     },
   }
 }
@@ -62,13 +62,13 @@ function transformInterfaceField(
   args: ITransformArgs,
   node: FieldNode,
   type: GraphQLInterfaceType
-): FieldNode | undefined {
+): FieldNode | void {
   const possibleTypes = args.schema.getPossibleTypes(type)
   const nodeImeplementations = possibleTypes.some(type =>
     args.nodeReferenceFragmentMap.has(type.name)
   )
   if (!nodeImeplementations) {
-    return
+    return undefined
   }
   // Replace with inline fragment for each implementation
   const selections: SelectionNode[] = possibleTypes.map(type => {
