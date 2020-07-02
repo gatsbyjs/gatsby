@@ -11271,7 +11271,8 @@
   description: >
     Neon Law is a general-practice law firm that uses software to improve access to justice.
   categories:
-    - Legal
+    - Consulting
+    - Data
     - Open Source
   built_by: Neon Law
   built_by_url: https://twitter.com/neonlaw
