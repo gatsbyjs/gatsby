@@ -19,7 +19,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
       Object {
-        "corejs": 2,
+        "corejs": 3,
         "exclude": Array [
           "transform-typeof-symbol",
         ],
