@@ -18,21 +18,26 @@ export function ignorePath(
     patterns: ``,
     options: {},
   }
-  if ((ignore as IPathIgnoreOptions).options !== undefined) {
-    settings.options = (ignore as IPathIgnoreOptions).options || {}
-  }
-  if ((ignore as IPathIgnoreOptions).patterns) {
-    settings.patterns = (ignore as IPathIgnoreOptions).patterns
+  if (typeof ignore === `string`) {
+    settings.patterns = ignore
+  } else if (Array.isArray(ignore)) {
+    if (ignore.length > 0) {
+      settings.patterns = ignore
+    }
+  } else if (ignore === null) {
+    return false
   } else {
-    // Allow shorthand ignore patterns ['pattern'] or 'pattern'
-    if (Array.isArray(ignore) && ignore.length > 0) {
-      settings.patterns = ignore
-    } else if (typeof ignore === `string`) {
-      settings.patterns = ignore
-    } else {
+    // TS should be able to assert that `ignore` must be a `IPathIgnoreOptions` now
+    if (!ignore.options && !ignore.patterns) {
       return false
     }
-  }
+    if (ignore.options) {
+      settings.options = ignore.options
+    }
+    if (ignore.patterns) {
+      settings.patterns = ignore.patterns
+    }
+  }    
   // Return true if the path should be ignored (matches any given ignore patterns)
   return mm.any(path, settings.patterns as string | string[], settings.options)
 }
