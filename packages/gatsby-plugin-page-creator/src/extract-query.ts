@@ -1,5 +1,6 @@
 import _ from "lodash"
 import path from "path"
+import { handleUnstable } from "./handle-unstable"
 
 // Input queryStringParent could be:
 //   Product
@@ -10,7 +11,7 @@ export function generateQueryFromString(
   queryStringParent: string,
   fileAbsolutePath: string
 ): string {
-  const fields = extractUrlParamsForQuery(fileAbsolutePath)
+  const fields = extractUrlParamsForQuery(handleUnstable(fileAbsolutePath))
   if (queryStringParent.includes(`...CollectionPagesQueryFragment`)) {
     return fragmentInterpolator(queryStringParent, fields)
   }
@@ -34,7 +35,7 @@ export function reverseLookupParams(
   }
 
   absolutePath.split(path.sep).forEach(part => {
-    const regex = /^\{([a-zA-Z_\(\)]+)\}/.exec(part)
+    const regex = /^\{([a-zA-Z_()]+)\}/.exec(part)
 
     if (regex === null) return
     const extracted = regex[1]
@@ -59,8 +60,12 @@ export function reverseLookupParams(
 //   `id,baz`
 function extractUrlParamsForQuery(createdPath: string): string {
   const parts = createdPath.split(path.sep)
+
   // always add `id` to queries
-  parts.push(`{id}`)
+  if (parts.some(s => s.includes(`{id}`)) === false) {
+    parts.push(`{id}`)
+  }
+
   return parts
     .reduce<string[]>((queryParts: string[], part: string): string[] => {
       if (part.startsWith(`{`)) {

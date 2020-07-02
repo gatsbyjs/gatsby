@@ -30,7 +30,7 @@ export const parsePath: (path: string) => WindowLocation
 
 export const prefetchPathname: (path: string) => void
 
-export const createPagesFromData: <T>(
+export const unstable_createPagesFromData: <T>(
   component: React.ComponentType<PageProps<T>>,
   query: string
 ) => React.ComponentType<PageProps<T>>
@@ -46,7 +46,7 @@ export const createPagesFromData: <T>(
  * export default (props: PageProps) => {
  *
  * @example
- * // When adding types for both pageContext (represended by LocaleLookUpInfo) 
+ * // When adding types for both pageContext (represended by LocaleLookUpInfo)
  * // and GraphQL query data (represented by IndexQueryProps)
  *
  * import {PageProps} from "gatsby"

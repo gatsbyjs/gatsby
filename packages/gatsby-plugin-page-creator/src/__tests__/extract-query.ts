@@ -42,7 +42,7 @@ describe(`extract query`, () => {
         )
       ).toEqual(`allMarkdownRemark {
         group(field: frontmatter___topic) {
-            nodes{frontmatter{topic}}
+            nodes{frontmatter{topic},id}
         }
     }`)
     })
@@ -53,6 +53,12 @@ describe(`extract query`, () => {
       expect(
         generateQueryFromString(`Thing`, compatiblePath(`/foo/bar/{id}.js`))
       ).toBe(`{allThing{nodes{id}}}`)
+    })
+
+    it(`always queries id`, () => {
+      expect(
+        generateQueryFromString(`Thing`, compatiblePath(`/foo/bar/{baz}.js`))
+      ).toBe(`{allThing{nodes{baz,id}}}`)
     })
 
     it(`multiple nodes`, () => {

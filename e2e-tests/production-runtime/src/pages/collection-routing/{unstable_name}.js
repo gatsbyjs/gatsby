@@ -1,5 +1,5 @@
 import React from "react"
-import { createPagesFromData, Link, graphql } from "gatsby"
+import { unstable_createPagesFromData, Link, graphql } from "gatsby"
 
 import Layout from "../../components/layout"
 
@@ -13,7 +13,7 @@ function BlogPost({ data: { product } }) {
   )
 }
 
-export default createPagesFromData(BlogPost, `Product`)
+export default unstable_createPagesFromData(BlogPost, `Product`)
 
 export const blogPostQuery = graphql`
   query GetBlogPostBySlugCollection($name: String!) {

@@ -15,6 +15,8 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"]
 ): Promise<void> {
+  validateUnstableUsage(filePath)
+
   // 1. Query for the data for the collection to generate pages
   const queryString = collectionExtractQueryString(absolutePath)
 
@@ -84,4 +86,25 @@ Unfortunately, the query came back empty. There may be an error in your query.`)
   watchCollectionBuilder(absolutePath, queryString, paths, actions, () =>
     createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
   )
+}
+
+function validateUnstableUsage(filePath: string): void {
+  let shouldThrow = false
+
+  filePath.split(`/`).forEach(part => {
+    if (part.startsWith(`{`) && part.startsWith(`{unstable_`) === false) {
+      shouldThrow = true
+    }
+  })
+
+  if (shouldThrow) {
+    console.error(`Creating collection routes in gatsby with the filesystem is an experimental feature. We require files to use the prefix 'unstable_' in each segment.
+
+Your current path:
+src/pages/${filePath}
+
+Change it to this:
+src/pages/${filePath.replace(/\{/g, `{unstable_`)}`)
+    process.exit(1)
+  }
 }

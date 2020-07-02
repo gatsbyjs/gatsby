@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { handleUnstable } from "./handle-unstable"
 
 // Generates the path for the page from the file path
 // src/pages/product/{id}.js => /product/:id, pulls from nodes.id
@@ -6,7 +7,7 @@ import _ from "lodash"
 // src/pages/blog/{parent__(File)__relativePath}} => blog/:slug pulls from nodes.parent.relativePath
 export function derivePath(path: string, node: Record<string, any>): string {
   // 1.  Remove the extension
-  let pathWithoutExtension = path.replace(/\.[a-z]+$/, ``)
+  let pathWithoutExtension = handleUnstable(path.replace(/\.[a-z]+$/, ``))
 
   // 2.  Pull out the slug parts that are within { } brackets.
   const slugParts = /(\{.*\})/g.exec(pathWithoutExtension)

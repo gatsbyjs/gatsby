@@ -8,7 +8,7 @@ import fs from "fs-extra"
 function pathIsCollectionBuilder(path: string): boolean {
   if (fs.existsSync(path) === false) return false
   const js = fs.readFileSync(path).toString()
-  return js.includes(`createPagesFromData`)
+  return js.includes(`unstable_createPagesFromData`)
 }
 
 function pathIsClientOnlyRoute(path: string): boolean {
@@ -35,7 +35,7 @@ export function createPage(
 
   const absolutePath = systemPath.join(pagesDirectory, filePath)
 
-  // If the page has a function call to createPagesFromData markers in it, then we create it as a collection builder
+  // If the page has a function call to unstable_createPagesFromData markers in it, then we create it as a collection builder
   if (pathIsCollectionBuilder(absolutePath)) {
     createPagesFromCollectionBuilder(filePath, absolutePath, actions, graphql)
     return

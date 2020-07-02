@@ -97,13 +97,13 @@ function graphql() {
   )
 }
 
-function createPagesFromData(Component) {
+function unstable_createPagesFromData(Component) {
   return Component
 }
 
 export {
   Link,
-  createPagesFromData,
+  unstable_createPagesFromData,
   withAssetPrefix,
   withPrefix,
   graphql,

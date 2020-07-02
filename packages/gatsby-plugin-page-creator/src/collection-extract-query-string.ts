@@ -8,21 +8,21 @@ import * as t from "@babel/types"
 // TODO: Ive tried to make TS happy here, but any changes I make to get TS
 // to work actually make the code fail. This code works. So maybe we can figure
 // this out later.
-function isCreatePagesFromData(path): boolean {
+function isunstable_createPagesFromData(path): boolean {
   return (
     (path.node.callee.type === `MemberExpression` &&
-      path.node.callee.property.name === `createPagesFromData` &&
+      path.node.callee.property.name === `unstable_createPagesFromData` &&
       // @ts-ignore
       path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
     // @ts-ignore
-    (path.node.callee.name === `createPagesFromData` &&
+    (path.node.callee.name === `unstable_createPagesFromData` &&
       // @ts-ignore
       path.get(`callee`).referencesImport(`gatsby`))
   )
 }
 
 // This Function opens up the actual collection file and extracts the queryString used in the
-// `createPagesFromData` macro.
+// `unstable_createPagesFromData` macro.
 export function collectionExtractQueryString(
   absolutePath: string
 ): string | null {
@@ -36,13 +36,13 @@ export function collectionExtractQueryString(
     absolutePath
   )
 
-  // 2.  Traverse the AST to find the createPagesFromData macro
+  // 2.  Traverse the AST to find the unstable_createPagesFromData macro
   traverse(ast, {
-    // The createPagesFromData is always a CallExpression
+    // The unstable_createPagesFromData is always a CallExpression
     CallExpression(path) {
       // 2.a.  But there are other callExpressions, so first we need to confirm that it is specifically
-      //       the createPagesFromData node that we are acting on.
-      if (!isCreatePagesFromData(path)) return
+      //       the unstable_createPagesFromData node that we are acting on.
+      if (!isunstable_createPagesFromData(path)) return
 
       // We save the callsiteExpression just for better logging to the user.
       callsiteExpression = generate(path.node).code
@@ -61,7 +61,7 @@ export function collectionExtractQueryString(
         string = queryAst.value
       }
 
-      // We want the convention to be that you export default the createPagesFromData builder,
+      // We want the convention to be that you export default the unstable_createPagesFromData builder,
       // so this check ensures that if they haven't done that we prevent things from going on.
       isExportedAsDefault = t.isExportDefaultDeclaration(path.container)
 
@@ -71,10 +71,10 @@ export function collectionExtractQueryString(
     },
   })
 
-  // 3. log error and exit early if they did not export default createPagesFromData
+  // 3. log error and exit early if they did not export default unstable_createPagesFromData
   if (isExportedAsDefault === false) {
     console.error(`CollectionBuilderError:
-  The createPagesFromData call in ${
+  The unstable_createPagesFromData call in ${
     absolutePath.split(`src/pages`)[1]
   } needs to be exported as default like this:
 
