@@ -32,7 +32,7 @@ export default (_?: unknown, options: IPresetOptions = {}) => {
         {
           // Allow importing core-js in entrypoint and use browserlist to select polyfills
           useBuiltIns: `usage`,
-          corejs: 3,
+          corejs: 2,
           modules: false,
           // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
           exclude: [`transform-typeof-symbol`],
