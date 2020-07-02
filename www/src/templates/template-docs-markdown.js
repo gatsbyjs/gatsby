@@ -32,7 +32,6 @@ export const pageQuery = graphql`
       anchor
       title
       description
-      overview
       issue
       disableTableOfContents
       tableOfContentsDepth

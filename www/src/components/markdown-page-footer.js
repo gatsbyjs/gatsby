@@ -12,25 +12,18 @@ export default function MarkdownPageFooter({ page, packagePage }) {
           sx={{
             display: `flex`,
             alignItems: `center`,
-            justifyContent: `space-between`,
             mt: 9,
           }}
         >
           <a
             sx={{ variant: `links.muted` }}
-            href={`https://github.com/gatsbyjs/gatsby/blob/master/${
-              packagePage ? `packages` : `docs`
-            }/${page ? page.parent.relativePath : ``}`}
+            href={`https://github.com/gatsbyjs/gatsby/blob/master/docs/${
+              props.page ? props.page.parent.relativePath : ``
+            }`}
           >
             {/* FIXME relative path probably won't work */}
             <EditIcon sx={{ mr: 2 }} /> Edit this page on GitHub
           </a>
-          {page?.latestUpdate && (
-            <span sx={{ color: `textMuted`, fontSize: 1 }}>
-              Last updated:{` `}
-              <time dateTime={page.latestUpdate}>{page.latestUpdate}</time>
-            </span>
-          )}
         </div>
       )}
     </Fragment>

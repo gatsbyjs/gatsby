@@ -63,8 +63,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
       issue: String
-      overview: Boolean # TODO delete this, it's useless
-      latestUpdate: Date @dateformat # TODO delete this
       # Frontmatter fields for API docs
       jsdoc: [String!]
       apiCalls: String
@@ -75,10 +73,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       timeToRead: Int
       tableOfContents: JSON
       excerpt: String!
-    }
-
-    type DocumentationJSComponentDescription implements Node {
-      childMdx: Mdx
     }
 
     type GatsbyAPICall implements Node @derivedTypes @dontInfer {
@@ -164,7 +158,6 @@ exports.onCreateNode = async ({
     ...node.frontmatter,
     slug,
     anchor: slugToAnchor(slug),
-    latestUpdate: getNode(node.parent).fields.gitLogLatestUpdate,
   }
 
   const docPageId = createNodeId(`${node.id} >>> DocPage`)
