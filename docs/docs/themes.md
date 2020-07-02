@@ -1,6 +1,5 @@
 ---
 title: Themes
-overview: true
 disableTableOfContents: true
 ---
 
