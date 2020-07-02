@@ -1,24 +1,43 @@
-const globCB = require(`glob`)
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
-const systemPath = require(`path`)
-const existsSync = require(`fs-exists-cached`).sync
+import globCB from "glob"
+import Promise from "bluebird"
+import _ from "lodash"
+import systemPath from "path"
+import { sync as existsSync } from "fs-exists-cached"
+import { CreatePagesArgs, PluginOptions, PluginCallback } from "gatsby"
 
-const glob = Promise.promisify(globCB)
+type GlobParameters = Parameters<typeof globCB>
+const glob = Promise.promisify<
+  Array<string>,
+  GlobParameters[0],
+  GlobParameters[1]
+>(globCB)
 
 const { createPage } = require(`./create-page-wrapper`)
 const { createPath, watchDirectory } = require(`gatsby-page-utils`)
+
+interface Options extends PluginOptions {
+  path: string
+  pathCheck: boolean
+  ignore: Array<string>
+}
 
 // Path creator.
 // Auto-create pages.
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-exports.createPagesStatefully = async (
-  { store, actions, reporter, graphql },
-  { path: pagesPath, pathCheck = true, ignore },
-  doneCb
-) => {
+async function createPagesStatefully(
+  {
+    store,
+    actions,
+    reporter,
+    graphql,
+  }: CreatePagesArgs & {
+    traceId: "initial-createPages"
+  },
+  { path: pagesPath, pathCheck = true, ignore }: Options,
+  doneCb: PluginCallback
+) {
   const { deletePage } = actions
   const { program } = store.getState()
 
@@ -78,5 +97,7 @@ exports.createPagesStatefully = async (
       })
       files = files.filter(f => f !== removedPath)
     }
-  ).then(() => doneCb())
+  ).then(() => doneCb(null, null))
 }
+
+exports.createPagesStatefully = createPagesStatefully
