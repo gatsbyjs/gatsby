@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.10...gatsby-transformer-documentationjs@4.3.11) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
 ## [4.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.9...gatsby-transformer-documentationjs@4.3.10) (2020-07-01)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

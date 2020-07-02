@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.3.9...gatsby-remark-copy-linked-files@2.3.10) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
 ## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@2.3.8...gatsby-remark-copy-linked-files@2.3.9) (2020-07-01)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files
