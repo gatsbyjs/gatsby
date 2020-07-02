@@ -46,7 +46,7 @@ exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
     type DocumentationJs implements Node
-      @childOf(types: ["File", "DocumentationJs"]) {
+      @childOf(types: ["File", "DocumentationJs"], many: true) {
       name: String
       kind: String
       memberof: String
