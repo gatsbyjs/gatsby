@@ -2,7 +2,7 @@ const TSEslint = require("@typescript-eslint/eslint-plugin")
 
 module.exports = {
   parser: "babel-eslint",
-  extends: [
+  extends:  [
     "google",
     "eslint:recommended",
     "plugin:flowtype/recommended",
@@ -105,9 +105,9 @@ module.exports = {
           "error",
           { ignoreParameters: true },
         ],
-        // This rule tries to ensure we use camelCase for all variables, properties
-        // functions, etc. However, it is not always possible to ensure properties
-        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
+        // This rule tries to ensure we use camelCase for all variables, properties.
+        // functions, etc. However, it is not always possible to ensure properties.
+        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks.
         // this rule. This allows properties to be whatever they need to be.
         "@typescript-eslint/camelcase": ["error", { properties: "never" }],
         // This rule tries to prevent using `require()`. However in node code,
