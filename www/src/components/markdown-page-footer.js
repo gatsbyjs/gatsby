@@ -4,7 +4,7 @@ import { Fragment } from "react"
 import { graphql } from "gatsby"
 import { MdCreate as EditIcon } from "react-icons/md"
 
-export default function MarkdownPageFooter({ page, packagePage }) {
+export default function MarkdownPageFooter({ page }) {
   return (
     <Fragment>
       {page && (
@@ -18,7 +18,7 @@ export default function MarkdownPageFooter({ page, packagePage }) {
           <a
             sx={{ variant: `links.muted` }}
             href={`https://github.com/gatsbyjs/gatsby/blob/master/docs/${
-              props.page ? props.page.parent.relativePath : ``
+              page ? page.parent.relativePath : ``
             }`}
           >
             {/* FIXME relative path probably won't work */}

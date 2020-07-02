@@ -59,7 +59,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       anchor: String!
       # Frontmatter-derived fields
       title: String!
-      description: String
+      description: String # TODO this should default to `excerpt`
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
       issue: String
