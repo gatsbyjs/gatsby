@@ -1,6 +1,6 @@
 {
   "name": "gatsby-admin",
-  "version": "0.1.78",
+  "version": "0.1.79",
   "main": "index.js",
   "author": "Max Stoiber",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "gatsby": "^2.23.14",
     "gatsby-interface": "0.0.173",
     "gatsby-plugin-typescript": "^2.4.10",
-    "gatsby-source-graphql": "^2.5.9",
+    "gatsby-source-graphql": "^2.6.0",
     "ncp": "^2.0.0",
     "nodemon": "^2.0.4",
     "react": "^16.12.0",
