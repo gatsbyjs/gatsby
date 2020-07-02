@@ -11247,6 +11247,16 @@
   built_by: Draftbox
   built_by_url: https://draftbox.co
   featured: false
+- title: Ellington Hammond
+  main_url: https://ellingtonhammond.com
+  url: https://ellingtonhammond.com
+  description: >
+    Ellington Hammond is a photographer and film director based in the United States.
+  categories:
+    - Portfolio
+    - E-commerce
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
 - title: Laputan ERP
   main_url: https://erp.laputan.com.au
   url: https://erp.laputan.com.au
@@ -11260,3 +11270,31 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Fidisys Playbook
+  main_url: https://playbook.fidisys.com/
+  url: https://playbook.fidisys.com/
+  description: >
+    Fidisys playbook is the process we follow in Fidisys to build awesome products. It shows engineering, hiring and operation process.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+  built_by: Fidisys Technologies
+  built_by_url: https://www.fidisys.com/
+- title: Gabriel Giordano Portfolio
+  main_url: https://gabrielgiordano.com
+  url: https://gabrielgiordano.com
+  source_url: https://github.com/gabrielgiordan/gabrielgiordano.com
+  description: >
+    Personal website for Gabriel Giordano, a Senior Software Engineer and also an open-source contributor.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+    - SEO
+    - Technology
+    - Programming
+    - Freelance
+  built_by: Gabriel Giordano
+  built_by_url: https://gabrielgiordano.com
+  featured: false
