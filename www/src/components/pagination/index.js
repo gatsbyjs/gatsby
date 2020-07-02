@@ -35,7 +35,7 @@ class Pagination extends React.Component {
         sx={{
           display: `flex`,
           justifyContent: `space-between`,
-          margin: t => `0 -${t.space[6]}`,
+          mx: -6,
           p: 6,
           flexDirection: `column`,
           fontSize: 1,

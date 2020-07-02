@@ -388,24 +388,24 @@ describe(`Queryable Node interfaces`, () => {
     const nodes = [
       {
         id: `author1`,
-        internal: { type: `AuthorYaml` },
+        internal: { type: `AuthorYaml`, counter: 0 },
         name: `Author 1`,
         birthday: new Date(Date.UTC(1978, 8, 26)),
       },
       {
         id: `author2`,
-        internal: { type: `AuthorJson` },
+        internal: { type: `AuthorJson`, counter: 1 },
         name: `Author 2`,
         birthday: new Date(Date.UTC(1978, 8, 26)),
       },
       {
         id: `post1`,
-        internal: { type: `ThisPost` },
+        internal: { type: `ThisPost`, counter: 2 },
         author: `author1`,
       },
       {
         id: `post2`,
-        internal: { type: `ThatPost` },
+        internal: { type: `ThatPost`, counter: 3 },
         author: `author2`,
       },
     ]

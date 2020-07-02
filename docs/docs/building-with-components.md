@@ -33,9 +33,9 @@ A basic directory structure of a project might look like this:
 ├── gatsby-config.js
 ├── package.json
 └── src
-    ├── html.jsx
+    ├── html.js
     ├── pages
-    │   ├── index.jsx
+    │   ├── index.js
     │   └── posts
     │       ├── 01-01-2017
     │       │   └── index.md
@@ -44,20 +44,20 @@ A basic directory structure of a project might look like this:
     │       └── 01-03-2017
     │           └── index.md
     ├── templates
-        └── post.jsx
+        └── post.js
 ```
 
 ### Page components
 
 Components under `src/pages` become pages automatically with paths based on
-their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com`
-and `src/pages/about.jsx` becomes `yoursite.com/about/`. Every `.js` or `.jsx`
+their file name. For example `src/pages/index.js` is mapped to `yoursite.com`
+and `src/pages/about.js` becomes `yoursite.com/about/`. Every `.js` or `.jsx`
 file in the pages directory must resolve to either a string or react component,
 otherwise your build will fail.
 
 Example:
 
-```jsx:title=src/pages/about.jsx
+```jsx:title=src/pages/about.js
 import React from "react"
 
 function AboutPage(props) {
@@ -76,7 +76,7 @@ export default AboutPage
 You can programmatically create pages using "page template components". All
 pages are React components but very often these components are just wrappers around data from files or other sources.
 
-`src/templates/post.jsx` is an example of a page component. It queries GraphQL
+`src/templates/post.js` is an example of a page component. It queries GraphQL
 for markdown data and then renders the page using this data.
 
 See [part seven](/tutorial/part-seven/) of the tutorial for a detailed
@@ -84,7 +84,7 @@ introduction to programmatically creating pages.
 
 Example:
 
-```jsx:title=src/templates/post.jsx
+```jsx:title=src/templates/post.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -114,19 +114,19 @@ export const pageQuery = graphql`
 
 ### HTML component
 
-`src/html.jsx` is responsible for everything other than where Gatsby lives in
+`src/html.js` is responsible for everything other than where Gatsby lives in
 the `<body />`.
 
 In this file, you can modify the `<head>` metadata and general structure of the
 document and add external links.
 
-Typically you should omit this from your site as the default html.js file will
+Typically you should omit this from your site as the default `html.js` file will
 suffice. If you need more control over server rendering, then it's valuable to
-have an html.js.
+have an `html.js`.
 
 Example:
 
-```jsx:title=src/html.jsx
+```jsx:title=src/html.js
 import React from "react"
 import favicon from "./favicon.png"
 

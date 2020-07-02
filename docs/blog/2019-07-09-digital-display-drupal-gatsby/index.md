@@ -32,7 +32,7 @@ A decoupled approach, where frontend templating is separate from the content man
 
 On the back end, a [Drupal 8](https://www.drupal.org/8) foundation manages content. On the frontend, Gatsby presents content. With this approach, the Sandy Springs team can “create once, publish everywhere,” with a more efficient process for sharing information with the local community.
 
-![Drupal-powered large scale digital signage in a cafe](./images/CitySprings2.jpg "City Spring's large scale digital signage")
+![Drupal-powered large scale digital signage in a café](./images/CitySprings2.jpg "City Spring's large scale digital signage")
 
 ## The Decoupled Dream Team
 

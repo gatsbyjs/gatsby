@@ -43,10 +43,10 @@ Additional actions may be required depending on which server you use.
 If you have a server from one of the following providers, you should read the individual subpages:
 
 - [AWS Amplify](/docs/deploying-to-aws-amplify)
-- [S3/Cloudfront](/docs/deploying-to-s3-cloudfront)
+- [S3/CloudFront](/docs/deploying-to-s3-cloudfront)
 - [Aerobatic](/docs/deploying-to-aerobatic)
 - [Heroku](/docs/deploying-to-heroku)
-- [ZEIT Now](/docs/deploying-to-zeit-now)
+- [Vercel](/docs/deploying-to-vercel)
 - [Cloudflare Workers](/docs/deploying-to-cloudflare-workers)
 - [GitLab Pages](/docs/deploying-to-gitlab-pages)
 - [Netlify](/docs/deploying-to-netlify)

@@ -19,7 +19,7 @@ To demonstrate our commitment, we’ve published an [Accessibility Statement on 
 
 It’s a work in progress for us and the larger ecosystem; however, Gatsby’s commitment to transparency and active improvement are our core values. If you’re new to web accessibility, we’ve included some resources for you to get started. If you or your company hasn’t tackled this subject much before, now’s a perfect time to start!
 
-For any questions, you are welcome to contact Gatsby Head of Learning [Marcy Sutton](mailto:marcy@gatsbyjs.com).
+For any questions, you are welcome to contact us via email at Gatsby: [accessibility@gatsbyjs.com](mailto:accessibility@gatsbyjs.com).
 
 Gatsby Accessibility Statement: https://www.gatsbyjs.org/accessibility-statement/
 

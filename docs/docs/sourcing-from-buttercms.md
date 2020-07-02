@@ -129,7 +129,7 @@ Then populate your new page with content. In the next step, you'll call the Butt
 
 #### Integrate into your application
 
-With your homepage defined, the ButterCMS graphQL query will return some data that looks like this:
+With your homepage defined, the ButterCMS GraphQL query will return some data that looks like this:
 
 ```json
 {
@@ -707,7 +707,7 @@ export default Faq
 
 ### Introduction
 
-Butter CMS is also a great feat if you want to spin up a blog, it's pretty easy as they provide a [blog engine](https://buttercms.com/gatsbyjs-blog-engine/) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
+ButterCMS is also a great feat if you want to spin up a blog, it's pretty easy as they provide a [blog engine](https://buttercms.com/gatsbyjs-blog-engine/) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
 
 ### Blog home page
 

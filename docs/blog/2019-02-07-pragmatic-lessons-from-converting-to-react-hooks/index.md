@@ -13,7 +13,7 @@ Last week I decided to install the React 16.8 alpha on a branch and experiment w
 
 ## Converting to Hooks and lessons learned
 
-The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React devTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
+The [Hooks documentation](https://reactjs.org/docs/hooks-intro.html) is well presented and an excellent resource to getting started with hooks. I previously championed the render props pattern for reusable logic and composability. However, the extra syntax often comes with tradeoffs in clarity. These concerns include: "wrapper hell" and more mental overhead to parse nested JSX structure within the component. Adding a second render prop component or ternary operator further compounds these concerns. These additional wrappers also display in the React DevTools and can get out of hand. The possibility of cleaning up this syntax and providing clearer code is alluring.
 
 ```jsx
 export const PureRandomQuote = ({
@@ -47,7 +47,7 @@ const updateStateGood = () =>
   this.setState(state => ({ count: state.count + 1 }))
 ```
 
-The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to useState. The `useEffect` hook checks if the isPlaying state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or isPlaying state changes. The hook includes a function to update the slide. The necessary state and functions are return in an object.
+The custom `useSlideshow` hook utilizes two different hooks to replace the functionality of the render props component: `useState` and `useEffect`. The current index and playing states are both set with their own calls to `useState`. The `useEffect` hook checks if the `isPlaying` state is true and then sets the timeout to advance the slide to the next index. It resets to the first slide after it reaches the last index. The hook clears the timeout when the current index or `isPlaying` state changes. The hook includes a function to update the slide. The necessary state and functions are return in an object.
 
 ```javascript
 function useSlideshow(slides, { timerLength = 5000 } = {}) {
@@ -86,7 +86,7 @@ function useSlideshow(slides, { timerLength = 5000 } = {}) {
 }
 ```
 
-The benefits of this structural change go beyond aesthetic cleanup. One major benefit is the cleanup and re-running of useEffect when specific properties change. This eliminates the need of storing the timeout id as a static property. It also eliminates imperative prop comparisons in `componentDidUpdate`. Instead, the function declares the data that will trigger a re-run of this side effect. If `currIndex` or `isPlaying` change, the effect will re-run. First the function will run the cleanup function to clear the timeout, and then will run the effect again. This compounds when a component requires many side effects.
+The benefits of this structural change go beyond aesthetic cleanup. One major benefit is the cleanup and re-running of `useEffect` when specific properties change. This eliminates the need of storing the timeout id as a static property. It also eliminates imperative prop comparisons in `componentDidUpdate`. Instead, the function declares the data that will trigger a re-run of this side effect. If `currIndex` or `isPlaying` change, the effect will re-run. First the function will run the cleanup function to clear the timeout, and then will run the effect again. This compounds when a component requires many side effects.
 
 The `useEffect` hook brings more clarity and organization to the side effects in your components. Class based components force you to provide your set up and tear down across three separate life cycle methods: `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`. This often results in duplication of code. A component may use many side effects which are all placed in these same lifecycle methods. The `useEffect` Hook shifts this paradigm by isolating the functionality of a given side effect in one function. Clean up for the effect is set as a return function. This colocation allows for easier mental parsing and grouping functions by their area of concern.
 
@@ -119,7 +119,7 @@ function useMediaQuery() {
 
 Hooks bring many benefits to React functional components. Specific benefits include:
 
-- Abstracting logic with custom Hooks over render props for reduced syntax and elements in devTools
+- Abstracting logic with custom Hooks over render props for reduced syntax and elements in DevTools
 - Improved ability to share logic across components
 - Ability to call `useState` without the need for state updater functions if referencing the current version of state
 - Encapsulating side effects into their own function by area of concern

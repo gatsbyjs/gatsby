@@ -26,7 +26,7 @@ The example above uses the power of TypeScript, in combination with exported typ
 
 ## Other resources
 
-TypeScript integration is supported through automatically including [`gatsby-plugin-typescript`](/plugins/gatsby-plugin-typescript). Visit that link to see configuration options and limitations of this setup.
+TypeScript integration is supported through automatically including [`gatsby-plugin-typescript`](/packages/gatsby-plugin-typescript/). Visit that link to see configuration options and limitations of this setup.
 
 If you are new to TypeScript, check out these other resources to learn more:
 

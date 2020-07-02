@@ -11,7 +11,7 @@ heroku buildpacks:set heroku/nodejs
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-static.git
 ```
 
-You can optionally add the buildpacks to `app.json` if you want to take advantage of the [heroku platform api](https://devcenter.heroku.com/articles/setting-up-apps-using-the-heroku-platform-api)
+You can optionally add the buildpacks to `app.json` if you want to take advantage of the [heroku platform API](https://devcenter.heroku.com/articles/setting-up-apps-using-the-heroku-platform-api)
 
 ```json:title=app.json
 {
