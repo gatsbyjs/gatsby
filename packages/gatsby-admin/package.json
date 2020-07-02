@@ -1,6 +1,6 @@
 {
   "name": "gatsby-admin",
-  "version": "0.1.82",
+  "version": "0.1.83",
   "main": "index.js",
   "author": "Max Stoiber",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "@typescript-eslint/parser": "^2.28.0",
     "csstype": "^2.6.10",
     "formik": "^2.1.4",
-    "gatsby": "^2.23.17",
+    "gatsby": "^2.23.18",
     "gatsby-interface": "0.0.173",
     "gatsby-plugin-typescript": "^2.4.12",
     "gatsby-source-graphql": "^2.6.1",
