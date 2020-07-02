@@ -1,8 +1,8 @@
 import _ from "lodash"
-import { Node } from "gatsby"
+import { IGatsbyNode } from "gatsby/src/redux/types"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ObjectOrArray = Record<string, any> | Array<any> | Node
+type ObjectOrArray = Record<string, any> | Array<any> | IGatsbyNode
 
 /**
  * Removes undefined keys from and Object or Array
@@ -13,7 +13,11 @@ const omitUndefined = <T extends ObjectOrArray>(data: T): T => {
     return _.pickBy(data, p => p !== undefined) as T
   }
 
-  return data.filter(p => p !== undefined)
+  if (Array.isArray(data)) {
+    return data.filter(p => p !== undefined)
+  }
+
+  return;
 }
 
 const isTypeSupported = (data: unknown): boolean => {
@@ -33,8 +37,8 @@ const isTypeSupported = (data: unknown): boolean => {
 /**
  * Make data serializable
  */
-export function sanitizeNode<T extends Node>(
-  data: T,
+export function sanitizeNode(
+  data: unknown,
   isNode: boolean = true,
   path: Set<T> = new Set()
 ): T | undefined {
@@ -51,7 +55,7 @@ export function sanitizeNode<T extends Node>(
         returnData[key] = o
         return
       }
-      returnData[key] = sanitizeNode(o as T, false, path)
+      returnData[key] = sanitizeNode(o, false, path)
 
       if (returnData[key] !== o) {
         anyFieldChanged = true
