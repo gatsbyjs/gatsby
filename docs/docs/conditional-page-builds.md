@@ -22,7 +22,7 @@ To list the paths in the build assets (`public`) folder, you can use one (or bot
 
 - `--log-pages` parameter will output all the file paths that were updated or deleted at the end of the build stage.
 
-```bash
+```shell
 success Building production JavaScript and CSS bundles - 82.198s
 success run queries - 82.762s - 4/4 0.05/s
 success Building static HTML for pages - 19.386s - 2/2 0.10/s

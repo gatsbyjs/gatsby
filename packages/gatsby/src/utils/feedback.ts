@@ -76,9 +76,10 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   //     received a request from us.
   if (lastDateValue) {
     const lastDate = new Date(lastDateValue)
-    const monthsSinceLastRequest = lastDate.getMonth() - new Date().getMonth()
+    const threeMonthsAgo = new Date()
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 
-    if (monthsSinceLastRequest < 3) {
+    if (lastDate > threeMonthsAgo) {
       return false
     }
   }

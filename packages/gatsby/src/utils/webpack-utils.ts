@@ -1,3 +1,4 @@
+import * as path from "path"
 import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
 import postcss from "postcss"
@@ -267,6 +268,13 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
           ...options,
         },
         loader: require.resolve(`./babel-loader`),
@@ -275,7 +283,16 @@ export const createWebpackUtils = (
 
     dependencies: options => {
       return {
-        options,
+        options: {
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
+          ...options,
+        },
         loader: require.resolve(`babel-loader`),
       }
     },
@@ -541,7 +558,8 @@ export const createWebpackUtils = (
     ...options
   }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
-      cache: true,
+      // TODO add proper cache keys
+      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
       // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
       parallel: !isWsl,

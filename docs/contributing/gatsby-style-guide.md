@@ -13,7 +13,7 @@ You don't have to be an expert in a
 topic to write about it--this entire website is open source, so even if you make a mistake, another contributor will help you correct it before the PR gets merged.
 
 If you’d like to help by writing an article, find a stub article in the Gatsby
-Docs (with a grey instead of black title in the sidebar of the Docs), write the article, then
+Docs (with a gray instead of black title in the sidebar of the Docs), write the article, then
 [open a pull request (PR)](/contributing/how-to-contribute/#contributing-to-the-documentation) in the Gatsby GitHub repo to replace the stub with your article.
 
 If you can't find a stub about the topic you'd like to write about, you can open a PR in GitHub that creates the stub and includes your draft article. Feel free to ask questions in the PR comments if you're not sure where to put a new article in the directory structure.

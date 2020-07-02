@@ -261,7 +261,7 @@ discovered Netlify for some other projects.
 
 ## Solution: Netlify + Gatsby
 
-Plugging any static site into the Netlify workflow is a no brainer, but after I
+Plugging any static site into the Netlify workflow is a no-brainer, but after I
 found Gatsby, I knew there was no other option for me. These two pair so well
 together!
 
