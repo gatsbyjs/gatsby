@@ -14,7 +14,7 @@ function preset(context, options = {}) {
   }
 
   const nodeConfig = {
-    corejs: 3,
+    corejs: 2,
     useBuiltIns: `entry`,
     targets: {
       node: nodeVersion,
