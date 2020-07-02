@@ -11234,6 +11234,28 @@
   built_by: Shion Honda
   built_by_url: https://twitter.com/shion_honda
   featured: false
+- title: Travel Diary - Your Digital Travelogue
+  main_url: https://ontraveldiary.com
+  url: https://ontraveldiary.com
+  description: >
+    An open to all digital platform for avid travelers to share their trips and photos with the world.
+  categories:
+    - Blog
+    - Travel
+    - Community
+  built_by: Draftbox
+  built_by_url: https://draftbox.co
+  featured: false
+- title: Ellington Hammond
+  main_url: https://ellingtonhammond.com
+  url: https://ellingtonhammond.com
+  description: >
+    Ellington Hammond is a photographer and film director based in the United States.
+  categories:
+    - Portfolio
+    - E-commerce
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
 - title: Laputan ERP
   main_url: https://erp.laputan.com.au
   url: https://erp.laputan.com.au
@@ -11247,6 +11269,17 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Fidisys Playbook
+  main_url: https://playbook.fidisys.com/
+  url: https://playbook.fidisys.com/
+  description: >
+    Fidisys playbook is the process we follow in Fidisys to build awesome products. It shows engineering, hiring and operation process.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+  built_by: Fidisys Technologies
+  built_by_url: https://www.fidisys.com/
 - title: Gabriel Giordano Portfolio
   main_url: https://gabrielgiordano.com
   url: https://gabrielgiordano.com
