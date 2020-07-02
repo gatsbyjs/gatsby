@@ -63,7 +63,7 @@ export default function EvaluationTable(props) {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
                             borderColor: `ui.border`,
-                            borderBottom: !showTooltip(s, i) ? 1 : `none`
+                            borderBottom: !showTooltip(s, i) ? 1 : `none`,
                             minWidth: 40,
                             px: 0,
                             textAlign: `left`,

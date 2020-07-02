@@ -28,7 +28,7 @@ export default function SimpleEvaluationTable(props) {
                         cursor: `pointer`,
                       },
                       borderColor: `ui.border`,
-                      borderBottom: !showTooltip(idx) ? 1 : `none`
+                      borderBottom: !showTooltip(idx) ? 1 : `none`,
                       minWidth: 40,
                       px: 0,
                       textAlign: `left`,
