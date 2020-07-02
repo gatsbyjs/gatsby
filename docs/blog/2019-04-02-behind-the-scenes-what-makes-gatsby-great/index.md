@@ -2,7 +2,7 @@
 title: "Behind the Scenes: What makes Gatsby Great"
 date: 2019-04-02
 author: Dustin Schau
-excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicriously fast experience that your users will love."
+excerpt: "Gatsby is fast. You know this. This post outlines the numerous performance techniques that Gatsby performs behind the scenes to deliver a ludicrously fast experience that your users will love."
 tags:
   - performance
   - apis
@@ -10,7 +10,7 @@ tags:
   - deployment
 ---
 
-Gatsby is **great** from a multititude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
+Gatsby is **great** from a multitude of perspectives. Our community is **great**. The developer experience is **great**. The performance of the resulting application is **great**. Our documentation is **great**. And so on and so forth... if I were to focus on _each_ of these areas, this post would become an overly long love letter that I'm not sure many would want to read.
 
 As such--this post focuses on just a single element of what makes Gatsby great: performance. To prime the discussion, let's consider [this post on the `webdev` subreddit on Reddit](https://www.reddit.com/r/webdev/comments/9z5dsr/how_does_reactjs_have_such_a_fast_website/?st=jtqbllhm&sh=60148ea7).
 
@@ -28,7 +28,7 @@ In an effort to answer this initial question, this post outlines several foundat
 2. Route-based code splitting
 3. Modern APIs
 
-Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicriously fast.
+Finally, this post concludes with tangible, practical advice for measuring and asserting conclusively that your app is _actually_ ludicrously fast.
 
 Let's dive deep.
 
@@ -149,7 +149,7 @@ Let's continue.
 
 Gatsby--like other tools--uses the filesystem as a convention for mapping to routes for instance, given the following directory structure:
 
-_also note we expose a [programatic API](/docs/node-apis/#createPages) for dynamic route creation_
+_also note we expose a [programmatic API](/docs/node-apis/#createPages) for dynamic route creation_
 
 ```text
 ├── src/
@@ -481,17 +481,17 @@ Lighthouse will provide scores from 0 - 100 for a variety of meaningful categori
 
 Lighthouse is a great _first_ step to asserting whether or not your application is actually fast. If you are scoring near 100s (if you're using Gatsby--you probably are!) you can feel assured with a reasonable degree of confidence that your application is actually fast. However--Lighthouse can sometimes vary between runs and results can sometimes vary depending on which machine is used to run the test. To gain a greater degree of _certainty_ that your application is fast I recommend another, complementary tool: Webpagetest.
 
-### Webpagetest
+### WebPagetest
 
-[Webpagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU-constrained. You can use a slower network to ensure that you get an accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
+[WebPagetest](https://webpagetest.org) is an amazing tool built by [Patrick Meenan](https://twitter.com/patmeenan). You can tweak the device used in the tests to validate that your application works even on low-performing devices that tend to be CPU-constrained. You can use a slower network to ensure that you get an accurate representation of how your users could be interacting with your application in less-than-ideal network connections. You can even choose the location of where your test is run!
 
-I liken the relationship between Lighthouse and Webpagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (Webpagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
+I liken the relationship between Lighthouse and WebPagetest as similar to the relationship between a unit test (Lighthouse) and an end to end test (WebPagetest). A unit test gives you a fair degree of confidence that what you're testing works like you expect. An end to end test gives you a near certainty that what you're testing works as expected, because you're testing in real-world conditions.
 
 Both are valuable--and both have their place!
 
 ### Trust, but validate
 
-As mentioned, performance is something that should be regularly monitored. Using tools like Webpagetest and Lighthouse are **great** techniques that should be used and help uncover performance problems (among other key concerns like accessibility improvements, SEO, etc.). However, the usage of these tools are oftentimes done in a reactionary, ad-hoc manner. Performing a Lighthouse test, discovering issues, and devoting a week or two to remediate is _all_ too common.
+As mentioned, performance is something that should be regularly monitored. Using tools like WebPagetest and Lighthouse are **great** techniques that should be used and help uncover performance problems (among other key concerns like accessibility improvements, SEO, etc.). However, the usage of these tools are oftentimes done in a reactionary, ad-hoc manner. Performing a Lighthouse test, discovering issues, and devoting a week or two to remediate is _all_ too common.
 
 Why react to something (!) with manual, ad-hoc spot checking? What if we could remediate and diagnose at pull request time?
 

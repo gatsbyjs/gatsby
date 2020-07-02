@@ -193,6 +193,6 @@ Hopefully you've seen how easy it is to start working with Gentics Mesh and Gats
 ## Learn more
 
 There is a lot more to learn on how Gentics Mesh API can help you build your site.
-One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. vehicle → vehiclePage, category → catgoryPage.)
+One big advantage of Mesh is that you can use a tree structure for your contents. This allows for easy path generation of contents. Combined with Gatsby this allows you to quickly add different kinds of pages to your site. The template for each site can be selected by the schema (e.g. `vehicle` → `vehiclePage`, `category` → `categoryPage`.)
 
 This workflow is also explained hands-on in [this in-depth guide](https://getmesh.io/blog/gentics-mesh-gatsby/) which shows how to build a basic vehicle inventory with Gatsby.

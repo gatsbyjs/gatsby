@@ -25,7 +25,7 @@
     "@types/semver": "^7.1.0",
     "@types/signal-exit": "^3.0.0",
     "@types/stack-trace": "^0.0.29",
-    "@types/webpack": "^4.41.8",
+    "@types/webpack": "^4.41.18",
     "@types/webpack-merge": "^4.1.5",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
@@ -158,5 +158,12 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "dictionary-en": "^3.0.0",
+    "retext-emoji": "^7.0.1",
+    "retext-spell": "^4.0.0",
+    "retext-syntax-mentions": "^2.1.0",
+    "retext-syntax-urls": "^2.0.0"
+  }
 }

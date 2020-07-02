@@ -269,6 +269,11 @@ ${e}`
       },
     },
     interfaces: [`Node`],
+    extensions: {
+      childOf: {
+        mimeTypes: options.mediaTypes,
+      },
+    },
   })
   createTypes(MdxType)
 }

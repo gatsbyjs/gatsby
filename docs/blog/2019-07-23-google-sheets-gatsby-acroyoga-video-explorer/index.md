@@ -56,7 +56,7 @@ Google sheets are pretty amazing if you think about it. While they might never b
 
 This is a list of Acroyoga videos from Youtube. I tagged these videos in column I (e.g. beginner, flow). The 'thumbnail' column is the Youtube video thumbnail while instructor_image are some dummy images I saved in a Google cloud storage bucket. The instructor_image column is not [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) here and I could find a way to store this separately in another sheet. This occasional lack of 'DRYness' is one potential downside of using a spreadsheet as a web application database.
 
-To access this data, I first must 'publish to the web' (under the file menu). This makes it available for consuming via API. Next I needed to register for an API key with Google. Finally, I can GET this data using a Google Sheets API method called [batchGet](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchGet). My API call [outputs my spreadsheet data as JSON](https://gist.github.com/kpennell/82484a220c0e56f40f98c4bcaec87d9c), which I'll now consume in my Gatsby app.
+To access this data, I first must 'publish to the web' (under the file menu). This makes it available for consuming via API. Next I needed to register for an API key with Google. Finally, I can GET this data using a Google Sheets API method called [`batchGet`](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/batchGet). My API call [outputs my spreadsheet data as JSON](https://gist.github.com/kpennell/82484a220c0e56f40f98c4bcaec87d9c), which I'll now consume in my Gatsby app.
 
 ## Making Gatsby Pages for Each Google Sheet Row
 
@@ -255,7 +255,7 @@ If you'd like to dive into the single-tag or single-instructor templates more, t
 
 When I first learned Gatsby, I found the folder structure, node and page creation methods really byzantine and confusing. I struggled to understand why there was no App.js and familiar parent-child component tree. I dug through the files looking for the React-router setup and was at a loss when I didn't find one. But once I got the hang of the Gatsby way of doing things, I began to love how easy it was to not only create prebuilt fast-loading pages (made up of React components) but also to link these pages together.
 
-This video explorer site allows users to easily filter videos by clicking/tapping on the tags or instructors. This links them to a new page with only the matching videos. Thanks to Gatsby's Link component, coding this functionality is very easy. Here is a card for one of the videos (ie rows in the Google Sheet).
+This video explorer site allows users to easily filter videos by clicking/tapping on the tags or instructors. This links them to a new page with only the matching videos. Thanks to Gatsby's Link component, coding this functionality is very easy. Here is a card for one of the videos (i.e. rows in the Google Sheet).
 
 ![Video Card showing Acroyoga](./images/word-image-2.png)
 

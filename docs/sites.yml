@@ -119,7 +119,7 @@
   main_url: https://theodorawarre.eu
   url: https://theodorawarre.eu
   description: >-
-    E-commerce site for jewellery designer Theodora Warre, built using Gatsby + 
+    E-commerce site for jewellery designer Theodora Warre, built using Gatsby +
     + Prismic + Matter.js
   categories:
     - E-commerce
@@ -11081,7 +11081,7 @@
     UK based web design agency building premium bespoke websites with light-speed performance and rock-solid security
   categories:
     - Agency
-    - Web development
+    - Web Development
     - Design
     - SEO
     - Portfolio
@@ -11162,7 +11162,7 @@
   built_by: Dovetail
   built_by_url: https://dovetailstudios.com
   featured: false
-- title: Brad Garropy
+- title: Daily Texas Country
   url: https://dailytexascountry.com
   main_url: https://dailytexascountry.com
   source_url: https://github.com/bradgarropy/dailytexascountry.com
@@ -11234,3 +11234,16 @@
   built_by: Shion Honda
   built_by_url: https://twitter.com/shion_honda
   featured: false
+- title: Laputan ERP
+  main_url: https://erp.laputan.com.au
+  url: https://erp.laputan.com.au
+  description: >
+    Customizable Enterprise Resource Planning (ERP) System helps companies save time and money across departments (Accounting, Finance, Human Resources, Marketing, Sales & IT) in order to improve productivity and competitiveness.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+    - Finance
+    - Marketing
+  built_by: Laputan Software
+  built_by_url: https://laputan.com.au
