@@ -8,6 +8,7 @@
     "build": "gatsby build",
     "clean": "gatsby clean"
   },
+  "license": "0BSD",
   "dependencies": {
     "gatsby": "^2.23.12",
     "gatsby-theme-blog": "^1.6.51",

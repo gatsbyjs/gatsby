@@ -1,6 +1,7 @@
 import { processStaticQueries } from "../query"
 import { IBuildContext } from "./"
 import reporter from "gatsby-cli/lib/reporter"
+import { assertStore } from "../utils/assert-store"
 
 export async function runStaticQueries({
   parentSpan,
@@ -9,9 +10,8 @@ export async function runStaticQueries({
   program,
   graphqlRunner,
 }: Partial<IBuildContext>): Promise<void> {
-  if (!store) {
-    reporter.panic(`Cannot run service without a redux store`)
-  }
+  assertStore(store)
+
   if (!queryIds) {
     return
   }
