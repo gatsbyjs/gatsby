@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState } from "react"
+import getStripe from "../../utils/stripejs"
 
 const cardStyles = {
   display: "flex",
@@ -13,6 +14,7 @@ const cardStyles = {
   maxWidth: "300px",
 }
 const buttonStyles = {
+  display: "block",
   fontSize: "13px",
   textAlign: "center",
   color: "#fff",
@@ -22,6 +24,11 @@ const buttonStyles = {
   backgroundColor: "rgb(255, 178, 56)",
   borderRadius: "6px",
   letterSpacing: "1.5px",
+}
+
+const buttonDisabledStyles = {
+  opacity: "0.5",
+  cursor: "not-allowed",
 }
 
 const formatPrice = (amount, currency) => {
@@ -34,33 +41,52 @@ const formatPrice = (amount, currency) => {
   return numberFormat.format(price)
 }
 
-const SkuCard = ({ sku, stripePromise }) => {
-  const redirectToCheckout = async (event, sku, quantity = 1) => {
+const ProductCard = ({ product }) => {
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async event => {
     event.preventDefault()
-    const stripe = await stripePromise
+    setLoading(true)
+
+    const price = new FormData(event.target).get("priceSelect")
+    const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout({
-      items: [{ sku, quantity }],
+      mode: "payment",
+      lineItems: [{ price, quantity: 1 }],
       successUrl: `${window.location.origin}/page-2/`,
       cancelUrl: `${window.location.origin}/advanced`,
     })
 
     if (error) {
       console.warn("Error:", error)
+      setLoading(false)
     }
   }
 
   return (
     <div style={cardStyles}>
-      <h4>{sku.attributes.name}</h4>
-      <p>Price: {formatPrice(sku.price, sku.currency)}</p>
-      <button
-        style={buttonStyles}
-        onClick={event => redirectToCheckout(event, sku.id)}
-      >
-        BUY ME
-      </button>
+      <form onSubmit={handleSubmit}>
+        <h4>{product.name}</h4>
+        <select name="priceSelect">
+          {product.prices.map(price => (
+            <option key={price.id} value={price.id}>
+              {formatPrice(price.unit_amount, price.currency)}
+            </option>
+          ))}
+        </select>
+        <button
+          disabled={loading}
+          style={
+            loading
+              ? { ...buttonStyles, ...buttonDisabledStyles }
+              : buttonStyles
+          }
+        >
+          BUY ME
+        </button>
+      </form>
     </div>
   )
 }
 
-export default SkuCard
+export default ProductCard

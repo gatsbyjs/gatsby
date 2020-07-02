@@ -15,5 +15,5 @@
 
 [template.environment]
   GATSBY_STRIPE_PUBLISHABLE_KEY = "Add your Stripe publishable key here: pk_test_xxx"
-  GATSBY_BUTTON_SKU_ID = "The sku id for the one-time purchase product: sku_xxx"
+  GATSBY_BUTTON_PRICE_ID = "The price id for the one-time purchase product: price_xxx"
   STRIPE_SECRET_KEY = "Add your Stripe secret key here: sk_test_xxx"

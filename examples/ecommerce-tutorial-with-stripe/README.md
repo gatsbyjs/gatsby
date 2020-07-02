@@ -13,7 +13,7 @@ This is a Gatsby e-commerce example based on https://www.gatsbyjs.org/tutorial/e
 ## Setup
 
 - First, you must enable client-only Checkout in your Stripe Dashboard: https://dashboard.stripe.com/account/checkout/settings
-- Next, create a product and SKU from the Stripe Dashboard: https://dashboard.stripe.com/test/products
+- Next, create a product and price from the Stripe Dashboard: https://dashboard.stripe.com/test/products
 
 ### Run locally
 
