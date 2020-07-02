@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.11...gatsby-remark-embed-snippet@4.3.12) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
 ## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.10...gatsby-remark-embed-snippet@4.3.11) (2020-07-01)
 
 **Note:** Version bump only for package gatsby-remark-embed-snippet
