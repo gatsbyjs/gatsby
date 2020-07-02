@@ -1,6 +1,5 @@
 ---
 title: Deploying and Hosting
-overview: true
 ---
 
 Getting your shiny new Gatsby site deployed and accessible is probably the first thing you will want to do now that it's built! Also, give yourself a pat on the back real quick for creating something so great!

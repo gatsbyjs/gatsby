@@ -49,7 +49,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       showTopLevelSignatures: Boolean
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
-      overview: Boolean
       issue: String
       jsdoc: [String!]
       apiCalls: String
