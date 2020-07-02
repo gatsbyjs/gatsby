@@ -366,7 +366,7 @@ describe(`gatsby-source-drupal`, () => {
     expect(nodes[createNodeId(`article-5`)]).toBeDefined()
   })
 
-  describe.only(`Error handling`, () => {
+  describe(`Error handling`, () => {
     describe(`Does end activities if error is thrown`, () => {
       const axios = require(`axios`)
       beforeEach(() => {
