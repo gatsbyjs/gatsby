@@ -41,7 +41,6 @@ export const pageQuery = graphql`
       frontmatter {
         title
         description
-        overview
         issue
         disableTableOfContents
         tableOfContentsDepth
