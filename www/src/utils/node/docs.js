@@ -61,18 +61,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       locale: String
     }
 
-    type File implements Node {
-      fields: FileFields
-    }
-
-    # Added by gatsby-transformer-gitinfo
-    # TODO add these back upstream
-    type FileFields {
-      gitLogLatestDate: Date @dateformat
-      gitLogLatestAuthorName: String
-      gitLogLatestAuthorEmail: String
-    }
-
     type GatsbyAPICall implements Node @derivedTypes @dontInfer {
       name: String
       file: String
