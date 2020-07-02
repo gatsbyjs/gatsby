@@ -33,7 +33,7 @@ Gatsby Days was the perfect energizing kick off to the rest of the week: our spr
 
 ![Chris Biscardi and Dustin Schau show off their karaoke skills.](./images/chris-dustin.jpg)
 
-![Marisa Morby, Dustin Schau, and Michal Piechowiak getting in on the Karaoke](./images/marisa-dustin-michal.jpg)
+![Marisa Morby, Dustin Schau, and Michał Piechowiak getting in on the Karaoke](./images/marisa-dustin-michal.jpg)
 
 ![Gatsby team members gather for brunch](./images/lunch.jpg)
 

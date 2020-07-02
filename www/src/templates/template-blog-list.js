@@ -79,8 +79,7 @@ class BlogPostsIndex extends React.Component {
                   },
                 },
                 [mediaQueries.md]: {
-                  marginLeft: t => `-${t.space[9]}`,
-                  marginRight: t => `-${t.space[9]}`,
+                  mx: -9,
                 },
               }}
             />
@@ -100,11 +99,7 @@ export const pageQuery = graphql`
   query blogListQuery($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { order: DESC, fields: [frontmatter___date, fields___slug] }
-      filter: {
-        frontmatter: { draft: { ne: true } }
-        fileAbsolutePath: { regex: "/docs.blog/" }
-        fields: { released: { eq: true } }
-      }
+      filter: { fields: { section: { eq: "blog" }, released: { eq: true } } }
       limit: $limit
       skip: $skip
     ) {

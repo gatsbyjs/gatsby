@@ -2,7 +2,7 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you through the process of using [Gatsby](/) with [WordPress Rest Api](https://developer.wordpress.org/rest-api/reference/).
+This guide will walk you through the process of using [Gatsby](/) with [WordPress Rest API](https://developer.wordpress.org/rest-api/reference/).
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
@@ -39,7 +39,7 @@ npm install gatsby-source-wordpress
 
 ### Configuring the plugin
 
-In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](http://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
+In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](https://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
 
 ```javascript:title=gatsby-config.js
 module.exports = {

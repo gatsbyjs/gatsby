@@ -55,6 +55,7 @@ beforeEach(() => {
 const getConfig = (args = {}) =>
   webpackConfig(
     {
+      directory: process.cwd(),
       extensions: [`.js`],
     },
     process.cwd(),

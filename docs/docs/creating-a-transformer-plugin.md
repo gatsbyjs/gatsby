@@ -27,7 +27,7 @@ This loose coupling between the data source and transformer plugins allow Gatsby
 
 Just like a source plugin, a transformer plugin is a normal NPM package. It has a `package.json` file with optional dependencies as well as a `gatsby-node.js` file where you implement Gatsby's Node.js APIs.
 
-`gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/yaml (e.g. a .yaml file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
+`gatsby-transformer-yaml` is transformer plugin that looks for new nodes with a media type of text/YAML (e.g. a `.yaml` file) and creates new YAML child node(s) by parsing the YAML source into JavaScript objects.
 
 Check out this example of rebuilding a simplified `gatsby-transformer-yaml` directly in a site. Say you have a default Gatsby starter site which includes a `src/data/example.yml` file:
 
@@ -102,7 +102,7 @@ Now you have a `File` node to work with:
 
 Now, transform the newly created `File` nodes by hooking into the `onCreateNode` API in `gatsby-node.js`.
 
-#### Convert yaml into JSON for storage in Gatsby nodes
+#### Convert YAML into JSON for storage in Gatsby nodes
 
 If you're following along in an example project, install the following packages:
 
@@ -174,7 +174,7 @@ Above, you create a `yamlNode` object with the shape expected by the [`createNod
 
 #### Creating the transformer relationship
 
-You then need to create a link between the parent node (file) and the child node (yaml content) using the `createParentChildLink` function after adding the parent node's id to the `yamlNode`:
+You then need to create a link between the parent node (file) and the child node (YAML content) using the `createParentChildLink` function after adding the parent node's id to the `yamlNode`:
 
 ```javascript:title=gatsby-node.js
 function transformObject(obj, id, type) {
@@ -304,7 +304,7 @@ Check out the [full source code](https://github.com/gatsbyjs/gatsby/blob/master/
 
 Sometimes transforming properties costs time and resources. In order to avoid recreating these properties at each run, you can profit from the global cache mechanism Gatsby provides.
 
-Cache keys should at least contain the contentDigest of the concerned node. For example, the `gatsby-transformer-remark` uses the following cache key for the html node:
+Cache keys should at least contain the contentDigest of the concerned node. For example, the `gatsby-transformer-remark` uses the following cache key for the HTML node:
 
 ```javascript:title=extend-node-type.js
 const htmlCacheKey = node =>

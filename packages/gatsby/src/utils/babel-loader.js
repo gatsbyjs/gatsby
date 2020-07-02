@@ -30,7 +30,6 @@ module.exports = babelLoader.custom(babel => {
           stage,
         },
         loader: {
-          cacheDirectory: true,
           sourceType: `unambiguous`,
           ...getCustomOptions(stage),
           ...options,

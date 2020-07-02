@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { t } from "@lingui/macro"
-import { withI18n } from "@lingui/react"
 
 import ChevronSvg from "./chevron-svg"
 import indention from "../../utils/sidebar/indention"
@@ -76,7 +74,7 @@ const Title = ({ item }) => (
       alignItems: `center`,
       display: `flex`,
       paddingLeft: indention(item.level),
-      minHeight: 40,
+      minHeight: `sidebarItemMinHeight`,
     }}
   >
     <SectionHeading disabled item={item}>
@@ -97,9 +95,9 @@ const TitleButton = ({ item, uid }) => {
       sx={{
         ...styles.resetButton,
         ...styles.button,
-        pl: item.level === 0 ? 6 : 0,
-        pr: `0 !important`,
-        minHeight: 40,
+        pl: indention(item.level),
+        pr: t => t.sizes.sidebarItemMinHeight,
+        minHeight: `sidebarItemMinHeight`,
         "&:before": {
           bg: `itemBorderColor`,
           content: `''`,
@@ -107,7 +105,7 @@ const TitleButton = ({ item, uid }) => {
           position: `absolute`,
           right: 0,
           bottom: 0,
-          left: t => (item.level === 0 ? t.space[6] : 0),
+          left: indention(item.level),
           top: `auto`,
         },
       }}
@@ -134,7 +132,7 @@ const TitleButton = ({ item, uid }) => {
 
 // A split title with a link that can be navigated to, and a button
 // that can expand it
-const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
+const SplitButton = ({ itemRef, item, uid }) => {
   const { getItemState, onSectionTitleClick } = useSidebarContext()
   const { isExpanded } = getItemState(item)
   return (
@@ -167,9 +165,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
         aria-controls={uid}
         aria-expanded={isExpanded}
         aria-label={
-          isExpanded
-            ? i18n._(t`${item.title} collapse`)
-            : i18n._(t`${item.title} expand`)
+          isExpanded ? `${item.title} collapse` : `${item.title} expand`
         }
         sx={{
           ...styles.resetButton,
@@ -188,7 +184,7 @@ const SplitButton = withI18n()(({ i18n, itemRef, item, uid }) => {
       </button>
     </span>
   )
-})
+}
 
 export default function SectionTitle({ itemRef, item, uid }) {
   const { disableAccordions } = useSidebarContext()

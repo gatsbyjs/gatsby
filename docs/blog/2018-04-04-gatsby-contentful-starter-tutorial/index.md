@@ -32,19 +32,19 @@ This guide assumes that you have [GatsbyJS installed](/docs/) and, optionally, a
 
 Start by using this with the Gatsby CLI:
 
-```bash
-gatsby new contentful-starter https://github.com/contentful-userland/gatsby-contentful-starter
+```shell
+gatsby new contentful-starter https://github.com/contentful/starter-gatsby-blog
 ```
 
 Alternatively, you can also clone a sample repo from GitHub:
 
-```bash
-git clone git@github.com:contentful-userland/gatsby-contentful-starter.git
+```shell
+git clone git@github.com:contentful/starter-gatsby-blog.git
 ```
 
 And go into the directory and install the required dependencies with:
 
-```bash
+```shell
 npm install
 ```
 

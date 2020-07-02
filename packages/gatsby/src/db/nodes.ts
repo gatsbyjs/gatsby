@@ -1,53 +1,36 @@
-import _ from "lodash"
-import { store } from "../redux"
 import { IGatsbyNode } from "../redux/types"
-import * as reduxNodes from "../redux/nodes"
-import { runSift as runQuery } from "../redux/run-sift"
+import { store } from "../redux"
 
 /**
  * Get content for a node from the plugin that created it.
  */
-export function loadNodeContent(node: IGatsbyNode): Promise<string> {
-  if (_.isString(node.internal.content)) {
-    return Promise.resolve(node.internal.content)
-  } else {
-    return new Promise(resolve => {
-      // Load plugin's loader function
-      const plugin = store
-        .getState()
-        .flattenedPlugins.find(plug => plug.name === node.internal.owner)
-      const { loadNodeContent } = require(plugin.resolve)
-      if (!loadNodeContent) {
-        throw new Error(
-          `Could not find function loadNodeContent for plugin ${plugin.name}`
-        )
-      }
-
-      return loadNodeContent(node).then(content => {
-        // TODO update node's content field here.
-        resolve(content)
-      })
-    })
+export async function loadNodeContent(node: IGatsbyNode): Promise<string> {
+  if (typeof node.internal.content === `string`) {
+    return node.internal.content
   }
-}
 
-const {
-  getNodes,
-  getNode,
-  getNodesByType,
-  getTypes,
-  hasNodeChanged,
-  getNodeAndSavePathDependency,
-  saveResolvedNodes,
-} = reduxNodes
+  // Load plugin's loader function
+  const plugin = store
+    .getState()
+    .flattenedPlugins.find(plug => plug.name === node.internal.owner)
 
-export {
-  getNodes,
-  getNode,
-  getNodesByType,
-  getTypes,
-  hasNodeChanged,
-  getNodeAndSavePathDependency,
-  saveResolvedNodes,
-  runQuery,
+  if (!plugin) {
+    throw new Error(
+      `Could not find owner plugin of node for loadNodeContent with owner \`${node.internal.owner}\``
+    )
+  }
+
+  const { loadNodeContent } = require(plugin.resolve)
+
+  if (!loadNodeContent) {
+    throw new Error(
+      `Could not find function loadNodeContent for plugin ${plugin.name}`
+    )
+  }
+
+  const content = await loadNodeContent(node)
+
+  node.internal.content = content
+
+  return content
 }
