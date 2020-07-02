@@ -245,11 +245,26 @@ type Mdx implements Node
 }
 ```
 
+The `mimeTypes` and `types` arguments can be combined as follows:
+
+```graphql
+# Adds `childMdx` as a child to `File` nodes *and* nodes with `@mimeTypes` set to "text/markdown" or "text/x-markdown"
+type Mdx implements Node
+  @childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
+  id: ID!
+}
+```
+
 If `many: true` is set, then instead of creating a single child field on the parent, it will create multiple:
 
 ```graphql
-# Adds `childrenMdx` as a field of `File`
-type Mdx implements Node @childOf(types: ["File"], many: true) {
+# Adds `childMdx1` with type `Mdx1` to `File`.
+type Mdx1 implements Node @childOf(types: ["File"]) {
+  id: ID!
+}
+
+# Adds `childrenMdx2` with type `[Mdx2]` as a field of `File`.
+type Mdx2 implements Node @childOf(types: ["File"], many: true) {
   id: ID!
 }
 ```
