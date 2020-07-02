@@ -100,7 +100,7 @@ You can add these words to the dictionary with the following command:
 yarn update-dictionary
 ```
 
-This will all new words to our personal dictionary, `dictionary.txt`. Commit this file along with the written docs, and be sure that actual misspellings aren't included.
+This will add all new words to the collective Gatsby dictionary, `dictionary.txt`. Commit this file along with the written docs, and be sure that actual misspellings aren't included.
 
 ## Word choice
 
