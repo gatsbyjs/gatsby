@@ -32,7 +32,6 @@ export default function MarkdownPageFooter({ page }) {
 
 export const fragment = graphql`
   fragment MarkdownPageFooterMdx on DocPage {
-    latestUpdate(formatString: "MMMM D, YYYY")
     parent {
       ... on File {
         relativePath
