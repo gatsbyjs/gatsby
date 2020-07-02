@@ -6834,7 +6834,7 @@
 - url: https://gatsby-starter-portfolio.herokuapp.com/
   repo: https://github.com/surudhb/gatsby-personal-site-template
   description: A minimalist dev portfolio featuring a blog, SEO, app-theming with React.Context, Bootstrap and Sass
-  tags: 
+  tags:
     - Portfolio
     - Blog
     - SEO
