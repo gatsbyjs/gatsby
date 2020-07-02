@@ -172,6 +172,50 @@ const runAPI = (plugin, api, args, activity) => {
     }
     const localReporter = getLocalReporter(activity, reporter)
 
+    let runningActivities = new Set()
+
+    const localReporterThatCleansUpAfterMisbahavingPlugins = {
+      ...localReporter,
+      activityTimer: (...args) => {
+        const activity = reporter.activityTimer(...args)
+
+        return {
+          ...activity,
+          start: () => {
+            activity.start()
+            runningActivities.add(activity)
+          },
+          end: () => {
+            activity.end()
+            runningActivities.delete(activity)
+          },
+        }
+      },
+      createProgress: (...args) => {
+        const activity = reporter.createProgress(...args)
+
+        return {
+          ...activity,
+          start: () => {
+            activity.start()
+            runningActivities.add(activity)
+          },
+          end: () => {
+            activity.end()
+            runningActivities.delete(activity)
+          },
+          done: () => {
+            activity.done()
+            runningActivities.delete(activity)
+          },
+        }
+      },
+    }
+
+    const endInProgressActivitiesCreatedByThisRun = () => {
+      runningActivities.forEach(timer => timer.end())
+    }
+
     const apiCallArgs = [
       {
         ...args,
@@ -187,7 +231,7 @@ const runAPI = (plugin, api, args, activity) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter: localReporter,
+        reporter: localReporterThatCleansUpAfterMisbahavingPlugins,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -211,8 +255,9 @@ const runAPI = (plugin, api, args, activity) => {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
-          callback(err, val)
           apiFinished = true
+          endInProgressActivitiesCreatedByThisRun()
+          callback(err, val)
         }
 
         try {
@@ -228,9 +273,9 @@ const runAPI = (plugin, api, args, activity) => {
     } else {
       const result = gatsbyNode[api](...apiCallArgs)
       pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
+      return Promise.resolve(result).finally(() => {
         apiFinished = true
-        return res
+        endInProgressActivitiesCreatedByThisRun()
       })
     }
   }
