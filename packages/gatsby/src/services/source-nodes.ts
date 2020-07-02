@@ -2,8 +2,8 @@ import sourceNodesAndRemoveStaleNodes from "../utils/source-nodes"
 import reporter from "gatsby-cli/lib/reporter"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
-// import { findChangedPages } from "../utils/check-for-changed-pages"
-// import { IGatsbyPage } from "../redux/types"
+import { IGatsbyPage } from "../redux/types"
+import { findChangedPages } from "../utils/changed-pages"
 
 export async function sourceNodes({
   parentSpan,
@@ -19,10 +19,10 @@ export async function sourceNodes({
     parentSpan,
   })
   activity.start()
-  // const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+  const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
   await sourceNodesAndRemoveStaleNodes({
     parentSpan: activity.span,
-    // deferNodeMutation: !!(webhookBody && Object.keys(webhookBody).length), // Coming soon
+    deferNodeMutation: true,
     webhookBody,
   })
 
@@ -34,31 +34,31 @@ export async function sourceNodes({
       .join(`, `)}]`
   )
 
-  // reporter.info(`Checking for deleted pages`)
+  reporter.info(`Checking for deleted pages`)
 
   // Add this back when we enable page creation outside of onCreatePages
-  // const tim = reporter.activityTimer(`Checking for changed pages`)
-  // tim.start()
+  const tim = reporter.activityTimer(`Checking for changed pages`)
+  tim.start()
 
-  // const { changedPages, deletedPages } = findChangedPages(
-  //   currentPages,
-  //   store.getState().pages
-  // )
+  const { changedPages, deletedPages } = findChangedPages(
+    currentPages,
+    store.getState().pages
+  )
 
-  // reporter.info(
-  //   `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
-  // )
+  reporter.info(
+    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
+  )
 
-  // reporter.info(
-  //   `Found ${changedPages.length} changed page${
-  //     changedPages.length === 1 ? `` : `s`
-  //   }`
-  // )
-  // tim.end()
+  reporter.info(
+    `Found ${changedPages.length} changed page${
+      changedPages.length === 1 ? `` : `s`
+    }`
+  )
+  tim.end()
 
   activity.end()
   return {
-    deletedPages: [],
-    changedPages: [],
+    deletedPages,
+    changedPages,
   }
 }

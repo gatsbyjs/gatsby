@@ -3,16 +3,10 @@ import report from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
-import { bootstrapSchemaHotReloader } from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
 import { initTracer } from "../utils/tracer"
 import db from "../db"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import * as requiresWriter from "../bootstrap/requires-writer"
-import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import {
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
@@ -22,31 +16,36 @@ import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram } from "./types"
 import {
-  startWebpackServer,
-  writeOutRequires,
   IBuildContext,
   initialize,
-  postBootstrap,
   rebuildSchemaWithSitePage,
   writeOutRedirects,
+  startWebpackServer,
 } from "../services"
 import { boundActionCreators } from "../redux/actions"
 import { ProgramStatus } from "../redux/types"
 import {
   MachineConfig,
   AnyEventObject,
-  assign,
   Machine,
-  DoneEventObject,
   interpret,
   Actor,
   Interpreter,
+  forwardTo,
 } from "xstate"
-import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
+import { dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { globalTracer } from "opentracing"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { queryRunningMachine } from "../state-machines/query-running"
+import { IWaitingContext } from "../state-machines/waiting/types"
+import {
+  ADD_NODE_MUTATION,
+  runMutationAndMarkDirty,
+} from "../state-machines/shared-transition-configs"
+import { buildActions } from "../state-machines/actions"
+import { waitingMachine } from "../state-machines/waiting"
+import reporter from "gatsby-cli/lib/reporter"
 
 const tracer = globalTracer()
 
@@ -84,6 +83,7 @@ process.on(`message`, msg => {
 })
 
 module.exports = async (program: IProgram): Promise<void> => {
+  reporter.setVerbose(program.verbose)
   const bootstrapSpan = tracer.startSpan(`bootstrap`)
 
   // We want to prompt the feedback request when users quit develop
@@ -138,27 +138,31 @@ module.exports = async (program: IProgram): Promise<void> => {
           src: `initialize`,
           onDone: {
             target: `initializingDataLayer`,
-            actions: `assignStoreAndWorkerPool`,
+            actions: [`assignStoreAndWorkerPool`, `spawnMutationListener`],
           },
         },
       },
       initializingDataLayer: {
+        on: {
+          ADD_NODE_MUTATION: runMutationAndMarkDirty,
+        },
         invoke: {
           src: `initializeDataLayer`,
           data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
             return { parentSpan, store, firstRun: true }
           },
           onDone: {
-            actions: `assignDataLayer`,
+            actions: `assignServiceResult`,
             target: `finishingBootstrap`,
           },
         },
       },
       finishingBootstrap: {
+        on: {
+          ADD_NODE_MUTATION: runMutationAndMarkDirty,
+        },
         invoke: {
-          src: async ({
-            gatsbyNodeGraphQLFunction,
-          }: IBuildContext): Promise<void> => {
+          src: async (): Promise<void> => {
             // These were previously in `bootstrap()` but are now
             // in part of the state machine that hasn't been added yet
             await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
@@ -167,15 +171,6 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             startRedirectListener()
             bootstrapSpan.finish()
-            await postBootstrap({ parentSpan: bootstrapSpan })
-
-            // These are the parts that weren't in bootstrap
-
-            // Start the createPages hot reloader.
-            bootstrapPageHotReloader(gatsbyNodeGraphQLFunction)
-
-            // Start the schema hot reloader.
-            bootstrapSchemaHotReloader()
           },
           onDone: {
             target: `runningQueries`,
@@ -183,6 +178,9 @@ module.exports = async (program: IProgram): Promise<void> => {
         },
       },
       runningQueries: {
+        on: {
+          ADD_NODE_MUTATION,
+        },
         invoke: {
           src: `runQueries`,
           data: ({
@@ -191,6 +189,7 @@ module.exports = async (program: IProgram): Promise<void> => {
             parentSpan,
             gatsbyNodeGraphQLFunction,
             graphqlRunner,
+            websocketManager,
           }: IBuildContext): IQueryRunningContext => {
             return {
               firstRun: true,
@@ -199,6 +198,7 @@ module.exports = async (program: IProgram): Promise<void> => {
               parentSpan,
               gatsbyNodeGraphQLFunction,
               graphqlRunner,
+              websocketManager,
             }
           },
           onDone: {
@@ -207,26 +207,79 @@ module.exports = async (program: IProgram): Promise<void> => {
         },
       },
       doingEverythingElse: {
+        on: {
+          ADD_NODE_MUTATION,
+        },
         invoke: {
-          src: async ({ workerPool, store, app }): Promise<void> => {
+          src: async (): Promise<void> => {
             // All the stuff that's not in the state machine yet
 
-            await writeOutRequires({ store })
             boundActionCreators.setProgramStatus(
               ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
             )
 
             await db.saveState()
 
-            await waitUntilAllJobsComplete()
-            requiresWriter.startListener()
             db.startAutosave()
-            queryUtil.startListeningToDevelopQueue({
-              graphqlTracing: program.graphqlTracing,
-            })
-            queryWatcher.startWatchDeletePage()
-
-            await startWebpackServer({ program, app, workerPool })
+          },
+          onDone: [
+            {
+              target: `startingDevServers`,
+              cond: ({ compiler }: IBuildContext): boolean => !compiler,
+            },
+            {
+              target: `waiting`,
+            },
+          ],
+        },
+      },
+      startingDevServers: {
+        on: {
+          ADD_NODE_MUTATION,
+        },
+        invoke: {
+          src: `startWebpackServer`,
+          onDone: {
+            target: `waiting`,
+            actions: `assignServers`,
+          },
+        },
+      },
+      waiting: {
+        on: {
+          ADD_NODE_MUTATION: {
+            actions: forwardTo(`waiting`),
+          },
+        },
+        invoke: {
+          id: `waiting`,
+          src: `waitForMutations`,
+          data: ({
+            store,
+            nodeMutationBatch = [],
+          }: IBuildContext): IWaitingContext => {
+            return { store, nodeMutationBatch }
+          },
+          onDone: {
+            // These are mutations added while we were running the last
+            // batch. We'll hold on to them til we've finished this build.
+            actions: `assignServiceResult`,
+            target: `rebuildingPages`,
+          },
+        },
+      },
+      rebuildingPages: {
+        on: {
+          ADD_NODE_MUTATION,
+        },
+        invoke: {
+          src: `initializeDataLayer`,
+          data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
+            return { parentSpan, store, firstRun: false, skipSourcing: true }
+          },
+          onDone: {
+            actions: `assignServiceResult`,
+            target: `runningQueries`,
           },
         },
       },
@@ -239,21 +292,10 @@ module.exports = async (program: IProgram): Promise<void> => {
         initializeDataLayer: dataLayerMachine,
         initialize,
         runQueries: queryRunningMachine,
+        waitForMutations: waitingMachine,
+        startWebpackServer: startWebpackServer,
       },
-      actions: {
-        assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(
-          (_context, event) => {
-            const { store, workerPool } = event.data
-            return {
-              store,
-              workerPool,
-            }
-          }
-        ),
-        assignDataLayer: assign<IBuildContext, DoneEventObject>(
-          (_, { data }): DataLayerResult => data
-        ),
-      },
+      actions: buildActions,
     }).withContext({ program, parentSpan: bootstrapSpan, app })
   )
 
@@ -262,8 +304,17 @@ module.exports = async (program: IProgram): Promise<void> => {
   ): actor is Interpreter<T> => `machine` in actor
 
   const listeners = new WeakSet()
+
+  let last = service.state
+
   service.onTransition(state => {
-    report.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    if (!last) {
+      last = state
+    } else if (!state.changed || last.matches(state)) {
+      return
+    }
+    last = state
+    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
     // eslint-disable-next-line no-unused-expressions
     service.children?.forEach(child => {
       // We want to ensure we don't attach a listener to the same
@@ -271,8 +322,15 @@ module.exports = async (program: IProgram): Promise<void> => {
       // because xstate handles that for us when the actor is stopped.
 
       if (isInterpreter(child) && !listeners.has(child)) {
+        let sublast = child.state
         child.onTransition(substate => {
-          report.verbose(
+          if (!sublast) {
+            sublast = substate
+          } else if (!substate.changed || sublast.matches(substate)) {
+            return
+          }
+          sublast = substate
+          reporter.verbose(
             `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
               substate.value
             )}`

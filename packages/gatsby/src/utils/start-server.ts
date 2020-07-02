@@ -53,7 +53,7 @@ interface IServer {
   webpackWatching: IWebpackWatchingPauseResume
 }
 
-interface IWebpackWatchingPauseResume {
+export interface IWebpackWatchingPauseResume extends webpack.Watching {
   suspend: () => void
   resume: () => void
 }
@@ -63,7 +63,7 @@ interface IWebpackWatchingPauseResume {
 type PatchedWebpackDevMiddleware = WebpackDevMiddleware &
   express.RequestHandler & {
     context: {
-      watching: webpack.Watching & IWebpackWatchingPauseResume
+      watching: IWebpackWatchingPauseResume
     }
   }
 

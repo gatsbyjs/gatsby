@@ -24,6 +24,7 @@ export interface IProgram {
   sitePackageJson: PackageJson
   ssl?: ICert
   graphqlTracing?: boolean
+  verbose?: boolean
   setStore?: (store: Store<IGatsbyState, AnyAction>) => void
 }
 

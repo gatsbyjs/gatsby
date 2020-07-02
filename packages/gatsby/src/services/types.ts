@@ -6,6 +6,10 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { Express } from "express"
 import JestWorker from "jest-worker"
+import { Actor, AnyEventObject } from "xstate"
+import { Compiler } from "webpack"
+import { WebsocketManager } from "../utils/websocket-manager"
+import { IWebpackWatchingPauseResume } from "../utils/start-server"
 export interface IGroupedQueryIds {
   pageQueryIds: string[]
   staticQueryIds: string[]
@@ -26,4 +30,10 @@ export interface IBuildContext {
   refresh?: boolean
   workerPool?: JestWorker
   app?: Express
+  nodesMutatedDuringQueryRun?: boolean
+  mutationListener?: Actor<unknown, AnyEventObject>
+  nodeMutationBatch?: IMutationAction[]
+  compiler?: Compiler
+  websocketManager?: WebsocketManager
+  webpackWatching?: IWebpackWatchingPauseResume
 }

@@ -2,33 +2,10 @@ import { IQueryRunningContext } from "./types"
 import { DoneInvokeEvent, assign, ActionFunctionMap } from "xstate"
 import { GraphQLRunner } from "../../query/graphql-runner"
 import { assertStore } from "../../utils/assert-store"
+import { enqueueFlush } from "../../utils/page-data"
 
-export const emitStaticQueryDataToWebsocket = (
-  { websocketManager }: IQueryRunningContext,
-  { data: { results } }: DoneInvokeEvent<any>
-): void => {
-  if (websocketManager && results) {
-    results.forEach((result, id) => {
-      websocketManager.emitStaticQueryData({
-        result,
-        id,
-      })
-    })
-  }
-}
-
-export const emitPageDataToWebsocket = (
-  { websocketManager }: IQueryRunningContext,
-  { data: { results } }: DoneInvokeEvent<any>
-): void => {
-  if (websocketManager && results) {
-    results.forEach((result, id) => {
-      websocketManager.emitPageData({
-        result,
-        id,
-      })
-    })
-  }
+export const flushPageData = (): void => {
+  enqueueFlush()
 }
 
 export const assignDirtyQueries = assign<
@@ -36,6 +13,7 @@ export const assignDirtyQueries = assign<
   DoneInvokeEvent<any>
 >((_context, { data }) => {
   const { queryIds } = data
+  console.log({ queryIds })
   return {
     filesDirty: false,
     queryIds,
@@ -61,6 +39,5 @@ export const queryActions: ActionFunctionMap<
 > = {
   resetGraphQLRunner,
   assignDirtyQueries,
-  emitPageDataToWebsocket,
-  emitStaticQueryDataToWebsocket,
+  flushPageData,
 }
