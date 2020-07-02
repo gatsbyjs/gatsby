@@ -20,6 +20,12 @@
     "gatsby",
     "graphql"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-graphql-source-toolkit"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-graphql-source-toolkit#readme",
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
     "lodash": "^4.17.15",
