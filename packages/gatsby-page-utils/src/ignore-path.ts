@@ -1,13 +1,13 @@
 import * as mm from "micromatch"
 
 interface IPathIgnoreOptions {
-  patterns: string | ReadonlyArray<string>
+  patterns?: string | ReadonlyArray<string>
   options?: mm.Options
 }
 
 export function ignorePath(
   path: string,
-  ignore?: IPathIgnoreOptions | string | string[] | {} | null
+  ignore?: IPathIgnoreOptions | string | string[] | null
 ): boolean {
   // Don't do anything if no ignore patterns
   if (!ignore) return false
@@ -27,7 +27,6 @@ export function ignorePath(
   } else if (ignore === null) {
     return false
   } else {
-    // TS should be able to assert that `ignore` must be a `IPathIgnoreOptions` now
     if (!ignore.options && !ignore.patterns) {
       return false
     }
@@ -37,7 +36,6 @@ export function ignorePath(
     if (ignore.patterns) {
       settings.patterns = ignore.patterns
     }
-  }    
-  // Return true if the path should be ignored (matches any given ignore patterns)
-  return mm.any(path, settings.patterns as string | string[], settings.options)
+  }
+  return mm.any(path, settings.patterns, settings.options)
 }

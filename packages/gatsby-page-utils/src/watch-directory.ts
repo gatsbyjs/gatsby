@@ -1,7 +1,8 @@
+const Promise = require(`bluebird`)
 import * as chokidar from "chokidar"
 const { slash } = require(`gatsby-core-utils`)
 
-export function watchDirectory(
+export async function watchDirectory(
   path: string,
   glob: string | ReadonlyArray<string>,
   onNewFile: (path: string) => void,
