@@ -6851,8 +6851,8 @@
     - SEO enabled on each page with react-helmet
     - Features optimized image rendering using gatsby-image
     - Uses open source icons from Fontawesome and icons8
-    - Uses icons as links to github, resume, hackkerank on main page
-    - Programatically generates styled pages for each blog post and project written in Markdown
+    - Uses icons as links to github, resume, hackerrank on main page
+    - Programmatically generates styled pages for each blog post and project written in Markdown
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
