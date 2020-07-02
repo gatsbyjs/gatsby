@@ -1,0 +1,37 @@
+{
+  "name": "gatsby-graphql-source-toolkit",
+  "version": "1.0.0",
+  "description": "The toolkit designed to simplify data sourcing from a remote GraphQL API into Gatsby.",
+  "author": "Vladimir Razuvaev <vladimir@gatsbyjs.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js,.tsx\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js,.tsx\""
+  },
+  "files": [
+    "lib/**"
+  ],
+  "keywords": [
+    "gatsby",
+    "graphql"
+  ],
+  "dependencies": {
+    "@types/node-fetch": "^2.5.7",
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.0",
+    "p-queue": "^6.4.0"
+  },
+  "devDependencies": {
+    "gatsby": "^2.23.12",
+    "graphql": "^14.6.0",
+    "babel-preset-gatsby-package": "^0.5.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^2.0.15",
+    "graphql": "^14.0.0 || ^15.0.0"
+  }
+}
