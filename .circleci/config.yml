@@ -212,7 +212,13 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      # We should always assert on master
+      - when:
+          condition:
+            - not:
+                equal: [master, << pipeline.git.branch >>]
+          steps:
+            - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
