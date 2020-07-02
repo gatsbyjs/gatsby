@@ -70,7 +70,7 @@
     "unist-util-visit": "^2.0.2",
     "urql": "^1.9.8",
     "ws": "^7.3.0",
-    "xstate": "^4.10.0"
+    "xstate": "^4.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",

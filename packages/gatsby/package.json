@@ -150,7 +150,7 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2",
     "webpack-stats-plugin": "^0.3.1",
-    "xstate": "^4.10.0",
+    "xstate": "^4.11.0",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
