@@ -12,14 +12,14 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   initial: `idle`,
   states: {
     idle: {
+      always:
+        // If we already have queued node mutations, move
+        // immediately to batching
+        {
+          cond: (ctx): boolean => !!ctx.nodeMutationBatch?.length,
+          target: `batchingNodeMutations`,
+        },
       on: {
-        "":
-          // If we already have queued node mutations, move
-          // immediately to batching
-          {
-            cond: (ctx): boolean => !!ctx.nodeMutationBatch?.length,
-            target: `batchingNodeMutations`,
-          },
         ADD_NODE_MUTATION: {
           actions: `addNodeMutation`,
           target: `batchingNodeMutations`,
@@ -28,13 +28,13 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
     },
 
     batchingNodeMutations: {
+      // Check if the batch is already full on entry
+      always: {
+        cond: (ctx): boolean =>
+          ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
+        target: `committingBatch`,
+      },
       on: {
-        // Check if the batch is already full on entry
-        "": {
-          cond: (ctx): boolean =>
-            ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
-          target: `committingBatch`,
-        },
         // More mutations added to batch
         ADD_NODE_MUTATION: [
           // If this fills the batch then commit it

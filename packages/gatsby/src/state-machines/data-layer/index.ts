@@ -15,18 +15,16 @@ const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
   initial: `start`,
   states: {
     start: {
-      on: {
-        "": [
-          {
-            target: `buildingSchema`,
-            cond: ({ skipSourcing }: IDataLayerContext): boolean =>
-              !!skipSourcing,
-          },
-          {
-            target: `customizingSchema`,
-          },
-        ],
-      },
+      always: [
+        {
+          target: `buildingSchema`,
+          cond: ({ skipSourcing }: IDataLayerContext): boolean =>
+            !!skipSourcing,
+        },
+        {
+          target: `customizingSchema`,
+        },
+      ],
     },
     customizingSchema: {
       invoke: {
