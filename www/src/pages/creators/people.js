@@ -6,8 +6,6 @@ export default function PeoplePage({ location, data }) {
   return <CreatorsView data={data} location={location} title={`People`} />
 }
 
-export default PeoplePage
-
 export const pageQuery = graphql`
   query {
     allCreatorsYaml(filter: { type: { eq: "individual" } }) {

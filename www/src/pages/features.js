@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
 import { graphql } from "gatsby"
 
 import Button from "../components/button"

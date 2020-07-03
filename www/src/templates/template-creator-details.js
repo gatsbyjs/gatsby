@@ -231,8 +231,6 @@ export default function CreatorTemplate({ data }) {
   )
 }
 
-export default CreatorTemplate
-
 export const pageQuery = graphql`
   query($slug: String!, $name: String!) {
     creatorsYaml(fields: { slug: { eq: $slug } }) {

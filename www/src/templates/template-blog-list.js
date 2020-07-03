@@ -15,6 +15,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 export default function BlogPostsIndex({ data, pageContext }) {
+  const posts = data.allMdx.nodes
   return (
     <main id={`reach-skip-nav`}>
       <PageMetadata title={`Blog | Page ${pageContext.currentPage}`} />
@@ -42,7 +43,7 @@ export default function BlogPostsIndex({ data, pageContext }) {
             View all Tags <TagsIcon />
           </Button>
         </div>
-        {data.allMdx.nodes.map((node, index) => (
+        {posts.map((node, index) => (
           <BlogPostPreviewItem
             post={node}
             key={node.fields.slug}
@@ -51,7 +52,7 @@ export default function BlogPostsIndex({ data, pageContext }) {
               borderBottomStyle: `solid`,
               borderColor: `ui.border`,
               pb: 8,
-              mb: index === allMdx.nodes.length - 1 ? 0 : 8,
+              mb: index === posts.length - 1 ? 0 : 8,
               ...pullIntoGutter,
               [breakpointGutter]: {
                 p: 9,

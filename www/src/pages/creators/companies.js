@@ -6,8 +6,6 @@ export default function CompaniesPage({ location, data }) {
   return <CreatorsView data={data} location={location} title={`Companies`} />
 }
 
-export default CompaniesPage
-
 export const pageQuery = graphql`
   query {
     allCreatorsYaml(filter: { type: { eq: "company" } }) {
