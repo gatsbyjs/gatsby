@@ -6799,6 +6799,20 @@
     - Landing Page
     - Google Analytics
     - PaperCSS style
+- url: https://gatsby-three-ts-plus.netlify.app/
+  repo: https://github.com/shunp/gatsby-three-ts-plus
+  description: 3D web starter kit with Three.js and TypeScript
+  tags:
+    - Linting
+    - Language:TypeScript
+    - Styling:Tailwind
+    - CMS:Netlify
+    - Portfolio
+  features:
+    - TypeScript is used for a better developer experience.
+    - Tailwind CSS Framework
+    - Includes React Helmet to allow editing site meta tags
+    - Desktop and mobile responsive layout
 - url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
   repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
   description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
