@@ -11268,6 +11268,17 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Lidabox
+  description: >-
+    website for the sale of medical supplies and biosafety supplies.
+  main_url: https://lidabox.com/
+  url: https://lidabox.com/
+  featured: false
+  categories:
+    - E-commerce
+    - Marketing
+  built_by: Ramón Chancay
+  built_by_url: https://ramonchancay.me/
 - title: Real Estate Shows
   main_url: https://realestateshows.com/
   url: https://realestateshows.com/
