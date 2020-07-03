@@ -3894,18 +3894,6 @@
     - Blog
   built_by: Eleftherios Psitopoulos
   built_by_url: https://bakedbird.com
-- title: Benjamin Lannon
-  url: https://lannonbr.com
-  main_url: https://lannonbr.com
-  source_url: https://github.com/lannonbr/Portfolio-gatsby
-  description: >
-    Personal portfolio of Benjamin Lannon
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Benjamin Lannon
-  built_by_url: https://lannonbr.com
-  featured: false
 - title: Aravind Balla
   url: https://aravindballa.com
   main_url: https://aravindballa.com
@@ -11081,7 +11069,7 @@
     UK based web design agency building premium bespoke websites with light-speed performance and rock-solid security
   categories:
     - Agency
-    - Web development
+    - Web Development
     - Design
     - SEO
     - Portfolio
@@ -11162,7 +11150,7 @@
   built_by: Dovetail
   built_by_url: https://dovetailstudios.com
   featured: false
-- title: Brad Garropy
+- title: Daily Texas Country
   url: https://dailytexascountry.com
   main_url: https://dailytexascountry.com
   source_url: https://github.com/bradgarropy/dailytexascountry.com
@@ -11207,6 +11195,17 @@
     - E-commerce
   built_by: Annie Taylor Chen
   built_by_url: https://www.annietaylorchen.com/
+- title: Inbound Latino
+  url: https://inboundlatino.com/
+  main_url: https://inboundlatino.com/
+  source_url: https://github.com/JoseSoteloCohen/inboundlatino
+  description: >-
+    A portfolio website built with Gatsby, featuring websites and WordPress plugins.
+  categories:
+    - Portfolio
+    - Web Development
+  built_by: José Sotelo
+  built_by_url: https://inboundlatino.com/
 - title: ReqView
   url: https://www.reqview.com
   main_url: https://www.reqview.com
@@ -11244,3 +11243,79 @@
     - Healthcare
   built_by: Joseph Race
   built_by_url: https://josephrace.co.uk
+- title: Travel Diary - Your Digital Travelogue
+  main_url: https://ontraveldiary.com
+  url: https://ontraveldiary.com
+  description: >
+    An open to all digital platform for avid travelers to share their trips and photos with the world.
+  categories:
+    - Blog
+    - Travel
+    - Community
+  built_by: Draftbox
+  built_by_url: https://draftbox.co
+  featured: false
+- title: Ellington Hammond
+  main_url: https://ellingtonhammond.com
+  url: https://ellingtonhammond.com
+  description: >
+    Ellington Hammond is a photographer and film director based in the United States.
+  categories:
+    - Portfolio
+    - E-commerce
+  built_by: Peter Hironaka
+  built_by_url: https://peterhironaka.com
+- title: Laputan ERP
+  main_url: https://erp.laputan.com.au
+  url: https://erp.laputan.com.au
+  description: >
+    Customizable Enterprise Resource Planning (ERP) System helps companies save time and money across departments (Accounting, Finance, Human Resources, Marketing, Sales & IT) in order to improve productivity and competitiveness.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+    - Finance
+    - Marketing
+  built_by: Laputan Software
+  built_by_url: https://laputan.com.au
+- title: Real Estate Shows
+  main_url: https://realestateshows.com/
+  url: https://realestateshows.com/
+  description: >
+    Marketing site for Real Estate Shows, a web app for making real estate video slide shows. Using WordPress as a data store for the blog via the WPGraphQL plugin.
+  categories:
+    - Real Estate
+    - Blog
+    - WordPress
+    - SEO
+    - Video
+  built_by: Zeek Interactive
+  built_by_url: https://zeek.com/
+- title: Fidisys Playbook
+  main_url: https://playbook.fidisys.com/
+  url: https://playbook.fidisys.com/
+  description: >
+    Fidisys playbook is the process we follow in Fidisys to build awesome products. It shows engineering, hiring and operation process.
+  categories:
+    - Technology
+    - Productivity
+    - Human Resources
+  built_by: Fidisys Technologies
+  built_by_url: https://www.fidisys.com/
+- title: Gabriel Giordano Portfolio
+  main_url: https://gabrielgiordano.com
+  url: https://gabrielgiordano.com
+  source_url: https://github.com/gabrielgiordan/gabrielgiordano.com
+  description: >
+    Personal website for Gabriel Giordano, a Senior Software Engineer and also an open-source contributor.
+  categories:
+    - Open Source
+    - Portfolio
+    - Web Development
+    - SEO
+    - Technology
+    - Programming
+    - Freelance
+  built_by: Gabriel Giordano
+  built_by_url: https://gabrielgiordano.com
+  featured: false

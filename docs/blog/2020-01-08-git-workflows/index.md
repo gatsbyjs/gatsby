@@ -285,7 +285,7 @@ No matter how many branches we have, the process is always the same when we're r
 
 What about when all the work is done, and we're ready to release?
 
-At this point, we'll have a string of commits on our root branch, `feat/headless-cms`. We can open a PR against our deploy branch (eg. master or staging). Because all the work has already been reviewed, we don't need to go through another review cycle.
+At this point, we'll have a string of commits on our root branch, `feat/headless-cms`. We can open a PR against our deploy branch (e.g. master or staging). Because all the work has already been reviewed, we don't need to go through another review cycle.
 
 At this point, we have the freedom to organize our commits however we want. We can squash it all into 1 commit, or combine them into logical chunks. It's up to us to decide how we want our work to be reflected in the history.
 
@@ -313,7 +313,7 @@ The amount of time it takes to _review_ a PR is often correlated with the amount
 
 It's also worth mentioning that feature flags are a viable alternative to this flow. Feature flags are toggles that can be flipped, and read from within the codebase. This means that unfinished work can be merged into production as long as it's hidden behind a feature flag. Once all the changes have been merged, the flag can be flipped, and the feature will be enabled.
 
-Feature flags are great because they allow developers to break monolithic changes into smaller PRs, but sometimes the cost of architecting a change to fit behind a feature flag is more trouble than it's worth (eg. sprawling changes that affect many different parts of the codebase, or large refactors).
+Feature flags are great because they allow developers to break monolithic changes into smaller PRs, but sometimes the cost of architecting a change to fit behind a feature flag is more trouble than it's worth (e.g. sprawling changes that affect many different parts of the codebase, or large refactors).
 
 When using feature flags, a streamlined version of this flow can still be useful, to ensure that developers aren't blocked while waiting for feedback.
 

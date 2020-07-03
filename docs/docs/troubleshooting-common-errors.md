@@ -83,7 +83,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 
 ## Errors in styling
 
-The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JSS solutions.
+The following errors are related to styles in your site, using CSS, preprocessors, or CSS-in-JS solutions.
 
 ### Inconsistent CSS styles between develop and build using styled-components or emotion
 
@@ -131,7 +131,7 @@ Gatsby's image processing is broken up into different packages which need to wor
 
 ### Field "image" must not have a selection since type "String" has no subfields
 
-This errror message `Field "image" must not have a selection since type "String" has no subfields.` comes up when a GraphQL query is trying to query a field for subfields, but none exist. This generally happens when plugins that are used together are added in the `gatsby-config` in the wrong order, or haven't been added at all.
+This error message `Field "image" must not have a selection since type "String" has no subfields.` comes up when a GraphQL query is trying to query a field for subfields, but none exist. This generally happens when plugins that are used together are added in the `gatsby-config` in the wrong order, or haven't been added at all.
 
 The query is trying to access fields that don't exist because they weren't set up at build time. In the following code, a query is looking to find the subfield `childImageSharp` of the `image` field, like the error states. The problematic GraphQL schema looks like this:
 

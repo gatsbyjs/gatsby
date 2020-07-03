@@ -36,7 +36,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 - [2018-07-18: The Great GatsbyJS w/ Jason Lengstorf on The Changelog #306](https://changelog.com/podcast/306)
 - [2018-04-17: Gatsby.js w/Jason Lengstorf](https://spec.fm/podcasts/toolsday/134337)
 - [2018-02-28: syntax.fm on Static Site Generators (lots of Gatsby love)](https://syntax.fm/show/034/why-static-site-generators-are-awesome)
-- [2017-09-21: Kyle Mathews on JAMSTACK radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
+- [2017-09-21: Kyle Mathews on JAMstack radio on "Static Site Generation with GatsbyJS](https://www.heavybit.com/library/podcasts/jamstack-radio/ep-22-static-site-generation-with-gatsbyjs/)
 - [2017-07-21: Kyle Mathews on Web of Tomorrow](https://www.orbit.fm/weboftomorrow/39/)
 - [2017-08-17: Kyle Mathews on Software Engineering Daily](https://softwareengineeringdaily.com/2017/08/17/gatsbyjs-with-kyle-mathews/)
 
@@ -46,7 +46,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 - [Jason Lengstorf's "Learn stuff with Jason" playlist](https://www.youtube.com/playlist?list=PLz8Iz-Fnk_eTpvd49Sa77NiF8Uqq5Iykx)
 - [Gatsby Days Bay Area December 2018 - Kyle Mathews & Guest Speakers](https://www.youtube.com/playlist?list=PLCU2qJekvcN1wzgVKymbjbGtZ3VgAWOdj)
 - [Static Site Generation with Gatsby.js v0 — Scott Nonnenberg](https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/)
-- [Build a JAMstack Saas App with Gatsby playlist](https://www.youtube.com/playlist?list=PL8KiuH6vpACWZ7989jU1Puil5P2_m2O8e)
+- [Build a JAMstack SaaS App with Gatsby playlist](https://www.youtube.com/playlist?list=PL8KiuH6vpACWZ7989jU1Puil5P2_m2O8e)
 - [React.js Conf 2016 - Lightning Talks - Kyle Mathews](https://www.youtube.com/watch?v=RFkNRKL6ZoE)
 - [Developing with React and Gatsby.js — Kyle Mathews](https://www.youtube.com/watch?v=G4LVKJOOj7o)
 - [GraphQL Summit Open Source Lightning Talk on Gatsby — Kyle Mathews](https://youtu.be/y588qNiCZZo)
@@ -55,7 +55,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 ## Livestreams
 
 - [Learn with Jason](https://www.youtube.com/playlist?list=PLCU2qJekvcN0RuMHCnjMYAKlpSKQ_e1hO)
-- [Build a Saas app with Gatsby and the JAMstack](https://www.youtube.com/playlist?list=PL8KiuH6vpACWZ7989jU1Puil5P2_m2O8e)
+- [Build a SaaS app with Gatsby and the JAMstack](https://www.youtube.com/playlist?list=PL8KiuH6vpACWZ7989jU1Puil5P2_m2O8e)
 
 ## Gatsby tutorials
 
