@@ -5,18 +5,6 @@ import React, { useState, useEffect, useRef } from "react"
 import LayerTab from "./layer-tab"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const ExampleWrapper = ({ children }) => (
-  <div
-    sx={{
-      gridArea: `example`,
-      borderRadius: 2,
-      overflow: `auto`,
-    }}
-  >
-    {children}
-  </div>
-)
-
 const LayerContentWrapper = ({
   index,
   displayCodeFullWidth = false,
@@ -90,12 +78,7 @@ export default function LayerModel({
         marginBottom: 6,
       }}
     >
-      <div
-        sx={{
-          borderRadius: 3,
-          backgroundColor: `ui.background`,
-        }}
-      >
+      <div sx={{ borderRadius: 3, backgroundColor: `ui.background` }}>
         <div
           role="tablist"
           sx={{
@@ -118,11 +101,12 @@ export default function LayerModel({
         </div>
       </div>
       <LayerContentWrapper
-        key={`contentWrapper${currentIndex}`}
         index={currentIndex}
         displayCodeFullWidth={displayCodeFullWidth}
       >
-        <ExampleWrapper>{example}</ExampleWrapper>
+        <div sx={{ gridArea: `example`, borderRadius: 2, overflow: `auto` }}>
+          {example}
+        </div>
         <div>{text}</div>
       </LayerContentWrapper>
     </div>

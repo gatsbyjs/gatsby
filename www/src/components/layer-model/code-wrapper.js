@@ -10,7 +10,6 @@ export default function CodeWrapper({ title, language, onRotate, children }) {
       {title && (
         <div
           sx={{
-            gridArea: `content`,
             position: `relative`,
             display: `flex`,
             alignItems: `center`,
