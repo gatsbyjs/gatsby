@@ -11358,3 +11358,16 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Jose D. Santos IV
+  main_url: https://ivjose.com
+  url: https://ivjose.com
+  source_url: https://github.com/ivjose/portfolio
+  description: >
+    I’m a freelance Frontend Developer specializing in React and in building a web interface with better user experiences.
+  categories:
+    - Freelance
+    - Portfolio
+    - Web Development
+  built_by: Jose D. Santos IV
+  built_by_url: https://ivjose.com
+  featured: false
