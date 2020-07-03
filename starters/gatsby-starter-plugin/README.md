@@ -90,6 +90,7 @@ This starter generates the [files Gatsby looks for in plugins](https://www.gatsb
 ├── gatsby-node.js
 ├── gatsby-ssr.js
 ├── index.js
+├── LICENSE
 ├── package.json
 └── README.md
 ```
@@ -99,6 +100,7 @@ This starter generates the [files Gatsby looks for in plugins](https://www.gatsb
 - **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
 - **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
 - **`index.js`**: A file that will be loaded by default when the plugin is [required by another application](https://docs.npmjs.com/creating-node-js-modules#create-the-file-that-will-be-loaded-when-your-module-is-required-by-another-application0). You can adjust what file is used by updating the `main` field of the `package.json`.
+- **`LICENSE`**: This plugin starter is licensed under the 0BSD license. This means that you can see this file as a placeholder and replace it with your own license.
 - **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the plugin's name, author, etc). This manifest is how npm knows which packages to install for your project.
 - **`README.md`**: A text file containing useful reference information about your plugin.
 
