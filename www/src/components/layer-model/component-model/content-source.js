@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { useState } from React
+import { useState } from "react"
 
 import { CodeWrapper } from "../model-wrapper"
 

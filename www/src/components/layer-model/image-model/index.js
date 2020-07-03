@@ -1,7 +1,7 @@
 import React from "react"
 
 import LayerModel from "../layer-model"
-j
+
 import InstallLayer from "./text-content/InstallLayer"
 import ConfigLayer from "./text-content/ConfigLayer"
 import QueryLayer from "./text-content/QueryLayer"

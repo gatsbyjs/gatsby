@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { forwardRef, useState, useEffect, useRef } from "react"
-import hex2rgba from "hex2rgba"
+import React, { useState, useEffect, useRef } from "react"
 
 import LayerTab from "./layer-tab"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
