@@ -53,7 +53,7 @@ Taking advantage of this client-side routing allows you to protect or customize 
 </Router>
 ```
 
-More specific code examples for this pattern are outlined in the [Client-only Routes & User Authentication guide](/docs/client-only-routes/#implementing-client-only-routes).
+More specific code examples for this pattern are outlined in the [Client-only Routes & User Authentication guide](/docs/client-only-routes/).
 
 ### Protecting code from accessing browser globals during build
 
