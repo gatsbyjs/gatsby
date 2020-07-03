@@ -1,6 +1,5 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const nodeStore = require(`../../db/nodes`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
@@ -52,7 +51,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -612,7 +610,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -743,7 +740,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -909,7 +905,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })
@@ -954,7 +949,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })

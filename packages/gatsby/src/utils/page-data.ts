@@ -11,9 +11,10 @@ interface IPageData {
   componentChunkName: IGatsbyPage["componentChunkName"]
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
+  staticQueryHashes: string[]
 }
 
-interface IPageDataWithQueryResult extends IPageData {
+export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
 }
 
@@ -55,7 +56,12 @@ export async function removePageData(
 
 export async function writePageData(
   publicDir: string,
-  { componentChunkName, matchPath, path: pagePath }: IPageData
+  {
+    componentChunkName,
+    matchPath,
+    path: pagePath,
+    staticQueryHashes,
+  }: IPageData
 ): Promise<IPageDataWithQueryResult> {
   const inputFilePath = path.join(
     publicDir,
@@ -71,6 +77,7 @@ export async function writePageData(
     path: pagePath,
     matchPath,
     result,
+    staticQueryHashes,
   }
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
@@ -102,7 +109,13 @@ export async function flush(): Promise<void> {
   }
   isFlushPending = false
   isFlushing = true
-  const { pendingPageDataWrites, components, pages, program } = store.getState()
+  const {
+    pendingPageDataWrites,
+    components,
+    pages,
+    program,
+    staticQueriesByTemplate,
+  } = store.getState()
 
   const { pagePaths, templatePaths } = pendingPageDataWrites
 
@@ -127,19 +140,21 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      const body = await writePageData(
+      const staticQueryHashes =
+        staticQueriesByTemplate.get(page.componentPath)?.map(String) || []
+
+      const result = await writePageData(
         path.join(program.directory, `public`),
-        page
+        {
+          ...page,
+          staticQueryHashes,
+        }
       )
 
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
-          ...body.result,
           id: pagePath,
-          result: {
-            data: body.result.data,
-            pageContext: body.result.pageContext,
-          },
+          result,
         })
       }
     }

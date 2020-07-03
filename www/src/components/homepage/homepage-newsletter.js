@@ -93,7 +93,9 @@ const Form = styled(EmailCaptureForm)`
 const HomepageNewsletter = () => (
   <HomepageSection>
     <Container>
-      <Ornament dangerouslySetInnerHTML={{ __html: NewsletterFormOrnament }} />
+      <Ornament>
+        <NewsletterFormOrnament />
+      </Ornament>
       <header>
         <Name>The Gatsby Newsletter</Name>
         <Title>Keep up with the latest things Gatsby!</Title>

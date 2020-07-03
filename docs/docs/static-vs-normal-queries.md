@@ -98,7 +98,7 @@ export () => {
 }
 ```
 
-A page query would be updated in a similar fashion. Alhough the exact specifics of what has to change are different, the idea is the same:
+A page query would be updated in a similar fashion. Although the exact specifics of what has to change are different, the idea is the same:
 
 ```diff
 - import { graphql } from "gatsby"

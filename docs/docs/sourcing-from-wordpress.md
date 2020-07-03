@@ -2,7 +2,7 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you through the process of using [Gatsby](/) with [WordPress Rest Api](https://developer.wordpress.org/rest-api/reference/).
+This guide will walk you through the process of using [Gatsby](/) with [WordPress Rest API](https://developer.wordpress.org/rest-api/reference/).
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/packages/gatsby-source-wordpress/?=wordpress). Let's begin!
 
