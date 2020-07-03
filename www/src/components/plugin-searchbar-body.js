@@ -398,7 +398,6 @@ const Result = ({ hit, pathname, query }) => {
           </span>
         </div>
         <div
-          aria-hidden
           sx={{
             alignItems: `center`,
             color: selected ? `lilac` : `textMuted`,
@@ -411,15 +410,16 @@ const Result = ({ hit, pathname, query }) => {
           hit.name[0] !== `@` &&
           hit.repository.url.indexOf(`https://github.com/gatsbyjs/gatsby`) ===
             0 ? (
-            <span sx={{ mr: 1 }} title={`Official Plugin`}>
-              <GatsbyIcon />
+            <span sx={{ mr: 1 }}>
+              <GatsbyIcon title="Official Plugin"/>
             </span>
           ) : (
-            <span sx={{ mr: 1 }} title={`Community Plugin`}>
-              <CommunityIcon />
+            <span sx={{ mr: 1 }}>
+              <CommunityIcon title="Community Plugin" role="img" />
             </span>
           )}
           <span
+            aria-hidden
             css={{
               width: `5em`,
               textAlign: `right`,
