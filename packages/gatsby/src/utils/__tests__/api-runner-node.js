@@ -26,6 +26,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     activityTimer: jest.fn(() => mockActivity),
     createProgress: jest.fn(() => mockActivity),
+    panicOnBuild: jest.fn(),
   }
 })
 
@@ -82,8 +83,42 @@ it(`Ends activities if plugin didn't end them`, async () => {
     () => {
       return {
         testAPIHook: ({ reporter }) => {
-          const activity = reporter.createProgress(`spinner activity`, 100, 0)
+          const activity = reporter.createProgress(`progress activity`, 100, 0)
           activity.start()
+          // not calling activity.end() or done() - api runner should do end it
+        },
+      }
+    },
+    { virtual: true }
+  )
+  jest.doMock(
+    `test-plugin-spinner-throw/gatsby-node`,
+    () => {
+      return {
+        testAPIHook: ({ reporter }) => {
+          const activity = reporter.activityTimer(
+            `spinner activity with throwing`
+          )
+          activity.start()
+          throw new Error(`error`)
+          // not calling activity.end() - api runner should do end it
+        },
+      }
+    },
+    { virtual: true }
+  )
+  jest.doMock(
+    `test-plugin-progress-throw/gatsby-node`,
+    () => {
+      return {
+        testAPIHook: ({ reporter }) => {
+          const activity = reporter.createProgress(
+            `progress activity with throwing`,
+            100,
+            0
+          )
+          activity.start()
+          throw new Error(`error`)
           // not calling activity.end() or done() - api runner should do end it
         },
       }
@@ -110,13 +145,23 @@ it(`Ends activities if plugin didn't end them`, async () => {
           resolve: `test-plugin-progress`,
           nodeAPIs: [`testAPIHook`],
         },
+        {
+          name: `test-plugin-spinner-throw`,
+          resolve: `test-plugin-spinner-throw`,
+          nodeAPIs: [`testAPIHook`],
+        },
+        {
+          name: `test-plugin-progress-throw`,
+          resolve: `test-plugin-progress-throw`,
+          nodeAPIs: [`testAPIHook`],
+        },
       ],
     }
   })
   await apiRunnerNode(`testAPIHook`)
 
-  expect(mockActivity.start).toBeCalledTimes(4)
+  expect(mockActivity.start).toBeCalledTimes(6)
   // we called end same amount of times we called start, even tho plugins
   // didn't call end/done themselves
-  expect(mockActivity.end).toBeCalledTimes(4)
+  expect(mockActivity.end).toBeCalledTimes(6)
 })
