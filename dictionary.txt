@@ -124,6 +124,7 @@ Addy
 Adekunle
 Adnan
 AEM
+AgilityCMS
 Ahhh
 Airbnb
 Airtable
@@ -592,6 +593,7 @@ ecommerce
 Ehmke
 EJ
 Eka
+Ekwuno
 Elevar
 Eleventy
 EmailCaptureForm
@@ -1135,6 +1137,7 @@ Kukic
 kung
 Kurulum
 KV
+Kwong
 l33t
 labelled
 labelledby
@@ -1361,6 +1364,7 @@ nvm
 NYCHA
 NYU
 OAuth
+Obinna
 observability
 Oduye
 oEmbed
@@ -1764,6 +1768,7 @@ sexualized
 SFTP
 shadowable
 sharable
+Shardul
 shareability
 shared-ui
 ShopFlamingo

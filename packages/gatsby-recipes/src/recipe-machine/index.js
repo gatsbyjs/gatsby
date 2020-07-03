@@ -163,22 +163,20 @@ const recipeMachine = Machine(
       },
       hasAnotherStep: {
         entry: [`incrementStep`],
-        on: {
-          "": [
-            {
-              target: `creatingPlan`,
-              // The 'searchValid' guard implementation details are
-              // specified in the machine config
-              cond: `hasNextStep`,
-            },
-            {
-              target: `done`,
-              // The 'searchValid' guard implementation details are
-              // specified in the machine config
-              cond: `atLastStep`,
-            },
-          ],
-        },
+        always: [
+          {
+            target: `creatingPlan`,
+            // The 'searchValid' guard implementation details are
+            // specified in the machine config
+            cond: `hasNextStep`,
+          },
+          {
+            target: `done`,
+            // The 'searchValid' guard implementation details are
+            // specified in the machine config
+            cond: `atLastStep`,
+          },
+        ],
       },
       done: {
         type: `final`,
