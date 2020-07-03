@@ -1,6 +1,5 @@
 .babelrc
 .env
-.htaccess
 .html
 .jpg
 .js
@@ -125,6 +124,7 @@ Addy
 Adekunle
 Adnan
 AEM
+AgilityCMS
 Ahhh
 Airbnb
 Airtable
@@ -300,6 +300,7 @@ Capozzi
 captioner
 Carmin
 carte
+Cashin
 casper
 Cassini
 catalogue
@@ -312,6 +313,7 @@ CDN-backed
 CDNs
 Cereda
 CFP
+Chakra
 changelog
 changelogs
 chatbots
@@ -463,6 +465,7 @@ Critchlow
 CRM
 cron
 cross-env
+Crowdin
 CRV
 CSP
 CSRF
@@ -590,6 +593,7 @@ ecommerce
 Ehmke
 EJ
 Eka
+Ekwuno
 Elevar
 Eleventy
 EmailCaptureForm
@@ -1014,12 +1018,6 @@ incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromFieldName
-inferFromMapping
-inferGraphQLType
-inferInputObjectStrctureFromNodes
-inferInputObjectStructureFromFields
-inferObjectStructureFromNodes
 InfluxData
 infrastructure-centric
 ing
@@ -1133,6 +1131,7 @@ Kukic
 kung
 Kurulum
 KV
+Kwong
 l33t
 labelled
 labelledby
@@ -1231,6 +1230,7 @@ MDX-embed
 MDXProvider
 Mediacurrent
 Meenan
+Meeshkan
 Meetfabric
 Megazord
 Melany
@@ -1358,6 +1358,7 @@ nvm
 NYCHA
 NYU
 OAuth
+Obinna
 observability
 Oduye
 oEmbed
@@ -1545,6 +1546,7 @@ prerender
 prerendering
 presentational
 Prima
+Printful
 Prisma
 Prismic
 Prismic-Powered
@@ -1760,6 +1762,7 @@ sexualized
 SFTP
 shadowable
 sharable
+Shardul
 shareability
 shared-ui
 ShopFlamingo
@@ -1910,6 +1913,7 @@ Theming
 themself
 Thijs
 Thinkmill
+Thinkster
 Tibaldi
 timeframe
 timeframes

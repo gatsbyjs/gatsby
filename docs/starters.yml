@@ -6519,6 +6519,24 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://ph0en1x.ru/
+  repo: https://github.com/eduard-kirilov/gatsby-ts-apollo-starter
+  description: This starter is a ready-made configuration that includes Gatsby, React, Redux, Apollo, GraphQL, TypeScript, Styled-Components, Material-UI, Jest, Enzyme.
+  tags:
+    - E-commerce
+    - SEO
+    - Redux
+    - Language:TypeScript
+    - Pagination
+    - Styling:Material
+  features:
+    - This starter is configured to interact with GraphQL of your backend through Apollo.
+    - Strong typing with TypeScript.
+    - Typescript, Apollo, Mongo - backend.
+    - Unit tests based on jest and enzyme.
+    - In this starter, Styled-components and Material-UI can be used simultaneously.
+    - This starter has tuned redux with reselect on board
+    - Desktop and mobile responsive layout
 - url: https://gatsby-starter-tailwind-opinionated.netlify.app/
   repo: https://github.com/mjsarfatti/gatsby-starter-tailwind-opinionated
   description: Based on the official Gatsby starter, with an opinionated Tailwind setup. Uses Purgecss to remove unused CSS.
@@ -6737,6 +6755,14 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://gatsby-starter-capacitor.netlify.app/
+  repo: https://github.com/flogy/gatsby-starter-capacitor
+  description: Build blazing fast mobile apps with Gatsby and Capacitor.
+  tags:
+    - Styling:None
+  features:
+    - Basic setup for hybrid mobile apps for Android and iOS
+    - Demonstration on how to access Native APIs of mobile devices
 - url: https://gatsby-starter-woo.surge.sh/
   repo: https://github.com/desmukh/gatsby-starter-woo
   description: Simple, clean and responsive landing page for your product or service. This is a GatsbyJS port of StyleShout's Woo template.
@@ -6784,3 +6810,35 @@
     - Client side App configuration , with client side routing
     - JSON data layer included
     - Minimal CSS GRID
+- url: https://mui-treasury.com/layout/clones/reactjs?bgColor=b6c0d4
+  repo: https://github.com/mui-treasury/gatsby-mui-layout-starter
+  description: Supercharge your next project with Mui Treasury Layout, built on top of Material-UI
+  tags:
+    - Styling:CSS-in-JS
+    - Styling:Material
+  features:
+    - Gatsby v2
+    - Material-UI
+    - MuiTreasury Layout
+    - Dynamic configurable
+    - Offline support
+    - PWA ready
+    - SEO
+    - Responsive design
+- url: https://7sferry-gatsby-contentful-starters.netlify.app/
+  repo: https://github.com/7sferry/Gatsbyan1.0
+  description: Blog template for Contentful CMS with some features like comment, tags, archives, pagination, prism, tags, share and many others.
+  tags:
+    - Blog
+    - SEO
+    - CMS:Contentful
+    - Pagination
+  features:
+    - Blog template
+    - Contentful CMS
+    - Facebook Comment
+    - Tags
+    - Archives by date
+    - Pagination
+    - Share Button
+    - Prism for code preview
