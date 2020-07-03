@@ -123,7 +123,6 @@ export const pageQuery = graphql`
       showTopLevelSignatures
       disableTableOfContents
       tableOfContentsDepth
-      ...MarkdownPageFooterMdx
     }
     jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
       nodes {
