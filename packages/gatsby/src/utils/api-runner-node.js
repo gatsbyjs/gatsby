@@ -174,7 +174,7 @@ const runAPI = (plugin, api, args, activity) => {
 
     let runningActivities = new Set()
 
-    const localReporterThatCleansUpAfterMisbahavingPlugins = {
+    const localReporterThatCleansUpAfterMisbehavingPlugins = {
       ...localReporter,
       activityTimer: (...args) => {
         const activity = reporter.activityTimer(...args)
@@ -231,7 +231,7 @@ const runAPI = (plugin, api, args, activity) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter: localReporterThatCleansUpAfterMisbahavingPlugins,
+        reporter: localReporterThatCleansUpAfterMisbehavingPlugins,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
