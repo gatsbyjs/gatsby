@@ -1,6 +1,5 @@
 .babelrc
 .env
-.htaccess
 .html
 .jpg
 .js
@@ -125,6 +124,7 @@ Addy
 Adekunle
 Adnan
 AEM
+AgilityCMS
 Ahhh
 Airbnb
 Airtable
@@ -593,6 +593,7 @@ ecommerce
 Ehmke
 EJ
 Eka
+Ekwuno
 Elevar
 Eleventy
 EmailCaptureForm
@@ -1017,12 +1018,6 @@ incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromFieldName
-inferFromMapping
-inferGraphQLType
-inferInputObjectStrctureFromNodes
-inferInputObjectStructureFromFields
-inferObjectStructureFromNodes
 InfluxData
 infrastructure-centric
 ing
@@ -1136,6 +1131,7 @@ Kukic
 kung
 Kurulum
 KV
+Kwong
 l33t
 labelled
 labelledby
@@ -1362,6 +1358,7 @@ nvm
 NYCHA
 NYU
 OAuth
+Obinna
 observability
 Oduye
 oEmbed
@@ -1765,6 +1762,7 @@ sexualized
 SFTP
 shadowable
 sharable
+Shardul
 shareability
 shared-ui
 ShopFlamingo
