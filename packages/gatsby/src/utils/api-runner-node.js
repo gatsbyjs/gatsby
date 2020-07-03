@@ -85,7 +85,7 @@ const getLocalReporter = (activity, reporter) =>
     ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
     : reporter
 
-const runAPI = (plugin, api, args, activity) => {
+const runAPI = async (plugin, api, args, activity) => {
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -271,12 +271,13 @@ const runAPI = (plugin, api, args, activity) => {
         }
       })
     } else {
-      const result = gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
-      return Promise.resolve(result).finally(() => {
+      try {
+        return await gatsbyNode[api](...apiCallArgs)
+      } finally {
+        pluginSpan.finish()
         apiFinished = true
         endInProgressActivitiesCreatedByThisRun()
-      })
+      }
     }
   }
 
