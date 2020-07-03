@@ -10,19 +10,11 @@ import { EcosystemIcon } from "../assets/icons"
 
 export default function EcosystemPage({ location, data }) {
   const startersData = data.allStartersYaml.nodes
-  const pluginsData = data.allStartersYaml.nodes
+  const pluginsData = data.allNpmPackage.nodes
 
   const starters = startersData.map(item => {
-    const {
-      fields: {
-        starterShowcase: { slug, name, description, stars },
-      },
-      childScreenshot: {
-        screenshotFile: {
-          childImageSharp: { fixed: thumbnail },
-        },
-      },
-    } = item
+    const { slug, name, description, stars } = item.fields.starterShowcase
+    const thumbnail = item.childScreenshot.screenshotFile.childImageSharp.fixed
 
     return {
       slug: `/starters${slug}`,
