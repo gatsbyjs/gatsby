@@ -1523,7 +1523,7 @@
     - SEO
 - url: https://gatsby-starter-notes.netlify.app/
   repo: https://github.com/patricoferris/gatsby-starter-notes
-  description: Gatsby starter for creating notes organized by subject and topic
+  description: Gatsby starter for creating notes organised by subject and topic
   tags:
     - Markdown
     - Pagination
