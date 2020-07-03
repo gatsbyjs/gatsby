@@ -20,13 +20,13 @@ Below we’ve provided resources for two paths that you can choose based on the 
 
 _Path A_ introduces you to form services for static sites, like Formik (the cloud service), Statickit, and FormKeep. Instead of giving you an all-in-one form builder to work with, these powerful, flexible, and inexpensive services provide you with endpoints to send form data to.
 
-_Path B_ welcomes you to the world of functions-as-a-service from the major cloud platforms. By using a combination of code and configuration, you can create your own data workflow with providers like AWS, Google, and Azure. There are two benefits to this approach. First, instead of using yet-another-SaaS, you’ll enhance your Gatsby site with the cloud provider services your employer has already invested in. Second, if you’re not familiar with the serverless tools provided by AWS, Google, and Azure, this challenge can be your first introduction to them.
+_Path B_ welcomes you to the world of functions-as-a-service from the major cloud platforms. By using a combination of code and configuration, you can create your own data workflow with providers like AWS, Google, and Azure. There are two benefits to this approach. First, instead of using yet another SaaS, you’ll enhance your Gatsby site with the cloud provider services your employer has already invested in. Second, if you’re not familiar with the serverless tools provided by AWS, Google, and Azure, this challenge can be your first introduction to them.
 
 ### Challenge Resources
 
 #### Path A
 
-Visit the [Power of Serveless](https://serverless.css-tricks.com/services/forms), a directory of serverless services. You’ll find many form options that work well with a Gatsby site. If you are already using Netlify, we recommend their [built-in form service](https://www.netlify.com/products/forms/). If you are using Formik’s React library, you may want to try their [new form service](https://formik.com/). [Statickit](https://statickit.com/), [FormKeep](https://formkeep.com/), and [Getform](https://getform.io/) also seem worth comparing. Each service has its own documentation and support that you can use.
+Visit the [Power of Serverless](https://serverless.css-tricks.com/services/forms), a directory of serverless services. You’ll find many form options that work well with a Gatsby site. If you are already using Netlify, we recommend their [built-in form service](https://www.netlify.com/products/forms/). If you are using Formik’s React library, you may want to try their [new form service](https://formik.com/). [Statickit](https://statickit.com/), [FormKeep](https://formkeep.com/), and [Getform](https://getform.io/) also seem worth comparing. Each service has its own documentation and support that you can use.
 
 #### Path B:
 

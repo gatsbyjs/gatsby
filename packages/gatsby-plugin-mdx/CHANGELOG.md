@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.21...gatsby-plugin-mdx@1.2.22) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.2.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.20...gatsby-plugin-mdx@1.2.21) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.2.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.19...gatsby-plugin-mdx@1.2.20) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.2.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.18...gatsby-plugin-mdx@1.2.19) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** set childOf extension for Mdx type definition ([#25112](https://github.com/gatsbyjs/gatsby/issues/25112)) ([49c0929](https://github.com/gatsbyjs/gatsby/commit/49c0929))
+
+## [1.2.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.17...gatsby-plugin-mdx@1.2.18) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.2.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.16...gatsby-plugin-mdx@1.2.17) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [1.2.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.15...gatsby-plugin-mdx@1.2.16) (2020-06-19)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 ## [1.2.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.14...gatsby-plugin-mdx@1.2.15) (2020-06-09)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

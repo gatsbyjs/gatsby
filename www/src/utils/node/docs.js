@@ -35,13 +35,122 @@ const slugToAnchor = slug =>
     .filter(item => item !== ``) // remove empty values
     .pop() // take last item
 
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
+
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      description: String
+      contentsHeading: String
+      showTopLevelSignatures: Boolean
+      disableTableOfContents: Boolean
+      tableOfContentsDepth: Int
+      issue: String
+      jsdoc: [String!]
+      apiCalls: String
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      anchor: String
+      section: String
+      locale: String
+    }
+
+    type File implements Node {
+      fields: FileFields
+    }
+
+    # Added by gatsby-transformer-gitinfo
+    # TODO add these back upstream
+    type FileFields {
+      gitLogLatestDate: Date @dateformat
+      gitLogLatestAuthorName: String
+      gitLogLatestAuthorEmail: String
+    }
+
+    type GatsbyAPICall implements Node @derivedTypes @dontInfer {
+      name: String
+      file: String
+      group: String
+      codeLocation: GatsbyAPICallCodeLocation
+    }
+
+    type GatsbyAPICallCodeLocation @dontInfer {
+      filename: Boolean
+      end: GatsbyAPICallEndpoint
+      start: GatsbyAPICallEndpoint
+    }
+
+    type GatsbyAPICallEndpoint @dontInfer {
+      column: Int
+      line: Int
+    }
+  `)
+}
+
+exports.onCreateNode = async ({
+  node,
+  actions,
+  getNode,
+  loadNodeContent,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode, createParentChildLink, createNodeField } = actions
+
+  if (isCodeFile(node)) {
+    const calls = await findApiCalls({ node, loadNodeContent })
+    if (calls.length > 0) {
+      calls.forEach(call => {
+        const apiCallNode = {
+          id: createNodeId(`findApiCalls-${JSON.stringify(call)}`),
+          parent: node.id,
+          children: [],
+          ...call,
+          internal: {
+            type: `GatsbyAPICall`,
+          },
+        }
+        apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
+
+        createNode(apiCallNode)
+        createParentChildLink({ parent: node, child: apiCallNode })
+      })
+    }
+    return
+  }
+
+  const slug = getMdxContentSlug(node, getNode(node.parent))
+  if (!slug) return
+
+  const locale = `en`
+  const section = slug.split(`/`)[1]
+  // fields for blog pages are handled in `utils/node/blog.js`
+  if (section === `blog`) return
+
+  // Add slugs and other fields for docs pages
+  if (slug) {
+    createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
+    createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: `section`, value: section })
+  }
+  if (locale) {
+    createNodeField({ node, name: `locale`, value: locale })
+  }
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const docsTemplate = getTemplate(`template-docs-markdown`)
   const apiTemplate = getTemplate(`template-api-markdown`)
 
-  const { data, errors } = await graphql(`
+  const { data, errors } = await graphql(/* GraphQL */ `
     query {
       allMdx(
         limit: 10000
@@ -98,55 +207,4 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
-}
-
-exports.onCreateNode = async ({
-  node,
-  actions,
-  getNode,
-  loadNodeContent,
-  createNodeId,
-  createContentDigest,
-}) => {
-  const { createNode, createParentChildLink, createNodeField } = actions
-
-  if (isCodeFile(node)) {
-    const calls = await findApiCalls({ node, loadNodeContent })
-    if (calls.length > 0) {
-      calls.forEach(call => {
-        const apiCallNode = {
-          id: createNodeId(`findApiCalls-${JSON.stringify(call)}`),
-          parent: node.id,
-          children: [],
-          ...call,
-          internal: {
-            type: `GatsbyAPICall`,
-          },
-        }
-        apiCallNode.internal.contentDigest = createContentDigest(apiCallNode)
-
-        createNode(apiCallNode)
-        createParentChildLink({ parent: node, child: apiCallNode })
-      })
-    }
-    return
-  }
-
-  const slug = getMdxContentSlug(node, getNode(node.parent))
-  if (!slug) return
-
-  const locale = `en`
-  const section = slug.split(`/`)[1]
-  // fields for blog pages are handled in `utils/node/blog.js`
-  if (section === `blog`) return
-
-  // Add slugs and other fields for docs pages
-  if (slug) {
-    createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-    createNodeField({ node, name: `slug`, value: slug })
-    createNodeField({ node, name: `section`, value: section })
-  }
-  if (locale) {
-    createNodeField({ node, name: `locale`, value: locale })
-  }
 }
