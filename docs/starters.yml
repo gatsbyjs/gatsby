@@ -6806,7 +6806,7 @@
     - PWA
     - Language:TypeScript
   features:
-    - PWA configuration 
+    - PWA configuration
     - Client side App configuration , with client side routing
     - JSON data layer included
     - Minimal CSS GRID
