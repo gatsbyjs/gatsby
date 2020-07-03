@@ -212,7 +212,13 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      # We should always assert on master
+      - when:
+          condition:
+            - not:
+                equal: [master, << pipeline.git.branch >>]
+          steps:
+            - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
@@ -225,6 +231,12 @@ jobs:
     executor:
       name: node
       image: "12"
+    <<: *test_template
+
+  unit_tests_node14:
+    executor:
+      name: node
+      image: "14"
     <<: *test_template
 
   unit_tests_www:
@@ -463,6 +475,17 @@ workflows:
                 - master
     jobs:
       - sync_translation_repo
+
+  weekly-node-14:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - unit_tests_node14
 
   nightly-react-next:
     triggers:

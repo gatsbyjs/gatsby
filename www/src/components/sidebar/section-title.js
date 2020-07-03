@@ -74,7 +74,7 @@ const Title = ({ item }) => (
       alignItems: `center`,
       display: `flex`,
       paddingLeft: indention(item.level),
-      minHeight: 40,
+      minHeight: `sidebarItemMinHeight`,
     }}
   >
     <SectionHeading disabled item={item}>
@@ -95,9 +95,9 @@ const TitleButton = ({ item, uid }) => {
       sx={{
         ...styles.resetButton,
         ...styles.button,
-        pl: item.level === 0 ? 6 : 0,
-        pr: `0 !important`,
-        minHeight: 40,
+        pl: indention(item.level),
+        pr: t => t.sizes.sidebarItemMinHeight,
+        minHeight: `sidebarItemMinHeight`,
         "&:before": {
           bg: `itemBorderColor`,
           content: `''`,
@@ -105,7 +105,7 @@ const TitleButton = ({ item, uid }) => {
           position: `absolute`,
           right: 0,
           bottom: 0,
-          left: t => (item.level === 0 ? t.space[6] : 0),
+          left: indention(item.level),
           top: `auto`,
         },
       }}
