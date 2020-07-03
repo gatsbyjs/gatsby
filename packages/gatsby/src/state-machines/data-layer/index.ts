@@ -13,6 +13,7 @@ export type DataLayerResult = Pick<
 
 const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
   initial: `start`,
+  context: {},
   states: {
     start: {
       always: [

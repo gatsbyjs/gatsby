@@ -10,6 +10,7 @@ export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 
 export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   initial: `idle`,
+  context: {},
   states: {
     idle: {
       always:
@@ -31,7 +32,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       // Check if the batch is already full on entry
       always: {
         cond: (ctx): boolean =>
-          ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
+          (ctx.nodeMutationBatch?.length || 0) >= NODE_MUTATION_BATCH_SIZE,
         target: `committingBatch`,
       },
       on: {
@@ -41,7 +42,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
           {
             actions: `addNodeMutation`,
             cond: (ctx): boolean =>
-              ctx.nodeMutationBatch?.length >= NODE_MUTATION_BATCH_SIZE,
+              (ctx.nodeMutationBatch?.length || 0) >= NODE_MUTATION_BATCH_SIZE,
             target: `committingBatch`,
           },
           // otherwise just add it to the batch

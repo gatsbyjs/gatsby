@@ -32,6 +32,7 @@ import {
   Actor,
   Interpreter,
   forwardTo,
+  State,
 } from "xstate"
 import { dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
@@ -305,7 +306,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const listeners = new WeakSet()
 
-  let last = service.state
+  let last: State<IBuildContext, AnyEventObject, any, any>
 
   service.onTransition(state => {
     if (!last) {

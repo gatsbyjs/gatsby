@@ -6,7 +6,7 @@ export interface IMutationAction {
   payload: unknown[]
 }
 export interface IWaitingContext {
-  nodeMutationBatch: IMutationAction[]
+  nodeMutationBatch?: IMutationAction[]
   store?: Store<IGatsbyState, AnyAction>
   runningBatch?: IMutationAction[]
   filesDirty?: boolean
