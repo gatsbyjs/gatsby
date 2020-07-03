@@ -19,8 +19,8 @@ const Link = () => (
       ":focus": {
         clip: `auto`,
         height: `auto`,
-        left: t => t.space[6],
-        padding: t => t.space[4],
+        left: 6,
+        padding: 4,
         position: `fixed`,
         top: 6,
         width: `auto`,

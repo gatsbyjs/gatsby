@@ -1,7 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const Joi = require(`@hapi/joi`)
-const isBlank = require(`is-blank`)
 const singleTrailingNewline = require(`single-trailing-newline`)
 
 const getDiff = require(`../utils/get-diff`)
@@ -20,7 +19,7 @@ const gitignoresAsArray = async root => {
   const ignores = ignoresStr.split(`\n`)
   const last = ignores.pop()
 
-  if (isBlank(last)) {
+  if (last.trim() === ``) {
     return ignores
   } else {
     return [...ignores, last]

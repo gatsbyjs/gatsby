@@ -197,128 +197,122 @@ const searchBoxStyles = t => css`
 /* stylelint-enable */
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
-class Search extends Component {
-  render() {
-    return (
-      <div sx={{ pb: [11, null, null, 0] }}>
-        <div
-          sx={{
-            borderBottomWidth: `1px`,
-            borderBottomStyle: `solid`,
-            borderColor: `ui.border`,
-            display: `flex`,
-            flexDirection: `column`,
-            width: `100%`,
-          }}
-        >
-          <Global styles={searchBoxStyles} />
-          <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
-          <div css={{ display: `none` }}>
-            <Configure analyticsTags={[`gatsby-plugins`]} />
-            <RefinementList
-              attribute="keywords"
-              transformItems={items =>
-                items.map(({ count, ...item }) => {
-                  return {
-                    ...item,
-                    count: count || 0,
-                  }
-                })
-              }
-              defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
-            />
-            <ToggleRefinement
-              attribute="deprecated"
-              value={false}
-              label="No deprecated plugins"
-              defaultRefinement={true}
-            />
-          </div>
-
-          <div
-            sx={{
-              alignItems: `center`,
-              color: `textMuted`,
-              display: `flex`,
-              height: searchMetaHeight,
-              px: 6,
-              fontSize: 0,
-            }}
-          >
-            <Stats
-              translations={{
-                stats: function (n) {
-                  return `${n} results`
-                },
-              }}
-            />
-            <SkipNavLink />
-          </div>
+function Search({ pathname, query }) {
+  return (
+    <div sx={{ pb: [11, null, null, 0] }}>
+      <div
+        sx={{
+          borderBottomWidth: `1px`,
+          borderBottomStyle: `solid`,
+          borderColor: `ui.border`,
+          display: `flex`,
+          flexDirection: `column`,
+          width: `100%`,
+        }}
+      >
+        <Global styles={searchBoxStyles} />
+        <SearchBox translations={{ placeholder: `Search Gatsby Library` }} />
+        <div css={{ display: `none` }}>
+          <Configure analyticsTags={[`gatsby-plugins`]} />
+          <RefinementList
+            attribute="keywords"
+            transformItems={items =>
+              items.map(({ count, ...item }) => {
+                return {
+                  ...item,
+                  count: count || 0,
+                }
+              })
+            }
+            defaultRefinement={[`gatsby-component`, `gatsby-plugin`]}
+          />
+          <ToggleRefinement
+            attribute="deprecated"
+            value={false}
+            label="No deprecated plugins"
+            defaultRefinement={true}
+          />
         </div>
 
-        <div>
-          <div
-            sx={{
-              [mediaQueries.md]: {
-                height: t =>
-                  `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
-                overflowY: `scroll`,
+        <div
+          sx={{
+            alignItems: `center`,
+            color: `textMuted`,
+            display: `flex`,
+            height: searchMetaHeight,
+            px: 6,
+            fontSize: 0,
+          }}
+        >
+          <Stats
+            translations={{
+              stats: function (n) {
+                return `${n} results`
               },
             }}
-          >
-            <InfiniteHits
-              hitComponent={result => (
-                <Result
-                  hit={result.hit}
-                  pathname={this.props.pathname}
-                  query={this.props.query}
-                />
-              )}
-            />
-          </div>
+          />
+          <SkipNavLink />
         </div>
+      </div>
 
+      <div>
         <div
           sx={{
-            fontSize: 0,
-            lineHeight: 0,
-            height: 20,
-            mt: 6,
-            display: `none`,
+            [mediaQueries.md]: {
+              height: t =>
+                `calc(100vh - ${t.sizes.headerHeight} - ${t.sizes.bannerHeight} - ${searchInputHeight} - ${searchInputWrapperMargin} - ${searchMetaHeight})`,
+              overflowY: `scroll`,
+            },
           }}
         >
-          <a
-            href={`https://www.algolia.com/`}
-            sx={{
-              "&&": {
+          <InfiniteHits
+            hitComponent={result => (
+              <Result hit={result.hit} pathname={pathname} query={query} />
+            )}
+          />
+        </div>
+      </div>
+
+      <div
+        sx={{
+          fontSize: 0,
+          lineHeight: 0,
+          height: 20,
+          mt: 6,
+          display: `none`,
+        }}
+      >
+        <a
+          href={`https://www.algolia.com/`}
+          sx={{
+            "&&": {
+              background: `url(${AlgoliaLogo})`,
+              border: `none`,
+              fontWeight: `body`,
+              backgroundRepeat: `no-repeat`,
+              backgroundPosition: `50%`,
+              backgroundSize: `100%`,
+              overflow: `hidden`,
+              textIndent: `-9000px`,
+              padding: `0!important`,
+              width: 110,
+              height: `100%`,
+              display: `block`,
+              ml: `auto`,
+              "&:hover": {
                 background: `url(${AlgoliaLogo})`,
-                border: `none`,
-                fontWeight: `body`,
                 backgroundRepeat: `no-repeat`,
                 backgroundPosition: `50%`,
                 backgroundSize: `100%`,
-                overflow: `hidden`,
-                textIndent: `-9000px`,
-                padding: `0!important`,
-                width: 110,
-                height: `100%`,
-                display: `block`,
-                ml: `auto`,
-                "&:hover": {
-                  background: `url(${AlgoliaLogo})`,
-                  backgroundRepeat: `no-repeat`,
-                  backgroundPosition: `50%`,
-                  backgroundSize: `100%`,
-                },
               },
-            }}
-          >
-            Algolia
-          </a>
-        </div>
+            },
+          }}
+        >
+          Algolia
+        </a>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 // the result component is fed into the InfiniteHits component

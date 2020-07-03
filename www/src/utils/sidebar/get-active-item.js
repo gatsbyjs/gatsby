@@ -1,7 +1,12 @@
 import { getLocaleAndBasePath } from "../i18n"
 
+function addTrailingSlashIfMissing(pathname) {
+  return pathname.endsWith(`/`) ? pathname : `${pathname}/`
+}
+
 const isItemActive = (location, item, activeItemHash) => {
-  const { basePath } = getLocaleAndBasePath(location.pathname)
+  const pathnameWithTrailingSlash = addTrailingSlashIfMissing(location.pathname)
+  const { basePath } = getLocaleAndBasePath(pathnameWithTrailingSlash)
   const linkMatchesPathname = item.link === basePath
   const linkWithoutHashMatchesPathname =
     item.link.replace(/#.*/, ``) === basePath

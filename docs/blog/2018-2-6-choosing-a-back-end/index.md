@@ -64,7 +64,7 @@ As soon as you sign up (for free) you get access to a dashboard with some dummy 
 
 ![Contentful's well-laid-out post-types](contentful-page.png)
 
-You then setup your fields, choosing from a big list. If you want a simple Title/Body you can set it up as above, or you can use times and dates, images, whole JSON Objects and more. You can also localise fields to only show in certain countries, make them required, and how they appear in the CMS. For example, I couldn’t see how to create a checkbox (as there isn’t a field-type for it), but if you create a Short text field you have the option to only allow certain values. Then, you can set the CMS-appearance to a drop-down or some radio buttons. I’d have liked that to be an option as soon as I add a field - something like WordPress’ custom fields - but once you know it’s there it makes sense.
+You then setup your fields, choosing from a big list. If you want a simple Title/Body you can set it up as above, or you can use times and dates, images, whole JSON Objects and more. You can also localize fields to only show in certain countries, make them required, and how they appear in the CMS. For example, I couldn’t see how to create a checkbox (as there isn’t a field-type for it), but if you create a Short text field you have the option to only allow certain values. Then, you can set the CMS-appearance to a drop-down or some radio buttons. I’d have liked that to be an option as soon as I add a field - something like WordPress’ custom fields - but once you know it’s there it makes sense.
 
 ![There are loads of field types available!](contentful-fields.png)
 
