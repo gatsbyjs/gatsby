@@ -101,7 +101,9 @@ class BuildHTMLError extends Error {
   constructor(error: Error) {
     super(error.message)
 
-    Object.keys(error).forEach(key => {
+    // We must use getOwnProperty because keys like `stack` are not enumerable,
+    // but we want to copy over the entire error
+    Object.getOwnPropertyNames(error).forEach(key => {
       this[key] = error[key]
     })
   }

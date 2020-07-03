@@ -2,9 +2,6 @@
 title: Build Time and Client Runtime Data Fetching
 ---
 
-import BuildDataExample from "@components/build-data-example"
-import ClientDataExample from "@components/client-data-example"
-
 This guide demonstrates how to fetch data at both [_build time_](/docs/glossary#build) and [_runtime_](/docs/glossary#runtime) in Gatsby. Most of the techniques outlined are for custom data handling. Be sure to check out Gatsby's [plugin library](/plugins/) to see if there's an off-the-shelf solution for your data requirements, such as [sourcing from a CMS](/docs/headless-cms/) or other third-party integration.
 
 ## The benefits of the hybrid nature of Gatsby apps
@@ -19,7 +16,7 @@ Compiling pages at build time is useful when your website content won't change o
 
 ## Combining build time and client runtime data
 
-To illustrate a combination of build time and client runtime data, this guide uses code from a [small example site](https://gatsby-data-fetching.netlify.app). It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
+To illustrate a combination of build time and client runtime data, this guide uses code from a small [example site]. It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
 Reasons to fetch certain data at build time vs. client runtime will vary, but in this example the repo's name and URL are much less likely to change between builds of the site. The repo's star counts, on the other hand, are likely to change often and would benefit from a client-side request to the GitHub API to stay current between static site builds.
 
 > Check out the code from the [full example here](https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching).
@@ -142,9 +139,9 @@ export default IndexPage
 
 > This data is gathered at build time and written to a JSON file. As the build continues, the code is rewritten behind the scenes to dynamically import the JSON file and set `gatsbyRepoData` equal to the contents of the JSON file instead of the call to `useStaticQuery`. You can read more about this process in the Gatsby internals section on [Normal vs Static Queries](/docs/static-vs-normal-queries/#replacing-queries-with-json-imports)
 
-Here's an adaptation of this build time data example being used on this page:
+In the [example site], the build data is shown in the line:
 
-<BuildDataExample />
+> Gatsby repo: [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
 
 The linked URL and repository name are fetched at build time; if the name of the repository changed and the site were rebuilt, it would update.
 
@@ -206,9 +203,9 @@ export default IndexPage
 
 In the code above, both the build time and runtime data are rendered from the same page component. The build time data has the advantage of being loaded before the user ever gets to the page. When the site loads in the browser, the runtime section in the `useEffect` hook will gather its data and render it as well.
 
-Here's an adaptation of this runtime example being used on this page (which is also a Gatsby app)!
+In the [example site], runtime data is shown in the line:
 
-<ClientDataExample />
+> Star count for the Gatsby repo: [current star count]
 
 The repo's star count is fetched at runtime; if you refresh the page, this number will likely update.
 
@@ -216,7 +213,9 @@ The repo's star count is fetched at runtime; if you refresh the page, this numbe
 
 You may be interested in other projects (both used in production and proof-of-concepts) that illustrate this usage:
 
-- [Live example](https://gatsby-data-fetching.netlify.app) of the code used in this guide
+- [Live example][example site] of the code used in this guide
 - [Gatsby store](https://github.com/gatsbyjs/store.gatsbyjs.org): with static product pages at build time and client-side interactions for e-commerce features
 - [Gatsby mail](https://github.com/DSchau/gatsby-mail): a client-side email application
 - [Example repo fetching data using Apollo](https://github.com/jlengstorf/gatsby-with-apollo)
+
+[example site]: https://gatsby-data-fetching.netlify.app
