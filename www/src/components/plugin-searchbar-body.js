@@ -197,7 +197,7 @@ const searchBoxStyles = t => css`
 /* stylelint-enable */
 
 // Search shows a list of "hits", and is a child of the PluginSearchBar component
-function Search() {
+function Search({ pathname, query }) {
   return (
     <div sx={{ pb: [11, null, null, 0] }}>
       <div
@@ -267,11 +267,7 @@ function Search() {
         >
           <InfiniteHits
             hitComponent={result => (
-              <Result
-                hit={result.hit}
-                pathname={this.props.pathname}
-                query={this.props.query}
-              />
+              <Result hit={result.hit} pathname={pathname} query={query} />
             )}
           />
         </div>
