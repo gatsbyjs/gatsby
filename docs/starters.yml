@@ -1798,7 +1798,7 @@
     - Netlify integration ready to deploy
 - url: https://traveler-blog.netlify.app/
   repo: https://github.com/QingpingMeng/gatsby-starter-traveler-blog
-  description: A fork of the Official Gatsby Starter Blog to build a traveler blog with images supported
+  description: A fork of the Official Gatsby Starter Blog to build a traveler blog with images support
   tags:
     - Blog
     - PWA
