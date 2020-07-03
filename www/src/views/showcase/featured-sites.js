@@ -220,7 +220,7 @@ export default function FeaturedSites({ setFilters, featured }) {
                 },
                 ...featuredSitesCard,
               }}
-              onClick={this.setFilterToFeatured}
+              onClick={setFilterToFeatured}
             >
               <div
                 sx={{
