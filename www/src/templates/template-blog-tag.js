@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import React from "react"
-import styled from "@emotion/styled"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { graphql } from "gatsby"
 import { TiTags as TagsIcon, TiArrowRight } from "react-icons/ti"
@@ -25,17 +24,7 @@ const preferSpacedTag = tags => {
   return tags[0]
 }
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  ${mediaQueries.xs} {
-    flex-direction: row;
-  }
-`
-
-const Tags = ({ pageContext, data }) => {
+export default function BlogTag({ pageContext, data }) {
   const { tags } = pageContext
   const { nodes, totalCount } = data.allMdx
   const tagHeader = `${totalCount} post${
@@ -52,7 +41,7 @@ const Tags = ({ pageContext, data }) => {
         )}`}
       />
       <h1>{tagHeader}</h1>
-      <ButtonWrapper>
+      <div sx={{ display: `flex` }}>
         <Button
           variant="small"
           key="blog-post-view-all-tags-button"
@@ -73,7 +62,7 @@ const Tags = ({ pageContext, data }) => {
             </Button>
           </React.Fragment>
         ) : null}
-      </ButtonWrapper>
+      </div>
       {nodes.map(node => (
         <BlogPostPreviewItem
           post={node}
@@ -85,8 +74,6 @@ const Tags = ({ pageContext, data }) => {
     </Container>
   )
 }
-
-export default Tags
 
 export const pageQuery = graphql`
   query($tags: [String]) {

@@ -101,7 +101,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const blogPostTemplate = getTemplate(`template-blog-post`)
   const blogListTemplate = getTemplate(`template-blog-list`)
-  const tagTemplate = getTemplate(`tags`)
+  const tagTemplate = getTemplate(`template-blog-tag`)
   const contributorPageTemplate = getTemplate(`template-contributor-page`)
 
   const { data, errors } = await graphql(/* GraphQL */ `
