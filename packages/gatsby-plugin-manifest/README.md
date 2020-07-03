@@ -500,7 +500,9 @@ cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back
 ```
 
 Comment out "Alias /icons/" in /etc/httpd/conf.d/autoindex.conf:
-`cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"`
+```shell
+cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"
+```
 
 Reload Apache/or restart server:
 ```shell
