@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
 import Img from "gatsby-image"
 import hex2rgba from "hex2rgba"
 import { useColorMode } from "theme-ui"
@@ -97,7 +96,7 @@ export default function FeaturedSites({ setfilters, featured }) {
               },
             },
           }}
-          onClick={this.setFilterToFeatured}
+          onClick={setFilterToFeatured}
         >
           <span className="title">View all</span>
           {` `}
