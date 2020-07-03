@@ -35,7 +35,6 @@ plugins: [
       forceBase64Format: ``, // valid formats: png,jpg,webp
       useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
       stripMetadata: true,
-      lazyImageGeneration: true,
       defaultQuality: 50,
     },
   },
