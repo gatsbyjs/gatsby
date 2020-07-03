@@ -230,7 +230,7 @@ We can't wait to see what you build.
 [case-study]: https://developers.google.com/web/showcase/2017/twitter
 [gatsby-graphql]: /docs/graphql-concepts/
 [gatsby-without-graphql]: /docs/using-gatsby-without-graphql/
-[client-only-routes]: /docs/client-only-routes-and-user-authentication
+[client-only-routes]: /docs/client-only-routes
 [create-react-app]: https://facebook.github.io/create-react-app/
 [react-dom-render-to-string]: https://reactjs.org/docs/react-dom-server.html#rendertostring
 [cdm]: https://reactjs.org/docs/react-component.html#componentdidmount

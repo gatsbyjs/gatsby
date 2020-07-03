@@ -36,7 +36,7 @@ To get started quickly, use `gatsby-plugin-create-client-paths` to create privat
 
 #### The Hand-Rolled Path
 
-[Read this tutorial and handy illustration](/docs/client-only-routes-and-user-authentication/) that walks you through adding private routes and authentication in Gatsby.
+[Read this tutorial and handy illustration](/docs/client-only-routes/) that walks you through adding private routes and authentication in Gatsby.
 
 ### What to Do If You Need Help
 
