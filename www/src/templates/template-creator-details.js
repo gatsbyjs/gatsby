@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React, { Component } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import Link from "../components/localized-link"
 import Img from "gatsby-image"
