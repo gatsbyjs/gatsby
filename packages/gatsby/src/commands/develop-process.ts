@@ -191,9 +191,10 @@ module.exports = async (program: IProgram): Promise<void> => {
             parentSpan,
             gatsbyNodeGraphQLFunction,
             graphqlRunner,
+            firstRun,
           }: IBuildContext): IQueryRunningContext => {
             return {
-              firstRun: true,
+              firstRun,
               program,
               store,
               parentSpan,
@@ -228,6 +229,9 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             await startWebpackServer({ program, app, workerPool })
           },
+          onDone: {
+            actions: assign<IBuildContext, any>({ firstRun: false }),
+          },
         },
       },
     },
@@ -254,7 +258,7 @@ module.exports = async (program: IProgram): Promise<void> => {
           (_, { data }): DataLayerResult => data
         ),
       },
-    }).withContext({ program, parentSpan: bootstrapSpan, app })
+    }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
   )
 
   const isInterpreter = <T>(
