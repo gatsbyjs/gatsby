@@ -7,7 +7,7 @@ tags:
   - gazette
 ---
 
-October means halloween! For your spooky reading pleasure, the blog now has a dark mode. So dim the lights, pull up a comfy chair and let's begin.
+October means Halloween! For your spooky reading pleasure, the blog now has a dark mode. So dim the lights, pull up a comfy chair and let's begin.
 
 In September we posted our [Series A funding announcement](https://www.gatsbyjs.org/blog/2019-09-26-announcing-gatsby-15m-series-a-funding-round/), then headed to the UK for Gatsby Days, London. Fear not, if you missed all the action you can [catch up by watching the videos](https://www.youtube.com/watch?v=UvO7h_KwgpE&list=PLCU2qJekvcN2f9rgS50xy7-4QBpgwid4G).
 

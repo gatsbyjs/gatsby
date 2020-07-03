@@ -30,11 +30,11 @@ We want Gatsby Cloud to be used by everyone. [Our pricing structure includes a f
 Jay Hostan, a senior product developer at global coffeehouse chain [Costa Coffee](https://www.costacoffee.com/), told us:
 
 <Pullquote>
-  Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a no
-  brainer and has added a lot of value to our workflow. Before, we were building
-  staging pipelines by hand. Preview allows our team to see content changes
-  immediately, creating a tighter feedback loop so we can launch faster. It's
-  enabled us to shift a lot of our focus to strategic projects and feature
+  Deciding to use Gatsby Preview as a paid feature of Gatsby Cloud was a
+  no-brainer and has added a lot of value to our workflow. Before, we were
+  building staging pipelines by hand. Preview allows our team to see content
+  changes immediately, creating a tighter feedback loop so we can launch faster.
+  It's enabled us to shift a lot of our focus to strategic projects and feature
   development.
 </Pullquote>
 

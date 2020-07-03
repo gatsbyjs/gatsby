@@ -362,7 +362,8 @@ async function generateBase64({ file, args = {}, reporter }) {
   return base64output
 }
 
-const generateCacheKey = ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+const generateCacheKey = ({ file, args }) =>
+  `${file.internal.contentDigest}${JSON.stringify(args)}`
 
 const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
 
