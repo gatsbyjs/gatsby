@@ -32,7 +32,7 @@ exports.sourceNodes = async (
     createSchema,
     refetchInterval,
     batch = false,
-    transformSchema: customTransformSchema,
+    transformSchema,
   } = options
 
   invariant(
@@ -106,17 +106,17 @@ exports.sourceNodes = async (
     }),
   ]
 
-  const schema = customTransformSchema
-    ? customTransformSchema({
+  const schema = transformSchema
+    ? transformSchema({
         schema: introspectionSchema,
-        link: linkToExecutor(link),
+        link,
         resolver,
         defaultTransforms,
       })
     : wrapSchema(
         {
           schema: introspectionSchema,
-          link: linkToExecutor(link),
+          executor: linkToExecutor(link),
         },
         defaultTransforms
       )
