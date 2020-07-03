@@ -83,6 +83,11 @@ describe(`sidebar`, () => {
       const { queryByText } = renderSidebar(`/characters/jay-gatsby/`)
       expect(queryByText(`Jay Gatsby`)).toBeInTheDocument()
     })
+
+    it(`opens sections with active items when the pathname is missing a trailing slash`, () => {
+      const { queryByText } = renderSidebar(`/characters/jay-gatsby`)
+      expect(queryByText(`Jay Gatsby`)).toBeInTheDocument()
+    })
   })
 
   describe(`toggle section`, () => {
@@ -124,6 +129,11 @@ describe(`sidebar`, () => {
   describe(`scroll into view`, () => {
     it(`scrolls the sidebar into view on load`, () => {
       renderSidebar(`/characters/jay-gatsby/`)
+      expect(scrollIntoViewMock).toHaveBeenCalled()
+    })
+
+    it(`scrolls the sidebar into view on load when the pathname is missing a trailing slash`, () => {
+      renderSidebar(`/characters/jay-gatsby`)
       expect(scrollIntoViewMock).toHaveBeenCalled()
     })
 
