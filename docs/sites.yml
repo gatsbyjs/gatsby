@@ -11233,6 +11233,16 @@
   built_by: Shion Honda
   built_by_url: https://twitter.com/shion_honda
   featured: false
+- title: mindkit
+  url: https://mindkit.fr
+  main_url: https://mindkit.fr
+  description: >
+    A collection of wellness links to help with mind and body. Built with Gatsby, Theme UI, Airtable and Netlify.
+  categories:
+    - Directory
+    - Healthcare
+  built_by: Joseph Race
+  built_by_url: https://josephrace.co.uk
 - title: Travel Diary - Your Digital Travelogue
   main_url: https://ontraveldiary.com
   url: https://ontraveldiary.com
