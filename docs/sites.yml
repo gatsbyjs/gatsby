@@ -11278,6 +11278,20 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: LeanyLabs
+  main_url: https://leanylabs.com/
+  url: https://leanylabs.com/mvp-development/
+  description: >
+    Web Development Agency. We help startups to build successful web applications.
+  categories:
+    - Agency
+    - Web Development
+    - Programming
+    - JavaScript
+    - Consulting
+    - Blog
+  built_by: LeanyLabs
+  built_by_url: https://leanylabs.com/
 - title: Require Podcast
   main_url: https://require.podcast.gq
   url: https://require.podcast.gq
