@@ -29,7 +29,7 @@ export async function bootstrap(
     : {}
 
   initialContext.parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
-
+  initialContext.firstRun = true
   const context = {
     ...initialContext,
     ...(await initialize(initialContext)),

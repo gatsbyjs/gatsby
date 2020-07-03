@@ -9,6 +9,7 @@ export async function sourceNodes({
   parentSpan,
   webhookBody,
   store,
+  deferNodeMutation,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: string[]
   changedPages: string[]
@@ -22,7 +23,7 @@ export async function sourceNodes({
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
   await sourceNodesAndRemoveStaleNodes({
     parentSpan: activity.span,
-    deferNodeMutation: true,
+    deferNodeMutation,
     webhookBody,
   })
 

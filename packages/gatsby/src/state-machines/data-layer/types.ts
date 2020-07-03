@@ -15,6 +15,7 @@ export interface IMutationAction {
   payload: unknown[]
 }
 export interface IDataLayerContext {
+  deferNodeMutation?: boolean
   skipSourcing?: boolean
   nodesMutatedDuringQueryRun?: boolean
   firstRun?: boolean

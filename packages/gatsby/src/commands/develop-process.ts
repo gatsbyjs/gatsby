@@ -149,8 +149,12 @@ module.exports = async (program: IProgram): Promise<void> => {
         },
         invoke: {
           src: `initializeDataLayer`,
-          data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-            return { parentSpan, store, firstRun: true }
+          data: ({
+            parentSpan,
+            store,
+            firstRun,
+          }: IBuildContext): IDataLayerContext => {
+            return { parentSpan, store, firstRun, deferNodeMutation: true }
           },
           onDone: {
             actions: `assignServiceResult`,
