@@ -11280,6 +11280,19 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Real Estate Shows
+  main_url: https://realestateshows.com/
+  url: https://realestateshows.com/
+  description: >
+    Marketing site for Real Estate Shows, a web app for making real estate video slide shows. Using WordPress as a data store for the blog via the WPGraphQL plugin.
+  categories:
+    - Real Estate
+    - Blog
+    - WordPress
+    - SEO
+    - Video
+  built_by: Zeek Interactive
+  built_by_url: https://zeek.com/
 - title: Fidisys Playbook
   main_url: https://playbook.fidisys.com/
   url: https://playbook.fidisys.com/
