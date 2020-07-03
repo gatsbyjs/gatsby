@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { forwardRef } from "react"
+import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import hex2rgba from "hex2rgba"
 
 export default forwardRef(function LayerTab(
@@ -8,6 +9,7 @@ export default forwardRef(function LayerTab(
   ref
 ) {
   const { baseColor, title, icon } = layer
+  console.log({ baseColor })
 
   return (
     <button
@@ -28,7 +30,7 @@ export default forwardRef(function LayerTab(
         fontWeight: selected ? `bold` : `body`,
         p: 2,
         ":focus": {
-          boxShadow: t => `0 0 0 3px ${hex2rgba(t.colors[baseColor][30], 0.5)}`,
+          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
           outline: 0,
         },
         ":hover": {

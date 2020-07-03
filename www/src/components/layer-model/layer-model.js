@@ -41,7 +41,7 @@ const LayerContentWrapper = ({
 export default function LayerModel({
   layers,
   displayCodeFullWidth = false,
-  initialLayer = `Content`,
+  initialLayer = layers[0].title,
 }) {
   const [selected, setSelected] = useState(initialLayer)
   const refs = useRef(layers.map(() => React.createRef()))

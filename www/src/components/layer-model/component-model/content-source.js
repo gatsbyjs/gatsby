@@ -2,7 +2,7 @@
 import { jsx } from "theme-ui"
 import { useState } from "react"
 
-import { CodeWrapper } from "../model-wrapper"
+import CodeWrapper from "../code-wrapper"
 
 // This content is only used when you click "cycle sources" in the Content pane
 const sources = [
