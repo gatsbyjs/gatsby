@@ -191,9 +191,10 @@ module.exports = async (program: IProgram): Promise<void> => {
             gatsbyNodeGraphQLFunction,
             graphqlRunner,
             websocketManager,
+            firstRun,
           }: IBuildContext): IQueryRunningContext => {
             return {
-              firstRun: true,
+              firstRun,
               program,
               store,
               parentSpan,
@@ -297,7 +298,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         startWebpackServer: startWebpackServer,
       },
       actions: buildActions,
-    }).withContext({ program, parentSpan: bootstrapSpan, app })
+    }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
   )
 
   const isInterpreter = <T>(
