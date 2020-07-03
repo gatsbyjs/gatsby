@@ -58,16 +58,15 @@ const sources = [
 
 export default function ContentSource() {
   const [sourceIndex, setSourceIndex] = useState(0)
+  const { title, language, content } = sources[sourceIndex]
+
   function handleRotate() {
     setSourceIndex(i => (i + 1) % sources.length)
   }
+
   return (
-    <CodeWrapper
-      title={sources[sourceIndex].title}
-      language={sources[sourceIndex].language}
-      onRotate={handleRotate}
-    >
-      {sources[sourceIndex].content}
+    <CodeWrapper title={title} language={language} onRotate={handleRotate}>
+      {content}
     </CodeWrapper>
   )
 }
