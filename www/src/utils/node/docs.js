@@ -49,7 +49,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       showTopLevelSignatures: Boolean
       disableTableOfContents: Boolean
       tableOfContentsDepth: Int
-      overview: Boolean
       issue: String
       jsdoc: [String!]
       apiCalls: String
@@ -60,23 +59,6 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       anchor: String
       section: String
       locale: String
-    }
-
-    type File implements Node {
-      childrenDocumentationJs: DocumentationJs
-      fields: FileFields
-    }
-
-    # Added by gatsby-transformer-gitinfo
-    # TODO add these back upstream
-    type FileFields {
-      gitLogLatestDate: Date @dateformat
-      gitLogLatestAuthorName: String
-      gitLogLatestAuthorEmail: String
-    }
-
-    type DocumentationJSComponentDescription implements Node {
-      childMdx: Mdx
     }
 
     type GatsbyAPICall implements Node @derivedTypes @dontInfer {

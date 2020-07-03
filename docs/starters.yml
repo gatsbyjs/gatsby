@@ -6519,6 +6519,24 @@
     - Desktop and mobile responsive layout
     - Customizable branding & navigation
     - Material-UI
+- url: https://ph0en1x.ru/
+  repo: https://github.com/eduard-kirilov/gatsby-ts-apollo-starter
+  description: This starter is a ready-made configuration that includes Gatsby, React, Redux, Apollo, GraphQL, TypeScript, Styled-Components, Material-UI, Jest, Enzyme.
+  tags:
+    - E-commerce
+    - SEO
+    - Redux
+    - Language:TypeScript
+    - Pagination
+    - Styling:Material
+  features:
+    - This starter is configured to interact with GraphQL of your backend through Apollo.
+    - Strong typing with TypeScript.
+    - Typescript, Apollo, Mongo - backend.
+    - Unit tests based on jest and enzyme.
+    - In this starter, Styled-components and Material-UI can be used simultaneously.
+    - This starter has tuned redux with reselect on board
+    - Desktop and mobile responsive layout
 - url: https://gatsby-starter-tailwind-opinionated.netlify.app/
   repo: https://github.com/mjsarfatti/gatsby-starter-tailwind-opinionated
   description: Based on the official Gatsby starter, with an opinionated Tailwind setup. Uses Purgecss to remove unused CSS.

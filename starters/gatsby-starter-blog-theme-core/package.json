@@ -8,6 +8,7 @@
     "build": "gatsby build",
     "clean": "gatsby clean"
   },
+  "license": "0BSD",
   "dependencies": {
     "@mdx-js/react": "^1.6.6",
     "gatsby": "^2.23.12",
