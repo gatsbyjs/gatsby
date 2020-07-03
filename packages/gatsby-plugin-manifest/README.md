@@ -494,7 +494,7 @@ Example:
 
 Alternatively, if you have access to modify Apache, you can resolve this issue by removing the restriction on `/icons` folders.
 
-Create a backup of /etc/httpd/conf.d/autoindex.conf:
+Create a backup of `/etc/httpd/conf.d/autoindex.conf`:
 ```shell
 cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back
 ```
