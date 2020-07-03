@@ -47,7 +47,7 @@ const GradientOverlay = () => {
   )
 }
 
-export default function FeaturedSites({ setfilters, featured }) {
+export default function FeaturedSites({ setFilters, featured }) {
   function setFilterToFeatured(e) {
     e.preventDefault()
     setFilters(`Featured`)
