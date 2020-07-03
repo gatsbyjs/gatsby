@@ -42,9 +42,19 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       invoke: {
         src: `runStaticQueries`,
         id: `running-static-queries`,
-        onDone: {
-          target: `runningPageQueries`,
-        },
+        onDone: [
+          {
+            target: `runningPageQueries`,
+            actions: `emitStaticQueryDataToWebsocket`,
+            // Only emit if there's a websocket manager
+            // This won't be the case on first run, and the query data
+            // will be emitted when the client first connects
+            cond: (context): boolean => !!context.websocketManager,
+          },
+          {
+            target: `runningPageQueries`,
+          },
+        ],
       },
     },
     runningPageQueries: {
