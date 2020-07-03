@@ -11278,6 +11278,20 @@
     - Marketing
   built_by: Laputan Software
   built_by_url: https://laputan.com.au
+- title: Require Podcast
+  main_url: https://require.podcast.gq
+  url: https://require.podcast.gq
+  source_url: https://github.com/requirepodcast/website
+  description: >
+    Website for Require Podcast - a Polish podcast about webdevelopment. Simple landing page + episode archive with player and episode notes generated from markdown files
+  categories:
+    - Entertainment
+    - Landing Page
+    - Podcast
+    - Programming
+    - Web Development
+  built_by: Adam Siekierski and Artur Dudek
+  built_by_url: https://siekierski.ml
 - title: Lidabox
   description: >-
     website for the sale of medical supplies and biosafety supplies.
