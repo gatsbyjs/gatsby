@@ -3894,18 +3894,6 @@
     - Blog
   built_by: Eleftherios Psitopoulos
   built_by_url: https://bakedbird.com
-- title: Benjamin Lannon
-  url: https://lannonbr.com
-  main_url: https://lannonbr.com
-  source_url: https://github.com/lannonbr/Portfolio-gatsby
-  description: >
-    Personal portfolio of Benjamin Lannon
-  categories:
-    - Portfolio
-    - Web Development
-  built_by: Benjamin Lannon
-  built_by_url: https://lannonbr.com
-  featured: false
 - title: Aravind Balla
   url: https://aravindballa.com
   main_url: https://aravindballa.com
