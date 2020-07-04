@@ -2,7 +2,7 @@
 title: Deploying to a DigitalOcean Droplet
 ---
 
-This guide walks through how to deploy and host your Gatsby site on a [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/).
+This guide walks through how to deploy and host your Gatsby site on a [DigitalOcean Droplet](https://www.digitalocean.com/products/droplets/) with Ubuntu and Nginx.
 
 DigitalOcean provides a cloud platform to deploy, manage, and scale applications of any size, removing infrastructure friction and providing predictability so developers and their teams can spend more time building better software.
 
