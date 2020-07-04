@@ -98,8 +98,7 @@ export default function BlogPostTemplate({ pageContext, data }) {
                       {` `}
                       (originally published at
                       {` `}
-                      <a href={post.canonicalLink}>{post.fields.publishedAt}</a>
-                      )
+                      <a href={post.canonicalLink}>{post.publishedAt}</a>)
                     </span>
                   )}
                 </BioLine>
