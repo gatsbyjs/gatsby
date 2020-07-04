@@ -1,3 +1,4 @@
+import * as path from "path"
 import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
 import postcss from "postcss"
@@ -12,6 +13,7 @@ import { getBrowsersList } from "./browserslist"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
+import { GatsbyWebpackVirtualModules } from "./gatsby-webpack-virtual-modules"
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
@@ -103,6 +105,7 @@ type PluginUtils = BuiltinPlugins & {
   minifyCss: PluginFactory
   fastRefresh: PluginFactory
   eslintGraphqlSchemaReload: PluginFactory
+  virtualModules: PluginFactory
 }
 
 /**
@@ -267,6 +270,13 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
           ...options,
         },
         loader: require.resolve(`./babel-loader`),
@@ -275,7 +285,16 @@ export const createWebpackUtils = (
 
     dependencies: options => {
       return {
-        options,
+        options: {
+          // TODO add proper cache keys
+          cacheDirectory: path.join(
+            program.directory,
+            `.cache`,
+            `webpack`,
+            `babel`
+          ),
+          ...options,
+        },
         loader: require.resolve(`babel-loader`),
       }
     },
@@ -541,7 +560,8 @@ export const createWebpackUtils = (
     ...options
   }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
-      cache: true,
+      // TODO add proper cache keys
+      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
       // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
       parallel: !isWsl,
@@ -654,6 +674,9 @@ export const createWebpackUtils = (
 
   plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
     new GatsbyWebpackEslintGraphqlSchemaReload()
+
+  plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
+    new GatsbyWebpackVirtualModules()
 
   return {
     loaders,

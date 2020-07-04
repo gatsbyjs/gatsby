@@ -6,24 +6,39 @@ const url = require(`url`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
-/**
- * Create a resolver for the given fieldName that resolves to
- * the field of the parent MDX.
- * (Taken from gatsby-theme-blog-core)
- */
-function mdxResolverPassthrough(fieldName) {
-  return async (source, args, context, info) => {
-    const type = info.schema.getType(`Mdx`)
-    const mdxNode = context.nodeModel.getNodeById({
-      id: source.parent,
-    })
-    const resolver = type.getFields()[fieldName].resolve
-    const result = await resolver(mdxNode, args, context, {
-      fieldName,
-    })
-    return result
-  }
-}
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
+
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      seoTitle: String
+      draft: Boolean
+      date: Date @dateformat
+      canonicalLink: String
+      tags: [String!]
+      author: AuthorYaml @link
+      twittercard: String
+      publishedAt: String
+      # TODO this was only used for one blog post; maybe it can be replaced with Image?
+      cover: File @fileByRelativePath
+      image: File @fileByRelativePath
+      imageAuthor: String
+      imageAuthorLink: String
+      imageTitle: String
+      showImageInArticle: Boolean
+    }
+
+    type MdxFields @dontInfer {
+      slug: String
+      section: String
+      released: Boolean
+      publishedAt: String
+      excerpt: String
+    }
 
 exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
