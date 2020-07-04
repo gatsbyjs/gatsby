@@ -4,6 +4,7 @@ import {
   GraphQLObjectType,
   isObjectType,
 } from "graphql"
+import { flatMap } from "lodash"
 import { FragmentMap, IGatsbyNodeConfig, RemoteTypeName } from "../../types"
 import * as GraphQLAST from "../../utils/ast-nodes"
 
@@ -89,7 +90,8 @@ function collectAllIdFields(
   possibleTypes: readonly GraphQLObjectType[],
   nodesMap: Map<RemoteTypeName, IGatsbyNodeConfig>
 ): Set<string> {
-  const allIds = possibleTypes.flatMap(
+  const allIds = flatMap(
+    possibleTypes,
     type => nodesMap.get(type.name)?.remoteIdFields ?? []
   )
   return new Set(allIds)
