@@ -94,7 +94,7 @@ sudo npm install
 sudo gatsby build
 ```
 
-### Install Nginx Web Server to host the static site and open firewall to accept HTTP and HTTPS requests
+### Install Nginx Web Server to host the site and open firewall to accept HTTP and HTTPS requests
 
 To host a website or static files onto a Linux-based server/VPS, a web-server like Apache or Nginx is required.
 
