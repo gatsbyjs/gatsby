@@ -56,7 +56,7 @@ const ContributionLink = styled.a`
   &&:not(:hover) {
     color: ${p => p.theme.colors.grey[50]};
     border-bottom-color: ${p =>
-      p.colorMode === "dark"
+      p.colorMode === `dark`
         ? p.theme.colors.grey[90]
         : p.theme.colors.grey[30]};
   }
@@ -78,9 +78,10 @@ const LanguageThumb = ({ lang, isCurrent }) => {
     <Container>
       <EnglishName>{lang.name}</EnglishName>
       <LocalName>
-        <Link to={localizedPath(lang.code, "/languages")}>
+        <Link to={localizedPath(lang.code, `/languages`)}>
           {lang.localName}
-        </Link>{" "}
+        </Link>
+        {` `}
         {isCurrent && <CheckCircleIcon />}
       </LocalName>
       <ContributionText>
@@ -91,7 +92,8 @@ const LanguageThumb = ({ lang, isCurrent }) => {
           colorMode={colorMode}
         >
           Contribute
-        </ContributionLink>{" "}
+        </ContributionLink>
+        {` `}
         <LaunchIcon />
       </ContributionText>
     </Container>
