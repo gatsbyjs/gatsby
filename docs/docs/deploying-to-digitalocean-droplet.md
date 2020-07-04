@@ -77,7 +77,7 @@ git clone <your-github-repo-site>
 
 > Note: this guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
 
-### Build your gatsby site to generate a static site for production
+### Generate your Gatsby site for production
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
 
