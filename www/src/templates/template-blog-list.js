@@ -15,7 +15,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { pullIntoGutter, breakpointGutter } from "../utils/styles"
 
 export default function BlogPostsIndex({ data, pageContext }) {
-  const posts = data.allMdx.nodes
+  const posts = data.allBlogPost.nodes
   return (
     <main id={`reach-skip-nav`}>
       <PageMetadata title={`Blog | Page ${pageContext.currentPage}`} />

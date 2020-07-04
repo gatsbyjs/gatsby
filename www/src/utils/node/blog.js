@@ -6,14 +6,29 @@ const url = require(`url`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
 const { getTemplate } = require(`../get-template`)
 
+// FIXME move to utility file
+function mdxResolverPassthrough(fieldName) {
+  return async (source, args, context, info) => {
+    const type = info.schema.getType(`Mdx`)
+    const mdxNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    })
+    const resolver = type.getFields()[fieldName].resolve
+    const result = await resolver(mdxNode, args, context, {
+      fieldName,
+    })
+    return result
+  }
+}
+
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type Mdx implements Node {
-      frontmatter: MdxFrontmatter
-      fields: MdxFields
-    }
-
-    type MdxFrontmatter @dontInfer {
+    type BlogPost implements Node @dontInfer @childOf(types: ["Mdx"]) {
+      slug: String!
+      released: Boolean
+      publishedAt: String
+      # Derived from frontmatter
+      excerpt: String
       title: String!
       seoTitle: String
       draft: Boolean
@@ -30,18 +45,12 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       imageAuthorLink: String
       imageTitle: String
       showImageInArticle: Boolean
+      # Derived from MDX
+      body: String!
+      html: String
+      timeToRead: Int
     }
 
-    type MdxFields @dontInfer {
-      slug: String
-      section: String
-      released: Boolean
-      publishedAt: String
-      excerpt: String
-    }
-
-exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
-  createTypes(/* GraphQL */ `
     type AuthorYaml implements Node @derivedTypes @dontInfer {
       id: String!
       bio: String
@@ -54,63 +63,22 @@ exports.createSchemaCustomization = ({ schema, actions: { createTypes } }) => {
       slug: String!
     }
   `)
+}
 
-  createTypes(
-    schema.buildObjectType({
-      name: `BlogPost`,
-      fields: {
-        id: { type: `ID!` },
-        html: { type: `String!`, resolve: mdxResolverPassthrough(`html`) },
-        body: { type: `String!`, resolve: mdxResolverPassthrough(`body`) },
-        timeToRead: {
-          type: `Int`,
-          resolve: mdxResolverPassthrough(`timeToRead`),
-        },
-        slug: { type: `String!` },
-        released: { type: `Boolean` },
-        excerpt: {
-          type: `String!`,
-          args: {
-            pruneLength: {
-              type: `Int`,
-              defaultValue: 140,
-            },
-          },
-          resolve: async (source, args, context, info) => {
-            const type = info.schema.getType(`Mdx`)
-            const mdxNode = context.nodeModel.getNodeById({
-              id: source.parent,
-            })
-            const resolver = type.getFields().excerpt.resolve
-            const result = await resolver(mdxNode, args, context, {
-              fieldName: `excerpt`,
-            })
-            return mdxNode.frontmatter.excerpt || result
-          },
-        },
-        title: { type: `String!` },
-        seoTitle: { type: `String` },
-        draft: { type: `Boolean` },
-        date: { type: `Date!`, extensions: { dateformat: {} } },
-        canonicalLink: { type: `String` },
-        publishedAt: { type: `String` },
-        tags: { type: `[String!]` },
-        author: { type: `AuthorYaml!`, extensions: { link: {} } },
-        twittercard: { type: `String` },
-        cover: { type: `File`, extensions: { fileByRelativePath: {} } },
-        image: { type: `File`, extensions: { fileByRelativePath: {} } },
-        imageAuthor: { type: `String` },
-        imageAuthorLink: { type: `String` },
-        imageTitle: { type: `String` },
-        showImageInArticle: { type: `Boolean` },
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    BlogPost: {
+      body: {
+        resolve: mdxResolverPassthrough(`body`),
       },
-      interfaces: [`Node`],
-      extensions: {
-        infer: false,
-        childOf: { types: [`Mdx`] },
+      html: {
+        resolve: mdxResolverPassthrough(`html`),
       },
-    })
-  )
+      timeToRead: {
+        resolve: mdxResolverPassthrough(`timeToRead`),
+      },
+    },
+  })
 }
 
 exports.onCreateNode = async ({ node, actions, getNode, createNodeId }) => {
@@ -138,7 +106,6 @@ exports.onCreateNode = async ({ node, actions, getNode, createNodeId }) => {
     const fieldData = {
       ...node.frontmatter,
       slug,
-      timeToRead: node.timeToRead,
       released: !draft && moment.utc().isSameOrAfter(moment.utc(date)),
       publishedAt: canonicalLink
         ? publishedAt || url.parse(canonicalLink).hostname
