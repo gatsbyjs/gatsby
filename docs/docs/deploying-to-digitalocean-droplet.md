@@ -39,7 +39,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    sudo apt-get install npm
    ```
 
-   To view the version of node and npm installed, run,
+   To view the version of Node and npm installed, run,
 
    ```bash
    node -v
