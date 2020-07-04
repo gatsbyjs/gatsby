@@ -48,10 +48,6 @@ if (process.env.AIRTABLE_API_KEY) {
 }
 
 module.exports = {
-  mapping: {
-    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
-    "Mdx.frontmatter.author": `AuthorYaml`,
-  },
   plugins: [
     `gatsby-plugin-theme-ui`,
     {
@@ -66,15 +62,14 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-gitinfo`,
-      options: {
-        include: /mdx?$/i,
-      },
-    },
-    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
-        keywords: [`gatsby-plugin`, `gatsby-component`],
+        // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword
+        // that returns a lot fewer packages
+        // (In this case, stuff that Lennart has published)
+        keywords: process.env.DISABLE_NPM_SEARCH
+          ? [`lekoarts`]
+          : [`gatsby-plugin`, `gatsby-component`],
       },
     },
     {
@@ -203,12 +198,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
-    {
-      resolve: `gatsby-plugin-layout`,
-      options: {
-        component: `${__dirname}/src/layouts/index.js`,
-      },
-    },
+    `gatsby-plugin-layout`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -226,6 +216,14 @@ module.exports = {
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-react-svg`,
+      options: {
+        rule: {
+          include: /assets\/(guidelines|icons|ornaments)\/.*.svg$/,
+        },
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
