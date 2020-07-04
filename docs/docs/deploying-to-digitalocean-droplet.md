@@ -84,7 +84,7 @@ The static files will be hosted publicly on the droplet. The `gatsby build` comm
 1. Install dependencies.
 
 ```bash
-cd my-gatsby-app
+cd <my-gatsby-app>
 sudo npm install
 ```
 
