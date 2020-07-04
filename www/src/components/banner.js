@@ -2,31 +2,29 @@
 import { jsx } from "theme-ui"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-function BannerContent() {
-  return (
-    <div
-      sx={{
-        color: `whiteFade.80`,
-        fontFamily: `heading`,
-        px: 6,
-        whiteSpace: `nowrap`,
-      }}
-    >
-      {`New! Try Incremental Builds with `}
-      <OutboundLink
-        href="https://www.gatsbyjs.com"
-        sx={{
-          color: `white`,
-          borderBottom: t => `1px solid ${t.colors.white}`,
-          "&:hover": {
-            borderBottom: 0,
-          },
-        }}
-      >
-        Gatsby Cloud!
-      </OutboundLink>
-    </div>
-  )
+const contentStyles = {
+  color: `whiteFade.80`,
+  fontFamily: `heading`,
+  whiteSpace: `nowrap`,
+  px: 6,
+}
+
+const linkStyles = {
+  color: `white`,
+  borderBottom: 1,
+  borderColor: `ui.border`,
+  "&:hover": {
+    borderBottom: 0,
+  },
+}
+
+const outerContainerStyles = {
+  position: `fixed`,
+  zIndex: `banner`,
+  backgroundColor: `banner`,
+  height: `bannerHeight`,
+  width: `100%`,
+  px: `env(safe-area-inset-left)`,
 }
 
 const innerContainerStyles = {
@@ -41,19 +39,18 @@ const innerContainerStyles = {
     }, ${t.colors.purple[`90`]} 96%, transparent)`,
 }
 
+const BannerContent = () => (
+  <div sx={contentStyles}>
+    {`New! Try Incremental Builds with `}
+    <OutboundLink href="https://www.gatsbyjs.com" sx={linkStyles}>
+      Gatsby Cloud!
+    </OutboundLink>
+  </div>
+)
+
 export default function Banner() {
   return (
-    <aside
-      className="banner"
-      sx={{
-        position: `fixed`,
-        zIndex: `banner`,
-        backgroundColor: `banner`,
-        height: `bannerHeight`,
-        width: `100%`,
-        px: `env(safe-area-inset-left)`,
-      }}
-    >
+    <aside sx={outerContainerStyles}>
       <div sx={innerContainerStyles}>
         <BannerContent />
       </div>
