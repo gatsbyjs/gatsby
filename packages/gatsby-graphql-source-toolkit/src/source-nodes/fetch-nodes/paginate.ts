@@ -141,7 +141,7 @@ export function resolvePaginationAdapter(
   const variableSet = new Set(variableNames)
   const adapter = paginationAdapters.find(
     s =>
-      (s.expectedVariableNames.length === 0 && variableNames.length === 0) ||
+      s.expectedVariableNames.length === variableNames.length &&
       s.expectedVariableNames.every(name => variableSet.has(name))
   )
   if (!adapter) {
