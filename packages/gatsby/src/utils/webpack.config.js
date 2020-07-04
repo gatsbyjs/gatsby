@@ -200,6 +200,8 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
+
+      plugins.virtualModules(),
     ]
 
     switch (stage) {

@@ -85,6 +85,7 @@ export const saveState = (): void => {
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
     pageData: state.pageData,
+    pendingPageDataWrites: state.pendingPageDataWrites,
   })
 }
 
