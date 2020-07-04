@@ -6845,3 +6845,17 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-bootstrap-snipcart.netlify.app/
+  repo: https://github.com/julianbattaglino/gatsby-snipcart-eccomerce.git
+  description: A simple e-commerce shop built using Gatsby / React Bootstrap and Snipcart.
+  tags:
+    - E-commerce
+    - React-Bootstrap CSS framework
+    - Snipcart
+    - Shop
+    - Products
+  features:
+    - Pwa
+    - Styled Components
+    
+
