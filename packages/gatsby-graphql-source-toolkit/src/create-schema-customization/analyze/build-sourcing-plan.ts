@@ -9,6 +9,7 @@ import {
   ASTKindToNode,
   getNamedType,
   isUnionType,
+  isEnumType,
 } from "graphql"
 import {
   IGatsbyNodeDefinition,
@@ -40,6 +41,7 @@ function buildFetchedTypeMap(
   const Visitors: {
     collectTypeFields: Visitor<ASTKindToNode>
     addUnionTypes: Visitor<ASTKindToNode>
+    addEnumTypes: Visitor<ASTKindToNode>
   } = {
     collectTypeFields: {
       Field(node: FieldNode): void {
@@ -84,11 +86,32 @@ function buildFetchedTypeMap(
         return undefined
       },
     },
+    addEnumTypes: {
+      Field(): void {
+        // Enum types must be added separately as well
+        const type = typeInfo.getType()
+        if (!type) {
+          return undefined
+        }
+        const enumType = getNamedType(type)
+        if (!isEnumType(enumType)) {
+          return undefined
+        }
+        if (!fetchedTypesMap.has(enumType.name)) {
+          fetchedTypesMap.set(enumType.name, new Map())
+        }
+        return undefined
+      },
+    },
   }
 
   const visitor = visitWithTypeInfo(
     typeInfo,
-    visitInParallel([Visitors.collectTypeFields, Visitors.addUnionTypes])
+    visitInParallel([
+      Visitors.collectTypeFields,
+      Visitors.addUnionTypes,
+      Visitors.addEnumTypes,
+    ])
   )
 
   for (const [, def] of args.gatsbyNodeDefs) {

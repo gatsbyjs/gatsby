@@ -3,9 +3,11 @@ import {
   isInterfaceType,
   isObjectType,
   isUnionType,
+  isEnumType,
   GraphQLUnionType,
   GraphQLObjectType,
   GraphQLInterfaceType,
+  GraphQLEnumType,
 } from "graphql"
 import { ISchemaCustomizationContext } from "../types"
 import { buildFields } from "./build-fields"
@@ -123,11 +125,31 @@ function collectGatsbyTypeInterfaces(
   return ifaces
 }
 
+function enumType(
+  context: ISchemaCustomizationContext,
+  remoteType: GraphQLEnumType
+): any {
+  const {
+    gatsbyApi: { schema },
+    typeNameTransform,
+  } = context
+
+  const typeConfig = {
+    name: typeNameTransform.toGatsbyTypeName(remoteType.name),
+    values: remoteType.getValues().reduce((acc, enumValue) => {
+      acc[enumValue.name] = { name: enumValue.name }
+      return acc
+    }, Object.create(null)),
+  }
+
+  return schema.buildEnumType(typeConfig)
+}
+
 export function buildTypeDefinition(
   context: ISchemaCustomizationContext,
-  typeName: string
+  remoteTypeName: string
 ): GatsbyGraphQLType | void {
-  const type = context.schema.getType(typeName)
+  const type = context.schema.getType(remoteTypeName)
 
   if (isObjectType(type)) {
     return objectType(context, type)
@@ -137,6 +159,9 @@ export function buildTypeDefinition(
   }
   if (isUnionType(type)) {
     return unionType(context, type)
+  }
+  if (isEnumType(type)) {
+    return enumType(context, type)
   }
   return undefined
 }
