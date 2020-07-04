@@ -131,7 +131,7 @@ Nginx is web-server. It provides the infrastructure code for handling client req
    sudo ufw allow 'OpenSSH'
    ```
 
-### Configuring Nginx to point to your Gatsby site's `/public` directory and add your domain
+### Configure Nginx to point to your Gatsby site's `/public` directory and add your domain
 
 Change the root directory configuration of Nginx in the default server block file
 
