@@ -65,16 +65,15 @@ const mergeFunctions = (data, context) => {
 
 export default function APITemplate({ data, location, pageContext }) {
   const { prev, next } = pageContext
-  const page = data.mdx
-  const { frontmatter, tableOfContents } = page
-  const heading = frontmatter.contentsHeading || `APIs`
+  const page = data.docPage
+  const heading = page.contentsHeading || `APIs`
   const headingId = `apis`
 
   // Cleanup graphql data for usage with API rendering components
   const mergedFuncs = mergeFunctions(data, pageContext)
 
   // Generate table of content items for API entries
-  const items = tableOfContents.items || []
+  const items = page.tableOfContents.items || []
   const tableOfContentsItems = [
     ...items,
     {
@@ -88,8 +87,7 @@ export default function APITemplate({ data, location, pageContext }) {
       }),
     },
   ]
-  const { tableOfContentsDepth: depth = 0 } = frontmatter
-  const tableOfContentsDepth = Math.max(depth, 2)
+  const tableOfContentsDepth = Math.max(page.tableOfContentsDepth, 2)
 
   return (
     <DocsMarkdownPage
@@ -103,7 +101,7 @@ export default function APITemplate({ data, location, pageContext }) {
       <h2 id={headingId}>{heading}</h2>
       <APIReference
         docs={mergedFuncs}
-        showTopLevelSignatures={frontmatter.showTopLevelSignatures}
+        showTopLevelSignatures={page.showTopLevelSignatures}
       />
     </DocsMarkdownPage>
   )
@@ -111,24 +109,20 @@ export default function APITemplate({ data, location, pageContext }) {
 
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
-    mdx(fields: { slug: { eq: $path } }) {
+    docPage(slug: { eq: $path }) {
+      relativePath
+      slug
       body
       excerpt
       timeToRead
       tableOfContents
-      fields {
-        slug
-        anchor
-      }
-      frontmatter {
-        title
-        description
-        contentsHeading
-        showTopLevelSignatures
-        disableTableOfContents
-        tableOfContentsDepth
-      }
-      ...MarkdownPageFooterMdx
+      anchor
+      title
+      description
+      contentsHeading
+      showTopLevelSignatures
+      disableTableOfContents
+      tableOfContentsDepth
     }
     jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
       nodes {
