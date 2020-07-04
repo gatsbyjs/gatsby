@@ -46,7 +46,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    npm -v
    ```
 
-4. To install the latest stable release using the `n` package (Optional) (Recommended),
+4. To install the latest stable Node.js release using the `n` package (Required),
 
    ```bash
    sudo npm install -g n
