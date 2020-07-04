@@ -141,7 +141,7 @@ Change the root directory configuration of Nginx in the default server block fil
    cd /etc/nginx/sites-available/
    ```
 
-2. Open the file default
+2. Open the file default in Vim ([shortcut cheat sheet](https://devhints.io/vim))
 
    ```bash
    sudo vim default
