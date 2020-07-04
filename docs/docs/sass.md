@@ -26,18 +26,8 @@ plugins: [`gatsby-plugin-sass`],
 
 3. Write your stylesheets as `.sass` or `.scss` files and require or import them as normal.
 
-```css:title=styles.scss
-$font-stack: Helvetica, sans-serif;
-$primary-color: #333;
-
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
-}
-```
-
 ```css:title=styles.sass
-$font-stack:    Helvetica, sans-serif
+$font-stack: Helvetica, sans-serif
 $primary-color: #333
 
 body
