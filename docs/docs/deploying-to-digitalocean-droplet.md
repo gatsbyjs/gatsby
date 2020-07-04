@@ -175,6 +175,7 @@ Change the root directory configuration of Nginx in the default server block fil
    ```bash
    sudo systemctl restart nginx
    ```
+
    You should now be able to view your built Gatsby site at your DigitalOcean IP address, before configuring a domain.
 
 5. Configure your domain to point to the IP address of your droplet. Go to the Advanced DNS settings in your domain provider's console and put an A record that points to the IP address of the droplet.
