@@ -50,10 +50,6 @@ const slugToAnchor = slug =>
 
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
-    type File implements Node {
-      childrenDocumentationJs: DocumentationJs
-    }
-
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
       slug: String!
       anchor: String!
