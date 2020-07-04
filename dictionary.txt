@@ -1018,12 +1018,6 @@ incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromFieldName
-inferFromMapping
-inferGraphQLType
-inferInputObjectStrctureFromNodes
-inferInputObjectStructureFromFields
-inferObjectStructureFromNodes
 InfluxData
 infrastructure-centric
 ing

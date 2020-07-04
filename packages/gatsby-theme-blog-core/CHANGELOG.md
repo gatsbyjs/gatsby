@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.58...gatsby-theme-blog-core@1.5.59) (2020-07-03)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.5.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.57...gatsby-theme-blog-core@1.5.58) (2020-07-03)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.5.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.56...gatsby-theme-blog-core@1.5.57) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.5.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.55...gatsby-theme-blog-core@1.5.56) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.5.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.54...gatsby-theme-blog-core@1.5.55) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
+## [1.5.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.53...gatsby-theme-blog-core@1.5.54) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-theme-blog-core
+
 ## [1.5.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme-blog-core@1.5.52...gatsby-theme-blog-core@1.5.53) (2020-07-01)
 
 **Note:** Version bump only for package gatsby-theme-blog-core
