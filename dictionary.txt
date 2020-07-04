@@ -2118,7 +2118,6 @@ Wirth
 Wiseman
 wishlist
 with-layout2
-with-navigation2
 Woah
 WooCommerce
 Woodworth
