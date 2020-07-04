@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "dotenv": "^8.2.0",
-    "gatsby": "^2.23.4",
+    "gatsby": "^2.23.20",
     "gatsby-theme-gatsbyjs-website": "*",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
