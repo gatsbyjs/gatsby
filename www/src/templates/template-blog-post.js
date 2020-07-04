@@ -59,18 +59,18 @@ export default function BlogPostTemplate({ pageContext, data }) {
             >
               <div css={{ flex: `0 0 auto` }}>
                 <Link
-                  to={post.frontmatter.author.fields.slug}
+                  to={post.author.fields.slug}
                   css={{ "&&": { borderBottom: 0 } }}
                 >
                   <Avatar
-                    image={post.frontmatter.author.avatar.childImageSharp.fixed}
-                    alt={post.frontmatter.author.id}
+                    image={post.author.avatar.childImageSharp.fixed}
+                    alt={post.author.id}
                     overrideCSS={{ mr: 5 }}
                   />
                 </Link>
               </div>
               <div css={{ flex: `1 1 auto` }}>
-                <Link to={post.frontmatter.author.fields.slug}>
+                <Link to={post.author.fields.slug}>
                   <h4
                     sx={{
                       fontSize: 3,
@@ -86,21 +86,19 @@ export default function BlogPostTemplate({ pageContext, data }) {
                         "&:hover": { borderColor: `link.hoverBorder` },
                       }}
                     >
-                      {post.frontmatter.author.id}
+                      {post.author.id}
                     </span>
                   </h4>
                 </Link>
-                <BioLine>{post.frontmatter.author.bio}</BioLine>
+                <BioLine>{post.author.bio}</BioLine>
                 <BioLine>
-                  {post.timeToRead} min read · {post.frontmatter.date}
-                  {post.frontmatter.canonicalLink && (
+                  {post.timeToRead} min read · {post.date}
+                  {post.canonicalLink && (
                     <span>
                       {` `}
                       (originally published at
                       {` `}
-                      <a href={post.frontmatter.canonicalLink}>
-                        {post.fields.publishedAt}
-                      </a>
+                      <a href={post.canonicalLink}>{post.fields.publishedAt}</a>
                       )
                     </span>
                   )}
@@ -119,37 +117,33 @@ export default function BlogPostTemplate({ pageContext, data }) {
                 },
               }}
             >
-              {post.frontmatter.title}
+              {post.title}
             </h1>
-            {post.frontmatter.image &&
-              post.frontmatter.showImageInArticle !== false && (
-                <div
-                  sx={{
-                    mt: 8,
-                    mb: 12,
-                    [mediaQueries.lg]: {
-                      ml: `-8em`,
-                    },
-                  }}
-                >
-                  <Img fluid={post.frontmatter.image.childImageSharp.fluid} />
-                  {post.frontmatter.imageAuthor &&
-                    post.frontmatter.imageAuthorLink && (
-                      <em>
-                        Image by
-                        {` `}
-                        <a href={post.frontmatter.imageAuthorLink}>
-                          {post.frontmatter.imageAuthor}
-                        </a>
-                      </em>
-                    )}
-                </div>
-              )}
+            {post.image && post.showImageInArticle !== false && (
+              <div
+                sx={{
+                  mt: 8,
+                  mb: 12,
+                  [mediaQueries.lg]: {
+                    ml: `-8em`,
+                  },
+                }}
+              >
+                <Img fluid={post.image.childImageSharp.fluid} />
+                {post.imageAuthor && post.imageAuthorLink && (
+                  <em>
+                    Image by
+                    {` `}
+                    <a href={post.imageAuthorLink}>{post.imageAuthor}</a>
+                  </em>
+                )}
+              </div>
+            )}
           </div>
           <section className="post-body">
             <MDXRenderer>{post.body}</MDXRenderer>
           </section>
-          <TagsSection tags={post.frontmatter.tags} />
+          <TagsSection tags={post.tags} />
           <EmailCaptureForm />
         </main>
       </Container>

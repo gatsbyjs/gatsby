@@ -169,7 +169,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // Create contributor pages.
   data.allAuthorYaml.nodes.forEach(node => {
     createPage({
-      path: `${node.fields.slug}`,
+      path: `${node.slug}`,
       component: contributorPageTemplate,
       context: {
         authorId: node.id,

@@ -46,7 +46,7 @@ export default function BlogPostsIndex({ data, pageContext }) {
         {posts.map((node, index) => (
           <BlogPostPreviewItem
             post={node}
-            key={node.fields.slug}
+            key={node.slug}
             sx={{
               borderBottomWidth: `1px`,
               borderBottomStyle: `solid`,
