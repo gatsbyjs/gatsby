@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 
-export default function TechWithIcon({ icon, height = "1.2em", children }) {
+export default function TechWithIcon({ icon, height = `1.2em`, children }) {
   return (
     <span sx={{ whiteSpace: `nowrap` }}>
       {children}
