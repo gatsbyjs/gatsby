@@ -75,6 +75,13 @@ The next step is to clone the repository containing your Gatsby app (Replace `<y
 git clone <your-github-repo-site>
 ```
 
+Incase of any warning related to Permission denied, check if <your non-root user> have sudo privileges or before cloning your repository, give permission to <your non-root user> to access the .config directory of under /home/gatsby/.
+
+```bash
+cd ~/
+sudo chown -R $(whoami) .config
+```
+
 > Note: this guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
 
 ### Generate your Gatsby site for production
