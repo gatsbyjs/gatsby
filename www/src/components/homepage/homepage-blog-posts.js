@@ -149,10 +149,6 @@ export default function HomepageBlogPosts({ posts }) {
           {postsInColumns.map((column, colIdx) => (
             <PostsColumn key={`col${colIdx}`}>
               {column.map((post, postIdx) => {
-                const {
-                  fields: { slug },
-                } = post
-
                 const firstPost = !colIdx && !postIdx
                 const lastPost = colIdx & postIdx
 
@@ -161,7 +157,7 @@ export default function HomepageBlogPosts({ posts }) {
                     /* add 'View all posts' link as a sibling of the last post card */
                   }
                   return (
-                    <LastPost key={slug}>
+                    <LastPost key={post.slug}>
                       <HomepageBlogPost
                         post={post}
                         desktopViewport={desktopViewport}
@@ -175,7 +171,7 @@ export default function HomepageBlogPosts({ posts }) {
                   <HomepageBlogPost
                     fullWidth={postIdx === 0}
                     first={firstPost}
-                    key={slug}
+                    key={post.slug}
                     post={post}
                     desktopViewport={desktopViewport}
                   />
@@ -187,12 +183,9 @@ export default function HomepageBlogPosts({ posts }) {
       ) : (
         <HomepageBlogPostsRootMobile className={SCROLLER_CLASSNAME}>
           <HorizontalScrollerContentAsDiv>
-            {posts.map((post, idx) => {
-              const {
-                fields: { slug },
-              } = post
-              return <HomepageBlogPost index={idx} key={slug} post={post} />
-            })}
+            {posts.map((post, idx) => (
+              <HomepageBlogPost index={idx} key={post.slug} post={post} />
+            ))}
             <ViewAll />
           </HorizontalScrollerContentAsDiv>
         </HomepageBlogPostsRootMobile>
