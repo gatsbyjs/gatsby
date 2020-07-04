@@ -75,7 +75,7 @@ The next step is to clone the repository containing your Gatsby app (Replace `<y
 git clone <your-github-repo-site>
 ```
 
-> Note: this guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity.
+> Note: this guide will refer to the cloned directory as `<my-gatsby-app>` for simplicity; you should replace it with your repo directory name.
 
 ### Build your gatsby site to generate a static site for production
 
