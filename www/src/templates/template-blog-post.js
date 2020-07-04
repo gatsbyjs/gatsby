@@ -17,7 +17,7 @@ import FooterLinks from "../components/shared/footer-links"
 
 export default function BlogPostTemplate({ pageContext, data }) {
   const { prev, next } = pageContext
-  const post = data.mdx
+  const post = data.blogPost
   const BioLine = ({ children }) => (
     <p
       sx={{
