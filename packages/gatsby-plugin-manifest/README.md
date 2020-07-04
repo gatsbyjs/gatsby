@@ -494,6 +494,23 @@ Example:
 
 Alternatively, if you have access to modify Apache, you can resolve this issue by removing the restriction on `/icons` folders.
 
+#### On Debian based systems
+Backup the /etc/apache2/mods-available/alias.conf file:
+```shell
+cp /etc/apache2/mods-available/alias.conf /etc/apache2/mods-available/alias.conf.back
+```
+
+Comment out the Alias /icons/ "/usr/share/apache2/icons/" row in /etc/apache2/mods-available/alias.conf file:
+```shell
+cat /etc/apache2/mods-available/alias.conf | grep "Alias /icons/"
+```
+
+Reload Apache service:
+```shell
+service apache2 reload
+```
+
+#### On Red Hat or CentOS systems
 Create a backup of `/etc/httpd/conf.d/autoindex.conf`:
 ```shell
 cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back
