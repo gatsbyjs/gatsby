@@ -149,7 +149,9 @@ export default function BlogPostTemplate({ pageContext, data }) {
           <section className="post-body">
             <MDXRenderer>{post.body}</MDXRenderer>
           </section>
-          <TagsSection tags={post.frontmatter.tags} />
+          {post.frontmatter.tags && (
+            <TagsSection tags={post.frontmatter.tags} />
+          )}
           <EmailCaptureForm />
         </main>
       </Container>
