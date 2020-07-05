@@ -93,15 +93,8 @@ class IndexRoute extends React.Component {
           }}
         >
           <MastheadContent />
-          <div
-            sx={{
-              width: `100%`,
-              p: 8,
-              pt: 0,
-            }}
-          >
-            <Diagram />
-          </div>
+
+          <Diagram />
           <HomepageLogoBanner />
           <HomepageFeatures />
           <div css={{ flex: `1 1 100%` }}>
