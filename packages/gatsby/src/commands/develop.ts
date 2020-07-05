@@ -249,6 +249,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       if (isRestarting) return
       if (signal !== null) {
         process.kill(process.pid, signal)
+        return
       }
       if (code !== null) {
         process.exit(code)
