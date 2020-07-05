@@ -18,6 +18,25 @@ const logDeprecationNotice = (prop, replacement) => {
   }
 }
 
+// SSR and Client base64 encode methods, expects Uint8Array input
+// Used for generating short class names from 32-bit values (hash)
+const nodeBtoa = b => Buffer.from(b, `binary`).toString(`base64`)
+const clientBtoa = b => btoa(String.fromCharCode(...b))
+const base64encode = typeof btoa !== `undefined` ? clientBtoa : nodeBtoa
+
+// fnv32a Hash
+function fnv32a(str) {
+  let h = 0x811c9dc5
+  for (let i = 0; i < str.length; ++i) {
+    h ^= str.charCodeAt(i)
+    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24)
+  }
+
+  return base64encode(Uint8Array.from([h >> 24, h >> 16, h >> 8, h]))
+    .replace(/[+/]/g, x => (x === `+` ? `_` : `-`))
+    .substr(0, 6)
+}
+
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
   let convertedProps = { ...props }
@@ -192,6 +211,28 @@ function groupByMedia(imageVariants) {
 
   return [...withMedia, ...without]
 }
+
+// ArtDirection - SSR + Initial load, removed upon hydration
+// Ensures correct CSS styles based on viewport width and media conditions
+function generateMediaQueries(imageVariants, selectorClass) {
+  const inlineStyleOverride = ({ width, height, aspectRatio }) =>
+    aspectRatio
+      ? `padding-bottom: ${100 / aspectRatio}% !important;`
+      : `width: ${width}px !important; height: ${height}px !important;`
+  const selector = v => `.${selectorClass} { ${inlineStyleOverride(v)} }`
+
+  const base = selector(imageVariants.find(v => !v.media))
+  const queries = imageVariants
+    .filter(v => v.media)
+    .map(v => `@media ${v.media} { ${selector(v)} }`)
+    .join(`\n`)
+
+  return `${base}\n${queries}`
+}
+
+const ResponsiveQueries = ({ imageVariants, selectorClass }) => (
+  <style>{generateMediaQueries(imageVariants, selectorClass)}</style>
+)
 
 function generateTracedSVGSources(imageVariants) {
   return imageVariants.map(({ src, media, tracedSVG }) => (
@@ -475,17 +516,21 @@ class Image extends React.Component {
       itemProp,
     }
 
-    const image = getCurrentSrcData(fluid || fixed)
-    
-    // Avoid rendering anything until mounted(hydration complete)
-    // Avoids invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
+    const imageVariants = fluid || fixed
+    const image = getCurrentSrcData(imageVariants)
+
+    const activeVariant = fnv32a(image.srcSet)
+    const uniqueKey = fnv32a(imageVariants.map(x => x.srcSet).join())
+
+    // Avoid render logic on client until mounted (hydration complete)
+    // Prevents invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
     if (!isBrowser || this.state.isHydrated) {
       if (fluid) {
-        const imageVariants = fluid
-
         return (
           <Tag
-            className={`${className ? className : ``} gatsby-image-wrapper`}
+            className={`${
+              className ? className : ``
+            } gatsby-image-wrapper ${uniqueKey}`}
             style={{
               position: `relative`,
               overflow: `hidden`,
@@ -494,8 +539,12 @@ class Image extends React.Component {
               ...style,
             }}
             ref={this.handleRef}
-            key={`fluid-${JSON.stringify(image.srcSet)}`}
+            key={activeVariant}
           >
+            <ResponsiveQueries
+              imageVariants={imageVariants}
+              uniqueKey={uniqueKey}
+            />
             {/* Preserve the aspect ratio. */}
             <Tag
               aria-hidden
@@ -588,8 +637,6 @@ class Image extends React.Component {
       }
 
       if (fixed) {
-        const imageVariants = fixed
-
         const divStyle = {
           position: `relative`,
           overflow: `hidden`,
@@ -605,11 +652,17 @@ class Image extends React.Component {
 
         return (
           <Tag
-            className={`${className ? className : ``} gatsby-image-wrapper`}
+            className={`${
+              className ? className : ``
+            } gatsby-image-wrapper  ${uniqueKey}`}
             style={divStyle}
             ref={this.handleRef}
-            key={`fixed-${JSON.stringify(image.srcSet)}`}
+            key={activeVariant}
           >
+            <ResponsiveQueries
+              imageVariants={imageVariants}
+              uniqueKey={uniqueKey}
+            />
             {/* Show a solid background color. */}
             {bgColor && (
               <Tag
