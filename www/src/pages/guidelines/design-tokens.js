@@ -100,7 +100,7 @@ const DesignTokens = ({ location }) => (
           This page collects all design tokens currently available for
           gatsbyjs.org which are not covered on sibling pages.
         </Intro>
-        <Badge my={3}>
+        <Badge>
           Work in Progress{` `}
           <MdWarning style={{ fontSize: 16, marginLeft: `0.25rem` }} />
         </Badge>

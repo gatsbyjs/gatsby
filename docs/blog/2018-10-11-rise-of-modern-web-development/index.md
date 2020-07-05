@@ -50,7 +50,7 @@ Modern frameworks also represent a core _technology advance_ over previous solut
 
 - **A declarative virtual DOM.** Instead of imperatively changing specific page elements’ state in reaction to specific user actions, developers can specify desired UI state as a "view" on application state, making code more readable and less buggy.
 
-React and Angular, along with mature ES2015+ JavaScript, and stable dependency/bundling solutions like npm and webpack, are blowing away conceptions of JS as an unserious language. They are in production of leading Fortune 500 companies, including Facebook, Twitter, Microsoft, Autodesk, Airbnb, and McDonalds.
+React and Angular, along with mature ES2015+ JavaScript, and stable dependency/bundling solutions like npm and webpack, are blowing away conceptions of JS as an unserious language. They are in production of leading Fortune 500 companies, including Facebook, Twitter, Microsoft, Autodesk, Airbnb, and McDonald's.
 
 ## Modern frameworks enable compelling content experiences
 

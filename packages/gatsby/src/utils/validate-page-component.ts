@@ -74,24 +74,25 @@ export function validatePageComponent(
       }
     }
 
-    const includesDefaultExport =
-      fileContent.includes(`export default`) ||
-      fileContent.includes(`module.exports`) ||
-      fileContent.includes(`exports.default`) ||
-      fileContent.includes(`exports["default"]`) ||
-      fileContent.match(/export \{.* as default.*\}/s) ||
-      // this check only applies to js and ts, not mdx
-      /\.(jsx?|tsx?)/.test(path.extname(component))
+    // this check only applies to js and ts, not mdx
+    if ([`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(component))) {
+      const includesDefaultExport =
+        fileContent.includes(`export default`) ||
+        fileContent.includes(`module.exports`) ||
+        fileContent.includes(`exports.default`) ||
+        fileContent.includes(`exports["default"]`) ||
+        fileContent.match(/export \{.* as default.*\}/s)
 
-    if (!includesDefaultExport) {
-      return {
-        error: {
-          id: `11328`,
-          context: {
-            component,
+      if (!includesDefaultExport) {
+        return {
+          error: {
+            id: `11328`,
+            context: {
+              component,
+            },
           },
-        },
-        panicOnBuild: true,
+          panicOnBuild: true,
+        }
       }
     }
   }
