@@ -18,6 +18,13 @@ import {
   unobserveScrollers,
 } from "../utils/scrollers-observer"
 
+const homepageWrapperStyles = {
+  display: `flex`,
+  flexDirection: `row`,
+  flexWrap: `wrap`,
+  justifyContent: `space-between`,
+}
+
 const combineEcosystemFeaturedItems = ({
   starters,
   plugins,
@@ -80,15 +87,7 @@ export default function IndexRoute(props) {
   return (
     <>
       <PageMetadata description="Blazing fast modern site generator for React. Go beyond static sites: build blogs, e-commerce sites, full-blown apps, and more with Gatsby." />
-      <main
-        id={`reach-skip-nav`}
-        css={{
-          display: `flex`,
-          flexDirection: `row`,
-          flexWrap: `wrap`,
-          justifyContent: `space-between`,
-        }}
-      >
+      <main id={`reach-skip-nav`} sx={homepageWrapperStyles}>
         <MastheadContent />
         <Diagram />
         <HomepageLogoBanner />
