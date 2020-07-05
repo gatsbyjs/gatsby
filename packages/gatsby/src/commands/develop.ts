@@ -80,7 +80,7 @@ class ControllableScript {
     code?: number
   ): Promise<void> {
     if (!this.process) {
-      throw new Error(`Trying to stop process before starting it`)
+      throw new Error(`Trying to stop the process before starting it`)
     }
     this.isRunning = false
     if (signal) {
@@ -97,7 +97,7 @@ class ControllableScript {
 
     return new Promise(resolve => {
       if (!this.process) {
-        throw new Error(`Trying to stop process before starting it`)
+        throw new Error(`Trying to stop the process before starting it`)
       }
       this.process.on(`exit`, () => {
         if (this.process) {
@@ -259,7 +259,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       // The 'exit' event is emitted after the child process ends. If the process
       // exited, code is the final exit code of the process, otherwise null.
       // If the process terminated due to receipt of a signal, signal is the
-      // string name of the signal, otherwise null.One of the two will always be
+      // string name of the signal, otherwise null. One of the two will always be
       // non - null.
       //
       // but just in case let do non-zero exit, because we are in situation
