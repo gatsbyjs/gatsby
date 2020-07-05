@@ -1,85 +1,74 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
-import styled from "@emotion/styled"
 
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 import { svgStyles } from "../../utils/styles"
 
-const PageHeadingContainer = styled(`header`)`
-  padding: ${p => p.theme.space[6]};
+const headerStyles = {
+  p: [6, null, 0],
+  [mediaQueries.md]: {
+    left: 0,
+    position: `fixed`,
+    top: t => `calc(${t.sizes.bannerHeight} + ${t.sizes.headerHeight})`,
+  },
+}
 
-  ${mediaQueries.md} {
-    left: 0;
-    position: fixed;
-    padding: 0;
-    top: ${`calc(${p => p.theme.sizes.bannerHeight} + ${props =>
-      props.theme.sizes.headerHeight})`};
-  }
-`
+const headingStyles = {
+  alignItems: `center`,
+  fontWeight: `bold`,
+  color: `heading`,
+  display: `flex`,
+  fontSize: 4,
+  lineHeight: `solid`,
+  position: `relative`,
+  width: `100%`,
+  m: 0,
+  [mediaQueries.md]: {
+    transform: `rotate(-90deg) translate(calc(-100% - 2rem), 1rem)`,
+    transformOrigin: `left top`,
+  },
 
-const H1 = styled(`h1`)`
-  align-items: center;
-  font-weight: bold;
-  color: ${p => p.theme.colors.heading};
-  display: flex;
-  font-size: ${p => p.theme.fontSizes[4]};
-  line-height: ${p => p.theme.lineHeights.solid};
-  margin: 0;
-  position: relative;
-  width: 100%;
+  ":after": {
+    right: -3,
+    bottom: -4,
+    content: `attr(data-title)`,
+    display: [`none`, null, `block`],
+    fontSize: `12rem`,
+    position: `absolute`,
+    zIndex: `-1`,
+    color: `blackFade.10`,
+  },
+}
 
-  ${mediaQueries.md} {
-    transform: rotate(-90deg)
-      translate(
-        calc(-100% - ${p => p.theme.space[7]}),
-        ${p => p.theme.space[4]}
-      );
-    transform-origin: top left;
-  }
+const strokeSvgStyles = svgStyles().stroke
+const defaultSvgStyles = svgStyles().default
 
-  :after {
-    bottom: -${p => p.theme.space[4]};
-    content: attr(data-title);
-    display: none;
-    font-size: 12rem;
-    position: absolute;
-    right: -${p => p.theme.space[3]};
-    z-index: -1;
-    color: ${p => p.theme.colors.blackFade[10]};
+const iconStyles = {
+  display: `flex`,
+  alignItems: `center`,
+  mr: 2,
+  svg: {
+    width: `2rem`,
+    height: `auto`,
+    m: 0,
+  },
+  defaultSvgStyles,
+  strokeSvgStyles,
+}
 
-    ${mediaQueries.md} {
-      display: block;
-    }
-  }
-`
-
-const Icon = styled(`span`)`
-  display: flex;
-  align-items: center;
-  margin-right: ${p => p.theme.space[2]};
-
-  svg {
-    width: ${p => p.theme.space[7]};
-    height: auto;
-    margin: 0;
-  }
-
-  ${svgStyles.stroke}
-  ${svgStyles.default}
-`
-
-const PageHeading = ({ title, icon }) => (
-  <PageHeadingContainer>
-    <H1 data-title={title}>
-      <Icon>{icon}</Icon>
-      {title}
-    </H1>
-  </PageHeadingContainer>
-)
+export default function PageHeading({ title, icon }) {
+  return (
+    <header sx={headerStyles}>
+      <h1 sx={headingStyles} data-title={title}>
+        <span sx={iconStyles}>{icon}</span>
+        {title}
+      </h1>
+    </header>
+  )
+}
 
 PageHeading.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.element,
 }
-
-export default PageHeading

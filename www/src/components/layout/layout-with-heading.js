@@ -3,20 +3,17 @@ import { jsx } from "theme-ui"
 import PropTypes from "prop-types"
 
 import PageHeading from "./page-heading"
-import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
-const LayoutWithHeading = props => {
-  const { children, pageTitle = ``, pageIcon } = props
-
+export default function LayoutWithHeading({
+  children,
+  pageTitle = ``,
+  pageIcon,
+}) {
   return (
     <div
       sx={{
-        pb: t => t.fontSizes[10],
-
-        [mediaQueries.md]: {
-          ml: t => t.sizes.pageHeadingDesktopWidth,
-          pb: 0,
-        },
+        pb: [9, null, 0],
+        ml: [0, null, 10],
       }}
     >
       {pageTitle && <PageHeading title={pageTitle} icon={pageIcon} />}
@@ -31,5 +28,3 @@ LayoutWithHeading.propTypes = {
   pageTitle: PropTypes.string,
   pageIcon: PropTypes.element,
 }
-
-export default LayoutWithHeading
