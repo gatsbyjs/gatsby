@@ -2,15 +2,12 @@
 import { jsx } from "theme-ui"
 import React, { useEffect } from "react"
 import { graphql } from "gatsby"
-import { MdArrowForward as ArrowForwardIcon } from "react-icons/md"
 
-import Container from "../components/container"
 import MastheadContent from "../components/masthead"
 import Diagram from "../components/diagram"
-import FuturaParagraph from "../components/futura-paragraph"
-import Button from "../components/button"
 import HomepageLogoBanner from "../components/homepage/homepage-logo-banner"
 import HomepageFeatures from "../components/homepage/homepage-features"
+import HomepageGetStarted from "../components/homepage/homepage-get-started"
 import HomepageEcosystem from "../components/homepage/homepage-ecosystem"
 import HomepageBlog from "../components/homepage/homepage-blog"
 import HomepageNewsletter from "../components/homepage/homepage-newsletter"
@@ -93,35 +90,12 @@ export default function IndexRoute(props) {
         }}
       >
         <MastheadContent />
-
         <Diagram />
         <HomepageLogoBanner />
         <HomepageFeatures />
-        <div css={{ flex: `1 1 100%` }}>
-          <Container withSidebar={false}>
-            <section css={{ textAlign: `center` }}>
-              <h1 sx={{ fontWeight: `heading`, mt: 0 }}>Curious yet?</h1>
-              <FuturaParagraph>
-                It only takes a few minutes to get up and running!
-              </FuturaParagraph>
-              <Button
-                secondary
-                variant="large"
-                to="/docs/"
-                tracking="Curious Yet -> Get Started"
-                overrideCSS={{ mt: 5 }}
-                icon={<ArrowForwardIcon />}
-              >
-                Get Started
-              </Button>
-            </section>
-          </Container>
-        </div>
-
+        <HomepageGetStarted />
         <HomepageEcosystem featuredItems={ecosystemFeaturedItems} />
-
         <HomepageBlog posts={postsData} />
-
         <HomepageNewsletter />
       </main>
       <FooterLinks />
