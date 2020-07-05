@@ -78,7 +78,10 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     node: {
       fs: 'empty' // highlight-line
-    }
+    },
+  })
+}
+    
 ```
 
 ## Errors in styling
