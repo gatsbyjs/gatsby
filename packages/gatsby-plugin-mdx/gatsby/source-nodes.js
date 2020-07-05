@@ -16,9 +16,11 @@ const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
 const { interopDefault } = require(`../utils/interop-default`)
+const { timeToRead } = require(`../utils/time-to-read`)
 
 async function getCounts({ mdast }) {
   let counts = {}
+  let text = ``
 
   // convert the mdxast to back to mdast
   remove(mdast, `import`)
@@ -37,6 +39,9 @@ async function getCounts({ mdast }) {
       visit(tree, visitor)
       function visitor(node) {
         counts[node.type] = (counts[node.type] || 0) + 1
+        if (node.type === `TextNode`) {
+          text += node.value + ` `
+        }
       }
     }
   }
@@ -45,6 +50,7 @@ async function getCounts({ mdast }) {
     paragraphs: counts.ParagraphNode,
     sentences: counts.SentenceNode,
     words: counts.WordNode,
+    plaintext: text,
   }
 }
 
@@ -250,14 +256,8 @@ ${e}`
         type: `Int`,
         async resolve(mdxNode) {
           const { mdast } = await processMDX({ node: mdxNode })
-          const { words } = await getCounts({ mdast })
-          let timeToRead = 0
-          const avgWPM = 265
-          timeToRead = Math.round(words / avgWPM)
-          if (timeToRead === 0) {
-            timeToRead = 1
-          }
-          return timeToRead
+          const { plaintext } = await getCounts({ mdast })
+          return timeToRead(plaintext)
         },
       },
       wordCount: {
