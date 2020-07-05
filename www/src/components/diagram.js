@@ -214,14 +214,14 @@ const Diagram = () => (
       }
     `}
     render={({ allStaticHostsYaml: { nodes: staticHosts } }) => (
-      <div
+      <section
         sx={{
           width: `100%`,
           p: 8,
           pt: 0,
         }}
       >
-        <section
+        <div
           className="Diagram"
           sx={{
             flex: `1 1 100%`,
@@ -330,8 +330,8 @@ const Diagram = () => (
               </ItemDescription>
             </div>
           </Segment>
-        </section>
-      </div>
+        </div>
+      </section>
     )}
   />
 )
