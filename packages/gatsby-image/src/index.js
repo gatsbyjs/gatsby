@@ -245,10 +245,9 @@ function generateMediaQueries(imageVariants, selectorClass) {
   return `${base}\n${queries}`
 }
 
-const ResponsiveQueries = ({ imageVariants, selectorClass }) =>
-  imageVariants.length > 1 ? (
-    <style>{generateMediaQueries(imageVariants, selectorClass)}</style>
-  ) : null
+const ResponsiveQueries = ({ imageVariants, selectorClass }) => (
+  <style>{generateMediaQueries(imageVariants, selectorClass)}</style>
+)
 
 function generateTracedSVGSources(imageVariants) {
   return imageVariants.map(({ src, media, tracedSVG }) => (
@@ -536,7 +535,11 @@ class Image extends React.Component {
     const image = getCurrentSrcData(imageVariants)
 
     const activeVariant = getShortKey(image.srcSet)
-    const uniqueKey = getShortKey(imageVariants.map(x => x.srcSet).join())
+
+    let uniqueKey
+    if (!isBrowser && imageVariants.length > 1) {
+      uniqueKey = getShortKey(imageVariants.map(x => x.srcSet).join())
+    }
 
     // Avoid render logic on client until mounted (hydration complete)
     // Prevents invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
@@ -544,9 +547,9 @@ class Image extends React.Component {
       if (fluid) {
         return (
           <Tag
-            className={`${
-              className ? className : ``
-            } gatsby-image-wrapper ${uniqueKey}`}
+            className={`${className ? className : ``} ${
+              uniqueKey ? uniqueKey : ``
+            } gatsby-image-wrapper`}
             style={{
               position: `relative`,
               overflow: `hidden`,
@@ -557,10 +560,12 @@ class Image extends React.Component {
             ref={this.handleRef}
             key={activeVariant}
           >
-            <ResponsiveQueries
-              imageVariants={imageVariants}
-              selectorClass={uniqueKey}
-            />
+            {uniqueKey && (
+              <ResponsiveQueries
+                imageVariants={imageVariants}
+                selectorClass={uniqueKey}
+              />
+            )}
             {/* Preserve the aspect ratio. */}
             <Tag
               aria-hidden
@@ -668,17 +673,19 @@ class Image extends React.Component {
 
         return (
           <Tag
-            className={`${
-              className ? className : ``
-            } gatsby-image-wrapper  ${uniqueKey}`}
+            className={`${className ? className : ``} ${
+              uniqueKey ? uniqueKey : ``
+            } gatsby-image-wrapper`}
             style={divStyle}
             ref={this.handleRef}
             key={activeVariant}
           >
-            <ResponsiveQueries
-              imageVariants={imageVariants}
-              selectorClass={uniqueKey}
-            />
+            {uniqueKey && (
+              <ResponsiveQueries
+                imageVariants={imageVariants}
+                selectorClass={uniqueKey}
+              />
+            )}
             {/* Show a solid background color. */}
             {bgColor && (
               <Tag
