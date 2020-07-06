@@ -172,12 +172,12 @@ const runAPI = async (plugin, api, args, activity) => {
     }
     const localReporter = getLocalReporter(activity, reporter)
 
-    let runningActivities = new Set()
+    const runningActivities = new Set()
 
     const localReporterThatCleansUpAfterMisbehavingPlugins = {
       ...localReporter,
       activityTimer: (...args) => {
-        const activity = reporter.activityTimer(...args)
+        const activity = reporter.activityTimer.apply(reporter, args)
 
         return {
           ...activity,
@@ -192,7 +192,7 @@ const runAPI = async (plugin, api, args, activity) => {
         }
       },
       createProgress: (...args) => {
-        const activity = reporter.createProgress(...args)
+        const activity = reporter.createProgress.apply(reporter, args)
 
         return {
           ...activity,
@@ -213,7 +213,7 @@ const runAPI = async (plugin, api, args, activity) => {
     }
 
     const endInProgressActivitiesCreatedByThisRun = () => {
-      runningActivities.forEach(timer => timer.end())
+      runningActivities.forEach(activity => activity.end())
     }
 
     const apiCallArgs = [
