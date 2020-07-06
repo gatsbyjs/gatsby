@@ -2,19 +2,18 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you through the process of using [Gatsby](/) with [WPGraphQL](https://www.wpgraphql.com/).
+This guide will walk you through the process of using [Gatsby](/) with WordPress and [WPGraphQL](https://www.wpgraphql.com/).
 
-WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/packages/gatsby-source-wordpress-experimental/?=wordpress). Let's begin!
+WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress-experimental](/packages/gatsby-source-wordpress-experimental/?=wordpress). Let's begin!
 
 _Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
-//TODO: Update link to new starter
-[this example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) to gain extra insights._
+[this example](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental) to gain extra insights._
 
 ## Setup
 
 ### Quick start
 
-This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [Quick Start guide](/docs/quick-start), then come back.
+This guide assumes that you have a Gatsby project set up along with a WordPress instance with the [appropriate plugins](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/getting-started.md#required-wordpress-dependencies). If you need to set up a Gatsby project, head to the [Quick Start guide](/docs/quick-start), then come back. For information on configuring your WordPress instance, checkout the [docs](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/getting-started.md#required-wordpress-dependencies) before continuing.
 
 ### gatsby-config.js
 
@@ -30,13 +29,9 @@ module.exports = {
 }
 ```
 
-### WordPress Plugins:
-
-//TODO: Fill in information about adding plugins wo WordPress
-
 ### Gatsby Plugin: gatsby-source-wordpress-experimental
 
-Now that you have some understanding of project structure lets add fetching WordPress data functionality. There's a plugin for that. [`gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental) is Gatsby's plugin for sourcing data from WordPress sites using the WPGraphQL API. You can install it by running the following command:
+Now that you have some understanding of project structure let's add fetching WordPress data functionality. There's a plugin for that. [`gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental) is Gatsby's plugin for sourcing data from WordPress sites using the WPGraphQL API. You can install it by running the following command:
 
 ```shell
 npm install gatsby-source-wordpress-experimental
@@ -44,7 +39,7 @@ npm install gatsby-source-wordpress-experimental
 
 ### Configuring the plugin
 
-In `gatsby-config.js`, add your configuration options, including your WordPress site's baseUrl, protocol, whether it's hosted on [wordpress.com](https://wordpress.com/) or self-hosted, and whether it makes use of the Advanced Custom Fields (ACF) plugin.
+In `gatsby-config.js`, add your WordPress site's url, all other config is optional but recommended.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -54,22 +49,35 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress-experimental`,
       options: {
-        //TODO: update configuration
-        // your WordPress source
-        baseUrl: `wpexample.com`,
-        protocol: `https`,
-        // is it hosted on wordpress.com, or self-hosted?
-        hostingWPCOM: false,
-        // does your site use the Advanced Custom Fields Plugin?
-        useACF: false
-      }
+        url:
+        // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
+          process.env.WPGRAPHQL_URL ||
+          `https://localhost/graphql`,
+        schema: {
+          //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
+          typePrefix: `Wp`,
+        },
+        develop: {
+          //caches media files outside of Gatsby's default cache an thus allows them to persist through a cache reset.
+          hardCacheMediaFiles: true,
+        },
+        type: {
+          Post: {
+            limit:
+              process.env.NODE_ENV === `development`
+                ? // Lets just pull 50 posts in development to make it easy on ourselves (aka. faster).
+                  50
+                : // and we don't actually need more than 5000 in production for this particular site
+                  5000,
+          },
+        },
+      },
     },
   ]
 }
 ```
 
-//TODO: update note about security headers maybe
-**Note**: If your config varies from what it shown above, for instance, if you are hosting your WordPress instance on WordPress.com, please refer to the [plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) for more information on how to setup other options required for your use case.
+**Note**: If your config varies from what it shown above, for instance, if you are securing your WordPress instance with Basic Auth, please refer to the [plugin docs](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/plugin-options.md) for more information on how to setup other options required for your use case.
 
 ## Using WordPress data
 
@@ -77,13 +85,11 @@ Once your source plugin is pulling data, you can construct your site pages by im
 
 The `createPages` API exposes the `graphql` function:
 
-> The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js#L15))
+> The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/blob/master/gatsby-node.js#L21))
 
-You can use the //TODO: Update link to new starter [`gatsby-node.js`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-wordpress/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/layout-components/).
+You can use the [`gatsby-node.js`](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/blob/master/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/layout-components/).
 
-For example, find an excerpt of the demo `gatsby-node.js` below.
-
-//TODO: update from new starter
+For example:
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
@@ -93,30 +99,33 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   // query content for WordPress posts
-  const result = await graphql(`
+  const {
+    data: {
+      allWpPost: { nodes: allPosts },
+    },
+  } = await graphql(`
     query {
-      allWordpressPost {
-        edges {
-          node {
-            id
-            slug
-          }
+      allWpPost {
+        nodes {
+          id
+          uri
         }
       }
     }
   `)
 
   const postTemplate = path.resolve(`./src/templates/post.js`)
-  result.data.allWordpressPost.edges.forEach(edge => {
+
+  allPosts.forEach(post => {
     createPage({
       // will be the url for the page
-      path: edge.node.slug,
+      path: post.uri,
       // specify the component template of your choice
       component: slash(postTemplate),
       // In the ^template's GraphQL query, 'id' will be available
-      // as a GraphQL variable to query for this posts's data.
+      // as a GraphQL variable to query for this post's data.
       context: {
-        id: edge.node.id,
+        id: post.id,
       },
     })
   })
@@ -129,20 +138,16 @@ A [Gatsby page is defined](/docs/api-specification/#concepts) as "a site page wi
 
 When you restart your server with the `gatsby develop` command, you'll be able to navigate to the new pages created for each of your posts at their respective paths.
 
-In the GraphiQL IDE at `http://localhost:8000/__graphql` you should now see queryable fields for `allWordpressPosts` in the docs or explorer sidebar.
+In the GraphiQL IDE at `http://localhost:8000/__graphql` you should now see queryable fields for `allWpPosts` in the docs or explorer sidebar.
 
 ## Wrapping up
 
 This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As
-the guide mentioned already, if you got stuck, you can have a look at
-//TODO: update with starter link [example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress), which is a working example
+the guide mentioned already, if you got stuck, you can have a look at [example repo](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental), which is a working example
 created to support this guide.
 
 ## Other resources
 
-//TODO Update links as appropriate
-
-- [Blog post on which this guide is based on](/blog/2018-01-22-getting-started-gatsby-and-wordpress/)
-- [Watch + Learn video tutorials](http://watch-learn.com/series/gatsbyjs-wordpress)
-- [Another blog post on using Gatsby with WordPress](https://indigotree.co.uk/how-use-wordpress-headless-cms/)
+- [WordPress integration announcement](/docs/blog/2020-07-07-wordpress-source-beta)
+- [Video Demo of WordPress integration](https://www.youtube.com/watch?v=vyuEu95yQkA)
 - More [Gatsby blog posts about using Gatsby + WordPress](/blog/tags/wordpress/)
