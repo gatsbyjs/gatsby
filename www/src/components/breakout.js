@@ -11,8 +11,7 @@ export default function Breakout({ children }) {
         position: `relative`,
         left: `50%`,
         right: `50%`,
-        ml: `-49vw`,
-        mr: `-49vw`,
+        mx: `-49vw`,
       }}
     >
       {children}
