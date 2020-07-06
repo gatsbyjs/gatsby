@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.20...gatsby@2.23.21) (2020-07-06)
+
+### Bug Fixes
+
+- **gatsby:** correctly pass through exit signals from child process ([#25520](https://github.com/gatsbyjs/gatsby/issues/25520)) ([be78563](https://github.com/gatsbyjs/gatsby/commit/be78563))
+- **gatsby-transformer-sharp:** removed unnecessary conversion to webp ([#25325](https://github.com/gatsbyjs/gatsby/issues/25325)) ([a5459bc](https://github.com/gatsbyjs/gatsby/commit/a5459bc))
+
+## [2.23.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.19...gatsby@2.23.20) (2020-07-03)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.18...gatsby@2.23.19) (2020-07-03)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.18](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.17...gatsby@2.23.18) (2020-07-02)
+
+### Bug Fixes
+
+- **eslint-config:** Remove deprecated jsx-a11y/label-has-for rule ([#25317](https://github.com/gatsbyjs/gatsby/issues/25317)) ([ff4ce02](https://github.com/gatsbyjs/gatsby/commit/ff4ce02))
+
+## [2.23.17](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.16...gatsby@2.23.17) (2020-07-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.16](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.15...gatsby@2.23.16) (2020-07-02)
+
+**Note:** Version bump only for package gatsby
+
+## [2.23.15](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.14...gatsby@2.23.15) (2020-07-02)
+
+### Features
+
+- **gatsby:** Track static queries by template ([#25120](https://github.com/gatsbyjs/gatsby/issues/25120)) ([6b39645](https://github.com/gatsbyjs/gatsby/commit/6b39645))
+
+## [2.23.14](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.13...gatsby@2.23.14) (2020-07-01)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.23.13](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.12...gatsby@2.23.13) (2020-07-01)
 
 ### Bug Fixes

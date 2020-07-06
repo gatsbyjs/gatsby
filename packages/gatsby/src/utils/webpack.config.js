@@ -5,7 +5,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
-const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -201,6 +200,8 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
+
+      plugins.virtualModules(),
     ]
 
     switch (stage) {
@@ -389,6 +390,7 @@ module.exports = async (
         "@babel/runtime": path.dirname(
           require.resolve(`@babel/runtime/package.json`)
         ),
+        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
         // TODO: Remove entire block when we make fast-refresh the default
         ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
           ? {
@@ -415,7 +417,6 @@ module.exports = async (
         PnpWebpackPlugin.bind(directoryPath(`public`), module),
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
-        new CoreJSResolver(),
       ],
     }
 
