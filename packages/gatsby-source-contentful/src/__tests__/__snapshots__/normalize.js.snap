@@ -2190,6 +2190,7 @@ Array [
     Object {
       "children": Array [],
       "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2205,18 +2206,24 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu",
       "internal": Object {
-        "contentDigest": "0930ba059b372c353c8190aff103633e",
+        "contentDigest": "e08dcc15bd58e68771c6e63244bfda8f",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Normann Copenhagen",
+      "updatedAt": "2017-06-27T09:35:37.178Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2232,18 +2239,24 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___de",
       "internal": Object {
-        "contentDigest": "171ee464b97e59593d2844f3e23c47dc",
+        "contentDigest": "40212c47b48143211ebb7ae649b96126",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Normann Copenhagen",
+      "updatedAt": "2017-06-27T09:35:37.178Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
+      "createdAt": "2017-06-27T09:35:37.064Z",
       "description": "by Lemnos",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2259,18 +2272,24 @@ Array [
       },
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8",
       "internal": Object {
-        "contentDigest": "9a32e1d8d06419eefe03a988c31643cd",
+        "contentDigest": "4848c2d670e8daa0cefb673733ed1a72",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "SoSo Wall Clock",
+      "updatedAt": "2017-06-27T09:35:37.064Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
+      "createdAt": "2017-06-27T09:35:37.064Z",
       "description": "by Lemnos",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2286,18 +2305,24 @@ Array [
       },
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___de",
       "internal": Object {
-        "contentDigest": "bf43eb21d935a5111a2071d457925863",
+        "contentDigest": "0b914482dd7743e6ceb718210d9fd305",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "SoSo Wall Clock",
+      "updatedAt": "2017-06-27T09:35:37.064Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
+      "createdAt": "2017-06-27T09:35:37.027Z",
       "description": "Merchandise image",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2313,18 +2338,24 @@ Array [
       },
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um",
       "internal": Object {
-        "contentDigest": "bb46be6f7cba38bd1b03f8eb6d243041",
+        "contentDigest": "ce6936aade311f9952f7e51a1419a114",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Hudson Wall Cup ",
+      "updatedAt": "2017-06-27T09:35:37.027Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
+      "createdAt": "2017-06-27T09:35:37.027Z",
       "description": "Merchandise image",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2340,18 +2371,24 @@ Array [
       },
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___de",
       "internal": Object {
-        "contentDigest": "02a38f17b2961c548b1dd02af06692ca",
+        "contentDigest": "758534e7c2b3897e761b50c3934e5d25",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Hudson Wall Cup ",
+      "updatedAt": "2017-06-27T09:35:37.027Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2367,18 +2404,24 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI",
       "internal": Object {
-        "contentDigest": "b221094b185145ec3b419956eab3feac",
+        "contentDigest": "6da02350b74a5ec73c02e05f4274aa2d",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Lemnos",
+      "updatedAt": "2017-06-27T09:35:37.012Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2394,18 +2437,24 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___de",
       "internal": Object {
-        "contentDigest": "572fac0564aac87f9be18b3357509cc0",
+        "contentDigest": "2684be9e65bea6e0f70702f8f62685f2",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Lemnos",
+      "updatedAt": "2017-06-27T09:35:37.012Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2421,18 +2470,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG",
       "internal": Object {
-        "contentDigest": "2ddf2de2ecfb1c194d8e30347d3a122b",
+        "contentDigest": "0529e3e05d7cd5f19e34caba510485d1",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Toys",
+      "updatedAt": "2017-06-27T09:35:36.633Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2448,18 +2503,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___de",
       "internal": Object {
-        "contentDigest": "946ccced1faeded60fea0917fad7e7d2",
+        "contentDigest": "f62c8da419321df624add5f941b66059",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Toys",
+      "updatedAt": "2017-06-27T09:35:36.633Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2475,18 +2536,24 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU",
       "internal": Object {
-        "contentDigest": "5559a89ef0e4b453774dd2c4cf78dd63",
+        "contentDigest": "3129d66e797ab99f3c2236be39395503",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Chive logo",
+      "updatedAt": "2017-06-27T09:35:36.182Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2502,18 +2569,24 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___de",
       "internal": Object {
-        "contentDigest": "119bc29e4bc85a59a28500e55ace73cc",
+        "contentDigest": "529a5fa3f6b5d2e9a524fa509cbf2123",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Chive logo",
+      "updatedAt": "2017-06-27T09:35:36.182Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
         "contentType": "image/png",
@@ -2529,18 +2602,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o",
       "internal": Object {
-        "contentDigest": "9c04bb6d73b4fef3d89f5e28057d1f11",
+        "contentDigest": "477159b0f3f036fea7e5c083d06d16f0",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Home and Kitchen",
+      "updatedAt": "2017-06-27T09:35:36.172Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
         "contentType": "image/png",
@@ -2556,18 +2635,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "internal": Object {
-        "contentDigest": "fa5af5110ad2045c8a6716cb7ee60a7b",
+        "contentDigest": "118db927d63889425a49ef96e6766785",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Home and Kitchen",
+      "updatedAt": "2017-06-27T09:35:36.172Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2583,18 +2668,24 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "internal": Object {
-        "contentDigest": "129b9d47aac479f125ba62946d0c12b2",
+        "contentDigest": "d0b8d18742550bf065ee92635220fc07",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam",
+      "updatedAt": "2017-06-27T09:35:36.168Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2610,18 +2701,24 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
       "internal": Object {
-        "contentDigest": "6ad25bcb580c6c3ddc711780cd0ffa90",
+        "contentDigest": "0f9ff782ed48545ba0cf89e28bcd54a3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam",
+      "updatedAt": "2017-06-27T09:35:36.168Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "wtrHxeu3zEoEce2MokCSi",
+      "createdAt": "2017-06-27T09:35:36.037Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2637,18 +2734,24 @@ Array [
       },
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi",
       "internal": Object {
-        "contentDigest": "5bde96e4453f00105a199d205c82d04e",
+        "contentDigest": "e093963d43625696e698d248a13bec40",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam Streamliner",
+      "updatedAt": "2017-06-27T09:35:36.037Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "wtrHxeu3zEoEce2MokCSi",
+      "createdAt": "2017-06-27T09:35:36.037Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2664,18 +2767,24 @@ Array [
       },
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___de",
       "internal": Object {
-        "contentDigest": "e068d9bbe973768459f78e0cf8c686ab",
+        "contentDigest": "4b0fd07d3412f5ff2ae2a24984153969",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam Streamliner",
+      "updatedAt": "2017-06-27T09:35:36.037Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2691,18 +2800,24 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI",
       "internal": Object {
-        "contentDigest": "ba9ff92e5255e3c75929a102d6c8933c",
+        "contentDigest": "0ec9573453443afa248884f5476a0303",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Whisk beaters",
+      "updatedAt": "2017-06-27T09:35:36.032Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -2718,18 +2833,24 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___de",
       "internal": Object {
-        "contentDigest": "68074490e4756689e2a331531c7a1d1a",
+        "contentDigest": "bb6a3391ff08c68ca89243efc11c5819",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Whisk beaters",
+      "updatedAt": "2017-06-27T09:35:36.032Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2745,18 +2866,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG",
       "internal": Object {
-        "contentDigest": "90e8ab587833b64dcdd66cd516e2d6ff",
+        "contentDigest": "6254f2c99b32f63f755df68cf1b67dc8",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "House icon",
+      "updatedAt": "2017-06-27T09:35:35.994Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -2772,12 +2899,17 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___de",
       "internal": Object {
-        "contentDigest": "4f3429a64dcbb126688874fee5f15ce4",
+        "contentDigest": "98dd622a65b27085518f161368d982db",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "House icon",
+      "updatedAt": "2017-06-27T09:35:35.994Z",
     },
   ],
 ]
@@ -6908,6 +7040,7 @@ Array [
     Object {
       "children": Array [],
       "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -6923,18 +7056,24 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu",
       "internal": Object {
-        "contentDigest": "0930ba059b372c353c8190aff103633e",
+        "contentDigest": "e08dcc15bd58e68771c6e63244bfda8f",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Normann Copenhagen",
+      "updatedAt": "2017-06-27T09:35:37.178Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "3wtvPBbBjiMKqKKga8I2Cu",
+      "createdAt": "2017-06-27T09:35:37.178Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -6950,18 +7089,24 @@ Array [
       },
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___de",
       "internal": Object {
-        "contentDigest": "171ee464b97e59593d2844f3e23c47dc",
+        "contentDigest": "40212c47b48143211ebb7ae649b96126",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Normann Copenhagen",
+      "updatedAt": "2017-06-27T09:35:37.178Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
+      "createdAt": "2017-06-27T09:35:37.064Z",
       "description": "by Lemnos",
       "file": Object {
         "contentType": "image/jpeg",
@@ -6977,18 +7122,24 @@ Array [
       },
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8",
       "internal": Object {
-        "contentDigest": "9a32e1d8d06419eefe03a988c31643cd",
+        "contentDigest": "4848c2d670e8daa0cefb673733ed1a72",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "SoSo Wall Clock",
+      "updatedAt": "2017-06-27T09:35:37.064Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "KTRF62Q4gg60q6WCsWKw8",
+      "createdAt": "2017-06-27T09:35:37.064Z",
       "description": "by Lemnos",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7004,18 +7155,24 @@ Array [
       },
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___de",
       "internal": Object {
-        "contentDigest": "bf43eb21d935a5111a2071d457925863",
+        "contentDigest": "0b914482dd7743e6ceb718210d9fd305",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "SoSo Wall Clock",
+      "updatedAt": "2017-06-27T09:35:37.064Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
+      "createdAt": "2017-06-27T09:35:37.027Z",
       "description": "Merchandise image",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7031,18 +7188,24 @@ Array [
       },
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um",
       "internal": Object {
-        "contentDigest": "bb46be6f7cba38bd1b03f8eb6d243041",
+        "contentDigest": "ce6936aade311f9952f7e51a1419a114",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Hudson Wall Cup ",
+      "updatedAt": "2017-06-27T09:35:37.027Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "Xc0ny7GWsMEMCeASWO2um",
+      "createdAt": "2017-06-27T09:35:37.027Z",
       "description": "Merchandise image",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7058,18 +7221,24 @@ Array [
       },
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___de",
       "internal": Object {
-        "contentDigest": "02a38f17b2961c548b1dd02af06692ca",
+        "contentDigest": "758534e7c2b3897e761b50c3934e5d25",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Hudson Wall Cup ",
+      "updatedAt": "2017-06-27T09:35:37.027Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7085,18 +7254,24 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI",
       "internal": Object {
-        "contentDigest": "b221094b185145ec3b419956eab3feac",
+        "contentDigest": "6da02350b74a5ec73c02e05f4274aa2d",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Lemnos",
+      "updatedAt": "2017-06-27T09:35:37.012Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "2Y8LhXLnYAYqKCGEWG4EKI",
+      "createdAt": "2017-06-27T09:35:37.012Z",
       "description": "company logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7112,18 +7287,24 @@ Array [
       },
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___de",
       "internal": Object {
-        "contentDigest": "572fac0564aac87f9be18b3357509cc0",
+        "contentDigest": "2684be9e65bea6e0f70702f8f62685f2",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Lemnos",
+      "updatedAt": "2017-06-27T09:35:37.012Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -7139,18 +7320,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG",
       "internal": Object {
-        "contentDigest": "2ddf2de2ecfb1c194d8e30347d3a122b",
+        "contentDigest": "0529e3e05d7cd5f19e34caba510485d1",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Toys",
+      "updatedAt": "2017-06-27T09:35:36.633Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6t4HKjytPi0mYgs240wkG",
+      "createdAt": "2017-06-27T09:35:36.633Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -7166,18 +7353,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___de",
       "internal": Object {
-        "contentDigest": "946ccced1faeded60fea0917fad7e7d2",
+        "contentDigest": "f62c8da419321df624add5f941b66059",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Toys",
+      "updatedAt": "2017-06-27T09:35:36.633Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7193,18 +7386,24 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU",
       "internal": Object {
-        "contentDigest": "5559a89ef0e4b453774dd2c4cf78dd63",
+        "contentDigest": "3129d66e797ab99f3c2236be39395503",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Chive logo",
+      "updatedAt": "2017-06-27T09:35:36.182Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "1MgbdJNTsMWKI0W68oYqkU",
+      "createdAt": "2017-06-27T09:35:36.182Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7220,18 +7419,24 @@ Array [
       },
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___de",
       "internal": Object {
-        "contentDigest": "119bc29e4bc85a59a28500e55ace73cc",
+        "contentDigest": "529a5fa3f6b5d2e9a524fa509cbf2123",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Chive logo",
+      "updatedAt": "2017-06-27T09:35:36.182Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
         "contentType": "image/png",
@@ -7247,18 +7452,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o",
       "internal": Object {
-        "contentDigest": "9c04bb6d73b4fef3d89f5e28057d1f11",
+        "contentDigest": "477159b0f3f036fea7e5c083d06d16f0",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Home and Kitchen",
+      "updatedAt": "2017-06-27T09:35:36.172Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6m5AJ9vMPKc8OUoQeoCS4o",
+      "createdAt": "2017-06-27T09:35:36.172Z",
       "description": "category icon",
       "file": Object {
         "contentType": "image/png",
@@ -7274,18 +7485,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "internal": Object {
-        "contentDigest": "fa5af5110ad2045c8a6716cb7ee60a7b",
+        "contentDigest": "118db927d63889425a49ef96e6766785",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Home and Kitchen",
+      "updatedAt": "2017-06-27T09:35:36.172Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7301,18 +7518,24 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "internal": Object {
-        "contentDigest": "129b9d47aac479f125ba62946d0c12b2",
+        "contentDigest": "d0b8d18742550bf065ee92635220fc07",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam",
+      "updatedAt": "2017-06-27T09:35:36.168Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "createdAt": "2017-06-27T09:35:36.168Z",
       "description": "Brand logo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7328,18 +7551,24 @@ Array [
       },
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
       "internal": Object {
-        "contentDigest": "6ad25bcb580c6c3ddc711780cd0ffa90",
+        "contentDigest": "0f9ff782ed48545ba0cf89e28bcd54a3",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam",
+      "updatedAt": "2017-06-27T09:35:36.168Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "wtrHxeu3zEoEce2MokCSi",
+      "createdAt": "2017-06-27T09:35:36.037Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7355,18 +7584,24 @@ Array [
       },
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi",
       "internal": Object {
-        "contentDigest": "5bde96e4453f00105a199d205c82d04e",
+        "contentDigest": "e093963d43625696e698d248a13bec40",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam Streamliner",
+      "updatedAt": "2017-06-27T09:35:36.037Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "wtrHxeu3zEoEce2MokCSi",
+      "createdAt": "2017-06-27T09:35:36.037Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7382,18 +7617,24 @@ Array [
       },
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___de",
       "internal": Object {
-        "contentDigest": "e068d9bbe973768459f78e0cf8c686ab",
+        "contentDigest": "4b0fd07d3412f5ff2ae2a24984153969",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Playsam Streamliner",
+      "updatedAt": "2017-06-27T09:35:36.037Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7409,18 +7650,24 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI",
       "internal": Object {
-        "contentDigest": "ba9ff92e5255e3c75929a102d6c8933c",
+        "contentDigest": "0ec9573453443afa248884f5476a0303",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Whisk beaters",
+      "updatedAt": "2017-06-27T09:35:36.032Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "10TkaLheGeQG6qQGqWYqUI",
+      "createdAt": "2017-06-27T09:35:36.032Z",
       "description": "Merchandise photo",
       "file": Object {
         "contentType": "image/jpeg",
@@ -7436,18 +7683,24 @@ Array [
       },
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___de",
       "internal": Object {
-        "contentDigest": "68074490e4756689e2a331531c7a1d1a",
+        "contentDigest": "bb6a3391ff08c68ca89243efc11c5819",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "Whisk beaters",
+      "updatedAt": "2017-06-27T09:35:36.032Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -7463,18 +7716,24 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG",
       "internal": Object {
-        "contentDigest": "90e8ab587833b64dcdd66cd516e2d6ff",
+        "contentDigest": "6254f2c99b32f63f755df68cf1b67dc8",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "House icon",
+      "updatedAt": "2017-06-27T09:35:35.994Z",
     },
   ],
   Array [
     Object {
       "children": Array [],
       "contentful_id": "6s3iG2OVmoUcosmA8ocqsG",
+      "createdAt": "2017-06-27T09:35:35.994Z",
       "description": "Category icon set",
       "file": Object {
         "contentType": "image/png",
@@ -7490,12 +7749,17 @@ Array [
       },
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___de",
       "internal": Object {
-        "contentDigest": "4f3429a64dcbb126688874fee5f15ce4",
+        "contentDigest": "98dd622a65b27085518f161368d982db",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
       "parent": null,
+      "spaceId": "rocybtov1ozk",
+      "sys": Object {
+        "revision": 1,
+      },
       "title": "House icon",
+      "updatedAt": "2017-06-27T09:35:35.994Z",
     },
   ],
 ]
