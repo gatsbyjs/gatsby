@@ -11367,6 +11367,18 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Neon Law
+  main_url: https://www.neonlaw.com
+  source_url: https://github.com/neonlaw/interface
+  url: https://www.neonlaw.com
+  description: >
+    Neon Law is a general-practice law firm that uses software to improve access to justice.
+  categories:
+    - Consulting
+    - Data
+    - Open Source
+  built_by: Neon Law
+  built_by_url: https://twitter.com/neonlaw
 
 - title: Developer Ecosystem
   main_url: https://www.developerecosystem.com/
