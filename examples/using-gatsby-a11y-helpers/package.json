@@ -1,0 +1,38 @@
+{
+  "name": "gatsby-example-using-gatsby-a11y-helpers",
+  "private": true,
+  "description": "Gatsby example site demoing gatsby-a11y-helpers",
+  "version": "1.0.0",
+  "author": "Madalyn Parker <hello@madalyn.dev>",
+  "dependencies": {
+    "@reach/skip-nav": "^0.8.0",
+    "gatsby": "2.23.11-dev-1593638467485",
+    "gatsby-plugin-manifest": "^2.4.13",
+    "gatsby-plugin-react-helmet": "^3.3.5",
+    "gatsby-source-filesystem": "^2.3.13",
+    "lodash": "^4.17.15",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-helmet": "^5.2.1"
+  },
+  "keywords": [
+    "gatsby",
+    "a11y",
+    "skip-nav",
+    "routing"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test develop http://localhost:8001 cy:open"
+  },
+  "devDependencies": {
+    "cypress": "^4.9.0",
+    "start-server-and-test": "^1.11.0"
+  }
+}

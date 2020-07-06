@@ -9,7 +9,7 @@ import Link, {
   navigateTo,
   parsePath,
 } from "gatsby-link"
-import { Announce, RouteFocus } from "@localGatsby/gatsby-a11y-helpers"
+import { RouteAnnouncement, RouteFocus } from "@localGatsby/gatsby-a11y-helpers"
 import PageRenderer from "./public-page-renderer"
 import loader from "./loader"
 
@@ -99,7 +99,7 @@ function graphql() {
 }
 
 export {
-  Announce,
+  RouteAnnouncement,
   RouteFocus,
   Link,
   withAssetPrefix,

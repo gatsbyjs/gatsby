@@ -115,9 +115,8 @@ const navigate = (to, options = {}) => {
       } else {
         //look for RouteFocus
         const focusWrapper = document.querySelectorAll(
-          `#gatsby-csr-focus-wrapper`
+          `[data-gatsby-csr-focus]`
         )
-        console.log(focusWrapper, focusWrapper[0])
         if (focusWrapper && focusWrapper.length) {
           if (focusWrapper[0].children && focusWrapper[0].children.length) {
             focusWrapper[0].children[0].focus()
@@ -126,7 +125,7 @@ const navigate = (to, options = {}) => {
           }
         }
       }
-      console.log(document.activeElement.id)
+      console.log(document.activeElement)
     })
     clearTimeout(timeoutId)
   })
@@ -193,7 +192,7 @@ class RouteAnnouncer extends React.Component {
         pageName = pageHeadings[0].innerText
       }
       const routeAnnouncement = document.querySelectorAll(
-        `#gatsby-route-announcement`
+        `[data-gatsby-route-announcement]`
       )
       if (routeAnnouncement && routeAnnouncement.length) {
         announcementText = routeAnnouncement[0].innerText
