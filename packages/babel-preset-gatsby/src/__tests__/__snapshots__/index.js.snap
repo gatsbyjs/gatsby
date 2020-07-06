@@ -45,7 +45,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
       Object {
-        "corejs": 3,
+        "corejs": 2,
         "exclude": Array [
           "transform-typeof-symbol",
         ],
@@ -120,7 +120,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
       Object {
-        "corejs": 3,
+        "corejs": 2,
         "exclude": Array [
           "transform-typeof-symbol",
         ],
@@ -187,7 +187,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
       Object {
-        "corejs": 3,
+        "corejs": 2,
         "exclude": Array [
           "transform-typeof-symbol",
         ],
@@ -254,7 +254,7 @@ Object {
     Array [
       "<PROJECT_ROOT>/node_modules/@babel/preset-env/lib/index.js",
       Object {
-        "corejs": 3,
+        "corejs": 2,
         "exclude": Array [
           "transform-typeof-symbol",
         ],

@@ -9,7 +9,7 @@ tags: ["gatsby-gazette"]
 
 In June Gatsby decided to be [intentional and quieter in our social media channels](https://twitter.com/GatsbyJS/status/1267495726017323009) to make room for conversations around systemic racism.
 
-During that period Gatsby [matched donations](https://www.gatsbyjs.com/donation-matching/) to organizations that specialize in criminal justice reform, like the NAACP Legal Defense Fund and the ACLU. We also [launched Gatsby Voices](https://www.gatsbyjs.com/gatsby-voices/), a content series where members of the Gatsby community can share the story of their experiences in tech. (Please apply - those who are selected will be compensated \$500 USD for their work). We renewed our commitment to our core value of ["You Belong Here"](/docs/gatsby-core-philosophy/#you-belong-here) by taking internal action to expand our organizational identity, reevaluate our hiring and career advancement policies, bring in expert consultation, [and other steps](https://www.gatsbyjs.org/blog/2020-06-11-you-belong-here-commitment/).
+During that period Gatsby [matched donations](https://www.gatsbyjs.com/donation-matching/) to organizations that specialize in criminal justice reform, like the NAACP Legal Defense Fund and the ACLU. We also [launched Gatsby Voices](https://www.gatsbyjs.com/gatsby-voices/), a content series where members of the Gatsby community can share the story of their experiences in tech. (Please apply - those who are selected will be compensated \$500 USD for their work). We renewed our commitment to our core value of ["You Belong Here"](/docs/gatsby-core-philosophy/#you-belong-here) by taking internal action to expand our organizational identity, reevaluate our hiring and career advancement policies, bring in expert consultation, [and other steps](/blog/2020-06-11-you-belong-here-commitment/).
 
 The efforts above are just the beginning of the work were doing to ensure Black lives matter in our world, our industry, and our company.
 
@@ -53,7 +53,7 @@ If you have an agency that wants to specialize on Gatsby, or you are building to
 
 ## 👩🏽‍🚀 New from the Gatsby Team
 
-**Kyle Mathews** sat with Shardul Sha of Index Ventures and [talked about how Gatsby came to be](https://youtu.be/pzyX9cH0yHM).
+**Kyle Mathews** sat with Shardul Shah of Index Ventures and [talked about how Gatsby came to be](https://youtu.be/pzyX9cH0yHM).
 
 **Laurie Barth** was interviewed on the OpenHive.JS podcast, and talked about [her work maintaining Gatsby](https://anchor.fm/openhivejs/episodes/Laurie-Barth-on-Maintaining-Gatsby-ef6p8i/a-a2e0v24)
 
@@ -73,12 +73,12 @@ Reflex launched as [a collection of Gatsby themes and plugins](https://reflexjs.
 
 Ecommerce service, Snipcart dived into [Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/) and showed [how to integrate a shopping cart into your site](https://snipcart.com/blog/gatsby-recipes-ecommerce) in just a few steps.
 
-WPGrahphQL announced [it's path to 1.0](https://github.com/wp-graphql/wp-graphql/issues/1357)! If you're new to this plugin for WordPress, that turns your installation into a GraphQL server, then the GitHub issue linked above does a nice job of getting you up-to-speed on the project's history and rapid growth.
+WPGraphQL announced [it's path to 1.0](https://github.com/wp-graphql/wp-graphql/issues/1357)! If you're new to this plugin for WordPress, that turns your installation into a GraphQL server, then the GitHub issue linked above does a nice job of getting you up-to-speed on the project's history and rapid growth.
 
 ## 💫 Next from Gatsby
 
-Be on the lookout for [gatsby-theme-blog 2.0](https://github.com/gatsbyjs/gatsby/issues/23910), our brand new [new routing API](https://www.youtube.com/watch?v=tAcAkqOcs3c) and best practices, and updates to how [headless WordPress](/docs/glossary/headless-wordpress) projects can work with Gatsby Cloud.
+Be on the lookout for [`gatsby-theme-blog` 2.0](https://github.com/gatsbyjs/gatsby/issues/23910), our brand new [new routing API](https://www.youtube.com/watch?v=tAcAkqOcs3c) and best practices, and updates to how [headless WordPress](/docs/glossary/headless-wordpress) projects can work with Gatsby Cloud.
 
-Want to help us build this stuff? Apply to our new position for [Senior Product Manager](https://www.gatsbyjs.com/careers/senior-product-manager--marketing---content-collaboration--4027422003) Or drop your resume in our evergreen ["Dream Job" posting](https://www.gatsbyjs.com/careers/dream-job-4011361003).
+Want to help us build this stuff? Apply to our new position for [Senior Product Manager](https://www.gatsbyjs.com/careers/senior-product-manager--marketing---content-collaboration--4027422003) Or drop your résumé in our evergreen ["Dream Job" posting](https://www.gatsbyjs.com/careers/dream-job-4011361003).
 
 Read more about our exciting in-flight work on the [Gatsby Days mega-roundup](/blog/2020-06-23-Reconfiguring-Gatsby-Days/#coming-soon). And signup for our newsletter below so you don’t miss a thing.

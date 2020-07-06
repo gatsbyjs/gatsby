@@ -8,7 +8,7 @@ Pages can be created in three ways:
 
 - In your site's gatsby-node.js by implementing the API
   [`createPages`](/docs/node-apis/#createPages)
-- Gatsby core automatically turns React components in `src/pages` into pages
+- Gatsby core automatically turns React components in `src/pages/*` into pages. Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export)
 - Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
@@ -17,8 +17,8 @@ to modify pages created in core or plugins or to create [client-only routes](/do
 ## Debugging help
 
 To see what pages are being created by your code or plugins, you can query for
-page information while developing in Graph_i_QL. Paste the following query in
-the Graph_i_QL IDE for your site. The Graph_i_QL IDE is available when running
+page information while developing in Graph<em>i</em>QL. Paste the following query in
+the Graph<em>i</em>QL IDE for your site. The Graph<em>i</em>QL IDE is available when running
 your sites development server at `HOST:PORT/___graphql` e.g.
 `http://localhost:8000/___graphql`.
 
@@ -39,7 +39,7 @@ your sites development server at `HOST:PORT/___graphql` e.g.
 }
 ```
 
-The `context` property accepts an object, and we can pass in any data we want the page to be able to access.
+The `context` property accepts an object, and you can pass in any data you want the page to be able to access.
 
 You can also query for any `context` data you or plugins added to pages.
 
