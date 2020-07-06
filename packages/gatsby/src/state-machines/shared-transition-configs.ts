@@ -6,6 +6,10 @@ export const ADD_NODE_MUTATION = {
   actions: `addNodeMutation`,
 }
 
+export const QUERY_FILE_CHANGED = {
+  actions: `markQueryFilesDirty`,
+}
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle

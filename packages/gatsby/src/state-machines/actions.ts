@@ -55,6 +55,10 @@ export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
   }
 )
 
+export const markQueryFilesDirty = assign<IBuildContext>({
+  queryFilesDirty: true,
+})
+
 export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
   (_context, { data }): DataLayerResult => data
 )
@@ -92,4 +96,5 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   assignStoreAndWorkerPool,
   assignServiceResult,
   assignServers,
+  markQueryFilesDirty,
 }

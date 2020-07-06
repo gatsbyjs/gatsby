@@ -43,6 +43,7 @@ import { IWaitingContext } from "../state-machines/waiting/types"
 import {
   ADD_NODE_MUTATION,
   runMutationAndMarkDirty,
+  QUERY_FILE_CHANGED,
 } from "../state-machines/shared-transition-configs"
 import { buildActions } from "../state-machines/actions"
 import { waitingMachine } from "../state-machines/waiting"
@@ -185,8 +186,12 @@ module.exports = async (program: IProgram): Promise<void> => {
       runningQueries: {
         on: {
           ADD_NODE_MUTATION,
+          QUERY_FILE_CHANGED: {
+            actions: forwardTo(`run-queries`),
+          },
         },
         invoke: {
+          id: `run-queries`,
           src: `runQueries`,
           data: ({
             program,
@@ -214,6 +219,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       },
       doingEverythingElse: {
         on: {
+          QUERY_FILE_CHANGED,
           ADD_NODE_MUTATION,
         },
         invoke: {
@@ -241,6 +247,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       },
       startingDevServers: {
         on: {
+          QUERY_FILE_CHANGED,
           ADD_NODE_MUTATION,
         },
         invoke: {
@@ -256,6 +263,12 @@ module.exports = async (program: IProgram): Promise<void> => {
           ADD_NODE_MUTATION: {
             actions: forwardTo(`waiting`),
           },
+          QUERY_FILE_CHANGED: {
+            actions: forwardTo(`waiting`),
+          },
+          EXTRACT_QUERIES_NOW: {
+            target: `runningQueries`,
+          },
         },
         invoke: {
           id: `waiting`,
@@ -267,8 +280,6 @@ module.exports = async (program: IProgram): Promise<void> => {
             return { store, nodeMutationBatch }
           },
           onDone: {
-            // These are mutations added while we were running the last
-            // batch. We'll hold on to them til we've finished this build.
             actions: `assignServiceResult`,
             target: `rebuildingPages`,
           },

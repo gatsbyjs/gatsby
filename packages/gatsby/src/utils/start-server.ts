@@ -194,7 +194,6 @@ export async function startServer(
    **/
   const REFRESH_ENDPOINT = `/__refresh`
   const refresh = async (req: express.Request): Promise<void> => {
-    stopSchemaHotReloader()
     let activity = report.activityTimer(`createSchemaCustomization`, {})
     activity.start()
     await createSchemaCustomization({
@@ -211,7 +210,6 @@ export async function startServer(
     activity.start()
     await rebuildSchema({ parentSpan: activity })
     activity.end()
-    startSchemaHotReloader()
   }
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(REFRESH_ENDPOINT, (req, res) => {

@@ -25,6 +25,11 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
           actions: `addNodeMutation`,
           target: `batchingNodeMutations`,
         },
+        // We only listen for this when idling because if we receive it at any
+        // other point we're already going to create pages etc
+        QUERY_FILE_CHANGED: {
+          actions: `extractQueries`,
+        },
       },
     },
 

@@ -1,4 +1,12 @@
-import { AssignAction, assign, ActionFunctionMap } from "xstate"
+import {
+  AssignAction,
+  assign,
+  ActionFunctionMap,
+  ActionFunction,
+  sendParent,
+  InvokeCreator,
+  AnyEventObject,
+} from "xstate"
 import { IWaitingContext } from "./types"
 import { AnyAction } from "redux"
 
@@ -16,6 +24,11 @@ export const addNodeMutation: AssignAction<IWaitingContext, AnyAction> = assign(
   }
 )
 
+export const extractQueries = sendParent<IWaitingContext, AnyEventObject>(
+  `EXTRACT_QUERIES_NOW`
+)
+
 export const waitingActions: ActionFunctionMap<IWaitingContext, AnyAction> = {
   addNodeMutation,
+  extractQueries,
 }
