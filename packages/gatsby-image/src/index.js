@@ -24,18 +24,19 @@ const nodeBtoa = b => Buffer.from(b, `binary`).toString(`base64`)
 const clientBtoa = b => btoa(String.fromCharCode(...b))
 const base64encode = typeof btoa !== `undefined` ? clientBtoa : nodeBtoa
 
-// fnv1a32 is a simple and fast hash, reduces input to 32-bit value (hash)
+// FNV-1a-32 is a simple and fast hash, reduces input to 32-bit value (hash)
 const fnvOffset = 2166136261
-const fnvPrime = 16777619
 function fnv1a32(str) {
   let h = fnvOffset
-  let i = str.length
-  while (i) {
-    h ^= str.charCodeAt(--i)
-    h *= fnvPrime
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i)
+    // JS numbers are inaccurate at calculating 'h *= fnvPrime',
+    // Uses bit shifts to accurately multiply the prime: '16777619'
+    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24)
   }
 
-  return h
+  // Cast to 32-bit uint
+  return h >>> 0
 }
 
 function getShortKey(input) {
