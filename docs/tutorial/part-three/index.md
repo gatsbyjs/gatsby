@@ -286,7 +286,7 @@ export default function Layout({ children }) {
 }
 ```
 
-![A Gatsby page showing a navigation links](with-navigation.png)
+![A Gatsby page showing navigation links](with-navigation.png)
 
 And there you have it! A three page site with basic global navigation.
 
