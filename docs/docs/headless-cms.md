@@ -1,6 +1,5 @@
 ---
 title: What is a Headless CMS and How to Source Content from One
-overview: true
 ---
 
 A _headless CMS_ is content management software that enables writers to produce and organize content, while providing developers with structured data that can be displayed using a separate system on the frontend of a website or app.
@@ -37,7 +36,7 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 | [Contentstack](https://www.contentstack.com/) | [guide](/docs/sourcing-from-contentstack)                                        | [docs](/packages/gatsby-source-contentstack)           | [starter](/starters/contentstack/gatsby-starter-contentstack/)     |
 | [ButterCMS](https://buttercms.com/)           | [guide](/docs/sourcing-from-buttercms/)                                          | [docs](/packages/gatsby-source-buttercms)              | [starter](/starters/ButterCMS/gatsby-starter-buttercms/)           |
 | [Ghost](https://ghost.org/)                   | [guide](/docs/sourcing-from-ghost/)                                              | [docs](/packages/gatsby-source-ghost/)                 | [starter](/starters/TryGhost/gatsby-starter-ghost/)                |
-| [Kentico Kontent](https://kontent.ai/)        | [guide](/docs/sourcing-from-kentico-kontent)                                     | [docs](/packages/@kentico/gatsby-source-kontent)       | [starter](/starters/Kentico/gatsby-starter-kontent/)               |
+| [Kentico Kontent](https://kontent.ai/)        | [guide](/docs/sourcing-from-kentico-kontent)                                     | [docs](/packages/@kentico/gatsby-source-kontent)       | [starter](/starters/Kentico/gatsby-starter-kontent-lumen/)         |
 | [Directus](https://directus.io/)              |                                                                                  | [docs](/packages/gatsby-source-directus)               |                                                                    |
 | [GraphCMS](https://graphcms.com/)             | [guide](/docs/sourcing-from-graphcms)                                            | [docs](/packages/gatsby-source-graphql)                | [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/) |
 | [Storyblok](https://www.storyblok.com/)       |                                                                                  | [docs](/packages/gatsby-source-storyblok)              |                                                                    |
