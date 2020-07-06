@@ -2,7 +2,7 @@ import groupBy from "lodash/groupBy"
 import path from "path"
 import gatsbyNode from "../gatsby-node"
 
-describe(`transformer-react-doc-gen: onCreateNode`, () => {
+describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
   let createdNodes, updatedNodes
   const createNodeId = jest.fn(id => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
@@ -360,5 +360,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       await run(getFileNode(`code.js`))
       expect(createdNodes.length).toBeGreaterThan(0)
     })
+  })
+
+  it(`doesn't cause a stack overflow for nodes of the same name`, () => {
+    expect(run(getFileNode(`same-name.ts`))).resolves.toBeUndefined()
   })
 })

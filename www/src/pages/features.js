@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Component } from "react"
 import { graphql } from "gatsby"
 
 import Button from "../components/button"
@@ -101,40 +100,36 @@ const FeaturesHeader = () => (
   </section>
 )
 
-class FeaturesPage extends Component {
-  render() {
-    return (
-      <PageWithSidebar location={this.props.location}>
-        <PageMetadata
-          title="Features"
-          description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
-        />
-        <Container>
-          <main id={`reach-skip-nav`}>
-            <FeaturesHeader />
-            <SimpleEvaluationTable
-              title="Feature Comparison"
-              headers={[
-                { display: `Category`, nodeFieldProperty: `Category` },
-                { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
-                {
-                  display: `JAMstack frameworks`,
-                  nodeFieldProperty: `Jamstack`,
-                },
-                { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
-              ]}
-              data={this.props.data.allGatsbyFeaturesSpecsCsv.nodes}
-            />
-            <FeaturesFooter />
-          </main>
-          <FooterLinks />
-        </Container>
-      </PageWithSidebar>
-    )
-  }
+export default function FeaturesPage({ location, data }) {
+  return (
+    <PageWithSidebar location={location}>
+      <PageMetadata
+        title="Features"
+        description="Learn how specific features like performance and support for modern technologies make Gatsby worth using."
+      />
+      <Container>
+        <main id={`reach-skip-nav`}>
+          <FeaturesHeader />
+          <SimpleEvaluationTable
+            title="Feature Comparison"
+            headers={[
+              { display: `Category`, nodeFieldProperty: `Category` },
+              { display: `Gatsby`, nodeFieldProperty: `Gatsby` },
+              {
+                display: `JAMstack frameworks`,
+                nodeFieldProperty: `Jamstack`,
+              },
+              { display: `Traditional CMS`, nodeFieldProperty: `Cms` },
+            ]}
+            data={data.allGatsbyFeaturesSpecsCsv.nodes}
+          />
+          <FeaturesFooter />
+        </main>
+        <FooterLinks />
+      </Container>
+    </PageWithSidebar>
+  )
 }
-
-export default FeaturesPage
 
 export const pageQuery = graphql`
   query {
