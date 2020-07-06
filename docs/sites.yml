@@ -11195,6 +11195,15 @@
     - E-commerce
   built_by: Annie Taylor Chen
   built_by_url: https://www.annietaylorchen.com/
+- title: Tatjana Volbeke Portfolio
+  url: https://tatjanavolbeke.com/
+  main_url: https://tatjanavolbeke.com/
+  categories:
+    - Design
+    - Portfolio
+    - User Experience
+  built_by: Outer Studio
+  built_by_url: https://outer.studio
 - title: Inbound Latino
   url: https://inboundlatino.com/
   main_url: https://inboundlatino.com/
@@ -11256,8 +11265,8 @@
   built_by_url: https://draftbox.co
   featured: false
 - title: Ellington Hammond
-  main_url: https://ellingtonhammond.com
-  url: https://ellingtonhammond.com
+  main_url: https://ellington-hammond.com
+  url: https://ellington-hammond.com
   description: >
     Ellington Hammond is a photographer and film director based in the United States.
   categories:
@@ -11308,7 +11317,7 @@
   built_by_url: https://siekierski.ml
 - title: Lidabox
   description: >-
-    website for the sale of medical supplies and biosafety supplies.
+    Website for the sale of medical supplies and biosafety supplies.
   main_url: https://lidabox.com/
   url: https://lidabox.com/
   featured: false
@@ -11358,6 +11367,30 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Neon Law
+  main_url: https://www.neonlaw.com
+  source_url: https://github.com/neonlaw/interface
+  url: https://www.neonlaw.com
+  description: >
+    Neon Law is a general-practice law firm that uses software to improve access to justice.
+  categories:
+    - Consulting
+    - Data
+    - Open Source
+  built_by: Neon Law
+  built_by_url: https://twitter.com/neonlaw
+
+- title: Developer Ecosystem
+  main_url: https://www.developerecosystem.com/
+  url: https://www.developerecosystem.com/
+  description: >
+    Theories, talks, and tools for building or being part of a Developer Ecosystem. Learn how Platform Economies are built and scaled.
+  categories:
+    - Blog
+    - Design
+    - Entrepreneurship
+  built_by: Hugh Durkin
+  built_by_url: https://twitter.com/hughdurkin
 - title: Jose D. Santos IV
   main_url: https://ivjose.com
   url: https://ivjose.com
