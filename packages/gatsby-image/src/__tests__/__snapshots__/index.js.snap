@@ -3,7 +3,7 @@
 exports[`<Image /> should have a transition-delay of 1sec 1`] = `
 <div>
   <div
-    class="fixedImage gatsby-image-wrapper  _UM6yrA"
+    class="fixedImage  gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
@@ -52,7 +52,7 @@ exports[`<Image /> should have a transition-delay of 1sec 1`] = `
 exports[`<Image /> should render fixed size images 1`] = `
 <div>
   <div
-    class="fixedImage gatsby-image-wrapper  _UM6yrA"
+    class="fixedImage  gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
     <div
@@ -101,7 +101,7 @@ exports[`<Image /> should render fixed size images 1`] = `
 exports[`<Image /> should render fluid images 1`] = `
 <div>
   <div
-    class="fixedImage gatsby-image-wrapper _UM6yrA"
+    class="fixedImage  gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline;"
   >
     <div
@@ -155,13 +155,9 @@ exports[`<Image /> should render fluid images 1`] = `
 exports[`<Image /> should render multiple fixed image variants 1`] = `
 <div>
   <div
-    class="fixedImage gatsby-image-wrapper  _3LcOMA"
+    class="fixedImage  gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline; width: 100px; height: 100px;"
   >
-    <style>
-      ._3LcOMA { width: 100px !important; height: 100px !important; }
-@media only screen and (min-width: 768px) { ._3LcOMA { width: 300px !important; height: 300px !important; } }
-    </style>
     <div
       aria-hidden="true"
       style="background-color: lightgray; width: 100px; opacity: 1; height: 100px; transition-delay: 500ms;"
@@ -225,13 +221,9 @@ exports[`<Image /> should render multiple fixed image variants 1`] = `
 exports[`<Image /> should render multiple fluid image variants 1`] = `
 <div>
   <div
-    class="fixedImage gatsby-image-wrapper _3LcOMA"
+    class="fixedImage  gatsby-image-wrapper"
     style="position: relative; overflow: hidden; display: inline;"
   >
-    <style>
-      ._3LcOMA { padding-bottom: 50% !important; }
-@media only screen and (min-width: 768px) { ._3LcOMA { padding-bottom: 33.333333333333336% !important; } }
-    </style>
     <div
       aria-hidden="true"
       style="width: 100%; padding-bottom: 50%;"
