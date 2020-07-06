@@ -245,9 +245,10 @@ function generateMediaQueries(imageVariants, selectorClass) {
   return `${base}\n${queries}`
 }
 
-const ResponsiveQueries = ({ imageVariants, selectorClass }) => (
-  <style>{generateMediaQueries(imageVariants, selectorClass)}</style>
-)
+const ResponsiveQueries = ({ imageVariants, selectorClass }) =>
+  imageVariants.length > 1 ? (
+    <style>{generateMediaQueries(imageVariants, selectorClass)}</style>
+  ) : null
 
 function generateTracedSVGSources(imageVariants) {
   return imageVariants.map(({ src, media, tracedSVG }) => (
@@ -558,7 +559,7 @@ class Image extends React.Component {
           >
             <ResponsiveQueries
               imageVariants={imageVariants}
-              uniqueKey={uniqueKey}
+              selectorClass={uniqueKey}
             />
             {/* Preserve the aspect ratio. */}
             <Tag
@@ -676,7 +677,7 @@ class Image extends React.Component {
           >
             <ResponsiveQueries
               imageVariants={imageVariants}
-              uniqueKey={uniqueKey}
+              selectorClass={uniqueKey}
             />
             {/* Show a solid background color. */}
             {bgColor && (
