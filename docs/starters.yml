@@ -6334,6 +6334,20 @@
     - Sitemap Generation
     - XML Sitemaps
     - Progressive Web Ap
+- url: https://gatsby-typescript-eslint-prettier-starter.netlify.app/
+  repo: https://github.com/Tielem/gatsby-typescript-eslint-prettier-starter
+  description: This Gatsby starter is an adaptation of the default Gatsby starter with TypeScript, ESlint and Prettier added and pre-configured, bringing you everything you need to get up and running with Gatsby in a type-safe and style-safe way.
+  tags:
+    - Language:TypeScript
+    - Linting
+    - Styling:None
+  features:
+    - TypeScript compile (gatsby-plugin-ts), not Babel transpile (gatsby-plugin-typescript)
+    - Type errors cause gatsby develop and gatsby build to stop
+    - Makes use of ESlint with Airbnb's TypeScript config, to ensure code styling both in JavaScript and TypeScript
+    - Linting errors cause gatsby develop and gatsby build to stop
+    - Good starter template to add additional features (such as Markdown or Headless CMS) in a type safe and style safe way
+    - Dependencies are automatically kept up to date with [Renovate](https://renovate.whitesourcesoftware.com/)
 - url: https://gatsby-basic-typescript-starter.netlify.app/
   repo: https://github.com/noahub/gatsby-typescript-starter
   description: This starter ships with the main Gatsby configuration files you need to build a basic site using React and TypeScript.
