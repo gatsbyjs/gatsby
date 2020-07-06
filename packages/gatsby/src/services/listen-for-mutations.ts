@@ -7,7 +7,6 @@ export const listenForMutations: InvokeCallback = (callback: Sender<any>) => {
   }
 
   const emitFileChange = (event: unknown): void => {
-    console.log({ event })
     callback({ type: `SOURCE_FILE_CHANGED`, payload: event })
   }
 
@@ -15,14 +14,19 @@ export const listenForMutations: InvokeCallback = (callback: Sender<any>) => {
     callback({ type: `QUERY_FILE_CHANGED`, payload: event })
   }
 
-  emitter.on(`ENQUEUE_NODE_MUTATION`, emitMutation)
+  const emitWebhook = (event: unknown): void => {
+    callback({ type: `WEBHOOK_RECEIVED`, payload: event })
+  }
 
+  emitter.on(`ENQUEUE_NODE_MUTATION`, emitMutation)
+  emitter.on(`WEBHOOK_RECEIVED`, emitWebhook)
   emitter.on(`SOURCE_FILE_CHANGED`, emitFileChange)
   emitter.on(`QUERY_FILE_CHANGED`, emitQueryChange)
 
   return (): void => {
     emitter.off(`ENQUEUE_NODE_MUTATION`, emitMutation)
     emitter.off(`SOURCE_FILE_CHANGED`, emitFileChange)
+    emitter.off(`WEBHOOK_RECEIVED`, emitWebhook)
     emitter.off(`QUERY_FILE_CHANGED`, emitQueryChange)
   }
 }

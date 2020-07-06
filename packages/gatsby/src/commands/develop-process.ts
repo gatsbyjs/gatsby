@@ -44,6 +44,7 @@ import {
   ADD_NODE_MUTATION,
   runMutationAndMarkDirty,
   QUERY_FILE_CHANGED,
+  WEBHOOK_RECEIVED,
 } from "../state-machines/shared-transition-configs"
 import { buildActions } from "../state-machines/actions"
 import { waitingMachine } from "../state-machines/waiting"
@@ -154,11 +155,18 @@ module.exports = async (program: IProgram): Promise<void> => {
             parentSpan,
             store,
             firstRun,
+            webhookBody,
           }: IBuildContext): IDataLayerContext => {
-            return { parentSpan, store, firstRun, deferNodeMutation: true }
+            return {
+              parentSpan,
+              store,
+              firstRun,
+              deferNodeMutation: true,
+              webhookBody,
+            }
           },
           onDone: {
-            actions: `assignServiceResult`,
+            actions: [`assignServiceResult`, `clearWebhookBody`],
             target: `finishingBootstrap`,
           },
         },
@@ -166,6 +174,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       finishingBootstrap: {
         on: {
           ADD_NODE_MUTATION: runMutationAndMarkDirty,
+          WEBHOOK_RECEIVED,
         },
         invoke: {
           src: async (): Promise<void> => {
@@ -221,6 +230,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         on: {
           QUERY_FILE_CHANGED,
           ADD_NODE_MUTATION,
+          WEBHOOK_RECEIVED,
         },
         invoke: {
           src: async (): Promise<void> => {
@@ -260,6 +270,7 @@ module.exports = async (program: IProgram): Promise<void> => {
       },
       waiting: {
         on: {
+          WEBHOOK_RECEIVED,
           ADD_NODE_MUTATION: {
             actions: forwardTo(`waiting`),
           },

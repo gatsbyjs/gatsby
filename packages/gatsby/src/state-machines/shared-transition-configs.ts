@@ -10,6 +10,11 @@ export const QUERY_FILE_CHANGED = {
   actions: `markQueryFilesDirty`,
 }
 
+export const WEBHOOK_RECEIVED = {
+  target: `initializingDataLayer`,
+  actions: `assignWebhookBody`,
+}
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle

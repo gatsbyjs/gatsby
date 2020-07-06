@@ -76,6 +76,17 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
   }
 )
 
+export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
+  webhookBody: (_context, { payload }) => {
+    console.log(`body`, payload?.webhookBody)
+    return payload?.webhookBody
+  },
+})
+
+export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
+  webhookBody: undefined,
+})
+
 /**
  * Event handler used in all states where we're not ready to process a file change
  * Instead we add it to a batch to process when we're next idle
@@ -97,4 +108,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   assignServiceResult,
   assignServers,
   markQueryFilesDirty,
+  assignWebhookBody,
+  clearWebhookBody,
 }
