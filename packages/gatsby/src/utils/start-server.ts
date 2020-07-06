@@ -34,11 +34,6 @@ import { Express } from "express"
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 
-import {
-  startSchemaHotReloader,
-  stopSchemaHotReloader,
-} from "../bootstrap/schema-hot-reloader"
-
 import sourceNodes from "../utils/source-nodes"
 import { createSchemaCustomization } from "../utils/create-schema-customization"
 import { rebuild as rebuildSchema } from "../schema"

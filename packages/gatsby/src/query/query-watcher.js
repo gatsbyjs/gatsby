@@ -8,7 +8,6 @@
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
 
-const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
 const path = require(`path`)
