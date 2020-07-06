@@ -564,7 +564,7 @@ export default Products
 
 ## Adding shopping cart functionality
 
-To add shopping cart functionality to your Gatsby site, you can use the [use-shopping-cart](https://useshoppingcart.com/) library. It allows you to keep the cart state across components and pages, and even stores the cart state in `localStorage`. You can find a Gatsby example in their [GitHub respository](https://github.com/dayhaysoos/use-shopping-cart/tree/master/examples).
+To add shopping cart functionality to your Gatsby site, you can use the [use-shopping-cart](https://useshoppingcart.com/) library. It allows you to keep the cart state across components and pages, and even stores the cart state in `localStorage`. You can find a Gatsby example in their [GitHub repository](https://github.com/dayhaysoos/use-shopping-cart/tree/master/examples).
 
 ## Testing Payments
 
