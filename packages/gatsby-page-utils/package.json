@@ -4,8 +4,8 @@
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\"",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
+    "@types/micromatch": "^4.0.1",
     "babel-preset-gatsby-package": "^0.5.1",
     "cross-env": "^5.2.1"
   },

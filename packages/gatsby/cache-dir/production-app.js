@@ -11,7 +11,7 @@ import {
 } from "./navigation"
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
-import asyncRequires from "./async-requires"
+import asyncRequires from "$virtual/async-requires"
 import {
   setLoader,
   ProdLoader,
@@ -22,7 +22,7 @@ import EnsureResources from "./ensure-resources"
 import stripPrefix from "./strip-prefix"
 
 // Generated during bootstrap
-import matchPaths from "./match-paths.json"
+import matchPaths from "$virtual/match-paths.json"
 
 const loader = new ProdLoader(asyncRequires, matchPaths)
 setLoader(loader)

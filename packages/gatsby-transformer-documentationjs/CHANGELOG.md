@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.11...gatsby-transformer-documentationjs@4.3.12) (2020-07-03)
+
+### Bug Fixes
+
+- incorrect typedef parsing for interfaces ([#24192](https://github.com/gatsbyjs/gatsby/issues/24192)) ([1a1177e](https://github.com/gatsbyjs/gatsby/commit/1a1177e))
+
 ## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.10...gatsby-transformer-documentationjs@4.3.11) (2020-07-02)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs
