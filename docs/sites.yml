@@ -11367,6 +11367,18 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+
+- title: Developer Ecosystem
+  main_url: https://www.developerecosystem.com/
+  url: https://www.developerecosystem.com/
+  description: >
+    Theories, talks, and tools for building or being part of a Developer Ecosystem. Learn how Platform Economies are built and scaled.
+  categories:
+    - Blog
+    - Design
+    - Entrepreneurship
+  built_by: Hugh Durkin
+  built_by_url: https://twitter.com/hughdurkin
 - title: Jose D. Santos IV
   main_url: https://ivjose.com
   url: https://ivjose.com
