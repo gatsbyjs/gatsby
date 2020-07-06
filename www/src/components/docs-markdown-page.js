@@ -31,14 +31,13 @@ function DocsMarkdownPage({
   prev,
   next,
   tableOfContentsItems = page.tableOfContents.items,
-  tableOfContentsDepth = page.frontmatter.tableOfContentsDepth,
+  tableOfContentsDepth = page.tableOfContentsDepth,
   children,
 }) {
-  const { frontmatter, excerpt, timeToRead, fields, body } = page
-  const [urlSegment] = fields.slug.split(`/`).slice(1)
-  const description = frontmatter.description || excerpt
+  const [urlSegment] = page.slug.split(`/`).slice(1)
+  const description = page.description || page.excerpt
   const isTOCVisible =
-    !frontmatter.disableTableOfContents && tableOfContentsItems?.length > 0
+    !page.disableTableOfContents && tableOfContentsItems?.length > 0
 
   return (
     <PageWithSidebar
@@ -46,10 +45,10 @@ function DocsMarkdownPage({
       enableScrollSync={urlSegment === `tutorial`}
     >
       <PageMetadata
-        title={frontmatter.title}
+        title={page.title}
         description={description}
         type="article"
-        timeToRead={timeToRead}
+        timeToRead={page.timeToRead}
       />
       <DocSearchContent>
         <Container
@@ -64,8 +63,8 @@ function DocsMarkdownPage({
           }}
         >
           <Breadcrumb location={location} />
-          <h1 id={fields.anchor} sx={{ mt: 0 }}>
-            {frontmatter.title}
+          <h1 id={page.anchor} sx={{ mt: 0 }}>
+            {page.title}
           </h1>
         </Container>
         <Container
@@ -114,9 +113,9 @@ function DocsMarkdownPage({
             }}
           >
             <div>
-              <MDXRenderer slug={fields.slug}>{body}</MDXRenderer>
+              <MDXRenderer slug={page.slug}>{page.body}</MDXRenderer>
               {children}
-              <MarkdownPageFooter page={page} />
+              <MarkdownPageFooter path={page.relativePath} />
               <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
             </div>
           </div>
