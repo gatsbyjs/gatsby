@@ -92,12 +92,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-transformer-gitinfo`,
-      options: {
-        include: /mdx?$/i,
-      },
-    },
-    {
       resolve: `gatsby-source-npm-package-search`,
       options: {
         // If DISABLE_NPM_SEARCH is true, search for a placeholder keyword

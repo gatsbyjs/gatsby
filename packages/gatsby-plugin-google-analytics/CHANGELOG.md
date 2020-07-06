@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.9...gatsby-plugin-google-analytics@2.3.10) (2020-07-03)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Separate preconnect and dns-prefetch ([#25279](https://github.com/gatsbyjs/gatsby/issues/25279)) ([6a6ac17](https://github.com/gatsbyjs/gatsby/commit/6a6ac17))
+
 ## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.8...gatsby-plugin-google-analytics@2.3.9) (2020-07-02)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

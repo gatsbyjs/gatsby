@@ -4,7 +4,11 @@ const chalk = require(`chalk`)
 const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 
-module.exports = async ({ syncToken, reporter, pluginConfig }) => {
+module.exports = async function contentfulFetch({
+  syncToken,
+  reporter,
+  pluginConfig,
+}) {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
 
@@ -106,12 +110,21 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   let contentTypeItems = contentTypes.items
 
-  // Fix IDs (inline) on entries and assets, created/updated and deleted.
-  contentTypeItems.forEach(normalize.fixIds)
-  currentSyncData.entries.forEach(normalize.fixIds)
-  currentSyncData.assets.forEach(normalize.fixIds)
-  currentSyncData.deletedEntries.forEach(normalize.fixIds)
-  currentSyncData.deletedAssets.forEach(normalize.fixIds)
+  if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
+    reporter.info(
+      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful.id\``
+    )
+  } else {
+    // Traverse entire data model and enforce every `sys.id` to be a string
+    // and if that string starts with a number, to prefix it with `c`. Assigns
+    // original `id` to `contentful_id`.
+    // Expensive at scale.
+    contentTypeItems.forEach(normalize.fixIds)
+    currentSyncData.entries.forEach(normalize.fixIds)
+    currentSyncData.assets.forEach(normalize.fixIds)
+    currentSyncData.deletedEntries.forEach(normalize.fixIds)
+    currentSyncData.deletedAssets.forEach(normalize.fixIds)
+  }
 
   const result = {
     currentSyncData,

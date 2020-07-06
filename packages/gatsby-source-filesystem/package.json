@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-filesystem",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-  "version": "2.3.17",
+  "version": "2.3.18",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -21,7 +21,7 @@
     "progress": "^2.0.3",
     "read-chunk": "^3.2.0",
     "valid-url": "^1.0.9",
-    "xstate": "^4.10.0"
+    "xstate": "^4.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
