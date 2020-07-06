@@ -24,7 +24,7 @@ describe(`babel-preset-gatsby`, () => {
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
       {
         exclude: [`transform-typeof-symbol`],
-        corejs: 3,
+        corejs: 2,
         loose: true,
         modules: false,
         useBuiltIns: `usage`,
