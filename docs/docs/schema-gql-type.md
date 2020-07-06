@@ -146,7 +146,7 @@ Another convenience Gatsby provides is the ability to query a node's `child` or 
 
 #### child resolvers
 
-When defining our parent `File` gqlType, [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) will iterate over the distinct types of its children, and create their fields. Let's say one of these child types is `markdownRemark`. Let's assume there is only one `markdownRemark` child per `File`. Therefore, its field name is `childMarkdownRemark`. Now, we must create its graphql Resolver.
+When defining our parent `File` gqlType, [createNodeFields](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/build-node-types.js#L48) will iterate over the distinct types of its children, and create their fields. Let's say one of these child types is `markdownRemark`. Let's assume there is only one `markdownRemark` child per `File`. Therefore, its field name is `childMarkdownRemark`. Now, we must create its GraphQL Resolver.
 
 ```javascript
 resolve(node, args, context, info)

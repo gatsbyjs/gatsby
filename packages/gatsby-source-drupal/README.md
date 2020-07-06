@@ -102,8 +102,8 @@ module.exports = {
 
 You can use the `fastBuilds` option to enable fastbuilds. This requires the
 Gatsby Drupal module (called gatsby_fastbuilds) to be enabled. This will speed
-up your develop and build process by only downloading content that has changed
-since you last ran `gatsby build` or `gatsby develop`.
+up your development and build process by only downloading content that has
+changed since you last ran `gatsby build` or `gatsby develop`.
 
 This will require authentication to your Drupal site and a Drupal user with the
 Drupal permission to `sync gatsby fastbuild log entities`.

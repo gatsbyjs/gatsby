@@ -18,7 +18,7 @@ This framework would have to be:
 - **simple**, not requiring any setup to start using and with thoughtful APIs to
   extend the framework.
 - **fast**, doesn't lose customers to slow page loads. Takes advantage of
-  HTTP/2, browser caching, service workers, inlined critical css, and code
+  HTTP/2, browser caching, service workers, inlined critical CSS, and code
   splitting so your site always loads incredibly fast—no matter what you build.
 - **JavaScript-driven**, the web is huge and intensely competitive. Sites that
   win are fast and richly interactive. Your framework must make it trivial to
@@ -180,7 +180,7 @@ is using Gatsby to build both their marketing site _and_ SaaS app within the
 _same Gatsby codebase_.
 
 The marketing pages of their site are built using markdown and React components
-along with a modern css-in-js library
+along with a modern CSS-in-JS library
 [Glamor](https://github.com/threepointone/glamor) for styling. The SaaS portion
 uses [Redux](http://redux.js.org/) to communicate with their Django API.
 

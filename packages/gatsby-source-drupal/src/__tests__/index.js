@@ -1,6 +1,6 @@
 jest.mock(`axios`, () => {
   return {
-    get: path => {
+    get: jest.fn(path => {
       const last = path.split(`/`).pop()
       try {
         return { data: require(`./fixtures/${last}.json`) }
@@ -8,7 +8,7 @@ jest.mock(`axios`, () => {
         console.log(`Error`, e)
         return null
       }
-    },
+    }),
   }
 })
 
@@ -18,13 +18,16 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
+const normalize = require(`../normalize`)
+const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
+
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const { sourceNodes } = require(`../gatsby-node`)
 const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
-  const nodes = {}
+  let nodes = {}
   const createNodeId = id => `generated-id-${id}`
   const baseUrl = `http://fixture`
   const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
@@ -456,6 +459,128 @@ describe(`gatsby-source-drupal`, () => {
         expect(
           nodes[createNodeId(`tag-2`)].relationships[`node__article___NODE`]
         ).toContain(createNodeId(`article-3`))
+      })
+    })
+  })
+
+  describe(`Error handling`, () => {
+    describe(`Does end activities if error is thrown`, () => {
+      const axios = require(`axios`)
+      beforeEach(() => {
+        nodes = {}
+        reporter.activityTimer.mockClear()
+        activity.start.mockClear()
+        activity.end.mockClear()
+        axios.get.mockClear()
+        downloadFileSpy.mockClear()
+      })
+
+      it(`during data fetching`, async () => {
+        axios.get.mockImplementationOnce(() => {
+          throw new Error(`data fetching failed`)
+        })
+        expect.assertions(5)
+
+        try {
+          await sourceNodes(args, { baseUrl })
+        } catch (e) {
+          expect(e).toMatchInlineSnapshot(`[Error: data fetching failed]`)
+        }
+
+        expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
+        expect(reporter.activityTimer).toHaveBeenNthCalledWith(
+          1,
+          `Fetch all data from Drupal`
+        )
+
+        expect(activity.start).toHaveBeenCalledTimes(1)
+        expect(activity.end).toHaveBeenCalledTimes(1)
+      })
+
+      it(`during file downloading`, async () => {
+        downloadFileSpy.mockImplementationOnce(() => {
+          throw new Error(`file downloading failed`)
+        })
+
+        expect.assertions(6)
+
+        try {
+          await sourceNodes(args, { baseUrl })
+        } catch (e) {
+          expect(e).toMatchInlineSnapshot(`[Error: file downloading failed]`)
+        }
+
+        expect(reporter.activityTimer).toHaveBeenCalledTimes(2)
+        expect(reporter.activityTimer).toHaveBeenNthCalledWith(
+          1,
+          `Fetch all data from Drupal`
+        )
+        expect(reporter.activityTimer).toHaveBeenNthCalledWith(
+          2,
+          `Remote file download`
+        )
+
+        expect(activity.start).toHaveBeenCalledTimes(2)
+        expect(activity.end).toHaveBeenCalledTimes(2)
+      })
+
+      it(`during refresh webhook handling`, async () => {
+        expect.assertions(5)
+
+        try {
+          await sourceNodes(
+            {
+              ...args,
+              webhookBody: {
+                malformattedPayload: true,
+              },
+            },
+            { baseUrl }
+          )
+        } catch (e) {
+          expect(e).toBeTruthy()
+        }
+
+        expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
+        expect(reporter.activityTimer).toHaveBeenNthCalledWith(
+          1,
+          `loading Drupal content changes`,
+          expect.anything()
+        )
+
+        expect(activity.start).toHaveBeenCalledTimes(1)
+        expect(activity.end).toHaveBeenCalledTimes(1)
+      })
+
+      it(`during fastbuilds sync`, async () => {
+        expect.assertions(5)
+
+        try {
+          const fastBuilds = true
+          // Mock the lastFetched timestamp to an invalid value.
+          args.store.getState.mockReturnValue({
+            status: {
+              plugins: {
+                "gatsby-source-drupal": {
+                  lastFetched: 1000000000,
+                },
+              },
+            },
+          })
+
+          await sourceNodes(args, { baseUrl, fastBuilds })
+        } catch (e) {
+          expect(e).toBeTruthy()
+        }
+
+        expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
+        expect(reporter.activityTimer).toHaveBeenNthCalledWith(
+          1,
+          `Fetch incremental changes from Drupal`
+        )
+
+        expect(activity.start).toHaveBeenCalledTimes(1)
+        expect(activity.end).toHaveBeenCalledTimes(1)
       })
     })
   })
