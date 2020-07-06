@@ -24,17 +24,32 @@ const nodeBtoa = b => Buffer.from(b, `binary`).toString(`base64`)
 const clientBtoa = b => btoa(String.fromCharCode(...b))
 const base64encode = typeof btoa !== `undefined` ? clientBtoa : nodeBtoa
 
-// fnv32a Hash
-function fnv32a(str) {
-  let h = 0x811c9dc5
-  for (let i = 0; i < str.length; ++i) {
-    h ^= str.charCodeAt(i)
-    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24)
+// fnv1a32 is a simple and fast hash, reduces input to 32-bit value (hash)
+const fnvOffset = 2166136261
+const fnvPrime = 16777619
+function fnv1a32(str) {
+  let h = fnvOffset
+  let i = str.length
+  while (i) {
+    h ^= str.charCodeAt(--i)
+    h *= fnvPrime
   }
 
-  return base64encode(Uint8Array.from([h >> 24, h >> 16, h >> 8, h]))
-    .replace(/[+/]/g, x => (x === `+` ? `_` : `-`))
-    .substr(0, 6)
+  return h
+}
+
+function getShortKey(input) {
+  const h = fnv1a32(input)
+  // 32-bit number split into 4 8-bit values for base64 encoding.
+  // Replace '+' and '/' base64 values which aren't ideal for CSS classnames.
+  // 32-bits is always <=6 characters long, '=' padding is truncated off.
+  // '-' should not be a first character, so prefix the string.
+  return (
+    `_` +
+    base64encode(Uint8Array.from([h >> 24, h >> 16, h >> 8, h]))
+      .replace(/[+/]/g, x => (x === `+` ? `_` : `-`))
+      .substr(0, 6)
+  )
 }
 
 // Handle legacy props during their deprecation phase
@@ -519,8 +534,8 @@ class Image extends React.Component {
     const imageVariants = fluid || fixed
     const image = getCurrentSrcData(imageVariants)
 
-    const activeVariant = fnv32a(image.srcSet)
-    const uniqueKey = fnv32a(imageVariants.map(x => x.srcSet).join())
+    const activeVariant = getShortKey(image.srcSet)
+    const uniqueKey = getShortKey(imageVariants.map(x => x.srcSet).join())
 
     // Avoid render logic on client until mounted (hydration complete)
     // Prevents invalid initial state from hydration phase: https://github.com/gatsbyjs/gatsby/pull/24811
