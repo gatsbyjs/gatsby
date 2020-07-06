@@ -18,12 +18,6 @@ const logDeprecationNotice = (prop, replacement) => {
   }
 }
 
-// SSR and Client base64 encode methods, expects Uint8Array input
-// Used for generating short class names from 32-bit values (hash)
-const nodeBtoa = b => Buffer.from(b, `binary`).toString(`base64`)
-const clientBtoa = b => btoa(String.fromCharCode(...b))
-const base64encode = typeof btoa !== `undefined` ? clientBtoa : nodeBtoa
-
 // FNV-1a-32 is a simple and fast hash, reduces input to 32-bit value (hash)
 const fnvOffset = 2166136261
 function fnv1a32(str) {
@@ -39,19 +33,8 @@ function fnv1a32(str) {
   return h >>> 0
 }
 
-function getShortKey(input) {
-  const h = fnv1a32(input)
-  // 32-bit number split into 4 8-bit values for base64 encoding.
-  // Replace '+' and '/' base64 values which aren't ideal for CSS classnames.
-  // 32-bits is always <=6 characters long, '=' padding is truncated off.
-  // '-' should not be a first character, so prefix the string.
-  return (
-    `_` +
-    base64encode(Uint8Array.from([h >> 24, h >> 16, h >> 8, h]))
-      .replace(/[+/]/g, x => (x === `+` ? `_` : `-`))
-      .substr(0, 6)
-  )
-}
+// Converts number to base 36 string (a-z,0-9)
+const getShortKey = input => `_` + fnv1a32(input).toString(36)
 
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
