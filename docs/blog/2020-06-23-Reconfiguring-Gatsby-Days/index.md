@@ -49,7 +49,7 @@ https://www.youtube.com/watch?v=iKSLYpFEKZc
 
 **Max Stoiber, Staff Software Engineer at Gatsby**
 
-Today we are introducing another new addition to the Gatsby ecosystem: Gatsby Admin. Currently in alpha, Admin is a new interface for managing your Gatsby site’s configuration. Admin aims to be the hub for utilizing and managing features like Themes, Blocks, Recipes, and GraphiQL. Alpha is a core piece of our ambition to make Gatsby fully accessible for all kinds of users, not just coders. Our vision: everything that’s possible in `gatsby-config.js` should eventually be possible through the Admin. This first alpha release includes plugin and theme management, as well as a theme file shadowing interface. After watching Max introduce and demo Admin in his presentation, you can go sign up for the Admin alpha at [gatsbyjs.com/admin-alpha](https://gatsbyjs.com/admin-alpha).
+Today we are introducing another new addition to the Gatsby ecosystem: Gatsby Admin. Currently in alpha, Admin is a new interface for managing your Gatsby site’s configuration. Admin aims to be the hub for utilizing and managing features like Themes, Blocks, Recipes, and GraphiQL. Admin is a core piece of our ambition to make Gatsby fully accessible for all kinds of users, not just coders. Our vision: everything that’s possible in `gatsby-config.js` should eventually be possible through the Admin. This first alpha release includes plugin and theme management, as well as a theme file shadowing interface. After watching Max introduce and demo Admin in his presentation, you can go sign up for the Admin alpha at [gatsbyjs.com/admin-alpha](https://gatsbyjs.com/admin-alpha).
 
 https://www.youtube.com/watch?v=B7D_B2HTbko
 
