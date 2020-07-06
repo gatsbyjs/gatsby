@@ -69,7 +69,7 @@ user-site
 
 ## Shadowing other themes
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` and a preset theme of `gatsby-theme-ui-preset`. If you want to customize the implementation of any theme you can do so with shadowing.
+Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` and a preset theme called `gatsby-theme-ui-preset`. If you want to customize the implementation of any theme, you can do so with shadowing.
 
 For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`. The styles in this file will be automatically merged with those in `gatsby-theme-ui-preset`. For conflicting styles, your local shadowed settings take precedence.
 
