@@ -21,8 +21,6 @@ cd my-blog
 gatsby develop
 ```
 
-![Default screen when starting a project using gatsby blog starter](./images/starter-blog-theme-default.png)
-
 ## Replace your avatar
 
 The blog theme starter ships with a solid gray image for the avatar. Add your own avatar by choosing the image you want, and overwriting the file located at `/content/assets/avatar.png`.
@@ -109,10 +107,6 @@ export default function Bio() {
 }
 ```
 
-At this point, you should have an updated avatar, updated site details, and an updated bio:
-
-![Screenshot of project with current tutorial edits](./images/starter-blog-theme-edited.png)
-
 ## Add your own blog content
 
 Now you can add your first blog post, and get rid of the demo content in the starter.
@@ -137,9 +131,7 @@ Delete the two demo posts in the `/content/posts` directory:
 - `my-blog/content/posts/hello-world.mdx`
 - `my-blog/content/posts/my-second-post.mdx`
 
-Restart the dev server, and you'll see your updated blog content:
-
-![Screenshot of project with updated post content](./images/starter-blog-theme-updated-content.png)
+Restart the dev server, and you'll see your updated blog content.
 
 ## Change the color theme
 
@@ -173,9 +165,7 @@ export default merge(defaultThemeColors, {
 })
 ```
 
-Now, instead of a purple theme, you have a blue theme instead:
-
-![Screenshot of project with updated color theme](./images/starter-blog-theme-updated-colors.png)
+Now, instead of a purple theme, you have a blue theme instead.
 
 In this file, you're pulling in the default color theme (imported as `defaultThemeColors` here), and overriding certain color keys.
 
