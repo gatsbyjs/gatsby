@@ -14,7 +14,7 @@ function flattenList(itemList) {
 
 function flattenFilterList(itemList) {
   const flattened = flattenList(itemList)
-  return flattened.filter(item => !item.link || !item.link.includes(`#`))
+  return flattened.filter(item => item.link && !item.link.includes(`#`))
 }
 
 const flattenedNavs = {
