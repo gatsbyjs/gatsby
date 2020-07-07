@@ -46,7 +46,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins.forEach(plugin => {
     const importedPlugin = interopDefault(require(plugin.resolve))
     if (typeof importedPlugin !== `function`) {
-      debug(`userPlugins: not a valid plugin: \`${plugin}\``)
+      debug(`userPlugins: not a valid plugin:`, plugin)
       return
     }
 
