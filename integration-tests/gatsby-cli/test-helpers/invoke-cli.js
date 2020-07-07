@@ -23,7 +23,7 @@ export const GatsbyCLI = {
         } catch (err) {
           return [
             err.exitCode,
-            createLogsMatcher(err.stdout.toString().split("\n")),
+            createLogsMatcher(err.stdout?.toString().split("\n") || ``),
           ]
         }
       },

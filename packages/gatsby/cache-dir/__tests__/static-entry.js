@@ -18,7 +18,7 @@ jest.mock(`gatsby/package.json`, () => {
 })
 
 jest.mock(
-  `../sync-requires`,
+  `$virtual/sync-requires`,
   () => {
     return {
       components: {

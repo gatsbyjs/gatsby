@@ -13,13 +13,13 @@ When you've installed [`gatsby-plugin-offline`](/packages/gatsby-plugin-offline/
 
 As a website owner, how do I test my site is serving its HTML correctly when `gatsby-plugin-offline` is being used? It would be best if you used your terminal of choice to visit your website. You can crawl your site by running the following command:
 
-**on Windows (using powershell):**
+**on Windows (using PowerShell):**
 
 ```shell
 Invoke-WebRequest https://www.gatsbyjs.org/docs/seo | Select -ExpandProperty Content
 ```
 
-**on Mac OS/Linux:**
+**on macOS/Linux:**
 
 ```shell
 curl https://www.gatsbyjs.org/docs/seo
