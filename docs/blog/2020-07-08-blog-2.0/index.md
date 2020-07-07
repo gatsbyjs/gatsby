@@ -16,7 +16,7 @@ Over the past year we've watched patterns emerge, accepted practices, and come t
 
 With new features and even more options to customize your theme, you can completely change the look of your site with only a few options!
 
-|                      Dark Preset                       |                        Sketchy Preset                         |
+|                        Preset 1                        |                           Preset 2                            |
 | :----------------------------------------------------: | :-----------------------------------------------------------: |
 | ![Blog page with dark theme styles](./dark-preset.png) | ![Blog page with sketchy preset styles](./sketchy-preset.png) |
 
