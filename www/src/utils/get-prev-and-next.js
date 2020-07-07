@@ -20,7 +20,7 @@ function flattenList(itemList) {
 
 function flattenFilterList(itemList) {
   const flattened = flattenList(itemList)
-  return flattened.filter(item => !item.link.includes("#"))
+  return flattened.filter(item => !item.link.includes(`#`))
 }
 
 const flattenedNavs = {
@@ -38,16 +38,16 @@ function findDoc(doc) {
 }
 
 function getPrevAndNext(slug) {
-  const section = slug.split("/")[1]
+  const section = slug.split(`/`)[1]
   const sectionNav = flattenedNavs[section]
   if (!sectionNav) return null
   const index = sectionNav.findIndex(findDoc, { link: slug })
   if (index < 0) {
-    return
+    return null
   }
   return {
     prev: index === 0 ? null : flattenedNavs[index - 1],
-    next: index === flattenedNavs.length - 1 ? null : flattenedNav[index + 1],
+    next: index === flattenedNavs.length - 1 ? null : flattenedNavs[index + 1],
   }
 }
 
