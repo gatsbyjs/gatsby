@@ -1,4 +1,4 @@
-const validatePath = require(`../validate-path`)
+import { validatePath } from "../validate-path"
 
 describe(`validatePath`, () => {
   it(`includes the correct file types`, () => {

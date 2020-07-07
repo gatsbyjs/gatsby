@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.9...gatsby-design-tokens@2.0.10) (2020-07-03)
+
+### Bug Fixes
+
+- **gatsby-design-tokens:** Add border definitions to theme ([#25486](https://github.com/gatsbyjs/gatsby/issues/25486)) ([7efdbd3](https://github.com/gatsbyjs/gatsby/commit/7efdbd3))
+
 ## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.8...gatsby-design-tokens@2.0.9) (2020-06-29)
 
 ### Bug Fixes

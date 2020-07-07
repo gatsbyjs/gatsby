@@ -82,7 +82,7 @@ With the exampleValue in hand, we can use each of its key/values to infer the Ty
 
 Fields on the node that were created directly by the source and transform plugins. E.g. for `File` type, these would be `relativePath`, `size`, `accessTime` etc.
 
-The creation of these fields is handled by the [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
+The creation of these fields is handled by the [`inferObjectStructureFromNodes`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
 1. It involves a mapping in [gatsby-config.js](/docs/gatsby-config/#mapping-node-types)
 2. It's value is a foreign key reference to some other node (ends in `___NODE`)
@@ -100,13 +100,13 @@ mapping: {
 },
 ```
 
-The field generation in this case is handled by [inferFromMapping](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
+The field generation in this case is handled by [`inferFromMapping`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L129). The first step is to find the type that is mapped to. In this case, `AuthorYaml`. This is known as the `linkedType`. That type will have a field to link by. In this case `name`. If one is not supplied, it defaults to `id`. This field is known as `linkedField`
 
 Now we can create a GraphQL Field declaration whose type is `AuthorYaml` (which we look up in list of other `gqlTypes`). The field resolver will get the value for the node (in this case, the author string), and then search through the react nodes until it finds one whose type is `AuthorYaml` and whose `name` field matches the author string.
 
 #### Foreign Key reference (`___NODE`)
 
-If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/tutorial/source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [inferFromFieldName](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
+If not a mapping field, it might instead end in `___NODE`, signifying that its value is an ID that is a foreign key reference to another node in redux. Check out the [Source Plugin Tutorial](/tutorial/source-plugin-tutorial/) for how this works from a user point of view. Behind the scenes, the field inference is handled by [`inferFromFieldName`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L204).
 
 This is actually quite similar to the mapping case above. We remove the `___NODE` part of the field name. E.g. `author___NODE` would become `author`. Then, we find our `linkedNode`. I.e given the example value for `author` (which would be an ID), we find its actual node in redux. Then, we find its type in processed types by its `internal.type`. Note, that also like in mapping fields, we can define the `linkedField` too. This can be specified via `nodeFieldname___NODE___linkedFieldName`. E.g. for `author___NODE___name`, the linkedField would be `name` instead of `id`.
 
@@ -116,11 +116,11 @@ If the foreign key value is an array of IDs, then instead of returning a Field d
 
 #### Plain object or value field
 
-If the field was not handled as a mapping or foreign key reference, then it must be a normal every day field. E.g. a scalar, string, or plain object. These cases are handled by [inferGraphQLType](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L38).
+If the field was not handled as a mapping or foreign key reference, then it must be a normal every day field. E.g. a scalar, string, or plain object. These cases are handled by [`inferGraphQLType`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L38).
 
 The core of this step creates a GraphQL Field object, where the type is inferred directly via the result of `typeof`. E.g. `typeof(value) === 'boolean'` would result in type `GraphQLBoolean`. Since these are simple values, resolvers are not defined (graphql-js takes care of that for us).
 
-If however, the value is an object or array, we recurse, using [inferObjectStructureFromNodes](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
+If however, the value is an object or array, we recurse, using [`inferObjectStructureFromNodes`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) to create the GraphQL fields.
 
 In addition, Gatsby creates custom GraphQL types for `File` ([types/type-file.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)) and `Date` ([types/type-date.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/types/type-file.js)). If the value of our field is a string that looks like a filename or a date (handled by [should-infer](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L52) functions), then we return the appropriate custom type.
 

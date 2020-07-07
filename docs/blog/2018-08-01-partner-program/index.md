@@ -40,7 +40,7 @@ Fill out the form below to let us know your interest in the Gatsby Partner Progr
 ### Partner application form:
 
 <HubspotForm
-  portal-id="4731712"
-  form-id="bbad5044-d31d-4473-bd57-62cb64fdc811"
-  sfdc-campaign-id="701f4000000VDrYAAW"
+  portalId="4731712"
+  formId="bbad5044-d31d-4473-bd57-62cb64fdc811"
+  sfdcCampaignId="701f4000000VDrYAAW"
 />
