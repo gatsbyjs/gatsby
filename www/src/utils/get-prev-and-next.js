@@ -1,13 +1,7 @@
 const { loadYaml } = require(`./load-yaml`)
-const docLinksData = loadYaml(`src/data/sidebars/doc-links.yaml`)
-const tutorialLinksData = loadYaml(`src/data/sidebars/tutorial-links.yaml`)
-const contributingLinksData = loadYaml(
-  `src/data/sidebars/contributing-links.yaml`
-)
-
-const docLinks = docLinksData[0].items
-const tutorialLinks = tutorialLinksData[0].items
-const contributingLinks = contributingLinksData[0].items
+const docLinks = loadYaml(`src/data/sidebars/doc-links.yaml`)
+const tutorialLinks = loadYaml(`src/data/sidebars/tutorial-links.yaml`)
+const contributingLinks = loadYaml(`src/data/sidebars/contributing-links.yaml`)
 
 // flatten sidebar links trees for easier next/prev link calculation
 function flattenList(itemList) {
@@ -24,9 +18,9 @@ function flattenFilterList(itemList) {
 }
 
 const flattenedNavs = {
-  docs: flattenFilterList(docLinks),
-  tutorials: flattenFilterList(tutorialLinks),
-  contributing: flattenFilterList(contributingLinks),
+  docs: flattenFilterList(docLinks[0].items),
+  tutorials: flattenFilterList(tutorialLinks[0].items),
+  contributing: flattenFilterList(contributingLinks[0].items),
 }
 
 function findDoc(doc) {
@@ -46,8 +40,8 @@ function getPrevAndNext(slug) {
     return null
   }
   return {
-    prev: index === 0 ? null : flattenedNavs[index - 1],
-    next: index === flattenedNavs.length - 1 ? null : flattenedNavs[index + 1],
+    prev: index === 0 ? null : sectionNav[index - 1],
+    next: index === sectionNav.length - 1 ? null : sectionNav[index + 1],
   }
 }
 
