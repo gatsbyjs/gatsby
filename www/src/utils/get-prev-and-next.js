@@ -14,12 +14,12 @@ function flattenList(itemList) {
 
 function flattenFilterList(itemList) {
   const flattened = flattenList(itemList)
-  return flattened.filter(item => item.link && !item.link.includes(`#`))
+  return flattened.filter(item => !item.link || !item.link.includes(`#`))
 }
 
 const flattenedNavs = {
   docs: flattenFilterList(docLinks[0].items),
-  tutorials: flattenFilterList(tutorialLinks[0].items),
+  tutorial: flattenFilterList(tutorialLinks[0].items),
   contributing: flattenFilterList(contributingLinks[0].items),
 }
 
