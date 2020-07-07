@@ -221,12 +221,14 @@ describe(`<Image />`, () => {
   })
 
   it(`should warn if missing both fixed and fluid props`, () => {
-    jest.spyOn(global.console, `warn`)
+    jest.spyOn(global.console, `error`)
 
     render(<Image fixed={null} />)
 
-    expect(console.warn).toBeCalledWith(
-      expect.stringContaining(`expects a 'fixed'`)
+    expect(console.error).toBeCalledWith(
+      expect.stringContaining(
+        `The prop \`fluid\` or \`fixed\` is marked as required`
+      )
     )
   })
 

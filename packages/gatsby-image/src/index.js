@@ -330,23 +330,9 @@ Img.propTypes = {
   onLoad: PropTypes.func,
 }
 
-// Intentionally not an instance method because webpack is not able to
-// three-shake it away in production
-function validateImageProps({ fluid, fixed }) {
-  if (!fluid && !fixed) {
-    console.warn(
-      `gatsby-image expects a 'fixed' or a 'fluid' prop; neither was present.`
-    )
-  }
-}
-
 class Image extends React.Component {
   constructor(props) {
     super(props)
-
-    if (process.env.NODE_ENV !== `production`) {
-      validateImageProps(props)
-    }
 
     // If this image has already been loaded before then we can assume it's
     // already in the browser cache so it's cheap to just show directly.
@@ -741,6 +727,23 @@ const fluidObject = PropTypes.shape({
   maxHeight: PropTypes.number,
 })
 
+function requireFixedOrFluid(originalPropTypes) {
+  return (props, propName, componentName) => {
+    if (!props.fixed && !props.fluid) {
+      throw new Error(
+        `The prop \`fluid\` or \`fixed\` is marked as required in \`${componentName}\`, but their values are both \`undefined\`.`
+      )
+    }
+
+    PropTypes.checkPropTypes(
+      { [propName]: originalPropTypes },
+      props,
+      `prop`,
+      componentName
+    )
+  }
+}
+
 // If you modify these propTypes, please don't forget to update following files as well:
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/README.md#gatsby-image-props
@@ -748,8 +751,12 @@ const fluidObject = PropTypes.shape({
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
-  fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
-  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
+  fixed: requireFixedOrFluid(
+    PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)])
+  ),
+  fluid: requireFixedOrFluid(
+    PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)])
+  ),
   fadeIn: PropTypes.bool,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,
