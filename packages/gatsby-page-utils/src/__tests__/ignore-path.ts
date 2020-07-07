@@ -1,4 +1,4 @@
-const ignorePath = require(`../ignore-path`)
+import { ignorePath } from "../ignore-path"
 
 describe(`ignore-path`, () => {
   it(`does not filter files without an ignore object`, () => {
@@ -50,9 +50,9 @@ describe(`ignore-path`, () => {
   it(`filters out files matching ignore patterns`, () => {
     const patterns = [
       // files named 'blog' or 'post' in top of pages directory
-      `(blog|post).(js|ts)?(x)*`,
+      `(blog|post).(js|ts|jsx|tsx)*`,
       // any files with .example prepended to the js(x)/ts(x) extension
-      `**/*.example.(js|ts)?(x)`,
+      `**/*.example.(js|ts|jsx|tsx)`,
     ]
 
     const ignoreFiles = [
@@ -82,9 +82,9 @@ describe(`ignore-path`, () => {
   it(`filters out files matching ignore patterns w/ options.nocase`, () => {
     const patterns = [
       // files named 'blog' or 'post' in top of pages directory
-      `(blog|post).(js|ts)?(x)*`,
+      `(blog|post).(js|ts|jsx|tsx)*`,
       // any files with .example prepended to the js(x)/ts(x) extension
-      `**/*.example.(js|ts)?(x)`,
+      `**/*.example.(js|ts|jsx|tsx)`,
     ]
 
     // https://www.npmjs.com/package/micromatch#optionsnocase
@@ -118,9 +118,9 @@ describe(`ignore-path`, () => {
   it(`filters out files matching ignore patterns as shorthand array`, () => {
     const patterns = [
       // files named 'blog' or 'post' in top of pages directory
-      `(blog|post).(js|ts)?(x)*`,
+      `(blog|post).(js|ts|jsx|tsx)*`,
       // any files with .example prepended to the js(x)/ts(x) extension
-      `**/*.example.(js|ts)?(x)`,
+      `**/*.example.(js|ts|jsx|tsx)`,
     ]
 
     const ignoreFiles = [
@@ -148,7 +148,7 @@ describe(`ignore-path`, () => {
   })
 
   it(`filters out files matching ignore pattern as shorthand string`, () => {
-    const pattern = `(blog|post).(js|ts)?(x)*`
+    const pattern = `(blog|post).(js|ts|jsx|tsx)*`
     // files named 'blog' or 'post' in top of pages directory
 
     const ignoreFiles = [{ path: `blog.js` }, { path: `post.tsx` }]

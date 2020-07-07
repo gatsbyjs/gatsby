@@ -1,4 +1,4 @@
-const createPath = require(`../create-path`)
+import { createPath } from "../create-path"
 
 describe(`create-path`, () => {
   it(`should create unix paths`, () => {
