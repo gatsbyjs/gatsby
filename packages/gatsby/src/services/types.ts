@@ -16,7 +16,7 @@ export interface IMutationAction {
   payload: unknown[]
 }
 export interface IBuildContext {
-  firstRun?: boolean
+  firstRun: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span

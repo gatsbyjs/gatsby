@@ -1,5 +1,5 @@
 import { syncStaticDir } from "../utils/get-static-dir"
-import report from "gatsby-cli/lib/reporter"
+import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
@@ -41,6 +41,7 @@ import {
   interpret,
   Actor,
   Interpreter,
+  State,
 } from "xstate"
 import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
@@ -100,7 +101,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    report.panic(
+    reporter.panic(
       `The flag ${chalk.yellow(
         `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
       )} is not available with ${chalk.cyan(
@@ -110,7 +111,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()
-  report.pendingActivity({ id: `webpack-develop` })
+  reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -266,8 +267,16 @@ module.exports = async (program: IProgram): Promise<void> => {
   ): actor is Interpreter<T> => `machine` in actor
 
   const listeners = new WeakSet()
+  let last: State<IBuildContext, AnyEventObject, any, any>
+
   service.onTransition(state => {
-    report.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    if (!last) {
+      last = state
+    } else if (!state.changed || last.matches(state)) {
+      return
+    }
+    last = state
+    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
     // eslint-disable-next-line no-unused-expressions
     service.children?.forEach(child => {
       // We want to ensure we don't attach a listener to the same
@@ -275,8 +284,15 @@ module.exports = async (program: IProgram): Promise<void> => {
       // because xstate handles that for us when the actor is stopped.
 
       if (isInterpreter(child) && !listeners.has(child)) {
+        let sublast = child.state
         child.onTransition(substate => {
-          report.verbose(
+          if (!sublast) {
+            sublast = substate
+          } else if (!substate.changed || sublast.matches(substate)) {
+            return
+          }
+          sublast = substate
+          reporter.verbose(
             `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
               substate.value
             )}`
