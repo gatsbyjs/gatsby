@@ -150,7 +150,6 @@ exports.onCreateNode = async ({
   const section = slug.split(`/`)[1]
   // fields for blog pages are handled in `utils/node/blog.js`
   if (section === `blog`) return
-  console.log({ slug, nav: getPrevAndNext(slug) })
 
   const fieldData = {
     ...node.frontmatter,
