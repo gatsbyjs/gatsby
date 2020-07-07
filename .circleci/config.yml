@@ -215,8 +215,8 @@ jobs:
       # We should always assert on master
       - when:
           condition:
-            - not:
-                equal: [master, << pipeline.git.branch >>]
+            not:
+              equal: [master, << pipeline.git.branch >>]
           steps:
             - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
