@@ -17,7 +17,7 @@ const {
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
-const syncRequires = require(`./sync-requires`)
+const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
 const stats = JSON.parse(
