@@ -3,7 +3,6 @@ import { render } from "@testing-library/react"
 import { Helmet } from "react-helmet"
 import DocsMarkdownPage from "../docs-markdown-page"
 import { ThemeProvider } from "theme-ui"
-import { I18nProvider } from "@lingui/react"
 import { MDXProvider } from "@mdx-js/react"
 
 import theme from "../../../src/gatsby-plugin-theme-ui"
@@ -56,14 +55,10 @@ const tableOfContentsItems = [
 const page = {
   excerpt: `excerpt`,
   timeToRead: 1,
-  fields: {
-    slug: `/docs/apis/`,
-    anchor: `apis`,
-  },
-  frontmatter: {
-    title: `title`,
-    description: `description`,
-  },
+  slug: `/docs/apis/`,
+  anchor: `apis`,
+  title: `title`,
+  description: `description`,
   tableOfContents: {
     items: tableOfContentsItems,
   },
@@ -82,13 +77,11 @@ const setup = (setupProps = {}) => {
   }
 
   return render(
-    <I18nProvider>
-      <ThemeProvider theme={theme}>
-        <MDXProvider>
-          <DocsMarkdownPage {...props} />
-        </MDXProvider>
-      </ThemeProvider>
-    </I18nProvider>
+    <ThemeProvider theme={theme}>
+      <MDXProvider>
+        <DocsMarkdownPage {...props} />
+      </MDXProvider>
+    </ThemeProvider>
   )
 }
 
@@ -109,7 +102,7 @@ it(`should not display table of content if disabled`, () => {
   const { queryByText } = setup({
     page: {
       ...page,
-      frontmatter: { ...page.frontmatter, disableTableOfContents: true },
+      disableTableOfContents: true,
     },
   })
 
@@ -133,20 +126,20 @@ it(`should display prev page and next page if available`, () => {
   expect(getByText(next.title).closest(`a`)).toHaveAttribute(`href`, next.link)
 })
 
-it(`should display frontmatter meta data if available`, () => {
+it(`should display metadata if available`, () => {
   setup()
 
   const contents = Helmet.peek()
 
-  expect(contents.title).toEqual(page.frontmatter.title)
+  expect(contents.title).toEqual(page.title)
   expect(contents.metaTags).toContainEqual({
     name: `description`,
-    content: page.frontmatter.description,
+    content: page.description,
   })
 })
 
 it(`should display excerpt as meta description if no frontmatter description is available`, () => {
-  setup({ page: { ...page, frontmatter: {} } })
+  setup({ page: { ...page, description: undefined } })
 
   const contents = Helmet.peek()
 
@@ -159,5 +152,5 @@ it(`should display excerpt as meta description if no frontmatter description is 
 it(`should display main title`, () => {
   const { getByText } = setup()
 
-  expect(getByText(page.frontmatter.title)).toBeDefined()
+  expect(getByText(page.title)).toBeDefined()
 })

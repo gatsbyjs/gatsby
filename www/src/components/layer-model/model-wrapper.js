@@ -80,7 +80,7 @@ const CodeWrapper = ({
           <button
             sx={{
               position: `absolute`,
-              right: t => t.space[3],
+              right: 3,
               backgroundColor: `transparent`,
               border: `none`,
               color: `grey.60`,

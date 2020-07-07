@@ -8,9 +8,9 @@ import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import DevLoader from "./dev-loader"
-import syncRequires from "./sync-requires"
+import syncRequires from "$virtual/sync-requires"
 // Generated during bootstrap
-import matchPaths from "./match-paths.json"
+import matchPaths from "$virtual/match-paths.json"
 
 window.___emitter = emitter
 
@@ -35,7 +35,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     .then(services => {
       if (services.developstatusserver) {
         const parentSocket = io(
-          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
+          `http://${window.location.hostname}:${services.developstatusserver.port}`
         )
 
         parentSocket.on(`develop:needs-restart`, msg => {

@@ -188,9 +188,9 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
 
-### [Infrastructure As Code](/docs/glossary/infrastructure-as-code/)
+### [Infrastructure as Code](/docs/glossary/infrastructure-as-code/)
 
-Infrastructure As Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
+Infrastructure as Code is the practice of using configuration files and scripts to automate the process of setting up your development, testing, and production environments.
 
 ## J
 
@@ -212,7 +212,7 @@ JSX is an extension to JavaScript that allows developers to write HTML and custo
 
 ### Linting
 
-Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io/) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-jsx-plugin-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
+Linting is the process of running a program that will analyze code for potential errors. The Gatsby project uses [prettier](https://prettier.io/) to identify and fix common style issues. Another example of a linter commonly used in React projects is [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y), which checks for common [accessibility](#accessibility) issues in development.
 
 ## M
 

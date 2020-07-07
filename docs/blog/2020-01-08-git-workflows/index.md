@@ -105,12 +105,12 @@ In this alternative flow, we're _leveraging_ Git to show us what work needs to b
 
 Once we've fixed all the conflicts, we can finish up our rebase by running the following:
 
-```bash
+```shell
 # stage all the changes we just made
-$ git add .
+git add .
 
 # wrap up the rebase
-$ git rebase --continue
+git rebase --continue
 ```
 
 After rebasing, our Git branches look like this:
@@ -129,8 +129,8 @@ You'll notice that our `C` commit—the only commit in our `pt2` branch—has be
 
 Because we've rewritten the history, by turning `C` into `E`, we need to force-push to update our PR on GitHub:
 
-```bash
-$ git push origin feat/headless-cms-pt2 -f
+```shell
+git push origin feat/headless-cms-pt2 -f
 ```
 
 ### Merging PRs
@@ -228,9 +228,9 @@ The Git history pollution isn't a huge deal, since we'll have the chance to squa
 
 If you do wind up squash-merging a branch, you'll need to manually snip out the duplicate commits. You can do this with an [interactive rebase](https://hackernoon.com/beginners-guide-to-interactive-rebasing-346a3f9c3a6d):
 
-```bash
-$ git checkout feat/headless-cms-pt2
-$ git rebase -i feat/headless-cms
+```shell
+git checkout feat/headless-cms-pt2
+git rebase -i feat/headless-cms
 # A popup will open, presenting you with a list of commits.
 # Delete the lines that contain work covered by the squashed
 # commit. Save and close the file.
@@ -242,18 +242,18 @@ The work we're doing in this example to migrate to a headless CMS might take a w
 
 To accomplish this, we'll do some more local rebasing:
 
-```bash
+```shell
 # Update our local state
-$ git checkout master
-$ git pull origin master
+git checkout master
+git pull origin master
 
 # Rebase our root branch
-$ git checkout feat/headless-cms
-$ git rebase master
+git checkout feat/headless-cms
+git rebase master
 
 # Continue down the chain
-$ git checkout feat/headless-cms-pt2
-$ git rebase feat/headless-cms
+git checkout feat/headless-cms-pt2
+git rebase feat/headless-cms
 ```
 
 Essentially, we're scooting all of our changes to happen _after_ the most recent commit on master. It's important to rebase instead of merge so that we don't "interleave" the changes from other branches—we're keeping all of our work tightly clustered for now. This can be a bit tedious if you have lots of incremental branches, so you may wish to hold off on this until you've merged everything into the root branch.
@@ -285,7 +285,7 @@ No matter how many branches we have, the process is always the same when we're r
 
 What about when all the work is done, and we're ready to release?
 
-At this point, we'll have a string of commits on our root branch, `feat/headless-cms`. We can open a PR against our deploy branch (eg. master or staging). Because all the work has already been reviewed, we don't need to go through another review cycle.
+At this point, we'll have a string of commits on our root branch, `feat/headless-cms`. We can open a PR against our deploy branch (e.g. master or staging). Because all the work has already been reviewed, we don't need to go through another review cycle.
 
 At this point, we have the freedom to organize our commits however we want. We can squash it all into 1 commit, or combine them into logical chunks. It's up to us to decide how we want our work to be reflected in the history.
 
@@ -293,13 +293,13 @@ At this point, we have the freedom to organize our commits however we want. We c
 
 No flow is without tradeoffs, and this one has a couple:
 
-##### 1. It rewrites history
+### 1. It rewrites history
 
 This flow relies heavily on rebasing, which rewrites history. This means that pushing to GitHub requires a force-push, which can be scary, especially for folks newer to using Git.
 
 This also makes it harder to collaborate on a feature; you need to communicate clearly before rebasing, to make sure everyone's work is in beforehand.
 
-##### 2. It involves some branch juggling
+### 2. It involves some branch juggling
 
 With 3-4 incremental branches, developers have to bounce between them and make sure they're kept in sync. This can be tedious.
 
@@ -313,7 +313,7 @@ The amount of time it takes to _review_ a PR is often correlated with the amount
 
 It's also worth mentioning that feature flags are a viable alternative to this flow. Feature flags are toggles that can be flipped, and read from within the codebase. This means that unfinished work can be merged into production as long as it's hidden behind a feature flag. Once all the changes have been merged, the flag can be flipped, and the feature will be enabled.
 
-Feature flags are great because they allow developers to break monolithic changes into smaller PRs, but sometimes the cost of architecting a change to fit behind a feature flag is more trouble than it's worth (eg. sprawling changes that affect many different parts of the codebase, or large refactors).
+Feature flags are great because they allow developers to break monolithic changes into smaller PRs, but sometimes the cost of architecting a change to fit behind a feature flag is more trouble than it's worth (e.g. sprawling changes that affect many different parts of the codebase, or large refactors).
 
 When using feature flags, a streamlined version of this flow can still be useful, to ensure that developers aren't blocked while waiting for feedback.
 

@@ -15,11 +15,11 @@ Static site generators, on the other hand, generate HTML pages during a [build](
 
 > Note: It's also possible to use Gatsby [without GraphQL](/docs/using-gatsby-without-graphql/), using the `createPages` API.
 
-You can also use static site generators to create [JAMStack](/docs/glossary/#jamstack) sites. JAMStack is a modern web site architecture that uses JavaScript, content APIs, and markup. Gatsby, for example, can use the [WordPress REST API](/docs/sourcing-from-wordpress/) as a data source.
+You can also use static site generators to create [JAMStack](/docs/glossary/#jamstack) sites. JAMStack is a modern website architecture that uses JavaScript, content APIs, and markup. Gatsby, for example, can use the [WordPress REST API](/docs/sourcing-from-wordpress/) as a data source.
 
 ### Advantages of static site generators
 
-Static site generators **reduce site complexity**. That, in turn, improves speed and reliability, and smoothes the developer experience.
+Static site generators **reduce site complexity**. That, in turn, improves speed and reliability, and smooths the developer experience.
 
 - You don't have to worry about database-toppling traffic spikes.
 - There's no need to manage database server software or backups.

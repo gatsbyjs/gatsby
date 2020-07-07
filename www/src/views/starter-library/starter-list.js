@@ -12,7 +12,7 @@ import {
 } from "../shared/styles"
 import ThumbnailLink from "../shared/thumbnail"
 import EmptyGridItems from "../shared/empty-grid-items"
-import V2Icon from "!raw-loader!../../assets/icons/v2icon.svg"
+import { V2Icon } from "../../assets/icons"
 import { get } from "lodash-es"
 
 const StartersList = ({ urlState, starters, count }) => {
@@ -124,14 +124,15 @@ const StartersList = ({ urlState, starters, count }) => {
                             }}
                           >
                             <span
-                              dangerouslySetInnerHTML={{ __html: V2Icon }}
                               sx={{
                                 color: `textMuted`,
                                 mb: 0,
                                 mr: 2,
                                 "& svg": { height: 12, width: 12 },
                               }}
-                            />
+                            >
+                              <V2Icon />
+                            </span>
                             {` `}
                             v2
                           </span>
@@ -217,7 +218,7 @@ const StartersList = ({ urlState, starters, count }) => {
 export default StartersList
 
 function sortingFunction() {
-  return function ({ node: nodeA }, { node: nodeB }) {
+  return function (nodeA, nodeB) {
     const metricA = get(nodeA, `fields.starterShowcase.stars`, 0)
     const metricB = get(nodeB, `fields.starterShowcase.stars`, 0)
     return metricB - metricA

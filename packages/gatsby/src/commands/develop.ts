@@ -2,13 +2,15 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import { spawn } from "child_process"
+import { spawn, ChildProcess } from "child_process"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import reporter from "gatsby-cli/lib/reporter"
+import getSslCert from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram } from "./types"
 
@@ -56,7 +58,7 @@ const doesConfigChangeRequireRestart = (
 }
 
 class ControllableScript {
-  private process
+  private process?: ChildProcess
   private script
   public isRunning
   constructor(script) {
@@ -73,7 +75,13 @@ class ControllableScript {
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
-  async stop(signal: string | null = null, code?: number): Promise<void> {
+  async stop(
+    signal: NodeJS.Signals | null = null,
+    code?: number
+  ): Promise<void> {
+    if (!this.process) {
+      throw new Error(`Trying to stop the process before starting it`)
+    }
     this.isRunning = false
     if (signal) {
       this.process.kill(signal)
@@ -88,25 +96,90 @@ class ControllableScript {
     }
 
     return new Promise(resolve => {
+      if (!this.process) {
+        throw new Error(`Trying to stop the process before starting it`)
+      }
       this.process.on(`exit`, () => {
-        this.process.removeAllListeners()
+        if (this.process) {
+          this.process.removeAllListeners()
+        }
+        this.process = undefined
         resolve()
       })
     })
   }
-  on(type, callback): void {
-    this.process.on(type, callback)
+  onMessage(callback: (msg: any) => void): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach message handler before process starter`)
+    }
+    this.process.on(`message`, callback)
+  }
+  onExit(
+    callback: (code: number | null, signal: NodeJS.Signals | null) => void
+  ): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach exit handler before process starter`)
+    }
+    this.process.on(`exit`, callback)
   }
 }
 
 let isRestarting
+
+// checks if a string is a valid ip
+const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
   const developProcessPath = slash(require.resolve(`./develop-process`))
   // Run the actual develop server on a random port, and the proxy on the program port
   // which users will access
   const proxyPort = program.port
-  const developPort = await getRandomPort()
+  const [statusServerPort, developPort] = await Promise.all([
+    getRandomPort(),
+    getRandomPort(),
+  ])
+
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    reporter.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
+
+  // Check if https is enabled, then create or get SSL cert.
+  // Certs are named 'devcert' and issued to the host.
+  // NOTE(@mxstbr): We mutate program.ssl _after_ passing it
+  // to the develop process controllable script above because
+  // that would mean we double SSL browser => proxy => server
+  if (program.https) {
+    const sslHost =
+      program.host === `0.0.0.0` || program.host === `::`
+        ? `localhost`
+        : program.host
+
+    if (REGEX_IP.test(sslHost)) {
+      reporter.panic(
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+      )
+    }
+
+    program.ssl = await getSslCert({
+      name: sslHost,
+      caFile: program[`ca-file`],
+      certFile: program[`cert-file`],
+      keyFile: program[`key-file`],
+      directory: program.directory,
+    })
+  }
+
+  // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
+  // codesandbox detects the right port to expose by default
+  const proxy = startDevelopProxy({
+    proxyPort: proxyPort,
+    targetPort: developPort,
+    program,
+  })
 
   const developProcess = new ControllableScript(`
     const cmd = require(${JSON.stringify(developProcessPath)});
@@ -114,17 +187,11 @@ module.exports = async (program: IProgram): Promise<void> => {
       ...program,
       port: developPort,
       proxyPort,
+      // Don't pass SSL options down to the develop process, it should always use HTTP
+      ssl: null,
     })};
     cmd(args);
   `)
-
-  const proxy = startDevelopProxy({
-    proxyPort: proxyPort,
-    targetPort: developPort,
-    programPath: program.directory,
-  })
-
-  const statusServerPort = await getRandomPort()
 
   let unlock
   if (!isCI()) {
@@ -167,20 +234,40 @@ module.exports = async (program: IProgram): Promise<void> => {
       io.emit(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
-      developProcess.on(`message`, handleChildProcessIPC)
+      developProcess.onMessage(handleChildProcessIPC)
       isRestarting = false
     })
   })
 
   developProcess.start()
-  developProcess.on(`message`, handleChildProcessIPC)
+  developProcess.onMessage(handleChildProcessIPC)
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
-  developProcess.on(`exit`, code => {
-    if (isRestarting) return
-    process.exit(code)
-  })
+  developProcess.onExit(
+    (code: number | null, signal: NodeJS.Signals | null) => {
+      if (isRestarting) return
+      if (signal !== null) {
+        process.kill(process.pid, signal)
+        return
+      }
+      if (code !== null) {
+        process.exit(code)
+      }
+
+      // This should not happen:
+      // https://nodejs.org/api/child_process.html#child_process_event_exit
+      // The 'exit' event is emitted after the child process ends. If the process
+      // exited, code is the final exit code of the process, otherwise null.
+      // If the process terminated due to receipt of a signal, signal is the
+      // string name of the signal, otherwise null. One of the two will always be
+      // non - null.
+      //
+      // but just in case let do non-zero exit, because we are in situation
+      // we don't expect to be possible
+      process.exit(1)
+    }
+  )
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
