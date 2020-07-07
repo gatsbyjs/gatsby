@@ -11367,6 +11367,17 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Nitro Sign
+  main_url: https://www.nitrosign.com
+  url: https://www.nitrosign.com
+  description: >
+    Nitro Sign is a free to use Electronic Signature solution that helps businesses & individuals work smarter, faster, and more securely—without the need for paper or pen.
+  categories:
+    - Technology
+    - Productivity
+    - Business
+  built_by: Nitro Software Inc
+  built_by_url: https://www.nitrosign.com
 - title: Neon Law
   main_url: https://www.neonlaw.com
   source_url: https://github.com/neonlaw/interface
