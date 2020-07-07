@@ -6916,3 +6916,18 @@
     - Blog posts page features a live filter tool
     - Uses site metadata to populate About page
     - Resume page generated using template Markdown files
+- url: https://gatsby-starter-nodejs-express.herokuapp.com/
+  repo: https://github.com/AdamSiekierski/gatsby-starter-nodejs-express
+  description: Gatsby starter with Node.js server based off gatsby-plugin-nodejs with Express 
+  tags:
+    - Server
+    - Backend
+    - Monolith
+    - Full-stack
+  features:
+    - Minimallist template to start creating a Gatsby site integrated with Node.js server
+    - Express server with gatsby-plugin-nodejs
+    - Way to create a full-stack Gatsby app/site
+    - Way to add own routes, for example with REST or GraphQL API
+    - Painless serving of Gatsby site, with support for client-side routes or redirects. Everything without writing any bit of code
+    - You can customize it, to use for example Fastify instead of Express. Refer to gatsby-plugin-nodejs' docs
