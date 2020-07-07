@@ -212,7 +212,13 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      # We should always assert on master
+      - when:
+          condition:
+            - not:
+                equal: [master, << pipeline.git.branch >>]
+          steps:
+            - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
@@ -363,6 +369,13 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/themes/production-runtime
+          test_command: yarn test
+
+  mdx_e2e_tests:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/mdx
           test_command: yarn test
 
   starters_validate:
@@ -580,6 +593,8 @@ workflows:
       - themes_e2e_tests_production_runtime:
           <<: *e2e-test-workflow
       - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - mdx_e2e_tests:
           <<: *e2e-test-workflow
       - starters_validate:
           <<: *ignore_master

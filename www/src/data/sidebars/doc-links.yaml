@@ -111,6 +111,9 @@
             - title: Deploying to Clodui
               link: /docs/deploying-to-clodui/
               breadcrumbTitle: Clodui
+            - title: Deploying to 21YunBox
+              link: /docs/deploying-to-21yunbox/
+              breadcrumbTitle: 21YunBox Hosting
             - title: Adding a Path Prefix
               link: /docs/path-prefix/
             - title: How Gatsby Works with GitHub Pages
