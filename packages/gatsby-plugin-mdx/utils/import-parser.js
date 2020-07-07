@@ -2,6 +2,7 @@
  * Parse source code containing (just) ES6 import declarations and return the
  * names of all bindings created by such a declaration.
  * The function will assume strict ES6 import code.
+ * The input may contain multiple import statements, each starting on a new line
  * First it strips the irrelevant bits (like `import`, curly brackets, and
  * `from` tail. What's left ought to be a string in the form of
  * `id[ as id] [, id[ as id]]`
@@ -21,10 +22,13 @@ function parseImportBindings(importCode, returnSegments = false) {
   // const bindings = distillBindings(match)
 
   const str = importCode.replace(
-    /^\s*import|[{}]|\s*from\s*['"][^'"]*['"].*$/g,
-    ``
+    /^\s*import|[{},]|\s*from\s*['"][^'"]*?['"]\s*$/gm,
+    ` , `
   )
-  const segments = str.trim().split(/\s*,\s*/g)
+  const segments = str
+    .trim()
+    .split(/\s*,\s*/g)
+    .filter(s => s !== ``)
   const bindings = segments.map(
     segment =>
       // `s` is either an ident (the binding), or `a as b` where `b` is the

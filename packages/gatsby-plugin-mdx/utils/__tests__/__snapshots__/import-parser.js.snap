@@ -897,3 +897,38 @@ Object {
   },
 }
 `;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 56 1`] = `
+Object {
+  "input": "import Events from \\"@components/events/events\\"",
+  "result": Object {
+    "bindings": Array [
+      "Events",
+    ],
+    "segments": Array [
+      "Events",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 57 1`] = `
+Object {
+  "input": "import multi as dong, {foo} from 'bar'
+import as as x, {from as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "multi as dong",
+      "foo",
+      "as as x",
+      "from as y",
+    ],
+  },
+}
+`;

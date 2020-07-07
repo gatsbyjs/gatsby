@@ -1,4 +1,6 @@
 const { parseImportBindings } = require(`../import-parser`)
+const grayMatter = require(`gray-matter`)
+const mdx = require(`@mdx-js/mdx`)
 
 function getBruteForceCases() {
   // These cases will be individually tested in four different ways;
@@ -64,10 +66,16 @@ function getBruteForceCases() {
     import {import as x} from 'bar'
     import {import as x, y} from 'bar'
     import {x, import as y} from 'bar'
+    import Events from "@components/events/events"
   `
     .trim()
     .split(/\n/g)
     .map(s => s.trim())
+
+  // Add double cases
+  bruteForceCases.push(
+    `import multi as dong, {foo} from 'bar'\nimport as as x, {from as y} from 'bar'`
+  )
 
   return bruteForceCases
 }
@@ -106,6 +114,166 @@ describe(`regex import scanner`, () => {
         const blown = input.replace(/ /g, `   `)
         expect(parseImportBindings(blown)).toEqual(bindings)
       })
+    })
+  })
+
+  describe(`multiple imports`, () => {
+    it(`double import ends up as one pseudo-node in md parser`, async () => {
+      // Note: the point of this test is to have two back2back imports clustered
+      //       as one pseudo-node in the ast.
+
+      const { content } = grayMatter(`
+---
+title: double test
+---
+
+import Events from "@components/events/events"
+import EmailCaptureForm from "@components/email-capture-form"
+
+<Events />
+      `)
+
+      const compiler = mdx.createCompiler()
+      const fileOpts = { contents: content }
+      const mdast = await compiler.parse(fileOpts)
+
+      const imports = mdast.children.filter(obj => obj.type === `import`)
+
+      // Assert the md parser outputs same mdast (update test if this changes)
+      expect(
+        imports.map(({ type, value }) => {
+          return { type, value }
+        })
+      ).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "type": "import",
+            "value": "import Events from \\"@components/events/events\\"
+        import EmailCaptureForm from \\"@components/email-capture-form\\"",
+          },
+        ]
+      `)
+
+      // Take the imports being parsed and feed them to the import parser
+      expect(parseImportBindings(imports[0].value, true))
+        .toMatchInlineSnapshot(`
+        Object {
+          "bindings": Array [
+            "Events",
+            "EmailCaptureForm",
+          ],
+          "segments": Array [
+            "Events",
+            "EmailCaptureForm",
+          ],
+        }
+      `)
+    })
+
+    it(`triple imports without newlines`, async () => {
+      // Note: the point of this test is to have multiple back2back imports
+      //       clustered as one pseudo-node in the ast.
+
+      const { content } = grayMatter(`
+---
+title: double test
+---
+
+import x, {frp, doo as dag} from "@components/events/events"
+import * as EmailCaptureForm from "@components/email-capture-form"
+import {A} from "@your/name"
+
+<Events />
+      `)
+
+      const compiler = mdx.createCompiler()
+      const fileOpts = { contents: content }
+      const mdast = await compiler.parse(fileOpts)
+
+      const imports = mdast.children.filter(obj => obj.type === `import`)
+
+      // Assert the md parser outputs same mdast (update test if this changes)
+      expect(
+        imports.map(({ type, value }) => {
+          return { type, value }
+        })
+      ).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "type": "import",
+            "value": "import x, {frp, doo as dag} from \\"@components/events/events\\"
+        import * as EmailCaptureForm from \\"@components/email-capture-form\\"
+        import {A} from \\"@your/name\\"",
+          },
+        ]
+      `)
+
+      // Take the imports being parsed and feed them to the import parser
+      expect(parseImportBindings(imports[0].value, true))
+        .toMatchInlineSnapshot(`
+        Object {
+          "bindings": Array [
+            "x",
+            "frp",
+            "dag",
+            "EmailCaptureForm",
+            "A",
+          ],
+          "segments": Array [
+            "x",
+            "frp",
+            "doo as dag",
+            "* as EmailCaptureForm",
+            "A",
+          ],
+        }
+      `)
+    })
+
+    it(`triple imports with newlines`, async () => {
+      // Note: the point of this test is to show that imports won't get
+      //       clustered by the parser if there are empty lines between them
+
+      const { content } = grayMatter(`
+---
+title: double test
+---
+
+import Events from "@components/events/events"
+
+import EmailCaptureForm from "@components/email-capture-form"
+
+import {A} from "@your/name"
+
+<Events />
+      `)
+
+      const compiler = mdx.createCompiler()
+      const fileOpts = { contents: content }
+      const mdast = await compiler.parse(fileOpts)
+
+      const imports = mdast.children.filter(obj => obj.type === `import`)
+
+      expect(
+        imports.map(({ type, value }) => {
+          return { type, value }
+        })
+      ).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "type": "import",
+            "value": "import Events from \\"@components/events/events\\"",
+          },
+          Object {
+            "type": "import",
+            "value": "import EmailCaptureForm from \\"@components/email-capture-form\\"",
+          },
+          Object {
+            "type": "import",
+            "value": "import {A} from \\"@your/name\\"",
+          },
+        ]
+      `)
     })
   })
 })
