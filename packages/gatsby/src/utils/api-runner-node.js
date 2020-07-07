@@ -97,13 +97,11 @@ const NODE_MUTATION_ACTIONS = [
 ]
 
 const deferActions = actions => {
-  // console.log(`actual actions`, actions)
-  const returnValue = NODE_MUTATION_ACTIONS.reduce((prev, next) => {
-    prev[next] = deferredAction(next)
-    return prev
-  }, actions)
-  // console.log(`returnValue`, returnValue)
-  return returnValue
+  const deferred = { ...actions }
+  NODE_MUTATION_ACTIONS.forEach(action => {
+    deferred[action] = deferredAction(action)
+  })
+  return deferred
 }
 
 const getLocalReporter = (activity, reporter) =>

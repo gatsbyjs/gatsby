@@ -9,7 +9,7 @@ export async function sourceNodes({
   parentSpan,
   webhookBody,
   store,
-  deferNodeMutation,
+  deferNodeMutation = false,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: string[]
   changedPages: string[]
@@ -35,9 +35,8 @@ export async function sourceNodes({
       .join(`, `)}]`
   )
 
-  reporter.info(`Checking for deleted pages`)
+  reporter.verbose(`Checking for deleted pages`)
 
-  // Add this back when we enable page creation outside of onCreatePages
   const tim = reporter.activityTimer(`Checking for changed pages`)
   tim.start()
 
@@ -46,11 +45,11 @@ export async function sourceNodes({
     store.getState().pages
   )
 
-  reporter.info(
+  reporter.verbose(
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
   )
 
-  reporter.info(
+  reporter.verbose(
     `Found ${changedPages.length} changed page${
       changedPages.length === 1 ? `` : `s`
     }`

@@ -87,9 +87,9 @@ export default async ({
   parentSpan,
   deferNodeMutation = false,
 }: {
-  webhookBody?: unknown
-  parentSpan?: Span
-  deferNodeMutation?: boolean
+  webhookBody: unknown
+  parentSpan: Span
+  deferNodeMutation: boolean
 }): Promise<void> => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,

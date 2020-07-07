@@ -18,12 +18,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       invoke: {
         id: `extracting-queries`,
         src: `extractQueries`,
-        onDone: [
-          {
-            actions: `resetGraphQLRunner`,
-            target: `writingRequires`,
-          },
-        ],
+        onDone: {
+          target: `writingRequires`,
+        },
       },
     },
     writingRequires: {

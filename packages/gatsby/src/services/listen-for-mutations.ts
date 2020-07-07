@@ -23,7 +23,7 @@ export const listenForMutations: InvokeCallback = (callback: Sender<any>) => {
   emitter.on(`SOURCE_FILE_CHANGED`, emitFileChange)
   emitter.on(`QUERY_FILE_CHANGED`, emitQueryChange)
 
-  return (): void => {
+  return function unsubscribeFromMutationListening(): void {
     emitter.off(`ENQUEUE_NODE_MUTATION`, emitMutation)
     emitter.off(`SOURCE_FILE_CHANGED`, emitFileChange)
     emitter.off(`WEBHOOK_RECEIVED`, emitWebhook)

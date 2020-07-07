@@ -6,7 +6,7 @@ import { IGatsbyPage } from "../redux/types"
 
 export function deleteUntouchedPages(
   currentPages: Map<string, IGatsbyPage>,
-  timestamp: number
+  timeBeforeApisRan: number
 ): string[] {
   const deletedPages: string[] = []
 
@@ -14,7 +14,7 @@ export function deleteUntouchedPages(
   currentPages.forEach(page => {
     if (
       !page.isCreatedByStatefulCreatePages &&
-      page.updatedAt < timestamp &&
+      page.updatedAt < timeBeforeApisRan &&
       page.path !== `/404.html`
     ) {
       deleteComponentsDependencies([page.path])
@@ -37,10 +37,10 @@ export function findChangedPages(
   const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) =>
     key === `updatedAt` || undefined
 
-  currentPages.forEach((newPage, key) => {
-    const oldPage = oldPages.get(key)
+  currentPages.forEach((newPage, path) => {
+    const oldPage = oldPages.get(path)
     if (!oldPage || !isEqualWith(newPage, oldPage, compareWithoutUpdated)) {
-      changedPages.push(key)
+      changedPages.push(path)
     }
   })
   const deletedPages: string[] = []

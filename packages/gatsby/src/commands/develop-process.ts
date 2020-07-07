@@ -43,8 +43,6 @@ import { IWaitingContext } from "../state-machines/waiting/types"
 import {
   ADD_NODE_MUTATION,
   runMutationAndMarkDirty,
-  QUERY_FILE_CHANGED,
-  WEBHOOK_RECEIVED,
 } from "../state-machines/shared-transition-configs"
 import { buildActions } from "../state-machines/actions"
 import { waitingMachine } from "../state-machines/waiting"
@@ -136,6 +134,12 @@ module.exports = async (program: IProgram): Promise<void> => {
     initial: `initializing`,
     states: {
       initializing: {
+        on: {
+          // Ignore mutation events because we'll be running everything anyway
+          ADD_NODE_MUTATION: undefined,
+          QUERY_FILE_CHANGED: undefined,
+          WEBHOOK_RECEIVED: undefined,
+        },
         invoke: {
           src: `initialize`,
           onDone: {
@@ -147,6 +151,8 @@ module.exports = async (program: IProgram): Promise<void> => {
       initializingDataLayer: {
         on: {
           ADD_NODE_MUTATION: runMutationAndMarkDirty,
+          // Ignore, because we're about to extract them anyway
+          QUERY_FILE_CHANGED: undefined,
         },
         invoke: {
           src: `initializeDataLayer`,
@@ -173,7 +179,8 @@ module.exports = async (program: IProgram): Promise<void> => {
       finishingBootstrap: {
         on: {
           ADD_NODE_MUTATION: runMutationAndMarkDirty,
-          WEBHOOK_RECEIVED,
+          // Ignore, because we're about to extract them anyway
+          QUERY_FILE_CHANGED: undefined,
         },
         invoke: {
           src: async (): Promise<void> => {
@@ -193,7 +200,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       },
       runningQueries: {
         on: {
-          ADD_NODE_MUTATION,
           QUERY_FILE_CHANGED: {
             actions: forwardTo(`run-queries`),
           },
@@ -226,11 +232,6 @@ module.exports = async (program: IProgram): Promise<void> => {
         },
       },
       doingEverythingElse: {
-        on: {
-          QUERY_FILE_CHANGED,
-          ADD_NODE_MUTATION,
-          WEBHOOK_RECEIVED,
-        },
         invoke: {
           src: async (): Promise<void> => {
             // All the stuff that's not in the state machine yet
@@ -255,10 +256,6 @@ module.exports = async (program: IProgram): Promise<void> => {
         },
       },
       startingDevServers: {
-        on: {
-          QUERY_FILE_CHANGED,
-          ADD_NODE_MUTATION,
-        },
         invoke: {
           src: `startWebpackServer`,
           onDone: {
@@ -269,7 +266,6 @@ module.exports = async (program: IProgram): Promise<void> => {
       },
       waiting: {
         on: {
-          WEBHOOK_RECEIVED,
           ADD_NODE_MUTATION: {
             actions: forwardTo(`waiting`),
           },
@@ -287,7 +283,7 @@ module.exports = async (program: IProgram): Promise<void> => {
             store,
             nodeMutationBatch = [],
           }: IBuildContext): IWaitingContext => {
-            return { store, nodeMutationBatch }
+            return { store, nodeMutationBatch, runningBatch: [] }
           },
           onDone: {
             actions: `assignServiceResult`,
@@ -296,9 +292,6 @@ module.exports = async (program: IProgram): Promise<void> => {
         },
       },
       rebuildingPages: {
-        on: {
-          ADD_NODE_MUTATION,
-        },
         invoke: {
           src: `initializeDataLayer`,
           data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
@@ -309,6 +302,19 @@ module.exports = async (program: IProgram): Promise<void> => {
             target: `runningQueries`,
           },
         },
+      },
+    },
+    // Transitions shared by all states, except where overridden
+    on: {
+      ADD_NODE_MUTATION: {
+        actions: `addNodeMutation`,
+      },
+      QUERY_FILE_CHANGED: {
+        actions: `markQueryFilesDirty`,
+      },
+      WEBHOOK_RECEIVED: {
+        target: `initializingDataLayer`,
+        actions: `assignWebhookBody`,
       },
     },
   }

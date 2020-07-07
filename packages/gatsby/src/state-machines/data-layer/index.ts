@@ -52,7 +52,7 @@ const dataLayerStates: MachineConfig<IDataLayerContext, any, any> = {
         src: `buildSchema`,
         onDone: {
           target: `creatingPages`,
-          actions: `assignGatsbyNodeGraphQL`,
+          actions: `assignGraphQLRunners`,
         },
       },
     },

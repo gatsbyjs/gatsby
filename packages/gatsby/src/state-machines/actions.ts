@@ -12,26 +12,25 @@ import { actions } from "../redux/actions"
 import { listenForMutations } from "../services/listen-for-mutations"
 import { DataLayerResult } from "./data-layer"
 import { assertStore } from "../utils/assert-store"
+import reporter from "gatsby-cli/lib/reporter"
 
-export const callRealApi = async (
-  event: IMutationAction,
-  store?: Store
-): Promise<unknown> => {
+export const callRealApi = (event: IMutationAction, store?: Store): void => {
   assertStore(store)
   const { type, payload } = event
   if (type in actions) {
     store.dispatch(actions[type](...payload))
+  } else {
+    reporter.log(`Could not dispatch unknown action "${type}`)
   }
-  return null
 }
 
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
  */
-export const callApi: ActionFunction<IBuildContext, AnyEventObject> = async (
+export const callApi: ActionFunction<IBuildContext, AnyEventObject> = (
   { store },
   event
-): Promise<unknown> => callRealApi(event.payload, store)
+) => callRealApi(event.payload, store)
 
 /**
  * Event handler used in all states where we're not ready to process node
@@ -77,10 +76,7 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
 )
 
 export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
-  webhookBody: (_context, { payload }) => {
-    console.log(`body`, payload?.webhookBody)
-    return payload?.webhookBody
-  },
+  webhookBody: (_context, { payload }) => payload?.webhookBody,
 })
 
 export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({

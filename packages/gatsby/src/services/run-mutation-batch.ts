@@ -5,10 +5,10 @@ import { IWaitingContext } from "../state-machines/waiting/types"
 import { assertStore } from "../utils/assert-store"
 import { actions } from "../redux/actions"
 
-const callRealApi = async (
+const callRealApi = (
   event: IMutationAction,
   store?: Store<IGatsbyState, AnyAction>
-): Promise<void> => {
+): void => {
   assertStore(store)
   const { type, payload } = event
   if (type in actions) {
@@ -16,11 +16,9 @@ const callRealApi = async (
   }
 }
 
-export const runMutationBatch = ({
+// Consume the entire batch and run actions
+export const runMutationBatch = async ({
   runningBatch = [],
   store,
-}: Partial<IWaitingContext>): Promise<void> =>
-  // Consume the entire batch and run actions
-  Promise.all(runningBatch.map(payload => callRealApi(payload, store))).then(
-    () => void 0
-  )
+}: Partial<IWaitingContext>): Promise<void[]> =>
+  Promise.all(runningBatch.map(payload => callRealApi(payload, store)))
