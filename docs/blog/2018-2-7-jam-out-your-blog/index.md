@@ -28,7 +28,7 @@ https://giphy.com/gifs/tom-cruise-top-gun-WDtCGLCXBAgow
 ### Like Josh’s requirements, my list includes:
 
 - **Speed** - this includes development, website performance, and deployment
-- **Development Experience** - I want to use React and Webpack
+- **Development Experience** - I want to use React and webpack
 - **Maintainability** - ease with which anyone can create, update and delete posts
 - **Scalability** - need to make sure that performance is not hindered by a growing needs
 - **Lean** - simplify the tools and services use to a bare minimum
@@ -111,7 +111,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 
 [x] Speed - this includes development, website performance, and deployment
 
-[x] Development Experience - I want to use React and Webpack
+[x] Development Experience - I want to use React and webpack
 
 [x] Maintainability - ease with which anyone can create, update and delete posts
 
@@ -122,7 +122,7 @@ Let’s summarize where we are and why [Netlify](https://www.netlify.com/) will 
 [x] NO WordPress - similarly, I don’t want to deal with updates, themes, hacks...etc
 ```
 
-When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
+When it comes to continuous deployment and inexpensive hosting, using Netlify is, as Josh mentions “ a no-brainer.”  Check out [Netlify’s features here](https://www.netlify.com/features/) for a more in-depth look.
 
 With streamlining in mind, a workflow doesn’t get any leaner than working within the confines of GitHub and Netlify. Think about the magic:
 
@@ -145,11 +145,11 @@ With all of that said, this process has a few caveats related to working within 
 1. If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
 2. Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
 
-#### Default
+### Default
 
 ![Default Prose image path](before-post-title.png)
 
-#### After (this will work)
+### After (this will work)
 
 ![After image path change](after-post-title.png)
 

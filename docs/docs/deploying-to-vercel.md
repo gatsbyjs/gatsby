@@ -6,7 +6,7 @@ title: Deploying to Vercel
 
 This guide will show you how to get started in a few quick steps:
 
-## Step 1: Installing VERCEL CLI
+## Step 1: Installing Vercel CLI
 
 To install their command-line interface with [npm](https://www.npmjs.com/), run the following command:
 
@@ -19,7 +19,7 @@ npm i -g vercel
 You can deploy your application by running the following command in the root of the project directory:
 
 ```shell
-now
+vercel
 ```
 
 That's all!
@@ -28,4 +28,4 @@ Your site will now deploy, and you will receive a link similar to the following:
 
 ## References:
 
-- [Example Project](https://github.com/zeit/now/tree/master/examples/gatsby)
+- [Example Project](https://github.com/vercel/vercel/tree/master/examples/gatsby)

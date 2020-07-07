@@ -13,6 +13,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   md: `markup`,
   sh: `bash`,
   rb: `ruby`,
+  rs: `rust`,
   py: `python`,
   ps1: `powershell`,
   psm1: `powershell`,
@@ -51,6 +52,7 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
 
       // Embed specific lines numbers of a file
       let lines = []
+      let sname = ``
       const rangePrefixIndex = snippetPath.indexOf(`#L`)
       if (rangePrefixIndex > -1) {
         const range = snippetPath.slice(rangePrefixIndex + 2)
@@ -61,6 +63,30 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
         }
         // Remove everything after the range prefix from file path
         snippetPath = snippetPath.slice(0, rangePrefixIndex)
+      } else {
+        // Check to see if there is a {snippet: "snippetName"} following the file path.
+        // This syntax could support additional options in the future - for now, only
+        // handle a string that contains a `snippet :` option.
+        const optionIndex = snippetPath.indexOf(`{`)
+        if (optionIndex > -1) {
+          const optionStr = snippetPath.slice(optionIndex)
+          snippetPath = snippetPath.slice(0, optionIndex)
+          try {
+            const optVal = JSON.parse(
+              optionStr.replace(/snippet\s*:/, `"snippet":`)
+            )
+            if (
+              typeof optVal != `undefined` &&
+              typeof optVal.snippet != `undefined`
+            ) {
+              sname = optVal.snippet
+            } else {
+              throw Error(`Invalid snippet options specified: ${optionStr}`)
+            }
+          } catch (err) {
+            throw Error(`Invalid snippet options specified: ${optionStr}`)
+          }
+        }
       }
 
       if (!fs.existsSync(snippetPath)) {
@@ -73,6 +99,26 @@ module.exports = ({ markdownAST, markdownNode }, { directory } = {}) => {
           .split(`\n`)
           .filter((_, lineNumber) => lines.includes(lineNumber + 1))
           .join(`\n`)
+      } else if (sname.length) {
+        const startSnippetMatcher = new RegExp(
+          `start-snippet{${sname}}[^\r\n]*[\r\n](.*)`,
+          `gs`
+        )
+        const startSnippetMatch = startSnippetMatcher.exec(code)
+        if (startSnippetMatch?.length >= 2) {
+          code = startSnippetMatch[1]
+
+          const endSnippetMatcher = new RegExp(
+            `(.*)[\r\n][^\r\n]*end-snippet{${sname}}`,
+            `gs`
+          )
+          const endSnippetMatch = endSnippetMatcher.exec(code)
+          if (endSnippetMatch?.length >= 2) {
+            code = endSnippetMatch[1]
+          }
+        } else {
+          code = ``
+        }
       }
 
       // PrismJS's theme styles are targeting pre[class*="language-"]

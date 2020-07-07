@@ -183,7 +183,7 @@ sudo apt update && sudo apt -y upgrade && sudo apt install build-essential && su
 
 ### Additional links and resources
 
-- [Super detailed guide to making VSCode work with ESL from VSCode's docs website](https://code.visualstudio.com/docs/remote/wsl)
+- [Super detailed guide to making VSCode work with WSL from VSCode's docs website](https://code.visualstudio.com/docs/remote/wsl)
 - [Microsoft Store page for downloading Ubuntu on Windows](https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6)
 - [n](https://github.com/tj/n)
 - [nvm](https://github.com/creationix/nvm)

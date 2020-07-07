@@ -8,48 +8,49 @@ import {
   ViewLayerContent,
   AppLayerContent,
 } from "./component-content-sections"
+import {
+  AbstractSymbol,
+  AtomicSymbol,
+  GraphqlLogo,
+  ReactLogo,
+  AppWindow,
+} from "../../../assets/icons/layer-icons"
 
 const layers = [
   {
     title: `Content`,
-    icon: `AbstractSymbol`,
+    icon: <AbstractSymbol />,
     baseColor: `orange`,
     component: ContentLayerContent,
   },
   {
     title: `Build`,
-    icon: `AtomicSymbol`,
+    icon: <AtomicSymbol />,
     baseColor: `green`,
     component: BuildLayerContent,
   },
   {
     title: `Data`,
-    icon: `GraphqlLogo`,
+    icon: <GraphqlLogo />,
     baseColor: `magenta`,
     component: DataLayerContent,
   },
   {
     title: `View`,
-    icon: `ReactLogo`,
+    icon: <ReactLogo />,
     baseColor: `blue`,
     component: ViewLayerContent,
   },
   {
     title: `App`,
-    icon: `AppWindow`,
+    icon: <AppWindow />,
     baseColor: `yellow`,
     component: AppLayerContent,
   },
 ]
 
-const ComponentModel = ({ initialLayer, ...props }) => {
-  return (
-    <LayerModel
-      layers={layers}
-      initialLayer={initialLayer}
-      {...props}
-    />
-  )
-}
+const ComponentModel = ({ initialLayer, ...props }) => (
+  <LayerModel layers={layers} initialLayer={initialLayer} {...props} />
+)
 
 export default ComponentModel

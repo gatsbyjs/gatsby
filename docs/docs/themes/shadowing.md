@@ -14,7 +14,8 @@ If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio
 
 You can inspect `gatsby-theme-blog`'s file structure to determine the file path for the file you want to shadow.
 
-```text:title="tree gatsby-theme-blog"
+```text:title=gatsby-theme-blog
+├── gatsby-browser.js
 ├── gatsby-config.js
 ├── gatsby-node.js
 └── src
@@ -34,10 +35,11 @@ You can inspect `gatsby-theme-blog`'s file structure to determine the file path 
     │   ├── posts.js
     │   └── seo.js
     ├── gatsby-plugin-theme-ui
-    │   └──components.js
-    └── templates
-        ├── post.js
-        └── posts.js
+    │   └── components.js
+    └── gatsby-theme-blog-core
+       └── components
+          ├── post.js
+          └── posts.js
 ```
 
 ### Customizing the `Bio` component
@@ -67,9 +69,9 @@ user-site
             └── bio.js // highlight-line
 ```
 
-## Shadowing other themes
+## Shadowing other files
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` and a preset theme called `gatsby-theme-ui-preset`. If you want to customize the implementation of any theme, you can do so with shadowing.
+Some themes, including `gatsby-theme-blog`, install additional plugins. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` with the `gatsby-theme-ui-preset` preset. Shadowing is one way to customize the styling of a theme.
 
 For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`. The styles in this file will be automatically merged with those in `gatsby-theme-ui-preset`. For conflicting styles, your local shadowed settings take precedence.
 
@@ -82,6 +84,8 @@ export default {
   },
 }
 ```
+
+> Note that any styles in shadowed files will automatically get deepmerged with your `preset` theme. Shadowed styles take precedence.
 
 Which will result in the following directory tree:
 

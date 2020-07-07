@@ -53,7 +53,7 @@ Ideally you would:
   show a preview of the image while it loads.
 - Hold the image position so your page doesn't jump while images load.
 
-Doing this consistently across a site feels like sisyphean labor. You manually
+Doing this consistently across a site feels like a task that can never be completed. You manually
 optimize your images and then… several images are swapped in at the last minute
 or a design-tweak shaves 100px of width off your images.
 
@@ -84,7 +84,7 @@ effect as well as lazy loading of images further down the screen.
 
 Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
-```bash
+```shell
 npm install --save gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 

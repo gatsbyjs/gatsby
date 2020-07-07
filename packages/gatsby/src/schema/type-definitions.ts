@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from "graphql"
 
-import { IPhantomReporter } from "gatsby-cli/lib/reporter"
+import { IPhantomReporter } from "gatsby-cli/lib/reporter/reporter-phantom"
 
 import { IGraphQLRunnerStats } from "../query/types"
 import { Path } from "graphql/jsutils/Path"
@@ -45,6 +45,7 @@ export interface IGatsbyPageInfo {
   itemCount: number
   pageCount: number
   perPage: number | undefined
+  totalCount: number
 }
 
 export interface IGraphQLSpanTracer {

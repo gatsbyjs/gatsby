@@ -163,6 +163,7 @@ export default function Bio() {
 }
 ```
 
+
 At this point, you should have an updated avatar, updated site details, and an updated bio. You may want to re-run `gatsby develop` to make sure everything looks good.
 
 ## Change the color theme
@@ -191,6 +192,7 @@ module.exports = {
   ],
 }
 ```
+
 
 If you want to further customize this theme you can shadow it. Create a file at `/src/gatsby-plugin-theme-ui/index.js`.
 

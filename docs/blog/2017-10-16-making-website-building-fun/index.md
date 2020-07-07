@@ -53,7 +53,7 @@ Compare this with the minimum code necessary for the original headroom.js.
 var myElement = document.querySelector("header")
 // construct an instance of Headroom, passing the element
 var headroom = new Headroom(myElement)
-// initialise
+// initialize
 headroom.init()
 ```
 
@@ -82,7 +82,7 @@ CSS, and JavaScript are all neatly encapsulated.
 ## What makes technology fun?
 
 This is a complex philosophical question and I'm writing this on a Saturday
-afternoon so I'll cheat a bit and just cut the gordian knot by saying
+afternoon so I'll cheat a bit and just cut the Gordian knot by saying
 "simplicity is fun" and conversely, "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and

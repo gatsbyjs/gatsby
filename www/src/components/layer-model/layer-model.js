@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react"
 import hex2rgba from "hex2rgba"
 
 import { colors } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
-import LayerIcon from "../../assets/icons/layer-icon"
 
 const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
   const { baseColor, title, icon } = layer
@@ -30,7 +29,7 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
         fontWeight: selected ? `bold` : `body`,
         p: 2,
         ":focus": {
-          boxShadow: t => `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
+          boxShadow: `0 0 0 3px ${hex2rgba(colors[baseColor][30], 0.5)}`,
           outline: 0,
         },
         ":hover": {
@@ -45,11 +44,13 @@ const Layer = ({ buttonRef, layer, onClick, selected, index }) => {
           p: 2,
         }}
       >
-        <span css={{ height: 40 }}>
-          <LayerIcon
-            name={icon}
-            fillColor={selected ? colors[baseColor][70] : colors.grey[50]}
-          />
+        <span
+          sx={{
+            height: 40,
+            color: selected ? colors[baseColor][70] : colors.grey[50],
+          }}
+        >
+          {icon}
         </span>
         <span>{title}</span>
       </span>
@@ -85,7 +86,7 @@ const LayerModel = ({
     }
   }, [selected])
   return (
-        <div
+    <div
       sx={{
         borderRadius: 3,
         border: t => `1px solid ${t.colors.ui.border}`,
