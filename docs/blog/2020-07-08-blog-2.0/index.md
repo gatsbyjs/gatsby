@@ -113,4 +113,6 @@ Use it in combination with `gatsby-theme-blog` and take advantage of the same fu
 
 ## Next Steps
 
+As you get started working with the new releases be sure to check out the updated [docs](/docs/themes/shadowing/) including a reworked [tutorial](/tutorial/using-a-theme/).
+
 We're so excited to see you make use of these updated themes and can't wait to see what the community builds. As always, we'd love for you to share it with us on [Twitter](https://twitter.com/GatsbyJS)!
