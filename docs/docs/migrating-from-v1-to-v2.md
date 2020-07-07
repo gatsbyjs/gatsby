@@ -676,7 +676,7 @@ If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), yo
 
 If you use CSS Modules and have class names with dashes in them, you'll need to change how you access the class names from JavaScript.
 
-This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
+This is because the [`camelCase` option](https://github.com/webpack-contrib/css-loader/tree/version-1#camelcase) for CSS Modules has been changed from `false` to `dashesOnly`.
 
 Here's an example with a class named `.my-class-name`:
 
@@ -692,7 +692,7 @@ export default function Component({ children }) (
 )
 ```
 
-The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader#options).
+The Gatsby v1 behavior can be restored by adjusting [CSS Loader options](https://github.com/webpack-contrib/css-loader/tree/version-1#options).
 
 For vanilla CSS without a preprocessor:
 
