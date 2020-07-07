@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.21...gatsby@2.23.22) (2020-07-07)
+
+### Features
+
+- **gatsby:** Use state machine for query running in develop ([#25378](https://github.com/gatsbyjs/gatsby/issues/25378)) ([e5ce35b](https://github.com/gatsbyjs/gatsby/commit/e5ce35b))
+
 ## [2.23.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.20...gatsby@2.23.21) (2020-07-06)
 
 ### Bug Fixes
