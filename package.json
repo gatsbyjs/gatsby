@@ -135,7 +135,7 @@
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error -p lint:code lint:docs lint:other",
     "lint:code": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
-    "lint:docs": "remark --quiet --frail \"./docs/\"",
+    "lint:docs": "remark --quiet --frail \"./docs/\" || echo \"Found linting errors in the docs. To add new words to the dictionary, run \\`yarn update-dictionary\\`.\"",
     "lint:scripts": "sh scripts/lint-shell-scripts.sh",
     "lint:other": "npm run prettier -- --check",
     "markdown": "md-magic --path \"starters/**/*.md\"",
@@ -153,6 +153,7 @@
     "test:integration": "jest --config=integration-tests/jest.config.js",
     "test:peril": "cd peril && yarn test",
     "typecheck": "node ./scripts/check-ts",
+    "update-dictionary": "node ./scripts/update-dictionary.js",
     "version": "prettier --write \"**/CHANGELOG.md\"",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
