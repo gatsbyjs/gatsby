@@ -14,8 +14,6 @@ Today I'm excited to share with you a release we've been working on for the past
 
 Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, `gatsby-theme-blog`.
 
-// TODO: Change these so the cropping/background isn't so weird
-
 With new features and even more options to customize your theme, you can completely change the look of your site with only a few options!
 
 |                      Dark Preset                       |                        Sketchy Preset                         |
