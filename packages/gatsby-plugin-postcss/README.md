@@ -55,6 +55,7 @@ module.exports = () => ({
 ```
 
 If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader/tree/version-1)
+**Note:**  Gatsby is using `css-loader@1.0.1`.
 
 ```javascript
 // in gatsby-config.js
