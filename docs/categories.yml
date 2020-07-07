@@ -67,6 +67,10 @@ starter:
   - Styling:None
   - Testing
   - Transitions
+  - Server
+  - Backend
+  - Monolith
+  - Full-stack
 site:
   - API
   - Accessibility
