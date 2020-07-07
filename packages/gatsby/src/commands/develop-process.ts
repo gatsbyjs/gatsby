@@ -40,10 +40,7 @@ import { globalTracer } from "opentracing"
 import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { queryRunningMachine } from "../state-machines/query-running"
 import { IWaitingContext } from "../state-machines/waiting/types"
-import {
-  ADD_NODE_MUTATION,
-  runMutationAndMarkDirty,
-} from "../state-machines/shared-transition-configs"
+import { runMutationAndMarkDirty } from "../state-machines/shared-transition-configs"
 import { buildActions } from "../state-machines/actions"
 import { waitingMachine } from "../state-machines/waiting"
 
@@ -319,18 +316,18 @@ module.exports = async (program: IProgram): Promise<void> => {
     },
   }
 
-  const service = interpret(
-    Machine(developConfig, {
-      services: {
-        initializeDataLayer: dataLayerMachine,
-        initialize,
-        runQueries: queryRunningMachine,
-        waitForMutations: waitingMachine,
-        startWebpackServer: startWebpackServer,
-      },
-      actions: buildActions,
-    }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
-  )
+  const machine = Machine(developConfig, {
+    services: {
+      initializeDataLayer: dataLayerMachine,
+      initialize,
+      runQueries: queryRunningMachine,
+      waitForMutations: waitingMachine,
+      startWebpackServer: startWebpackServer,
+    },
+    actions: buildActions,
+  }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
+
+  const service = interpret(machine)
 
   const isInterpreter = <T>(
     actor: Actor<T> | Interpreter<T>
