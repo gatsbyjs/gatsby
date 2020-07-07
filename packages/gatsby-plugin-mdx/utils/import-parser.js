@@ -18,9 +18,6 @@
  * @returns {Array<string> | {bindings: Array<string>, segments: Array<string>}}
  */
 function parseImportBindings(importCode, returnSegments = false) {
-  // const match = importCode.match(reImportParser)
-  // const bindings = distillBindings(match)
-
   const str = importCode.replace(
     /^\s*import|[{},]|\s*from\s*['"][^'"]*?['"]\s*$/gm,
     ` , `
