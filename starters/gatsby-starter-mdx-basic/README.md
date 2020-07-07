@@ -15,13 +15,13 @@ gatsby new my-site https://github.com/ChristopherBiscardi/gatsby-starter-mdx-bas
 2. Install dependencies
 
 ```sh
-yarn
+npm install
 ```
 
 3. Run the develop script
 
 ```sh
-yarn develop
+gatsby develop
 ```
 
 4. Edit Page 2 in `src/pages/page-2.mdx`
