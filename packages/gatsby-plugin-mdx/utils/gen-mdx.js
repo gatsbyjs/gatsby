@@ -46,6 +46,7 @@ module.exports = async function genMDX(
     options,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -110,9 +111,9 @@ export const _frontmatter = ${JSON.stringify(data)}`
     {
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode: node,
-      //          files,
       getNode,
       getNodes,
+      getNodesByType,
       reporter,
       cache,
       pathPrefix,

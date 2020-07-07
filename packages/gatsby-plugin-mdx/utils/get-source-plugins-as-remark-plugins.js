@@ -12,10 +12,12 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   gatsbyRemarkPlugins,
   mdxNode,
   getNode,
+  getNodes,
   getNodesByType,
   reporter,
   cache,
   pathPrefix,
+  compiler,
   ...helpers
 }) {
   debug(`getSourcePluginsAsRemarkPlugins`)
@@ -55,11 +57,13 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
           markdownAST,
           markdownNode: mdxNode,
           getNode,
+          getNodes,
           getNodesByType,
           files: fileNodes,
           pathPrefix,
           reporter,
           cache,
+          compiler,
           ...helpers,
         },
         plugin.options || {}
