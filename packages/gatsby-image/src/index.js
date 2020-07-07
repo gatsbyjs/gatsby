@@ -18,15 +18,11 @@ const logDeprecationNotice = (prop, replacement) => {
   }
 }
 
-// FNV-1a-32 is a simple and fast hash, reduces input to 32-bit value (hash)
-const fnvOffset = 2166136261
-function fnv1a32(str) {
-  let h = fnvOffset
+// DJB2 is a simple and fast hash, reduces input to 32-bit value (hash)
+function djb2_xor(str) {
+  let h = 5381
   for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i)
-    // JS numbers are inaccurate at calculating 'h *= fnvPrime',
-    // Uses bit shifts to accurately multiply the prime: '16777619'
-    h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24)
+    h = (h * 33) ^ str.charCodeAt(i)
   }
 
   // Cast to 32-bit uint
@@ -34,7 +30,7 @@ function fnv1a32(str) {
 }
 
 // Converts number to base 36 string (a-z,0-9)
-const getShortKey = input => `_` + fnv1a32(input).toString(36)
+const getShortKey = input => `_` + djb2_xor(input).toString(36)
 
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
