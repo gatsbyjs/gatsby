@@ -112,7 +112,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
 
   if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
     reporter.info(
-      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful.id\``
+      `Skipping normalization of \`.id\`, this means \`sys\` objects will not get a \`.contentful_id\``
     )
   } else {
     // Traverse entire data model and enforce every `sys.id` to be a string
