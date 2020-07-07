@@ -6859,3 +6859,28 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://gatsby-starter-portfolio.herokuapp.com/
+  repo: https://github.com/surudhb/gatsby-personal-site-template
+  description: A minimalist dev portfolio featuring a blog, SEO, app-theming with React.Context, Bootstrap and Sass
+  tags:
+    - Portfolio
+    - Blog
+    - SEO
+    - Markdown
+    - MDX
+    - Styling:Bootstrap
+    - Styling:SCSS
+    - Client-side App
+  features:
+    - Gatsby v2
+    - Main page, Blog page, About page, Projects page, Resume page with dedicated pages for each blog-post and project
+    - Uses Sass with Bootstrap to make styling super simple
+    - Light/Dark mode for entire app using React's Context API
+    - SEO enabled on each page with react-helmet
+    - Features optimized image rendering using gatsby-image
+    - Uses open source icons from Fontawesome and icons8
+    - Uses icons as links to github, resume, hackerrank on main page
+    - Programmatically generates styled pages for each blog post and project written in Markdown
+    - Blog posts page features a live filter tool
+    - Uses site metadata to populate About page
+    - Resume page generated using template Markdown files
