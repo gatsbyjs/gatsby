@@ -71,7 +71,7 @@ const matchesMedia = ({ media }) =>
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
  * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string} or undefined if not cacheable
+ * @return {string?} Returns image src or undefined it not given.
  */
 const getImageCacheKey = ({ fluid, fixed }) => {
   const srcData = getCurrentSrcData(fluid || fixed || [])
