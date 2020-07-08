@@ -11415,3 +11415,15 @@
   built_by: Jose D. Santos IV
   built_by_url: https://ivjose.com
   featured: false
+- title: Jeff Jadulco
+  main_url: https://jeffjadulco.com
+  url: https://jeffjadulco.com
+  description: >
+    Personal website for Jeff Jadulco, an experienced game developer with deep interest in modern web development.
+  categories:
+    - Blog
+    - Portfolio
+    - Web Development
+  built_by: Jeff Jadulco
+  built_by_url: https://jeffjadulco.com
+  featured: false
