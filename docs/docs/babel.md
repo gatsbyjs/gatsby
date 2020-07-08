@@ -12,9 +12,9 @@ This means that your JavaScript is automatically compiled to ensure it works on 
 
 If you only target newer browsers, see the [Browser Support](/docs/browser-support/) docs page for how to instruct Gatsby on which browsers you support and then Babel will start compiling for only these browsers.
 
-## How to use a custom .babelrc file
+## How to use a custom `.babelrc` file
 
-Gatsby ships with a default .babelrc setup that should work for most sites. If you'd like to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and add additional plugins, presets, and pass options to `babel-preset-gatsby`, e.g. `targets`.
+Gatsby ships with a default `.babelrc` setup that should work for most sites. If you'd like to add custom Babel presets or plugins, you can create your own `.babelrc` at the root of your site, import [`babel-preset-gatsby`](https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby), and add additional plugins, presets, and pass options to `babel-preset-gatsby`, e.g. `targets`.
 
 ```shell
 npm install --save-dev babel-preset-gatsby
