@@ -62,7 +62,6 @@ const page = {
   tableOfContents: {
     items: tableOfContentsItems,
   },
-  parent: {},
 }
 
 const location = {
@@ -118,7 +117,12 @@ it(`should display prev page and next page if available`, () => {
     title: `next`,
     link: `/docs/next`,
   }
-  const { getByText } = setup({ prev, next })
+  const { getByText } = setup({
+    page: {
+      ...page,
+      nav: { prev, next },
+    },
+  })
 
   expect(getByText(prev.title)).toBeDefined()
   expect(getByText(prev.title).closest(`a`)).toHaveAttribute(`href`, prev.link)
