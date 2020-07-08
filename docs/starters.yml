@@ -6925,7 +6925,7 @@
     - Monolith
     - Full-stack
   features:
-    - Minimallist template to start creating a Gatsby site integrated with Node.js server
+    - Minimalist template to start creating a Gatsby site integrated with Node.js server
     - Express server with gatsby-plugin-nodejs
     - Way to create a full-stack Gatsby app/site
     - Way to add own routes, for example with REST or GraphQL API
