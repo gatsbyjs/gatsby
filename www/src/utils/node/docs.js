@@ -147,6 +147,7 @@ exports.sourceNodes = async ({
     ...contributingLinks[0].items,
   ]
   await traverseHierarchy(allItems, async navItem => {
+    // FIXME add a `section` to the ID to disambiguate between cross-links
     const navItemId = createNodeId(`navItem-${navItem.link || navItem.title}`)
     // FIXME figure out how not to duplicate this logic
     const { prev, next } = getPrevAndNext(navItem.link || ``) || {}
