@@ -6769,6 +6769,21 @@
     - The default Gatsby formatting tool Prettier, has been removed in order to avoid conflicts with the ESLint + AirBnB TypeScript tools described above.
     - Firebase Hosting is supported and configured for Gatsby from the start.
     - Dynamic pages for blog posts in markdown is implemented.
+- url: https://the-great-gatsby-starter.netlify.app
+  repo: https://github.com/bradgarropy/gatsby-starter
+  description: 🥂 the great gatsby starter
+  tags:
+    - Linting
+    - Netlify
+    - SEO
+    - Styling:CSS-in-JS
+  features:
+    - Base scaffolding for a Gatsby site.
+    - ESLint and Prettier are preconfigured.
+    - Preconfigured Netlify hosting.
+    - Serverless functions ready to go.
+    - Style with styled-components out of the box.
+    - Customizable SEO component included.
 - url: https://gatsby-starter-capacitor.netlify.app/
   repo: https://github.com/flogy/gatsby-starter-capacitor
   description: Build blazing fast mobile apps with Gatsby and Capacitor.
