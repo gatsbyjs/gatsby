@@ -143,7 +143,7 @@ exports.sourceNodes = async ({
   const allItems = [
     ...docLinks[0].items,
     ...tutorialLinks[0].items,
-    ...contributinLinks[0].items,
+    ...contributingLinks[0].items,
   ]
   await traverseHierarchy(allItems, async navItem => {
     const navItemId = createNodeId(`navItem-${navItem.title}`)
