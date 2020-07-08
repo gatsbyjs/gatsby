@@ -26,6 +26,7 @@ by providing a set of convenience tools and conventions.
 - [Tools Reference](#tools-reference)
   - [Configuration Tools](#configuration-tools)
     - [createDefaultQueryExecutor](#createdefaultqueryexecutor)
+    - [wrapQueryExecutorWithQueue](#wrapqueryexecutorwithqueue)
     - [loadSchema](#loadschema)
     - [buildNodeDefinitions](#buildnodedefinitions)
   - [Query compilation tools](#query-compilation-tools)
@@ -63,7 +64,7 @@ This new toolkit should solve all those issues and implement correct node sourci
 
 ## How it works
 
-Let's imagine we have a GraphQL API located at `https://www.example.com/graphql`.
+Imagine you have a GraphQL API located at `https://www.example.com/graphql`.
 This example API has the following straightforward schema:
 
 ```graphql
@@ -87,12 +88,12 @@ type Query {
 }
 ```
 
-How do we source data from this GraphQL API using the toolkit?
-Let's look at the full example and then walk through it step-by-step.
+To better understand how to source data from this GraphQL API using the toolkit,
+look at the full example and then walk through it step-by-step.
 
 ```js
 async function createSourcingConfig(gatsbyApi) {
-  // Step1. Setup remote schema:
+  // Step1. Set up remote schema:
   const execute = createDefaultQueryExecutor(`https://www.example.com/graphql`)
   const schema = await loadSchema(execute)
 
@@ -140,20 +141,20 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
 }
 ```
 
-Let's take a closer look at every step in this example.
+Take a closer look at each step in this example:
 
-### 1. Setup remote schema
+### 1. Set up remote schema
 
 ```js
 const execute = createDefaultQueryExecutor(`https://www.example.com/graphql`)
 const schema = await loadSchema(execute)
 ```
 
-The toolkit executes GraphQL queries against remote API and so expects you
-to provide `execute` function for that. A default implementation is available via
+The toolkit executes GraphQL queries against a remote API and so expects you
+to provide an `execute` function. A default implementation is available via the
 [`createDefaultQueryExecutor`](#createdefaultqueryexecutor) utility.
 
-Also, we are going to perform various kinds of analysis with GraphQL schema and so
+In order to perform various kinds of analysis with your GraphQL schema,
 expect a `schema` object (an instance of `GraphQLSchema` from `graphql-js` package).
 
 Use [`loadSchema`](#loadschema) to fetch the remote schema and re-construct it locally via GraphQL [introspection][7].
@@ -175,18 +176,18 @@ Declare which types of the remote GraphQL API you will treat as Gatsby nodes and
 
 Settings explained:
 
-- `remoteTypeName` is utilized to:
+- `remoteTypeName` is used to:
 
-  - Build gatsby node type name as follows: `${gatsbyTypePrefix}${remoteTypeName}` ([customizable](#type-name-transformer)).
+  - Build Gatsby node type name as follows: `${gatsbyTypePrefix}${remoteTypeName}` ([customizable](#type-name-transformer)).
   - Discover and resolve relationships between node types in the schema.
 
 - `remoteIdFields` are necessary to:
 
-  - Construct gatsby node id (a concatenation of all remote id fields)
+  - Construct a Gatsby node id (a concatenation of all remote id fields)
   - Re-fetch individual nodes by `id` (e.g., to support previews and delta sourcing)
   - Resolve node relationships in Gatsby schema customization
 
-- `queries` for node sourcing (without field selections).
+- `queries` are for node sourcing (without field selections).
   Those are combined with custom fragments for actual data fetching (see the next two steps).
 
 ### 3. Define fields to be fetched (using GraphQL fragments)
@@ -194,14 +195,14 @@ Settings explained:
 This step is probably the most important for the whole process.
 It enables different workflows with a high granularity of sourcing.
 
-In the example we demonstrate the simplest workflow - [automatic fragments generation](#generatedefaultfragments)
+This example demonstrates one possible workflow - [automatic fragment generation](#generatedefaultfragments)
 on each run:
 
 ```js
 const fragments = generateDefaultFragments({ schema, gatsbyNodeTypes })
 ```
 
-This call generates the following fragments ([customizable](#generatedefaultfragments)):
+This call generates the following ([customizable](#generatedefaultfragments)) fragments:
 
 ```graphql
 fragment Post on Post {
@@ -223,18 +224,18 @@ fragment Author on Author {
 }
 ```
 
-In [step 4](#4-compile-sourcing-queries) we combine those fragments with `queries` (from [step 2](#2-configure-gatsby-node-types))
-to produce final sourcing queries.
+In [step 4](#4-compile-sourcing-queries), combine those fragments with `queries` (from [step 2](#2-configure-gatsby-node-types))
+to produce the final sourcing queries.
 
 But instead of generating them every time, you could have chosen the following workflow (as one of the possible options):
 
-1.  Generate fragments on the very first run and save them somewhere in the `src` folder
-2.  Allow developers to edit those fragments in IDE (e.g., to remove fields they don't need, add fields with arguments, etc.)
-3.  Load modified fragments from the file system on each run
+1.  Generate fragments on the very first run and save them somewhere in the `src` folder.
+2.  Allow developers to edit those fragments in an IDE (e.g., to remove fields they don't need, add fields with arguments, etc.).
+3.  Load modified fragments from the file system on each run.
 
-See [`readOrGenerateDefaultFragments`](#readorgeneratedefaultfragments) utility for something like this.
+See the [`readOrGenerateDefaultFragments`](#readorgeneratedefaultfragments) utility for something like this.
 
-For example let's modify the `Author` fragment to fetch excerpts of author posts:
+For example, modify the `Author` fragment to fetch excerpts of author posts:
 
 ```graphql
 fragment CustomizedAuthorFragment on Author {
@@ -246,11 +247,11 @@ fragment CustomizedAuthorFragment on Author {
 }
 ```
 
-We will see how this change affects sourcing queries in the next step.
+You'll see how this change affects sourcing queries in the next step.
 
 ### 4. Compile sourcing queries
 
-In this step we combine node configurations ([step 2](#2-configure-gatsby-node-types))
+In this step, you'll combine node configurations ([step 2](#2-configure-gatsby-node-types))
 with custom fragments ([step 3](#3-define-fields-to-be-fetched-using-graphql-fragments))
 and compile final queries for node sourcing:
 
@@ -262,7 +263,7 @@ const documents = compileNodeQueries({
 })
 ```
 
-For our example, the toolkit will compile two documents (for `Post` and `Author` types respectively):
+For this example, the toolkit will compile two documents (for `Post` and `Author` types respectively):
 
 `Post`:
 
@@ -315,7 +316,7 @@ Note how the `excerpt` field has been moved from `CustomizedAuthorFragment` to t
 `CustomizedAuthorFragment__allPosts` in the `Post` document
 (and fields from `remoteIdFields` list have been added in its place).
 
-Also, note the toolkit automatically adds field aliases for reserved gatsby fields
+Also, note the toolkit automatically adds field aliases for reserved Gatsby fields
 (`id`, `internal`, `parent`, `children` and [`__typename` meta field][10])
 
 **Why?** This way we achieve data normalization in Gatsby. All the data belonging
@@ -325,7 +326,7 @@ nodes of other types (via id fields).
 You can write these documents somewhere to disk to ease debugging
 (generated queries are static and could be used manually to replicate the error).
 
-### 5. Add explicit types to gatsby schema
+### 5. Add explicit types to the Gatsby schema
 
 ```js
 await createSchemaCustomization(config)
@@ -333,7 +334,7 @@ await createSchemaCustomization(config)
 
 This step utilizes Gatsby [Schema Customization API][8] to describe node types specified in [step 2](#2-configure-gatsby-node-types).
 
-For our example, the toolkit creates the following Gatsby node type definitions:
+For this example, the toolkit creates the following Gatsby node type definitions:
 
 ```graphql
 type ExamplePost implements Node @dontInfer {
@@ -352,7 +353,7 @@ type ExampleAuthor implements Node @dontInfer {
 
 > as well as custom resolvers for `ExamplePost.author` and `ExampleAuthor.allPosts` to resolve relationships
 
-As you may see, the toolkit uses the remote schema as a reference, but it doesn't clone it 1 to 1.
+The toolkit uses the remote schema as a reference, but doesn't clone it.
 
 Instead, it takes all the fields from the sourcing query (including aliased fields)
 and adds them to Gatsby node type with slight changes:
@@ -379,15 +380,15 @@ fragment MyFragment on RemoteType {
 }
 ```
 
-Then we add those `alias1` and `alias2` fields to Gatsby type so that you could access
+Then we add those `alias1` and `alias2` fields to Gatsby type so that you can access
 them in Gatsby's queries.
 
 ---
 
 ### 6. Source nodes
 
-Here we take all the queries compiled in [step 4](#4-compile-sourcing-queries), execute them
-against the remote GraphQL API and transform results to Gatsby nodes using [createNode action][11].
+Now take all the queries compiled in [step 4](#4-compile-sourcing-queries), execute them
+against the remote GraphQL API, and transform results to Gatsby nodes using [createNode action][11].
 
 Let's take another look at one of the queries:
 
@@ -419,7 +420,7 @@ The toolkit uses variable names to resolve an effective [pagination adapter](#au
 > In our example it is `LimitOffset` adapter that "knows" how to produce values for `$limit` and `$offset` variables as the toolkit
 > loops through pages.
 
-Let's assume we've received a GraphQL result that looks like this:
+Assume you've received a GraphQL result that looks like this:
 
 ```json
 {
@@ -439,8 +440,8 @@ Let's assume we've received a GraphQL result that looks like this:
 ```
 
 The toolkit will create a single Gatsby node of type `ExampleAuthor` out of it as-is.
-The only difference is that it will add the `id` field and required Gatsby's `internal` fields
-as described [in `createNode` docs][11].
+The only difference is that it will add the `id` field and required Gatsby `internal` fields
+as described in the [`createNode` docs][11].
 
 ## Sourcing changes (delta)
 
@@ -450,8 +451,8 @@ has changed since then.
 > **Note:** it is only possible if your API allows you to receive
 > the list of nodes changed since the last build.
 
-Let's see how it works with [our original example](#how-it-works). First, we need to
-modify the config of Gatsby node types from the [step 2](#2-configure-gatsby-node-types)
+Check out how this works with [the original example](#how-it-works). First, you'll need to
+modify the config of Gatsby node types from [step 2](#2-configure-gatsby-node-types)
 to support individual node re-fetching:
 
 ```diff
@@ -469,11 +470,11 @@ const gatsbyNodeTypes = [
 ]
 ```
 
-When compiling queries on [step 4](#4-compile-sourcing-queries) the toolkit will spread
-all of our fragments in both queries, so the shape of the node will be identical when
+When compiling queries in [step 4](#4-compile-sourcing-queries), the toolkit will spread
+all of your fragments in both queries, so the shape of the node will be identical when
 executing `LIST_POSTS` or `NODE_POST`.
 
-Next, let's modify `sourceNodes` in `gatsby-node.js`:
+Next, modify `sourceNodes` in `gatsby-node.js`:
 
 ```js
 exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
@@ -516,22 +517,22 @@ async function fetchNodeChanges(lastBuildTime) {
 }
 ```
 
-As you can see, two kinds of events supported (and thus must be tracked by your backend): `DELETE` and `UPDATE`.
+There are two kinds of supported events (which must be tracked by your backend): `DELETE` and `UPDATE`.
 
 The toolkit only cares about remote IDs of the nodes that have changed:
 
-- for the `UPDATE` event it will re-fetch nodes individually using `NODE_POST` query we defined above
-- for the `DELETE` event, it will delete corresponding Gatsby nodes (without further requests to your API).
+- For the `UPDATE` event, it will re-fetch nodes individually using `NODE_POST` query we defined above.
+- For the `DELETE` event, it will delete corresponding Gatsby nodes (without further requests to your API).
 
 The `remoteId` field here must contain values for **all** of the `remoteIdFields`
-defined in gatsby node config above (in this example: `__typename` and `id`).
+defined in Gatsby node config above (in this example: `__typename` and `id`).
 They will be passed to the `NODE_POST` query as variables.
 
 ## Automatic Pagination Explained
 
-[Pagination][9] is essential for an effective node sourcing. But different GraphQL APIs
+[Pagination][9] is essential for effective node sourcing but different GraphQL APIs
 implement pagination differently. The toolkit abstracts those differences away by
-introducing a concept of "pagination adapter".
+introducing the concept of a "pagination adapter".
 
 Two most common adapters supported out of the box: `LimitOffset` and `RelayForward`
 (for [Relay Connections specification][12]).
@@ -542,7 +543,7 @@ The toolkit selects which adapter to use based on variable names used in the que
 - `LimitOffset`: when it sees `$limit` and `$offset` variables
 - `RelayForward`: when it sees `$first` and `$after` variables
 
-In a nutshell pagination adapter simply "knows" which variable values to use for the
+In a nutshell, a pagination adapter "knows" which variable values to use for the
 given GraphQL query to fetch the next page of a field.
 
 This way the toolkit can paginate your queries automatically and express the
@@ -551,7 +552,7 @@ result as `AsyncIterator` of your nodes for convenience and efficiency.
 ## Configuration
 
 You can adjust some aspects of sourcing and schema customization by providing a config
-object of the following structure (typescript flavour):
+object of the following structure (TypeScript flavor):
 
 ```ts
 type RemoteTypeName = string
@@ -647,7 +648,7 @@ interface ISourcingConfig {
 }
 ```
 
-This is just a simple object that defines which aliases to use for internal
+This object defines which aliases to use for internal
 Gatsby fields when compiling queries ([step 4](#4-compile-sourcing-queries)).
 
 Default value is:
@@ -679,7 +680,7 @@ export interface ITypeNameTransform {
 }
 ```
 
-Default implementation uses `gatsbyTypePrefix` option and is as simple as:
+Default implementation uses the `gatsbyTypePrefix` option:
 
 ```js
 function createTypeNameTransform(prefix) {
@@ -701,7 +702,7 @@ interface ISourcingConfig {
 }
 ```
 
-You can add a new (or override existing) adapters by providing you own implementations
+You can add a new (or override existing) adapters by providing your own implementations
 conforming to this interface:
 
 ```ts
@@ -754,7 +755,7 @@ function createDefaultQueryExecutor(
 ```
 
 This implementation sends GraphQL requests using [`node-fetch`][14]
-(see library documentation for all possible `FetchOptions`). It also uses [p-queue][13]
+(see library documentation for all possible `FetchOptions`). It also uses [`p-queue`][13]
 to restrict the number of concurrently executed queries.
 Default concurrency level is `10`, try increasing it to achieve higher throughput.
 
@@ -770,7 +771,7 @@ function wrapQueryExecutorWithQueue(
 ): IQueryExecutor
 ```
 
-Under the hood it uses [p-queue][13] library to limit concurrency level, so refer to
+Under the hood it uses [`p-queue`][13] library to limit concurrency level, so refer to
 the library docs for all available `queueOptions`.
 
 #### loadSchema
@@ -806,7 +807,7 @@ export function buildNodeDefinitions(
 
 #### generateDefaultFragments
 
-Utility function that generates default fragments for every gatsby node type (defined in [step 2](#2-configure-gatsby-node-types)).
+Utility function that generates default fragments for every Gatsby node type (defined in [step 2](#2-configure-gatsby-node-types)).
 
 ```ts
 interface IDefaultFragmentsConfig {
@@ -849,7 +850,7 @@ type Name {
 }
 ```
 
-Let's define `gatsbyNodeTypes` option as:
+Define `gatsbyNodeTypes` option as:
 
 ```js
 const gatsbyNodeTypes = [
@@ -893,7 +894,7 @@ Things to notice:
 2. Selection of the field `Post.author` contains fields listed in `remoteIdFields`
    for type `Author` (applies for any type from the `gatsbyNodeTypes` list).
    It is prefixed with `remoteId` because `id` is an internal Gatsby field.
-   So [gatsby field aliases](#gatsby-field-aliases) are used to avoid conflicts during
+   So [Gatsby field aliases](#gatsby-field-aliases) are used to avoid conflicts during
    sourcing.
 
 3. Field `Author.name` of type `Name` was inlined in the fragment because it is not listed
@@ -980,7 +981,7 @@ async function createSchemaCustomization(config: ISourcingConfig): Promise<void>
 #### sourceAllNodes
 
 Uses [sourcing config](#configuration) to fetch all data from the remote GraphQL API
-and create gatsby nodes (using [createNode action][11]). See [step 6](#6-source-nodes) for example.
+and create Gatsby nodes (using [createNode action][11]). See [step 6](#6-source-nodes) for example.
 
 ```ts
 async function sourceAllNodes(config: ISourcingConfig): Promise<void>
