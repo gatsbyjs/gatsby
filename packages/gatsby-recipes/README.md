@@ -32,7 +32,7 @@ To confirm that this worked, run `gatsby --help` in your terminal. The output sh
 
 ### Running an example recipe
 
-Now you can test out recipes! Start with a recipe for installing `emotion` by following these steps:
+Now you can test out recipes! Start with a recipe for installing [Emotion](https://emotion.sh/docs/introduction) by following these steps:
 
 1. Create a new Hello World Gatsby site:
 
@@ -40,7 +40,7 @@ Now you can test out recipes! Start with a recipe for installing `emotion` by fo
 gatsby new try-emotion https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-1. Navigate into that project directory:
+1. Go to the project directory you created:
 
 ```shell
 cd try-emotion
