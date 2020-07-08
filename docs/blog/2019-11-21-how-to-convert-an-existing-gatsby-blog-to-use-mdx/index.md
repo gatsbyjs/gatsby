@@ -214,7 +214,7 @@ This is a post showing MDX in action. This starter now comes with MDX out-of-the
 MDX lets you write JSX embedded inside markdown, perfect for technical blogs. MDX works with Gatsby through [gatsby-plugin-mdx](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx/). You can learn more about it in the Gatsby docs: [Getting Started with MDX](https://www.gatsbyjs.org/docs/mdx/getting-started/).
 ````
 
-![example post mdx](./screenshot.png)
+![example post MDX](./screenshot.png)
 
 If you're interested in spinning up a new personal blog with MDX, I've prepared [Gatsby personal blog starter](https://github.com/thomaswangio/gatsby-personal-starter-blog) for your usage!
 

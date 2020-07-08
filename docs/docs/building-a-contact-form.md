@@ -92,7 +92,7 @@ More information on Netlify Forms can be found [on their website](https://www.ne
 
 Formspree offers a generous free-tier service for handling form submissions on static sites. This makes it a great tool for having form submissions sent directly to an email address of your choosing, with very little setup required.
 
-In order to begin leveraging Formspree's features, you must add a form action directing the http POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
+In order to begin leveraging Formspree's features, you must add a form action directing the HTTP POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
 
 ```jsx:title=src/pages/contact.js
 <form method="post" action="https://formspree.io/email@domain.tld">

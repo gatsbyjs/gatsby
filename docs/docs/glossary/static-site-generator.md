@@ -19,7 +19,7 @@ You can also use static site generators to create [JAMStack](/docs/glossary/#jam
 
 ### Advantages of static site generators
 
-Static site generators **reduce site complexity**. That, in turn, improves speed and reliability, and smoothes the developer experience.
+Static site generators **reduce site complexity**. That, in turn, improves speed and reliability, and smooths the developer experience.
 
 - You don't have to worry about database-toppling traffic spikes.
 - There's no need to manage database server software or backups.

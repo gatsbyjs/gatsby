@@ -1,7 +1,9 @@
 import chokidar from "chokidar"
 
 import webpackHotMiddleware from "webpack-hot-middleware"
-import webpackDevMiddleware from "webpack-dev-middleware"
+import webpackDevMiddleware, {
+  WebpackDevMiddleware,
+} from "webpack-dev-middleware"
 import got from "got"
 import webpack from "webpack"
 import express from "express"
@@ -48,7 +50,22 @@ interface IServer {
   webpackActivity: ActivityTracker
   websocketManager: WebsocketManager
   workerPool: JestWorker
+  webpackWatching: IWebpackWatchingPauseResume
 }
+
+interface IWebpackWatchingPauseResume {
+  suspend: () => void
+  resume: () => void
+}
+
+// context seems to be public, but not documented API
+// see https://github.com/webpack/webpack-dev-middleware/issues/656
+type PatchedWebpackDevMiddleware = WebpackDevMiddleware &
+  express.RequestHandler & {
+    context: {
+      watching: webpack.Watching & IWebpackWatchingPauseResume
+    }
+  }
 
 export async function startServer(
   program: IProgram,
@@ -220,16 +237,14 @@ export async function startServer(
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
 
-  app.use(
-    webpackDevMiddleware(compiler, {
-      logLevel: `silent`,
-      publicPath: devConfig.output.publicPath,
-      watchOptions: devConfig.devServer
-        ? devConfig.devServer.watchOptions
-        : null,
-      stats: `errors-only`,
-    })
-  )
+  const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
+    logLevel: `silent`,
+    publicPath: devConfig.output.publicPath,
+    watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
+    stats: `errors-only`,
+  }) as unknown) as PatchedWebpackDevMiddleware
+
+  app.use(webpackDevMiddlewareInstance)
 
   // Expose access to app for advanced use cases
   const { developMiddleware } = store.getState().config
@@ -314,5 +329,12 @@ export async function startServer(
     socket?.to(`clients`).emit(`reload`)
   })
 
-  return { compiler, listener, webpackActivity, websocketManager, workerPool }
+  return {
+    compiler,
+    listener,
+    webpackActivity,
+    websocketManager,
+    workerPool,
+    webpackWatching: webpackDevMiddlewareInstance.context.watching,
+  }
 }

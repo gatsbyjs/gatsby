@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.58...gatsby-cli@2.12.59) (2020-07-07)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.57...gatsby-cli@2.12.58) (2020-07-03)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.56...gatsby-cli@2.12.57) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.55...gatsby-cli@2.12.56) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.54...gatsby-cli@2.12.55) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.53...gatsby-cli@2.12.54) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.52...gatsby-cli@2.12.53) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [2.12.52](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.51...gatsby-cli@2.12.52) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby:** fix build-html error stacktrace ([#25385](https://github.com/gatsbyjs/gatsby/issues/25385)) ([eac89cb](https://github.com/gatsbyjs/gatsby/commit/eac89cb))
+
 ## [2.12.51](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.12.50...gatsby-cli@2.12.51) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-cli
