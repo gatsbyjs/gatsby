@@ -27,12 +27,16 @@ Netlify currently has built in support for [GitHub](https://github.com/), [GitLa
 
 Now, login to Netlify and you will see a `New site from git` button at the top right corner of the screen. Click on it and connect with the same git provider that you used to host your website and authorize Netlify to use your account. Choose your website repository and it will take you to deploy settings with the below options.
 
-- Branch to deploy: You can specify a branch to monitor. When you push to that particular branch, only then will Netlify build and deploy the site. The default is `master`.
+- Branch to deploy: You can specify a branch to monitor. When you push to that particular branch, only then will Netlify build and deploy the site. The default is `master`. The secondary default is `main`.
 - Build Command: You can specify the command you want Netlify to run when you push to the above branch. The default is `npm run build`.
 - Publish directory: You can specify which folder Netlify should use to host the website, e.g., public, dist, build. The default is `public`.
 - Advanced build settings: If the site needs environment variables to build, you can specify them by clicking on `Show advanced` and then the `New Variable` button.
 
 Click on the `Deploy site` button and Netlify will start the build and deploy process you have specified. You can go to the `Deploys` tab and see the process unfold in the `Deploy log`. After a few moments, it will give you the live site URL, e.g., `random-name.netlify.com`.
+
+#### Continuous deployment
+
+Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo. Continous deployment is only possible when using a Git repository.
 
 ### Upload site folder
 
@@ -54,10 +58,6 @@ Once the build is complete, you are ready to upload your site to Netlify. Go to 
 To start the deploy process, you need only drag and drop the `public` folder over the above area on the Netlify website. Netlify will create a new site with a random name, then start uploading and hosting the application files. After a few moments, it will give you a live site URL e.g. `random-name.netlify.com`.
 
 ![alt text](./images/gatsby-default-starter.png "Gatsby Default Starter")
-
-## Continuous deployment
-
-Now that your site is connected to your repository, Netlify will deploy the site and publish it whenever you push to your Git repo.
 
 ## Domain setup
 
