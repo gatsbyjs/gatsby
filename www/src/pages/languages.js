@@ -22,7 +22,7 @@ const TranslateBackground = styled(TranslateIcon)`
   opacity: 0.25;
 
   color: ${p =>
-    p.colorMode === "dark" ? p.theme.colors.grey[10] : p.theme.colors.grey[90]};
+    p.colorMode === `dark` ? p.theme.colors.grey[10] : p.theme.colors.grey[90]};
 `
 
 const LanguagesContainer = styled.div`
@@ -33,7 +33,7 @@ const LanguagesContainer = styled.div`
 `
 
 const allLanguages = [
-  { code: "en", name: "English", localName: "English" },
+  { code: `en`, name: `English`, localName: `English` },
   ...langs,
 ]
 
@@ -54,12 +54,12 @@ const LanguagesFooter = () => (
   <section>
     <h2>How to help with translation</h2>
     <p>
-      The Gatsby documentation is currently translated in over{" "}
+      The Gatsby documentation is currently translated in over{` `}
       {allLanguages.length}+ local languages. Most of the translations are
       contributed by our international members.
     </p>
     <p>
-      Don't see your language above?{" "}
+      Don't see your language above?{` `}
       <Link to="/contributing/translation/">Let us know</Link>.
     </p>
   </section>
