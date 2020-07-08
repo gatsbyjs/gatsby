@@ -158,7 +158,7 @@
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
-    "packages/*"
+    "packages/"
   ],
   "dependencies": {
     "dictionary-en": "^3.0.1",
