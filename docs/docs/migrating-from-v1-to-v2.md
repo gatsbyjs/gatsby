@@ -50,7 +50,7 @@ This documentation page covers the _how_ of migrating from v1 to v2. Various blo
 - [Resolving Deprecations](#resolving-deprecations)
 
   - [Import Link from Gatsby](#import-link-from-gatsby)
-  - [Import graphql from Gatsby](#import-graphql-from-gatsby)
+  - [Import GraphQL from Gatsby](#import-graphql-from-gatsby)
   - [Rename `boundActionCreators` to `actions`](#rename-boundactioncreators-to-actions)
   - [Rename `pathContext` to `pageContext`](#rename-pathcontext-to-pagecontext)
   - [Rename responsive image queries](#rename-responsive-image-queries)
@@ -812,7 +812,7 @@ Furthermore you can remove the package from the `package.json`.
 }
 ```
 
-### Import graphql from Gatsby
+### Import GraphQL from Gatsby
 
 The `graphql` tag function that Gatsby v1 auto-supports is deprecated in v2. Gatsby will throw deprecation warning unless you explicitly import it from the `gatsby` package.
 
@@ -1025,7 +1025,7 @@ The node `internal` object isn't meant for adding node data. While Gatsby v1 all
 
 ### Import `graphql` types from `gatsby/graphql`
 
-Import graphql types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
+Import GraphQL types from `gatsby/graphql` to prevent `Schema must contain unique named types but contains multiple types named "<typename>"` errors. `gatsby/graphql` exports all builtin GraphQL types as well as `graphQLJSON` type.
 
 ```diff
 -const { GraphQLString } = require(`graphql`)
