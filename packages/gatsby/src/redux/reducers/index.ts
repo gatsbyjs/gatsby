@@ -18,12 +18,13 @@ import { componentDataDependenciesReducer } from "./component-data-dependencies"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
 import { nodesByTypeReducer } from "./nodes-by-type"
-import programReducer from "./program"
+import { programReducer } from "./program"
 import { resolvedNodesCacheReducer } from "./resolved-nodes"
 import { nodesTouchedReducer } from "./nodes-touched"
 import { flattenedPluginsReducer } from "./flattened-plugins"
-import schemaCustomizationReducer from "./schema-customization"
-import inferenceMetadataReducer from "./inference-metadata"
+import { pendingPageDataWritesReducer } from "./pending-page-data-writes"
+import { schemaCustomizationReducer } from "./schema-customization"
+import { inferenceMetadataReducer } from "./inference-metadata"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -55,4 +56,5 @@ export {
   inferenceMetadataReducer as inferenceMetadata,
   pageDataStatsReducer as pageDataStats,
   pageDataReducer as pageData,
+  pendingPageDataWritesReducer as pendingPageDataWrites,
 }

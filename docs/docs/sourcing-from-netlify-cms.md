@@ -142,7 +142,7 @@ backend:
   repo: your-username/your-repo-name
 ```
 
-Now you can save the config.yml file, commit the change, and push it to your GitHub repo.
+Now you can save the `config.yml` file, commit the change, and push it to your GitHub repo.
 
 ### Authenticating with GitLab
 
