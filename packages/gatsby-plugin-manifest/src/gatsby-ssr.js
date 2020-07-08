@@ -31,7 +31,7 @@ exports.onRenderBody = (
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
     if (insertFaviconLinkTag) {
-      if (icon.endsWith(`.svg`)) {
+      if (icon?.endsWith(`.svg`)) {
         headComponents.push(
           <link
             rel="icon"
