@@ -1,7 +1,5 @@
 # Gatsby Starter MDX Basic
 
-View this starter [live on Netlify](https://gatsby-starter-mdx-basic.netlify.com/)
-
 This starter build MDX support into the
 [gatsby-default-starter](https://github.com/gatsbyjs/gatsby-starter-default). Its
 README also applies here.
