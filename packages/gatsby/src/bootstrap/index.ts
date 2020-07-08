@@ -19,7 +19,7 @@ import JestWorker from "jest-worker"
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: IBuildContext
+  initialContext: Partial<IBuildContext>
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: JestWorker
@@ -28,11 +28,17 @@ export async function bootstrap(
     ? { childOf: initialContext.parentSpan }
     : {}
 
-  initialContext.parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+  const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
+
+  const bootstrapContext: IBuildContext = {
+    ...initialContext,
+    parentSpan,
+    firstRun: true,
+  }
 
   const context = {
-    ...initialContext,
-    ...(await initialize(initialContext)),
+    ...bootstrapContext,
+    ...(await initialize(bootstrapContext)),
   }
 
   await customizeSchema(context)
@@ -59,7 +65,7 @@ export async function bootstrap(
 
   await postBootstrap(context)
 
-  initialContext.parentSpan.finish()
+  parentSpan.finish()
 
   return {
     gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,

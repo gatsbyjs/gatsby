@@ -77,8 +77,10 @@ Some packages, like Babel, bring `fs` along for the ride anyway. In order to pre
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     node: {
-      fs: 'empty' // highlight-line
-    }
+      fs: "empty", // highlight-line
+    },
+  })
+}
 ```
 
 ## Errors in styling
