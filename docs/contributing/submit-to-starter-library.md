@@ -48,7 +48,7 @@ If there are linting issues with your PR, you can fix them by running `npm run f
 
 ### Need to change details?
 
-If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR. GitHub data (like stars) will be automatically pulled and updated, but your starter description, tags, and feature list are up to you!
+If you want to edit anything in your site submission later, simply edit the `.yml` file by submitting another PR. GitHub data (like stars) will be automatically pulled and updated, but your starter description, tags, and feature list are up to you!
 
 ### Adding new tag
 
