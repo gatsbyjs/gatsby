@@ -5,7 +5,7 @@ import { graphql } from "gatsby"
 
 import DocsMarkdownPage from "../components/docs-markdown-page"
 
-function DocsTemplate({ data, location, pageContext: { next, prev } }) {
+function DocsTemplate({ data, location }) {
   const page = data.docPage
 
   return (
