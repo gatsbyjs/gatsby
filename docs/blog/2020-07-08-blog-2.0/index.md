@@ -84,7 +84,7 @@ If you'd rather not use any preset and set everything locally yourself, you can 
 
 Another option for presets are prism highlighting. Theme UI comes with a number of built-in [prism presets](https://theme-ui.com/packages/prism#syntax-themes) that you can reference directly by name and the theme will do the rest for you.
 
-```js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
