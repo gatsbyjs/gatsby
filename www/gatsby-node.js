@@ -72,8 +72,11 @@ exports.createSchemaCustomization = async helpers => {
   `)
 }
 
-// Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
-exports.createResolvers = ({ createResolvers }) => {
+exports.createResolvers = async helpers => {
+  await runApiForSections(`createResolvers`, helpers)
+
+  const { createResolvers } = helpers
+  // Patch `DocumentationJs` type to handle custom `@availableIn` jsdoc tag
   createResolvers({
     DocumentationJs: {
       availableIn: {

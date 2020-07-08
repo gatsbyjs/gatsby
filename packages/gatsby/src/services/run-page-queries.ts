@@ -1,6 +1,6 @@
 import { processPageQueries } from "../query"
-import { IBuildContext } from "./"
 import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function runPageQueries({
@@ -9,7 +9,7 @@ export async function runPageQueries({
   store,
   program,
   graphqlRunner,
-}: Partial<IBuildContext>): Promise<void> {
+}: Partial<IQueryRunningContext>): Promise<void> {
   assertStore(store)
 
   if (!queryIds) {
