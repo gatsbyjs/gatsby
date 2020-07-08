@@ -2,7 +2,7 @@
 title: "Announcing Blog Theme 2.0"
 date: 2020-07-08
 author: Laurie Barth
-excerpt: "Gatsby blogs are a great part of the Gatsby ecosystem and now they're even easier to build out of the box. Introducing the new and improved Blog Theme version 2.0."
+excerpt: "Gatsby blogs are a core part of the Gatsby ecosystem and now they're even easier to build out of the box. Introducing the new and improved Blog Theme version 2.0."
 tags:
   - gatsby-themes
   - mdx
@@ -10,7 +10,7 @@ tags:
   - blog
 ---
 
-Today I'm excited to share with you a release we've been working on for the past few months. When we first released Gatsby themes we had ideas of what the community might build, but you've really blown away our expectations.
+Today I'm excited to share with you a release we've been working on for the past few months. When we first released Gatsby themes we had ideas of what the community might build, but in the time since then you've really blown away our expectations.
 
 Over the past year we've watched patterns emerge, accepted practices, and come to understand how people develop and use themes. As a result, we're excited about this opportunity to introduce an update to our most popular theme, `gatsby-theme-blog`.
 
