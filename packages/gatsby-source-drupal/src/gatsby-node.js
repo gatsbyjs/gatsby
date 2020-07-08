@@ -106,15 +106,9 @@ exports.sourceNodes = async (
 
   fastBuilds = fastBuilds || false
   if (fastBuilds) {
-    let lastFetched = 0
-    if (
-      store.getState().status.plugins &&
-      store.getState().status.plugins[`gatsby-source-drupal`] &&
-      store.getState().status.plugins[`gatsby-source-drupal`].lastFetched
-    ) {
-      lastFetched = store.getState().status.plugins[`gatsby-source-drupal`]
-        .lastFetched
-    }
+    let lastFetched =
+      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
+      0
 
     const drupalFetchIncrementalActivity = reporter.activityTimer(
       `Fetch incremental changes from Drupal`
@@ -135,15 +129,17 @@ exports.sourceNodes = async (
       )
 
       if (data.data.status === -1) {
+        // The incremental data is expired or this is the first fetch.
         reporter.info(`Unable to pull incremental data changes from Drupal`)
         setPluginStatus({ lastFetched: data.data.timestamp })
         requireFullRebuild = true
       } else {
         // Touch nodes so they are not garbage collected by Gatsby.
-        const existingNodes = getNodes().filter(
-          n => n.internal.owner === `gatsby-source-drupal`
-        )
-        existingNodes.forEach(n => touchNode({ nodeId: n.id }))
+        getNodes().forEach(node => {
+          if (node.internal.owner === `gatsby-source-drupal`) {
+            touchNode({ nodeId: node.id })
+          }
+        })
 
         // Process sync data from Drupal.
         let nodesToSync = data.data.entities

@@ -39,11 +39,7 @@ describe(`gatsby-source-drupal`, () => {
   }
   const getNodes = jest.fn(() => {
     return {
-      filter: jest.fn(() => {
-        return {
-          forEach: jest.fn(() => nodes),
-        }
-      }),
+      forEach: jest.fn(() => nodes),
     }
   })
 
