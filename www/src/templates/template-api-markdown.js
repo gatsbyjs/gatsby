@@ -63,7 +63,7 @@ const mergeFunctions = (data, context) => {
   return mergedFuncs
 }
 
-export default function APITemplate({ data, location }) {
+export default function APITemplate({ data, location, pageContext }) {
   const page = data.docPage
   const heading = page.contentsHeading || `APIs`
   const headingId = `apis`
