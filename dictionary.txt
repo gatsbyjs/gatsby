@@ -9,7 +9,6 @@
 .scss
 .tsx
 .yaml
-.yml
 ½
 ⅓
 1000px
