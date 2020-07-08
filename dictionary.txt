@@ -1,4 +1,3 @@
-.babelrc
 .env
 .html
 .jpg
