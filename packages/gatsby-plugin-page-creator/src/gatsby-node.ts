@@ -1,5 +1,5 @@
 import globCB from "glob"
-import Promise from "bluebird"
+import Bluebird from "bluebird"
 import _ from "lodash"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
@@ -8,13 +8,13 @@ import { createPage } from "./create-page-wrapper"
 import { createPath, watchDirectory } from "gatsby-page-utils"
 
 type GlobParameters = Parameters<typeof globCB>
-const glob = Promise.promisify<
+const glob = Bluebird.promisify<
   Array<string>,
   GlobParameters[0],
   GlobParameters[1]
 >(globCB)
 
-interface Options extends PluginOptions {
+interface IOptions extends PluginOptions {
   path: string
   pathCheck: boolean
   ignore: Array<string>
@@ -34,9 +34,9 @@ async function createPagesStatefully(
   }: CreatePagesArgs & {
     traceId: "initial-createPages"
   },
-  { path: pagesPath, pathCheck = true, ignore }: Options,
+  { path: pagesPath, pathCheck = true, ignore }: IOptions,
   doneCb: PluginCallback
-) {
+): Promise<void> {
   const { deletePage } = actions
   const { program } = store.getState()
 
