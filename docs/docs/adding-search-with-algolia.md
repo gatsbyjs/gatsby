@@ -7,7 +7,7 @@ Once you've added some content to your site, you'll want to make it easy for you
 Two things before you begin:
 
 1. Beyond this guide, you may also want to checkout Algolia's extensive [docs on how to get started in React](https://www.algolia.com/doc/guides/building-search-ui/getting-started/react).
-2. If you're looking to add search to a documentation site, you can let Algolia handle most of the steps outlined below by using their [Docsearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
+2. If you're looking to add search to a documentation site, you can let Algolia handle most of the steps outlined below by using their [DocSearch](https://community.algolia.com/docsearch) functionality. For other types of sites and more fine-grained control over exactly what data should be indexed, read on.
 
 ## Why Use Algolia?
 
@@ -61,7 +61,7 @@ Notice that you're loading `queries` from a file at `./src/utils/algolia.js` (yo
 
 For this, you will need to navigate to [the 'API Keys' section of your Algolia profile](https://www.algolia.com/api-keys). If you already have an account, you will find your API keys here. If not, you will need to sign up for one and then navigate to this link. It should look something like this screenshot, only with actual numbers instead of redacted ones:
 
-![algolia api key screenshot](./images/algolia-api-keys.png)
+![Algolia API key screenshot](./images/algolia-api-keys.png)
 
 Once you have your App ID, Search-Only API Key, and Admin API Key, place the following code into your `.env` file, replacing the placeholder keys with your keys:
 
@@ -555,7 +555,7 @@ export const PostHit = clickHandler => ({ hit }) => (
 )
 ```
 
-`Highlight` and `Snippet` imported from `react-instantsearch-dom` both display attributes of matching search results to the user. Their distinction is that the former renders it in full (e.g. a title, date or list of tags) whereas the latter only shows a snippet, i.e. a text passage of given length surrounding the matching string (e.g. for body texts). In each case the `attribute` prop should be the name of the property as it was assigned in `src/utils/algolia.js` and as it appears in your Aloglia indices.
+`Highlight` and `Snippet` imported from `react-instantsearch-dom` both display attributes of matching search results to the user. Their distinction is that the former renders it in full (e.g. a title, date or list of tags) whereas the latter only shows a snippet, i.e. a text passage of given length surrounding the matching string (e.g. for body texts). In each case the `attribute` prop should be the name of the property as it was assigned in `src/utils/algolia.js` and as it appears in your Algolia indices.
 
 ## Usage
 

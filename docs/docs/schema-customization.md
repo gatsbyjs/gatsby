@@ -562,7 +562,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 This approach becomes a lot more powerful when plugins provide custom field
 extensions. A _very_ basic markdown transformer plugin could for example provide
-an extension to convert markdown strings into html:
+an extension to convert markdown strings into HTML:
 
 ```js:title=gatsby-transformer-basic-md/src/gatsby-node.js
 const remark = require(`remark`)
@@ -650,7 +650,7 @@ If multiple field extensions are added to a field, resolvers are processed in th
 first a custom resolver added with `createTypes` (or `createResolvers`) runs, then field
 extension resolvers execute from left to right.
 
-Finally, note that in order to get the current fieldValue, you use `context.defaultFieldResolver`.
+Finally, note that in order to get the current `fieldValue`, you use `context.defaultFieldResolver`.
 
 ## createResolvers API
 

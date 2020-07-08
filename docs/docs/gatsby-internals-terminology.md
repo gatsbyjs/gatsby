@@ -53,11 +53,11 @@ It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=net
 
 ### jsonName
 
-The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
+The logical name for the page's query JSON result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
-The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
+The actual JSON file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
 
 ### component
 
