@@ -166,7 +166,9 @@ const processQueries = async (
   queryJobs,
   { activity, graphqlRunner, graphqlTracing }
 ) => {
-  const queue = queryQueue.createBuildQueue(graphqlRunner, { graphqlTracing })
+  const queue = queryQueue.createAppropriateQueue(graphqlRunner, {
+    graphqlTracing,
+  })
   return queryQueue.processBatch(queue, queryJobs, activity)
 }
 

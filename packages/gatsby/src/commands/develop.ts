@@ -2,7 +2,7 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import { spawn } from "child_process"
+import { spawn, ChildProcess } from "child_process"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import socket from "socket.io"
@@ -58,7 +58,7 @@ const doesConfigChangeRequireRestart = (
 }
 
 class ControllableScript {
-  private process
+  private process?: ChildProcess
   private script
   public isRunning
   constructor(script) {
@@ -75,7 +75,13 @@ class ControllableScript {
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
-  async stop(signal: string | null = null, code?: number): Promise<void> {
+  async stop(
+    signal: NodeJS.Signals | null = null,
+    code?: number
+  ): Promise<void> {
+    if (!this.process) {
+      throw new Error(`Trying to stop the process before starting it`)
+    }
     this.isRunning = false
     if (signal) {
       this.process.kill(signal)
@@ -90,14 +96,31 @@ class ControllableScript {
     }
 
     return new Promise(resolve => {
+      if (!this.process) {
+        throw new Error(`Trying to stop the process before starting it`)
+      }
       this.process.on(`exit`, () => {
-        this.process.removeAllListeners()
+        if (this.process) {
+          this.process.removeAllListeners()
+        }
+        this.process = undefined
         resolve()
       })
     })
   }
-  on(type, callback): void {
-    this.process.on(type, callback)
+  onMessage(callback: (msg: any) => void): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach message handler before process starter`)
+    }
+    this.process.on(`message`, callback)
+  }
+  onExit(
+    callback: (code: number | null, signal: NodeJS.Signals | null) => void
+  ): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach exit handler before process starter`)
+    }
+    this.process.on(`exit`, callback)
   }
 }
 
@@ -211,20 +234,40 @@ module.exports = async (program: IProgram): Promise<void> => {
       io.emit(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
-      developProcess.on(`message`, handleChildProcessIPC)
+      developProcess.onMessage(handleChildProcessIPC)
       isRestarting = false
     })
   })
 
   developProcess.start()
-  developProcess.on(`message`, handleChildProcessIPC)
+  developProcess.onMessage(handleChildProcessIPC)
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
-  developProcess.on(`exit`, code => {
-    if (isRestarting) return
-    process.exit(code)
-  })
+  developProcess.onExit(
+    (code: number | null, signal: NodeJS.Signals | null) => {
+      if (isRestarting) return
+      if (signal !== null) {
+        process.kill(process.pid, signal)
+        return
+      }
+      if (code !== null) {
+        process.exit(code)
+      }
+
+      // This should not happen:
+      // https://nodejs.org/api/child_process.html#child_process_event_exit
+      // The 'exit' event is emitted after the child process ends. If the process
+      // exited, code is the final exit code of the process, otherwise null.
+      // If the process terminated due to receipt of a signal, signal is the
+      // string name of the signal, otherwise null. One of the two will always be
+      // non - null.
+      //
+      // but just in case let do non-zero exit, because we are in situation
+      // we don't expect to be possible
+      process.exit(1)
+    }
+  )
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 

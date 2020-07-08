@@ -159,7 +159,7 @@ itemsArrayWithTagsArray.map((item, i) => {
     id: createNodeId(`${i}`),
     parent: `__SOURCE__`,
     internal: {
-      type: `item`, // name of the graphQL query --> allItem {}
+      type: `item`, // name of the GraphQL query --> allItem {}
       contentDigest: createContentDigest(item),
     },
     children: [],
