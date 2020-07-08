@@ -28,8 +28,6 @@ const containerStyles = {
 function DocsMarkdownPage({
   page,
   location,
-  prev,
-  next,
   tableOfContentsItems = page.tableOfContents.items,
   tableOfContentsDepth = page.tableOfContentsDepth,
   children,
@@ -116,7 +114,11 @@ function DocsMarkdownPage({
               <MDXRenderer slug={page.slug}>{page.body}</MDXRenderer>
               {children}
               <MarkdownPageFooter path={page.relativePath} />
-              <PrevAndNext sx={{ mt: 9 }} prev={prev} next={next} />
+              <PrevAndNext
+                sx={{ mt: 9 }}
+                prev={page.nav?.prev}
+                next={page.nav?.next}
+              />
             </div>
           </div>
         </Container>

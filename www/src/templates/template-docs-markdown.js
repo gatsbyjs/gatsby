@@ -9,12 +9,7 @@ function DocsTemplate({ data, location }) {
   const page = data.docPage
 
   return (
-    <DocsMarkdownPage
-      page={page}
-      location={location}
-      prev={page.nav?.prev}
-      next={page.nav?.next}
-    >
+    <DocsMarkdownPage page={page} location={location}>
       {page.issue && (
         <a href={page.issue} target="_blank" rel="noopener noreferrer">
           See the issue relating to this stub on GitHub

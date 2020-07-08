@@ -60,7 +60,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       docPage: DocPage @link(by: "slug")
       prev: NavItem @link(by: "slug")
       next: NavItem @link(by: "slug")
-      items: [NavItem!] @link(by: "slug")
+      items: [NavItem] @link(by: "slug")
     }
 
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
@@ -256,7 +256,6 @@ exports.createPages = async ({ graphql, actions }) => {
   data.allDocPage.nodes.forEach(node => {
     if (!node.slug) return
 
-    const prevAndNext = getPrevAndNext(node.slug)
     if (node.jsdoc) {
       // API template
       createPage({
@@ -266,7 +265,6 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: node.slug,
           jsdoc: node.jsdoc,
           apiCalls: node.apiCalls,
-          ...prevAndNext,
         },
       })
     } else {
@@ -276,7 +274,6 @@ exports.createPages = async ({ graphql, actions }) => {
         component: docsTemplate,
         context: {
           slug: node.slug,
-          ...prevAndNext,
         },
       })
     }

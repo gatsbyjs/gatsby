@@ -63,8 +63,7 @@ const mergeFunctions = (data, context) => {
   return mergedFuncs
 }
 
-export default function APITemplate({ data, location, pageContext }) {
-  const { prev, next } = pageContext
+export default function APITemplate({ data, location }) {
   const page = data.docPage
   const heading = page.contentsHeading || `APIs`
   const headingId = `apis`
@@ -93,8 +92,6 @@ export default function APITemplate({ data, location, pageContext }) {
     <DocsMarkdownPage
       page={page}
       location={location}
-      prev={prev}
-      next={next}
       tableOfContentsItems={tableOfContentsItems}
       tableOfContentsDepth={tableOfContentsDepth}
     >
@@ -110,6 +107,16 @@ export default function APITemplate({ data, location, pageContext }) {
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
     docPage(slug: { eq: $path }) {
+      nav {
+        prev {
+          title
+          link: slug
+        }
+        next {
+          title
+          link: slug
+        }
+      }
       relativePath
       slug
       body
