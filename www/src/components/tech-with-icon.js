@@ -8,7 +8,7 @@ export default function TechWithIcon({ icon, height = `1.2em`, children }) {
       &nbsp;
       <img
         src={icon}
-        alt={children}
+        alt=""
         sx={{
           verticalAlign: `text-bottom`,
           height: `${height}`,
