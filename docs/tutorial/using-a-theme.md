@@ -87,7 +87,7 @@ my-blog
 └── package.json
 ```
 
-Despite the `md` extension, `my-post.md` is treated as an MDX file. When using this theme, you can use `md` and `mdx` extensions interchangably.
+Despite the `md` extension, `my-post.md` is treated as an MDX file. When using this theme, you can use `md` and `mdx` extensions interchangeably.
 
 Inside that Markdown file, add content. The top section is called [frontmatter](/docs/mdx/writing-pages/#using-frontmatter-in-mdx) and `title` and `date` are required fields.
 

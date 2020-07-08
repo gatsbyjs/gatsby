@@ -52,6 +52,7 @@
 200px
 20K
 20x
+21YunBox
 250px
 2a
 2am
@@ -797,6 +798,7 @@ gatsby-source-shopify
 gatsby-source-stripe
 gatsby-source-tmdb
 gatsby-source-wordpress
+gatsby-source-wordpress-experimental
 gatsby-source-x-cms
 gatsby-ssr
 gatsby-starter-blog
@@ -863,6 +865,7 @@ Gienow
 gif
 GIFs
 Gitalk
+Gitee
 GitLab
 Gitpod
 Gitter
@@ -2078,6 +2081,8 @@ WeakMap
 WebAIM
 webapps
 Webby
+webfont
+webfonts
 WebGL
 webhook
 webhooks
