@@ -125,6 +125,7 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
+// FIXME the way this renders makes console print "createPage" on loop
 async function traverseHierarchy(hierarchy, fn) {
   for (let item of hierarchy) {
     await fn(item)
@@ -147,6 +148,7 @@ exports.sourceNodes = async ({
   ]
   await traverseHierarchy(allItems, async navItem => {
     const navItemId = createNodeId(`navItem-${navItem.link || navItem.title}`)
+    // FIXME figure out how not to duplicate this logic
     const { prev, next } = getPrevAndNext(navItem.link || ``) || {}
     await createNode({
       id: navItemId,
