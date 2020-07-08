@@ -7,29 +7,35 @@ import {
   QueryLayerContent,
   DisplayLayerContent,
 } from "./image-content-sections"
+import {
+  AbstractSymbol,
+  AtomicSymbol,
+  GraphqlLogo,
+  ReactLogo,
+} from "../../../assets/icons/layer-icons"
 
 const layers = [
   {
     title: `Install`,
-    icon: `AbstractSymbol`,
+    icon: <AbstractSymbol />,
     baseColor: `orange`,
     component: InstallLayerContent,
   },
   {
     title: `Config`,
-    icon: `AtomicSymbol`,
+    icon: <AtomicSymbol />,
     baseColor: `green`,
     component: ConfigLayerContent,
   },
   {
     title: `Query`,
-    icon: `GraphqlLogo`,
+    icon: <GraphqlLogo />,
     baseColor: `magenta`,
     component: QueryLayerContent,
   },
   {
     title: `Display`,
-    icon: `ReactLogo`,
+    icon: <ReactLogo />,
     baseColor: `blue`,
     component: DisplayLayerContent,
   },

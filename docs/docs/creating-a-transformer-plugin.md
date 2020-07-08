@@ -55,7 +55,7 @@ module.exports = {
 }
 ```
 
-These are exposed in your graphql schema which you can query:
+These are exposed in your GraphQL schema which you can query:
 
 ```graphql
 query {

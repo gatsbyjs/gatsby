@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import "@babel/polyfill"
 import os from "os"
 import semver from "semver"
 import util from "util"

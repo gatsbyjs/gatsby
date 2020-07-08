@@ -343,7 +343,7 @@ And then like this to access the image using the alias name `banner`.
 <Img fluid={data.banner.childImageSharp.fluid} />
 ```
 
-These examples should handle a fair number of use cases. A couple bonus things:
+These examples should handle a fair number of use cases. A couple of bonus things:
 
 ## Aspect ratio
 

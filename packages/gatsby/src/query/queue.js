@@ -59,6 +59,16 @@ const createDevelopQueue = getRunner => {
   return new Queue(handler, queueOptions)
 }
 
+const createAppropriateQueue = (graphqlRunner, runnerOptions = {}) => {
+  if (process.env.NODE_ENV === `production`) {
+    return createBuildQueue(graphqlRunner, runnerOptions)
+  }
+  if (!graphqlRunner) {
+    graphqlRunner = new GraphQLRunner(store, runnerOptions)
+  }
+  return createDevelopQueue(() => graphqlRunner)
+}
+
 /**
  * Returns a promise that pushes jobs onto queue and resolves onces
  * they're all finished processing (or rejects if one or more jobs
@@ -116,4 +126,5 @@ module.exports = {
   createBuildQueue,
   createDevelopQueue,
   processBatch,
+  createAppropriateQueue,
 }
