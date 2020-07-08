@@ -33,7 +33,8 @@ export const applyStatusTriageNeededLabel = async () => {
     if (
       issueOrPullRequest &&
       !issueOrPullRequest.labels.some(
-        (label: GitHubIssueLabel) => label.name === triageNeededLabel
+        (label: GitHubIssueLabel) =>
+          label.name === triageNeededLabel || label.name.indexOf(`topic:`) === 0
       )
     ) {
       const opts = {
