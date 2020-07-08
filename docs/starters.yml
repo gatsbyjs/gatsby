@@ -6859,6 +6859,38 @@
     - Pagination
     - Share Button
     - Prism for code preview
+- url: https://ghost-novela-preview.draftbox.co/
+  repo: https://github.com/draftbox-co/gatsby-ghost-novela-starter
+  description: A Gatsby starter for creating blogs from headless Ghost CMS.
+  tags:
+    - AMP
+    - Blog
+    - CMS:Headless
+    - CMS:Ghost
+    - Disqus
+    - Language:TypeScript
+    - Markdown
+    - MDX
+    - Netlify
+    - Pagination
+    - PWA
+    - RSS
+    - SEO
+    - Styling:CSS-in-JS
+    - Styling:Theme-UI
+  features:
+    - Novela theme by Narrative
+    - Data sourcing from headless Ghost
+    - Responsive design
+    - SEO optimized
+    - OpenGraph structured data
+    - Twitter Cards meta
+    - Sitemap Generation
+    - XML Sitemaps
+    - Progressive Web App
+    - Offline Support
+    - RSS Feed
+    - Composable and extensible
 - url: https://gatsby-starter-portfolio.herokuapp.com/
   repo: https://github.com/surudhb/gatsby-personal-site-template
   description: A minimalist dev portfolio featuring a blog, SEO, app-theming with React.Context, Bootstrap and Sass
