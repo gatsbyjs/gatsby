@@ -11367,6 +11367,16 @@
   built_by: Gabriel Giordano
   built_by_url: https://gabrielgiordano.com
   featured: false
+- title: Raleigh Bikes
+  url: https://www.raleigh.co.uk/gb/en/
+  main_url: https://raleigh.co.uk/
+  description: >
+    Chances are that you rode a Raleigh when you were younger - and maybe you still do now. Raleigh is one of the oldest bicycle companies in the world. Website build with Algolia, Shopware & Storyblok.
+  categories:
+    - E-commerce
+    - Sports
+  built_by: Oberon (for Accell Group)
+  built_by_url: https://oberon.nl
 - title: Nitro Sign
   main_url: https://www.nitrosign.com
   url: https://www.nitrosign.com
