@@ -1006,7 +1006,7 @@ add_filter('acf/format_value/type=gallery', 'acf_nullify_empty', 100, 3);
 add_filter('acf/format_value/type=repeater', 'acf_nullify_empty', 100, 3);
 ```
 
-This code should be added as a plugin (recommended), or within the `functions.php` of a theme.
+This code is also available as a [WordPress plugin](https://wordpress.org/plugins/wp-acf-nullify-gatsby/) or can be added within the `functions.php` of a theme.
 
 ### GraphQL Error - Unknown field `localFile` on type `[image field]`
 
