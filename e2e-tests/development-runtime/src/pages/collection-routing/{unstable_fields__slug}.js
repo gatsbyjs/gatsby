@@ -19,8 +19,8 @@ function BlogPost({ data: { post } }) {
 export default unstable_createPagesFromData(BlogPost, `MarkdownRemark`)
 
 export const blogPostQuery = graphql`
-  query GetBlogPostBySlugCollection($fields__slug: String!) {
-    post: markdownRemark(fields: { slug: { eq: $fields__slug } }) {
+  query GetBlogPostBySlugCollection($id: String!) {
+    post: markdownRemark(id: { eq: $id }) {
       fields {
         slug
       }

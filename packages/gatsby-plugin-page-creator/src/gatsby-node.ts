@@ -3,9 +3,18 @@ import Bluebird from "bluebird"
 import _ from "lodash"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
-import { CreatePagesArgs, PluginOptions, PluginCallback } from "gatsby"
+import {
+  CreatePagesArgs,
+  ParentSpanPluginArgs,
+  SetFieldsOnGraphQLNodeTypeArgs,
+  PluginOptions,
+  PluginCallback,
+} from "gatsby"
 import { createPage } from "./create-page-wrapper"
 import { createPath, watchDirectory } from "gatsby-page-utils"
+import { collectionExtractQueryString } from "./collection-extract-query-string"
+import { parse, GraphQLString } from "graphql"
+import { derivePath } from "./derive-path"
 
 type GlobParameters = Parameters<typeof globCB>
 const glob = Bluebird.promisify<
@@ -99,4 +108,53 @@ async function createPagesStatefully(
   ).then(() => doneCb(null, null))
 }
 
+const knownCollections = new Map()
+
+function setFieldsOnGraphQLNodeType(
+  args: SetFieldsOnGraphQLNodeTypeArgs
+): object {
+  const collectionQuery = `all${args.type.name}`
+  if (knownCollections.has(collectionQuery)) {
+    return {
+      path: {
+        type: GraphQLString,
+        args: {
+          filePath: {
+            type: GraphQLString,
+          },
+        },
+        resolve: (source: object, { filePath }: { filePath: string }): string =>
+          derivePath(filePath, source),
+      },
+    }
+  }
+
+  return {}
+}
+
 exports.createPagesStatefully = createPagesStatefully
+exports.setFieldsOnGraphQLNodeType = setFieldsOnGraphQLNodeType
+
+exports.onPreInit = async function onPreInit(
+  _args: ParentSpanPluginArgs,
+  { path: pagesPath }: IOptions
+) {
+  systemPath.resolve(process.cwd(), pagesPath)
+  const pagesGlob = `**/\\{*\\}**`
+
+  const files = await glob(pagesGlob, { cwd: pagesPath })
+
+  await Bluebird.map(files, async relativePath => {
+    const absolutePath = require.resolve(
+      systemPath.join(pagesPath, relativePath)
+    )
+    const queryString = await collectionExtractQueryString(absolutePath)
+    if (!queryString) return
+    const ast = parse(queryString)
+    knownCollections.set(
+      // @ts-ignore
+      ast.definitions[0].selectionSet.selections[0].name.value,
+      relativePath
+    )
+  })
+}

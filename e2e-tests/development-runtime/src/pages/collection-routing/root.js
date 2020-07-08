@@ -8,9 +8,9 @@ export default function Root(props) {
       {props.data.allMarkdownRemark.nodes.map(node => {
         return (
           <Link
-            to={`/collection-routing/${node.fields.slug}`}
+            to={node.path}
             data-testid="collection-routing-blog"
-            data-testslug={node.fields.slug}
+            data-testslug={node.path}
           >
             {node.frontmatter.title}
           </Link>
@@ -27,9 +27,7 @@ export const query = graphql`
         frontmatter {
           title
         }
-        fields {
-          slug
-        }
+        path(filePath: "collection-routing/{fields__slug}")
       }
     }
   }

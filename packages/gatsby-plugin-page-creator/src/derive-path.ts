@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { handleUnstable } from "./handle-unstable"
+import slugify from "slugify"
 
 // Generates the path for the page from the file path
 // src/pages/product/{id}.js => /product/:id, pulls from nodes.id
@@ -32,7 +33,10 @@ export function derivePath(path: string, node: Record<string, any>): string {
 
     // 3.b  We do node or node.nodes here because we support the special group
     //      graphql field, which then moves nodes in another depth
-    const value = _.get(node.nodes, `[0]${key}`) || _.get(node, key)
+    const value = slugify(_.get(node.nodes, `[0]${key}`) || _.get(node, key), {
+      lower: true,
+      strict: true,
+    })
 
     // 3.c  log error if the key does not exist on node
     if (!value) {
