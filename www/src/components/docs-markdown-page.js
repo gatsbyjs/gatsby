@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import React from "react"
+import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
@@ -25,7 +25,7 @@ const containerStyles = {
   px: 9,
 }
 
-function DocsMarkdownPage({
+export default function DocsMarkdownPage({
   page,
   location,
   tableOfContentsItems = page.tableOfContents.items,
@@ -128,4 +128,28 @@ function DocsMarkdownPage({
   )
 }
 
-export default DocsMarkdownPage
+export const docPageContentFragment = graphql`
+  fragment DocPageContent on DocPage {
+    relativePath
+    slug
+    body
+    excerpt
+    timeToRead
+    tableOfContents
+    anchor
+    title
+    description
+    disableTableOfContents
+    tableOfContentsDepth
+    nav {
+      prev {
+        title
+        link: slug
+      }
+      next {
+        title
+        link: slug
+      }
+    }
+  }
+`
