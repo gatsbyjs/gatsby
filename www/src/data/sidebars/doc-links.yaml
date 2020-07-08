@@ -41,6 +41,8 @@
         - title: Preparing Your Environment
           link: /docs/preparing-your-environment/
           items:
+            - title: Basic Hardware & Software Requirements
+              link: /docs/basic-hardware-software-requirements/
             - title: Browser Support
               link: /docs/browser-support/
             - title: Gatsby on Windows
