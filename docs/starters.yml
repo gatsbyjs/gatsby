@@ -6804,6 +6804,18 @@
     - Fully responsive
     - Includes React Helmet to allow editing site meta tags
     - All landing page content can be customised through YAML files stored in content folder and in gatsby-config.js
+- url: https://adityaketkar.netlify.app/
+  repo: https://github.com/adityaketkar/circle-packing-personal-homepage
+  description: A Customizable Personal-Website Template, Ready to Deploy in 10 mins!
+  tags:
+    - Landing Page
+    - Onepage
+    - Portfolio
+  features:
+    - Based on Starter "Dimension"
+    - Easy to implement, data stored in JSON file
+    - Includes a instructional video, can be deployed by people with no coding experience
+    - Fully customizable template
 - url: https://vapor.aesthetic.codes/
   repo: https://github.com/vaporwavy/gatsby-vapor
   description: A custom, simple theme for Gatsby. Made for minimalists. Completely free and fully responsive.
