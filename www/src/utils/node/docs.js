@@ -1,4 +1,6 @@
+const { loadYaml } = require(`../load-yaml`)
 const minimatch = require(`minimatch`)
+const docLinks = loadYaml(`src/data/sidebars/doc-links.yaml`)
 
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
@@ -50,8 +52,18 @@ const slugToAnchor = slug =>
 
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
+    type NavItem implements Node @dontInfer {
+      slug: String
+      title: String!
+      docPage: DocPage @link(by: "slug")
+      prev: NavItem @link(by: "slug")
+      next: NavItem @link(by: "slug")
+      items: [NavItem!] @link(by: "slug")
+    }
+
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
       slug: String!
+      nav: NavItem! @link(from: "slug", by: "slug")
       anchor: String!
       relativePath: String!
       # Frontmatter-derived fields
@@ -111,6 +123,43 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
+async function traverseHierarchy(hierarchy, fn) {
+  for (let item of hierarchy) {
+    await fn(item)
+    if (item.items) {
+      await traverseHierarchy(item.items, fn)
+    }
+  }
+}
+
+exports.sourceNodes = async ({
+  actions,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode } = actions
+  await traverseHierarchy(docLinks[0].items, async navItem => {
+    const navItemId = createNodeId(`navItem-${navItem.title}`)
+    const { prev, next } = getPrevAndNext(navItem.link || ``) || {}
+    await createNode({
+      id: navItemId,
+      slug: navItem.link,
+      docPage: navItem.link,
+      prev: prev && prev.link,
+      next: next && next.link,
+      items: navItem.items && navItem.items.map(x => x.link),
+      title: navItem.title,
+      children: [],
+      internal: {
+        type: `NavItem`,
+        contentDigest: createContentDigest(navItem),
+        content: JSON.stringify(navItem),
+        description: `A navigation item`,
+      },
+    })
+  })
+}
+
 exports.onCreateNode = async ({
   node,
   actions,
@@ -154,6 +203,7 @@ exports.onCreateNode = async ({
   const fieldData = {
     ...node.frontmatter,
     slug,
+    nav: slug,
     anchor: slugToAnchor(slug),
     relativePath: getNode(node.parent).relativePath,
   }

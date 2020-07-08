@@ -103,6 +103,10 @@ exports.createResolvers = async helpers => {
   })
 }
 
+exports.sourceNodes = async helpers => {
+  await runApiForSections(`sourceNodes`, helpers)
+}
+
 exports.onCreateNode = async helpers => {
   await runApiForSections(`onCreateNode`, helpers)
 }
