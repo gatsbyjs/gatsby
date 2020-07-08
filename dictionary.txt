@@ -900,7 +900,6 @@ GraphiQl
 GraphiQL
 graphiql-code-exporter
 graphiql-filesystem
-graphql
 GraphQL
 GraphQL-based
 graphql-compose
