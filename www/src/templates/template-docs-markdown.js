@@ -12,8 +12,8 @@ function DocsTemplate({ data, location }) {
     <DocsMarkdownPage
       page={page}
       location={location}
-      prev={page.nav.prev}
-      next={page.nav.next}
+      prev={page.nav?.prev}
+      next={page.nav?.next}
     >
       {page.issue && (
         <a href={page.issue} target="_blank" rel="noopener noreferrer">
