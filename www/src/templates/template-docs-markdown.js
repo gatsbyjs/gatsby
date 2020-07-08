@@ -9,7 +9,12 @@ function DocsTemplate({ data, location, pageContext: { next, prev } }) {
   const page = data.docPage
 
   return (
-    <DocsMarkdownPage page={page} location={location} prev={prev} next={next}>
+    <DocsMarkdownPage
+      page={page}
+      location={location}
+      prev={page.nav.prev}
+      next={page.nav.next}
+    >
       {page.issue && (
         <a href={page.issue} target="_blank" rel="noopener noreferrer">
           See the issue relating to this stub on GitHub
@@ -24,6 +29,16 @@ export default DocsTemplate
 export const pageQuery = graphql`
   query($slug: String!) {
     docPage(slug: { eq: $slug }) {
+      nav {
+        prev {
+          title
+          link: slug
+        }
+        next {
+          title
+          link: slug
+        }
+      }
       relativePath
       slug
       body
