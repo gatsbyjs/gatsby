@@ -1,6 +1,8 @@
 const { loadYaml } = require(`../load-yaml`)
 const minimatch = require(`minimatch`)
 const docLinks = loadYaml(`src/data/sidebars/doc-links.yaml`)
+const tutorialLinks = loadYaml(`src/data/sidebars/tutorial-links.yaml`)
+const contributingLinks = loadYaml(`src/data/sidebars/contributing-links.yaml`)
 
 const { getPrevAndNext } = require(`../get-prev-and-next.js`)
 const { getMdxContentSlug } = require(`../get-mdx-content-slug`)
@@ -138,7 +140,12 @@ exports.sourceNodes = async ({
   createContentDigest,
 }) => {
   const { createNode } = actions
-  await traverseHierarchy(docLinks[0].items, async navItem => {
+  const allItems = [
+    ...docLinks[0].items,
+    ...tutorialLinks[0].items,
+    ...contributinLinks[0].items,
+  ]
+  await traverseHierarchy(allItems, async navItem => {
     const navItemId = createNodeId(`navItem-${navItem.title}`)
     const { prev, next } = getPrevAndNext(navItem.link || ``) || {}
     await createNode({
