@@ -1,4 +1,3 @@
-.babelrc
 .env
 .html
 .jpg
@@ -9,7 +8,6 @@
 .scss
 .tsx
 .yaml
-.yml
 ½
 ⅓
 1000px
@@ -124,7 +122,6 @@ Addy
 Adekunle
 Adnan
 AEM
-AgilityCMS
 Ahhh
 Airbnb
 Airtable
@@ -1018,12 +1015,6 @@ incineratingly
 Indexability
 indexable
 IndexedDB
-inferFromFieldName
-inferFromMapping
-inferGraphQLType
-inferInputObjectStrctureFromNodes
-inferInputObjectStructureFromFields
-inferObjectStructureFromNodes
 InfluxData
 infrastructure-centric
 ing

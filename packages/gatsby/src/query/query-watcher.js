@@ -195,6 +195,9 @@ exports.extractQueries = ({ parentSpan } = {}) => {
   return updateStateAndRunQueries(true, { parentSpan }).then(() => {
     // During development start watching files to recompile & run
     // queries on the fly.
+
+    // TODO: move this into a spawned service, and emit events rather than
+    // directly triggering the compilation
     if (process.env.NODE_ENV !== `production`) {
       watch(store.getState().program.directory)
     }
@@ -252,7 +255,7 @@ exports.startWatchDeletePage = () => {
     const componentPath = slash(action.payload.component)
     const { pages } = store.getState()
     let otherPageWithTemplateExists = false
-    for (let page of pages.values()) {
+    for (const page of pages.values()) {
       if (slash(page.component) === componentPath) {
         otherPageWithTemplateExists = true
         break

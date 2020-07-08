@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`transformer-react-doc-gen: onCreateNode Complex example should handle members should handle type unions 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Complex example should handle members should handle type unions 1`] = `
 Object {
   "elements": Array [
     Object {
@@ -18,7 +18,7 @@ Object {
 }
 `;
 
-exports[`transformer-react-doc-gen: onCreateNode Complex example should handle typedefs should handle type applications 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Complex example should handle typedefs should handle type applications 1`] = `
 Object {
   "children": Array [
     "documentationJS documentationJS node_1 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"}] line 12 path #[{\\"name\\":\\"ObjectType\\",\\"kind\\":\\"typedef\\"},{\\"fieldName\\":\\"properties\\",\\"fieldIndex\\":0}] line 3--DocumentationJSComponentDescription--comment.description",
@@ -52,12 +52,12 @@ Object {
 }
 `;
 
-exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: description content 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: description content 1`] = `
 "A pretty cool jsdoc example
 "
 `;
 
-exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: example 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: example 1`] = `
 Object {
   "description": "const apple = require('apple')
 apple()",
@@ -68,9 +68,9 @@ apple()",
 }
 `;
 
-exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: param description 1`] = `
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: param description 1`] = `
 "A nice crispy apple
 "
 `;
 
-exports[`transformer-react-doc-gen: onCreateNode Simple example should extract out a description, params, and examples: param name 1`] = `"paramName"`;
+exports[`gatsby-transformer-documentationjs: onCreateNode Simple example should extract out a description, params, and examples: param name 1`] = `"paramName"`;

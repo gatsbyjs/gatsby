@@ -1,10 +1,11 @@
 import { calcInitialDirtyQueryIds, groupQueryIds } from "../query"
-import { IBuildContext, IGroupedQueryIds } from "./"
+import { IGroupedQueryIds } from "./"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
 import { assertStore } from "../utils/assert-store"
 
 export async function calculateDirtyQueries({
   store,
-}: Partial<IBuildContext>): Promise<{
+}: Partial<IQueryRunningContext>): Promise<{
   queryIds: IGroupedQueryIds
 }> {
   assertStore(store)

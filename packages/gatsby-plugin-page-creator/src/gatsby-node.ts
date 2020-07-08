@@ -4,6 +4,8 @@ import _ from "lodash"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import { CreatePagesArgs, PluginOptions, PluginCallback } from "gatsby"
+import { createPage } from "./create-page-wrapper"
+import { createPath, watchDirectory } from "gatsby-page-utils"
 
 type GlobParameters = Parameters<typeof globCB>
 const glob = Promise.promisify<
@@ -11,9 +13,6 @@ const glob = Promise.promisify<
   GlobParameters[0],
   GlobParameters[1]
 >(globCB)
-
-const { createPage } = require(`./create-page-wrapper`)
-const { createPath, watchDirectory } = require(`gatsby-page-utils`)
 
 interface Options extends PluginOptions {
   path: string

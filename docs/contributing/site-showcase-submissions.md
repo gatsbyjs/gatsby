@@ -139,4 +139,4 @@ categories:
 
 ### Need to change your submission?
 
-If you want to edit anything in your site submission later, simply edit the .yml file by submitting another PR.
+If you want to edit anything in your site submission later, simply edit the `.yml` file by submitting another PR.
