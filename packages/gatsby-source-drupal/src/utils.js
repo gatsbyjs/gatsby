@@ -93,7 +93,7 @@ const handleWebhookUpdate = async (
     reporter,
     store,
   },
-  pluginOptions
+  pluginOptions = {}
 ) => {
   const { createNode } = actions
 
@@ -154,7 +154,8 @@ const handleWebhookUpdate = async (
   }
 
   // download file
-  if (isFileNode(newNode)) {
+  const { skipFileDownloads } = pluginOptions
+  if (isFileNode(newNode) && !skipFileDownloads) {
     await downloadFile(
       {
         node: newNode,

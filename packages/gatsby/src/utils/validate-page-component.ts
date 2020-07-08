@@ -75,7 +75,7 @@ export function validatePageComponent(
     }
 
     // this check only applies to js and ts, not mdx
-    if (/\.(jsx?|tsx?)/.test(path.extname(component))) {
+    if ([`.js`, `.jsx`, `.ts`, `.tsx`].includes(path.extname(component))) {
       const includesDefaultExport =
         fileContent.includes(`export default`) ||
         fileContent.includes(`module.exports`) ||

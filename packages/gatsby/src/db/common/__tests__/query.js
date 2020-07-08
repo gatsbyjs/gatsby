@@ -1,4 +1,4 @@
-import { createDbQueriesFromObject, dbQueryToSiftQuery } from "../query"
+import { createDbQueriesFromObject } from "../query"
 
 describe(`DbQuery`, () => {
   it(`converts basic query`, () => {
@@ -14,15 +14,6 @@ describe(`DbQuery`, () => {
             "value": "2",
           },
           "type": "query",
-        },
-      ]
-    `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "id": Object {
-            "$eq": "2",
-          },
         },
       ]
     `)
@@ -44,15 +35,6 @@ describe(`DbQuery`, () => {
             "value": "2",
           },
           "type": "query",
-        },
-      ]
-    `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "internal.value": Object {
-            "$eq": "2",
-          },
         },
       ]
     `)
@@ -85,20 +67,6 @@ describe(`DbQuery`, () => {
             "value": /baz/,
           },
           "type": "query",
-        },
-      ]
-    `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "internal.value": Object {
-            "$eq": "2",
-          },
-        },
-        Object {
-          "internal.otherValue": Object {
-            "$regex": /baz/,
-          },
         },
       ]
     `)
@@ -148,27 +116,6 @@ describe(`DbQuery`, () => {
         },
       ]
     `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "id": Object {
-            "$in": Array [
-              "foo",
-            ],
-          },
-        },
-        Object {
-          "internal.value": Object {
-            "$eq": "2",
-          },
-        },
-        Object {
-          "internal.otherValue": Object {
-            "$regex": /baz/,
-          },
-        },
-      ]
-    `)
   })
 
   it(`converts elemMatch`, () => {
@@ -190,17 +137,6 @@ describe(`DbQuery`, () => {
             "nested",
           ],
           "type": "elemMatch",
-        },
-      ]
-    `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "nested": Object {
-            "$elemMatch": Object {
-              "$eq": "foo",
-            },
-          },
         },
       ]
     `)
@@ -227,19 +163,6 @@ describe(`DbQuery`, () => {
             "nested",
           ],
           "type": "elemMatch",
-        },
-      ]
-    `)
-    expect(query.map(q => dbQueryToSiftQuery(q))).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "nested": Object {
-            "$elemMatch": Object {
-              "foo": Object {
-                "$eq": "foo",
-              },
-            },
-          },
         },
       ]
     `)

@@ -12,6 +12,14 @@ const {
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
+import {
+  getNode,
+  getNodes,
+  getNodesByType,
+  getTypes,
+  saveResolvedNodes,
+} from "../redux/nodes"
+import { runFastFiltersAndSort } from "../redux/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -60,10 +68,9 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, nodeStore, createPageDependency }) {
+  constructor({ schema, schemaComposer, createPageDependency }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
-    this.nodeStore = nodeStore
     this.createPageDependencyActionCreator = createPageDependency
 
     this._rootNodeMap = new WeakMap()
@@ -124,7 +131,7 @@ class LocalNodeModel {
   getNodeById(args, pageDependencies) {
     const { id, type } = args || {}
 
-    const node = getNodeById(this.nodeStore, id)
+    const node = getNodeById(id)
 
     let result
     if (!node) {
@@ -156,7 +163,7 @@ class LocalNodeModel {
     const { ids, type } = args || {}
 
     const nodes = Array.isArray(ids)
-      ? ids.map(id => getNodeById(this.nodeStore, id)).filter(Boolean)
+      ? ids.map(id => getNodeById(id)).filter(Boolean)
       : []
 
     let result
@@ -189,11 +196,11 @@ class LocalNodeModel {
 
     let result
     if (!type) {
-      result = this.nodeStore.getNodes()
+      result = getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
       const nodes = nodeTypeNames.reduce((acc, typeName) => {
-        acc.push(...this.nodeStore.getNodesByType(typeName))
+        acc.push(...getNodesByType(typeName))
         return acc
       }, [])
       result = nodes.filter(Boolean)
@@ -268,7 +275,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = await this.nodeStore.runQuery({
+    const queryResult = await runFastFiltersAndSort({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
@@ -365,7 +372,7 @@ class LocalNodeModel {
     )
 
     if (!_.isEmpty(actualFieldsToResolve)) {
-      await this.nodeStore.saveResolvedNodes(nodeTypeNames, async node => {
+      await saveResolvedNodes(nodeTypeNames, async node => {
         this.trackInlineObjectsInRootNode(node)
         const resolvedFields = await resolveRecursive(
           this,
@@ -399,7 +406,7 @@ class LocalNodeModel {
    * @returns {string[]}
    */
   getTypes() {
-    return this.nodeStore.getTypes()
+    return getTypes()
   }
 
   /**
@@ -434,9 +441,9 @@ class LocalNodeModel {
     while (iterations++ < 100) {
       if (predicate && predicate(node)) return node
 
-      const parent = node.parent && getNodeById(this.nodeStore, node.parent)
+      const parent = getNodeById(node.parent)
       const id = this._rootNodeMap.get(node)
-      const trackedParent = id && getNodeById(this.nodeStore, id)
+      const trackedParent = getNodeById(id)
 
       if (!parent && !trackedParent) return node
 
@@ -554,8 +561,7 @@ class ContextualNodeModel {
   }
 }
 
-const getNodeById = (nodeStore, id) =>
-  id != null ? nodeStore.getNode(id) : null
+const getNodeById = id => (id != null ? getNode(id) : null)
 
 const toNodeTypeNames = (schema, gqlTypeName) => {
   const gqlType =
