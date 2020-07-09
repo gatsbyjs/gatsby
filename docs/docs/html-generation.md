@@ -64,7 +64,7 @@ The only input to `static-entry.js` is a path. So we must look up the page for t
 
 ### 4. Create Page Component
 
-Now we're ready to create a React component for the page (inside the Html container). This is handled by [RouteHandler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L123). Its render will create an element from the component in `sync-requires.js`.
+Now we're ready to create a React component for the page (inside the HTML container). This is handled by [RouteHandler](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L123). Its render will create an element from the component in `sync-requires.js`.
 
 ### 5. Add Preload Link and Script Tags
 
@@ -91,7 +91,7 @@ The [production-app.js](/docs/production-app/#first-load) needs to know the page
 
 ### 7. Render Final HTML Document
 
-Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render our top level Html component to a string and return it.
+Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render our top level HTML component to a string and return it.
 
 ## build-html.js
 
@@ -99,6 +99,6 @@ So, we've built the means to generate HTML for a page. This webpack bundle is sa
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. By default, the [render-html.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker/render-html.ts) creates a pool of workers equal to the number of physical cores on your machine. You can configure the number of pools by passing an optional environment variable, [`GATSBY_CPU_COUNT`](/docs/multi-core-builds). It then partitions the pages into groups and sends them to the workers, which run [worker](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker).
 
-The workers simply iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the html for the page's path in `/public`.
+The workers simply iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the HTML for the page's path in `/public`.
 
 Once all workers have finished, we're done!

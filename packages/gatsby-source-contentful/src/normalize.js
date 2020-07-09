@@ -126,12 +126,16 @@ exports.buildResolvableSet = ({
   const resolvable = new Set()
   existingNodes.forEach(n => {
     if (n.contentful_id) {
-      // We need to add only root level resolvable (assets and entries)
-      // derived nodes (markdown or JSON) will be recreated if needed.
-      // We also need to apply `fixId` as some objects will have ids
-      // prefixed with `c` and fixIds will recursively apply that
-      // and resolvable ids need to match that.
-      resolvable.add(fixId(n.contentful_id))
+      if (process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS) {
+        resolvable.add(n.contentful_id)
+      } else {
+        // We need to add only root level resolvable (assets and entries)
+        // derived nodes (markdown or JSON) will be recreated if needed.
+        // We also need to apply `fixId` as some objects will have ids
+        // prefixed with `c` and fixIds will recursively apply that
+        // and resolvable ids need to match that.
+        resolvable.add(fixId(n.contentful_id))
+      }
     }
   })
 
@@ -447,7 +451,9 @@ exports.createNodesForContentType = ({
       let entryNode = {
         id: mId(space.sys.id, entryItem.sys.id),
         spaceId: space.sys.id,
-        contentful_id: entryItem.sys.contentful_id,
+        contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
+          ? entryItem.sys.id
+          : entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
@@ -610,7 +616,9 @@ exports.createAssetNodes = ({
     })
 
     const assetNode = {
-      contentful_id: assetItem.sys.contentful_id,
+      contentful_id: process.env.EXPERIMENTAL_CONTENTFUL_SKIP_NORMALIZE_IDS
+        ? assetItem.sys.id
+        : assetItem.sys.contentful_id,
       id: mId(space.sys.id, assetItem.sys.id),
       parent: null,
       children: [],

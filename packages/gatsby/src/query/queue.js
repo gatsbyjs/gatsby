@@ -43,12 +43,7 @@ const createDevelopQueue = getRunner => {
   const handler = ({ job: queryJob, activity }, callback) => {
     queryRunner(getRunner(), queryJob, activity?.span).then(
       result => {
-        if (queryJob.isPage) {
-          websocketManager.emitPageData({
-            result,
-            id: queryJob.id,
-          })
-        } else {
+        if (!queryJob.isPage) {
           websocketManager.emitStaticQueryData({
             result,
             id: queryJob.id,
@@ -62,6 +57,16 @@ const createDevelopQueue = getRunner => {
   }
 
   return new Queue(handler, queueOptions)
+}
+
+const createAppropriateQueue = (graphqlRunner, runnerOptions = {}) => {
+  if (process.env.NODE_ENV === `production`) {
+    return createBuildQueue(graphqlRunner, runnerOptions)
+  }
+  if (!graphqlRunner) {
+    graphqlRunner = new GraphQLRunner(store, runnerOptions)
+  }
+  return createDevelopQueue(() => graphqlRunner)
 }
 
 /**
@@ -121,4 +126,5 @@ module.exports = {
   createBuildQueue,
   createDevelopQueue,
   processBatch,
+  createAppropriateQueue,
 }

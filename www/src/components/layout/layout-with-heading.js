@@ -29,7 +29,7 @@ LayoutWithHeading.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
   pageTitle: PropTypes.string,
-  pageIcon: PropTypes.string,
+  pageIcon: PropTypes.element,
 }
 
 export default LayoutWithHeading

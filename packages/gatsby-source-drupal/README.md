@@ -142,6 +142,28 @@ module.exports = {
 }
 ```
 
+### File Downloads
+
+You can use the `skipFileDownloads` option if you do not want Gatsby to download
+files from your Drupal website. This is useful if you are using another option
+for processing/serving images.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        skipFileDownloads: true,
+      },
+    },
+  ],
+}
+```
+
 ## Concurrent File Requests
 
 You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.

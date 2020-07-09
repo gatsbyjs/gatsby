@@ -43,7 +43,7 @@ The manual process required to make the Harry’s website perform was what they 
   Gatsby takes care of this for us.
 </Pullquote>
 
-Since Gatsby simply serves html files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
+Since Gatsby simply serves HTML files that are hosted on the edge (CDN: Content Delivery Network), this dramatically improves SEO. The developers can focus on other things because Gatsby just takes care of the performance. The team was excited about the image support from Gatsby that is “out-of-the-box.” They didn’t have to write code in-house, which was game changing for a team looking to lead in mobile-optimized shopping.
 
 The Flamingo team also wanted to shake things up with content and image design by providing the fastest, most seamless shopping experience. Gatsby’s image handling helps reduce raw image sizes and speed up page load times, and serves the right resolution image depending on different screen sizes. This gave the frontend developers the ability to go beyond JS to focus on edge hosting and optimization. With a site driven by modern development tools, Gatsby’s out-of-the-box image support is the cherry on top for Flamingo. “We don’t have to write the code ourselves!” said Johnny.
 
