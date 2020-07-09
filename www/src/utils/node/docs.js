@@ -100,7 +100,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       docPage: DocPage @link(by: "slug")
       prev: NavItem @link(by: "link")
       next: NavItem @link(by: "link")
-      items: [NavItem] @link(by: "link")
+      items: [NavItem!] @link(by: "link")
       parents: [NavItem] @link(by: "link")
     }
 
