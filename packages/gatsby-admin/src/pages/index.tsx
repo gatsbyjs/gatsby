@@ -12,6 +12,7 @@ import {
   ButtonProps,
   InputFieldLabel,
 } from "gatsby-interface"
+import PageEmbed from "../components/pageembed"
 
 const SecondaryButton: React.FC<ButtonProps> = props => (
   <Button
@@ -130,7 +131,12 @@ const PluginCard: React.FC<{
   <Flex
     flexDirection="column"
     gap={6}
-    sx={{ backgroundColor: `ui.background`, padding: 5, borderRadius: 2 }}
+    sx={{
+      backgroundColor: `ui.background`,
+      padding: 5,
+      borderRadius: 2,
+      boxShadow: `floating`,
+    }}
   >
     <Heading as="h2" sx={{ fontWeight: `500`, fontSize: 3 }}>
       {plugin.name}
@@ -157,6 +163,11 @@ const Index: React.FC<{}> = () => {
             shadowableFiles
           }
         }
+        allGatsbyPage {
+          nodes {
+            path
+          }
+        }
       }
     `,
   })
@@ -167,6 +178,26 @@ const Index: React.FC<{}> = () => {
 
   return (
     <Flex gap={7} flexDirection="column" sx={{ paddingY: 7, paddingX: 6 }}>
+      {!window ||
+        (!window.frameElement && (
+          <Flex gap={7} flexDirection="column">
+            <SectionHeading>Pages</SectionHeading>
+            <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
+              {data.allGatsbyPage.nodes
+                .filter(page => page.path.indexOf(`/dev-404-page/`) !== 0)
+                .map(page => (
+                  <Flex
+                    gap={5}
+                    flexDirection="column"
+                    sx={{ width: `100%`, textAlign: `center` }}
+                  >
+                    <PageEmbed height={400} src={page.path} />
+                    <Text sx={{ color: `text.secondary` }}>{page.path}</Text>
+                  </Flex>
+                ))}
+            </Grid>
+          </Flex>
+        ))}
       <SectionHeading>Plugins</SectionHeading>
       <Grid gap={6} columns={[1, 1, 1, 2, 3]}>
         {data.allGatsbyPlugin.nodes
