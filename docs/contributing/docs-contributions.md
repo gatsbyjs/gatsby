@@ -168,18 +168,38 @@ When you're new to Gatsby there can be a lot of words to learn...
 
 There are embedded examples in a few places in the docs (like the [GraphQL Reference guide](/docs/graphql-reference/)) that provide a working version of the code described. In the specific example of the GraphQL Query Options Reference page, these examples of the GraphiQL interface show how data can be queried from Gatsby's data layer.
 
-To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://711808k40x.sse.codesandbox.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. Write an example query, and when you have a query you are satisfied with, the query fields and names will be saved as URL parameters so you can share the link. Copy the URL and use it as the `src` of an iframe:
+To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be opened at its server container link, for example: https://711808k40x.sse.codesandbox.io/. Because CodeSandbox is running a Gatsby site in [`develop` mode instead of `build` mode](/docs/overview-of-the-gatsby-build-process/) you can navigate to GraphiQL by adding `/___graphql` to the link. There's a custom component that you can use to add the `Graphiql` iframe here in the markdown, it is called `GraphqlEmbed`. To add it you need to use it like this:
 
-<!-- prettier-ignore -->
-```mdx
-Here's an example of a GraphQL query inline:
-
-<iframe src="https://711808k40x.sse.codesandbox.io/___graphql?query=query%20TitleQuery%20%7B%0A%20%20site%20%7B%0A%20%20%20%20siteMetadata%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&explorerIsOpen=false&operationName=TitleQuery" /> // highlight-line
-
-More markdown content...
+```graphql
+# Component Props
+# title (string): Required, Title attribute for the iframe
+# query (string): Required, String with the graphql query you want to use
+# url (string): Optional, default is https://711808k40x.sse.codesandbox.io/___graphql
+# lazy (boolean): Optional, sets the iframe loading attribute, to lazy.
+<GraphqlEmbed
+  title="TitleQuery"
+  query={`query TitleQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }`}
+/>
 ```
 
-> Note that you should set the `explorerIsOpen` parameter in the URL to `false` if it isn't already.
+Use it here in the markdown without any code highlight syntax and it will produce the following:
+
+<GraphqlEmbed
+  title="TitleQuery"
+  query={`query TitleQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }`}
+/>
 
 ## Docs renaming instructions
 

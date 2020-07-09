@@ -122,11 +122,20 @@ This is my first Gatsby post written in Markdown!
 }
 ```
 
-<iframe
+<GraphqlEmbed
   title="Query for all markdown"
-  src="https://q4xpb.sse.codesandbox.io/___graphql?explorerIsOpen=false&query=%7B%0A%20%20allMarkdownRemark%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20path%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
-  width="600"
-  height="300"
+  url="https://q4xpb.sse.codesandbox.io/___graphql"
+  query={`{
+    allMarkdownRemark {
+      edges {
+        node {
+          frontmatter {
+            path
+          }
+        }
+      }
+    }
+  }`}
 />
 
 4. Add the JavaScript code to generate pages from Markdown posts at build time by copying the GraphQL query into `gatsby-node.js` and looping through the results:

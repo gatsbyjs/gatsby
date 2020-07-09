@@ -902,6 +902,7 @@ graphiql-code-exporter
 graphiql-filesystem
 GraphQL
 GraphQL-based
+GraphqlEmbed
 graphql-compose
 graphql-js
 Graphql-js
