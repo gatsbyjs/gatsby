@@ -161,6 +161,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@changesets/cli": "^2.9.2",
     "dictionary-en": "^3.0.1",
     "retext-emoji": "^7.0.1",
     "retext-spell": "^4.0.0",
