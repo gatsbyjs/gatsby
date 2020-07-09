@@ -57,6 +57,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
     type NavItem implements Node @dontInfer {
       slug: String
       title: String!
+      section: String!
       docPage: DocPage @link(by: "slug")
       prev: NavItem @link(by: "slug")
       next: NavItem @link(by: "slug")
@@ -135,24 +136,22 @@ async function traverseHierarchy(hierarchy, fn) {
   }
 }
 
-exports.sourceNodes = async ({
-  actions,
-  createNodeId,
-  createContentDigest,
-}) => {
+async function createNavItemNodes(
+  section,
+  navItems,
+  { actions, createNodeId, createContentDigest }
+) {
   const { createNode } = actions
-  const allItems = [
-    ...docLinks[0].items,
-    ...tutorialLinks[0].items,
-    ...contributingLinks[0].items,
-  ]
-  await traverseHierarchy(allItems, async navItem => {
+  await traverseHierarchy(navItems[0].items, async navItem => {
     // FIXME add a `section` to the ID to disambiguate between cross-links
-    const navItemId = createNodeId(`navItem-${navItem.link || navItem.title}`)
+    const navItemId = createNodeId(
+      `navItem-${section}-${navItem.link || navItem.title}`
+    )
     // FIXME figure out how not to duplicate this logic
     const { prev, next } = getPrevAndNext(navItem.link || ``) || {}
     await createNode({
       id: navItemId,
+      section,
       slug: navItem.link,
       docPage: navItem.link,
       prev: prev && prev.link,
@@ -168,6 +167,12 @@ exports.sourceNodes = async ({
       },
     })
   })
+}
+
+exports.sourceNodes = async helpers => {
+  await createNavItemNodes(`docs`, docLinks, helpers)
+  await createNavItemNodes(`tutorial`, tutorialLinks, helpers)
+  await createNavItemNodes(`contributing`, contributingLinks, helpers)
 }
 
 exports.onCreateNode = async ({
