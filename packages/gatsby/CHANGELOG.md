@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.22...gatsby@2.23.23) (2020-07-09)
+
+### Bug Fixes
+
+- **gatsby:** end activity if plugin didn't do it ([#25470](https://github.com/gatsbyjs/gatsby/issues/25470)) ([44d0c2a](https://github.com/gatsbyjs/gatsby/commit/44d0c2a))
+
+## [2.23.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.21...gatsby@2.23.22) (2020-07-07)
+
+### Features
+
+- **gatsby:** Use state machine for query running in develop ([#25378](https://github.com/gatsbyjs/gatsby/issues/25378)) ([e5ce35b](https://github.com/gatsbyjs/gatsby/commit/e5ce35b))
+
+## [2.23.21](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.20...gatsby@2.23.21) (2020-07-06)
+
+### Bug Fixes
+
+- **gatsby:** correctly pass through exit signals from child process ([#25520](https://github.com/gatsbyjs/gatsby/issues/25520)) ([be78563](https://github.com/gatsbyjs/gatsby/commit/be78563))
+- **gatsby-transformer-sharp:** removed unnecessary conversion to webp ([#25325](https://github.com/gatsbyjs/gatsby/issues/25325)) ([a5459bc](https://github.com/gatsbyjs/gatsby/commit/a5459bc))
+
+## [2.23.20](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.19...gatsby@2.23.20) (2020-07-03)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.23.19](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.18...gatsby@2.23.19) (2020-07-03)
 
 **Note:** Version bump only for package gatsby

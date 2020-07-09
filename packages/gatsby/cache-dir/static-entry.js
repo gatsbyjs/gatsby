@@ -17,7 +17,7 @@ const {
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
-const syncRequires = require(`./sync-requires`)
+const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 
 const stats = JSON.parse(
@@ -432,17 +432,29 @@ export default (pagePath, callback) => {
     />
   )
 
+  let bodyScripts = []
+  if (chunkMapping[`polyfill`]) {
+    chunkMapping[`polyfill`].forEach(script => {
+      const scriptPath = `${__PATH_PREFIX__}${script}`
+      bodyScripts.push(
+        <script key={scriptPath} src={scriptPath} noModule={true} />
+      )
+    })
+  }
+
   // Filter out prefetched bundles as adding them as a script tag
   // would force high priority fetching.
-  const bodyScripts = scripts
-    .filter(s => s.rel !== `prefetch`)
-    .map(s => {
-      const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-        1,
-        -1
-      )}`
-      return <script key={scriptPath} src={scriptPath} async />
-    })
+  bodyScripts = bodyScripts.concat(
+    scripts
+      .filter(s => s.rel !== `prefetch`)
+      .map(s => {
+        const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+          1,
+          -1
+        )}`
+        return <script key={scriptPath} src={scriptPath} async />
+      })
+  )
 
   postBodyComponents.push(...bodyScripts)
 

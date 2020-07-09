@@ -78,7 +78,7 @@ having to give up on the most powerful out-of-the-box feature.
 
 ## Community reception
 
-![NPM stats for gatsby plugin page creator](npm-stats.png)
+![npm stats for gatsby plugin page creator](npm-stats.png)
 
 This plugin has by far been the most impactful open source contribution I have made
 to date. As of writing, the newly published Gatsby plugin has been

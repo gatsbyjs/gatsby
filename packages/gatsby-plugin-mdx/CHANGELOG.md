@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.22...gatsby-plugin-mdx@1.2.23) (2020-07-09)
+
+### Performance Improvements
+
+- **gatsby-plugin-mdx:** prevent babel parse step at sourcing time ([#25437](https://github.com/gatsbyjs/gatsby/issues/25437)) ([760845a](https://github.com/gatsbyjs/gatsby/commit/760845a))
+
 ## [1.2.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.2.21...gatsby-plugin-mdx@1.2.22) (2020-07-02)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
