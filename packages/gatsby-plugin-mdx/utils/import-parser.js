@@ -19,7 +19,7 @@
  */
 function parseImportBindings(importCode, returnSegments = false) {
   const str = importCode.replace(
-    /^\s*import|[{},]|\s*from\s*['"][^'"]*?['"]\s*$/gm,
+    /^\s*import|[{},]|\s*from\s*['"][^'"]*?['"].*?$/gm,
     ` , `
   )
   const segments = str
