@@ -180,11 +180,9 @@ async function createNavItemNodes(
 ) {
   const { createNode } = actions
   await traverseHierarchy(navItems[0].items, async navItem => {
-    // FIXME add a `section` to the ID to disambiguate between cross-links
     const navItemId = createNodeId(
       `navItem-${section}-${navItem.link || navItem.title}`
     )
-    // FIXME figure out how not to duplicate this logic
     const { prev, next } = getPrevAndNext(section, navItem.link || ``) || {}
     await createNode({
       id: navItemId,
