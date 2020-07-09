@@ -6,7 +6,7 @@ import telemetry from "gatsby-telemetry"
 
 import { buildHTML } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
-import bootstrap from "../bootstrap"
+import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
@@ -30,6 +30,7 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  writeOutRequires,
 } from "../services"
 import {
   markWebpackStatusAsPending,
@@ -77,8 +78,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { graphqlRunner: bootstrapGraphQLRunner } = await bootstrap({
-    ...program,
+  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+    program,
     parentSpan: buildSpan,
   })
 
@@ -96,8 +97,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
   })
 
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
+  })
+
   await apiRunnerNode(`onPreBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -143,13 +156,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
     rewriteActivityTimer.end()
   }
-
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
 
   await flushPendingPageDataWrites()
   markWebpackStatusAsDone()
@@ -265,7 +271,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
-    graphql: bootstrapGraphQLRunner,
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()

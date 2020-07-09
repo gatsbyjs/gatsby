@@ -18,7 +18,7 @@ import { mediaQueries } from "gatsby-design-tokens/dist/theme-gatsbyjs-org"
 
 import { GoMarkGithub as GithubIcon } from "react-icons/go"
 import { MdLaunch as LaunchSiteIcon } from "react-icons/md"
-import FeaturedIcon from "../../assets/icons/featured-sites-icons"
+import { FeaturedSitesIcon } from "../../assets/icons"
 
 const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
   if (count) items = items.slice(0, count)
@@ -115,7 +115,7 @@ const ShowcaseList = ({ items, count, filters, onCategoryClick }) => {
                     })}`}
                     className="featured-site"
                   >
-                    <FeaturedIcon />
+                    <FeaturedSitesIcon />
                   </Link>
                 )}
               </div>

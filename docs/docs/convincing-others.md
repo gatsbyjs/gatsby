@@ -4,7 +4,7 @@ title: Convincing Others
 
 This section of the documentation has a slightly different tenor than the rest of the docs.
 
-The purpose of the rest of the docs is to help you understand Gatsby. The purpose of this section to help you explain Gatsby to others.
+The purpose of the rest of the docs is to help you understand Gatsby. The purpose of this section is to help you explain Gatsby to others.
 
 Explaining Gatsby well to others, and helping convince them to use it (or to let you use it) is a different kind of problem than becoming a talented Gatsby developer.
 

@@ -14,7 +14,8 @@ If you’ve installed `gatsby-theme-blog` you’ll notice that it renders a `Bio
 
 You can inspect `gatsby-theme-blog`'s file structure to determine the file path for the file you want to shadow.
 
-```text:title="tree gatsby-theme-blog"
+```text:title=gatsby-theme-blog
+├── gatsby-browser.js
 ├── gatsby-config.js
 ├── gatsby-node.js
 └── src
@@ -22,24 +23,23 @@ You can inspect `gatsby-theme-blog`'s file structure to determine the file path 
     │   ├── bio-content.js
     │   ├── bio.js // highlight-line
     │   ├── header.js
-    │   ├── headings.js
     │   ├── home-footer.js
     │   ├── layout.js
+    │   ├── post-date.js
     │   ├── post-footer.js
+    │   ├── post-hero.js
+    │   ├── post-link.js
+    │   ├── post-list.js
+    │   ├── post-title.js
     │   ├── post.js
     │   ├── posts.js
-    │   ├── seo.js
-    │   └── switch.js
+    │   └── seo.js
     ├── gatsby-plugin-theme-ui
-    │   ├── colors.js
-    │   ├── components.js
-    │   ├── index.js
-    │   ├── prism.js
-    │   ├── styles.js
-    │   └── typography.js
-    └── templates
-        ├── post.js
-        └── posts.js
+    │   └── components.js
+    └── gatsby-theme-blog-core
+       └── components
+          ├── post.js
+          └── posts.js
 ```
 
 ### Customizing the `Bio` component
@@ -69,25 +69,23 @@ user-site
             └── bio.js // highlight-line
 ```
 
-## Shadowing other themes
+## Shadowing other files
 
-Some themes, including `gatsby-theme-blog`, install other themes. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui`. If you want to customize the implementation of any theme you can do so with shadowing.
+Some themes, including `gatsby-theme-blog`, install additional plugins. `gatsby-theme-blog` uses `gatsby-plugin-theme-ui` with the `gatsby-theme-ui-preset` preset. Shadowing is one way to customize the styling of a theme.
 
-For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`.
+For example, to shadow `index.js` from `gatsby-plugin-theme-ui`, create a file named `user-site/src/gatsby-plugin-theme-ui/index.js`. The styles in this file will be automatically merged with those in `gatsby-theme-ui-preset`. For conflicting styles, your local shadowed settings take precedence.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
-import baseTheme from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/index"
-
 export default {
-  ...baseTheme,
   fontSizes: [12, 14, 16, 24, 32, 48, 64, 96, 128],
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   colors: {
-    ...baseTheme.colors,
     primary: `tomato`,
   },
 }
 ```
+
+> Note that any styles in shadowed files will automatically get deep-merged with your `preset` theme. Shadowed styles take precedence.
 
 Which will result in the following directory tree:
 
@@ -218,13 +216,8 @@ export default function CallToAction(props) {
 **Note:** For this approach to work NewsletterCTA has to accept a `className` property to apply styles after the CSS prop is transformed by the Emotion babel plugin.
 
 ```js:title=src/gatsby-plugin-theme-ui/index.js
-import theme from "gatsby-plugin-theme-ui/src"
-
-const { colors } = theme
 export default {
-  ...theme,
   colors: {
-    ...colors,
     primary: "tomato",
   },
 }

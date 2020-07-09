@@ -48,7 +48,7 @@ So, literally _everyone_.
 
 ![line graph showing job roles of people who would be very disappointed if they could not use Gatsby](./image6.png)
 
-![Line graph showing job roles of people who would be somewhat disappointed if they could not use Gatsby ](./image2.png)
+![Line graph showing job roles of people who would be somewhat disappointed if they could not use Gatsby](./image2.png)
 
 ### What is the main benefit you receive from Gatsby?
 
@@ -71,6 +71,6 @@ Requests for incremental builds and complaints about slow builds have decreased 
 
 Thank you again to all who have responded to the survey so far; your responses help guide the focus of the community to answer real-world needs. If you haven't filled out the survey yet, you can run `gatsby feedback` at any time after upgrading your version of `gatsby` in a project's `package.json` file, and then rerunning dependency and install commands. We would love to hear from you!
 
-Otherwise, wait to see the survey appear in a CLI near you! The plan is to do this every 3 months, at the most, and then report results. (If you'd like to opt out, see the [Telemetry Docs](/docs/telemetry/#how-to-opt-out/)).
+Otherwise, wait to see the survey appear in a CLI near you! The plan is to do this every 3 months, at the most, and then report results. (If you'd like to opt out, see the [Telemetry Docs](/docs/telemetry/#how-to-opt-out)).
 
 If you haven't used Gatsby yet, try it out and let us know what you think! You can install the Gatsby CLI using `npm install -g gatsby-cli` ([see the Quickstart Guide for more details](/docs/quick-start/)).

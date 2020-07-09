@@ -45,7 +45,7 @@ Patrick wanted me to find a better, more modern solution and that’s where I st
 
 The speed is lightning fast. We removed WordPress entirely from the equation and replaced it with the more user-friendly, less of a headache [Contentful](https://www.contentful.com/).
 
-He also liked the cost-effectiveness of Godaddy but when things broke, it was a huge time suck to repair. We swapped Godaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our GitHub repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
+He also liked the cost-effectiveness of GoDaddy but when things broke, it was a huge time suck to repair. We swapped GoDaddy with [Netlify](https://netlify.com) and used Netlify to automatically run production builds from our GitHub repo. We wired Contentful to Netlify using a hook and to GatsbyJS using API keys and now Iron Cove’s site was fast and super simple to update. A win-win all around.
 
 Patrick loved Gatsby so much he created a new product line where he is actively looking to help companies build sites using GatsbyJS and all the other tools he used on his current site.
 
@@ -94,7 +94,7 @@ They suggest that a link be added to the home page of Gatsby pointing to it and 
 
 It wasn’t just Gatsby but the whole collaborative team of Gatsby, Git, GitHub, and Netlify that broke through to every student this term. It was amazing to witness this as a teacher. I also tried to show them blogs and Markdown but that wasn’t super smooth and none of the students added that part to their final project.
 
-In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CAAS sites.
+In my next class with Gatsby, I plan on introducing Contentful and GraphCMS to show them CaaS sites.
 
 ### Phil's final thoughts:
 
