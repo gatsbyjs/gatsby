@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.24.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.23...gatsby@2.24.0) (2020-07-09)
+
+### Features
+
+- **gatsby:** add polyfill chunk to gatsby ([#25159](https://github.com/gatsbyjs/gatsby/issues/25159)) ([0b7738c](https://github.com/gatsbyjs/gatsby/commit/0b7738c))
+- **gatsby:** shim much used polyfills to noOp ([#25162](https://github.com/gatsbyjs/gatsby/issues/25162)) ([669de83](https://github.com/gatsbyjs/gatsby/commit/669de83))
+- **gatsby-recipes:** add GatsbyPage provider ([#25248](https://github.com/gatsbyjs/gatsby/issues/25248)) ([9c58ee1](https://github.com/gatsbyjs/gatsby/commit/9c58ee1))
+
 ## [2.23.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.22...gatsby@2.23.23) (2020-07-09)
 
 ### Bug Fixes
