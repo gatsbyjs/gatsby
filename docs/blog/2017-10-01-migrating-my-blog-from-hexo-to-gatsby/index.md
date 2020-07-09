@@ -343,8 +343,8 @@ be intuitive.
   global
 
 The error handling is pretty straightforward, if a bit verbose, as long as you
-know what graphql responses look like. In case you didn't know, if you get an
-error in a graphql query the response will contain the `errors` array. We check
+know what GraphQL responses look like. In case you didn't know, if you get an
+error in a GraphQL query the response will contain the `errors` array. We check
 for this array and handle it accordingly.
 
 Now let's looks specifically at where we render a link for each blog post:
