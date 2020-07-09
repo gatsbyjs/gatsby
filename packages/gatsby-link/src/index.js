@@ -7,9 +7,18 @@ import { parsePath } from "./parse-path"
 
 export { parsePath }
 
+if (process.env.NODE_ENV !== `production`) {
+  if (typeof __BASE_PATH__ === `undefined`) {
+    var __BASE_PATH__ = ``
+  }
+  if (typeof __PATH_PREFIX__ === `undefined`) {
+    var __PATH_PREFIX__ = ``
+  }
+}
+
 const isAbsolutePath = path => path?.startsWith(`/`)
 
-export function withPrefix(path, prefix = getGlobalBasePrefix()) {
+export function withPrefix(path, prefix = __BASE_PATH__) {
   if (!isLocalLink(path)) {
     return path
   }
@@ -17,27 +26,12 @@ export function withPrefix(path, prefix = getGlobalBasePrefix()) {
   if (path.startsWith(`./`) || path.startsWith(`../`)) {
     return path
   }
-  const base = prefix ?? getGlobalPathPrefix() ?? `/`
+  const base = prefix ?? __PATH_PREFIX__ ?? `/`
 
   return `${base?.endsWith(`/`) ? base.slice(0, -1) : base}${
     path.startsWith(`/`) ? path : `/${path}`
   }`
 }
-
-// These global values are wrapped in typeof clauses to ensure the values exist.
-// This is especially problematic in unit testing of this component.
-const getGlobalPathPrefix = () =>
-  process.env.NODE_ENV !== `production`
-    ? typeof __PATH_PREFIX__ !== `undefined`
-      ? __PATH_PREFIX__
-      : undefined
-    : __PATH_PREFIX__
-const getGlobalBasePrefix = () =>
-  process.env.NODE_ENV !== `production`
-    ? typeof __BASE_PATH__ !== `undefined`
-      ? __BASE_PATH__
-      : undefined
-    : __BASE_PATH__
 
 const isLocalLink = path =>
   path &&
@@ -46,7 +40,7 @@ const isLocalLink = path =>
   !path.startsWith(`//`)
 
 export function withAssetPrefix(path) {
-  return withPrefix(path, getGlobalPathPrefix())
+  return withPrefix(path, __PATH_PREFIX__)
 }
 
 function absolutify(path, current) {
