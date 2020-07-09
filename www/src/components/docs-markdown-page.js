@@ -144,11 +144,11 @@ export const docPageContentFragment = graphql`
     nav {
       prev {
         title
-        link: slug
+        link
       }
       next {
         title
-        link: slug
+        link
       }
     }
   }

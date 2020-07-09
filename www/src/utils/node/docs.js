@@ -94,19 +94,19 @@ const slugToAnchor = slug =>
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(/* GraphQL */ `
     type NavItem implements Node @dontInfer {
-      slug: String
+      link: String
       title: String!
       section: String!
       docPage: DocPage @link(by: "slug")
-      prev: NavItem @link(by: "slug")
-      next: NavItem @link(by: "slug")
-      items: [NavItem] @link(by: "slug")
-      parents: [NavItem] @link(by: "slug")
+      prev: NavItem @link(by: "link")
+      next: NavItem @link(by: "link")
+      items: [NavItem] @link(by: "link")
+      parents: [NavItem] @link(by: "link")
     }
 
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
       slug: String!
-      nav: NavItem @link(from: "slug", by: "slug")
+      nav: NavItem @link(from: "slug", by: "link")
       anchor: String!
       relativePath: String!
       # Frontmatter-derived fields
@@ -179,11 +179,7 @@ async function createNavItemNodes(
     await createNode({
       id: navItemId,
       section,
-      slug: navItem.link,
-      docPage: navItem.link,
-      items: navItem.items,
-      title: navItem.title,
-      parents: navItem.parents,
+      ...navItem,
       ...prevNextBySlug[section][normalize(navItem.link || ``)],
       children: [],
       internal: {
