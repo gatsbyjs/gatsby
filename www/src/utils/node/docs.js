@@ -106,7 +106,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
 
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
       slug: String!
-      nav: NavItem @link(from: "slug", by: "link")
+      nav: NavItem! @link(from: "slug", by: "link")
       anchor: String!
       relativePath: String!
       # Frontmatter-derived fields
