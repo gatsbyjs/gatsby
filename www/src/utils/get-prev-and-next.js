@@ -24,23 +24,21 @@ const flattenedNavs = _.mapValues(navLinks, navList => {
   return flattened.filter(item => item.link && !item.link.includes(`#`))
 })
 
-const navIndicesBySlug = _.mapValues(flattenedNavs, navList => {
-  const mapping = {}
-  _.forEach(navList, (item, i) => {
-    mapping[normalize(item.link)] = i
-  })
-  return mapping
-})
+const navIndicesBySlug = _.mapValues(flattenedNavs, navList =>
+  Object.fromEntries(
+    navList.map((item, index) => [normalize(item.link), index])
+  )
+)
 
 function getPrevAndNext(slug) {
   const section = slug.split(`/`)[1]
   const sectionNav = flattenedNavs[section]
   if (!sectionNav) return null
   const index = navIndicesBySlug[section][normalize(slug)]
-  if (!index) return null
+  if (_.isNil(index)) return null
   return {
-    prev: index === 0 ? null : sectionNav[index - 1],
-    next: index === sectionNav.length - 1 ? null : sectionNav[index + 1],
+    prev: sectionNav[index - 1] || null,
+    next: sectionNav[index + 1] || null,
   }
 }
 
