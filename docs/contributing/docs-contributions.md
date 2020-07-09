@@ -2,6 +2,8 @@
 title: Docs Contributions
 ---
 
+import GraphqlEmbed from "@components/graphql-embed"
+
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of June 2020, over 2,100 people have contributed. It's people like you that make this community great!
 
 > _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
@@ -175,7 +177,7 @@ To write a new GraphQL example, a CodeSandbox project with a Gatsby site can be 
 # title (string): Required, Title attribute for the iframe
 # query (string): Required, String with the graphql query you want to use
 # url (string): Optional, default is https://711808k40x.sse.codesandbox.io/___graphql
-# lazy (boolean): Optional, sets the iframe loading attribute, to lazy.
+# lazy (boolean): Optional, sets the iframe loading attribute, to lazy, default is false.
 <GraphqlEmbed
   title="TitleQuery"
   query={`query TitleQuery {
@@ -198,7 +200,7 @@ Use it here in the markdown without any code highlight syntax and it will produc
         title
       }
     }
-  }`}
+}`}
 />
 
 ## Docs renaming instructions

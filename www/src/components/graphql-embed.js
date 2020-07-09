@@ -1,10 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { useRef, useState, useCallback, useEffect } from "react"
-import PropTypes from "prop-types"
 
-export default function GraphqlEmbed({ lazy, title, url, query }) {
-  const ASPECT_RATIO = 2 / 3
+export default function GraphqlEmbed({
+  lazy = false,
+  title,
+  url = `https://711808k40x.sse.codesandbox.io/___graphql`,
+  query,
+}) {
+  const ASPECT_RATIO = 1 / 2
 
   const [iframeWidth, setIframeWidth] = useState(0)
   const iframeRef = useRef()
@@ -34,16 +38,4 @@ export default function GraphqlEmbed({ lazy, title, url, query }) {
       {...(lazy && { loading: `lazy` })}
     />
   )
-}
-
-GraphqlEmbed.defaultProps = {
-  lazy: false,
-  url: `https://711808k40x.sse.codesandbox.io/___graphql`,
-}
-
-GraphqlEmbed.propTypes = {
-  lazy: PropTypes.bool,
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string,
-  query: PropTypes.string.isRequired,
 }
