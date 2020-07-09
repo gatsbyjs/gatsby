@@ -20,7 +20,7 @@ Navigate to the root of your project inside your terminal and install the theme 
 
 ## Configure the theme
 
-In your `gatsby-config.js` file, add `gatsby-theme-blog`. This theme takes optional dependencies that you can find in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme-blog#theme-options). However, you won't need to use them here.
+In your `gatsby-config.js` file, add `gatsby-theme-blog`. This theme takes optional dependencies that you can find in the [README](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog#theme-options). However, you won't need to use them here.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -87,7 +87,7 @@ my-blog
 └── package.json
 ```
 
-Despite the `md` extension, `my-post.md` is treated as an MDX file. When using this theme, you can use `md` and `mdx` extensions interchangably.
+Despite the `md` extension, `my-post.md` is treated as an MDX file. When using this theme, you can use `md` and `mdx` extensions interchangeably.
 
 Inside that Markdown file, add content. The top section is called [frontmatter](/docs/mdx/writing-pages/#using-frontmatter-in-mdx) and `title` and `date` are required fields.
 
