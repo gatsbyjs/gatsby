@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.24.0...gatsby@2.24.1) (2020-07-09)
+
+### Bug Fixes
+
+- **gatsby:** Check if page data exists when hash matches ([#25614](https://github.com/gatsbyjs/gatsby/issues/25614)) ([1399426](https://github.com/gatsbyjs/gatsby/commit/1399426))
+
 # [2.24.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.23...gatsby@2.24.0) (2020-07-09)
 
 ### Features
