@@ -39,7 +39,7 @@
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
     "babel-preset-gatsby-package": "^0.5.1",
-    "core-js": "^2.6.11",
+    "core-js": "^3.6.5",
     "cross-env": "^5.2.1",
     "css-loader": "^1.0.1",
     "graphiql": "^0.17.5",
