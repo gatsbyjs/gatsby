@@ -86,6 +86,20 @@ Gatsby uses [`remark-lint`](https://github.com/remarkjs/remark-lint) and [`retex
 yarn lint:docs
 ```
 
+#### Disabling lint errors
+
+If an article is causing linting errors with remark lint that cannot be fixed for some reason, such as a bug in the remark parser, add the file to `.remarkignore` along with a comment on the unfixable error:
+
+```text
+# errors on `misaligned-table-fence` because
+# remark doesn't realize that the fenced pipes shouldn't be counted as syntax
+/docs/docs/mdx/customizing-components.md
+```
+
+This option should only be used sparingly, since it disables linting for the _entire_ page.
+
+> Note: A better way to handle this would be to use [`lint disable`](https://github.com/remarkjs/remark-lint#configuring-remark-lint) to disable a single rule for a certain block. However, there is a bug where `remark-mdx` causes `remark-lint` to ignore all these comments, making them useless.
+
 #### Updating the dictionary
 
 We use [`retext-spell`](https://github.com/retextjs/retext-spell) for spell checking the docs. Since the linter doesn't know about proper nouns, such as individual names or brand names, it may list these as errors:

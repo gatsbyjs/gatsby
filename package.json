@@ -162,6 +162,7 @@
   ],
   "dependencies": {
     "dictionary-en": "^3.0.1",
+    "remark-mdx": "^1.6.6",
     "retext-emoji": "^7.0.1",
     "retext-spell": "^4.0.0",
     "retext-syntax-mentions": "^2.1.1",

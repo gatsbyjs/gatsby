@@ -32,9 +32,6 @@ export default function Layout({ children }) {
 
 The following components can be customized with the MDXProvider:
 
-<!-- remark lint doesn't realize the pipes in code blocks aren't table markers -->
-<!-- lint ignore table-pipe-alignment -->
-
 | Tag             | Name                                                                 | Syntax                                            |
 | --------------- | -------------------------------------------------------------------- | ------------------------------------------------- |
 | `p`             | [Paragraph](https://github.com/syntax-tree/mdast#paragraph)          |                                                   |
@@ -61,8 +58,6 @@ The following components can be customized with the MDXProvider:
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                             |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `https://mdxjs.com` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                 |
-
-<!-- lint enable table-pipe-alignment -->
 
 ## How does this work?
 

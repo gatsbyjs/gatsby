@@ -1,3 +1,4 @@
+
 .env
 .html
 .jpg
@@ -8,6 +9,7 @@
 .scss
 .tsx
 .yaml
+*NPM
 ½
 ⅓
 1000px
@@ -112,11 +114,9 @@ Acquia
 Acroyoga
 Acroyoga-focused
 acroyogis
-actualGitSvg
 ad-hoc
 adblocker
 add-ons
-additionalWorkSvg
 addon
 addons
 Addy
@@ -209,7 +209,6 @@ banoffee
 barebones
 base64
 Base64
-baseGithub
 basepath
 baseUrl
 Başlangıç
@@ -499,7 +498,6 @@ dataPaths
 dataset
 datasource
 datastore
-DateChart
 Dato
 DatoCMS
 DDoS
@@ -565,7 +563,6 @@ doopoll
 dotenv
 doubleBind
 DoubleClick
-doubleWorkSvg
 dr
 dreamt
 Dribbble
@@ -596,7 +593,6 @@ Eka
 Ekwuno
 Elevar
 Eleventy
-EmailCaptureForm
 emotion-js
 enablement
 eng
@@ -973,7 +969,6 @@ HOCs
 Holík
 Homebrew
 hoo
-HorizontalNavList
 Hostan
 hostname
 hotspot
@@ -988,7 +983,6 @@ HTML5
 html5up
 HTTPArchive
 HTTPS
-HubspotForm
 HyperCard
 hyperconnected
 hypermodern
@@ -1008,7 +1002,6 @@ IFTTT
 IIS
 ile
 Ilesh
-ImageModel
 Imgur
 imho
 Imoh
@@ -1023,7 +1016,6 @@ InfluxData
 infrastructure-centric
 ing
 init
-initialSvg
 inkteam
 Inkteam
 inlined
@@ -1241,8 +1233,6 @@ memcached
 Meng
 mentorship
 merch
-mergeCommitSvg
-mergeSrc
 MERN
 metacompiler
 metadescription
@@ -1282,7 +1272,6 @@ mongo
 monorepo
 monorepos
 Morby
-moreIncrementalSvg
 Moto
 Moveable
 Moz
@@ -1345,7 +1334,6 @@ Novela
 Novia
 Novikov
 npm
-*NPM
 npm-check
 npm-force-resolutions
 npx
@@ -1422,7 +1410,6 @@ Pai
 Palantir
 parallelize
 parallelizing
-parallelUniversesSvg
 Params
 Pardot
 parseable
@@ -1623,7 +1610,6 @@ READMEs
 realtime
 ReasonML
 rebase
-rebasedSvg
 rebasing
 rebrand
 rebranding
@@ -1732,7 +1718,6 @@ schemas
 Scholnick
 sci-fi
 Scotty
-ScriptLoader
 scss
 SCSS
 SDK
@@ -1851,7 +1836,6 @@ Strattic
 Strava
 stringified
 StriVectin
-StubList
 StyledComponent
 Styleguidist
 stylesheet
@@ -1992,6 +1976,7 @@ Unconference
 und
 underexplored
 underprovide
+unfixable
 unist
 Unist
 unist-util-visit
@@ -2055,7 +2040,6 @@ Vinci
 Vinod
 VirtualBox
 Vishwakarma
-VisuallyHidden
 VM
 Vogt
 VoiceOver
