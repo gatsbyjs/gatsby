@@ -11,40 +11,42 @@ const navLinks = {
   contributing: loadYaml(`src/data/sidebars/contributing-links.yaml`),
 }
 
-// flatten sidebar links trees for easier next/prev link calculation
-function flattenList(itemList) {
-  return itemList.reduce((reducer, { items, ...rest }) => {
-    reducer.push(rest)
-    if (items) reducer.push(...flattenList(items))
-    return reducer
-  }, [])
+function* flattenList(itemList, parents = []) {
+  for (const item of itemList) {
+    yield {
+      ...item,
+      items: item.items ? item.items.map(child => child.link) : null,
+      parents,
+    }
+    if (item.items) {
+      yield* flattenList(item.items, [item.link, ...parents])
+    }
+  }
 }
 
 function normalize(slug) {
   return slug.endsWith(`/`) ? slug : `${slug}/`
 }
 
-const flattenedNavs = _.mapValues(navLinks, navList => {
-  const flattened = flattenList(navList[0].items)
-  return flattened.filter(item => item.link && !item.link.includes(`#`))
-})
+const flattenedNavs = _.mapValues(navLinks, navList => [
+  ...flattenList(navList[0].items),
+])
 
-const navIndicesBySlug = _.mapValues(flattenedNavs, navList =>
-  Object.fromEntries(
-    navList.map((item, index) => [normalize(item.link), index])
+const prevNextBySlug = _.mapValues(flattenedNavs, navList => {
+  // ignore items without links and hashes when counting indices
+  const filteredNavSlugs = navList
+    .filter(item => item.link && !item.link.includes(`#`))
+    .map(item => normalize(item.link))
+  return Object.fromEntries(
+    filteredNavSlugs.map((slug, index) => [
+      slug,
+      {
+        prev: filteredNavSlugs[index - 1],
+        next: filteredNavSlugs[index + 1],
+      },
+    ])
   )
-)
-
-function getPrevAndNext(section, slug) {
-  const sectionNav = flattenedNavs[section]
-  if (!sectionNav) return null
-  const index = navIndicesBySlug[section][normalize(slug)]
-  if (_.isNil(index)) return null
-  return {
-    prev: sectionNav[index - 1].link || null,
-    next: sectionNav[index + 1].link || null,
-  }
-}
+})
 
 const ignorePatterns = [
   `**/commonjs/**`,
@@ -99,6 +101,7 @@ exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
       prev: NavItem @link(by: "slug")
       next: NavItem @link(by: "slug")
       items: [NavItem] @link(by: "slug")
+      parents: [NavItem] @link(by: "slug")
     }
 
     type DocPage implements Node @dontInfer @childOf(types: ["Mdx"]) {
@@ -163,36 +166,25 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
-// FIXME the way this renders makes console print "createPage" on loop
-async function traverseHierarchy(hierarchy, fn) {
-  for (let item of hierarchy) {
-    await fn(item)
-    if (item.items) {
-      await traverseHierarchy(item.items, fn)
-    }
-  }
-}
-
 async function createNavItemNodes(
   section,
   navItems,
   { actions, createNodeId, createContentDigest }
 ) {
   const { createNode } = actions
-  await traverseHierarchy(navItems[0].items, async navItem => {
+  for (const navItem of navItems) {
     const navItemId = createNodeId(
       `navItem-${section}-${navItem.link || navItem.title}`
     )
-    const { prev, next } = getPrevAndNext(section, navItem.link || ``) || {}
     await createNode({
       id: navItemId,
       section,
       slug: navItem.link,
       docPage: navItem.link,
-      prev,
-      next,
-      items: navItem.items && navItem.items.map(x => x.link),
+      items: navItem.items,
       title: navItem.title,
+      parents: navItem.parents,
+      ...prevNextBySlug[section][normalize(navItem.link || ``)],
       children: [],
       internal: {
         type: `NavItem`,
@@ -201,12 +193,12 @@ async function createNavItemNodes(
         description: `A navigation item`,
       },
     })
-  })
+  }
 }
 
 exports.sourceNodes = async helpers => {
   Promise.all(
-    _.map(navLinks, (navList, section) => {
+    _.map(flattenedNavs, (navList, section) => {
       createNavItemNodes(section, navList, helpers)
     })
   )
