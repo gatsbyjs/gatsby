@@ -1,0 +1,5 @@
+# errors on `misaligned-table-fence` because
+# remark doesn't realize that the fenced pipes shouldn't be counted as syntax
+/docs/docs/mdx/customizing-components.md
+# throws a bunch of errors because the footnotes are weird and need to be rewritten
+/docs/docs/caching.md
