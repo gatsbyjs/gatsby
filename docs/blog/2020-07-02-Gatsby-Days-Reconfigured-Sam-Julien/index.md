@@ -21,4 +21,4 @@ https://www.youtube.com/watch?v=eMOnbgKRIYE
 
 While demonstrating building his Recipe, Sam explains how to supply a default React Context object with mock values. This is so that Gatsby's build process, which generates static files, doesn't raise errors from failing to find a Context that the authentication code references. The recipe also uses `gatsby-browser.js` to wrap the authentication provider around the app, as well as `gatsby-node.js` to handle authentication libraries that rely on DOM API objects like `document` and `window`.
 
-You can view the slides and resources for Sam’s presentation at [http://samj.im/gatsby-days](http://samj.im/gatsby-days). Check out recent projects on his website [http://www.samjulien.com/](http://www.samjulien.com/) and find him on Twitter [@SamJulien] (https://twitter.com/samjulien). 
+You can view the slides and resources for Sam’s presentation at [http://samj.im/gatsby-days](http://samj.im/gatsby-days). Check out recent projects on his website [http://www.samjulien.com/](http://www.samjulien.com/) and find him on Twitter [@SamJulien](https://twitter.com/samjulien).
