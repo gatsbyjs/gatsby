@@ -217,6 +217,7 @@ Bazaarvoice
 Bazel
 Behance
 BEM
+Bemis
 benchmarking
 Benedicte
 Benedikt
@@ -554,6 +555,7 @@ dnf
 DNS
 DNVBs
 DocSearch
+Doctocat
 Docz
 Dodds
 Doggo
@@ -1359,6 +1361,7 @@ NYU
 OAuth
 Obinna
 observability
+Octocat
 Oduye
 oEmbed
 ok
