@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+### Patch Changes
+
+- Added a pointless update to the readme
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
