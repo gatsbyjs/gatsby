@@ -217,9 +217,9 @@ const preferDefault = m => m && m.default || m
         c.component
       )
 
-      return `  "${c.componentChunkName}": () => import("${slash(
+      return `  "${c.componentChunkName}": function() { return import("${slash(
         `./${relativeComponentPath}`
-      )}" /* webpackChunkName: "${c.componentChunkName}" */)`
+      )}" /* webpackChunkName: "${c.componentChunkName}" */) }`
     })
     .join(`,\n`)}
 }\n\n`
