@@ -172,6 +172,9 @@ commands:
 
       - <<: *attach_to_bootstrap
       - run:
+          name: Install Admin dependencies
+          command: yarn workspace gatsby-admin install
+      - run:
           name: Build Admin
           command: yarn workspace gatsby-admin build
       - run:
