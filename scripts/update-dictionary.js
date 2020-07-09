@@ -9,16 +9,27 @@ const fs = require(`fs`)
 const words = new Set(fs.readFileSync(`./dictionary.txt`, `utf-8`).split(`\n`))
 
 // Run remark and track all "spelling errors"
-let matches = []
+console.log(`Running \`yarn lint:docs\`...`)
+const matches = new Set()
 try {
-  execSync(`yarn lint:docs`, { encoding: `utf-8` })
+  execSync(`yarn lint:docs`, { encoding: `utf-8`, stdio: `pipe` })
 } catch (e) {
-  matches = (e.stderr || ``).matchAll(/`(.*)` is misspelt/g)
+  for (const match of (e.stderr || ``).matchAll(/`(.*)` is misspelt/g)) {
+    matches.add(match[1])
+  }
 }
+
+if (matches.size === 0) {
+  console.log(`No new words/misspellings found. Exiting...`)
+  process.exit(0)
+}
+
+console.log(`Found ${matches.size} new words:`)
 
 // Add all unknown words to our list of words
 for (const match of matches) {
-  words.add(match[1])
+  console.log(match)
+  words.add(match)
 }
 
 const wordList = [...words]
@@ -27,3 +38,4 @@ wordList.sort((a, b) => a.localeCompare(b))
 
 // Write back to the dictionary file
 fs.writeFileSync(`./dictionary.txt`, wordList.join(`\n`))
+console.log(`Updated \`dictionary.txt\`.`)

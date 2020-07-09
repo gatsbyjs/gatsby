@@ -299,7 +299,7 @@ The title you're seeing in the header comes from the title listed here. You can 
 
 Since you are building a blog using WordPress and want your users to have full control over the data, you should get your site name from WordPress so if it ever changes the user can update it. Fortunately, WordPress makes this available to us through the API, so you can query it in GraphQL like so:
 
-![Graphql query to get siteName from WordPress](./images/gatsby3.png)
+![GraphQL query to get siteName from WordPress](./images/gatsby3.png)
 
 Using queries works a bit differently inside of components. Rather than just writing a query which drops data into your page or template, you have to use a new component called `StaticQuery` which is designed specifically for using queries inside of components.
 

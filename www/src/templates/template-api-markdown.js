@@ -110,19 +110,9 @@ export default function APITemplate({ data, location, pageContext }) {
 export const pageQuery = graphql`
   query($path: String!, $jsdoc: [String], $apiCalls: String) {
     docPage(slug: { eq: $path }) {
-      relativePath
-      slug
-      body
-      excerpt
-      timeToRead
-      tableOfContents
-      anchor
-      title
-      description
+      ...DocPageContent
       contentsHeading
       showTopLevelSignatures
-      disableTableOfContents
-      tableOfContentsDepth
     }
     jsdoc: allFile(filter: { relativePath: { in: $jsdoc } }) {
       nodes {

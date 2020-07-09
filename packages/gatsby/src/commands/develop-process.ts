@@ -1,5 +1,5 @@
 import { syncStaticDir } from "../utils/get-static-dir"
-import report from "gatsby-cli/lib/reporter"
+import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import express from "express"
@@ -22,15 +22,11 @@ import { markWebpackStatusAsPending } from "../utils/webpack-status"
 
 import { IProgram } from "./types"
 import {
-  calculateDirtyQueries,
-  runStaticQueries,
-  runPageQueries,
   startWebpackServer,
   writeOutRequires,
   IBuildContext,
   initialize,
   postBootstrap,
-  extractQueries,
   rebuildSchemaWithSitePage,
   writeOutRedirects,
 } from "../services"
@@ -43,11 +39,15 @@ import {
   Machine,
   DoneEventObject,
   interpret,
+  Actor,
+  Interpreter,
+  State,
 } from "xstate"
 import { DataLayerResult, dataLayerMachine } from "../state-machines/data-layer"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { globalTracer } from "opentracing"
-import reporter from "gatsby-cli/lib/reporter"
+import { IQueryRunningContext } from "../state-machines/query-running/types"
+import { queryRunningMachine } from "../state-machines/query-running"
 
 const tracer = globalTracer()
 
@@ -101,7 +101,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    report.panic(
+    reporter.panic(
       `The flag ${chalk.yellow(
         `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
       )} is not available with ${chalk.cyan(
@@ -111,7 +111,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   }
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()
-  report.pendingActivity({ id: `webpack-develop` })
+  reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
   telemetry.startBackgroundUpdate()
 
@@ -151,26 +151,19 @@ module.exports = async (program: IProgram): Promise<void> => {
           },
           onDone: {
             actions: `assignDataLayer`,
-            target: `doingEverythingElse`,
+            target: `finishingBootstrap`,
           },
         },
       },
-      doingEverythingElse: {
+      finishingBootstrap: {
         invoke: {
           src: async ({
             gatsbyNodeGraphQLFunction,
-            graphqlRunner,
-            workerPool,
-            store,
-            app,
-          }): Promise<void> => {
-            // All the stuff that's not in the state machine yet
-
+          }: IBuildContext): Promise<void> => {
             // These were previously in `bootstrap()` but are now
             // in part of the state machine that hasn't been added yet
             await rebuildSchemaWithSitePage({ parentSpan: bootstrapSpan })
 
-            await extractQueries({ parentSpan: bootstrapSpan })
             await writeOutRedirects({ parentSpan: bootstrapSpan })
 
             startRedirectListener()
@@ -184,11 +177,42 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             // Start the schema hot reloader.
             bootstrapSchemaHotReloader()
+          },
+          onDone: {
+            target: `runningQueries`,
+          },
+        },
+      },
+      runningQueries: {
+        invoke: {
+          src: `runQueries`,
+          data: ({
+            program,
+            store,
+            parentSpan,
+            gatsbyNodeGraphQLFunction,
+            graphqlRunner,
+            firstRun,
+          }: IBuildContext): IQueryRunningContext => {
+            return {
+              firstRun,
+              program,
+              store,
+              parentSpan,
+              gatsbyNodeGraphQLFunction,
+              graphqlRunner,
+            }
+          },
+          onDone: {
+            target: `doingEverythingElse`,
+          },
+        },
+      },
+      doingEverythingElse: {
+        invoke: {
+          src: async ({ workerPool, store, app }): Promise<void> => {
+            // All the stuff that's not in the state machine yet
 
-            const { queryIds } = await calculateDirtyQueries({ store })
-
-            await runStaticQueries({ queryIds, store, program, graphqlRunner })
-            await runPageQueries({ queryIds, store, program, graphqlRunner })
             await writeOutRequires({ store })
             boundActionCreators.setProgramStatus(
               ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
@@ -206,17 +230,20 @@ module.exports = async (program: IProgram): Promise<void> => {
 
             await startWebpackServer({ program, app, workerPool })
           },
+          onDone: {
+            actions: assign<IBuildContext, any>({ firstRun: false }),
+          },
         },
       },
     },
   }
 
   const service = interpret(
-    // eslint-disable-next-line new-cap
     Machine(developConfig, {
       services: {
         initializeDataLayer: dataLayerMachine,
         initialize,
+        runQueries: queryRunningMachine,
       },
       actions: {
         assignStoreAndWorkerPool: assign<IBuildContext, DoneEventObject>(
@@ -232,10 +259,48 @@ module.exports = async (program: IProgram): Promise<void> => {
           (_, { data }): DataLayerResult => data
         ),
       },
-    }).withContext({ program, parentSpan: bootstrapSpan, app })
+    }).withContext({ program, parentSpan: bootstrapSpan, app, firstRun: true })
   )
+
+  const isInterpreter = <T>(
+    actor: Actor<T> | Interpreter<T>
+  ): actor is Interpreter<T> => `machine` in actor
+
+  const listeners = new WeakSet()
+  let last: State<IBuildContext, AnyEventObject, any, any>
+
   service.onTransition(state => {
-    reporter.verbose(`transition to ${JSON.stringify(state.value)}`)
+    if (!last) {
+      last = state
+    } else if (!state.changed || last.matches(state)) {
+      return
+    }
+    last = state
+    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    // eslint-disable-next-line no-unused-expressions
+    service.children?.forEach(child => {
+      // We want to ensure we don't attach a listener to the same
+      // actor. We don't need to worry about detaching the listener
+      // because xstate handles that for us when the actor is stopped.
+
+      if (isInterpreter(child) && !listeners.has(child)) {
+        let sublast = child.state
+        child.onTransition(substate => {
+          if (!sublast) {
+            sublast = substate
+          } else if (!substate.changed || sublast.matches(substate)) {
+            return
+          }
+          sublast = substate
+          reporter.verbose(
+            `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
+              substate.value
+            )}`
+          )
+        })
+        listeners.add(child)
+      }
+    })
   })
   service.start()
 }
