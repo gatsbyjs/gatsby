@@ -285,7 +285,7 @@ export const pageQuery = graphql`
 `
 ```
 
-At the bottom of the file you'll notice the graphql query. This is how pages and
+At the bottom of the file you'll notice the GraphQL query. This is how pages and
 templates in Gatsby v1 get their data. In v0, wrapper components had little
 control over what data they got. In v1, templates and pages can query for
 exactly the data they need.

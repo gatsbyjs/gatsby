@@ -2,13 +2,14 @@
 import path from "path"
 import http from "http"
 import tmp from "tmp"
-import { spawn } from "child_process"
+import { spawn, ChildProcess } from "child_process"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import socket from "socket.io"
 import fs from "fs-extra"
 import { isCI, slash } from "gatsby-core-utils"
 import { createServiceLock } from "gatsby-core-utils/dist/service-lock"
+import { UnlockFn } from "gatsby-core-utils/src/service-lock"
 import reporter from "gatsby-cli/lib/reporter"
 import getSslCert from "../utils/get-ssl-cert"
 import { startDevelopProxy } from "../utils/develop-proxy"
@@ -58,7 +59,7 @@ const doesConfigChangeRequireRestart = (
 }
 
 class ControllableScript {
-  private process
+  private process?: ChildProcess
   private script
   public isRunning
   constructor(script) {
@@ -75,7 +76,13 @@ class ControllableScript {
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
-  async stop(signal: string | null = null, code?: number): Promise<void> {
+  async stop(
+    signal: NodeJS.Signals | null = null,
+    code?: number
+  ): Promise<void> {
+    if (!this.process) {
+      throw new Error(`Trying to stop the process before starting it`)
+    }
     this.isRunning = false
     if (signal) {
       this.process.kill(signal)
@@ -90,14 +97,31 @@ class ControllableScript {
     }
 
     return new Promise(resolve => {
+      if (!this.process) {
+        throw new Error(`Trying to stop the process before starting it`)
+      }
       this.process.on(`exit`, () => {
-        this.process.removeAllListeners()
+        if (this.process) {
+          this.process.removeAllListeners()
+        }
+        this.process = undefined
         resolve()
       })
     })
   }
-  on(type, callback): void {
-    this.process.on(type, callback)
+  onMessage(callback: (msg: any) => void): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach message handler before process starter`)
+    }
+    this.process.on(`message`, callback)
+  }
+  onExit(
+    callback: (code: number | null, signal: NodeJS.Signals | null) => void
+  ): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach exit handler before process starter`)
+    }
+    this.process.on(`exit`, callback)
   }
 }
 
@@ -115,16 +139,6 @@ module.exports = async (program: IProgram): Promise<void> => {
     getRandomPort(),
     getRandomPort(),
   ])
-
-  const developProcess = new ControllableScript(`
-    const cmd = require(${JSON.stringify(developProcessPath)});
-    const args = ${JSON.stringify({
-      ...program,
-      port: developPort,
-      proxyPort,
-    })};
-    cmd(args);
-  `)
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -160,24 +174,51 @@ module.exports = async (program: IProgram): Promise<void> => {
     })
   }
 
+  // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
+  // codesandbox detects the right port to expose by default
   const proxy = startDevelopProxy({
     proxyPort: proxyPort,
     targetPort: developPort,
     program,
   })
 
-  let unlock
-  if (!isCI()) {
-    unlock = await createServiceLock(program.directory, `developstatusserver`, {
-      port: statusServerPort,
-    })
+  const developProcess = new ControllableScript(`
+    const cmd = require(${JSON.stringify(developProcessPath)});
+    const args = ${JSON.stringify({
+      ...program,
+      port: developPort,
+      proxyPort,
+      // Don't pass SSL options down to the develop process, it should always use HTTP
+      ssl: null,
+    })};
+    cmd(args);
+  `)
 
-    if (!unlock) {
+  let unlocks: Array<UnlockFn> = []
+  if (!isCI()) {
+    const statusUnlock = await createServiceLock(
+      program.directory,
+      `developstatusserver`,
+      {
+        port: statusServerPort,
+      }
+    )
+    const developUnlock = await createServiceLock(
+      program.directory,
+      `developproxy`,
+      {
+        port: proxyPort,
+      }
+    )
+
+    if (!statusUnlock || !developUnlock) {
       console.error(
         `Looks like develop for this site is already running. Try visiting http://localhost:8000/ maybe?`
       )
       process.exit(1)
     }
+
+    unlocks = unlocks.concat([statusUnlock, developUnlock])
   }
 
   const statusServer = http.createServer().listen(statusServerPort)
@@ -207,20 +248,40 @@ module.exports = async (program: IProgram): Promise<void> => {
       io.emit(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
-      developProcess.on(`message`, handleChildProcessIPC)
+      developProcess.onMessage(handleChildProcessIPC)
       isRestarting = false
     })
   })
 
   developProcess.start()
-  developProcess.on(`message`, handleChildProcessIPC)
+  developProcess.onMessage(handleChildProcessIPC)
 
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
-  developProcess.on(`exit`, code => {
-    if (isRestarting) return
-    process.exit(code)
-  })
+  developProcess.onExit(
+    (code: number | null, signal: NodeJS.Signals | null) => {
+      if (isRestarting) return
+      if (signal !== null) {
+        process.kill(process.pid, signal)
+        return
+      }
+      if (code !== null) {
+        process.exit(code)
+      }
+
+      // This should not happen:
+      // https://nodejs.org/api/child_process.html#child_process_event_exit
+      // The 'exit' event is emitted after the child process ends. If the process
+      // exited, code is the final exit code of the process, otherwise null.
+      // If the process terminated due to receipt of a signal, signal is the
+      // string name of the signal, otherwise null. One of the two will always be
+      // non - null.
+      //
+      // but just in case let do non-zero exit, because we are in situation
+      // we don't expect to be possible
+      process.exit(1)
+    }
+  )
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
@@ -256,7 +317,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   process.on(`beforeExit`, async () => {
     await Promise.all([
       watcher?.close(),
-      unlock?.(),
+      ...unlocks.map(unlock => unlock()),
       new Promise(resolve => {
         statusServer.close(resolve)
       }),

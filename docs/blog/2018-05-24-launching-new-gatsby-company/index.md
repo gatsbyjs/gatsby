@@ -41,7 +41,7 @@ During my years building Drupal sites, I’d occasionally cast envious eyes at a
 
 Then, in late 2010, the initial version of Backbone.js was released. I started playing with it and got super excited because things finally clicked for me: this was how to build rich, real-time JavaScript apps. The next year, I started my first full-time software development job at [Pantheon.io](https://pantheon.io/) and had a fantastic time building the Pantheon dashboard with Backbone.js to support Drupal & WordPress developers. I attended Backbone.js meetups and the first few Backbone.js conferences. Developer excitement online and at meetups was palpable. We could all feel that the world of web applications was starting to change dramatically.
 
-Node.js, then only a couple of years old, was gaining traction fast. For the first time, NPM enabled the easy sharing of JavaScript libraries. Consequently, the number of libraries exploded. With a server runtime and ecosystem developing around JS, more and more web development tools started being written in JavaScript.
+Node.js, then only a couple of years old, was gaining traction fast. For the first time, npm enabled the easy sharing of JavaScript libraries. Consequently, the number of libraries exploded. With a server runtime and ecosystem developing around JS, more and more web development tools started being written in JavaScript.
 
 The fast paced world of the web was reinventing itself again.
 

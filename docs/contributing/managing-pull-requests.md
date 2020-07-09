@@ -130,7 +130,7 @@ These are good PR titles because they are concise, specific and use the [convent
 #### Bad PR Titles ❌
 
 - new tests
-- add support for my new cms
+- add support for my new CMS
 - fix bug in gatsby
 
 These are bad PR titles because they are generic, don't communicate the change properly and don't use the conventional commit format.

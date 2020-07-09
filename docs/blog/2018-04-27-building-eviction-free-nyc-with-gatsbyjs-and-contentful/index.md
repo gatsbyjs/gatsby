@@ -208,4 +208,4 @@ tenants take advantage of this historic new right.
 **Footnote: Our code for [evictionfreenyc.org](http://www.evictionfreenyc.org/) is
 open source! [Click
 here](https://github.com/JustFixNYC/eviction-free-nyc) to view the code on
-github.**
+GitHub.**

@@ -10,7 +10,7 @@ const theme = {
   ...baseTheme,
   colors: {
     ...baseTheme.colors,
-    background: baseTheme.colors.grey[90],
+    background: baseTheme.colors.primaryBackground,
   },
   fontWeights: {
     ...baseTheme.fontWeights,
