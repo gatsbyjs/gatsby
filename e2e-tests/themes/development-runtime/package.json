@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Sidhartha Chatterjee <sid@gatsbyjs.com>",
   "dependencies": {
+    "@testing-library/cypress": "^6.0.0",
     "gatsby": "^2.13.14",
     "gatsby-theme-about": "*",
     "react": "^16.8.0",
