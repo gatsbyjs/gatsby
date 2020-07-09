@@ -27,9 +27,17 @@ export function withPrefix(path, prefix = getGlobalBasePrefix()) {
 // These global values are wrapped in typeof clauses to ensure the values exist.
 // This is especially problematic in unit testing of this component.
 const getGlobalPathPrefix = () =>
-  typeof __PATH_PREFIX__ !== `undefined` ? __PATH_PREFIX__ : undefined
+  process.env.NODE_ENV !== `production`
+    ? typeof __PATH_PREFIX__ !== `undefined`
+      ? __PATH_PREFIX__
+      : undefined
+    : __PATH_PREFIX__
 const getGlobalBasePrefix = () =>
-  typeof __BASE_PATH__ !== `undefined` ? __BASE_PATH__ : undefined
+  process.env.NODE_ENV !== `production`
+    ? typeof __BASE_PATH__ !== `undefined`
+      ? __BASE_PATH__
+      : undefined
+    : __BASE_PATH__
 
 const isLocalLink = path =>
   path &&
