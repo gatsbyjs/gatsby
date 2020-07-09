@@ -78,7 +78,7 @@ git checkout package.json; yarn --force
 
 If you're adding e2e tests and want to run them against local changes:
 
-- In the root of the mono repo run `yarn lerna run build --scope=<package-name>` where `package-name` is the changes you're testing
+- In the root of the monorepo, run `yarn lerna run build --scope=<package-name>` where `package-name` is the directory containing the changes you're testing.
 - Run `gatsby-dev` inside your specific e2e test directory, for example `e2e-tests/themes/development-runtime`
 - While the previous step is running open a new terminal window and run `yarn test` in that same e2e test directory
 
