@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.23.23](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.22...gatsby@2.23.23) (2020-07-09)
+
+### Bug Fixes
+
+- **gatsby:** end activity if plugin didn't do it ([#25470](https://github.com/gatsbyjs/gatsby/issues/25470)) ([44d0c2a](https://github.com/gatsbyjs/gatsby/commit/44d0c2a))
+
 ## [2.23.22](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.23.21...gatsby@2.23.22) (2020-07-07)
 
 ### Features
