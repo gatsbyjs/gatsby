@@ -84,7 +84,7 @@ If you'd rather not use any preset and set everything locally yourself, you can 
 
 Another option for presets are prism highlighting. Theme UI comes with a number of built-in [prism presets](https://theme-ui.com/packages/prism#syntax-themes) that you can reference directly by name and the theme will do the rest for you.
 
-```
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
@@ -107,7 +107,7 @@ This gives you more tools than ever before to use this theme as an add-on for si
 
 ## `gatsby-theme-blog-darkmode`
 
-Another change is the darkmode toggle that's long been a staple of the blog theme. In order to make styling a bit more fun and remove the need for a darkmode out of the box, this is now a separate theme!
+Another change is the dark mode toggle that's long been a staple of the blog theme. In order to make styling a bit more fun and remove the need for a dark mode out of the box, this is now a separate theme!
 
 Use it in combination with `gatsby-theme-blog` and take advantage of the same functionality you've come to expect!
 
