@@ -181,6 +181,7 @@ async function createNavItemNodes(
       section,
       ...navItem,
       ...prevNextBySlug[section][normalize(navItem.link || ``)],
+      docPage: navItem.link,
       children: [],
       internal: {
         type: `NavItem`,
