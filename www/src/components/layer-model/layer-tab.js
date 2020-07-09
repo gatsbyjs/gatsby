@@ -9,7 +9,6 @@ export default forwardRef(function LayerTab(
   ref
 ) {
   const { baseColor, title, icon } = layer
-  console.log({ baseColor })
 
   return (
     <button
