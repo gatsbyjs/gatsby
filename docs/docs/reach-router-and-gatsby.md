@@ -11,7 +11,7 @@ The main reasons Gatsby uses `@reach/router` are:
 1. Preloading. You can read more about preloading in the docs for the [Gatsby Link API](https://www.gatsbyjs.org/docs/gatsby-link/).
 2. The [routing accessibility](https://reach.tech/router/accessibility) it provides.
 3. It supports [server rendering](https://reach.tech/router/server-rendering) which helps Gatsby build routed files at build time.
-4. Scroll restoration. It supports [scroll restoration](https://reacttraining.com/react-router/web/guides/scroll-restoration), which allows Gatsby to better control pages' scroll position.
+4. It supports [scroll restoration](/docs/scroll-restoration), which allows Gatsby to better control pages' scroll position.
 
 With Gatsby, you will mostly be using the `<Link />` component provided by the `gatsby` package. The [`<Link />` API docs](https://www.gatsbyjs.org/docs/gatsby-link/) explain the relationship between `gatsby` `<Link />` and `@reach/router` `<Link />` very nicely:
 
