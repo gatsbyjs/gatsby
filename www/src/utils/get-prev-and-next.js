@@ -37,6 +37,7 @@ function getPrevAndNext(slug) {
   const sectionNav = flattenedNavs[section]
   if (!sectionNav) return null
   const index = navIndicesBySlug[section][normalize(slug)]
+  if (!index) return null
   return {
     prev: index === 0 ? null : sectionNav[index - 1],
     next: index === sectionNav.length - 1 ? null : sectionNav[index + 1],
