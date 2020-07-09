@@ -41,7 +41,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 
    > _Note: After making changes in `gatsby-node.js` you need to re-run `gatsby develop` for the changes to take effect._
 
-3. Query the data (in GraphiQL or in your components).
+3. Query the data (in [GraphiQL](/docs/running-queries-with-graphiql/) or in your components).
 
 ```graphql
 query MyPokemonQuery {
