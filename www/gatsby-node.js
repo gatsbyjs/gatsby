@@ -20,7 +20,7 @@ async function runApiForSections(api, helpers) {
   await Promise.all(
     sections.map(section => {
       if (section[api]) {
-        section[api](helpers)
+        return section[api](helpers)
       }
     })
   )

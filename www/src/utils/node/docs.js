@@ -196,7 +196,7 @@ async function createNavItemNodes(
 exports.sourceNodes = async helpers => {
   await Promise.all(
     _.map(flattenedNavs, (navList, section) => {
-      createNavItemNodes(section, navList, helpers)
+      return createNavItemNodes(section, navList, helpers)
     })
   )
 }
