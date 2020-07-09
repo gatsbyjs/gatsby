@@ -43,6 +43,9 @@ function absolutify(path, current) {
 }
 
 const rewriteLinkPath = (path, relativeTo) => {
+  if (typeof path === `number`) {
+    return path
+  }
   if (!isLocalLink(path)) {
     return path
   }
