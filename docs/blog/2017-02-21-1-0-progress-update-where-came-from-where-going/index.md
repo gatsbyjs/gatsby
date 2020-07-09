@@ -23,7 +23,7 @@ This framework would have to be:
 - **JavaScript-driven**, the web is huge and intensely competitive. Sites that
   win are fast and richly interactive. Your framework must make it trivial to
   use advanced JavaScript.
-- **team ready**, use industry standard collaboration tools like NPM, Git, and
+- **team ready**, use industry standard collaboration tools like npm, Git, and
   continuous deployment, so your team is always on the same page and shipping
   new features is easy.
 - **modular**, allows for cleanly separated features so fixing bugs and adding
@@ -205,8 +205,8 @@ The plugin system will let you hook into lifecycle APIs from events during the
 bootstrap and build processes and in the browser.
 
 There are a [number of official Gatsby plugins](/docs/plugins/) already
-built—all distributed as separate NPM packages. It'll be easy to create your own
-plugins for internal projects and as open source projects published on NPM.
+built—all distributed as separate npm packages. It'll be easy to create your own
+plugins for internal projects and as open source projects published on npm.
 
 Plugins can:
 
@@ -226,7 +226,7 @@ Themes will also be able to _compose_ other themes. So a large organization
 could have a standard "base" theme and then individual departments could extend
 the base theme to meet their specific requirements.
 
-Themes (like plugins) will be published on NPM. So soon, starting a new Gatsby
+Themes (like plugins) will be published on npm. So soon, starting a new Gatsby
 blog will be as simple as:
 
 ```shell

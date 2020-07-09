@@ -177,9 +177,9 @@
     Feel free to contact me if you want to launch a blazingly fast website!
   location: Darmstadt, Germany
   website: https://www.lekoarts.de
-  github: https://github.com/LeKoArts
+  github: https://github.com/LekoArts
   image: images/lekoarts.jpg
-  for_hire: true
+  for_hire: false
   portfolio: true
 - name: Ventura Digitalagentur
   type: agency

@@ -53,6 +53,10 @@ export async function removePageData(
   return Promise.resolve()
 }
 
+export function pageDataExists(publicDir: string, pagePath: string): boolean {
+  return fs.existsSync(getFilePath(publicDir, pagePath))
+}
+
 export async function writePageData(
   publicDir: string,
   { componentChunkName, matchPath, path: pagePath }: IPageData

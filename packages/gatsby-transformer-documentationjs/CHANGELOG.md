@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.12...gatsby-transformer-documentationjs@4.3.13) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.11...gatsby-transformer-documentationjs@4.3.12) (2020-07-03)
+
+### Bug Fixes
+
+- incorrect typedef parsing for interfaces ([#24192](https://github.com/gatsbyjs/gatsby/issues/24192)) ([1a1177e](https://github.com/gatsbyjs/gatsby/commit/1a1177e))
+
+## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.10...gatsby-transformer-documentationjs@4.3.11) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.9...gatsby-transformer-documentationjs@4.3.10) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.8...gatsby-transformer-documentationjs@4.3.9) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.7...gatsby-transformer-documentationjs@4.3.8) (2020-06-30)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+## [4.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.6...gatsby-transformer-documentationjs@4.3.7) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-transformer-documentationjs:** Add childOf, mimeTypes and fill in other schema typings ([#25113](https://github.com/gatsbyjs/gatsby/issues/25113)) ([48f7878](https://github.com/gatsbyjs/gatsby/commit/48f7878))
+
 ## [4.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.3.5...gatsby-transformer-documentationjs@4.3.6) (2020-06-24)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs
