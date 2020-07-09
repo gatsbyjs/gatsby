@@ -244,7 +244,7 @@ A program that lets you run [JavaScript](#javascript) on your computer. Gatsby i
 
 ### Package
 
-A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [NPM](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
+A package usually describes a [JavaScript](#javascript) program that has additional information about how it should be distributed and used, such as its version number. [npm](#npm) and [Yarn](#yarn) manages and installs the packages your project uses. [Gatsby](#gatsby) itself is a package.
 
 ### Page
 
@@ -376,6 +376,6 @@ A WordPress plugin that adds [GraphQL](#graphql) capabilities to WordPress. It's
 
 ### [Yarn](/docs/glossary/yarn/)
 
-A [package](#package) manager that some prefer to [NPM](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
+A [package](#package) manager that some prefer to [npm](#npm). It is also required for [developing Gatsby](/contributing/setting-up-your-local-dev-environment/#using-yarn).
 
 ## Z

@@ -10,6 +10,7 @@ import {
   InputField,
   InputFieldControl,
   ButtonProps,
+  InputFieldLabel,
 } from "gatsby-interface"
 
 const SecondaryButton: React.FC<ButtonProps> = props => (
@@ -19,12 +20,6 @@ const SecondaryButton: React.FC<ButtonProps> = props => (
     sx={{
       paddingX: 6,
       paddingY: 4,
-      color: `whiteFade.80`,
-      border: `sixtywhite`,
-      "&:hover": {
-        color: `white`,
-        border: `white`,
-      },
     }}
     {...props}
   ></Button>
@@ -65,9 +60,7 @@ const InstallInput: React.FC<{ for: string }> = props => {
     >
       <InputField id={inputId}>
         <Flex gap={2} flexDirection="column">
-          <Text size="S" sx={{ color: `grey.40` }}>
-            <label htmlFor={inputId}>Install {props.for}:</label>
-          </Text>
+          <InputFieldLabel>Install {props.for}:</InputFieldLabel>
           <Flex gap={4} alignItems="center">
             <InputFieldControl
               placeholder={`gatsby-${props.for}-`}
@@ -75,15 +68,7 @@ const InstallInput: React.FC<{ for: string }> = props => {
               value={value}
               onChange={(e): void => setValue(e.target.value)}
               sx={{
-                backgroundColor: `background`,
-                borderColor: `grey.60`,
-                color: `white`,
                 width: `initial`,
-                "&:focus": {
-                  borderColor: `grey.40`,
-                  // TODO(@mxstbr): Fix this focus outline
-                  boxShadow: `none`,
-                },
               }}
             />
             <SecondaryButton
@@ -136,11 +121,7 @@ const DestroyButton: React.FC<{ name: string }> = ({ name }) => {
 }
 
 const SectionHeading: React.FC<HeadingProps> = props => (
-  <Heading
-    as="h1"
-    sx={{ color: `white`, fontWeight: `500`, fontSize: 5 }}
-    {...props}
-  />
+  <Heading as="h1" sx={{ fontWeight: `500`, fontSize: 5 }} {...props} />
 )
 
 const PluginCard: React.FC<{
@@ -149,12 +130,12 @@ const PluginCard: React.FC<{
   <Flex
     flexDirection="column"
     gap={6}
-    sx={{ backgroundColor: `grey.80`, padding: 5, borderRadius: 2 }}
+    sx={{ backgroundColor: `ui.background`, padding: 5, borderRadius: 2 }}
   >
-    <Heading as="h2" sx={{ color: `white`, fontWeight: `500`, fontSize: 3 }}>
+    <Heading as="h2" sx={{ fontWeight: `500`, fontSize: 3 }}>
       {plugin.name}
     </Heading>
-    <Text sx={{ color: `grey.40` }}>
+    <Text sx={{ color: `text.secondary` }}>
       {plugin.description || <em>No description.</em>}
     </Text>
     <Flex justifyContent="flex-end" sx={{ width: `100%` }}>

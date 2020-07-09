@@ -111,7 +111,7 @@ const getLocalReporter = (activity, reporter) =>
 
 const pluginNodeCache = new Map()
 
-const runAPI = (plugin, api, args, activity) => {
+const runAPI = async (plugin, api, args, activity) => {
   let gatsbyNode = pluginNodeCache.get(plugin.name)
   if (!gatsbyNode) {
     gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
@@ -208,6 +208,50 @@ const runAPI = (plugin, api, args, activity) => {
     }
     const localReporter = getLocalReporter(activity, reporter)
 
+    const runningActivities = new Set()
+
+    const localReporterThatCleansUpAfterMisbehavingPlugins = {
+      ...localReporter,
+      activityTimer: (...args) => {
+        const activity = reporter.activityTimer.apply(reporter, args)
+
+        return {
+          ...activity,
+          start: () => {
+            activity.start()
+            runningActivities.add(activity)
+          },
+          end: () => {
+            activity.end()
+            runningActivities.delete(activity)
+          },
+        }
+      },
+      createProgress: (...args) => {
+        const activity = reporter.createProgress.apply(reporter, args)
+
+        return {
+          ...activity,
+          start: () => {
+            activity.start()
+            runningActivities.add(activity)
+          },
+          end: () => {
+            activity.end()
+            runningActivities.delete(activity)
+          },
+          done: () => {
+            activity.done()
+            runningActivities.delete(activity)
+          },
+        }
+      },
+    }
+
+    const endInProgressActivitiesCreatedByThisRun = () => {
+      runningActivities.forEach(activity => activity.end())
+    }
+
     const apiCallArgs = [
       {
         ...args,
@@ -223,7 +267,7 @@ const runAPI = (plugin, api, args, activity) => {
         getNode,
         getNodesByType,
         hasNodeChanged,
-        reporter: localReporter,
+        reporter: localReporterThatCleansUpAfterMisbehavingPlugins,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -247,8 +291,9 @@ const runAPI = (plugin, api, args, activity) => {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
           pluginSpan.finish()
-          callback(err, val)
           apiFinished = true
+          endInProgressActivitiesCreatedByThisRun()
+          callback(err, val)
         }
 
         try {
@@ -262,12 +307,13 @@ const runAPI = (plugin, api, args, activity) => {
         }
       })
     } else {
-      const result = gatsbyNode[api](...apiCallArgs)
-      pluginSpan.finish()
-      return Promise.resolve(result).then(res => {
+      try {
+        return await gatsbyNode[api](...apiCallArgs)
+      } finally {
+        pluginSpan.finish()
         apiFinished = true
-        return res
-      })
+        endInProgressActivitiesCreatedByThisRun()
+      }
     }
   }
 
