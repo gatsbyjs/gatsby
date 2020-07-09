@@ -2,7 +2,7 @@
 title: "Gatsby Days Video: Building Design System Documentation with Gatsby"
 date: 2020-07-14
 author: Michelle Gienow
-excerpt: "Design systems depend on solid docs. If your docs fall down, your system probably will too. Adekunle Oduye presents a practical system for building living documentation for your design system where docs are part of the development process, not an afterthought, with a Gatsby starter + Storybook."
+excerpt: "Design systems depend on solid documentation. If your docs fall down, your system probably will too. Adekunle Oduye presents a practical system for building living documentation for your design system -- one where docs are part of the development process, not an afterthought -- with a Gatsby starter + Storybook."
 tags:
   - documentation
   - gatsby-days
