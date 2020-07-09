@@ -34,6 +34,7 @@ exports.onRenderBody = (
       if (icon?.endsWith(`.svg`)) {
         headComponents.push(
           <link
+            key={`gatsby-plugin-manifest-icon-link-svg`}
             rel="icon"
             href={withPrefix(
               addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
@@ -45,7 +46,7 @@ exports.onRenderBody = (
       favicons.forEach(favicon => {
         headComponents.push(
           <link
-            key={favicon.src}
+            key={`gatsby-plugin-manifest-icon-link-png`}
             rel="icon"
             href={withPrefix(
               addDigestToPath(favicon.src, cacheDigest, cacheBusting)
