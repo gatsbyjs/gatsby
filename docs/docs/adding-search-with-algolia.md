@@ -597,7 +597,7 @@ Running `gatsby develop` should now give you a working search that looks somethi
 
 ![Search widget displaying search results](./images/algolia-final-search.png)
 
-You can also play around with it [here](https://janosh.io/blog).
+You can also play around with it at [https://janosh.io/blog](https://janosh.io/blog).
 
 ## Deploying to Netlify
 
