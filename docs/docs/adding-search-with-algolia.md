@@ -420,7 +420,7 @@ export default styled.div`
 `
 ```
 
-The root element needs relative positioning so we can position the popover underneath it.
+The root element needs relative positioning so you can position the popover underneath it.
 
 ```jsx:title=src/components/search/styled-search-box.js
 import styled, { css } from "styled-components"
