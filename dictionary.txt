@@ -1701,6 +1701,9 @@ runtimes
 Ruzicka
 S3
 S3-compliant
+Sass
+*sass
+*SASS
 SaaS
 Saccone
 Sacha
