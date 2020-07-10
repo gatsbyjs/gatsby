@@ -1,123 +1,164 @@
-import fs from "fs"
-import pify from "pify"
-import minimatch from "minimatch"
+/* global: reporter */
 
+import Joi from "@hapi/joi"
+import path from "path"
+import reporter from "gatsby-cli/lib/reporter"
+
+const defaultExcludes = [
+  `/dev-404-page`,
+  `/404`,
+  `/404.html`,
+  `/offline-plugin-app-shell-fallback`,
+]
+
+const pluginOptions = Joi.object({
+  plugins: Joi.array(),
+  output: Joi.string().default(`/sitemap.xml`),
+  createLinkInHead: Joi.boolean().default(true),
+  sitemapSize: Joi.number().default(45000), // default bassed on upstream "sitemap" plugin default, maybe need optimization
+  query: Joi.string().default(`
+  {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
+
+    allSitePage {
+      nodes {
+        path
+      }
+    }
+  }`),
+  exclude: Joi.array()
+    .items(Joi.string(), Joi.object())
+    .default(parent => {
+      const configExclude = parent?.exclude
+
+      if (!configExclude) {
+        return defaultExcludes
+      }
+
+      return [...defaultExcludes, ...configExclude]
+    }),
+  resolveSiteUrl: Joi.function().default(() => resolveSiteUrl),
+  resolvePagePath: Joi.function().default(() => resolvePagePath),
+  resolvePages: Joi.function().default(() => resolvePages),
+  filterPages: Joi.function().default(() => filterPages),
+  serialize: Joi.function().default(() => serialize),
+})
+
+export async function validateOptions(options) {
+  return pluginOptions.validateAsync(options)
+}
+
+/**
+ *
+ * @param {string} path
+ * @returns {string}
+ */
 export const withoutTrailingSlash = path =>
   path === `/` ? path : path.replace(/\/$/, ``)
 
-export const writeFile = pify(fs.writeFile)
-export const renameFile = pify(fs.rename)
+/**
+ * @name prefixPath
+ *
+ * Propperly handles prefixing relative path with site domain, Gatsby pathPrefix and AssetPrefix
+ *
+ * @param {string} url - string containing relative path
+ * @param {string} siteUrl - results of the resolveSiteUrl function
+ * @returns {string}
+ */
+// TODO: Update for v3
+export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
+  return new URL(pathPrefix + url, siteUrl).toString()
+}
 
-export function filterQuery(
-  results,
-  excludes,
-  pathPrefix,
-  resolveSiteUrl = defaultOptions.resolveSiteUrl
+/**
+ * @name resolveSiteUrl
+ *
+ * @param {Object} data - results of the GraphQL query
+ * @returns {string}
+ */
+function resolveSiteUrl(data) {
+  return data.site.siteMetadata.siteUrl
+}
+/**
+ * @name resolvePagePath
+ *
+ * if you don't want to place the URI in "path" then resolvePagePath
+ * are needed.
+ *
+ * @param {Object|string} page - Array Item returned from reolvePages
+ * @returns {string}
+ */
+
+function resolvePagePath(page) {
+  return page?.path
+}
+/**
+ * @name resolvePages
+ *
+ * This allows custom resolution of the array of pages.
+ * This also where user's could merge multiple sources into
+ * a single array if needed.
+ *
+ * @param {Object} data - results of the GraphQL query
+ * @returns {Array}
+ */
+function resolvePages(data) {
+  return data.allSitePage.nodes
+}
+
+/**
+ * @name filterPages
+ *
+ * This allows filtering any data in any way.
+ *
+ * This Function is executed via allPages.filter((page) => !excludes.some((excludedRoute) => thisFunc(page, ecludedRoute, tools)))
+ * allPages is the results of the resolvePages
+ *
+ * @param {Object} page
+ * @param {string} excludedRoute - Array from plugin config `options.exclude`
+ * @param {Object} tools - contains required tools for filtering
+ *
+ * @returns {Array}
+ */
+function filterPages(
+  page,
+  excludedRoute,
+  { minimatch, withoutTrailingSlash, resolvePagePath }
 ) {
-  const { errors, data } = results
-
-  if (errors) {
-    throw new Error(errors.join(`, `))
-  }
-
-  const { allSitePage, ...otherData } = data
-
-  let { allPages, originalType } = getNodes(allSitePage)
-
-  // Removing excluded paths
-  allPages = allPages.filter(
-    page =>
-      !excludes.some(excludedRoute =>
-        minimatch(
-          withoutTrailingSlash(page.path),
-          withoutTrailingSlash(excludedRoute)
-        )
-      )
-  )
-
-  // Add path prefix
-  allPages = allPages.map(page => {
-    page.path = (pathPrefix + page.path).replace(/^\/\//g, `/`)
-    return page
-  })
-
-  // siteUrl Validation
-
-  let siteUrl = resolveSiteUrl(data)
-
-  if (!siteUrl || siteUrl.trim().length == 0) {
-    throw new Error(
-      `SiteMetaData 'siteUrl' property is required and cannot be left empty. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
+  if (typeof excludedRoute !== `string`) {
+    reporter.error(
+      `You've passed something other than string to the exclude array. This is supported, but you'll have to write a custom filter function. Ignoring the input for now: ${JSON.stringify(
+        excludedRoute,
+        null,
+        2
+      )}`
     )
+    return false
   }
-
-  // remove trailing slash of siteUrl
-  siteUrl = withoutTrailingSlash(siteUrl)
-
-  return {
-    ...otherData,
-    allSitePage: {
-      [originalType]:
-        originalType === `nodes`
-          ? allPages
-          : allPages.map(page => {
-              return { node: page }
-            }),
-    },
-    site: { siteMetadata: { siteUrl } },
-  }
-}
-
-export const defaultOptions = {
-  query: `
-    {
-      site {
-        siteMetadata {
-          siteUrl
-        }
-      }
-
-      allSitePage {
-        edges {
-          node {
-            path
-          }
-        }
-      }
-  }`,
-  output: `/sitemap.xml`,
-  exclude: [
-    `/dev-404-page`,
-    `/404`,
-    `/404.html`,
-    `/offline-plugin-app-shell-fallback`,
-  ],
-  createLinkInHead: true,
-  serialize: ({ site, allSitePage }) => {
-    const { allPages } = getNodes(allSitePage)
-    return allPages?.map(page => {
-      return {
-        url: `${site.siteMetadata?.siteUrl ?? ``}${page.path}`,
-        changefreq: `daily`,
-        priority: 0.7,
-      }
-    })
-  },
-  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
-}
-
-function getNodes(results) {
-  if (`nodes` in results) {
-    return { allPages: results.nodes, originalType: `nodes` }
-  }
-
-  if (`edges` in results) {
-    return {
-      allPages: results?.edges?.map(edge => edge.node),
-      originalType: `edges`,
-    }
-  }
-  throw new Error(
-    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`
+  return minimatch(
+    withoutTrailingSlash(resolvePagePath(page)),
+    withoutTrailingSlash(excludedRoute)
   )
+}
+
+/**
+ * @name serialize
+ *
+ * This funciton is executed by allPages.map(page => thisFunc(page, siteUrl, tools))
+ * allpages is the result of the filter process
+ *
+ * @param {Object} page - results of the resolvePages function
+ * @param {Object} tools - contains tools for serializing
+ *
+ */
+function serialize(page, { resolvePagePath }) {
+  return {
+    url: `${resolvePagePath(page)}`,
+    changefreq: `daily`,
+    priority: 0.7,
+  }
 }

@@ -1,80 +1,81 @@
 import path from "path"
-import sitemap from "sitemap"
-import {
-  defaultOptions,
-  filterQuery,
-  writeFile,
-  renameFile,
-  withoutTrailingSlash,
-} from "./internals"
+import minimatch from "minimatch"
+import { simpleSitemapAndIndex } from "sitemap"
+import { validateOptions, withoutTrailingSlash, prefixPath } from "./internals"
 
 const publicPath = `./public`
 
+const reporterPrefix = `[plugin-sitemap]:`
+
+exports.onPreInit = async ({ reporter }, pluginOptions) => {
+  await validateOptions(pluginOptions).catch(err => reporter.panic(err))
+  reporter.verbose(`${reporterPrefix} Plugin options valid`)
+}
+
 exports.onPostBuild = async (
-  { graphql, pathPrefix, basePath = pathPrefix },
+  { graphql, reporter, pathPrefix },
   pluginOptions
 ) => {
-  const options = { ...pluginOptions }
-  delete options.plugins
-  delete options.createLinkInHead
+  global.reporter = reporter
 
   const {
-    query,
-    serialize,
     output,
+    sitemapSize,
+    query,
     exclude,
-    hostname,
     resolveSiteUrl,
-    ...rest
-  } = {
-    ...defaultOptions,
-    ...options,
-  }
+    resolvePagePath,
+    resolvePages,
+    filterPages,
+    serialize,
+  } = await validateOptions(pluginOptions).catch(err => reporter.panic(err))
+  console.log(`PathPrefix: `, pathPrefix)
+  const { data: queryRecords } = await graphql(query)
+
+  reporter.verbose(
+    `${reporterPrefix}Query Results` + JSON.stringify(queryRecords, null, 2)
+  )
+
+  const allPages = resolvePages(queryRecords)
+  const siteUrl = resolveSiteUrl(queryRecords)
+
+  reporter.verbose(
+    `${reporterPrefix} Filtering ${allPages.length} pages based on ${exclude.length} excludes`
+  )
+  const filteredPages = allPages.filter(page => {
+    const result = !exclude.some(excluded =>
+      filterPages(page, excluded, {
+        minimatch,
+        withoutTrailingSlash,
+        resolvePagePath,
+      })
+    )
+
+    if (!result) {
+      reporter.verbose(
+        `${reporterPrefix} Excluded page ${resolvePagePath(page)}`
+      )
+    }
+
+    return result
+  })
+
+  reporter.verbose(
+    `${reporterPrefix} pages remainig after filtering ${filteredPages.length} pages`
+  )
+
+  const serializedPages = filteredPages.map(page => {
+    const { url, ...rest } = serialize(page, { resolvePagePath })
+
+    return { url: prefixPath({ url, siteUrl, pathPrefix }), ...rest }
+  })
 
   const saved = path.join(publicPath, output)
 
-  // Paths we're excluding...
-  const excludeOptions = exclude.concat(defaultOptions.exclude)
-
-  const queryRecords = await graphql(query)
-
-  const filteredRecords = filterQuery(
-    queryRecords,
-    excludeOptions,
-    basePath,
-    resolveSiteUrl
-  )
-  const urls = serialize(filteredRecords)
-
-  if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
-    const map = sitemap.createSitemap(rest)
-    urls.forEach(u => map.add(u))
-    return writeFile(saved, map.toString())
-  }
-
-  const {
-    site: {
-      siteMetadata: { siteUrl },
-    },
-  } = filteredRecords
-  return new Promise(resolve => {
-    // sitemap-index.xml is default file name. (https://git.io/fhNgG)
-    const indexFilePath = path.join(
-      publicPath,
-      `${rest.sitemapName || `sitemap`}-index.xml`
-    )
-    const sitemapIndexOptions = {
-      ...rest,
-      hostname:
-        (hostname || withoutTrailingSlash(siteUrl)) +
-        withoutTrailingSlash(pathPrefix || ``),
-      targetFolder: publicPath,
-      urls,
-      callback: error => {
-        if (error) throw new Error(error)
-        renameFile(indexFilePath, saved).then(resolve)
-      },
-    }
-    sitemap.createSitemapIndex(sitemapIndexOptions)
+  return simpleSitemapAndIndex({
+    hostname: siteUrl,
+    destinationDir: saved,
+    sourceData: serializedPages,
+    limit: sitemapSize,
   })
 }
