@@ -72,7 +72,6 @@ exports.onCreateNode = async ({
   node,
   actions,
   getNode,
-  loadNodeContent,
   createNodeId,
   createContentDigest,
 }) => {
